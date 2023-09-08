@@ -3,4 +3,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "hello_world#index"
+  resources :landing_page
 end

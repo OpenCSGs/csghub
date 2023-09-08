@@ -1,3 +1,16 @@
 <%= javascript_import_module_tag "vue_components/app2" %>
 <div id="app">  
 </div>  
+
+
+    <div id="authing-guard-container"></div>
+
+    <script>
+      const guard = new GuardFactory.Guard({
+        appId: '64f5a0343bf429c9942dbd46'
+      })
+
+      guard.start('#authing-guard-container').then(userInfo => {
+        console.log('userInfo in start: ', userInfo)
+      })
+    </script>
