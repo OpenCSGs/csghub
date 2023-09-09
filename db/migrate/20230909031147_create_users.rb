@@ -11,6 +11,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.boolean :email_verified
       t.datetime :last_login_at
 
+      t.index ['login_identity'], name: "index_users_on_login_identity", unique: true
+
       t.timestamps
     end
   end

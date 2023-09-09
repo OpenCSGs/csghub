@@ -26,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_031147) do
     t.datetime "last_login_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
 end
