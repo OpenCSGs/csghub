@@ -2,3 +2,4 @@ zh:
   hello: "Hello world"
   zh: '中文'
   en: '英文'
+  logout: '退出登录'

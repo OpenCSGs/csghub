@@ -33,3 +33,4 @@ en:
   hello: "Hello world"
   en: 'English'
   zh: 'Chinese'
+  logout: 'Logout'
