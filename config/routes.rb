@@ -3,10 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-  scope "(:locale)" do
-
-    root "hello_world#index"
-    resources :landing_page
+  scope "(:locale)", :locale => /en|zh/ do
+    root "spaces#index"
 
     get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
