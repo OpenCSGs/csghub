@@ -14,6 +14,9 @@
   </head>
 
   <body>
+    <% if current_user %>
+      <%= render partial: 'partials/navbar' %>
+    <% end %>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>
