@@ -15,10 +15,10 @@
         </a>
         <div class="flex items-center lg:order-2">
           <div class="group inline-block relative">
-            <button class="p-2 lg:p-3 text-xs border-0">语言切换 </button>
+            <button class="p-2 lg:p-3 text-xs border-0">< <%= I18n.t("#{current_locale}") %> > </button>
             <div class="invisible px-2 lg:px-3 text-xs border-0 absolute group-hover:visible">
-              <a class="block py-1" href="/zh/">中文</a>
-              <a class="block" href="/en/">英文</a>
+              <a class="block py-1" href="/zh/"><%= I18n.t('zh') %></a>
+              <a class="block" href="/en/"><%= I18n.t('en') %></a>
             </div>
           </div>
           <p href="#" class="text-gray focus:ring-4 focus:ring-blue-300 font-medium text-sm px-2 lg:px-3 py-2 lg:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> <%= current_user.phone %> </p>
