@@ -14,8 +14,15 @@
           <%= image_tag "open_csg_logo.png", width: 'auto', height: 34.11, class: "mr-3 h-6 sm:h-9", alt: "OpenCSG Logo" %>
         </a>
         <div class="flex items-center lg:order-2">
-          <a href="#" class="text-gray focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> <%= current_user.phone %> </a>
-          <a href=<%= logout_address %> onclick="cleanUp();" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">登出</a>
+          <div class="group inline-block relative">
+            <button class="p-2 lg:p-3 text-xs border-0">语言切换 </button>
+            <div class="invisible px-2 lg:px-3 text-xs border-0 absolute group-hover:visible">
+              <a class="block py-1" href="/zh/">中文</a>
+              <a class="block" href="/en/">英文</a>
+            </div>
+          </div>
+          <p href="#" class="text-gray focus:ring-4 focus:ring-blue-300 font-medium text-sm px-2 lg:px-3 py-2 lg:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> <%= current_user.phone %> </p>
+          <a href=<%= logout_address %> onclick="cleanUp();" class="text-gray-800 dark:text-white bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-2 lg:px-3 py-2 lg:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">登出</a>
           <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
@@ -25,10 +32,10 @@
         <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
           <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 mb:0">
             <li>
-              <a href="#" class="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-[#1a8b7b] lg:p-0 dark:text-white" aria-current="page">Spaces</a>
+              <a href="#" class="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-[#1a8b7b] lg:p-0 dark:text-white" aria-current="page"><%= t('navbar.applications') %></a>
             </li>
             <li>
-              <a href="#" class="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-[#1a8b7b] lg:p-0 dark:text-white" aria-current="page">Billings</a>
+              <a href="#" class="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-[#1a8b7b] lg:p-0 dark:text-white" aria-current="page"><%= t('navbar.billings') %></a>
             </li>
           </ul>
         </div>
