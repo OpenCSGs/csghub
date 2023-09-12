@@ -3,16 +3,24 @@ class Api::Starchain::SpacesController < ApplicationController
   before_action :set_current_user
 
   def create
-    space = Space.new(space_params)
+    space = Space.new(create_params)
     space.user = @current_user
     if space.save
       render json: {message: "Space created"}
     else
-      render json: {message: "Failed to create space"}, status: 500
+      render json: {message: "Failed to create space"}, status: 400
     end
   end
 
   def update
+    space = Space.find_by(space_starchain_id: params[:id])
+    return render json: {message: "Space not found"} unless space
+
+    if space.update(update_params)
+      render json: {message: "Space updated"}
+    else
+      render json: {message: "Failed to update space"}, status: 400
+    end
   end
 
   def destroy
@@ -20,8 +28,12 @@ class Api::Starchain::SpacesController < ApplicationController
 
   private 
 
-  def space_params
+  def create_params
     params.permit(:space_starchain_id, :title, :desc, :site_link, :space_type)
+  end
+
+  def update_params
+    params.permit(:title, :desc, :site_link, :space_type)
   end
 
   def id_token
