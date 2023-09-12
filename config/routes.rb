@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
+  namespace :api do
+    namespace :starchain do
+      resources :spaces, only: [:create, :destroy, :update]
+    end
+  end
 
   scope "(:locale)", :locale => /en|zh/ do
     root "spaces#index"

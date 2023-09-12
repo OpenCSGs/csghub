@@ -34,3 +34,9 @@ en:
   en: 'English'
   zh: 'Chinese'
   logout: 'Logout'
+
+  activerecord:
+    errors:
+      models:
+        space:
+          blank: "Field can't be blank"
