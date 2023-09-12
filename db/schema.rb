@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_09_031147) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_100621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "spaces", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "space_starchain_id"
+    t.string "title"
+    t.text "desc"
+    t.string "site_link"
+    t.string "space_type"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_spaces_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "login_identity"

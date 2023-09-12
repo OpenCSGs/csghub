@@ -1,3 +1,30 @@
-<% if Space.size == 0 %>
-<% else %>
-<% end %>
+<div class="max-w-screen-xl w-5/6">
+  <% if Space.count == 0 %>
+    <div class="flex flex-col">
+      <p>您还没有属于自己的应用，点击下面的链接去 StarChain 构建您的第一个应用吧！</p>
+      <div>
+        <p class="mt-5"> 
+          <button onclick="window.location='https://baidu.com'" class="group relative h-12 w-48 overflow-hidden rounded-2xl bg-green-500 text-lg font-bold text-white">
+            StarChain
+            <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+          </button>
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div>
+      <p>您可以去 StarChain 构建新的应用：<button onclick="window.location='https://baidu.com'" class="group relative h-8 w-28 overflow-hidden rounded-2xl bg-green-500 text-md text-white"> StarChain </button></p>
+      <div>
+        <% Space.all.each do |space| %>
+          <div class="mt-4 w-80 rounded bg-gray-50 p-3">
+            <h3 class="h-12"><%= space.title %></h3>
+            <p class="h-28">
+              <%= space.desc %>
+              <a class="text-purple-600"><%= space.site_link %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

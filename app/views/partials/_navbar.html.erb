@@ -1,14 +1,18 @@
 <script>
-  function cleanUp(){
+  function cleanUp() {
     localStorage.removeItem('_guard_i18nextLng')
     localStorage.removeItem('_authing_token')
     localStorage.removeItem('_authing_user')
     localStorage.removeItem('__authing__multiple_accounts')
   }
 
-  function reloadPage(locale){
+  function reloadPage(locale) {
     let currentPath = window.location.pathname
-    window.location.pathname = currentPath.replace(/en|zh/, locale);
+    if (currentPath === '/') {
+      window.location.pathname = `/${locale}`
+    } else {
+      window.location.pathname = currentPath.replace(/en|zh/, locale);
+    }
   }
 </script>
 <div>
