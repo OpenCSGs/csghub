@@ -16,6 +16,10 @@ class Api::Starchain::SpacesController < ApplicationController
     space = Space.find_by(space_starchain_id: params[:id])
     return render json: {message: "Space not found"} unless space
 
+    if space.user.id != current_user.id
+      render json: {message: "Unauthrorized"}, status: 401
+    end
+
     if space.update(update_params)
       render json: {message: "Space updated"}
     else
@@ -24,6 +28,18 @@ class Api::Starchain::SpacesController < ApplicationController
   end
 
   def destroy
+    space = Space.find_by(space_starchain_id: params[:id])
+    return render json: {message: "Space not found"} unless space
+
+    if space.user.id != current_user.id
+      render json: {message: "Unauthrorized"}, status: 401
+    end
+
+    if space.destroy
+      render json: {message: "Space destroyed"}
+    else
+      render json: {message: "Failed to destroy space"}
+    end
   end
 
   private 
