@@ -40,3 +40,4 @@ en:
       models:
         space:
           blank: "Field can't be blank"
+          taken: "Can't create duplicate space"

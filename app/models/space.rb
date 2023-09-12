@@ -3,7 +3,9 @@ class Space < ApplicationRecord
                         :title,
                         :desc,
                         :site_link,
-                        :space_type, message: "缺少必填字段"
+                        :space_type
+
+  validates_uniqueness_of :space_starchain_id
 
   belongs_to :user, dependent: :destroy
 end

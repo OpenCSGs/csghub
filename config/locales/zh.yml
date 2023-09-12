@@ -3,3 +3,10 @@ zh:
   zh: '中文'
   en: '英文'
   logout: '退出登录'
+
+  activerecord:
+    errors:
+      models:
+        space:
+          blank: "字段不能为空"
+          taken: "不能创建重复的空间"
