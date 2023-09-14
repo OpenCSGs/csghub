@@ -1,0 +1,89 @@
+image: docker:24.0.6
+
+include:
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+variables:
+  CI_USER: $GITLAB_USER
+  CI_TOKEN: $GITLAB_USER_TOKEN_HIVEER
+  GIT_DEPTH: 100
+
+stages:
+  - build
+  - deploy
+
+# 判断是不是正确的project，正确的branch，以及是不是forked repo过来的MR
+.if-main-original-repo: &if-main-original-repo
+  if: '$CI_COMMIT_REF_NAME == "main" && $CI_PROJECT_ID == "146773" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
+
+.if-staging-original-repo: &if-staging-original-repo
+  if: '$CI_COMMIT_REF_NAME == "staging" && $CI_PROJECT_ID == "146773" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
+
+staging-build:
+  stage: build
+  services:
+    - docker:24.0.6-dind
+  rules:
+    - <<: *if-staging-original-repo
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker login $CI_REGISTRY -u $CI_USER -p $CI_TOKEN
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+master-build:
+  stage: build
+  services:
+    - docker:24.0.6-dind
+  rules:
+    - <<: *if-main-original-repo
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker login $CI_REGISTRY -u $CI_USER -p $CI_TOKEN
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+staging-deploy:
+  stage: deploy
+  rules:
+    - <<: *if-staging-original-repo
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$OPEN_PORTAL_STAGING_PEM" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $OPEN_PORTAL_STAGING_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - |
+        ssh root@$OPEN_PORTAL_STAGING_HOST "/bin/bash -s" << EOT
+          cd /root/open-portal/
+          docker-compose -f docker_compose_staging.yml pull
+          docker-compose -f docker_compose_staging.yml up -d web
+          docker image prune -f
+        EOT
+
+main-deploy:
+  stage: deploy
+  rules:
+    - <<: *if-main-original-repo
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$PARTNER_PORTAL_PRD_SSH_KEY_SH" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $PARTNER_PORTAL_PRD_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $PARTNER_PORTAL_PRD_TWO_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - |
+        ssh root@$PARTNER_PORTAL_PRD_HOST "/bin/bash -s" << EOT
+          cd /root/jihu-partner-portal/
+          docker-compose -f docker-compose-production.yml pull
+          docker-compose -f docker-compose-production.yml up -d web
+          docker image prune -f
+        EOT
