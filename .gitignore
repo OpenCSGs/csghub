@@ -35,3 +35,5 @@
 
 node_modules
 .vite/
+docker-compose-staging.yml
+docker-compose-production.yml
