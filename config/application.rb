@@ -22,5 +22,7 @@ module TestApp
 
     config.time_zone = "Beijing"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.action_dispatch.default_headers.merge!({'X-Frame-Options' => 'ALLOWALL'})
   end
 end

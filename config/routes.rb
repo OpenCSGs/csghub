@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "spaces#index"
 
+    resources :spaces, only: ['index', 'show']
+
     get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
     post   '/login',   to: 'sessions#create'
