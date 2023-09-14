@@ -61,7 +61,7 @@ staging-deploy:
   script:
     - |
         ssh root@$OPEN_PORTAL_STAGING_HOST "/bin/bash -s" << EOT
-          cd /root/open-portal/
+          cd /root/open_portal/
           docker compose -f docker_compose_staging.yml pull
           docker compose -f docker_compose_staging.yml up -d web
           docker image prune -f
