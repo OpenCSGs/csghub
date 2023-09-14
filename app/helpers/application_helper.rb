@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def current_domain
+  def current_cookie_domain
     if Rails.env == 'production'
       'opencsg.com'
     else
@@ -8,11 +8,8 @@ module ApplicationHelper
   end
 
   def logout_address
-    if Rails.env == 'production'
-      "https://qszku65kpvg0.authing.cn/login/profile/logout?redirect_uri=https://opencsg.com/logout"
-    else
-      "https://qszku65kpvg0.authing.cn/login/profile/logout?redirect_uri=http://localhost:3000/logout"
-    end
+    asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
+    "#{Rails.application.credentials[:authing_domain]}/login/profile/logout?#{asset_host}/logout"
   end
 
   def current_locale

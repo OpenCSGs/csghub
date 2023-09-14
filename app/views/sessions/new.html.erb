@@ -4,8 +4,9 @@
 <div id="authing-guard-container"></div>
 <% if Rails.env.production? %>
   <script>
+    const authingAppId = "<%= Rails.application.credentials[:authing_app_id] %>"
     const guard = new GuardFactory.Guard({
-      appId: '64f5a0343bf429c9942dbd46'
+      appId: authingAppId
     })
     guard.start('#authing-guard-container').then(userInfo => {
       document.cookie = `authing_uuid=${userInfo.id};domain=opencsg.com;`;
@@ -18,15 +19,14 @@
   </script>
 <% else %>
   <script>
+    const authingAppId = "<%= Rails.application.credentials[:authing_app_id] %>"
     const guard = new GuardFactory.Guard({
-      appId: '64f5a0343bf429c9942dbd46'
+      appId: authingAppId
     })
     guard.start('#authing-guard-container').then(userInfo => {
       document.cookie = `authing_uuid=${userInfo.id};domain=localhost;`;
       document.cookie = `id_token=${userInfo.token};domain=localhost;`;
       document.cookie = `last_login_at=${userInfo.lastLogin};`;
-      console.log(userInfo)
-      console.log(document.cookie)
       window.location.href = "/authing/callback"
     })
   </script>
