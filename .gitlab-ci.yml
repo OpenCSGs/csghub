@@ -9,6 +9,7 @@ variables:
   GIT_DEPTH: 100
 
 stages:
+  - test
   - build
   - deploy
 
