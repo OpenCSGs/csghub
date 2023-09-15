@@ -9,11 +9,9 @@
       appId: authingAppId
     })
     guard.start('#authing-guard-container').then(userInfo => {
-      document.cookie = `authing_uuid=${userInfo.id};domain=opencsg.com;`;
-      document.cookie = `id_token=${userInfo.token};domain=opencsg.com;`;
-      document.cookie = `last_login_at=${userInfo.lastLogin};`;
-      console.log(userInfo)
-      console.log(document.cookie)
+      document.cookie = `authingUuid=${userInfo.id};domain=opencsg.com;`;
+      document.cookie = `idToken=${userInfo.token};domain=opencsg.com;`;
+      document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
       window.location.href = "/authing/callback"
     })
   </script>
@@ -24,9 +22,11 @@
       appId: authingAppId
     })
     guard.start('#authing-guard-container').then(userInfo => {
-      document.cookie = `authing_uuid=${userInfo.id};domain=localhost;`;
-      document.cookie = `id_token=${userInfo.token};domain=localhost;`;
-      document.cookie = `last_login_at=${userInfo.lastLogin};`;
+      document.cookie = `idToken=${userInfo.token};domain=localhost;`;
+      document.cookie = `authingUuid=${userInfo.id};domain=localhost;`;
+      document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
+      delete userInfo['token']
+      document.cookie = `userinfos=${JSON.stringify(userInfo)};domain=localhost;`;
       window.location.href = "/authing/callback"
     })
   </script>

@@ -5,9 +5,9 @@ class SessionsController < ApplicationController
   end
 
   def authing
-    authing_uuid = cookies[:authing_uuid]
-    authing_id_token = cookies[:id_token]
-    last_login_at = cookies[:last_login_at]
+    authing_uuid = cookies[:authingUuid]
+    authing_id_token = cookies[:idToken]
+    last_login_at = cookies[:lastLoginAt]
     user_infos = JWT.decode(authing_id_token, nil, false).first
     user = User.find_by(login_identity: authing_uuid)
     if user
