@@ -1,15 +1,35 @@
 module ApplicationHelper
   def current_cookie_domain
-    if Rails.env == 'production'
+    if Rails.env != 'development'
       'opencsg.com'
     else
       'localhost'
     end
   end
 
+  def authing_domain
+    if Rails.env.production?
+      Rails.application.credentials.authing.production.authing_domain
+    elsif Rails.env.staging?
+      Rails.application.credentials.authing.staging.authing_domain
+    else
+      Rails.application.credentials.authing.development.authing_domain
+    end
+  end
+
+  def authing_app_id
+    if Rails.env.production?
+      Rails.application.credentials.authing.production.authing_app_id
+    elsif Rails.env.staging?
+      Rails.application.credentials.authing.staging.authing_app_id
+    else
+      Rails.application.credentials.authing.development.authing_app_id
+    end
+  end
+
   def logout_address
     asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
-    "#{Rails.application.credentials[:authing_domain]}/login/profile/logout?redirect_uri=#{asset_host}/logout"
+    "#{authing_domain}/login/profile/logout?redirect_uri=#{asset_host}/logout"
   end
 
   def current_locale

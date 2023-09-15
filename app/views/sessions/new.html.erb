@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="https://cdn.authing.co/packages/guard/latest/guard.min.css" />
 
 <div id="authing-guard-container"></div>
-<% if Rails.env.production? %>
+<% if Rails.env.production? || Rails.env.staging? %>
   <script>
-    const authingAppId = "<%= Rails.application.credentials[:authing_app_id] %>"
+    const authingAppId = "<%= authing_app_id %>"
     const guard = new GuardFactory.Guard({
       appId: authingAppId
     })
@@ -19,7 +19,7 @@
   </script>
 <% else %>
   <script>
-    const authingAppId = "<%= Rails.application.credentials[:authing_app_id] %>"
+    const authingAppId = "<%= authing_app_id %>"
     const guard = new GuardFactory.Guard({
       appId: authingAppId
     })
