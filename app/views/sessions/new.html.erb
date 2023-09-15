@@ -12,6 +12,8 @@
       document.cookie = `authingUuid=${userInfo.id};domain=opencsg.com;`;
       document.cookie = `idToken=${userInfo.token};domain=opencsg.com;`;
       document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
+      delete userInfo['token']
+      document.cookie = `userinfos=${JSON.stringify(userInfo)};domain=opencsg.com;`;
       window.location.href = "/authing/callback"
     })
   </script>
