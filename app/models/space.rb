@@ -7,5 +7,8 @@ class Space < ApplicationRecord
 
   validates_uniqueness_of :space_starchain_id
 
+  enum status: [:running,
+                :stopped]
+
   belongs_to :user, dependent: :destroy
 end
