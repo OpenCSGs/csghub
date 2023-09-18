@@ -32,7 +32,7 @@ class Api::Starchain::SpacesController < ApplicationController
     return render json: {message: "Space not found"} unless space
 
     if space.user.id != current_user.id
-      render json: {message: "Unauthrorized"}, status: 401
+      return render json: {message: "Unauthrorized"}, status: 401
     end
 
     if space.destroy
