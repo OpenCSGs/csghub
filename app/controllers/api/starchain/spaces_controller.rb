@@ -17,7 +17,7 @@ class Api::Starchain::SpacesController < ApplicationController
     return render json: {message: "Space not found"} unless space
 
     if space.user.id != current_user.id
-      render json: {message: "Unauthrorized"}, status: 401
+      return render json: {message: "Unauthrorized"}, status: 401
     end
 
     if space.update(update_params)
@@ -42,14 +42,14 @@ class Api::Starchain::SpacesController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def create_params
     params.permit(:space_starchain_id, :title, :desc, :site_link, :space_type)
   end
 
   def update_params
-    params.permit(:title, :desc, :site_link, :space_type)
+    params.permit(:title, :desc, :site_link, :space_type, :status)
   end
 
   def id_token
