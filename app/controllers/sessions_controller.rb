@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       user = User.create(login_identity: authing_uuid,
+                         avatar: user_infos['picture'],
                          name: user_infos['username'],
                          phone: user_infos['phone_number'],
                          phone_verified: user_infos['phone_number_verified'],
