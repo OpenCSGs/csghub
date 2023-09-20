@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
                          gender: user_infos['gender'],
                          last_login_at: last_login_at)
       user.roles = :personal_user
+      helpers.log_in user
       redirect_to root_path
     end
   end

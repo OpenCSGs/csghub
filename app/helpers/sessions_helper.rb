@@ -11,6 +11,10 @@ module SessionsHelper
     current_user.present?
   end
 
+  def logged_in_other_system?
+    cookies[:idToken].present?
+  end
+
   def user_roles
     current_user.roles.join(',')
   end
