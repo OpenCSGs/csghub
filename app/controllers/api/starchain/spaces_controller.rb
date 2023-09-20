@@ -8,31 +8,31 @@ class Api::Starchain::SpacesController < ApplicationController
     if space.save
       render json: {message: "Space created"}
     else
-      render json: {message: "Failed to create space"}, status: 400
+      render json: {message: "Failed to create space"}, status: :bad_request
     end
   end
 
   def update
     space = Space.find_by(space_starchain_id: params[:id])
-    return render json: {message: "Space not found"} unless space
+    return render json: {message: "Space not found"}, status: :not_found unless space
 
     if space.user.id != current_user.id
-      return render json: {message: "Unauthrorized"}, status: 401
+      return render json: {message: "Unauthrorized"}, status: :unauthorized
     end
 
     if space.update(update_params)
       render json: {message: "Space updated"}
     else
-      render json: {message: "Failed to update space"}, status: 400
+      render json: {message: "Failed to update space"}, status: :bad_request
     end
   end
 
   def destroy
     space = Space.find_by(space_starchain_id: params[:id])
-    return render json: {message: "Space not found"} unless space
+    return render json: {message: "Space not found"}, status: :not_found unless space
 
     if space.user.id != current_user.id
-      return render json: {message: "Unauthrorized"}, status: 401
+      return render json: {message: "Unauthrorized"}, status: :unauthorized
     end
 
     if space.destroy
