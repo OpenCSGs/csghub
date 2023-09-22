@@ -9,7 +9,7 @@ async function watch() {
     outdir: 'app/assets/builds',
     plugins: [vuePlugin()],
     define: {
-        "process.env.NODE_ENV": JSON.stringify("development"),
+      "process.env.NODE_ENV": JSON.stringify("development"),
     },
   });
   await ctx.watch();

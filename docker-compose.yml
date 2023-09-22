@@ -12,6 +12,7 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/open_portal_db
+      RAILS_ENV: staging
     command: >
       bash -c "bundle exec rails assets:precompile
       && bundle exec rails db:create
