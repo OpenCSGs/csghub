@@ -40,4 +40,4 @@ docker-compose-production.yml
 /node_modules
 
 yarn-error.log
-
+**/*.icloud
