@@ -1,7 +1,20 @@
 <script type="text/javascript" src="https://cdn.authing.co/packages/guard/latest/guard.min.js"></script>
 <link rel="stylesheet" href="https://cdn.authing.co/packages/guard/latest/guard.min.css" />
 
-<div id="authing-guard-container"></div>
+<%# overwrite authing css%>
+<style>
+  .authing-g2-render-module-normal {
+    position: unset !important;
+    transform: unset !important;
+  }
+</style>
+
+<div class="w-full h-full flex">
+  <div class="w-2/6 h-full bg-gray-50">
+  </div>
+  <div class="w-4/6 h-full flex justify-center items-center" id="authing-guard-container"></div>
+</div>
+
 <% if Rails.env.production? || Rails.env.staging? %>
   <script>
     const authingAppId = "<%= authing_app_id %>"
