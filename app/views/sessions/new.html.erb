@@ -9,10 +9,10 @@
   }
 </style>
 
-<div class="w-full h-full flex">
-  <div class="w-2/6 h-full bg-gray-50">
+<div class="w-full h-full flex sm:flex-col">
+  <div class="w-2/6 h-full bg-gray-50 sm:hidden">
   </div>
-  <div class="w-4/6 h-full flex justify-center items-center" id="authing-guard-container"></div>
+  <div class="w-4/6 h-full sm:w-auto flex justify-center items-center" id="authing-guard-container"></div>
 </div>
 
 <% if Rails.env.production? || Rails.env.staging? %>
