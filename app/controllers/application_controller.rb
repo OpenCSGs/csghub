@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
                          email_verified: user_infos['email_verified'],
                          gender: user_infos['gender'],
                          last_login_at: Time.zone.now)
-      helpers.login user
+      helpers.log_in user
     else
       session[:original_request_path] = request.fullpath
       redirect_to login_path

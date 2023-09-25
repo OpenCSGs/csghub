@@ -1,6 +1,9 @@
 require 'jwt'
 
 class SessionsController < ApplicationController
+  before_action :authenticate_user, only: :new
+  before_action :check_login, only: :new
+
   def new
   end
 
@@ -32,5 +35,11 @@ class SessionsController < ApplicationController
   def destroy
     helpers.logout
     redirect_to login_path
+  end
+
+  def check_login
+    if helpers.current_user
+      redirect_to root_path
+    end
   end
 end
