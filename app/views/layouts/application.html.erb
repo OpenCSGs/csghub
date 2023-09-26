@@ -27,11 +27,10 @@
 
   <body>
     <div id="app">
-      <%= render partial: 'partials/navbar' %>
-      <div>
-        <Course />
-      </div>
-      <%= yield %>
+      <% if current_user %>
+        <%= render partial: 'partials/navbar' %>
+      <% end %>
     </div>
+    <%= yield %>
   </body>
 </html>
