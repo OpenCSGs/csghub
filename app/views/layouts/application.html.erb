@@ -5,9 +5,24 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script src="https://cdn.tailwindcss.com"></script>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {},
+          screens: {
+            '2xl': {'max': '1535px'},
+            'xl': {'max': '1279px'},
+            'lg': {'max': '1023px'},
+            'md': {'max': '767px'},
+            'sm': {'max': '639px'},
+          },
+        }
+      }
+    </script>
   </head>
 
   <body>
