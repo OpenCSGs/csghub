@@ -1,12 +1,20 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # admin
+  namespace :admin do
+    resources :spaces
+    resources :users
 
+    root to: "spaces#index"
+  end
+
+  # api
   namespace :api do
     namespace :starchain do
       resources :spaces, only: [:create, :destroy, :update]
     end
   end
 
+  # application
   scope "(:locale)", :locale => /en|zh/ do
     root "spaces#index"
 

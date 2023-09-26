@@ -4,6 +4,10 @@ zh:
   en: '英文'
   logout: '退出登录'
 
+  administrate:
+    search:
+      label: '搜索'
+
   activerecord:
     errors:
       models:
