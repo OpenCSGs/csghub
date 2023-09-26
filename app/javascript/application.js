@@ -1,31 +1,26 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+// rails turbo and stimulus js
 import "@hotwired/turbo-rails"
 import "./controllers"
 
-//import "./components"
-//import "./components/navbar_app.js"
-
+// Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import Navbar from "./components/navbar.vue"
 import Course from "./components/course.vue"
 
 const appNavbar = createApp({
   components: {
-    Navbar
-  },
-  data() {  
-    return { }
-  } 
+    Navbar,
+    Course
+  }
 }).use(ElementPlus);
-appNavbar.mount("#navbar")
 
-const appCourse = createApp({
-  data() {  
-    return {  }  
-  } 
-}).use(ElementPlus);
-appCourse.component('Course', Course)  
-appCourse.mount("#course")
+// register Element UI Icons
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  appNavbar.component(key, component)
+}
+
+appNavbar.mount("#app")

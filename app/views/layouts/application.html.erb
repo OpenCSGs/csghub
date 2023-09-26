@@ -26,7 +26,12 @@
   </head>
 
   <body>
-    <%= render partial: 'partials/navbar' %>
-    <%= yield %>
+    <div id="app">
+      <%= render partial: 'partials/navbar' %>
+      <div>
+        <Course />
+      </div>
+      <%= yield %>
+    </div>
   </body>
 </html>
