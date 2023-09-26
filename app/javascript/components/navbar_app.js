@@ -1,5 +1,5 @@
 import { createApp } from "vue/dist/vue.esm-bundler.js"
-import Course from "./course.vue"
+import Navbar from "./navbar.vue"
 
 const app = createApp({
   data() {  
@@ -9,6 +9,6 @@ const app = createApp({
   } 
 });
 
-app.component('Course', Course)  
+app.component('Navbar', Navbar)  
 
-app.mount("#app")
+app.mount("#navbar")

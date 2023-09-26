@@ -8,6 +8,9 @@ async function watch() {
     sourcemap: true,
     outdir: 'app/assets/builds',
     plugins: [vuePlugin()],
+    loader: {
+      '.png': 'file'
+    },
     define: {
       "process.env.NODE_ENV": JSON.stringify("development"),
     },

@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+/tmp/**/*.keep
 !/log/.keep
 !/tmp/.keep
 
@@ -41,3 +42,4 @@ docker-compose-production.yml
 
 yarn-error.log
 **/*.icloud
+**/.DS_Store

@@ -11,9 +11,7 @@
   </head>
 
   <body>
-    <% if current_user %>
-      <%= render partial: 'partials/navbar' %>
-    <% end %>
+    <%= render partial: 'partials/navbar' %>
     <%= yield %>
   </body>
 </html>

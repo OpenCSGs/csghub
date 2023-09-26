@@ -7,6 +7,9 @@ esbuild.build({
   sourcemap: true,
   outdir: 'app/assets/builds',
   plugins: [vuePlugin()],
+  loader: {
+    '.png': 'file'
+  },
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },

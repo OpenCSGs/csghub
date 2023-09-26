@@ -4,9 +4,10 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^7.3.0",
+    "element-plus": "^2.3.14",
     "esbuild": "^0.19.3",
     "esbuild-plugin-vue3": "^0.3.2",
-    "tdesign-vue-next": "^1.5.7",
+    "less": "^4.2.0",
     "vue": "^3.3.4"
   },
   "scripts": {
