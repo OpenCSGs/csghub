@@ -19,6 +19,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone: Field::String,
     phone_verified: Field::Boolean,
     roles_mask: Field::Number,
+    roles: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -30,9 +31,12 @@ class UserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
+    login_identity
     avatar
+    phone
+    phone_verified
     email
-    email_verified
+    roles
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -66,7 +70,7 @@ class UserDashboard < Administrate::BaseDashboard
     name
     phone
     phone_verified
-    roles_mask
+    roles
   ].freeze
 
   # COLLECTION_FILTERS
