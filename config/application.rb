@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module TestApp
+module OpenCSG
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -26,7 +26,7 @@ module TestApp
     config.action_dispatch.default_headers.merge!({'X-Frame-Options' => 'ALLOWALL'})
 
     config.to_prepare do
-      Administrate::ApplicationController.helper TestApp::Application.helpers
+      Administrate::ApplicationController.helper OpenCSG::Application.helpers
     end
   end
 end
