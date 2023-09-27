@@ -14,7 +14,6 @@ class SessionsController < ApplicationController
     user = User.find_by(login_identity: authing_uuid)
     if user
       helpers.log_in user
-      redirect_to root_path
     else
       user = User.create(login_identity: authing_uuid,
                          avatar: user_infos['picture'],
@@ -27,6 +26,13 @@ class SessionsController < ApplicationController
                          last_login_at: last_login_at)
       user.roles = :personal_user
       helpers.log_in user
+    end
+
+    if session[:original_request_path].present?
+      redirect_path = session[:original_request_path]
+      session[:original_request_path] = nil
+      redirect_to redirect_path
+    else
       redirect_to root_path
     end
   end

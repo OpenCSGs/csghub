@@ -9,7 +9,12 @@ module Admin
     before_action :authenticate_admin
 
     def authenticate_admin
-      # TODO Add authentication logic here.
+      if helpers.logged_in? && helpers.current_user.admin?
+        return true
+      else
+        session[:original_request_path] = request.fullpath
+        redirect_to login_path
+      end
     end
 
     # Override this value to specify the number of elements to display at a time
