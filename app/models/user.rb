@@ -4,6 +4,8 @@ class User < ApplicationRecord
              admin
              personal_user
              company_user)
+  
+  SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
@@ -24,11 +26,11 @@ class User < ApplicationRecord
   end
 
   def super_user?
-    has_role?('super_user')
+    has_role?('super_user') || SUPER_USERS.include?(phone)
   end
 
   def admin?
-    has_role?('admin')
+    has_role?('admin') || super_user?
   end
 
   def display_name
