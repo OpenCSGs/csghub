@@ -2,7 +2,7 @@
   <div class="flex text-white bg-[#1C8B7F] justify-between items-center">
     <div class="flex">
       <div class="py-2 pl-4 mr-[100px] sm:mr-[30px]">
-        <img src="/assets/opencsg_logo.png" height=51 width=157 alt="OpenCSG Logo" />
+        <img :src="logo" height=51 width=157 alt="OpenCSG Logo" />
       </div>
       <ul class="flex justify-between items-center sm:hidden">
         <li class="px-4"> 应用空间 </li>
@@ -56,7 +56,8 @@
 <script>
 export default {
   props: {
-    logout: String
+    logout: String,
+    logo: String
   },
   data() {
     return { }
