@@ -24,5 +24,9 @@ module TestApp
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.action_dispatch.default_headers.merge!({'X-Frame-Options' => 'ALLOWALL'})
+
+    config.to_prepare do
+      Administrate::ApplicationController.helper TestApp::Application.helpers
+    end
   end
 end
