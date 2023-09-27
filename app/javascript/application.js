@@ -8,7 +8,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import Navbar from "./components/Navbar.vue"
+import Navbar from "./components/TheNavbar.vue"
 
 const app = createApp({
   components: {
