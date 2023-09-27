@@ -26,11 +26,13 @@
   </head>
 
   <body>
-    <div id="app">
-      <% if current_user %>
+    <% if current_user %>
+      <div id="app">
         <%= render partial: 'partials/navbar' %>
-      <% end %>
-    </div>
-    <%= yield %>
+        <%= yield %>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

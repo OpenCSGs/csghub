@@ -8,19 +8,17 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import Navbar from "./components/navbar.vue"
-import Course from "./components/course.vue"
+import Navbar from "./components/Navbar.vue"
 
-const appNavbar = createApp({
+const app = createApp({
   components: {
-    Navbar,
-    Course
+    Navbar
   }
 }).use(ElementPlus);
 
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  appNavbar.component(key, component)
+  app.component(key, component)
 }
 
-appNavbar.mount("#app")
+app.mount("#app")
