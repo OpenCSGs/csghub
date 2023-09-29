@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded mt-6">
+  <div class="p-4 bg-white rounded my-6">
     <p>
       嗨！这里是开放的大模型应用空间。
     </p>
