@@ -1,5 +1,5 @@
 <template>
-  <div class="flex text-[#303133] bg-white justify-between items-center border-b border-gray-100 max-w-[1280px] m-auto">
+  <div class="flex text-[#303133] justify-between items-center border-b border-gray-100 max-w-[1280px] m-auto">
     <div class="flex">
       <div class="py-2 pl-4 mr-[100px] sm:mr-[30px]">
         <img :src="logo" height=32 width=99 alt="OpenCSG Logo" />
@@ -90,8 +90,7 @@
       </el-dropdown>
       <el-dropdown class="pl-1">
         <span class="el-dropdown-link">
-          <el-avatar :size="40" src="https://empty">
-            <img :src="avatar" />
+          <el-avatar :size="35" :src="avatar">
           </el-avatar>
         </span>
         <template #dropdown>
