@@ -9,10 +9,12 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import Navbar from "./components/TheNavbar.vue"
+import SpaceIntro from "./components/SpaceIntro.vue"
 
 const app = createApp({
   components: {
-    Navbar
+    Navbar,
+    SpaceIntro
   }
 }).use(ElementPlus);
 
