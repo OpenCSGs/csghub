@@ -8,7 +8,10 @@ class Space < ApplicationRecord
   validates_uniqueness_of :space_starchain_id
 
   enum status: [:running,
-                :stopped]
+                :stopped], _default: "running"
+
+  enum space_type: [:private_s,
+                    :public_s], _default: "private_s"
 
   belongs_to :user, dependent: :destroy
   has_many :taggings, dependent: :destroy
