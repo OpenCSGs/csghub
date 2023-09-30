@@ -11,4 +11,13 @@ class Space < ApplicationRecord
                 :stopped]
 
   belongs_to :user, dependent: :destroy
+
+  def cover_image_url
+    if cover_image
+      # retrive the image temp url from aliyun
+      AliyunOss.instance.download cover_image
+    else
+      nil
+    end
+  end
 end
