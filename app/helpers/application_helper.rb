@@ -32,6 +32,14 @@ module ApplicationHelper
     "#{authing_domain}/login/profile/logout?redirect_uri=#{asset_host}/logout"
   end
 
+  def starchain_address
+    if Rails.env.production?
+      "https://starchain.opencsg.com/"
+    else
+      "https://starchain-stg.opencsg.com/"
+    end
+  end
+
   def current_locale
     I18n.locale
   end
