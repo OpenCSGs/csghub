@@ -11,6 +11,8 @@ class Space < ApplicationRecord
                 :stopped]
 
   belongs_to :user, dependent: :destroy
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
 
   def cover_image_url
     if cover_image
