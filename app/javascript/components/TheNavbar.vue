@@ -1,11 +1,11 @@
 <template>
-  <div class="flex text-[#303133] justify-between items-center border-b border-gray-100 max-w-[1280px] m-auto">
+  <div class="flex text-[#303133] justify-between items-center border-b border-gray-100 max-w-[1248px] m-auto">
     <div class="flex">
-      <div class="py-2 pl-4 mr-[100px] sm:mr-[30px]">
+      <div class="py-2 mr-[100px] sm:mr-[30px]">
         <img :src="logo" height=32 width=99 alt="OpenCSG Logo" />
       </div>
     </div>
-    <div class="flex justify-between items-center px-4">
+    <div class="flex justify-between items-center pl-4">
       <ul class="flex justify-between items-center mlg:hidden">
         <li class="px-5 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
