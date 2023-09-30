@@ -1,11 +1,11 @@
 <div class="max-w-[1280px] m-auto">
-  <space-intro></space-intro>
+  <space-intro star-chain-address="<%= starchain_address %>"></space-intro>
   <% if Space.count == 0 %>
     <div class="flex flex-col">
       <p>您还没有属于自己的应用，点击下面的链接去 StarChain 构建您的第一个应用吧!！</p>
       <div>
         <p class="mt-5">
-          <button onclick="window.open('https://starchain-stg.opencsg.com/', '_blank')" class="flex items-center justify-center group relative h-12 w-48 overflow-hidden rounded-2xl bg-[#1a8b7b] text-lg font-bold text-white">
+          <button onclick="window.open('<%= starchain_address %>', '_blank')" class="flex items-center justify-center group relative h-12 w-48 overflow-hidden rounded-2xl bg-[#1a8b7b] text-lg font-bold text-white">
             StarChain
             <el-icon class="mx-2">
               <arrow-right />
@@ -17,7 +17,7 @@
     </div>
   <% else %>
     <div>
-      <p>您可以去 StarChain 构建新的应用：<button onclick="window.open('https://starchain-stg.opencsg.com/', '_blank')" class="group relative h-8 w-28 overflow-hidden rounded-2xl bg-green-500 text-md text-white"> StarChain </button></p>
+      <p>您可以去 StarChain 构建新的应用：<button onclick="window.open('<%= starchain_address %>', '_blank')" class="group relative h-8 w-28 overflow-hidden rounded-2xl bg-green-500 text-md text-white"> StarChain </button></p>
       <div>
         <% Space.all.each do |space| %>
           <div class="mt-4 w-80 rounded bg-gray-50 p-3">
