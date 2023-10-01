@@ -1,4 +1,4 @@
-<div class="max-w-[1248px] m-auto">
+<div class="max-w-[1280px] m-auto">
   <space-intro star-chain-address="<%= starchain_address %>"></space-intro>
   <% if Space.count == 0 %>
     <div class="flex flex-col">
@@ -33,13 +33,15 @@
       </div>
       <div>
         <% Space.all.each do |space| %>
-          <div class="mt-4 w-80 rounded bg-gray-50 p-3">
-            <h3 class="h-12"><%= space.title %></h3>
-            <p class="h-28">
-              <%= space.desc %>
-              <a class="text-purple-600"><%= space.site_link %>
-            </p>
-          </div>
+          <space-card title='<%= space.title %>'
+                      desc='<%= space.desc %>'
+                      author='<%= space.author %>'
+                      created-at='<%= space.created_at.strftime('%Y-%m-%d %H:%M:%S') %>'
+                      cover-image='<%= space.cover_image_url || asset_path('default_cover_image.png') %>'
+                      tags='<%= space.tags.to_json %>'
+                      status='<%= space.status %>'
+                      >
+          </space-card>
         <% end %>
       </div>
     </div>

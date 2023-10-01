@@ -1,5 +1,5 @@
 <template>
-  <div class="flex text-[#303133] justify-between items-center border-b border-gray-100 max-w-[1248px] m-auto">
+  <div class="flex text-[#303133] justify-between items-center border-b border-gray-100 max-w-[1280px] m-auto">
     <div class="flex">
       <div class="py-2 mr-[100px] sm:mr-[30px]">
         <img :src="logo" height=32 width=99 alt="OpenCSG Logo" />

@@ -25,4 +25,8 @@ class Space < ApplicationRecord
       nil
     end
   end
+
+  def author
+    user.name
+  end
 end
