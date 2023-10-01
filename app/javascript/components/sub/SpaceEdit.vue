@@ -7,16 +7,16 @@
 
   <el-dialog
     v-model="dialogVisible"
-    title="Tips"
+    :title="title"
     width="30%"
     :before-close="handleClose"
   >
     <span>This is a message</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false">
-          Confirm
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="dialogVisible = false" class="bg-[#409EFF]">
+          确定
         </el-button>
       </span>
     </template>
@@ -27,10 +27,14 @@
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
+defineProps({
+  title: String
+})
+
 const dialogVisible = ref(false)
 
 const handleClose = (done: () => void) => {
-  ElMessageBox.confirm('Are you sure to close this dialog?')
+  ElMessageBox.confirm('确认关闭这个弹窗吗?')
     .then(() => {
       done()
     })

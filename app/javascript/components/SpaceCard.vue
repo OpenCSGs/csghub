@@ -11,7 +11,7 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit />
+      <SpaceEdit :title="title" />
     </div>
     <div class="mt-2">
       <img :src="coverImage" />
