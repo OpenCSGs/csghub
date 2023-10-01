@@ -10,11 +10,13 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import Navbar from "./components/TheNavbar.vue"
 import SpaceIntro from "./components/SpaceIntro.vue"
+import SpaceCard from "./components/SpaceCard.vue"
 
 const app = createApp({
   components: {
     Navbar,
-    SpaceIntro
+    SpaceIntro,
+    SpaceCard
   }
 }).use(ElementPlus);
 

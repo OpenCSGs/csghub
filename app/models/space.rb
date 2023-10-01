@@ -8,7 +8,25 @@ class Space < ApplicationRecord
   validates_uniqueness_of :space_starchain_id
 
   enum status: [:running,
-                :stopped]
+                :stopped], _default: "running"
+
+  enum space_type: [:private_s,
+                    :public_s], _default: "private_s"
 
   belongs_to :user, dependent: :destroy
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
+  def cover_image_url
+    if cover_image
+      # retrive the image temp url from aliyun
+      AliyunOss.instance.download cover_image
+    else
+      nil
+    end
+  end
+
+  def author
+    user.name
+  end
 end

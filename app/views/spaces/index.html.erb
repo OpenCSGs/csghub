@@ -17,16 +17,31 @@
     </div>
   <% else %>
     <div>
-      <p>您可以去 StarChain 构建新的应用：<button onclick="window.open('<%= starchain_address %>', '_blank')" class="group relative h-8 w-28 overflow-hidden rounded-2xl bg-green-500 text-md text-white"> StarChain </button></p>
+      <div class="flex justify-between">
+        <h3 class="pl-4 font-semibold text-xl">Space 列表</h3>
+        <el-dropdown>
+          <el-button type="default">
+            <span>全部应用</span>
+            <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>我的应用</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
       <div>
         <% Space.all.each do |space| %>
-          <div class="mt-4 w-80 rounded bg-gray-50 p-3">
-            <h3 class="h-12"><%= space.title %></h3>
-            <p class="h-28">
-              <%= space.desc %>
-              <a class="text-purple-600"><%= space.site_link %>
-            </p>
-          </div>
+          <space-card title='<%= space.title %>'
+                      desc='<%= space.desc %>'
+                      author='<%= space.author %>'
+                      created-at='<%= space.created_at.strftime('%Y-%m-%d %H:%M:%S') %>'
+                      cover-image='<%= space.cover_image_url || asset_path('default_cover_image.png') %>'
+                      tags='<%= space.tags.to_json %>'
+                      status='<%= space.status %>'
+                      >
+          </space-card>
         <% end %>
       </div>
     </div>

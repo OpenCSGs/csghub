@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_20_005010) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_30_092558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,11 +20,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_005010) do
     t.string "title"
     t.text "desc"
     t.string "site_link"
-    t.string "space_type"
+    t.integer "space_type"
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cover_image"
     t.index ["user_id"], name: "index_spaces_on_user_id"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.bigint "space_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["space_id"], name: "index_taggings_on_space_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,4 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_005010) do
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
+  add_foreign_key "taggings", "spaces"
+  add_foreign_key "taggings", "tags"
 end
