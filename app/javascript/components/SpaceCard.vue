@@ -5,11 +5,14 @@
       <SpaceRunning v-if="status === 'running'" />
       <SpaceStopped v-else />
     </div>
-    <p class="text-sm leading-snug text-[#606266]">
-      <span class="mr-2">{{author}}</span>
-      <span class="mr-2">·</span>
-      <span>{{createdAt}}</span>
-    </p>
+    <div class="text-sm leading-snug text-[#606266] flex justify-between">
+      <p>
+        <span class="mr-2">{{author}}</span>
+        <span class="mr-2">·</span>
+        <span>{{createdAt}}</span>
+      </p>
+      <SpaceEdit />
+    </div>
     <div class="mt-2">
       <img :src="coverImage" />
     </div>
@@ -37,6 +40,7 @@
 <script>
 import SpaceRunning from './sub/SpaceRunning.vue'
 import SpaceStopped from './sub/SpaceStopped.vue'
+import SpaceEdit from './sub/SpaceEdit.vue'
 
 export default {
   props: {
@@ -50,7 +54,8 @@ export default {
   },
   components: {
     SpaceRunning,
-    SpaceStopped
+    SpaceStopped,
+    SpaceEdit
   },
   mounted() {
     console.log(this.tags)

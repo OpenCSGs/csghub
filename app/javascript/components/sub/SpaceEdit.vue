@@ -1,0 +1,46 @@
+<template>
+  <el-button text @click="dialogVisible = true" class="px-2 py-0 h-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M13 7.99999C13 7.85399 13.0468 7.73416 13.1405 7.64049C13.2342 7.54682 13.354 7.49999 13.5 7.49999C13.646 7.49999 13.7658 7.54682 13.8595 7.64049C13.9532 7.73416 14 7.85399 14 7.99999V13.5C14 13.646 13.9532 13.7658 13.8595 13.8595C13.7658 13.9532 13.646 14 13.5 14H2.5C2.354 14 2.23417 13.9532 2.1405 13.8595C2.04683 13.7658 2 13.646 2 13.5V2.49999C2 2.35399 2.04683 2.23416 2.1405 2.14049C2.23417 2.04682 2.354 1.99999 2.5 1.99999H8C8.146 1.99999 8.26583 2.04682 8.3595 2.14049C8.45317 2.23416 8.5 2.35399 8.5 2.49999C8.5 2.64599 8.45317 2.76582 8.3595 2.85949C8.26583 2.95315 8.146 2.99999 8 2.99999H3V13H13V7.99999ZM7.344 8.65649L8.172 8.54699L13.2345 3.46899C13.3698 3.33366 13.4142 3.17482 13.3675 2.99249C13.3208 2.81016 13.2037 2.69299 13.016 2.64099C12.8283 2.58899 12.6668 2.63066 12.5315 2.76599L7.4535 7.82849L7.344 8.65649ZM13.9375 2.06249C14.2292 2.35415 14.375 2.70566 14.375 3.11699C14.375 3.52832 14.2292 3.88515 13.9375 4.18749L8.7655 9.35949C8.68217 9.44282 8.58317 9.49499 8.4685 9.51599L6.828 9.75049C6.66133 9.77149 6.52067 9.72199 6.406 9.60199C6.29133 9.48199 6.2445 9.33882 6.2655 9.17249L6.5 7.53199C6.51033 7.41732 6.55717 7.32349 6.6405 7.25049L11.828 2.06299C12.13 1.77132 12.4815 1.62549 12.8825 1.62549C13.2835 1.62549 13.635 1.77132 13.937 2.06299L13.9375 2.06249Z" fill="#606266"/>
+    </svg>
+  </el-button>
+
+  <el-dialog
+    v-model="dialogVisible"
+    title="Tips"
+    width="30%"
+    :before-close="handleClose"
+  >
+    <span>This is a message</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogVisible = false">
+          Confirm
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+</template>
+
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { ElMessageBox } from 'element-plus'
+
+const dialogVisible = ref(false)
+
+const handleClose = (done: () => void) => {
+  ElMessageBox.confirm('Are you sure to close this dialog?')
+    .then(() => {
+      done()
+    })
+    .catch(() => {
+      // catch error
+    })
+}
+</script>
+<style scoped>
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+</style>
