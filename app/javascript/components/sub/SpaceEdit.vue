@@ -9,7 +9,6 @@
     v-model="dialogVisible"
     :title="title"
     width="30%"
-    <!-- :before-close="handleCloseModal" -->
   >
 
     <h3 class="mb-2">Tags</h3>
@@ -41,8 +40,8 @@
     <div class="mt-2">
       <p>点击选择系统默认 tag:</p>
       <div class="flex gap-2 my-2 flex-wrap">
-        <p v-for="tag in defaultTags" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
-          <span :class="[`text-[${tag.color}]`]"> {{ tag.name }}</span>
+        <p v-for="tag in globalDefaultTags" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
+          <span :class="[`text-[${tag.color}]`]" class="cursor-pointer" @click="selectTag"> {{ tag.name }}</span>
         </p>
       </div>
     </div>
@@ -60,7 +59,7 @@
 
 <script lang="ts" setup>
   import { nextTick, ref, inject } from 'vue'
-  import { ElInput, ElMessageBox } from 'element-plus'
+  import { ElInput, ElMessage } from 'element-plus'
 
   const props = defineProps({
     title: String,
@@ -68,25 +67,15 @@
   })
 
   const gloalDefaultTagsString = inject('defaultTags') as string
-  const defaultTags = ref(JSON.parse(gloalDefaultTagsString))
+  const globalDefaultTags = ref(JSON.parse(gloalDefaultTagsString))
 
-  const tagNameArray = JSON.parse(props.tags).map(tag => tag.name)
+  const spaceTagsNameArray = JSON.parse(props.tags).map(tag => tag.name)
 
   const dialogVisible = ref(false)
   const inputValue = ref('')
-  const dynamicTags = ref(tagNameArray)
+  const dynamicTags = ref(spaceTagsNameArray)
   const inputVisible = ref(false)
   const InputRef = ref<InstanceType<typeof ElInput>>()
-
-  const handleCloseModal = (done: () => void) => {
-    ElMessageBox.confirm('确认关闭这个弹窗吗?')
-      .then(() => {
-        done()
-      })
-      .catch(() => {
-        // catch error
-      })
-  }
 
   const handleClose = (tag: string) => {
     dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
@@ -105,6 +94,18 @@
     }
     inputVisible.value = false
     inputValue.value = ''
+  }
+
+  const selectTag = (event) => {
+    const currentSelectedTag = event.target.innerHTML
+    if (dynamicTags.value.includes(currentSelectedTag)) {
+      ElMessage({
+        message: '当前 Tag 已经添加！',
+        type: 'warning'
+      })
+    } else {
+      dynamicTags.value.push(event.target.innerHTML)
+    }
   }
 </script>
 
