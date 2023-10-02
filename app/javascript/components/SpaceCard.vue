@@ -11,7 +11,7 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit :title="title" />
+      <SpaceEdit :title="title" :tags="tags" />
     </div>
     <div class="mt-2">
       <img :src="coverImage" />
@@ -49,16 +49,13 @@ export default {
     author: String,
     createdAt: String,
     coverImage: String,
-    tags: Object,
+    tags: String,
     status: String
   },
   components: {
     SpaceRunning,
     SpaceStopped,
     SpaceEdit
-  },
-  mounted() {
-    console.log(this.tags)
   }
 }
 </script>

@@ -9,9 +9,44 @@
     v-model="dialogVisible"
     :title="title"
     width="30%"
-    :before-close="handleClose"
+    <!-- :before-close="handleCloseModal" -->
   >
-    <span>This is a message</span>
+
+    <h3 class="mb-2">Tags</h3>
+    <el-tag
+      v-for="tag in dynamicTags"
+      :key="tag"
+      class="mx-1"
+      closable
+      :disable-transitions="false"
+      @close="handleClose(tag)"
+    >
+      {{ tag }}
+    </el-tag>
+
+    <el-input
+      v-if="inputVisible"
+      ref="InputRef"
+      v-model="inputValue"
+      class="ml-1 w-20"
+      size="small"
+      @keyup.enter="handleInputConfirm"
+      @blur="handleInputConfirm"
+    />
+
+    <el-button v-else class="button-new-tag ml-1 mt-1" size="small" @click="showInput">
+      + New Tag
+    </el-button>
+
+    <div class="mt-2">
+      <p>点击选择系统默认 tag:</p>
+      <div class="flex gap-2 my-2 flex-wrap">
+        <p v-for="tag in defaultTags" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
+          <span :class="[`text-[${tag.color}]`]"> {{ tag.name }}</span>
+        </p>
+      </div>
+    </div>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -24,27 +59,57 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+  import { nextTick, ref, inject } from 'vue'
+  import { ElInput, ElMessageBox } from 'element-plus'
 
-defineProps({
-  title: String
-})
+  const props = defineProps({
+    title: String,
+    tags: String
+  })
 
-const dialogVisible = ref(false)
+  const gloalDefaultTagsString = inject('defaultTags') as string
+  const defaultTags = ref(JSON.parse(gloalDefaultTagsString))
 
-const handleClose = (done: () => void) => {
-  ElMessageBox.confirm('确认关闭这个弹窗吗?')
-    .then(() => {
-      done()
+  const tagNameArray = JSON.parse(props.tags).map(tag => tag.name)
+
+  const dialogVisible = ref(false)
+  const inputValue = ref('')
+  const dynamicTags = ref(tagNameArray)
+  const inputVisible = ref(false)
+  const InputRef = ref<InstanceType<typeof ElInput>>()
+
+  const handleCloseModal = (done: () => void) => {
+    ElMessageBox.confirm('确认关闭这个弹窗吗?')
+      .then(() => {
+        done()
+      })
+      .catch(() => {
+        // catch error
+      })
+  }
+
+  const handleClose = (tag: string) => {
+    dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
+  }
+
+  const showInput = () => {
+    inputVisible.value = true
+    nextTick(() => {
+      InputRef.value!.input!.focus()
     })
-    .catch(() => {
-      // catch error
-    })
-}
+  }
+
+  const handleInputConfirm = () => {
+    if (inputValue.value) {
+      dynamicTags.value.push(inputValue.value)
+    }
+    inputVisible.value = false
+    inputValue.value = ''
+  }
 </script>
+
 <style scoped>
-.dialog-footer button:first-child {
-  margin-right: 10px;
-}
+  .dialog-footer button:first-child {
+    margin-right: 10px; 
+  }
 </style>
