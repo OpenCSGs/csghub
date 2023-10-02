@@ -17,6 +17,9 @@ const app = createApp({
     Navbar,
     SpaceIntro,
     SpaceCard
+  },
+  provide:{
+    defaultTags: DefaultTags
   }
 }).use(ElementPlus);
 

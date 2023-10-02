@@ -15,3 +15,7 @@ body {
     outline: none !important;
   }
 }
+
+.el-dialog__body {
+  padding: 10px 20px !important;
+}
