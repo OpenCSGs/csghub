@@ -46,6 +46,22 @@
       </div>
     </div>
 
+    <h3 class="mb-2">图片</h3>
+    <input ref="fileInput" type="file" class="hidden" @change="previewImage" />
+    <div class="relative">
+      <img v-if="imageUrl" :src="imageUrl" class="rounded w-full h-[140px] object-cover" />
+      <span
+        v-if="imageDeleteDisabled"
+        @click="handleRemove"
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+      >
+        <el-icon size="28"><Delete /></el-icon>
+      </span>
+    </div>
+    <div v-if="!imageUploadDisabled" @click="uploadCoverImage" class="w-full border-dotted border border-[#DCDFE6] bg-[#FAFAFA] rounded h-[140px] flex items-center justify-center cursor-pointer">
+      <el-icon size="28"><Plus /></el-icon>
+    </div>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -106,6 +122,25 @@
     } else {
       dynamicTags.value.push(event.target.innerHTML)
     }
+  }
+
+  const fileInput = ref(null)
+  const imageUrl = ref('')
+  const imageDeleteDisabled = ref(false)
+  const imageUploadDisabled = ref(false)
+  const uploadCoverImage = () => {
+    fileInput.value.click()
+  }
+  const previewImage = () => {
+    imageUrl.value = URL.createObjectURL(fileInput.value.files[0])
+    imageDeleteDisabled.value = true
+    imageUploadDisabled.value = true
+  }
+  const handleRemove = () => {
+    fileInput.value.value = null
+    imageUrl.value = ''
+    imageDeleteDisabled.value = false
+    imageUploadDisabled.value = false
   }
 </script>
 
