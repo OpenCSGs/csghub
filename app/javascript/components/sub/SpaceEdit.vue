@@ -65,7 +65,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible = false" class="bg-[#409EFF]">
+        <el-button type="primary" @click="submitTheForm" class="bg-[#409EFF]">
           确定
         </el-button>
       </span>
@@ -79,7 +79,8 @@
 
   const props = defineProps({
     title: String,
-    tags: String
+    tags: String,
+    starChainId: String
   })
 
   const gloalDefaultTagsString = inject('defaultTags') as string
@@ -141,6 +142,24 @@
     imageUrl.value = ''
     imageDeleteDisabled.value = false
     imageUploadDisabled.value = false
+  }
+  const submitTheForm = () => {
+    const res = updateSpace()
+    dialogVisible.value = false
+  }
+
+  async function updateSpace() {
+    const spaceUpdateEndpoint = `spaces/${props.starChainId}`;
+    const formData = new FormData()
+    formData.append("tags", dynamicTags.value);
+    formData.append("cover_image", fileInput.value.files[0]);
+    const options = {
+      method: 'PUT',
+      body: formData 
+    };
+
+    const response = await fetch(spaceUpdateEndpoint, options);
+    return await response.json();
   }
 </script>
 

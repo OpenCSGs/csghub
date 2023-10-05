@@ -40,6 +40,7 @@
                       cover-image='<%= space.cover_image_url || asset_path('default_cover_image.png') %>'
                       tags='<%= space.tags.to_json %>'
                       status='<%= space.status %>'
+                      star-chain-id='<%= space.space_starchain_id %>'
                       >
           </space-card>
         <% end %>

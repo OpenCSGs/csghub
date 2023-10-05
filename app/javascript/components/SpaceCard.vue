@@ -11,7 +11,7 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit :title="title" :tags="tags" />
+      <SpaceEdit :title="title" :tags="tags" :star-chain-id="starChainId" />
     </div>
     <div class="mt-2">
       <img :src="coverImage" />
@@ -50,7 +50,8 @@ export default {
     createdAt: String,
     coverImage: String,
     tags: String,
-    status: String
+    status: String,
+    starChainId: String
   },
   components: {
     SpaceRunning,
