@@ -19,3 +19,22 @@ body {
 .el-dialog__body {
   padding: 10px 20px !important;
 }
+
+.el-upload-list--picture-card {
+  width: 100% !important;
+}
+
+.el-upload--picture-card {
+  width: 100% !important;
+}
+
+.el-upload-list__item {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.el-upload-list__item > div {
+    width: 100% !important;
+}
+.el-upload-list--picture-card .el-upload-list__item-thumbnail {
+  object-fit: cover !important;
+}
