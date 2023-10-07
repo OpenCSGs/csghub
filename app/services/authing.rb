@@ -36,19 +36,11 @@ class Authing
   private
 
   def access_key
-    if Rails.env.development?
-      Rails.application.credentials.authing_api.development.access_key
-    else
-      Rails.application.credentials.authing_api.production.access_key
-    end
+    Rails.application.credentials.authing_api.production.access_key
   end
 
   def access_secret
-    if Rails.env.development?
-      Rails.application.credentials.authing_api.development.access_secret
-    else
-      Rails.application.credentials.authing_api.production.access_secret
-    end
+    Rails.application.credentials.authing_api.production.access_secret
   end
 
   def authing_connection
