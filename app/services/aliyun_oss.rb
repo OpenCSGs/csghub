@@ -25,7 +25,7 @@ class AliyunOss
                  else
                    random_file_name
                  end
-    if bucket.put_object(object_key, file: file)
+    if bucket.put_object(object_key, file: file.path)
       object_key
     else
       ''
