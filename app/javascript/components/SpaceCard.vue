@@ -11,7 +11,12 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit :title="title" :tags="tags" :star-chain-id="starChainId" :raw-image-url="coverImageUrl" @retriveSpaceCard="retriveSpaceCard"/>
+      <SpaceEdit :title="title" 
+                 :tags="tags" 
+                 :star-chain-id="starChainId" 
+                 :raw-image-url="coverImageUrl" 
+                 @retriveSpaceCard="retriveSpaceCard"
+      />
     </div>
     <div class="mt-2">
       <img :src="coverImageUrl" class="h-[147px] w-full object-cover rounded cursor-pointer" />

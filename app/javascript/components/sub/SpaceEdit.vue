@@ -9,6 +9,7 @@
     v-model="dialogVisible"
     :title="title"
     width="30%"
+    @close="closeEditDialog"
   >
 
     <h3 class="mb-2">Tags</h3>
@@ -96,6 +97,10 @@
   const dynamicTags = ref(spaceTagsNameArray)
   const inputVisible = ref(false)
   const InputRef = ref<InstanceType<typeof ElInput>>()
+
+  const closeEditDialog = () => {
+    dialogVisible.value = false
+  }
 
   const handleClose = (tag: string) => {
     dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
