@@ -10,6 +10,7 @@
     :title="title"
     width="30%"
     @close="closeEditDialog"
+    class="max-w-[438px] w-[80%]"
   >
 
     <h3 class="mb-2 font-[500]">Tags</h3>
