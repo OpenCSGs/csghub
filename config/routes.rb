@@ -9,16 +9,14 @@ Rails.application.routes.draw do
 
   # api
   namespace :api do
-    namespace :starchain do
-      resources :spaces, only: [:create, :destroy, :update]
-    end
+    resources :spaces, only: [:create, :destroy, :update, :show]
   end
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
     root "spaces#index"
 
-    resources :spaces, only: ['index', 'show']
+    resources :spaces, only: ['index', 'show', 'update']
 
     get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
