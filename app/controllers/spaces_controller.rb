@@ -9,7 +9,6 @@ class SpacesController < ApplicationController
   end
 
   def update
-    debugger
     new_tags = []
     update_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name)
@@ -19,10 +18,16 @@ class SpacesController < ApplicationController
       new_tags << tag
     end
     space.tags = new_tags
-    image_url_code = AliyunOss.instance.upload 'space-cover', update_params[:cover_image]
-    space.cover_image = image_url_code
+    if update_params[:cover_image].present?
+      image_url_code = AliyunOss.instance.upload 'space-cover', update_params[:cover_image]
+      space.cover_image = image_url_code
+    end
     if space.save
-      render json: {message: 'Space Saved'}
+      render json: {
+        message: 'Space Saved',
+        tags: space.tags.to_json,
+        cover_image: space.cover_image_url
+      }
     else
       render json: {message: 'Failed to Save'}, status: 500
     end
@@ -31,11 +36,11 @@ class SpacesController < ApplicationController
   private
 
   def space
-    @space = Space.find_by!(space_starchain_id: params[:id])
+    @space ||= Space.find_by!(space_starchain_id: params[:id])
   end
 
   def update_params
-    params.permit(:tags, :cover_image)
+    params.permit(:id, :tags, :cover_image)
   end
 
   def random_color
