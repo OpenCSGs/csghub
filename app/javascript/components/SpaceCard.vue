@@ -1,7 +1,10 @@
 <template>
   <div class="mt-4 h-[311px] w-[416px] rounded bg-gray-50 p-4">
     <div class="flex justify-between items-center mb-1">
-      <h3 class="text-[#303133] font-semibold leading-6">{{ title }}</h3>
+      <div class="flex items-center">
+        <h3 class="max-w-[150px] text-[#303133] font-semibold leading-6 truncate mr-[15px]">{{ title }}</h3>
+        <span v-if="spaceType === 'private'" class="h-[16px] w-[50px] flex items-center justify-center rounded-[100px] bg-[#CDD0D6] text-[#606266] text-[12px]">{{ spaceType }}</span>
+      </div>
       <SpaceRunning v-if="status === 'running'" />
       <SpaceStopped v-else />
     </div>
@@ -58,7 +61,8 @@ export default {
     coverImage: String,
     tags: String,
     status: String,
-    starChainId: String
+    starChainId: String,
+    spaceType: String
   },
 
   data() {
@@ -90,8 +94,12 @@ export default {
       //  console.log(data.cover_image)
       //  this.coverImageUrl = data.cover_image
       //})
-      this.spaceTags = data.tags
-      this.coverImageUrl = data.cover_image
+      if (data.tags != undefined) {
+        this.spaceTags = data.tags
+      }
+      if (data.cover_image != undefined) {
+        this.coverImageUrl = data.cover_image
+      }
     }
   }
 }
