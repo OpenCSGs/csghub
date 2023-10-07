@@ -9,9 +9,7 @@ Rails.application.routes.draw do
 
   # api
   namespace :api do
-    namespace :starchain do
-      resources :spaces, only: [:create, :destroy, :update]
-    end
+    resources :spaces, only: [:create, :destroy, :update, :show]
   end
 
   # application
