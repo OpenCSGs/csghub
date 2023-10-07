@@ -47,7 +47,13 @@
       </div>
     </div>
 
-    <h3 class="mb-2">图片</h3>
+    <h3 class="mb-2 mt-4">Space Type</h3>
+    <el-radio-group v-model="radio">
+      <el-radio :label="'private'">private</el-radio>
+      <el-radio :label="'public'">public</el-radio>
+    </el-radio-group>
+
+    <h3 class="mb-2 mt-4">图片</h3>
     <input ref="fileInput" type="file" class="hidden" @change="previewImage" />
     <div class="relative">
       <img v-if="imageUrl" :src="imageUrl" class="rounded w-full h-[140px] object-cover" />
@@ -84,7 +90,8 @@
     title: String,
     tags: String,
     starChainId: String,
-    rawImageUrl: String
+    rawImageUrl: String,
+    spaceType: String
   })
 
   const gloalDefaultTagsString = inject('defaultTags') as string
@@ -133,6 +140,8 @@
     }
   }
 
+  const radio = ref(props.spaceType)
+
   const fileInput = ref(null)
   const imageUrl = ref(props.rawImageUrl)
   const imageDeleteEnable = ref(true)
@@ -166,6 +175,7 @@
     if ( file != undefined) {
       formData.append("cover_image", file);
     }
+    formData.append("space_type", `${radio.value}_s`)
     const options = {
       method: 'PUT',
       body: formData 

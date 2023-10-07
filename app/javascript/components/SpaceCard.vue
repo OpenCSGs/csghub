@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-1">
       <div class="flex items-center">
         <h3 class="max-w-[150px] text-[#303133] font-semibold leading-6 truncate mr-[15px]">{{ title }}</h3>
-        <span v-if="spaceType === 'private'" class="h-[16px] w-[50px] flex items-center justify-center rounded-[100px] bg-[#CDD0D6] text-[#606266] text-[12px]">{{ spaceType }}</span>
+        <span v-if="spaceTypes === 'private'" class="h-[16px] w-[50px] flex items-center justify-center rounded-[100px] bg-[#CDD0D6] text-[#606266] text-[12px]">{{ spaceTypes }}</span>
       </div>
       <SpaceRunning v-if="status === 'running'" />
       <SpaceStopped v-else />
@@ -18,6 +18,7 @@
                  :tags="tags" 
                  :star-chain-id="starChainId" 
                  :raw-image-url="coverImageUrl" 
+                 :space-type="spaceType"
                  @retriveSpaceCard="retriveSpaceCard"
       />
     </div>
@@ -69,7 +70,8 @@ export default {
     return { 
       cookies: useCookies().cookies,
       coverImageUrl: this.coverImage,
-      spaceTags: this.tags
+      spaceTags: this.tags,
+      spaceTypes: this.spaceType
     };
   },
 
@@ -99,6 +101,9 @@ export default {
       }
       if (data.cover_image != undefined) {
         this.coverImageUrl = data.cover_image
+      }
+      if (this.spaceTypes != data.space_type) {
+        this.spaceTypes = data.space_type
       }
     }
   }
