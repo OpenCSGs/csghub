@@ -10,20 +10,16 @@ module ApplicationHelper
   def authing_domain
     if Rails.env.production?
       Rails.application.credentials.authing.production.authing_domain
-    elsif Rails.env.staging?
-      Rails.application.credentials.authing.staging.authing_domain
     else
-      Rails.application.credentials.authing.development.authing_domain
+      Rails.application.credentials.authing.staging.authing_domain
     end
   end
 
   def authing_app_id
     if Rails.env.production?
       Rails.application.credentials.authing.production.authing_app_id
-    elsif Rails.env.staging?
-      Rails.application.credentials.authing.staging.authing_app_id
     else
-      Rails.application.credentials.authing.development.authing_app_id
+      Rails.application.credentials.authing.staging.authing_app_id
     end
   end
 
