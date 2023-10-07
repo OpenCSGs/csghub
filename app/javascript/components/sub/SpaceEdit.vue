@@ -51,14 +51,14 @@
     <div class="relative">
       <img v-if="imageUrl" :src="imageUrl" class="rounded w-full h-[140px] object-cover" />
       <span
-        v-if="imageDeleteDisabled"
+        v-if="imageDeleteEnable"
         @click="handleRemove"
-        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer h-[38px] w-[38px] bg-white opacity-80 rounded flex items-center justify-center"
       >
         <el-icon size="28"><Delete /></el-icon>
       </span>
     </div>
-    <div v-if="!imageUploadDisabled" @click="uploadCoverImage" class="w-full border-dotted border border-[#DCDFE6] bg-[#FAFAFA] rounded h-[140px] flex items-center justify-center cursor-pointer">
+    <div v-if="imageUploadEnable" @click="uploadCoverImage" class="w-full border-dotted border border-[#DCDFE6] bg-[#FAFAFA] rounded h-[140px] flex items-center justify-center cursor-pointer">
       <el-icon size="28"><Plus /></el-icon>
     </div>
 
@@ -74,13 +74,16 @@
 </template>
 
 <script lang="ts" setup>
-  import { nextTick, ref, inject } from 'vue'
+  import { nextTick, ref, inject, onMounted } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
+
+  const emit = defineEmits(['retriveSpaceCard'])
 
   const props = defineProps({
     title: String,
     tags: String,
-    starChainId: String
+    starChainId: String,
+    rawImageUrl: String
   })
 
   const gloalDefaultTagsString = inject('defaultTags') as string
@@ -126,41 +129,50 @@
   }
 
   const fileInput = ref(null)
-  const imageUrl = ref('')
-  const imageDeleteDisabled = ref(false)
-  const imageUploadDisabled = ref(false)
+  const imageUrl = ref(props.rawImageUrl)
+  const imageDeleteEnable = ref(true)
+  const imageUploadEnable = ref(false)
   const uploadCoverImage = () => {
     fileInput.value.click()
   }
   const previewImage = () => {
     imageUrl.value = URL.createObjectURL(fileInput.value.files[0])
-    imageDeleteDisabled.value = true
-    imageUploadDisabled.value = true
+    imageDeleteEnable.value = true
+    imageUploadEnable.value = false
   }
   const handleRemove = () => {
     fileInput.value.value = null
     imageUrl.value = ''
-    imageDeleteDisabled.value = false
-    imageUploadDisabled.value = false
+    imageDeleteEnable.value = false
+    imageUploadEnable.value = true
   }
   const submitTheForm = () => {
-    const res = updateSpace()
+    updateSpace().then((data) => {
+      emit('retriveSpaceCard', data)
+    })
     dialogVisible.value = false
   }
 
   async function updateSpace() {
     const spaceUpdateEndpoint = `spaces/${props.starChainId}`;
     const formData = new FormData()
+    const file = fileInput.value.files[0]
     formData.append("tags", dynamicTags.value);
-    formData.append("cover_image", fileInput.value.files[0]);
+    if ( file != undefined) {
+      formData.append("cover_image", file);
+    }
     const options = {
       method: 'PUT',
       body: formData 
     };
 
     const response = await fetch(spaceUpdateEndpoint, options);
-    return await response.json();
+    return response.json();
   }
+  
+  onMounted(() => {
+    console.log('Mounted Edit')
+  })
 </script>
 
 <style scoped>

@@ -11,13 +11,13 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit :title="title" :tags="tags" :star-chain-id="starChainId" />
+      <SpaceEdit :title="title" :tags="tags" :star-chain-id="starChainId" :raw-image-url="coverImageUrl" @retriveSpaceCard="retriveSpaceCard"/>
     </div>
     <div class="mt-2">
-      <img :src="coverImage" />
+      <img :src="coverImageUrl" class="h-[147px] w-full object-cover rounded cursor-pointer" />
     </div>
     <div class="flex gap-2 my-2 flex-wrap">
-      <p v-for="tag in JSON.parse(tags)" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
+      <p v-for="tag in JSON.parse(spaceTags)" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
         <span :class="[`text-[${tag.color}]`]"> {{ tag.name }}</span>
       </p>
     </div>
@@ -37,10 +37,12 @@
     </el-popover>
   </div>
 </template>
+
 <script>
 import SpaceRunning from './sub/SpaceRunning.vue'
 import SpaceStopped from './sub/SpaceStopped.vue'
 import SpaceEdit from './sub/SpaceEdit.vue'
+import { useCookies } from "vue3-cookies";
 
 export default {
   props: {
@@ -53,10 +55,39 @@ export default {
     status: String,
     starChainId: String
   },
+
+  data() {
+    return { 
+      cookies: useCookies().cookies,
+      coverImageUrl: this.coverImage,
+      spaceTags: this.tags
+    };
+  },
+
   components: {
     SpaceRunning,
     SpaceStopped,
     SpaceEdit
+  },
+
+  methods: {
+    async retriveSpaceCard(data) {
+      // leave here for a reference
+      //const spaceUpdateEndpoint = `api/spaces/${this.starChainId}`;
+      //const response = await fetch(spaceUpdateEndpoint, {
+      //  headers: {
+      //    "Authorization": this.cookies.get('idToken'),
+      //  },
+      // });
+      //response.json().then((data) => {
+      //  this.spaceTags = data.tags
+      //  console.log(data.tags)
+      //  console.log(data.cover_image)
+      //  this.coverImageUrl = data.cover_image
+      //})
+      this.spaceTags = data.tags
+      this.coverImageUrl = data.cover_image
+    }
   }
 }
 </script>

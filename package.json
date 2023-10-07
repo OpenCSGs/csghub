@@ -10,6 +10,7 @@
     "esbuild-plugin-vue3": "^0.3.2",
     "less": "^4.2.0",
     "vue": "^3.3.4",
+    "vue3-cookies": "^1.0.6",
     "yarn": "^1.22.19"
   },
   "scripts": {
