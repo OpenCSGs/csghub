@@ -1,6 +1,16 @@
-class Api::Starchain::SpacesController < ApplicationController
+class Api::SpacesController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_current_user
+
+  def show
+    space = Space.find_by(space_starchain_id: params[:id])
+    return render json: {message: "Space not found"}, status: :not_found unless space
+
+    render json: {
+      tags: space.tags.to_json,
+      cover_image: space.cover_image_url
+    }
+  end
 
   def create
     space = Space.new(create_params)
