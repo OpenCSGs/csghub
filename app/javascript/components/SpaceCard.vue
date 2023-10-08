@@ -23,7 +23,7 @@
       />
     </div>
     <div class="mt-2">
-      <img :src="coverImageUrl" class="h-[147px] w-full object-cover rounded cursor-pointer" />
+      <img :src="coverImageUrl" @click="toSpaceDetail" class="h-[147px] w-full object-cover rounded cursor-pointer hover:opacity-50" />
     </div>
     <div class="flex gap-2 my-2 flex-wrap">
       <p v-for="tag in JSON.parse(spaceTags)"
@@ -109,6 +109,9 @@ export default {
       if (this.spaceTypes != data.space_type) {
         this.spaceTypes = data.space_type
       }
+    },
+    toSpaceDetail() {
+      window.location.pathname = `/spaces/${this.starChainId}`
     }
   }
 }
