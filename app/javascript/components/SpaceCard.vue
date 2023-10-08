@@ -34,9 +34,9 @@
       </p>
     </div>
     <el-popover
-      placement="top-start"
       :width="384"
       trigger="hover"
+      :placement="bottom"
       effect="dark"
       :content="desc"
 
