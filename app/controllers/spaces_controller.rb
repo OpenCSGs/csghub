@@ -22,11 +22,13 @@ class SpacesController < ApplicationController
       image_url_code = AliyunOss.instance.upload 'space-cover', update_params[:cover_image]
       space.cover_image = image_url_code
     end
+    space.space_type = update_params[:space_type]
     if space.save
       render json: {
         message: 'Space Saved',
         tags: space.tags.to_json,
-        cover_image: space.cover_image_url
+        cover_image: space.cover_image_url,
+        space_type: space.readable_type
       }
     else
       render json: {message: 'Failed to Save'}, status: 500
@@ -40,7 +42,7 @@ class SpacesController < ApplicationController
   end
 
   def update_params
-    params.permit(:id, :tags, :cover_image)
+    params.permit(:id, :tags, :cover_image, :space_type)
   end
 
   def random_color

@@ -10,9 +10,10 @@
     :title="title"
     width="30%"
     @close="closeEditDialog"
+    class="max-w-[438px] w-[80%]"
   >
 
-    <h3 class="mb-2">Tags</h3>
+    <h3 class="mb-2 font-[500]">Tags</h3>
     <el-tag
       v-for="tag in dynamicTags"
       :key="tag"
@@ -39,7 +40,7 @@
     </el-button>
 
     <div class="mt-2">
-      <p>点击选择系统默认 tag:</p>
+      <p class="text-[12px]">点击选择系统默认 tag:</p>
       <div class="flex gap-2 my-2 flex-wrap">
         <p v-for="tag in globalDefaultTags" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
           <span :class="[`text-[${tag.color}]`]" class="cursor-pointer" @click="selectTag"> {{ tag.name }}</span>
@@ -47,7 +48,13 @@
       </div>
     </div>
 
-    <h3 class="mb-2">图片</h3>
+    <h3 class="mb-2 mt-4 font-[500]">Space Type</h3>
+    <el-radio-group v-model="radio">
+      <el-radio :label="'private'">private</el-radio>
+      <el-radio :label="'public'">public</el-radio>
+    </el-radio-group>
+
+    <h3 class="mb-2 mt-4 font-[500]">图片</h3>
     <input ref="fileInput" type="file" class="hidden" @change="previewImage" />
     <div class="relative">
       <img v-if="imageUrl" :src="imageUrl" class="rounded w-full h-[140px] object-cover" />
@@ -84,7 +91,8 @@
     title: String,
     tags: String,
     starChainId: String,
-    rawImageUrl: String
+    rawImageUrl: String,
+    spaceType: String
   })
 
   const gloalDefaultTagsString = inject('defaultTags') as string
@@ -133,6 +141,8 @@
     }
   }
 
+  const radio = ref(props.spaceType)
+
   const fileInput = ref(null)
   const imageUrl = ref(props.rawImageUrl)
   const imageDeleteEnable = ref(true)
@@ -166,6 +176,7 @@
     if ( file != undefined) {
       formData.append("cover_image", file);
     }
+    formData.append("space_type", `${radio.value}_s`)
     const options = {
       method: 'PUT',
       body: formData 

@@ -29,4 +29,13 @@ class Space < ApplicationRecord
   def author
     user.name
   end
+
+  def readable_type
+    case space_type
+    when 'private_s'
+      'private'
+    when 'public_s'
+      'public'
+    end
+  end
 end

@@ -31,16 +31,17 @@
           </template>
         </el-dropdown>
       </div>
-      <div class="flex justify-between sm:flex-wrap sm:justify-center">
+      <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[10px] justify-items-center">
         <% Space.all.each do |space| %>
           <space-card title='<%= space.title %>'
                       desc='<%= space.desc %>'
-                      author='<%= space.author %>'
+                      author='<%= space.author || 'UserName' %>'
                       created-at='<%= space.created_at.strftime('%Y-%m-%d %H:%M:%S') %>'
                       cover-image='<%= space.cover_image_url || asset_path('default_cover_image.png') %>'
                       tags='<%= space.tags.to_json %>'
                       status='<%= space.status %>'
                       star-chain-id='<%= space.space_starchain_id %>'
+                      space-type='<%= space.readable_type %>'
                       >
           </space-card>
         <% end %>
