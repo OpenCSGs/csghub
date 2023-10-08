@@ -366,6 +366,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails (~> 1.2)
   jwt
+  kaminari
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
