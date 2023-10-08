@@ -12,13 +12,15 @@ import Navbar from "./components/TheNavbar.vue"
 import SpaceIntro from "./components/SpaceIntro.vue"
 import SpaceCard from "./components/SpaceCard.vue"
 import SpaceCards from "./components/SpaceCards.vue"
+import Foot from "./components/TheFooter.vue"
 
 app = createApp({
   components: {
     Navbar,
     SpaceIntro,
     SpaceCard,
-    SpaceCards
+    SpaceCards,
+    Foot
   },
   provide:{
     defaultTags: DefaultTags

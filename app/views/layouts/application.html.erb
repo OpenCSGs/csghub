@@ -33,9 +33,11 @@
       <div id="app" class="min-h-full">
         <%= render partial: 'partials/navbar' %>
         <%= yield %>
+        <%= render partial: 'partials/foot' %>
       </div>
     <% else %>
       <%= yield %>
+      <%= render partial: 'partials/foot' %>
     <% end %>
   </body>
 </html>
