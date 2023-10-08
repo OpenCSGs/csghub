@@ -153,9 +153,6 @@ GEM
     http-form_data (2.3.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
-    importmap-rails (1.2.1)
-      actionpack (>= 6.0.0)
-      railties (>= 6.0.0)
     io-console (0.6.0)
     irb (1.8.1)
       rdoc
@@ -322,10 +319,6 @@ GEM
     thor (1.2.2)
     tilt (2.3.0)
     timeout (0.4.0)
-    turbo-rails (1.4.0)
-      actionpack (>= 6.0.0)
-      activejob (>= 6.0.0)
-      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -362,7 +355,6 @@ DEPENDENCIES
   debug
   dotenv-rails
   faraday
-  importmap-rails
   jbuilder
   jsbundling-rails (~> 1.2)
   jwt
@@ -375,7 +367,6 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   tailwindcss-rails (~> 2.0)
-  turbo-rails
   tzinfo-data
   web-console
   webdrivers
