@@ -28,11 +28,13 @@
     </script>
   </head>
 
-  <body class="min-h-full bg-[#F2F3F5]">
+  <body class="h-full bg-[#F2F3F5]">
     <% if current_user %>
-      <div id="app" class="min-h-full">
-        <%= render partial: 'partials/navbar' %>
-        <%= yield %>
+      <div id="app" class="min-h-full flex flex-col">
+        <div class="grow">
+          <%= render partial: 'partials/navbar' %>
+          <%= yield %>
+        </div>
         <%= render partial: 'partials/foot' %>
       </div>
     <% else %>
