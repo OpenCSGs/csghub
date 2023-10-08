@@ -2,6 +2,11 @@ class Api::SpacesController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_current_user
 
+  def index
+    @spaces = Space.all.order(:title).page(params[:page])
+    render json: {spaces: @spaces.to_json}
+  end
+
   def show
     space = Space.find_by(space_starchain_id: params[:id])
     return render json: {message: "Space not found"}, status: :not_found unless space

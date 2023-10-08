@@ -1,4 +1,6 @@
 class Space < ApplicationRecord
+  paginates_per 6
+
   validates_presence_of :space_starchain_id,
                         :title,
                         :desc,
@@ -37,5 +39,19 @@ class Space < ApplicationRecord
     when 'public_s'
       'public'
     end
+  end
+
+  def as_json options = nil
+    {
+      title: title,
+      desc: desc,
+      author: author || 'UserName',
+      created_at: created_at.strftime('%Y-%m-%d %H:%M:%S'),
+      cover_image: cover_image_url || ActionController::Base.helpers.asset_path('default_cover_image.png'),
+      tags: tags.to_json,
+      status: status,
+      star_chain_id: space_starchain_id,
+      space_type: readable_type
+    }
   end
 end
