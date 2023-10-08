@@ -1,9 +1,9 @@
 <template>
   <div class="flex justify-center items-center flex-col text-[#303133]" style="background: #FFFFFF">
-    <div class="px-64 py-4 flex justify-center items-center max-w-[1280px] border ">
+    <div class="px-64 py-4 flex justify-center items-center max-w-[1280px]">
       <div class="flex justify-between items-center px-4">
         <div class="my-2">
-          <img :src="footLogo" width=103 height=120 alt="OpenCSG Logo"/>
+          <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
         </div>
         <div class="flex flex-none ml-[100px] items-start flex-col gap-y-4">
           <p class="text-base font-semibold">关于我们</p>
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="px-64 py-4 flex justify-center items-center w-[1280px] text-xs font-normal gap-x-1.5 border">
+    <div class="px-64 py-4 flex justify-center items-center text-xs font-normal gap-x-1.5 border-t w-full">
       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
         <g clip-path="url(#clip0_9_14638)">
           <path

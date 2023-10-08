@@ -43,3 +43,8 @@ docker-compose-production.yml
 yarn-error.log
 **/*.icloud
 **/.DS_Store
+/.idea
+
+
+
+
