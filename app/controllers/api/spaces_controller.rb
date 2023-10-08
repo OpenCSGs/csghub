@@ -19,9 +19,19 @@ class Api::SpacesController < ApplicationController
 
   def create
     space = Space.new(create_params)
+    new_tags = []
+    create_params[:tags].split(',').each do |tag_name|
+      tag = Tag.find_by(name: tag_name.strip)
+      unless tag
+        tag = Tag.create(name: tag_name.strip, color: random_color)
+      end
+      new_tags << tag
+    end
+    space.tags = new_tags
     space.user = @current_user
     if space.save
-      render json: {message: "Space created"}
+      render json: { message: "Space created",
+                     space_address: "#{starchain_address}/spaces/#{space.space_starchain_id}" }
     else
       render json: {message: "Failed to create space"}, status: :bad_request
     end
@@ -87,5 +97,13 @@ class Api::SpacesController < ApplicationController
     else
       return render json: {message: "User not found"}, status: :not_found
     end
+  end
+
+  def random_color
+    "##{random_color_hex}"
+  end
+
+  def random_color_hex
+    "%06x" % (rand * 0xffffff)
   end
 end

@@ -30,9 +30,9 @@ module ApplicationHelper
 
   def starchain_address
     if Rails.env.production?
-      "https://starchain.opencsg.com/"
+      "https://starchain.opencsg.com"
     else
-      "https://starchain-stg.opencsg.com/"
+      "https://starchain-stg.opencsg.com"
     end
   end
 
