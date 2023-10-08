@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[10px] justify-items-center min-h-[664px]">
+  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[10px] justify-items-center">
     <SpaceCard v-for="space in JSON.parse(theSpaces)" 
       :key="space.star_chain_id"
       :title="space.title"
