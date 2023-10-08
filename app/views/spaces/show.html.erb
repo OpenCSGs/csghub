@@ -1,1 +1,25 @@
-<iframe src="https://portal-stg.opencsg.com" title="W3Schools Free Online Web Tutorials"></iframe>
+<div class="max-w-[1280px] m-auto">
+  <p class="my-[24px] flex gap-[4px] items-center">
+    <span class="text-[#909399] font-[14px]"> 空间 Space </span>
+    <span class="text-[#909399]">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.07476 9.78613C3.8954 9.68258 3.83395 9.45323 3.9375 9.27387L7.80514 2.57492C7.90869 2.39556 8.13804 2.33411 8.3174 2.43766C8.49676 2.54122 8.55821 2.77056 8.45466 2.94992L4.58702 9.64887C4.48347 9.82823 4.25412 9.88969 4.07476 9.78613Z" fill="#909399"/>
+      </svg>
+     </span>
+    <span class="text-[14px] text-[#303133]"> <%= @space.title %> </span>
+  </p>
+  <div class="p-[24px] bg-white rounded-[8px]">
+    <h3 class="text-[#303133] text-[20px] font-[600] font-semibold leading-[28px] mb-[8px]"><%= @space.title %></h3>
+    <p class="text-[14px] text-[#606266] flex gap-[8px]">
+      <span class="mr-2"><%= @space.author || 'UserName' %></span>
+      <span class="mr-2">·</span>
+      <span><%= @space.created_at.strftime('%Y-%m-%d %H:%M:%S') %></span>
+    </p>
+    <iframe src="<%= @space.site_link %>"
+            title="W3Schools Free Online Web Tutorials"
+            class="w-full h-[646px] rounded-[8px] border border-solid border-gray-300 p-[5px] mt-[24px]">
+    </iframe>
+    <p class="my-[24px] text-[14px] text-[#606266]"><%= @space.desc %></p>
+  </div>
+  <div></div>
+</div>
