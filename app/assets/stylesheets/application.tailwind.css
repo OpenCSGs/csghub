@@ -38,3 +38,6 @@ body {
 .el-upload-list--picture-card .el-upload-list__item-thumbnail {
   object-fit: cover !important;
 }
+img, video {
+  max-width: unset !important;
+}
