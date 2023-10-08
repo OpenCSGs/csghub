@@ -1,5 +1,5 @@
 // rails turbo and stimulus js
-import "@hotwired/turbo-rails"
+//import "@hotwired/turbo-rails"
 import "./controllers"
 
 // Vue config
@@ -11,12 +11,14 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import Navbar from "./components/TheNavbar.vue"
 import SpaceIntro from "./components/SpaceIntro.vue"
 import SpaceCard from "./components/SpaceCard.vue"
+import SpaceCards from "./components/SpaceCards.vue"
 
-const app = createApp({
+app = createApp({
   components: {
     Navbar,
     SpaceIntro,
-    SpaceCard
+    SpaceCard,
+    SpaceCards
   },
   provide:{
     defaultTags: DefaultTags
@@ -27,5 +29,4 @@ const app = createApp({
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-
 app.mount("#app")
