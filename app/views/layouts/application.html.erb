@@ -28,9 +28,9 @@
     </script>
   </head>
 
-  <body class="h-auto">
+  <body class="min-h-full bg-[#F2F3F5]">
     <% if current_user %>
-      <div id="app" class="h-full bg-[#F2F3F5]">
+      <div id="app" class="min-h-full">
         <%= render partial: 'partials/navbar' %>
         <%= yield %>
       </div>

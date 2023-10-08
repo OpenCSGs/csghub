@@ -7,6 +7,7 @@ class SpacesController < ApplicationController
   end
 
   def show
+    @space = space
   end
 
   def update
