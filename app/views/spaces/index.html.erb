@@ -31,8 +31,7 @@
           </template>
         </el-dropdown>
       </div>
-      <space-cards spaces='<%= @spaces.to_json %>'></space-cards>
-      <%= paginate @spaces, outer_window: 3 %>
+      <space-cards total-cards=<%= Space.count %> spaces='<%= @spaces.to_json %>'></space-cards>
     </div>
   <% end %>
 </div>

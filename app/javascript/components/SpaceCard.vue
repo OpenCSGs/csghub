@@ -14,10 +14,10 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit :title="title" 
-                 :tags="tags" 
-                 :star-chain-id="starChainId" 
-                 :raw-image-url="coverImageUrl" 
+      <SpaceEdit :title="title"
+                 :tags="tags"
+                 :star-chain-id="starChainId"
+                 :raw-image-url="coverImageUrl"
                  :space-type="spaceType"
                  @retriveSpaceCard="retriveSpaceCard"
       />
@@ -26,7 +26,10 @@
       <img :src="coverImageUrl" class="h-[147px] w-full object-cover rounded cursor-pointer" />
     </div>
     <div class="flex gap-2 my-2 flex-wrap">
-      <p v-for="tag in JSON.parse(spaceTags)" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
+      <p v-for="tag in JSON.parse(spaceTags)"
+         class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]"
+         :key="tag.name"
+      >
         <span :class="[`text-[${tag.color}]`]"> {{ tag.name }}</span>
       </p>
     </div>
@@ -51,7 +54,6 @@
 import SpaceRunning from './sub/SpaceRunning.vue'
 import SpaceStopped from './sub/SpaceStopped.vue'
 import SpaceEdit from './sub/SpaceEdit.vue'
-import { useCookies } from "vue3-cookies";
 
 export default {
   props: {
@@ -67,8 +69,7 @@ export default {
   },
 
   data() {
-    return { 
-      cookies: useCookies().cookies,
+    return {
       coverImageUrl: this.coverImage,
       spaceTags: this.tags,
       spaceTypes: this.spaceType
@@ -79,6 +80,9 @@ export default {
     SpaceRunning,
     SpaceStopped,
     SpaceEdit
+  },
+
+  mounted() {
   },
 
   methods: {

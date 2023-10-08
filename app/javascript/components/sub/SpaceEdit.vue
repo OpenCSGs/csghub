@@ -179,20 +179,19 @@
     formData.append("space_type", `${radio.value}_s`)
     const options = {
       method: 'PUT',
-      body: formData 
+      body: formData
     };
 
     const response = await fetch(spaceUpdateEndpoint, options);
     return response.json();
   }
-  
+
   onMounted(() => {
-    console.log('Mounted Edit')
   })
 </script>
 
 <style scoped>
   .dialog-footer button:first-child {
-    margin-right: 10px; 
+    margin-right: 10px;
   }
 </style>
