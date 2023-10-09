@@ -70,7 +70,7 @@ class Api::SpacesController < ApplicationController
   private
 
   def create_params
-    params.permit(:space_starchain_id, :title, :desc, :site_link, :space_type)
+    params.permit(:space_starchain_id, :title, :desc, :site_link, :space_type, :tags)
   end
 
   def update_params
