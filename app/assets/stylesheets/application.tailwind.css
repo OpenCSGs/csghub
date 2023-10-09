@@ -41,3 +41,6 @@ body {
 img, video {
   max-width: unset !important;
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
