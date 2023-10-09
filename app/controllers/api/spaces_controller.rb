@@ -18,7 +18,7 @@ class Api::SpacesController < ApplicationController
   end
 
   def create
-    space = Space.new(create_params)
+    space = Space.new(create_params.slice(:space_starchain_id, :title, :desc, :site_link, :space_type))
     new_tags = []
     create_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name.strip)
