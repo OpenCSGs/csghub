@@ -30,7 +30,7 @@
     </div>
 
     <div class="px-64 py-4 flex justify-center items-center text-xs font-normal gap-x-1.5 border-t w-full">
-      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none" class="flex-none grid grid-rows-2">
         <g clip-path="url(#clip0_9_14638)">
           <path
               d="M4.92677 7.8571L7.7286 10.6589L5.32493 13.0626L0.759148 8.49681C0.413879 8.15154 0.413579 7.59184 0.758477 7.2462L6.99128 1H11.7839L4.92677 7.8571Z"
@@ -45,12 +45,18 @@
           </clipPath>
         </defs>
       </svg>
-      <p> 违法和不良信息举报中心</p>
+        <dic class="grid grid-cols-2 lg:grid-cols-1 flex-none auto-cols-auto">
+          <p >违法和不良信</p>
+          <p >息举报中心</p>
+        </dic>
       <p>｜</p>
-      <img :src="emblemLogo" height=16 width=16 alt="OpenCSG Logo"/>
-      <p> 京公网安备11010502047940号</p>
+      <img :src="emblemLogo" height=16 width=16 alt="OpenCSG Logo" class="flex-none"/>
+      <p class="flex-none"> 京公网安备11010502047940号</p>
       <p>｜</p>
-      <p> 京ICP备2021036779号-1</p>
+      <div class="grid grid-cols-2 lg:grid-cols-1 flex-none auto-rows-min">
+      <p> 京ICP备2021</p>
+        <p>036779号-1</p>
+      </div>
     </div>
   </div>
 </template>
