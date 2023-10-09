@@ -33,6 +33,10 @@ class User < ApplicationRecord
     has_role?('admin') || super_user?
   end
 
+  def company_user?
+    has_role?('company_user')
+  end
+
   def display_name
     name || login_identity
   end
