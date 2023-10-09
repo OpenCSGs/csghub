@@ -31,7 +31,7 @@ class Api::SpacesController < ApplicationController
     space.user = @current_user
     if space.save
       render json: { message: "Space created",
-                     space_address: "#{starchain_address}/spaces/#{space.space_starchain_id}" }
+                     space_address: "#{helpers.starchain_address}/spaces/#{space.space_starchain_id}" }
     else
       render json: {message: "Failed to create space"}, status: :bad_request
     end
