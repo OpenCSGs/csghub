@@ -43,13 +43,9 @@
       }
     },
     mounted() {
-      console.log(JSON.parse(this.theSpaces))
-      console.log(this.totalCards)
     },
     methods: {
       async reloadCards() {
-        console.log('hey reload the cards')
-        console.log(this.currentPage)
         const spaceUpdateEndpoint = `api/spaces?page=${this.currentPage}`;
         const response = await fetch(spaceUpdateEndpoint, {
           headers: {
