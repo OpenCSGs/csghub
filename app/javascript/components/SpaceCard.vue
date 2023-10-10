@@ -25,9 +25,9 @@
     <div class="mt-2">
       <img :src="coverImageUrl" @click="toSpaceDetail" class="h-[147px] w-full object-cover rounded cursor-pointer hover:opacity-50" />
     </div>
-    <div class="flex gap-2 my-2 flex-wrap">
+    <div class="flex gap-2 my-2 overflow-x-auto no-scrollbar">
       <p v-for="tag in JSON.parse(spaceTags)"
-         class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]"
+         class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6] mr-2 whitespace-nowrap"
          :key="tag.name"
       >
         <span :class="[`text-[${tag.color}]`]"> {{ tag.name }}</span>
