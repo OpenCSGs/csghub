@@ -1,11 +1,11 @@
 <template>
-  <div class="flex justify-center items-center flex-col text-[#303133]" style="background: #FFFFFF">
-    <div class="px-64 py-4 flex justify-center items-center max-w-[1280px]">
-      <div class="flex px-4 mlg:flex-wrap gap-x-24 mlg:gap-y-4">
+  <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
+    <div class="w-[914px] py-4 flex gap-x-[120px] justify-center items-center">
+      <div class="flex gap-x-[100px]">
         <div class="my-2 justify-center items-center">
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
         </div>
-        <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px] mlg:border-t  mlg:w-full">
+        <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
           <p class="text-base font-semibold">关于我们</p>
           <div class="flex text-sm font-normal items-start flex-col gap-y-2">
             <p>公司介绍</p>
@@ -14,7 +14,9 @@
             <p>加入我们</p>
           </div>
         </div>
-        <div class="flex flex-none  items-start flex-col gap-y-4 mlg:border-t  mlg:w-full">
+      </div>
+      <div class="flex gap-x-[100px]">
+        <div class="flex flex-none  items-start flex-col gap-y-4">
           <p class="text-base font-semibold">联系我们</p>
           <div class="flex text-sm font-normal items-start flex-col gap-y-2 ">
             <p>商务合作：Partner@opencsg.com</p>
@@ -29,9 +31,8 @@
       </div>
     </div>
 
-    <div class="px-64 py-4 flex justify-center items-center text-xs font-normal gap-x-1.5 border-t w-full">
-      <div class="flex flex-wrap">
-        <div class="flex gap-x-1.5 mlg:border">
+    <div class="py-4 flex justify-center items-center text-xs font-normal border-t w-full sm:text-[10px]">
+      <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
           <g clip-path="url(#clip0_9_14638)">
             <path
@@ -43,38 +44,36 @@
           </g>
           <defs>
             <clipPath id="clip0_9_14638">
-              <rect width="16" height="16" fill="white" transform="translate(0.5)"/>
+              <rect class="h-4 w-4" fill="white" transform="translate(0.5)"/>
             </clipPath>
           </defs>
         </svg>
         <p> 违法和不良信息举报中心</p>
-        </div>
-        <div class="flex gap-x-1.5 mlg:border">
+      </div>
+      <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <p class="lg:hidden">｜</p>
-        <img :src="emblemLogo" height=16 width=16 alt="OpenCSG Logo"/>
+        <img :src="emblemLogo" class="h-4 w-4" alt="OpenCSG Logo"/>
         <p> 京公网安备11010502047940号</p>
-        </div>
-        <div class="flex gap-x-1.5 mlg:border">
+      </div>
+      <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <p class="lg:hidden">｜</p>
         <p> 京ICP备2021036779号-1</p>
-        </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    footCode: String,
-    footLogo: String,
-    emblemLogo: String
-  },
-  data() {
-    return {}
-  },
-  mounted() {
+  export default {
+    props: {
+      footCode: String,
+      footLogo: String,
+      emblemLogo: String
+    },
+    data() {
+      return {}
+    },
+    mounted() {
+    }
   }
-}
 </script>
