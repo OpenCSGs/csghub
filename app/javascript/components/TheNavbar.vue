@@ -249,10 +249,11 @@
         </template>
       </el-dropdown>
     </div>
-    <ContactUs
+   
+  </div>
+  <ContactUs
       ref='child'
     />
-  </div>
 </template>
 
 <script>
