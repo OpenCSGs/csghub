@@ -9,39 +9,39 @@
     >
       <form ref="forms" @submit.prevent="sendEmail">
         <input
-          class="formInput"
+          class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
           placeholder="名字"
           name="user_name"
         />
         <input
-          class="formInput"
+          class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
           placeholder="公司 请务必填写工商信息名称!"
           name="user_company"
         />
         <input
-          class="formInput"
+          class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="email"
           placeholder="邮箱'"
           name="user_email"
         />
         <input
-          class="formInput"
+          class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="tel"
           placeholder="手机"
           name="user_tel"
         />
         <input
-          class="formInput"
+          class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
           placeholder="职位"
           name="user_job"
         />
-        <textarea name="message" placeholder="你在寻找什么帮助"></textarea>
+        <textarea name="message" class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0" placeholder="你在寻找什么帮助"></textarea>
         <div class="text-center">
-          <input class="button" type="submit" :value="'提交'" />
-          <div class="closeButton" @click="dialogVisible = false">关闭</div>
+          <input class="w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] mr-20 cursor-pointer" type="submit" :value="'提交'" />
+          <div class="inline-block w-[70px] text-[#606266] bg-white border border-solid border-[#DCDFE6] rounded-[4px] leading-[40px] cursor-pointer" @click="dialogVisible = false">关闭</div>
         </div>
       </form>
     </el-dialog>
@@ -102,60 +102,3 @@ defineExpose({
     showDialog,
 })
 </script>
-<style scoped>
-input {
-  background-color: #FFF;
-  border-radius: 4px;
-  border: 1px solid #DCDFE6;
-  color: #606266;
-  height: 40px;
-  line-height: 40px;
-  outline: 0;
-  padding: 0 15px;
-  width: 100%;
-  margin: 10px 0;
-}
-
-textarea {
-  display: block;
-  resize: vertical;
-  padding: 5px 15px;
-  line-height: 1.5;
-  width: 100%;
-  font-size: inherit;
-  color: #606266;
-  background-color: #FFF;
-  border: 1px solid #DCDFE6;
-  border-radius: 4px;
-  outline: 0;
-}
-.button {
-  color: #FFF;
-  background-color: #409EFF;
-  border-color: #409EFF;
-  width: 70px;
-  margin-right: 20px;
-  cursor: pointer;
-}
-.closeButton {
-  display: inline-block;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  background: #FFF;
-  border: 1px solid #DCDFE6;
-  color: #606266;
-  text-align: center;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  outline: 0;
-  margin: 0;
-  -webkit-transition: .1s;
-  transition: .1s;
-  font-weight: 500;
-  padding: 12px 20px;
-  font-size: 14px;
-  border-radius: 4px;
-}
-
-</style>
