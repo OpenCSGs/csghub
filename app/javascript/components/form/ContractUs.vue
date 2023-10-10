@@ -79,8 +79,7 @@ const sendEmail = () => {
     return;
   }
   closeDialog();
-  emailjs
-    .sendForm(
+  emailjs.sendForm(
       "service_j9efpor",
       "template_latqkpb",
       forms.value,

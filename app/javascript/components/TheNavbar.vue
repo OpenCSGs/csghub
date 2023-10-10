@@ -249,14 +249,14 @@
         </template>
       </el-dropdown>
     </div>
-    <Contract
+    <ContractUs
       ref='child'
     />
   </div>
 </template>
 
 <script>
-import Contract from "./form/Contract.vue";
+import ContractUs from "./form/ContractUs.vue";
 export default {
   props: {
     logout: String,
@@ -269,7 +269,7 @@ export default {
     return {}
   },
   components: {
-    Contract
+    ContractUs
   },
   methods: {
     showDialog() {
