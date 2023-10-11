@@ -119,7 +119,7 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>个人信息</el-dropdown-item>
+            <el-dropdown-item>{{ phone }}</el-dropdown-item>
             <el-dropdown-item divided>
               <a :href="logout" @click="cleanUpAuthing"> Logout </a>
             </el-dropdown-item>
@@ -138,7 +138,8 @@ export default {
     avatar: String,
     starChainUrl: String,
     isCompanyUser: String,
-    companyVerified: String
+    companyVerified: String,
+    phone: String
   },
   data() {
     return { }
