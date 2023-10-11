@@ -23,7 +23,7 @@
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="email"
-          placeholder="邮箱'"
+          placeholder="邮箱"
           name="user_email"
         />
         <input
