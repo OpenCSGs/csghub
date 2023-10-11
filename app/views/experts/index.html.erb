@@ -1,0 +1,38 @@
+<div class="flex justify-center items-center flex-col">
+  <div class="flex justify-center items-center flex-col max-w-[1280px] not-italic gap-y-[16px] px-[266px] my-[60px]">
+    <p class="text-5xl">Hire a OpenCSG Expert</p>
+    <p style="text-align: center;">Find a OpenCSG-endorsed partner to help with your next project. Browse Experts based
+      on what
+      your need and reach out to start a conversation.</p>
+  </div>
+
+  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[10px] justify-items-center">
+    <% @experts.each do |expert| %>
+      <expert-card name=<%= expert["name"] %>
+                     type=<%= expert["type"] %>
+                   tags=<%= expert["tags"] %>
+                     desc=<%= expert["desc"] %>
+                   avatar=<%= asset_path(expert["avatar"]) %>
+        />
+    <% end %>
+
+  </div>
+
+
+</div>
+
+<!--<script>-->
+<!--  export default {-->
+<!--      data() {-->
+<!--          return {-->
+<!--              Experts: JSON.parse(<%#= @experts.to_json %>),-->
+<!--          }-->
+<!--      },-->
+
+<!--      mounted() {-->
+<!--          // 在组件挂载后，将JSON字符串转换为数组-->
+<!--          this.experts = JSON.parse(this.Experts);-->
+<!--      },-->
+<!--  }-->
+
+<!--</script>-->
