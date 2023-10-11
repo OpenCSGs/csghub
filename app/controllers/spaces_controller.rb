@@ -1,9 +1,9 @@
 class SpacesController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: :index
   skip_before_action :verify_authenticity_token
 
   def index
-    @spaces = Space.all.order(:title).page params[:page]
+    @spaces = policy_scope(Space).order(created_at: :desc).page params[:page]
   end
 
   def show
