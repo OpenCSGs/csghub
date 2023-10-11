@@ -69,7 +69,7 @@ export default {
 
   data() {
     return {
-      Tags: this.tags?this.tags.split("，"):''
+      Tags: this.tags?this.tags.split(","):''
     };
   },
 
