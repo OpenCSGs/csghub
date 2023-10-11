@@ -15,7 +15,7 @@ class Space < ApplicationRecord
   enum space_type: [:private_s,
                     :public_s], _default: "private_s"
 
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 

@@ -78,7 +78,7 @@ class Api::SpacesController < ApplicationController
   end
 
   def id_token
-    request.headers["Authorization"]
+    request.headers["Authorization"].to_s.split(' ').last
   end
 
   def user_info
