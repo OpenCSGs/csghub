@@ -1,5 +1,5 @@
 <template>
-  <div v-if="true" class="flex justify-between">
+  <div class="flex justify-between">
     <h3 class="pl-4 font-semibold text-xl">Space 列表</h3>
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
