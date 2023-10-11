@@ -12,7 +12,7 @@
         <li class="px-5 mlg:hidden"> <space></space> </li>
         <li class="px-5 mlg:hidden"> <model></model> </li>
         <li class="px-5 mlg:hidden"> <dataset></dataset> </li>
-        <li v-if="JSON.parse(isLoggedIn.toLowerCase())" class="px-5 mlg:hidden lg:hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
+        <li v-if="isLoggedInBoolean" class="px-5 mlg:hidden lg:hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
         <li class="px-5 mlg:hidden lg:hidden"> <partner></partner> </li>
         <li class="px-5 mlg:hidden lg:hidden xl:hidden"> <expert></expert> </li>
         <li class="px-5 mlg:hidden lg:hidden xl:hidden"> <docs></docs> </li>
@@ -29,14 +29,14 @@
             <el-dropdown-item class="hidden mlg:flex"> <space></space> </el-dropdown-item>
             <el-dropdown-item class="hidden mlg:flex"> <model></model> </el-dropdown-item>
             <el-dropdown-item class="hidden mlg:flex"> <dataset></dataset> </el-dropdown-item>
-            <el-dropdown-item v-if="JSON.parse(isLoggedIn.toLowerCase())" class="hidden lg:flex"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
+            <el-dropdown-item v-if="isLoggedInBoolean" class="hidden lg:flex"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
             <el-dropdown-item class="hidden lg:flex"> <partner></partner> </el-dropdown-item>
             <el-dropdown-item class="hidden xl:flex"> <expert></expert> </el-dropdown-item>
             <el-dropdown-item class="hidden xl:flex"> <docs></docs> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-dropdown v-if="JSON.parse(isLoggedIn.toLowerCase())" class="pl-1">
+      <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
           <el-avatar :size="35" :src="avatar">
           </el-avatar>
@@ -103,7 +103,9 @@ export default {
     isLoggedIn: String
   },
   data() {
-    return {}
+    return {
+      isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase())
+    }
   },
   components: {
     ContactUs,
