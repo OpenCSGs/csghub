@@ -21,6 +21,7 @@ app = createApp({
     SpaceIntro,
     SpaceCard,
     SpaceCards,
+    ExpertCard,
     Foot
   },
   provide:{
