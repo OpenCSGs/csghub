@@ -1,6 +1,22 @@
 <template>
+  <div v-if="true" class="flex justify-between">
+    <h3 class="pl-4 font-semibold text-xl">Space 列表</h3>
+    <el-select v-if="isLoggedInBoolean"
+               v-model="filterValue"
+               @change="reloadCards"
+               class="w-[100px]"
+    >
+      <el-option
+        v-for="item in filterValues"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      />
+    </el-select>
+  </div>
   <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[10px] justify-items-center">
-    <SpaceCard v-for="space in JSON.parse(theSpaces)" 
+    <SpaceCard v-for="space in JSON.parse(theSpaces)"
       :key="space.star_chain_id"
       :title="space.title"
       :desc="space.desc"
@@ -19,7 +35,7 @@
                  :total="Number(totalCards)"
                  :page-size="6"
                  layout="prev, pager, next"
-                 @update:current-page="reloadCards"
+                 @update:current-page="nextPage"
                  class="my-[52px] flex justify-center"
   />
 </template>
@@ -30,7 +46,8 @@
   export default {
     props: {
       spaces: String,
-      totalCards: String
+      totalCards: String,
+      isLoggedIn: String
     },
     components: {
       SpaceCard
@@ -39,13 +56,25 @@
       return {
         cookies: useCookies().cookies,
         theSpaces: this.spaces,
-        currentPage: 1
+        currentPage: 1,
+        isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
+        filterValue: "all",
+        filterValues: [
+          {
+            value: 'all',
+            label: '全部应用'
+          },
+          {
+            value: 'mine',
+            label: '我的应用'
+          }
+        ]
       }
     },
     mounted() {
     },
     methods: {
-      async reloadCards() {
+      async nextPage() {
         const spaceUpdateEndpoint = `api/spaces?page=${this.currentPage}`;
         const response = await fetch(spaceUpdateEndpoint, {
           headers: {
@@ -53,6 +82,23 @@
           },
          });
         response.json().then((data) => {
+          this.theSpaces = data.spaces
+        })
+      },
+      async reloadCards() {
+        console.log('here reload cards')
+        if (this.filterValue === 'mine') {
+          this.cookies.set('mySpaces', true)
+        } else {
+          this.cookies.set('mySpaces', false)
+        }
+        const response = await fetch('api/spaces', {
+          headers: {
+            "Authorization": this.cookies.get('idToken'),
+          },
+         });
+        response.json().then((data) => {
+          this.currentPage = 1
           this.theSpaces = data.spaces
         })
       }
