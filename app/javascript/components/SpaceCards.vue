@@ -86,7 +86,6 @@
         })
       },
       async reloadCards() {
-        console.log('here reload cards')
         if (this.filterValue === 'mine') {
           this.cookies.set('mySpaces', true)
         } else {
