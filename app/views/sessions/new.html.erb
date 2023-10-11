@@ -18,7 +18,7 @@
     color: #1C8B7F;
   }
   .authing-ant-tabs-ink-bar {
-    background: #1C8B7F; 
+    background: #1C8B7F;
   }
 </style>
 
@@ -38,6 +38,7 @@
       document.cookie = `authingUuid=${userInfo.id};domain=opencsg.com;`;
       document.cookie = `idToken=${userInfo.token};domain=opencsg.com;`;
       document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
+      document.cookie = `isCompanyUser=${userInfo.customData.isCompanyUser};`;
       delete userInfo['token']
       document.cookie = `userinfos=${JSON.stringify(userInfo)};domain=opencsg.com;`;
       window.location.href = "/authing/callback"
@@ -53,6 +54,7 @@
       document.cookie = `idToken=${userInfo.token};domain=localhost;`;
       document.cookie = `authingUuid=${userInfo.id};domain=localhost;`;
       document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
+      document.cookie = `isCompanyUser=${userInfo.customData.isCompanyUser};`;
       delete userInfo['token']
       document.cookie = `userinfos=${JSON.stringify(userInfo)};domain=localhost;`;
       window.location.href = "/authing/callback"
