@@ -85,6 +85,7 @@
           <span class="ml-[8px]">企业社区</span>
         </li>
         <li class="px-5 flex items-center">
+          <a href="/experts" class="flex items-center hover:text-[#66CDAA]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -108,6 +109,7 @@
             </defs>
           </svg>
           <span class="ml-[8px]">技术专家</span>
+          </a>
         </li>
       </ul>
       <el-dropdown class="hidden mlg:block px-8">
