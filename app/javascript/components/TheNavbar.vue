@@ -14,9 +14,10 @@
         <li class="px-5 mlg:hidden"> <dataset></dataset> </li>
         <li class="px-5 mlg:hidden lg:hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
         <li class="px-5 mlg:hidden lg:hidden"> <partner></partner> </li>
-        <li class="px-5 mlg:hidden lg:hidden"> <expert></expert> </li>
+        <li class="px-5 mlg:hidden lg:hidden xl:hidden"> <expert></expert> </li>
+        <li class="px-5 mlg:hidden lg:hidden xl:hidden"> <docs></docs> </li>
       </ul>
-      <el-dropdown class="hidden lg:block px-8">
+      <el-dropdown class="hidden xl:block px-8">
         <span class="el-dropdown-link">
           目录
           <el-icon class="el-icon--right">
@@ -30,7 +31,8 @@
             <el-dropdown-item class="hidden mlg:flex"> <dataset></dataset> </el-dropdown-item>
             <el-dropdown-item class="hidden lg:flex"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
             <el-dropdown-item class="hidden lg:flex"> <partner></partner> </el-dropdown-item>
-            <el-dropdown-item class="hidden lg:flex"> <expert></expert> </el-dropdown-item>
+            <el-dropdown-item class="hidden xl:flex"> <expert></expert> </el-dropdown-item>
+            <el-dropdown-item class="hidden xl:flex"> <docs></docs> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -83,6 +85,7 @@ import Dataset from "./sub/navbarItems/dataset.vue";
 import Starchain from "./sub/navbarItems/starchain.vue";
 import Partner from "./sub/navbarItems/partner.vue";
 import Expert from "./sub/navbarItems/expert.vue";
+import Docs from "./sub/navbarItems/docs.vue";
 export default {
   props: {
     logout: String,
@@ -103,7 +106,8 @@ export default {
     Dataset,
     Starchain,
     Partner,
-    Expert
+    Expert,
+    Docs
   },
   methods: {
     showDialog() {
