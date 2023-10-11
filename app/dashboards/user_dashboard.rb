@@ -22,6 +22,7 @@ class UserDashboard < Administrate::BaseDashboard
     roles: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    company_verified: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -71,6 +72,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone
     phone_verified
     roles
+    company_verified
   ].freeze
 
   # COLLECTION_FILTERS

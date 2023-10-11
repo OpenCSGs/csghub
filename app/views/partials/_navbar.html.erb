@@ -1,8 +1,18 @@
 <div class="bg-white">
-  <Navbar logout="<%= logout_address %>"
-          logo="<%= asset_path('opencsg_logo.png') %>"
-          avatar="<%= current_user.avatar %>"
-          star-chain-url="<%= starchain_address %>"
-          is-company-user=<%= current_user.company_user? %>
- />
+  <% if logged_in? %>
+    <Navbar logout="<%= logout_address %>"
+            logo="<%= asset_path('opencsg_logo.png') %>"
+            avatar="<%= current_user.avatar %>"
+            star-chain-url="<%= starchain_address %>"
+            is-company-user=<%= current_user.company_user? %>
+            company-verified=<%= current_user.company_verified %>
+            phone=<%= current_user.phone %>
+            is-logged-in=true
+    />
+  <% else %>
+    <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
+            star-chain-url="<%= starchain_address %>"
+            is-logged-in=false
+    />
+  <% end %>
 </div>

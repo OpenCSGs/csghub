@@ -218,14 +218,19 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.4-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.4-x64-mingw-ucrt)
+      racc (~> 1.4)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
     pg (1.5.4)
+    pg (1.5.4-x64-mingw-ucrt)
     psych (5.1.0)
       stringio
     public_suffix (5.0.3)
     puma (5.6.7)
       nio4r (~> 2.0)
+    pundit (2.3.1)
+      activesupport (>= 3.0.0)
     racc (1.7.1)
     rack (2.2.8)
     rack-test (2.1.0)
@@ -314,6 +319,8 @@ GEM
     stringio (3.0.8)
     tailwindcss-rails (2.0.30-arm64-darwin)
       railties (>= 6.0.0)
+    tailwindcss-rails (2.0.30-x64-mingw-ucrt)
+      railties (>= 6.0.0)
     tailwindcss-rails (2.0.30-x86_64-darwin)
       railties (>= 6.0.0)
     thor (1.2.2)
@@ -321,6 +328,8 @@ GEM
     timeout (0.4.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2023.3)
+      tzinfo (>= 1.0.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
@@ -344,6 +353,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x64-mingw-ucrt
   x86_64-darwin-21
 
 DEPENDENCIES
@@ -361,6 +371,7 @@ DEPENDENCIES
   kaminari
   pg (~> 1.1)
   puma (~> 5.0)
+  pundit (~> 2.3)
   rails (~> 7.0.7, >= 7.0.7.2)
   rspec-rails
   selenium-webdriver
