@@ -1,22 +1,20 @@
 <template>
 
   <!--  最外层-->
-  <div class="flex flex-col p-[16px] w-[410px] h-[205px] bg-gray-50 gap-y-[16px] rounded-lg border">
+  <div class="flex flex-col p-[16px] w-[410px] max-h-[205px] bg-white gap-y-[16px] justify-between rounded-lg border">
     <!--  第一排-->
     <div class="flex gap-x-[16px]">
       <div>
         <el-avatar :size="56" :src="avatar">
         </el-avatar>
       </div>
-
-
       <!--右侧T内容-->
       <div class="flex flex-col w-full gap-y-[8px]">
         <div>
           <p class="text-xl">{{ name }}</p>
         </div>
 
-        <div class="flex gap-x-[4px] text-sm">
+        <div class="flex gap-x-[4px] text-sm text-[#606266]">
           <p>{{ type }}</p>
 
           <div class="pt-[2px]">
@@ -26,31 +24,22 @@
                   stroke="#303133" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-
           <!--蓝色|-->
           <div class="flex h-[20px] w-[16px] pt-[2px]">
             <div class="w-6/12 border-r-2 border-solid" style="border-color:#DCDFE6;"></div>
           </div>
-
           <p>咨询价格</p>
-
-
         </div>
-
       </div>
-
     </div>
-
     <!--  第二排专业领域-->
-    <div class="flex gap-x-[7px] text-xs">
-      <div class="border rounded px-[8px]">
-        <span v-for="tag in Tags">{{ tag }}</span>
+    <div class="flex gap-x-[7px] text-xs leading-[20px] text-[#606266]">
+      <div class="border rounded px-[8px]" v-for="tag in Tags" :key="tag">
+        <span>{{ tag }}</span>
       </div>
     </div>
-
     <!--  第三排text-->
     <div>
-      <!--      <p class="flex flex-wrap text-sm">{{ desc }}</p>-->
       <el-popover
           :width="378"
           trigger="hover"
@@ -59,7 +48,7 @@
           :content="desc"
       >
         <template #reference>
-          <p class="h-[40px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2">
+          <p class="h-[40px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer">
             {{ desc }}
           </p>
         </template>
@@ -80,16 +69,13 @@ export default {
 
   data() {
     return {
-      Tags: this.tags.split(",")
+      Tags: this.tags?this.tags.split("，"):''
     };
   },
 
   components: {},
 
   mounted() {
-    console.log("expertcard")
-    console.log(this.tags)
-    console.log(this.desc)
   }
 }
 </script>
