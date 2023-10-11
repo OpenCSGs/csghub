@@ -43,8 +43,8 @@
 
     <!--  第二排专业领域-->
     <div class="flex gap-x-[7px] text-xs">
-      <div class="border rounded px-[8px]">
-        <span v-for="tag in Tags">{{ tag }}</span>
+      <div v-for="tag in Tags" class="border rounded px-[8px]">
+        <span>{{ tag }}</span>
       </div>
     </div>
 
@@ -80,15 +80,13 @@ export default {
 
   data() {
     return {
-      Tags: this.tags.split(",")
+      Tags: this.tags.split(","),
     };
   },
 
   components: {},
 
   mounted() {
-    console.log("expertcard")
-    console.log(this.tags)
     console.log(this.desc)
   }
 }
