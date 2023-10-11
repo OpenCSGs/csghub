@@ -2,11 +2,13 @@ class SpacePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.nil?
-        scope.where("space_type = ?", 1)
+        scope.where(space_type: 'public_s')
       elsif user.admin?
         scope.all
       else
-        scope.where("space_type = ? OR user_id = ?", 1, user.id)
+        scope.where(space_type: 'public_s').or(
+          scope.where(user_id: user.id)
+        )
       end
     end
   end
