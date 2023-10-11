@@ -3,7 +3,11 @@ class Api::SpacesController < ApplicationController
   before_action :set_current_user
 
   def index
-    @spaces = Space.all.order(:title).page(params[:page])
+    @spaces = if cookies[:mySpaces] == 'true'
+                policy_scope(Space).where(user_id: current_user.id).order(created_at: :desc).page(params[:page])
+              else
+                policy_scope(Space).order(created_at: :desc).page(params[:page])
+              end
     render json: {spaces: @spaces.to_json}
   end
 
