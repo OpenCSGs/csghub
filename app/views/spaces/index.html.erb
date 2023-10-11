@@ -17,7 +17,11 @@
     </div>
   <% else %>
     <div>
-      <space-cards is-logged-in="<%= logged_in? %>" total-cards=<%= policy_scope(Space).count %> spaces='<%= @spaces.to_json %>'></space-cards>
+      <space-cards is-logged-in="<%= logged_in? %>"
+                   total-cards=<%= policy_scope(Space).count %>
+                   spaces='<%= @spaces.to_json %>'
+      >
+      </space-cards>
     </div>
   <% end %>
 </div>

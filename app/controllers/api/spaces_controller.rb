@@ -4,9 +4,12 @@ class Api::SpacesController < ApplicationController
 
   def index
     @spaces = if cookies[:mySpaces] == 'true'
-                policy_scope(Space).where(user_id: current_user.id).order(created_at: :desc).page(params[:page])
+                policy_scope(Space).where(user_id: current_user.id)
+                                   .order(created_at: :desc)
+                                   .page(params[:page])
               else
-                policy_scope(Space).order(created_at: :desc).page(params[:page])
+                policy_scope(Space).order(created_at: :desc)
+                                   .page(params[:page])
               end
     render json: {spaces: @spaces.to_json}
   end
