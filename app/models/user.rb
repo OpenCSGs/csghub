@@ -4,8 +4,10 @@ class User < ApplicationRecord
              admin
              personal_user
              company_user)
-  
+
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
+
+  has_many :spaces, dependent: :destroy
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]

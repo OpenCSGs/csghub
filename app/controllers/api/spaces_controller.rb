@@ -15,7 +15,7 @@ class Api::SpacesController < Api::ApplicationController
   end
 
   def create
-    space = Space.new(create_params)
+    space = Space.new(create_params.slice(:space_starchain_id, :title, :desc, :site_link, :space_type))
     new_tags = []
     create_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name.strip)
@@ -28,7 +28,7 @@ class Api::SpacesController < Api::ApplicationController
     space.user = @current_user
     if space.save
       render json: { message: "Space created",
-                     space_address: "#{starchain_address}/spaces/#{space.space_starchain_id}" }
+                     space_address: "#{request.base_url}/spaces/#{space.space_starchain_id}" }
     else
       render json: {message: "Failed to create space"}, status: :bad_request
     end
@@ -67,7 +67,7 @@ class Api::SpacesController < Api::ApplicationController
   private
 
   def create_params
-    params.permit(:space_starchain_id, :title, :desc, :site_link, :space_type)
+    params.permit(:space_starchain_id, :title, :desc, :site_link, :space_type, :tags)
   end
 
   def update_params
