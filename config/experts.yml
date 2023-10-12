@@ -1,7 +1,25 @@
 - name: james_calzoni
   type: 个人
   tags: 专业领域,专业领域,专业领域
-  desc: iamametdapibussed amet id. Turpis iaculis justo
+  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
+  avatar: 'experts/james_calzoni.png'
+
+- name: ping_li
+  type: 个人
+  tags: 专业领域,专业领域,专业领域
+  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
+  avatar: 'experts/james_calzoni.png'
+
+- name: ping_li
+  type: 个人
+  tags: 专业领域,专业领域,专业领域
+  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
+  avatar: 'experts/james_calzoni.png'
+
+- name: ping_li
+  type: 个人
+  tags: 专业领域,专业领域,专业领域
+  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
   avatar: 'experts/james_calzoni.png'
 
 - name: ping_li

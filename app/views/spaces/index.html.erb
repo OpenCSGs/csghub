@@ -31,7 +31,7 @@
           </template>
         </el-dropdown>
       </div>
-      <space-cards total-cards=<%= Space.count %> spaces='<%= @spaces.to_json %>'></space-cards>
+      <space-cards total-cards=<%= policy_scope(Space).count %> spaces='<%= @spaces.to_json %>'></space-cards>
     </div>
   <% end %>
 </div>
