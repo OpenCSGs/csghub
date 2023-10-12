@@ -11,6 +11,7 @@ class SpacesController < ApplicationController
   end
 
   def update
+    authorize space
     new_tags = []
     update_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name)
@@ -35,6 +36,8 @@ class SpacesController < ApplicationController
     else
       render json: {message: 'Failed to Save'}, status: 500
     end
+  rescue Pundit::NotAuthorizedError
+    render json: {message: 'Unauthorized Operation'}, status: 401
   end
 
   private
