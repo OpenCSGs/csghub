@@ -190,7 +190,7 @@
 
     await fetch(spaceUpdateEndpoint, options).then((res) => {
       if (!res.ok) {
-        return res.text().then(text => { throw new Error(text) })
+        return res.json().then(data => { throw new Error(data.message) })
       } else {
         return res.json();
       }
