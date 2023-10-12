@@ -1,5 +1,4 @@
 <template>
-
   <div class="flex flex-col p-[16px] w-[410px] max-h-[255px] bg-white gap-y-[16px] justify-between rounded-lg border">
     <div class="flex gap-x-[16px]">
       <div>
