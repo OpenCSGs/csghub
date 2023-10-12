@@ -18,6 +18,7 @@ class Space < ApplicationRecord
   belongs_to :user
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  has_many :comments, as: :commentable
 
   def cover_image_url
     if cover_image

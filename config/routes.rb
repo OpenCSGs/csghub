@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # api
   namespace :api do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
+    resources :comments, only: [:create, :destroy]
   end
 
   # application
