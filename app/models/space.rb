@@ -45,7 +45,7 @@ class Space < ApplicationRecord
     {
       title: title,
       desc: desc,
-      author: author || 'UserName',
+      author: author || user.phone || 'UserName',
       created_at: created_at.strftime('%Y-%m-%d %H:%M:%S'),
       cover_image: cover_image_url || ActionController::Base.helpers.asset_path('default_cover_image.png'),
       tags: tags.to_json,
