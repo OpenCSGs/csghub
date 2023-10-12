@@ -1,7 +1,7 @@
 <template>
 
   <!--  最外层-->
-  <div class="flex flex-col p-[16px] w-[410px] max-h-[205px] bg-white gap-y-[16px] justify-between rounded-lg border">
+  <div class="flex flex-col p-[16px] w-[410px] max-h-[255px] bg-white gap-y-[16px] justify-between rounded-lg border">
     <!--  第一排-->
     <div class="flex gap-x-[16px]">
       <div>
@@ -41,6 +41,10 @@
     </div>
     <!--  第三排text-->
     <div>
+
+
+      <p class="h-[40px] leading-[23px] text-[#606266] text-sm font-semibold">{{ title }}</p>
+
       <el-popover
           :width="378"
           trigger="hover"
@@ -49,7 +53,7 @@
           :content="desc"
       >
         <template #reference>
-          <p class="h-[40px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer">
+          <p class="h-[40px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer" style="white-space: pre-line;">
             {{ desc }}
           </p>
         </template>
@@ -64,6 +68,7 @@ export default {
     name: String,
     type: String,
     tags: String,
+    title: String,
     desc: String,
     avatar: String
   },

@@ -1,0 +1,40 @@
+<el-select>
+  <el-option/>
+</el-select>
+
+<el-select v-if="isLoggedInBoolean"
+           v-model="filterValue"
+           @change="reloadCards"
+           class="w-[100px]"
+>
+  <el-option
+    v-for="item in filterValues"
+    :key="item.value"
+    :label="item.label"
+    :value="item.value"
+    :disabled="item.disabled"
+    />
+</el-select>
+
+<SpaceCard v-for="space in JSON.parse(theSpaces)"
+           :key="space.star_chain_id"
+           :title="space.title"
+           :desc="space.desc"
+           :author="space.author"
+           :createdAt="space.created_at"
+           :coverImage="space.cover_image"
+           :tags="space.tags"
+           :status="space.status"
+           :starChainId="space.star_chain_id"
+           :spaceType="space.space_type"
+  />
+async reloadCards() {
+  this.cookies.set('mySpaces', this.filterValue === 'mine');
+  const response = await fetch('api/spaces', {
+    headers: { "Authorization": this.cookies.get('idToken') }
+  });
+  response.json().then((data) => {
+    this.currentPage = 1
+    this.theSpaces = data.spaces
+})
+}
