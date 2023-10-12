@@ -14,3 +14,19 @@ zh:
         space:
           blank: "字段不能为空"
           taken: "不能创建重复的空间"
+
+  datetime:
+    distance_in_words:
+      about_x_hours: 大约%{count}小时
+      about_x_months: 大约%{count}个月
+      about_x_years: 大约%{count}年
+      almost_x_years: 接近%{count}年
+      half_a_minute: 半分钟
+      less_than_x_seconds: 不到%{count}秒
+      less_than_x_minutes: 不到%{count}分钟
+      over_x_years: "%{count}年多"
+      x_seconds: "%{count}秒"
+      x_minutes: "%{count}分钟"
+      x_days: "%{count}天"
+      x_months: "%{count}个月"
+      x_years: "%{count}年"

@@ -1,11 +1,20 @@
 class Api::CommentsController < Api::ApplicationController
+  include ActionView::Helpers::DateHelper
+
   def create
     commentable = find_commentable
     comment = commentable.comments.build(comment_params)
     comment.user = @current_user
 
     if comment.save
-      render json: comment, status: :created
+      comment_data = comment.as_json(only: [:id, :content])
+      comment_data["time"] = time_ago_in_words(comment.created_at)
+      comment_data["user"] = {
+        id: comment.user.id,
+        name: comment.user.display_name,
+        avatar: comment.user.avatar
+      }
+      render json: comment_data, status: :created
     else
       render json: comment.errors, status: :unprocessable_entity
     end

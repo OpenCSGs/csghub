@@ -2,12 +2,26 @@ class SpacesController < ApplicationController
   before_action :authenticate_user
   skip_before_action :verify_authenticity_token
 
+  include ActionView::Helpers::DateHelper
+
   def index
     @spaces = Space.all.order(:title).page params[:page]
   end
 
   def show
     @space = space
+    @comments = space.comments.order(created_at: :desc).includes(:user).map do |comment|
+      {
+        id: comment.id,
+        content: comment.content,
+        time: time_ago_in_words(comment.created_at),
+        user: {
+          id: comment.user.id,
+          name: comment.user.display_name,
+          avatar: comment.user.avatar
+        }
+      }
+    end
   end
 
   def update
