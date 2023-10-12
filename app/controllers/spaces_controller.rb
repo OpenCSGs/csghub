@@ -11,6 +11,7 @@ class SpacesController < ApplicationController
   end
 
   def update
+    authorize space
     new_tags = []
     update_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name)
@@ -33,8 +34,10 @@ class SpacesController < ApplicationController
         space_type: space.readable_type
       }
     else
-      render json: {message: 'Failed to Save'}, status: 500
+      render json: {message: '更新失败!'}, status: 500
     end
+  rescue Pundit::NotAuthorizedError
+    render json: {message: '更新未授权!'}, status: 401
   end
 
   private

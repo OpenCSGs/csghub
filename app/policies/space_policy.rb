@@ -12,4 +12,8 @@ class SpacePolicy < ApplicationPolicy
       end
     end
   end
+
+  def update?
+    user.login_identity == record.user.login_identity
+  end
 end

@@ -18,6 +18,7 @@ class Space < ApplicationRecord
   belongs_to :user
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  has_many :comments, as: :commentable
 
   def cover_image_url
     if cover_image
@@ -51,7 +52,8 @@ class Space < ApplicationRecord
       tags: tags.to_json,
       status: status,
       star_chain_id: space_starchain_id,
-      space_type: readable_type
+      space_type: readable_type,
+      author_uuid: user.login_identity
     }
   end
 end
