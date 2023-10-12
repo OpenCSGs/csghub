@@ -13,6 +13,7 @@ import SpaceIntro from "./components/SpaceIntro.vue"
 import SpaceCard from "./components/SpaceCard.vue"
 import SpaceCards from "./components/SpaceCards.vue"
 import Foot from "./components/TheFooter.vue"
+import PartnersBanner from "./components/PartnersBanner.vue"
 
 app = createApp({
   components: {
@@ -20,7 +21,8 @@ app = createApp({
     SpaceIntro,
     SpaceCard,
     SpaceCards,
-    Foot
+    Foot,
+    PartnersBanner
   },
   provide:{
     defaultTags: DefaultTags
