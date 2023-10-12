@@ -29,12 +29,6 @@
   </head>
 
   <body class="h-full bg-[#F2F3F5]">
-    <div id="app" class="min-h-full flex flex-col">
-      <div class="grow">
-        <%= render partial: 'partials/navbar' %>
-        <%= yield %>
-      </div>
-      <%= render partial: 'partials/foot' %>
-    </div>
+    <%= yield %>
   </body>
 </html>

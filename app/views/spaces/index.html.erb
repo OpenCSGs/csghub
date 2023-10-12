@@ -17,21 +17,11 @@
     </div>
   <% else %>
     <div>
-      <div class="flex justify-between">
-        <h3 class="pl-4 font-semibold text-xl">Space 列表</h3>
-        <el-dropdown>
-          <el-button type="default">
-            <span>全部应用</span>
-            <el-icon class="el-icon--right"><arrow-down /></el-icon>
-          </el-button>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>我的应用</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
-      <space-cards total-cards=<%= Space.count %> spaces='<%= @spaces.to_json %>'></space-cards>
+      <space-cards is-logged-in="<%= logged_in? %>"
+                   total-cards=<%= policy_scope(Space).count %>
+                   spaces='<%= @spaces.to_json %>'
+      >
+      </space-cards>
     </div>
   <% end %>
 </div>

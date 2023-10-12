@@ -1,6 +1,8 @@
 require 'jwt'
 
 class SessionsController < ApplicationController
+  layout 'login'
+
   before_action :check_user_login, only: :new
 
   def new

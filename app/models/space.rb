@@ -46,13 +46,14 @@ class Space < ApplicationRecord
     {
       title: title,
       desc: desc,
-      author: author || 'UserName',
+      author: author || user.phone || 'UserName',
       created_at: created_at.strftime('%Y-%m-%d %H:%M:%S'),
       cover_image: cover_image_url || ActionController::Base.helpers.asset_path('default_cover_image.png'),
       tags: tags.to_json,
       status: status,
       star_chain_id: space_starchain_id,
-      space_type: readable_type
+      space_type: readable_type,
+      author_uuid: user.login_identity
     }
   end
 end

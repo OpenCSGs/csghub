@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
     resources :spaces, only: ['index', 'show', 'update']
 
+    get '/partners', to: 'partners#index'
+    get '/experts', to: 'experts#index'
+
     get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
     post   '/login',   to: 'sessions#create'
