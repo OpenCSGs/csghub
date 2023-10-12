@@ -52,7 +52,8 @@ class Space < ApplicationRecord
       tags: tags.to_json,
       status: status,
       star_chain_id: space_starchain_id,
-      space_type: readable_type
+      space_type: readable_type,
+      author_uuid: user.login_identity
     }
   end
 end

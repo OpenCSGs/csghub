@@ -4,7 +4,7 @@
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
                @change="reloadCards"
-               class="w-[100px]"
+               class="w-[100px] xl:mr-[20px]"
     >
       <el-option
         v-for="item in filterValues"
@@ -27,6 +27,7 @@
       :status="space.status"
       :starChainId="space.star_chain_id"
       :spaceType="space.space_type"
+      :authorUuid="space.author_uuid"
     />
   </div>
   <el-pagination background
