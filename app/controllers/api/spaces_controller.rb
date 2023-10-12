@@ -21,7 +21,7 @@ class Api::SpacesController < Api::ApplicationController
     create_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name.strip)
       unless tag
-        tag = Tag.create(name: tag_name.strip, color: random_color)
+        tag = Tag.create(name: tag_name.strip, color: COLORS.sample)
       end
       new_tags << tag
     end
@@ -73,13 +73,5 @@ class Api::SpacesController < Api::ApplicationController
 
   def update_params
     params.permit(:title, :desc, :site_link, :space_type, :status)
-  end
-
-  def random_color
-    "##{random_color_hex}"
-  end
-
-  def random_color_hex
-    "%06x" % (rand * 0xffffff)
   end
 end

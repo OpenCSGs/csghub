@@ -188,13 +188,13 @@
       body: formData
     };
 
-    await fetch(spaceUpdateEndpoint, options).then((res) => {
-      if (!res.ok) {
-        return res.json().then(data => { throw new Error(data.message) })
-      } else {
-        return res.json();
-      }
-    })
+    const response = await fetch(spaceUpdateEndpoint, options)
+
+    if (!response.ok) {
+      return response.json().then(data => { throw new Error(data.message) })
+    } else {
+      return response.json();
+    }
   }
 
   onMounted(() => {
