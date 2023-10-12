@@ -76,10 +76,6 @@ class Api::SpacesController < Api::ApplicationController
   end
 
   def random_color
-    "##{random_color_hex}"
-  end
-
-  def random_color_hex
-    "%06x" % (rand * 0xffffff)
+    COLORS.sample
   end
 end
