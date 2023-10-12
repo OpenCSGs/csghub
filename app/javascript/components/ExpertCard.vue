@@ -19,7 +19,7 @@
             </svg>
           </div>
           <div class="flex h-[20px] w-[16px] pt-[2px]">
-            <div class="w-6/12 border-r-2 border-solid" style="border-color:#DCDFE6;"></div>
+            <div class="w-6/12 border-r-2 border-solid border-[#DCDFE6]"></div>
           </div>
           <p>咨询价格</p>
         </div>
@@ -40,8 +40,7 @@
           :content="desc"
       >
         <template #reference>
-          <p class="h-[40px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer"
-             style="white-space: pre-line;">
+          <p class="h-[40px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer">
             {{ desc }}
           </p>
         </template>
@@ -69,8 +68,7 @@ export default {
 
   components: {},
 
-  mounted() {
-  }
+  mounted() {}
 }
 </script>
 
