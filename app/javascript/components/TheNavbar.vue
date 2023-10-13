@@ -17,7 +17,7 @@
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li>
       </ul>
-      <el-dropdown class="!hidden xl:!block px-8">
+      <el-dropdown class="!hidden xl:!block px-8 sm:px-2">
         <span class="el-dropdown-link">
           目录
           <el-icon class="el-icon--right">

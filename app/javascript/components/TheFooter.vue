@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
-    <div class="w-[914px] py-[60px] flex gap-x-[120px] justify-center items-center">
+    <div class="max-w-[914px] py-[60px] flex gap-x-[120px] sm:gap-x-[20px] justify-center items-center">
       <div class="flex gap-x-[100px]">
-        <div class="my-2 justify-center items-center">
+        <div class="my-2 justify-center items-center sm:hidden">
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
         </div>
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
@@ -25,13 +25,13 @@
             <p>投资关系：ir@opencsg.com</p>
           </div>
         </div>
-        <div class="py-2 my-2 rounded-lg  mlg:w-full">
+        <div class="py-2 my-2 rounded-lg mlg:w-full sm:hidden">
           <img :src="footCode" height=103 width=103 alt="OpenCSG Logo"/>
         </div>
       </div>
     </div>
 
-    <div class="py-4 flex justify-center items-center text-xs font-normal border-t w-full sm:text-[10px]">
+    <div class="py-4 flex justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] sm:flex-col">
       <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
           <g clip-path="url(#clip0_9_14638)">
