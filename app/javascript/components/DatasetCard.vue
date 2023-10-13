@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "Dataset"
+  name: "DatasetCard"
 }
 </script>
 
