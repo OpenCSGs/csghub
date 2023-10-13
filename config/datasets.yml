@@ -1,0 +1,27 @@
+- name: wnut17_ner
+  title: wnut17命名实体识别数据集
+  tags: 词分类,NER,命名实体识别
+  desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+  type: 数据集作者
+  create_at: 2023.08.28
+
+- name: wnut17_ner
+  title: wnut17命名实体识别数据集
+  tags: 词分类,NER,命名实体识别
+  desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+  type: 数据集作者
+  create_at: 2023.08.28
+
+- name: wnut17_ner
+  title: wnut17命名实体识别数据集
+  tags: 词分类,NER,命名实体识别
+  desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+  type: 数据集作者
+  create_at: 2023.08.28
+
+- name: wnut17_ner
+  title: wnut17命名实体识别数据集
+  tags: 词分类,NER,命名实体识别
+  desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+  type: 数据集作者
+  create_at: 2023.08.28
