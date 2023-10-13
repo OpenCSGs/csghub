@@ -2,26 +2,13 @@ class SpacesController < ApplicationController
   before_action :authenticate_user, except: :index
   skip_before_action :verify_authenticity_token
 
-  include ActionView::Helpers::DateHelper
-
   def index
     @spaces = policy_scope(Space).order(created_at: :desc).page params[:page]
   end
 
   def show
     @space = space
-    @comments = space.comments.order(created_at: :desc).includes(:user).map do |comment|
-      {
-        id: comment.id,
-        content: comment.content,
-        time: time_ago_in_words(comment.created_at),
-        user: {
-          id: comment.user.id,
-          name: comment.user.comment_display_name,
-          avatar: comment.user.avatar
-        }
-      }
-    end
+    @comments = space.comments.order(created_at: :desc).includes(:user).map(&:as_json_data)
   end
 
   def stopped
