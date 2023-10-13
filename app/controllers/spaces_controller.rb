@@ -17,7 +17,7 @@ class SpacesController < ApplicationController
         time: time_ago_in_words(comment.created_at),
         user: {
           id: comment.user.id,
-          name: comment.user.display_name,
+          name: comment.user.comment_display_name,
           avatar: comment.user.avatar
         }
       }

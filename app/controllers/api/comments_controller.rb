@@ -11,7 +11,7 @@ class Api::CommentsController < Api::ApplicationController
       comment_data["time"] = time_ago_in_words(comment.created_at)
       comment_data["user"] = {
         id: comment.user.id,
-        name: comment.user.display_name,
+        name: comment.user.comment_display_name,
         avatar: comment.user.avatar
       }
       render json: comment_data, status: :created

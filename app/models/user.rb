@@ -42,4 +42,8 @@ class User < ApplicationRecord
   def display_name
     name || login_identity
   end
+
+  def comment_display_name
+    name || phone || login_identity
+  end
 end

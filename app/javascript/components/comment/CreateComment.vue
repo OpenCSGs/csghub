@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 flex items-center justify-between rounded-[8px] border border-gray-300 mb-6">
+  <div class="p-[28px] flex items-center justify-between rounded-[8px] border border-gray-300 mb-6">
     <textarea rows="1" placeholder="添加评论" v-model="newCommentContent" class="flex-1 outline-none mr-4 text-sm text-[#606266]"></textarea>
     <button
       :disabled="newCommentContent.trim().length === 0"
