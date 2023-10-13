@@ -28,7 +28,7 @@ class Api::CommentsController < Api::ApplicationController
     if comment.destroy
       render json: {message: "Comment destroyed"}
     else
-      render json: {message: "Failed to destroy comment"}
+      render json: {message: "Failed to destroy comment"}, status: :bad_request
     end
   end
 

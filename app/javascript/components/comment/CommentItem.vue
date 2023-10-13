@@ -18,6 +18,7 @@
 
 <script setup>
   import { useCookies } from "vue3-cookies";
+  import { ElMessage, ElMessageBox } from 'element-plus'
 
   const { cookies } = useCookies();
 
@@ -35,23 +36,30 @@
   const emit = defineEmits(['deleteComment']);
 
   const confirmDelete = async (commentId) => {
-    if (confirm('确认删除此评论？')) {
-      try {
-        const response = await fetch(`/api/comments/${commentId}`, {
-          method: 'DELETE',
-          headers: {
-            "Authorization": cookies.get('idToken'),
-            'Content-Type': 'application/json',
-          },
-        });
+    const confirmResult = await ElMessageBox.confirm('确认删除此评论？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    });
 
-        if (response.ok) {
-          emit('deleteComment', commentId);
-        } else {
-          throw new Error('删除失败，请重试');
-        }
-      } catch (error) {
-        console.error(error);
+    if (confirmResult === 'confirm') {
+      const response = await fetch(`/api/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: cookies.get('idToken'),
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        emit('deleteComment', commentId);
+      } else {
+        response.json().then(data => {
+          ElMessage({
+            message: data.message,
+            type: 'warning'
+          });
+        });
       }
     }
   };
