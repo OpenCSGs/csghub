@@ -30,7 +30,7 @@ class Space < ApplicationRecord
   end
 
   def author
-    user.name
+    user.name || user.phone || user.login_identity
   end
 
   def readable_type
@@ -46,7 +46,7 @@ class Space < ApplicationRecord
     {
       title: title,
       desc: desc,
-      author: author || user.phone || 'UserName',
+      author: author,
       created_at: created_at.strftime('%Y-%m-%d %H:%M:%S'),
       cover_image: cover_image_url || ActionController::Base.helpers.asset_path('default_cover_image.png'),
       tags: tags.to_json,
