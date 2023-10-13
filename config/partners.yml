@@ -1,0 +1,20 @@
+- name: Datawhale
+  site: https://datawhale.club/#/
+  desc: Datawhale成立于2018年，是国内头部的开源学习组织，汇聚了来自伯克利、斯坦福、港中文、港科大、清华、北大、上交、复旦、浙大等全球近百所高校的成员，吸引了数十万的AI领域学习者关注；组织以for the learner为使命，致力于构建开源学习社区，和学习者一起成长。
+  logo: 'partners/datawhale.png'
+- name: Xorbits
+  site: https://xorbits.cn
+  desc: 杭州未来速度科技有限公司（简称Xorbits）是⼀家专注于企业级数据和AI的基础设施平台公司，致⼒于研发能够满⾜客户不断增⻓的计算需求的解决⽅案。⽆论是⼤数据分析、⼤模型应⽤，我们的基础设施都能够提供稳定、⾼性能的⽀持，并随着您的业务规模扩⼤⽽轻松扩展。未来速度旗下有两款产品，企业⼤规模处理数据套件Xorbits，对数据处理和AI领域的 Python 库进⾏了加速，如NumPy、pandas和scikit-learn，可轻松扩展到成千台机器，⽀持处理TB级数据；⾼性能⼤模型推理引擎Xinference，提供⼀站式“模型即服务”解决⽅案，针对底层硬件的⾼效适配，⼤幅降低⼤模型的部署⻔槛和成本，助⼒上层 AI 应⽤实现。主要团队成员来⾃阿⾥云、百度、华为和微软，在Data&AI领域有丰富技术实践经验。
+  logo: 'partners/xorbits.png'
+- name: 浪潮
+  site: https://www.inspur.com
+  desc: 浪潮集团有限公司，即浪潮集团，是中国本土顶尖的大型IT企业之一，中国领先的云计算、大数据服务商。浪潮集团旗下拥有浪潮信息、浪潮软件、浪潮国际三家上市公司，业务涵盖云计算、大数据、工业互联网等新一代信息技术产业领域，为全球120多个国家和地区提供IT产品和服务，浪潮致力于成为世界一流的新一代信息技术产业龙头企业，经济社会数字化转型的优秀服务商，新型基础设施建设的骨干企业。
+  logo: 'partners/lang_chao.png'
+- name: AWS
+  site: https://aws.amazon.com/
+  desc: 亚马逊网络服务(AWS)是世界上最全面和最广泛采用的云，从全球数据中心提供200多种功能齐全的服务。数以百万计的客户——包括发展最快的初创公司、最大的企业和领先的政府机构——正在使用AWS来降低成本、变得更敏捷、更快地创新。
+  logo: 'partners/aws.png'
+- name: NVIDIA
+  site: https://www.nvidia.cn
+  desc: NVIDIA 率先推出加速计算来应对其他公司无法解决的挑战。我们在人工智能和数字孪生领域的工作正在改变世界上最大的行业并深刻影响社会。
+  logo: 'partners/nvidia.png'

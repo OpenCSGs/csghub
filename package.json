@@ -6,6 +6,7 @@
     "@emailjs/browser": "^3.11.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^7.3.0",
+    "caniuse-lite": "^1.0.30001547",
     "element-plus": "^2.3.14",
     "emailjs-com": "^3.2.0",
     "esbuild": "^0.19.3",

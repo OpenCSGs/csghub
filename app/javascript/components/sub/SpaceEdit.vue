@@ -165,6 +165,12 @@
     updateSpace().then((data) => {
       emit('retriveSpaceCard', data)
     })
+    .catch(err => {
+      ElMessage({
+        message: err.message,
+        type: 'warning'
+      })
+    })
     dialogVisible.value = false
   }
 
@@ -182,8 +188,13 @@
       body: formData
     };
 
-    const response = await fetch(spaceUpdateEndpoint, options);
-    return response.json();
+    const response = await fetch(spaceUpdateEndpoint, options)
+
+    if (!response.ok) {
+      return response.json().then(data => { throw new Error(data.message) })
+    } else {
+      return response.json();
+    }
   }
 
   onMounted(() => {

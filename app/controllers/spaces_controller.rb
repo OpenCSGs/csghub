@@ -11,11 +11,12 @@ class SpacesController < ApplicationController
   end
 
   def update
+    authorize space
     new_tags = []
     update_params[:tags].split(',').each do |tag_name|
       tag = Tag.find_by(name: tag_name)
       unless tag
-        tag = Tag.create(name: tag_name, color: random_color)
+        tag = Tag.create(name: tag_name, color: COLORS.sample)
       end
       new_tags << tag
     end
@@ -33,8 +34,10 @@ class SpacesController < ApplicationController
         space_type: space.readable_type
       }
     else
-      render json: {message: 'Failed to Save'}, status: 500
+      render json: {message: '更新失败!'}, status: 500
     end
+  rescue Pundit::NotAuthorizedError
+    render json: {message: '更新未授权!'}, status: 401
   end
 
   private
@@ -45,13 +48,5 @@ class SpacesController < ApplicationController
 
   def update_params
     params.permit(:id, :tags, :cover_image, :space_type)
-  end
-
-  def random_color
-    "##{random_color_hex}"
-  end
-
-  def random_color_hex
-    "%06x" % (rand * 0xffffff)
   end
 end

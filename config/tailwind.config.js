@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js',
+    './app/javascript/**/*',
     './app/views/**/*',
   ],
   theme: {
@@ -11,6 +11,7 @@ module.exports = {
       '2xl': {'max': '1535px'},
       'xl': {'max': '1279px'},
       'lg': {'max': '1023px'},
+      'mlg': {'max': '825px'},
       'md': {'max': '767px'},
       'sm': {'max': '639px'},
     },
