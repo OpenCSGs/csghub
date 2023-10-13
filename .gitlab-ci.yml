@@ -84,14 +84,14 @@ main-deploy:
     - |
         ssh root@$PARTNER_PORTAL_PRD_HOST "/bin/bash -s" << EOT
           cd /root/open_portal/
-          docker compose -f docker-compose-production.yml pull
-          docker compose -f docker-compose-production.yml up -d web
+          docker compose -f docker_compose_production.yml pull
+          docker compose -f docker_compose_production.yml up -d web
           docker image prune -f
         EOT
     - |
         ssh root@$PARTNER_PORTAL_PRD_TWO_HOST "/bin/bash -s" << EOT
           cd /root/open_portal/
-          docker compose -f docker-compose-production.yml pull
-          docker compose -f docker-compose-production.yml up -d web
+          docker compose -f docker_compose_production.yml pull
+          docker compose -f docker_compose_production.yml up -d web
           docker image prune -f
         EOT
