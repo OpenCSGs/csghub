@@ -31,7 +31,7 @@
          class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6] mr-2 whitespace-nowrap"
          :key="tag.name"
       >
-        <span :class="[`text-[${tag.color}]`]"> {{ tag.name }}</span>
+        <span :style="`color: ${tag.color}`"> {{ tag.name }}</span>
       </p>
     </div>
     <el-popover
