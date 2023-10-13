@@ -14,6 +14,7 @@ import SpaceCard from "./components/SpaceCard.vue"
 import SpaceCards from "./components/SpaceCards.vue"
 import Foot from "./components/TheFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
+import ExpertCard from "./components/ExpertCard.vue"
 
 app = createApp({
   components: {
@@ -21,8 +22,9 @@ app = createApp({
     SpaceIntro,
     SpaceCard,
     SpaceCards,
+    CommentList,
+    ExpertCard,
     Foot,
-    CommentList
   },
   provide:{
     defaultTags: DefaultTags
