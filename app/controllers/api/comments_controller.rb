@@ -5,7 +5,7 @@ class Api::CommentsController < Api::ApplicationController
     comment.user = @current_user
 
     if comment.save
-      render json: comment, status: :created
+      render json: comment.as_json_data, status: :created
     else
       render json: comment.errors, status: :unprocessable_entity
     end
@@ -19,7 +19,7 @@ class Api::CommentsController < Api::ApplicationController
     if comment.destroy
       render json: {message: "Comment destroyed"}
     else
-      render json: {message: "Failed to destroy comment"}
+      render json: {message: "Failed to destroy comment"}, status: :bad_request
     end
   end
 

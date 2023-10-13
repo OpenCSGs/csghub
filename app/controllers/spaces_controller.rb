@@ -8,6 +8,7 @@ class SpacesController < ApplicationController
 
   def show
     @space = space
+    @comments = space.comments.order(created_at: :desc).includes(:user).map(&:as_json_data)
   end
 
   def stopped
