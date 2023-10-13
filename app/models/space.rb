@@ -42,6 +42,14 @@ class Space < ApplicationRecord
     end
   end
 
+  def application_url
+    if running?
+      site_link
+    else
+      "/spaces/stopped"
+    end
+  end
+
   def as_json options = nil
     {
       title: title,
