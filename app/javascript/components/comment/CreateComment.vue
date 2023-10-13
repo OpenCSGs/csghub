@@ -14,6 +14,7 @@
 <script setup>
   import { ref } from 'vue';
   import { useCookies } from "vue3-cookies";
+  import { ElMessage } from 'element-plus'
 
   const newCommentContent = ref('');
   const { cookies } = useCookies();
@@ -55,7 +56,10 @@
         emit('createComment', createdComment);
         newCommentContent.value = ''; // Clear the input field
       } else {
-        throw new Error('创建失败，请重试');
+        ElMessage({
+          message: '创建失败，请重试',
+          type: 'warning'
+        });
       }
     } catch (error) {
       console.error(error);
