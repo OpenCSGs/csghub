@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
-    <div class="w-[914px] py-4 flex gap-x-[120px] justify-center items-center">
+    <div class="w-[914px] py-[60px] flex gap-x-[120px] justify-center items-center">
       <div class="flex gap-x-[100px]">
         <div class="my-2 justify-center items-center">
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>

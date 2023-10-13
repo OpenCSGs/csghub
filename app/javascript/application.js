@@ -15,6 +15,7 @@ import SpaceCards from "./components/SpaceCards.vue"
 import Foot from "./components/TheFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
+import DatasetCard from "./components/DatasetCard.vue"
 
 app = createApp({
   components: {
@@ -23,6 +24,7 @@ app = createApp({
     SpaceCard,
     SpaceCards,
     CommentList,
+    DatasetCard,
     ExpertCard,
     Foot,
   },
