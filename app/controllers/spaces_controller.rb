@@ -10,6 +10,10 @@ class SpacesController < ApplicationController
     @space = space
   end
 
+  def stopped
+    render 'stopped', layout: 'login'
+  end
+
   def update
     authorize space
     new_tags = []

@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "spaces#index"
 
-    resources :spaces, only: ['index', 'show', 'update']
+    resources :spaces, only: ['index', 'show', 'update'] do
+      collection do
+        get 'stopped'
+      end
+    end
 
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
