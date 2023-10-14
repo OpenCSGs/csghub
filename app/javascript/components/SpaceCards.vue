@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between">
-    <h3 class="pl-4 font-semibold text-xl">Space 列表</h3>
+    <h3 class="pl-[20px] font-semibold text-xl">Space 列表</h3>
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
                @change="reloadCards"

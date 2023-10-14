@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
     <div class="max-w-[914px] py-[60px] flex gap-x-[120px] sm:gap-x-[20px] justify-center items-center">
       <div class="flex gap-x-[100px]">
-        <div class="my-2 justify-center items-center sm:hidden">
+        <div class="my-2 justify-center items-center mlg:hidden">
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
         </div>
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
@@ -25,7 +25,7 @@
             <p>投资关系：ir@opencsg.com</p>
           </div>
         </div>
-        <div class="py-2 my-2 rounded-lg mlg:w-full sm:hidden">
+        <div class="py-2 my-2 rounded-lg mlg:w-full mlg:hidden">
           <img :src="footCode" height=103 width=103 alt="OpenCSG Logo"/>
         </div>
       </div>
