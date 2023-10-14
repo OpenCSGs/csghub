@@ -4,7 +4,7 @@ class SpacesController < ApplicationController
 
   def index
     # 重置为全部应用
-    cookies[:mySpaces] == 'false'
+    cookies[:mySpaces] = 'false'
     @total_spaces = policy_scope(Space).order(created_at: :desc)
     @spaces = @total_spaces.page params[:page]
   end
