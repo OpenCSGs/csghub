@@ -3,7 +3,8 @@ class SpacesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @spaces = policy_scope(Space).order(created_at: :desc).page params[:page]
+    @total_spaces = policy_scope(Space).order(created_at: :desc)
+    @spaces = @total_spaces.page params[:page]
   end
 
   def show

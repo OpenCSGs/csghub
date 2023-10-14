@@ -18,7 +18,7 @@
   <% else %>
     <div>
       <space-cards is-logged-in="<%= logged_in? %>"
-                   total-cards=<%= policy_scope(Space).count %>
+                   total-cards=<%= @total_spaces.count %>
                    spaces='<%= @spaces.to_json %>'
       >
       </space-cards>
