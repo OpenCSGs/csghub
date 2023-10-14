@@ -1,6 +1,5 @@
 EXPERTS = YAML.safe_load(File.read(File.join(Rails.root, 'config/experts.yml')))
 PARTNERS = YAML.safe_load(File.read(File.join(Rails.root, 'config/partners.yml')))
-DATASETS = YAML.safe_load(File.read(File.join(Rails.root, 'config/datasets.yml')))
 COLORS = [
 '#6b9023',
 '#006666',
