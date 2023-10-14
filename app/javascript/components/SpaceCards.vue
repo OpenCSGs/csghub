@@ -33,7 +33,7 @@
   <el-pagination background
                  v-model:current-page="currentPage"
                  :default-current-page=1
-                 :total="Number(totalCards)"
+                 :total="Number(theTotalCards)"
                  :page-size="6"
                  layout="prev, pager, next"
                  @update:current-page="nextPage"
@@ -60,6 +60,7 @@
         currentPage: 1,
         isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
         filterValue: "all",
+        theTotalCards: this.totalCards,
         filterValues: [
           {
             value: 'all',
@@ -81,7 +82,8 @@
           headers: { "Authorization": this.cookies.get('idToken') }
          });
         response.json().then((data) => {
-          this.theSpaces = data.spaces
+          this.theSpaces = data.spaces,
+          this.theTotalCards = data.total_cards
         })
       },
       async reloadCards() {
@@ -92,6 +94,7 @@
         response.json().then((data) => {
           this.currentPage = 1
           this.theSpaces = data.spaces
+          this.theTotalCards = data.total_cards
         })
       }
     }
