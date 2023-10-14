@@ -1,7 +1,7 @@
 <div class="max-w-[1280px] m-auto">
   <space-intro star-chain-address="<%= starchain_address %>"></space-intro>
   <% if Space.count == 0 %>
-    <div class="flex flex-col">
+    <div class="flex flex-col xl:px-[20px] sm:mb-[40px]">
       <p>您还没有属于自己的应用，点击下面的链接去 StarChain 构建您的第一个应用吧!！</p>
       <div>
         <p class="mt-5">
@@ -18,7 +18,7 @@
   <% else %>
     <div>
       <space-cards is-logged-in="<%= logged_in? %>"
-                   total-cards=<%= policy_scope(Space).count %>
+                   total-cards=<%= @total_spaces.count %>
                    spaces='<%= @spaces.to_json %>'
       >
       </space-cards>

@@ -35,7 +35,7 @@
       <el-popover
           :width="378"
           trigger="hover"
-          :placement="bottom"
+          placement="bottom"
           effect="dark"
           :content="desc"
       >
