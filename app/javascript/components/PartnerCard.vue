@@ -4,7 +4,7 @@
       <img :src="logo" class="max-w-full max-h-[48px]" alt="OpenCSG Logo"/>
     </div>
     <div class="flex gap-x-[7px] text-xs leading-[20px] text-[#606266]">
-      <div class="border rounded px-[8px]" v-for="tag in Tags" :key="tag">
+      <div class="border rounded px-[8px]" v-for="tag in theTags" :key="tag">
         <span>{{ tag }}</span>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
 
   data() {
     return {
-      Tags: this.tags ? this.tags.split(",") : []
+      theTags: this.tags ? this.tags.split(",") : []
     };
   },
 
