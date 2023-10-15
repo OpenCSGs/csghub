@@ -1,0 +1,15 @@
+<div class="m-auto max-w-[1280px]">
+  <p class="mt-[24px] mb-[16px] text-xl font-semibold xl:hidden">数据集</p>
+  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center">
+    <% DATASETS.each do |dataset| %>
+      <dataset-card other="<%= dataset["other"] %>"
+                    type="<%= dataset["type"] %>"
+                    tags="<%= dataset["tags"] %>"
+                    title="<%= dataset["title"] %>"
+                    desc="<%= dataset["desc"] %>"
+                    url="<%= dataset["url"] %>"
+      >
+      </dataset-card>
+    <% end %>
+  </div>
+</div>
