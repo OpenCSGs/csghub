@@ -18,3 +18,17 @@
     <% end %>
   </div>
 </div>
+
+<div class="fixed bottom-[100px] right-[20px] w-[200px]">
+  <el-popover
+    placement="top-start"
+    :width="200"
+    trigger="hover"
+  >
+    <h3 class="text-center">扫码联系我们</h3>
+    <%= image_tag('qiye_wechat.png', width: '180', height: '180') %>
+    <template #reference>
+      <%= image_tag('monster.gif', width: '120') %>
+    </template>
+  </el-popover>
+</div>
