@@ -1,0 +1,81 @@
+- title: 中文诗词数据集
+tags:
+desc: 中文诗词生成数据集，由中国古代各朝代诗词组成，可用于训练诗词续写模型。本数据集包括训练集（388599）测试集（1710）。其中，每一条数据有一个属性，输入句子text1，由一段诗词组成示例如下：{"text1":"云髻高梳鬓不分，扫除虚室事元君。新糊白纸屏风上，尽画蓬莱五色云。"}
+type: 数据集作者
+create_at: 2023.08.28
+url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/chinese-poetry-collection.tar.gz
+other: ModelScope 提供
+
+- title: 中文Text2SQL数据集
+  tags:
+  desc: 同时包含用于训练和测试表格问答预训练模型的数据，数据集包含500条训练数据和100条测试数据。
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/ChineseText2SQL.tar.gz
+  other: ModelScope 提供
+
+- title: 100PoisonMpts：中文大模型治理数据集
+  tags:
+  desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/100PoisonMpts.tar.gz
+  other: 达摩院 提供
+
+- title: 中文大模型价值观比较数据集
+  tags:
+  desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/CValues-Comparison.tar.gz
+  other: 达摩院 提供
+
+- title: 人类-ChatGPT 问答对比语料集(英文版)
+  tags: 文本分类
+  desc: '对于给定问题的人类-ChatGPT回答文本对。
+  数据格式采用jsonline格式，有 question, human_answers, chatgpt_answers 三个字段，其中 question 为字符串类型，human_answers 和 chatgpt_answers 都是装有字符串的列表，一般情况下只有一个字符串，也会有多个。例如：
+  {
+    "question":"Please explain what is Recommender system",
+    "human_answers": [
+      "A recommender system, or a recommendation system (sometimes replacing ......",
+    ],
+    "chatgpt_answers": [
+      "A recommender system, or a recommendation system, is a subclass of ",
+    ]
+  }'
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/HC3.tar.gz
+  other: SimpleAI 提供
+
+- title: 人类-ChatGPT 问答对比语料集(中文版)
+  tags: 文本分类
+  desc: '对于给定问题的人类-ChatGPT回答文本对。数据格式采用jsonline格式，有 question, human_answers, chatgpt_answers 三个字段，其中 question 为字符串类型，human_answers 和 chatgpt_answers 都是装有字符串的列表，一般情况下只有一个字符串，也会有多个。例如：{"question":"我有一个计算机相关的问题，请用中文回答，什么是 控制总线","human_answers": ["控制总线（ControlBus）简称CB。控制总线主要用来传送控制信号和时序信号。控制......",],"chatgpt_answers": ["控制总线是计算机中一种用于传输控制信息的总线。它连接着计算机的处理器、内存......",]}'
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/CValues-Comparison.tar.gz
+  other: SimpleAI 提供
+
+- title: alpaca-gpt4-data-zh
+  tags:
+  desc: 该数据集为GPT-4生成的中文数据集，用于LLM的指令精调和强化学习等。数据集已经开源，license为CC BY NC 4.0, 仅用于非商业化用途
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/alpaca-gpt4-data-zh.tar.gz
+  other:
+
+- title: CLUE中文数据集
+  tags: 文本分类
+  desc: CLUE(A Chinese Language Understanding Evaluation Benchmark, 官网：https://www.cluebenchmarks.com/) 是用于对中文语法理解任务进行训练、校验和测试的数据集
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/clue.tar.gz
+  other: ModelScope 提供
+
+- title: MultiAlpaca多语言指令精调数据集
+  tags: 智能对话
+  desc: 本数据集是根据self-instruct思想构建的多语言指令数据集，涉及语言有阿拉伯语（Ar)、德语（De）、西班牙语（Es）、法语（Fr）、印度尼西亚语（Id）、日语（Ja）、韩语（Ko）、葡萄牙语（Pt）、俄语（Ru）、泰语（Th）、越南语（Vi），共计11个语种，支持对多语言大模型（large language models, LLMs）进行监督微调学习
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/nlp_polylm_multialpaca_sft.tar.gz
+  other: 达摩院 提供
