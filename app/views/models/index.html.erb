@@ -1,0 +1,15 @@
+<div class="m-auto max-w-[1280px] mb-[60px]">
+  <p class="mt-[24px] text-xl font-semibold xl:hidden">Models</p>
+  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center mt-[16px]">
+    <% MODELS.each do |model| %>
+      <model-card title="<%= model["title"] %>"
+                  author="<%= model["author"] %>"
+                  download_url="<%= model["download_url"] %>"
+                  tags="<%= model["tags"] %>"
+                  license="<%= model["license"] %>"
+                  desc="<%= model["desc"] %>"
+                  avatar="<%= asset_path('models/avatar.png') %>">
+      </model-card>
+    <% end %>
+  </div>
+</div>

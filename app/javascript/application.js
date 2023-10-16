@@ -16,6 +16,7 @@ import Foot from "./components/TheFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
+import ModelCard from "./components/ModelCard.vue"
 
 app = createApp({
   components: {
@@ -26,6 +27,7 @@ app = createApp({
     CommentList,
     DatasetCard,
     ExpertCard,
+    ModelCard,
     Foot,
   },
   provide:{
