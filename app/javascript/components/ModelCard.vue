@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-[410px] h-[219px] bg-white p-4 gap-y-2 rounded-lg border">
+  <div class="flex flex-col w-[410px] h-[219px] bg-white p-4 gap-y-2 rounded-lg border xl:w-auto">
     <div class="flex gap-x-[16px]">
       <el-avatar shape="square" :size="56" :src="avatar"></el-avatar>
       <div class="flex flex-col gap-y-[4px] flex-1">
@@ -24,7 +24,7 @@
           download
           class="pl-5 leading-[32px] block cursor-pointer hover:bg-[#ECF5FF] hover:text-[#409EFF] hover:font-semibold"
         >
-          download model
+          下载模型
         </a>
       </el-popover>
     </div>
