@@ -27,7 +27,7 @@
 
     <div class="flex gap-x-[4px] h-[16px] gap-y-[4px] text-[#909399]">
       <p v-if="other.length !== 0" class="text-sm">{{ other }}</p>
-      <div class="flex h-[18px] w-[16px] pt-[2px]">
+      <div v-if="other.length !== 0" class="flex h-[18px] w-[16px] pt-[2px]">
         <div class="w-6/12 border-r-2 border-solid border-[#DCDFE6]"></div>
       </div>
       <a :href="url" class="text-sm underline cursor-pointer">下载</a>
