@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-[410px] h-[219px] bg-white p-4 gap-y-2 rounded-lg border xl:w-auto">
+  <div class="flex flex-col w-[410px] h-[219px] bg-white p-4 gap-y-2 rounded-lg border xl:w-full">
     <div class="flex gap-x-[16px]">
       <el-avatar shape="square" :size="56" :src="avatar"></el-avatar>
       <div class="flex flex-col gap-y-[4px] flex-1">
