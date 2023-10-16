@@ -32,13 +32,13 @@
   type: 个人
   title: OpenCSG 技术专家
   tags: 软件开发专家
-  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
+  desc: 先后在国内知名互联网公司担任资深研发专家、架构师和技术Leader。在 Golang/Python 后端开发、大模型应用开发、Docker/K8s/Ingress/Mesh 云原生技术、以及大规模高并发系统设计方面有丰富的理论基础和实践经验。活跃于各个开源社区，自主研发了多个开源项目，同时也为 Caddy、Proto Actor、Sarama、MongoEngine 等明星项目贡献过高质量代码。
   avatar: 'experts/luo_peng.png'
 - name: 王伟
   type: 个人
   title: OpenCSG CTO
   tags: 分布式计算专家
-  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
+  desc: 10+年软件技术从业经验，曾任人工智能独角兽高级技术总监、首席架构师、资深技术专家，在高并发系统架构、云计算大数据平台、人工智能算法等领域有非常丰富的工作经验，同时具备良好的技术视野、管理方法和成功经验。
   avatar: 'experts/wang_wei.png'
 - name: 何开圣
   type: 个人
@@ -46,3 +46,9 @@
   tags: 分布式计算专家
   desc: 在人工智能与大数据领域有丰富的经验，参与设计开发多个分布式计算框架。曾在阿里云计算平台负责 Python 生态的工作，多个开源项目的创建者与核心开发者。
   avatar: 'experts/he_kai_sheng.png'
+- name: 程浩
+  type: 个人
+  title: 示说网创始人
+  tags: 开源专家
+  desc: 前英特尔大数据技术团队研发经理，开源技术积极参与者， 多个Apache知名开源项目代码贡献者，上海Apache Spark Meetup核心组织者，策划及出品若干技术分享研讨会。
+  avatar: 'experts/cheng_hao.png'
