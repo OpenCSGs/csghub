@@ -4,67 +4,45 @@
   tags: 人工智能专家
   desc: 管震是智用人工智能应用研究院的创始人和院长，同时也是中信联标准委员会、广东省发改委战略专家、广东省工信厅工业互联网专家、广东省制造业数字化转型顾问。管震曾任微软公司首席技术顾问，近20年的微软工作经验，主要工作围绕人工智能、物联网、云计算等技术与产业创新的结合，发起并支持微软及合作伙伴生态在工业、零售、地产、教育以及社区等领域的智慧化、数字化升级的探索。
   avatar: 'experts/guan_zhen.png'
-
 - name: 周闻均
   type: 个人
   title: 智用人工智能应用研究院数据智能与孵化器 CTO
   tags: 人工智能专家
   desc: 周闻钧是智用人工智能应用研究院数据智能与孵化器CTO，同时也担任上海徐汇区特聘数字人才讲师（人工智能方向），主要研究领域为人工智能、物联网、工业元宇宙、数据科学等。周闻钧曾任微软中国首席创新技术架构师、苹果公司技术传教士、同济大学软件学院院长助理。人工智能、产业物联网和元宇宙领域的知名专家，具备5年以上高校科研教学和10年以上企业技术布道的经验，是数据科学、人工智能、大数据三个领域“微软专业学位”的拥有者，为多家行业领先的独角兽公司和初创企业提供技术咨询。
   avatar: 'experts/zhou_wen_jun.png'
-
 - name: 赵铭
   type: 个人
   title: 智用研究院首席数字咨询师
   tags: DevOps专家
   desc: 赵铭是智用人工智能应用研究院首席数字咨询师，原微软CTO办公室资深应用架构师。主要研究领域是云原生、云迁移、人工智能、DevOps等。赵铭20余年IT与云服务行业经验，技术路线贯穿系统集成、存储网络、虚拟化、云计算、物联网、人工智能、区块链和大模型等多个领域，是公有云方法论与实践的大师。曾为大型企业客户提供云原生应用与微服务应用的咨询规划和技术架构设计，参与过的云原生和微服务应用项目涵盖电商、教育、汽车、物流等多个行业与领域。
   avatar: 'experts/zhao_ming.png'
-
 - name: 张善友
   type: 个人
   title: 工业与技术社区 CTO
   tags: 软件开发专家
   desc: 从事.NET技术开发二十多年，认证CKAD专家， 曾在腾讯工作12年，专注于云原生和工业物联网解决方案落地。.NET 技术社区、 Dapr中文社区、Semantic Kernel 中文社区 以及相关开源项目，运营微信公众号“dotnet跨平台” 和 “新一代智能应用“。 荣获连任18次微软最有价值专家MVP，5届华为云HCDE，5届腾讯云最有价值专家TVP
   avatar: 'experts/zhang_shan_you.png'
-
-
 - name: 王艺
   type: 个人
   title: 植德律师事务所合伙人 & 合规部牵头人
   tags: 法务专家
   desc: 执业领域：数据合规、金融合规与政府监管。资质:深圳数据交易所五星数据交易合规认证师资格（DEXCO）；PIPP、CIPP/E。著作:《数据出境法学原理与实务》，法律出版社，2023年8月出版。研究代表项目:全国人大：《数据产权保护课题》。中国互联网金融协会：《金融数据应用 典型场景与合规指引》。世界银行IFC：《数字金融机构（业务）个人金融信息数据治理合规指引》。深数交：《数据交易合规评估规范》。荣誉奖项：入选《钱伯斯大中华区指南2023》TMT：数据保护与隐私领域“潜质律师”推荐。获2022-2023年LEGALBAND 顶级律师：网络安全与数据合规。获2022 LEGALBAND中国律师特别推荐榜：数字经济15强。获2022年度GRCD中国合规大奖“最佳政府监管合规律师”。获得“2021、2023律商联讯杰出作者”称号。
   avatar: 'experts/wang_yi.png'
-
-- name: 程浩
-  type: 个人
-  title:
-  tags: 专业领域,专业领域,专业领域
-  desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
-  avatar: 'experts/james_calzoni.png'
-
 - name: 罗彭
   type: 个人
-  title:
-  tags: 专业领域,专业领域,专业领域
+  title: OpenCSG 技术专家
+  tags: 软件开发专家
   desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
-  avatar: 'experts/james_calzoni.png'
-
+  avatar: 'experts/luo_peng.png'
 - name: 王伟
   type: 个人
-  title:
-  tags: 专业领域,专业领域,专业领域
+  title: OpenCSG CTO
+  tags: 分布式计算专家
   desc: Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo
-  avatar: 'experts/james_calzoni.png'
-
+  avatar: 'experts/wang_wei.png'
 - name: 何开圣
   type: 个人
   title: 未来速度CTO
   tags: 分布式计算专家
   desc: 在人工智能与大数据领域有丰富的经验，参与设计开发多个分布式计算框架。曾在阿里云计算平台负责 Python 生态的工作，多个开源项目的创建者与核心开发者。
-  avatar: 'experts/james_calzoni.png'
-
-- name: 林旅强
-  type: 个人
-  title:
-  tags: 专业领域,专业领域,专业领域
-  desc: 开源社联合创始人，前华为开源专家、华为云AI开发者生态总监。《开发者关系：方法与实践》译者。\n现为独立顾问，提供开源治理暨开发者生态咨询顾问及企业内训。
-  avatar: 'experts/james_calzoni.png'
+  avatar: 'experts/he_kai_sheng.png'
