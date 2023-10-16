@@ -5,8 +5,8 @@
       <p class="text-sm font-normal">{{ protocol }}</p>
     </div>
 
-    <div v-if="Tags.length !== 0" class="h-[24px] flex gap-x-[7px] text-xs leading-[20px] text-[#606266]">
-      <div v-for="tag in Tags" :key="tag" class="border rounded px-[8px]" >
+    <div v-if="theTags.length !== 0" class="h-[24px] flex gap-x-[7px] text-xs leading-[20px] text-[#606266]">
+      <div v-for="tag in theTags" :key="tag" class="border rounded px-[8px]" >
         <span>{{ tag }}</span>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <div class="flex h-[18px] w-[16px] pt-[2px]">
         <div class="w-6/12 border-r-2 border-solid border-[#DCDFE6]"></div>
       </div>
-      <a href="{{url}}" class="text-sm underline cursor-pointer">下载</a>
+      <a :href="url" class="text-sm underline cursor-pointer">下载</a>
     </div>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
 
   data() {
     return {
-      Tags: this.tags ? this.tags.split(",") : [],
+      theTags: this.tags ? this.tags.split(",") : [],
     };
   },
 
