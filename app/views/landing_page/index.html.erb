@@ -1,0 +1,81 @@
+  <%# banner %>
+<div class="flex flex-col justify-center py-[100px] lg:px-[106px] md:px-[50px] py-[24px] px-[80px] bg-white">
+  <div class="flex justify-center items-center max-w-[1280px] m-auto">
+    <div class="flex-1">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">Empower Everyone with OpenCSG</div>
+      <div class="max-w-[415px] text-[#606266] text-[20px] mb-[24px]">Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo </div>
+      <% if logged_in? == false %>
+        <div class="flex gap-[8px] items-center">
+          <div class="hover:bg-[white] hover:text-[black] hover:border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] border-2">Join Us</div>
+          <a href="https://www.opencsg.com" class="block hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">Learn More</a>
+        </div>
+      <% else %>
+        <div class="hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">Learn More</div>
+      <% end %>
+    </div>
+  <%# 图片600*600 %>
+    <div class="flex-1 w-[738px] h-[605px]">
+            <img src="<%= asset_path('landing_banner.png') %>" alt="" class="w-full max-h-[605px]" />
+    </div>
+  </div>
+</div>
+<div class="flex flex-col justify-center py-[100px] lg:px-[106px] md:px-[50px] py-[24px] px-[80px]">
+  <%# News %>
+  <div class="max-w-[1280px] m-auto">
+    <%# NewsText %>
+    <div class="text-center">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">What’s New</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo </div>
+      <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Join Us For Free</div>
+    </div>
+    <%# NewsCards %>
+    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center mb-[60px] max-w-[1280px] m-auto pt-[80px]">
+      <% @newsData.each do |card| %>
+        <div class="w-full border border-[#DCDFE6] bg-white rounded-[8px]">
+          <div class="bg-[#ECF5FF] h-[224px] flex justify-center items-center">
+            <img src="<%= asset_path(card[:url]) %>" alt="" class="w-full max-h-[224px]" />
+          </div>
+          <div class="pt-[55px] pb-[24px] px-[18px] text-center text-[20px]">
+            <%= card[:text]  %>
+          </div>
+        </div>
+      <% end  %>
+    </div>
+  </div>
+  <%# Experts %>
+  <div class="max-w-[1280px] m-auto mb-[60px]">
+    <%# ExpertsText %>
+    <div class="text-center">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">Meet Our Experts</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">Find a OpenCSG-endorsed partner to help with your next project. Browse Experts based on what your need and reach out to start a conversation.</div>
+      <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Explore More </div>
+    </div>
+  </div>
+  <%# Partners %>
+  <div class="max-w-[1280px] m-auto mb-[60px]">
+    <%# PartnersText %>
+    <div class="text-center mb-[60px]">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">Meet Opencsg partners</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">OpenCSG is a collaborative ecosystem initiative that connects partners and empowers them to build large-scale models for customers across various industries.</div>
+    </div>
+    <%# PartnersCards %>
+    <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center max-w-[1280px] m-auto">
+    <% @partersData.each do |card| %>
+      <div class="flex rounded-[8px] bg-white w-full py-[15px] pl-[8px] pr-[12px] items-center justify-between">
+        <div class="shadow-md rounded-[8px] w-[50px] h-[50px] flex items-center">
+          <div>
+            <img src="<%= asset_path(card[:url]) %>" alt="" class="w-[50px] max-h-[50px] mr-[8px]" />
+          </div>
+          <div class="min-w-[90px]">
+            <div class="text-[18px] font-semibold leading-[26px]"><%= card[:name] %></div>
+            <div class="text-[12px] text-[#909399] font-medium leading-[20px]"><%= card[:num] %> models</div>
+          </div>
+        </div>
+        <div class="text-[#0D99FF] cursor-pointer">
+         + follow
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
