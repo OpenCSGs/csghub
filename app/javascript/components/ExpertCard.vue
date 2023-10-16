@@ -18,10 +18,6 @@
                   stroke="#303133" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="flex h-[20px] w-[16px] pt-[2px]">
-            <div class="w-6/12 border-r-2 border-solid border-[#DCDFE6]"></div>
-          </div>
-          <p>咨询价格</p>
         </div>
       </div>
     </div>

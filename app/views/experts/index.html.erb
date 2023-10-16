@@ -1,9 +1,10 @@
 <div class="flex justify-center items-center flex-col lg:px-[106px] md:px-[50px] sm:px-[20px]">
   <div class="flex justify-center items-center text-center flex-col max-w-[1280px] not-italic gap-y-[16px] px-[266px] lg:px-[106px] sm:px-[20px] my-[60px]">
-    <p class="text-5xl">Hire a OpenCSG Expert</p>
-    <p>Find a OpenCSG-endorsed partner to help with your next project. Browse Experts based
-      on what
-      your need and reach out to start a conversation.</p>
+    <p>开放传神（OpenCSG）邀请您作为专家入驻社区，让我们共建开源开放、共享开源生态。
+希望您为用户提供技术支持及咨询，解决方案设计指导等。</p>
+    <a href="https://opencsg-china.feishu.cn/share/base/form/shrcn2n5Hs4lFqgl6tds2Sf6CIc" target="_blank">
+      <el-button type="info" round>成为社区专家</el-button>
+    </a>
   </div>
   <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center mb-[60px]">
     <% EXPERTS.each do |expert| %>
@@ -16,4 +17,18 @@
       </expert-card>
     <% end %>
   </div>
+</div>
+
+<div class="fixed bottom-[100px] right-[20px] w-[204px]">
+  <el-popover
+    placement="top-start"
+    :width="204"
+    trigger="hover"
+  >
+    <h3 class="text-center">扫码联系我们</h3>
+    <%= image_tag('qiye_wechat.png', width: '180', height: '180') %>
+    <template #reference>
+      <%= image_tag('monster.gif', width: '120') %>
+    </template>
+  </el-popover>
 </div>
