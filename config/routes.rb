@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-
+    
     root to: "spaces#index"
   end
 
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
-    root "spaces#index"
+    root "landing_page#index"
 
     resources :spaces, only: ['index', 'show', 'update'] do
       collection do
