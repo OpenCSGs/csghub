@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-[410px] h-[250px] bg-white p-4 gap-y-4 rounded-lg border">
+  <div class="flex flex-col w-[410px] h-[250px] mlg:w-[600px] sm:w-[95%] bg-white p-4 gap-y-4 rounded-lg border">
     <div class="flex flex-col gap-y-[4px]">
       <p class="text-xl font-semibold">{{ title }}</p>
       <p class="text-sm font-normal">{{ protocol }}</p>
