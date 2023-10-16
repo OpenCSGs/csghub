@@ -3,7 +3,10 @@ class SpacesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @spaces = policy_scope(Space).order(created_at: :desc).page params[:page]
+    # 重置为全部应用
+    cookies[:mySpaces] = 'false'
+    @total_spaces = policy_scope(Space).order(created_at: :desc)
+    @spaces = @total_spaces.page params[:page]
   end
 
   def show

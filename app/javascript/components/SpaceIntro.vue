@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded my-6 text-[#606266]">
+  <div class="p-[20px] bg-white rounded my-6 text-[#606266]">
     <p>
       嗨！这里是开放的大模型应用空间。
     </p>

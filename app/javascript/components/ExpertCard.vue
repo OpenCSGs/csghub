@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-[16px] w-[410px] max-h-[255px] bg-white gap-y-[16px] justify-between rounded-lg border">
+  <div class="flex flex-col p-[16px] max-w-[410px] max-h-[255px] bg-white gap-y-[16px] justify-between rounded-lg border">
     <div class="flex gap-x-[16px]">
       <div>
         <el-avatar :size="56" :src="avatar">
@@ -18,10 +18,6 @@
                   stroke="#303133" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="flex h-[20px] w-[16px] pt-[2px]">
-            <div class="w-6/12 border-r-2 border-solid border-[#DCDFE6]"></div>
-          </div>
-          <p>咨询价格</p>
         </div>
       </div>
     </div>
@@ -35,7 +31,7 @@
       <el-popover
           :width="378"
           trigger="hover"
-          :placement="bottom"
+          placement="bottom"
           effect="dark"
           :content="desc"
       >

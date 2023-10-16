@@ -1,5 +1,6 @@
-<div class="flex justify-center lg:px-[106px] md:px-[50px] py-[24px] px-[80px]">
-  <div class="flex justify-center items-center sm:flex-col pl-[36px] pr-[20px] gap-x-[109px] bg-white max-w-[1280px] m-auto">
+<div class="flex flex-col justify-center lg:px-[106px] md:px-[50px] py-[24px] px-[80px]">
+  <%# banner %>
+  <div class="flex justify-center items-center sm:flex-col sm:w-full pl-[36px] pr-[20px] gap-x-[109px] bg-white max-w-[1280px] m-auto mb-[68px]">
     <div class="grow-[1.5]">
       <div class="text-[48px] sm:text-[23px] sm:pt-[10px] text-[#303133] font-semibold mb-[18px]">OpenCSG Partner Network</div>
       <div class="text-[18px] sm:text-[18px] font-normal leading-[26px]">OpenCSG is a collaborative ecosystem initiative that connects partners and empowers them to build large-scale models for customers across various industries.</div>
@@ -7,5 +8,16 @@
     <div class="grow flex justify-center">
       <img src="<%= asset_path('partners/partners_banner.png') %>" class="max-w-[298px]" />
     </div>
+  </div>
+  <%# cards %>
+  <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center mb-[60px] max-w-[1280px] m-auto">
+    <% PARTNERS.each do |partner| %>
+      <partner-card name="<%= partner["name"] %>"
+                    site="<%= partner["site"] %>"
+                    tags="<%= partner["tags"] %>"
+                    desc="<%= partner["desc"] %>"
+                    logo="<%= asset_path(partner["logo"]) %>">
+      </partner-card>
+    <% end %>
   </div>
 </div>

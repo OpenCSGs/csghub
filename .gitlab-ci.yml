@@ -24,6 +24,8 @@ staging-build:
   stage: build
   services:
     - docker:24.0.6-dind
+  tags:
+   - opencsg
   rules:
     - <<: *if-staging-original-repo
   variables:
@@ -48,6 +50,8 @@ master-build:
 
 staging-deploy:
   stage: deploy
+  tags:
+   - opencsg
   rules:
     - <<: *if-staging-original-repo
   before_script:
@@ -63,7 +67,7 @@ staging-deploy:
         ssh root@$OPEN_PORTAL_STAGING_HOST "/bin/bash -s" << EOT
           cd /root/open_portal/
           docker compose -f docker_compose_staging.yml pull
-          docker compose -f docker_compose_staging.yml up -d web
+          docker compose -f docker_compose_staging.yml up -d --force-recreate web
           docker image prune -f
         EOT
 
@@ -74,17 +78,24 @@ main-deploy:
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
-    - echo "$PARTNER_PORTAL_PRD_SSH_KEY_SH" | tr -d '\r' | ssh-add -
+    - echo "$OPEN_PORTAL_STAGING_PEM" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $PARTNER_PORTAL_PRD_HOST >> ~/.ssh/known_hosts
-    - ssh-keyscan $PARTNER_PORTAL_PRD_TWO_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $OPEN_PORTAL_PRD_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $OPEN_PORTAL_PRD_TWO_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
     - |
-        ssh root@$PARTNER_PORTAL_PRD_HOST "/bin/bash -s" << EOT
-          cd /root/jihu-partner-portal/
-          docker compose -f docker-compose-production.yml pull
-          docker compose -f docker-compose-production.yml up -d web
+        ssh root@$OPEN_PORTAL_PRD_HOST "/bin/bash -s" << EOT
+          cd /root/open_portal/
+          docker compose -f docker_compose_production.yml pull
+          docker compose -f docker_compose_production.yml up -d --force-recreate web
+          docker image prune -f
+        EOT
+    - |
+        ssh root@$OPEN_PORTAL_PRD_TWO_HOST "/bin/bash -s" << EOT
+          cd /root/open_portal/
+          docker compose -f docker_compose_production.yml pull
+          docker compose -f docker_compose_production.yml up -d --force-recreate web
           docker image prune -f
         EOT

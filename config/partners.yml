@@ -1,5 +1,6 @@
 - name: Datawhale
   site: https://datawhale.club/#/
+  tags: 专业领域,专业领域,专业领域
   desc: Datawhale成立于2018年，是国内头部的开源学习组织，汇聚了来自伯克利、斯坦福、港中文、港科大、清华、北大、上交、复旦、浙大等全球近百所高校的成员，吸引了数十万的AI领域学习者关注；组织以for the learner为使命，致力于构建开源学习社区，和学习者一起成长。
   logo: 'partners/datawhale.png'
 - name: Xorbits

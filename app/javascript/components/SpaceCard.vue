@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 h-[311px] w-[416px] rounded bg-gray-50 p-4">
+  <div class="mt-4 h-[311px] w-[416px] mlg:w-[600px] sm:w-[95%] rounded bg-gray-50 p-4">
     <div class="flex justify-between items-center mb-1">
       <div class="flex items-center">
         <h3 class="max-w-[150px] text-[#303133] font-semibold leading-6 truncate mr-[15px]">{{ title }}</h3>
