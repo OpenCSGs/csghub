@@ -6,6 +6,7 @@ async function watch() {
     entryPoints: ['app/javascript/*.*'],
     bundle: true,
     sourcemap: true,
+    minify: true,
     outdir: 'app/assets/builds',
     plugins: [vuePlugin()],
     loader: {
