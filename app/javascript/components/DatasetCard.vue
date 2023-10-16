@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col w-[410px] h-[290px] bg-white p-4 gap-y-4 rounded-lg border">
+  <div class="flex flex-col w-[410px] h-[270px] bg-white p-4 gap-y-4 rounded-lg border">
     <div class="flex flex-col gap-y-[4px]">
       <p class="text-xl font-semibold">{{ title }}</p>
       <p class="text-sm font-normal">{{ protocol }}</p>
     </div>
 
-    <div class="h-[24px] flex gap-x-[7px] text-xs leading-[20px] text-[#606266]">
+    <div v-if="Tags.length !== 0" class="h-[24px] flex gap-x-[7px] text-xs leading-[20px] text-[#606266]">
       <div v-for="tag in Tags" :key="tag" class="border rounded px-[8px]" >
         <span>{{ tag }}</span>
       </div>
@@ -25,9 +25,9 @@
       </template>
     </el-popover>
 
-    <div class="flex flex-wrap gap-x-[4px] h-[16px] gap-y-[4px]">
-      <p class="text-[#909399] text-sm">{{ other }}</p>
-      <a href="{{url}}" class="text-sm text-yellow-700 underline">{{ url }}</a>
+    <div class="flex flex-col gap-x-[4px] h-[16px] gap-y-[4px]">
+      <p v-if="other.length !== 0" class="text-[#909399] text-sm">{{ other }}</p>
+      <a href="{{url}}" class="text-base text-yellow-700 underline">下载</a>
     </div>
   </div>
 </template>
@@ -46,12 +46,14 @@ export default {
 
   data() {
     return {
-      Tags: this.tags ? this.tags.split(",") : []
+      Tags: this.tags ? this.tags.split(",") : [],
     };
   },
 
   components: {},
 
-  mounted() {}
+  mounted() {
+    console.log(this.Tags)
+  }
 }
 </script>

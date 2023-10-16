@@ -1,6 +1,6 @@
 <div class="m-auto max-w-[1280px]">
   <p class="mt-[24px] mb-[16px] text-xl font-semibold xl:hidden">数据集</p>
-  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center">
+  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center mb-[60px] xl:mt-[60px]">
     <% DATASETS.each do |dataset| %>
       <dataset-card other="<%= dataset["other"] %>"
                     type="<%= dataset["type"] %>"
