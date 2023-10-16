@@ -1,11 +1,11 @@
   <%# banner %>
 <div class="flex flex-col justify-center py-[100px] lg:px-[106px] md:px-[50px] py-[24px] px-[80px] bg-white">
-  <div class="flex justify-center items-center max-w-[1280px] m-auto">
-    <div class="flex-1">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">Empower Everyone with OpenCSG</div>
-      <div class="max-w-[415px] text-[#606266] text-[20px] mb-[24px]">Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo </div>
+  <div class="flex justify-center items-center  sm:flex-col sm:w-full max-w-[1280px] m-auto">
+    <div class="grow">
+      <div class="text-[48px] sm:text-[23px] text-[#303133] font-semibold mb-[24px]">Empower Everyone with OpenCSG</div>
+      <div class="max-w-[415px] text-[#606266] text-[20px] sm:text-[18px] mb-[24px]">Lorem ipsum dolor sit amet consectetur. Dignissim eu ut integer vestibulum. Cursus aenean tortor scelerisque non. Id diam amet dapibus sed amet id. Turpis iaculis justo </div>
       <% if logged_in? == false %>
-        <div class="flex gap-[8px] items-center">
+        <div class="flex  sm:flex-col gap-[8px] items-center">
           <div class="hover:bg-[white] hover:text-[black] hover:border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] border-2">Join Us</div>
           <a href="https://www.opencsg.com" class="block hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">Learn More</a>
         </div>
@@ -14,7 +14,7 @@
       <% end %>
     </div>
   <%# 图片600*600 %>
-    <div class="flex-1 w-[738px] h-[605px]">
+    <div class="grow sm:grow-0 flex justify-center">
             <img src="<%= asset_path('landing_banner.png') %>" alt="" class="w-full max-h-[605px]" />
     </div>
   </div>
