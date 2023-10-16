@@ -8,10 +8,10 @@
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
           <p class="text-base font-semibold">关于我们</p>
           <div class="flex text-sm font-normal items-start flex-col gap-y-2">
-            <p>公司介绍</p>
-            <p>新闻动态</p>
-            <p>文档中心</p>
-            <p>加入我们</p>
+            <p><a href="https://opencsg.com">公司介绍</a></p>
+            <p><a href="https://opencsg.com">新闻动态</a></p>
+            <p><a href="https://opencsg.com">文档中心</a></p>
+            <p><a href="https://opencsg.com">加入我们</a></p>
           </div>
         </div>
       </div>
