@@ -147,8 +147,8 @@
     <%# PartnersCards %>
     <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center max-w-[1280px] m-auto">
     <% PARTNERS.each do |partner| %>
-      <div class="h-[80px] flexitems-center justify-between">
-       <img class="h-[80px] w-full " src="<%= asset_path(partner["logo"]) %>" />
+      <div class="w-[278px] bg-white h-[80px] flex items-center justify-center">
+       <img class="max-h-[48px] " src="<%= asset_path(partner["logo"]) %>" />
       </div>
     <% end %>
     </div>
