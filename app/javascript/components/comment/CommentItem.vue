@@ -46,7 +46,7 @@
       const response = await fetch(`/api/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: cookies.get('idToken'),
+          Authorization: `Bearer ${cookies.get('idToken')}`,
           'Content-Type': 'application/json',
         },
       });

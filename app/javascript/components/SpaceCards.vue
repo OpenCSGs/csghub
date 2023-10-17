@@ -79,7 +79,7 @@
       async nextPage() {
         const spaceUpdateEndpoint = `api/spaces?page=${this.currentPage}`;
         const response = await fetch(spaceUpdateEndpoint, {
-          headers: { "Authorization": this.cookies.get('idToken') }
+          headers: { "Authorization": `Bearer ${this.cookies.get('idToken')}` }
          });
         response.json().then((data) => {
           this.theSpaces = data.spaces,
@@ -89,7 +89,7 @@
       async reloadCards() {
         this.cookies.set('mySpaces', this.filterValue === 'mine');
         const response = await fetch('api/spaces', {
-          headers: { "Authorization": this.cookies.get('idToken') }
+          headers: { "Authorization": `Bearer ${this.cookies.get('idToken')}` }
          });
         response.json().then((data) => {
           this.currentPage = 1
