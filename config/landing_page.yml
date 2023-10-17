@@ -42,3 +42,22 @@ datasets:
     create_at: 2023.08.28
     url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/100PoisonMpts.tar.gz
     other: 达摩院 提供
+experts:
+  - name: 周闻均
+    type: 个人
+    title: 智用人工智能应用研究院数据智能与孵化器 CTO
+    tags: 人工智能专家
+    desc: 周闻钧是智用人工智能应用研究院数据智能与孵化器CTO，同时也担任上海徐汇区特聘数字人才讲师（人工智能方向），主要研究领域为人工智能、物联网、工业元宇宙、数据科学等。周闻钧曾任微软中国首席创新技术架构师、苹果公司技术传教士、同济大学软件学院院长助理。人工智能、产业物联网和元宇宙领域的知名专家，具备5年以上高校科研教学和10年以上企业技术布道的经验，是数据科学、人工智能、大数据三个领域“微软专业学位”的拥有者，为多家行业领先的独角兽公司和初创企业提供技术咨询。
+    avatar: 'experts/zhou_wen_jun.png'
+  - name: 何开圣
+    type: 个人
+    title: 未来速度CTO
+    tags: 分布式计算专家
+    desc: 在人工智能与大数据领域有丰富的经验，参与设计开发多个分布式计算框架。曾在阿里云计算平台负责 Python 生态的工作，多个开源项目的创建者与核心开发者。
+    avatar: 'experts/he_kai_sheng.png'
+  - name: 朱万友
+    type: 个人
+    title: 瀚诚软件CEO
+    tags: 敏捷交付专家
+    desc: 擅长用敏捷软件开发方法交付高度定制化的创新型项目和产品。拥有18年软件开发/交付经验，曾参与过国际大型CAD/CAM系统的开发，主导过知名国企工程敏捷的导入。现服务于瀚诚软件，致力于以极限编程等工程敏捷方法为客户提供卓越的交付和咨询服务。
+    avatar: 'experts/zhu_wan_you.jpg'

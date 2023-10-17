@@ -24,7 +24,7 @@
   <div class="max-w-[1280px] m-auto  mb-[60px]">
     <%# Models Spaces Datesets Text %>
     <div class="text-center mb-[88px]">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">最新趋势</div>
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px] pt-[100px]">最新趋势</div>
       <div class="text-[#606266] text-[20px] mb-[24px]"> 探索 Opencsg 用户喜欢什么 </div>
     </div>
     <%# SpaceCards %>
@@ -125,17 +125,17 @@
       <div class="text-[#606266] text-[20px] mb-[24px]">Find a OpenCSG-endorsed partner to help with your next project. Browse Experts based on what your need and reach out to start a conversation.</div>
       <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Explore More </div>
     </div>
-      <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[24px] justify-items-center">
-    <% EXPERTS.each do |expert| %>
-      <expert-card name="<%= expert["name"] %>"
-                   type="<%= expert["type"] %>"
-                   tags="<%= expert["tags"] %>"
-                   title="<%= expert["title"] %>"
-                   desc="<%= expert["desc"] %>"
-                   avatar="<%= asset_path(expert["avatar"]) %>">
-      </expert-card>
-    <% end %>
-  </div>
+    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[24px] justify-items-center pt-[60px]">
+      <% LANDING_PAGE['experts'].each do |expert| %>
+        <expert-card name="<%= expert["name"] %>"
+                    type="<%= expert["type"] %>"
+                    tags="<%= expert["tags"] %>"
+                    title="<%= expert["title"] %>"
+                    desc="<%= expert["desc"] %>"
+                    avatar="<%= asset_path(expert["avatar"]) %>">
+        </expert-card>
+      <% end %>
+    </div>
   </div>
   <%# Partners %>
   <div class="max-w-[1280px] m-auto mb-[60px]">
