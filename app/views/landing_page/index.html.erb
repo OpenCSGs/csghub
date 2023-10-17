@@ -24,64 +24,64 @@
   <div class="max-w-[1280px] m-auto  mb-[60px]">
     <%# Models Spaces Datesets Text %>
     <div class="text-center mb-[88px]">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">Trending This Week</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">Explore what Opencsg users love. </div>
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">最新趋势</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]"> 探索 Opencsg 用户喜欢什么 </div>
     </div>
+    <%# SpaceCards %>
+    <% if @latest_spaces.count != 0 %>
+      <div class="mt-[24px]">
+        <div class="flex mb-[16px]">
+          <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
+          <div class="text-[24px] font-medium leading-[23px] mr-[20px]">应用空间</div>
+          <a href="/spaces" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">查看更多</a>
+        </div>
+        <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
+          <% @latest_spaces.each do |space| %>
+            <space-card title="<%= space.title %>"
+                        desc="<%= space.desc %>"
+                        author="<%= space.author %>"
+                        created-at="<%= space.created_at %>"
+                        cover-image="<%= space.cover_image_url || asset_path('default_cover_image.png') %>"
+                        tags="<%= space.tags.to_json %>"
+                        status="<%= space.status %>"
+                        star-chain-id="<%= space.space_starchain_id %>"
+                        space-type="<%= space.space_type %>"
+                        author_uuid="<%= space.user.login_identity %>"
+            >
+            </space-card>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
     <%# ModelsCards %>
-    <div class="mb-[24px]">
+    <div class="mt-[24px]">
       <div class="flex mb-[16px]">
         <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
-        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">Models</div>
-        <a href="/models" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">View More</a>
+        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">模型</div>
+        <a href="/models" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">查看更多</a>
       </div>
-      <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
-        <% MODELS.slice(0,3).each do |model| %>
+      <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
+        <% LANDING_PAGE['models'].each do |model| %>
           <model-card title="<%= model["title"] %>"
-                  author="<%= model["author"] %>"
-                  download_url="<%= model["download_url"] %>"
-                  tags="<%= model["tags"] %>"
-                  license="<%= model["license"] %>"
-                  desc="<%= model["desc"] %>"
-                  avatar="<%= asset_path('models/default_model_logo.png') %>">
+                      author="<%= model["author"] %>"
+                      download_url="<%= model["download_url"] %>"
+                      tags="<%= model["tags"] %>"
+                      license="<%= model["license"] %>"
+                      desc="<%= model["desc"] %>"
+                      avatar="<%= asset_path('models/default_model_logo.png') %>">
           </model-card>
         <% end %>
       </div>
     </div>
-    <%# SpacesCards %>
-    <% if Space.where(space_type: 'public_s').count > 0 %>
-    <div class="mb-[24px]">
+    <%# DatasetCards %>
+    <div class="mt-[24px]">
       <div class="flex mb-[16px]">
         <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
-        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">Spaces </div>
-        <a href="/spaces" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">View More</a>
+        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">数据集</div>
+        <a href="/datasets" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">查看更多</a>
       </div>
-      <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
-        <% Space.where(space_type: 'public_s').order(created_at: :desc).limit(3).each do |space| %>
-         <space-card title="<%= space["title"]%>"
-                     desc="<%= space["desc"]%>"
-                     author="<%= space["author"]%>"
-                     createdAt="<%= space["createdAt"]%>"
-                     coverImage="<%= space["coverImage"]%>"
-                     tags="<%= space["tags"]%>"
-                     status="<%= space["status"]%>"
-                     starChainId="<%= space["starChainId"]%>"
-                     spaceType="<%= space["spaceType"]%>"
-                     authorUuid="<%= space["authorUuid"]%>"
-         >
-         </space-card>
-        <% end %>
-      </div>
-    </div>
-    <% end %>
-    <%# DatasetsCards %>
-    <div>
-      <div class="flex mb-[16px]">
-        <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
-        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">Datasets</div>
-        <a href="/datasets" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">View More</a>
-      </div>
-      <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
-        <% DATASETS.slice(0,3).each do |dataset| %>
+      <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
+        <% LANDING_PAGE['datasets'].each do |dataset| %>
           <dataset-card other="<%= dataset["other"] %>"
                         type="<%= dataset["type"] %>"
                         tags="<%= dataset["tags"] %>"
