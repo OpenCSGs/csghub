@@ -146,20 +146,9 @@
     </div>
     <%# PartnersCards %>
     <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center max-w-[1280px] m-auto">
-    <% @partersData.each do |card| %>
-      <div class="flex rounded-[8px] bg-white w-full py-[15px] pl-[8px] pr-[12px] items-center justify-between">
-        <div class="shadow-md rounded-[8px] w-[50px] h-[50px] flex items-center">
-          <div>
-            <img src="<%= asset_path(card[:url]) %>" alt="" class="w-[50px] max-h-[50px] mr-[8px]" />
-          </div>
-          <div class="min-w-[90px]">
-            <div class="text-[18px] font-semibold leading-[26px]"><%= card[:name] %></div>
-            <div class="text-[12px] text-[#909399] font-medium leading-[20px]"><%= card[:num] %> models</div>
-          </div>
-        </div>
-        <div class="text-[#0D99FF] cursor-pointer">
-         + follow
-        </div>
+    <% PARTNERS.each do |partner| %>
+      <div class="h-[80px] flexitems-center justify-between">
+       <img class="h-[80px] w-full " src="<%= asset_path(partner["logo"]) %>" />
       </div>
     <% end %>
     </div>
