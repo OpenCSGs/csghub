@@ -28,70 +28,14 @@
       <div class="text-[#606266] text-[20px] mb-[24px]">Explore what Opencsg users love. </div>
     </div>
     <%# ModelsCards %>
-    <div class="mb-[24px]">
-      <div class="flex mb-[16px]">
+    <div>
+      <div class="flex">
         <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
         <div class="text-[24px] font-medium leading-[23px] mr-[20px]">Models</div>
         <a href="/models" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">View More</a>
       </div>
       <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
-        <% MODELS.slice(0,3).each do |model| %>
-          <model-card title="<%= model["title"] %>"
-                  author="<%= model["author"] %>"
-                  download_url="<%= model["download_url"] %>"
-                  tags="<%= model["tags"] %>"
-                  license="<%= model["license"] %>"
-                  desc="<%= model["desc"] %>"
-                  avatar="<%= asset_path('models/default_model_logo.png') %>">
-          </model-card>
-        <% end %>
-      </div>
-    </div>
-    <%# SpacesCards %>
-    <% if Space.where(space_type: 'public_s').count > 0 %>
-    <div class="mb-[24px]">
-      <div class="flex mb-[16px]">
-        <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
-        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">Spaces </div>
-        <a href="/spaces" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">View More</a>
-      </div>
-      <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
-        <% Space.where(space_type: 'public_s').order(created_at: :desc).limit(3).each do |space| %>
-         <space-card title="<%= space["title"]%>"
-                     desc="<%= space["desc"]%>"
-                     author="<%= space["author"]%>"
-                     createdAt="<%= space["createdAt"]%>"
-                     coverImage="<%= space["coverImage"]%>"
-                     tags="<%= space["tags"]%>"
-                     status="<%= space["status"]%>"
-                     starChainId="<%= space["starChainId"]%>"
-                     spaceType="<%= space["spaceType"]%>"
-                     authorUuid="<%= space["authorUuid"]%>"
-         >
-         </space-card>
-        <% end %>
-      </div>
-    </div>
-    <% end %>
-    <%# DatasetsCards %>
-    <div>
-      <div class="flex mb-[16px]">
-        <div class="bg-[#D9D9D9] w-[23px] mr-[7px]"></div>
-        <div class="text-[24px] font-medium leading-[23px] mr-[20px]">Datasets</div>
-        <a href="/datasets" class="text-[14px] cursor-pointer text-[#757575] leading-[22px] underline">View More</a>
-      </div>
-      <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
-        <% DATASETS.slice(0,3).each do |dataset| %>
-          <dataset-card other="<%= dataset["other"] %>"
-                        type="<%= dataset["type"] %>"
-                        tags="<%= dataset["tags"] %>"
-                        protocol="<%= dataset["protocol"] %>"
-                        title="<%= dataset["title"] %>"
-                        desc="<%= dataset["desc"] %>"
-                        url="<%= dataset["url"] %>"
-          >
-          </dataset-card>
-        <% end %>
+      
       </div>
     </div>
   </div>
