@@ -5,7 +5,9 @@ class Api::ApplicationController < ApplicationController
   private
 
   def id_token
-    request.headers["Authorization"]
+    pattern = /^Bearer /
+    header  = request.headers['Authorization']
+    header.gsub(pattern, '') if header && header.match(pattern)
   end
 
   def user_info
