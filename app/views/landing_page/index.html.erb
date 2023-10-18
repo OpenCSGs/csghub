@@ -19,9 +19,9 @@
     </div>
   </div>
 </div>
-<div class="flex flex-col justify-center py-[100px] lg:px-[106px] md:px-[50px] py-[24px] px-[80px]">
+<div class="flex flex-col justify-center lg:px-[106px] md:px-[50px] py-[24px] px-[80px]">
   <%# Models Spaces Datesets %>
-  <div class="max-w-[1280px] m-auto  mb-[60px]">
+  <div class="max-w-[1280px] m-auto">
     <%# Models Spaces Datesets Text %>
     <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px] pt-[100px]">最新趋势</div>
@@ -98,13 +98,13 @@
   <%# News %>
   <div class="max-w-[1280px] m-auto">
     <%# NewsText %>
-    <div class="text-center">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">最新动态</div>
+    <div class="text-center mb-[88px]">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px] mt-[100px]">最新动态</div>
       <div class="text-[#606266] text-[20px] mb-[24px]">获取OpenCSG最新动态 </div>
       <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Join Us For Free</div>
     </div>
     <%# NewsCards %>
-    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center mb-[60px] max-w-[1280px] m-auto pt-[80px]">
+    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
       <% @newsData.each do |card| %>
         <a href="<%= asset_path(card[:href]) %>" class="w-full border border-[#DCDFE6] bg-white rounded-[8px] px-[18px]">
           <div class="bg-[#ECF5FF] h-[224px] flex justify-center items-center">
@@ -124,14 +124,14 @@
     </div>
   </div>
   <%# Experts %>
-  <div class="max-w-[1280px] m-auto mb-[60px]">
+  <div class="max-w-[1280px] m-auto mt-[100px]">
     <%# ExpertsText %>
-    <div class="text-center">
+    <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">专家</div>
       <div class="text-[#606266] text-[20px] mb-[24px]">在 OpenCSG，我们为您提供寻找合作伙伴的服务，以帮助您完成下一个项目。您可以根据您的需求浏览专家，并开始对话。</div>
       <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Explore More </div>
     </div>
-    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[24px] justify-items-center pt-[60px]">
+    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[24px] justify-items-center">
       <% LANDING_PAGE['experts'].each do |expert| %>
         <expert-card name="<%= expert["name"] %>"
                     type="<%= expert["type"] %>"
@@ -144,17 +144,17 @@
     </div>
   </div>
   <%# Partners %>
-  <div class="max-w-[1280px] m-auto mb-[60px]">
+  <div class="max-w-[1280px] m-auto mb-[100px] mt-[100px]">
     <%# PartnersText %>
-    <div class="text-center mb-[60px]">
+    <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">OpenCSG 合作伙伴</div>
       <div class="text-[#606266] text-[20px] mb-[24px]">OpenCSG 是一个协作生态系统，它连接合作伙伴并赋予他们能力，为各个行业的客户构建大规模模型。</div>
     </div>
     <%# PartnersCards %>
-    <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center max-w-[1280px] m-auto">
+    <div class="grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-[24px] justify-items-center max-w-[1280px] m-auto">
     <% PARTNERS.each do |partner| %>
-      <div class="w-[278px] bg-white h-[80px] flex items-center justify-center">
-       <img class="max-h-[48px] " src="<%= asset_path(partner["logo"]) %>" />
+      <div class="w-[278px] bg-white h-[80px] flex items-center justify-center rounded-[8px]">
+       <img class="max-h-[48px]" src="<%= asset_path(partner["logo"]) %>" />
       </div>
     <% end %>
     </div>
