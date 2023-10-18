@@ -85,3 +85,5 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "administrate", "~> 0.19.0"
 
 gem "pundit", "~> 2.3"
+
+gem "ruby-pinyin", "~> 0.5.0"
