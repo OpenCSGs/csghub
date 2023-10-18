@@ -41,7 +41,7 @@
       const response = await fetch('/api/comments', {
         method: 'POST',
         headers: {
-          "Authorization": cookies.get('idToken'),
+          'Authorization': `Bearer ${cookies.get('idToken')}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

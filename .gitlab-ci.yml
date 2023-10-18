@@ -39,6 +39,8 @@ master-build:
   stage: build
   services:
     - docker:24.0.6-dind
+  tags:
+   - opencsg
   rules:
     - <<: *if-main-original-repo
   variables:
@@ -73,6 +75,8 @@ staging-deploy:
 
 main-deploy:
   stage: deploy
+  tags:
+   - opencsg
   rules:
     - <<: *if-main-original-repo
   before_script:

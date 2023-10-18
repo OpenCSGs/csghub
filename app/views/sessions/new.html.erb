@@ -22,10 +22,8 @@
   }
 </style>
 
-<div class="w-full h-full flex sm:flex-col">
-  <div class="w-2/6 h-full bg-gray-50 sm:hidden">
-  </div>
-  <div class="w-4/6 h-full sm:w-auto flex justify-center items-center" id="authing-guard-container"></div>
+<div class="w-full h-full flex items-center justify-center sm:flex-col bg-gradient-to-r from-cyan-500 to-green-600">
+  <div class="h-full sm:w-auto flex justify-center items-center" id="authing-guard-container"></div>
 </div>
 
 <% if Rails.env.production? || Rails.env.staging? %>

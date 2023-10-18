@@ -8,14 +8,13 @@
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
           <p class="text-base font-semibold">关于我们</p>
           <div class="flex text-sm font-normal items-start flex-col gap-y-2">
-            <p><a href="https://opencsg.com">公司介绍</a></p>
-            <p><a href="https://opencsg.com">新闻动态</a></p>
-            <p><a href="https://opencsg.com">文档中心</a></p>
-            <p><a href="https://opencsg.com">加入我们</a></p>
+            <p><a href="https://opencsg.com" target="_blank">公司介绍</a></p>
+            <p><a href="https://opencsg.com/blog" target="_blank">新闻动态</a></p>
+            <p><a href="https://opencsg.com" target="_blank">加入我们</a></p>
           </div>
         </div>
       </div>
-      <div class="flex gap-x-[100px]">
+      <div class="flex gap-x-[100px] mt-[5px]">
         <div class="flex flex-none  items-start flex-col gap-y-4">
           <p class="text-base font-semibold">联系我们</p>
           <div class="flex text-sm font-normal items-start flex-col gap-y-2 ">
@@ -25,8 +24,9 @@
             <p>投资关系：ir@opencsg.com</p>
           </div>
         </div>
-        <div class="py-2 my-2 rounded-lg mlg:w-full mlg:hidden">
-          <img :src="footCode" height=103 width=103 alt="OpenCSG Logo"/>
+        <div class="my-2 rounded-lg mlg:w-full mlg:hidden text-center text-sm font-medium">
+          <img :src="footCode" height=100 width=100 alt="OpenCSG Logo"/>
+          <p class="mt-[8px]">微信公众号</p>
         </div>
       </div>
     </div>

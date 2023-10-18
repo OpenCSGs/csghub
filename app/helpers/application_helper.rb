@@ -29,6 +29,14 @@ module ApplicationHelper
   end
 
   def starchain_address
+    if logged_in?
+      raw_starchain_address
+    else
+      '/login'
+    end
+  end
+
+  def raw_starchain_address
     if Rails.env.production?
       "https://starchain.opencsg.com"
     else
