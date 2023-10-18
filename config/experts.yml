@@ -52,3 +52,15 @@
   tags: 开源专家
   desc: 前英特尔大数据技术团队研发经理，开源技术积极参与者， 多个Apache知名开源项目代码贡献者，上海Apache Spark Meetup核心组织者，策划及出品若干技术分享研讨会。
   avatar: 'experts/cheng_hao.png'
+- name: 朱万友
+  type: 个人
+  title: 瀚诚软件CEO
+  tags: 敏捷交付专家
+  desc: 擅长用敏捷软件开发方法交付高度定制化的创新型项目和产品。拥有18年软件开发/交付经验，曾参与过国际大型CAD/CAM系统的开发，主导过知名国企工程敏捷的导入。现服务于瀚诚软件，致力于以极限编程等工程敏捷方法为客户提供卓越的交付和咨询服务。
+  avatar: 'experts/zhu_wan_you.png'
+- name: 刘峰
+  type: 个人
+  title: SRE、AIOps金牌讲师
+  tags: 人工智能专家
+  desc: SRE和AIOps人工智能运维领域资深专家，具备超过 15 年 服务管理以及稳定性运维咨询领域工作和讲师经历。作为大中华区 SRE 讲师第一人，
+  avatar: 'experts/liu_feng.png'
