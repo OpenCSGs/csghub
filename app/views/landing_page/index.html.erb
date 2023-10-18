@@ -106,7 +106,7 @@
     <%# NewsCards %>
     <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center mb-[60px] max-w-[1280px] m-auto pt-[80px]">
       <% @newsData.each do |card| %>
-        <div class="w-full border border-[#DCDFE6] bg-white rounded-[8px] px-[18px]">
+        <a href="<%= asset_path(card[:href]) %>" class="w-full border border-[#DCDFE6] bg-white rounded-[8px] px-[18px]">
           <div class="bg-[#ECF5FF] h-[224px] flex justify-center items-center">
             <img src="<%= asset_path(card[:url]) %>" alt="" class="w-full max-h-[224px]" />
           </div>
@@ -119,7 +119,7 @@
           <div class="pt-[16px] pb-[24px] text-center text-[20px]">
             <%= card[:text]  %>
           </div>
-        </div>
+        </a>
       <% end  %>
     </div>
   </div>
