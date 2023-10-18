@@ -104,22 +104,24 @@
       <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Join Us For Free</div>
     </div>
     <%# NewsCards %>
-    <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center max-w-[1280px] m-auto">
+    <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[45px] justify-items-center max-w-[1280px] m-auto">
       <% @newsData.each do |card| %>
-        <a href="<%= asset_path(card[:href]) %>" class="w-full border border-[#DCDFE6] bg-white rounded-[8px] px-[18px]">
-          <div class="bg-[#ECF5FF] h-[224px] flex justify-center items-center">
-            <img src="<%= asset_path(card[:url]) %>" alt="" class="w-full max-h-[224px]" />
-          </div>
-          <div class="text-[20px] font-semibold pt-[16px] leading-[22px] ">
-            <%= card[:title]  %>
-          </div>
-           <div class="text-[16px] text-[#909399] leading-[24px] ">
-            <%= card[:time]  %>
-          </div>
-          <div class="pt-[16px] pb-[24px] text-center text-[20px]">
-            <%= card[:text]  %>
-          </div>
-        </a>
+        <div class="bg-[#ECF5FF] flex flex-col justify-center items-center max-w-[380px] max-h-[478px] overflow-hidden">
+          <img src="<%= asset_path(card[:url]) %>" alt="" class="w-full max-h-[200px] object-cover rounded-t-[8px]" />
+          <a href="<%= asset_path(card[:href]) %>" class="w-full border border-[#DCDFE6] bg-white rounded-b-[8px] px-[18px]">
+            <div class="h-[224px] overflow-cut">
+              <p class="text-[20px] font-semibold pt-[16px] leading-[22px] ">
+                <%= card[:title]  %>
+              </p>
+              <p class="text-[16px] text-[#909399] leading-[24px] ">
+                <%= card[:time]  %>
+              </p>
+              <p class="pt-[16px] pb-[24px] text-center text-[16px] text-[#909399]">
+                <%= card[:text]  %>
+              </p>
+            </div>
+          </a>
+        </div>
       <% end  %>
     </div>
   </div>
