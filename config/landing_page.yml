@@ -1,0 +1,63 @@
+models:
+  - title: ChatGLM-中英对话大模型-6B-Int4
+    author: 智谱.AI
+    download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/ChatGLM-6B-Int4.tar.gz
+    tags: PyTorch,文本生成
+    license: Apache License 2.0
+    desc: ChatGLM-6B 是一个开源的、支持中英双语问答的对话语言模型，基于 General Language Model (GLM) 架构，具有 62 亿参数。结合模型量化技术，用户可以在消费级的显卡上进行本地部署（INT4 量化级别下最低只需 6GB 显存）。ChatGLM-6B 使用了和 ChatGLM 相同的技术，针对中文问答和对话进行了优化。ChatGLM-6B-INT4 是 ChatGLM-6B 量化后的模型权重。具体的，ChatGLM-6B-INT4 对 ChatGLM-6B 中的 28 个 GLM Block 进行了 INT4 量化，没有对 Embedding 和 LM Head 进行量化。量化后的模型理论上 6G 显存（使用 CPU 即内存）即可推理，具有在嵌入式设备（如树莓派）上运行的可能。
+  - title: 百川2-7B-对话模型-4bits量化版
+    author: 百川智能
+    download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/Baichuan2-7B-Chat-4bits.tar.gz
+    tags: PyTorch,文本生成
+    license: 其它
+    desc: Baichuan 2 是百川智能推出的新一代开源大语言模型，采用 2.6 万亿 Tokens 的高质量语料训练。Baichuan 2 在多个权威的中文、英文和多语言的通用、领域 benchmark 上取得同尺寸最佳的效果。本次发布包含有 7B、13B 的 Base 和 Chat 版本，并提供了 Chat 版本的 4bits 量化。所有版本对学术研究完全开放。同时，开发者通过邮件申请并获得官方商用许可后，即可免费商用。
+  - title: 书生·浦语-对话-7B-v1_1
+    author: 上海人工智能实验室
+    download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/internlm-chat-7b-v1_1.tar.gz
+    tags: PyTorch,文本生成
+    license: Apache License 2.0
+    desc: 书生·浦语大模型，包含面向实用场景的70亿参数基础模型与对话模型 （InternLM-7B）。模型具有以下特点：使用上万亿高质量预料，建立模型超强知识体系；支持8k语境窗口长度，实现更长输入与更强推理体验；通用工具调用能力，支持用户灵活自助搭建流程；模型权重对学术研究完全开放，也可申请免费的商业使用授权。
+datasets:
+  - title: 中文诗词数据集
+    tags:
+    protocol: '开源协议：Apache License 2.0'
+    desc: 中文诗词生成数据集，由中国古代各朝代诗词组成，可用于训练诗词续写模型。本数据集包括训练集（388599）测试集（1710）。其中，每一条数据有一个属性，输入句子text1，由一段诗词组成示例如下：{"text1":"云髻高梳鬓不分，扫除虚室事元君。新糊白纸屏风上，尽画蓬莱五色云。"}
+    type: 数据集作者
+    create_at: 2023.08.28
+    url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/chinese-poetry-collection.tar.gz
+    other: ModelScope 提供
+  - title: 中文Text2SQL数据集
+    tags:
+    protocol: '开源协议：Apache License 2.0'
+    desc: 同时包含用于训练和测试表格问答预训练模型的数据，数据集包含500条训练数据和100条测试数据。
+    type: 数据集作者
+    create_at: 2023.08.28
+    url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/ChineseText2SQL.tar.gz
+    other: ModelScope 提供
+  - title: 100PoisonMpts：中文大模型治理数据集
+    tags:
+    protocol: '开源协议：Apache License 2.0'
+    desc: 本数据集包括训练集（3394）、验证集（1009）、测试集（1287），实体类型包括corporation, creative-work、group、location、person、product。
+    type: 数据集作者
+    create_at: 2023.08.28
+    url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/100PoisonMpts.tar.gz
+    other: 达摩院 提供
+experts:
+  - name: 周闻均
+    type: 个人
+    title: 智用人工智能应用研究院数据智能与孵化器 CTO
+    tags: 人工智能专家
+    desc: 周闻钧是智用人工智能应用研究院数据智能与孵化器CTO，同时也担任上海徐汇区特聘数字人才讲师（人工智能方向），主要研究领域为人工智能、物联网、工业元宇宙、数据科学等。周闻钧曾任微软中国首席创新技术架构师、苹果公司技术传教士、同济大学软件学院院长助理。人工智能、产业物联网和元宇宙领域的知名专家，具备5年以上高校科研教学和10年以上企业技术布道的经验，是数据科学、人工智能、大数据三个领域“微软专业学位”的拥有者，为多家行业领先的独角兽公司和初创企业提供技术咨询。
+    avatar: 'experts/zhou_wen_jun.png'
+  - name: 何开圣
+    type: 个人
+    title: 未来速度CTO
+    tags: 分布式计算专家
+    desc: 在人工智能与大数据领域有丰富的经验，参与设计开发多个分布式计算框架。曾在阿里云计算平台负责 Python 生态的工作，多个开源项目的创建者与核心开发者。
+    avatar: 'experts/he_kai_sheng.png'
+  - name: 朱万友
+    type: 个人
+    title: 瀚诚软件CEO
+    tags: 敏捷交付专家
+    desc: 擅长用敏捷软件开发方法交付高度定制化的创新型项目和产品。拥有18年软件开发/交付经验，曾参与过国际大型CAD/CAM系统的开发，主导过知名国企工程敏捷的导入。现服务于瀚诚软件，致力于以极限编程等工程敏捷方法为客户提供卓越的交付和咨询服务。
+    avatar: 'experts/zhu_wan_you.jpg'
