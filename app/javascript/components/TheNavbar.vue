@@ -19,12 +19,9 @@
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li>
       </ul>
-      <el-dropdown class="!hidden xl:!block px-8 sm:px-2">
+      <el-dropdown class="!hidden xl:!block pr-8 sm:px-2">
         <span class="el-dropdown-link">
-          目录
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m242-200 200-280-200-280h98l200 280-200 280h-98Zm238 0 200-280-200-280h98l200 280-200 280h-98Z"/></svg>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
