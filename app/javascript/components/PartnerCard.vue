@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-[16px]  bg-white gap-y-[15px] justify-between rounded-lg border">
+  <div class="flex flex-col p-[16px] bg-white gap-y-[15px] justify-between rounded-lg border w-full">
     <div class="max-w-[270px]">
       <img :src="logo" class="max-w-full max-h-[48px]" alt="OpenCSG Logo"/>
     </div>
