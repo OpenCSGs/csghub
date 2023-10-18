@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
-    <div class="max-w-[914px] py-[60px] flex gap-x-[120px] sm:gap-x-[20px] justify-center items-center">
+    <div class="max-w-[914px] py-[60px] flex gap-x-[120px] sm:gap-x-[10px] justify-center items-center">
       <div class="flex gap-x-[100px]">
         <div class="my-2 justify-center items-center mlg:hidden">
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
         </div>
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
           <p class="text-base font-semibold">关于我们</p>
-          <div class="flex text-sm font-normal items-start flex-col gap-y-2">
+          <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2">
             <p><a href="https://opencsg.com" target="_blank">公司介绍</a></p>
             <p><a href="https://opencsg.com/blog" target="_blank">新闻动态</a></p>
             <p><a href="https://opencsg.com" target="_blank">加入我们</a></p>
@@ -15,9 +15,9 @@
         </div>
       </div>
       <div class="flex gap-x-[100px] mt-[5px]">
-        <div class="flex flex-none  items-start flex-col gap-y-4">
+        <div class="flex flex-none items-start flex-col gap-y-4">
           <p class="text-base font-semibold">联系我们</p>
-          <div class="flex text-sm font-normal items-start flex-col gap-y-2 ">
+          <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
             <p>商务合作：Partner@opencsg.com</p>
             <p>简历投递：hr@opencsg.com</p>
             <p>媒体合作：pr@opencsg.com</p>
