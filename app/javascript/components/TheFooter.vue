@@ -18,7 +18,7 @@
         <div class="flex flex-none items-start flex-col gap-y-4">
           <p class="text-base font-semibold">联系我们</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
-            <p>商务合作：Partner@opencsg.com</p>
+            <p>商务合作：partner@opencsg.com</p>
             <p>简历投递：hr@opencsg.com</p>
             <p>媒体合作：pr@opencsg.com</p>
             <p>投资关系：ir@opencsg.com</p>
