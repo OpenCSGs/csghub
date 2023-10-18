@@ -16,8 +16,11 @@
     </div>
   </div>
   <%# cards %>
+  <div class="max-w-[1280px] m-auto mb-[10px]">
+    <p class="w-[1280px] xl:w-[96vw] sm:w-full text-gray-500 font-light italic"> * 以下数据根据拼音首字母排序 * </p>
+  </div>
   <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center mb-[60px] max-w-[1280px] m-auto">
-    <% PARTNERS.each do |partner| %>
+    <% @partners.each do |partner| %>
       <partner-card name="<%= partner["name"] %>"
                     site="<%= partner["site"] %>"
                     tags="<%= partner["tags"] %>"
