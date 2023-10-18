@@ -6,11 +6,11 @@
       <div class="max-w-[415px] text-[#606266] text-[20px] sm:text-[18px] mb-[24px]">我们的愿景是大众化大模型，让每个赛道，每个行业，每个公司，每个人拥有经济且实用的大模型， 并具备可访问性、定制性和垂直行业特性。让大模型驱动全民，从而推动技术加速创新。</div>
       <% if !logged_in? %>
         <div class="flex  sm:flex-col gap-[8px] items-center">
-          <a href="/login" class="hover:bg-[white] hover:text-[black] hover:border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] border-2">加入我们</a>
+          <a href="/login" class="hover:bg-[white] hover:text-[black] hover:border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] border-2">加入社区</a>
           <a href="https://www.opencsg.com" class="block hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">了解更多</a>
         </div>
       <% else %>
-        <div class="hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">Learn More</div>
+        <a href="https://www.opencsg.com" class="block hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">了解更多</a>
       <% end %>
     </div>
   <%# 图片600*600 %>
@@ -101,7 +101,6 @@
     <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px] mt-[100px]">最新动态</div>
       <div class="text-[#606266] text-[20px] mb-[24px]">获取OpenCSG最新动态 </div>
-      <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Join Us For Free</div>
     </div>
     <%# NewsCards %>
     <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[45px] justify-items-center max-w-[1280px] m-auto">
@@ -131,7 +130,9 @@
     <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">专家</div>
       <div class="text-[#606266] text-[20px] mb-[24px]">在 OpenCSG，我们为您提供寻找合作伙伴的服务，以帮助您完成下一个项目。您可以根据您的需求浏览专家，并开始对话。</div>
-      <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">Explore More </div>
+      <a href="/experts">
+        <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">了解更多 </div>
+      </a>
     </div>
     <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[24px] justify-items-center">
       <% LANDING_PAGE['experts'].each do |expert| %>
@@ -153,12 +154,15 @@
       <div class="text-[#606266] text-[20px] mb-[24px]">OpenCSG 是一个协作生态系统，它连接合作伙伴并赋予他们能力，为各个行业的客户构建大规模模型。</div>
     </div>
     <%# PartnersCards %>
+    <div class="mb-[10px]">
+      <p class="text-center sm:w-full text-gray-500 font-light italic"> * 以下数据根据拼音首字母排序 * </p>
+    </div>
     <div class="grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1 gap-[24px] justify-items-center max-w-[1280px] m-auto">
-    <% PARTNERS.each do |partner| %>
-      <div class="w-[278px] bg-white h-[80px] flex items-center justify-center rounded-[8px]">
-       <img class="max-h-[48px]" src="<%= asset_path(partner["logo"]) %>" />
-      </div>
-    <% end %>
+      <% @partners.each do |partner| %>
+        <div class="w-[278px] bg-white h-[80px] flex items-center justify-center rounded-[8px]">
+        <img class="max-h-[48px]" src="<%= asset_path(partner["logo"]) %>" />
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
