@@ -4,7 +4,7 @@
     <div class="grow">
       <div class="text-[48px] sm:text-[23px] text-[#303133] font-semibold mb-[24px]">让大模型赋能每一个人</div>
       <div class="max-w-[415px] text-[#606266] text-[20px] sm:text-[18px] mb-[24px]">我们的愿景是大众化大模型，让每个赛道，每个行业，每个公司，每个人拥有经济且实用的大模型， 并具备可访问性、定制性和垂直行业特性。让大模型驱动全民，从而推动技术加速创新。</div>
-      <% if logged_in? == false %>
+      <% if !logged_in? %>
         <div class="flex  sm:flex-col gap-[8px] items-center">
           <a href="/login" class="hover:bg-[white] hover:text-[black] hover:border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] border-2">加入我们</a>
           <a href="https://www.opencsg.com" class="block hover:bg-[black] hover:text-[white] rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-white text-black w-[200px] py-[11px] border-2 border-black">了解更多</a>
@@ -106,17 +106,17 @@
     <%# NewsCards %>
     <div class="grid grid-cols-3 mlg:grid-cols-1 gap-[25px] justify-items-center mb-[60px] max-w-[1280px] m-auto pt-[80px]">
       <% @newsData.each do |card| %>
-        <a href="<%= asset_path(card[:href]) %>" class="w-full border border-[#DCDFE6] bg-white rounded-[8px] px-[18px]">
-          <div class="bg-[#ECF5FF] h-[224px] flex justify-center items-center">
+        <a href="<%= asset_path(card[:href]) %>" class="w-full border border-[#DCDFE6] bg-white rounded-[8px]">
+          <div class="bg-[#ECF5FF]flex justify-center items-center">
             <img src="<%= asset_path(card[:url]) %>" alt="" class="w-full max-h-[224px]" />
           </div>
-          <div class="text-[20px] font-semibold pt-[16px] leading-[22px] ">
+          <div class="text-[20px] font-semibold pt-[16px] leading-[22px] px-[18px]">
             <%= card[:title]  %>
           </div>
-           <div class="text-[16px] text-[#909399] leading-[24px] ">
+           <div class="text-[16px] text-[#909399] leading-[24px] px-[18px]">
             <%= card[:time]  %>
           </div>
-          <div class="pt-[16px] pb-[24px] text-center text-[20px]">
+          <div class="pt-[16px] pb-[24px] text-center text-[20px] px-[18px]">
             <%= card[:text]  %>
           </div>
         </a>
