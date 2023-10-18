@@ -2,6 +2,7 @@ EXPERTS = YAML.safe_load(File.read(File.join(Rails.root, 'config/experts.yml')))
 PARTNERS = YAML.safe_load(File.read(File.join(Rails.root, 'config/partners.yml')))
 MODELS = YAML.safe_load(File.read(File.join(Rails.root, 'config/models.yml')))
 DATASETS = YAML.safe_load(File.read(File.join(Rails.root, 'config/datasets.yml')))
+LANDING_PAGE = YAML.safe_load(File.read(File.join(Rails.root, 'config/landing_page.yml')))
 COLORS = [
 '#6b9023',
 '#006666',
