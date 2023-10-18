@@ -275,6 +275,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.6)
+    rmmseg-cpp-new (0.3.1)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -292,6 +293,8 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
+    ruby-pinyin (0.5.0)
+      rmmseg-cpp-new (~> 0.3.1)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
@@ -374,6 +377,7 @@ DEPENDENCIES
   pundit (~> 2.3)
   rails (~> 7.0.7, >= 7.0.7.2)
   rspec-rails
+  ruby-pinyin (~> 0.5.0)
   selenium-webdriver
   sprockets-rails
   stimulus-rails
