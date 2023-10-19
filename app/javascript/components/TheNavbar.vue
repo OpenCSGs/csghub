@@ -1,11 +1,9 @@
 <template>
-  <div
-    class="flex text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px]"
-  >
+  <div class="flex text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
     <div class="flex">
       <div class="py-2 mr-[100px] sm:mr-[30px]">
         <a href="/">
-          <img :src="logo" height="32" width="99" alt="OpenCSG Logo" />
+          <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px]" />
         </a>
       </div>
     </div>
