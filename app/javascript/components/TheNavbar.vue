@@ -19,12 +19,9 @@
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li>
       </ul>
-      <el-dropdown class="!hidden xl:!block px-8 sm:px-2">
+      <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
-          目录
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
+          <el-icon><ArrowDownBold /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -74,8 +71,11 @@
         </template>
       </el-dropdown>
       <button v-else class="bg-[#303133] rounded-[100px] py-[2px] px-[12px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
-        <a href="/login">
+        <a class="sm:hidden" href="/login">
           登录/注册
+        </a>
+        <a class="hidden sm:block" href="/login">
+          登录
         </a>
       </button>
     </div>
