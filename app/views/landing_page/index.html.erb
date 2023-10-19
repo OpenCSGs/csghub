@@ -68,7 +68,7 @@
                       tags="<%= model["tags"] %>"
                       license="<%= model["license"] %>"
                       desc="<%= model["desc"] %>"
-                      avatar="<%= asset_path('models/default_model_logo.png') %>">
+                      avatar="<%= asset_path( model["avatar"] ) %>">
           </model-card>
         <% end %>
       </div>
@@ -100,7 +100,7 @@
     <%# NewsText %>
     <div class="text-center mb-[88px] sm:mb-[44px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px] mt-[100px] sm:mt-[50px]">最新动态</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">获取OpenCSG最新动态 </div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">获取 OpenCSG 最新动态 </div>
     </div>
     <%# NewsCards %>
     <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[45px] justify-items-center max-w-[1280px] m-auto">
@@ -128,8 +128,8 @@
   <div class="max-w-[1280px] m-auto mt-[100px] sm:mt-[50px]">
     <%# ExpertsText %>
     <div class="text-center mb-[88px] sm:mb-[44px]">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">专家</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">在 OpenCSG，我们为您提供寻找合作伙伴的服务，以帮助您完成下一个项目。您可以根据您的需求浏览专家，并开始对话。</div>
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">专家社区</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">共建开源开放、共享开源生态<br/>为用户提供技术支持及咨询，解决方案设计指导等</div>
       <a href="/experts">
         <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">了解更多 </div>
       </a>
@@ -151,7 +151,7 @@
     <%# PartnersText %>
     <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">OpenCSG 合作伙伴</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">OpenCSG 是一个协作生态系统，它连接合作伙伴并赋予他们能力，为各个行业的客户构建大规模模型。</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">连接与共建解决方案生态，携手合作伙伴，打造共创、共赢、共享的合作伙伴新生态</div>
     </div>
     <%# PartnersCards %>
     <div class="mb-[10px]">
