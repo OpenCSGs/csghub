@@ -1,6 +1,6 @@
   <%# banner %>
-<div class="flex flex-col justify-center py-[100px] lg:px-[106px] md:px-[50px] py-[24px] px-[80px] bg-white h-screen mt-[-47.63px]">
-  <div class="flex justify-center items-center sm:flex-col sm:w-full max-w-[1280px] m-auto ">
+<div class="flex flex-col justify-center py-[100px] sm:pb-[50px] lg:px-[106px] sm:px-[20px] md:px-[50px] px-[80px] bg-white h-screen sm:h-auto mt-[-47.63px]">
+  <div class="flex justify-center items-center sm:flex-col sm:gap-[30px] gap-[80px] sm:w-full max-w-[1280px] m-auto ">
     <div class="grow">
       <div class="text-[48px] sm:text-[23px] text-[#303133] font-semibold mb-[24px]">让大模型赋能每一个人</div>
       <div class="max-w-[415px] text-[#606266] text-[20px] sm:text-[18px] mb-[24px]">我们的愿景是大众化大模型，让每个赛道，每个行业，每个公司，每个人拥有经济且实用的大模型， 并具备可访问性、定制性和垂直行业特性。让大模型驱动全民，从而推动技术加速创新。</div>
@@ -14,17 +14,17 @@
       <% end %>
     </div>
   <%# 图片600*600 %>
-    <div class="grow sm:grow-0 flex justify-center">
-            <img src="<%= asset_path('landing_banner.png') %>" alt="" class="w-full max-h-[605px]" />
+    <div class="grow sm:grow-0 flex justify-center mr-[-80px] sm:mr-0">
+      <img src="<%= asset_path('landing_banner.png') %>" alt="" class="w-full max-h-[605px]" />
     </div>
   </div>
 </div>
-<div class="flex flex-col justify-center lg:px-[106px] md:px-[50px] py-[24px] px-[80px]">
+<div class="flex flex-col justify-center lg:px-[106px] md:px-[50px] sm:px-[20px] py-[24px] px-[80px]">
   <%# Models Spaces Datesets %>
   <div class="max-w-[1280px] m-auto">
     <%# Models Spaces Datesets Text %>
-    <div class="text-center mb-[88px]">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px] pt-[100px]">最新趋势</div>
+    <div class="text-center mb-[88px] sm:mb-[44px]">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px] pt-[100px] sm:pt-[50px]">最新趋势</div>
       <div class="text-[#606266] text-[20px] mb-[24px]"> 探索 Opencsg 用户喜欢什么 </div>
     </div>
     <%# SpaceCards %>
@@ -68,7 +68,7 @@
                       tags="<%= model["tags"] %>"
                       license="<%= model["license"] %>"
                       desc="<%= model["desc"] %>"
-                      avatar="<%= asset_path('models/default_model_logo.png') %>">
+                      avatar="<%= asset_path( model["avatar"] ) %>">
           </model-card>
         <% end %>
       </div>
@@ -98,9 +98,9 @@
   <%# News %>
   <div class="max-w-[1280px] m-auto">
     <%# NewsText %>
-    <div class="text-center mb-[88px]">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px] mt-[100px]">最新动态</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">获取OpenCSG最新动态 </div>
+    <div class="text-center mb-[88px] sm:mb-[44px]">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px] mt-[100px] sm:mt-[50px]">最新动态</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">获取 OpenCSG 最新动态 </div>
     </div>
     <%# NewsCards %>
     <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[45px] justify-items-center max-w-[1280px] m-auto">
@@ -125,11 +125,11 @@
     </div>
   </div>
   <%# Experts %>
-  <div class="max-w-[1280px] m-auto mt-[100px]">
+  <div class="max-w-[1280px] m-auto mt-[100px] sm:mt-[50px]">
     <%# ExpertsText %>
-    <div class="text-center mb-[88px]">
-      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">专家</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">在 OpenCSG，我们为您提供寻找合作伙伴的服务，以帮助您完成下一个项目。您可以根据您的需求浏览专家，并开始对话。</div>
+    <div class="text-center mb-[88px] sm:mb-[44px]">
+      <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">专家社区</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">共建开源开放、共享开源生态<br/>为用户提供技术支持及咨询，解决方案设计指导等</div>
       <a href="/experts">
         <div class="hover:bg-[white] hover:text-[black] border-2 hover:border-black rounded-[40px] cursor-pointer text-center text-[20px] font-semibold bg-black text-white w-[200px] py-[11px] m-auto">了解更多 </div>
       </a>
@@ -147,11 +147,11 @@
     </div>
   </div>
   <%# Partners %>
-  <div class="max-w-[1280px] m-auto mb-[100px] mt-[100px]">
+  <div class="max-w-[1280px] m-auto mb-[100px] sm:mb-[50px] mt-[100px] sm:mt-[50px]">
     <%# PartnersText %>
     <div class="text-center mb-[88px]">
       <div class="text-[48px] text-[#303133] font-semibold mb-[24px]">OpenCSG 合作伙伴</div>
-      <div class="text-[#606266] text-[20px] mb-[24px]">OpenCSG 是一个协作生态系统，它连接合作伙伴并赋予他们能力，为各个行业的客户构建大规模模型。</div>
+      <div class="text-[#606266] text-[20px] mb-[24px]">连接与共建解决方案生态，携手合作伙伴，打造共创、共赢、共享的合作伙伴新生态</div>
     </div>
     <%# PartnersCards %>
     <div class="mb-[10px]">
