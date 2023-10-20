@@ -1,13 +1,13 @@
-<div class="fixed bottom-[50px] right-[30px] sm:hidden">
+<div class="fixed bottom-[50px] right-[30px]">
   <el-popover
     placement="top-start"
-    :width="204"
+    :width='204'
     trigger="hover"
   >
     <h3 class="text-center"> 添加企业微信</h3>
     <%= image_tag('qiye_wechat.png', width: '180', height: '180') %>
     <template #reference>
-      <%= image_tag('monster.gif', width: '120') %>
+      <%= image_tag('monster.gif', width: '120', class: "w-[120px] sm:w-[60px]") %>
     </template>
   </el-popover>
 </div>
