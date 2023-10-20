@@ -1,23 +1,21 @@
 <template>
-  <div
-    class="flex text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px]"
-  >
+  <div class="flex text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
     <div class="flex">
       <div class="py-2 mr-[100px] sm:mr-[30px]">
         <a href="/">
-          <img :src="logo" height="32" width="99" alt="OpenCSG Logo" />
+          <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px]" />
         </a>
       </div>
     </div>
     <div class="flex justify-between items-center pl-4">
       <ul class="flex justify-between items-center">
+        <li v-if="isLoggedInBoolean" class="px-5 mlg:!hidden lg:!hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
         <li class="px-5 mlg:!hidden"> <space></space> </li>
         <li class="px-5 mlg:!hidden"> <model></model> </li>
         <li class="px-5 mlg:!hidden"> <dataset></dataset> </li>
-        <li v-if="isLoggedInBoolean" class="px-5 mlg:!hidden lg:!hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <partner></partner> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
-        <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li>
+        <!-- <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li> -->
       </ul>
       <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
@@ -25,13 +23,13 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
+            <el-dropdown-item v-if="isLoggedInBoolean" class="!hidden lg:!flex"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
             <el-dropdown-item class="!hidden mlg:!flex"> <space></space> </el-dropdown-item>
             <el-dropdown-item class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
             <el-dropdown-item class="!hidden mlg:!flex"> <dataset></dataset> </el-dropdown-item>
-            <el-dropdown-item v-if="isLoggedInBoolean" class="!hidden lg:!flex"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <partner></partner> </el-dropdown-item>
             <el-dropdown-item class="!hidden xl:!flex"> <expert></expert> </el-dropdown-item>
-            <el-dropdown-item class="!hidden xl:!flex"> <docs></docs> </el-dropdown-item>
+            <!-- <el-dropdown-item class="!hidden xl:!flex"> <docs></docs> </el-dropdown-item> -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>

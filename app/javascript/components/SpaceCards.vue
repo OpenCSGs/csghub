@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between">
-    <h3 class="pl-[20px] font-semibold text-xl">Space 列表</h3>
+    <h3 class="pl-[10px] xl:pl-[25px] mb-[20px] font-semibold text-xl">Space 列表</h3>
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
                @change="reloadCards"
@@ -15,7 +15,7 @@
       />
     </el-select>
   </div>
-  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[10px] justify-items-center xl:px-[20px]">
+  <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[20px] justify-items-center xl:px-[20px]">
     <SpaceCard v-for="space in JSON.parse(theSpaces)"
       :key="space.star_chain_id"
       :title="space.title"

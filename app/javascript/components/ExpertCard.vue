@@ -36,7 +36,7 @@
           :content="desc"
       >
         <template #reference>
-          <p class="h-[40px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer">
+          <p class="h-[46px] leading-[23px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2 cursor-pointer">
             {{ desc }}
           </p>
         </template>
