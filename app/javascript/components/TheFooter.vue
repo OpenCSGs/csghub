@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
-    <div class="max-w-[914px] py-[60px] flex gap-x-[120px] sm:gap-x-[10px] justify-center items-center">
+    <div class="max-w-[914px] py-[60px] flex gap-x-[120px] sm:gap-x-[10px] mlg:pb-[30px] justify-center items-center mlg:items-start">
       <div class="flex gap-x-[100px]">
         <div class="my-2 justify-center items-center mlg:hidden">
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="flex gap-x-[100px] mt-[5px]">
+      <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0">
         <div class="flex flex-none items-start flex-col gap-y-4">
           <p class="text-base font-semibold">联系我们</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
@@ -29,6 +29,11 @@
           <p class="mt-[8px]">微信公众号</p>
         </div>
       </div>
+    </div>
+
+    <div class="my-2 rounded-lg hidden mlg:block text-center text-sm font-medium pb-10">
+      <img :src="footCode" height=120 width=120 alt="OpenCSG Logo"/>
+      <p class="mt-[8px]">微信公众号</p>
     </div>
 
     <div class="py-4 flex justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] sm:flex-col">
