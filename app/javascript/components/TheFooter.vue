@@ -32,7 +32,7 @@
     </div>
 
     <div class="my-2 rounded-lg hidden mlg:block text-center text-sm font-medium pb-10">
-      <img :src="footCode" height=240 width=240 alt="OpenCSG Logo"/>
+      <img :src="footCode" height=120 width=120 alt="OpenCSG Logo"/>
       <p class="mt-[8px]">微信公众号</p>
     </div>
 
