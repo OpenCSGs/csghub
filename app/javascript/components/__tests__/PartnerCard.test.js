@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import PartnerCard from '../PartnerCard.vue'
 
-describe('WeatherBanner.vue Implementation Test', () => {
+describe('PartnerCard.vue Implementation Test', () => {
   let wrapper = null
 
   it('initializes with correct elements', () => {
