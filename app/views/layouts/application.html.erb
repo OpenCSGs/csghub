@@ -10,6 +10,14 @@
     <%= javascript_include_tag "application", defer: true %>
     <%= favicon_link_tag asset_path('favicon.png') %>
     <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?95555b86ed4a344b0aa4f20afeee20c1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+
       const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
     </script>
   </head>
