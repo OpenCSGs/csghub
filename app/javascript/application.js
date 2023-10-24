@@ -19,7 +19,7 @@ import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
 import ModelCard from "./components/ModelCard.vue"
 import UserInfo from "./components/profile/UserInfo.vue"
-import EditInfo from "./components/profile/EditInfo.vue"
+// import EditInfo from "./components/profile/EditInfo.vue"
 
 app = createApp({
   components: {
@@ -34,7 +34,7 @@ app = createApp({
     PartnerCard,
     Foot,
     UserInfo,
-    EditInfo
+    // EditInfo
   },
   provide:{
     defaultTags: DefaultTags
