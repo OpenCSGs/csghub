@@ -27,7 +27,13 @@
 </template>
 <script>
 export default {
-  props: {},
+  props: {
+    name:String,
+    tel:String,
+    avatar:String,
+    mail:String,
+    lastTime:String,
+  },
   data() {
     return {};
   },
