@@ -58,6 +58,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -76,6 +77,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov'
 end
 
 gem "jsbundling-rails", "~> 1.2"

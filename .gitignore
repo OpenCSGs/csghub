@@ -48,6 +48,4 @@ yarn-error.log
 
 config/database.yml
 
-
-
-
+coverage/
