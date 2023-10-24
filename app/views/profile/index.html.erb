@@ -5,6 +5,7 @@
                email="<%= current_user.email %>"
                avatar="<%= current_user.avatar %>"
                last-time="<%= current_user.last_login_at %>"
+               roles="<%= current_user.roles.to_json %>"
     ></user-info>
   </div>
   <div class="grow">
