@@ -18,7 +18,14 @@
     "yarn": "^1.22.19"
   },
   "scripts": {
+    "test": "vitest",
     "build": "node build.js",
     "dev-build": "node build.dev.js"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue/test-utils": "^2.4.1",
+    "jsdom": "^22.1.0",
+    "vitest": "^0.34.6"
   }
 }
