@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       end
     end
 
+    get '/profile', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
     get '/datasets', to: 'datasets#index'
