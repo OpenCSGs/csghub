@@ -29,7 +29,7 @@
 export default {
   props: {
     name: String,
-    tel: String,
+    phone: String,
     avatar: String,
     mail: String,
     lastTime: String,
@@ -37,5 +37,6 @@ export default {
   data() {
     return {};
   },
+  mounted() {},
 };
 </script>
