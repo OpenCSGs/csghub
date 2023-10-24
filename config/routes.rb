@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    
+
     root to: "spaces#index"
   end
 
@@ -18,13 +18,19 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "landing_page#index"
 
+    resources :settings, only: [] do
+      collection do
+        get 'profile'
+      end
+    end
+
     resources :spaces, only: ['index', 'show', 'update'] do
       collection do
         get 'stopped'
       end
     end
 
-    get '/profile', to: 'profile#index'
+    get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
     get '/datasets', to: 'datasets#index'
