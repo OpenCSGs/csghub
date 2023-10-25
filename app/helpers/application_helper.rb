@@ -47,4 +47,8 @@ module ApplicationHelper
   def current_locale
     I18n.locale
   end
+
+  def little_assistant_monster_pages?
+    request.path.match(/\/partners|\/experts/)
+  end
 end
