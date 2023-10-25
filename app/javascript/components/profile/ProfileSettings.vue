@@ -83,6 +83,9 @@
   </div>
 </template>
 <script>
+import { useCookies } from "vue3-cookies"
+import { ElMessage } from 'element-plus'
+const { cookies } = useCookies()
 export default {
   props: {
     name: String,
@@ -112,15 +115,18 @@ export default {
       this.imageUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `user/profile/${this.$props.userName}`;
+      const profileUpdateEndpoint = `/api/users/${this.userName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
       if (file !== undefined) {
-        formData.append("profile_avatar", file);
+        formData.append("avatar", file);
       }
-      formData.append("profile_name", `${this.name}`);
+      formData.append("name", this.inputName);
       const options = {
         method: "PUT",
+        headers: {
+          'Authorization': `Bearer ${cookies.get('idToken')}`
+        },
         body: formData,
       };
 
@@ -143,7 +149,7 @@ export default {
       }
     },
     saveProfile() {
-      //   updateProfile()
+      this.updateProfile()
     },
   },
 };
