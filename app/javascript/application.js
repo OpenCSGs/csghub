@@ -18,9 +18,9 @@ import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
 import ModelCard from "./components/ModelCard.vue"
-import UserInfo from "./components/profile/UserInfo.vue"
-import EditInfo from "./components/profile/EditInfo.vue"
-import ProfileSettings from "./components/profile/ProfileSettings.vue"
+import Profile from "./components/user_settings/Profile.vue"
+import EditInfo from "./components/user_settings/EditInfo.vue"
+import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 
 app = createApp({
   components: {
@@ -34,9 +34,9 @@ app = createApp({
     ModelCard,
     PartnerCard,
     Foot,
-    UserInfo,
+    Profile,
     EditInfo,
-    ProfileSettings
+    ProfileEdit
   },
   provide:{
     defaultTags: DefaultTags
