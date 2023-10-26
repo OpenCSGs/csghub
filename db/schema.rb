@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_10_073921) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_26_064610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_073921) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "landing_pages", force: :cascade do |t|
+    t.string "lead_source"
+    t.string "channel"
+    t.string "lead_status"
+    t.string "local_channel"
+    t.string "lead_type"
+    t.string "lead_fields"
+    t.string "uuid"
+    t.string "landing_page_status", default: "active"
+    t.string "title"
+    t.string "internal_title"
+    t.text "description"
+    t.string "custom_required_fields"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "spaces", force: :cascade do |t|
