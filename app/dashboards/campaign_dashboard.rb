@@ -16,6 +16,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     uuid: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    content: RichTextField
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,20 +26,23 @@ class CampaignDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    end_date
-    location
     name
+    content
+    location
+    start_date
+    end_date
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    end_date
-    location
-    name
-    start_date
     uuid
+    name
+    location
+    content
+    start_date
+    end_date
     created_at
     updated_at
   ].freeze
@@ -47,11 +51,11 @@ class CampaignDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    end_date
-    location
     name
     start_date
-    uuid
+    end_date
+    location
+    content
   ].freeze
 
   # COLLECTION_FILTERS
