@@ -48,6 +48,8 @@ gem "jwt"
 # Aliyun OSS SDK
 gem 'aliyun-sdk'
 
+gem 'activestorage-aliyun'
+
 gem 'faraday'
 
 # pagination

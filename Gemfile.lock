@@ -61,6 +61,9 @@ GEM
       activesupport (= 7.0.7.2)
       marcel (~> 1.0)
       mini_mime (>= 1.1.0)
+    activestorage-aliyun (1.1.0)
+      aliyun-sdk (>= 0.6.0)
+      rails (>= 6.0.0)
     activesupport (7.0.7.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
@@ -374,6 +377,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  activestorage-aliyun
   administrate (~> 0.19.0)
   aliyun-sdk
   authing_ruby
