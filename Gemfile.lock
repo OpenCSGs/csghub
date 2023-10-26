@@ -352,6 +352,8 @@ GEM
     thor (1.2.2)
     tilt (2.3.0)
     timeout (0.4.0)
+    trix (0.10.1)
+      rails
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
@@ -410,6 +412,7 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   tailwindcss-rails (~> 2.0)
+  trix
   tzinfo-data
   web-console
   webdrivers
