@@ -55,6 +55,11 @@
       </div>
       <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <p class="lg:hidden">｜</p>
+        <img :src="emblemLogo" class="h-4 w-4" alt="OpenCSG Logo"/>
+        <p><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011202004415"> 京公网安备11011202004415号 </a></p>
+      </div>
+      <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
+        <p class="lg:hidden">｜</p>
         <p><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank"> 京ICP备2023006263号-1 </a></p>
       </div>
     </div>
