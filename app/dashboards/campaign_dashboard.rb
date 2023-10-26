@@ -27,7 +27,6 @@ class CampaignDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     name
-    content
     location
     start_date
     end_date
