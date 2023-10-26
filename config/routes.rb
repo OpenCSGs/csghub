@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    
+    resources :campaigns
+
     root to: "spaces#index"
   end
 
