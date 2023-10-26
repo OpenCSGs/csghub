@@ -52,6 +52,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_053521) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name"
+    t.string "uuid"
+    t.string "location"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uuid"], name: "index_campaigns_on_uuid"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.string "commentable_type", null: false
