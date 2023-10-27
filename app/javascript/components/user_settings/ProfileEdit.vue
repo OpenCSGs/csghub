@@ -83,9 +83,9 @@
   </div>
 </template>
 <script>
-import { useCookies } from "vue3-cookies"
-import { ElMessage } from 'element-plus'
-const { cookies } = useCookies()
+import { useCookies } from "vue3-cookies";
+import { ElMessage } from "element-plus";
+const { cookies } = useCookies();
 export default {
   props: {
     name: String,
@@ -118,14 +118,21 @@ export default {
       const profileUpdateEndpoint = `/api/users/${this.userName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
+      const data = [];
+      const reader = new FileReader();
       if (file !== undefined) {
         formData.append("avatar", file);
+        reader.onload = () => {
+          data.avatar = reader.result; // 将图片Base64数据赋值给avatarSrc
+        };
+        reader.readAsDataURL(file);
       }
       formData.append("name", this.inputName);
+      data.name = this.inputName;
       const options = {
         method: "PUT",
         headers: {
-          'Authorization': `Bearer ${cookies.get('idToken')}`
+          Authorization: `Bearer ${cookies.get("idToken")}`,
         },
         body: formData,
       };
@@ -134,14 +141,15 @@ export default {
         const response = await fetch(profileUpdateEndpoint, options);
         if (!response.ok) {
           ElMessage({
-            message: 'profile更新失败',
+            message: "profile更新失败",
             type: "warning",
           });
         } else {
           ElMessage({
-            message: 'profile已更新',
+            message: "profile已更新",
             type: "success",
           });
+          this.$emit("updateUserInfo", data);
           // 处理成功响应
         }
       } catch (error) {
@@ -149,7 +157,7 @@ export default {
       }
     },
     saveProfile() {
-      this.updateProfile()
+      this.updateProfile();
     },
   },
 };
