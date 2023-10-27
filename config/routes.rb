@@ -25,7 +25,8 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :campaigns
+    # will open later when it's ready
+    # resources :campaigns, only: :show
 
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'

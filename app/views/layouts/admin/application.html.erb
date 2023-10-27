@@ -12,6 +12,7 @@ By default, it renders:
 - Links to stylesheets and JavaScripts
 %>
 
+    <!-- <%= content_for(:title) %> - <%= application_title %> -->
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
 <head>
@@ -19,7 +20,7 @@ By default, it renders:
   <meta name="ROBOTS" content="NOODP">
   <meta name="viewport" content="initial-scale=1">
   <title>
-    <%= content_for(:title) %> - <%= application_title %>
+    OpenCSG Admin
   </title>
   <%= javascript_include_tag "admin_application", defer: true %>
   <%= render "stylesheet" %>
