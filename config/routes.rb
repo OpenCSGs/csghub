@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :campaigns
+
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
     get '/datasets', to: 'datasets#index'

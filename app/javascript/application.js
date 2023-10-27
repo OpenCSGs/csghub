@@ -1,8 +1,5 @@
-// rails turbo and stimulus js
-//import "@hotwired/turbo-rails"
 import "trix"
 import "@rails/actiontext"
-import "./controllers"
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"

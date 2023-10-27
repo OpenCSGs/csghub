@@ -145,7 +145,8 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
-    ffi (1.15.5)
+    ffi (1.16.3)
+    ffi (1.16.3-x64-mingw-ucrt)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -352,8 +353,6 @@ GEM
     thor (1.2.2)
     tilt (2.3.0)
     timeout (0.4.0)
-    trix (0.10.1)
-      rails
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
@@ -412,7 +411,6 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   tailwindcss-rails (~> 2.0)
-  trix
   tzinfo-data
   web-console
   webdrivers

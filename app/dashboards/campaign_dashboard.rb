@@ -39,9 +39,9 @@ class CampaignDashboard < Administrate::BaseDashboard
     uuid
     name
     location
-    content
     start_date
     end_date
+    content
     created_at
     updated_at
   ].freeze
