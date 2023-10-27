@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
-    root "home#index"
+    root "landing_page#index"
 
     resources :spaces, only: ['index', 'show', 'update'] do
       collection do
