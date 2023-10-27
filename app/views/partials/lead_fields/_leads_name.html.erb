@@ -1,4 +1,4 @@
 <div class="form-group">
   <%= label_tag "name", "姓名*", class: "block" %>
-  <%= text_field_tag "name", @lead.name, required: true, disabled: @landing_page.inactive? %>
+  <%= text_field_tag "name", @lead.name, required: true, disabled: @lead_form.inactive? %>
 </div>

@@ -1,6 +1,6 @@
 <div class="form-group">
   <%= label_tag "company", "公司*", class: "block" %>
-  <%= text_field_tag "company", @lead.company, required: true, disabled: @landing_page.inactive? %>
+  <%= text_field_tag "company", @lead.company, required: true, disabled: @lead_form.inactive? %>
 </div>
 
 

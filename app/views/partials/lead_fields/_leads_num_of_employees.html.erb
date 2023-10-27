@@ -1,4 +1,4 @@
 <div class="form-group">
   <%= label_tag "num_of_employees", "员工数量#{custom_required?('num_of_employees') ? '*' : ''}", class: "block" %>
-  <%= text_field_tag "num_of_employees", @lead.num_of_employees, disabled: @landing_page.inactive? %>
+  <%= text_field_tag "num_of_employees", @lead.num_of_employees, disabled: @lead_form.inactive? %>
 </div>

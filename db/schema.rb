@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_060824) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "landing_pages", force: :cascade do |t|
+  create_table "lead_forms", force: :cascade do |t|
     t.string "lead_source"
     t.string "channel"
     t.string "lead_status"
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_060824) do
     t.string "lead_type"
     t.string "lead_fields"
     t.string "uuid"
-    t.string "landing_page_status", default: "active"
+    t.string "lead_form_status", default: "active"
     t.string "title"
     t.string "internal_title"
     t.text "description"
@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_060824) do
     t.string "local_channel"
     t.string "uploads_tag"
     t.string "lead_status"
-    t.string "landing_page_uuid"
+    t.string "lead_form_uuid"
     t.string "utm_keyword"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

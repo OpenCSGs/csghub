@@ -23,7 +23,7 @@ class CreateLeads < ActiveRecord::Migration[7.0]
       t.string :local_channel
       t.string :uploads_tag
       t.string :lead_status
-      t.string :landing_page_uuid
+      t.string :lead_form_uuid
       t.string :utm_keyword
 
       t.timestamps

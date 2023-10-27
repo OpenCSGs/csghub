@@ -1,12 +1,12 @@
-class LandingPage < ApplicationRecord
+class LeadForm < ApplicationRecord
   serialize :lead_fields, JSON
   serialize :custom_required_fields, JSON
   before_create :set_default_status
   paginates_per 15
 
-  enum landing_page_status: { active: 'active', inactive: 'inactive' }
+  enum lead_form_status: { active: 'active', inactive: 'inactive' }
 
-  has_many :leads, primary_key: :uuid, foreign_key: :landing_page_uuid
+  has_many :leads, primary_key: :uuid, foreign_key: :lead_form_uuid
 
   def self.available_form_fields
     [
@@ -32,11 +32,11 @@ class LandingPage < ApplicationRecord
   end
 
   def form_url
-    LANDING_PAGE_HOST + "/landing_pages/form/#{self.uuid}_#{self.title.gsub(/\s+/, '_')}"
+    LEAD_FORM_HOST + "/lead_forms/form/#{self.uuid}_#{self.title.gsub(/\s+/, '_')}"
   end
 
-  def toggle_landing_page_status!
-    case landing_page_status
+  def toggle_lead_form_status!
+    case lead_form_status
     when 'active'
       inactive!
     when 'inactive'
@@ -47,7 +47,7 @@ class LandingPage < ApplicationRecord
   private
 
   def set_default_status
-    self.local_channel = 'landinge_page'
+    self.local_channel = 'lead_form'
     self.uuid = SecureRandom.base58(8)
   end
 end

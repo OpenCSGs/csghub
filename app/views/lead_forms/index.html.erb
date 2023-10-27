@@ -1,13 +1,12 @@
-<div class="landing-page landing-page-index__div" data-controller='sticky-table'>
-  <% if @landing_pages.blank? %>
+<div class="lead-form lead-form-index__div" data-controller='sticky-table'>
+  <% if @lead_forms.blank? %>
     <div class="leads-index--no-content__div">
       <h2>
-        所有 Landing Page
+        所有 Lead Form
       </h2>
       <div class="leads-index--no-content__div-content-outer-div">
         <div class="leads-index--no-content__div-content-inner-div">
-          <%= image_tag "collaberation.png", width: 88, height: 88 %>
-          <p> 目前暂无 Landing Page 创建 </p>
+          <p> 目前暂无 Lead Form 创建 </p>
         </div>
       </div>
     </div>
@@ -23,19 +22,19 @@
           </tr>
         </thead>
         <tbody>
-          <% @landing_pages.each do |landing_page| %>
-            <tr onclick=<%= "window.location.href='/landing_pages/#{landing_page.id}'; return false" %>>
-              <td><%= landing_page.internal_title %></td>
-              <td><%= landing_page.title %></td>
-              <td class="landing-page-text-status <%= landing_page.landing_page_status %>"><%= landing_page.landing_page_status %></td>
+          <% @lead_forms.each do |lead_form| %>
+            <tr onclick=<%= "window.location.href='/lead_forms/#{lead_form.id}'; return false" %>>
+              <td><%= lead_form.internal_title %></td>
+              <td><%= lead_form.title %></td>
+              <td class="lead-form-text-status <%= lead_form.lead_form_status %>"><%= lead_form.lead_form_status %></td>
               <td onclick="event.stopPropagation();" class='table__sticky--right' data-sticky-table-target="rightColumn">
-                <%= link_to '更新', edit_landing_page_path(landing_page), class: 'text-decoration-none' %>
+                <%= link_to '更新', edit_lead_form_path(lead_form), class: 'text-decoration-none' %>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
-    <%= paginate @landing_pages %>
+    <%= paginate @lead_forms %>
   <% end %>
 </div>

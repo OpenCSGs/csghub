@@ -14,15 +14,17 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
-  # landing pages
-  # resources :landing_pages do
-  #   collection do
-  #     get 'thank-you'
-  #   end
-  #   member do
-  #     post :toggle_landing_page_status
-  #   end
-  # end
+  # lead form
+  resources :lead_forms do
+    collection do
+      get 'thank-you'
+    end
+    member do
+      post :toggle_lead_form_status
+    end
+  end
+
+  get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
@@ -33,8 +35,6 @@ Rails.application.routes.draw do
         get 'stopped'
       end
     end
-  
-    get 'landing_pages/form/:uuid', to: 'landing_pages#show_form'
 
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
