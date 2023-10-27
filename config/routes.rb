@@ -14,15 +14,27 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+  # landing pages
+  # resources :landing_pages do
+  #   collection do
+  #     get 'thank-you'
+  #   end
+  #   member do
+  #     post :toggle_landing_page_status
+  #   end
+  # end
+
   # application
   scope "(:locale)", :locale => /en|zh/ do
-    root "landing_page#index"
+    root "home#index"
 
     resources :spaces, only: ['index', 'show', 'update'] do
       collection do
         get 'stopped'
       end
     end
+  
+    get 'landing_pages/form/:uuid', to: 'landing_pages#show_form'
 
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'

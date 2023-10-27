@@ -1,0 +1,63 @@
+<div class="landing-page">
+  <div class="leads-form" data-controller="landing-pages">
+    <div>
+      <h2> 更新 Landing Page </h2>
+    </div>
+    <hr />
+    <% if flash[:alert].present? %>
+      <p class="alert alert-danger"> <%= flash[:alert] %> </p>
+    <% end %>
+    <%= form_tag landing_page_path(@landing_page), method: 'put', multipart: true do %>
+      <div class="form-group">
+        <%= label_tag "internal_title", "内部标题 *", class: "block" %>
+        <%= text_field_tag "internal_title", @landing_page.internal_title, required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "title", "标题 *", class: "block" %>
+        <%= text_field_tag "title", @landing_page.title, required: true %>
+      </div>
+
+      <div class="form-group textarea136">
+        <%= label_tag "description", "描述", class: "block" %>
+        <%= text_area_tag "description", @landing_page.description %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "lead_source", "Lead Source *", class: "block" %>
+        <%= select_tag "lead_source", options_for_select(available_lead_source, @landing_page.lead_source), required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "channel", "Channel", class: "block" %>
+        <%= text_field_tag "channel", @landing_page.channel %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag "lead_status", "Lead Status", class: "block" %>
+        <%= text_field_tag "lead_status", @landing_page.lead_status %>
+      </div>
+
+      <div class="form-checkbox-group lead-fields-container"
+           data-controller="lead-fields"
+           data-action="dragover->lead-fields#resortAndInsert">
+        <%= label_tag "lead_fields", "选择表单字段", class: "block" %>
+        <% (selected_fields + unselected_fields).each do |attr| %>
+          <div class="form-group checkbox-group draggable"
+               draggable="true"
+               data-action="dragstart->lead-fields#addDraggingClass dragend->lead-fields#removeDraggingClass">
+            <% if attr.in? LandingPage.required_form_fields %>
+              <%= check_box_tag "lead_fields[]", attr, true, {class: 'readonly'} %>
+              <%= label_tag "#{attr} *" %>
+            <% else %>
+              <%= check_box_tag "lead_fields[]", attr %>
+              <%= label_tag attr %>
+              <%= select_tag "custom_required_fields[]", options_for_select([['非必填', 'blank'], ['必填', attr]], @landing_page.custom_required_fields&.include?(attr) ? attr : 'blank') %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <%= submit_tag "更新", class: 'leads-form-submit admin-btn margin-bottom-48' %>
+    <% end %>
+  </div>
+</div>

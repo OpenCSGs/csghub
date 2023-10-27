@@ -4,6 +4,10 @@ class LandingPage < ApplicationRecord
   before_create :set_default_status
   paginates_per 15
 
+  enum landing_page_status: { active: 'active', inactive: 'inactive' }
+
+  has_many :leads, primary_key: :uuid, foreign_key: :landing_page_uuid
+
   def self.available_form_fields
     [
       'name',

@@ -1,0 +1,4 @@
+<div class="form-group">
+  <%= label_tag "email", "邮箱#{custom_required?('email') ? '*' : ''}", class: "block" %>
+  <%= email_field_tag "email", @lead.email, disabled: @landing_page.inactive? %>
+</div>

@@ -1,0 +1,30 @@
+<div class="landing-page">
+  <div class="leads-form">
+    <div class="leads-form-without-banner">
+      <h2> <%= @landing_page.title %> </h2>
+      <% if flash[:alert].present? %>
+        <p class="alert alert-danger"> <%= flash[:alert] %> </p>
+      <% end %>
+      <p> <%= simple_format(@landing_page.description) %> </p>
+      <%= form_tag '/leads', method: 'post' do %>
+        <%= hidden_field_tag 'lead_source', @landing_page.lead_source  %>
+        <%= hidden_field_tag 'channel', @landing_page.channel  %>
+        <%= hidden_field_tag 'local_channel', @landing_page.local_channel  %>
+        <%= hidden_field_tag 'lead_status', @landing_page.lead_status  %>
+        <%= hidden_field_tag 'utm_source', @lead.utm_source  %>
+        <%= hidden_field_tag 'utm_medium', @lead.utm_medium  %>
+        <%= hidden_field_tag 'utm_keyword', @lead.utm_keyword  %>
+        <%= hidden_field_tag 'utm_content', @lead.utm_content  %>
+        <%= hidden_field_tag 'landing_page_uuid', @landing_page.uuid  %>
+
+        <% @landing_page.lead_fields.each do |field| %>
+          <%= render "partials/lead_fields/leads_#{field}" %>
+        <% end %>
+
+        <div class="leads-form-submit__div">
+          <%= submit_tag "提交", class: 'leads-form-submit admin-btn margin-bottom-48', disabled: @landing_page.inactive? %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

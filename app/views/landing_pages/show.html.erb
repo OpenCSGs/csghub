@@ -1,0 +1,62 @@
+<div class="leads leads-crud">
+  <div>
+    <h2 style="margin:0"> <%= @landing_page.internal_title %> </h2>
+    <p class="leads-status-label__p">
+      <span class="regular-status <%= @landing_page.landing_page_status %>"><%= @landing_page.landing_page_status %></span>
+    </p>
+  </div>
+  <div class="lead-detail">
+    <p class="lead-attr-group">
+      <label>标题: </label>
+      <%= @landing_page.title.presence %>
+    </p>
+    <p class="lead-attr-group">
+      <label>描述: </label>
+      <%= simple_format(@landing_page.description.presence) %>
+    </p>
+    <p class="lead-attr-group">
+      <label>Lead Source: </label>
+      <%= @landing_page.lead_source.presence %>
+    </p>
+    <p class="lead-attr-group">
+      <label>Channel: </label>
+      <%= @landing_page.channel.presence || '-----'  %>
+    </p>
+    <p class="lead-attr-group">
+      <label>Lead Status: </label>
+      <%= @landing_page.lead_status.presence || '-----' %>
+    </p>
+    <p class="lead-attr-group">
+      <label>Local Channel: </label>
+      <%= @landing_page.local_channel.presence || '-----' %>
+    </p>
+    <p class="lead-attr-group">
+      <label>Lead Type: </label>
+      <%= @landing_page.lead_type.presence || '-----' %>
+    </p>
+    <p class="lead-attr-group">
+      <label>Lead Fields: </label>
+      <%= @landing_page.lead_fields.presence || '-----' %>
+    </p>
+    <p class="lead-attr-group">
+      <label>表单链接: </label>
+      <a href=<%= @landing_page.form_url %>>
+        <%= @landing_page.form_url %>
+      </a>
+    </p>
+    <hr />
+    <div class="row">
+      <div class="col">
+        <%= button_to "更新", edit_landing_page_path(id: @landing_page.id), method: 'get', class: 'admin-btn white margin-bottom-48' %>
+      </div>
+      <div class="col">
+        <% if @landing_page.active? %>
+          <%= button_to "下线活动", toggle_landing_page_status_landing_page_path(id: @landing_page.id), method: 'post', class: 'admin-btn gray margin-bottom-48' %>
+        <% end %>
+        <% if @landing_page.inactive? %>
+          <%= button_to "上线活动", toggle_landing_page_status_landing_page_path(id: @landing_page.id), method: 'post', class: 'admin-btn green margin-bottom-48' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

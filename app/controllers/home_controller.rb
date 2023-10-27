@@ -1,4 +1,4 @@
-class LandingPageController < ApplicationController
+class HomeController < ApplicationController
   def index
     @partersData = [{name:'AWS',num:'20',url:'partners/aws.png'},
                     {name:'Datawhale',num:'20',url:'partners/aws.png'},
