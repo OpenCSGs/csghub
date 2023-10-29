@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center md:flex-col px-4 py-[36px]  my-[24px] rounded-[8px] lg:px-[106px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+  <div class="flex justify-center md:flex-col px-4 py-[36px] my-[24px] rounded-[8px] lg:px-[106px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="w-[411px] md:mb-[24px]"
-          :name="profileName" 
+          :name="profileName"
           :avatar="profileAvatar">
     </Menu>
     <ProfileEdit class="grow py-[24px]"
@@ -31,16 +31,17 @@ export default {
   },
   data() {
     return {
-        profileName:this.name,
-        profileAvatar:this.avatar
+      profileName: this.name,
+      profileAvatar: this.avatar,
     };
   },
   mounted() {},
   methods: {
-    updateUserInfo(data){
-        this.profileName=data.name?data.name:this.name;
-        this.profileAvatar=data.avatar?data.avatar:this.avatar;
-    }
+    updateUserInfo(data) {
+      const { name, avatar } = data;
+      this.profileName = name || this.name;
+      this.profileAvatar = avatar || this.avatar;
+    },
   },
 };
 </script>
