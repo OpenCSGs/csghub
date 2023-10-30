@@ -61,6 +61,9 @@ GEM
       activesupport (= 7.0.7.2)
       marcel (~> 1.0)
       mini_mime (>= 1.1.0)
+    activestorage-aliyun (1.1.0)
+      aliyun-sdk (>= 0.6.0)
+      rails (>= 6.0.0)
     activesupport (7.0.7.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
@@ -142,7 +145,8 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
-    ffi (1.15.5)
+    ffi (1.16.3)
+    ffi (1.16.3-x64-mingw-ucrt)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -159,6 +163,9 @@ GEM
     http-form_data (2.3.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     io-console (0.6.0)
     irb (1.8.1)
       rdoc
@@ -206,6 +213,7 @@ GEM
     mime-types (3.5.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0808)
+    mini_magick (4.12.0)
     mini_mime (1.1.5)
     minitest (5.19.0)
     msgpack (1.7.2)
@@ -301,6 +309,8 @@ GEM
     rspec-support (3.12.1)
     ruby-pinyin (0.5.0)
       rmmseg-cpp-new (~> 0.3.1)
+    ruby-vips (2.2.0)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
@@ -374,6 +384,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  activestorage-aliyun
   administrate (~> 0.19.0)
   aliyun-sdk
   authing_ruby
@@ -383,6 +394,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faraday
+  image_processing (~> 1.2)
   jbuilder
   jsbundling-rails (~> 1.2)
   jwt

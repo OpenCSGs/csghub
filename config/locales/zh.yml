@@ -7,6 +7,9 @@ zh:
   administrate:
     search:
       label: '搜索'
+    controller:
+      update:
+        success: '更新成功'
 
   activerecord:
     errors:
