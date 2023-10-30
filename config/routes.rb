@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users
     resources :comments
     resources :campaigns
+    resources :lead_forms
 
     root to: "spaces#index"
   end
@@ -19,9 +20,6 @@ Rails.application.routes.draw do
   # resources :lead_forms do
   #   collection do
   #     get 'thank-you'
-  #   end
-  #   member do
-  #     post :toggle_lead_form_status
   #   end
   # end
 

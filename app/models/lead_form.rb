@@ -1,4 +1,6 @@
 class LeadForm < ApplicationRecord
+  include UuidConcern
+
   serialize :lead_fields, JSON
   serialize :custom_required_fields, JSON
   before_create :set_default_status
@@ -6,6 +8,7 @@ class LeadForm < ApplicationRecord
 
   enum lead_form_status: { active: 'active', inactive: 'inactive' }
 
+  belongs_to :campaign
   has_many :leads, primary_key: :uuid, foreign_key: :lead_form_uuid
 
   def self.available_form_fields
@@ -48,6 +51,5 @@ class LeadForm < ApplicationRecord
 
   def set_default_status
     self.local_channel = 'lead_form'
-    self.uuid = SecureRandom.base58(8)
   end
 end

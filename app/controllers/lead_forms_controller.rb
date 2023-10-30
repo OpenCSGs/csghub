@@ -1,26 +1,6 @@
 class LeadFormsController < ApplicationController
-  before_action :authenticate_user, except: [:thank_you, :show_form]
   before_action :remember_lead_form, except: [:thank_you]
   before_action :init_lead, except: [:thank_you]
-  before_action :set_lead_form, only: [:show, :edit, :update, :toggle_lead_form_status]
-
-  def new
-    @lead_form = LeadForm.new
-    @lead_form.lead_status = 'Raw'
-  end
-
-  def create
-    lead_form = LeadForm.new lead_form_params
-    if lead_form.save
-      redirect_to lead_form_path(lead_form)
-    else
-      flash[:alert] = '创建失败，请检查提交信息'
-      render 'new'
-    end
-  end
-
-  def show
-  end
 
   def show_form
     uuid = params[:uuid].split('_').first
@@ -31,27 +11,8 @@ class LeadFormsController < ApplicationController
     render layout: "lead_form"
   end
 
-  def index
-    @lead_forms = LeadForm.order(created_at: 'desc').page params[:page]
-  end
-
-  def edit
-  end
-
-  def update
-    @lead_form.update lead_form_params
-    saved_changes = @lead_form.saved_changes.except(:updated_at, :created_at)
-    redirect_to lead_form_path(@lead_form)
-  end
-
   def thank_you
     render layout: "lead_form_form"
-  end
-
-  def toggle_lead_form_status
-    @lead_form.toggle_lead_form_status!
-    saved_changes = @lead_form.saved_changes.except(:updated_at, :created_at)
-    redirect_to lead_form_path(@lead_form)
   end
 
   private
@@ -71,9 +32,5 @@ class LeadFormsController < ApplicationController
 
   def lead_form_params
     params.permit(:title, :internal_title, :description, :lead_source, :channel, :lead_status, lead_fields: [], custom_required_fields: [])
-  end
-
-  def set_lead_form
-    @lead_form = LeadForm.find params[:id]
   end
 end
