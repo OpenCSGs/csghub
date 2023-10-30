@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    
+    resources :campaigns
+
     root to: "spaces#index"
   end
 
@@ -35,6 +36,9 @@ Rails.application.routes.draw do
         get 'stopped'
       end
     end
+
+    # will open later when it's ready
+    # resources :campaigns, only: :show
 
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
