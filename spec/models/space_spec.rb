@@ -62,4 +62,69 @@ RSpec.describe Space, type: :model do
       end
     end
   end
+
+  describe '#readable_type' do
+    context 'when space_type is private_s' do
+      it 'returns "private"' do
+        space.space_type = 'private_s'
+        expect(space.readable_type).to eq('private')
+      end
+    end
+
+    context 'when space_type is public_s' do
+      it 'returns "public"' do
+        space.space_type = 'public_s'
+        expect(space.readable_type).to eq('public')
+      end
+    end
+  end
+
+  describe '#application_url' do
+    context 'when running' do
+      before do
+        allow(space).to receive(:running?).and_return(true)
+        allow(space).to receive(:site_link).and_return('http://test.com')
+      end
+
+      it 'returns the site link' do
+        expect(space.application_url).to eq('http://test.com')
+      end
+    end
+
+    context 'when not running' do
+      before do
+        allow(space).to receive(:running?).and_return(false)
+      end
+
+      it 'returns "/spaces/stopped"' do
+        expect(space.application_url).to eq('/spaces/stopped')
+      end
+    end
+  end
+
+  describe '#as_json' do
+    it 'returns a valid JSON object' do
+      json = space.as_json
+      expect(json).to be_a(Hash)
+    end
+
+    it 'includes the expected attributes and values' do
+      allow(ActionController::Base.helpers).to receive(:asset_path).and_return('/assets/default_cover_image.png')
+      json = space.as_json
+
+      expect(json).to include(
+                        title: 'Space Title',
+                        desc: 'This is desc for space',
+                        author: 'Joe',
+                        created_at: '2023-01-15 10:30:00',
+                        cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
+                        tags: '[]',
+                        status: 'running',
+                        star_chain_id: 'abc1234',
+                        space_type: 'private',
+                        author_uuid: 'uuid123401'
+                      )
+    end
+  end
 end
+
