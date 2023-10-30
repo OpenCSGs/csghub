@@ -67,7 +67,6 @@ class LeadFormDashboard < Administrate::BaseDashboard
     channel
     description
     internal_title
-    lead_fields
     lead_form_status
     lead_source
     lead_status
