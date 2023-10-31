@@ -23,14 +23,9 @@ export default {
   },
   data() {
     return {
-        active:''
     };
   },
-  mounted() {
-    if (window.location.pathname) {
-      this.active = window.location.pathname
-    }
-  },
+  mounted() {},
   methods: {
     menuClass(menuPath) {
       if (menuPath === window.location.pathname) {
