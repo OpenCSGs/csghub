@@ -42,7 +42,6 @@ export default {
   data() {
     return {
       theLastLoginTime: this.lastLoginTime ? this.lastLoginTime.slice(0, -6) : "",
-      user: this.roles ? JSON.parse(this.roles)[0] : [],
     };
   },
   mounted() {},
