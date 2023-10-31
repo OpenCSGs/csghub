@@ -40,6 +40,16 @@ module Admin
     #     transform_values { |value| value == "" ? nil : value }
     # end
 
+    def resource_params
+      permitted_attributes = dashboard.permitted_attributes(action_name)
+      params.require(resource_name).permit(*permitted_attributes, lead_fields: [], custom_required_fields: [])
+    end
+
+    def toggle_lead_form_status
+      requested_resource.toggle_lead_form_status!
+      redirect_to action: :index
+    end
+
     # See https://administrate-demo.herokuapp.com/customizing_controller_actions
     # for more information
   end
