@@ -103,14 +103,14 @@ RSpec.describe Space, type: :model do
   end
 
   describe '#as_json' do
+    let(:json) { space.as_json }
+
     it 'returns a valid JSON object' do
-      json = space.as_json
       expect(json).to be_a(Hash)
     end
 
     it 'includes the expected attributes and values' do
       allow(ActionController::Base.helpers).to receive(:asset_path).and_return('/assets/default_cover_image.png')
-      json = space.as_json
 
       expect(json).to include(
                         title: 'Space Title',
