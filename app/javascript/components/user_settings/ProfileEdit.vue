@@ -80,14 +80,10 @@ export default {
       const profileUpdateEndpoint = `/api/users/${this.userName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
-      const data = {};
       if (file !== undefined) {
         formData.append("avatar", file);
-        const fileUrl = URL.createObjectURL(file);
-        data.avatar = fileUrl;
       }
       formData.append("name", this.inputName);
-      data.name = this.inputName;
       const options = {
         method: "PUT",
         headers: {
@@ -108,7 +104,10 @@ export default {
             message: "profile已更新",
             type: "success",
           });
-          this.$emit("updateUserInfo", data);
+          this.$emit("updateUserInfo", {
+            avatar: URL.createObjectURL(file),
+            name: this.inputName
+          });
           // 处理成功响应
         }
       } catch (error) {
