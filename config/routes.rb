@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users
     resources :comments
     resources :campaigns
+    resources :lead_forms
 
     root to: "spaces#index"
   end
@@ -14,6 +15,15 @@ Rails.application.routes.draw do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
     resources :comments, only: [:create, :destroy]
   end
+
+  # lead form
+  # resources :lead_forms do
+  #   collection do
+  #     get 'thank-you'
+  #   end
+  # end
+
+  # get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
 
   # application
   scope "(:locale)", :locale => /en|zh/ do

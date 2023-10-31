@@ -1,0 +1,4 @@
+<div class="form-group textarea136">
+  <%= label_tag "additional_notes", "描述#{custom_required?('additional_notes') ? '*' : ''}", class: "block" %>
+  <%= text_area_tag "additional_notes", @lead.additional_notes, disabled: @lead_form.inactive? %>
+</div>

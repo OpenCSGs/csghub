@@ -1,0 +1,4 @@
+<div class="form-group">
+  <%= label_tag "industry", "行业#{custom_required?('industry') ? '*' : ''}", class: "block" %>
+  <%= text_field_tag "industry", @lead.industry, disabled: @lead_form.inactive? %>
+</div>
