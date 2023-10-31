@@ -1,0 +1,30 @@
+<div class="lead-form">
+  <div class="leads-form">
+    <div class="leads-form-without-banner">
+      <h2> <%= @lead_form.title %> </h2>
+      <% if flash[:alert].present? %>
+        <p class="alert alert-danger"> <%= flash[:alert] %> </p>
+      <% end %>
+      <p> <%= simple_format(@lead_form.description) %> </p>
+      <%= form_tag '/leads', method: 'post' do %>
+        <%= hidden_field_tag 'lead_source', @lead_form.lead_source  %>
+        <%= hidden_field_tag 'channel', @lead_form.channel  %>
+        <%= hidden_field_tag 'local_channel', @lead_form.local_channel  %>
+        <%= hidden_field_tag 'lead_status', @lead_form.lead_status  %>
+        <%= hidden_field_tag 'utm_source', @lead.utm_source  %>
+        <%= hidden_field_tag 'utm_medium', @lead.utm_medium  %>
+        <%= hidden_field_tag 'utm_keyword', @lead.utm_keyword  %>
+        <%= hidden_field_tag 'utm_content', @lead.utm_content  %>
+        <%= hidden_field_tag 'lead_form_uuid', @lead_form.uuid  %>
+
+        <% @lead_form.lead_fields.each do |field| %>
+          <%= render "partials/lead_fields/leads_#{field}" %>
+        <% end %>
+
+        <div class="leads-form-submit__div">
+          <%= submit_tag "提交", class: 'leads-form-submit admin-btn margin-bottom-48', disabled: @lead_form.inactive? %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

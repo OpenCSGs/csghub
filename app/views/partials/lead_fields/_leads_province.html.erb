@@ -1,0 +1,4 @@
+<div class="form-group">
+  <%= label_tag "province", "省份#{custom_required?('province') ? '*' : ''}", class: "block" %>
+  <%= select_tag "province", options_for_select(Lead.provinces_list, @lead.province), disabled: @lead_form.inactive? %>
+</div>

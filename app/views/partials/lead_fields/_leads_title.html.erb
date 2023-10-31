@@ -1,0 +1,4 @@
+<div class="form-group">
+  <%= label_tag "title", "职位#{custom_required?('title') ? '*' : ''}", class: "block" %>
+  <%= text_field_tag "title", @lead.title, disabled: @lead_form.inactive? %>
+</div>
