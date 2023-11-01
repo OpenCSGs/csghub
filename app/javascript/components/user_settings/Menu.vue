@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="pl-[54px]">
+      <div class="px-[54px] md:px-[50px] sm:px-[20px]">
         <div>
          <el-avatar :size="120" :src="avatar"> </el-avatar>
         </div>
