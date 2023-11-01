@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     resources :users
     resources :comments
     resources :campaigns
-    resources :lead_forms
+    resources :lead_forms do
+      member do
+        post :toggle_lead_form_status
+      end
+    end
 
     root to: "spaces#index"
   end

@@ -35,7 +35,7 @@ class LeadFormDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     campaign
-    channel
+    lead_form_status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
