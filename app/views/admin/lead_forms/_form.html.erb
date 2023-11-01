@@ -48,8 +48,8 @@ and renders all form fields for a resource's editable attributes.
 
   <div class="form-checkbox-group lead-fields-container" data-controller="lead-fields" data-action="dragover->lead-fields#resortAndInsert">
     <%= label_tag "lead_fields", "选择表单字段", class: "block" %>
-    <% LeadForm.available_form_fields.each do |attr| %>
-      <div class="form-group checkbox-group draggable" draggable="true" data-action="dragstart->lead-fields#addDraggingClass dragend->lead-fields#removeDraggingClass">
+    <% form_fields_for(page.resource).each do |attr| %>
+      <div class="field-unit__field form-group checkbox-group draggable" draggable="true" data-action="dragstart->lead-fields#addDraggingClass dragend->lead-fields#removeDraggingClass">
         <% if attr.in? LeadForm.required_form_fields %>
           <%= check_box_tag "lead_form[lead_fields][]", attr, true, {class: 'readonly'} %>
           <%= label_tag "#{attr} *" %>
@@ -66,7 +66,7 @@ and renders all form fields for a resource's editable attributes.
     <% end %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-actions lead-form-actions">
     <%= f.submit %>
   </div>
 <% end %>
