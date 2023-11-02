@@ -80,14 +80,15 @@ RSpec.describe Space, type: :model do
   end
 
   describe '#application_url' do
+    let(:site_link) { 'http://test.com' }
     context 'when running' do
       before do
         allow(space).to receive(:running?).and_return(true)
-        allow(space).to receive(:site_link).and_return('http://test.com')
+        allow(space).to receive(:site_link).and_return(site_link)
       end
 
       it 'returns the site link' do
-        expect(space.application_url).to eq('http://test.com')
+        expect(space.application_url).to eq(site_link)
       end
     end
 
@@ -103,16 +104,16 @@ RSpec.describe Space, type: :model do
   end
 
   describe '#as_json' do
-    let(:json) { space.as_json }
+    let(:space_json) { space.as_json }
 
     it 'returns a valid JSON object' do
-      expect(json).to be_a(Hash)
+      expect(space_json).to be_a(Hash)
     end
 
     it 'includes the expected attributes and values' do
       allow(ActionController::Base.helpers).to receive(:asset_path).and_return('/assets/default_cover_image.png')
 
-      expect(json).to include(
+      expect(space_json).to include(
                         title: 'Space Title',
                         desc: 'This is desc for space',
                         author: 'Joe',
