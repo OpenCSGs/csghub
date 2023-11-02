@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center md:flex-col py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
-    <Menu class="w-[411px] md:mb-[24px]"
+    <Menu class="max-w-[411px] md:mb-[24px]"
           :name="profileName"
           :avatar="profileAvatar">
     </Menu>

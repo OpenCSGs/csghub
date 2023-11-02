@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[24px]">
+  <div class="flex flex-col gap-[24px] p-[16px]">
     <div class="font-semibold text-[20px] leading-[28px]">Profile Settings</div>
     <el-avatar :size="120" :src="avatarUrl"> </el-avatar>
     <div class="flex gap-[12px]">
