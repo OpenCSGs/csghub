@@ -15,6 +15,7 @@ RSpec.describe Comment, type: :model do
 
   describe 'as_json_data' do
     let(:comment) { create(:comment) }
+
     it 'returns a JSON representation of the comment' do
       user = comment.user
       expected_json = {
