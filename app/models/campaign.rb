@@ -1,6 +1,11 @@
 class Campaign < ApplicationRecord
   include UuidConcern
 
+  LIVE_COMPETITION = '直播比赛'.freeze
+  TRAINING_CAMP = '创作训练营'.freeze
+
+  CAMPAIGN_TYPES = [LIVE_COMPETITION, TRAINING_CAMP].freeze
+
   has_rich_text :content
 
   before_create :set_uuid

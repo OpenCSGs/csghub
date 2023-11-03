@@ -17,7 +17,10 @@ class CampaignDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     content: RichTextField,
-    lead_form: Field::HasOne
+    lead_form: Field::HasOne,
+    organizer: Field::String,
+    views: Field::Number,
+    campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign::CAMPAIGN_TYPES }),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -44,6 +47,9 @@ class CampaignDashboard < Administrate::BaseDashboard
     start_date
     end_date
     content
+    organizer
+    views
+    campaign_type
     created_at
     updated_at
   ].freeze
@@ -57,6 +63,8 @@ class CampaignDashboard < Administrate::BaseDashboard
     end_date
     location
     content
+    organizer
+    campaign_type
   ].freeze
 
   # COLLECTION_FILTERS
