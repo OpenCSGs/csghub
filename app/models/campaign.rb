@@ -1,6 +1,11 @@
 class Campaign < ApplicationRecord
   include UuidConcern
 
+  enum campaign_type: {
+    live_competition: 0,
+    training_camp: 1
+  }
+
   has_rich_text :content
 
   before_create :set_uuid
