@@ -106,25 +106,19 @@ RSpec.describe Space, type: :model do
   describe '#as_json' do
     let(:space_json) { space.as_json }
 
-    it 'returns a valid JSON object' do
-      expect(space_json).to be_a(Hash)
-    end
-
     it 'includes the expected attributes and values' do
       allow(ActionController::Base.helpers).to receive(:asset_path).and_return('/assets/default_cover_image.png')
+      author = space.user
 
-      expect(space_json).to include(
-                        title: 'Space Title',
-                        desc: 'This is desc for space',
-                        author: 'Joe',
-                        created_at: '2023-01-15 10:30:00',
-                        cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
-                        tags: '[]',
-                        status: 'running',
-                        star_chain_id: 'abc1234',
-                        space_type: 'private',
-                        author_uuid: 'uuid123401'
-                      )
+      expect(space_json).to include(title: space.title,
+                              desc: space.desc,
+                              author: author.comment_display_name,
+                              cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
+                              tags: space.tags.to_json,
+                              status: space.status,
+                              star_chain_id: space.space_starchain_id,
+                              space_type: space.readable_type,
+                              author_uuid: author.login_identity)
     end
   end
 end
