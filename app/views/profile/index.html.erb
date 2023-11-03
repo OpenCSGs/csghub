@@ -1,5 +1,5 @@
-<div class="flex justify-center md:flex-col py-[36px]  my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
-  <div class="w-[411px] md:mb-[24px]">
+<div class="flex justify-center md:flex-col  my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+  <div class="md:mb-[24px] mr-[24px]">
     <profile name="<%= current_user.name %>"
                phone="<%= current_user.phone %>"
                email="<%= current_user.email %>"
@@ -9,7 +9,7 @@
                roles="<%= current_user.roles.to_json %>"
     ></profile>
   </div>
-  <div class="grow pr-4">
+  <div class="grow pr-4 py-[36px]">
     <%# Spaces %>
     <div class="flex items-center justify-between mb-[16px] max-w-[1280px]">
       <div class="flex items-center gap-[8px]">
