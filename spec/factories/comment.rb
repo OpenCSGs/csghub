@@ -4,6 +4,7 @@ FactoryBot.define do
     created_at { '2023-01-15 10:30:00' }
 
     user
+    # Associate the commentable attribute to a Space object
     association :commentable, factory: :space
   end
 end
