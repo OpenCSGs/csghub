@@ -44,16 +44,13 @@ class LeadFormDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     campaign
-    channel
-    description
-    internal_title
-    lead_fields
-    lead_form_status
-    lead_source
-    lead_status
-    lead_type
-    local_channel
     title
+    internal_title
+    lead_source
+    channel
+    lead_form_status
+    description
+    lead_fields
     uuid
     form_url
     created_at
