@@ -17,6 +17,7 @@ import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
 import ModelCard from "./components/ModelCard.vue"
+import ExpertForm from "./components/form/Expertform.vue"
 
 app = createApp({
   components: {
@@ -27,6 +28,7 @@ app = createApp({
     CommentList,
     DatasetCard,
     ExpertCard,
+    ExpertForm,
     ModelCard,
     PartnerCard,
     Foot,

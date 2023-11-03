@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
     get '/experts/form', to: 'experts#form'
+    post '/experts/create', to: 'experts#create'
+    get '/experts/create', to: 'experts#create'
     get '/datasets', to: 'datasets#index'
     get '/models', to: 'models#index'
 

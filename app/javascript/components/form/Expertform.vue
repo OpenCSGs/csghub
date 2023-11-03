@@ -58,8 +58,8 @@
           </svg>
         </div>
         <input
-            class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-            type="email"
+            class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
+            type="tel"
             placeholder="请输入"
             name="phone"
         />
@@ -120,33 +120,73 @@
 <script setup>
 
 import {ElMessage} from "element-plus";
-import emailjs from "emailjs-com";
+import {useCookies} from "vue3-cookies";
 
-export default {
-  methods: {},
-  }
+const { cookies } = useCookies();
+
 const submitTheForm = () => {
-  console.log("test");
   let inputBtn = document.getElementsByClassName("formInput");
   if (inputBtn[0].value == "") {
     ElMessage({message: "请您填写姓名", type: "warning"});
     return;
   } else if (inputBtn[1].value == "") {
-    ElMessage({message: "请您填写公司", type: "warning"});
+    ElMessage({message: "请您填写职位名称", type: "warning"});
     return;
   } else if (inputBtn[2].value == "") {
-    ElMessage({message: "请您邮箱", type: "warning"});
+    ElMessage({message: "请您填写电话号码", type: "warning"});
     return;
   } else if (inputBtn[3].value == "") {
-    ElMessage({message: "请您填写手机号", type: "warning"});
-    return;
-  } else if (inputBtn[4].value == "") {
-    ElMessage({message: "请您填写职位", type: "warning"});
+    ElMessage({message: "请您公司名称", type: "warning"});
     return;
   }
-  console.log("test1");
 
-  ElMessage({message: "表单发送失败", type: "warning"});
-  console.log("FAILED...", error.text);
+  console.log("start")
+
+  createExpert().catch(err => {
+    ElMessage({
+      message: err.message,
+      type: 'warning'
+    })
+  })
 };
+
+async function createExpert() {
+  let inputBtn = document.getElementsByClassName("formInput");
+  // http://localhost:3000/experts/www.baidu.com
+  const expertCreateEndpoint = 'create'
+  const formData = new FormData()
+  formData.append("name", "name")
+  console.log(inputBtn[0])
+  formData.append("job_name", "name")
+  formData.append("phone", "name")
+  formData.append("company_name", "name")
+  // formData.append("expertise", inputBtn[4])
+  // formData.append("desc", inputBtn[5])
+  const option = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${cookies.get('idToken')}`,
+      'Content-Type': 'application/json',
+    },
+    // body: formData
+  };
+  console.log("start_")
+  const response = await fetch(expertCreateEndpoint, option)
+
+  if (!response.ok) {
+    return response.json().then(data => {
+      console.log(data)
+      // 从JSON数据中提取的data.message作为错误消息, data为上个函数的返回值
+      throw new Error(data.message)
+    })
+  } else {
+    ElMessage({ message: "表单发送成功", type: "success" });
+
+    setTimeout(() => {
+      window.location.href = "/experts";
+    }, 1500);
+    return response.json();
+  }
+}
+
 </script>
