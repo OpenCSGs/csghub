@@ -68,41 +68,37 @@ RSpec.describe User, type: :model do
       expect(user.super_user?).to be(true)
     end
 
-    # it 'returns true for super user by phone' do
-    #   expect(user.super_user?).to be(true)
-    # end
-
     it 'returns false for non-super user' do
-      user.roles = [:admin] # Assuming the role 'admin' corresponds to this value
+      user.roles = [:admin]
       expect(user.super_user?).to be(false)
     end
   end
 
   describe '#admin?' do
     it 'returns true for admin role' do
-      user.roles = [:admin] # Assuming the role 'admin' corresponds to this value
+      user.roles = [:admin]
       expect(user.admin?).to be(true)
     end
 
     it 'returns true for super user role' do
-      user.roles = [:super_user]  # Assuming the role 'super_user' corresponds to this value
+      user.roles = [:super_user]
       expect(user.admin?).to be(true)
     end
 
     it 'returns false for non-admin user' do
-      user.roles = [:personal_user]  # Assuming the role 'personal_user' corresponds to this value
+      user.roles = [:personal_user]
       expect(user.admin?).to be(false)
     end
   end
 
   describe '#company_user?' do
     it 'returns true for company user role' do
-      user.roles = [:company_user] # Assuming the role 'company_user' corresponds to this value
+      user.roles = [:company_user]
       expect(user.company_user?).to be(true)
     end
 
     it 'returns false for non-company user' do
-      user.roles = [:admin] # Assuming the role 'admin' corresponds to this value
+      user.roles = [:admin]
       expect(user.company_user?).to be(false)
     end
   end

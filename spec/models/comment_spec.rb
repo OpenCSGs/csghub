@@ -2,7 +2,7 @@ require 'rails_helper'
 include ActionView::Helpers::DateHelper
 
 RSpec.describe Comment, type: :model do
-  subject(:comment) { build(:comment) }
+  subject(:comment) { create(:comment) }
 
   describe 'associations' do
     it { should belong_to(:commentable) }

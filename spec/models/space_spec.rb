@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Space, type: :model do
-  subject(:space) { build(:space) }
+  subject(:space) { create(:space) }
   # refer to: https://github.com/thoughtbot/shoulda-matchers/blob/main/lib/shoulda/matchers/active_record/association_matcher.rb#L328
   describe 'associations' do
     it { should belong_to(:user) }
@@ -111,14 +111,15 @@ RSpec.describe Space, type: :model do
       author = space.user
 
       expect(space_json).to include(title: space.title,
-                              desc: space.desc,
-                              author: author.comment_display_name,
-                              cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
-                              tags: space.tags.to_json,
-                              status: space.status,
-                              star_chain_id: space.space_starchain_id,
-                              space_type: space.readable_type,
-                              author_uuid: author.login_identity)
+                                    desc: space.desc,
+                                    author: author.comment_display_name,
+                                    cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
+                                    created_at: space.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                                    tags: space.tags.to_json,
+                                    status: space.status,
+                                    star_chain_id: space.space_starchain_id,
+                                    space_type: space.readable_type,
+                                    author_uuid: author.login_identity)
     end
   end
 end
