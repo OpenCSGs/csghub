@@ -61,8 +61,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_025328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "organizer"
-    t.integer "views"
-    t.string "campaign_type"
+    t.string "organizer_website"
+    t.integer "pageviews"
+    t.integer "campaign_type"
     t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 

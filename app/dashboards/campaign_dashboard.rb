@@ -19,8 +19,9 @@ class CampaignDashboard < Administrate::BaseDashboard
     content: RichTextField,
     lead_form: Field::HasOne,
     organizer: Field::String,
-    views: Field::Number,
-    campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign::CAMPAIGN_TYPES }),
+    organizer_website: Field::String,
+    pageviews: Field::Number,
+    campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:campaign_type) }),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -48,7 +49,8 @@ class CampaignDashboard < Administrate::BaseDashboard
     end_date
     content
     organizer
-    views
+    organizer_website
+    pageviews
     campaign_type
     created_at
     updated_at
@@ -64,6 +66,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     location
     content
     organizer
+    organizer_website
     campaign_type
   ].freeze
 

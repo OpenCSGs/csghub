@@ -1,10 +1,10 @@
 class Campaign < ApplicationRecord
   include UuidConcern
 
-  LIVE_COMPETITION = '直播比赛'.freeze
-  TRAINING_CAMP = '创作训练营'.freeze
-
-  CAMPAIGN_TYPES = [LIVE_COMPETITION, TRAINING_CAMP].freeze
+  enum campaign_type: {
+    live_competition: 0,
+    training_camp: 1
+  }
 
   has_rich_text :content
 
