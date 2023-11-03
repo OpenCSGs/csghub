@@ -53,7 +53,7 @@ and renders all form fields for a resource's editable attributes.
         <div class="field-unit__label"></div>
         <div class="field-unit__field flex items-center border-b border-gray-300 py-[20px] mt-0 !ml-0">
           <% if attr.in? LeadForm.required_form_fields %>
-            <%= check_box_tag "lead_form[lead_fields][]", attr, true, {class: 'readonly h-5 w-5'} %>
+            <%= check_box_tag "lead_form[lead_fields][]", attr, true, {class: 'pointer-events-none h-5 w-5'} %>
             <%= label_tag attr, "#{attr} *", class: 'flex-1' %>
           <% elsif attr.in? page.resource.lead_fields || [] %>
             <%= check_box_tag "lead_form[lead_fields][]", attr, true, {class: 'h-5 w-5'} %>
