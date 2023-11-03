@@ -34,6 +34,7 @@ class LeadFormDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
+    internal_title
     campaign
     lead_form_status
   ].freeze
@@ -64,15 +65,12 @@ class LeadFormDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     campaign
+    title
     channel
     description
     internal_title
     lead_form_status
     lead_source
-    lead_status
-    lead_type
-    local_channel
-    title
   ].freeze
 
   # COLLECTION_FILTERS

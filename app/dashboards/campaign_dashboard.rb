@@ -44,6 +44,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     start_date
     end_date
     content
+    lead_form
     created_at
     updated_at
   ].freeze
