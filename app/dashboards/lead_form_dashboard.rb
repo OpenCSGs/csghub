@@ -66,11 +66,11 @@ class LeadFormDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     campaign
     title
-    channel
-    description
     internal_title
-    lead_form_status
     lead_source
+    channel
+    lead_form_status
+    description
   ].freeze
 
   # COLLECTION_FILTERS
