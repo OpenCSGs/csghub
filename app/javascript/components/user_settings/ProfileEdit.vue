@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-[24px] p-[16px]">
-    <div class="font-semibold text-[20px] leading-[28px]">Profile Settings</div>
+    <div class="font-semibold text-[20px] leading-[28px]">个人资料设置</div>
     <el-avatar :size="120" :src="avatarUrl"> </el-avatar>
     <div class="flex gap-[12px]">
       <input ref="fileInput"
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">Name</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">姓名</div>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 placeholder="Name">
@@ -40,7 +40,7 @@
       </el-input>
     </div>
     <div @click="saveProfile" class="w-[111px] text-[14px] border border-[#DCDFE6] px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
-      Sava profile
+      保存
     </div>
   </div>
 </template>
