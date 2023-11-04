@@ -30,7 +30,6 @@ RSpec.describe User, type: :model do
       user = User.new
       user.roles = [:admin, :personal_user]
 
-      # Check if roles are set correctly
       user.reload
       expect(user.roles).to contain_exactly(:admin, :personal_user)
     end
@@ -39,13 +38,11 @@ RSpec.describe User, type: :model do
   describe '#roles' do
     it 'returns user roles based on roles_mask' do
       user.roles = [:admin, :personal_user]
-      # Check if roles are correctly retrieved
       expect(user.roles).to contain_exactly(:admin, :personal_user)
     end
 
     it 'returns empty array for no roles' do
       user.roles = []
-      # Check if roles are empty for no roles_mask
       expect(user.roles).to be_empty
     end
   end
@@ -116,7 +113,6 @@ RSpec.describe User, type: :model do
 
   describe 'comment_display_name' do
     let(:phone) { '17708176699' }
-    let(:uuid) { 'uuid123401' }
     let(:login_identity) { 'uuid123401' }
 
     it 'returns name if name is present' do
@@ -130,7 +126,7 @@ RSpec.describe User, type: :model do
 
     it 'returns login_identity if name is not present but phone is present' do
       user = User.new(login_identity: login_identity)
-      expect(user.comment_display_name).to eq(uuid)
+      expect(user.comment_display_name).to eq(login_identity)
     end
   end
 end
