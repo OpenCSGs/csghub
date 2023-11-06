@@ -8,8 +8,8 @@
       {{ loginIdentity }}
     </div>
     <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">编辑个人信息</a>
-    <div v-show="user" class="mt-[16px] text-[#606266] text-[16px] leading-[24px] flex items-center gap-[8px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.66663 12.533C2.66663 10.7657 4.09931 9.33301 5.86663 9.33301H10.1333C11.9006 9.33301 13.3333 10.7657 13.3333 12.533V12.533C13.3333 13.7112 12.3782 14.6663 11.2 14.6663H4.79996C3.62175 14.6663 2.66663 13.7112 2.66663 12.533V12.533Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.6666 3.99967C10.6666 5.47243 9.47272 6.66634 7.99996 6.66634C6.5272 6.66634 5.33329 5.47243 5.33329 3.99967C5.33329 2.52692 6.5272 1.33301 7.99996 1.33301C9.47272 1.33301 10.6666 2.52692 10.6666 3.99967Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      {{ userRoles }}
+    <div v-show="userRoles" class="mt-[16px] text-[#606266] text-[16px] leading-[24px] flex items-center gap-[8px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.66663 12.533C2.66663 10.7657 4.09931 9.33301 5.86663 9.33301H10.1333C11.9006 9.33301 13.3333 10.7657 13.3333 12.533V12.533C13.3333 13.7112 12.3782 14.6663 11.2 14.6663H4.79996C3.62175 14.6663 2.66663 13.7112 2.66663 12.533V12.533Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.6666 3.99967C10.6666 5.47243 9.47272 6.66634 7.99996 6.66634C6.5272 6.66634 5.33329 5.47243 5.33329 3.99967C5.33329 2.52692 6.5272 1.33301 7.99996 1.33301C9.47272 1.33301 10.6666 2.52692 10.6666 3.99967Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {{ userRoles.join(', ') }}
     </div>
     <div v-show="phone" class="mt-[16px] text-[#606266] text-[16px] leading-[24px] flex items-center gap-[8px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8.00004 3.99967H8.00671M6.66671 12.6663H9.33337M8.33337 3.99967C8.33337 4.18377 8.18414 4.33301 8.00004 4.33301C7.81595 4.33301 7.66671 4.18377 7.66671 3.99967C7.66671 3.81558 7.81595 3.66634 8.00004 3.66634C8.18414 3.66634 8.33337 3.81558 8.33337 3.99967ZM7.60004 14.6663H8.40004C9.89351 14.6663 10.6403 14.6663 11.2107 14.3757C11.7124 14.12 12.1204 13.7121 12.3761 13.2103C12.6667 12.6399 12.6667 11.8931 12.6667 10.3997V5.59967C12.6667 4.1062 12.6667 3.35946 12.3761 2.78903C12.1204 2.28727 11.7124 1.87932 11.2107 1.62366C10.6403 1.33301 9.89351 1.33301 8.40004 1.33301H7.60004C6.10657 1.33301 5.35983 1.33301 4.7894 1.62366C4.28763 1.87932 3.87969 2.28727 3.62402 2.78903C3.33337 3.35946 3.33337 4.1062 3.33337 5.59967V10.3997C3.33337 11.8931 3.33337 12.6399 3.62402 13.2103C3.87969 13.7121 4.28763 14.12 4.7894 14.3757C5.35983 14.6663 6.10657 14.6663 7.60004 14.6663Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/></svg>
       {{ phone }}
@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       theLastLoginTime: this.lastLoginTime ? this.lastLoginTime.slice(0, -6) : "",
-      userRoles: this.roles ? JSON.parse(this.roles)[0] : [],
+      userRoles: this.roles ? JSON.parse(this.roles) : [],
     };
   },
   mounted() {},
