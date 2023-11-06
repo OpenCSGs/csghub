@@ -8,7 +8,7 @@
         <!--姓名-->
         <div class="w-full h-auto">
           <div class="flex gap-x-[80px]">
-          <div class="w-[350px]">
+          <div class="w-[320px]">
             <div class="flex items-center gap-[4px]">
               <label for="username">姓名</label>
               <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
@@ -43,7 +43,7 @@
           </div>
           </div>
 
-          <div class="w-[320px] mt-[8px]">
+          <div class="w-[306px] mt-[8px]">
             <div class="flex items-center gap-[4px]">
               <label for="email">工作电子邮箱地址</label>
               <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
