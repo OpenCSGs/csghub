@@ -9,19 +9,29 @@
           </div>
         </div>
         <div class="flex flex-col">
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer" :class="menuClass('/settings/profile')">
+          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/profile')"
+          >
             个人资料
           </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer" :class="menuClass('/settings/account')">
+          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/account')"
+          >
             账户信息
           </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer" :class="menuClass('/settings/accessTokens')">
+          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/accessTokens')"
+          >
             访问令牌
           </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer" :class="menuClass('/settings/keys')">
+          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/keys')"
+          >
             SSH和GPG密钥
           </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] cursor-pointer" :class="menuClass('/settings/billing')">
+          <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/billing')"
+          >
             账单
           </div>
         </div>
