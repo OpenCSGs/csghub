@@ -8,6 +8,9 @@ class Campaign < ApplicationRecord
 
   has_rich_text :content
 
+  has_one_attached :desktop_banner
+  has_one_attached :mobile_banner
+
   before_create :set_uuid
 
   has_one :lead_form
