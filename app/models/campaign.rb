@@ -12,9 +12,15 @@ class Campaign < ApplicationRecord
 
   has_one :lead_form
 
+  has_many :leads, through: :lead_form
+
   scope :without_lead_form, -> { includes(:lead_form).where(lead_forms: { id: nil }) }
 
   def set_uuid
     self.uuid = SecureRandom.base58(12)
+  end
+
+  def with_content_and_leads_count
+    attributes.merge(content: content.body.to_plain_text.squish, leads_count: leads.count)
   end
 end
