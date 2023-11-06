@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     # resources :campaigns, only: :show
 
     get '/partners', to: 'partners#index'
+    get '/partners/form', to: 'partners#form'
+    get '/partners/create', to: 'partners#create'
     get '/experts', to: 'experts#index'
     get '/datasets', to: 'datasets#index'
     get '/models', to: 'models#index'
