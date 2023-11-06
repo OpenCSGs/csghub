@@ -52,6 +52,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer_website
     pageviews
     campaign_type
+    lead_form
     created_at
     updated_at
   ].freeze

@@ -1,0 +1,75 @@
+<%#
+# Form Partial
+
+This partial is rendered on a resource's `new` and `edit` pages,
+and renders all form fields for a resource's editable attributes.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Form][1].
+  Contains helper methods to display a form,
+  and knows which attributes should be displayed in the resource's form.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Form
+%>
+
+<%= form_for([namespace, page.resource], html: { class: "form" }) do |f| %>
+  <% if page.resource.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= t(
+          "administrate.form.errors",
+          pluralized_errors: pluralize(page.resource.errors.count, t("administrate.form.error")),
+          resource_name: display_resource_name(page.resource_name, singular: true)
+        ) %>
+      </h2>
+
+      <ul>
+        <% page.resource.errors.full_messages.each do |message| %>
+          <li class="flash-error"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% page.attributes(controller.action_name).each do |attribute| -%>
+    <% if controller.action_name == "edit" && attribute.name == "campaign" %>
+      <div class="field-unit">
+        <div class="field-unit__label"><label>Campaign: </label></div>
+        <div class="field-unit__field"><%= attribute.data.name %></div>
+      </div>
+    <% else %>
+      <div class="field-unit field-unit--<%= attribute.html_class %> field-unit--<%= requireness(attribute) %>">
+        <%= render_field attribute, f: f %>
+      </div>
+    <% end %>
+  <% end -%>
+
+  <div class="form-checkbox-group lead-fields-container m-10" data-controller="lead-fields" data-action="dragover->lead-fields#resortAndInsert">
+    <%= label_tag "lead_fields", "选择表单字段", class: "block font-bold text-lg leading-6 mb-2 text-gray-700" %>
+    <% form_fields_for(page.resource).each do |attr| %>
+      <div class="field-unit draggable form-group checkbox-group" draggable="true" data-action="dragstart->lead-fields#addDraggingClass dragend->lead-fields#removeDraggingClass">
+        <div class="field-unit__label"></div>
+        <div class="field-unit__field flex items-center border-b border-gray-300 py-[20px] mt-0 !ml-0">
+          <% if attr.in? LeadForm.required_form_fields %>
+            <%= check_box_tag "lead_form[lead_fields][]", attr, true, {class: 'pointer-events-none h-5 w-5'} %>
+            <%= label_tag attr, "#{attr} *", class: 'flex-1' %>
+          <% elsif attr.in? page.resource.lead_fields || [] %>
+            <%= check_box_tag "lead_form[lead_fields][]", attr, true, {class: 'h-5 w-5'} %>
+            <%= label_tag attr, attr, class: 'flex-1' %>
+            <%= select_tag "lead_form[custom_required_fields][]", options_for_select([['非必填', nil], ['必填', attr]], page.resource.custom_required_fields&.include?(attr) ? attr : 'blank'), class: 'w-32 bg-right' %>
+          <% else %>
+            <%= check_box_tag "lead_form[lead_fields][]", attr, false, {class: 'h-5 w-5'} %>
+            <%= label_tag attr, attr, class: 'flex-1' %>
+            <%= select_tag "lead_form[custom_required_fields][]", options_for_select([['非必填', nil], ['必填', attr]], page.resource.custom_required_fields&.include?(attr) ? attr : 'blank'), class: 'w-32 bg-right' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-actions lead-form-actions clear-both pt-10">
+    <%= f.submit %>
+  </div>
+<% end %>
