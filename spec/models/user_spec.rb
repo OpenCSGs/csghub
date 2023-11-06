@@ -101,13 +101,15 @@ RSpec.describe User, type: :model do
   end
 
   describe 'display_name' do
+    let(:login_identity) { 'uuid123401' }
+
     it 'returns name if name is present' do
       expect(user.display_name).to eq('Joe')
     end
 
     it 'returns login_identity if name is not present' do
-      user = User.new(login_identity: 'uuid123401')
-      expect(user.display_name).to eq('uuid123401')
+      user = User.new(login_identity: login_identity)
+      expect(user.display_name).to eq(login_identity)
     end
   end
 
