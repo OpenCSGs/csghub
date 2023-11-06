@@ -222,11 +222,6 @@
             <div class="w-[320px] mt-[8px]">
               <div class="flex items-center gap-[4px]">
                 <label for="post">邮政/邮政编码</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
               </div>
               <input
                   class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
@@ -284,10 +279,17 @@
 
           <div class="w-full">
             <label for="phone">文件补充</label>
-            <input ref="fileInputRef" type="file" class="hidden" @change="previewImage"/>
+            <input ref="fileInputRef" type="file" class="hidden" @change="handleFileUpload"/>
+            <!-- 预览上传的文件 -->
+            <!-- 文件上传进度条 -->
+            <div v-if="uploadProgress > 0">
+              <div class="progress-bar" :style="{ width: uploadProgress + '%' }"></div>
+            </div>
+
+
             <div @click="uploadFile"
                  class="flex items-center justify-center mt-[8px] w-[440px] h-[160px] px-[8px] border rounded border-dashed border-[#DCDFE6] bg-[#FAFAFA]">
-              <div class="flex items-center justify-center flex-col">
+              <div v-if="filesUpdated === false" class="flex items-center justify-center flex-col">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path
                       d="M3.2 18C1.88484 17.235 1 15.8051 1 14.1674C1 12.1053 2.40285 10.3727 4.30122 9.88197C4.30041 9.83571 4.3 9.78935 4.3 9.7429C4.3 5.46661 7.74741 2 12 2C15.6211 2 18.6584 4.51348 19.4806 7.90009C21.5395 8.69955 23 10.7089 23 13.0613C23 14.8707 22.1359 16.4772 20.8 17.4862M12 22V13M12 13L8.5 16.5M12 13L15.5 16.5"
@@ -295,6 +297,9 @@
                 </svg>
                 <p class="mt-[8px] text-[#606266]">将文件拖拽到此处，或<a href="upload" class="text-[#409EFF]">点击上传</a></p>
                 <p class="text-[12px] text-[#A8ABB2]">pdf./doc. files with a size less than 500kb</p>
+              </div>
+              <div v-else>
+                文件已上传
               </div>
             </div>
           </div>
@@ -343,6 +348,8 @@
 <!--</script>-->
 
 <script>
+  import {ElMessage} from "element-plus";
+
   export default {
     props: {},
     components: {},
@@ -350,6 +357,9 @@
       return {
         fileInput: null,
         filterValue: '',
+        previewUrl: '',
+        uploadProgress: 0,  // 用于显示上传进度
+        filesUpdated: false,
         filterValues: [
           {
             value: 'option1',
@@ -386,9 +396,51 @@
       },
 
       uploadFile() {
-        console.log("uploadFile")
         this.fileInput.click()
+      },
+
+      // 文件上传
+      handleFileUpload() {
+        console.log(event.target.files[0])
+        const file = event.target.files[0]
+
+        // 预览上传的文件
+        this.previewFile(file)
+
+        // 模拟上传进度
+        this.uploadProgress = 0   // 从 0 逐渐增加到 100，并在达到 100 时停止计时器
+        // 使用 setInterval 创建一个定时器，每隔 500 毫秒（0.5 秒）执行一次回调函数
+        const interval = setInterval(() => {
+          this.uploadProgress += 20   // 每次定时器回调执行时，上传进度增加 10
+          if (this.uploadProgress >= 100) {
+            clearInterval(interval)  // 停止定时器
+          }
+        }, 500)
+
+        // 模拟上传完成后的操作
+        setTimeout(() => {
+          this.uploadProgress = 0
+          this.filesUpdated = true
+          ElMessage({ message: "文件已上传", type: "success" });
+          // 在这里可以执行上传完成后的操作
+        }, 3000)
+      },
+
+      previewFile(file) {
+        const reader = new FileReader()  // 异步读取文件的 Web API
+        reader.onload = (event) => {   // 在文件读取完成后被触发
+          this.previewUrl = event.target.result  // 包含了读取的文件内容的 Data URL, 格式:data:[<MIME 类型>][;base64],<数据>
+          console.log(this.previewUrl)
+        }
+        reader.readAsDataURL(file)   // 将文件内容转化为 Data URL
       },
     }
   }
 </script>
+<style>
+.progress-bar {
+  background-color: green;
+  height: 10px;
+  transition: width 0.5s;
+}
+</style>
