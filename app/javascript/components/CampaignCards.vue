@@ -16,7 +16,7 @@
                  v-model:current-page="currentPage"
                  :default-current-page=1
                  :total="Number(theTotalCards)"
-                 :page-size="10"
+                 :page-size="6"
                  layout="prev, pager, next"
                  @update:current-page="nextPage"
                  class="my-[52px] flex justify-center"
