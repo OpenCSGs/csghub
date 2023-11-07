@@ -39,7 +39,7 @@ class Campaign < ApplicationRecord
     obj.attached? ? rails_blob_path(obj, disposition: "inline", only_path: true) : nil
   end
 
-  def with_banner
+  def banner_attributes
     attributes.slice('uuid').merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
   end
 end
