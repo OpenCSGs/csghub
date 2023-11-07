@@ -1,8 +1,19 @@
-class Api::LeadsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::LeadsController < Api::ApplicationController
 
   def create
-    render json: {message: '创建成功!'}, status: 200
+    lead = Lead.create(create_params.slice(:name, :title, :phone, :company, :expertise, :introduction))
+    lead.save
+
+    if lead.save
+      render json: { message: "Lead created" }
+    else
+      render json: {message: "Failed to create lead"}, status: :bad_request
+    end
+  end
+
+
+  def create_params
+    params.require(:lead).permit(:name, :title, :phone, :company, :expertise, :introduction)
   end
 end
 

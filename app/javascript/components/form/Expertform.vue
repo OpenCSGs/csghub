@@ -153,8 +153,6 @@ const submitTheForm = () => {
     return
   }
 
-  console.log("start")
-
   createExpert().catch(err => {
     ElMessage({
       message: err.message,
@@ -170,11 +168,11 @@ async function createExpert() {
 
   const jsonData = {
     name: inputBtn[0].value,
-    job_name: inputBtn[1].value,
+    title: inputBtn[1].value,
     phone: inputBtn[2].value,
-    company_name: inputBtn[3].value,
+    company: inputBtn[3].value,
     expertise: textareaElement[0].value,
-    desc: textareaElement[1].value
+    introduction: textareaElement[1].value
   }
 
   const jsonStr = JSON.stringify(jsonData)
@@ -186,7 +184,6 @@ async function createExpert() {
     },
     body: jsonStr
   }
-  console.log("start_")
   const response = await fetch(expertCreateEndpoint, option)
 
   if (!response.ok) {
