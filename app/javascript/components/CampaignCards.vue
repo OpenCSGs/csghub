@@ -1,14 +1,14 @@
 <template>
   <div class="sm:px-0 relative">
-    <el-carousel :autoplay="false" height="400px">
+    <el-carousel :autoplay="false" height="390px">
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
-          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover h-[400px]" alt="OpenCSG"/>
-          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover h-[400px]" alt="OpenCSG"/>
+          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover h-[390px]" alt="OpenCSG"/>
+          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover h-[390px]" alt="OpenCSG"/>
         </div>
       </el-carousel-item>
     </el-carousel>
-    <div class="flex gap-3 absolute left-[80px] bottom-[45px] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%]">
+    <div class="flex gap-3 absolute left-[80px] bottom-[35px] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%]">
       <a href="#" class="w-[96px] h-[40px] flex items-center justify-center bg-[#409EFF] rounded text-white text-[14px] leading-[22px]">立即报名</a>
       <a href="#" class="w-[96px] h-[40px] flex items-center justify-center text-white rounded border-white border-[1px] text-[14px] leading-[22px]">了解更多</a>
     </div>
