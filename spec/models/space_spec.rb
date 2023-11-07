@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Space, type: :model do
-  subject(:space) { build(:space) }
+  subject(:space) { create(:space) }
   # refer to: https://github.com/thoughtbot/shoulda-matchers/blob/main/lib/shoulda/matchers/active_record/association_matcher.rb#L328
   describe 'associations' do
     it { should belong_to(:user) }
@@ -62,4 +62,65 @@ RSpec.describe Space, type: :model do
       end
     end
   end
+
+  describe '#readable_type' do
+    context 'when space_type is private_s' do
+      it 'returns "private"' do
+        space.space_type = 'private_s'
+        expect(space.readable_type).to eq('private')
+      end
+    end
+
+    context 'when space_type is public_s' do
+      it 'returns "public"' do
+        space.space_type = 'public_s'
+        expect(space.readable_type).to eq('public')
+      end
+    end
+  end
+
+  describe '#application_url' do
+    let(:site_link) { 'http://test.com' }
+    context 'when running' do
+      before do
+        allow(space).to receive(:running?).and_return(true)
+        allow(space).to receive(:site_link).and_return(site_link)
+      end
+
+      it 'returns the site link' do
+        expect(space.application_url).to eq(site_link)
+      end
+    end
+
+    context 'when not running' do
+      before do
+        allow(space).to receive(:running?).and_return(false)
+      end
+
+      it 'returns "/spaces/stopped"' do
+        expect(space.application_url).to eq('/spaces/stopped')
+      end
+    end
+  end
+
+  describe '#as_json' do
+    let(:space_json) { space.as_json }
+
+    it 'includes the expected attributes and values' do
+      allow(ActionController::Base.helpers).to receive(:asset_path).and_return('/assets/default_cover_image.png')
+      author = space.user
+
+      expect(space_json).to include(title: space.title,
+                                    desc: space.desc,
+                                    author: author.comment_display_name,
+                                    cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
+                                    created_at: space.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                                    tags: space.tags.to_json,
+                                    status: space.status,
+                                    star_chain_id: space.space_starchain_id,
+                                    space_type: space.readable_type,
+                                    author_uuid: author.login_identity)
+    end
+  end
 end
+

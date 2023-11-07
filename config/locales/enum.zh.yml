@@ -1,0 +1,7 @@
+zh:
+  activerecord:
+    enums:
+      campaign:
+        campaign_types:
+          live_competition: 直播比赛
+          training_camp: 创作训练营

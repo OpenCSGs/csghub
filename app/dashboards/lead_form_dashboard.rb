@@ -34,8 +34,9 @@ class LeadFormDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
+    internal_title
     campaign
-    channel
+    lead_form_status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -43,16 +44,13 @@ class LeadFormDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     campaign
-    channel
-    description
-    internal_title
-    lead_fields
-    lead_form_status
-    lead_source
-    lead_status
-    lead_type
-    local_channel
     title
+    internal_title
+    lead_source
+    channel
+    lead_form_status
+    description
+    lead_fields
     uuid
     form_url
     created_at
@@ -64,15 +62,12 @@ class LeadFormDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     campaign
-    channel
-    description
-    internal_title
-    lead_form_status
-    lead_source
-    lead_status
-    lead_type
-    local_channel
     title
+    internal_title
+    lead_source
+    channel
+    lead_form_status
+    description
   ].freeze
 
   # COLLECTION_FILTERS
