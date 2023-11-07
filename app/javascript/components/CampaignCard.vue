@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full rounded-lg p-6 bg-white mt-4">
+  <a href="#" class="w-full block rounded-lg p-6 bg-white mt-4">
     <div class="flex items-center justify-between mb-1">
       <div class="text-[#303133] text-[20px] leading-7">
         {{ name }}
@@ -28,11 +28,11 @@
           {{ organizer }}
         </a>
       </div>
-      <a class="text-white font-semibold w-[88px] h-[32px] flex items-center justify-center bg-[#409EFF] rounded-[100px]">
+      <a href="#" class="text-white font-semibold w-[88px] h-[32px] flex items-center justify-center bg-[#409EFF] rounded-[100px]">
         立即报名
       </a>
     </div>
-  </div>
+  </a>
 </template>
 
 <script>
