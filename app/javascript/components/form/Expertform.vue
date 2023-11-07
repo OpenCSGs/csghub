@@ -87,7 +87,7 @@
           </svg>
         </div>
         <textarea name="expertise"
-                  class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
+                  class="formTextarea w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
                   placeholder="请输入"></textarea>
 
         <div class="flex items-center gap-[4px] mt-[16px]">
@@ -99,7 +99,7 @@
           </svg>
         </div>
         <textarea name="desc"
-                  class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
+                  class="formTextarea w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
                   placeholder="请输入"></textarea>
 
         <div class="flex mt-[16px] gap-x-[16px]">
@@ -140,19 +140,28 @@ const closeDiv = () => {
 // }
 
 const submitTheForm = () => {
-  let inputBtn = document.getElementsByClassName("formInput");
+  const inputBtn = document.getElementsByClassName("formInput")
   if (inputBtn[0].value == "") {
-    ElMessage({message: "请您填写姓名", type: "warning"});
-    return;
+    ElMessage({message: "请您填写姓名", type: "warning"})
+    return
   } else if (inputBtn[1].value == "") {
-    ElMessage({message: "请您填写职位名称", type: "warning"});
-    return;
+    ElMessage({message: "请您填写职位名称", type: "warning"})
+    return
   } else if (inputBtn[2].value == "") {
-    ElMessage({message: "请您填写电话号码", type: "warning"});
-    return;
+    ElMessage({message: "请您填写电话号码", type: "warning"})
+    return
   } else if (inputBtn[3].value == "") {
-    ElMessage({message: "请您公司名称", type: "warning"});
-    return;
+    ElMessage({message: "请您公司名称", type: "warning"})
+    return
+  }
+
+  const textareaElement = document.getElementsByClassName('formTextarea')
+  if (textareaElement[0].value == "") {
+    ElMessage({message: "请您填写擅长领域", type: "warning"})
+    return
+  } else if (textareaElement[1].value == "") {
+    ElMessage({message: "请您填写个人介绍", type: "warning"})
+    return
   }
 
   console.log("start")
@@ -166,24 +175,28 @@ const submitTheForm = () => {
 }
 
 async function createExpert() {
-  let inputBtn = document.getElementsByClassName("formInput");
+  const inputBtn = document.getElementsByClassName("formInput")
+  const textareaElement = document.getElementsByClassName('formTextarea')
+
   // http://localhost:3000/experts/www.baidu.com
-  const expertCreateEndpoint = 'create'
-  const formData = new FormData()
-  formData.append("name", "name")
-  console.log(inputBtn[0])
-  formData.append("job_name", "name")
-  formData.append("phone", "name")
-  formData.append("company_name", "name")
-  // formData.append("expertise", inputBtn[4])
-  // formData.append("desc", inputBtn[5])
+  const expertCreateEndpoint = '/api/leads'
+
+  const jsonData = {
+    name: inputBtn[0].value,
+    job_name: inputBtn[1].value,
+    phone: inputBtn[2].value,
+    company_name: inputBtn[3].value,
+    expertise: textareaElement[0].value,
+    desc: textareaElement[1].value
+  }
+  const jsonStr = JSON.stringify(jsonData)
   const option = {
-    method: 'GET',
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${cookies.get('idToken')}`,
       'Content-Type': 'application/json',
     },
-    // body: formData
+    body: jsonStr
   };
   console.log("start_")
   const response = await fetch(expertCreateEndpoint, option)
