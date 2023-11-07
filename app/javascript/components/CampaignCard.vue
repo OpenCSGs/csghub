@@ -4,7 +4,7 @@
       <div class="text-[#303133] text-[20px] leading-7">
         {{ name }}
       </div>
-      <div class="flex items-center">
+      <div class="flex items-center text-[#909399]">
         <div class="flex items-center mr-2">
           <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none"><path d="M14.6668 8.14388C14.6668 9.81055 12.6668 13.4772 8.00016 13.4772C3.3335 13.4772 1.3335 9.81055 1.3335 8.14388C1.3335 6.47721 3.3335 2.81055 8.00016 2.81055C12.6668 2.81055 14.6668 6.47721 14.6668 8.14388Z" stroke="#909399" stroke-linecap="round"/><path d="M10.0002 8.14388C10.0002 9.24845 9.10473 10.1439 8.00016 10.1439C6.89559 10.1439 6.00016 9.24845 6.00016 8.14388C6.00016 7.03931 6.89559 6.14388 8.00016 6.14388C9.10473 6.14388 10.0002 7.03931 10.0002 8.14388Z" stroke="#909399" stroke-linecap="round"/></svg>
           {{ pageviews }}

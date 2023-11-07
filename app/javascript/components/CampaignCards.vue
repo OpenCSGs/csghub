@@ -3,8 +3,8 @@
     <el-carousel :autoplay="false" height="400px">
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
-          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full" alt="OpenCSG"/>
-          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full" alt="OpenCSG"/>
+          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover" alt="OpenCSG"/>
+          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover" alt="OpenCSG"/>
         </div>
       </el-carousel-item>
     </el-carousel>

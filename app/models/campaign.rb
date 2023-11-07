@@ -32,7 +32,12 @@ class Campaign < ApplicationRecord
   end
 
   def with_content_and_leads_count
-    attributes.merge(content: content.body.to_plain_text.squish, leads_count: leads.count)
+    attributes.merge(
+      content: content.body.to_plain_text.squish,
+      leads_count: leads.count,
+      start_date: start_date.to_date,
+      end_date: end_date.to_date
+    )
   end
 
   def with_blob_path(obj)
