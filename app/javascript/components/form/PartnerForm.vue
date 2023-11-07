@@ -387,6 +387,7 @@
       // 获取文件输入元素，假设文件输入元素的 ref 为 'fileInputRef'
       // 用于访问组件模板中具有ref属性的DOM元素或子组件的对象
       this.fileInput = this.$refs.fileInputRef
+      const formInputs = document.getElementsByClassName("formInput");
     },
     methods: {
       changeValue(selectedValue) {
@@ -434,7 +435,26 @@
         }
         reader.readAsDataURL(file)   // 将文件内容转化为 Data URL
       },
-    }
+
+      submitTheForm() {
+        console.log("test")
+        if (inputBtn[0].value == "") {
+          ElMessage({ message: "请您填写姓名", type: "warning" });
+          return;
+        } else if (inputBtn[1].value == "") {
+          ElMessage({ message: "请您填写公司", type: "warning" });
+          return;
+        } else if (inputBtn[2].value == "") {
+          ElMessage({ message: "请您邮箱", type: "warning" });
+          return;
+        } else if (inputBtn[3].value == "") {
+          ElMessage({ message: "请您填写手机号", type: "warning" });
+          return;
+        } else if (inputBtn[4].value == "") {
+          ElMessage({ message: "请您填写职位", type: "warning" });
+          return;
+      }
+    },
   }
 </script>
 <style>
