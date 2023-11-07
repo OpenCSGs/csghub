@@ -22,6 +22,8 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer_website: Field::String,
     pageviews: Field::Number,
     campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:campaign_type) }),
+    desktop_banner: Field::ActiveStorage,
+    mobile_banner: Field::ActiveStorage,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -53,6 +55,8 @@ class CampaignDashboard < Administrate::BaseDashboard
     pageviews
     campaign_type
     lead_form
+    desktop_banner
+    mobile_banner
     created_at
     updated_at
   ].freeze
@@ -69,6 +73,8 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer
     organizer_website
     campaign_type
+    desktop_banner
+    mobile_banner
   ].freeze
 
   # COLLECTION_FILTERS
