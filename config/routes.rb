@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    resources :campaigns
+    resources :campaigns do
+      member do
+        post :toggle_campaign_recommended
+      end
+    end
     resources :lead_forms do
       member do
         post :toggle_lead_form_status

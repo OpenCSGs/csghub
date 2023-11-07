@@ -1,5 +1,15 @@
 <template>
   <div class="xl:px-[20px]">
+    <el-carousel :autoplay="false">
+      <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
+        <div>
+          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full" alt="OpenCSG"/>
+          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full" alt="OpenCSG"/>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
+  </div>
+  <div class="xl:px-[20px]">
     <CampaignCard v-for="campaign in JSON.parse(theCampaigns)"
                   :key="campaign.uuid"
                   :name="campaign.name"
@@ -30,6 +40,7 @@
     props: {
       campaigns: String,
       totalCards: String,
+      recommendedCampaigns: String,
     },
     components: {
       CampaignCard
@@ -40,6 +51,7 @@
         theCampaigns: this.campaigns,
         currentPage: 1,
         theTotalCards: this.totalCards,
+        theRecommendedCampaigns: this.recommendedCampaigns
       }
     },
     mounted() {
