@@ -46,10 +46,9 @@ Rails.application.routes.draw do
       end
     end
 
-    get '/profile/:user_id', to: 'profile#index'
-    # will open later when it's ready
-    # resources :campaigns, only: :show
+    resources :campaigns, only: :show
 
+    get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/experts', to: 'experts#index'
     get '/datasets', to: 'datasets#index'

@@ -1,3 +1,21 @@
-<div>
-  <p><%= @campaign.content %></p>
+<div class="max-w-7xl m-auto">
+  <div>
+    <%= image_tag url_for(@campaign.desktop_banner), class: "sm:hidden w-full" %>
+    <%= image_tag url_for(@campaign.mobile_banner), class: "hidden sm:block w-full" %>
+  </div>
+  <div class="my-[25px]">
+    <div class="max-w-[932px] bg-white rounded-[8px] p-[16px]">
+      <div class="flex justify-between items-center">
+        <h3 class="text-[#303133] text-[48px] font-[600]"> <%= @campaign.name %></h3>
+        <el-button type="primary" round>立即报名</el-button>
+      </div>
+      <el-tag class="mb-[8px]" type="<%= campaign_status_type(@campaign.status) %>"><%= t("campaign.#{@campaign.status}") %></el-tag>
+      <p class="text-[#909399] text-[14px] my-[8px]">活动时间: <%= @campaign.start_date.strftime("%Y-%m-%d") %> ~ <%= @campaign.end_date.strftime("%Y-%m-%d") %></p>
+      <p class="text-[#909399] text-[14px] my-[8px]">活动地点: <%= @campaign.location %></p>
+      <hr class="my-[30px]" />
+      <p><%= @campaign.content %></p>
+    </div>
+    <div>
+    </div>
+  </div>
 </div>
