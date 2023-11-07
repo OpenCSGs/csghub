@@ -79,6 +79,9 @@ GEM
       kaminari (>= 1.0)
       sassc-rails (~> 2.1)
       selectize-rails (~> 0.6)
+    administrate-field-active_storage (0.4.2)
+      administrate (>= 0.2.2)
+      rails (>= 7.0)
     aliyun-sdk (0.8.0)
       nokogiri (~> 1.6)
       rest-client (~> 2.0)
@@ -386,6 +389,7 @@ PLATFORMS
 DEPENDENCIES
   activestorage-aliyun
   administrate (~> 0.19.0)
+  administrate-field-active_storage
   aliyun-sdk
   authing_ruby
   bootsnap

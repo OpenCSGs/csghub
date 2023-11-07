@@ -17,7 +17,13 @@ class CampaignDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     content: RichTextField,
-    lead_form: Field::HasOne
+    lead_form: Field::HasOne,
+    organizer: Field::String,
+    organizer_website: Field::String,
+    pageviews: Field::Number,
+    campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:campaign_type) }),
+    desktop_banner: Field::ActiveStorage,
+    mobile_banner: Field::ActiveStorage,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -44,6 +50,13 @@ class CampaignDashboard < Administrate::BaseDashboard
     start_date
     end_date
     content
+    organizer
+    organizer_website
+    pageviews
+    campaign_type
+    lead_form
+    desktop_banner
+    mobile_banner
     created_at
     updated_at
   ].freeze
@@ -57,6 +70,11 @@ class CampaignDashboard < Administrate::BaseDashboard
     end_date
     location
     content
+    organizer
+    organizer_website
+    campaign_type
+    desktop_banner
+    mobile_banner
   ].freeze
 
   # COLLECTION_FILTERS

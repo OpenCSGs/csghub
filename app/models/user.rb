@@ -46,4 +46,13 @@ class User < ApplicationRecord
   def comment_display_name
     name || phone || login_identity
   end
+
+  def avatar_url
+    if avatar
+      # retrive the image temp url from aliyun
+      AliyunOss.instance.download avatar
+    else
+      nil
+    end
+  end
 end
