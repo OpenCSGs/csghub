@@ -17,6 +17,8 @@ import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
 import ModelCard from "./components/ModelCard.vue"
+import CampaignCard from "./components/CampaignCard.vue"
+import CampaignCards from "./components/CampaignCards.vue"
 
 app = createApp({
   components: {
@@ -30,6 +32,8 @@ app = createApp({
     ModelCard,
     PartnerCard,
     Foot,
+    CampaignCard,
+    CampaignCards,
   },
   provide:{
     defaultTags: DefaultTags

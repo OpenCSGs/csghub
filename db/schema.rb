@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_03_025328) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_054141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_03_025328) do
     t.datetime "updated_at", null: false
     t.string "organizer"
     t.string "organizer_website"
-    t.integer "pageviews"
+    t.integer "pageviews", default: 0
     t.integer "campaign_type"
     t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
