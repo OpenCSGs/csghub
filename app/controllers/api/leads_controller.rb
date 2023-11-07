@@ -2,7 +2,6 @@ class Api::LeadsController < Api::ApplicationController
 
   def create
     lead = Lead.create(create_params.slice(:name, :title, :phone, :company, :expertise, :introduction))
-    lead.save
 
     if lead.save
       render json: { message: "Lead created" }
