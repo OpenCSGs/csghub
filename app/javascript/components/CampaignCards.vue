@@ -1,6 +1,6 @@
 <template>
-  <div class="xl:px-[20px]">
-    <el-carousel :autoplay="false">
+  <div class="xl:px-[20px] relative">
+    <el-carousel :autoplay="false" height="400px">
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
           <img :src="campaign.desktop_banner_url" class="sm:hidden w-full" alt="OpenCSG"/>
@@ -8,6 +8,10 @@
         </div>
       </el-carousel-item>
     </el-carousel>
+    <div class="flex gap-3 absolute left-[80px] bottom-[45px]">
+      <a href="#" class="w-[96px] h-[40px] flex items-center justify-center bg-[#409EFF] rounded text-white text-[14px] leading-[22px]">立即报名</a>
+      <a href="#" class="w-[96px] h-[40px] flex items-center justify-center text-white rounded border-white border-[1px] text-[14px] leading-[22px]">了解更多</a>
+    </div>
   </div>
   <div class="xl:px-[20px]">
     <CampaignCard v-for="campaign in JSON.parse(theCampaigns)"
