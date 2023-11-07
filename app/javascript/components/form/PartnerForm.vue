@@ -8,39 +8,39 @@
         <!--姓名-->
         <div class="w-full h-auto">
           <div class="flex gap-x-[80px]">
-          <div class="w-[320px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="username">姓名</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
+            <div class="w-[320px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="username">姓名</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <input
+                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
+                  type="text"
+                  placeholder="你的名字"
+                  name="user_name"
+              />
             </div>
-            <input
-                class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-                type="text"
-                placeholder="你的名字"
-                name="user_name"
-            />
-          </div>
 
-          <div class="w-[320px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="phone">电话号码</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
+            <div class="w-[320px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="phone">电话号码</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <input
+                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
+                  type="tel"
+                  placeholder="178 0106 1972"
+                  name="phone"
+              />
             </div>
-            <input
-                class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-                type="tel"
-                placeholder="178 0106 1972"
-                name="phone"
-            />
-          </div>
           </div>
 
           <div class="w-[306px] mt-[8px]">
@@ -65,120 +65,123 @@
         <div class="w-full h-auto">
 
           <div class="flex gap-x-[80px]">
-          <div class="w-[320px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="profession">职称</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
-            </div>
-            <input
-                class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-                type="text"
-                placeholder="首席执行官"
-                name="profession"
-            />
-          </div>
-
-          <div class="w-[320px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="department">部门</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
-            </div>
-            <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large" class="w-full mt-[10px] h-full">
-              <el-option
-                  v-for="item in filterValues"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
+            <div class="w-[320px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="profession">职称</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <input
+                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
+                  type="text"
+                  placeholder="首席执行官"
+                  name="profession"
               />
-            </el-select>
-          </div>
+            </div>
+
+            <div class="w-[320px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="department">部门</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large"
+                         class="w-full mt-[10px] h-full">
+                <el-option
+                    v-for="item in filterValues"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                />
+              </el-select>
+            </div>
           </div>
 
           <div class="flex gap-x-[80px]">
-          <div class="w-[320px] mt-[8px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="company_name">公司名称</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
+            <div class="w-[320px] mt-[8px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="company_name">公司名称</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <input
+                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
+                  type="text"
+                  placeholder="开放传神"
+                  name="company_name"
+              />
             </div>
-            <input
-                class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-                type="text"
-                placeholder="开放传神"
-                name="company_name"
-            />
-          </div>
 
-          <div class="w-[320px] mt-[8px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="web">公司网站</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
+            <div class="w-[320px] mt-[8px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="web">公司网站</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <input
+                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
+                  type="text"
+                  placeholder="https://https://opencsg.com"
+                  name="web"
+              />
             </div>
-            <input
-                class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-                type="text"
-                placeholder="https://https://opencsg.com"
-                name="web"
-            />
-          </div>
           </div>
 
           <div class="flex gap-x-[80px]">
-          <div class="w-[320px] mt-[8px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="sector">公司行业</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
+            <div class="w-[320px] mt-[8px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="sector">公司行业</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large"
+                         class="w-full mt-[10px]">
+                <el-option
+                    v-for="item in filterValues"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                />
+              </el-select>
             </div>
-            <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large" class="w-full mt-[10px]">
-              <el-option
-                  v-for="item in filterValues"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-              />
-            </el-select>
-          </div>
 
-          <div class="w-[320px] mt-[8px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="scale">公司规模</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
+            <div class="w-[320px] mt-[8px]">
+              <div class="flex items-center gap-[4px]">
+                <label for="scale">公司规模</label>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
+                  <path
+                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
+                      fill="#F56C6C"/>
+                </svg>
+              </div>
+              <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large"
+                         class="w-full mt-[10px] h-full">
+                <el-option
+                    v-for="item in filterValues"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                />
+              </el-select>
             </div>
-            <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large" class="w-full mt-[10px] h-full">
-              <el-option
-                  v-for="item in filterValues"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-              />
-            </el-select>
-          </div>
           </div>
         </div>
         <!--地址-->
@@ -241,7 +244,8 @@
                     fill="#F56C6C"/>
               </svg>
             </div>
-            <el-select v-model="country" @change="changeValue" placeholder="请选择一个选项" size="large" class="w-full mt-[10px] h-full text-[#606266]">
+            <el-select v-model="country" @change="changeValue" placeholder="请选择一个选项" size="large"
+                       class="w-full mt-[10px] h-full text-[#606266]">
               <el-option
                   v-for="item in filterValues"
                   :key="item.value"
@@ -348,114 +352,115 @@
 <!--</script>-->
 
 <script>
-  import {ElMessage} from "element-plus";
+import {ElMessage} from "element-plus";
 
-  export default {
-    props: {},
-    components: {},
-    data() {
-      return {
-        fileInput: null,
-        filterValue: '',
-        previewUrl: '',
-        uploadProgress: 0,  // 用于显示上传进度
-        filesUpdated: false,
-        filterValues: [
-          {
-            value: 'option1',
-            label: '选项1'
-          },
-          {
-            value: 'option2',
-            label: '选项2'
-          }
-        ],
-        country: '中国',
-        countryList: [
-          {
-            value: 'option1',
-            label: '美国'
-          },
-          {
-            value: 'option2',
-            label: '中国'
-          }
-        ]
-      }
-    },
-    mounted() {
-      // 获取文件输入元素，假设文件输入元素的 ref 为 'fileInputRef'
-      // 用于访问组件模板中具有ref属性的DOM元素或子组件的对象
-      this.fileInput = this.$refs.fileInputRef
-      const formInputs = document.getElementsByClassName("formInput");
-    },
-    methods: {
-      changeValue(selectedValue) {
-        console.log('选中的值为:', selectedValue)
-        this.filterValue = selectedValue
-        console.log(this.filterValue)
-      },
-
-      uploadFile() {
-        this.fileInput.click()
-      },
-
-      // 文件上传
-      handleFileUpload() {
-        console.log(event.target.files[0])
-        const file = event.target.files[0]
-
-        // 预览上传的文件
-        this.previewFile(file)
-
-        // 模拟上传进度
-        this.uploadProgress = 0   // 从 0 逐渐增加到 100，并在达到 100 时停止计时器
-        // 使用 setInterval 创建一个定时器，每隔 500 毫秒（0.5 秒）执行一次回调函数
-        const interval = setInterval(() => {
-          this.uploadProgress += 20   // 每次定时器回调执行时，上传进度增加 10
-          if (this.uploadProgress >= 100) {
-            clearInterval(interval)  // 停止定时器
-          }
-        }, 500)
-
-        // 模拟上传完成后的操作
-        setTimeout(() => {
-          this.uploadProgress = 0
-          this.filesUpdated = true
-          ElMessage({ message: "文件已上传", type: "success" });
-          // 在这里可以执行上传完成后的操作
-        }, 3000)
-      },
-
-      previewFile(file) {
-        const reader = new FileReader()  // 异步读取文件的 Web API
-        reader.onload = (event) => {   // 在文件读取完成后被触发
-          this.previewUrl = event.target.result  // 包含了读取的文件内容的 Data URL, 格式:data:[<MIME 类型>][;base64],<数据>
-          console.log(this.previewUrl)
+export default {
+  props: {},
+  components: {},
+  data() {
+    return {
+      fileInput: null,
+      filterValue: '',
+      previewUrl: '',
+      uploadProgress: 0,  // 用于显示上传进度
+      filesUpdated: false,
+      filterValues: [
+        {
+          value: 'option1',
+          label: '选项1'
+        },
+        {
+          value: 'option2',
+          label: '选项2'
         }
-        reader.readAsDataURL(file)   // 将文件内容转化为 Data URL
-      },
-
-      submitTheForm() {
-        console.log("test")
-        if (inputBtn[0].value == "") {
-          ElMessage({ message: "请您填写姓名", type: "warning" });
-          return;
-        } else if (inputBtn[1].value == "") {
-          ElMessage({ message: "请您填写公司", type: "warning" });
-          return;
-        } else if (inputBtn[2].value == "") {
-          ElMessage({ message: "请您邮箱", type: "warning" });
-          return;
-        } else if (inputBtn[3].value == "") {
-          ElMessage({ message: "请您填写手机号", type: "warning" });
-          return;
-        } else if (inputBtn[4].value == "") {
-          ElMessage({ message: "请您填写职位", type: "warning" });
-          return;
-      }
+      ],
+      country: '中国',
+      countryList: [
+        {
+          value: 'option1',
+          label: '美国'
+        },
+        {
+          value: 'option2',
+          label: '中国'
+        }
+      ]
+    }
+  },
+  mounted() {
+    // 获取文件输入元素，假设文件输入元素的 ref 为 'fileInputRef'
+    // 用于访问组件模板中具有ref属性的DOM元素或子组件的对象
+    this.fileInput = this.$refs.fileInputRef
+    const formInputs = document.getElementsByClassName("formInput");
+  },
+  methods: {
+    changeValue(selectedValue) {
+      console.log('选中的值为:', selectedValue)
+      this.filterValue = selectedValue
+      console.log(this.filterValue)
     },
+
+    uploadFile() {
+      this.fileInput.click()
+    },
+
+    // 文件上传
+    handleFileUpload() {
+      console.log(event.target.files[0])
+      const file = event.target.files[0]
+
+      // 预览上传的文件
+      this.previewFile(file)
+
+      // 模拟上传进度
+      this.uploadProgress = 0   // 从 0 逐渐增加到 100，并在达到 100 时停止计时器
+      // 使用 setInterval 创建一个定时器，每隔 500 毫秒（0.5 秒）执行一次回调函数
+      const interval = setInterval(() => {
+        this.uploadProgress += 20   // 每次定时器回调执行时，上传进度增加 10
+        if (this.uploadProgress >= 100) {
+          clearInterval(interval)  // 停止定时器
+        }
+      }, 500)
+
+      // 模拟上传完成后的操作
+      setTimeout(() => {
+        this.uploadProgress = 0
+        this.filesUpdated = true
+        ElMessage({message: "文件已上传", type: "success"});
+        // 在这里可以执行上传完成后的操作
+      }, 3000)
+    },
+
+    previewFile(file) {
+      const reader = new FileReader()  // 异步读取文件的 Web API
+      reader.onload = (event) => {   // 在文件读取完成后被触发
+        this.previewUrl = event.target.result  // 包含了读取的文件内容的 Data URL, 格式:data:[<MIME 类型>][;base64],<数据>
+        console.log(this.previewUrl)
+      }
+      reader.readAsDataURL(file)   // 将文件内容转化为 Data URL
+    },
+
+    submitTheForm() {
+      console.log("test")
+      if (inputBtn[0].value == "") {
+        ElMessage({message: "请您填写姓名", type: "warning"});
+        return;
+      } else if (inputBtn[1].value == "") {
+        ElMessage({message: "请您填写公司", type: "warning"});
+        return;
+      } else if (inputBtn[2].value == "") {
+        ElMessage({message: "请您邮箱", type: "warning"});
+        return;
+      } else if (inputBtn[3].value == "") {
+        ElMessage({message: "请您填写手机号", type: "warning"});
+        return;
+      } else if (inputBtn[4].value == "") {
+        ElMessage({message: "请您填写职位", type: "warning"});
+        return;
+      }
+    }
   }
+}
 </script>
 <style>
 .progress-bar {

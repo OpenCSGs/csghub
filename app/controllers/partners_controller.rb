@@ -3,9 +3,6 @@ class PartnersController < ApplicationController
     @partners = PARTNERS.sort_by {|partner| PinYin.abbr(partner['name'])}
   end
 
-  def form
-  end
-
-  def create
+  def apply
   end
 end
