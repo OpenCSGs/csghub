@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_054141) do
     t.string "organizer_website"
     t.integer "pageviews", default: 0
     t.integer "campaign_type"
+    t.integer "status", default: 0
     t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 

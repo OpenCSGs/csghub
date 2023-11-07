@@ -58,7 +58,9 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>{{ phone }}</el-dropdown-item>
+            <el-dropdown-item>
+              <a :href="userProfile">个人信息</a>
+            </el-dropdown-item>
             <el-dropdown-item @click="showDialog"
               >联系我们</el-dropdown-item
             >
@@ -100,11 +102,13 @@ export default {
     isCompanyUser: String,
     companyVerified: String,
     phone: String,
-    isLoggedIn: String
+    isLoggedIn: String,
+    userName: String
   },
   data() {
     return {
-      isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase())
+      isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
+      userProfile: `/profile/${this.userName}`
     }
   },
   components: {

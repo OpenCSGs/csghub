@@ -19,6 +19,9 @@ import DatasetCard from "./components/DatasetCard.vue"
 import ModelCard from "./components/ModelCard.vue"
 import CampaignCard from "./components/CampaignCard.vue"
 import CampaignCards from "./components/CampaignCards.vue"
+import Profile from "./components/user_settings/Profile.vue"
+import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
+import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 
 app = createApp({
   components: {
@@ -34,6 +37,9 @@ app = createApp({
     Foot,
     CampaignCard,
     CampaignCards,
+    Profile,
+    ProfileEdit,
+    ProfileSettings
   },
   provide:{
     defaultTags: DefaultTags

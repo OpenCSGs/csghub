@@ -6,7 +6,16 @@ class Campaign < ApplicationRecord
     training_camp: 1
   }
 
+  # 特别强调：这里的顺序不能打乱，新的状态依次放在最后
+  enum status: [:prestart,
+                :signing_up,
+                :in_progress,
+                :ended]
+
   has_rich_text :content
+
+  has_one_attached :desktop_banner
+  has_one_attached :mobile_banner
 
   before_create :set_uuid
 

@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     resources :users
     resources :comments
     resources :campaigns
-    resources :lead_forms
+    resources :lead_forms do
+      member do
+        post :toggle_lead_form_status
+      end
+    end
 
     root to: "spaces#index"
   end
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
     resources :comments, only: [:create, :destroy]
+    resources :users, only: [:update]
   end
 
   # lead form
@@ -29,12 +34,19 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "landing_page#index"
 
+    resources :settings, only: [] do
+      collection do
+        get 'profile'
+      end
+    end
+
     resources :spaces, only: ['index', 'show', 'update'] do
       collection do
         get 'stopped'
       end
     end
 
+    get '/profile/:user_id', to: 'profile#index'
     # will open later when it's ready
     resources :campaigns, only: [:index, :show]
 
