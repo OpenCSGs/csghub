@@ -7,7 +7,11 @@
     <div class="max-w-[932px] bg-white rounded-[8px] p-[16px]">
       <div class="flex justify-between items-center">
         <h3 class="text-[#303133] text-[48px] font-[600]"> <%= @campaign.name %></h3>
-        <el-button type="primary" round>立即报名</el-button>
+        <a href="<%= @campaign.form_url %>">
+          <el-button type="primary" round>
+            立即报名
+          </el-button>
+        </a>
       </div>
       <el-tag class="mb-[8px]" type="<%= campaign_status_type(@campaign.status) %>"><%= t("campaign.#{@campaign.status}") %></el-tag>
       <p class="text-[#909399] text-[14px] my-[8px]">活动时间: <%= @campaign.start_date.strftime("%Y-%m-%d") %> ~ <%= @campaign.end_date.strftime("%Y-%m-%d") %></p>
