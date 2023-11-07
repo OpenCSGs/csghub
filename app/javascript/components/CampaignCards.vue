@@ -4,7 +4,7 @@
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
           <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover h-[400px]" alt="OpenCSG"/>
-          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover" alt="OpenCSG"/>
+          <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover h-[400px]" alt="OpenCSG"/>
         </div>
       </el-carousel-item>
     </el-carousel>
