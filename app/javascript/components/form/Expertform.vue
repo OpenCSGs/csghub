@@ -10,7 +10,7 @@
               fill="#909399"/>
         </svg>
         <p>表单中填写的信息除电话号码外将展示在专家推荐页面</p>
-        <svg xmlns="http://www.w3.org/2000/svg" @click="closeDiv" class="cursor-pointer" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" @click="closeTipDiv" class="cursor-pointer" width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
               d="M11.9375 3.35951L7.99996 7.29701L4.06246 3.35951C3.95812 3.26584 3.84096 3.21901 3.71096 3.21901C3.58096 3.21901 3.46629 3.26851 3.36696 3.36751C3.26762 3.46651 3.21812 3.58117 3.21846 3.71151C3.21879 3.84184 3.26562 3.95901 3.35896 4.06301L7.29646 8.00051L3.35896 11.938C3.22362 12.0733 3.17929 12.2348 3.22596 12.4225C3.27262 12.6102 3.38729 12.7273 3.56996 12.774C3.75262 12.8207 3.91662 12.7763 4.06196 12.641L7.99946 8.70351L11.937 12.641C12.0413 12.7347 12.1585 12.7815 12.2885 12.7815C12.4185 12.7815 12.5331 12.732 12.6325 12.633C12.7318 12.534 12.7813 12.4193 12.781 12.289C12.7806 12.1587 12.7338 12.0415 12.6405 11.9375L8.70296 8.00001L12.6405 4.06251C12.7758 3.92717 12.8201 3.76567 12.7735 3.57801C12.7268 3.39034 12.6096 3.27317 12.422 3.22651C12.2343 3.17984 12.0728 3.22417 11.9375 3.35951Z"
               fill="#909399"/>
@@ -115,29 +115,18 @@
     </div>
   </div>
 </template>
-
 <script setup>
-
 import {ElMessage} from "element-plus";
 import {useCookies} from "vue3-cookies";
 import {ref} from "vue";
 
-const divVisible = ref(true)
+const divTipVisible = ref(true)
 
 const { cookies } = useCookies()
 
-const closeDiv = () => {
-  // 不能在函数内部使用this来引用divVisible
-  divVisible.value = false
+const closeTipDiv = () => {
+  divTipVisible.value = false
 };
-
-// const divClass = () => {
-//   if (divVisible.value === true) {
-//     return 'flex items-center justify-center px-[16px] py-[9px] w-full font-normal text-[13px] text-[#909399] rounded-[4px] leading-[22px] outline-0 bg-[#F4F4F5] gap-[8px]'
-//   } else {
-//     return 'hidden'
-//   }
-// }
 
 const submitTheForm = () => {
   const inputBtn = document.getElementsByClassName("formInput")
@@ -177,8 +166,6 @@ const submitTheForm = () => {
 async function createExpert() {
   const inputBtn = document.getElementsByClassName("formInput")
   const textareaElement = document.getElementsByClassName('formTextarea')
-
-  // http://localhost:3000/experts/www.baidu.com
   const expertCreateEndpoint = '/api/leads'
 
   const jsonData = {
@@ -189,6 +176,7 @@ async function createExpert() {
     expertise: textareaElement[0].value,
     desc: textareaElement[1].value
   }
+
   const jsonStr = JSON.stringify(jsonData)
   const option = {
     method: 'POST',
@@ -197,24 +185,22 @@ async function createExpert() {
       'Content-Type': 'application/json',
     },
     body: jsonStr
-  };
+  }
   console.log("start_")
   const response = await fetch(expertCreateEndpoint, option)
 
   if (!response.ok) {
     return response.json().then(data => {
       console.log(data)
-      // 从JSON数据中提取的data.message作为错误消息, data为上个函数的返回值
       throw new Error(data.message)
     })
   } else {
-    ElMessage({ message: "表单发送成功", type: "success" });
+    ElMessage({ message: "表单发送成功", type: "success" })
 
     setTimeout(() => {
-      window.location.href = "/experts";
-    }, 1500);
-    return response.json();
+      window.location.href = "/experts"
+    }, 1500)
+    return response.json()
   }
 }
-
 </script>
