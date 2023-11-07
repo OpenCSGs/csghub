@@ -1,9 +1,9 @@
 <template>
-  <div class="xl:px-[20px] sm:px-0 relative">
+  <div class="sm:px-0 relative">
     <el-carousel :autoplay="false" height="400px">
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
-          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover" alt="OpenCSG"/>
+          <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover h-[400px]" alt="OpenCSG"/>
           <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover" alt="OpenCSG"/>
         </div>
       </el-carousel-item>
