@@ -9,55 +9,16 @@
         <div class="w-full h-auto">
           <div class="flex gap-x-[80px]">
             <div class="w-[320px]">
-              <div class="flex items-center gap-[4px]">
-                <label for="username">姓名</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
-              </div>
-              <input
-                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-                  type="text"
-                  placeholder="你的名字"
-                  name="user_name"
-              />
+              <form-input @update:inputValue="handleUserNameInputValue" field="user_name" placeholder="你的名字" label="姓名"/>
             </div>
 
             <div class="w-[320px]">
-              <div class="flex items-center gap-[4px]">
-                <label for="phone">电话号码</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
-              </div>
-              <input
-                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-                  type="tel"
-                  placeholder="手机号码"
-                  name="phone"
-              />
+              <form-input @update:inputValue="handlePhoneInputValue" field="phone" placeholder="手机号码" label="手机号码"/>
             </div>
           </div>
 
-          <div class="w-[306px] mt-[8px]">
-            <div class="flex items-center gap-[4px]">
-              <label for="email">工作电子邮箱地址</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
-            </div>
-            <input
-                class="formInput w-full text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-                type="email"
-                placeholder="example@gmail.com"
-                name="email"
-            />
+          <div class="w-[306px] mt-[24px]">
+            <form-input @update:inputValue="handleEmailInputValue" field="email" placeholder="example@gmail.com" label="工作电子邮箱地址"/>
           </div>
 
         </div>
@@ -66,97 +27,29 @@
 
           <div class="flex gap-x-[80px]">
             <div class="w-[320px]">
-              <div class="flex items-center gap-[4px]">
-                <label for="company_name">公司/单位名称</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
-              </div>
-              <input
-                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-                  type="text"
-                  placeholder="开放传神"
-                  name="company_name"
-              />
+              <form-input @update:inputValue="handleCompanyNameInputValue" field="company_name" placeholder="开放传神" label="公司/单位名称"/>
             </div>
 
             <div class="w-[320px]">
-              <div class="flex items-center gap-[4px]">
-                <label for="profession">职称</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
-              </div>
-              <input
-                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-                  type="text"
-                  placeholder="首席执行官"
-                  name="profession"
-              />
+              <form-input @update:inputValue="handleProfessionInputValue" field="profession" placeholder="首席执行官" label="职称"/>
             </div>
           </div>
 
           <div class="flex gap-x-[80px]">
-            <div class="w-[320px] mt-[8px]">
-              <div class="flex items-center gap-[4px]">
-                <label for="company_web">公司/产品官网</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
-              </div>
-              <input
-                  class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-                  type="text"
-                  placeholder="例：https://opencsg.com"
-                  name="company_web"
-              />
+            <div class="w-[320px] mt-[24px]">
+              <form-input @update:inputValue="handleCompanyWebInputValue" field="company_web" placeholder="例：https://opencsg.com" label="公司/产品官网"/>
             </div>
 
-            <div class="w-[320px] mt-[8px]">
-              <div class="flex items-center gap-[4px]">
-                <label for="industry">公司行业</label>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                  <path
-                      d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                      fill="#F56C6C"/>
-                </svg>
-              </div>
-              <el-select v-model="filterValue" @change="changeValue" placeholder="请选择一个选项" size="large"
-                         class="w-full mt-[10px]">
-                <el-option
-                    v-for="item in filterValues"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled"
-                />
-              </el-select>
+            <div class="w-[320px] mt-[24px]">
+              <form-select @update:filterValue="handleIndustryInputValue" field="industry" placeholder="请选择一个选项" label="公司行业"/>
             </div>
           </div>
 
         </div>
         <!--desc-->
-        <div class="w-full h-auto">
+        <div class="w-full h-auto mt-[10px]">
           <div class="w-full">
-            <div class="flex items-center gap-[4px]">
-              <label for="desc">请简要描述您的合作需求</label>
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <path
-                    d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
-                    fill="#F56C6C"/>
-              </svg>
-            </div>
-            <textarea name="desc"
-                      class="formTextarea w-full bg-white h-[40px] text-[#606266] rounded-[4px] my-[10px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
-                      placeholder="请提供您的合作意向及需求"
-                      maxlength="100"
-            ></textarea>
+            <form-input @update:inputValue="handleDescInputValue" field="desc" placeholder="请提供您的合作意向及需求" label="请简要描述您的合作需求" :type_placeholder=true />
           </div>
         </div>
 
@@ -176,12 +69,32 @@
 import {ElMessage} from "element-plus"
 import {useCookies} from "vue3-cookies"
 
+import FormLabel from "./sub/FormLabel.vue"
+import FormInput from "./sub/FormInput.vue"
+import FormSelect from "./sub/FormSelect.vue"
+
+
 export default {
   props: {},
-  components: {},
+  components: {
+    FormLabel,
+    FormInput,
+    FormSelect
+  },
   data() {
     return {
-      filterValue: '',
+      user_name: null,
+      phone: null,
+      email: null,
+
+      company_name: null,
+      company_web: null,
+      industry: null,
+      desc: null,
+
+      profession: null,
+
+      filterValue: null,
       filesUpdated: false,
       filterValues: [
         {
@@ -195,38 +108,62 @@ export default {
       ],
     }
   },
-  mounted() {
-    this.formInputs = document.getElementsByClassName("formInput")
-    this.formTextarea = document.getElementsByClassName("formTextarea")
-  },
+
+  mounted() {},
+
   methods: {
+    handleUserNameInputValue(value) {
+      this.user_name = value
+    },
+    handlePhoneInputValue(value) {
+      this.phone = value
+    },
+    handleEmailInputValue(value) {
+      this.email = value
+    },
+
+    handleCompanyNameInputValue(value) {
+      this.company_name = value
+    },
+    handleProfessionInputValue(value) {
+      this.profession = value
+    },
+    handleCompanyWebInputValue(value) {
+      this.company_web = value
+    },
+    handleIndustryInputValue(value) {
+      this.industry = value
+    },
+
+    handleDescInputValue(value) {
+      this.desc = value
+    },
+
+
     changeValue(selectedValue) {
       this.filterValue = selectedValue
     },
 
     submitTheForm() {
-      const inputBtn = this.formInputs
-      if (inputBtn[0].value == "") {
+      if (this.user_name == null) {
         ElMessage({message: "请您填写姓名", type: "warning"})
         return
-      } else if (inputBtn[1].value == "") {
+      } else if (this.phone == null) {
         ElMessage({message: "请您填写电话号码", type: "warning"})
         return
-      } else if (inputBtn[2].value == "") {
+      } else if (this.email == null) {
         ElMessage({message: "请您填写邮箱", type: "warning"})
         return
-      } else if (inputBtn[3].value == "") {
+      } else if (this.company_name == null) {
         ElMessage({message: "请您填写公司/单位名称", type: "warning"})
         return
-      } else if (inputBtn[4].value == "") {
+      } else if (this.profession == null) {
         ElMessage({message: "请您填写职称", type: "warning"})
         return
-      } else if (inputBtn[5].value == "") {
+      } else if (this.company_web == null) {
         ElMessage({message: "请您填写公司/产品官网", type: "warning"})
         return
-      }
-
-      if (this.filterValue == '') {
+      } else if (this.industry == null) {
         ElMessage({message: "请您选择公司行业", type: "warning"})
         return
       }
@@ -242,18 +179,17 @@ export default {
     async createPartner() {
 
       const { cookies } = useCookies()
-      const inputBtn = this.formInputs
       const expertCreateEndpoint = '/api/leads'
 
       const jsonData = {
-        name: inputBtn[0].value,
-        phone: inputBtn[1].value,
-        email: inputBtn[2].value,
-        company: inputBtn[3].value,
-        title: inputBtn[4].value,
-        company_site: inputBtn[5].value,
-        industry: this.filterValue,
-        introduction: this.formTextarea[0].value
+        name: this.user_name,
+        phone: this.phone,
+        email: this.email,
+        company: this.company_name,
+        title: this.profession,
+        company_site: this.company_web,
+        industry: this.industry,
+        introduction: this.desc
       }
 
       const jsonStr = JSON.stringify(jsonData)
