@@ -29,7 +29,7 @@
         </a>
       </div>
       <a href="#" class="text-white font-semibold w-[88px] h-[32px] flex items-center justify-center bg-[#409EFF] rounded-[100px]">
-        立即报名
+        查看更多
       </a>
     </div>
   </a>
