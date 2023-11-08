@@ -52,7 +52,6 @@ Rails.application.routes.draw do
 
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
-    post '/api/leads', to: 'api/leads#create'
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
     post '/api/leads', to: 'api/leads#create'
