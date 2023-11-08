@@ -1,7 +1,6 @@
 <template>
   <div class="flex justify-center items-center mt-[200px] lg:mt-[350px]">
-    <div
-        class="absolute flex flex-col bg-white w-[500px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl">
+    <div class="absolute flex flex-col bg-white w-[500px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl">
 
       <div v-if="divTipVisible === true" class="flex items-center justify-center px-[16px] py-[9px] w-full font-normal text-[13px] text-[#909399] rounded-[4px] leading-[22px] outline-0 bg-[#F4F4F5] gap-[8px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -17,24 +16,49 @@
         </svg>
       </div>
 
-      <form ref="forms" @submit.prevent="submitTheForm" class="flex flex-col gap-y-[24px] text-[#303133] text-sm">
-        <form-input @update:inputValue="handleUserNameInputValue" field="user_name" placeholder="请输入" label="姓名" required="true"/>
-        <form-input @update:inputValue="handleUserNameInputValue" field="job_name" placeholder="请输入" label="职位名称"/>
-        <form-input @update:inputValue="handleUserNameInputValue" field="phone" placeholder="请输入" label="电话号码"/>
-        <form-input @update:inputValue="handleUserNameInputValue" field="company_name" placeholder="请输入" label="公司名称"/>
-        <form-input @update:inputValue="handleUserNameInputValue" field="expertise" placeholder="请输入" label="擅长领域" :type_placeholder=true />
-        <form-input @update:inputValue="handleUserNameInputValue" field="desc" placeholder="请输入" label="个人介绍" :type_placeholder=true />
+      <div>
+        <form-label labelName="姓名" :required="true" />
+        <el-input v-model="userName"
+                  clearable
+                  placeholder="姓名"
+                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+
+        <form-label labelName="职位名称" :required="true" />
+        <el-input v-model="jobTitle"
+                  clearable
+                  placeholder="职位名称"
+                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+
+        <form-label labelName="电话号码" :required="true" />
+        <el-input v-model="phone"
+                  clearable
+                  placeholder="电话号码"
+                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+
+        <form-label labelName="公司名称" :required="true" />
+        <el-input v-model="companyName"
+                  clearable
+                  placeholder="公司名称"
+                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+
+        <form-label labelName="擅长领域" :required="true" />
+        <el-input v-model="expertise"
+                  clearable
+                  type="textarea"
+                  placeholder="擅长领域"
+                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+
+        <form-label labelName="个人介绍" :required="true" />
+        <el-input v-model="introduction"
+                  clearable
+                  type="textarea"
+                  placeholder="个人介绍"
+                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
         <div class="flex mt-[16px] gap-x-[16px]">
-          <input class="flex w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] cursor-pointer" type="submit"
-                 :value="'提交'"/>
-          <div
-              class="flex justify-center items-center inline-block w-[70px] text-[#606266] bg-white border border-solid border-[#DCDFE6] rounded-[4px] leading-[40px] cursor-pointer"
-              @click="dialogVisible = false">保存
-          </div>
+          <el-button type="primary">提交</el-button>
         </div>
-
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -42,66 +66,43 @@
 import {ElMessage} from "element-plus"
 import {useCookies} from "vue3-cookies"
 import {ref} from "vue"
-
 import FormLabel from "./sub/FormLabel.vue"
-import FormInput from "./sub/FormInput.vue"
 
 const divTipVisible = ref(true)
 
 const { cookies } = useCookies()
 
-let user_name = null
-let job_name = null
-let phone = null
-let company_name = null
-let expertise = null
-let desc = null
-
-// 父组件接受子组件传来的值
-const handleUserNameInputValue = (value) => {
-  user_name = value
-}
-const handleJobNameInputValue = (value) => {
-  job_name = value
-}
-const handlePhoneInputValue = (value) => {
-  phone = value
-}
-const handleCompanyNameInputValue = (value) => {
-  company_name = value
-}
-const handleExpertiseInputValue = (value) => {
-  expertise = value
-}
-const handleDescInputValue = (value) => {
-  desc = value
-}
+const userName = ref('')
+const jobName = ref('')
+const phone = ref('')
+const companyName = ref('')
+const expertise = ref('')
+const introduction = ref('')
 
 const closeTipDiv = () => {
   divTipVisible.value = false
 };
 
 const submitTheForm = () => {
-  if (user_name == null) {
+  if (userName == null) {
     ElMessage({message: "请您填写姓名", type: "warning"})
     return
-  } else if (job_name == null) {
+  } else if (jobName == null) {
     ElMessage({message: "请您填写职位名称", type: "warning"})
     return
   } else if (phone == null) {
     ElMessage({message: "请您填写电话号码", type: "warning"})
     return
-  } else if (company_name == null) {
+  } else if (companyName == null) {
     ElMessage({message: "请您填写公司名称", type: "warning"})
     return
   } else if (expertise == null) {
     ElMessage({message: "请您填写擅长领域", type: "warning"})
     return
-  } else if (desc == null) {
+  } else if (introduction == null) {
     ElMessage({message: "请您填写个人介绍", type: "warning"})
     return
   }
-
 
   createExpert().catch(err => {
     ElMessage({
