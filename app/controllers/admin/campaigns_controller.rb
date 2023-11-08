@@ -42,5 +42,10 @@ module Admin
 
     # See https://administrate-demo.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def toggle_campaign_recommended
+      requested_resource.toggle! :recommended
+      redirect_to action: :index
+    end
   end
 end
