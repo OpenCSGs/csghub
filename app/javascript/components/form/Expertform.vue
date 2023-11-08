@@ -18,7 +18,7 @@
       </div>
 
       <form ref="forms" @submit.prevent="submitTheForm" class="flex flex-col gap-y-[24px] text-[#303133] text-sm">
-        <form-input @update:inputValue="handleUserNameInputValue" field="user_name" placeholder="请输入" label="姓名"/>
+        <form-input @update:inputValue="handleUserNameInputValue" field="user_name" placeholder="请输入" label="姓名" required="true"/>
         <form-input @update:inputValue="handleUserNameInputValue" field="job_name" placeholder="请输入" label="职位名称"/>
         <form-input @update:inputValue="handleUserNameInputValue" field="phone" placeholder="请输入" label="电话号码"/>
         <form-input @update:inputValue="handleUserNameInputValue" field="company_name" placeholder="请输入" label="公司名称"/>

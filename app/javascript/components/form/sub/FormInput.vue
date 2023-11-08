@@ -1,12 +1,13 @@
 <template>
   <div>
-    <form-label :for_field="field" :label="label" :closeSvg=false />
-    <el-input v-if="type_placeholder === false" v-model="inputValue" @input="updateValue" clearable
-              :placeholder="placeholder" class="w-full h-[40px] text-[#606266] mt-[10px]"/>
-    <el-input v-else v-model="inputValue" @input="updateValue" clearable type="textarea" :placeholder="placeholder"
-              class="w-full h-auto text-[#606266] mt-[10px]"/>
+    <form-label :forField="field" :labelName="label" :required="required" />
+    <el-input v-model="inputValue"
+              @input="updateValue" clearable
+              :placeholder="placeholder"
+              class="w-full h-[40px] text-[#606266] mt-[10px]"/>
   </div>
 </template>
+
 <script>
 import FormLabel from "./FormLabel.vue"
 
@@ -17,7 +18,7 @@ export default {
     field: String,
     type_placeholder: Boolean,
     label: String,
-    closeSvg: Boolean
+    required: Boolean
   },
   components: {
     FormLabel
