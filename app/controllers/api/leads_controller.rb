@@ -1,7 +1,6 @@
 class Api::LeadsController < Api::ApplicationController
-
   def create
-    lead = Lead.create(create_params.slice(:name, :title, :phone, :company, :expertise, :introduction))
+    lead = Lead.create(create_params.slice(:name, :title, :phone, :company, :expertise, :introduction, :email, :company_site, :industry))
 
     if lead.save
       render json: { message: "Lead created" }
@@ -10,9 +9,8 @@ class Api::LeadsController < Api::ApplicationController
     end
   end
 
-
   def create_params
-    params.require(:lead).permit(:name, :title, :phone, :company, :expertise, :introduction)
+    params.require(:lead).permit(:name, :title, :phone, :company, :expertise, :introduction, :email, :company_site, :industry)
   end
 end
 
