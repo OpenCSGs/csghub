@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center gap-y-[10px] gap-x-[4px]">
-      <form-label :for_field="field" :label="label" :closeSvg=false />
-    </div>
+    <form-label :for_field="field" :label="label" :closeSvg=false />
     <el-input v-if="type_placeholder === false" v-model="inputValue" @input="updateValue" clearable
               :placeholder="placeholder" class="w-full h-[40px] text-[#606266] mt-[10px]"/>
     <el-input v-else v-model="inputValue" @input="updateValue" clearable type="textarea" :placeholder="placeholder"
