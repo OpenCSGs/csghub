@@ -19,88 +19,66 @@
 
       <form ref="forms" @submit.prevent="submitTheForm" class="flex flex-col text-[#303133] text-sm gap-y-[8px]">
         <div class="flex items-center gap-[4px]">
-          <label for="username">姓名</label>
+          <form-label for_field="user_name" label="姓名"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path
                 d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
                 fill="#F56C6C"/>
           </svg>
         </div>
-        <input
-            class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-            type="text"
-            placeholder="请输入"
-            name="user_name"
-        />
+        <form-input @update:inputValue="handleUserNameInputValue" field="user_name" placeholder="请输入"/>
 
         <div class="flex items-center gap-[4px] mt-[16px]">
-          <label for="job_name">职位名称</label>
+          <form-label for_field="job_name" label="职位名称"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path
                 d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
                 fill="#F56C6C"/>
           </svg>
         </div>
-        <input
-            class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-            type="text"
-            placeholder="请输入"
-            name="job_name"
-        />
+        <form-input @update:inputValue="handleJobNameInputValue" placeholder="请输入"/>
 
         <div class="flex items-center gap-[4px] mt-[16px]">
-          <label for="phone">电话号码</label>
+          <form-label for_field="phone" label="电话号码"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path
                 d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
                 fill="#F56C6C"/>
           </svg>
         </div>
-        <input
-            class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px] outline-0"
-            type="tel"
-            placeholder="请输入"
-            name="phone"
-        />
+        <form-input @update:inputValue="handlePhoneInputValue" placeholder="请输入"/>
 
         <div class="flex items-center gap-[4px] mt-[16px]">
-          <label for="company_name">公司名称</label>
+          <form-label for_field="company_name" label="公司名称"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path
                 d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
                 fill="#F56C6C"/>
           </svg>
         </div>
-        <input
-            class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
-            type="tel"
-            placeholder="请输入"
-            name="company_name"
-        />
+        <form-input @update:inputValue="handleCompanyNameInputValue" placeholder="请输入"/>
 
         <div class="flex items-center gap-[4px] mt-[16px]">
-          <label for="expertise">擅长领域</label>
+          <form-label for_field="expertise" label="擅长领域"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path
                 d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
                 fill="#F56C6C"/>
           </svg>
         </div>
-        <textarea name="expertise"
-                  class="formTextarea w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
-                  placeholder="请输入"></textarea>
+
+        <form-input @update:inputValue="handleExpertiseInputValue" field="expertise" placeholder="请输入" :type_placeholder=true />
 
         <div class="flex items-center gap-[4px] mt-[16px]">
-          <label for="desc">个人介绍</label>
+          <form-label for_field="desc" label="个人介绍"/>
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none">
             <path
                 d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z"
                 fill="#F56C6C"/>
           </svg>
         </div>
-        <textarea name="desc"
-                  class="formTextarea w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0"
-                  placeholder="请输入"></textarea>
+
+          <form-input @update:inputValue="handleDescInputValue" field="expertise" placeholder="请输入" :type_placeholder=true />
 
         <div class="flex mt-[16px] gap-x-[16px]">
           <input class="flex w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] cursor-pointer" type="submit"
@@ -116,42 +94,69 @@
   </div>
 </template>
 <script setup>
-import {ElMessage} from "element-plus";
-import {useCookies} from "vue3-cookies";
-import {ref} from "vue";
+import {ElMessage} from "element-plus"
+import {useCookies} from "vue3-cookies"
+import {ref} from "vue"
+
+import FormLabel from "./sub/FormLabel.vue"
+import FormInput from "./sub/FormInput.vue"
 
 const divTipVisible = ref(true)
 
 const { cookies } = useCookies()
+
+let user_name = ''
+let job_name = ''
+let phone = ''
+let company_name = ''
+let expertise = ''
+let desc = ''
+
+// 父组件接受子组件传来的值
+const handleUserNameInputValue = (value) => {
+  user_name = value
+}
+const handleJobNameInputValue = (value) => {
+  job_name = value
+}
+const handlePhoneInputValue = (value) => {
+  phone = value
+}
+const handleCompanyNameInputValue = (value) => {
+  company_name = value
+}
+const handleExpertiseInputValue = (value) => {
+  expertise = value
+}
+const handleDescInputValue = (value) => {
+  desc = value
+}
 
 const closeTipDiv = () => {
   divTipVisible.value = false
 };
 
 const submitTheForm = () => {
-  const inputBtn = document.getElementsByClassName("formInput")
-  if (inputBtn[0].value == "") {
+  if (user_name == "") {
     ElMessage({message: "请您填写姓名", type: "warning"})
     return
-  } else if (inputBtn[1].value == "") {
+  } else if (job_name == "") {
     ElMessage({message: "请您填写职位名称", type: "warning"})
     return
-  } else if (inputBtn[2].value == "") {
+  } else if (phone == "") {
     ElMessage({message: "请您填写电话号码", type: "warning"})
     return
-  } else if (inputBtn[3].value == "") {
-    ElMessage({message: "请您公司名称", type: "warning"})
+  } else if (company_name == "") {
+    ElMessage({message: "请您填写公司名称", type: "warning"})
     return
-  }
-
-  const textareaElement = document.getElementsByClassName('formTextarea')
-  if (textareaElement[0].value == "") {
+  } else if (expertise == "") {
     ElMessage({message: "请您填写擅长领域", type: "warning"})
     return
-  } else if (textareaElement[1].value == "") {
+  } else if (desc == "") {
     ElMessage({message: "请您填写个人介绍", type: "warning"})
     return
   }
+
 
   createExpert().catch(err => {
     ElMessage({
@@ -162,17 +167,15 @@ const submitTheForm = () => {
 }
 
 async function createExpert() {
-  const inputBtn = document.getElementsByClassName("formInput")
-  const textareaElement = document.getElementsByClassName('formTextarea')
   const expertCreateEndpoint = '/api/leads'
 
   const jsonData = {
-    name: inputBtn[0].value,
-    title: inputBtn[1].value,
-    phone: inputBtn[2].value,
-    company: inputBtn[3].value,
-    expertise: textareaElement[0].value,
-    introduction: textareaElement[1].value
+    name: user_name,
+    title: job_name,
+    phone: phone,
+    company: company_name,
+    expertise: expertise,
+    introduction: desc
   }
 
   const jsonStr = JSON.stringify(jsonData)
