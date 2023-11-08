@@ -90,6 +90,10 @@ to display a collection of resources in an HTML table.
           resource: resource,
           table_title: "page-title"
         ) %>
+
+        <td>
+          <%= link_to("Toggle Recommended", toggle_campaign_recommended_admin_campaign_path(resource), method: 'post') %>
+        </td>
       </tr>
     <% end %>
   </tbody>

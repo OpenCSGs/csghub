@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    resources :campaigns
+    resources :campaigns do
+      member do
+        post :toggle_campaign_recommended
+      end
+    end
     resources :lead_forms do
       member do
         post :toggle_lead_form_status
@@ -19,6 +23,7 @@ Rails.application.routes.draw do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
     resources :comments, only: [:create, :destroy]
     resources :users, only: [:update]
+    resources :campaigns, only: [:index]
   end
 
   # lead form
@@ -46,7 +51,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :campaigns, only: :show
+    resources :campaigns, only: [:index, :show]
 
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
