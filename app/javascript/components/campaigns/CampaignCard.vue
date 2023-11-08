@@ -49,9 +49,6 @@
       leadsCount: Number,
       formUrl: String
     },
-    mounted() {
-      console.log(this.name)
-      console.log(this.formUrl)
-    }
+    mounted() {}
   }
 </script>

@@ -60,9 +60,7 @@
         theRecommendedCampaigns: this.recommendedCampaigns
       }
     },
-    mounted() {
-      console.log(this.campaigns)
-    },
+    mounted() {},
     methods: {
       async nextPage() {
         const campaignsUpdateEndpoint = `api/campaigns?page=${this.currentPage}`;
