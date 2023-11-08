@@ -3,16 +3,12 @@ module LeadFormsHelper
     ENV.fetch('LEAD_SOURCES', '').split(',').map(&:strip)
   end
 
-  def selected_fields
-    @lead_form.lead_fields
-  end
-
-  def unselected_fields
-    LeadForm.available_form_fields - @lead_form.lead_fields
+  def form_fields_for(resource)
+    form_fields = LeadForm.available_form_fields
+    resource.new_record? ? form_fields : (resource.lead_fields + form_fields).uniq
   end
 
   def custom_required? field
     @lead_form&.custom_required_fields&.include?(field)
   end
 end
-

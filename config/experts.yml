@@ -64,3 +64,9 @@
   tags: SRE培训专家,AIOps培训专家
   desc: SRE和AIOps人工智能运维领域资深专家，具备超过 15 年 服务管理以及稳定性运维咨询领域工作和讲师经历。作为大中华区 SRE 讲师第一人，
   avatar: 'experts/liu_feng.png'
+- name: 苏勇
+  type: 专家
+  title: 大模型行业应用专家
+  tags: 人工智能专家,数字孪生专家,数据治理顾问
+  desc: 连续创业者，专注AGI、LLM、多模态、Vision AI及大数据领域，在多个行业有丰富的AI、大数据及数字孪生技术落地经验，曾设计开发多个千万级大型高并发AI相关项目。拥有丰富的通用大模型及垂类大模型训练及落地经验。同时具备丰富的产品设计能力。拥有Cisco CCIE、redhat RHCA、Oracle OCP等多个国际认证。前IterCast在线教育创始人，产品及公司获得过多次投资。
+  avatar: 'experts/su_yong.jpg'

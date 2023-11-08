@@ -88,6 +88,8 @@ gem "jsbundling-rails", "~> 1.2"
 gem "tailwindcss-rails", "~> 2.0"
 
 gem "administrate", "~> 0.19.0"
+# support active storage
+gem 'administrate-field-active_storage'
 
 gem "pundit", "~> 2.3"
 
