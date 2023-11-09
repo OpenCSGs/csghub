@@ -50,18 +50,18 @@ class CampaignDashboard < Administrate::BaseDashboard
     location
     start_date
     end_date
-    content
     organizer
     organizer_website
     pageviews
     recommended
     campaign_type
     status
+    created_at
+    updated_at
+    content
     lead_form
     desktop_banner
     mobile_banner
-    created_at
-    updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -72,12 +72,12 @@ class CampaignDashboard < Administrate::BaseDashboard
     start_date
     end_date
     location
-    content
     organizer
     organizer_website
     recommended
     campaign_type
     status
+    content
     desktop_banner
     mobile_banner
   ].freeze
