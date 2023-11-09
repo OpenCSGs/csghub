@@ -6,6 +6,8 @@
 # you're free to overwrite the RESTful controller actions.
 module Admin
   class ApplicationController < Administrate::ApplicationController
+    include Administrate::Punditize
+
     before_action :authenticate_admin
 
     def authenticate_admin
@@ -15,6 +17,10 @@ module Admin
         session[:original_request_path] = request.fullpath
         redirect_to login_path
       end
+    end
+
+    def current_user
+      helpers.current_user
     end
 
     # Override this value to specify the number of elements to display at a time

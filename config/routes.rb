@@ -4,7 +4,12 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    resources :campaigns
+    resources :leads
+    resources :campaigns do
+      member do
+        post :toggle_campaign_recommended
+      end
+    end
     resources :lead_forms do
       member do
         post :toggle_lead_form_status
@@ -19,16 +24,19 @@ Rails.application.routes.draw do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
     resources :comments, only: [:create, :destroy]
     resources :users, only: [:update]
+    resources :campaigns, only: [:index]
   end
 
   # lead form
-  # resources :lead_forms do
-  #   collection do
-  #     get 'thank-you'
-  #   end
-  # end
+  resources :lead_forms do
+    collection do
+      get 'thank-you'
+    end
+  end
 
-  # get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
+  get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
+
+  resources :leads, only: [:create]
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
@@ -46,10 +54,9 @@ Rails.application.routes.draw do
       end
     end
 
-    get '/profile/:user_id', to: 'profile#index'
-    # will open later when it's ready
-    # resources :campaigns, only: :show
+    resources :campaigns, only: [:index, :show]
 
+    get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
     get '/experts', to: 'experts#index'

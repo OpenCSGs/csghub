@@ -1,4 +1,4 @@
-<div class="form-group">
-  <%= label_tag "name", "姓名*", class: "block" %>
-  <%= text_field_tag "name", @lead.name, required: true, disabled: @lead_form.inactive? %>
+<div class="w-[320px] lg:w-full">
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "name"} %>
+  <%= text_field_tag "name", @lead.name, required: true, class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>
