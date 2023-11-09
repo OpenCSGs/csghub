@@ -84,26 +84,25 @@ const closeTipDiv = () => {
 };
 
 const submitTheForm = () => {
-  if (userName == null) {
+  if (!userName.value) {
     ElMessage({message: "请您填写姓名", type: "warning"})
     return
-  } else if (jobName == null) {
+  } else if (!jobName.value) {
     ElMessage({message: "请您填写职位名称", type: "warning"})
     return
-  } else if (phone == null) {
+  } else if (!phone.value) {
     ElMessage({message: "请您填写电话号码", type: "warning"})
     return
-  } else if (companyName == null) {
+  } else if (!companyName.value) {
     ElMessage({message: "请您填写公司名称", type: "warning"})
     return
-  } else if (expertise == null) {
+  } else if (!expertise.value) {
     ElMessage({message: "请您填写擅长领域", type: "warning"})
     return
-  } else if (introduction == null) {
+  } else if (!introduction.value) {
     ElMessage({message: "请您填写个人介绍", type: "warning"})
     return
   }
-
   createExpert().catch(err => {
     ElMessage({
       message: err.message,
