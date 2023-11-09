@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
+    resources :leads
     resources :campaigns do
       member do
         post :toggle_campaign_recommended
