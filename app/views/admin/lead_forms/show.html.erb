@@ -37,8 +37,6 @@ as well as a link to its edit page.
       method: :delete,
       data: { confirm: t("administrate.actions.confirm") }
     ) if accessible_action?(page.resource, :destroy) %>
-
-    <%= link_to "Open Campaign", "/campaigns/#{page.resource.id}", class: "button button--alt" %>
   </div>
 </header>
 
@@ -52,15 +50,8 @@ as well as a link to its edit page.
       ) %>
       </dt>
 
-      <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
-        <% if attribute.name == "campaign_type" %>
-          <%= attribute.resource.human_enum_name(:campaign_type) %>
-        <% elsif attribute.name == "status" %>
-          <%= attribute.resource.human_enum_name(:status) %>
-        <% else %>
-          <%= render_field attribute, page: page %>
-        <% end %>
-      </dd>
+      <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
+          ><%= render_field attribute, page: page %></dd>
     <% end %>
   </dl>
 </section>

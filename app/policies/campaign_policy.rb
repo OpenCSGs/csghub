@@ -1,4 +1,8 @@
 class CampaignPolicy < ApplicationPolicy
+  def new?
+    user.admin?
+  end
+
   def index?
     true
   end
@@ -12,6 +16,10 @@ class CampaignPolicy < ApplicationPolicy
   end
 
   def update?
+    user.admin?
+  end
+
+  def create?
     user.admin?
   end
 

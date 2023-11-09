@@ -36,7 +36,7 @@ and renders all form fields for a resource's editable attributes.
   <% page.attributes(controller.action_name).each do |attribute| -%>
     <% if controller.action_name == "edit" && attribute.name == "campaign" %>
       <div class="field-unit">
-        <div class="field-unit__label"><label>Campaign: </label></div>
+        <div class="field-unit__label"><label>Campaign </label></div>
         <div class="field-unit__field"><%= attribute.data.name %></div>
       </div>
     <% else %>
