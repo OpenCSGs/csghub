@@ -21,8 +21,17 @@ class Campaign < ApplicationRecord
   before_create :set_uuid
 
   has_one :lead_form
-
   has_many :leads, through: :lead_form
+
+  validates_presence_of :name,
+                        :start_date,
+                        :end_date,
+                        :location,
+                        :organizer,
+                        :content,
+                        :desktop_banner,
+                        :mobile_banner,
+                        :campaign_type
 
   scope :without_lead_form, -> { includes(:lead_form).where(lead_forms: { id: nil }) }
   scope :recommended, -> { where(recommended: true) }
