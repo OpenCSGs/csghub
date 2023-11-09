@@ -34,10 +34,9 @@ class UserDashboard < Administrate::BaseDashboard
     id
     login_identity
     avatar_url
-    phone
-    phone_verified
-    email
     roles
+    phone
+    email
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
