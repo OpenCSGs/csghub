@@ -9,7 +9,7 @@ class UserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    avatar: Field::String,
+    avatar_url: Field::String,
     email: Field::String,
     email_verified: Field::Boolean,
     gender: Field::String,
@@ -33,7 +33,7 @@ class UserDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     login_identity
-    avatar
+    avatar_url
     phone
     phone_verified
     email
@@ -44,7 +44,7 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    avatar
+    avatar_url
     email
     email_verified
     gender
