@@ -17,12 +17,12 @@
     <%= hidden_field_tag 'utm_content', @lead.utm_content  %>
     <%= hidden_field_tag 'lead_form_uuid', @lead_form.uuid  %>
 
-    <div class="p-[36px] max-w-[766px] xl:w-[80%] m-auto bg-white flex flex-wrap justify-between gap-[16px] lg:justify-center rounded-lg">
+    <div class="p-[36px] max-w-[766px] xl:w-[80%] sm:w-[90%] sm:p-[20px] m-auto bg-white flex flex-wrap justify-between gap-[16px] lg:justify-center rounded-lg">
       <% @lead_form.lead_fields.each do |field| %>
         <%= render "partials/lead_fields/leads_#{field}" %>
       <% end %>
 
-      <div class="w-full mt-[32px]">
+      <div class="w-full mt-[32px] sm:mt-0">
         <%= submit_tag "提交表单", class: 'flex items-center justify-center w-[88px] h-[32px] bg-[#409EFF] font-[500] text-white rounded cursor-pointer', disabled: @lead_form.inactive? %>
       </div>
     </div>
