@@ -5,9 +5,6 @@
   </div>
   <div class="text-[48px] font-[600] mb-[16px] text-center"> <%= @lead_form.title %> </div>
   <div class="text-[20px] leading-[28px] text-center mb-[36px]"> <%= @lead_form.description %> </div>
-  <% if flash[:alert].present? %>
-    <p class="max-w-[766px] xl:w-[80%] mx-auto p-[16px] mb-[20px] text-[#721c24] bg-[#f8d7da] border-[#f5c6cb] rounded-lg" id="error"> <%= flash[:alert] %> </p>
-  <% end %>
   <%= form_tag leads_path, method: 'post' do %>
     <%= hidden_field_tag 'lead_source', @lead_form.lead_source  %>
     <%= hidden_field_tag 'channel', @lead_form.channel  %>
@@ -18,12 +15,15 @@
     <%= hidden_field_tag 'lead_form_uuid', @lead_form.uuid  %>
 
     <div class="p-[36px] max-w-[766px] xl:w-[80%] sm:w-[90%] sm:p-[20px] m-auto bg-white flex flex-wrap justify-between gap-[16px] lg:justify-center rounded-lg">
+      <% if flash[:alert].present? %>
+        <el-alert title="<%= flash[:alert] %>" type="error" center show-icon></el-alert>
+      <% end %>
       <% @lead_form.lead_fields.each do |field| %>
         <%= render "partials/lead_fields/leads_#{field}" %>
       <% end %>
 
       <div class="w-full mt-[32px] sm:mt-0">
-        <%= submit_tag "提交表单", class: 'flex items-center justify-center w-[88px] h-[32px] bg-[#409EFF] font-[500] text-white rounded cursor-pointer', disabled: @lead_form.inactive? %>
+        <%= submit_tag "提交表单", class: 'flex items-center justify-center w-[88px] h-[32px] bg-[#409EFF] font-[500] text-white rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-[#ccc]', disabled: @lead_form.inactive? %>
       </div>
     </div>
   <% end %>

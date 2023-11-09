@@ -5,6 +5,7 @@ class LeadFormsController < ApplicationController
   def show_form
     uuid = params[:uuid].split('_').first
     @lead_form = LeadForm.find_by!(uuid: uuid)
+    flash[:alert] = "活动已结束申请" if @lead_form.inactive?
   end
 
   def thank_you
