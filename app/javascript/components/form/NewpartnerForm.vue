@@ -39,7 +39,7 @@
           </div>
         </div>
         <!--公司-->
-        <div class="w-full h-auto">
+        <div class="w-full h-auto mt-[24px]">
           <div class="flex gap-x-[80px]">
             <div class="w-[320px]">
               <form-label labelName="公司/单位名称" :required="true" />
@@ -201,11 +201,13 @@ export default {
       };
 
       const jsonStr = JSON.stringify(jsonData);
+
       const option = {
-        method: "POST",
+        method: 'POST',
         headers: {
-          Authorization: `Bearer ${cookies.get("idToken")}`,
-          "Content-Type": "application/json",
+          'Authorization': `Bearer ${cookies.get('idToken')}`,
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          'Content-Type': 'application/json',
         },
         body: jsonStr,
       };
