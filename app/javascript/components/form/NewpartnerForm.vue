@@ -1,12 +1,12 @@
 <template>
-  <div class="flex justify-center items-center mt-[50px] lg:mt-[350px]">
+  <div class="flex justify-center items-center mt-[50px] lg:mt-[100px] md:mt-[250px]">
     <div
-      class="absolute flex flex-col bg-white w-[766px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
+      class="absolute flex flex-col bg-white w-[766px] lg:w-[566px] md:w-[400px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
     >
       <div class="text-[#303133] text-sm gap-y-[48px]">
         <div class="w-full h-auto">
-          <div class="flex gap-x-[80px]">
-            <div class="w-[320px]">
+          <div class="flex md:flex-col md:gap-y-[20px] gap-x-[80px]">
+            <div class="w-[320px] lg:w-full">
               <form-label labelName="姓名" :required="true" />
               <el-input
                 v-model="userName"
@@ -16,7 +16,7 @@
               />
             </div>
 
-            <div class="w-[320px]">
+            <div class="w-[320px] lg:w-full md:flex-col">
               <form-label labelName="手机号码" :required="true" />
               <el-input
                 v-model="phone"
@@ -39,7 +39,7 @@
         </div>
 
         <div class="w-full h-auto mt-[24px]">
-          <div class="flex gap-x-[80px]">
+          <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
             <div class="w-[320px]">
               <form-label labelName="公司/单位名称" :required="true" />
               <el-input
@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <div class="flex gap-x-[80px]">
+          <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
             <div class="w-[320px] mt-[24px]">
               <form-label labelName="公司/产品官网" :required="true" />
               <el-input
@@ -71,7 +71,7 @@
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
-            <div class="w-[320px] mt-[24px]">
+            <div class="w-[320px] mt-[24px] md:mt-0">
               <form-label labelName="公司行业" :required="true" />
               <el-input
                   v-model="industry"
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="w-full h-auto mt-[10px]">
+        <div class="w-full h-auto mt-[24px]">
           <div class="w-full">
             <form-label labelName="请简要描述您的合作需求" :required="true" />
             <el-input
