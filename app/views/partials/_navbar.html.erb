@@ -4,16 +4,16 @@
             logo="<%= asset_path('opencsg_logo.png') %>"
             avatar="<%= current_user.avatar_url %>"
             star-chain-url="<%= starchain_address %>"
-            is-company-user=<%= current_user.company_user? %>
-            company-verified=<%= current_user.company_verified %>
-            phone=<%= current_user.phone %>
-            user-name=<%= current_user.comment_display_name%>
-            is-logged-in=true
+            is-company-user="<%= current_user.company_user? %>"
+            company-verified="<%= current_user.company_verified %>"
+            phone="<%= current_user.phone %>"
+            user-name="<%= current_user.comment_display_name%>"
+            is-logged-in="true"
     />
   <% else %>
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
             star-chain-url="<%= starchain_address %>"
-            is-logged-in=false
+            is-logged-in="false"
     />
   <% end %>
 </div>

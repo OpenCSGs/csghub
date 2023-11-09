@@ -34,7 +34,7 @@ class Campaign < ApplicationRecord
   end
 
   def with_content_and_leads_count
-    attributes.merge(
+    as_json.merge(
       content: content.body.to_plain_text.squish,
       leads_count: leads.count,
       start_date: start_date.to_date,
@@ -47,6 +47,23 @@ class Campaign < ApplicationRecord
   end
 
   def banner_attributes
-    attributes.slice('uuid').merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
+    as_json.slice(:uuid, :id, :form_url).merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
+  end
+
+  def as_json options = nil
+    {
+      id: id,
+      uuid: uuid,
+      name: name,
+      location: location,
+      start_date: start_date,
+      end_date: end_date,
+      organizer: organizer,
+      organizer_website: organizer_website,
+      pageviews: pageviews,
+      campaign_type: campaign_type,
+      status: status,
+      form_url: form_url
+    }
   end
 end

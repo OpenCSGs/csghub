@@ -6,24 +6,26 @@
           <img :src="campaign.desktop_banner_url" class="sm:hidden w-full object-cover h-[390px]" alt="OpenCSG"/>
           <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover h-[390px]" alt="OpenCSG"/>
         </div>
+        <div class="flex gap-3 absolute left-[80px] bottom-[25px] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%]">
+          <a :href="campaign.form_url" class="w-[96px] h-[40px] flex items-center justify-center bg-[#409EFF] rounded text-white text-[14px] leading-[22px]">立即报名</a>
+          <a :href="'/campaigns/' + campaign.id" class="w-[96px] h-[40px] flex items-center justify-center text-white rounded border-white border-[1px] text-[14px] leading-[22px]">了解更多</a>
+        </div>
       </el-carousel-item>
     </el-carousel>
-    <div class="flex gap-3 absolute left-[80px] bottom-[35px] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%]">
-      <a href="#" class="w-[96px] h-[40px] flex items-center justify-center bg-[#409EFF] rounded text-white text-[14px] leading-[22px]">立即报名</a>
-      <a href="#" class="w-[96px] h-[40px] flex items-center justify-center text-white rounded border-white border-[1px] text-[14px] leading-[22px]">了解更多</a>
-    </div>
   </div>
   <div class="xl:px-[20px]">
     <CampaignCard v-for="campaign in JSON.parse(theCampaigns)"
+                  :campaignId="campaign.id"
                   :key="campaign.uuid"
                   :name="campaign.name"
                   :content="campaign.content"
                   :organizer="campaign.organizer"
-                  :organizer_website="campaign.organizer_website"
-                  :start_date="campaign.start_date"
-                  :end_date="campaign.end_date"
+                  :organizerWebsite="campaign.organizer_website"
+                  :startDate="campaign.start_date"
+                  :endDate="campaign.end_date"
                   :pageviews="campaign.pageviews"
-                  :leads_count="campaign.leads_count"
+                  :leadsCount="campaign.leads_count"
+                  :formUrl="campaign.form_url"
     />
   </div>
   <el-pagination background
@@ -58,8 +60,7 @@
         theRecommendedCampaigns: this.recommendedCampaigns
       }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
       async nextPage() {
         const campaignsUpdateEndpoint = `api/campaigns?page=${this.currentPage}`;

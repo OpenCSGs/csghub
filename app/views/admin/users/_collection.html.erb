@@ -61,24 +61,26 @@ to display a collection of resources in an HTML table.
           <% if accessible_action?(resource, :show) %>
             <%= %(tabindex=0 role=link data-url=#{polymorphic_path([namespace, resource])}) %>
           <% end %>
-          >
+      >
         <% collection_presenter.attributes_for(resource).each do |attribute| %>
           <td class="cell-data cell-data--<%= attribute.html_class %>">
             <% if accessible_action?(resource, :show) -%>
-              <% if attribute.name == 'lead_form' && attribute.data.blank? %>
-                <a href="<%= new_admin_lead_form_path(campaign_id: resource.id) %>">Create</a>
-              <% elsif attribute.name == 'status' %>
-                <%= attribute.resource.human_enum_name(:status) %>
-              <% else %>
-                <a href="<%= polymorphic_path([namespace, resource]) -%>"
-                  tabindex="-1"
-                  class="action-show"
-                  >
+              <a href="<%= polymorphic_path([namespace, resource]) -%>"
+                 tabindex="-1"
+                 class="action-show"
+                 >
+                <% if attribute.name == "avatar_url" && attribute.data.present? %>
+                  <%= image_tag attribute.data, class: "h-[40px] w-[40px] rounded-[50%]" %>
+                <% else %>
                   <%= render_field attribute %>
-                </a>
-              <% end %>
+                <% end -%>
+              </a>
             <% else %>
-              <%= render_field attribute %>
+              <% if attribute.name == "avatar_url" && attribute.data.present? %>
+                <%= image_tag attribute.data, class: "h-[40px] w-[40px] rounded-[50%]" %>
+              <% else %>
+                <%= render_field attribute %>
+              <% end -%>
             <% end -%>
           </td>
         <% end %>
@@ -92,10 +94,6 @@ to display a collection of resources in an HTML table.
           resource: resource,
           table_title: "page-title"
         ) %>
-
-        <td>
-          <%= link_to("Toggle Recommended", toggle_campaign_recommended_admin_campaign_path(resource), method: 'post') %>
-        </td>
       </tr>
     <% end %>
   </tbody>

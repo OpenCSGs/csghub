@@ -9,7 +9,7 @@ class UserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    avatar: Field::String,
+    avatar_url: Field::String,
     email: Field::String,
     email_verified: Field::Boolean,
     gender: Field::String,
@@ -19,7 +19,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone: Field::String,
     phone_verified: Field::Boolean,
     roles_mask: Field::Number,
-    roles: Field::String,
+    roles: Field::Select.with_options(include_blank: true, collection: User::ROLES),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     company_verified: Field::Boolean
@@ -33,18 +33,17 @@ class UserDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     login_identity
-    avatar
-    phone
-    phone_verified
-    email
+    avatar_url
     roles
+    phone
+    email
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    avatar
+    avatar_url
     email
     email_verified
     gender
@@ -53,7 +52,7 @@ class UserDashboard < Administrate::BaseDashboard
     name
     phone
     phone_verified
-    roles_mask
+    roles
     created_at
     updated_at
   ].freeze
