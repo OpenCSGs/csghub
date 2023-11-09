@@ -67,6 +67,8 @@ to display a collection of resources in an HTML table.
             <% if accessible_action?(resource, :show) -%>
               <% if attribute.name == 'lead_form' && attribute.data.blank? %>
                 <a href="<%= new_admin_lead_form_path(campaign_id: resource.id) %>">Create</a>
+              <% elsif attribute.name == 'status' %>
+                <%= attribute.resource.human_enum_name(:status) %>
               <% else %>
                 <a href="<%= polymorphic_path([namespace, resource]) -%>"
                   tabindex="-1"

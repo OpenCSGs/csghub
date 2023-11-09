@@ -53,6 +53,8 @@ as well as a link to its edit page.
       <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
         <% if attribute.name == "campaign_type" %>
           <%= attribute.resource.human_enum_name(:campaign_type) %>
+        <% elsif attribute.name == "status" %>
+          <%= attribute.resource.human_enum_name(:status) %>
         <% else %>
           <%= render_field attribute, page: page %>
         <% end %>
