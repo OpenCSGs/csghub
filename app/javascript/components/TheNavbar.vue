@@ -9,28 +9,28 @@
     </div>
     <div class="flex justify-between items-center pl-4">
       <ul class="flex justify-between items-center">
-        <li v-if="isLoggedInBoolean" class="px-5"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
+        <li v-if="isLoggedInBoolean" class="px-5 sm:!hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
         <li class="px-5 md:!hidden"> <space></space> </li>
         <li class="px-5 mlg:!hidden"> <model></model> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <partner></partner> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
-        <li class="px-5 !hidden"> <campaigns></campaigns> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <campaigns></campaigns> </li>
         <!-- <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li> -->
       </ul>
-      <el-dropdown class="hidden xl:!block pr-8 sm:px-[15px]">
+      <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
           <el-icon><ArrowDownBold /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-if="isLoggedInBoolean" class="!hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
+            <el-dropdown-item v-if="isLoggedInBoolean" class="!hidden sm:!flex"> <starchain :star-chain-url="starChainUrl"></starchain> </el-dropdown-item>
             <el-dropdown-item class="!hidden md:!flex"> <space></space> </el-dropdown-item>
             <el-dropdown-item class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <partner></partner> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex xl:!flex"> <expert></expert> </el-dropdown-item>
-            <el-dropdown-item class="!flex"> <campaigns></campaigns> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex xl:!flex"> <campaigns></campaigns> </el-dropdown-item>
             <!-- <el-dropdown-item class="!hidden xl:!flex"> <docs></docs> </el-dropdown-item> -->
           </el-dropdown-menu>
         </template>
