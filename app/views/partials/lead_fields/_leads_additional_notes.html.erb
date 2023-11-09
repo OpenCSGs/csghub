@@ -1,4 +1,4 @@
 <div class="w-[320px] lg:w-full">
-  <%= label_tag "additional_notes", "描述#{custom_required?('additional_notes') ? '*' : ''}", class: "text-left block leading-[22px] mb-[8px]" %>
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "additional_notes"} %>
   <%= text_area_tag "additional_notes", @lead.additional_notes, required: custom_required?('additional_notes'), class: "w-full h-[80px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>

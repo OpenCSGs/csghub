@@ -5,9 +5,9 @@ class Lead < ApplicationRecord
 
   validates_presence_of :company, :phone, :name
 
-  validate :custom_required_fields
+  validate :custom_required_fields_presence
 
-  def custom_required_fields
+  def custom_required_fields_presence
     return unless lead_form
 
     required_fields = lead_form.custom_required_fields & lead_form.lead_fields

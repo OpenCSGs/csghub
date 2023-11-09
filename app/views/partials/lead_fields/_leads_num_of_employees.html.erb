@@ -1,5 +1,5 @@
 <div class="w-[320px] lg:w-full">
-  <%= label_tag "num_of_employees", "员工数量#{custom_required?('num_of_employees') ? '*' : ''}", class: "text-left block leading-[22px] mb-[8px]" %>
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "num_of_employees"} %>
   <%= text_field_tag "num_of_employees", @lead.num_of_employees, required: custom_required?('num_of_employees'), class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>
 

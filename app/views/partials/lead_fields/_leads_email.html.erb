@@ -1,4 +1,4 @@
 <div class="w-[320px] lg:w-full">
-  <%= label_tag "email", "邮箱#{custom_required?('email') ? '*' : ''}", class: "text-left block leading-[22px] mb-[8px]" %>
+  <%= label_tag "email", "邮箱", class: "text-left block leading-[22px] mb-[8px]" %>
   <%= text_field_tag "email", @lead.email, required: custom_required?('email'), class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>

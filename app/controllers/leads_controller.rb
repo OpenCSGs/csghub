@@ -6,7 +6,7 @@ class LeadsController < ApplicationController
       redirect_to thank_you_lead_forms_path
     else
       flash[:alert] = @lead.errors.full_messages.first || "请填写完整的信息"
-      redirect_to error_path
+      redirect_to current_lead_form_path
     end
   end
 
@@ -16,11 +16,11 @@ class LeadsController < ApplicationController
     @lead = Lead.new(lead_params)
     unless @lead.lead_form.active?
       flash[:alert] = "活动已结束申请"
-      redirect_to error_path and return
+      redirect_to current_lead_form_path and return
     end
   end
 
-  def error_path
+  def current_lead_form_path
     session[:original_request_path] + '#error'
   end
 
