@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center mt-[200px] lg:mt-[325px]">
+  <div class="flex justify-center items-center mt-[200px] lg:mt-[350px]">
     <div class="absolute flex flex-col bg-white w-[500px] md:w-[400px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl">
       <div v-if="divTipVisible === true" class="flex items-center justify-center px-[16px] py-[9px] w-full font-normal text-[13px] text-[#909399] rounded-[4px] leading-[22px] outline-0 bg-[#F4F4F5] gap-[8px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
