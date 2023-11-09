@@ -1,6 +1,4 @@
-<div class="form-group">
-  <%= label_tag "company", "公司*", class: "block" %>
-  <%= text_field_tag "company", @lead.company, required: true, disabled: @lead_form.inactive? %>
+<div class="w-[320px] lg:w-full">
+  <%= label_tag "company", "公司*", class: "text-left block leading-[22px] mb-[8px]" %>
+  <%= text_field_tag "company", @lead.company, required: true, class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>
-
-

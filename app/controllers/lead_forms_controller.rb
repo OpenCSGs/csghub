@@ -5,14 +5,9 @@ class LeadFormsController < ApplicationController
   def show_form
     uuid = params[:uuid].split('_').first
     @lead_form = LeadForm.find_by!(uuid: uuid)
-    if @lead_form.inactive?
-      flash[:alert] = '活动已经下线'
-    end
-    render layout: "lead_form"
   end
 
   def thank_you
-    render layout: "lead_form_form"
   end
 
   private

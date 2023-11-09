@@ -27,13 +27,15 @@ Rails.application.routes.draw do
   end
 
   # lead form
-  # resources :lead_forms do
-  #   collection do
-  #     get 'thank-you'
-  #   end
-  # end
+  resources :lead_forms do
+    collection do
+      get 'thank-you'
+    end
+  end
 
-  # get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
+  get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
+
+  resources :leads, only: [:create]
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
