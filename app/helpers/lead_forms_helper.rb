@@ -11,4 +11,29 @@ module LeadFormsHelper
   def custom_required? field
     @lead_form&.custom_required_fields&.include?(field)
   end
+
+  def field_display_name(field)
+    case field
+    when 'name'
+      '姓名*'
+    when 'phone'
+      '电话*'
+    when 'company'
+      '公司*'
+    when 'email'
+      "邮箱#{custom_required?('email') ? '*' : ''}"
+    when 'title'
+      "职位#{custom_required?('title') ? '*' : ''}"
+    when 'industry'
+      "行业#{custom_required?('industry') ? '*' : ''}"
+    when 'province'
+      "省份#{custom_required?('province') ? '*' : ''}"
+    when 'email_opt_out'
+      "不接受邮件#{custom_required?('email_opt_out') ? '*' : ''}"
+    when 'num_of_employees'
+      "员工数量#{custom_required?('num_of_employees') ? '*' : ''}"
+    when 'additional_notes'
+      "备注#{custom_required?('additional_notes') ? '*' : ''}"
+    end
+  end
 end

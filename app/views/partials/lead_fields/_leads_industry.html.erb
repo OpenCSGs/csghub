@@ -1,4 +1,4 @@
-<div class="form-group">
-  <%= label_tag "industry", "行业#{custom_required?('industry') ? '*' : ''}", class: "block" %>
-  <%= text_field_tag "industry", @lead.industry, disabled: @lead_form.inactive? %>
+<div class="w-[320px] lg:w-full">
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "industry"} %>
+  <%= text_field_tag "industry", @lead.industry, required: custom_required?('industry'), class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>

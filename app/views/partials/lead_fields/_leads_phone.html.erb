@@ -1,5 +1,4 @@
-<div class="form-group phone122">
-  <%= label_tag "phone", "电话*", class: "block" %>
-  <p class="field-remark">请填入纯数字号码，座机及港澳台号码请加上行政区号</p>
-  <%= text_field_tag "phone", @lead.phone, required: true, disabled: @lead_form.inactive? %>
+<div class="w-[320px] lg:w-full">
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "phone"} %>
+  <%= text_field_tag "phone", @lead.phone, required: true, class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
 </div>
