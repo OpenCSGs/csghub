@@ -4,7 +4,6 @@
       class="absolute flex flex-col bg-white w-[766px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
     >
       <div class="text-[#303133] text-sm gap-y-[48px]">
-        <!--姓名-->
         <div class="w-full h-auto">
           <div class="flex gap-x-[80px]">
             <div class="w-[320px]">
@@ -38,7 +37,7 @@
             />
           </div>
         </div>
-        <!--公司-->
+
         <div class="w-full h-auto mt-[24px]">
           <div class="flex gap-x-[80px]">
             <div class="w-[320px]">
@@ -74,21 +73,12 @@
             </div>
             <div class="w-[320px] mt-[24px]">
               <form-label labelName="公司行业" :required="true" />
-              <el-select
-                v-model="filterValue"
-                @change="handleIndustryInputValue"
-                placeholder="请选择一个选项1"
-                size="large"
-                class="w-full"
-              >
-                <el-option
-                  v-for="item in filterValues"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                />
-              </el-select>
+              <el-input
+                  v-model="industry"
+                  clearable
+                  placeholder="请填写您的行业信息"
+                  class="w-full h-[40px] text-[#606266]"
+              />
             </div>
           </div>
         </div>
@@ -101,7 +91,7 @@
               clearable
               placeholder="请提供您的合作意向及需求"
               type="textarea"
-              class="w-full h-[40px] text-[#606266]"
+              class="w-full h-auto text-[#606266]"
             />
           </div>
         </div>

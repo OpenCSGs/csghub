@@ -46,14 +46,14 @@
                   clearable
                   type="textarea"
                   placeholder="擅长领域"
-                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+                  class="w-full h-auto text-[#606266] mb-[24px]"/>
 
         <form-label labelName="个人介绍" :required="true" />
         <el-input v-model="introduction"
                   clearable
                   type="textarea"
                   placeholder="个人介绍"
-                  class="w-full h-[40px] text-[#606266] mb-[24px]"/>
+                  class="w-full h-auto text-[#606266] mb-[24px]"/>
 
         <div class="flex mt-[16px] gap-x-[16px]">
           <el-button type="primary" @click="submitTheForm">提交</el-button>
