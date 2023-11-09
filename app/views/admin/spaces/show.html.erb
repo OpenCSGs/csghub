@@ -51,10 +51,8 @@ as well as a link to its edit page.
       </dt>
 
       <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
-        <% if attribute.name == "campaign_type" %>
-          <%= attribute.resource.human_enum_name(:campaign_type) %>
-        <% elsif attribute.name == "status" %>
-          <%= attribute.resource.human_enum_name(:status) %>
+        <% if attribute.name == "cover_image_url" && attribute.data.present? %>
+          <%= image_tag attribute.data, class: "h-[147px] w-[384px] w-full object-cover rounded cursor-pointer hover:opacity-50" %>
         <% else %>
           <%= render_field attribute, page: page %>
         <% end %>
