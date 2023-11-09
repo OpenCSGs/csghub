@@ -28,6 +28,8 @@ class LeadsController < ApplicationController
     params.permit(
       *LeadForm.available_form_fields,
       :lead_form_uuid,
+      :channel,
+      :lead_source,
       :utm_content,
       :utm_medium,
       :utm_source,
