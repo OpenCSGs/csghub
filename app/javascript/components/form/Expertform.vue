@@ -24,7 +24,7 @@
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
         <form-label labelName="职位名称" :required="true" />
-        <el-input v-model="jobTitle"
+        <el-input v-model="jobName"
                   clearable
                   placeholder="职位名称"
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
@@ -56,7 +56,7 @@
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
         <div class="flex mt-[16px] gap-x-[16px]">
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" @click="submitTheForm">提交</el-button>
         </div>
       </div>
     </div>
@@ -116,23 +116,25 @@ async function createExpert() {
   const expertCreateEndpoint = '/api/leads'
 
   const jsonData = {
-    name: user_name,
-    title: job_name,
-    phone: phone,
-    company: company_name,
-    expertise: expertise,
-    introduction: desc
+    name: userName.value,
+    title: jobName.value,
+    phone: phone.value,
+    company: companyName.value,
+    expertise: expertise.value,
+    introduction: introduction.value
   }
 
   const jsonStr = JSON.stringify(jsonData)
   const option = {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${cookies.get('idToken')}`,
+      'Authorization': `Bearer ${cookies.get('idToken')}`,
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       'Content-Type': 'application/json',
     },
     body: jsonStr
   }
+
   const response = await fetch(expertCreateEndpoint, option)
 
   if (!response.ok) {
