@@ -37,6 +37,8 @@ as well as a link to its edit page.
       method: :delete,
       data: { confirm: t("administrate.actions.confirm") }
     ) if accessible_action?(page.resource, :destroy) %>
+
+    <%= link_to "Open Campaign", "/campaigns/#{page.resource.id}", class: "button button--alt" %>
   </div>
 </header>
 
