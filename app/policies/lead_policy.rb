@@ -8,11 +8,11 @@ class LeadPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.super_user?
+    user.admin?
   end
 
   def update?
-    user.super_user?
+    user.admin?
   end
 
   def destroy?
