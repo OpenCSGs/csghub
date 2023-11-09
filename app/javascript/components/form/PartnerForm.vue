@@ -188,6 +188,8 @@ export default {
         company_site: this.companyWeb,
         industry: this.industry,
         introduction: this.desc,
+        lead_source: 'CommunitySite',
+        lead_type: 'partners'
       };
 
       const jsonStr = JSON.stringify(jsonData);

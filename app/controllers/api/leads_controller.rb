@@ -10,7 +10,7 @@ class Api::LeadsController < Api::ApplicationController
   end
 
   def create_params
-    params.require(:lead).permit(:name, :title, :phone, :company, :expertise, :introduction, :email, :company_site, :industry)
+    params.require(:lead).permit(:name, :title, :phone, :company, :expertise, :introduction, :email, :company_site, :industry, :lead_source, :lead_type)
   end
 end
 

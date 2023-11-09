@@ -119,7 +119,9 @@ async function createExpert() {
     phone: phone.value,
     company: companyName.value,
     expertise: expertise.value,
-    introduction: introduction.value
+    introduction: introduction.value,
+    lead_source: 'CommunitySite',
+    lead_type: 'experts'
   }
 
   const jsonStr = JSON.stringify(jsonData)
