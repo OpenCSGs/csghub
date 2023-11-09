@@ -48,8 +48,12 @@ class LeadDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    additional_notes
+    lead_source
     channel
+    name
+    phone
+    email
+    title
     company
   ].freeze
 
