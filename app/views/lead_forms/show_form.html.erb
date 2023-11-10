@@ -8,6 +8,7 @@
   <%= form_tag leads_path, method: 'post' do %>
     <%= hidden_field_tag 'lead_source', @lead_form.lead_source  %>
     <%= hidden_field_tag 'channel', @lead_form.channel  %>
+    <%= hidden_field_tag 'lead_type', @lead_form.lead_type  %>
     <%= hidden_field_tag 'utm_source', @lead.utm_source  %>
     <%= hidden_field_tag 'utm_medium', @lead.utm_medium  %>
     <%= hidden_field_tag 'utm_keyword', @lead.utm_keyword  %>
