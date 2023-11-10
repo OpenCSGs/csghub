@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items-center mt-[200px] lg:mt-[350px]">
     <div class="absolute flex flex-col bg-white w-[500px] md:w-[400px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl">
-      <div v-if="divTipVisible === true" class="flex items-center justify-center px-[16px] py-[9px] w-full font-normal text-[13px] text-[#909399] rounded-[4px] leading-[22px] outline-0 bg-[#F4F4F5] gap-[8px]">
+      <div v-if="IsTipsVisible === true" class="flex items-center justify-center px-[16px] py-[9px] w-full font-normal text-[13px] text-[#909399] rounded-[4px] leading-[22px] outline-0 bg-[#F4F4F5] gap-[8px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path
               d="M10 1.25C12.4742 1.315 14.5348 2.17104 16.1819 3.81813C17.829 5.46521 18.685 7.52583 18.75 10C18.685 12.4742 17.829 14.5348 16.1819 16.1819C14.5348 17.829 12.4742 18.685 10 18.75C7.52583 18.685 5.46521 17.829 3.81813 16.1819C2.17104 14.5348 1.315 12.4742 1.25 10C1.315 7.52583 2.17104 5.46521 3.81813 3.81813C5.46521 2.17104 7.52583 1.315 10 1.25ZM11.3088 6.62125C11.6475 6.62125 11.9275 6.52042 12.1488 6.31875C12.37 6.11708 12.4806 5.84687 12.4806 5.50812C12.4806 5.16937 12.37 4.89917 12.1488 4.6975C11.9275 4.49583 11.6508 4.395 11.3188 4.395C10.9867 4.395 10.71 4.49583 10.4887 4.6975C10.2675 4.89917 10.1569 5.16937 10.1569 5.50812C10.1569 5.84687 10.2675 6.11708 10.4887 6.31875C10.71 6.52042 10.9835 6.62125 11.3094 6.62125H11.3088ZM11.5431 13.6525C11.5431 13.5742 11.5496 13.47 11.5625 13.34C11.5754 13.21 11.5754 13.0863 11.5625 12.9688L10.5275 14.16C10.4233 14.2771 10.3158 14.3683 10.205 14.4338C10.0942 14.4992 9.99979 14.5188 9.92188 14.4925C9.80479 14.4404 9.75271 14.3492 9.76562 14.2188L11.4844 8.80875C11.5494 8.44417 11.4908 8.13167 11.3088 7.87125C11.1267 7.61083 10.8337 7.45458 10.43 7.4025C9.97417 7.41542 9.47604 7.6075 8.93563 7.97875C8.39521 8.35 7.92313 8.82208 7.51937 9.395V9.68813C7.50646 9.81854 7.50646 9.94229 7.51937 10.0594L8.55438 8.86812C8.65854 8.75104 8.76604 8.65979 8.87687 8.59438C8.98771 8.52896 9.07562 8.50937 9.14062 8.53562C9.27104 8.60062 9.31667 8.70479 9.2775 8.84812L7.57812 14.2387C7.48688 14.5642 7.5325 14.854 7.715 15.1081C7.8975 15.3623 8.21646 15.5348 8.67188 15.6256C9.32312 15.6127 9.87 15.424 10.3125 15.0594C10.755 14.6948 11.1652 14.226 11.5431 13.6531V13.6525Z"
@@ -67,7 +67,7 @@ import {useCookies} from "vue3-cookies"
 import {ref} from "vue"
 import FormLabel from "./sub/FormLabel.vue"
 
-const divTipVisible = ref(true)
+const IsTipsVisible = ref(true)
 
 const { cookies } = useCookies()
 
@@ -79,7 +79,7 @@ const expertise = ref('')
 const introduction = ref('')
 
 const closeTipDiv = () => {
-  divTipVisible.value = false
+  IsTipsVisible.value = false
 };
 
 const submitTheForm = () => {
