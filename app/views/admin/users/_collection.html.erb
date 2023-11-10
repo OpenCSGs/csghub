@@ -69,8 +69,8 @@ to display a collection of resources in an HTML table.
                  tabindex="-1"
                  class="action-show"
                  >
-                <% if attribute.name == "avatar_url" && attribute.data.present? %>
-                  <%= image_tag attribute.data, class: "h-[40px] w-[40px] rounded-[50%]" %>
+                <% if attribute.name == "avatar" && attribute.data.present? %>
+                  <%= image_tag resource.avatar_url, class: "h-[40px] w-[40px] rounded-[50%]" %>
                 <% else %>
                   <%= render_field attribute %>
                 <% end -%>
