@@ -19,7 +19,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone: Field::String,
     phone_verified: Field::Boolean,
     roles_mask: Field::Number,
-    roles: Field::Select.with_options(include_blank: true, collection: User::ROLES),
+    roles: Field::Select.with_options(include_blank: true, searchable: false, collection: User::ROLES),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     company_verified: Field::Boolean
