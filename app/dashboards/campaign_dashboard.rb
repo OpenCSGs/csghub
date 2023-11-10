@@ -21,7 +21,9 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer: Field::String,
     organizer_website: Field::String,
     pageviews: Field::Number,
+    recommended: Field::Boolean,
     campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:campaign_type) }),
+    status: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:status) }),
     desktop_banner: Field::ActiveStorage,
     mobile_banner: Field::ActiveStorage,
   }.freeze
@@ -34,10 +36,9 @@ class CampaignDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     id
     name
-    location
-    start_date
-    end_date
+    status
     lead_form
+    recommended
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -49,16 +50,18 @@ class CampaignDashboard < Administrate::BaseDashboard
     location
     start_date
     end_date
-    content
     organizer
     organizer_website
     pageviews
+    recommended
     campaign_type
+    status
+    created_at
+    updated_at
+    content
     lead_form
     desktop_banner
     mobile_banner
-    created_at
-    updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -69,10 +72,12 @@ class CampaignDashboard < Administrate::BaseDashboard
     start_date
     end_date
     location
-    content
     organizer
     organizer_website
+    recommended
     campaign_type
+    status
+    content
     desktop_banner
     mobile_banner
   ].freeze

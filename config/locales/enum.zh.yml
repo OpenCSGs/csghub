@@ -5,3 +5,8 @@ zh:
         campaign_types:
           live_competition: 直播比赛
           training_camp: 创作训练营
+        statuses:
+          prestart: '即将开始'
+          signing_up: '报名中'
+          in_progress: '正在进行'
+          ended: '已结束'

@@ -16,6 +16,7 @@ class SpaceDashboard < Administrate::BaseDashboard
     status: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     title: Field::String,
     user: Field::BelongsTo,
+    cover_image_url: Field::Url,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -27,9 +28,11 @@ class SpaceDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    desc
-    site_link
     space_starchain_id
+    title
+    space_type
+    user
+    site_link
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -43,6 +46,7 @@ class SpaceDashboard < Administrate::BaseDashboard
     status
     title
     user
+    cover_image_url
     created_at
     updated_at
   ].freeze
