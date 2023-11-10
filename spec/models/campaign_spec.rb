@@ -14,7 +14,7 @@ RSpec.describe Campaign, type: :model do
   end
 
   describe 'enums' do
-    it { should define_enum_for(:campaign_type).with_values(live_competition: 0, training_camp: 1) }
+    it { should define_enum_for(:campaign_type).with_values(live_competition: 0, training_camp: 1, offline_campaign: 2) }
     it { should define_enum_for(:status).with_values(prestart: 0, signing_up: 1, in_progress: 2, ended: 3) }
   end
 

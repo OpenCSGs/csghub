@@ -4,7 +4,7 @@
     <%= image_tag url_for(@campaign.mobile_banner), class: "hidden sm:block w-full" %>
   </div>
   <div class="my-[25px] flex md:flex-col">
-    <div class="max-w-[932px] bg-white rounded-[8px] p-[16px]">
+    <div class="max-w-[932px] bg-white rounded-[8px] p-[16px] flex-1">
       <div class="flex justify-between items-center">
         <h3 class="text-[#303133] text-[48px] font-[600]"> <%= @campaign.name %></h3>
         <% if @campaign.signing_up? %>

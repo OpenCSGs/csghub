@@ -5,6 +5,7 @@ zh:
         campaign_types:
           live_competition: 直播比赛
           training_camp: 创作训练营
+          offline_campaign: 线下活动
         statuses:
           prestart: '即将开始'
           signing_up: '报名中'

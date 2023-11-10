@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
 
   # lead form
-  resources :lead_forms do
+  resources :lead_forms, only: [] do
     collection do
       get 'thank-you'
     end
