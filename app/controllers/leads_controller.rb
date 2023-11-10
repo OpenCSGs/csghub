@@ -30,6 +30,7 @@ class LeadsController < ApplicationController
       :lead_form_uuid,
       :channel,
       :lead_source,
+      :lead_type,
       :utm_content,
       :utm_medium,
       :utm_source,

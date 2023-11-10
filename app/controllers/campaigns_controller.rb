@@ -10,5 +10,8 @@ class CampaignsController < ApplicationController
   def show
     @campaign = Campaign.find params[:id]
     @related_spaces = Space.left_joins(:tags).where(tags: {name: @campaign.name})
+    # Increment the pageview count of the campaign when it is viewed
+    @campaign.pageviews += 1
+    @campaign.save
   end
 end
