@@ -56,7 +56,7 @@ class Campaign < ApplicationRecord
   end
 
   def banner_attributes
-    as_json.slice(:uuid, :id, :form_url).merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
+    as_json.slice(:uuid, :id, :form_url, :status).merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
   end
 
   def as_json options = nil
