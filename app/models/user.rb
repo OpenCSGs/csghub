@@ -48,9 +48,11 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    if avatar
+    if avatar.match(/^avatar\/*/)
       # retrive the image temp url from aliyun
       AliyunOss.instance.download avatar
+    elsif avatar.present?
+      avatar
     else
       nil
     end
