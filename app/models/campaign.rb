@@ -4,7 +4,8 @@ class Campaign < ApplicationRecord
 
   enum campaign_type: {
     live_competition: 0,
-    training_camp: 1
+    training_camp: 1,
+    offline_campaign: 2,
   }
 
   # 特别强调：这里的顺序不能打乱，新的状态依次放在最后
