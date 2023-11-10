@@ -7,6 +7,12 @@ zh:
   administrate:
     search:
       label: '搜索'
+    controller:
+      update:
+        success: '更新成功'
+    actions:
+      show_resource: '%{name}'
+      edit_resource: 'Edit %{name}'
 
   activerecord:
     errors:

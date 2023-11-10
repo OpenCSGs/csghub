@@ -4,7 +4,18 @@ Rails.application.routes.draw do
     resources :spaces
     resources :users
     resources :comments
-    
+    resources :leads
+    resources :campaigns do
+      member do
+        post :toggle_campaign_recommended
+      end
+    end
+    resources :lead_forms do
+      member do
+        post :toggle_lead_form_status
+      end
+    end
+
     root to: "spaces#index"
   end
 
@@ -12,11 +23,30 @@ Rails.application.routes.draw do
   namespace :api do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
     resources :comments, only: [:create, :destroy]
+    resources :users, only: [:update]
+    resources :campaigns, only: [:index]
   end
+
+  # lead form
+  resources :lead_forms do
+    collection do
+      get 'thank-you'
+    end
+  end
+
+  get 'lead_forms/form/:uuid', to: 'lead_forms#show_form'
+
+  resources :leads, only: [:create]
 
   # application
   scope "(:locale)", :locale => /en|zh/ do
     root "landing_page#index"
+
+    resources :settings, only: [] do
+      collection do
+        get 'profile'
+      end
+    end
 
     resources :spaces, only: ['index', 'show', 'update'] do
       collection do
@@ -24,8 +54,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :campaigns, only: [:index, :show]
+
+    get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
+    get '/partners/apply', to: 'partners#apply'
     get '/experts', to: 'experts#index'
+    get '/experts/apply', to: 'experts#apply'
+    post '/api/leads', to: 'api/leads#create'
     get '/datasets', to: 'datasets#index'
     get '/models', to: 'models#index'
 

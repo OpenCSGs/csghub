@@ -6,19 +6,28 @@
     "@emailjs/browser": "^3.11.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^7.3.0",
+    "@rails/actiontext": "^7.1.1",
     "caniuse-lite": "^1.0.30001547",
     "element-plus": "^2.3.14",
     "emailjs-com": "^3.2.0",
     "esbuild": "^0.19.3",
     "esbuild-plugin-vue3": "^0.3.2",
     "less": "^4.2.0",
+    "trix": "^2.0.7",
     "vue": "^3.3.4",
     "vue-turbolinks": "^2.2.2",
     "vue3-cookies": "^1.0.6",
     "yarn": "^1.22.19"
   },
   "scripts": {
+    "test": "vitest",
     "build": "node build.js",
     "dev-build": "node build.dev.js"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue/test-utils": "^2.4.1",
+    "jsdom": "^22.1.0",
+    "vitest": "^0.34.6"
   }
 }

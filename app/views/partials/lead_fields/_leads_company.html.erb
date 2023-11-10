@@ -1,0 +1,4 @@
+<div class="w-[320px] lg:w-full">
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "company"} %>
+  <%= text_field_tag "company", @lead.company, required: true, class: "w-full h-[40px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
+</div>

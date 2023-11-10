@@ -1,0 +1,16 @@
+<div class="max-w-[1280px] m-auto">
+  <% if @campaigns.size == 0 %>
+    <div class="flex flex-col xl:px-[20px] sm:mb-[40px]">
+      <p>No Campaigns</p>
+    </div>
+  <% else %>
+    <div>
+      <campaign-cards
+        total-cards=<%= @total_campaigns.count %>
+        campaigns='<%= @campaigns.to_json %>'
+        recommended-campaigns='<%= @recommended_campaigns.to_json %>'
+      >
+      </campaign-cards>
+    </div>
+  <% end %>
+</div>

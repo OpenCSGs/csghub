@@ -47,4 +47,21 @@ module ApplicationHelper
   def current_locale
     I18n.locale
   end
+
+  def little_assistant_monster_pages?
+    request.path.match(/\/partners|\/experts/)
+  end
+
+  def campaign_status_type status
+    case status
+    when 'prestart'
+      'warning'
+    when 'signing_up'
+      ''
+    when 'in_progress'
+      'success'
+    when 'ended'
+      'danger'
+    end
+  end
 end

@@ -40,13 +40,15 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 gem "authing_ruby"
 gem "jwt"
 
 # Aliyun OSS SDK
 gem 'aliyun-sdk'
+
+gem 'activestorage-aliyun'
 
 gem 'faraday'
 
@@ -58,6 +60,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -76,6 +79,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'shoulda-matchers', '~> 5.0'
+  gem 'simplecov'
 end
 
 gem "jsbundling-rails", "~> 1.2"
@@ -83,6 +88,8 @@ gem "jsbundling-rails", "~> 1.2"
 gem "tailwindcss-rails", "~> 2.0"
 
 gem "administrate", "~> 0.19.0"
+# support active storage
+gem 'administrate-field-active_storage'
 
 gem "pundit", "~> 2.3"
 

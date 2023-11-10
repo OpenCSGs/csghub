@@ -10,9 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_10_073921) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name"
+    t.string "uuid"
+    t.string "location"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "organizer"
+    t.string "organizer_website"
+    t.integer "pageviews", default: 0
+    t.integer "campaign_type"
+    t.integer "status", default: 0
+    t.boolean "recommended", default: false
+    t.index ["uuid"], name: "index_campaigns_on_uuid"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -23,6 +78,57 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_073921) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "lead_forms", force: :cascade do |t|
+    t.string "lead_source"
+    t.string "channel"
+    t.string "lead_status"
+    t.string "local_channel"
+    t.string "lead_type"
+    t.string "lead_fields"
+    t.string "uuid"
+    t.string "lead_form_status", default: "active"
+    t.string "title"
+    t.string "internal_title"
+    t.text "description"
+    t.string "custom_required_fields"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "campaign_id", null: false
+    t.index ["campaign_id"], name: "index_lead_forms_on_campaign_id"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.text "additional_notes"
+    t.string "channel"
+    t.string "lead_type"
+    t.string "company"
+    t.string "email"
+    t.string "email_opt_out"
+    t.string "phone"
+    t.string "name"
+    t.string "num_of_employees"
+    t.string "province"
+    t.string "title"
+    t.string "utm_content"
+    t.string "utm_medium"
+    t.string "utm_source"
+    t.string "lead_source"
+    t.string "region"
+    t.string "utm_campaign"
+    t.string "sync_status"
+    t.string "industry"
+    t.string "local_channel"
+    t.string "uploads_tag"
+    t.string "lead_status"
+    t.string "lead_form_uuid"
+    t.string "utm_keyword"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "expertise"
+    t.text "introduction"
+    t.string "company_site"
   end
 
   create_table "spaces", force: :cascade do |t|
@@ -72,7 +178,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_10_073921) do
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
+  add_foreign_key "lead_forms", "campaigns"
   add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end
