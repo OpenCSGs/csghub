@@ -5,7 +5,7 @@ class Lead < ApplicationRecord
 
   validates_presence_of :company, :phone, :name
 
-  validates_uniqueness_of :phone,  scope: :lead_type
+  validates_uniqueness_of :phone, scope: :lead_type
 
   validate :custom_required_fields_presence
 
