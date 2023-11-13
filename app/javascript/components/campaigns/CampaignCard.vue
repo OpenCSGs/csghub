@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="w-full block rounded-lg p-6 bg-white mt-4">
+  <a :href="'/campaigns/' + campaignId" class="w-full block rounded-lg p-6 bg-white mt-4">
     <div class="flex items-center justify-between mb-1">
       <div class="text-[#303133] text-[20px] leading-7">
         {{ name }}

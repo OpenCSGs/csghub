@@ -1,10 +1,14 @@
 <template>
-  <div class="flex justify-center items-center mt-[50px] lg:mt-[100px] md:mt-[250px]">
+  <div class="flex justify-center items-center mt-[50px] lg:mt-[60px] md:px-[24px] md:mt-[60px] sm:mt-[36px]">
     <div
-      class="absolute flex flex-col bg-white w-[766px] lg:w-[566px] md:w-[400px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
+      class="flex flex-col bg-white w-[766px] lg:w-[566px] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
     >
       <div class="text-[#303133] text-sm gap-y-[48px]">
         <div class="w-full h-auto">
+          <div class="hidden md:block text-sm text-[#606266] mb-[24px]">
+            <p class="mt-[16px]">如您有意加入OpenCSG开放传神社区并成为我们的合作伙伴，请填写下方信息</p>
+            <p class="mt-[16px]">我们会尽快与您联系并详细沟通，感谢您对OpenCSG的支持。</p>
+          </div>
           <div class="flex md:flex-col md:gap-y-[20px] gap-x-[80px]">
             <div class="w-[320px] lg:w-full">
               <form-label labelName="姓名" :required="true" />
@@ -27,7 +31,7 @@
             </div>
           </div>
 
-          <div class="w-[306px] mt-[24px]">
+          <div class="w-[306px] mt-[24px] lg:w-full md:flex-col">
             <form-label labelName="工作电子邮箱地址" :required="true" />
             <el-input
               v-model="email"
@@ -40,7 +44,7 @@
 
         <div class="w-full h-auto mt-[24px]">
           <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
-            <div class="w-[320px]">
+            <div class="w-[320px] lg:w-full md:flex-col">
               <form-label labelName="公司/单位名称" :required="true" />
               <el-input
                 v-model="companyName"
@@ -50,7 +54,7 @@
               />
             </div>
 
-            <div class="w-[320px]">
+            <div class="w-[320px] lg:w-full md:flex-col">
               <form-label labelName="职称" :required="true" />
               <el-input
                 v-model="profession"
@@ -62,7 +66,7 @@
           </div>
 
           <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
-            <div class="w-[320px] mt-[24px]">
+            <div class="w-[320px] mt-[24px] lg:w-full md:flex-col">
               <form-label labelName="公司/产品官网" :required="true" />
               <el-input
                 v-model="companyWeb"
@@ -71,7 +75,7 @@
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
-            <div class="w-[320px] mt-[24px] md:mt-0">
+            <div class="w-[320px] mt-[24px] md:mt-0 lg:w-full md:flex-col">
               <form-label labelName="公司行业" :required="true" />
               <el-input
                   v-model="industry"
