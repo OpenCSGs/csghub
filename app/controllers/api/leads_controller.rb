@@ -1,4 +1,6 @@
 class Api::LeadsController < Api::ApplicationController
+  skip_before_action :set_current_user
+
   def create
     lead = Lead.new(create_params)
 
