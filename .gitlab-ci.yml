@@ -15,10 +15,10 @@ stages:
 
 # 判断是不是正确的project，正确的branch，以及是不是forked repo过来的MR
 .if-main-original-repo: &if-main-original-repo
-  if: '$CI_COMMIT_REF_NAME == "main" && $CI_PROJECT_ID == "146773" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
+  if: '$CI_COMMIT_REF_NAME == "main" && $CI_PROJECT_ID == "18" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
 
 .if-staging-original-repo: &if-staging-original-repo
-  if: '$CI_COMMIT_REF_NAME == "staging" && $CI_PROJECT_ID == "146773" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
+  if: '$CI_COMMIT_REF_NAME == "staging" && $CI_PROJECT_ID == "18" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
 
 staging-build:
   stage: build
