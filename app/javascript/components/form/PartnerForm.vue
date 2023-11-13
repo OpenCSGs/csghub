@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center items-center mt-[50px] lg:mt-[100px] md:mt-[80px]">
+  <div class="flex justify-center items-center mt-[50px] lg:mt-[60px] md:mt-[60px] sm:mt-[36px]">
     <div
-      class="absolute flex flex-col bg-white w-[766px] lg:w-[566px] md:w-[90%] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
+      class="flex flex-col bg-white w-[766px] lg:w-[566px] md:w-[90%] h-auto border rounded-lg p-[36px] gap-y-[24px] border-[#DCDFE6] bg-gradient-to-r shadow-xl"
     >
       <div class="text-[#303133] text-sm gap-y-[48px]">
         <div class="w-full h-auto">
