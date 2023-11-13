@@ -1,5 +1,4 @@
 class Api::LeadsController < Api::ApplicationController
-
   def create
     lead = Lead.new(create_params)
 
