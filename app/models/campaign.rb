@@ -4,7 +4,8 @@ class Campaign < ApplicationRecord
 
   enum campaign_type: {
     live_competition: 0,
-    training_camp: 1
+    training_camp: 1,
+    offline_campaign: 2,
   }
 
   # 特别强调：这里的顺序不能打乱，新的状态依次放在最后
@@ -56,7 +57,7 @@ class Campaign < ApplicationRecord
   end
 
   def banner_attributes
-    as_json.slice(:uuid, :id, :form_url).merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
+    as_json.slice(:uuid, :id, :form_url, :status).merge(desktop_banner_url: with_blob_path(desktop_banner), mobile_banner_url: with_blob_path(mobile_banner))
   end
 
   def as_json options = nil
