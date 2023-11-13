@@ -7,7 +7,7 @@
           <img :src="campaign.mobile_banner_url" class="hidden sm:block w-full object-cover h-[390px]" alt="OpenCSG"/>
         </div>
         <div class="flex gap-3 absolute left-[80px] bottom-[25px] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%]">
-          <a :href="campaign.form_url" class="w-[96px] h-[40px] flex items-center justify-center bg-[#409EFF] rounded text-white text-[14px] leading-[22px]">立即报名</a>
+          <a v-if="campaign.status === 'signing_up'" :href="campaign.form_url" class="w-[96px] h-[40px] flex items-center justify-center bg-[#409EFF] rounded text-white text-[14px] leading-[22px]">立即报名</a>
           <a :href="'/campaigns/' + campaign.id" class="w-[96px] h-[40px] flex items-center justify-center text-white rounded border-white border-[1px] text-[14px] leading-[22px]">了解更多</a>
         </div>
       </el-carousel-item>

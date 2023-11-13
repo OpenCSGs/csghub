@@ -22,7 +22,7 @@ class LeadFormDashboard < Administrate::BaseDashboard
     local_channel: Field::String,
     title: Field::String,
     uuid: Field::String,
-    form_url: Field::Url,
+    form_url: Field::Url.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze

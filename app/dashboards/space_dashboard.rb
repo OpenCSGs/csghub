@@ -16,7 +16,7 @@ class SpaceDashboard < Administrate::BaseDashboard
     status: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     title: Field::String,
     user: Field::BelongsTo,
-    cover_image_url: Field::Url,
+    cover_image_url: Field::Url.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
