@@ -1,4 +1,4 @@
-FROM registry.jihulab.com/opencsg/open-portal/ruby-node
+FROM git-devops.opencsg.com:5050/product/community/open-portal/ruby-node
 
 SHELL ["/bin/bash", "-c"]
 RUN mkdir /myapp
