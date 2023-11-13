@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-center items-center mt-[200px] lg:mt-[350px] md:mt-[120px]">
-    <div class="absolute flex flex-col bg-white w-[500px] md:w-[400px] h-auto border rounded-lg p-[36px] md:p-[24px] md:pt-[8px] border-[#DCDFE6] bg-gradient-to-r shadow-xl">
+  <div class="flex items-center justify-center mb-[100px] md:mb-[50px] mt-[50px] lg:mt-[50px]">
+    <div class="flex flex-col bg-white w-[500px] sm:w-[90%] h-auto border rounded-lg p-[36px] md:p-[24px] md:pt-[8px] border-[#DCDFE6] bg-gradient-to-r shadow-xl">
       <div v-if="IsTipsVisible === true" class="flex items-center justify-center md:hidden px-[16px] py-[9px] w-full font-normal text-[13px] text-[#909399] rounded-[4px] leading-[22px] outline-0 bg-[#F4F4F5] gap-[8px] mb-[16px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path
