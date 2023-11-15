@@ -55,6 +55,20 @@ gem 'faraday'
 # pagination
 gem 'kaminari'
 
+gem "jsbundling-rails", "~> 1.2"
+
+gem "tailwindcss-rails", "~> 2.0"
+
+gem "administrate", "~> 0.19.0"
+# support active storage
+gem 'administrate-field-active_storage'
+
+gem "pundit", "~> 2.3"
+
+gem "ruby-pinyin", "~> 0.5.0"
+
+gem 'openid_connect'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'rspec-rails'
@@ -82,15 +96,3 @@ group :test do
   gem 'shoulda-matchers', '~> 5.0'
   gem 'simplecov'
 end
-
-gem "jsbundling-rails", "~> 1.2"
-
-gem "tailwindcss-rails", "~> 2.0"
-
-gem "administrate", "~> 0.19.0"
-# support active storage
-gem 'administrate-field-active_storage'
-
-gem "pundit", "~> 2.3"
-
-gem "ruby-pinyin", "~> 0.5.0"
