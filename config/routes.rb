@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # admin
   namespace :admin do
+    resources :system_configs
     resources :spaces
     resources :users
     resources :comments
