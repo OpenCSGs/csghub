@@ -20,6 +20,10 @@ zh:
         space:
           blank: "字段不能为空"
           taken: "不能创建重复的空间"
+        lead:
+          blank: "字段不能为空"
+          taken: "不能创建重复的线索"
+
 
   datetime:
     distance_in_words:

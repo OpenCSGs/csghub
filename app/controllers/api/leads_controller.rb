@@ -1,5 +1,5 @@
 class Api::LeadsController < Api::ApplicationController
-  skip_before_action :set_current_user
+  # skip_before_action :set_current_user
 
   def create
     lead = Lead.new(create_params)
@@ -7,7 +7,7 @@ class Api::LeadsController < Api::ApplicationController
     if lead.save
       render json: { message: "线索创建成功" }
     else
-      render json: { message: "线索创建失败" }, status: :bad_request
+      render json: { message: lead.errors.full_messages.first.split(' ')[1] }, status: :bad_request
     end
   end
 
