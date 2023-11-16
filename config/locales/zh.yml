@@ -40,3 +40,9 @@ zh:
       x_days: "%{count}天"
       x_months: "%{count}个月"
       x_years: "%{count}年"
+
+  support:
+    array:
+      words_connector: "，"
+      two_words_connector: "，"
+      last_word_connector: "，"
