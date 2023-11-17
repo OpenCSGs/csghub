@@ -82,6 +82,9 @@ GEM
     administrate-field-active_storage (0.4.2)
       administrate (>= 0.2.2)
       rails (>= 7.0)
+    administrate-field-jsonb (0.4.6)
+      administrate (< 1.0.0)
+      rails (>= 4.2)
     aes_key_wrap (1.1.0)
     aliyun-sdk (0.8.0)
       nokogiri (~> 1.6)
@@ -429,6 +432,7 @@ DEPENDENCIES
   activestorage-aliyun
   administrate (~> 0.19.0)
   administrate-field-active_storage
+  administrate-field-jsonb
   aliyun-sdk
   authing_ruby
   bootsnap
