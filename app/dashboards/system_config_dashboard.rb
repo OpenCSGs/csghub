@@ -9,8 +9,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    oidc_signin_url: Field::String,
-    oidc_signup_url: Field::String,
+    application_env: Field::String,
+    oidc_configs: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -22,8 +22,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    oidc_signin_url
-    oidc_signup_url
+    application_env
     created_at
   ].freeze
 
@@ -31,8 +30,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    oidc_signin_url
-    oidc_signup_url
+    application_env
+    oidc_configs
     created_at
     updated_at
   ].freeze
@@ -41,8 +40,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    oidc_signin_url
-    oidc_signup_url
+    application_env
+    oidc_configs
   ].freeze
 
   # COLLECTION_FILTERS

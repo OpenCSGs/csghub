@@ -146,8 +146,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_101906) do
   end
 
   create_table "system_configs", force: :cascade do |t|
-    t.string "oidc_signup_url"
-    t.string "oidc_signin_url"
+    t.string "application_env"
+    t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
