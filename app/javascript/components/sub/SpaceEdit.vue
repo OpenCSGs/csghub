@@ -185,6 +185,7 @@
     formData.append("space_type", `${radio.value}_s`)
     const options = {
       method: 'PUT',
+      headers:{'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')},
       body: formData
     };
 
