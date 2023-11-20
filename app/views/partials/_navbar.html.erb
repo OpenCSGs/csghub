@@ -14,6 +14,7 @@
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
             star-chain-url="<%= starchain_address %>"
             is-logged-in="false"
+            login-url="<%= SystemConfig.first.oidc_configs["login_url"]%>"
     />
   <% end %>
 </div>
