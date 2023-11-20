@@ -8,8 +8,43 @@ class SessionsController < ApplicationController
   def new
   end
 
+  def oidc
+    current_domain = Rails.env.development? ? 'localhost' : 'opencsg.com'
+    @openid_client = OPENID_CLIENT
+    @openid_client.authorization_code = params['code']
+    access_token = @openid_client.access_token!
+    user_infos = JWT.decode(access_token.id_token, nil, false).first
+    cookies[:idToken] = {value: access_token.id_token, domain: current_domain}
+    cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
+    cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
+    user_uuid = user_infos['sub']
+    user = User.find_by(login_identity: user_uuid)
+    if user
+      helpers.log_in user
+    else
+      user = User.create(login_identity: user_uuid,
+                         roles: :personal_user,
+                         avatar: user_infos['avatar'],
+                         name: user_infos['displayName'],
+                         phone: user_infos['phone'],
+                         email: user_infos['email'],
+                         email_verified: user_infos['emailVerified'],
+                         gender: user_infos['gender'],
+                         last_login_at: Time.now)
+      helpers.log_in user
+    end
+
+    if session[:original_request_path].present?
+      redirect_path = session[:original_request_path]
+      session[:original_request_path] = nil
+      redirect_to redirect_path
+    else
+      redirect_to root_path
+    end
+  end
+
   def authing
-    authing_uuid = cookies[:authingUuid]
+    authing_uuid = cookies[:oidcUuid]
     authing_id_token = cookies[:idToken]
     last_login_at = cookies[:lastLoginAt]
     user_role = cookies[:isCompanyUser] == 'true' ? :company_user : :personal_user
