@@ -7,7 +7,7 @@ class CampaignsController < ApplicationController
   end
 
   def show
-    @campaign = Campaign.find_by(id: params[:id], release: true)
+    @campaign = Campaign.release.find_by(id: params[:id])
     if @campaign.nil?
       return redirect_to root_path, alert: '未找到符合条件的活动'
     end
