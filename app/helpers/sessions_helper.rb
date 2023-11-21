@@ -20,8 +20,9 @@ module SessionsHelper
   end
 
   def logout
+    puts "===== Logout ====="
+    puts "current user: #{session[:login_identity].presence}"
     session[:login_identity] = nil
-    cookies.delete :lastLoginAt
     cookies.delete :oidcUuid, domain: current_cookie_domain
     cookies.delete :idToken, domain: current_cookie_domain
     cookies.delete :userinfos, domain: current_cookie_domain

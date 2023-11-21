@@ -1,7 +1,7 @@
 module ApplicationHelper
   def current_cookie_domain
     if Rails.env != 'development'
-      'opencsg.com'
+      '.opencsg.com'
     else
       'localhost'
     end

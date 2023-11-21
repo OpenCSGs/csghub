@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   end
 
   def oidc
-    current_domain = Rails.env.development? ? 'localhost' : 'opencsg.com'
+    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
     @openid_client = OPENID_CLIENT
     @openid_client.authorization_code = params['code']
     access_token = @openid_client.access_token!
