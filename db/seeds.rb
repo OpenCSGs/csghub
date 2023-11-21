@@ -22,5 +22,4 @@ if SystemConfig.first.blank?
   else
     SystemConfig.create(application_env: 'production')
   end
-
 end
