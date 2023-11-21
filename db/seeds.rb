@@ -13,3 +13,14 @@ Tag::DEFAULT_TAGS.each do |htag|
   puts "creating tag: #{htag[:name]}"
   Tag.create(name: htag[:name], color: htag[:color])
 end
+
+if SystemConfig.first.blank?
+  if Rails.env.development?
+    SystemConfig.create(application_env: 'development')
+  elsif Rails.env.staging?
+    SystemConfig.create(application_env: 'staging')
+  else
+    SystemConfig.create(application_env: 'production')
+  end
+
+end
