@@ -24,10 +24,10 @@ class ApplicationController < ActionController::Base
       helpers.log_in user
     else
       session[:original_request_path] = request.fullpath
-      redirect_to login_path
+      redirect_to root_path
     end
   rescue => e
-    redirect_to login_path
+    redirect_to root_path
   end
 
   def check_user_login
@@ -60,6 +60,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_locale
+    puts "===== Application login user ====="
+    puts "Current User: #{session[:login_identity]}"
     I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
     session[:locale] = I18n.locale
   end

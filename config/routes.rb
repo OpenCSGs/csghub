@@ -66,7 +66,6 @@ Rails.application.routes.draw do
     get '/datasets', to: 'datasets#index'
     get '/models', to: 'models#index'
 
-    get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
     get    '/oidc/callback', to: 'sessions#oidc'
     post   '/login',   to: 'sessions#create'
