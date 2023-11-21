@@ -1,9 +1,9 @@
 class CampaignsController < ApplicationController
   def index
-    @release_campaigns = Campaign.release
-    @total_campaigns = @release_campaigns.all.order(created_at: :desc)
+    @released_campaigns = Campaign.release
+    @total_campaigns = @released_campaigns.order(created_at: :desc)
     @campaigns = @total_campaigns.page(params[:page]).map(&:with_content_and_leads_count)
-    @recommended_campaigns = @release_campaigns.recommended.map(&:banner_attributes)
+    @recommended_campaigns = @released_campaigns.recommended.map(&:banner_attributes)
   end
 
   def show
