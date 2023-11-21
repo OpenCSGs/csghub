@@ -90,13 +90,6 @@ GEM
       nokogiri (~> 1.6)
       rest-client (~> 2.0)
     attr_required (1.0.1)
-    authing_ruby (1.1.6)
-      faraday (~> 1.4, >= 1.4.3)
-      http (~> 5.0, >= 5.0.1)
-      jwt (~> 2.2, >= 2.2.3)
-      logging (~> 2.3)
-      minitest (~> 5.14, >= 5.14.4)
-      uri-query_params (~> 0.7.2)
     bindata (2.4.15)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -156,20 +149,11 @@ GEM
     faraday-retry (1.0.3)
     ffi (1.16.3)
     ffi (1.16.3-x64-mingw-ucrt)
-    ffi-compiler (1.0.1)
-      ffi (>= 1.0.0)
-      rake
     globalid (1.2.1)
       activesupport (>= 6.1)
-    http (5.1.1)
-      addressable (~> 2.8)
-      http-cookie (~> 1.0)
-      http-form_data (~> 2.2)
-      llhttp-ffi (~> 0.4.0)
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    http-form_data (2.3.0)
     httpclient (2.8.3)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -207,13 +191,6 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    little-plugger (1.1.4)
-    llhttp-ffi (0.4.0)
-      ffi-compiler (~> 1.0)
-      rake (~> 13.0)
-    logging (2.3.1)
-      little-plugger (~> 1.1)
-      multi_json (~> 1.14)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -232,7 +209,6 @@ GEM
     mini_mime (1.1.5)
     minitest (5.19.0)
     msgpack (1.7.2)
-    multi_json (1.15.0)
     multipart-post (2.3.0)
     net-imap (0.3.7)
       date
@@ -396,7 +372,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    uri-query_params (0.7.2)
     validate_email (0.1.6)
       activemodel (>= 3.0)
       mail (>= 2.2.5)
@@ -434,7 +409,6 @@ DEPENDENCIES
   administrate-field-active_storage
   administrate-field-jsonb
   aliyun-sdk
-  authing_ruby
   bootsnap
   capybara
   debug
