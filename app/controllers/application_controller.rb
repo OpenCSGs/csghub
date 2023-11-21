@@ -60,8 +60,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_locale
-    puts "===== Application login user ====="
-    puts "Current User: #{session[:login_identity]}"
     I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
     session[:locale] = I18n.locale
   end
