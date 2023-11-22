@@ -7,12 +7,14 @@ module Admin
       #  send_foo_updated_email(requested_resource)
       @campaign = Campaign.find(params[:id])
       @lead_form = LeadForm.find_by(campaign_id: @campaign.id)
-      if @campaign.signing_up?
-        @lead_form.update(lead_form_status: 'active')
-        @lead_form.save
-      else
-        @lead_form.update(lead_form_status: 'inactive')
-        @lead_form.save
+      if @lead_form
+        if @campaign.signing_up?
+          @lead_form.update(lead_form_status: 'active')
+          @lead_form.save
+        else
+          @lead_form.update(lead_form_status: 'inactive')
+          @lead_form.save
+        end
       end
     end
 
