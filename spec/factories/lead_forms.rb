@@ -3,6 +3,6 @@ FactoryBot.define do
     title { "test_lead_form" }
     lead_fields { ["phone", "title", "name", "email", "company"] }
     custom_required_fields { ["title", "", "", "", "", "", ""] }
+    campaign
   end
 end
-  

@@ -78,9 +78,12 @@ RSpec.describe Campaign, type: :model do
     it 'returns a hash with uuid, desktop_banner_url, and mobile_banner_url' do
       campaign = create(:campaign)
       expect(campaign.banner_attributes).to include(
-        'uuid' => campaign.uuid,
+        :uuid => campaign.uuid,
         :desktop_banner_url => campaign.with_blob_path(campaign.desktop_banner),
-        :mobile_banner_url => campaign.with_blob_path(campaign.mobile_banner)
+        :mobile_banner_url => campaign.with_blob_path(campaign.mobile_banner),
+        :status => 'prestart',
+        'id': campaign.id,
+        'form_url': campaign.form_url
       )
     end
   end
