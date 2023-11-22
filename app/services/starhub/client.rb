@@ -16,7 +16,7 @@ module Starhub
 
     private
 
-    def get_request_url(path)
+    def build_request_url(path)
       base_url = Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
       base_url + path
     end
@@ -26,22 +26,21 @@ module Starhub
       headers['content-type'] ||= 'application/json'
 
       request = ::RestClient::Request.new(
-        :method => verb,
-        :url => get_request_url(path),
-        :headers => headers, 
-        :payload => options[:body]
+        method: verb,
+        url: build_request_url(path),
+        headers: headers,
+        payload: options[:body]
       )
 
       response = request.execute do |resp, &blk|
         if resp.code >= 300 
-          e = ApiError.new(resp)
-          Rails.logger.error(e.to_s)
-          raise e
+          raise APIError.new(resp)
         else 
           resp.return!(&blk)
         end
       end
-      JSON.parse(response) 
+
+      response.body
     end
   end
 end
