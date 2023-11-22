@@ -7,7 +7,7 @@ module Starhub
     end
 
     def get_model_detail(username, model_name, options = {})
-      res = @client.get("/api/v1/models/#{username}/#{model_name}/detail")
+      res = @client.get("/models/#{username}/#{model_name}/detail")
     end
 
     # TODO: add more starhub api
