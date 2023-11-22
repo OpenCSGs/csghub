@@ -382,6 +382,7 @@ GEM
     zeitwerk (2.6.11)
 
 PLATFORMS
+  arm64-darwin-22
   arm64-darwin-23
   x64-mingw-ucrt
   x86_64-darwin-21
