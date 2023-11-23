@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
-  before_action :set_default_locale
+  before_action :set_default_locale, :check_user_login
 
   def authenticate_user
     if helpers.logged_in?
@@ -31,11 +31,10 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_login
-    if helpers.logged_in?
-      redirect_to root_path
-    elsif helpers.logged_in_other_system?
-      authing_id_token = cookies[:idToken]
-      user_infos = JWT.decode(authing_id_token, nil, false).first
+    return if helpers.logged_in?
+    if helpers.logged_in_other_system?
+      oidc_id_token = cookies[:idToken]
+      user_infos = JWT.decode(oidc_id_token, nil, false).first
       user = User.find_by_login_identity(user_infos['sub'])
       unless user
         user = User.create(login_identity: user_infos['sub'],
@@ -49,7 +48,6 @@ class ApplicationController < ActionController::Base
                           last_login_at: Time.zone.now)
       end
       helpers.log_in user
-      redirect_to root_path
     end
   end
 
