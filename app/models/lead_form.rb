@@ -3,7 +3,7 @@ class LeadForm < ApplicationRecord
 
   serialize :lead_fields, JSON
   serialize :custom_required_fields, JSON
-  before_create :set_default_status
+  before_create :set_default_status, :set_lead_form_status
   paginates_per 15
 
   enum lead_form_status: { active: 'active', inactive: 'inactive' }
@@ -52,5 +52,9 @@ class LeadForm < ApplicationRecord
   def set_default_status
     self.local_channel = 'lead_form'
     self.lead_type = 'customer'
+  end
+
+  def set_lead_form_status
+    self.lead_form_status = 'inactive' if lead_form_status.blank?
   end
 end

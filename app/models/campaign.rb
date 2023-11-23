@@ -20,6 +20,7 @@ class Campaign < ApplicationRecord
   has_one_attached :mobile_banner
 
   before_create :set_uuid
+  after_update :update_lead_form_status
 
   has_one :lead_form
   has_many :leads, through: :lead_form
@@ -75,5 +76,15 @@ class Campaign < ApplicationRecord
       status: status,
       form_url: form_url
     }
+  end
+
+  def update_lead_form_status
+    if signing_up? and lead_form
+      lead_form.update(lead_form_status: 'active')
+      lead_form.save
+    else
+      lead_form.update(lead_form_status: 'inactive')
+      lead_form.save
+    end
   end
 end
