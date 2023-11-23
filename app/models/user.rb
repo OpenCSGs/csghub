@@ -40,11 +40,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    name || login_identity
-  end
-
-  def comment_display_name
-    name || phone || login_identity
+    nickname.presence || name.presence || phone.presence || login_identity.presence
   end
 
   def avatar_url

@@ -112,7 +112,7 @@ RSpec.describe Space, type: :model do
 
       expect(space_json).to include(title: space.title,
                                     desc: space.desc,
-                                    author: author.comment_display_name,
+                                    author: author.display_name,
                                     cover_image: ActionController::Base.helpers.asset_path('default_cover_image.png'),
                                     created_at: space.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                                     tags: space.tags.to_json,
@@ -123,4 +123,3 @@ RSpec.describe Space, type: :model do
     end
   end
 end
-
