@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_23_113109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
     t.integer "campaign_type"
     t.integer "status", default: 0
     t.boolean "recommended", default: false
+    t.boolean "release", default: false
     t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 
@@ -145,6 +146,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
     t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
+  create_table "system_configs", force: :cascade do |t|
+    t.string "application_env"
+    t.jsonb "oidc_configs", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id", null: false
     t.bigint "space_id"
@@ -175,6 +183,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
     t.datetime "updated_at", null: false
     t.string "avatar"
     t.boolean "company_verified", default: false
+    t.string "nickname"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
