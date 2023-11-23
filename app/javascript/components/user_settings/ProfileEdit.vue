@@ -15,10 +15,17 @@
       </div>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">姓名</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
-                placeholder="Name">
+                placeholder="username">
+      </el-input>
+    </div>
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">用户昵称</div>
+      <el-input class="max-w-[400px]"
+                v-model="inputNickname"
+                placeholder="昵称">
       </el-input>
     </div>
     <div>
@@ -51,6 +58,7 @@ const { cookies } = useCookies();
 export default {
   props: {
     name: String,
+    nickname: String,
     avatar: String,
     phone: String,
     email: String,
@@ -59,6 +67,7 @@ export default {
   data() {
     return {
       inputName: this.name,
+      inputNickname: this.nickname,
       inputPhone: this.phone,
       inputEmail: this.email,
       avatarUrl: this.avatar,
@@ -84,6 +93,7 @@ export default {
         formData.append("avatar", file);
       }
       formData.append("name", this.inputName);
+      formData.append("nickname", this.inputNickname);
       const options = {
         method: "PUT",
         headers: {
@@ -105,8 +115,8 @@ export default {
             type: "success",
           });
           this.$emit("updateUserInfo", {
-            avatar: URL.createObjectURL(file),
-            name: this.inputName
+            avatar: file && URL.createObjectURL(file),
+            nickname: this.inputNickname
           });
           // 处理成功响应
         }
