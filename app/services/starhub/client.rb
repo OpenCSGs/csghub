@@ -33,7 +33,8 @@ module Starhub
       )
 
       response = request.execute do |resp, &blk|
-        if resp.code >= 300 
+        if resp.code >= 300
+          # TODO: handle more types of error
           raise APIError.new(resp)
         else 
           resp.return!(&blk)
