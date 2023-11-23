@@ -79,12 +79,9 @@ class Campaign < ApplicationRecord
   end
 
   def update_lead_form_status
-    if signing_up? and lead_form
-      lead_form.update(lead_form_status: 'active')
-      lead_form.save
-    else
-      lead_form.update(lead_form_status: 'inactive')
-      lead_form.save
-    end
+    return unless lead_form
+    lead_form_status = signing_up? ? 'active' : 'inactive'
+    lead_form.update(lead_form_status: lead_form_status)
+    lead_form.save
   end
 end
