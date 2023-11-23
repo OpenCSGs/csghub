@@ -82,6 +82,11 @@ GEM
     administrate-field-active_storage (0.4.2)
       administrate (>= 0.2.2)
       rails (>= 7.0)
+    administrate_exportable (0.6.3)
+      actionview (>= 5.2.2.1)
+      administrate (>= 0.17.0)
+      rails (>= 4.2)
+      railties (>= 5.2.2.1)
     aliyun-sdk (0.8.0)
       nokogiri (~> 1.6)
       rest-client (~> 2.0)
@@ -390,6 +395,7 @@ DEPENDENCIES
   activestorage-aliyun
   administrate (~> 0.19.0)
   administrate-field-active_storage
+  administrate_exportable
   aliyun-sdk
   authing_ruby
   bootsnap
