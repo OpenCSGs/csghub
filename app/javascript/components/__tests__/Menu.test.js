@@ -25,12 +25,7 @@ describe("Menu.vue", () => {
       propsData: {
         name: "John",
         avatar: "/path/to/avatar.png",
-      },
-      mocks: {
-        $route: {
-          path: "/settings/account", // 模拟当前的路由路径
-        },
-      },
+      }
     });
 
     // 断言渲染的 menu item 是否包含正确的文本内容和样式类名
@@ -64,27 +59,8 @@ describe("Menu.vue", () => {
         pathname: null,
       },
     });
-  });
-  it("returns empty string for inactive menu item", () => {
-    // 创建包含 menuClass 方法的浅渲染实例
-    const wrapper = shallowMount(Menu);
-
-    // 设置 window.location.pathname
-    Object.defineProperty(window, "location", {
-      value: {
-        pathname: "/home",
-      },
-      writable: true,
-    });
 
     // 调用 menuClass 方法并进行断言
     expect(wrapper.vm.menuClass("/settings/profile")).toBe("");
-
-    // 还原 window.location.pathname
-    Object.defineProperty(window, "location", {
-      value: {
-        pathname: null,
-      },
-    });
   });
 });
