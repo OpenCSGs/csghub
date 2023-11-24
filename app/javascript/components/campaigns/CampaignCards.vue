@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:px-0 relative">
+  <div v-if="theRecommendedCampaigns.length !== 2" class="sm:px-0 relative">
     <el-carousel :autoplay="false" height="390px">
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
@@ -60,7 +60,9 @@
         theRecommendedCampaigns: this.recommendedCampaigns
       }
     },
-    mounted() {},
+    mounted() {
+      console.log(this.theRecommendedCampaigns.length)
+    },
     methods: {
       async nextPage() {
         const campaignsUpdateEndpoint = `api/campaigns?page=${this.currentPage}`;
