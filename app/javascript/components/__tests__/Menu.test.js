@@ -3,12 +3,11 @@ import Menu from "../user_settings/Menu.vue";
 
 describe("Menu.vue", () => {
   it("renders correctly with props", () => {
-    const propsData = {
-      name: "John Doe",
-      avatar: "avatar-url.jpg",
-    };
     const wrapper = shallowMount(Menu, {
-      props: propsData,
+      propsData: {
+        name: "John Doe",
+        avatar: "avatar-url.jpg",
+      },
       global: {
         components: {
           "router-link": RouterLinkStub,
@@ -18,7 +17,7 @@ describe("Menu.vue", () => {
         },
       },
     });
-    expect(wrapper.html()).toContain(propsData.name);
+    expect(wrapper.html()).toContain('John Doe');
   });
 
   it("renders menu items correctly", () => {
@@ -66,23 +65,23 @@ describe("Menu.vue", () => {
       },
     });
   });
-  it('returns empty string for inactive menu item', () => {
+  it("returns empty string for inactive menu item", () => {
     // 创建包含 menuClass 方法的浅渲染实例
     const wrapper = shallowMount(Menu);
-    
+
     // 设置 window.location.pathname
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(window, "location", {
       value: {
-        pathname: '/home',
+        pathname: "/home",
       },
       writable: true,
     });
-    
+
     // 调用 menuClass 方法并进行断言
-    expect(wrapper.vm.menuClass('/settings/profile')).toBe('');
-    
+    expect(wrapper.vm.menuClass("/settings/profile")).toBe("");
+
     // 还原 window.location.pathname
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(window, "location", {
       value: {
         pathname: null,
       },
