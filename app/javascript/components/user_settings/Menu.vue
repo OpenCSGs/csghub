@@ -5,8 +5,8 @@
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div class="ml-[10px]">
             <div class="text-[24px] leading-[32px] font-semibold">
-              <a :href="'/profile/' + name">
-                {{nickname}}
+              <a :href="'/profile/' + userName">
+                {{userName}}
               </a>
             </div>
             <div class="text-[16px] text-[#909399] leading-[24px]">@{{name}}</div>
@@ -46,12 +46,11 @@
 export default {
   props: {
     name: String,
-    nickname: String,
+    userName: String,
     avatar: String,
   },
   data() {
-    return {
-    };
+    return {};
   },
   mounted() {},
   methods: {
