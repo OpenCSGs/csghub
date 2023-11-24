@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
+  validates_uniqueness_of :name
+
   has_many :spaces, dependent: :destroy
 
   # user.roles = "super_user"
