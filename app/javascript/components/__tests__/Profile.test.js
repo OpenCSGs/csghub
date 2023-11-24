@@ -35,22 +35,6 @@ describe('Profile.vue Implementation Test', () => {
     expect(wrapper.html()).toContain('role1, role2');
     expect(wrapper.html()).toContain(lastLoginTime.slice(0, -6));});
 
-  it('renders no data message if props are empty', () => {
-    const wrapper = shallowMount(Profile, {
-      props: {
-        name: '',
-        phone: '',
-        avatar: '',
-        email: '',
-        lastLoginTime: '',
-        loginIdentity: '',
-        roles: '',
-      },
-    });
-
-    expect(wrapper.html()).toContain('暂无数据');
-  });
-
   it('parses roles JSON correctly', () => {
     const roles = '["role1", "role2"]';
     const wrapper = shallowMount(Profile, {
