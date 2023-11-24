@@ -8,7 +8,7 @@ class User < ApplicationRecord
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
   validates_uniqueness_of :name
-  validates :name, format: { with: /\A(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])\Z/ }
+  validates :name, format: { with: /\A(?=.{8,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }
 
   has_many :spaces, dependent: :destroy
 
