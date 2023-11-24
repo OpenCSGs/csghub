@@ -16,29 +16,22 @@ class SessionsController < ApplicationController
     cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
     cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
     user_uuid = user_infos['sub']
-    user = User.find_by(login_identity: user_uuid)
-    if user
-      helpers.log_in user
-    else
-      user = User.create(login_identity: user_uuid,
-                         roles: :personal_user,
-                         avatar: user_infos['avatar'],
-                         name: user_infos['displayName'],
-                         phone: user_infos['phone'],
-                         email: user_infos['email'],
-                         email_verified: user_infos['emailVerified'],
-                         gender: user_infos['gender'],
-                         last_login_at: Time.now)
-      helpers.log_in user
+
+    user = User.find_or_create_by(login_identity: user_uuid) do |u|
+      u.roles = :personal_user
+      u.avatar = user_infos['avatar']
+      u.name = user_infos['displayName']
+      u.phone = user_infos['phone']
+      u.email = user_infos['email']
+      u.email_verified = user_infos['emailVerified']
+      u.gender = user_infos['gender']
+      u.last_login_at = Time.now
     end
 
-    if session[:original_request_path].present?
-      redirect_path = session[:original_request_path]
-      session[:original_request_path] = nil
-      redirect_to redirect_path
-    else
-      redirect_to root_path
-    end
+    helpers.log_in user
+
+    redirect_path = session.delete(:original_request_path) || root_path
+    redirect_to redirect_path
   end
 
   def authing
