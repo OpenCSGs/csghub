@@ -7,11 +7,11 @@
     </Menu>
     <ProfileEdit class="grow py-[24px]"
                  :name="name"
-                 :nickname="userName"
+                 :nickname="nickname"
                  :avatar="avatar"
                  :phone="phone"
                  :email="email"
-                 :userName="userName"
+                 :displayName="displayName"
                  @updateUserInfo="updateUserInfo">
     </ProfileEdit>
   </div>
@@ -22,10 +22,11 @@ import ProfileEdit from "./ProfileEdit.vue";
 export default {
   props: {
     name: String,
+    nickname: String,
     phone: String,
     avatar: String,
     email: String,
-    userName: String,
+    displayName: String,
   },
   components: {
     Menu,
@@ -33,7 +34,7 @@ export default {
   },
   data() {
     return {
-      profileName: this.userName,
+      profileName: this.displayName,
       profileAvatar: this.avatar,
     };
   },
@@ -41,7 +42,7 @@ export default {
   methods: {
     updateUserInfo(data) {
       const { nickname, avatar } = data;
-      this.profileName = nickname || this.userName;
+      this.profileName = nickname || this.displayName;
       this.profileAvatar = avatar || this.avatar;
     },
   },

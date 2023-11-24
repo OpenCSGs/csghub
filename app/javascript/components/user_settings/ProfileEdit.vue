@@ -62,7 +62,7 @@ export default {
     avatar: String,
     phone: String,
     email: String,
-    userName: String,
+    displayName: String,
   },
   data() {
     return {
@@ -86,7 +86,7 @@ export default {
       this.avatarUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `/api/users/${this.userName}`;
+      const profileUpdateEndpoint = `/api/users/${this.displayName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
       if (file !== undefined) {
