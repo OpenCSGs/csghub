@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center md:flex-col py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="max-w-[411px] md:mb-[24px]"
-          :name="name"
-          :displayName="profileName"
+          :name="profileName"
+          :displayName="profileDisplayName"
           :avatar="profileAvatar">
     </Menu>
     <ProfileEdit class="grow py-[24px]"
@@ -34,15 +34,17 @@ export default {
   },
   data() {
     return {
-      profileName: this.displayName,
+      profileName: this.name,
+      profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
     };
   },
   mounted() {},
   methods: {
     updateUserInfo(data) {
-      const { nickname, avatar } = data;
-      this.profileName = nickname || this.displayName;
+      const { nickname, name, avatar } = data;
+      this.profileName = name || this.name;
+      this.profileDisplayName = nickname || this.displayName;
       this.profileAvatar = avatar || this.avatar;
     },
   },

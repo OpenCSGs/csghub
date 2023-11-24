@@ -16,7 +16,7 @@
     </div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
-      <p class="text-gray-500 text-[12px] italic">* 8-20位字母数字以及 _ . 构成的字符串</p>
+      <p class="text-gray-500 text-[12px] italic">* 8-20位字母数字以及 _ 构成的字符串</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 placeholder="username">
@@ -117,6 +117,7 @@ export default {
           });
           this.$emit("updateUserInfo", {
             avatar: file && URL.createObjectURL(file),
+            name: this.inputName,
             nickname: this.inputNickname
           });
           // 处理成功响应
