@@ -52,6 +52,6 @@ class LeadForm < ApplicationRecord
   def set_default_status
     self.local_channel = 'lead_form'
     self.lead_type = 'customer'
-    self.lead_form_status = 'inactive' if lead_form_status.blank?
+    self.lead_form_status = 'inactive'
   end
 end

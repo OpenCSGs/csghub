@@ -80,7 +80,6 @@ class Campaign < ApplicationRecord
 
   def update_lead_form_status
     return unless lead_form
-    lead_form_status = signing_up? ? 'active' : 'inactive'
-    lead_form.update(lead_form_status: lead_form_status)
+    signing_up? ? lead_form.active! : lead_form.inactive!
   end
 end
