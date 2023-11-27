@@ -53,39 +53,39 @@
   tags: 文本生成
   license: Apache License 2.0
   desc: Yi系列模型是由来自“零一万物”的开发者研发的大型语言模型。
-  avatar: 'models/default_model_logo'
+  avatar: 'models/ling_yi_wan_wu.png'
 - title: chatglm3-6b
   author: 智谱.AI
   download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/chatglm3-6b.zip
   tags: PyTorch,文本生成
   license: Apache License 2.0
   desc: ChatGLM3-6B 是 ChatGLM 系列最新一代的开源模型，在保留了前两代模型对话流畅、部署门槛低等众多优秀特性的基础上，ChatGLM3-6B 有用更强大的基础模型。
-  avatar: 'models/default_model_logo'
+  avatar: 'models/zhi_pu_ai.png'
 - title: RetinaFace
   author: 达摩院
   download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/cv_gpen_image-portrait-enhancement.tar.gz
   tags: PyTorch,人脸识别
   license: MIT License
   desc: RetinaFace为当前学术界和工业界精度较高的人脸检测和人脸关键点定位二合一的方法,该模型的特点主要是引入关键点分支，可以在训练阶段引入关键点预测分支进行多任务学习，提供额外的互补特征，inference去掉关键点分支即可，并不会引入额外的计算量。
-  avatar: 'models/default_model_logo'
+  avatar: 'models/da_mo_yuan'
 - title: FairFace
   author: 达摩院
   download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/cv_resnet34_face-attribute-recognition_fairface.tar.gz
   tags: PyTorch,人脸属性识别
   license: MIT License
   desc: FairFace是结构简单性能优良的人脸属性模型, 被WACV2021录取, 是人脸属性领域近几年高引文章之一。网络结构比较简单，backbone是标准的ResNet34结构，后面接一个fc层，对输入图片的人脸预测其年龄区间和性别。
-  avatar: 'models/default_model_logo'
+  avatar: 'models/da_mo_yuan'
 - title: GPT-3夸夸机器人-中文
   author: 达摩院
   download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/nlp_gpt3_kuakua-robot_chinese-large.tar.gz
   tags: PyTorch,文本生成
   license: Apache License 2.0
   desc: GPT-3模型是一个通用的预训练生成模型，可以用于解决下游各种类型的生成任务，特别是zero-shot生成能力。我们在GPT-3基础模型上，通过夸夸数据训练了一个GPT-3夸夸机器人，可以随时随地为你鼓励，加油！
-  avatar: 'models/default_model_logo'
+  avatar: 'models/da_mo_yuan'
 - title: 羽人7B
   author: fyi
   download_url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/models/yuren-baichuan-7b.tar.gz
   tags: PyTorch,文本生成
   license: Apache License 2.0
   desc: 羽人是基于 baichuan-inc/baichuan-7B 进行多任务有监督微调的开源多模态大语言模型, 建立在 Pleisto 的以数据为中心(Data-centric AI)的工作上。羽人在多轮对话、开放域问答、角色扮演、文本生成、文本理解、图片理解等多个任务上均拥有优异的表现。
-  avatar: 'models/default_model_logo'
+  avatar: 'models/bai_chuan_zhi_neng'
