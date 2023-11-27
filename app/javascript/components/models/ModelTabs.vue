@@ -20,7 +20,7 @@
         <model-summary :introduction="introduction" />
       </el-tab-pane>
       <el-tab-pane label="模型文件" name="files">
-        <model-files :files="files" />
+        <model-files :files="files" :last-commit="lastCommit" />
       </el-tab-pane>
       <el-tab-pane label="社区" name="community">community</el-tab-pane>
       <el-tab-pane label="设置" name="settings">settings</el-tab-pane>
@@ -52,6 +52,7 @@ import ModelFiles from './ModelFiles.vue'
 const props = defineProps({
   files: Array,
   introduction: String,
+  lastCommit: Object,
 })
 
 const activeName = ref('summary')

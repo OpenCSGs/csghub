@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px]">
-    <model-tabs :introduction="model.detail.introduction" :files="files.tree" />
+    <model-tabs :introduction="model.detail.introduction" :files="files.tree" :last-commit="lastCommit.last_commit" />
   </div>
 </template>
 
@@ -16,5 +16,6 @@ import ModelTabs from './models/ModelTabs.vue';
 const props = defineProps({
   model: Object,
   files: Object,
+  lastCommit: Object,
 })
 </script>

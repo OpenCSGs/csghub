@@ -20,7 +20,7 @@
             </template>
           </el-dropdown>
         </div>
-        <a href="#" class="ml-4">Add some files</a>
+        <a href="#" class="ml-4">{{ lastCommit.message }}</a>
       </div>
       <div class="flex items-center sm:hidden">
         <div class="flex items-center border border-[#DCDFE6] rounded-[100px] px-4 py-[1px]">
@@ -78,7 +78,7 @@
       <a href="#" class="text-[#606266] w-[30%]">
         {{ file.commit.message }}
       </a>
-      <div class="text-[#909399] w-[20%] text-righ sm:hidden">
+      <div class="text-[#909399] w-[20%] text-right sm:hidden">
         {{ file.commit.created_at }}
       </div>
     </div>
@@ -88,6 +88,9 @@
 <script setup>
   defineProps({
     files: {
+      type: Object,
+    },
+    lastCommit: {
       type: Object,
     }
   })
