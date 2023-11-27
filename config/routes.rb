@@ -73,6 +73,6 @@ Rails.application.routes.draw do
     get    '/authing/callback', to: 'sessions#authing'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
-    post    '/logout',  to: 'sessions#destroy'
+    get    '/logout',  to: 'sessions#destroy'
   end
 end
