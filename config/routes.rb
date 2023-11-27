@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     end
 
     resources :campaigns, only: [:index, :show]
+    resources :models, only: [:index, :show]
 
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
@@ -63,12 +64,11 @@ Rails.application.routes.draw do
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
-    get '/models', to: 'models#index'
 
     get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
-    get    '/logout',  to: 'sessions#destroy'
+    post    '/logout',  to: 'sessions#destroy'
   end
 end
