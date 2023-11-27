@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[300px] pt-8">
+  <div class="min-h-[300px] pt-8 sm:px-5">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         <div>
@@ -22,7 +22,7 @@
         </div>
         <a href="#" class="ml-4">Add some files</a>
       </div>
-      <div class="flex items-center">
+      <div class="flex items-center sm:hidden">
         <div class="flex items-center border border-[#DCDFE6] rounded-[100px] px-4 py-[1px]">
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 contributors
@@ -58,7 +58,7 @@
           9499188
         </div>
       </div>
-      <div class="text-[#909399]">
+      <div class="text-[#909399] sm:hidden">
         8 分钟前
       </div>
     </div>
@@ -78,7 +78,7 @@
       <a href="#" class="text-[#606266] w-[30%]">
         {{ file.commit.message }}
       </a>
-      <div class="text-[#909399] w-[20%] text-right">
+      <div class="text-[#909399] w-[20%] text-righ sm:hidden">
         {{ file.commit.created_at }}
       </div>
     </div>
