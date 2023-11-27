@@ -15,7 +15,7 @@ module Admin
         return true
       else
         session[:original_request_path] = request.fullpath
-        redirect_to login_path
+        redirect_to root_path
       end
     end
 

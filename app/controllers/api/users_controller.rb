@@ -1,6 +1,7 @@
 class Api::UsersController < Api::ApplicationController
   def update
     @current_user.name = user_params[:name]
+    @current_user.nickname = user_params[:nickname]
     if user_params[:avatar].present?
       avatar_url_code = AliyunOss.instance.upload 'user-avatar', user_params[:avatar]
       @current_user.avatar = avatar_url_code
@@ -15,6 +16,6 @@ class Api::UsersController < Api::ApplicationController
   private
 
   def user_params
-    params.permit(:name, :avatar)
+    params.permit(:name, :nickname, :avatar)
   end
 end

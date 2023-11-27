@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   # admin
   namespace :admin do
+    resources :system_configs
     resources :spaces
-    resources :users
+    resources :users do
+      get :export, on: :collection
+    end
     resources :comments
     resources :leads
     resources :campaigns do
@@ -65,8 +68,8 @@ Rails.application.routes.draw do
     get '/datasets', to: 'datasets#index'
     get '/models', to: 'models#index'
 
-    get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
+    get    '/oidc/callback', to: 'sessions#oidc'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'

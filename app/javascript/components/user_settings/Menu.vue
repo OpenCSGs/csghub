@@ -5,11 +5,11 @@
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div class="ml-[10px]">
             <div class="text-[24px] leading-[32px] font-semibold">
-              <a :href="'/profile/' + name">
-                {{name}}
+              <a :href="'/profile/' + displayName">
+                {{displayName}}
               </a>
             </div>
-            <div class="text-[16px] text-[#909399] leading-[24px]">@handle</div>
+            <div class="text-[16px] text-[#909399] leading-[24px]">@{{name}}</div>
           </div>
         </div>
         <div class="flex flex-col">
@@ -46,11 +46,11 @@
 export default {
   props: {
     name: String,
+    displayName: String,
     avatar: String,
   },
   data() {
-    return {
-    };
+    return {};
   },
   mounted() {},
   methods: {

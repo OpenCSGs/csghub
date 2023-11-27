@@ -1,9 +1,9 @@
-class UserPolicy < ApplicationPolicy
-  def index?
-    true
+class SystemConfigPolicy < ApplicationPolicy
+  def new?
+    user.super_user?
   end
 
-  def export?
+  def index?
     true
   end
 
@@ -16,16 +16,20 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    user.super_user?
+  end
+
+  def create?
+    user.super_user?
   end
 
   def destroy?
-    user.super_user?
+    false
   end
 
   class Scope < Scope
     def resolve
-      User.all
+      SystemConfig.all
     end
   end
 end
