@@ -58,7 +58,9 @@ Rails.application.routes.draw do
     end
 
     resources :campaigns, only: [:index, :show]
-    resources :models, only: [:index, :show]
+    resources :models, only: [:index]
+
+    get '/models/:user_name/:model_name', to: 'models#show'
 
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'

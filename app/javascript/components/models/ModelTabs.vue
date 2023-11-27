@@ -17,10 +17,10 @@
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="模型介绍" name="summary">
-        <model-summary :download-count="downloadCount" :introduction="introduction" />
+        <model-summary :introduction="introduction" />
       </el-tab-pane>
       <el-tab-pane label="模型文件" name="files">
-        <model-files />
+        <model-files :files="files" />
       </el-tab-pane>
       <el-tab-pane label="社区" name="community">community</el-tab-pane>
       <el-tab-pane label="设置" name="settings">settings</el-tab-pane>
@@ -50,13 +50,13 @@ import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
 
 const props = defineProps({
-  downloadCount: Number,
+  files: Array,
   introduction: String,
 })
 
 const activeName = ref('summary')
 
 const handleClick = (tab, event) => {
-  console.log(tab, event)
+  // console.log(tab, event)
 }
 </script>
