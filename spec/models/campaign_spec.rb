@@ -57,7 +57,8 @@ RSpec.describe Campaign, type: :model do
   describe '#with_content_and_leads_count' do
     it 'returns a hash with content, leads_count, start_date, and end_date' do
       campaign = create(:campaign)
-      create_list(:lead, 3, lead_form: campaign.lead_form)
+      # 跳过了 lead 的电话唯一性验证
+      build_list(:lead, 3, company: 'company', name: 'name', phone: '17708176692', lead_form: campaign.lead_form)
       expect(campaign.with_content_and_leads_count).to include(
         content: campaign.content.body.to_plain_text.squish,
         leads_count: campaign.leads.count,
@@ -78,9 +79,12 @@ RSpec.describe Campaign, type: :model do
     it 'returns a hash with uuid, desktop_banner_url, and mobile_banner_url' do
       campaign = create(:campaign)
       expect(campaign.banner_attributes).to include(
-        'uuid' => campaign.uuid,
+        :uuid => campaign.uuid,
         :desktop_banner_url => campaign.with_blob_path(campaign.desktop_banner),
-        :mobile_banner_url => campaign.with_blob_path(campaign.mobile_banner)
+        :mobile_banner_url => campaign.with_blob_path(campaign.mobile_banner),
+        :status => 'prestart',
+        'id': campaign.id,
+        'form_url': campaign.form_url
       )
     end
   end

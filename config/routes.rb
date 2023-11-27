@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :system_configs
     resources :spaces
-    resources :users
+    resources :users do
+      get :export, on: :collection
+    end
     resources :comments
     resources :leads
     resources :campaigns do
