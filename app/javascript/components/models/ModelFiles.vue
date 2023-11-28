@@ -20,7 +20,7 @@
             </template>
           </el-dropdown>
         </div>
-        <a href="#" class="ml-4">{{ lastCommit.message }}</a>
+        <a href="#" class="ml-4">{{  }}</a>
       </div>
       <div class="flex items-center sm:hidden">
         <div class="flex items-center border border-[#DCDFE6] rounded-[100px] px-4 py-[1px]">
@@ -51,15 +51,15 @@
       <div class="flex items-center">
         <div class="flex items-center mr-2">
           <el-avatar :size="24" class="mr-2" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-          <a href="#" class="text-[#303133]">vincent</a>
+          <a href="#" class="text-[#303133]">{{ lastCommit.author_name }}</a>
         </div>
-        <a href="#" class="mr-2 text-[#606266]">Add some files</a>
+        <a href="#" class="mr-2 text-[#606266]">{{ lastCommit.message }}</a>
         <div class="rounded border border-[#DCDFE6] text-xs text-[#606266] px-3 py-[2px]">
-          9499188
+          {{ lastCommit.id.substring(0, 7) }}
         </div>
       </div>
       <div class="text-[#909399] sm:hidden">
-        8 分钟前
+        {{ lastCommit.committer_date }}}
       </div>
     </div>
 
