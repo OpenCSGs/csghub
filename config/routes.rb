@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     resources :settings, only: [] do
       collection do
         get 'profile'
+        get 'git-token'
       end
     end
 

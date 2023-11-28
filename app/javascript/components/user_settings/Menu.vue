@@ -16,7 +16,9 @@
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/profile')"
           >
-            个人资料
+            <a href="/settings/profile">
+              个人资料
+            </a>
           </div>
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/account')"
@@ -31,7 +33,9 @@
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/accessTokens')"
           >
-            Git Token
+            <a href="/settings/git-token">
+              Git Token
+            </a>
           </div>
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/keys')"
