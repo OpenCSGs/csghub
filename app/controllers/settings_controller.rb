@@ -4,4 +4,7 @@ class SettingsController < ApplicationController
 
   def git_token
   end
+
+  def ssh_key
+  end
 end
