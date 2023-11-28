@@ -41,7 +41,7 @@
                :class="menuClass('/settings/keys')"
           >
             <a href="/settings/ssh-key">
-              SSH Key
+              SSH Keys
             </a>
           </div>
           <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
