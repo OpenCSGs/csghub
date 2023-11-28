@@ -90,6 +90,7 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "administrate", "~> 0.19.0"
 # support active storage
 gem 'administrate-field-active_storage'
+gem 'administrate_exportable'
 
 gem "pundit", "~> 2.3"
 

@@ -3,6 +3,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def export?
+    true
+  end
+
   def show?
     true
   end
