@@ -89,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_113109) do
     t.string "lead_type"
     t.string "lead_fields"
     t.string "uuid"
-    t.string "lead_form_status", default: "active"
+    t.string "lead_form_status", default: "inactive"
     t.string "title"
     t.string "internal_title"
     t.text "description"
