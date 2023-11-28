@@ -20,14 +20,13 @@
             </template>
           </el-dropdown>
         </div>
-        <a href="#" class="ml-4">{{  }}</a>
       </div>
-      <div class="flex items-center sm:hidden">
-        <div class="flex items-center border border-[#DCDFE6] rounded-[100px] px-4 py-[1px]">
+      <div class="flex items-center">
+        <div class="flex items-center border border-[#DCDFE6] rounded-[100px] px-4 py-[1px] sm:hidden">
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 contributors
         </div>
-        <a href="#" class="mx-4">history: 4 commits</a>
+        <a href="#" class="mx-4 sm:hidden">history: 4 commits</a>
         <el-dropdown split-button @click="handleClick">
             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
               <circle cx="8.75" cy="2.25" r="1.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
@@ -59,7 +58,7 @@
         </div>
       </div>
       <div class="text-[#909399] sm:hidden">
-        {{ lastCommit.committer_date }}}
+        {{ lastCommit.committer_date }}
       </div>
     </div>
 
