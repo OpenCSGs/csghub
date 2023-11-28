@@ -37,6 +37,7 @@ class Campaign < ApplicationRecord
 
   scope :without_lead_form, -> { includes(:lead_form).where(lead_forms: { id: nil }) }
   scope :recommended, -> { where(recommended: true) }
+  scope :release, -> { where(release: true) }
 
   delegate :form_url, to: :lead_form, allow_nil: true
 
