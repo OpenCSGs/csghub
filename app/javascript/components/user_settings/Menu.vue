@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="w-[294px] border rounded-[8px] bg-[#FAFAFA] border-[#DCDFE6] ml-[80px] md:ml-[20px] mr-[24px]">
+      <div class="w-[294px] border rounded-[8px] bg-[#FAFAFA] border-[#DCDFE6] mx-[24px]">
         <div class="flex p-[16px] border-b border-[#DCDFE6]">
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div class="ml-[10px]">
