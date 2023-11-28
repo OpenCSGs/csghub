@@ -78,3 +78,30 @@
   create_at: 2023.08.28
   url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/nlp_polylm_multialpaca_sft.tar.gz
   other: 达摩院 提供
+
+- title: CValues-Comparison 中文大模型价值观比较数据集
+  tags: 文本分类
+  protocol: '开源协议：Apache License 2.0'
+  desc: 该数据集可以用于大模型安全、价值观对齐等多个问题的研究，比如：正例可以用来SFT增强模型的安全性，正反例可以用来训练或评估reward模型，正反例可以用来构造多项选择题，用于自动化评估模型安全性表现
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/CValues-Comparison.tar.gz
+  other:
+
+- title: DuReader问题生成
+  tags: 文本分类
+  protocol: '开源协议：Apache License 2.0'
+  desc: DuReader数据集属于下游question generation 问题生成类任务，可以用于训练问题生成模型，用于下游的FAQ挖掘等场景
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/DuReader_robust-QG.tar.gz
+  other:
+
+- title: 中文夸夸数据集
+  tags: 文本分类
+  protocol: '开源协议：Apache License 2.0'
+  desc: 夸夸数据集属于下游生成类任务，每一条数据有两个属性，分别是输入句子text1和输出句子text2。其中输入句子是答案和相关的段落，输出句子为相应的问题。
+  type: 数据集作者
+  create_at: 2023.08.28
+  url: https://opencsg-model-dataset.oss-cn-beijing.aliyuncs.com/datasets/chinese-kuakua-collection.tar.gz
+  other:
