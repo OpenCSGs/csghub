@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_113109) do
     t.integer "campaign_type"
     t.integer "status", default: 0
     t.boolean "recommended", default: false
+    t.boolean "release", default: false
     t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 

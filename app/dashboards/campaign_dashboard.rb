@@ -22,6 +22,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer_website: Field::String,
     pageviews: Field::Number,
     recommended: Field::Boolean,
+    release: Field::Boolean,
     campaign_type: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:campaign_type) }),
     status: Field::Select.with_options(include_blank: true, collection: -> { Campaign.human_enum_options(:status) }),
     desktop_banner: Field::ActiveStorage,
@@ -39,6 +40,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     status
     lead_form
     recommended
+    release
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -54,6 +56,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer_website
     pageviews
     recommended
+    release
     campaign_type
     status
     created_at
@@ -75,6 +78,7 @@ class CampaignDashboard < Administrate::BaseDashboard
     organizer
     organizer_website
     recommended
+    release
     campaign_type
     status
     content
