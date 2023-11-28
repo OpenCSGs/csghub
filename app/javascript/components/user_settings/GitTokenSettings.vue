@@ -32,7 +32,6 @@
 </template>
 <script>
 import Menu from "./Menu.vue";
-import ProfileEdit from "./ProfileEdit.vue";
 import { ElMessage } from 'element-plus'
 export default {
   props: {
@@ -42,8 +41,7 @@ export default {
     gitToken: String
   },
   components: {
-    Menu,
-    ProfileEdit,
+    Menu
   },
   data() {
     return {
