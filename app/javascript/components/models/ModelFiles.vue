@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="text-[#909399] sm:hidden">
-        {{ lastCommit.committer_date }}
+        {{ format(lastCommit.committer_dat, 'zh_CN') }}
       </div>
     </div>
 
@@ -78,13 +78,15 @@
         {{ file.commit.message }}
       </a>
       <div class="text-[#909399] w-[20%] text-right sm:hidden">
-        {{ file.commit.created_at }}
+        {{ format(file.commit.created_at, 'zh_CN') }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+  import { format } from 'timeago.js';
+
   defineProps({
     files: {
       type: Object,

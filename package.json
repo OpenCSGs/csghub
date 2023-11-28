@@ -15,6 +15,7 @@
     "github-markdown-css": "^5.4.0",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
+    "timeago.js": "^4.0.2",
     "trix": "^2.0.7",
     "vue": "^3.3.4",
     "vue-turbolinks": "^2.2.2",
