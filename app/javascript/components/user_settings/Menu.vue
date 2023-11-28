@@ -26,7 +26,12 @@
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/accessTokens')"
           >
-            访问令牌
+            Access Token
+          </div>
+          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/accessTokens')"
+          >
+            Git Token
           </div>
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/keys')"
