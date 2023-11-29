@@ -11,19 +11,19 @@
         添加 SSH Key
       </button>
       <div class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">现在还没有添加SSH key到您的账户</div>
-      <ssh-key-card v-for="sshkey in JSON.parse(TheSshKeys)"
+      <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
                     :ssh-key-name="sshkey.name"
                     :ssh-key="sshkey.ssh_key">
       </ssh-key-card>
       <el-dialog v-model="centerDialogVisible" title="添加 SSH Key" width="30%" class="dialogWidth" style="border-radius: 0.5rem;" left>
         <div class="mb-[16px]">
           <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span> </p>
-          <el-input v-model="input" placeholder="Key"/>
+          <el-input v-model="theSshKeyName" placeholder="Key"/>
         </div>
         <div>
           <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span> </p>
           <el-input
-            v-model="textarea"
+            v-model="theSshKey"
             :rows="6"
             type="textarea"
             placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
@@ -61,7 +61,9 @@ export default {
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
-      TheSshKeys: this.sshKeys
+      theSshKeys: this.sshKeys,
+      theSshKeyName: '',
+      theSshKey: '',
     };
   },
   mounted() {

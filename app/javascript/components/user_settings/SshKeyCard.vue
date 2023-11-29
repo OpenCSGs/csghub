@@ -1,7 +1,7 @@
 <template>
   <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] md:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
-      <p class="font-medium">{{ TheSshKeyName }}</p>
+      <p class="font-medium">{{ theSshKeyName }}</p>
       <p class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">Added less than a minute ago</p>
       <div @click="deleteDialogVisible = true"
            class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded border-2 text-right">
@@ -12,7 +12,7 @@
         </svg>
       </div>
     </div>
-    <div class="pt-[16px]"><p class="text-[#606266] text-sm">{{ TheSshKey }}</p></div>
+    <div class="pt-[16px]"><p class="text-[#606266] text-sm">{{ theSshKey }}</p></div>
   </div>
   <el-dialog v-model="deleteDialogVisible" title="删除 Key “key name”" width="30%" class="dialogWidth" style="border-radius: 0.5rem;" left>
     <div class="flex items-center justify-center h-[108px]">
@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       deleteDialogVisible: false,
-      TheSshKeyName: this.sshKeyName,
-      TheSshKey: this.sshKey
+      theSshKeyName: this.sshKeyName,
+      theSshKey: this.sshKey
     }
   },
   mounted() {},
