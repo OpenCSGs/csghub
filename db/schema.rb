@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_29_081517) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_082802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -132,6 +132,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_081517) do
     t.string "company_site"
   end
 
+  create_table "org_memberships", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_org_memberships_on_organization_id"
+    t.index ["user_id"], name: "index_org_memberships_on_user_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.string "nickname"
@@ -196,6 +206,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_081517) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
+  add_foreign_key "org_memberships", "organizations"
+  add_foreign_key "org_memberships", "users"
   add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end
