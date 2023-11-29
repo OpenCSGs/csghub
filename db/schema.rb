@@ -155,13 +155,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_144304) do
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
   end
 
-  create_table "system_configs", force: :cascade do |t|
-    t.string "application_env"
-    t.jsonb "oidc_configs", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id", null: false
     t.bigint "space_id"
