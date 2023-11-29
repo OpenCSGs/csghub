@@ -10,7 +10,7 @@
       <button @click="centerDialogVisible = true" class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]">
         添加 SSH Key
       </button>
-      <div class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">现在还没有添加SSH key到您的账户</div>
+      <div v-if="theSshKeys === '[]'" class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">现在还没有添加SSH key到您的账户</div>
       <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
                     :ssh-key-name="sshkey.name"
                     :ssh-key="sshkey.ssh_key">
@@ -67,7 +67,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.sshKeys)
+    console.log(this.theSshKeys.length)
   },
   methods: {},
 };
