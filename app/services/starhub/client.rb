@@ -17,7 +17,8 @@ module Starhub
     private
 
     def build_request_url(path)
-      base_url = Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
+      starhub_configs = SystemConfig.first&.starhub_configs
+      base_url = starhub_configs.blank? ?  'http://localhost:8080/api/v1' : starhub_configs['base_url']
       base_url + path
     end
 
