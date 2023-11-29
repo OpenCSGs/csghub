@@ -71,26 +71,19 @@ export default {
 };
 </script>
 <style>
-/* 默认宽度 */
 .dialogWidth {
   width: 30%;
 }
-
-/* 在小屏幕上宽度变为50% */
 @media (max-width: 640px) {
   .dialogWidth {
     width: 80%;
   }
 }
-
-/* 在中等屏幕上宽度变为40% */
 @media (min-width: 641px) and (max-width: 1024px) {
   .dialogWidth {
     width: 50%;
   }
 }
-
-/* 在大屏幕上宽度保持为30% */
 @media (min-width: 1025px) {
   .dialogWidth {
     width: 30%;
