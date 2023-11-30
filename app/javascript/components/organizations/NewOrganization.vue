@@ -5,7 +5,7 @@
       <div class="flex sm:flex-col gap-[16px] mb-[16px]">
         <div class="w-[284px] sm:w-auto">
           <p class="text-[#303133] text-[14px] mb-[8px]">组织命名空间</p>
-          <el-input v-model="orgName" placeholder="8-20位字母数字以及 _ 构成的字符串" input-style="height: 40px" />
+          <el-input v-model="orgName" placeholder="2-20位字母数字以及 _ 构成的字符串" input-style="height: 40px" />
         </div>
         <div class="w-[284px] sm:w-auto">
           <p class="text-[#303133] text-[14px] mb-[8px]">组织别名</p>
