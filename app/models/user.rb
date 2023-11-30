@@ -11,6 +11,8 @@ class User < ApplicationRecord
   validates :name, format: { with: /\A(?=.{8,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }
 
   has_many :spaces, dependent: :destroy
+  has_many :org_memberships, dependent: :destroy
+  has_many :organizations, through: :org_memberships
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
