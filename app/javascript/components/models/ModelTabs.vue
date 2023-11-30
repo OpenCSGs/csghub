@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="flex items-center absolute top-0 right-0 sm:relative sm:pl-5 sm:pb-4 z-10">
+    <div class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
       <el-dropdown>
         <div class="rounded border border-[#DCDFE6] flex items-center justify-center w-[46px] h-8 mr-2 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -33,7 +33,7 @@
         <div class="text-[#a0a1a7] p-2"># for integration of the OpenCSG model hub</div>
         <div class="text-[#a0a1a7] p-2"># into the corresponding library =)</div>
       </el-dialog>
-      <el-dialog v-model="cloneRepositoryVisible" title="" class="sm:!w-[80%]">
+      <el-dialog v-model="cloneRepositoryVisible" title="" class="md:!w-[80%]">
         <div class="rounded-t border-t border-x border-[#EBEEF5] mt-4">
           <div class="flex items-center px-3 py-2 bg-[#F5F7FA] text-[#303133]">
             <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -69,7 +69,7 @@
     </div>
     <el-tabs v-model="activeName">
       <el-tab-pane label="模型介绍" name="summary">
-        <model-summary :introduction="introduction" />
+        <model-summary :introduction="introduction" :download-count="downloadCount" />
       </el-tab-pane>
       <el-tab-pane label="模型文件" name="files">
         <model-files :files="files" :last-commit="lastCommit" />
@@ -109,6 +109,7 @@ import ModelFiles from './ModelFiles.vue'
 const props = defineProps({
   files: Array,
   introduction: String,
+  downloadCount: Number,
   lastCommit: Object,
 })
 
