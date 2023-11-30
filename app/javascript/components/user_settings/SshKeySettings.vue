@@ -51,7 +51,7 @@
 import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
 import {useCookies} from "vue3-cookies"
-import {ElMessage} from "element-plus";
+import {ElMessage} from "element-plus"
 
 export default {
   props: {
@@ -78,13 +78,17 @@ export default {
   mounted() {},
   methods: {
     submitSshKey() {
+      if(this.theSshKeyName == '') {
+        ElMessage({message: "请您填写SSH Key 名称", type: "warning"})
+        return
+      } else if (this.theSshKey == '') {
+        ElMessage({message: "请您填写SSH Key 内容", type: "warning"})
+        return
+      }
+
       this.centerDialogVisible = false
 
-      this.createTheSshKey().then((data) => {
-        ElMessage({message: data.message, type: "success"})
-        console.log(data)
-      }).
-      catch((err) => {
+      this.createTheSshKey().catch((err) => {
         ElMessage({
           message: err.message,
           type: "warning",
@@ -121,9 +125,9 @@ export default {
         })
       } else {
         setTimeout(() => {
-          window.location.href = "/settings/ssh-key";
+          window.location.href = "/settings/ssh-key"
         }, 1000);
-        return response.json()
+        ElMessage({message: "添加成功", type: "success"})
       }
     },
   },

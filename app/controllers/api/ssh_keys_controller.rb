@@ -3,13 +3,9 @@ class Api::SshKeysController < Api::ApplicationController
     @ssh_key = SshKey.new(create_params)
     @ssh_key.user_id = current_user.id
     if @ssh_key.save
-      created_at = @ssh_key.created_at
-      current_time = Time.now
-      puts "now:", current_time
-      puts created_at
-      render json: { message: '添加成功', status: true }
+      render json: { message: '添加成功' }
     else
-      render json: { message: '添加失败', status: false}
+      render json: { message: @ssh_key.errors.full_messages.to_sentence }, status: :bad_request
     end
   end
 
