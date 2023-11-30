@@ -24,7 +24,7 @@
       </div>
       <div class="max-w-[284px] mb-[16px]">
         <p class="text-[#303133] text-[14px] mb-[8px]">组织类型</p>
-        <el-select v-model="orgTypeValue" placeholder="选择" size="large">
+        <el-select v-model="orgType" placeholder="选择" size="large">
           <el-option
             v-for="item in theOrgTypes"
             :key="item[1]"
@@ -52,7 +52,7 @@
   })
 
   const theOrgTypes = JSON.parse(props.orgTypes)
-  const orgTypeValue = ref('')
+  const orgType = ref('')
   const orgAvatar = ref('待上传')
   const orgAvatarFileInput = ref(null)
   const orgName = ref('')
@@ -73,6 +73,9 @@
         message: '组织创建成功',
         type: 'success'
       })
+      setTimeout(() => {
+        window.location.href = "/"
+      }, 500)
     })
     .catch(err => {
       ElMessage({
@@ -86,10 +89,10 @@
     const orgCreateEndpoint = `/internal_api/organizations`;
     const formData = new FormData()
     const orgAvatarFile = orgAvatarFileInput.value.files[0]
-    formData.append('name', orgName)
-    formData.append('nickname', orgNickname)
-    formData.append('org_type', orgTypeValue)
-    formData.append('homepage', orgHomepage)
+    formData.append('name', orgName.value)
+    formData.append('nickname', orgNickname.value)
+    formData.append('org_type', orgType.value)
+    formData.append('homepage', orgHomepage.value)
     if ( orgAvatarFile != undefined) {
       formData.append("logo", orgAvatarFile);
     }
