@@ -5,5 +5,6 @@ class ProfileController < ApplicationController
     # @datasets = current_user.datasets
     # @models = current_user.models
     @spaces = current_user.spaces
+    @organizations = current_user.organizations
   end
 end
