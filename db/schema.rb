@@ -148,7 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_082802) do
     t.string "logo"
     t.string "homepage"
     t.string "org_type"
-    t.boolean "verified"
+    t.boolean "verified", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_organizations_on_name"

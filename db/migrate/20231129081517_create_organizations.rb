@@ -6,7 +6,7 @@ class CreateOrganizations < ActiveRecord::Migration[7.0]
       t.string :logo
       t.string :homepage
       t.string :org_type
-      t.boolean :verified
+      t.boolean :verified, default: false
 
       t.index :name
       t.timestamps
