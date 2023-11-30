@@ -48,7 +48,8 @@
   import { ElInput, ElMessage } from 'element-plus'
 
   const props = defineProps({
-    orgTypes: String
+    orgTypes: String,
+    currentUserProfile: String
   })
 
   const theOrgTypes = JSON.parse(props.orgTypes)
@@ -74,7 +75,7 @@
         type: 'success'
       })
       setTimeout(() => {
-        window.location.href = "/"
+        window.location.href = props.currentUserProfile
       }, 500)
     })
     .catch(err => {
@@ -84,6 +85,9 @@
       })
     })
   }
+
+  onMounted(() => {
+  })
 
   async function submitOrgForm() {
     const orgCreateEndpoint = `/internal_api/organizations`;
