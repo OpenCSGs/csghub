@@ -2,7 +2,7 @@
   <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] md:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
       <p class="font-medium">{{ theSshKeyName }}</p>
-      <p class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">Added less than a minute ago</p>
+      <p class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
       <div @click="deleteDialogVisible = true"
            class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded border-2 text-right">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,15 +33,26 @@
 export default {
   props: {
     sshKeyName: String,
-    sshKey: String
+    sshKey: String,
+    createTime: String
   },
   data() {
     return {
       deleteDialogVisible: false,
       theSshKeyName: this.sshKeyName,
-      theSshKey: this.sshKey
+      theSshKey: this.sshKey,
+      theCreateTime: this.createTime,
+      theMinutesDifference: ''
     }
   },
-  mounted() {},
+  mounted() {
+    let currentObject = new Date()
+    let createObject = new Date(this.theCreateTime)
+    let timeDifferenceInMilliseconds = currentObject - createObject;
+
+    let minutesDifference = timeDifferenceInMilliseconds / (1000 * 60);
+    this.theMinutesDifference = Math.round(minutesDifference)
+    console.log(`Time difference in minutes: ${minutesDifference}min`)
+  },
 }
 </script>

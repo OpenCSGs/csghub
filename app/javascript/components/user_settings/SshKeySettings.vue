@@ -1,5 +1,6 @@
 <template>
-  <div class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+  <div
+      class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="max-w-[411px] md:mb-[24px]"
           :name="profileName"
           :displayName="profileDisplayName"
@@ -7,32 +8,37 @@
     </Menu>
     <div class="grow py-[24px]">
       <h3 class="text-[#303133] text-[20px] font-[600]">SSH Keys</h3>
-      <button @click="centerDialogVisible = true" class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]">
+      <button @click="centerDialogVisible = true"
+              class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]">
         添加 SSH Key
       </button>
-      <div v-if="theSshKeys === '[]'" class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">现在还没有添加SSH key到您的账户</div>
+      <div v-if="theSshKeys === '[]'"
+           class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">现在还没有添加SSH key到您的账户
+      </div>
       <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
                     :ssh-key-name="sshkey.name"
-                    :ssh-key="sshkey.ssh_key">
+                    :ssh-key="sshkey.ssh_key"
+                    :create-time="sshkey.created_at">
       </ssh-key-card>
-      <el-dialog v-model="centerDialogVisible" title="添加 SSH Key" width="30%" class="dialogWidth" style="border-radius: 0.5rem;" left>
+      <el-dialog v-model="centerDialogVisible" title="添加 SSH Key" width="30%" class="dialogWidth"
+                 style="border-radius: 0.5rem;" left>
         <div class="mb-[16px]">
-          <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span> </p>
+          <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span></p>
           <el-input v-model="theSshKeyName" placeholder="Key"/>
         </div>
         <div>
-          <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span> </p>
+          <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span></p>
           <el-input
-            v-model="theSshKey"
-            :rows="6"
-            type="textarea"
-            placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
+              v-model="theSshKey"
+              :rows="6"
+              type="textarea"
+              placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
           />
         </div>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="centerDialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="centerDialogVisible = false">
+            <el-button type="primary" @click="submitSshKey">
               添加
             </el-button>
           </span>
@@ -42,8 +48,11 @@
   </div>
 </template>
 <script>
-import Menu from "./Menu.vue";
-import SshKeyCard from "./SshKeyCard.vue";
+import Menu from "./Menu.vue"
+import SshKeyCard from "./SshKeyCard.vue"
+import {useCookies} from "vue3-cookies"
+import {ElMessage} from "element-plus";
+
 export default {
   props: {
     name: String,
@@ -66,26 +75,77 @@ export default {
       theSshKey: '',
     };
   },
-  mounted() {
-    console.log(this.theSshKeys.length)
+  mounted() {},
+  methods: {
+    submitSshKey() {
+      this.centerDialogVisible = false
+
+      this.createTheSshKey().then((data) => {
+        ElMessage({message: data.message, type: "success"})
+        console.log(data)
+      }).
+      catch((err) => {
+        ElMessage({
+          message: err.message,
+          type: "warning",
+        })
+      })
+    },
+
+    async createTheSshKey() {
+      const {cookies} = useCookies()
+      const SshKeyCreateEndpoint = "/api/ssh_keys"
+
+      const jsonData = {
+        name: this.theSshKeyName,
+        ssh_key: this.theSshKey,
+      }
+
+      const jsonStr = JSON.stringify(jsonData)
+
+      const option = {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${cookies.get('idToken')}`,
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          'Content-Type': 'application/json',
+        },
+        body: jsonStr
+      }
+      const response = await fetch(SshKeyCreateEndpoint, option)
+
+      if (!response.ok) {
+        return response.json().then((data) => {
+          console.log(data)
+          throw new Error(data.message)
+        })
+      } else {
+        setTimeout(() => {
+          window.location.href = "/settings/ssh-key";
+        }, 1000);
+        return response.json()
+      }
+    },
   },
-  methods: {},
 };
 </script>
 <style>
 .dialogWidth {
   width: 30%;
 }
+
 @media (max-width: 640px) {
   .dialogWidth {
     width: 80%;
   }
 }
+
 @media (min-width: 641px) and (max-width: 1024px) {
   .dialogWidth {
     width: 50%;
   }
 }
+
 @media (min-width: 1025px) {
   .dialogWidth {
     width: 30%;

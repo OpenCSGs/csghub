@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :users, only: [:update]
     resources :campaigns, only: [:index]
     resources :leads, only: [:create]
+    resources :ssh_keys, only: [:create]
   end
 
   # lead form
