@@ -22,27 +22,32 @@
       </ssh-key-card>
       <el-dialog v-model="centerDialogVisible" title="添加 SSH Key" width="30%" class="dialogWidth"
                  style="border-radius: 0.5rem;" left>
-        <div class="mb-[16px]">
-          <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span></p>
-          <el-input v-model="theSshKeyName" placeholder="Key"/>
-        </div>
-        <div>
-          <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span></p>
-          <el-input
-              v-model="theSshKey"
-              :rows="6"
-              type="textarea"
-              placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
-          />
-        </div>
-        <template #footer>
+
+        <el-form :model="formData" :rules="formRules" ref="formRules">
+          <div class="mb-[16px]">
+            <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span></p>
+            <el-input v-model="theSshKeyName" placeholder="Key"/>
+          </div>
+          <div>
+            <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span></p>
+            <el-form-item prop="theSshKey">
+              <el-input
+                  v-model="formData.theSshKey"
+                  :rows="6"
+                  type="textarea"
+                  placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
+              />
+            </el-form-item>
+          </div>
+        </el-form>
+          <template #footer>
           <span class="dialog-footer">
             <el-button @click="centerDialogVisible = false">Cancel</el-button>
             <el-button type="primary" @click="submitSshKey">
               添加
             </el-button>
-          </span>
-        </template>
+        </span>
+          </template>
       </el-dialog>
     </div>
   </div>
@@ -51,7 +56,7 @@
 import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
 import {useCookies} from "vue3-cookies"
-import {ElMessage} from "element-plus"
+import { ElMessage } from "element-plus"
 
 export default {
   props: {
@@ -64,35 +69,67 @@ export default {
     Menu,
     SshKeyCard
   },
+
   data() {
     return {
       centerDialogVisible: false,
+      sshKeyWarningDialogVisible: false,
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
       theSshKeys: this.sshKeys,
       theSshKeyName: '',
-      theSshKey: '',
+      formData: {
+        theSshKey: '',
+      },
+      formRules: {
+        theSshKey: [
+          {validator: this.validateTheSshKey, trigger: 'blur'},  // blur: 聚焦时触发验证
+        ],
+      },
     };
   },
+
   mounted() {},
+
   methods: {
+    // 验证theSshKey
+    validateTheSshKey(rule, value, callback) {
+      let regex = /^(ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh.com|sk-ssh-ed25519@openssh.com)/
+
+      if (!value) {
+        callback(new Error('Please input the ssh key'))
+        return
+      }
+      // 正则校验theSshKey
+      if (!regex.test(value)) {
+        callback(new Error('Invalid SSH key'))
+      }
+    },
+
     submitSshKey() {
-      if(this.theSshKeyName == '') {
+      if (this.theSshKeyName == '') {
         ElMessage({message: "请您填写SSH Key 名称", type: "warning"})
         return
-      } else if (this.theSshKey == '') {
+      } else if (this.formData.theSshKey == '') {
         ElMessage({message: "请您填写SSH Key 内容", type: "warning"})
         return
       }
 
-      this.centerDialogVisible = false
-
-      this.createTheSshKey().catch((err) => {
-        ElMessage({
-          message: err.message,
-          type: "warning",
-        })
+      // 异步操作: 提交时验证表单(注意: 验证通过时valid为true，否则为false)
+      this.$refs.formRules.validate((valid) => {
+        if (valid) {
+          console.log('submit!');
+          // 异步发送请求
+          this.createTheSshKey().catch((err) => {
+            ElMessage({
+              message: err.message,
+              type: "warning",
+            })
+          })
+        } else {
+          console.log('error submit!');
+        }
       })
     },
 
@@ -102,7 +139,7 @@ export default {
 
       const jsonData = {
         name: this.theSshKeyName,
-        ssh_key: this.theSshKey,
+        ssh_key: this.formData.theSshKey,
       }
 
       const jsonStr = JSON.stringify(jsonData)
@@ -116,6 +153,7 @@ export default {
         },
         body: jsonStr
       }
+
       const response = await fetch(SshKeyCreateEndpoint, option)
 
       if (!response.ok) {
@@ -131,7 +169,7 @@ export default {
       }
     },
   },
-};
+}
 </script>
 <style>
 .dialogWidth {
