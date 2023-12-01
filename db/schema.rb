@@ -199,6 +199,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_082802) do
     t.string "avatar"
     t.boolean "company_verified", default: false
     t.string "nickname"
+    t.string "git_token"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
