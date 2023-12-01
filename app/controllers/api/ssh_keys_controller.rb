@@ -9,6 +9,18 @@ class Api::SshKeysController < Api::ApplicationController
     end
   end
 
+  def destroy
+    @ssh_key = SshKey.find_by(id: params[:id])
+    return render json: { message: "SshKey not found" }, status: :not_found unless @ssh_key
+    return render json: { message: "Unauthorized" }, status: :unauthorized unless @ssh_key.user.id == @ssh_key.user_id
+
+    if @ssh_key.destroy
+      render json: {message: "SshKey destroyed"}
+    else
+      render json: {message: "Failed to destroy SshKey"}, status: :bad_request
+    end
+  end
+
   private
 
   def create_params

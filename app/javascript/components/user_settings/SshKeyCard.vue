@@ -21,7 +21,7 @@
     <template #footer>
           <span class="dialog-footer">
             <el-button @click="deleteDialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="deleteDialogVisible = false">
+            <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyId)">
               确认
             </el-button>
           </span>
@@ -30,21 +30,28 @@
 </template>
 
 <script>
+import {useCookies} from "vue3-cookies"
+import {ElMessage} from "element-plus"
+
 export default {
   props: {
     sshKeyName: String,
     sshKey: String,
-    createTime: String
+    createTime: String,
+    sshKeyId: Number
   },
+
   data() {
     return {
       deleteDialogVisible: false,
       theSshKeyName: this.sshKeyName,
       theSshKey: this.sshKey,
+      theSshKeyId: this.sshKeyId,
       theCreateTime: this.createTime,
       theMinutesDifference: ''
     }
   },
+
   mounted() {
     let currentObject = new Date()
     let createObject = new Date(this.theCreateTime)
@@ -52,7 +59,40 @@ export default {
 
     let minutesDifference = timeDifferenceInMilliseconds / (1000 * 60);
     this.theMinutesDifference = Math.round(minutesDifference)
-    console.log(`Time difference in minutes: ${minutesDifference}min`)
+    // console.log(`Time difference in minutes: ${minutesDifference}min`)
   },
+
+  methods: {
+    async confirmDeleteSshKey(theSshKeyId) {
+      this.deleteDialogVisible = false
+
+      const {cookies} = useCookies()
+
+      const option = {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${cookies.get('idToken')}`,
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          'Content-Type': 'application/json',
+        },
+      }
+
+      const response = await fetch(`/api/ssh_keys/${theSshKeyId}`, option)
+
+      if (!response.ok) {
+        return response.json().then((data) => {
+          ElMessage({
+            message: data.message,
+            type: 'warning'
+          })
+        })
+      } else {
+        setTimeout(() => {
+          window.location.href = "/settings/ssh-key"
+        }, 1000);
+        ElMessage({message: "删除成功", type: "success"})
+      }
+    }
+  }
 }
 </script>

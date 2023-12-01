@@ -18,6 +18,7 @@
       <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
                     :ssh-key-name="sshkey.name"
                     :ssh-key="sshkey.ssh_key"
+                    :ssh-key-id="sshkey.id"
                     :create-time="sshkey.created_at">
       </ssh-key-card>
       <el-dialog v-model="centerDialogVisible" title="添加 SSH Key" width="30%" class="dialogWidth"
