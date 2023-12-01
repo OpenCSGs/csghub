@@ -1,6 +1,6 @@
 <template>
   <div
-      class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+      class="flex justify-center md:flex-col h-auto px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="max-w-[411px] md:mb-[24px]"
           :name="profileName"
           :displayName="profileDisplayName"
@@ -121,7 +121,6 @@ export default {
       // 异步操作: 提交时验证表单(注意: 验证通过时valid为true，否则为false)
       this.$refs.formRules.validate((valid) => {
         if (valid) {
-          console.log('submit!')
           // 异步发送请求
           this.createTheSshKey().catch((err) => {
             ElMessage({
@@ -129,8 +128,6 @@ export default {
               type: "warning",
             })
           })
-        } else {
-          console.log('error submit!')
         }
       })
     },

@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] md:w-full">
+  <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] lg:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
-      <p class="font-medium">{{ theSshKeyName }}</p>
+      <p class="font-medium break-words">{{ theSshKeyName }}</p>
       <p class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
       <div @click="deleteDialogVisible = true"
            class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded border-2 text-right">
@@ -12,9 +12,10 @@
         </svg>
       </div>
     </div>
-    <div class="pt-[16px]"><p class="text-[#606266] text-sm">{{ theSshKey }}</p></div>
+    <div class="pt-[16px]"><p class="break-all text-[#606266] text-sm">{{ theSshKey }}</p></div>
   </div>
-  <el-dialog v-model="deleteDialogVisible" title="删除 Key “key name”" width="30%" class="dialogWidth" style="border-radius: 0.5rem;" left>
+  <el-dialog v-model="deleteDialogVisible" title="删除 Key “key name”" width="30%" class="dialogWidth"
+             style="border-radius: 0.5rem;" left>
     <div class="flex items-center justify-center h-[108px]">
       <p>你确定要从你的帐户中删除此密钥吗？此操作无法撤消。</p>
     </div>
@@ -53,13 +54,12 @@ export default {
   },
 
   mounted() {
-    let currentObject = new Date()
-    let createObject = new Date(this.theCreateTime)
-    let timeDifferenceInMilliseconds = currentObject - createObject;
+    let currentTime = new Date()
+    let createTime = new Date(this.theCreateTime)
+    let passedTimeInMilliseconds = currentTime - createTime;
 
-    let minutesDifference = timeDifferenceInMilliseconds / (1000 * 60);
+    let minutesDifference = passedTimeInMilliseconds / (1000 * 60);
     this.theMinutesDifference = Math.round(minutesDifference)
-    // console.log(`Time difference in minutes: ${minutesDifference}min`)
   },
 
   methods: {
@@ -67,7 +67,6 @@ export default {
       this.deleteDialogVisible = false
 
       const {cookies} = useCookies()
-
       const option = {
         method: 'DELETE',
         headers: {

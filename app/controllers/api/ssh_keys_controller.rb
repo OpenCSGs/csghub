@@ -1,7 +1,7 @@
 class Api::SshKeysController < Api::ApplicationController
   def create
     @ssh_key = SshKey.new(create_params)
-    @ssh_key.user_id = current_user.id
+    @ssh_key.user = current_user
     if @ssh_key.save
       render json: { message: '添加成功' }
     else
