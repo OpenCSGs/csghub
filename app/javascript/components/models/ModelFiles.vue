@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-between mt-4 px-3 py-2 bg-[#F5F7FA] rounded-t-[4px] rounded-r-[4px]">
+    <div class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] border-b-0 bg-[#F5F7FA] rounded-t-[4px]">
       <div class="flex items-center">
         <div class="flex items-center mr-2">
           <el-avatar :size="24" class="mr-2" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
