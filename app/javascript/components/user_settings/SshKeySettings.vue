@@ -40,14 +40,14 @@
             </el-form-item>
           </div>
         </el-form>
-          <template #footer>
+        <template #footer>
           <span class="dialog-footer">
             <el-button @click="centerDialogVisible = false">Cancel</el-button>
             <el-button type="primary" @click="submitSshKey">
               添加
             </el-button>
         </span>
-          </template>
+        </template>
       </el-dialog>
     </div>
   </div>
@@ -56,7 +56,7 @@
 import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
 import {useCookies} from "vue3-cookies"
-import { ElMessage } from "element-plus"
+import {ElMessage} from "element-plus"
 
 export default {
   props: {
@@ -90,12 +90,13 @@ export default {
     };
   },
 
-  mounted() {},
+  mounted() {
+  },
 
   methods: {
     // 验证theSshKey
-    validateTheSshKey(rule, value, callback) {
-      let regex = /^(ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh.com|sk-ssh-ed25519@openssh.com)/
+    async validateTheSshKey(rule, value, callback) {
+      let regex = /^(ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh.com|sk-ssh-ed25519@openssh.com)/;
 
       if (!value) {
         callback(new Error('Please input the ssh key'))
@@ -119,7 +120,7 @@ export default {
       // 异步操作: 提交时验证表单(注意: 验证通过时valid为true，否则为false)
       this.$refs.formRules.validate((valid) => {
         if (valid) {
-          console.log('submit!');
+          console.log('submit!')
           // 异步发送请求
           this.createTheSshKey().catch((err) => {
             ElMessage({
@@ -128,7 +129,7 @@ export default {
             })
           })
         } else {
-          console.log('error submit!');
+          console.log('error submit!')
         }
       })
     },
