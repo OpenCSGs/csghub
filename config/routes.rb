@@ -26,7 +26,6 @@ Rails.application.routes.draw do
     resources :spaces, only: [:create, :destroy, :update]
     resources :comments, only: [:create, :destroy]
     resources :users, only: [:update]
-    resources :campaigns, only: [:index]
     resources :leads, only: [:create]
   end
 
@@ -34,6 +33,7 @@ Rails.application.routes.draw do
   namespace :internal_api do
     resources :organizations, only: [:create, :update]
     resources :spaces, only: [:index, :update]
+    resources :campaigns, only: [:index]
   end
 
   # lead form

@@ -1,4 +1,6 @@
 class Campaign < ApplicationRecord
+  paginates_per 6
+
   include UuidConcern
   include Rails.application.routes.url_helpers
 
