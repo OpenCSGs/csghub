@@ -19,6 +19,10 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/last_commit")
     end
 
+    def get_model_branches(username, model_name, options = {})
+      res = @client.get("/models/#{username}/#{model_name}/branches")
+    end
+
     # TODO: add more starhub api
   end
 end

@@ -1,5 +1,5 @@
 <template>
-  <FileList :files="files" :last-commit="lastCommit" />
+  <FileList :files="files" :last-commit="lastCommit" :branches="branches" />
 </template>
 
 <script setup>
@@ -8,5 +8,6 @@
   const props = defineProps({
     files: Object,
     lastCommit: Object,
+    branches: Object,
   })
 </script>

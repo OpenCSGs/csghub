@@ -6,7 +6,7 @@
         <model-summary :introduction="introduction" :download-count="downloadCount" />
       </template>
       <template #files>
-        <model-files :files="files" :last-commit="lastCommit" />
+        <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
     </TabContainer>
   </div>
@@ -29,5 +29,6 @@ const props = defineProps({
   downloadCount: Number,
   files: Object,
   lastCommit: Object,
+  branches: Object,
 })
 </script>

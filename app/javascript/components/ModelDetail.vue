@@ -5,7 +5,13 @@
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
-    <model-tabs :introduction="model.detail.introduction" :download-count="model.detail.download_count" :files="files.tree" :last-commit="lastCommit.last_commit" />
+    <model-tabs
+      :introduction="model.detail.introduction"
+      :download-count="model.detail.download_count"
+      :files="files.tree"
+      :last-commit="lastCommit.last_commit"
+      :branches="branches.branches"
+    />
   </div>
 </template>
 
@@ -17,5 +23,6 @@ const props = defineProps({
   model: Object,
   files: Object,
   lastCommit: Object,
+  branches: Object,
 })
 </script>
