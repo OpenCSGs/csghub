@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         post :toggle_lead_form_status
       end
     end
+    resources :system_api_keys
 
     root to: "spaces#index"
   end
