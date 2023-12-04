@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   # external api
   namespace :api do
-    resources :spaces, only: [:create, :destroy, :update, :show, :index]
+    resources :spaces, only: [:create, :destroy, :update]
     resources :comments, only: [:create, :destroy]
     resources :users, only: [:update]
     resources :campaigns, only: [:index]
