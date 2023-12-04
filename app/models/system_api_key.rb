@@ -1,0 +1,2 @@
+class SystemApiKey < ApplicationRecord
+end
