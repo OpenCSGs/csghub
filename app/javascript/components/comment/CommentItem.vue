@@ -43,10 +43,9 @@
     });
 
     if (confirmResult === 'confirm') {
-      const response = await fetch(`/api/comments/${commentId}`, {
+      const response = await fetch(`/internal_api/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${cookies.get('idToken')}`,
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
           'Content-Type': 'application/json',
         },

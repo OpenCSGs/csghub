@@ -38,10 +38,9 @@
         content: newCommentContent.value,
       };
 
-      const response = await fetch('/api/comments', {
+      const response = await fetch('/internal_api/comments', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${cookies.get('idToken')}`,
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
           'Content-Type': 'application/json',
         },
