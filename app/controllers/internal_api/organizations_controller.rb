@@ -1,4 +1,6 @@
 class InternalApi::OrganizationsController < ApplicationController
+  before_action :authenticate_user
+  
   def create
     new_org = Organization.new organization_params
     if params[:logo].present?

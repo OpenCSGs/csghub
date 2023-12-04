@@ -1,4 +1,6 @@
 class InternalApi::SpacesController < ApplicationController
+  before_action :authenticate_user, only: :update
+
   def index
     @total_spaces = policy_scope(Space).order(created_at: :desc)
     @total_spaces = @total_spaces.where(user_id: current_user.id) if cookies[:mySpaces] == 'true'
