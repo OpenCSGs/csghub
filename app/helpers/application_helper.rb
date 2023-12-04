@@ -48,10 +48,6 @@ module ApplicationHelper
     I18n.locale
   end
 
-  def little_assistant_monster_pages?
-    request.path.match(/\/partners|\/experts/)
-  end
-
   def campaign_status_type status
     case status
     when 'prestart'

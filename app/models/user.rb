@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
+  validates_uniqueness_of :name, :git_token
+  validates :name, format: { with: /\A(?=.{8,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }
+
   has_many :spaces, dependent: :destroy
 
   # user.roles = "super_user"
@@ -40,11 +43,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    name || login_identity
-  end
-
-  def comment_display_name
-    name || phone || login_identity
+    nickname.presence || name.presence || phone.presence || login_identity.presence
   end
 
   def avatar_url
@@ -56,5 +55,20 @@ class User < ApplicationRecord
     else
       nil
     end
+  end
+
+  def git_token!
+    git_token || create_git_token
+  end
+
+  private
+
+  def create_git_token
+    new_token = SecureRandom.urlsafe_base64
+    while User.exists?(git_token: new_token) do
+      new_token = SecureRandom.urlsafe_base64
+    end
+    self.update_column('git_token', new_token)
+    new_token
   end
 end

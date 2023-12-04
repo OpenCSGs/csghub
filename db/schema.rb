@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_111511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
     t.integer "campaign_type"
     t.integer "status", default: 0
     t.boolean "recommended", default: false
+    t.boolean "release", default: false
     t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 
@@ -88,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
     t.string "lead_type"
     t.string "lead_fields"
     t.string "uuid"
-    t.string "lead_form_status", default: "active"
+    t.string "lead_form_status", default: "inactive"
     t.string "title"
     t.string "internal_title"
     t.text "description"
@@ -175,6 +176,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_061750) do
     t.datetime "updated_at", null: false
     t.string "avatar"
     t.boolean "company_verified", default: false
+    t.string "nickname"
+    t.string "git_token"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 

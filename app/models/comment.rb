@@ -20,7 +20,7 @@ class Comment < ApplicationRecord
   def user_json
     {
       id: user.id,
-      name: user.comment_display_name,
+      name: user.display_name,
       avatar: user.avatar
     }
   end

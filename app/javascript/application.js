@@ -25,6 +25,7 @@ import CampaignCards from "./components/campaigns/CampaignCards.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
+import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
 
 
 app = createApp({
@@ -46,7 +47,8 @@ app = createApp({
     CampaignCards,
     Profile,
     ProfileEdit,
-    ProfileSettings
+    ProfileSettings,
+    GitTokenSettings
   },
   provide:{
     defaultTags: DefaultTags
