@@ -76,7 +76,7 @@ export default {
         },
       }
 
-      const response = await fetch(`/api/ssh_keys/${theSshKeyId}`, option)
+      const response = await fetch(`/internal_api/ssh_keys/${theSshKeyId}`, option)
 
       if (!response.ok) {
         return response.json().then((data) => {

@@ -134,7 +134,7 @@ export default {
 
     async createTheSshKey() {
       const {cookies} = useCookies()
-      const SshKeyCreateEndpoint = "/api/ssh_keys"
+      const SshKeyCreateEndpoint = "/internal_api/ssh_keys"
 
       const jsonData = {
         name: this.theSshKeyName,

@@ -28,6 +28,10 @@ Rails.application.routes.draw do
     resources :users, only: [:update]
     resources :campaigns, only: [:index]
     resources :leads, only: [:create]
+  end
+
+  # internal_api
+  namespace :internal_api do
     resources :ssh_keys, only: [:create, :destroy]
   end
 
