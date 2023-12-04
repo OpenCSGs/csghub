@@ -58,9 +58,7 @@ export default {
   },
 
   mounted() {
-    let currentTime = new Date()
-    let createTime = new Date(this.theCreateTime)
-    let passedTimeInMilliseconds = currentTime - createTime
+    let passedTimeInMilliseconds = new Date() - new Date(this.theCreateTime)
 
     this.theMinutesDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60))
     this.theHoursDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60 * 60))
