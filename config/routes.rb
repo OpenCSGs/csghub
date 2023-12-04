@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   # internal api
   namespace :internal_api do
     resources :organizations, only: [:create, :update]
+    resources :spaces, only: :index
   end
 
   # lead form
