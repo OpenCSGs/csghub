@@ -84,6 +84,7 @@
 <script lang="ts" setup>
   import { nextTick, ref, inject, onMounted } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
+  import csrfFetch from "../../packs/csrfFetch.js"
 
   const emit = defineEmits(['retriveSpaceCard'])
 
@@ -185,11 +186,10 @@
     formData.append("space_type", `${radio.value}_s`)
     const options = {
       method: 'PUT',
-      headers:{'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')},
       body: formData
     };
 
-    const response = await fetch(spaceUpdateEndpoint, options)
+    const response = await csrfFetch(spaceUpdateEndpoint, options)
 
     if (!response.ok) {
       return response.json().then(data => { throw new Error(data.message) })
