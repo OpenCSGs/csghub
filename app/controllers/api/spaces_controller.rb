@@ -1,13 +1,14 @@
 class Api::SpacesController < Api::ApplicationController
-  def show
-    space = Space.find_by(space_starchain_id: params[:id])
-    return render json: {message: "Space not found"}, status: :not_found unless space
+  # ToDo: deprecated，在下一个 Sprint 6 移除
+  # def show
+  #   space = Space.find_by(space_starchain_id: params[:id])
+  #   return render json: {message: "Space not found"}, status: :not_found unless space
 
-    render json: {
-      tags: space.tags.to_json,
-      cover_image: space.cover_image_url
-    }
-  end
+  #   render json: {
+  #     tags: space.tags.to_json,
+  #     cover_image: space.cover_image_url
+  #   }
+  # end
 
   def create
     space = Space.new(create_params.slice(:space_starchain_id, :title, :desc, :site_link, :space_type))
