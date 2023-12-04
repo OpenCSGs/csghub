@@ -129,7 +129,7 @@ const submitTheForm = () => {
 }
 
 async function createExpert() {
-  const expertCreateEndpoint = '/api/leads'
+  const expertCreateEndpoint = '/internal_api/leads'
 
   const jsonData = {
     name: userName.value,
@@ -146,7 +146,6 @@ async function createExpert() {
   const option = {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${cookies.get('idToken')}`,
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       'Content-Type': 'application/json',
     },

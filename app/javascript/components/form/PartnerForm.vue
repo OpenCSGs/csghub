@@ -181,7 +181,7 @@ export default {
     },
     async createPartner() {
       const { cookies } = useCookies();
-      const expertCreateEndpoint = "/api/leads";
+      const expertCreateEndpoint = "/internal_api/leads";
 
       const jsonData = {
         name: this.userName,
@@ -201,7 +201,6 @@ export default {
       const option = {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${cookies.get('idToken')}`,
           'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
           'Content-Type': 'application/json',
         },
