@@ -2,7 +2,9 @@
   <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] lg:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
       <p class="font-medium break-words">{{ theSshKeyName }}</p>
-      <p class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
+      <p v-if="theMinutesDifference <= 60" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
+      <p v-if="theHoursDifference > 1 && theHoursDifference <= 24" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theHoursDifference }} 小时前添加</p>
+      <p v-if="theDaysDifference > 1" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theDaysDifference }} 天前添加</p>
       <div @click="deleteDialogVisible = true"
            class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded border-2 text-right">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,19 +22,19 @@
       <p>你确定要从你的帐户中删除此密钥吗？此操作无法撤消。</p>
     </div>
     <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="deleteDialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyId)">
-              确认
-            </el-button>
-          </span>
+      <span class="dialog-footer">
+        <el-button @click="deleteDialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyId)">
+          确认
+        </el-button>
+      </span>
     </template>
   </el-dialog>
 </template>
 
 <script>
-import {useCookies} from "vue3-cookies"
 import {ElMessage} from "element-plus"
+import csrfFetch from "../../packs/api.js"
 
 export default {
   props: {
@@ -49,34 +51,29 @@ export default {
       theSshKey: this.sshKey,
       theSshKeyId: this.sshKeyId,
       theCreateTime: this.createTime,
-      theMinutesDifference: ''
+      theMinutesDifference: '',
+      theHoursDifference: '',
+      theDaysDifference: '',
     }
   },
 
   mounted() {
     let currentTime = new Date()
     let createTime = new Date(this.theCreateTime)
-    let passedTimeInMilliseconds = currentTime - createTime;
+    let passedTimeInMilliseconds = currentTime - createTime
 
-    let minutesDifference = passedTimeInMilliseconds / (1000 * 60);
-    this.theMinutesDifference = Math.round(minutesDifference)
+    this.theMinutesDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60))
+    this.theHoursDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60 * 60))
+    this.theDaysDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60 * 60 * 24))
   },
 
   methods: {
     async confirmDeleteSshKey(theSshKeyId) {
       this.deleteDialogVisible = false
 
-      const {cookies} = useCookies()
-      const option = {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${cookies.get('idToken')}`,
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-          'Content-Type': 'application/json',
-        },
-      }
+      const option = { method: 'DELETE' }
 
-      const response = await fetch(`/internal_api/ssh_keys/${theSshKeyId}`, option)
+      const response = await csrfFetch(`/internal_api/ssh_keys/${theSshKeyId}`, option)
 
       if (!response.ok) {
         return response.json().then((data) => {

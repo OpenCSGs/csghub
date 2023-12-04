@@ -56,8 +56,8 @@
 <script>
 import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
-import {useCookies} from "vue3-cookies"
 import {ElMessage} from "element-plus"
+import csrfFetch from "../../packs/api.js"
 
 export default {
   props: {
@@ -133,7 +133,6 @@ export default {
     },
 
     async createTheSshKey() {
-      const {cookies} = useCookies()
       const SshKeyCreateEndpoint = "/internal_api/ssh_keys"
 
       const jsonData = {
@@ -146,14 +145,12 @@ export default {
       const option = {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${cookies.get('idToken')}`,
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
           'Content-Type': 'application/json',
         },
         body: jsonStr
       }
 
-      const response = await fetch(SshKeyCreateEndpoint, option)
+      const response = await csrfFetch(SshKeyCreateEndpoint, option)
 
       if (!response.ok) {
         return response.json().then((data) => {
