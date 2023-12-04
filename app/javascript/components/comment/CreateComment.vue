@@ -15,6 +15,7 @@
   import { ref } from 'vue';
   import { useCookies } from "vue3-cookies";
   import { ElMessage } from 'element-plus'
+  import csrfFetch from "../../packs/csrfFetch.js"
 
   const newCommentContent = ref('');
   const { cookies } = useCookies();
@@ -38,12 +39,9 @@
         content: newCommentContent.value,
       };
 
-      const response = await fetch('/internal_api/comments', {
+      const response = await csrfFetch('/internal_api/comments', {
         method: 'POST',
-        headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           comment: newComment,
           commentable_type: props.commentable_type,

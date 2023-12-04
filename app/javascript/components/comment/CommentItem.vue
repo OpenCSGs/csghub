@@ -19,6 +19,7 @@
 <script setup>
   import { useCookies } from "vue3-cookies";
   import { ElMessage, ElMessageBox } from 'element-plus'
+  import csrfFetch from "../../packs/csrfFetch.js"
 
   const { cookies } = useCookies();
 
@@ -43,12 +44,8 @@
     });
 
     if (confirmResult === 'confirm') {
-      const response = await fetch(`/internal_api/comments/${commentId}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-          'Content-Type': 'application/json',
-        },
+      const response = await csrfFetch(`/internal_api/comments/${commentId}`, {
+        method: 'DELETE'
       });
 
       if (response.ok) {
