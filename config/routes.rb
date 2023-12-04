@@ -21,13 +21,18 @@ Rails.application.routes.draw do
     root to: "spaces#index"
   end
 
-  # api
+  # external api
   namespace :api do
     resources :spaces, only: [:create, :destroy, :update, :show, :index]
     resources :comments, only: [:create, :destroy]
     resources :users, only: [:update]
     resources :campaigns, only: [:index]
     resources :leads, only: [:create]
+  end
+
+  # internal api
+  namespace :internal_api do
+    resources :organizations, only: [:create, :update]
   end
 
   # lead form
@@ -60,9 +65,9 @@ Rails.application.routes.draw do
 
     resources :campaigns, only: [:index, :show]
     resources :models, only: [:index]
+    resources :organizations, only: [:new]
 
     get '/models/:user_name/:model_name', to: 'models#show'
-
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
