@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   # internal api
   namespace :internal_api do
     resources :organizations, only: [:create, :update]
-    resources :spaces, only: :index
+    resources :spaces, only: [:index, :update]
   end
 
   # lead form
@@ -58,7 +58,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :spaces, only: ['index', 'show', 'update'] do
+    resources :spaces, only: ['index', 'show'] do
       collection do
         get 'stopped'
       end

@@ -175,7 +175,7 @@
   }
 
   async function updateSpace() {
-    const spaceUpdateEndpoint = `spaces/${props.starChainId}`;
+    const spaceUpdateEndpoint = `/internal_api/spaces/${props.starChainId}`;
     const formData = new FormData()
     const file = fileInput.value.files[0]
     formData.append("tags", dynamicTags.value);
