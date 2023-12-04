@@ -1,5 +1,5 @@
 class SystemApiKey < ApplicationRecord
-  validate_presence_of :service, :secret_key
+  validates_presence_of :service, :secret_key
 
   before_create :initialize_key
 
