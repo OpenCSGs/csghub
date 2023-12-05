@@ -1,10 +1,8 @@
 <template>
   <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] lg:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
-      <p class="font-medium text-base break-words">{{ theSshKeyName }}</p>
-      <p v-if="theMinutesDifference <= 60" class="text-[#606266] text-xs pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
-      <p v-if="theHoursDifference > 1 && theHoursDifference <= 24" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theHoursDifference }} 小时前添加</p>
-      <p v-if="theDaysDifference > 1" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theDaysDifference }} 天前添加</p>
+      <p class="font-medium text-base break-words mr-[8px]">{{ theSshKeyName }}</p>
+      <p class="text-[#606266] text-[13px] md:pl-0 md:mt-[4px]"> {{ passedTime }}</p>
       <div @click="deleteDialogVisible = true"
            class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded border-2 text-right">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,12 +55,18 @@ export default {
     }
   },
 
-  mounted() {
-    let passedTimeInMilliseconds = new Date() - new Date(this.theCreateTime)
-
-    this.theMinutesDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60))
-    this.theHoursDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60 * 60))
-    this.theDaysDifference = Math.ceil(passedTimeInMilliseconds / (1000 * 60 * 60 * 24))
+  computed: {
+    passedTime() {
+      const passedTimeInSeconds = (new Date() - new Date(this.theCreateTime))/1000
+      const oneHour = 60*60
+      if (passedTimeInSeconds < oneHour) {
+        return `不到 ${Math.ceil(passedTimeInSeconds/60)} 分钟前添加`
+      } else if (passedTimeInSeconds < oneHour*24) {
+        return `不到 ${Math.ceil(passedTimeInSeconds/oneHour)} 小时前添加`
+      } else {
+        return `不到 ${Math.ceil(passedTimeInSeconds/(oneHour*24))} 天前添加`
+      }
+    }
   },
 
   methods: {
@@ -83,7 +87,7 @@ export default {
       } else {
         setTimeout(() => {
           window.location.href = "/settings/ssh-key"
-        }, 1000);
+        }, 200);
         ElMessage({message: "删除成功", type: "success"})
       }
     }
