@@ -1,11 +1,14 @@
-class Api::UsersController < Api::ApplicationController
+class InternalApi::UsersController < ApplicationController
+  before_action :authenticate_user
+  
   def update
-    @current_user.name = user_params[:name]
+    current_user.name = user_params[:name]
+    current_user.nickname = user_params[:nickname]
     if user_params[:avatar].present?
       avatar_url_code = AliyunOss.instance.upload 'user-avatar', user_params[:avatar]
-      @current_user.avatar = avatar_url_code
+      current_user.avatar = avatar_url_code
     end
-    if @current_user.save
+    if current_user.save
       render json: {message: '用户更新成功'}
     else
       render json: {message: '用户更新失败'}, status: 500
@@ -15,6 +18,6 @@ class Api::UsersController < Api::ApplicationController
   private
 
   def user_params
-    params.permit(:name, :avatar)
+    params.permit(:name, :nickname, :avatar)
   end
 end

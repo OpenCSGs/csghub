@@ -1,4 +1,6 @@
 class Campaign < ApplicationRecord
+  paginates_per 6
+
   include UuidConcern
   include Rails.application.routes.url_helpers
 
@@ -20,6 +22,7 @@ class Campaign < ApplicationRecord
   has_one_attached :mobile_banner
 
   before_create :set_uuid
+  after_update :update_lead_form_status
 
   has_one :lead_form
   has_many :leads, through: :lead_form
@@ -36,6 +39,7 @@ class Campaign < ApplicationRecord
 
   scope :without_lead_form, -> { includes(:lead_form).where(lead_forms: { id: nil }) }
   scope :recommended, -> { where(recommended: true) }
+  scope :release, -> { where(release: true) }
 
   delegate :form_url, to: :lead_form, allow_nil: true
 
@@ -75,5 +79,10 @@ class Campaign < ApplicationRecord
       status: status,
       form_url: form_url
     }
+  end
+
+  def update_lead_form_status
+    return unless lead_form
+    signing_up? ? lead_form.active! : lead_form.inactive!
   end
 end

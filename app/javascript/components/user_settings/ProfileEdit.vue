@@ -15,10 +15,18 @@
       </div>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">姓名</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
+      <p class="text-gray-500 text-[12px] italic">* 2-20位字母数字以及 _ 构成的字符串</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
-                placeholder="Name">
+                placeholder="username">
+      </el-input>
+    </div>
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">用户昵称</div>
+      <el-input class="max-w-[400px]"
+                v-model="inputNickname"
+                placeholder="昵称">
       </el-input>
     </div>
     <div>
@@ -45,20 +53,23 @@
   </div>
 </template>
 <script>
+import csrfFetch from "../../packs/csrfFetch.js"
 import { useCookies } from "vue3-cookies";
 import { ElMessage } from "element-plus";
 const { cookies } = useCookies();
 export default {
   props: {
     name: String,
+    nickname: String,
     avatar: String,
     phone: String,
     email: String,
-    userName: String,
+    displayName: String,
   },
   data() {
     return {
       inputName: this.name,
+      inputNickname: this.nickname,
       inputPhone: this.phone,
       inputEmail: this.email,
       avatarUrl: this.avatar,
@@ -77,23 +88,21 @@ export default {
       this.avatarUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `/api/users/${this.userName}`;
+      const profileUpdateEndpoint = `/internal_api/users/${this.displayName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
       if (file !== undefined) {
         formData.append("avatar", file);
       }
       formData.append("name", this.inputName);
+      formData.append("nickname", this.inputNickname);
       const options = {
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${cookies.get("idToken")}`,
-        },
         body: formData,
       };
 
       try {
-        const response = await fetch(profileUpdateEndpoint, options);
+        const response = await csrfFetch(profileUpdateEndpoint, options);
         if (!response.ok) {
           ElMessage({
             message: "profile更新失败",
@@ -105,8 +114,9 @@ export default {
             type: "success",
           });
           this.$emit("updateUserInfo", {
-            avatar: URL.createObjectURL(file),
-            name: this.inputName
+            avatar: file && URL.createObjectURL(file),
+            name: this.inputName,
+            nickname: this.inputNickname
           });
           // 处理成功响应
         }
