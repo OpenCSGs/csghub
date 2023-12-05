@@ -49,13 +49,9 @@ app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-<<<<<<< HEAD
     GitTokenSettings,
-    SshKeySettings
-=======
-    NewOrganization,
-    GitTokenSettings
->>>>>>> main
+    SshKeySettings,
+    NewOrganization
   },
   provide:{
     defaultTags: DefaultTags
