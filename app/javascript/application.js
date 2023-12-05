@@ -27,6 +27,7 @@ import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
 import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
+import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 
 app = createApp({
   components: {
@@ -48,8 +49,9 @@ app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-    NewOrganization,
-    GitTokenSettings
+    GitTokenSettings,
+    SshKeySettings,
+    NewOrganization
   },
   provide:{
     defaultTags: DefaultTags

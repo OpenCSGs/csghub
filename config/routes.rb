@@ -37,6 +37,11 @@ Rails.application.routes.draw do
     resources :users, only: [:update]
   end
 
+  # internal_api
+  namespace :internal_api do
+    resources :ssh_keys, only: [:create, :destroy]
+  end
+
   # lead form
   resources :lead_forms, only: [] do
     collection do
@@ -56,6 +61,7 @@ Rails.application.routes.draw do
       collection do
         get 'profile'
         get 'git-token'
+        get 'ssh-keys'
       end
     end
 
