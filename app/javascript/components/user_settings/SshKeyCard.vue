@@ -34,7 +34,7 @@
 
 <script>
 import {ElMessage} from "element-plus"
-import csrfFetch from "../../packs/api.js"
+import csrfFetch from "../../packs/csrfFetch.js"
 
 export default {
   props: {
