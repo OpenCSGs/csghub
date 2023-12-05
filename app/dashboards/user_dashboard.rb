@@ -20,7 +20,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone_verified: Field::Boolean,
     roles_mask: Field::Number,
     roles: Field::Select.with_options(include_blank: true, searchable: false, collection: User::ROLES),
-    created_at: Field::DateTime,
+    created_at: Field::DateTime.with_options(format: '%Y-%m-%d %H:%M'),
     updated_at: Field::DateTime,
     company_verified: Field::Boolean
   }.freeze
@@ -37,6 +37,7 @@ class UserDashboard < Administrate::BaseDashboard
     roles
     phone
     email
+    created_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
