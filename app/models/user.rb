@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :spaces, dependent: :destroy
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
+  has_many :comments, dependent: :destroy
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]

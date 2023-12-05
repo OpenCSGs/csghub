@@ -2,7 +2,7 @@ class Comment < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
   belongs_to :commentable, polymorphic: true
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
 
   validates :content, presence: true
 
