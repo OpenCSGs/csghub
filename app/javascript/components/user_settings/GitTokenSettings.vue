@@ -18,6 +18,7 @@
               v-model="theGitToken"
               type="password"
               show-password
+              onfocus="this.blur()"
             />
             <div class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-[#FFF] cursor-pointer" @click="copyToken">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">

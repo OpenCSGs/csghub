@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_30_043153) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -132,6 +132,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_043153) do
     t.string "company_site"
   end
 
+  create_table "org_memberships", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_org_memberships_on_organization_id"
+    t.index ["user_id"], name: "index_org_memberships_on_user_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.string "nickname"
+    t.string "logo"
+    t.string "homepage"
+    t.string "org_type"
+    t.boolean "verified", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_organizations_on_name"
+  end
+
   create_table "spaces", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "space_starchain_id"
@@ -153,6 +175,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_043153) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
+  end
+
+  create_table "system_api_keys", force: :cascade do |t|
+    t.string "service"
+    t.string "secret_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -195,6 +224,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_043153) do
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
   add_foreign_key "ssh_keys", "users"
+  add_foreign_key "org_memberships", "organizations"
+  add_foreign_key "org_memberships", "users"
   add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end

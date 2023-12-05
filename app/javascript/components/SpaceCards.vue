@@ -77,10 +77,8 @@
     },
     methods: {
       async nextPage() {
-        const spaceUpdateEndpoint = `api/spaces?page=${this.currentPage}`;
-        const response = await fetch(spaceUpdateEndpoint, {
-          headers: { "Authorization": `Bearer ${this.cookies.get('idToken')}` }
-         });
+        const spaceUpdateEndpoint = `/internal_api/spaces?page=${this.currentPage}`;
+        const response = await fetch(spaceUpdateEndpoint);
         response.json().then((data) => {
           this.theSpaces = data.spaces,
           this.theTotalCards = data.total_cards
@@ -88,9 +86,7 @@
       },
       async reloadCards() {
         this.cookies.set('mySpaces', this.filterValue === 'mine');
-        const response = await fetch('api/spaces', {
-          headers: { "Authorization": `Bearer ${this.cookies.get('idToken')}` }
-         });
+        const response = await fetch('/internal_api/spaces');
         response.json().then((data) => {
           this.currentPage = 1
           this.theSpaces = data.spaces
