@@ -1,4 +1,4 @@
-class InternalApi::SshKeysController < InternalApi::ApplicationController
+class InternalApi::SshKeysController < ApplicationController
   def create
     @ssh_key = SshKey.new(create_params)
     @ssh_key.user = current_user
