@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       collection do
         get 'profile'
         get 'git-token'
-        get 'ssh-key'
+        get 'ssh-keys'
       end
     end
 

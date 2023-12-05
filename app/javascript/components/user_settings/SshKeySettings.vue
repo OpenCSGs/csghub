@@ -113,7 +113,8 @@ export default {
       if (this.theSshKeyName == '') {
         ElMessage({message: "请您填写SSH Key 名称", type: "warning"})
         return
-      } else if (this.formData.theSshKey == '') {
+      }
+      if (this.formData.theSshKey == '') {
         ElMessage({message: "请您填写SSH Key 内容", type: "warning"})
         return
       }
@@ -140,14 +141,12 @@ export default {
         ssh_key: this.formData.theSshKey,
       }
 
-      const jsonStr = JSON.stringify(jsonData)
-
       const option = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonStr
+        body: JSON.stringify(jsonData)
       }
 
       const response = await csrfFetch(SshKeyCreateEndpoint, option)
@@ -159,7 +158,7 @@ export default {
         })
       } else {
         setTimeout(() => {
-          window.location.href = "/settings/ssh-key"
+          window.location.href = "/settings/ssh-keys"
         }, 1000);
         ElMessage({message: "添加成功", type: "success"})
       }

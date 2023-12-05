@@ -5,7 +5,7 @@ class SettingsController < ApplicationController
   def git_token
   end
 
-  def ssh_key
+  def ssh_keys
     @ssh_keys = SshKey.where(user_id: current_user.id)
   end
 end

@@ -82,7 +82,7 @@ export default {
         })
       } else {
         setTimeout(() => {
-          window.location.href = "/settings/ssh-key"
+          window.location.href = "/settings/ssh-keys"
         }, 1000);
         ElMessage({message: "删除成功", type: "success"})
       }
