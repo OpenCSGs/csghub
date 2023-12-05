@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
-  validates_uniqueness_of :name, :git_token
-  validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }
+  validates_uniqueness_of :name, :git_token, allow_blank: true
+  validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }, allow_blank: true
 
   has_many :spaces, dependent: :destroy
   has_many :org_memberships, dependent: :destroy
@@ -49,7 +49,7 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    if avatar.match(/^avatar\/*/)
+    if avatar.to_s.match(/^avatar\/*/)
       # retrive the image temp url from aliyun
       AliyunOss.instance.download avatar
     elsif avatar.present?
