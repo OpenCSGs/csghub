@@ -26,3 +26,9 @@ const props = defineProps({
   branches: Object,
 })
 </script>
+
+<style>
+  body {
+    background: #fff !important;
+  }
+</style>
