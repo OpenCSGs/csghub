@@ -1,8 +1,8 @@
 <template>
   <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] lg:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
-      <p class="font-medium break-words">{{ theSshKeyName }}</p>
-      <p v-if="theMinutesDifference <= 60" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
+      <p class="font-medium text-base break-words">{{ theSshKeyName }}</p>
+      <p v-if="theMinutesDifference <= 60" class="text-[#606266] text-xs pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theMinutesDifference }} 分钟前添加</p>
       <p v-if="theHoursDifference > 1 && theHoursDifference <= 24" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theHoursDifference }} 小时前添加</p>
       <p v-if="theDaysDifference > 1" class="text-[#606266] text-sm pl-[8px] md:pl-0 md:mt-[4px]">不到 {{ theDaysDifference }} 天前添加</p>
       <div @click="deleteDialogVisible = true"

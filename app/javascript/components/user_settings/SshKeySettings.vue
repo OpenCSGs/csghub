@@ -27,7 +27,7 @@
         <el-form :model="formData" :rules="formRules" ref="formRules">
           <div class="mb-[16px]">
             <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span></p>
-            <el-input v-model="theSshKeyName" placeholder="Key"/>
+            <el-input v-model="theSshKeyName" placeholder="Key" maxlength="20"/>
           </div>
           <div>
             <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span></p>
