@@ -67,6 +67,9 @@
               >联系我们</el-dropdown-item
             >
             <el-dropdown-item divided>
+              <a href="/organizations/new">+ 新建组织</a>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
               <a :href="logout" @click="cleanUpAuthing"> Logout </a>
             </el-dropdown-item>
           </el-dropdown-menu>

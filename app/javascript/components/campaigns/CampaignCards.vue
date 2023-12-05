@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:px-0 relative">
+  <div v-if="hasRecommendedCampaigns" class="sm:px-0 relative">
     <el-carousel :autoplay="false" height="390px">
       <el-carousel-item v-for="campaign in JSON.parse(theRecommendedCampaigns)" :key="campaign.uuid">
         <div>
@@ -71,6 +71,11 @@
           this.theCampaigns = data.campaigns,
           this.theTotalCards = data.total_cards
         })
+      }
+    },
+    computed: {
+      hasRecommendedCampaigns() {
+        return this.theRecommendedCampaigns != '[]'
       }
     }
   }
