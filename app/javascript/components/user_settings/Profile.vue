@@ -33,7 +33,12 @@
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
         组织机构
       </div>
-      <div class="text-[#909399]">暂无数据</div>
+      <div v-if="userOrgs != {}" class="flex gap-[10px]">
+        <p v-for="org in userOrgs">
+          <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />
+        </p>
+      </div>
+      <div v-else class="text-[#909399]">暂无数据</div>
     </div>
   </div>
 </template>
@@ -47,13 +52,16 @@ export default {
     lastLoginTime: String,
     loginIdentity: String,
     roles: String,
+    orgs: String
   },
   data() {
     return {
       theLastLoginTime: this.lastLoginTime ? this.lastLoginTime.slice(0, -6) : "",
       userRoles: this.roles ? JSON.parse(this.roles) : [],
+      userOrgs: this.orgs ? JSON.parse(this.orgs) : []
     };
   },
-  mounted() {},
+  mounted() {
+  },
 };
 </script>

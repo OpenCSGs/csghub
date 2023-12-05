@@ -57,7 +57,7 @@
 import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
 import {ElMessage} from "element-plus"
-import csrfFetch from "../../packs/api.js"
+import csrfFetch from "../../packs/csrfFetch.js"
 
 export default {
   props: {

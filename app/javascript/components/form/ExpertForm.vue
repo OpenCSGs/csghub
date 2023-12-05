@@ -84,6 +84,7 @@ import {ElMessage} from "element-plus"
 import {useCookies} from "vue3-cookies"
 import {ref} from "vue"
 import FormLabel from "./sub/FormLabel.vue"
+import csrfFetch from "../../packs/csrfFetch.js"
 
 const IsTipsVisible = ref(true)
 
@@ -129,7 +130,7 @@ const submitTheForm = () => {
 }
 
 async function createExpert() {
-  const expertCreateEndpoint = '/api/leads'
+  const expertCreateEndpoint = '/internal_api/leads'
 
   const jsonData = {
     name: userName.value,
@@ -145,15 +146,11 @@ async function createExpert() {
   const jsonStr = JSON.stringify(jsonData)
   const option = {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${cookies.get('idToken')}`,
-      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: jsonStr
   }
 
-  const response = await fetch(expertCreateEndpoint, option)
+  const response = await csrfFetch(expertCreateEndpoint, option)
 
   if (!response.ok) {
     return response.json().then(data => {

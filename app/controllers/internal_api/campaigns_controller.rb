@@ -1,4 +1,4 @@
-class Api::CampaignsController < Api::ApplicationController
+class InternalApi::CampaignsController < ApplicationController
   def index
     @total_campaigns = Campaign.all.order(created_at: :desc)
     @campaigns = @total_campaigns.page(params[:page]).map(&:with_content_and_leads_count)
