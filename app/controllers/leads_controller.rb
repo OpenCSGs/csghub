@@ -1,6 +1,8 @@
 class LeadsController < ApplicationController
   before_action :check_lead_form_status, only: [:create]
-
+  
+  #给活动对应的lead form的表单使用
+  
   def create
     if @lead.save
       redirect_to thank_you_lead_forms_path

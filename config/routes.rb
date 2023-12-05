@@ -24,16 +24,17 @@ Rails.application.routes.draw do
 
   # external api
   namespace :api do
-    resources :spaces, only: [:create, :destroy, :update, :show, :index]
-    resources :comments, only: [:create, :destroy]
-    resources :users, only: [:update]
-    resources :campaigns, only: [:index]
-    resources :leads, only: [:create]
+    resources :spaces, only: [:create, :destroy, :update]
   end
 
   # internal api
   namespace :internal_api do
     resources :organizations, only: [:create, :update]
+    resources :spaces, only: [:index, :update]
+    resources :campaigns, only: [:index]
+    resources :comments, only: [:create, :destroy]
+    resources :leads, only: [:create]
+    resources :users, only: [:update]
   end
 
   # lead form
@@ -58,7 +59,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :spaces, only: ['index', 'show', 'update'] do
+    resources :spaces, only: ['index', 'show'] do
       collection do
         get 'stopped'
       end
