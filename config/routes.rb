@@ -70,6 +70,7 @@ Rails.application.routes.draw do
     resources :organizations, only: [:new]
 
     get '/models/:user_name/:model_name', to: 'models#show'
+    get '/datasets/:user_name/:dataset_name', to: 'datasets#show'
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'

@@ -16,8 +16,9 @@ import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
-import ModelCard from "./components/ModelCard.vue"
 import ModelDetail from "./components/ModelDetail.vue"
+import ModelCard from "./components/ModelCard.vue"
+import DatasetDetail from "./components/DatasetDetail.vue"
 import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
@@ -36,6 +37,7 @@ app = createApp({
     SpaceCards,
     CommentList,
     DatasetCard,
+    DatasetDetail,
     ExpertCard,
     ExpertForm,
     ModelCard,

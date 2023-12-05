@@ -15,7 +15,7 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}")
     end
 
-    def get_last_commit(username, model_name, options = {})
+    def get_model_last_commit(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/last_commit")
     end
 
@@ -37,7 +37,7 @@ module Starhub
       res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}")
     end
 
-    def get_datasets_commit(username, dataset_name, options = {})
+    def get_datasets_last_commit(username, dataset_name, options = {})
       res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit")
     end
 
