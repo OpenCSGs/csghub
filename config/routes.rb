@@ -66,15 +66,16 @@ Rails.application.routes.draw do
     end
 
     resources :campaigns, only: [:index, :show]
+    resources :models, only: [:index]
     resources :organizations, only: [:new]
 
+    get '/models/:user_name/:model_name', to: 'models#show'
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
-    get '/models', to: 'models#index'
 
     get    '/login',   to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
