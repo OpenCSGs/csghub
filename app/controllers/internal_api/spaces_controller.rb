@@ -13,9 +13,8 @@ class InternalApi::SpacesController < ApplicationController
     authorize space
     new_tags = []
     update_params[:tags].split(',').each do |tag_name|
-      tag = Tag.find_by(name: tag_name)
-      unless tag
-        tag = Tag.create(name: tag_name, color: COLORS.sample)
+      tag = Tag.find_or_create_by(name: tag_name) do |t|
+        t.color = COLORS.sample
       end
       new_tags << tag
     end
