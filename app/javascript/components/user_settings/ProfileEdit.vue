@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+import csrfFetch from "../../packs/csrfFetch.js"
 import { useCookies } from "vue3-cookies";
 import { ElMessage } from "element-plus";
 const { cookies } = useCookies();
@@ -87,7 +88,7 @@ export default {
       this.avatarUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `/api/users/${this.displayName}`;
+      const profileUpdateEndpoint = `/internal_api/users/${this.displayName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
       if (file !== undefined) {
@@ -97,14 +98,11 @@ export default {
       formData.append("nickname", this.inputNickname);
       const options = {
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${cookies.get("idToken")}`,
-        },
         body: formData,
       };
 
       try {
-        const response = await fetch(profileUpdateEndpoint, options);
+        const response = await csrfFetch(profileUpdateEndpoint, options);
         if (!response.ok) {
           ElMessage({
             message: "profile更新失败",

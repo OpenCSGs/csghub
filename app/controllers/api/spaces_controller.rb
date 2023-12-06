@@ -1,20 +1,14 @@
 class Api::SpacesController < Api::ApplicationController
-  def index
-    @total_spaces = policy_scope(Space).order(created_at: :desc)
-    @total_spaces = @total_spaces.where(user_id: current_user.id) if cookies[:mySpaces] == 'true'
-    @spaces = @total_spaces.page(params[:page])
-    render json: {spaces: @spaces.to_json, total_cards: @total_spaces.count}
-  end
+  # ToDo: deprecated，在下一个 Sprint 6 移除
+  # def show
+  #   space = Space.find_by(space_starchain_id: params[:id])
+  #   return render json: {message: "Space not found"}, status: :not_found unless space
 
-  def show
-    space = Space.find_by(space_starchain_id: params[:id])
-    return render json: {message: "Space not found"}, status: :not_found unless space
-
-    render json: {
-      tags: space.tags.to_json,
-      cover_image: space.cover_image_url
-    }
-  end
+  #   render json: {
+  #     tags: space.tags.to_json,
+  #     cover_image: space.cover_image_url
+  #   }
+  # end
 
   def create
     space = Space.new(create_params.slice(:space_starchain_id, :title, :desc, :site_link, :space_type))

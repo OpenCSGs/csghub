@@ -84,6 +84,7 @@
 <script lang="ts" setup>
   import { nextTick, ref, inject, onMounted } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
+  import csrfFetch from "../../packs/csrfFetch.js"
 
   const emit = defineEmits(['retriveSpaceCard'])
 
@@ -175,7 +176,7 @@
   }
 
   async function updateSpace() {
-    const spaceUpdateEndpoint = `spaces/${props.starChainId}`;
+    const spaceUpdateEndpoint = `/internal_api/spaces/${props.starChainId}`;
     const formData = new FormData()
     const file = fileInput.value.files[0]
     formData.append("tags", dynamicTags.value);
@@ -185,11 +186,10 @@
     formData.append("space_type", `${radio.value}_s`)
     const options = {
       method: 'PUT',
-      headers:{'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')},
       body: formData
     };
 
-    const response = await fetch(spaceUpdateEndpoint, options)
+    const response = await csrfFetch(spaceUpdateEndpoint, options)
 
     if (!response.ok) {
       return response.json().then(data => { throw new Error(data.message) })

@@ -63,10 +63,8 @@
     mounted() {},
     methods: {
       async nextPage() {
-        const campaignsUpdateEndpoint = `api/campaigns?page=${this.currentPage}`;
-        const response = await fetch(campaignsUpdateEndpoint, {
-          headers: { "Authorization": `Bearer ${this.cookies.get('idToken')}` }
-        });
+        const campaignsUpdateEndpoint = `/internal_api/campaigns?page=${this.currentPage}`;
+        const response = await fetch(campaignsUpdateEndpoint);
         response.json().then((data) => {
           this.theCampaigns = data.campaigns,
           this.theTotalCards = data.total_cards

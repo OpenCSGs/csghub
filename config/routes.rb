@@ -18,22 +18,29 @@ Rails.application.routes.draw do
         post :toggle_lead_form_status
       end
     end
+    resources :system_api_keys
 
     root to: "spaces#index"
   end
 
   # external api
   namespace :api do
-    resources :spaces, only: [:create, :destroy, :update, :show, :index]
-    resources :comments, only: [:create, :destroy]
-    resources :users, only: [:update]
-    resources :campaigns, only: [:index]
-    resources :leads, only: [:create]
+    resources :spaces, only: [:create, :destroy, :update]
   end
 
   # internal api
   namespace :internal_api do
     resources :organizations, only: [:create, :update]
+    resources :spaces, only: [:index, :update]
+    resources :campaigns, only: [:index]
+    resources :comments, only: [:create, :destroy]
+    resources :leads, only: [:create]
+    resources :users, only: [:update]
+  end
+
+  # internal_api
+  namespace :internal_api do
+    resources :ssh_keys, only: [:create, :destroy]
   end
 
   # lead form
@@ -55,25 +62,27 @@ Rails.application.routes.draw do
       collection do
         get 'profile'
         get 'git-token'
+        get 'ssh-keys'
       end
     end
 
-    resources :spaces, only: ['index', 'show', 'update'] do
+    resources :spaces, only: ['index', 'show'] do
       collection do
         get 'stopped'
       end
     end
 
     resources :campaigns, only: [:index, :show]
+    resources :models, only: [:index]
     resources :organizations, only: [:new]
 
+    get '/models/:user_name/:model_name', to: 'models#show'
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
-    get '/models', to: 'models#index'
 
     get    '/authing/callback', to: 'sessions#authing'
     get    '/oidc/callback', to: 'sessions#oidc'

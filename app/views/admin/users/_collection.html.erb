@@ -70,7 +70,7 @@ to display a collection of resources in an HTML table.
                  class="action-show"
                  >
                 <% if attribute.name == "avatar" && attribute.data.present? %>
-                  <%= image_tag resource.avatar_url, class: "h-[40px] w-[40px] rounded-[50%]" %>
+                  <%= image_tag resource.avatar_url, class: "h-[40px] w-[40px] rounded-[50%] object-cover" %>
                 <% else %>
                   <%= render_field attribute %>
                 <% end -%>

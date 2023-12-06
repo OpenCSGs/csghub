@@ -17,6 +17,7 @@ import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
 import ModelCard from "./components/ModelCard.vue"
+import ModelDetail from "./components/ModelDetail.vue"
 import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
@@ -26,6 +27,7 @@ import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
 import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
+import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 
 app = createApp({
   components: {
@@ -38,6 +40,7 @@ app = createApp({
     ExpertCard,
     ExpertForm,
     ModelCard,
+    ModelDetail,
     PartnerCard,
     PartnerForm,
     Foot,
@@ -46,8 +49,9 @@ app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-    NewOrganization,
-    GitTokenSettings
+    GitTokenSettings,
+    SshKeySettings,
+    NewOrganization
   },
   provide:{
     defaultTags: DefaultTags
