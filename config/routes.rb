@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       end
     end
     resources :system_api_keys
+    resources :tags
 
     root to: "spaces#index"
   end

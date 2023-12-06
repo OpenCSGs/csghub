@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -205,6 +205,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tag_origin", default: "user_created"
+    t.string "tag_type", default: "task"
+    t.string "tag_field"
+    t.string "zh_name"
+    t.text "desc"
   end
 
   create_table "users", force: :cascade do |t|
