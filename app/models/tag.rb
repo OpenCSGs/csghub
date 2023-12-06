@@ -3,6 +3,18 @@ class Tag < ApplicationRecord
 
   enum :tag_origin, user_created: 'user_created', system: 'system'
   enum :tag_type, task: 'task', framework: 'framework', language: 'language', license: 'license'
+  enum :tag_field,
+       computer_vision: 'computer_vision',
+       natural_language_processing: 'natural_language_processing',
+       video_processing: 'video_processing',
+       multimodal_technology: 'multimodal_technology',
+       text_processing: 'text_processing',
+       graphics: 'graphics',
+       audio: 'audio',
+       video: 'video',
+       multimodal: 'multimodal',
+       scientific_computing: 'scientific_computing'
+
 
   has_many :taggings, dependent: :destroy
   has_many :spaces, through: :taggings
