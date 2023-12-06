@@ -76,7 +76,7 @@ export default {
       coverImageUrl: this.coverImage,
       spaceTags: this.tags,
       spaceTypes: this.spaceType,
-      currentAuthor: useCookies().cookies.get('authingUuid')
+      currentAuthor: useCookies().cookies.get('oidcUuid')
     };
   },
 

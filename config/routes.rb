@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # admin
   namespace :admin do
+    resources :system_configs
     resources :spaces
     resources :users do
       get :export, on: :collection
@@ -84,8 +85,9 @@ Rails.application.routes.draw do
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
 
-    get    '/login',   to: 'sessions#new'
+    get    '/login', to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
+    get    '/oidc/callback', to: 'sessions#oidc'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'

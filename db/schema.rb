@@ -168,6 +168,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
     t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
+  create_table "system_configs", force: :cascade do |t|
+    t.string "application_env"
+    t.jsonb "oidc_configs", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ssh_keys", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false

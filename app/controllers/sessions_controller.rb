@@ -3,13 +3,40 @@ require 'jwt'
 class SessionsController < ApplicationController
   layout 'login'
 
-  before_action :check_user_login, only: :new
-
   def new
+    redirect_to SystemConfig.first.oidc_configs['login_url'], allow_other_host: true
+  end
+
+  def oidc
+    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
+    @openid_client = OPENID_CLIENT
+    @openid_client.authorization_code = params['code']
+    access_token = @openid_client.access_token!
+    user_infos = JWT.decode(access_token.id_token, nil, false).first
+    cookies[:idToken] = {value: access_token.id_token, domain: current_domain}
+    cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
+    cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
+    user_uuid = user_infos['sub']
+
+    user = User.find_or_create_by(login_identity: user_uuid) do |u|
+      u.roles = :personal_user
+      u.avatar = user_infos['avatar']
+      u.name = user_infos['name']
+      u.phone = user_infos['phone']
+      u.email = user_infos['email']
+      u.email_verified = user_infos['emailVerified']
+      u.gender = user_infos['gender']
+      u.last_login_at = Time.now
+    end
+
+    helpers.log_in user
+
+    redirect_path = session.delete(:original_request_path) || root_path
+    redirect_to redirect_path
   end
 
   def authing
-    authing_uuid = cookies[:authingUuid]
+    authing_uuid = cookies[:oidcUuid]
     authing_id_token = cookies[:idToken]
     last_login_at = cookies[:lastLoginAt]
     user_role = cookies[:isCompanyUser] == 'true' ? :company_user : :personal_user
