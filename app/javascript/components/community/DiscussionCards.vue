@@ -7,7 +7,7 @@
       :time="card.time"
       :user="card.user"
       :commentNum="card.commentNum"
-      ></DiscussionCard>
+      @changeFlag="changeFlag"></DiscussionCard>
   </div>
 </template>
 <script>
@@ -23,6 +23,10 @@ export default {
     return {};
   },
   mounted() {},
-  methods: {},
+  methods: {
+    changeFlag(flag) {
+      this.$emit("changeFlag",flag);
+    }
+  },
 };
 </script>

@@ -51,17 +51,21 @@
           <span>Upload images, audio, and videos by dragging in the text input, pasting, or <span class="underline cursor-pointer">clicking here</span>.</span>
         </div>
       </div>
+      <div class="px-[16px] markdown-body py-[16px] bg-white" v-show="activeTab=='Preview'"  v-html="renderMarkdown(desc)"></div>
     </div>
     <div>
-      <el-button type="primary">Comment</el-button>
-      <el-button>Cancel</el-button>
+      <el-button type="primary" @click="create">Comment</el-button>
+      <el-button @click="cancel">Cancel</el-button>
     </div>
   </div>
 </template>
 <script>
 import CommunityTimeLine from './CommunityTimeLine.vue'
+import MarkdownIt from "markdown-it";
 export default {
-  props: {},
+  props: {
+    discussionId: String,
+  },
   components: {
     CommunityTimeLine
   },
@@ -75,6 +79,17 @@ export default {
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    renderMarkdown(text) {
+      const mdParser = new MarkdownIt();
+      return mdParser.render(text);
+    },
+    create(){
+      this.$emit("changeFlag",'show');
+    },
+    cancel(){
+      this.$emit("changeFlag",'show');
+    }
+  },
 };
 </script>

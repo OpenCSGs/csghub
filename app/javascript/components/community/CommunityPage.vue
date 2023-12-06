@@ -10,9 +10,9 @@
         </div>
     </div>
     <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
-    <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards"></DiscussionCards>
+    <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @changeFlag="changeFlag"></DiscussionCards>
     <NewDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag"></NewDiscussion>
-    <DiscussionDetails class="hidden"></DiscussionDetails>
+    <DiscussionDetails v-if="theFlag=='showDetail'" @changeFlag="changeFlag"></DiscussionDetails>
   </div>
 </template>
 <script>
@@ -30,11 +30,11 @@ export default {
   },
   data() {
     return {
-      cards:[],
+      // cards:[],
      theFlag:'show',
-    //   cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
-    //          {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
-    //          {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'}]
+      cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
+             {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
+             {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'}]
     };
   },
   mounted() {},
