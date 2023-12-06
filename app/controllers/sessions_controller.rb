@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
     user = User.find_or_create_by(login_identity: user_uuid) do |u|
       u.roles = :personal_user
       u.avatar = user_infos['avatar']
-      u.nickname = user_infos['displayName']
+      u.name = user_infos['name']
       u.phone = user_infos['phone']
       u.email = user_infos['email']
       u.email_verified = user_infos['emailVerified']
