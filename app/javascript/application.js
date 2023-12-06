@@ -25,7 +25,6 @@ import CampaignCards from "./components/campaigns/CampaignCards.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
-import CommunityPage from "./components/community/CommunityPage.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
 import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
@@ -50,7 +49,6 @@ app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-    CommunityPage,
     GitTokenSettings,
     SshKeySettings,
     NewOrganization
