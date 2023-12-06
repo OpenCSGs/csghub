@@ -1,6 +1,6 @@
 <template>
-  <div class="px-[80px] py-[32px]">
-    <div class="flex justify-between mb-[16px]">
+  <div class="py-[32px] md:px-[10px]">
+    <div class="flex justify-between mb-[16px]" v-show="theFlag=='show'">
         <div class="px-[16px] py-[5px] rounded-[4px] bg-[#EBEDF0] text-[#606266] text-[14px] leading-[22px] cursor-pointer ">
           Discussions
         </div>
@@ -9,10 +9,10 @@
           View closed（1）
         </div>
     </div>
-    <EmptyCommunity class="hidden"></EmptyCommunity>
-    <DiscussionCards class="hidden" :cards="cards"></DiscussionCards>
-    <NewDiscussion class="hidden"></NewDiscussion>
-    <DiscussionDetails></DiscussionDetails>
+    <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
+    <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards"></DiscussionCards>
+    <NewDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag"></NewDiscussion>
+    <DiscussionDetails class="hidden"></DiscussionDetails>
   </div>
 </template>
 <script>
@@ -30,12 +30,18 @@ export default {
   },
   data() {
     return {
-      cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
-             {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
-             {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'}]
+      cards:[],
+     theFlag:'show',
+    //   cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
+    //          {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
+    //          {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'}]
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    changeFlag(flag){
+      this.theFlag=flag
+    }
+  },
 };
 </script>
