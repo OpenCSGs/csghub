@@ -13,7 +13,7 @@ class TagDashboard < Administrate::BaseDashboard
     desc: Field::Text,
     name: Field::String,
     spaces: Field::HasMany,
-    tag_field: Field::String,
+    tag_field: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     tag_origin: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     tag_type: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     taggings: Field::HasMany,
