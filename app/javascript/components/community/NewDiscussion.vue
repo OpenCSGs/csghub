@@ -18,7 +18,8 @@
         <div class="px-[20px] py-[9px] border-r" :class="activeTab=='Preview'?'bg-white':'border-b'" @click="activeTab='Preview'">Preview</div>
         <div class="border-b w-full"></div>
       </div>
-      <div class="px-[16px] py-[16px] bg-white">
+      <!-- Edit -->
+      <div class="px-[16px] py-[16px] bg-white" v-show="activeTab=='Edit'">
         <el-input v-model="desc"
                   clearable
                   type="textarea"
@@ -29,15 +30,19 @@
           <span>Upload images, audio, and videos by dragging in the text input, pasting, or <span class="underline cursor-pointer">clicking here</span>.</span>
         </div>
       </div>
+      <!-- Preview -->
+      <div class="px-[16px] markdown-body py-[16px] bg-white" v-show="activeTab=='Preview'"  v-html="renderMarkdown(desc)"></div>
     </div>
     <div>
-      <el-button type="primary">Create discussion</el-button>
-      <el-button>Cancel</el-button>
+      <el-button type="primary" @click="create">Create discussion</el-button>
+      <el-button @click="cancel">Cancel</el-button>
     </div>
   </div>
 </template>
 <script>
 import FormLabel from "../form/sub/FormLabel.vue"
+import MarkdownIt from 'markdown-it';
+import 'github-markdown-css';
 export default {
   props: {},
   components: {
@@ -51,6 +56,17 @@ export default {
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    renderMarkdown(text) {
+      const mdParser = new MarkdownIt();
+      return mdParser.render(text);
+    },
+    create(){
+      this.$emit("changeFlag",'show');
+    },
+    cancel(){
+      this.$emit("changeFlag",'show');
+    }
+  },
 };
 </script>
