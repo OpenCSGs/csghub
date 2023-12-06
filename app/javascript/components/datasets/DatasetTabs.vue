@@ -1,6 +1,5 @@
 <template>
   <div class="relative">
-    <DatasetClone />
     <TabContainer>
       <template #summary>
         <dataset-summary :introduction="introduction" :download-count="downloadCount" />
@@ -19,7 +18,6 @@
 </style>
 
 <script setup>
-import DatasetClone from './DatasetClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
