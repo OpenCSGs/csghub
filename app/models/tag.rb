@@ -1,4 +1,9 @@
 class Tag < ApplicationRecord
+  validates_presence_of :tag_origin, :tag_type, :name
+
+  enum :tag_origin, user_created: 'user_created', system: 'system'
+  enum :tag_type, task: 'task', framework: 'framework', language: 'language', license: 'license'
+
   has_many :taggings, dependent: :destroy
   has_many :spaces, through: :taggings
 
