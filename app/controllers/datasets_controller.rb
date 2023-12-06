@@ -3,7 +3,7 @@ class DatasetsController < ApplicationController
   end
 
   def show
-    @model = Starhub.api.get_datasets_detail(params[:user_name], params[:datasets_name])
+    @dataset = Starhub.api.get_datasets_detail(params[:user_name], params[:datasets_name])
     @files = Starhub.api.get_datasets_files(params[:user_name], params[:datasets_name])
     @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:datasets_name])
     @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:datasets_name])
