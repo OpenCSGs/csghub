@@ -17,23 +17,7 @@ class SessionsController < ApplicationController
     cookies[:idToken] = {value: access_token.id_token, domain: current_domain}
     cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
     cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
-    user_uuid = user_infos['sub']
-
-    user = User.find_or_create_by(login_identity: user_uuid) do |u|
-      u.roles = :personal_user
-      u.avatar = user_infos['avatar']
-      u.name = user_infos['name']
-      u.phone = user_infos['phone']
-      u.email = user_infos['email']
-      u.email_verified = user_infos['emailVerified']
-      u.gender = user_infos['gender']
-      u.last_login_at = Time.now
-    end
-
-    helpers.log_in user
-
-    redirect_path = session.delete(:original_request_path) || root_path
-    redirect_to redirect_path
+    login_by_user_infos user_infos
   end
 
   def authing
