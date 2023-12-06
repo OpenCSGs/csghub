@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
     @openid_client.authorization_code = params['code']
     access_token = @openid_client.access_token!
     user_infos = JWT.decode(access_token.id_token, nil, false).first
+    Rails.logger.warn "===== User Info =====: #{user_infos}"
     cookies[:idToken] = {value: access_token.id_token, domain: current_domain}
     cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
     cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
