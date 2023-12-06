@@ -7,7 +7,9 @@
       <el-tab-pane label="文件" name="files">
         <slot name="files"></slot>
       </el-tab-pane>
-      <el-tab-pane label="社区" name="community" class="min-h-[300px]">community</el-tab-pane>
+      <el-tab-pane label="社区" name="community" class="min-h-[300px]">
+        <slot name="community"></slot>
+      </el-tab-pane>
       <el-tab-pane label="设置" name="settings" class="min-h-[300px]">settings</el-tab-pane>
     </el-tabs>
   </div>
@@ -32,6 +34,5 @@
 
 <script setup>
 import { ref } from 'vue'
-
 const activeName = ref('summary')
 </script>

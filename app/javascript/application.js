@@ -50,7 +50,7 @@ app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-    CommunityPage
+    CommunityPage,
     GitTokenSettings,
     SshKeySettings,
     NewOrganization
