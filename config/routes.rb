@@ -85,6 +85,7 @@ Rails.application.routes.draw do
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
 
+    get    '/login', to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
     get    '/oidc/callback', to: 'sessions#oidc'
     post   '/login',   to: 'sessions#create'

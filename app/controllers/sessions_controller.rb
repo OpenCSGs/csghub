@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   layout 'login'
 
   def new
+    redirect_to SystemConfig.first.oidc_configs['login_url'], allow_other_host: true
   end
 
   def oidc
