@@ -7,7 +7,7 @@ class Tag < ApplicationRecord
   enum :tag_field,
        computer_vision: 'computer_vision',
        natural_language_processing: 'natural_language_processing',
-       video_processing: 'video_processing',
+       audio_processing: 'audio_processing',
        multimodal_technology: 'multimodal_technology',
        text_processing: 'text_processing',
        graphics: 'graphics',
