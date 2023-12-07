@@ -49,8 +49,8 @@ class ApplicationController < ActionController::Base
     user = User.find_by(phone: user_infos['phone']) || User.find_by(email: user_infos['email'])
     if user
       user.login_identity = user_infos['sub']
-      user.name = user_infos['name']
-      user.avatar = user_infos['avatar']
+      user.name = user_infos['name'] if user.name.blank?
+      user.avatar = user_infos['avatar'] if user.avatar.blank?
       user.save
     else
       user = User.find_or_create_by(login_identity: user_infos['sub']) do |u|
