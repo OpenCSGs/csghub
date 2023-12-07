@@ -24,9 +24,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M4.6665 3.5L1.1665 7L4.6665 10.5M9.33317 3.5L12.8332 7L9.33317 10.5" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <div class="ml-2 text-[#606266] font-medium">Use with library</div>
+      <div class="ml-2 text-[#606266] text-sm font-medium">Use with library</div>
     </div>
-    <el-dialog v-model="dialogLibraryVisible" title="Model library is unknown">
+    <el-dialog v-model="dialogLibraryVisible" title="Model library is unknown" class="md:!w-[80%]">
       <div class="text-[#a0a1a7] p-2"># Type of model/library unknown.</div>
       <div class="text-[#a0a1a7] p-2"># Feel free to open a Pull request </div>
       <div class="text-[#a0a1a7] p-2"># for integration of the OpenCSG model hub</div>
