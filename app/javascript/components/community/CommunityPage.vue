@@ -32,9 +32,9 @@ export default {
     return {
       // cards:[],
      theFlag:'show',
-      cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
-             {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'},
-             {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'opened 1 dat ago by',user:'Username'}]
+      cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'2023-10-10 10:10:10',user:'Username'},
+             {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'2023-12-6 10:10:10',user:'Username'},
+             {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'2023-10-10 10:10:10',user:'Username'}]
     };
   },
   mounted() {},
