@@ -17,13 +17,27 @@
     </div>
     <div class="border border-[#EBEEF5] border-b-[2px] rounded-[4px]">
       <div class="flex justify-between gap-[4px] border-b border-[#EBEEF5] items-center px-[12px] py-[9px] bg-[#F5F7FA]">
-        <div>
+        <div class="flex items-center gap-[8px]">
           <el-avatar :size="24" :src="avatar"></el-avatar>
-          Username 1 minute ago·edited less than a minute ago
+          Username {{updateTime}}
         </div>
-        <div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M7.66667 4.66634C8.58333 4.66634 9.33333 3.91634 9.33333 2.99967C9.33333 2.08301 8.58333 1.33301 7.66667 1.33301C6.75 1.33301 6 2.08301 6 2.99967C6 3.91634 6.75 4.66634 7.66667 4.66634Z" fill="#606266"/><path d="M7.66667 6.33301C6.75 6.33301 6 7.08301 6 7.99967C6 8.91634 6.75 9.66634 7.66667 9.66634C8.58333 9.66634 9.33333 8.91634 9.33333 7.99967C9.33333 7.08301 8.58333 6.33301 7.66667 6.33301Z" fill="#606266"/><path d="M6 12.9997C6 12.083 6.75 11.333 7.66667 11.333C8.58333 11.333 9.33333 12.083 9.33333 12.9997C9.33333 13.9163 8.58333 14.6663 7.66667 14.6663C6.75 14.6663 6 13.9163 6 12.9997Z" fill="#606266"/></svg>
-        </div>
+        <el-dropdown>
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M7.66667 4.66634C8.58333 4.66634 9.33333 3.91634 9.33333 2.99967C9.33333 2.08301 8.58333 1.33301 7.66667 1.33301C6.75 1.33301 6 2.08301 6 2.99967C6 3.91634 6.75 4.66634 7.66667 4.66634Z" fill="#606266"/><path d="M7.66667 6.33301C6.75 6.33301 6 7.08301 6 7.99967C6 8.91634 6.75 9.66634 7.66667 9.66634C8.58333 9.66634 9.33333 8.91634 9.33333 7.99967C9.33333 7.08301 8.58333 6.33301 7.66667 6.33301Z" fill="#606266"/><path d="M6 12.9997C6 12.083 6.75 11.333 7.66667 11.333C8.58333 11.333 9.33333 12.083 9.33333 12.9997C9.33333 13.9163 8.58333 14.6663 7.66667 14.6663C6.75 14.6663 6 13.9163 6 12.9997Z" fill="#606266"/></svg>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path opacity="0.12" d="M10.3335 3L6.1691 7.16431C5.85805 7.47536 5.70252 7.63088 5.57607 7.80679C5.4638 7.96296 5.36875 8.13083 5.2926 8.30745C5.20681 8.50639 5.15347 8.71976 5.04678 9.14652L4.66675 10.6666L6.18691 10.2866C6.61365 10.1799 6.82702 10.1266 7.02596 10.0408C7.20257 9.96464 7.37043 9.8696 7.5266 9.75734C7.70251 9.63089 7.85803 9.47537 8.16907 9.16433L8.16907 9.16433L12.3334 5C12.3334 5 11.3336 4.66667 11.0002 4.33333C10.6669 4 10.3335 3 10.3335 3Z" fill="#2F384C"/>
+                  <path d="M13.3334 14.0002H2.66675M10.6667 2.66683C10.5001 3.8335 11.5001 4.8335 12.6667 4.66683M4.66675 10.6668L5.04678 9.14669C5.15347 8.71994 5.20681 8.50657 5.2926 8.30763C5.36875 8.13101 5.46379 7.96315 5.57606 7.80697C5.70252 7.63106 5.85804 7.47554 6.16909 7.1645L11.0002 2.33349C11.0533 2.2804 11.0798 2.25386 11.1033 2.2325C11.6119 1.77022 12.3885 1.77023 12.897 2.23252C12.9205 2.25388 12.9471 2.28043 13.0001 2.33351V2.33351C13.0532 2.3866 13.0798 2.41314 13.1011 2.43664C13.5634 2.94519 13.5634 3.72179 13.1011 4.23033C13.0797 4.25383 13.0532 4.28037 13.0001 4.33345L8.16907 9.1645C7.85803 9.47555 7.70251 9.63107 7.5266 9.75752C7.37043 9.86978 7.20257 9.96483 7.02595 10.041C6.82702 10.1268 6.61365 10.1801 6.1869 10.2868L4.66675 10.6668Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Edit
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+
       </div>
       <div class="px-[12px] py-[12px]">
         Content<br>
@@ -40,7 +54,7 @@
         <div class="px-[20px] py-[9px] border-r" :class="activeTab=='Preview'?'bg-white':'border-b'" @click="activeTab='Preview'">Preview</div>
         <div class="border-b w-full"></div>
       </div>
-      <div class="px-[16px] py-[16px] bg-white">
+      <div class="px-[16px] py-[16px] bg-white" v-show="activeTab=='Edit'" @dragover.prevent @drop="handleDrop">
         <el-input v-model="desc"
                   clearable
                   type="textarea"
@@ -48,7 +62,8 @@
                   class="w-full h-auto text-[#606266] mb-[10px]"/>
         <div class="flex gap-[8px] text-[#909399] text-[14px] leading-[22px]">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.99992 11.9997L4.51355 9.48605C5.03457 8.96503 5.29507 8.70452 5.59611 8.60523C5.86095 8.51788 6.14652 8.51577 6.41263 8.5992C6.7151 8.69403 6.97943 8.95066 7.50809 9.46393L9.65733 11.5506M14.3333 11.7913L13.3834 10.8415C12.8554 10.3135 12.5914 10.0495 12.2869 9.95055C12.0192 9.86354 11.7307 9.86354 11.4629 9.95055C11.1585 10.0495 10.8943 10.3136 10.3661 10.8418C9.96312 11.2448 9.65733 11.5506 9.65733 11.5506M12.3333 14.2265L9.65733 11.5506M11.9999 5.33301C11.9999 6.06939 11.403 6.66634 10.6666 6.66634C9.93021 6.66634 9.33325 6.06939 9.33325 5.33301C9.33325 4.59663 9.93021 3.99967 10.6666 3.99967C11.403 3.99967 11.9999 4.59663 11.9999 5.33301ZM7.73325 14.6663H8.26658C10.5068 14.6663 11.6269 14.6663 12.4825 14.2304C13.2352 13.8469 13.8471 13.235 14.2306 12.4823C14.6666 11.6267 14.6666 10.5066 14.6666 8.26634V7.73301C14.6666 5.4928 14.6666 4.37269 14.2306 3.51705C13.8471 2.7644 13.2352 2.15248 12.4825 1.76898C11.6269 1.33301 10.5068 1.33301 8.26659 1.33301H7.73325C5.49304 1.33301 4.37294 1.33301 3.51729 1.76898C2.76464 2.15248 2.15272 2.7644 1.76923 3.51705C1.33325 4.37269 1.33325 5.4928 1.33325 7.73301V8.26634C1.33325 10.5066 1.33325 11.6267 1.76923 12.4823C2.15272 13.235 2.76464 13.8469 3.51729 14.2304C4.37294 14.6663 5.49304 14.6663 7.73325 14.6663Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Upload images, audio, and videos by dragging in the text input, pasting, or <span class="underline cursor-pointer">clicking here</span>.</span>
+          <span  for="fileInput" >Upload images, audio, and videos by dragging in the text input, pasting, or 
+            <label for="fileInput" class="underline cursor-pointer">click here<input id="fileInput" type="file" @change="handleFileInput" class="hidden" /></label>.</span>
         </div>
       </div>
       <div class="px-[16px] markdown-body py-[16px] bg-white" v-show="activeTab=='Preview'"  v-html="renderMarkdown(desc)"></div>
@@ -62,6 +77,7 @@
 <script>
 import CommunityTimeLine from './CommunityTimeLine.vue'
 import MarkdownIt from "markdown-it";
+import { format } from 'timeago.js';
 export default {
   props: {
     discussionId: String,
@@ -73,19 +89,38 @@ export default {
     return {
       activeTab:'Edit',
       desc:'',
+      updateTime:format('2023-12-1', 'zh_CN'),
       timelineData:[{ name:'Username',type:'change status',state:'closed',date: '2022-01-01', text: 'Event 1' },
-                    { name:'Username',type:'change status',state:'open',date: '2022-02-15', text: 'Event 2' },
-                    { name:'Username',type:'change title',title_from:'xxx',title_to:'xyx',date: '2022-03-10', text: 'Event 3' },]
+                    { name:'Username',type:'change status',state:'open',date: '2023-03-15', text: 'Event 2' },
+                    { name:'Username',type:'change title',title_from:'xxx',title_to:'xyx',date: '2023-04-10', text: 'Event 3' },]
     };
   },
   mounted() {},
   methods: {
+    handleDrop(e) {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      this.uploadImage(file);
+    },
+    handleFileInput(e) {
+      const file = e.target.files[0];
+      this.uploadImage(file);
+    },
+    uploadImage(file) {
+      console.log(file);
+      // 这里可以使用 FormData 或者其他方式上传图片到后端，获取图片地址
+      // 假设已经获取到图片地址 imageUrl 和图片名称 imageName
+      let imageUrl = 'https://cdn-uploads.huggingface.co/production/uploads/6548417d2fe2a1e686ab71d2/g28SIbJ-lfdEiIXdD30_Y.jpeg';
+      let imageName = '微信图片_20230717004756.jpg';
+      this.desc = this.desc + '![' + imageName+']' + '('+ imageUrl + ')'
+    },
     renderMarkdown(text) {
       const mdParser = new MarkdownIt();
       return mdParser.render(text);
     },
     create(){
-      this.$emit("changeFlag",'show');
+      let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
+      this.timelineData.push(data)
     },
     cancel(){
       this.$emit("changeFlag",'show');
