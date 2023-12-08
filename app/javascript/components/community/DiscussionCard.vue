@@ -11,13 +11,14 @@
       </div>
       <div class="flex gap-[8px] text-[#606266] text-[14px] leading-[22px]">
         <div>#{{num}}</div>
-        <div>{{time}}</div>
-        <div>{{user}}</div>
+        <div>{{theTime}}</div>
+        <div>by {{user}}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { format } from 'timeago.js';
 export default {
   props: {
     num:String,
@@ -28,7 +29,9 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      theTime:format(this.time,'zh_CN')
+    };
   },
   mounted() {},
   methods: {
