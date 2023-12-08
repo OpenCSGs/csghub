@@ -20,6 +20,19 @@ class Tag < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :spaces, through: :taggings
 
+  TAG_FIELD_COLOR_MAPPINGS = [
+    {computer_vision: '#db7a7a'},
+    {natural_language_processing: '#7f71de'},
+    {audio_processing: '#538f72'},
+    {multimodal_technology: '#e69832'},
+    {multimodal: '#e69832'},
+    {text_processing: '#ff33cc'},
+    {graphics: '#0073e6'},
+    {audio: '#cccc00'},
+    {video: '#33cccc'},
+    {scientific_computing: '#33cc33'}
+  ]
+
   DEFAULT_TAGS = [
     {name: '语言模型', color: '#009933'},
     {name: '图片模型', color: '#ff9900'},
