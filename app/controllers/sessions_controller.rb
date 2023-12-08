@@ -3,6 +3,10 @@ require 'jwt'
 class SessionsController < ApplicationController
   layout 'login'
 
+  def signup
+    redirect_to SystemConfig.first.oidc_configs['sign_up_url'], allow_other_host: true
+  end
+
   def new
     redirect_to SystemConfig.first.oidc_configs['login_url'], allow_other_host: true
   end
