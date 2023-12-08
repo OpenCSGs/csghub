@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :leads, only: [:create]
     resources :users, only: [:update]
+    resources :tags, only: [] do
+      get 'task-tags', to: 'tags#task_tags'
+      get 'framework-tags', to: 'tags#framework_tags'
+    end
   end
 
   # internal_api
