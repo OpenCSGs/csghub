@@ -52,6 +52,7 @@
 </template>
 <script>
 import MarkdownIt from "markdown-it";
+import 'github-markdown-css';
 export default {
   props:{
     desc: String
