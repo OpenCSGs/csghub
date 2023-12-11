@@ -22,5 +22,5 @@ class Model < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
 
-  validates :name, format: { with: /\A[\w\.\-]+\z/ }
+  validates :name, format: { with: /^[a-zA-Z0-9\-._]{2,20}$/ }
 end
