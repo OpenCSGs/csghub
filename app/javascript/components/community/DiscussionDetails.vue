@@ -58,7 +58,6 @@
 <script>
 import CommunityTimeLine from './CommunityTimeLine.vue'
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
-import MarkdownIt from "markdown-it";
 import { format } from 'timeago.js';
 export default {
   props: {
