@@ -27,7 +27,7 @@ const props = defineProps({
 })
 </script>
 
-<style>
+<style scoped>
   body {
     background: #fff !important;
   }
