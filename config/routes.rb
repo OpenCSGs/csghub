@@ -84,6 +84,7 @@ Rails.application.routes.draw do
     resources :organizations, only: [:new]
 
     get '/models/:user_name/:model_name', to: 'models#show'
+    get '/new_models', to: 'models#new_index'
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
