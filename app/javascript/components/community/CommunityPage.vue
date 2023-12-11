@@ -11,21 +11,21 @@
     </div>
     <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
     <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @changeFlag="changeFlag"></DiscussionCards>
-    <NewDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag"></NewDiscussion>
+    <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag"></NewCommunityDiscussion>
     <DiscussionDetails v-if="theFlag=='showDetail'" @changeFlag="changeFlag"></DiscussionDetails>
   </div>
 </template>
 <script>
 import EmptyCommunity from "./EmptyCommunity.vue";
 import DiscussionCards from "./DiscussionCards.vue";
-import NewDiscussion from "./NewDiscussion.vue";
+import NewCommunityDiscussion from "./NewCommunityDiscussion.vue";
 import DiscussionDetails from "./DiscussionDetails.vue";
 export default {
   props: {},
   components: {
     EmptyCommunity,
     DiscussionCards,
-    NewDiscussion,
+    NewCommunityDiscussion,
     DiscussionDetails
   },
   data() {
