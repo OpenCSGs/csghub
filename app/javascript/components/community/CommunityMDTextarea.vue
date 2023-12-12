@@ -79,7 +79,7 @@ export default {
       // 假设已经获取到图片地址 imageUrl 和图片名称 imageName
       let imageUrl = 'https://cdn-uploads.huggingface.co/production/uploads/6548417d2fe2a1e686ab71d2/g28SIbJ-lfdEiIXdD30_Y.jpeg';
       let imageName = '微信图片_20230717004756.jpg';
-      this.desc = this.desc + '![' + imageName+']' + '('+ imageUrl + ')'
+      this.theDesc = this.theDesc + '![' + imageName+']' + '('+ imageUrl + ')'
     },
     renderMarkdown(text) {
       const mdParser = new MarkdownIt();
