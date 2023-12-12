@@ -1,5 +1,8 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px]">
+  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px] cursor-pointer"
+        :style="setTagColor()"
+        @click="toggleActive"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="13" viewBox="0 0 21 13" fill="none">
       <g clip-path="url(#clip0_4087_110578)">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8485 0.959961C10.6531 0.959961 10.462 1.01638 10.2995 1.12208C10.137 1.22779 10.0104 1.37804 9.93558 1.55382C9.86079 1.7296 9.84121 1.92303 9.87934 2.10964C9.91746 2.29624 10.0116 2.46765 10.1498 2.60219C10.288 2.73673 10.464 2.82835 10.6557 2.86547C10.8474 2.90258 11.0461 2.88354 11.2266 2.81072C11.4072 2.73791 11.5615 2.61461 11.6701 2.45641C11.7787 2.29821 11.8366 2.11222 11.8366 1.92195C11.8366 1.66681 11.7325 1.42214 11.5472 1.24173C11.3619 1.06132 11.1106 0.959961 10.8485 0.959961Z" fill="#2932DF"/>
@@ -18,3 +21,22 @@
     PaddlePaddle
   </span>
 </template>
+<script setup lang="ts">
+  import { onMounted } from 'vue'
+  const props = defineProps({
+    activeTag: String
+  })
+
+  const emit = defineEmits(['setActiveFrameworkTag'])
+
+  const toggleActive = () => {
+    emit('setActiveFrameworkTag', 'PaddlePaddle')
+  }
+  const setTagColor = () => {
+    if (props.activeTag === 'PaddlePaddle') {
+      return "color: white; background-color: rgb(5 183 141 / 63%)"
+    }
+  }
+  onMounted(() => {
+  })
+</script>

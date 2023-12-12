@@ -46,11 +46,16 @@
       <div v-show="showFramework" class="flex gap-[8px] flex-wrap">
         <PyTorch @setActiveFrameworkTag="setActiveFrameworkTag"
                  :activeTag="activeFrameworkTag" />
-        <TensorFlow />
-        <Safetensors />
-        <ONNX />
-        <JAX />
-        <PaddlePaddle />
+        <TensorFlow @setActiveFrameworkTag="setActiveFrameworkTag"
+                    :activeTag="activeFrameworkTag" />
+        <Safetensors @setActiveFrameworkTag="setActiveFrameworkTag"
+                     :activeTag="activeFrameworkTag" />
+        <ONNX @setActiveFrameworkTag="setActiveFrameworkTag"
+              :activeTag="activeFrameworkTag" />
+        <JAX @setActiveFrameworkTag="setActiveFrameworkTag"
+             :activeTag="activeFrameworkTag" />
+        <PaddlePaddle @setActiveFrameworkTag="setActiveFrameworkTag"
+                      :activeTag="activeFrameworkTag" />
       </div>
     </div>
   </div>

@@ -1,5 +1,8 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px]">
+  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px] cursor-pointer"
+        :style="setTagColor()"
+        @click="toggleActive"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="12" viewBox="0 0 21 12" fill="none">
       <g clip-path="url(#clip0_4087_108615)">
         <path d="M2.35109 6.00029L1.18701 7.99301H3.51517L4.67925 6.00029H2.35109Z" fill="#5E97F6" stroke="#DCE0DF" stroke-width="0.0460105" stroke-linejoin="round"/>
@@ -50,3 +53,22 @@
     JAX
   </span>
 </template>
+<script setup lang="ts">
+  import { onMounted } from 'vue'
+  const props = defineProps({
+    activeTag: String
+  })
+
+  const emit = defineEmits(['setActiveFrameworkTag'])
+
+  const toggleActive = () => {
+    emit('setActiveFrameworkTag', 'JAX')
+  }
+  const setTagColor = () => {
+    if (props.activeTag === 'JAX') {
+      return "color: white; background-color: rgb(5 183 141 / 63%)"
+    }
+  }
+  onMounted(() => {
+  })
+</script>

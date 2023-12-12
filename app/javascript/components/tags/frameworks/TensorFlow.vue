@@ -1,5 +1,8 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px]">
+  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px] cursor-pointer"
+      :style="setTagColor()"
+      @click="toggleActive"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
       <g clip-path="url(#clip0_3946_96047)">
         <mask id="mask0_3946_96047" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="6" y="0" width="6" height="12">
@@ -32,3 +35,22 @@
     TensorFlow
   </span>
 </template>
+<script setup lang="ts">
+  import { onMounted } from 'vue'
+  const props = defineProps({
+    activeTag: String
+  })
+
+  const emit = defineEmits(['setActiveFrameworkTag'])
+
+  const toggleActive = () => {
+    emit('setActiveFrameworkTag', 'TensorFlow')
+  }
+  const setTagColor = () => {
+    if (props.activeTag === 'TensorFlow') {
+      return "color: white; background-color: rgb(5 183 141 / 63%)"
+    }
+  }
+  onMounted(() => {
+  })
+</script>
