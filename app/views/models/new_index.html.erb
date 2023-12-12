@@ -1,1 +1,7 @@
-<tag-sidebar></tag-sidebar>
+<div class="m-auto max-w-[1280px] mb-[60px]">
+  <tag-sidebar
+    task-tags="<%= @task_tags.to_json %>"
+    framework-tags="<%= @framework_tags.to_json %>"
+  >
+  </tag-sidebar>
+</div>
