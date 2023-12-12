@@ -87,6 +87,9 @@ export default {
     },
     handleInput(value) {
       this.$emit('inputChange', value);
+    },
+    clearTextarea(){
+        this.theDesc=''
     }
   },
 };

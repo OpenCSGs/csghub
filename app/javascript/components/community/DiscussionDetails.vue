@@ -51,7 +51,7 @@
       </div>
     </div>
     <CommunityTimeLine :timelineData="timelineData"></CommunityTimeLine>
-    <CommunityMDTextarea :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea ref="mdTextarea" :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="create">Comment</el-button>
       <el-button @click="cancel">Cancel</el-button>
@@ -101,6 +101,7 @@ export default {
     create(){
       let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
       this.timelineData.push(data)
+      this.$refs.mdTextarea.clearTextarea();
     },
     cancel(){
       this.$emit("changeFlag",'show');
