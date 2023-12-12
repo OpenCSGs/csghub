@@ -4,7 +4,7 @@ class ModelsController < ApplicationController
 
   def new_index
     response = {}
-    Tag::TAG_FIELD_COLOR_MAPPINGS.keys.each do |field|
+    Tag::MODEL_TAG_FIELDS.each do |field|
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
