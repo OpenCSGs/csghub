@@ -1,5 +1,5 @@
 class Model < ApplicationRecord
-  enum :visibility, { v_public: 'public', v_private: 'private' }, default: :v_private
+  enum :visibility, { model_public: 'public', model_private: 'private' }, default: :model_private
   enum :license, {
     apache: 'Apache License 2.0',
     mit: 'MIT License',
