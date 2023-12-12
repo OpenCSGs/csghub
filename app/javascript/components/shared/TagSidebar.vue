@@ -23,6 +23,7 @@
         size="large"
         placeholder="筛选标签"
         :prefix-icon="Search"
+        @change = "filterTags"
       />
     </div>
     <div>
@@ -80,41 +81,27 @@
       return `color: ${tagFieldColor}; border: solid`
     }
   }
-</script>
 
-<!-- <script>
-export default {
-  props: {
-    taskTags: String,
-    frameworkTags: String
-  },
-  data() {
-    return {
-      activeNavItem: 'Task',
-      theTaskTags: JSON.parse(this.taskTags),
-      theFrameworkTags: JSON.parse(this.frameworkTags),
-      activeTag: '',
-      tagFilterInput: ''
-    }
-  },
-  methods: {
-    changeActiveItem(e) {
-      this.activeNavItem = e.target.dataset.type
-    },
-    setActiveTags(e) {
-      if (this.activeTag === e.target.dataset.tag_name) {
-        this.activeTag = ''
-      } else {
-        this.activeTag = e.target.dataset.tag_name
-      }
-    },
-    setTagColor(tagName, tagFieldColor) {
-      if(this.activeTag === tagName) {
-        return `color: white; background-color: ${tagFieldColor}`
-      } else {
-        return `color: ${tagFieldColor}; background-color: #F2F3F5`
-      }
-    }
+  const filterTags = (keywords) => {
+    const keywordsRegex = new RegExp(keywords);
+    const newTags = JSON.parse(props.taskTags)
+    const result = removeNotMatchedTags(newTags, keywordsRegex)
+    theTaskTags.value = result
   }
-}
-</script> -->
+
+  const removeNotMatchedTags = (json, regex) => {
+    let newJson = {}
+    const fields = Object.keys(json)
+    for (let field of fields) {
+      newJson[field] = {color: json[field].color, zh_name: json[field].zh_name}
+      newJson[field].tags = []
+      for (let tag of json[field].tags) {
+        const matchResult = regex.test(tag.zh_name)
+        if (matchResult) {
+          newJson[field].tags.push(tag)
+        }
+      }
+    }
+    return newJson
+  }
+</script>
