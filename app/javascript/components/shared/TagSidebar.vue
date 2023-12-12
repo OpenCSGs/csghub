@@ -6,14 +6,14 @@
             :class="this.activeNavItem === 'Task' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        Task
+        任务标签
       </span>
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="Framework"
             :class="this.activeNavItem === 'Framework' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        Framework
+        框架标签
       </span>
     </div>
     <div>
