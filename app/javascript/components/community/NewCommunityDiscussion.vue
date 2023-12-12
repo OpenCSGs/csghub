@@ -7,9 +7,15 @@
     <div>
       <FormLabel labelName="Title" :required="true" />
       <el-input v-model="title"
+                  :maxLength="200"
+                  show-word-limit
                   clearable
                   placeholder="Create new file"
-                  class="w-full h-[40px] text-[#606266]"/>
+                  class="w-full h-[40px] text-[#606266]">
+                  <template #suffix>
+        <span>{{ title.length }} / 200</span>
+      </template>
+    </el-input>
     </div>
     <FormLabel labelName="Description" :required="true" />
     <CommunityMDTextarea :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
