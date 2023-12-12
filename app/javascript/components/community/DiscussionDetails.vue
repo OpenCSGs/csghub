@@ -50,7 +50,7 @@
         Content<br>
       </div>
     </div>
-    <CommunityTimeLine :timelineData="timelineData"></CommunityTimeLine>
+    <!-- <CommunityTimeLine :timelineData="timelineData"></CommunityTimeLine> -->
     <CommunityMDTextarea ref="mdTextarea" :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="create">Comment</el-button>
@@ -90,17 +90,17 @@ export default {
     },
     saveTitle() {
       this.isEdit = false;
-      if(this.title!=this.oldTitle){
-        let data={name:'username',type:'change title',title_from:this.oldTitle,title_to:this.title,date:new Date().toISOString()}
-        this.timelineData.push(data)
-      }
+      // if(this.title!=this.oldTitle){
+      //   let data={name:'username',type:'change title',title_from:this.oldTitle,title_to:this.title,date:new Date().toISOString()}
+      //   this.timelineData.push(data)
+      // }
     },
     handleInputChange(value) {
       this.desc = value;
     },
     create(){
-      let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
-      this.timelineData.push(data)
+      // let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
+      // this.timelineData.push(data)
       this.$refs.mdTextarea.clearTextarea();
     },
     cancel(){
