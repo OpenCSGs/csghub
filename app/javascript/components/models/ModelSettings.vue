@@ -52,8 +52,8 @@
         <a @click="confirmDialogVisible = true">
           <div
               id="confirmDelete"
-              class="w-[224px] py-[8px] px-[12px] border border-[#EAECF0] bg-[#EAECF0] rounded-[8px] font-medium text-[14px] text-[#98A2B3]"
-              :class="decs !== '' ? 'bg-[#D92D20] text-[#FFFFFF]': ''"
+              class="w-[224px] py-[8px] px-[12px] border border-[#EAECF0] rounded-[8px] font-medium text-[14px] text-[#98A2B3]"
+              :class="decs!==''?'bg-[#D92D20] text-[#FFFFFF]':'bg-[#EAECF0]'"
               @mouseover="handleMouseOver"
               @mouseleave="handleMouseLeave">
             <p>I understand, move this dataset</p>
@@ -92,11 +92,12 @@ const options = [
 
 function handleMouseOver() {
   if (decs.value !== '') {
-    document.getElementById('confirmDelete').classList.add('bg-[#B42318]')
+    console.log("test")
+    document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
   }
 }
 
 function handleMouseLeave() {
-  document.getElementById('confirmDelete').classList.remove('bg-[#B42318]')
+  document.getElementById('confirmDelete').classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
 }
 </script>
