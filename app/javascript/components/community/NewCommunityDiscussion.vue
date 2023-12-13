@@ -30,6 +30,8 @@ import FormLabel from "../form/sub/FormLabel.vue"
 import MarkdownIt from 'markdown-it';
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
 import 'github-markdown-css';
+import csrfFetch from "../../packs/csrfFetch";
+import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
   props: {},
   components: {
@@ -52,11 +54,77 @@ export default {
       const mdParser = new MarkdownIt();
       return mdParser.render(text);
     },
-    create(){
-      this.$emit("changeFlag",'show');
-    },
+    async create() {
+    if (this.title === '' || this.desc === '') {
+      ElMessage({ message: "标题和内容不能为空", type: "warning" });
+      return;
+    }
+    try {
+      const discussionResponse = await this.createComment('123123123');
+      console.log(discussionResponse);
+      const commentCreated = await this.createComment(discussionResponse.id);
+      
+      if (commentCreated) {
+        ElMessage({ message: "添加成功", type: "success" });
+      } else {
+        ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
+      }
+      setTimeout(() => {
+        this.$emit("changeFlag", 'show');
+      }, 1000);
+      ElMessage({ message: "添加成功", type: "success" });
+      // 此处应重新获取最新的 discussions
+    } catch (error) {
+      console.error(error.message);
+      ElMessage({ message: "发生错误，请重试", type: "error" });
+    }
+  },
     cancel(){
       this.$emit("changeFlag",'show');
+    },
+    async createDiscussion(){
+      const discussionCreateEndpoint = "/internal_api/discussions"
+      const discussionJsonData = {
+        discussionable_type:'Model',
+        discussionable_id:123,//因为目前没有model，先占位，后续有了model后需要补上
+        title:this.title
+      }
+      const option = {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(discussionJsonData)
+      }
+      const response = await csrfFetch(discussionCreateEndpoint, option)
+      return response.json();
+    },
+    async createComment(discussionId){
+      debugger
+      const commentCreateEndpoint = "/internal_api/comments"
+      const commentJsonData = {
+        commentable_type:'Discussion',
+        commentable_id:discussionId,
+        comment:this.desc
+      }
+      const commentOption = {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentJsonData)
+      }
+      try {
+        const response = await csrfFetch(commentCreateEndpoint, commentOption);
+        if (response.ok) {
+          return true; // 创建评论成功，返回 true
+        } else {
+          throw new Error('创建评论失败'); // 抛出错误
+        }
+      } catch (error) {
+        console.error(error.message);
+        return false; // 发生错误，返回 false
+      }
     }
   },
 };
