@@ -19,6 +19,7 @@
       <p class="text-gray-500 text-[12px] italic">* 2-20位字母数字以及 _ 构成的字符串</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
+                disabled
                 placeholder="username">
       </el-input>
     </div>

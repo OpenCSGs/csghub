@@ -25,7 +25,7 @@ staging-build:
   services:
     - docker:24.0.6-dind
   tags:
-    - linux-medium-amd64
+    - overseas
   rules:
     - <<: *if-staging-original-repo
   variables:
@@ -40,7 +40,7 @@ master-build:
   services:
     - docker:24.0.6-dind
   tags:
-    - linux-medium-amd64
+    - overseas
   rules:
     - <<: *if-main-original-repo
   variables:

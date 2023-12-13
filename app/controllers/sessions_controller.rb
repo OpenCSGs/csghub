@@ -3,13 +3,29 @@ require 'jwt'
 class SessionsController < ApplicationController
   layout 'login'
 
-  before_action :check_user_login, only: :new
+  def signup
+    redirect_to SystemConfig.first.oidc_configs['sign_up_url'], allow_other_host: true
+  end
 
   def new
+    redirect_to SystemConfig.first.oidc_configs['login_url'], allow_other_host: true
+  end
+
+  def oidc
+    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
+    @openid_client = ::OPENID_CLIENT
+    @openid_client.authorization_code = params['code']
+    access_token = @openid_client.access_token!
+    user_infos = JWT.decode(access_token.id_token, nil, false).first
+    Rails.logger.warn "===== User Info =====: #{user_infos}"
+    cookies[:idToken] = {value: access_token.id_token, domain: current_domain}
+    cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
+    cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
+    login_by_user_infos user_infos
   end
 
   def authing
-    authing_uuid = cookies[:authingUuid]
+    authing_uuid = cookies[:oidcUuid]
     authing_id_token = cookies[:idToken]
     last_login_at = cookies[:lastLoginAt]
     user_role = cookies[:isCompanyUser] == 'true' ? :company_user : :personal_user

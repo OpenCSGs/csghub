@@ -1,7 +1,7 @@
 module ApplicationHelper
   def current_cookie_domain
     if Rails.env != 'development'
-      'opencsg.com'
+      '.opencsg.com'
     else
       'localhost'
     end
@@ -25,7 +25,9 @@ module ApplicationHelper
 
   def logout_address
     asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
-    "#{authing_domain}/login/profile/logout?redirect_uri=#{asset_host}/logout"
+    "#{asset_host}/logout"
+    # ToDo: will remove in later
+    # "#{authing_domain}/login/profile/logout?redirect_uri=#{asset_host}/logout"
   end
 
   def starchain_address

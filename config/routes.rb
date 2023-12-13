@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # admin
   namespace :admin do
+    resources :system_configs
     resources :spaces
     resources :users do
       get :export, on: :collection
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
       end
     end
     resources :system_api_keys
+    resources :tags
 
     root to: "spaces#index"
   end
@@ -35,6 +37,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :leads, only: [:create]
     resources :users, only: [:update]
+    resources :tags, only: [] do
+      collection do
+        get 'task-tags', to: 'tags#task_tags'
+        get 'framework-tags', to: 'tags#framework_tags'
+      end
+    end
   end
 
   # internal_api
@@ -83,8 +91,10 @@ Rails.application.routes.draw do
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
 
-    get    '/login',   to: 'sessions#new'
+    get    '/signup', to: 'sessions#signup'
+    get    '/login', to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
+    get    '/oidc/callback', to: 'sessions#oidc'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'
