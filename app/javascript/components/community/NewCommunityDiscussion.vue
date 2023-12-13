@@ -31,7 +31,7 @@ import MarkdownIt from 'markdown-it';
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
 import 'github-markdown-css';
 import csrfFetch from "../../packs/csrfFetch";
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 export default {
   props: {},
   components: {

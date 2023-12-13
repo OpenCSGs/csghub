@@ -62,6 +62,8 @@
 import CommunityTimeLine from './CommunityTimeLine.vue'
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
 import { format } from 'timeago.js';
+import csrfFetch from "../../packs/csrfFetch";
+import { ElMessage } from 'element-plus'
 export default {
   props: {
     discussionId: String,
@@ -98,13 +100,44 @@ export default {
     handleInputChange(value) {
       this.desc = value;
     },
-    create(){
+    async create(){
+      if (this.desc === '') {
+        ElMessage({ message: "内容不能为空", type: "warning" });
+        return;
+      }
+      this.createComment(discussionResponse.id).then((data) => {
+        ElMessage({ message: "添加评论成功", type: "success" });
+      })
+      .catch(err => {
+        ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
+      })
       // let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
       // this.timelineData.push(data)
       this.$refs.mdTextarea.clearTextarea();
     },
     cancel(){
       this.$emit("changeFlag",'show');
+    },
+    async createComment(discussionId){
+      const commentCreateEndpoint = "/internal_api/comments"
+      const commentJsonData = {
+        commentable_type:'Discussion',
+        commentable_id:discussionId,
+        comment:this.desc
+      }
+      const commentOption = {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentJsonData)
+      }
+      const response = await csrfFetch(commentCreateEndpoint, commentOption);
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then(data => { throw new Error(data.message) })
+      }
     }
   },
 };
