@@ -8,6 +8,9 @@
       <template #files>
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
+      <template #settings>
+        <model-settings/>
+      </template>
     </TabContainer>
   </div>
 </template>
@@ -23,6 +26,7 @@ import ModelClone from './ModelClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
+import ModelSettings from './ModelSettings.vue'
 
 const props = defineProps({
   introduction: String,
