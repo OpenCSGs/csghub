@@ -1,6 +1,7 @@
 <template>
-  <div class="flex flex-col gap-[24px] border-2 rounded-[8px] my-[32px] p-[24px]">
-    <div class="flex flex-col gap-[8px]">
+  <div
+      class="flex flex-col gap-[24px] border-2 md:border-0 rounded-[8px] my-[32px] md:my-0 p-[24px] md:py-[32px] md:px-[16px]">
+    <div class="flex flex-col gap-[8px] w-auto">
       <div class="flex items-center w-[900px]">
         <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -12,28 +13,23 @@
         </svg>
         <p class="ml-[20px] text-xl font-semibold">Change dataset visibility</p>
       </div>
-      <div class="text-[14px] w-[900px] ml-[36px] text-[#606266]">
-        <p class="inline-block">This dataset is currently</p>
-        <p class="text-[#303133] whitespace-pre-wrap inline-block"> 【private】 </p>
-        <div class="flex">
-          <p class="">. Only you (personal dataset) or members of your organization
-            (organization dataset) can see and commit to this dataset.</p></div>
+      <div class="text-[14px] ml-[36px] w-[900px] lg:w-full text-[#606266] pr-[36px]">
+        <p>This model is currently 【private】. Only you (personal model) or members of your organization (organization
+          model) can see and commit to this model.</p>
       </div>
-      <div class="w-[900px]">
-        <div class="ml-[36px]">
-          <el-select v-model="selectedValue">
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            ></el-option>
-          </el-select>
-        </div>
+      <div class="ml-[36px]">
+        <el-select v-model="selectedValue" class="w-[320px] sm:w-full">
+          <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          ></el-option>
+        </el-select>
       </div>
     </div>
     <div class="border-b-2"></div>
-    <div class="flex flex-col gap-[8px]">
+    <div class="flex flex-col gap-[8px] w-auto">
       <div class="flex items-center w-[900px]">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -42,39 +38,29 @@
         </svg>
         <p class="ml-[20px] text-xl font-semibold">Delete this dataset</p>
       </div>
-      <div class="flex text-[14px] w-[900px] ml-[36px] text-[#606266]">
-        <p>This action</p>
-        <p class="text-[#303133] whitespace-pre-wrap"> cannot </p>
-        <p> be undone. This will permanently delete the</p>
-        <p class="text-[#303133] whitespace-pre-wrap"> username/datasetname </p>
-        <p>dataset repository and
-          all its files.</p>
+      <div class="flex text-[14px] w-[900px] lg:w-full ml-[36px] text-[#606266] pr-[36px]">
+        <p>This action cannot be undone. This will permanently delete the username/modelname model repository and all
+          its files, including weights.</p>
       </div>
-      <div class="w-[900px]">
-        <div class="flex flex-col gap-[16px] ml-[36px]">
-          <div class="flex flex-col gap-[8px] mt-[8px] text-[#606266] text-[14px]">
-            <div class="flex">
-              <p>Please type</p>
-              <p class="text-[#303133] whitespace-pre-wrap"> username/datasetname </p>
-              <p>to confirm.</p>
-            </div>
+      <div class="flex flex-col gap-[16px] ml-[36px]">
+        <div class="flex flex-col gap-[8px] mt-[8px] text-[#606266] text-[14px]">
+          <p>Please type username/modelname to confirm.</p>
+          <div class="w-[320px] sm:w-full">
             <el-input v-model="decs"></el-input>
           </div>
-          <a @click="confirmDialogVisible = true">
-            <div
-                id="confirmDelete"
-                class="w-[224px] py-[8px] px-[12px] border border-[#EAECF0] bg-[#EAECF0] rounded-[8px] font-medium text-[14px] text-[#98A2B3]"
-                :class="decs !== '' ? 'bg-[#D92D20] text-[#FFFFFF]': ''"
-                @mouseover="handleMouseOver"
-                @mouseleave="handleMouseLeave"
-              >
-              <p>I understand, move this dataset</p>
-            </div>
-          </a>
         </div>
+        <a @click="confirmDialogVisible = true">
+          <div
+              id="confirmDelete"
+              class="w-[224px] py-[8px] px-[12px] border border-[#EAECF0] bg-[#EAECF0] rounded-[8px] font-medium text-[14px] text-[#98A2B3]"
+              :class="decs !== '' ? 'bg-[#D92D20] text-[#FFFFFF]': ''"
+              @mouseover="handleMouseOver"
+              @mouseleave="handleMouseLeave">
+            <p>I understand, move this dataset</p>
+          </div>
+        </a>
       </div>
     </div>
-
     <el-dialog v-model="confirmDialogVisible" title="Change model visibility" width="30%" class="dialogWidth"
                style="border-radius: 0.5rem;" left>
       <div class="py-[32px]">
@@ -92,20 +78,17 @@
     </el-dialog>
   </div>
 </template>
-
 <script setup>
 import {ref} from "vue"
 
-
 let selectedValue = ref('Private')
+let decs = ref('')
+let confirmDialogVisible = ref(false)
+
 const options = [
   {value: 'private', label: 'Private'},
   {value: 'public', label: 'Public'},
 ]
-
-
-let decs = ref('')
-let confirmDialogVisible = ref(false)
 
 function handleMouseOver() {
   if (decs.value !== '') {
