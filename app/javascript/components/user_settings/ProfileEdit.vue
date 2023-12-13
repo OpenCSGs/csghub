@@ -16,7 +16,7 @@
     </div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
-      <p class="text-gray-500 text-[12px] italic">* 2-20位字母数字以及 _ 构成的字符串</p>
+      <p class="text-gray-500 text-[12px] italic">* 2-20位字母数字以及 _ - 构成的字符串，- _ 不能连续出现</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 disabled
