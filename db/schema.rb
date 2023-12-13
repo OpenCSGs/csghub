@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_13_120759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -228,6 +228,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
     t.boolean "company_verified", default: false
     t.string "nickname"
     t.string "git_token"
+    t.boolean "starhub_synced", default: false
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
