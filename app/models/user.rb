@@ -67,6 +67,15 @@ class User < ApplicationRecord
     git_token || create_git_token
   end
 
+  def starhub_synced!
+    self.starhub_synced = true
+    self.save
+  end
+
+  def starhub_synced?
+    starhub_synced == true
+  end
+
   private
 
   def create_git_token
@@ -79,7 +88,11 @@ class User < ApplicationRecord
   end
 
   # 需要兼容 portal 电话和邮件非必需
+  # after_create 在用户 save 的时候也会 trigger
   def sync_to_starhub_server
-    Starhub.api.create_or_update_user(nickname, name, email)
+    res = Starhub.api.create_or_update_user(nickname, name, email)
+    if res.status == 200
+      self.starhub_synced! unless starhub_synced?
+    end
   end
 end
