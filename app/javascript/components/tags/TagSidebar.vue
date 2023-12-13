@@ -128,17 +128,10 @@
   }
 
   const removeNotMatchedTags = (json, regex) => {
-    let newJson = {}
-    const fields = Object.keys(json)
-    for (let field of fields) {
-      newJson[field] = {color: json[field].color, zh_name: json[field].zh_name}
-      newJson[field].tags = []
-      for (let tag of json[field].tags) {
-        const matchResult = regex.test(tag.zh_name)
-        if (matchResult) {
-          newJson[field].tags.push(tag)
-        }
-      }
+    const newJson = {}
+    for (const [field, { color, zh_name, tags }] of Object.entries(json)) {
+      const matchedTags = tags.filter((tag) => regex.test(tag.zh_name))
+      newJson[field] = { color, zh_name, tags: matchedTags }
     }
     return newJson
   }
