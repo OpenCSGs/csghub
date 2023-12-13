@@ -55,30 +55,27 @@ export default {
       return mdParser.render(text);
     },
     async create() {
-    if (this.title === '' || this.desc === '') {
-      ElMessage({ message: "标题和内容不能为空", type: "warning" });
-      return;
-    }
-    try {
-      const discussionResponse = await this.createComment('123123123');
-      console.log(discussionResponse);
-      const commentCreated = await this.createComment(discussionResponse.id);
-      
-      if (commentCreated) {
-        ElMessage({ message: "添加成功", type: "success" });
-      } else {
-        ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
+      if (this.title === '' || this.desc === '') {
+        ElMessage({ message: "标题和内容不能为空", type: "warning" });
+        return;
       }
-      setTimeout(() => {
-        this.$emit("changeFlag", 'show');
-      }, 1000);
-      ElMessage({ message: "添加成功", type: "success" });
-      // 此处应重新获取最新的 discussions
-    } catch (error) {
-      console.error(error.message);
-      ElMessage({ message: "发生错误，请重试", type: "error" });
-    }
-  },
+      try {
+        const discussionResponse = await this.createDiscussion();
+        this.createComment(discussionResponse.id).then((data) => {
+          ElMessage({ message: "添加评论成功", type: "success" });
+        })
+        .catch(err => {
+          ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
+        })
+        setTimeout(() => {
+          this.$emit("changeFlag", 'show');
+        }, 1000);
+        ElMessage({ message: "添加discussion成功", type: "success" });
+        // 此处应重新获取最新的 discussions
+      } catch (error) {
+        ElMessage({ message: "发生错误，请重试", type: "error" });
+      }
+    },
     cancel(){
       this.$emit("changeFlag",'show');
     },
@@ -100,7 +97,6 @@ export default {
       return response.json();
     },
     async createComment(discussionId){
-      debugger
       const commentCreateEndpoint = "/internal_api/comments"
       const commentJsonData = {
         commentable_type:'Discussion',
@@ -114,16 +110,11 @@ export default {
         },
         body: JSON.stringify(commentJsonData)
       }
-      try {
-        const response = await csrfFetch(commentCreateEndpoint, commentOption);
-        if (response.ok) {
-          return true; // 创建评论成功，返回 true
-        } else {
-          throw new Error('创建评论失败'); // 抛出错误
-        }
-      } catch (error) {
-        console.error(error.message);
-        return false; // 发生错误，返回 false
+      const response = await csrfFetch(commentCreateEndpoint, commentOption);
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then(data => { throw new Error(data.message) })
       }
     }
   },
