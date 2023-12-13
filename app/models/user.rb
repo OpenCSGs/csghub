@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :ssh_keys, dependent: :destroy
 
+  after_create :sync_to_starhub_server
+
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
   def roles=(*roles)
@@ -74,5 +76,10 @@ class User < ApplicationRecord
     end
     self.update_column('git_token', new_token)
     new_token
+  end
+
+  # 需要兼容 portal 电话和邮件非必需
+  def sync_to_starhub_server
+    Starhub.api.create_or_update_user(nickname, name, email)
   end
 end
