@@ -23,10 +23,10 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/branches")
     end
     
-    def create_sshkey(name, key_name, content)
+    def create_ssh_key(username, key_name, content)
       options = {}
       options[:body] = {
-        username: name,
+        username: username,
         name: key_name,
         content: content
       }
