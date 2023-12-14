@@ -44,7 +44,6 @@
       </div>
       <el-input class="max-w-[400px]"
                 v-model="inputEmail"
-                disabled
                 placeholder="邮箱">
       </el-input>
     </div>
@@ -97,6 +96,7 @@ export default {
       }
       formData.append("name", this.inputName);
       formData.append("nickname", this.inputNickname);
+      formData.append("email", this.inputEmail);
       const options = {
         method: "PUT",
         body: formData,
