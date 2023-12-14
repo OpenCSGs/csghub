@@ -8,6 +8,7 @@
     <model-tabs
       :introduction="model.data.introduction"
       :download-count="model.data.download_count"
+      :model-path="model.data.path"
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"

@@ -40,19 +40,21 @@ import { h } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
   props: {
-    Path: String
+    path: String
   },
   components: {},
   data() {
     return {
       visibility:'Private',
       delDesc:'',
-      datasetPath:'username/datasetname',
+      datasetPath: this.path,
       options:[{value: 'Private',label: 'Private'},
         {value: 'Public',label: 'Public'}]
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.path)
+  },
   methods: {
     del(){
       if(this.delDesc==this.datasetPath){
