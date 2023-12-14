@@ -27,12 +27,7 @@ module SessionsHelper
   end
 
   def login_url
-    system_oidc_config = SystemConfig.first&.oidc_configs
-    if system_oidc_config
-      system_oidc_config["login_url"]
-    else
-      default_oidc_config = Rails.application.credentials.oidc_config.send(Rails.env)
-      default_oidc_config["login_url"]
-    end
+    oidc_configs = SystemConfig.first&.oidc_configs || Rails.application.credentials.oidc_config.send(Rails.env)
+    oidc_configs["login_url"]
   end
 end
