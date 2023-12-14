@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates_uniqueness_of :name, :git_token, allow_blank: true
   validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }, allow_blank: true
 
+  validate :unique_name
+
   has_many :spaces, dependent: :destroy
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
@@ -80,5 +82,9 @@ class User < ApplicationRecord
     end
     self.update_column('git_token', new_token)
     new_token
+  end
+
+  def unique_name
+    errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
   end
 end
