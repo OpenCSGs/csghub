@@ -23,8 +23,23 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/branches")
     end
 
-    def create_or_update_user(name, nickname, email)
-      res = @client.post("/api/v1/users", options)
+    def create_user(name, nickname, email)
+      options = {}
+      options[:body] = {
+        username: name,
+        name: nickname,
+        email: email
+      }
+      @client.post("/users", options)
+    end
+
+    def update_user(name, nickname, email)
+      options = {}
+      options[:body] = {
+        name: nickname,
+        email: email
+      }
+      @client.put("/users/#{name}", options)
     end
 
     # TODO: add more starhub api
