@@ -22,8 +22,8 @@
       <div class="flex items-center gap-[20px] text-[20px] leading-[28px] font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.66634 3.3335L3.09677 10.6507C3.17992 12.0643 3.22149 12.7711 3.52319 13.3075C3.78878 13.7797 4.19189 14.1597 4.67885 14.3971C5.23202 14.6668 5.94003 14.6668 7.35607 14.6668H8.64328C10.0593 14.6668 10.7673 14.6668 11.3205 14.3971C11.8075 14.1597 12.2106 13.7797 12.4762 13.3075C12.7779 12.7711 12.8194 12.0643 12.9026 10.6507L13.333 3.3335M2.66634 3.3335H1.33301M2.66634 3.3335H13.333M13.333 3.3335H14.6663M10.6663 3.3335L10.3644 2.42753C10.2332 2.03412 10.1676 1.83742 10.046 1.69199C9.93863 1.56356 9.80072 1.46416 9.64492 1.40288C9.4685 1.3335 9.26115 1.3335 8.84646 1.3335H7.15289C6.7382 1.3335 6.53085 1.3335 6.35443 1.40288C6.19863 1.46416 6.06071 1.56356 5.95332 1.69199C5.8317 1.83742 5.76613 2.03412 5.635 2.42753L5.33301 3.3335M6.66634 6.66683V11.3335M9.33301 6.66683V9.3335" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Delete this dataset
       </div>
-      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">This action <span class="text-black font-semibold">cannot</span> be undone. This will permanently delete the <span class="text-black font-semibold">username/datasetname</span> dataset repository and all its files.</div>
-      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">Please type <span class="text-black font-semibold">username/datasetname</span> to confirm.</div>
+      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">This action <span class="text-black font-semibold">cannot</span> be undone. This will permanently delete the <span class="text-black font-semibold">{{path}}</span> dataset repository and all its files.</div>
+      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">Please type <span class="text-black font-semibold">{{path}}</span> to confirm.</div>
       <el-input
           v-model="delDesc"
           clearable
