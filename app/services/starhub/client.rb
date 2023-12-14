@@ -14,6 +14,10 @@ module Starhub
       request(:post, path, options)
     end
 
+    def put(path, options = {})
+      request(:put, path, options)
+    end
+
     private
 
     def build_request_url(path)
@@ -32,16 +36,7 @@ module Starhub
         payload: options[:body]
       )
 
-      response = request.execute do |resp, &blk|
-        if resp.code >= 300
-          # TODO: handle more types of error
-          raise APIError.new(resp)
-        else 
-          resp.return!(&blk)
-        end
-      end
-
-      response.body
+      request.execute
     end
   end
 end
