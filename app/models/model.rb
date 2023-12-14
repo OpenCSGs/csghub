@@ -22,5 +22,9 @@ class Model < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
 
-  validates :name, format: { with: /\A[a-zA-Z0-9\-._]{2,20}\z/ }
+  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
+
+  def path
+    "#{owner.name}/#{name}"
+  end
 end

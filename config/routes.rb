@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :leads, only: [:create]
     resources :users, only: [:update]
+    resources :models, only: [:create]
   end
 
   # internal_api
@@ -75,7 +76,7 @@ Rails.application.routes.draw do
     end
 
     resources :campaigns, only: [:index, :show]
-    resources :models, only: [:index]
+    resources :models, only: [:index, :new]
     resources :organizations, only: [:new]
 
     get '/models/:user_name/:model_name', to: 'models#show'

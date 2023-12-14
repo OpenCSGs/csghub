@@ -65,6 +65,11 @@ class User < ApplicationRecord
     git_token || create_git_token
   end
 
+  def available_namespaces
+    org_names = organizations.includes(:org_memberships).where.not(org_memberships: {role: 'read'}).pluck(:id, :name)
+    [["#{id}_User", name], *org_names.map { |id, name| ["#{id}_Organization", name] }]
+  end
+
   private
 
   def create_git_token
