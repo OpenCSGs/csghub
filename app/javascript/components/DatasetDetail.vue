@@ -1,16 +1,16 @@
 <template>
   <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
-      <dataset-header :license="dataset.detail.license" :name="dataset.detail.name" :path="dataset.detail.path" />
+      <dataset-header :license="dataset.data.license" :name="dataset.data.name" :path="dataset.data.path" />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
-      :introduction="dataset.detail.introduction"
-      :download-count="dataset.detail.download_count"
+      :introduction="dataset.data.introduction"
+      :download-count="dataset.data.download_count"
       :files="files.tree"
-      :last-commit="lastCommit.last_commit"
-      :branches="branches.branches"
+      :last-commit="lastCommit.data"
+      :branches="branches.data"
     />
   </div>
 </template>
@@ -27,7 +27,7 @@ const props = defineProps({
 })
 </script>
 
-<style>
+<style scoped>
   body {
     background: #fff !important;
   }
