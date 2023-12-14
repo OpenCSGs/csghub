@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :campaigns, only: [:index]
     resources :comments, only: [:create, :destroy]
     resources :leads, only: [:create]
+    resources :ssh_keys, only: [:create, :destroy]
     resources :users, only: [:update]
     resources :tags, only: [] do
       collection do
@@ -43,11 +44,7 @@ Rails.application.routes.draw do
         get 'framework-tags', to: 'tags#framework_tags'
       end
     end
-  end
-
-  # internal_api
-  namespace :internal_api do
-    resources :ssh_keys, only: [:create, :destroy]
+    resources :discussions, only: :create
   end
 
   # lead form
