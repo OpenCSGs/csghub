@@ -26,20 +26,34 @@ class Tag < ApplicationRecord
     computer_vision: {color: '#db7a7a', zh_name: '计算机视觉'},
     natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理'},
     audio_processing: {color: '#538f72', zh_name: '语音处理'},
-    multimodal_technology: {color: '#e69832', zh_name: '多模态'},
     multimodal: {color: '#e69832', zh_name: '多模态'},
     text_processing: {color: '#ff33cc', zh_name: '文本'},
     graphics: {color: '#0073e6', zh_name: '图像'},
     audio: {color: '#cccc00', zh_name: '音频'},
     video: {color: '#33cccc', zh_name: '视频'},
     scientific_computing: {color: '#33cc33', zh_name: '科学计算'}
-  }
+  }.with_indifferent_access
 
   DEFAULT_TAGS = [
     {name: '语言模型', color: '#009933'},
     {name: '图片模型', color: '#ff9900'},
     {name: '多模态', color: '#cc0066'},
     {name: '智能体', color: '#cc33ff'}
+  ]
+
+  MODEL_TAG_FIELDS = [
+    'computer_vision',
+    'natural_language_processing',
+    'audio_processing',
+    'multimodal'
+  ]
+
+  DATASET_TAG_FIELDS = [
+    'text_processing',
+    'graphics',
+    'audio',
+    'multimodal',
+    'scientific_computing'
   ]
 
   def as_json options = nil
