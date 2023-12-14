@@ -22,6 +22,16 @@ module Starhub
     def get_model_branches(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/branches")
     end
+    
+    def create_sshkey(username, name, content)
+      options = {}
+      options[:body] = {
+        username: username,
+        name: name,
+        content: content
+      }
+      @client.post("/user/deli6/ssh_keys", options)
+    end
 
     # TODO: add more starhub api
   end
