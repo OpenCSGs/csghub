@@ -29,6 +29,7 @@ import NewOrganization from "./components/organizations/NewOrganization.vue"
 import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
+import TagSidebar from "./components/tags/TagSidebar.vue"
 
 app = createApp({
   components: {
@@ -54,6 +55,7 @@ app = createApp({
     SshKeySettings,
     NewOrganization,
     NewModel,
+    TagSidebar
   },
   provide:{
     defaultTags: DefaultTags

@@ -1,16 +1,17 @@
-class DatasetsController < ApplicationController
-  def index
-  end
-
-  def new_index
+class InternalApi::TagsController < ApplicationController
+  def task_tags
     response = {}
-    Tag::DATASET_TAG_FIELDS.each do |field|
+    Tag::TAG_FIELD_COLOR_MAPPINGS.keys.each do |field|
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
       response[field][:tags] = Tag.where(tag_field: field)
     end
-    @task_tags = response.as_json
-    @framework_tags = Tag.where(tag_type: 'framework').as_json
+    render json: response.as_json
+  end
+
+  def framework_tags
+    response = Tag.where(tag_type: 'framework')
+    render json: response.as_json
   end
 end
