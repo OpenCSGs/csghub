@@ -9,7 +9,7 @@
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
       <template #settings>
-        <Settings/>
+        <Settings :path="modelPath" />
       </template>
     </TabContainer>
   </div>
@@ -31,6 +31,7 @@ import Settings from '../settings/settings.vue'
 const props = defineProps({
   introduction: String,
   downloadCount: Number,
+  modelPath: String,
   files: Object,
   lastCommit: Object,
   branches: Object,

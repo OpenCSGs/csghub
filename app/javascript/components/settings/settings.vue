@@ -39,7 +39,9 @@
 import { h } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 export default {
-  props: {},
+  props: {
+    Path: String
+  },
   components: {},
   data() {
     return {
