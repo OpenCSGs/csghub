@@ -37,10 +37,12 @@
               Git Token
             </a>
           </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/keys')"
           >
-            SSH和GPG密钥
+            <a href="/settings/ssh-keys">
+              SSH Keys
+            </a>
           </div>
           <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/billing')"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -168,6 +168,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
     t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
+  create_table "system_configs", force: :cascade do |t|
+    t.string "application_env"
+    t.jsonb "oidc_configs", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ssh_keys", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.text "ssh_key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_ssh_keys_on_user_id"
+  end
+
   create_table "system_api_keys", force: :cascade do |t|
     t.string "service"
     t.string "secret_key"
@@ -189,6 +205,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tag_origin", default: "user_created"
+    t.string "tag_type", default: "task"
+    t.string "tag_field"
+    t.string "zh_name"
+    t.text "desc"
   end
 
   create_table "users", force: :cascade do |t|
@@ -214,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_134018) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
+  add_foreign_key "ssh_keys", "users"
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
   add_foreign_key "taggings", "spaces"

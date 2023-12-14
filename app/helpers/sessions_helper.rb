@@ -21,8 +21,7 @@ module SessionsHelper
 
   def logout
     session[:login_identity] = nil
-    cookies.delete :lastLoginAt
-    cookies.delete :authingUuid, domain: current_cookie_domain
+    cookies.delete :oidcUuid, domain: current_cookie_domain
     cookies.delete :idToken, domain: current_cookie_domain
     cookies.delete :userinfos, domain: current_cookie_domain
   end

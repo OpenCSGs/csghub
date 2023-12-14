@@ -23,7 +23,9 @@ zh:
         lead:
           blank: "字段不能为空"
           taken: "不能创建重复的线索"
-
+        ssh_key:
+          blank: "字段不能为空"
+          taken: "不能创建重复"
 
   datetime:
     distance_in_words:
