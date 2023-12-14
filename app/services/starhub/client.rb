@@ -32,16 +32,7 @@ module Starhub
         payload: options[:body]
       )
 
-      response = request.execute do |resp, &blk|
-        if resp.code >= 300
-          # TODO: handle more types of error
-          raise APIError.new(resp)
-        else 
-          resp.return!(&blk)
-        end
-      end
-
-      response.body
+      request.execute
     end
   end
 end

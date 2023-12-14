@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_14_081234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -168,25 +168,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
     t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
-  create_table "system_configs", force: :cascade do |t|
-    t.string "application_env"
-    t.jsonb "oidc_configs", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "ssh_keys", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.text "ssh_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "starhub_synced", default: false
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
   end
 
   create_table "system_api_keys", force: :cascade do |t|
     t.string "service"
     t.string "secret_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "system_configs", force: :cascade do |t|
+    t.string "application_env"
+    t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -235,9 +236,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
-  add_foreign_key "ssh_keys", "users"
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
+  add_foreign_key "ssh_keys", "users"
   add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end
