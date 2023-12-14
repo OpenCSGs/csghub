@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :organizations, through: :org_memberships
   has_many :comments, dependent: :destroy
   has_many :models, as: :owner
+  has_many :created_models, class_name: 'Model', foreign_key: :creator_id
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]

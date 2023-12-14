@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_08_075530) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_14_070405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -140,6 +140,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_08_075530) do
     t.string "visibility"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_models_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_models_on_owner"
   end
 
@@ -247,6 +249,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_08_075530) do
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
   add_foreign_key "ssh_keys", "users"
+  add_foreign_key "models", "users", column: "creator_id"
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
   add_foreign_key "taggings", "spaces"

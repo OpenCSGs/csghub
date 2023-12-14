@@ -2,7 +2,7 @@ class InternalApi::ModelsController < ApplicationController
   before_action :authenticate_user
   
   def create
-    model = Model.new(model_params)
+    model = current_user.created_models.build(model_params)
     if model.save
       render json: { path: model.path, message: '模型创建成功!' }, status: :created
     else
