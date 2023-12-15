@@ -81,6 +81,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_14_070405) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "discussions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.bigint "discussionable_id", null: false
+    t.string "discussionable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lead_forms", force: :cascade do |t|
     t.string "lead_source"
     t.string "channel"
