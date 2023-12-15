@@ -1,6 +1,5 @@
 class Model < ApplicationRecord
-  enum :visibility, { model_public: 'public', model_private: 'private' }, default: :model_private
-  enum :license, {
+  DEFAULT_LICENSES = {
     apache_2_0: 'Apache License 2.0',
     mit: 'MIT',
     lgpl: 'GNU Lesser General Public License family',
@@ -22,6 +21,8 @@ class Model < ApplicationRecord
     cc_by_nc_sa_4_0: 'Creative Commons Attribution Non Commercial Share Alike 4.0',
     other: 'Other'
   }
+
+  enum :visibility, { model_public: 'public', model_private: 'private' }, default: :model_private
 
   belongs_to :owner, polymorphic: true
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id

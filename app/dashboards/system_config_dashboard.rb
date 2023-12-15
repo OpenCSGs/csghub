@@ -11,6 +11,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     id: Field::Number,
     application_env: Field::String,
     oidc_configs: Field::JSONB,
+    license_configs: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -32,6 +33,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     id
     application_env
     oidc_configs
+    license_configs
     created_at
     updated_at
   ].freeze
@@ -42,6 +44,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     application_env
     oidc_configs
+    license_configs
   ].freeze
 
   # COLLECTION_FILTERS

@@ -19,10 +19,6 @@ class ModelPolicy < ApplicationPolicy
     user.super_user?
   end
 
-  def toggle_lead_form_status?
-    user.admin?
-  end
-
   class Scope < Scope
     def resolve
       Model.all

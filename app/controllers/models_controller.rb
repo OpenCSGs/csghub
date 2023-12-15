@@ -23,6 +23,7 @@ class ModelsController < ApplicationController
 
   def new
     @available_namespaces = current_user.available_namespaces
-    @licenses = Model.licenses
+    system_config = SystemConfig.first
+    @licenses = system_config&.license_configs.blank? ? Model::DEFAULT_LICENSES : system_config.license_configs
   end
 end
