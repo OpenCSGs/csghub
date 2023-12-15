@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :name, :git_token, allow_blank: true
   validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }, allow_blank: true
 
-  validate :unique_name
+  validate :unique_name_by_organization
 
   has_many :spaces, dependent: :destroy
   has_many :org_memberships, dependent: :destroy
@@ -84,7 +84,7 @@ class User < ApplicationRecord
     new_token
   end
 
-  def unique_name
+  def unique_name_by_organization
     errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
   end
 end

@@ -4,7 +4,7 @@ class Organization < ApplicationRecord
   validates_uniqueness_of :name
   validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }
 
-  validate :unique_name
+  validate :unique_name_by_user
 
   has_many :org_memberships, dependent: :destroy
   has_many :users, through: :org_memberships
@@ -31,7 +31,7 @@ class Organization < ApplicationRecord
 
   private
 
-  def unique_name
+  def unique_name_by_user
     errors.add(:name, 'is already taken') if User.where(name: name).exists?
   end
 end
