@@ -27,7 +27,7 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">模型名称</p>
-          <el-input v-model="modelName" placeholder="2-20个字母数字下划线中线的字符串" input-style="width: 100%" />
+          <el-input v-model="modelName" placeholder="2-20个字母数字_-的字符串，_-不能并列出现" input-style="width: 100%" />
         </div>
       </div>
       <div class="mb-9">
@@ -75,7 +75,7 @@
   :deep(.el-input) {
     width: 240px;
     height: 40px;
-    
+
     @media screen and (max-width: 768px) {
       width: 100%;
     }
@@ -102,7 +102,7 @@
   :deep(.el-select) {
     width: 240px;
     height: 40px;
-    
+
     @media screen and (max-width: 768px) {
       width: 100%;
     }
@@ -113,7 +113,7 @@
   import { ref, computed, defineProps } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
-  
+
   const props = defineProps({
     licenses: Array,
     namespaces: Array,
@@ -123,9 +123,9 @@
   const owner = ref(props.namespaces[0][0])
   const modelName = ref('')
   const visibility = ref('private')
-  
+
   const canCreateModel = computed(() => { return /^(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+$/.test(modelName.value) })
-  
+
   const createModel = async () => {
     try {
       const res = await submitModelForm()
@@ -135,7 +135,7 @@
       ElMessage.warning(err.message)
     }
   }
-  
+
   async function submitModelForm() {
     const modelCreateEndpoint = `/internal_api/models`
     const formData = new FormData()
@@ -145,7 +145,7 @@
     formData.append('name', modelName.value)
     formData.append('license', license.value)
     formData.append('visibility', visibility.value)
-    
+
     const options = { method: 'POST', body: formData }
 
     const response = await csrfFetch(modelCreateEndpoint, options)
