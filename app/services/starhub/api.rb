@@ -23,6 +23,12 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/branches")
     end
 
+
+    # create git token
+    def add_git_token(username, name, options = {})
+      options[:body] = {name: name}.to_json
+      res = @client.post("/user/#{username}/tokens", options)
+    end
     # TODO: add more starhub api
   end
 end
