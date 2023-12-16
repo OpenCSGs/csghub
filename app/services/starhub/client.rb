@@ -24,6 +24,7 @@ module Starhub
     def request(verb, path, options = {})
       headers = options[:headers] || {}
       headers['content-type'] ||= 'application/json'
+      headers['Authorization'] ||= Rails.application.credentials.starhub_api.send("#{Rails.env}").token
 
       request = ::RestClient::Request.new(
         method: verb,
@@ -35,7 +36,7 @@ module Starhub
       response = request.execute do |resp, &blk|
         if resp.code >= 300
           # TODO: handle more types of error
-          raise APIError.new(resp)
+          raise ApiError.new(resp)
         else 
           resp.return!(&blk)
         end
