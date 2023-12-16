@@ -66,7 +66,7 @@
             <el-dropdown-item @click="showDialog"
               >联系我们</el-dropdown-item
             >
-            <el-dropdown-item divided>
+            <el-dropdown-item v-if="decemberRelease" divided>
               <a href="/organizations/new">+ 新建组织</a>
             </el-dropdown-item>
             <el-dropdown-item divided>
@@ -110,7 +110,8 @@ export default {
     phone: String,
     isLoggedIn: String,
     userName: String,
-    loginUrl: String
+    loginUrl: String,
+    decemberRelease: Boolean
   },
   data() {
     return {
