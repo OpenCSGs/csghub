@@ -23,8 +23,11 @@ class InternalApi::ModelsController < ApplicationController
   def validate_owner
     if params[:owner_type] == 'User' && current_user.id.to_i != params[:owner_id].to_i
       return { valid: false, message: '用户不存在' }
-    elsif params[:owner_type] == 'Organization' && current_user.organizations.joins(:org_memberships).where.not(org_memberships: { role: 'read' }).pluck(:id).exclude?(params[:owner_id].to_i)
-      return { valid: false, message: '组织不存在' }
+    elsif params[:owner_type] == 'Organization'
+      org = current_user.organizations.find_by(id: params[:owner_id])
+      if !org || current_user.org_memberships.find_by(organization: org).role == 'read'
+        return { valid: false, message: '组织不存在或无权限' }
+      end
     end
     { valid: true }
   end
