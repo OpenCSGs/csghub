@@ -34,15 +34,13 @@
              class="py-[6px] px-[12px] w-[95px] border rounded-[8px] text-[14px] text-[#FFFFFF] mt-[16px] cursor-pointer bg-[#9FCEFF] hover:text-[#606266] hover:bg-[#8AA2FF]">
           New token
         </div>
-        <el-dialog v-model="addTokenDialogVisible" title="Create a new access token" class="dialogWidth"
-                   style="border-radius: 0.5rem; width: 20%;" left>
+        <el-dialog v-model="addTokenDialogVisible" title="Create a new access token"
+                   style="border-radius: 0.5rem;" class="dialogWidth" left>
           <div class="mb-[16px]">
             <p class="text-[#303133] text-[14px] mb-[8px]"> Name <span class="text-red-400">*</span></p>
             <el-input v-model="gitTokenName" class="h-[40px]" placeholder="What's this token for?" maxlength="20"/>
           </div>
-          <el-button type="primary" @click="addGitToken" class="w-full h-[30px] mb-[16px]">
-          确认
-          </el-button>
+          <el-button type="primary" @click="addGitToken" class="w-full h-[30px] mb-[16px]">Generate a token</el-button>
         </el-dialog>
       </div>
     </div>
@@ -121,3 +119,26 @@ export default {
   }
 }
 </script>
+<style scoped>
+.dialogWidth {
+  width: 20%;
+}
+
+@media (max-width: 640px) {
+  .dialogWidth {
+    width: 80%;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .dialogWidth {
+    width: 40%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dialogWidth {
+    width: 20%;
+  }
+}
+</style>
