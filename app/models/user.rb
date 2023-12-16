@@ -61,7 +61,7 @@ class User < ApplicationRecord
   end
 
   def git_token!
-    git_token || create_git_token
+    git_token
   end
 
   private
