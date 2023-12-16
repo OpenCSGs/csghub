@@ -8,11 +8,11 @@
     </Menu>
     <div class="grow py-[24px]">
       <div class="max-w-[512px]">
-        <div class="mb-[32px]">
+        <div class="mb-[16px]">
           <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">用户 Git Token</h3>
           <p class="text-[#606266] text-[14px]"> Git Token 用于授权您执行 Git 相关操作 </p>
         </div>
-        <div class="bg-[#F5F7FA] p-[12px] rounded-[8px]">
+        <div v-if="gitToken" class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
           <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">git token</h3>
           <div class="flex items-center">
             <el-input
