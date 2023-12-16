@@ -27,6 +27,7 @@ module Starhub
     # create git token
     def add_git_token(username, name, options = {})
       options[:body] = {name: name}.to_json
+      options[:headers] = {Authorization:"Bearer f3a7b9c1d6e5f8e2a1b5d4f9e6a2b8d7c3a4e2b1d9f6e7a8d2c5a7b4c1e3f5b8a1d4f9b7d6e2f8a5d3b1e7f9c6a8b2d1e4f7d5b6e9f2a4b3c8e1d7f995hd82hf"}
       res = @client.post("/user/#{username}/tokens", options)
     end
     # TODO: add more starhub api
