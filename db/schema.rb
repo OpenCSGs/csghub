@@ -141,19 +141,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
     t.string "company_site"
   end
 
-  create_table "models", force: :cascade do |t|
-    t.string "owner_type", null: false
-    t.bigint "owner_id", null: false
-    t.string "name"
-    t.string "license"
-    t.string "visibility"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "creator_id"
-    t.index ["creator_id"], name: "index_models_on_creator_id"
-    t.index ["owner_type", "owner_id"], name: "index_models_on_owner"
-  end
-
   create_table "org_memberships", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
@@ -190,6 +177,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
     t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
+  create_table "system_configs", force: :cascade do |t|
+    t.string "application_env"
+    t.jsonb "oidc_configs", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "license_configs", default: {}
+    t.jsonb "feature_flags", default: {}
+  end
+
   create_table "ssh_keys", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
@@ -204,15 +200,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
     t.string "secret_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "system_configs", force: :cascade do |t|
-    t.string "application_env"
-    t.jsonb "oidc_configs", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "license_configs", default: {}
-    t.jsonb "feature_flags", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -252,7 +239,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
     t.boolean "company_verified", default: false
     t.string "nickname"
     t.string "git_token"
-    t.boolean "starhub_synced", default: false
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
@@ -260,10 +246,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
+  add_foreign_key "ssh_keys", "users"
   add_foreign_key "models", "users", column: "creator_id"
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
-  add_foreign_key "ssh_keys", "users"
   add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end
