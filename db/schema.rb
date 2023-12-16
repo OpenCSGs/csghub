@@ -182,7 +182,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
     t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "license_configs", default: {}
     t.jsonb "feature_flags", default: {}
   end
 
@@ -247,7 +246,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
   add_foreign_key "comments", "users"
   add_foreign_key "lead_forms", "campaigns"
   add_foreign_key "ssh_keys", "users"
-  add_foreign_key "models", "users", column: "creator_id"
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
   add_foreign_key "taggings", "spaces"
