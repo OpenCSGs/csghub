@@ -65,7 +65,8 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    helpers.log_in user
+    # 确保如果新的用户uuid没有保存，那么我们登录老的用户
+    helpers.log_in user.reload
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
   end
