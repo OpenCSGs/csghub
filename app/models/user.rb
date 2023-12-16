@@ -73,6 +73,10 @@ class User < ApplicationRecord
     [["#{id}_User", name], *org_names.map { |id, name| ["#{id}_Organization", name] }]
   end
 
+  def org_role org
+    org_memberships.find_by(organization: org)&.role
+  end
+
   private
 
   def create_git_token
