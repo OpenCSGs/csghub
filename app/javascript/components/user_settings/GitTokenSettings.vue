@@ -27,6 +27,7 @@
             </div>
           </div>
         </div>
+        <div><span @click="addGitToken" class="bg-[#9FCEFF] cursor-pointer">generate git token</span></div>
       </div>
     </div>
   </div>
@@ -34,6 +35,7 @@
 <script>
 import Menu from "./Menu.vue";
 import { ElMessage } from 'element-plus'
+import csrfFetch from "../../packs/csrfFetch";
 export default {
   props: {
     name: String,
@@ -50,6 +52,7 @@ export default {
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
+      gitTokenName: 'test7'
     };
   },
   mounted() {},
@@ -60,7 +63,31 @@ export default {
         message: '复制成功！',
         type: 'success'
       })
-    }
-  },
-};
+    },
+
+    async addGitToken() {
+      const GitTokenCreateEndpoint = "/internal_api/git_token"
+      const option = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({name: this.gitTokenName})
+      }
+      const response = await csrfFetch(GitTokenCreateEndpoint, option)
+
+      if (!response.ok) {
+        return response.json().then((data) => {
+          console.log(data)
+          ElMessage({message: data.message, type: "warning"})
+        })
+      } else {
+        // setTimeout(() => {
+        //   window.location.href = "/settings/ssh-keys"
+        // }, 1000)
+        ElMessage({message: "添加成功", type: "success"})
+      }
+    },
+  }
+}
 </script>
