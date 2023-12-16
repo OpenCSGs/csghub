@@ -2,6 +2,10 @@ class InternalApi::ModelsController < ApplicationController
   before_action :authenticate_user
   
   def create
+    res = validate_owner
+    if !res[:valid]
+      return render json: { message: res[:message] }, status: :unprocessable_entity
+    end
     model = current_user.created_models.build(model_params)
     if model.save
       render json: { path: model.path, message: '模型创建成功!' }, status: :created
@@ -14,5 +18,14 @@ class InternalApi::ModelsController < ApplicationController
 
   def model_params
     params.permit(:name, :owner_id, :owner_type, :visibility, :license)
+  end
+
+  def validate_owner
+    if params[:owner_type] == 'User' && current_user.id.to_i != params[:owner_id].to_i
+      return { valid: false, message: '用户不存在' }
+    elsif params[:owner_type] == 'Organization' && current_user.organizations.joins(:org_memberships).where.not(org_memberships: { role: 'read' }).pluck(:id).exclude?(params[:owner_id].to_i)
+      return { valid: false, message: '组织不存在' }
+    end
+    { valid: true }
   end
 end
