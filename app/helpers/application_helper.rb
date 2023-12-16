@@ -62,4 +62,13 @@ module ApplicationHelper
       'danger'
     end
   end
+
+  def feature_flags
+    system_config = SystemConfig.first
+    if system_config
+      system_config.feature_flags
+    else
+      {}
+    end
+  end
 end

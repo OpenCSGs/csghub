@@ -9,7 +9,7 @@
             phone="<%= current_user.phone %>"
             user-name="<%= current_user.display_name%>"
             is-logged-in="true"
-            :december-release="<%= SystemConfig.first.feature_flags['december_release'] %>"
+            :december-release="<%= feature_flags['december_release'] %>"
     />
   <% else %>
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
