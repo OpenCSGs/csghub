@@ -65,8 +65,22 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    helpers.log_in user
+    # 确保如果新的用户uuid没有保存，那么我们登录老的用户
+    helpers.log_in user.reload
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
+  end
+
+  def check_user_info_integrity
+    return unless helpers.logged_in?
+
+    if current_user.email.blank?
+      flash[:alert] = "请补充邮箱，以便能使用完整的功能"
+      return redirect_to '/settings/profile'
+    end
+
+    unless current_user.starhub_synced?
+      current_user.sync_to_starhub_server
+    end
   end
 end

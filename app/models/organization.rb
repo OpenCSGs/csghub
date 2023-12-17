@@ -2,7 +2,7 @@ class Organization < ApplicationRecord
   enum :org_type, {'企业': 'company', '高校': 'university', '非营利组织': 'non_profit', '社区组织': 'community'}
 
   validates_uniqueness_of :name
-  validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }
+  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
   validate :unique_name_by_user
 
