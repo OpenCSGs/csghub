@@ -1,4 +1,6 @@
 class ModelsController < ApplicationController
+  before_action :check_user_info_integrity
+
   def index
   end
 
@@ -29,5 +31,12 @@ class ModelsController < ApplicationController
       puts "Caught an internal server error: #{e.message}"
       return render json: { message: "删除#{params[:user_name]}/#{params[:model_name]}失败" }, status: :bad_request
     end
+  end
+
+  def new
+    @available_namespaces = current_user.available_namespaces
+    system_config = SystemConfig.first
+    license_configs = system_config.license_configs rescue nil
+    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 end
