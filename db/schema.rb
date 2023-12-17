@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "discussions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.bigint "discussionable_id", null: false
+    t.string "discussionable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "lead_forms", force: :cascade do |t|
@@ -173,6 +182,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065321) do
     t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "feature_flags", default: {}
   end
 
   create_table "ssh_keys", force: :cascade do |t|
