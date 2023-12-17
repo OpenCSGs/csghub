@@ -1,4 +1,6 @@
 class ModelsController < ApplicationController
+  before_action :check_user_info_integrity
+
   def index
   end
 
@@ -12,6 +14,7 @@ class ModelsController < ApplicationController
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
+    @license_tags = Tag.where(tag_type: 'license').as_json
   end
 
   def show
@@ -19,5 +22,12 @@ class ModelsController < ApplicationController
     @files = Starhub.api.get_model_files(params[:user_name], params[:model_name])
     @last_commit = Starhub.api.get_last_commit(params[:user_name], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
+  end
+
+  def new
+    @available_namespaces = current_user.available_namespaces
+    system_config = SystemConfig.first
+    license_configs = system_config.license_configs rescue nil
+    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 end

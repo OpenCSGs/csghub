@@ -1,47 +1,39 @@
-require 'rest_client'
-
 module Starhub
   class Client
     class ApiError < StandardError; end
-
     include Singleton
 
-    def get(path, options = {})
-      request(:get, path, options)
+    API_VERSION = '/api/v1'
+
+    def get(path, params = {})
+      starhub_api_connection.get(request_path(path), params)
     end
 
     def post(path, options = {})
-      request(:post, path, options)
+      starhub_api_connection.post(request_path(path)) do |req|
+        req.body = options.to_json
+      end
+    end
+
+    def put(path, options = {})
+      starhub_api_connection.put(request_path(path)) do |req|
+        req.body = options.to_json
+      end
     end
 
     private
 
-    def build_request_url(path)
-      base_url = Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
-      base_url + path
+    def request_path(path)
+      API_VERSION + path
     end
 
-    def request(verb, path, options = {})
-      headers = options[:headers] || {}
-      headers['content-type'] ||= 'application/json'
-
-      request = ::RestClient::Request.new(
-        method: verb,
-        url: build_request_url(path),
-        headers: headers,
-        payload: options[:body]
-      )
-
-      response = request.execute do |resp, &blk|
-        if resp.code >= 300
-          # TODO: handle more types of error
-          raise ApiError.new(resp)
-        else 
-          resp.return!(&blk)
-        end
-      end
-
-      response.body
+    def starhub_api_connection
+      Faraday.new(
+        url: Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url,
+        headers: {
+          'Content-Type' => 'application/json',
+          'Authorization' => Rails.application.credentials.starhub_api.send("#{Rails.env}").token
+        })
     end
   end
 end
