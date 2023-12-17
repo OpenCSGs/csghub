@@ -20,7 +20,7 @@
             :class="activeNavItem === 'License' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        框架标签
+      许可证标签
       </span>
     </div>
     <div>
