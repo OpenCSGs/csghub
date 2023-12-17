@@ -94,7 +94,7 @@ class User < ApplicationRecord
       Starhub.api.update_user(name, nickname, email)
     else
       res = Starhub.api.create_user(name, nickname, email)
-      starhub_synced! if res.code >= 200 && res.code <= 299
+      starhub_synced! if res.status >= 200 && res.status <= 299
     end
   end
 

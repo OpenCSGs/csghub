@@ -38,7 +38,7 @@ module Starhub
         name: nickname,
         email: email
       }
-      @client.put("/users", options)
+      @client.put("/users/#{name}", options)
     end
 
     def create_model(username, model_name, namespace, options = {})
