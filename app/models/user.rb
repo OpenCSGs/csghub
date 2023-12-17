@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :models, as: :owner
   has_many :created_models, class_name: 'Model', foreign_key: :creator_id
+  has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
   has_many :ssh_keys, dependent: :destroy
 
   after_save :sync_to_starhub_server
