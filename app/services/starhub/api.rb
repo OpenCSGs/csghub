@@ -38,7 +38,7 @@ module Starhub
         name: nickname,
         email: email
       }
-      @client.put("/users", options)
+      @client.put("/users/#{name}", options)
     end
 
     # TODO: add more starhub api
