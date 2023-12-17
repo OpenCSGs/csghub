@@ -20,4 +20,14 @@ class ModelsController < ApplicationController
     @last_commit = Starhub.api.get_last_commit(params[:user_name], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
   end
+
+  def destroy
+    begin
+      Starhub.api.delete_model(params[:user_name], params[:model_name])
+      render json: { message: '删除成功' }
+    rescue Starhub::Client::ApiError => e
+      puts "Caught an internal server error: #{e.message}"
+      return render json: { message: "删除#{params[:user_name]}/#{params[:model_name]}失败" }, status: :bad_request
+    end
+  end
 end

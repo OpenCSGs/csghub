@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     resources :organizations, only: [:new]
 
     get '/models/:user_name/:model_name', to: 'models#show'
+    delete '/models/:user_name/:model_name', to: 'models#destroy'
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'
