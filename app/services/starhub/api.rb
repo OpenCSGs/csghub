@@ -55,7 +55,7 @@ module Starhub
         name: key_name,
         content: content
       }
-      @client.post("/user/deli6/ssh_keys", options)
+      @client.post("/user/#{username}/ssh_keys", options)
     end
 
     # TODO: add more starhub api
