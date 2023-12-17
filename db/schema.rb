@@ -252,6 +252,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_16_085904) do
     t.boolean "company_verified", default: false
     t.string "nickname"
     t.string "git_token"
+    t.boolean "starhub_synced", default: false
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
