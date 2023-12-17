@@ -24,8 +24,7 @@ module Starhub
     end
 
     def create_user(name, nickname, email)
-      options = {}
-      options[:body] = {
+      options = {
         username: name,
         name: nickname,
         email: email
@@ -34,12 +33,12 @@ module Starhub
     end
 
     def update_user(name, nickname, email)
-      options = {}
-      options[:body] = {
+      options = {
+        username: name,
         name: nickname,
         email: email
       }
-      @client.put("/users/#{name}", options)
+      @client.put("/users", options)
     end
 
     # TODO: add more starhub api
