@@ -26,7 +26,7 @@ import ModelClone from './ModelClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
-import Settings from '../settings/settings.vue'
+import Settings from '../settings/ModelSettings.vue'
 
 const props = defineProps({
   introduction: String,
