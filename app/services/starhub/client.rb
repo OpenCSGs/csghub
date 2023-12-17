@@ -14,6 +14,10 @@ module Starhub
       request(:post, path, options)
     end
 
+    def delete(path, options = {})
+      request(:delete, path, options)
+    end
+
     private
 
     def build_request_url(path)

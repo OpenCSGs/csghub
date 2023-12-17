@@ -23,6 +23,10 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/branches")
     end
 
+    def delete_model(username, model_name, options = {})
+      res = @client.delete("/models/#{username}/#{model_name}")
+    end
+
     # TODO: add more starhub api
   end
 end
