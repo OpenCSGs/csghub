@@ -4,9 +4,17 @@ class Dataset < ApplicationRecord
   belongs_to :owner, polymorphic: true
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
+  after_create :sync_created_dataset_to_starhub_server
+
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
   def path
     "#{owner.name}/#{name}"
+  end
+
+  private
+
+  def sync_created_dataset_to_starhub_server
+    Starhub.api.create_dataset(creator.name, name, owner.name)
   end
 end

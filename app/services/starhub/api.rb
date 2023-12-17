@@ -48,6 +48,13 @@ module Starhub
       @client.post("/models", options)
     end
 
+    def create_dataset(username, dataset_name, namespace, options = {})
+      options[:username] = username
+      options[:name] = dataset_name
+      options[:namespace] = namespace
+      @client.post("/datasets", options)
+    end
+
     # TODO: add more starhub api
   end
 end
