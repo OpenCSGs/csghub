@@ -19,6 +19,9 @@ class User < ApplicationRecord
   has_many :models, as: :owner
   has_many :created_models, class_name: 'Model', foreign_key: :creator_id
 
+  has_many :datasets, as: :owner
+  has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
+
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
   def roles=(*roles)

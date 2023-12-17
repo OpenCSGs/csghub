@@ -14,6 +14,10 @@ module Starhub
       request(:post, path, options)
     end
 
+    def put(path, options = {})
+      request(:put, path, options)
+    end
+
     private
 
     def build_request_url(path)

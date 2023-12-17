@@ -9,6 +9,7 @@ class Organization < ApplicationRecord
   has_many :org_memberships, dependent: :destroy
   has_many :users, through: :org_memberships
   has_many :models, as: :owner
+  has_many :datasets, as: :owner
 
   def avatar_url
     if logo
