@@ -45,7 +45,6 @@ class Organization < ApplicationRecord
 
   def sync_to_starhub_server
     res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
-    debugger
     starhub_synced! if res.status >= 200 && res.status <= 299
   end
 
