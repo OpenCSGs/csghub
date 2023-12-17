@@ -47,10 +47,9 @@ module Starhub
       options[:namespace] = namespace
       @client.post("/models", options)
     end
-    
+
     def create_ssh_key(username, key_name, content)
-      options = {}
-      options[:body] = {
+      options = {
         username: username,
         name: key_name,
         content: content

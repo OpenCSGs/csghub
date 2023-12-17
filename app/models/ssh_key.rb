@@ -16,9 +16,7 @@ class SshKey < ApplicationRecord
   end
 
   def sync_to_starhub_server
-    unless starhub_synced?
-      res = Starhub.api.create_ssh_key(user.name, name, ssh_key)
-      starhub_synced! if res.code >= 200 && res.code <= 299
-    end
+    res = Starhub.api.create_ssh_key(user.name, name, ssh_key)
+    starhub_synced! if res.status >= 200 && res.status <= 299
   end
 end
