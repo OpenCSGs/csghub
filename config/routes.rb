@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
     resources :system_api_keys
     resources :tags
+    resources :models, except: [:new, :create]
 
     root to: "spaces#index"
   end
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
     resources :users, only: [:update]
+    resources :models, only: [:create]
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -77,7 +79,7 @@ Rails.application.routes.draw do
     end
 
     resources :campaigns, only: [:index, :show]
-    resources :models, only: [:index]
+    resources :models, only: [:index, :new]
     resources :organizations, only: [:new]
 
     get '/models/:user_name/:model_name', to: 'models#show'
