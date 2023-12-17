@@ -49,29 +49,29 @@ module Starhub
     end
 
     def get_model_tags(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/tags")
+      res = @client.get("/models/#{username}/#{model_name}/tags").body
     end
 
     # datasets
     def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/detail")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/detail").body
     end
 
     def get_datasets_files(username, dataset_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}").body
     end
 
     def get_datasets_last_commit(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit").body
     end
 
     def get_datasets_branches(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/branches")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/branches").body
     end
 
     def get_datasets_tags(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tags")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tags").body
     end
 
     # TODO: add more starhub api
