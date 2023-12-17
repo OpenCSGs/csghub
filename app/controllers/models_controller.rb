@@ -24,13 +24,13 @@ class ModelsController < ApplicationController
   end
 
   def destroy
-    begin
-      Starhub.api.delete_model(params[:user_name], params[:model_name])
-      render json: { message: '删除成功' }
-    rescue Starhub::Client::ApiError => e
-      puts "Caught an internal server error: #{e.message}"
-      return render json: { message: "删除#{params[:user_name]}/#{params[:model_name]}失败" }, status: :bad_request
+    res = Starhub.api.delete_model(params[:user_name], params[:model_name])
+    res_json = JSON.parse(res.body)
+    unless res_json["msg"] == 'OK'
+      puts res_json["message"]
+      return render json: { message: "删除 #{params[:user_name]}/#{params[:model_name]} 失败" }, status: :bad_request
     end
+    render json: { message: '删除成功' }
   end
 
   def new
