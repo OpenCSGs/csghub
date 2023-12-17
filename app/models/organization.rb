@@ -9,6 +9,9 @@ class Organization < ApplicationRecord
   has_many :org_memberships, dependent: :destroy
   has_many :users, through: :org_memberships
   has_many :models, as: :owner
+  belongs_to :creator, class_name: 'User', foreign_key: :creator_id
+
+  after_create :sync_to_starhub_server
 
   def avatar_url
     if logo
@@ -29,7 +32,21 @@ class Organization < ApplicationRecord
     }
   end
 
+  def starhub_synced!
+    self.starhub_synced = true
+    self.save
+  end
+
+  def starhub_synced?
+    starhub_synced == true
+  end
+
   private
+
+  def sync_to_starhub_server
+    res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
+    starhub_synced! if res.status >= 200 && res.status <= 299
+  end
 
   def unique_name_by_user
     errors.add(:name, 'is already taken') if User.where(name: name).exists?
