@@ -8,12 +8,15 @@ class User < ApplicationRecord
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
   validates_uniqueness_of :name, :git_token, allow_blank: true
-  validates :name, format: { with: /\A(?=.{2,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])\Z/ }, allow_blank: true
+  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
 
   has_many :spaces, dependent: :destroy
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
   has_many :comments, dependent: :destroy
+  has_many :ssh_keys, dependent: :destroy
+
+  after_save :sync_to_starhub_server
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
@@ -62,6 +65,24 @@ class User < ApplicationRecord
 
   def git_token!
     git_token || create_git_token
+  end
+
+  def starhub_synced!
+    self.starhub_synced = true
+    self.save
+  end
+
+  def starhub_synced?
+    starhub_synced == true
+  end
+
+  def sync_to_starhub_server
+    if starhub_synced?
+      Starhub.api.update_user(name, nickname, email)
+    else
+      res = Starhub.api.create_user(name, nickname, email)
+      starhub_synced! if res.code >= 200 && res.code <= 299
+    end
   end
 
   private

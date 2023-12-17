@@ -1,4 +1,9 @@
 <div>
+  <p>
+    <% if flash[:alert].present? %>
+      <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+    <% end %>
+  </p>
   <profile-settings name="<%= current_user.name %>"
                     nickname="<%= current_user.nickname %>"
                     avatar="<%= current_user.avatar_url %>"
