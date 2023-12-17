@@ -28,6 +28,7 @@ module Starhub
     def request(verb, path, options = {})
       headers = options[:headers] || {}
       headers['content-type'] ||= 'application/json'
+      headers['Authorization'] ||= Rails.application.credentials.starhub_api.send("#{Rails.env}").token
 
       request = ::RestClient::Request.new(
         method: verb,
