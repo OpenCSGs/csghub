@@ -6,9 +6,8 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
-      :introduction="dataset.data.introduction"
-      :download-count="dataset.data.download_count"
-      :files="files.tree"
+      :dataset-detail="dataset.data"
+      :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
     />

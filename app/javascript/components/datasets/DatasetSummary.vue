@@ -4,7 +4,7 @@
     <div class="py-4 w-[36%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
       <div class="text-[#606266] text-base font-medium leading-[22px] pl-4 md:pl-0">Download last month</div>
       <div class="text-[#303133] text-base font-semibold leading-6 mt-1 pl-4 md:pl-0">{{ downloadCount }}</div>
-      <DatasetClone />
+      <DatasetClone :http-clone-url="httpCloneUrl" :ssh-clone-url="sshCloneUrl" />
     </div>
   </div>
 </template>
@@ -17,6 +17,8 @@
   const props = defineProps({
     introduction: String,
     downloadCount: Number,
+    httpCloneUrl: String,
+    sshCloneUrl: String,
   });
 
   const mdParser = new MarkdownIt();

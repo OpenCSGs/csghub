@@ -34,7 +34,7 @@
           <div class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all">
             <div class="text-[#909399]"># Make sure you have git-lfs installed (https://git-lfs.com)</div>
             <div>git lfs install</div>
-            <div>git clone https://opencsg.com:username/reponame</div>
+            <div>git clone {{ httpCloneUrl }}</div>
             <div class="text-[#909399]"># if you want to clone without large files – just their pointers</div>
             <div class="text-[#909399]"># prepend your git clone with the following env var:</div>
             <div>GIT_LFS_SKIP_SMUDGE=1</div>
@@ -44,7 +44,7 @@
           <div class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all">
             <div class="text-[#909399]"># Make sure you have git-lfs installed (https://git-lfs.com)</div>
             <div>git lfs install</div>
-            <div>git clone git@opencsg.com:username/reponame</div>
+            <div>git clone {{ sshCloneUrl }}</div>
             <div class="text-[#909399]"># if you want to clone without large files – just their pointers</div>
             <div class="text-[#909399]"># prepend your git clone with the following env var:</div>
             <div>GIT_LFS_SKIP_SMUDGE=1</div>
@@ -57,6 +57,11 @@
 
 <script setup>
 import { ref } from 'vue'
+
+defineProps({
+  httpCloneUrl: String,
+  sshCloneUrl: String,
+});
 
 const activeCloneType = ref('https')
 const dialogLibraryVisible = ref(false)
