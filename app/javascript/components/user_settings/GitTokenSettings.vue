@@ -34,8 +34,9 @@
              class="py-[6px] px-[12px] w-[95px] border rounded-[8px] text-[14px] text-[#FFFFFF] mt-[16px] cursor-pointer bg-[#9FCEFF] hover:text-[#606266] hover:bg-[#8AA2FF]">
           New token
         </div>
-        <el-dialog v-model="addTokenDialogVisible" title="Create a new access token"
-                   style="border-radius: 0.5rem;" class="addDialogWidth" left>
+        <el-dialog v-model="addTokenDialogVisible"
+                   title="Create a new access token"
+                   class="max-w-[500px] !w-[90%]">
           <div class="mb-[16px]">
             <p class="text-[#303133] text-[14px] mb-[8px]"> Name <span class="text-red-400">*</span></p>
             <el-input v-model="gitTokenName" class="h-[40px]" placeholder="What's this token for?" maxlength="20"/>
@@ -113,20 +114,3 @@ export default {
   }
 }
 </script>
-<style>
-@media (max-width: 680px) {
-  .addDialogWidth {
-    width: 70%;
-  }
-}
-@media (min-width: 681px) and (max-width: 1400px) {
-  .addDialogWidth {
-    width: 40%;
-  }
-}
-@media (min-width: 1401px) {
-  .addDialogWidth {
-    width: 20%;
-  }
-}
-</style>
