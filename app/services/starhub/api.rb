@@ -100,7 +100,7 @@ module Starhub
         username: username,
         name: key_name
       }
-      @client.delete("/api/v1/user/#{username}/ssh_key/#{key_name}")
+      @client.delete("/user/#{username}/ssh_key/#{key_name}")
     end
 
     def create_organization(username, org_name, org_full_name, desc)

@@ -32,6 +32,8 @@ import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
 import NewDataset from "./components/datasets/NewDataset.vue"
+import ModelItem from "./components/models/ModelItem.vue"
+import DatasetItem from "./components/datasets/DatasetItem.vue"
 
 app = createApp({
   components: {
@@ -59,7 +61,9 @@ app = createApp({
     NewOrganization,
     NewModel,
     TagSidebar,
-    NewDataset
+    NewDataset,
+    ModelItem,
+    DatasetItem
   },
   provide:{
     defaultTags: DefaultTags
