@@ -27,11 +27,11 @@ class Model < ApplicationRecord
   belongs_to :owner, polymorphic: true
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
-  after_create :sync_created_model_to_starhub_server
+  #after_create :sync_created_model_to_starhub_server
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
-  validates_uniqueness_of :name, scope: :owner
+  validates :name, uniqueness: { scope: [:owner_type, :owner_id] }
 
   def path
     "#{owner.name}/#{name}"

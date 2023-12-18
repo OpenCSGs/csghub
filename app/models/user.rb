@@ -72,7 +72,7 @@ class User < ApplicationRecord
   end
 
   def available_namespaces
-    org_names = organizations.includes(:org_memberships).where.not(org_memberships: {role: 'read'}).pluck(:id, :name)
+    org_names = organizations.includes(:org_memberships).where.not(org_memberships: {role: 'read'}).pluck(:id, :name).uniq
     [["#{id}_User", name], *org_names.map { |id, name| ["#{id}_Organization", name] }]
   end
 
