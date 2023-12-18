@@ -16,6 +16,7 @@ class UserDashboard < Administrate::BaseDashboard
     last_login_at: Field::DateTime,
     login_identity: Field::String,
     name: Field::String,
+    git_token: Field::String,
     phone: Field::String,
     phone_verified: Field::Boolean,
     roles_mask: Field::Number,
@@ -54,6 +55,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone
     phone_verified
     roles
+    git_token
     created_at
     updated_at
   ].freeze
