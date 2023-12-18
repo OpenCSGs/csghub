@@ -73,6 +73,7 @@ export default {
           this.$emit("changeFlag", 'show');
         }, 1000);
         ElMessage({ message: "添加discussion成功", type: "success" });
+        this.$emit("getDiscussion");
         // 此处应重新获取最新的 discussions
       } catch (error) {
         ElMessage({ message: "发生错误，请重试", type: "error" });

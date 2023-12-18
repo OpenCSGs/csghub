@@ -10,7 +10,7 @@
         </div>
     </div>
     <DiscussionCards v-if="theFlag=='show'" :cards="cards" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
-    <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
+    <NewCommunityDiscussion v-if="theFlag=='new'" @getDiscussion="getDiscussion" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
   </div>
 </template>
 <script>
