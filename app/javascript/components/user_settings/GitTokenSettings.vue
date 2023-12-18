@@ -49,9 +49,8 @@
 </template>
 <script>
 import Menu from "./Menu.vue";
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
-import {ref} from "vue"
 
 export default {
   props: {
