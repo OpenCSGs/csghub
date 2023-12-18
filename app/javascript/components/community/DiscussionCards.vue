@@ -8,8 +8,8 @@
         :discussionId="card.id"
         :num="card.num"
         :title="card.title"
-        :time="card.created_at"
-        :user="card.user"
+        :time="card.time"
+        :user="card.user.name"
         :commentNum="card.commentNum"/>
     </template>
   </div>
