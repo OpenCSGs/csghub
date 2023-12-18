@@ -35,7 +35,9 @@
       </div>
       <div v-if="userOrgs != {}" class="flex gap-[10px]">
         <p v-for="org in userOrgs">
-          <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />
+          <a :href="`/organizations/${org.name}`">
+            <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />
+          </a>
         </p>
       </div>
       <div v-else class="text-[#909399]">暂无数据</div>

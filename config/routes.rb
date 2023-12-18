@@ -83,7 +83,7 @@ Rails.application.routes.draw do
 
     resources :campaigns, only: [:index, :show]
     resources :models, only: [:index, :new]
-    resources :organizations, only: [:new]
+    resources :organizations, only: [:new, :show]
 
     get '/models/:user_name/:model_name', to: 'models#show'
     delete '/models/:user_name/:model_name', to: 'models#destroy'
