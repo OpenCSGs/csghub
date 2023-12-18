@@ -1,12 +1,13 @@
 class InternalApi::OrganizationsController < ApplicationController
   before_action :authenticate_user
-  
+
   def create
     new_org = Organization.new organization_params
     if params[:logo].present?
       image_url_code = AliyunOss.instance.upload 'org-logo', params[:logo]
       new_org.logo = image_url_code
     end
+    new_org.creator = current_user
     Organization.transaction do
       new_org.save!
       OrgMembership.create!(organization: new_org, user: current_user, role: :admin)

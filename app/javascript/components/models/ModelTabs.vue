@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <ModelClone />
+    <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
     <TabContainer>
       <template #summary>
-        <model-summary :introduction="introduction" :download-count="downloadCount" />
+        <model-summary :introduction="modelDetail.introduction" :download-count="modelDetail.download_count" />
       </template>
       <template #files>
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
@@ -25,8 +25,7 @@ import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
 
 const props = defineProps({
-  introduction: String,
-  downloadCount: Number,
+  modelDetail: Object,
   files: Object,
   lastCommit: Object,
   branches: Object,
