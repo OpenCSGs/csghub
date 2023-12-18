@@ -51,9 +51,12 @@
           class="max-w-[240px] ml-[36px]"
       />
       <div class="ml-[36px] flex">
-        <div @click="clickDelete"
-             class="text-[#98A2B3] py-[8px] px-[12px] bg-[#F2F4F7] text-[14px] leading-[20px] rounded-[8px]"
-             :class="delDesc === datasetPath ?'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white':''">
+        <div id="confirmDelete"
+             @click="clickDelete"
+             class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+             :class="delDesc === datasetPath ?'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white':'bg-[#F2F4F7]'"
+             @mouseover="handleMouseOver"
+             @mouseleave="handleMouseLeave">
           I understand, delete this model
         </div>
       </div>
@@ -82,9 +85,7 @@ export default {
         {value: 'Public', label: 'Public'}]
     };
   },
-  mounted() {
-    console.log(this.options)
-  },
+  mounted() {},
   methods: {
     clickDelete() {
       if (this.delDesc === this.datasetPath) {
@@ -170,6 +171,15 @@ export default {
         }, 1000)
         return response.json()
       }
+    },
+    handleMouseOver() {
+      if (this.delDesc !== '') {
+        document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
+      }
+    },
+
+    handleMouseLeave() {
+      document.getElementById('confirmDelete').classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
     }
   }
 }
