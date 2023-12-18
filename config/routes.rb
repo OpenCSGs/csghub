@@ -87,7 +87,7 @@ Rails.application.routes.draw do
 
     get '/models/:user_name/:model_name', to: 'models#show'
     delete '/models/:user_name/:model_name', to: 'models#destroy'
-    put '/models/:user_name/:model_name', to: 'models#update '
+    put '/models/:user_name/:model_name', to: 'models#update'
     get '/datasets/:user_name/:dataset_name', to: 'datasets#show'
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'

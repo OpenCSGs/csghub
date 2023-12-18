@@ -68,7 +68,8 @@ import csrfFetch from "../../packs/csrfFetch";
 
 export default {
   props: {
-    path: String
+    path: String,
+    default_branch: String
   },
   components: {},
   data() {
@@ -80,10 +81,12 @@ export default {
         {value: 'Public', label: 'Public'}]
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.options)
+  },
   methods: {
     clickDelete() {
-      if(this.delDesc === this.datasetPath) {
+      if (this.delDesc === this.datasetPath) {
         this.deleteModel().catch((err) => {
           ElMessage({
             message: err.message,
@@ -94,7 +97,7 @@ export default {
     },
     async deleteModel() {
       const modelDeleteEndpoint = "/models/" + this.path
-      const option = { method: 'DELETE' }
+      const option = {method: 'DELETE'}
       const response = await csrfFetch(modelDeleteEndpoint, option)
 
       if (!response.ok) {
@@ -124,7 +127,12 @@ export default {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel'
       }).then((action) => {
-
+        this.changeVisibilityApi(value).catch((err) => {
+          ElMessage({
+            message: err.message,
+            type: "warning",
+          })
+        })
         ElMessage({
           type: 'info',
           message: `切换成功`,
@@ -138,10 +146,21 @@ export default {
       })
     },
 
-    async changeVisibilityApi() {
-      const modelDeleteEndpoint = "/models/" + this.path
-      const option = { method: 'PUT' }
-      const response = await csrfFetch(modelDeleteEndpoint, option)
+    async changeVisibilityApi(value) {
+      console.log(value)
+      const modelUpdateEndpoint = "/models/" + this.path
+      const jsonData = {
+        private: (value === 'Private') ? true : false,
+        default_branch: this.default_branch,
+        description: "Starhub Server Project Editedaaa."
+      }
+      const jsonStr = JSON.stringify(jsonData)
+      const option = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: jsonStr
+      }
+      const response = await csrfFetch(modelUpdateEndpoint, option)
 
       if (!response.ok) {
         return response.json().then((data) => {

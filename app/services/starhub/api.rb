@@ -58,7 +58,8 @@ module Starhub
       options[:private] = private
       options[:default_branch] = default_branch
       options[:description] = description
-      res = @client.put("/models/#{username}/#{model_name}")
+      res = @client.put("/models/#{username}/#{model_name}", options)
+    end
 
     def generate_git_token(username, name, options = {})
       options[:name] = name

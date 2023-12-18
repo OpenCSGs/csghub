@@ -46,4 +46,5 @@ class Model < ApplicationRecord
     res = Starhub.api.delete_model(owner.name, name)
     raise ActiveRecord::Rollback unless res.success?
   end
+
 end
