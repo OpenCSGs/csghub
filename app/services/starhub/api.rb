@@ -16,7 +16,7 @@ module Starhub
     end
 
     def get_model_last_commit(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/last_commit")
+      res = @client.get("/models/#{username}/#{model_name}/last_commit").body
     end
 
     def get_model_branches(username, model_name, options = {})
