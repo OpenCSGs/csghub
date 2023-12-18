@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <TabContainer>
+    <TabContainer :default-tab="defaultTab">
       <template #summary>
         <dataset-summary
           :introduction="datasetDetail.introduction"
@@ -10,7 +10,14 @@
         />
       </template>
       <template #files>
-        <dataset-files :files="files" :last-commit="lastCommit" :branches="branches" />
+        <dataset-files
+          :files="files"
+          :last-commit="lastCommit"
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="datasetDetail.path"
+        />
       </template>
     </TabContainer>
   </div>
@@ -32,5 +39,8 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  currentBranch: String,
+  currentPath: String,
+  defaultTab: String,
 })
 </script>

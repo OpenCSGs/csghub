@@ -12,7 +12,7 @@ module Starhub
 
     def get_model_files(username, model_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}").body
+      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}&ref=#{options[:ref]}").body
     end
 
     def get_model_last_commit(username, model_name, options = {})
@@ -64,7 +64,7 @@ module Starhub
 
     def get_datasets_files(username, dataset_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}&ref=#{options[:ref]}").body
     end
 
     def get_datasets_last_commit(username, dataset_name, options = {})

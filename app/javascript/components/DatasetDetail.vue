@@ -10,6 +10,9 @@
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
+      :current-branch="currentBranch"
+      :current-path="currentPath"
+      :default-tab="defaultTab"
     />
   </div>
 </template>
@@ -23,6 +26,9 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  currentBranch: String,
+  currentPath: String,
+  defaultTab: String,
 })
 </script>
 

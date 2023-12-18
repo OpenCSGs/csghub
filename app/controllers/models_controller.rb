@@ -27,11 +27,7 @@ class ModelsController < ApplicationController
     @default_tab = 'files'
     @current_branch = params[:branch] || 'main'
     @current_path = params[:path] || ''
-    options = {
-      ref: @current_branch,
-      path: @current_path
-    }
-    @files = Starhub.api.get_model_files(params[:user_name], params[:model_name], options)
+    @files = Starhub.api.get_model_files(params[:user_name], params[:model_name], files_options)
     render :show
   end
 
@@ -46,7 +42,14 @@ class ModelsController < ApplicationController
 
   def load_model_detail
     @model = Starhub.api.get_model_detail(params[:user_name], params[:model_name])
-    @last_commit = Starhub.api.get_last_commit(params[:user_name], params[:model_name])
+    @last_commit = Starhub.api.get_model_last_commit(params[:user_name], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
+  end
+
+  def files_options
+    {
+      ref: @current_branch,
+      path: @current_path
+    }
   end
 end
