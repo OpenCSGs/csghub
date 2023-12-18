@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
     resources :system_api_keys
     resources :tags
+    resources :organizations
+    resources :ssh_keys
     resources :models, except: [:new, :create]
 
     root to: "spaces#index"
