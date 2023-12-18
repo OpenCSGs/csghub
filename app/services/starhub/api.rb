@@ -55,6 +55,16 @@ module Starhub
       @client.post("/datasets", options)
     end
 
+    def create_organization(username, org_name, org_full_name, desc)
+      options = {
+        username: username,
+        name: org_name,
+        full_name: org_full_name,
+        description: desc
+      }
+      @client.post("/organizations", options)
+    end
+
     # TODO: add more starhub api
   end
 end
