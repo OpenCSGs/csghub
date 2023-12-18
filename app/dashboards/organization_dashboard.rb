@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class UserDashboard < Administrate::BaseDashboard
+class OrganizationDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,22 +9,18 @@ class UserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    avatar: Field::String,
-    email: Field::String,
-    email_verified: Field::Boolean,
-    gender: Field::String,
-    last_login_at: Field::DateTime,
-    login_identity: Field::String,
+    creator_id: Field::Number,
+    homepage: Field::String,
+    logo: Field::String,
     name: Field::String,
-    git_token: Field::String,
-    phone: Field::String,
-    phone_verified: Field::Boolean,
-    roles_mask: Field::Number,
-    roles: Field::Select.with_options(include_blank: true, searchable: false, collection: User::ROLES),
-    created_at: Field::DateTime.with_options(format: '%Y-%m-%d %H:%M'),
+    nickname: Field::String,
+    org_memberships: Field::HasMany,
+    org_type: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
+    starhub_synced: Field::Boolean,
+    users: Field::HasMany,
+    verified: Field::Boolean,
+    created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    company_verified: Field::Boolean,
-    starhub_synced: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -34,30 +30,28 @@ class UserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    login_identity
-    avatar
-    roles
-    phone
-    email
+    creator_id
+    homepage
+    name
+    nickname
     starhub_synced
-    created_at
+    logo
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    avatar
-    email
-    email_verified
-    gender
-    last_login_at
-    login_identity
+    creator_id
+    homepage
+    logo
     name
-    phone
-    phone_verified
-    roles
-    git_token
+    nickname
+    org_memberships
+    org_type
+    starhub_synced
+    users
+    verified
     created_at
     updated_at
   ].freeze
@@ -66,17 +60,16 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    avatar
-    email
-    email_verified
-    gender
-    last_login_at
-    login_identity
+    creator_id
+    homepage
+    logo
     name
-    phone
-    phone_verified
-    roles
-    company_verified
+    nickname
+    org_memberships
+    org_type
+    starhub_synced
+    users
+    verified
   ].freeze
 
   # COLLECTION_FILTERS
@@ -91,10 +84,10 @@ class UserDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how users are displayed
+  # Overwrite this method to customize how organizations are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(user)
-  #   "User ##{user.id}"
+  # def display_resource(organization)
+  #   "Organization ##{organization.id}"
   # end
 end

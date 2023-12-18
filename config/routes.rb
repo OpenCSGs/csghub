@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
     resources :system_api_keys
     resources :tags
+    resources :organizations
+    resources :ssh_keys
     resources :models, except: [:new, :create]
 
     root to: "spaces#index"
@@ -38,6 +40,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
+    resources :git_token, only: [:create]
     resources :users, only: [:update]
     resources :models, only: [:create]
     resources :tags, only: [] do
@@ -80,10 +83,12 @@ Rails.application.routes.draw do
 
     resources :campaigns, only: [:index, :show]
     resources :models, only: [:index, :new]
-    resources :organizations, only: [:new]
+    resources :organizations, only: [:new, :show]
 
     get '/models/:user_name/:model_name', to: 'models#show'
     get '/models/:user_name/:model_name/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
+    get '/datasets/:user_name/:dataset_name', to: 'datasets#show'
+    get '/datasets/:user_name/:dataset_name/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'

@@ -16,8 +16,9 @@ import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
-import ModelCard from "./components/ModelCard.vue"
 import ModelDetail from "./components/ModelDetail.vue"
+import ModelCard from "./components/ModelCard.vue"
+import DatasetDetail from "./components/DatasetDetail.vue"
 import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
@@ -30,6 +31,8 @@ import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
+import ModelItem from "./components/models/ModelItem.vue"
+import DatasetItem from "./components/datasets/DatasetItem.vue"
 
 app = createApp({
   components: {
@@ -39,6 +42,7 @@ app = createApp({
     SpaceCards,
     CommentList,
     DatasetCard,
+    DatasetDetail,
     ExpertCard,
     ExpertForm,
     ModelCard,
@@ -55,7 +59,9 @@ app = createApp({
     SshKeySettings,
     NewOrganization,
     NewModel,
-    TagSidebar
+    TagSidebar,
+    ModelItem,
+    DatasetItem
   },
   provide:{
     defaultTags: DefaultTags
