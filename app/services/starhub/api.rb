@@ -48,7 +48,7 @@ module Starhub
       @client.post("/models", options)
     end
 
-    def add_git_token(username, name, options = {})
+    def generate_git_token(username, name, options = {})
       options[:name] = name
       res = @client.post("/user/#{username}/tokens", options)
     end
