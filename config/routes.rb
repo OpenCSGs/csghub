@@ -83,7 +83,7 @@ Rails.application.routes.draw do
 
     resources :campaigns, only: [:index, :show]
     resources :models, only: [:index, :new]
-    resources :organizations, only: [:new]
+    resources :organizations, only: [:new, :show]
 
     get '/models/:user_name/:model_name', to: 'models#show'
     get '/datasets/:user_name/:dataset_name', to: 'datasets#show'

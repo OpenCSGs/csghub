@@ -95,6 +95,17 @@ class User < ApplicationRecord
     end
   end
 
+  def as_json options = nil
+    {
+      id: id,
+      name: name,
+      nickname: nickname,
+      email: email,
+      phone: phone,
+      avatar: avatar_url
+    }
+  end
+
   private
 
   def unique_name_by_organization
