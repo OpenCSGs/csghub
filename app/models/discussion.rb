@@ -3,6 +3,7 @@ class Discussion < ApplicationRecord
 
   has_many :comments, as: :commentable
   belongs_to :user
+  belongs_to :discussionable, polymorphic: true
 
   def as_json_data
     {

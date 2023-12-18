@@ -11,7 +11,7 @@
     </div>
     <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
     <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @changeFlag="changeFlag"></DiscussionCards>
-    <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag"></NewCommunityDiscussion>
+    <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
     <DiscussionDetails v-if="theFlag=='showDetail'" @changeFlag="changeFlag"></DiscussionDetails>
   </div>
 </template>
@@ -21,7 +21,9 @@ import DiscussionCards from "./DiscussionCards.vue";
 import NewCommunityDiscussion from "./NewCommunityDiscussion.vue";
 import DiscussionDetails from "./DiscussionDetails.vue";
 export default {
-  props: {},
+  props: {
+    localModelId: String
+  },
   components: {
     EmptyCommunity,
     DiscussionCards,
