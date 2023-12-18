@@ -22,6 +22,6 @@ class SshKey < ApplicationRecord
   end
 
   def delete_from_starhub_server
-    Starhub.api.delete_ssh_key(user.name, name, ssh_key)
+    Starhub.api.delete_ssh_key(user.name, name)
   end
 end
