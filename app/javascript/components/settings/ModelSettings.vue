@@ -17,7 +17,6 @@
         organization (organization model) can see and commit to this model.
       </div>
       <el-select v-model="visibility"
-                 :disabled="true"
                  @change="changeVisibility"
                  placeholder="Select"
                  class="w-[240px] ml-[36px]">
@@ -125,6 +124,7 @@ export default {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel'
       }).then((action) => {
+
         ElMessage({
           type: 'info',
           message: `切换成功`,
@@ -136,6 +136,26 @@ export default {
           message: '取消切换',
         })
       })
+    },
+
+    async changeVisibilityApi() {
+      const modelDeleteEndpoint = "/models/" + this.path
+      const option = { method: 'PUT' }
+      const response = await csrfFetch(modelDeleteEndpoint, option)
+
+      if (!response.ok) {
+        return response.json().then((data) => {
+          console.log(data)
+          throw new Error(data.message)
+        })
+      } else {
+        ElMessage({message: "更新成功", type: "success"})
+
+        setTimeout(() => {
+          window.location.href = "/models"
+        }, 1000)
+        return response.json()
+      }
     }
   }
 }

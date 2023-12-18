@@ -39,4 +39,9 @@ class ModelsController < ApplicationController
     license_configs = system_config.license_configs rescue nil
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
+
+  def update
+    res = Starhub.api.update_model(params[:user_name], params[:model_name], params[:private], params[:default_branch], params[:description])
+
+  end
 end

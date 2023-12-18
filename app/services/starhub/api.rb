@@ -52,6 +52,15 @@ module Starhub
       res = @client.delete("/models/#{username}/#{model_name}")
     end
 
+    def update_model(username, model_name, private, default_branch, description, options = {})
+      options[:username] = username
+      options[:name] = model_name
+      options[:private] = private
+      options[:default_branch] = default_branch
+      options[:description] = description
+      res = @client.put("/models/#{username}/#{model_name}")
+    end
+
     # TODO: add more starhub api
   end
 end
