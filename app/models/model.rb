@@ -35,6 +35,14 @@ class Model < ApplicationRecord
     "#{owner.name}/#{name}"
   end
 
+  def as_json options={}
+    {
+      name: name,
+      path: path,
+      updated_at: updated_at
+    }
+  end
+
   private
 
   def sync_created_model_to_starhub_server
