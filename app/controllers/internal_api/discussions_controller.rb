@@ -15,7 +15,7 @@ class InternalApi::DiscussionsController < ApplicationController
     discussion.user = current_user
 
     if discussion.save
-      render json: discussion.as_json_data, status: :created
+      render json: discussion.as_json, status: :created
     else
       render json: discussion.errors, status: :unprocessable_entity
     end

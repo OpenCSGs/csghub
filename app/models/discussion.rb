@@ -5,7 +5,7 @@ class Discussion < ApplicationRecord
   belongs_to :user
   belongs_to :discussionable, polymorphic: true
 
-  def as_json_data
+  def as_json options={}
     {
       id: id,
       title: title,

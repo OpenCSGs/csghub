@@ -1,6 +1,6 @@
 class InternalApi::CommentsController < ApplicationController
   before_action :authenticate_user
-  
+
   def index
     commentable = find_commentable
     comments = commentable.comments
@@ -14,7 +14,7 @@ class InternalApi::CommentsController < ApplicationController
     comment.user = current_user
 
     if comment.save
-      render json: comment.as_json_data, status: :created
+      render json: comment.as_json, status: :created
     else
       render json: comment.errors, status: :unprocessable_entity
     end
