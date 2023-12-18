@@ -22,7 +22,8 @@ class UserDashboard < Administrate::BaseDashboard
     roles: Field::Select.with_options(include_blank: true, searchable: false, collection: User::ROLES),
     created_at: Field::DateTime.with_options(format: '%Y-%m-%d %H:%M'),
     updated_at: Field::DateTime,
-    company_verified: Field::Boolean
+    company_verified: Field::Boolean,
+    starhub_synced: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -37,6 +38,7 @@ class UserDashboard < Administrate::BaseDashboard
     roles
     phone
     email
+    starhub_synced
     created_at
   ].freeze
 
