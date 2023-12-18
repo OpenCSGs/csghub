@@ -3,7 +3,6 @@ class InternalApi::GitTokenController < ApplicationController
     res = Starhub.api.add_git_token(current_user.name, params[:name])
     res_json = JSON.parse(res.body)
     unless res_json["msg"] == 'OK'
-      puts res_json["message"]
       return render json: { message: '生成 Git Token 失败' }, status: :bad_request
     end
     current_user.git_token = res_json["data"]["token"]
@@ -20,5 +19,3 @@ class InternalApi::GitTokenController < ApplicationController
     params.permit(:name)
   end
 end
-
-
