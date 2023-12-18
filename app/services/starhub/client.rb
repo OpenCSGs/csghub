@@ -21,8 +21,8 @@ module Starhub
       end
     end
 
-    def put(path, options = {})
-      request(:put, path, options)
+    def delete(path, params = {})
+      starhub_api_connection.delete(request_path(path), params)
     end
 
     private
