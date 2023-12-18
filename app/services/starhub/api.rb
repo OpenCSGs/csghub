@@ -15,7 +15,7 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}").body
     end
 
-    def get_last_commit(username, model_name, options = {})
+    def get_model_last_commit(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/last_commit").body
     end
 
@@ -52,6 +52,37 @@ module Starhub
       res = @client.delete("/models/#{username}/#{model_name}")
     end
 
+    def generate_git_token(username, name, options = {})
+      options[:name] = name
+      res = @client.post("/user/#{username}/tokens", options)
+    end
+
+    def get_model_tags(username, model_name, options = {})
+      res = @client.get("/models/#{username}/#{model_name}/tags").body
+    end
+
+    # datasets
+    def get_datasets_detail(username, dataset_name, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/detail").body
+    end
+
+    def get_datasets_files(username, dataset_name, options = {})
+      options[:path] ||= '/'
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}").body
+    end
+
+    def get_datasets_last_commit(username, dataset_name, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit").body
+    end
+
+    def get_datasets_branches(username, dataset_name, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/branches").body
+    end
+
+    def get_datasets_tags(username, dataset_name, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tags").body
+    end
+
     def create_ssh_key(username, key_name, content)
       options = {
         username: username,
@@ -66,7 +97,7 @@ module Starhub
         username: username,
         name: key_name
       }
-      @client.delete("/api/v1/user/#{username}/ssh_key/#{key_name}")
+      @client.delete("/user/#{username}/ssh_key/#{key_name}")
     end
 
     def create_organization(username, org_name, org_full_name, desc)
