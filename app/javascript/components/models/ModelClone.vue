@@ -24,9 +24,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M4.6665 3.5L1.1665 7L4.6665 10.5M9.33317 3.5L12.8332 7L9.33317 10.5" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <div class="ml-2 text-[#606266] font-medium">Use with library</div>
+      <div class="ml-2 text-[#606266] text-sm font-medium">Use with library</div>
     </div>
-    <el-dialog v-model="dialogLibraryVisible" title="Model library is unknown">
+    <el-dialog v-model="dialogLibraryVisible" title="Model library is unknown" class="md:!w-[80%]">
       <div class="text-[#a0a1a7] p-2"># Type of model/library unknown.</div>
       <div class="text-[#a0a1a7] p-2"># Feel free to open a Pull request </div>
       <div class="text-[#a0a1a7] p-2"># for integration of the OpenCSG model hub</div>
@@ -47,7 +47,7 @@
           <div class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all">
             <div class="text-[#909399]"># Make sure you have git-lfs installed (https://git-lfs.com)</div>
             <div>git lfs install</div>
-            <div>git clone https://opencsg.com:username/reponame</div>
+            <div>git clone {{ cloneHttpUrl }}</div>
             <div class="text-[#909399]"># if you want to clone without large files – just their pointers</div>
             <div class="text-[#909399]"># prepend your git clone with the following env var:</div>
             <div>GIT_LFS_SKIP_SMUDGE=1</div>
@@ -57,7 +57,7 @@
           <div class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all">
             <div class="text-[#909399]"># Make sure you have git-lfs installed (https://git-lfs.com)</div>
             <div>git lfs install</div>
-            <div>git clone git@opencsg.com:username/reponame</div>
+            <div>git clone {{ cloneSshUrl }}</div>
             <div class="text-[#909399]"># if you want to clone without large files – just their pointers</div>
             <div class="text-[#909399]"># prepend your git clone with the following env var:</div>
             <div>GIT_LFS_SKIP_SMUDGE=1</div>
@@ -70,6 +70,11 @@
 
 <script setup>
 import { ref } from 'vue'
+
+const props = defineProps({
+  cloneHttpUrl: String,
+  cloneSshUrl: String,
+})
 
 const activeCloneType = ref('https')
 const dialogLibraryVisible = ref(false)

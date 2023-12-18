@@ -9,12 +9,13 @@
             phone="<%= current_user.phone %>"
             user-name="<%= current_user.display_name%>"
             is-logged-in="true"
+            :december-release="<%= !!feature_flags['december_release'] %>"
     />
   <% else %>
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
             star-chain-url="<%= starchain_address %>"
             is-logged-in="false"
-            login-url="<%= SystemConfig.first.oidc_configs["login_url"]%>"
+            login-url="<%= login_url %>"
     />
   <% end %>
 </div>

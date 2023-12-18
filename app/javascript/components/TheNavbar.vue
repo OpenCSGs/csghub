@@ -66,8 +66,11 @@
             <el-dropdown-item @click="showDialog"
               >联系我们</el-dropdown-item
             >
-            <el-dropdown-item divided>
+            <el-dropdown-item v-if="decemberRelease" divided>
               <a href="/organizations/new">+ 新建组织</a>
+            </el-dropdown-item>
+            <el-dropdown-item v-if="decemberRelease">
+              <a href="/models/new">+ 新建模型</a>
             </el-dropdown-item>
             <el-dropdown-item divided>
               <a :href="logout" @click="cleanUpAuthing"> Logout </a>
@@ -110,7 +113,8 @@ export default {
     phone: String,
     isLoggedIn: String,
     userName: String,
-    loginUrl: String
+    loginUrl: String,
+    decemberRelease: Boolean
   },
   data() {
     return {
