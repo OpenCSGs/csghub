@@ -15,6 +15,7 @@ class Dataset < ApplicationRecord
   private
 
   def sync_created_dataset_to_starhub_server
-    Starhub.api.create_dataset(creator.name, name, owner.name)
+    res = Starhub.api.create_dataset(creator.name, name, owner.name, { license: license })
+    raise ActiveRecord::Rollback unless res.success?
   end
 end

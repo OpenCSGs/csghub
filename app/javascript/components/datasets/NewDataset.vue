@@ -44,7 +44,7 @@
       <hr class="mb-9" />
       <div class="mb-9">
         <el-radio-group v-model="visibility" class="!block">
-          <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
+          <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4 bg-[#F9FAFB]" label="public" size="large" border disabled>
             公开
             <p class="whitespace-normal text-[#475467] font-light">任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。</p>
           </el-radio>

@@ -17,7 +17,7 @@ class InternalApi::DatasetsController < ApplicationController
   private
 
   def dataset_params
-    params.permit(:name, :owner_id, :owner_type, :visibility, :license)
+    params.permit(:name, :owner_id, :owner_type, :license)
   end
 
   def validate_owner
