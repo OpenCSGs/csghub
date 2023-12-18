@@ -1,6 +1,13 @@
 class InternalApi::CommentsController < ApplicationController
   before_action :authenticate_user
   
+  def index
+    commentable = find_commentable
+    comments = commentable.comments
+
+    render json: comments.as_json, status: :ok
+  end
+
   def create
     commentable = find_commentable
     comment = commentable.comments.build(comment_params)
