@@ -9,7 +9,7 @@
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
       <template #settings>
-        <Settings :path="modelPath" :default_branch="modelDefaultBranch" />
+        <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
       </template>
     </TabContainer>
   </div>
@@ -31,6 +31,7 @@ import Settings from '../settings/ModelSettings.vue'
 const props = defineProps({
   modelPath: String,
   modelDefaultBranch: String,
+  modelPrivate: Boolean,
   modelDetail: Object,
   files: Object,
   lastCommit: Object,

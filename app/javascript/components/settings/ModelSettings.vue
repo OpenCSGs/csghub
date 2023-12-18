@@ -69,12 +69,13 @@ import csrfFetch from "../../packs/csrfFetch";
 export default {
   props: {
     path: String,
-    default_branch: String
+    default_branch: String,
+    private: Boolean
   },
   components: {},
   data() {
     return {
-      visibility: 'Private',
+      visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       datasetPath: this.path,
       options: [{value: 'Private', label: 'Private'},
