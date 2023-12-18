@@ -9,7 +9,7 @@
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
       <template #community>
-        <CommunityPage></CommunityPage>
+        <CommunityPage :localModelId="localModelId" ></CommunityPage>
       </template>
     </TabContainer>
   </div>
@@ -29,6 +29,7 @@ import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 
 const props = defineProps({
+  localModelId: String,
   modelDetail: Object,
   files: Object,
   lastCommit: Object,

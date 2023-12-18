@@ -33,7 +33,9 @@ import 'github-markdown-css';
 import csrfFetch from "../../packs/csrfFetch";
 import { ElMessage } from 'element-plus'
 export default {
-  props: {},
+  props: {
+    localModelId: String
+  },
   components: {
     FormLabel,
     CommunityMDTextarea
@@ -82,9 +84,9 @@ export default {
     async createDiscussion(){
       const discussionCreateEndpoint = "/internal_api/discussions"
       const discussionJsonData = {
-        discussionable_type:'Model',
-        discussionable_id:123,//因为目前没有model，先占位，后续有了model后需要补上
-        title:this.title
+        discussionable_type: 'Model',
+        discussionable_id: this.localModelId,//因为目前没有model，先占位，后续有了model后需要补上
+        title: this.title
       }
       const option = {
         method:'POST',
