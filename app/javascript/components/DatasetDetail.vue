@@ -8,6 +8,7 @@
     <dataset-tabs
         :dataset-path="dataset.data.path"
         :dataset-default-branch="dataset.data.default_branch"
+        :dataset-private="dataset.data.private"
         :dataset-detail="dataset.data"
         :files="files.data"
         :last-commit="lastCommit.data"

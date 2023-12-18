@@ -13,7 +13,7 @@
         <dataset-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
       <template #settings>
-        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" />
+        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
     </TabContainer>
   </div>
@@ -34,6 +34,7 @@ import Settings from './DatasetSettins.vue'
 const props = defineProps({
   datasetPath: String,
   datasetDefaultBranch: String,
+  datasetPrivate: Boolean,
   datasetDetail: Object,
   files: Object,
   lastCommit: Object,
