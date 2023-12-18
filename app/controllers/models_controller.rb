@@ -25,13 +25,18 @@ class ModelsController < ApplicationController
   end
 
   def destroy
-    res = Starhub.api.delete_model(params[:user_name], params[:model_name])
-    res_json = JSON.parse(res.body)
-    unless res_json["msg"] == 'OK'
-      puts res_json["message"]
-      return render json: { message: "删除 #{params[:user_name]}/#{params[:model_name]} 失败" }, status: :bad_request
+    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
+    @model = owner && owner.models.find_by(name: params[:model_name])
+
+    unless @model
+      return render json: { message: "未找到对应模型" }, status: 404
     end
-    render json: { message: '删除成功' }
+
+    if @model.destroy
+      render json: { message: '删除成功' }
+    else
+      render json: { message: "删除 #{params[:user_name]}/#{params[:model_name]} 失败" }, status: :bad_request
+    end
   end
 
   def new

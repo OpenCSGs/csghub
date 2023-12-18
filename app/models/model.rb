@@ -28,6 +28,7 @@ class Model < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   after_create :sync_created_model_to_starhub_server
+  after_destroy :delete_model_from_starhub_server
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
@@ -39,5 +40,10 @@ class Model < ApplicationRecord
 
   def sync_created_model_to_starhub_server
     Starhub.api.create_model(creator.name, name, owner.name)
+  end
+
+  def delete_model_from_starhub_server
+    res = Starhub.api.delete_model(owner.name, name)
+    raise ActiveRecord::Rollback unless res.success?
   end
 end
