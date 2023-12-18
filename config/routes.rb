@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     resources :organizations, only: [:create, :update]
     resources :spaces, only: [:index, :update]
     resources :campaigns, only: [:index]
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy, :index]
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
     resources :git_token, only: [:create]
@@ -49,7 +49,8 @@ Rails.application.routes.draw do
         get 'framework-tags', to: 'tags#framework_tags'
       end
     end
-    resources :discussions, only: :create
+    # resources :discussions, only: :create
+    resources :discussions, only: [:create, :index]
   end
 
   # lead form

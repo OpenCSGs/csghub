@@ -67,6 +67,7 @@ import { ElMessage } from 'element-plus'
 export default {
   props: {
     discussionId: String,
+    commentId: String
   },
   components: {
     CommunityTimeLine,
@@ -105,7 +106,7 @@ export default {
         ElMessage({ message: "内容不能为空", type: "warning" });
         return;
       }
-      this.createComment(discussionResponse.id).then((data) => {
+      this.createComment(this.commentId).then((data) => {
         ElMessage({ message: "添加评论成功", type: "success" });
       })
       .catch(err => {
@@ -118,12 +119,15 @@ export default {
     cancel(){
       this.$emit("changeFlag",'show');
     },
-    async createComment(discussionId){
+    async createComment(commentId){
       const commentCreateEndpoint = "/internal_api/comments"
+      const newComment = {
+        content: this.desc,
+      };
       const commentJsonData = {
         commentable_type:'Discussion',
-        commentable_id:discussionId,
-        comment:this.desc
+        commentable_id:commentId,
+        comment:newComment
       }
       const commentOption = {
         method:'POST',

@@ -10,9 +10,9 @@
         </div>
     </div>
     <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
-    <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @changeFlag="changeFlag"></DiscussionCards>
+    <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
     <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
-    <DiscussionDetails v-if="theFlag=='showDetail'" @changeFlag="changeFlag"></DiscussionDetails>
+    <DiscussionDetails v-if="theFlag=='showDetail'" :commentId="lastCommentId" @changeFlag="changeFlag"></DiscussionDetails>
   </div>
 </template>
 <script>
@@ -35,15 +35,17 @@ export default {
       // cards:[],
       type:'Model',
       theFlag:'show',
-      cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'2023-10-10 10:10:10',user:'Username'},
-             {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'2023-12-6 10:10:10',user:'Username'},
-             {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'2023-10-10 10:10:10',user:'Username'}]
+      cards:[],
+      lastCommentId:''
     };
   },
   mounted() {
     this.getDiscussion()
   },
   methods: {
+    updateDetails(card){
+      this.lastCommentId = card.id
+    },
     changeFlag(flag){
       this.theFlag=flag
     },
