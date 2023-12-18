@@ -32,6 +32,8 @@ class OrganizationDashboard < Administrate::BaseDashboard
     id
     creator_id
     homepage
+    name
+    nickname
     starhub_synced
     logo
   ].freeze
