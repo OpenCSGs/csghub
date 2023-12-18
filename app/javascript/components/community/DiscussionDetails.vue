@@ -66,8 +66,7 @@ import csrfFetch from "../../packs/csrfFetch";
 import { ElMessage } from 'element-plus'
 export default {
   props: {
-    discussionId: String,
-    commentId: String
+    discussionId: String
   },
   components: {
     CommunityTimeLine,
@@ -77,6 +76,7 @@ export default {
     return {
       isEdit:false,
       activeTab:'Edit',
+      commentData:[],
       desc:'',
       title:"Discussion name",
       oldTitle:'Discussion name',
@@ -86,7 +86,9 @@ export default {
                     { name:'Username',type:'change title',title_from:'xxx',title_to:'xyx',date: '2023-04-10', text: 'Event 3' },]
     };
   },
-  mounted() {},
+  mounted() {
+    this.getComment(this.discussionId)
+  },
   methods: {
     editTitle() {
       this.isEdit = true;
@@ -106,7 +108,7 @@ export default {
         ElMessage({ message: "内容不能为空", type: "warning" });
         return;
       }
-      this.createComment(this.commentId).then((data) => {
+      this.createComment(this.discussionId).then((data) => {
         ElMessage({ message: "添加评论成功", type: "success" });
       })
       .catch(err => {
@@ -117,16 +119,24 @@ export default {
       this.$refs.mdTextarea.clearTextarea();
     },
     cancel(){
-      this.$emit("changeFlag",'show');
+      this.$emit("toggleDetails");
     },
-    async createComment(commentId){
+    async getComment(discussionId){
+      const commentCreateEndpoint = `/internal_api/comments?commentable_type=Discussion&commentable_id=${discussionId}`
+      const response = await fetch(commentCreateEndpoint);
+      response.json().then((data) => {
+        console.log(data);
+        this.commentData=data
+      })
+    },
+    async createComment(discussionId){
       const commentCreateEndpoint = "/internal_api/comments"
       const newComment = {
         content: this.desc,
       };
       const commentJsonData = {
         commentable_type:'Discussion',
-        commentable_id:commentId,
+        commentable_id:discussionId,
         comment:newComment
       }
       const commentOption = {

@@ -12,14 +12,12 @@
     <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
     <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
     <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
-    <DiscussionDetails v-if="theFlag=='showDetail'" :commentId="lastCommentId" @changeFlag="changeFlag"></DiscussionDetails>
   </div>
 </template>
 <script>
 import EmptyCommunity from "./EmptyCommunity.vue";
 import DiscussionCards from "./DiscussionCards.vue";
 import NewCommunityDiscussion from "./NewCommunityDiscussion.vue";
-import DiscussionDetails from "./DiscussionDetails.vue";
 export default {
   props: {
     localModelId: String
@@ -27,8 +25,7 @@ export default {
   components: {
     EmptyCommunity,
     DiscussionCards,
-    NewCommunityDiscussion,
-    DiscussionDetails
+    NewCommunityDiscussion
   },
   data() {
     return {
@@ -53,8 +50,7 @@ export default {
       const discussionCreateEndpoint = `/internal_api/discussions?discussionable_type=${this.type}&discussionable_id=${this.localModelId}`
       const response = await fetch(discussionCreateEndpoint);
       response.json().then((data) => {
-        console.log(data);
-        this.cards=data
+        this.cards = data
       })
     }
   },
