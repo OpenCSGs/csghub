@@ -85,7 +85,7 @@ export default {
       const discussionCreateEndpoint = "/internal_api/discussions"
       const discussionJsonData = {
         discussionable_type: 'Model',
-        discussionable_id: this.localModelId,//因为目前没有model，先占位，后续有了model后需要补上
+        discussionable_id: this.localModelId,
         title: this.title
       }
       const option = {
@@ -100,10 +100,13 @@ export default {
     },
     async createComment(discussionId){
       const commentCreateEndpoint = "/internal_api/comments"
+      const newComment = {
+        content: this.desc,
+      };
       const commentJsonData = {
         commentable_type:'Discussion',
         commentable_id:discussionId,
-        comment:this.desc
+        comment:newComment
       }
       const commentOption = {
         method:'POST',
