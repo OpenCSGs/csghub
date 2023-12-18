@@ -41,7 +41,7 @@ class Model < ApplicationRecord
       name: name,
       visibility: visibility,
       license: license,
-      access_path: path,
+      path: path,
       updated_at: updated_at
     }
   end
