@@ -48,6 +48,11 @@ module Starhub
       @client.post("/models", options)
     end
 
+    def generate_git_token(username, name, options = {})
+      options[:name] = name
+      res = @client.post("/user/#{username}/tokens", options)
+    end
+
     def get_model_tags(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/tags").body
     end

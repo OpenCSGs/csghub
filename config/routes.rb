@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
+    resources :git_token, only: [:create]
     resources :users, only: [:update]
     resources :models, only: [:create]
     resources :tags, only: [] do
