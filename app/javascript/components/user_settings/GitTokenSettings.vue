@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div v-if="!gitToken" @click="addTokenDialogVisible = true"
+        <div v-else @click="addTokenDialogVisible = true"
              class="py-[6px] px-[12px] w-[95px] border rounded-[8px] text-[14px] text-[#FFFFFF] mt-[16px] cursor-pointer bg-[#9FCEFF] hover:text-[#606266] hover:bg-[#8AA2FF]">
           New token
         </div>
