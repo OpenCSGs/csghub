@@ -4,7 +4,7 @@
       :key="card.id"
       :num="card.num"
       :title="card.title"
-      :time="card.time"
+      :time="card.created_at"
       :user="card.user"
       :commentNum="card.commentNum"
       @changeFlag="changeFlag"></DiscussionCard>
