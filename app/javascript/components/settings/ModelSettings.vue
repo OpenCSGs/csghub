@@ -53,7 +53,7 @@
       <div class="ml-[36px] flex">
         <div @click="clickDelete"
              class="text-[#98A2B3] py-[8px] px-[12px] bg-[#F2F4F7] text-[14px] leading-[20px] rounded-[8px]"
-             :class="delDesc === datasetPath ?'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:bg-[#B42318] hover:text-white':''">
+             :class="delDesc === datasetPath ?'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white':''">
           I understand, delete this model
         </div>
       </div>
@@ -133,10 +133,6 @@ export default {
             type: "warning",
           })
         })
-        ElMessage({
-          type: 'info',
-          message: `切换成功`,
-        })
       }).catch(() => {
         this.visibility = value === 'Public' ? 'Private' : 'Public'
         ElMessage({
@@ -147,7 +143,6 @@ export default {
     },
 
     async changeVisibilityApi(value) {
-      console.log(value)
       const modelUpdateEndpoint = "/models/" + this.path
       const jsonData = {
         private: (value === 'Private') ? true : false,
@@ -169,7 +164,6 @@ export default {
         })
       } else {
         ElMessage({message: "更新成功", type: "success"})
-
         setTimeout(() => {
           window.location.href = "/models"
         }, 1000)
