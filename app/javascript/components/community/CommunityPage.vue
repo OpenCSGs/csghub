@@ -9,13 +9,11 @@
           View closed（1）
         </div>
     </div>
-    <EmptyCommunity v-if="theFlag=='show' && cards.length <= 0" @changeFlag="changeFlag"></EmptyCommunity>
-    <DiscussionCards v-if="theFlag=='show' && cards.length > 0" :cards="cards" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
+    <DiscussionCards v-if="theFlag=='show'" :cards="cards" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
     <NewCommunityDiscussion v-if="theFlag=='new'" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
   </div>
 </template>
 <script>
-import EmptyCommunity from "./EmptyCommunity.vue";
 import DiscussionCards from "./DiscussionCards.vue";
 import NewCommunityDiscussion from "./NewCommunityDiscussion.vue";
 export default {
@@ -23,7 +21,6 @@ export default {
     localModelId: String
   },
   components: {
-    EmptyCommunity,
     DiscussionCards,
     NewCommunityDiscussion
   },
