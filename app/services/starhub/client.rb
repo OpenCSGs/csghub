@@ -21,6 +21,10 @@ module Starhub
       end
     end
 
+    def delete(path, params = {})
+      starhub_api_connection.delete(request_path(path), params)
+    end
+
     private
 
     def request_path(path)
