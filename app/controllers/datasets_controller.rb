@@ -4,6 +4,13 @@ class DatasetsController < ApplicationController
   def index
   end
 
+  def show
+    @dataset = Starhub.api.get_datasets_detail(params[:user_name], params[:dataset_name])
+    @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name])
+    @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:dataset_name])
+    @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:dataset_name])
+  end
+
   def new_index
     response = {}
     Tag::DATASET_TAG_FIELDS.each do |field|
@@ -14,5 +21,6 @@ class DatasetsController < ApplicationController
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
+    @license_tags = Tag.where(tag_type: 'license').as_json
   end
 end

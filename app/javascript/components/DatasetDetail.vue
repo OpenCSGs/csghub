@@ -1,13 +1,12 @@
 <template>
-  <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6">
+  <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
-      <model-header :license="model.data.license" :name="model.data.name" :path="model.data.path" />
+      <dataset-header :license="dataset.data.license" :name="dataset.data.name" :path="dataset.data.path" />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
-    <model-tabs
-      :model-path="model.data.path"
-      :model-detail="model.data"
+    <dataset-tabs
+      :dataset-detail="dataset.data"
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
@@ -16,11 +15,11 @@
 </template>
 
 <script setup>
-import ModelHeader from './models/ModelHeader.vue';
-import ModelTabs from './models/ModelTabs.vue';
+import DatasetHeader from './datasets/DatasetHeader.vue';
+import DatasetTabs from './datasets/DatasetTabs.vue';
 
 const props = defineProps({
-  model: Object,
+  dataset: Object,
   files: Object,
   lastCommit: Object,
   branches: Object,
