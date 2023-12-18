@@ -8,6 +8,8 @@ class Dataset < ApplicationRecord
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
+  validates_uniqueness_of :name, scope: :owner
+
   def path
     "#{owner.name}/#{name}"
   end
