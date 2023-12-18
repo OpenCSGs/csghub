@@ -6,9 +6,8 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <model-tabs
-      :introduction="model.data.introduction"
-      :download-count="model.data.download_count"
       :model-path="model.data.path"
+      :model-detail="model.data"
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"

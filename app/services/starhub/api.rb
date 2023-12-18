@@ -52,6 +52,33 @@ module Starhub
       res = @client.delete("/models/#{username}/#{model_name}")
     end
 
+    def create_ssh_key(username, key_name, content)
+      options = {
+        username: username,
+        name: key_name,
+        content: content
+      }
+      @client.post("/user/#{username}/ssh_keys", options)
+    end
+
+    def delete_ssh_key(username, key_name)
+      options = {
+        username: username,
+        name: key_name
+      }
+      @client.delete("/api/v1/user/#{username}/ssh_key/#{key_name}")
+    end
+
+    def create_organization(username, org_name, org_full_name, desc)
+      options = {
+        username: username,
+        name: org_name,
+        full_name: org_full_name,
+        description: desc
+      }
+      @client.post("/organizations", options)
+    end
+
     # TODO: add more starhub api
   end
 end
