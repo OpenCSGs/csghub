@@ -71,10 +71,6 @@ class User < ApplicationRecord
     end
   end
 
-  def git_token!
-    git_token || create_git_token
-  end
-
   def available_namespaces
     org_names = organizations.includes(:org_memberships).where.not(org_memberships: {role: 'read'}).pluck(:id, :name)
     [["#{id}_User", name], *org_names.map { |id, name| ["#{id}_Organization", name] }]
@@ -103,15 +99,6 @@ class User < ApplicationRecord
   end
 
   private
-
-  def create_git_token
-    new_token = SecureRandom.urlsafe_base64
-    while User.exists?(git_token: new_token) do
-      new_token = SecureRandom.urlsafe_base64
-    end
-    self.update_column('git_token', new_token)
-    new_token
-  end
 
   def unique_name_by_organization
     errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
