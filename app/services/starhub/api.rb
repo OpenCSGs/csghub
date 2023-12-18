@@ -79,6 +79,10 @@ module Starhub
       res = @client.get("/datasets/#{username}/#{dataset_name}/tags").body
     end
 
+    def delete_dataset(username, dataset_name, params = {})
+      res = @client.delete("/datasets/#{username}/#{dataset_name}")
+    end
+
     def create_ssh_key(username, key_name, content)
       options = {
         username: username,

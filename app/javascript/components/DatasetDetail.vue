@@ -1,15 +1,17 @@
 <template>
   <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
-      <dataset-header :license="dataset.data.license" :name="dataset.data.name" :path="dataset.data.path" />
+      <dataset-header :license="dataset.data.license" :name="dataset.data.name" :path="dataset.data.path"/>
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
-      :dataset-detail="dataset.data"
-      :files="files.data"
-      :last-commit="lastCommit.data"
-      :branches="branches.data"
+        :dataset-path="dataset.data.path"
+        :dataset-default-branch="dataset.data.default_branch"
+        :dataset-detail="dataset.data"
+        :files="files.data"
+        :last-commit="lastCommit.data"
+        :branches="branches.data"
     />
   </div>
 </template>
@@ -27,7 +29,7 @@ const props = defineProps({
 </script>
 
 <style scoped>
-  body {
-    background: #fff !important;
-  }
+body {
+  background: #fff !important;
+}
 </style>

@@ -11,6 +11,12 @@ class DatasetsController < ApplicationController
     @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:dataset_name])
   end
 
+  def destroy
+    # 待开发
+    puts "yes"
+    render json: { message: '删除成功' }
+  end
+
   def new_index
     response = {}
     Tag::DATASET_TAG_FIELDS.each do |field|
