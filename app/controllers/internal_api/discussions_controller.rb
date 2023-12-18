@@ -2,6 +2,13 @@
 class InternalApi::DiscussionsController < ApplicationController
   before_action :authenticate_user
 
+  def index
+    discussionable = find_discussionable
+    discussions = discussionable.discussions
+
+    render json: discussions.as_json, status: :ok
+  end
+
   def create
     discussionable = find_discussionable
     discussion = discussionable.discussions.build(discussion_params)

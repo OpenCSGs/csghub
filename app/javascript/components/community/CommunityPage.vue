@@ -33,16 +33,27 @@ export default {
   data() {
     return {
       // cards:[],
-     theFlag:'show',
+      type:'Model',
+      theFlag:'show',
       cards:[{id:'1',num:'1',commentNum:'87',title:'Discussion name',time:'2023-10-10 10:10:10',user:'Username'},
              {id:'2',num:'2',commentNum:'0',title:'Discussion name',time:'2023-12-6 10:10:10',user:'Username'},
              {id:'3',num:'3',commentNum:'17',title:'Discussion name',time:'2023-10-10 10:10:10',user:'Username'}]
     };
   },
-  mounted() {},
+  mounted() {
+    this.getDiscussion()
+  },
   methods: {
     changeFlag(flag){
       this.theFlag=flag
+    },
+    async getDiscussion(){
+      const discussionCreateEndpoint = `/internal_api/discussions?discussionable_type=${this.type}&discussionable_id=${this.localModelId}`
+      const response = await fetch(discussionCreateEndpoint);
+      response.json().then((data) => {
+        console.log(data);
+        this.cards=data
+      })
     }
   },
 };
