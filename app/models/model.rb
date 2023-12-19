@@ -59,12 +59,12 @@ class Model < ApplicationRecord
                                    owner.name,
                                    { license: license,
                                      private: model_private? })
-    raise ActiveRecord::Rollback unless res.success?
+    raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
   end
 
   def delete_model_from_starhub_server
     res = Starhub.api.delete_model(owner.name, name)
-    raise ActiveRecord::Rollback unless res.success?
+    raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
   end
 
   def update_starhub_server_model
@@ -72,6 +72,6 @@ class Model < ApplicationRecord
                                    name,
                                    owner.name,
                                    { private: model_private? })
-    raise ActiveRecord::Rollback unless res.success?
+    raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
   end
 end

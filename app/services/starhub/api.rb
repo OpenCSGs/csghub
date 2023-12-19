@@ -7,20 +7,28 @@ module Starhub
     end
 
     def get_model_detail(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/detail").body
+      res = @client.get("/models/#{username}/#{model_name}/detail")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_model_files(username, model_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}").body
+      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_model_last_commit(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/last_commit").body
+      res = @client.get("/models/#{username}/#{model_name}/last_commit")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_model_branches(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/branches").body
+      res = @client.get("/models/#{username}/#{model_name}/branches")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def create_user(name, nickname, email)
@@ -49,7 +57,7 @@ module Starhub
     end
 
     def delete_model(namespace, model_name, params = {})
-      res = @client.delete("/models/#{namespace}/#{model_name}")
+      @client.delete("/models/#{namespace}/#{model_name}")
     end
 
     def update_model(username, model_name, namespace, options = {})
@@ -71,33 +79,45 @@ module Starhub
     end
 
     def get_model_tags(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/tags").body
+      res = @client.get("/models/#{username}/#{model_name}/tags")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     # datasets
     def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/detail").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/detail")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_datasets_files(username, dataset_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_datasets_last_commit(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_datasets_branches(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/branches").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/branches")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def get_datasets_tags(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tags").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tags")
+      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      res.body
     end
 
     def delete_dataset(namespace, dataset_name, params = {})
-      res = @client.delete("/datasets/#{namespace}/#{dataset_name}")
+      @client.delete("/datasets/#{namespace}/#{dataset_name}")
     end
 
     def create_ssh_key(username, key_name, content)
