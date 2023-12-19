@@ -1,4 +1,4 @@
-class InternalApi::SpacesController < ApplicationController
+class InternalApi::SpacesController < InternalApi::ApplicationController
   before_action :authenticate_user, only: :update
 
   def index

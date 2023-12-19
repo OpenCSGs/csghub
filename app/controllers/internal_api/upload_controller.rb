@@ -1,4 +1,4 @@
-class InternalApi::UploadController < ApplicationController
+class InternalApi::UploadController < InternalApi::ApplicationController
   def create
     bucket_code = AliyunOss.instance.upload 'comment', upload_params[:file]
     public_url = AliyunOss.instance.download_public bucket_code

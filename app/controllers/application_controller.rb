@@ -1,11 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
-  rescue_from StarhubError do |e|
-    log_error e.message
-    render json: {message: "Git服务器报错"}, status: 500
-  end
-
   before_action :set_default_locale, :check_user_login
 
   def authenticate_user

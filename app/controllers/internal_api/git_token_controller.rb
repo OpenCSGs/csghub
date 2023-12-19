@@ -1,4 +1,4 @@
-class InternalApi::GitTokenController < ApplicationController
+class InternalApi::GitTokenController < InternalApi::ApplicationController
   def create
     res = Starhub.api.generate_git_token(current_user.name, params[:name])
     res_json = JSON.parse(res.body)
