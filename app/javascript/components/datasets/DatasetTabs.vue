@@ -12,6 +12,9 @@
       <template #files>
         <dataset-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
+      <template #community>
+        <CommunityPage :localModelId="localDatasetId" ></CommunityPage>
+      </template>
     </TabContainer>
   </div>
 </template>
@@ -26,8 +29,10 @@
 import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
+import CommunityPage from '../community/CommunityPage.vue'
 
 const props = defineProps({
+  localDatasetId: String,
   datasetDetail: Object,
   files: Object,
   lastCommit: Object,

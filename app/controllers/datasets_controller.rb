@@ -5,6 +5,14 @@ class DatasetsController < ApplicationController
   end
 
   def show
+    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
+    @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
+    unless @local_dataset
+      # ToDo: 在模型列表页渲染 alert message
+      flash[:alert] = "未找到数据集"
+      return redirect_to "/datasets"
+    end
+
     @dataset = Starhub.api.get_datasets_detail(params[:user_name], params[:dataset_name])
     @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name])
     @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:dataset_name])

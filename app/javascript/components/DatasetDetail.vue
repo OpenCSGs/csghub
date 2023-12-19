@@ -6,6 +6,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
+      :local-dataset-id="localDatasetId"
       :dataset-detail="dataset.data"
       :files="files.data"
       :last-commit="lastCommit.data"
@@ -23,6 +24,7 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  localDatasetId: String
 })
 </script>
 
