@@ -29,6 +29,8 @@ class Model < ApplicationRecord
   has_many :discussions, as: :discussionable, dependent: :destroy
 
   after_create :sync_created_model_to_starhub_server
+  after_destroy :delete_model_from_starhub_server
+  after_update :update_starhub_server_model
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
@@ -52,7 +54,24 @@ class Model < ApplicationRecord
   private
 
   def sync_created_model_to_starhub_server
-    res = Starhub.api.create_model(creator.name, name, owner.name, { license: license, private: model_private? })
+    res = Starhub.api.create_model(creator.name,
+                                   name,
+                                   owner.name,
+                                   { license: license,
+                                     private: model_private? })
+    raise ActiveRecord::Rollback unless res.success?
+  end
+
+  def delete_model_from_starhub_server
+    res = Starhub.api.delete_model(owner.name, name)
+    raise ActiveRecord::Rollback unless res.success?
+  end
+
+  def update_starhub_server_model
+    res = Starhub.api.update_model(creator.name,
+                                   name,
+                                   owner.name,
+                                   { private: model_private? })
     raise ActiveRecord::Rollback unless res.success?
   end
 end

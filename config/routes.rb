@@ -42,7 +42,11 @@ Rails.application.routes.draw do
     resources :ssh_keys, only: [:create, :destroy]
     resources :git_token, only: [:create]
     resources :users, only: [:update]
+
     resources :models, only: [:create]
+    delete '/models/:namespace/:model_name', to: 'models#destroy'
+    put '/models/:namespace/:model_name', to: 'models#update'
+
     resources :datasets, only: [:create]
     resources :tags, only: [] do
       collection do
