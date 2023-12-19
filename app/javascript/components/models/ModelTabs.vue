@@ -8,6 +8,9 @@
       <template #files>
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
+      <template #community>
+        <CommunityPage :localModelId="localModelId" ></CommunityPage>
+      </template>
       <template #settings>
         <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
       </template>
@@ -26,9 +29,11 @@ import ModelClone from './ModelClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
+import CommunityPage from '../community/CommunityPage.vue'
 import Settings from '../settings/ModelSettings.vue'
 
 const props = defineProps({
+  localModelId: String,
   modelPath: String,
   modelDefaultBranch: String,
   modelPrivate: Boolean,

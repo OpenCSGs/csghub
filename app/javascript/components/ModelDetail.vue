@@ -6,6 +6,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <model-tabs
+      :local-model-id="localModelId"
       :model-path="model.data.path"
       :model-default-branch="model.data.default_branch"
       :model-private="model.data.private"
@@ -26,6 +27,7 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  localModelId: String
 })
 </script>
 
