@@ -3,7 +3,8 @@ class Dataset < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
-
+  has_many :discussions, as: :discussionable, dependent: :destroy
+  
   after_create :sync_created_dataset_to_starhub_server
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
