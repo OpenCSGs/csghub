@@ -42,7 +42,12 @@ Rails.application.routes.draw do
     resources :ssh_keys, only: [:create, :destroy]
     resources :git_token, only: [:create]
     resources :users, only: [:update]
+
     resources :models, only: [:create]
+    delete '/models/:namespace/:model_name', to: 'models#destroy'
+    put '/models/:namespace/:model_name', to: 'models#update'
+
+    resources :datasets, only: [:create]
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -83,6 +88,7 @@ Rails.application.routes.draw do
 
     resources :campaigns, only: [:index, :show]
     resources :models, only: [:index, :new]
+    resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show]
 
     get '/models/:user_name/:model_name', to: 'models#show'
@@ -94,7 +100,6 @@ Rails.application.routes.draw do
     get '/partners/apply', to: 'partners#apply'
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
-    get '/datasets', to: 'datasets#index'
 
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'

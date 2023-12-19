@@ -6,6 +6,9 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <model-tabs
+      :model-path="model.data.path"
+      :model-default-branch="model.data.default_branch"
+      :model-private="model.data.private"
       :model-detail="model.data"
       :files="files.data"
       :last-commit="lastCommit.data"

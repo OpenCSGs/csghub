@@ -8,6 +8,9 @@
       <template #files>
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
+      <template #settings>
+        <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
+      </template>
     </TabContainer>
   </div>
 </template>
@@ -23,8 +26,12 @@ import ModelClone from './ModelClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
+import Settings from '../settings/ModelSettings.vue'
 
 const props = defineProps({
+  modelPath: String,
+  modelDefaultBranch: String,
+  modelPrivate: Boolean,
   modelDetail: Object,
   files: Object,
   lastCommit: Object,
