@@ -1,7 +1,7 @@
 <template>
   <div class="py-[32px] md:px-[10px]">
     <div class="flex justify-between mb-[16px]" v-show="theFlag=='show'">
-        <div @click="changeFlag('new')" class="px-[16px] py-[5px] rounded-[4px] bg-[#EBEDF0] text-[#606266] text-[14px] leading-[22px] cursor-pointer ">
+        <div @click="changeFlag('new')" class="px-[16px] py-[5px] border bg-[#FAFCFF] rounded-[4px] hover:bg-[#EBEDF0] text-[#606266] text-[14px] leading-[22px] cursor-pointer ">
           New Discussions
         </div>
         <!-- <div class="hover:bg-[#F5F7FA] cursor-pointer flex items-center gap-[8px] px-[16px] py-[5px] rounded-[4px] text-[#606266] text-[14px] leading-[22px]">
