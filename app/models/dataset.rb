@@ -5,6 +5,7 @@ class Dataset < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   after_create :sync_created_dataset_to_starhub_server
+  after_destroy :delete_dataset_from_starhub_server
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
@@ -29,6 +30,11 @@ class Dataset < ApplicationRecord
 
   def sync_created_dataset_to_starhub_server
     res = Starhub.api.create_dataset(creator.name, name, owner.name, { license: license, private: dataset_private?  })
+    raise ActiveRecord::Rollback unless res.success?
+  end
+
+  def delete_dataset_from_starhub_server
+    res = Starhub.api.delete_dataset(owner.name, name)
     raise ActiveRecord::Rollback unless res.success?
   end
 end
