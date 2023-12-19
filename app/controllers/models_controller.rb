@@ -57,7 +57,7 @@ class ModelsController < ApplicationController
     if params[:private] == 'true'
       @model.visibility = 'private'
     else
-      @model.visibility = 'private'
+      @model.visibility = 'public'
     end
 
     if @model.save
