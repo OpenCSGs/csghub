@@ -6,13 +6,13 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
-        :dataset-path="dataset.data.path"
-        :dataset-default-branch="dataset.data.default_branch"
-        :dataset-private="dataset.data.private"
-        :dataset-detail="dataset.data"
-        :files="files.data"
-        :last-commit="lastCommit.data"
-        :branches="branches.data"
+      :dataset-path="dataset.data.path"
+      :dataset-default-branch="dataset.data.default_branch"
+      :dataset-private="dataset.data.private"
+      :dataset-detail="dataset.data"
+      :files="files.data"
+      :last-commit="lastCommit.data"
+      :branches="branches.data"
     />
   </div>
 </template>
