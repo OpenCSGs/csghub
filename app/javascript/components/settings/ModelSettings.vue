@@ -66,8 +66,7 @@
 <script>
 import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
-import {useCookies} from "vue3-cookies";
-import csrfFetch from "../../packs/csrfFetch";
+import csrfFetch from "../../packs/csrfFetch"
 
 export default {
   props: {
@@ -129,17 +128,16 @@ export default {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel'
       }).then((action) => {
-        this.changeVisibilityApi(value).catch((err) => {
+        this.changeVisibilityApi(value).then((data) => {
           ElMessage({
-            message: err.message,
-            type: "warning",
+            message: data.message,
+            type: "success",
           })
         })
-      }).catch(() => {
-        this.visibility = value === 'Public' ? 'Private' : 'Public'
+      }).catch((err) => {
         ElMessage({
-          type: 'info',
-          message: '取消切换',
+          type: 'warning',
+          message: err.message,
         })
       })
     },
@@ -160,18 +158,12 @@ export default {
       const response = await csrfFetch(modelUpdateEndpoint, option)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          console.log(data)
-          throw new Error(data.message)
-        })
+        return response.json().then((data) => { throw new Error(data.message) })
       } else {
-        ElMessage({message: "更新成功", type: "success"})
-        setTimeout(() => {
-          window.location.href = "/models"
-        }, 1000)
         return response.json()
       }
     },
+
     handleMouseOver() {
       if (this.delDesc !== '') {
         document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
