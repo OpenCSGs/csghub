@@ -12,5 +12,6 @@ class OrganizationsController < ApplicationController
     end
     @members = @organization.users
     @models = @organization.models
+    @datasets = @organization.datasets
   end
 end
