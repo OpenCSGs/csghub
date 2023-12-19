@@ -99,6 +99,7 @@ export default {
       } else {
         response.json().then((data) => {
           this.theDesc = this.theDesc + '![' + file.name+']' + '('+ data.url + ')'
+          this.$emit('inputChange', this.theDesc);
         })
       }
     },
