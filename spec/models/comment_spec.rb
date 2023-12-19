@@ -13,7 +13,7 @@ RSpec.describe Comment, type: :model do
     it { should validate_presence_of(:content) }
   end
 
-  describe 'as_json_data' do
+  describe 'as_json' do
     let(:comment) { create(:comment) }
 
     it 'returns a JSON representation of the comment' do
@@ -25,11 +25,11 @@ RSpec.describe Comment, type: :model do
         user: {
           id: user.id,
           name: user.name,
-          avatar: user.avatar
+          avatar: user.avatar_url
         }
       }
 
-      expect(comment.as_json_data).to eq(expected_json)
+      expect(comment.as_json).to eq(expected_json)
     end
   end
 end

@@ -14,6 +14,17 @@ class Dataset < ApplicationRecord
     "#{owner.name}/#{name}"
   end
 
+  def as_json options=nil
+    {
+      id: id,
+      name: name,
+      visibility: visibility,
+      license: license,
+      path: path,
+      updated_at: updated_at
+    }
+  end
+
   private
 
   def sync_created_dataset_to_starhub_server

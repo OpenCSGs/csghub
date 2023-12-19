@@ -87,6 +87,7 @@
         <a href="#" class="ml-2 text-sm text-[#303133] hover:underline">
           {{ file.name }}
         </a>
+        <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
       </div>
       <div class="text-sm text-[#606266] w-[20%]">
         <span v-if="file.type === 'file'">{{ file.size }} kb</span>
