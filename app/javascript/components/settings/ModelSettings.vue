@@ -103,15 +103,13 @@ export default {
 
       if (!response.ok) {
         return response.json().then((data) => {
-          console.log(data)
           throw new Error(data.message)
         })
       } else {
         ElMessage({message: "删除成功", type: "success"})
-
         setTimeout(() => {
           window.location.href = "/models"
-        }, 1000)
+        }, 500)
         return response.json()
       }
     },
@@ -127,7 +125,7 @@ export default {
         showCancelButton: true,
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel'
-      }).then((action) => {
+      }).then(() => {
         this.changeVisibilityApi(value).then((data) => {
           ElMessage({
             message: data.message,
@@ -155,6 +153,7 @@ export default {
         headers: {'Content-Type': 'application/json'},
         body: jsonStr
       }
+
       const response = await csrfFetch(modelUpdateEndpoint, option)
 
       if (!response.ok) {
@@ -163,13 +162,11 @@ export default {
         return response.json()
       }
     },
-
     handleMouseOver() {
       if (this.delDesc !== '') {
         document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
       }
     },
-
     handleMouseLeave() {
       document.getElementById('confirmDelete').classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
     }
