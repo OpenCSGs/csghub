@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   rescue_from StarhubError do |e|
-    Rails.logger.error "========error======== #{e.message}"
+    log_error e.message
     render json: {message: "Git服务器报错"}, status: 500
   end
 
@@ -33,6 +33,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def log_error message
+    ErrorLog.create(
+      message: message,
+      user_info: "#{current_user.name} / #{current_user.id} / #{current_user.phone} / #{current_user.email}",
+      request: request.path,
+      payload: request.params.to_s
+    )
+  end
 
   def current_user
     helpers.current_user

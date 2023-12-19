@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :tags
     resources :organizations
     resources :ssh_keys
+    resources :error_logs
     resources :models, except: [:new, :create]
 
     root to: "spaces#index"
