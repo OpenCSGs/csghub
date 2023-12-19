@@ -61,6 +61,13 @@ module Starhub
       res = @client.put("/models/#{username}/#{model_name}", options)
     end
 
+    def create_dataset(username, dataset_name, namespace, options = {})
+      options[:username] = username
+      options[:name] = dataset_name
+      options[:namespace] = namespace
+      @client.post("/datasets", options)
+    end
+
     def generate_git_token(username, name, options = {})
       options[:name] = name
       res = @client.post("/user/#{username}/tokens", options)
