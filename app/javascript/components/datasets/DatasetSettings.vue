@@ -98,13 +98,12 @@ export default {
       }
     },
     async deleteDataset() {
-      const datesetDeleteEndpoint = "/datasets/" + this.path
+      const datesetDeleteEndpoint = "/internal_api/datasets/" + this.path
       const option = {method: 'DELETE'}
       const response = await csrfFetch(datesetDeleteEndpoint, option)
 
       if (!response.ok) {
         return response.json().then((data) => {
-          console.log(data)
           throw new Error(data.message)
         })
       } else {
