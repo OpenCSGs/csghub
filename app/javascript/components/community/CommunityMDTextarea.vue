@@ -53,16 +53,18 @@
   </div>
 </template>
 <script>
-import MarkdownIt from "markdown-it";
-import 'github-markdown-css';
+import MarkdownIt from "markdown-it"
+import 'github-markdown-css'
+import csrfFetch from "../../packs/csrfFetch.js"
+import { ElMessage } from 'element-plus'
 export default {
   props:{
     desc: String
   },
   data() {
     return {
-      activeTab:'Edit',
-      theDesc:this.desc
+      activeTab: 'Edit',
+      theDesc: this.desc
     };
   },
   methods: {
@@ -75,13 +77,30 @@ export default {
       const file = e.target.files[0];
       this.uploadImage(file);
     },
-    uploadImage(file) {
-      console.log(file);
-      // 这里可以使用 FormData 或者其他方式上传图片到后端，获取图片地址
-      // 假设已经获取到图片地址 imageUrl 和图片名称 imageName
-      let imageUrl = 'https://cdn-uploads.huggingface.co/production/uploads/6548417d2fe2a1e686ab71d2/g28SIbJ-lfdEiIXdD30_Y.jpeg';
-      let imageName = '微信图片_20230717004756.jpg';
-      this.theDesc = this.theDesc + '![' + imageName+']' + '('+ imageUrl + ')'
+    async uploadImage(file) {
+      const uploadEndpoint = '/internal_api/upload';
+      const formData = new FormData()
+      if ( file != undefined) {
+        formData.append("file", file)
+      }
+      const options = {
+        method: 'POST',
+        body: formData
+      }
+      const response = await csrfFetch(uploadEndpoint, options)
+
+      if (!response.ok) {
+        response.json().then(data => {
+          ElMessage({
+            message: data.message,
+            type: 'warning'
+          })
+        })
+      } else {
+        response.json().then((data) => {
+          this.theDesc = this.theDesc + '![' + file.name+']' + '('+ data.url + ')'
+        })
+      }
     },
     renderMarkdown(text) {
       const mdParser = new MarkdownIt();
