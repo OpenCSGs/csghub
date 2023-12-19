@@ -49,24 +49,21 @@ class ModelsController < ApplicationController
   def update
     owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
     @model = owner && owner.models.find_by(name: params[:model_name])
+
     unless @model
       return render json: { message: "未找到对应模型" }, status: 404
     end
 
-    @model[:visibility] = 'private' if params[:private]
+    if params[:private] == 'true'
+      @model.visibility = 'private'
+    else
+      @model.visibility = 'private'
+    end
 
     if @model.save
       render json: { message: '更新成功' }
     else
       render json: { message: "更新失败" }, status: :bad_request
-    end
-
-    res = Starhub.api.update_model(params[:user_name], params[:model_name], params[:private], params[:default_branch], params[:description])
-    puts JSON.parse(res.body)
-    if JSON.parse(res.body)["msg"] == 'OK'
-      render json: { message: '更新成功' }
-    else
-      render json: { message: '更新失败' }, status: :bad_request
     end
   end
 end

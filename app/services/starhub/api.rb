@@ -52,13 +52,10 @@ module Starhub
       res = @client.delete("/models/#{username}/#{model_name}")
     end
 
-    def update_model(username, model_name, private, default_branch, description, options = {})
+    def update_model(username, model_name, namespace, options = {})
       options[:username] = username
       options[:name] = model_name
-      options[:private] = private
-      options[:default_branch] = default_branch
-      options[:description] = description
-      res = @client.put("/models/#{username}/#{model_name}", options)
+      res = @client.put("/models/#{namespace}/#{model_name}", options)
     end
 
     def create_dataset(username, dataset_name, namespace, options = {})
