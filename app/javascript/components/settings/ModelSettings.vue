@@ -97,7 +97,7 @@ export default {
       }
     },
     async deleteModel() {
-      const modelDeleteEndpoint = "/models/" + this.path
+      const modelDeleteEndpoint = "/internal_api/models/" + this.path
       const option = {method: 'DELETE'}
       const response = await csrfFetch(modelDeleteEndpoint, option)
 
@@ -141,7 +141,7 @@ export default {
     },
 
     async changeVisibilityApi(value) {
-      const modelUpdateEndpoint = "/models/" + this.path
+      const modelUpdateEndpoint = "/internal_api/models/" + this.path
       const jsonData = {
         private: (value === 'Private') ? true : false,
         default_branch: this.default_branch,

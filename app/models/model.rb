@@ -71,5 +71,6 @@ class Model < ApplicationRecord
                                    name,
                                    owner.name,
                                    { private: model_private? })
+    raise ActiveRecord::Rollback unless res.success?
   end
 end

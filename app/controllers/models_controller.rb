@@ -24,46 +24,10 @@ class ModelsController < ApplicationController
     @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
   end
 
-  def destroy
-    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-
-    unless @model
-      return render json: { message: "未找到对应模型" }, status: 404
-    end
-
-    if @model.destroy
-      render json: { message: '删除成功' }
-    else
-      render json: { message: "删除 #{params[:user_name]}/#{params[:model_name]} 失败" }, status: :bad_request
-    end
-  end
-
   def new
     @available_namespaces = current_user.available_namespaces
     system_config = SystemConfig.first
     license_configs = system_config.license_configs rescue nil
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
-  end
-
-  def update
-    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-
-    unless @model
-      return render json: { message: "未找到对应模型" }, status: 404
-    end
-
-    if params[:private].to_s == 'true'
-      @model.visibility = 'private'
-    else
-      @model.visibility = 'public'
-    end
-
-    if @model.save
-      render json: { message: '更新成功' }
-    else
-      render json: { message: "更新失败" }, status: :bad_request
-    end
   end
 end
