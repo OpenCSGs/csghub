@@ -51,6 +51,7 @@ class ModelsController < ApplicationController
     @model = Starhub.api.get_model_detail(params[:user_name], params[:model_name])
     @last_commit = Starhub.api.get_model_last_commit(params[:user_name], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
+    @readme = Starhub.api.get_model_file_content(params[:user_name], params[:model_name], 'README.md')
   end
 
   def files_options

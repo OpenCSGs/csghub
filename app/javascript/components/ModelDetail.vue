@@ -17,6 +17,7 @@
       :current-branch="currentBranch"
       :current-path="currentPath"
       :default-tab="defaultTab"
+      :readme="readme.data"
     />
   </div>
 </template>
@@ -32,10 +33,8 @@ const props = defineProps({
   branches: Object,
   currentBranch: String,
   currentPath: String,
-  defaultTab: String,
-  localModelId: String
+  readme: Object,
 })
-</script>
 
 <style scoped>
   body {

@@ -7,6 +7,7 @@
           :download-count="datasetDetail.download_count"
           :http-clone-url="datasetDetail.http_clone_url"
           :ssh-clone-url="datasetDetail.ssh_clone_url"
+          :readme="readme"
         />
       </template>
       <template #files>
@@ -18,6 +19,9 @@
           :current-path="currentPath"
           :namespace-path="datasetDetail.path"
         />
+      </template>
+      <template #settings>
+        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
     </TabContainer>
   </div>
@@ -33,8 +37,12 @@
 import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
+import Settings from './DatasetSettings.vue'
 
 const props = defineProps({
+  datasetPath: String,
+  datasetDefaultBranch: String,
+  datasetPrivate: Boolean,
   datasetDetail: Object,
   files: Object,
   lastCommit: Object,
@@ -42,5 +50,6 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
+  readme: String
 })
 </script>
