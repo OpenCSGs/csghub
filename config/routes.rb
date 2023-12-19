@@ -48,6 +48,8 @@ Rails.application.routes.draw do
     put '/models/:namespace/:model_name', to: 'models#update'
 
     resources :datasets, only: [:create]
+    delete '/datasets/:namespace/:dataset_name', to: 'datasets#destroy'
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -95,7 +97,6 @@ Rails.application.routes.draw do
 
     get '/models/:user_name/:model_name', to: 'models#show'
     get '/datasets/:user_name/:dataset_name', to: 'datasets#show'
-    delete '/datasets/:user_name/:dataset_name', to: 'datasets#destroy'
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'
