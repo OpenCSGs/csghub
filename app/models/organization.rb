@@ -9,6 +9,7 @@ class Organization < ApplicationRecord
   has_many :org_memberships, dependent: :destroy
   has_many :users, through: :org_memberships
   has_many :models, as: :owner
+  has_many :datasets, as: :owner
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   after_create :sync_to_starhub_server

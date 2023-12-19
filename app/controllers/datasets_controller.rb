@@ -31,6 +31,13 @@ class DatasetsController < ApplicationController
     @license_tags = Tag.where(tag_type: 'license').as_json
   end
 
+  def new
+    @available_namespaces = current_user.available_namespaces
+    system_config = SystemConfig.first
+    license_configs = system_config.license_configs rescue nil
+    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
+  end
+
   private
 
   def load_dataset_detail
