@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
 
   before_action :set_default_locale, :check_user_login
 
+  rescue_from StarhubError do |e|
+    log_error e.message
+    redirect_to errors_not_found_path
+  end
+
   def authenticate_user
     if helpers.logged_in?
       return true
