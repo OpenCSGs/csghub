@@ -9,6 +9,7 @@ class DatasetsController < ApplicationController
     @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name])
     @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:dataset_name])
     @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:dataset_name])
+    @readme = Starhub.api.get_datasets_file_content(params[:user_name], params[:dataset_name], 'README.md')
   end
 
   def new_index

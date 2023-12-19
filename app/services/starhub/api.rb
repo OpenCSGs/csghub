@@ -23,6 +23,10 @@ module Starhub
       res = @client.get("/models/#{username}/#{model_name}/branches").body
     end
 
+    def get_model_file_content(username, model_name, path, options = {})
+      res = @client.get("/models/#{username}/#{model_name}/raw/#{path}").body
+    end
+
     def create_user(name, nickname, email)
       options = {
         username: name,
@@ -94,6 +98,10 @@ module Starhub
 
     def get_datasets_tags(username, dataset_name, options = {})
       res = @client.get("/datasets/#{username}/#{dataset_name}/tags").body
+    end
+
+    def get_datasets_file_content(username, dataset_name, path, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}").body
     end
 
     def delete_dataset(namespace, dataset_name, params = {})
