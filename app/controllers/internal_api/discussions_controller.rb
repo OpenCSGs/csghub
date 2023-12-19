@@ -23,10 +23,10 @@ class InternalApi::DiscussionsController < ApplicationController
 
   def update
     discussion = Discussion.find_by(id: params[:id])
-    if discussion.update(discussion_params)
+    if discussion && discussion.update(discussion_params)
       render json: discussion.as_json, status: :ok
     else
-      render json: discussion.errors, status: :unprocessable_entity
+      render json: '更新失败', status: :unprocessable_entity
     end
   end
 
