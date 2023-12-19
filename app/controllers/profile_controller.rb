@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
 
   def index
     @models = current_user.models.map(&:as_json)
-    @datasets = [] # TODO current_user.datasets
+    @datasets = current_user.datasets.map(&:as_json)
     @spaces = current_user.spaces
     @organizations = current_user.organizations
   end

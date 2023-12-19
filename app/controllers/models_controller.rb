@@ -20,6 +20,13 @@ class ModelsController < ApplicationController
 
   def show
     @default_tab = 'summary'
+    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
+    @local_model = owner && owner.models.find_by(name: params[:model_name])
+    unless @local_model
+      # ToDo: 在模型列表页渲染 alert message
+      flash[:alert] = "未找到模型"
+      return redirect_to "/models"
+    end
     @files = Starhub.api.get_model_files(params[:user_name], params[:model_name])
   end
 

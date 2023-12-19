@@ -37,12 +37,16 @@ Rails.application.routes.draw do
     resources :organizations, only: [:create, :update]
     resources :spaces, only: [:index, :update]
     resources :campaigns, only: [:index]
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy, :index]
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
     resources :git_token, only: [:create]
     resources :users, only: [:update]
+
     resources :models, only: [:create]
+    delete '/models/:namespace/:model_name', to: 'models#destroy'
+    put '/models/:namespace/:model_name', to: 'models#update'
+
     resources :datasets, only: [:create]
     resources :tags, only: [] do
       collection do
@@ -50,7 +54,9 @@ Rails.application.routes.draw do
         get 'framework-tags', to: 'tags#framework_tags'
       end
     end
-    resources :discussions, only: :create
+    # resources :discussions, only: :create
+    resources :discussions, only: [:create, :index, :update]
+    resources :upload, only: [:create]
   end
 
   # lead form

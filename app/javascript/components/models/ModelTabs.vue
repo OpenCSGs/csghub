@@ -15,6 +15,12 @@
           :namespace-path="modelDetail.path"
         />
       </template>
+      <template #community>
+        <CommunityPage :localModelId="localModelId" ></CommunityPage>
+      </template>
+      <template #settings>
+        <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
+      </template>
     </TabContainer>
   </div>
 </template>
@@ -30,8 +36,14 @@ import ModelClone from './ModelClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
+import CommunityPage from '../community/CommunityPage.vue'
+import Settings from '../settings/ModelSettings.vue'
 
 const props = defineProps({
+  localModelId: String,
+  modelPath: String,
+  modelDefaultBranch: String,
+  modelPrivate: Boolean,
   modelDetail: Object,
   files: Object,
   lastCommit: Object,

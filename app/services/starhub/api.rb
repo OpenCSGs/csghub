@@ -48,6 +48,16 @@ module Starhub
       @client.post("/models", options)
     end
 
+    def delete_model(username, model_name, params = {})
+      res = @client.delete("/models/#{username}/#{model_name}")
+    end
+
+    def update_model(username, model_name, namespace, options = {})
+      options[:username] = username
+      options[:name] = model_name
+      res = @client.put("/models/#{namespace}/#{model_name}", options)
+    end
+
     def create_dataset(username, dataset_name, namespace, options = {})
       options[:username] = username
       options[:name] = dataset_name

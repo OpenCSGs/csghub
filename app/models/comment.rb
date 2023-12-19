@@ -6,7 +6,7 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
-  def as_json_data
+  def as_json options={}
     {
       id: id,
       content: content,
@@ -21,7 +21,7 @@ class Comment < ApplicationRecord
     {
       id: user.id,
       name: user.display_name,
-      avatar: user.avatar
+      avatar: user.avatar_url
     }
   end
 end
