@@ -12,6 +12,9 @@
       <template #files>
         <dataset-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
+      <template #settings>
+        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
+      </template>
     </TabContainer>
   </div>
 </template>
@@ -26,8 +29,12 @@
 import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
+import Settings from './DatasetSettings.vue'
 
 const props = defineProps({
+  datasetPath: String,
+  datasetDefaultBranch: String,
+  datasetPrivate: Boolean,
   datasetDetail: Object,
   files: Object,
   lastCommit: Object,
