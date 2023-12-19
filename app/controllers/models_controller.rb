@@ -54,7 +54,7 @@ class ModelsController < ApplicationController
       return render json: { message: "未找到对应模型" }, status: 404
     end
 
-    if params[:private] == 'true'
+    if params[:private].to_s == 'true'
       @model.visibility = 'private'
     else
       @model.visibility = 'public'
