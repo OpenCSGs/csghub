@@ -29,7 +29,7 @@
 import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
-import Settings from './DatasetSettins.vue'
+import Settings from './DatasetSettings.vue'
 
 const props = defineProps({
   datasetPath: String,

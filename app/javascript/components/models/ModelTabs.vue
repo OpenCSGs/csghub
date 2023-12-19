@@ -30,7 +30,7 @@ import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
-import Settings from '../settings/ModelSettings.vue'
+import Settings from './ModelSettings.vue'
 
 const props = defineProps({
   localModelId: String,
