@@ -4,7 +4,7 @@ class InternalApi::DiscussionsController < ApplicationController
 
   def index
     discussionable = find_discussionable
-    discussions = discussionable.discussions
+    discussions = discussionable.discussions.order(updated_at: :desc)
 
     render json: discussions.as_json, status: :ok
   end
