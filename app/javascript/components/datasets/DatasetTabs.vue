@@ -7,6 +7,7 @@
           :download-count="datasetDetail.download_count"
           :http-clone-url="datasetDetail.http_clone_url"
           :ssh-clone-url="datasetDetail.ssh_clone_url"
+          :readme="readme"
         />
       </template>
       <template #files>
@@ -32,5 +33,6 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  readme: String
 })
 </script>

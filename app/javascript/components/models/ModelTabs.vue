@@ -3,7 +3,7 @@
     <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
     <TabContainer>
       <template #summary>
-        <model-summary :introduction="modelDetail.introduction" :download-count="modelDetail.download_count" />
+        <model-summary :readme="readme" :download-count="modelDetail.download_count" />
       </template>
       <template #files>
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
@@ -29,5 +29,6 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  readme: String
 })
 </script>

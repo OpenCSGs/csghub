@@ -10,6 +10,7 @@
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
+      :readme="readme.data"
     />
   </div>
 </template>
@@ -23,6 +24,7 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  readme: Object
 })
 </script>
 
