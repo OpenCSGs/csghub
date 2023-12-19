@@ -7,6 +7,7 @@
         :title="currentTitle"
         :userName="currentUserName"
         :time="currentTime"
+        @getDiscussion="getDiscussion"
         @toggleDetails="toggleDetails" />
       <DiscussionCard v-else v-for="card in cards"  @click="showDetails(card)"
         :key="card.id"
@@ -53,6 +54,9 @@ export default {
     },
     changeFlag(flag){
       this.$emit('changeFlag',flag)
+    },
+    getDiscussion(){
+      this.$emit("getDiscussion");
     }
   }
 };

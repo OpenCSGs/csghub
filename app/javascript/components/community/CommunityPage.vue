@@ -9,7 +9,7 @@
           View closed（1）
         </div> -->
     </div>
-    <DiscussionCards v-if="theFlag=='show'" :cards="cards" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
+    <DiscussionCards v-if="theFlag=='show'" :cards="cards" @getDiscussion="getDiscussion" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
     <NewCommunityDiscussion v-if="theFlag=='new'" @getDiscussion="getDiscussion" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
   </div>
 </template>

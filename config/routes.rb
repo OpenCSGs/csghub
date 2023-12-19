@@ -50,7 +50,7 @@ Rails.application.routes.draw do
       end
     end
     # resources :discussions, only: :create
-    resources :discussions, only: [:create, :index]
+    resources :discussions, only: [:create, :index, :update]
   end
 
   # lead form

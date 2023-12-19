@@ -92,6 +92,8 @@ export default {
     },
     saveTitle() {
       this.isEdit = false;
+      this.updateDiscussion(this.discussionId)
+      this.$emit("getDiscussion");
       // if(this.title!=this.oldTitle){
       //   let data={name:'username',type:'change title',title_from:this.oldTitle,title_to:this.title,date:new Date().toISOString()}
       //   this.timelineData.push(data)
@@ -128,6 +130,23 @@ export default {
     },
     cancel(){
       this.$emit("toggleDetails");
+    },
+    
+    async updateDiscussion(id) {
+      const discussionUpdateEndpoint = `/internal_api/discussions/${id}`;
+      const formData = new FormData()
+      formData.append("title", this.theTitle);
+      const options = {
+        method: 'PUT',
+        body: formData
+      };
+      const response = await csrfFetch(discussionUpdateEndpoint, options)
+
+      if (!response.ok) {
+        return response.json().then(data => { throw new Error(data.message) })
+      } else {
+        return response.json();
+      }
     },
     async getComment(discussionId){
       const commentCreateEndpoint = `/internal_api/comments?commentable_type=Discussion&commentable_id=${discussionId}`
