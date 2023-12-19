@@ -52,8 +52,8 @@ module Starhub
       @client.post("/models", options)
     end
 
-    def delete_model(username, model_name, params = {})
-      res = @client.delete("/models/#{username}/#{model_name}")
+    def delete_model(namespace, model_name, params = {})
+      res = @client.delete("/models/#{namespace}/#{model_name}")
     end
 
     def update_model(username, model_name, namespace, options = {})
@@ -102,6 +102,10 @@ module Starhub
 
     def get_datasets_file_content(username, dataset_name, path, options = {})
       res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}").body
+    end
+
+    def delete_dataset(namespace, dataset_name, params = {})
+      res = @client.delete("/datasets/#{namespace}/#{dataset_name}")
     end
 
     def create_ssh_key(username, key_name, content)

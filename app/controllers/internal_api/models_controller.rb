@@ -46,7 +46,7 @@ class InternalApi::ModelsController < ApplicationController
     if @model.destroy
       render json: { message: '删除成功' }
     else
-      render json: { message: "删除 #{params[:user_name]}/#{params[:model_name]} 失败" }, status: :bad_request
+      render json: { message: "删除 #{params[:namespace]}/#{params[:model_name]} 失败" }, status: :bad_request
     end
   end
 

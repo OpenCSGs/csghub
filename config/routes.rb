@@ -48,6 +48,8 @@ Rails.application.routes.draw do
     put '/models/:namespace/:model_name', to: 'models#update'
 
     resources :datasets, only: [:create]
+    delete '/datasets/:namespace/:dataset_name', to: 'datasets#destroy'
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
