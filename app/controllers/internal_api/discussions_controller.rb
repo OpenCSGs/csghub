@@ -26,7 +26,7 @@ class InternalApi::DiscussionsController < ApplicationController
     if discussion && discussion.update(discussion_params)
       render json: discussion.as_json, status: :ok
     else
-      render json: '更新失败', status: :unprocessable_entity
+      render json: { message: '更新失败' }, status: :unprocessable_entity
     end
   end
 

@@ -92,8 +92,20 @@ export default {
     },
     saveTitle() {
       this.isEdit = false;
-      this.updateDiscussion(this.discussionId)
-      this.$emit("getDiscussion");
+      this.updateDiscussion(this.discussionId).then((data) => {
+        this.$emit("getDiscussion")
+        ElMessage({
+          message: "标题更新成功！",
+          type: 'success'
+        })
+      })
+      .catch(err => {
+        ElMessage({
+          message: err.message,
+          type: 'warning'
+        })
+      })
+
       // if(this.title!=this.oldTitle){
       //   let data={name:'username',type:'change title',title_from:this.oldTitle,title_to:this.title,date:new Date().toISOString()}
       //   this.timelineData.push(data)
@@ -131,7 +143,7 @@ export default {
     cancel(){
       this.$emit("toggleDetails");
     },
-    
+
     async updateDiscussion(id) {
       const discussionUpdateEndpoint = `/internal_api/discussions/${id}`;
       const formData = new FormData()
