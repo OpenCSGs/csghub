@@ -23,6 +23,9 @@ class User < ApplicationRecord
 
   after_save :sync_to_starhub_server
 
+  has_many :datasets, as: :owner
+  has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
+
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
   def roles=(*roles)
@@ -69,7 +72,7 @@ class User < ApplicationRecord
   end
 
   def available_namespaces
-    org_names = organizations.includes(:org_memberships).where.not(org_memberships: {role: 'read'}).pluck(:id, :name)
+    org_names = organizations.includes(:org_memberships).where.not(org_memberships: {role: 'read'}).pluck(:id, :name).uniq
     [["#{id}_User", name], *org_names.map { |id, name| ["#{id}_Organization", name] }]
   end
 
