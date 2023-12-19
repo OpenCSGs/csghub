@@ -32,6 +32,8 @@ class Model < ApplicationRecord
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
+  validates :name, uniqueness: { scope: [:owner_type, :owner_id] }
+
   def path
     "#{owner.name}/#{name}"
   end
@@ -50,6 +52,7 @@ class Model < ApplicationRecord
   private
 
   def sync_created_model_to_starhub_server
-    Starhub.api.create_model(creator.name, name, owner.name)
+    res = Starhub.api.create_model(creator.name, name, owner.name, { license: license, private: model_private? })
+    raise ActiveRecord::Rollback unless res.success?
   end
 end
