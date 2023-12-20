@@ -23,19 +23,19 @@
             size="large"
             placeholder="模型名字"
             :prefix-icon="Search"
-            @change = "filterModelByName"
+            @change = "reloadModels"
           />
-          <el-dropdown size="large" split-button type="">
-            Default
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>Action 1</el-dropdown-item>
-                <el-dropdown-item>Action 2</el-dropdown-item>
-                <el-dropdown-item>Action 3</el-dropdown-item>
-                <el-dropdown-item>Action 4</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <el-select v-model="sortSelection"
+                     @change="reloadModels"
+                     class="w-[100px] xl:mr-[20px]"
+          >
+            <el-option
+              v-for="item in sortOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </div>
       </div>
       <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
@@ -48,7 +48,7 @@
                       :total="totalModels"
                       :page-size="16"
                       layout="prev, pager, next"
-                      @update:current-page="loadModels"
+                      @update:current-page="reloadModels"
                       class="my-[52px] flex justify-center"
         />
       </div>
@@ -69,13 +69,31 @@
   })
 
   const nameFilterInput = ref('')
+  const sortSelection = ref('recently_update')
   const currentPage = ref(1)
   const perPage = ref(16)
   const totalModels = ref('')
   const modelsData = ref(Array)
-
-  const filterModelByName = (keyword) => {
-    const url = `/internal_api/models?page=${currentPage.value}&per_page=${perPage.value}&search=${keyword}`
+  const sortOptions = [
+                        {
+                          value: 'recently_update',
+                          label: '最近更新'
+                        },
+                        {
+                          value: 'trending',
+                          label: '热门'
+                        },
+                        {
+                          value: 'most_download',
+                          label: '最多下载'
+                        },
+                        {
+                          value: 'most_favorite',
+                          label: '最多喜欢'
+                        },
+                      ]
+  const reloadModels = () => {
+    const url = `/internal_api/models?page=${currentPage.value}&per_page=${perPage.value}&search=${nameFilterInput.value}&sort=${sortSelection.value}`
     loadModels(url)
   }
 
