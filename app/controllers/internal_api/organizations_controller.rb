@@ -1,4 +1,4 @@
-class InternalApi::OrganizationsController < ApplicationController
+class InternalApi::OrganizationsController < InternalApi::ApplicationController
   before_action :authenticate_user
 
   def create

@@ -1,16 +1,27 @@
 <template>
   <div class="relative">
-    <TabContainer>
+    <TabContainer :default-tab="defaultTab">
       <template #summary>
         <dataset-summary
           :introduction="datasetDetail.introduction"
           :download-count="datasetDetail.download_count"
           :http-clone-url="datasetDetail.http_clone_url"
           :ssh-clone-url="datasetDetail.ssh_clone_url"
+          :readme="readme"
         />
       </template>
       <template #files>
-        <dataset-files :files="files" :last-commit="lastCommit" :branches="branches" />
+        <dataset-files
+          :files="files"
+          :last-commit="lastCommit"
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="datasetDetail.path"
+        />
+      </template>
+      <template #settings>
+        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
       <template #community>
         <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
@@ -33,9 +44,19 @@ import CommunityPage from '../community/CommunityPage.vue'
 
 const props = defineProps({
   localDatasetId: String,
+import Settings from './DatasetSettings.vue'
+
+const props = defineProps({
+  datasetPath: String,
+  datasetDefaultBranch: String,
+  datasetPrivate: Boolean,
   datasetDetail: Object,
   files: Object,
   lastCommit: Object,
   branches: Object,
+  currentBranch: String,
+  currentPath: String,
+  defaultTab: String,
+  readme: String
 })
 </script>

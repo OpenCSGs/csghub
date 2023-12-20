@@ -1,5 +1,6 @@
 class DatasetsController < ApplicationController
   before_action :check_user_info_integrity
+  before_action :load_dataset_detail, only: [:show, :files]
 
   def index
   end
@@ -14,9 +15,16 @@ class DatasetsController < ApplicationController
     end
 
     @dataset = Starhub.api.get_datasets_detail(params[:user_name], params[:dataset_name])
+    @default_tab = 'summary'
     @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name])
-    @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:dataset_name])
-    @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:dataset_name])
+  end
+
+  def files
+    @default_tab = 'files'
+    @current_branch = params[:branch] || 'main'
+    @current_path = params[:path] || ''
+    @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name], files_options)
+    render :show
   end
 
   def new_index
@@ -37,5 +45,21 @@ class DatasetsController < ApplicationController
     system_config = SystemConfig.first
     license_configs = system_config.license_configs rescue nil
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
+  end
+
+  private
+
+  def load_dataset_detail
+    @dataset = Starhub.api.get_datasets_detail(params[:user_name], params[:dataset_name])
+    @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:dataset_name])
+    @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:dataset_name])
+    @readme = Starhub.api.get_datasets_file_content(params[:user_name], params[:dataset_name], 'README.md')
+  end
+
+  def files_options
+    {
+      ref: @current_branch,
+      path: @current_path
+    }
   end
 end

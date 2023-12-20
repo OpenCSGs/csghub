@@ -1,0 +1,1 @@
+class StarhubError < StandardError; end

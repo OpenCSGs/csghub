@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :tags
     resources :organizations
     resources :ssh_keys
+    resources :error_logs
     resources :models, except: [:new, :create]
 
     root to: "spaces#index"
@@ -48,6 +49,8 @@ Rails.application.routes.draw do
     put '/models/:namespace/:model_name', to: 'models#update'
 
     resources :datasets, only: [:create]
+    delete '/datasets/:namespace/:dataset_name', to: 'datasets#destroy'
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -94,7 +97,9 @@ Rails.application.routes.draw do
     resources :organizations, only: [:new, :show]
 
     get '/models/:user_name/:model_name', to: 'models#show'
+    get '/models/:user_name/:model_name/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
     get '/datasets/:user_name/:dataset_name', to: 'datasets#show'
+    get '/datasets/:user_name/:dataset_name/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'
@@ -110,5 +115,9 @@ Rails.application.routes.draw do
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'
+
+    # errors
+    get '/errors/not-found', to: 'errors#not_found'
+    get '/errors/unauthorized', to: 'errors#unauthorized'
   end
 end
