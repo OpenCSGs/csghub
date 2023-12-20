@@ -182,7 +182,7 @@
   const canPreview = (path) => {
     const parts = path.split('.')
     const extension = parts[parts.length - 1]
-    const previewExtensions = ['gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c']
+    const previewExtensions = ['gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt']
     return previewExtensions.includes(extension)
   }
 
