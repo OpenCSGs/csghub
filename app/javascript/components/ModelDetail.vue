@@ -23,10 +23,12 @@
 </template>
 
 <script setup>
-import ModelHeader from './models/ModelHeader.vue';
-import ModelTabs from './models/ModelTabs.vue';
+import ModelHeader from './models/ModelHeader.vue'
+import ModelTabs from './models/ModelTabs.vue'
 
 const props = defineProps({
+  localModelId: String,
+  defaultTab: String,
   model: Object,
   files: Object,
   lastCommit: Object,
@@ -35,6 +37,7 @@ const props = defineProps({
   currentPath: String,
   readme: Object,
 })
+</script>
 
 <style scoped>
   body {
