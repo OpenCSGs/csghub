@@ -46,7 +46,7 @@ class Organization < ApplicationRecord
 
   def sync_to_starhub_server
     res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
-    raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+    raise StarhubError, res.body unless res.success?
     starhub_synced!
   end
 

@@ -30,11 +30,11 @@ class Dataset < ApplicationRecord
 
   def sync_created_dataset_to_starhub_server
     res = Starhub.api.create_dataset(creator.name, name, owner.name, { license: license, private: dataset_private?  })
-    raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+    raise StarhubError, res.body unless res.success?
   end
 
   def delete_dataset_from_starhub_server
     res = Starhub.api.delete_dataset(owner.name, name)
-    raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+    raise StarhubError, res.body unless res.success?
   end
 end

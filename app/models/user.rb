@@ -92,10 +92,10 @@ class User < ApplicationRecord
   def sync_to_starhub_server
     if starhub_synced?
       res = Starhub.api.update_user(name, nickname, email)
-      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      raise StarhubError, res.body unless res.success?
     else
       res = Starhub.api.create_user(name, nickname, email)
-      raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
+      raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
   end
