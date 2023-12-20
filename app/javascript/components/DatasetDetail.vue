@@ -31,7 +31,7 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
-  localDatasetId: String
+  localDatasetId: String,
   currentBranch: String,
   currentPath: String,
   defaultTab: String,

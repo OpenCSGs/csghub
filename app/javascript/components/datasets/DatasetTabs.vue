@@ -41,12 +41,10 @@ import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
-
-const props = defineProps({
-  localDatasetId: String,
 import Settings from './DatasetSettings.vue'
 
 const props = defineProps({
+  localDatasetId: String,
   datasetPath: String,
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,
