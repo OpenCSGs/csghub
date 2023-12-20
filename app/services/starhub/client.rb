@@ -5,6 +5,10 @@ module Starhub
 
     API_VERSION = '/api/v1'
 
+    rescue_from Faraday::ConnectionFailed do
+      raise StarhubError, "Git服务器超时"
+    end
+
     def get(path, params = {})
       starhub_api_connection.get(request_path(path), params)
     end
