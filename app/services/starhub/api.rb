@@ -14,7 +14,7 @@ module Starhub
 
     def get_model_files(username, model_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}")
+      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}&ref=#{options[:ref]}")
       raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
       res.body
     end
@@ -97,7 +97,7 @@ module Starhub
 
     def get_datasets_files(username, dataset_name, options = {})
       options[:path] ||= '/'
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}&ref=#{options[:ref]}")
       raise StarhubError, JSON.parse(res.body)['message'] unless res.success?
       res.body
     end

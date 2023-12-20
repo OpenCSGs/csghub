@@ -1,12 +1,19 @@
 <template>
   <div class="relative">
     <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
-    <TabContainer>
+    <TabContainer :default-tab="defaultTab">
       <template #summary>
         <model-summary :readme="readme" :download-count="modelDetail.download_count" />
       </template>
       <template #files>
-        <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
+        <model-files
+          :files="files"
+          :last-commit="lastCommit"
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="modelDetail.path"
+        />
       </template>
       <template #community>
         <CommunityPage :localModelId="localModelId" ></CommunityPage>
@@ -41,6 +48,9 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  currentBranch: String,
+  currentPath: String,
+  defaultTab: String,
   readme: String
 })
 </script>

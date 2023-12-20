@@ -14,22 +14,28 @@
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
+      :current-branch="currentBranch"
+      :current-path="currentPath"
+      :default-tab="defaultTab"
       :readme="readme.data"
     />
   </div>
 </template>
 
 <script setup>
-import ModelHeader from './models/ModelHeader.vue';
-import ModelTabs from './models/ModelTabs.vue';
+import ModelHeader from './models/ModelHeader.vue'
+import ModelTabs from './models/ModelTabs.vue'
 
 const props = defineProps({
+  localModelId: String,
+  defaultTab: String,
   model: Object,
   files: Object,
   lastCommit: Object,
   branches: Object,
+  currentBranch: String,
+  currentPath: String,
   readme: Object,
-  localModelId: String
 })
 </script>
 
