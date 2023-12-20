@@ -6,8 +6,11 @@ module Starhub
       @client = Starhub::Client.instance
     end
 
-    def get_models(page, per=16)
-      res = @client.get("/models?per=#{per}&page=#{page}")
+    def get_models(keyword, page, per=16)
+      url = "/models?per=#{per}"
+      url += "&search=#{keyword}" if keyword.present?
+      url += "&page=#{page}" if page.present?
+      res = @client.get(url)
       raise StarhubError, res.body unless res.success?
       res.body
     end

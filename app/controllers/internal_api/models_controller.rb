@@ -4,7 +4,8 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def index
     page = params[:page] || 1
     per_page = params[:per_page] || 16
-    res_body = Starhub.api.get_models(page, per_page)
+    keyword = params[:search]
+    res_body = Starhub.api.get_models(keyword, page, per_page)
     api_response = JSON.parse(res_body)
     render json: {models: api_response['data'], total: api_response['total']}
   end

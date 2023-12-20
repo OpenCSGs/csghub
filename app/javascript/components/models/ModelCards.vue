@@ -74,12 +74,13 @@
   const totalModels = ref('')
   const modelsData = ref(Array)
 
-  const filterModelByName = (keywords) => {
+  const filterModelByName = (keyword) => {
+    const url = `/internal_api/models?page=${currentPage.value}&per_page=${perPage.value}&search=${keyword}`
+    loadModels(url)
   }
 
-  async function loadModels() {
-    const modelsEndpoint = `/internal_api/models?page=${currentPage.value}&per_page=${perPage.value}`;
-    const response = await fetch(modelsEndpoint);
+  async function loadModels(url) {
+    const response = await fetch(url);
 
     if (!response.ok) {
       ElMessage({
@@ -95,6 +96,7 @@
   }
 
   onMounted(() => {
-    loadModels()
+    const url = `/internal_api/models?page=${currentPage.value}&per_page=${perPage.value}`
+    loadModels(url)
   })
 </script>
