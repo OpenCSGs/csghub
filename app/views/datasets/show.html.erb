@@ -4,6 +4,9 @@
     :files="<%= @files %>"
     :last-commit="<%= @last_commit %>"
     :branches="<%= @branches %>"
+    current-branch="<%= @current_branch || 'main' %>"
+    current-path="<%= @current_path || '' %>"
+    default-tab="<%= @default_tab || 'summary' %>"
     :readme="<%= @readme %>"
   >
   </dataset-detail>

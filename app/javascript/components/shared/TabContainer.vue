@@ -36,5 +36,10 @@
 
 <script setup>
 import { ref } from 'vue'
-const activeName = ref('summary')
+
+const props = defineProps({
+  defaultTab: String,
+})
+
+const activeName = ref(props.defaultTab)
 </script>
