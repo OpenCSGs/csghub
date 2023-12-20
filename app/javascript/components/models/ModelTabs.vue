@@ -26,7 +26,7 @@
         />
       </template>
       <template #community>
-        <CommunityPage :localModelId="localModelId" ></CommunityPage>
+        <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
       <template #settings>
         <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />

@@ -95,9 +95,21 @@
         <a v-if="file.type === 'dir'" :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline">
           {{ file.name }}
         </a>
-        <a v-else :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline">
+        <a v-else-if="canPreview(file.path)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline">
           {{ file.name }}
         </a>
+        <el-popover
+          v-else
+          placement="top"
+          :width="270"
+          trigger="hover"
+          effect="dark"
+          content="暂不支持预览，请通过 git clone 下载"
+        >
+          <template #reference>
+            <div class="ml-2 text-sm text-[#303133] hover:underline">{{ file.name }}</div>
+          </template>
+        </el-popover>
         <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
       </div>
       <div class="text-sm text-[#606266] w-[20%]">
@@ -165,6 +177,13 @@
     }
 
     return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
+  }
+
+  const canPreview = (path) => {
+    const parts = path.split('.')
+    const extension = parts[parts.length - 1]
+    const previewExtensions = ['gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c']
+    return previewExtensions.includes(extension)
   }
 
   onMounted(() => {

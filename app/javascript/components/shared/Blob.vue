@@ -126,19 +126,6 @@
     })
   }
 
-  const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
-
-  function formatBytes(bytes) {
-    let level = 0;
-    let n = parseInt(bytes, 10) || 0;
-
-    while (n >= 1024 && ++level) {
-      n = n / 1024;
-    }
-
-    return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
-  }
-
   const detectFileType = () => {
     const parts = props.currentPath.split('.')
     const extension = parts[parts.length - 1]

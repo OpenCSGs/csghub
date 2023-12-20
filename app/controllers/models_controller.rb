@@ -36,6 +36,7 @@ class ModelsController < ApplicationController
       flash[:alert] = "未找到模型"
       return redirect_to "/models"
     end
+    @default_tab = 'files'
     @files = Starhub.api.get_model_files(params[:namespace], params[:model_name], files_options)
     render :show
   end
