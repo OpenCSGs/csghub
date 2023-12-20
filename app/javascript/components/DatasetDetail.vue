@@ -6,6 +6,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
+      :content="content.data"
       :dataset-path="dataset.data.path"
       :dataset-default-branch="dataset.data.default_branch"
       :dataset-private="dataset.data.private"
@@ -17,6 +18,7 @@
       :current-path="currentPath"
       :default-tab="defaultTab"
       :readme="readme.data"
+      :actionName="actionName"
     />
   </div>
 </template>
@@ -33,7 +35,9 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  readme: Object
+  readme: Object,
+  content: Object,
+  actionName: String
 })
 </script>
 

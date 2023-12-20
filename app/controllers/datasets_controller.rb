@@ -1,20 +1,18 @@
 class DatasetsController < ApplicationController
   before_action :check_user_info_integrity
-  before_action :load_dataset_detail, only: [:show, :files]
+  before_action :load_dataset_detail, only: [:show, :files, :blob]
+  before_action :load_branch_and_path, only: [:files, :blob]
 
   def index
   end
 
   def show
     @default_tab = 'summary'
-    @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name])
+    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name])
   end
 
   def files
-    @default_tab = 'files'
-    @current_branch = params[:branch] || 'main'
-    @current_path = params[:path] || ''
-    @files = Starhub.api.get_datasets_files(params[:user_name], params[:dataset_name], files_options)
+    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name], files_options)
     render :show
   end
 
@@ -38,13 +36,24 @@ class DatasetsController < ApplicationController
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 
+  def blob
+    @content = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
+    render :show
+  end
+
   private
 
   def load_dataset_detail
-    @dataset = Starhub.api.get_datasets_detail(params[:user_name], params[:dataset_name])
-    @last_commit = Starhub.api.get_datasets_last_commit(params[:user_name], params[:dataset_name])
-    @branches = Starhub.api.get_datasets_branches(params[:user_name], params[:dataset_name])
-    @readme = Starhub.api.get_datasets_file_content(params[:user_name], params[:dataset_name], 'README.md')
+    @dataset = Starhub.api.get_datasets_detail(params[:namespace], params[:dataset_name])
+    @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
+    @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
+    @readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
+  end
+
+  def load_branch_and_path
+    @default_tab = 'files'
+    @current_branch = params[:branch] || 'main'
+    @current_path = params[:path] || ''
   end
 
   def files_options

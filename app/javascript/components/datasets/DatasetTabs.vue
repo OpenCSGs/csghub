@@ -10,9 +10,19 @@
           :readme="readme"
         />
       </template>
-      <template #files>
+      <template #files v-if="actionName !== 'blob'">
         <dataset-files
           :files="files"
+          :last-commit="lastCommit"
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="datasetDetail.path"
+        />
+      </template>
+      <template #files v-if="actionName === 'blob'">
+        <dataset-blob
+          :content="content"
           :last-commit="lastCommit"
           :branches="branches"
           :current-branch="currentBranch"
@@ -38,6 +48,7 @@ import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
 import Settings from './DatasetSettings.vue'
+import DatasetBlob from './DatasetBlob.vue'
 
 const props = defineProps({
   datasetPath: String,
@@ -50,6 +61,8 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  readme: String
+  readme: String,
+  content: String,
+  actionName: String
 })
 </script>

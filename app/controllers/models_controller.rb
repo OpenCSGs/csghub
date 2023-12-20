@@ -1,6 +1,8 @@
 class ModelsController < ApplicationController
   before_action :check_user_info_integrity
-  before_action :load_model_detail, only: [:show, :files]
+  before_action :load_model_detail, only: [:show, :files, :blob]
+  before_action :load_branch_and_path, only: [:files, :blob]
+  before_action :load_local_model, only: [:show, :files, :blob]
 
   def index
   end
@@ -20,28 +22,21 @@ class ModelsController < ApplicationController
 
   def show
     @default_tab = 'summary'
-    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
-    @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到模型"
       return redirect_to "/models"
     end
-    @files = Starhub.api.get_model_files(params[:user_name], params[:model_name])
+    @files = Starhub.api.get_model_files(params[:namespace], params[:model_name])
   end
 
   def files
-    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
-    @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到模型"
       return redirect_to "/models"
     end
-    @default_tab = 'files'
-    @current_branch = params[:branch] || 'main'
-    @current_path = params[:path] || ''
-    @files = Starhub.api.get_model_files(params[:user_name], params[:model_name], files_options)
+    @files = Starhub.api.get_model_files(params[:namespace], params[:model_name], files_options)
     render :show
   end
 
@@ -52,13 +47,34 @@ class ModelsController < ApplicationController
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 
+  def blob
+    unless @local_model
+      # ToDo: 在模型列表页渲染 alert message
+      flash[:alert] = "未找到模型"
+      return redirect_to "/models"
+    end
+    @content = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], params[:path], { ref: @current_branch })
+    render :show
+  end
+
   private
 
   def load_model_detail
-    @model = Starhub.api.get_model_detail(params[:user_name], params[:model_name])
-    @last_commit = Starhub.api.get_model_last_commit(params[:user_name], params[:model_name])
-    @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
-    @readme = Starhub.api.get_model_file_content(params[:user_name], params[:model_name], 'README.md')
+    @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
+    @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
+    @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
+    @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+  end
+
+  def load_branch_and_path
+    @default_tab = 'files'
+    @current_branch = params[:branch] || 'main'
+    @current_path = params[:path] || ''
+  end
+
+  def load_local_model
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @local_model = owner && owner.models.find_by(name: params[:model_name])
   end
 
   def files_options

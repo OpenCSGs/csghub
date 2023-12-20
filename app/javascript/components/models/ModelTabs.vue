@@ -5,9 +5,19 @@
       <template #summary>
         <model-summary :readme="readme" :download-count="modelDetail.download_count" />
       </template>
-      <template #files>
+      <template #files v-if="actionName !== 'blob'">
         <model-files
           :files="files"
+          :last-commit="lastCommit"
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="modelDetail.path"
+        />
+      </template>
+      <template #files v-if="actionName === 'blob'">
+        <model-blob
+          :content="content"
           :last-commit="lastCommit"
           :branches="branches"
           :current-branch="currentBranch"
@@ -38,6 +48,7 @@ import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
+import ModelBlob from './ModelBlob.vue'
 
 const props = defineProps({
   localModelId: String,
@@ -51,6 +62,8 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  readme: String
+  readme: String,
+  content: String,
+  actionName: String
 })
 </script>

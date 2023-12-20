@@ -6,6 +6,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <model-tabs
+      :content="content.data"
       :local-model-id="localModelId"
       :model-path="model.data.path"
       :model-default-branch="model.data.default_branch"
@@ -18,6 +19,7 @@
       :current-path="currentPath"
       :default-tab="defaultTab"
       :readme="readme.data"
+      :actionName="actionName"
     />
   </div>
 </template>
@@ -36,6 +38,8 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   readme: Object,
+  content: Object,
+  actionName: String
 })
 </script>
 
