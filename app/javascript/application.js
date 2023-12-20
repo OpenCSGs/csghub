@@ -33,6 +33,7 @@ import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
 import NewDataset from "./components/datasets/NewDataset.vue"
 import ModelItem from "./components/models/ModelItem.vue"
+import ModelCards from "./components/models/ModelCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 
 app = createApp({
@@ -63,7 +64,8 @@ app = createApp({
     TagSidebar,
     NewDataset,
     ModelItem,
-    DatasetItem
+    DatasetItem,
+    ModelCards
   },
   provide:{
     defaultTags: DefaultTags

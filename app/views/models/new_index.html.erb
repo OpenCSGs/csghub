@@ -1,8 +1,13 @@
-<div class="m-auto max-w-[1280px] mb-[60px]">
-  <tag-sidebar
-    task-tags="<%= @task_tags.to_json %>"
-    framework-tags="<%= @framework_tags.to_json %>"
-    license-tags="<%= @license_tags.to_json %>"
-  >
-  </tag-sidebar>
+<div class="flex gap-[24px] max-w-[1280px] mb-[60px] m-auto mt-[32px]">
+  <div class="w-[30%] xl:hidden">
+    <tag-sidebar
+      task-tags="<%= @task_tags.to_json %>"
+      framework-tags="<%= @framework_tags.to_json %>"
+      license-tags="<%= @license_tags.to_json %>"
+    >
+    </tag-sidebar>
+  </div>
+  <div class="xl:mx-[20px]">
+    <model-cards></model-cards>
+  </div>
 </div>

@@ -1,4 +1,6 @@
 class ModelsController < ApplicationController
+  layout 'new_application'
+
   before_action :check_user_info_integrity
   before_action :load_model_detail, only: [:show, :files]
 
