@@ -13,7 +13,7 @@
         <dataset-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
       <template #community>
-        <CommunityPage :type="'Dataset'" :localModelId="localDatasetId" ></CommunityPage>
+        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
       </template>
     </TabContainer>
   </div>

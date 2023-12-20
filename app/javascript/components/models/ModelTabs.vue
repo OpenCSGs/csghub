@@ -9,7 +9,7 @@
         <model-files :files="files" :last-commit="lastCommit" :branches="branches" />
       </template>
       <template #community>
-        <CommunityPage :type="'Model'" :localModelId="localModelId" ></CommunityPage>
+        <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
       <template #settings>
         <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
