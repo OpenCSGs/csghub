@@ -1,4 +1,4 @@
-class InternalApi::CommentsController < ApplicationController
+class InternalApi::CommentsController < InternalApi::ApplicationController
   before_action :authenticate_user
 
   def index

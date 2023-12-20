@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :tags
     resources :organizations
     resources :ssh_keys
+    resources :error_logs
     resources :models, except: [:new, :create]
 
     root to: "spaces#index"
@@ -114,5 +115,9 @@ Rails.application.routes.draw do
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'
+
+    # errors
+    get '/errors/not-found', to: 'errors#not_found'
+    get '/errors/unauthorized', to: 'errors#unauthorized'
   end
 end

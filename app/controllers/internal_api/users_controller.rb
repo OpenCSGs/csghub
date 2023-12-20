@@ -1,4 +1,4 @@
-class InternalApi::UsersController < ApplicationController
+class InternalApi::UsersController < InternalApi::ApplicationController
   before_action :authenticate_user
 
   def update
