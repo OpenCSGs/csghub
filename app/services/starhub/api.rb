@@ -32,7 +32,9 @@ module Starhub
     end
 
     def get_model_file_content(username, model_name, path, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/raw/#{path}").body
+      res = @client.get("/models/#{username}/#{model_name}/raw/#{path}")
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     def create_user(name, nickname, email)
@@ -80,6 +82,8 @@ module Starhub
     def generate_git_token(username, name, options = {})
       options[:name] = name
       res = @client.post("/user/#{username}/tokens", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     def get_model_tags(username, model_name, options = {})
@@ -121,7 +125,9 @@ module Starhub
     end
 
     def get_datasets_file_content(username, dataset_name, path, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}").body
+      res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}")
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     def delete_dataset(namespace, dataset_name, params = {})
