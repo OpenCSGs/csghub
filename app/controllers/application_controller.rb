@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     ErrorLog.create(
       message: message,
       user_info: "#{current_user.name} / #{current_user.id} / #{current_user.phone} / #{current_user.email}",
-      request: request.path,
+      request: "#{request.method} #{request.path}",
       payload: request.params.to_s
     )
   end
