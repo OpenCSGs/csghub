@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :set_default_locale, :check_user_login
 
   rescue_from StarhubError do |e|
-    log_error e.message
+    log_error e.message, e.backtrace
     redirect_to errors_not_found_path
   end
 
@@ -34,12 +34,13 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def log_error message
+  def log_error message, backtrace
     ErrorLog.create(
       message: message,
       user_info: "#{current_user.name} / #{current_user.id} / #{current_user.phone} / #{current_user.email}",
       request: "#{request.method} #{request.path}",
-      payload: request.params.to_s
+      payload: request.params.to_s,
+      backtrace: backtrace
     )
   end
 

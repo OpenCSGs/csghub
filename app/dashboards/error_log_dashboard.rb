@@ -12,6 +12,7 @@ class ErrorLogDashboard < Administrate::BaseDashboard
     message: Field::String,
     payload: Field::Text,
     request: Field::String,
+    backtrace: Field::Text,
     user_info: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -38,6 +39,7 @@ class ErrorLogDashboard < Administrate::BaseDashboard
     payload
     request
     user_info
+    backtrace
     created_at
     updated_at
   ].freeze
