@@ -5,28 +5,32 @@ module Starhub
 
     API_VERSION = '/api/v1'
 
-    rescue_from Faraday::ConnectionFailed do
-      raise StarhubError, "Git服务器超时"
-    end
-
     def get(path, params = {})
       starhub_api_connection.get(request_path(path), params)
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
     end
 
     def post(path, options = {})
       starhub_api_connection.post(request_path(path)) do |req|
         req.body = options.to_json
       end
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
     end
 
     def put(path, options = {})
       starhub_api_connection.put(request_path(path)) do |req|
         req.body = options.to_json
       end
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
     end
 
     def delete(path, params = {})
       starhub_api_connection.delete(request_path(path), params)
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
     end
 
     private
