@@ -154,7 +154,7 @@
     })
   }
 
-  const units = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB']
+  const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
 
   function formatBytes(bytes) {
     let level = 0;
