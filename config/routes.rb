@@ -96,10 +96,10 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show]
 
-    get '/models/:user_name/:model_name', to: 'models#show'
-    get '/models/:user_name/:model_name/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
-    get '/datasets/:user_name/:dataset_name', to: 'datasets#show'
-    get '/datasets/:user_name/:dataset_name/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
+    get '/models/:namespace/:model_name', to: 'models#show'
+    get '/models/:namespace/:model_name/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
+    get '/datasets/:namespace/:dataset_name', to: 'datasets#show'
+    get '/datasets/:namespace/:dataset_name/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'
