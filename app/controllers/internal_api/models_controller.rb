@@ -1,6 +1,14 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user
 
+  def index
+    page = params[:page] || 1
+    per_page = params[:per_page] || 16
+    res_body = Starhub.api.get_models(page, per_page)
+    api_response = JSON.parse(res_body)
+    render json: {models: api_response['data'], total: api_response['total']}
+  end
+
   def create
     res = validate_owner
     if !res[:valid]

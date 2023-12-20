@@ -6,6 +6,12 @@ module Starhub
       @client = Starhub::Client.instance
     end
 
+    def get_models(page, per=16)
+      res = @client.get("/models?per=#{per}&page=#{page}")
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def get_model_detail(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/detail")
       raise StarhubError, res.body unless res.success?
