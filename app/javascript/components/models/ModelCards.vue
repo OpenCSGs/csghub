@@ -27,7 +27,8 @@
           />
           <el-select v-model="sortSelection"
                      @change="reloadModels"
-                     class="w-[100px] xl:mr-[20px]"
+                     class="w-[200px] xl:w-[150px] xl:mr-[20px]"
+                     size="large"
           >
             <el-option
               v-for="item in sortOptions"
