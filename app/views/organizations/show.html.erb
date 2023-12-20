@@ -2,15 +2,11 @@
   <div class="py-[16px] bg-[#FAFCFF]">
     <div class="max-w-[1280px] m-auto py-[16px] xl:px-[16px]">
       <div class="flex gap-[10px]">
-        <% if @organization.avatar_url.present? %>
-          <%= image_tag @organization.avatar_url, class: "h-[60px] w-[60px] rounded-[50%]" %>
-        <% else %>
-          <%= image_tag "default_org.png", class: "h-[60px] w-[60px] rounded-[50%]" %>
-        <% end %>
+        <%= image_tag @organization.avatar_url, class: "h-[60px] w-[60px] rounded-[50%]" %>
         <div>
           <h3 class="text-[24px] text-[#303133] font-[600]"><%= @organization.name %></h3>
           <p class="text-[16px]"> @<%= @organization.name %> </p>
-       </div>
+        </div>
       </div>
     </div>
   </div>
