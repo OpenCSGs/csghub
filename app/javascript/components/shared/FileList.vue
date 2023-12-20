@@ -101,7 +101,7 @@
         <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
       </div>
       <div class="text-sm text-[#606266] w-[20%]">
-        <span v-if="file.type === 'file'">{{ file.size }} kb</span>
+        <span v-if="file.type === 'file'">{{ formatBytes(file.size) }}</span>
       </div>
       <a href="#" class="text-[#606266] w-[30%] text-sm hover:underline">
         {{ file.commit.message }}
@@ -152,6 +152,19 @@
       breadcrumbPath += '/' + item
       return breadcrumbPath
     })
+  }
+
+  const units = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB']
+
+  function formatBytes(bytes) {
+    let level = 0;
+    let n = parseInt(bytes, 10) || 0;
+
+    while (n >= 1024 && ++level) {
+      n = n / 1024;
+    }
+
+    return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
   }
 
   onMounted(() => {
