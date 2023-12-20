@@ -23,6 +23,9 @@
       <template #settings>
         <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
+      <template #community>
+        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+      </template>
     </TabContainer>
   </div>
 </template>
@@ -37,9 +40,11 @@
 import TabContainer from '../shared/TabContainer.vue'
 import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
+import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 
 const props = defineProps({
+  localDatasetId: String,
   datasetPath: String,
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,

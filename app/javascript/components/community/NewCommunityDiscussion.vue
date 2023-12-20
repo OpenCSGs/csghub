@@ -34,7 +34,8 @@ import csrfFetch from "../../packs/csrfFetch";
 import { ElMessage } from 'element-plus'
 export default {
   props: {
-    localModelId: String
+    localModelId: String,
+    type:String
   },
   components: {
     FormLabel,
@@ -85,7 +86,7 @@ export default {
     async createDiscussion(){
       const discussionCreateEndpoint = "/internal_api/discussions"
       const discussionJsonData = {
-        discussionable_type: 'Model',
+        discussionable_type: this.type,
         discussionable_id: this.localModelId,
         title: this.title
       }

@@ -20,18 +20,18 @@ class ModelsController < ApplicationController
 
   def show
     @default_tab = 'summary'
-    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到模型"
       return redirect_to "/models"
     end
-    @files = Starhub.api.get_model_files(params[:user_name], params[:model_name])
+    @files = Starhub.api.get_model_files(params[:namespace], params[:model_name])
   end
 
   def files
-    owner = User.find_by(name: params[:user_name]) || Organization.find_by(name: params[:user_name])
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
@@ -41,7 +41,7 @@ class ModelsController < ApplicationController
     @default_tab = 'files'
     @current_branch = params[:branch] || 'main'
     @current_path = params[:path] || ''
-    @files = Starhub.api.get_model_files(params[:user_name], params[:model_name], files_options)
+    @files = Starhub.api.get_model_files(params[:namespace], params[:model_name], files_options)
     render :show
   end
 
@@ -55,10 +55,10 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    @model = Starhub.api.get_model_detail(params[:user_name], params[:model_name])
-    @last_commit = Starhub.api.get_model_last_commit(params[:user_name], params[:model_name])
-    @branches = Starhub.api.get_model_branches(params[:user_name], params[:model_name])
-    @readme = Starhub.api.get_model_file_content(params[:user_name], params[:model_name], 'README.md')
+    @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
+    @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
+    @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
+    @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
   end
 
   def files_options

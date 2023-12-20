@@ -10,7 +10,7 @@
         </div> -->
     </div>
     <DiscussionCards v-if="theFlag=='show'" :cards="cards" @getDiscussion="getDiscussion" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
-    <NewCommunityDiscussion v-if="theFlag=='new'" @getDiscussion="getDiscussion" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
+    <NewCommunityDiscussion v-if="theFlag=='new'" :type="type" @getDiscussion="getDiscussion" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
   </div>
 </template>
 <script>
@@ -18,7 +18,8 @@ import DiscussionCards from "./DiscussionCards.vue";
 import NewCommunityDiscussion from "./NewCommunityDiscussion.vue";
 export default {
   props: {
-    localModelId: String
+    localModelId: String,
+    type:String
   },
   components: {
     DiscussionCards,
@@ -27,7 +28,6 @@ export default {
   data() {
     return {
       // cards:[],
-      type:'Model',
       theFlag:'show',
       cards:[],
       lastCommentId:''
