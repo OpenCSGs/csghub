@@ -1,5 +1,5 @@
 <div class="flex gap-[24px] max-w-[1280px] mb-[60px] m-auto mt-[32px]">
-  <div class="w-[30%] xl:hidden">
+  <div class="w-[30%] min-w-[360px] xl:mx-[20px] mlg:hidden">
     <tag-sidebar
       task-tags="<%= @task_tags.to_json %>"
       framework-tags="<%= @framework_tags.to_json %>"
@@ -7,7 +7,7 @@
     >
     </tag-sidebar>
   </div>
-  <div class="xl:mx-[20px]">
+  <div class="mlg:mx-[20px] mlg:pr-[0] xl:w-full pr-[20px]">
     <model-cards></model-cards>
   </div>
 </div>
