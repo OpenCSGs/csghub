@@ -1,11 +1,12 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: :index
 
   def index
     page = params[:page] || 1
     per_page = params[:per_page] || 16
     keyword = params[:search]
-    res_body = Starhub.api.get_models(keyword, page, per_page)
+    sort_by = params[:sort]
+    res_body = Starhub.api.get_models(keyword, sort_by, page, per_page)
     api_response = JSON.parse(res_body)
     render json: {models: api_response['data'], total: api_response['total']}
   end
