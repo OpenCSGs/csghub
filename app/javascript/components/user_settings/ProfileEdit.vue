@@ -105,10 +105,12 @@ export default {
       try {
         const response = await csrfFetch(profileUpdateEndpoint, options);
         if (!response.ok) {
-          ElMessage({
-            message: "profile更新失败",
-            type: "warning",
-          });
+          response.json().then(data => {
+            ElMessage({
+              message: data.message,
+              type: "warning",
+            })
+          })
         } else {
           ElMessage({
             message: "profile已更新",
