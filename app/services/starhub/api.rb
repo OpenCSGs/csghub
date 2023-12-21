@@ -104,7 +104,31 @@ module Starhub
       res.body
     end
 
+    def get_user_models(namespace, username, options = {})
+      res = @client.get("/user/#{namespace}/models?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def get_org_models(namespace, username, options = {})
+      res = @client.get("/organization/#{namespace}/models?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # datasets
+
+    def get_user_datasets(namespace, username, options = {})
+      res = @client.get("/user/#{namespace}/datasets?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def get_org_datasets(namespace, username, options = {})
+      res = @client.get("/organization/#{namespace}/datasets?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
 
     def get_datasets(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/datasets?per=#{per}&page=#{page}"

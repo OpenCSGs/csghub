@@ -11,7 +11,7 @@ class OrganizationsController < ApplicationController
       return redirect_to "/profile/#{current_user.name}"
     end
     @members = @organization.users
-    @models = @organization.models
-    @datasets = @organization.datasets
+    @models = Starhub.api.get_org_models(@organization.name, current_user.name)
+    @datasets = Starhub.api.get_org_datasets(@organization.name, current_user.name)
   end
 end

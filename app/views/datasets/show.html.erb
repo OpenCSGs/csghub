@@ -9,7 +9,7 @@
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
     :readme="<%= @readme %>"
-    :content="<%= @content %>"
+    :content="<%= @content || {} %>"
     :action-name="'<%= action_name %>'"
     avatar="<%= current_user.avatar_url %>"
   >
