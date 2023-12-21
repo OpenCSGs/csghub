@@ -44,7 +44,7 @@
               </clipPath>
             </defs>
           </svg>
-          history: 4 commits
+          历史提交: 4 commits
         </a>
         <el-dropdown split-button>
             + 添加文件
