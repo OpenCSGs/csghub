@@ -128,14 +128,14 @@ export default {
         cancelButtonText: 'Cancel'
       }).then((action) => {
         ElMessage({
-          type: 'info',
+          type: 'success',
           message: '切换成功',
         })
       }).catch(() => {
         this.visibility = value === 'Public' ? 'Private' : 'Public'
         ElMessage({
-          type: 'info',
-          message: '取消切换',
+          type: 'warning',
+          message: '操作取消',
         })
       })
     },
