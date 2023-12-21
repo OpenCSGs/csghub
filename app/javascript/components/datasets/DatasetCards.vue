@@ -20,7 +20,7 @@
         <div class="xl:mt-[16px]">
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[16px] xl:!w-[260px]"
+            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
             size="large"
             placeholder="数据集名字"
             :prefix-icon="Search"
@@ -28,7 +28,7 @@
           />
           <el-select v-model="sortSelection"
                      @change="reloadDatasets"
-                     class="w-[200px] xl:w-[150px] xl:mr-[20px]"
+                     class="w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
                      size="large"
           >
             <el-option
