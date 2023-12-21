@@ -10,11 +10,10 @@
               d="M9.99967 7.99984C9.99967 9.10441 9.10424 9.99984 7.99967 9.99984C6.89511 9.99984 5.99967 9.10441 5.99967 7.99984C5.99967 6.89527 6.89511 5.99984 7.99967 5.99984C9.10424 5.99984 9.99967 6.89527 9.99967 7.99984Z"
               stroke="#606266" stroke-linecap="round"/>
         </svg>
-        Change model visibility
+        修改模型可见性
       </div>
-      <div class="max-w-[864px] ml-[36px] text-[14px] text-[#606266] leading-[22px]">This model is currently <span
-          class="text-black font-semibold">【{{ visibility }}】</span>. Only you (personal model) or members of your
-        organization (organization model) can see and commit to this model.
+      <div class="max-w-[864px] ml-[36px] text-[14px] text-[#606266] leading-[22px]">当前模型目前是<span
+          class="text-black font-semibold">【{{ visibility=='Private'?'私有':'公开' }}】</span>状态。{{ visibility=='Private'?'只有创建者或组织成员可见':'任何人都可以看到此模型'}}
       </div>
       <el-select v-model="visibility"
                  @change="changeVisibility"
@@ -36,14 +35,14 @@
               d="M2.66634 3.3335L3.09677 10.6507C3.17992 12.0643 3.22149 12.7711 3.52319 13.3075C3.78878 13.7797 4.19189 14.1597 4.67885 14.3971C5.23202 14.6668 5.94003 14.6668 7.35607 14.6668H8.64328C10.0593 14.6668 10.7673 14.6668 11.3205 14.3971C11.8075 14.1597 12.2106 13.7797 12.4762 13.3075C12.7779 12.7711 12.8194 12.0643 12.9026 10.6507L13.333 3.3335M2.66634 3.3335H1.33301M2.66634 3.3335H13.333M13.333 3.3335H14.6663M10.6663 3.3335L10.3644 2.42753C10.2332 2.03412 10.1676 1.83742 10.046 1.69199C9.93863 1.56356 9.80072 1.46416 9.64492 1.40288C9.4685 1.3335 9.26115 1.3335 8.84646 1.3335H7.15289C6.7382 1.3335 6.53085 1.3335 6.35443 1.40288C6.19863 1.46416 6.06071 1.56356 5.95332 1.69199C5.8317 1.83742 5.76613 2.03412 5.635 2.42753L5.33301 3.3335M6.66634 6.66683V11.3335M9.33301 6.66683V9.3335"
               stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Delete this model
+        删除模型
       </div>
-      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">This action <span
-          class="text-black font-semibold">cannot</span> be undone. This will permanently delete the <span
-          class="text-black font-semibold">{{ path }}</span> model repository and all its files.
+      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">此操作<span
+          class="text-black font-semibold">无法</span> 撤销. 这将永久删除<span
+          class="text-black font-semibold">{{ path }}</span>模型仓库及其所有文件。
       </div>
-      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">Please type <span
-          class="text-black font-semibold">{{ path }}</span> to confirm.
+      <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">请输入<span
+          class="text-black font-semibold">{{ path }}</span>以确认删除.
       </div>
       <el-input
           v-model="delDesc"
@@ -57,7 +56,7 @@
              :class="delDesc === datasetPath ?'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white':'bg-[#F2F4F7]'"
              @mouseover="handleMouseOver"
              @mouseleave="handleMouseLeave">
-          I understand, delete this model
+             我已知晓,确认删除
         </div>
       </div>
     </div>
@@ -80,8 +79,8 @@ export default {
       visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       datasetPath: this.path,
-      options: [{value: 'Private', label: 'Private'},
-        {value: 'Public', label: 'Public'}]
+      options: [{value: 'Private', label: '私有'},
+        {value: 'Public', label: '公开'}]
     };
   },
   mounted() {},
@@ -116,26 +115,33 @@ export default {
 
     changeVisibility(value) {
       ElMessageBox({
-        title: 'Change dataset visibility',
+        title: '修改模型可见性',
         message: h('p', null, [
-          h('span', null, 'After changing visibility to '),
-          h('span', null, this.visibility),
-          h('span', null, '， anyone on the internet can see this dataset. Only you (personal dataset) or members of your organization (organization dataset) can commit.')
+          h('span', null, '修改可见性为'),
+          h('span', null, this.visibility=='Private'?'私有':'公开'),
+          h('span', null, this.visibility=='Private'?'，仅创建者或者组织管理员可进行提交':'， 任何互联网上的人都可以看到此模型。')
         ]),
         showCancelButton: true,
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel'
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
       }).then(() => {
         this.changeVisibilityApi(value).then((data) => {
-          ElMessage({
-            message: data.message,
-            type: "success",
-          })
-        })
-      }).catch((err) => {
+                                          ElMessage({
+                                            message: data.message,
+                                            type: "success",
+                                          })
+                                        })
+                                        .catch((err) => {
+                                          ElMessage({
+                                            message: err.message,
+                                            type: "warning",
+                                          })
+                                        })
+      }).catch(() => {
+        this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
-          message: err.message,
+          message: '操作取消',
         })
       })
     },

@@ -45,8 +45,8 @@
     <!-- <CommunityTimeLine :timelineData="timelineData"></CommunityTimeLine> -->
     <CommunityMDTextarea ref="mdTextarea" :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="create">Comment</el-button>
-      <el-button @click="cancel">Cancel</el-button>
+      <el-button type="primary" @click="create">评论</el-button>
+      <el-button @click="cancel">取消</el-button>
     </div>
   </div>
 </template>

@@ -76,7 +76,7 @@
               <a href="/datasets/new">+ 新建数据集</a>
             </el-dropdown-item>
             <el-dropdown-item divided>
-              <a :href="logout" @click="cleanUpAuthing"> Logout </a>
+              <a :href="logout" @click="cleanUpAuthing"> 退出登录 </a>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>

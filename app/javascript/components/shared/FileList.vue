@@ -31,7 +31,7 @@
       <div class="flex items-center text-sm text-[#606266]">
         <div class="flex items-center py-[1px] md:hidden">
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-          1 contributors
+          1 贡献者
         </div>
         <a href="#" class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden">
           <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -44,7 +44,7 @@
               </clipPath>
             </defs>
           </svg>
-          history: 4 commits
+          历史提交: 4 commits
         </a>
         <el-dropdown split-button>
             + 添加文件
