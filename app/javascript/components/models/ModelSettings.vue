@@ -13,7 +13,7 @@
         修改模型可见性
       </div>
       <div class="max-w-[864px] ml-[36px] text-[14px] text-[#606266] leading-[22px]">当前模型目前是<span
-          class="text-black font-semibold">【{{ visibility }}】</span>状态。只有您（个人模式）或您组织的成员（组织模式）可见并可以提交变更到当前模型。
+          class="text-black font-semibold">【{{ visibility=='Private'?'私有':'公开' }}】</span>状态。只有您（个人模式）或您组织的成员（组织模式）可见并可以提交变更到当前模型。
       </div>
       <el-select v-model="visibility"
                  @change="changeVisibility"
@@ -115,15 +115,15 @@ export default {
 
     changeVisibility(value) {
       ElMessageBox({
-        title: 'Change dataset visibility',
+        title: '修改模型可见性',
         message: h('p', null, [
-          h('span', null, 'After changing visibility to '),
-          h('span', null, this.visibility),
-          h('span', null, '， anyone on the internet can see this dataset. Only you (personal dataset) or members of your organization (organization dataset) can commit.')
+          h('span', null, '修改可见性为'),
+          h('span', null, this.visibility=='Private'?'私有':'公开'),
+          h('span', null, this.visibility=='Private'?'，仅创建者或者组织管理员可进行提交':'， 任何互联网上的人都可以看到此数据集。')
         ]),
         showCancelButton: true,
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel'
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
       }).then(() => {
         this.changeVisibilityApi(value).then((data) => {
           ElMessage({
@@ -134,7 +134,7 @@ export default {
       }).catch((err) => {
         ElMessage({
           type: 'warning',
-          message: err.message,
+          message: err.message?err.message:'取消操作',
         })
       })
     },
