@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resources :git_token, only: [:create]
     resources :users, only: [:update]
 
-    resources :models, only: [:create]
+    resources :models, only: [:index, :create]
     delete '/models/:namespace/:model_name', to: 'models#destroy'
     put '/models/:namespace/:model_name', to: 'models#update'
 
