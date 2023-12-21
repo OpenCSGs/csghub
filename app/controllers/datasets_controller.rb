@@ -1,13 +1,13 @@
 class DatasetsController < ApplicationController
   before_action :check_user_info_integrity
-  before_action :load_dataset_detail, only: [:show, :files]
+  before_action :load_dataset_detail, only: [:show, :files, :blob]
+  before_action :load_branch_and_path, only: [:files, :blob]
+  before_action :load_local_dataset, only: [:show, :files, :blob]
 
   def index
   end
 
   def show
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     unless @local_dataset
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到数据集"
@@ -20,8 +20,6 @@ class DatasetsController < ApplicationController
   end
 
   def files
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     unless @local_dataset
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到数据集"
@@ -29,8 +27,6 @@ class DatasetsController < ApplicationController
     end
 
     @default_tab = 'files'
-    @current_branch = params[:branch] || 'main'
-    @current_path = params[:path] || ''
     @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name], files_options)
     render :show
   end
@@ -55,6 +51,17 @@ class DatasetsController < ApplicationController
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 
+  def blob
+    unless @local_dataset
+      # ToDo: 在模型列表页渲染 alert message
+      flash[:alert] = "未找到数据集"
+      return redirect_to "/datasets"
+    end
+
+    @content = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
+    render :show
+  end
+
   private
 
   def load_dataset_detail
@@ -62,6 +69,17 @@ class DatasetsController < ApplicationController
     @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
     @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
     @readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
+  end
+
+  def load_branch_and_path
+    @default_tab = 'files'
+    @current_branch = params[:branch] || 'main'
+    @current_path = params[:path] || ''
+  end
+
+  def load_local_dataset
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
   end
 
   def files_options
