@@ -1,7 +1,12 @@
 <template>
   <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6">
     <div class="mx-auto max-w-[1280px]">
-      <model-header :license="model.data.license" :name="model.data.name" :path="model.data.path" />
+      <model-header
+        :license="model.data.license"
+        :name="model.data.name"
+        :path="model.data.path"
+        :avatar="avatar"
+      />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
@@ -39,7 +44,8 @@ const props = defineProps({
   currentPath: String,
   readme: Object,
   content: Object,
-  actionName: String
+  actionName: String,
+  avatar: String
 })
 </script>
 
