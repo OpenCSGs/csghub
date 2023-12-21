@@ -8,6 +8,12 @@ class ApplicationController < ActionController::Base
     redirect_to errors_not_found_path
   end
 
+  rescue_from SensitiveContentError do |e|
+    log_error e.message, e.backtrace
+    flash[:alert] = e.message
+    redirect_to errors_unauthorized_path
+  end
+
   def authenticate_user
     if helpers.logged_in?
       return true

@@ -90,6 +90,8 @@ class User < ApplicationRecord
   end
 
   def sync_to_starhub_server
+    Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
+
     if starhub_synced?
       res = Starhub.api.update_user(name, nickname, email)
       raise StarhubError, res.body unless res.success?

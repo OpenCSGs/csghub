@@ -186,6 +186,21 @@ module Starhub
       @client.post("/organizations", options)
     end
 
+    def text_secure_check(scenario, content)
+      options = {
+        scenario: scenario,
+        text: content
+      }
+      res = @client.post("/sensitive/text", options)
+      if res.status == 400
+        raise SensitiveContentError, '监测到敏感内容'
+      elsif res.status == 500
+        raise StarhubError, "Git服务器报错"
+      else
+        res
+      end
+    end
+
     # TODO: add more starhub api
   end
 end

@@ -1,0 +1,1 @@
+class SensitiveContentError < StandardError; end
