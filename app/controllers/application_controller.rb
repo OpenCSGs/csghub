@@ -8,6 +8,12 @@ class ApplicationController < ActionController::Base
     redirect_to errors_not_found_path
   end
 
+  rescue_from SensitiveContentError do |e|
+    log_error e.message, e.backtrace
+    flash[:alert] = e.message
+    redirect_to errors_unauthorized_path
+  end
+
   def authenticate_user
     if helpers.logged_in?
       return true
@@ -63,11 +69,13 @@ class ApplicationController < ActionController::Base
 
     user = User.find_by(phone: user_infos['phone']) || User.find_by(email: user_infos['email'])
     if user
+      Starhub.api.text_secure_check('nickname_detection', user_infos['name'])
       user.login_identity = user_infos['sub']
       user.name = user_infos['name'] if user.name.blank?
       user.avatar = user_infos['avatar'] if user.avatar.blank?
       user.save
     else
+      Starhub.api.text_secure_check('nickname_detection', "#{user_infos['name']} #{user_infos['email']}")
       user = User.find_or_create_by(login_identity: user_infos['sub']) do |u|
         u.roles = :personal_user
         u.avatar = user_infos['avatar']
