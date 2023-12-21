@@ -3,12 +3,12 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def index
     res_body = Starhub.api.get_datasets(params[:search],
-                                      params[:sort],
-                                      params[:task_tag],
-                                      params[:framework_tag],
-                                      params[:license_tag],
-                                      params[:page],
-                                      params[:per_page])
+                                        params[:sort],
+                                        params[:task_tag],
+                                        params[:framework_tag],
+                                        params[:license_tag],
+                                        params[:page],
+                                        params[:per_page])
     api_response = JSON.parse(res_body)
     render json: {datasets: api_response['data'], total: api_response['total']}
   end
