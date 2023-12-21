@@ -2,7 +2,8 @@ class ModelsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_model_detail, only: [:show, :files]
+  before_action :load_model_detail, only: [:show, :files, :blob]
+  before_action :load_branch_and_path, only: [:files, :blob]
 
   def index
   end
@@ -26,10 +27,12 @@ class ModelsController < ApplicationController
   end
 
   def files
-    @default_tab = 'files'
-    @current_branch = params[:branch] || 'main'
-    @current_path = params[:path] || ''
     @files = Starhub.api.get_model_files(params[:namespace], params[:model_name], files_options)
+    render :show
+  end
+
+  def blob
+    @content = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], params[:path], { ref: @current_branch })
     render :show
   end
 
@@ -61,6 +64,12 @@ class ModelsController < ApplicationController
     @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
     @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+  end
+
+  def load_branch_and_path
+    @default_tab = 'files'
+    @current_branch = params[:branch] || 'main'
+    @current_path = params[:path] || ''
   end
 
   def files_options

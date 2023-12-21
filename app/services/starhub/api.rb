@@ -44,7 +44,7 @@ module Starhub
     end
 
     def get_model_file_content(username, model_name, path, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/raw/#{path}")
+      res = @client.get("/models/#{username}/#{model_name}/raw/#{path}?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -137,7 +137,7 @@ module Starhub
     end
 
     def get_datasets_file_content(username, dataset_name, path, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
