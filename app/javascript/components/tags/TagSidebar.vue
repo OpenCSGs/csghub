@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-[#fff] flex-col">
+  <div class="flex bg-[#fff] flex-col pr-[20px]">
     <div class="mb-[16px]">
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="Task"
