@@ -25,6 +25,8 @@
     const { extension } = props;
 
     switch (extension) {
+      case 'rb':
+        return 'ruby';
       case 'gitattributes':
         return 'cal';
       case 'json':
