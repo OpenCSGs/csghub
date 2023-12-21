@@ -105,6 +105,19 @@ module Starhub
     end
 
     # datasets
+
+    def get_datasets(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+      url = "/datasets?per=#{per}&page=#{page}"
+      url += "&search=#{keyword}" if keyword.present?
+      url += "&sort=#{sort_by}" if sort_by.present?
+      url += "&task_tag=#{task_tag}" if task_tag.present?
+      url += "&framework_tag=#{framework_tag}" if framework_tag.present?
+      url += "&license_tag=#{license_tag}" if license_tag.present?
+      res = @client.get(url)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def get_datasets_detail(username, dataset_name, options = {})
       res = @client.get("/datasets/#{username}/#{dataset_name}/detail")
       raise StarhubError, res.body unless res.success?

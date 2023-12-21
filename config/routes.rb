@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     delete '/models/:namespace/:model_name', to: 'models#destroy'
     put '/models/:namespace/:model_name', to: 'models#update'
 
-    resources :datasets, only: [:create]
+    resources :datasets, only: [:index, :create]
     delete '/datasets/:namespace/:dataset_name', to: 'datasets#destroy'
 
     resources :tags, only: [] do
