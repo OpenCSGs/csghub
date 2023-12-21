@@ -13,6 +13,7 @@ class Organization < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   after_create :sync_to_starhub_server
+  before_save :detect_sensitive_content
 
   def avatar_url
     if logo
@@ -45,6 +46,11 @@ class Organization < ApplicationRecord
 
   private
 
+  def detect_sensitive_content
+    Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
+    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
+  end
+
   def sync_to_starhub_server
     res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
     raise StarhubError, res.body unless res.success?
@@ -53,5 +59,13 @@ class Organization < ApplicationRecord
 
   def unique_name_by_user
     errors.add(:name, 'is already taken') if User.where(name: name).exists?
+  end
+
+  def bucket_name
+    if Rails.env.production?
+      Rails.application.credentials.aliyun_oss.production.bucket_name
+    else
+      Rails.application.credentials.aliyun_oss.staging.bucket_name
+    end
   end
 end

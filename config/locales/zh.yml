@@ -18,12 +18,19 @@ zh:
     errors:
       models:
         space:
+          invalid: "字段不符合规范"
           blank: "字段不能为空"
           taken: "不能创建重复的空间"
         lead:
+          invalid: "字段不符合规范"
           blank: "字段不能为空"
           taken: "不能创建重复的线索"
         ssh_key:
+          invalid: "字段不符合规范"
+          blank: "字段不能为空"
+          taken: "不能创建重复"
+        organization:
+          invalid: "字段不符合规范"
           blank: "字段不能为空"
           taken: "不能创建重复"
 
