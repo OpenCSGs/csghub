@@ -19,7 +19,8 @@ class Organization < ApplicationRecord
       # retrive the image temp url from aliyun
       AliyunOss.instance.download logo
     else
-      nil
+      asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
+      "#{asset_host}/assets/default_org.png"
     end
   end
 
