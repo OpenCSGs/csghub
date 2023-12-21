@@ -1,6 +1,6 @@
 <template>
-  <div class="flex w-[421px] p-[16px] bg-[#fff] flex-col">
-    <div class="my-[16px]">
+  <div class="flex bg-[#fff] flex-col">
+    <div class="mb-[16px]">
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="Task"
             :class="activeNavItem === 'Task' ? 'text-[#344054] font-[600]' : ''"
@@ -28,15 +28,15 @@
       <div v-show="showTask">
         <el-input
           v-model="tagFilterInput"
-          class="w-50"
+          class="!w-[80%]"
           size="large"
           placeholder="筛选标签"
           :prefix-icon="Search"
           @change = "filterTags"
         />
-        <div>
+        <div class="mt-[16px]">
           <div v-for="tagField in theTaskTags">
-            <h3 class="text-[#909399] text-[12px] mb-[11px] mt-[16px]">{{ tagField.zh_name }}</h3>
+            <h3 class="text-[#909399] text-[12px] mb-[11px]">{{ tagField.zh_name }}</h3>
             <div class="flex gap-[8px]">
               <span v-for="tag in tagField.tags" class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer"
                     :data-tag_name="tag.name"
@@ -95,6 +95,8 @@
     licenseTags: String
   })
 
+  const emit = defineEmits(['resetTags'])
+
   const activeNavItem = ref('Task')
   const theTaskTags = ref(JSON.parse(props.taskTags))
   const theFrameworkTags = ref(JSON.parse(props.frameworkTags))
@@ -130,6 +132,7 @@
     } else {
       activeTaskTag.value = e.target.dataset.tag_name
     }
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
   }
 
   const setActiveFrameworkTag = (tagName) => {
@@ -138,6 +141,7 @@
     } else {
       activeFrameworkTag.value = tagName
     }
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
   }
 
   const setActiveLicenseTag = (e) => {
@@ -146,6 +150,7 @@
     } else {
       activeLicenseTag.value = e.target.dataset.tag_name
     }
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
   }
 
   const setTagColor = (tagName, tagFieldColor) => {
