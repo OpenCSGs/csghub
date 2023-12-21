@@ -91,6 +91,7 @@ class User < ApplicationRecord
 
   def sync_to_starhub_server
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
+    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar)
 
     if starhub_synced?
       res = Starhub.api.update_user(name, nickname, email)
@@ -114,6 +115,14 @@ class User < ApplicationRecord
   end
 
   private
+
+  def bucket_name
+    if Rails.env.production?
+      Rails.application.credentials.aliyun_oss.production.bucket_name
+    else
+      Rails.application.credentials.aliyun_oss.staging.bucket_name
+    end
+  end
 
   def unique_name_by_organization
     errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
