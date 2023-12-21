@@ -13,7 +13,7 @@
         修改数据集可见性
       </div>
       <div class="max-w-[864px] ml-[36px] text-[14px] text-[#606266] leading-[22px]">当前数据集目前是<span
-          class="text-black font-semibold">【{{ visibility=='Private'?'私有':'公开' }}】</span>状态。只有您（个人模式）或您组织的成员（组织模式）可见并可以提交变更到当前数据集。
+          class="text-black font-semibold">【{{ visibility=='Private'?'私有':'公开' }}】</span>状态。{{ visibility=='Private'?'只有创建者或组织成员可见':'任何人都可以看到此数据集'}}
       </div>
       <el-select v-model="visibility"
                  :disabled="true"
