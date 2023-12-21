@@ -3,4 +3,9 @@ class InternalApi::ApplicationController < ApplicationController
     log_error e.message, e.backtrace
     render json: {message: "Git服务器报错"}, status: 500
   end
+
+  rescue_from SensitiveContentError do |e|
+    log_error e.message, e.backtrace
+    render json: {message: "监测到敏感词！！！"}, status: 500
+  end
 end
