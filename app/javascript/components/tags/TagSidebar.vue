@@ -95,6 +95,8 @@
     licenseTags: String
   })
 
+  const emit = defineEmits(['resetTags'])
+
   const activeNavItem = ref('Task')
   const theTaskTags = ref(JSON.parse(props.taskTags))
   const theFrameworkTags = ref(JSON.parse(props.frameworkTags))
@@ -130,6 +132,7 @@
     } else {
       activeTaskTag.value = e.target.dataset.tag_name
     }
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
   }
 
   const setActiveFrameworkTag = (tagName) => {
@@ -138,6 +141,7 @@
     } else {
       activeFrameworkTag.value = tagName
     }
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
   }
 
   const setActiveLicenseTag = (e) => {
@@ -146,6 +150,7 @@
     } else {
       activeLicenseTag.value = e.target.dataset.tag_name
     }
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
   }
 
   const setTagColor = (tagName, tagFieldColor) => {

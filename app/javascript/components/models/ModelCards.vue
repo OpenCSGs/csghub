@@ -5,6 +5,7 @@
         :taskTags="props.taskTags"
         :frameworkTags="props.frameworkTags"
         :licenseTags="props.licenseTags"
+        @resetTags="resetTags"
       />
     </div>
     <div class="mlg:mx-[20px] mlg:pr-[0] xl:w-full pr-[20px]">
@@ -74,6 +75,9 @@
   const currentPage = ref(1)
   const perPage = ref(16)
   const totalModels = ref('')
+  const taskTag = ref('')
+  const frameworkTag = ref('')
+  const licenseTag = ref('')
   const modelsData = ref(Array)
   const sortOptions = [
                         {
@@ -93,8 +97,23 @@
                           label: '最多喜欢'
                         },
                       ]
+
+  const resetTags = (task, framework, license) => {
+    taskTag.value = task
+    frameworkTag.value = framework
+    licenseTag.value = license
+    reloadModels()
+  }
+
   const reloadModels = () => {
-    const url = `/internal_api/models?page=${currentPage.value}&per_page=${perPage.value}&search=${nameFilterInput.value}&sort=${sortSelection.value}`
+    let url = "/internal_api/models"
+    url = url + `?page=${currentPage.value}`
+    url = url + `&per_page=${perPage.value}`
+    url = url + `&search=${nameFilterInput.value}`
+    url = url + `&sort=${sortSelection.value}`
+    url = url + `&task_tag=${taskTag.value}`
+    url = url + `&framework_tag=${frameworkTag.value}`
+    url = url + `&license=${licenseTag.value}`
     loadModels(url)
   }
 
