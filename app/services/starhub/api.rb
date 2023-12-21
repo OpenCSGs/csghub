@@ -6,11 +6,13 @@ module Starhub
       @client = Starhub::Client.instance
     end
 
-    def get_models(keyword, sort_by, page, per=16)
-      url = "/models?per=#{per}"
+    def get_models(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+      url = "/models?per=#{per}&page=#{page}"
       url += "&search=#{keyword}" if keyword.present?
       url += "&sort=#{sort_by}" if sort_by.present?
-      url += "&page=#{page}" if page.present?
+      url += "&task_tag=#{task_tag}" if task_tag.present?
+      url += "&framework_tag=#{framework_tag}" if framework_tag.present?
+      url += "&license_tag=#{license_tag}" if license_tag.present?
       res = @client.get(url)
       raise StarhubError, res.body unless res.success?
       res.body
