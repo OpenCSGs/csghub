@@ -85,8 +85,8 @@
     </div>
 
     <div class="px-4 py-4 border border-t-0 border-[#DCDFE6] rounded-b">
-      <MarkdownViewer :content="content" v-if="fileType === 'md'" />
-      <CodeViewer :extension="fileType" :content="content" v-else />
+      <MarkdownViewer v-if="fileType === 'md'" :content="content" />
+      <CodeViewer v-else :extension="fileType" :content="content" />
     </div>
   </div>
 </template>
