@@ -113,7 +113,7 @@
     url = url + `&sort=${sortSelection.value}`
     url = url + `&task_tag=${taskTag.value}`
     url = url + `&framework_tag=${frameworkTag.value}`
-    url = url + `&license=${licenseTag.value}`
+    url = url + `&license_tag=${licenseTag.value}`
     loadDatasets(url)
   }
 
