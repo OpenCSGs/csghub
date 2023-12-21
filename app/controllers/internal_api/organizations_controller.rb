@@ -14,8 +14,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     end
     render json: {message: '组织创建成功!'}, status: 200
   rescue => error
-    Rails.logger.warn "=====Error=====: #{error.message}"
-    render json: {message: '组织创建失败!'}, status: 500
+    render json: {message: error.message}, status: 500
   end
 
   def update
