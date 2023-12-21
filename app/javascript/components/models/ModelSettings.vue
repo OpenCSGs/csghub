@@ -126,15 +126,22 @@ export default {
         cancelButtonText: '取消'
       }).then(() => {
         this.changeVisibilityApi(value).then((data) => {
-          ElMessage({
-            message: data.message,
-            type: "success",
-          })
-        })
-      }).catch((err) => {
+                                          ElMessage({
+                                            message: data.message,
+                                            type: "success",
+                                          })
+                                        })
+                                        .catch((err) => {
+                                          ElMessage({
+                                            message: err.message,
+                                            type: "warning",
+                                          })
+                                        })
+      }).catch(() => {
+        this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
-          message: err.message?err.message:'取消操作',
+          message: '操作取消',
         })
       })
     },
