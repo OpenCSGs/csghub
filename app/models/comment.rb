@@ -6,6 +6,8 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
+  before_save :detect_sensitive_content
+
   def as_json options={}
     {
       id: id,
@@ -23,5 +25,9 @@ class Comment < ApplicationRecord
       name: user.display_name,
       avatar: user.avatar_url
     }
+  end
+
+  def detect_sensitive_content
+    Starhub.api.text_secure_check('nickname_detection', content)
   end
 end
