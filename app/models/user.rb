@@ -90,7 +90,7 @@ class User < ApplicationRecord
 
   def sync_to_starhub_server
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar)
+    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
     if starhub_synced?
       res = Starhub.api.update_user(name, nickname, email)
