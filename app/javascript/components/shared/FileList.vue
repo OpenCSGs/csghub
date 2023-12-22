@@ -124,10 +124,10 @@
           placement="top"
           effect="dark"
           trigger="hover"
-          :content="file.commit.created_at"
+          :content="file.commit.committer_date"
         >
           <template #reference>
-            {{ format(file.commit.created_at, 'zh_CN') }}
+            {{ format(file.commit.committer_date, 'zh_CN') }}
           </template>
         </el-popover>
       </div>
