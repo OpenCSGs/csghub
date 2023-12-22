@@ -57,28 +57,24 @@ export default {
       const mdParser = new MarkdownIt();
       return mdParser.render(text);
     },
-    async create() {
+    create() {
       if (this.title === '' || this.desc === '') {
         ElMessage({ message: "标题和内容不能为空", type: "warning" });
         return;
       }
-      try {
-        const discussionResponse = await this.createDiscussion();
-        this.createComment(discussionResponse.id).then((data) => {
-          ElMessage({ message: "添加评论成功", type: "success" });
+      this.createDiscussion().then(discussion => {
+        this.createComment(discussion.id).catch(err => {
+          ElMessage({ message: ('评论中： ' + err.message), type: 'warning' });
+          return
         })
-        .catch(err => {
-          ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
-        })
-        setTimeout(() => {
-          this.$emit("changeFlag", 'show');
-        }, 1000);
         ElMessage({ message: "添加discussion成功", type: "success" });
+        this.$emit("changeFlag", 'show');
         this.$emit("getDiscussion");
         // 此处应重新获取最新的 discussions
-      } catch (error) {
-        ElMessage({ message: "发生错误，请重试", type: "error" });
-      }
+      })
+      .catch(err => {
+        ElMessage({ message: err.message, type: 'warning' });
+      })
     },
     cancel(){
       this.$emit("changeFlag",'show');
@@ -98,7 +94,11 @@ export default {
         body: JSON.stringify(discussionJsonData)
       }
       const response = await csrfFetch(discussionCreateEndpoint, option)
-      return response.json();
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then(data => { throw new Error(data.message) })
+      }
     },
     async createComment(discussionId){
       const commentCreateEndpoint = "/internal_api/comments"
