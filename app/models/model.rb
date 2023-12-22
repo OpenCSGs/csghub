@@ -31,6 +31,7 @@ class Model < ApplicationRecord
   after_create :sync_created_model_to_starhub_server
   after_destroy :delete_model_from_starhub_server
   after_update :update_starhub_server_model
+  before_save :detect_sensitive_content
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
@@ -73,5 +74,9 @@ class Model < ApplicationRecord
                                    owner.name,
                                    { private: model_private? })
     raise StarhubError, res.body unless res.success?
+  end
+
+  def detect_sensitive_content
+    Starhub.api.text_secure_check('nickname_detection', name)
   end
 end
