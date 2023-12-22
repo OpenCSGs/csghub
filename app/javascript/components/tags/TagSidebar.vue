@@ -91,6 +91,7 @@
   import Safetensors from './frameworks/Safetensors.vue'
   import JAX from './frameworks/JAX.vue'
   import ONNX from './frameworks/ONNX.vue'
+  import PaddlePaddle from './frameworks/PaddlePaddle.vue'
   import Joblib from './frameworks/Joblib.vue'
   import GGUF from './frameworks/GGUF.vue'
 
