@@ -1,3 +1,8 @@
+<p>
+  <% if flash[:alert].present? %>
+    <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+  <% end %>
+</p>
 <div class="h-full flex items-center justify-center flex-col bg-[#F3F0FF] py-[223px]">
   <div class="flex flex-col items-center">
     <div class="flex flex-col gap-[8px] items-center text-center mt-[24px] px-[16px] text-[#303133]">
