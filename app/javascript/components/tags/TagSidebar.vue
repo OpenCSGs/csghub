@@ -63,6 +63,10 @@
              :activeTag="activeFrameworkTag" />
         <PaddlePaddle @setActiveFrameworkTag="setActiveFrameworkTag"
                       :activeTag="activeFrameworkTag" />
+        <Joblib @setActiveFrameworkTag="setActiveFrameworkTag"
+                      :activeTag="activeFrameworkTag" />
+        <GGUF @setActiveFrameworkTag="setActiveFrameworkTag"
+                      :activeTag="activeFrameworkTag" />
       </div>
 
       <div v-show="showLicense" class="flex gap-[8px] flex-wrap">
@@ -87,7 +91,8 @@
   import Safetensors from './frameworks/Safetensors.vue'
   import JAX from './frameworks/JAX.vue'
   import ONNX from './frameworks/ONNX.vue'
-  import PaddlePaddle from './frameworks/PaddlePaddle.vue'
+  import Joblib from './frameworks/Joblib.vue'
+  import GGUF from './frameworks/GGUF.vue'
 
   const props = defineProps({
     taskTags: String,
