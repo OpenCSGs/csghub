@@ -14,7 +14,9 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     end
     render json: {message: '组织创建成功!'}, status: 200
   rescue => error
-    render json: {message: error.message}, status: 500
+    message = new_org.errors.full_messages.to_sentence
+    message = message.presence || error.message
+    render json: {message: message}, status: 500
   end
 
   def update

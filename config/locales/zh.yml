@@ -29,6 +29,7 @@ zh:
           blank: "字段不能为空"
           taken: "不能创建重复"
         organization:
+          invalid: '不符合规范'
           blank: "字段不能为空"
           taken: "不能创建重复"
 
