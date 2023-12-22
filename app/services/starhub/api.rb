@@ -211,6 +211,7 @@ module Starhub
     end
 
     def text_secure_check(scenario, content)
+      return if content.blank?
       options = {
         scenario: scenario,
         text: content
@@ -226,6 +227,7 @@ module Starhub
     end
 
     def image_secure_check(scenario, oss_bucket_name, oss_object_name)
+      return if oss_object_name.blank?
       options = {
         scenario: scenario,
         oss_bucket_name: oss_bucket_name,
