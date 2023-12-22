@@ -60,6 +60,7 @@ class ModelsController < ApplicationController
         return redirect_to errors_unauthorized_path unless current_user.org_role(@local_model.owner)
       end
     end
+    @avatar_url = owner.avatar_url
     @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
     @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
