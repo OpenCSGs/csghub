@@ -36,8 +36,8 @@ class Organization < ApplicationRecord
   end
 
   def starhub_synced!
-    self.starhub_synced = true
-    self.save
+    # do not trigger the callback again
+    self.update_column('starhub_synced', true)
   end
 
   def starhub_synced?
