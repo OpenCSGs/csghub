@@ -1,7 +1,7 @@
 class InternalApi::UploadController < InternalApi::ApplicationController
   def create
     bucket_code = AliyunOss.instance.upload 'comment', upload_params[:file]
-    public_url = AliyunOss.instance.download_public bucket_code
+    public_url = AliyunOss.instance.download bucket_code
     if public_url.blank?
       render json: {message: '上传文件失败'}, status: 400
     else
