@@ -4,7 +4,7 @@
     <div class="mt-[16px]">
       <div class="flex sm:flex-col gap-[16px] mb-[16px]">
         <div class="w-[284px] sm:w-auto">
-          <p class="text-[#303133] text-[14px] mb-[8px]">组织命名空间</p>
+          <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">组织命名空间<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg></p>
           <el-input v-model="orgName" placeholder="2-20位字母数字以及 _ 构成的字符串" input-style="height: 40px" />
         </div>
         <div class="w-[284px] sm:w-auto">
@@ -16,7 +16,7 @@
         <div class="max-w-[284px]">
           <p class="text-[#303133] text-[14px] mb-[8px]">组织头像</p>
           <div>
-            <input type="file" ref="orgAvatarFileInput" class="hidden" @change="previewAvatar" />
+            <input type="file" ref="orgAvatarFileInput" class="hidden" accept="image/*" @change="previewAvatar" />
             <el-button class="mr-[8px]" @click="uploadOrgAvatar">点击上传</el-button>
             <span class="text-[#606266] text-[14px]">{{ orgAvatar }}</span>
           </div>
@@ -65,25 +65,41 @@
   }
 
   const previewAvatar = () => {
-    orgAvatar.value = orgAvatarFileInput.value.files[0].name
+    const file = orgAvatarFileInput.value.files[0];
+    const maxSize = 1 * 1024 * 1024; // 1MB
+    if (file && file.size <= maxSize) {
+      orgAvatar.value = file.name;
+    } else {
+      orgAvatar.value = '待上传';
+      orgAvatarFileInput.value = null;
+      ElMessage.error('请上传不超过1MB的图片文件');
+    }
   }
 
   const createOrg = () => {
-    submitOrgForm().then((data) => {
-      ElMessage({
-        message: '组织创建成功',
-        type: 'success'
+    if(orgName.value&&orgName.value!=''){
+      submitOrgForm().then((data) => {
+        ElMessage({
+          message: '组织创建成功',
+          type: 'success'
+        })
+        setTimeout(() => {
+          window.location.href = props.currentUserProfile
+        }, 500)
       })
-      setTimeout(() => {
-        window.location.href = props.currentUserProfile
-      }, 500)
-    })
-    .catch(err => {
-      ElMessage({
-        message: err.message,
-        type: 'warning'
+      .catch(err => {
+        ElMessage({
+          message: err.message,
+          type: 'warning'
+        })
       })
-    })
+    }else{
+      ElMessage({
+          message: '请填写组织命名空间',
+          type: 'warning'
+        })
+    }
+
   }
 
   onMounted(() => {
