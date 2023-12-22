@@ -15,7 +15,7 @@
               <rect opacity="0.12" x="1.3335" y="1.3335" width="13.3333" height="13.3333" rx="3.33333" fill="#2F384C"/>
               <path d="M6.66683 5.3335L4.00016 8.00016L6.66683 10.6668M9.3335 5.3335L12.0002 8.00016L9.3335 10.6668M6.66682 14.6668H9.3335C11.2003 14.6668 12.1338 14.6668 12.8468 14.3035C13.474 13.9839 13.9839 13.474 14.3035 12.8468C14.6668 12.1338 14.6668 11.2003 14.6668 9.3335V6.66683C14.6668 4.79999 14.6668 3.86657 14.3035 3.15353C13.9839 2.52632 13.474 2.01639 12.8468 1.69681C12.1338 1.3335 11.2003 1.3335 9.3335 1.3335H6.66683C4.79999 1.3335 3.86657 1.3335 3.15353 1.69681C2.52632 2.01639 2.01639 2.52632 1.69681 3.15353C1.3335 3.86657 1.3335 4.79999 1.3335 6.66682V9.3335C1.3335 11.2003 1.3335 12.1338 1.69681 12.8468C2.01639 13.474 2.52632 13.9839 3.15353 14.3035C3.86657 14.6668 4.79999 14.6668 6.66682 14.6668Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            下载数据集
+            下载模型
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -39,7 +39,7 @@
             <rect opacity="0.12" x="1.3335" y="1.3335" width="13.3333" height="13.3333" rx="3.33333" fill="#2F384C"/>
             <path d="M6.66683 5.3335L4.00016 8.00016L6.66683 10.6668M9.3335 5.3335L12.0002 8.00016L9.3335 10.6668M6.66682 14.6668H9.3335C11.2003 14.6668 12.1338 14.6668 12.8468 14.3035C13.474 13.9839 13.9839 13.474 14.3035 12.8468C14.6668 12.1338 14.6668 11.2003 14.6668 9.3335V6.66683C14.6668 4.79999 14.6668 3.86657 14.3035 3.15353C13.9839 2.52632 13.474 2.01639 12.8468 1.69681C12.1338 1.3335 11.2003 1.3335 9.3335 1.3335H6.66683C4.79999 1.3335 3.86657 1.3335 3.15353 1.69681C2.52632 2.01639 2.01639 2.52632 1.69681 3.15353C1.3335 3.86657 1.3335 4.79999 1.3335 6.66682V9.3335C1.3335 11.2003 1.3335 12.1338 1.69681 12.8468C2.01639 13.474 2.52632 13.9839 3.15353 14.3035C3.86657 14.6668 4.79999 14.6668 6.66682 14.6668Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          下载数据集
+          下载模型
         </div>
       </div>
       <el-tabs v-model="activeCloneType" class="border border-[#EBEEF5] mb-8 clone-tabs">
@@ -48,9 +48,6 @@
             <div class="text-[#909399]"># Make sure you have git-lfs installed (https://git-lfs.com)</div>
             <div>git lfs install</div>
             <div>git clone {{ cloneHttpUrl }}</div>
-            <div class="text-[#909399]"># if you want to clone without large files – just their pointers</div>
-            <div class="text-[#909399]"># prepend your git clone with the following env var:</div>
-            <div>GIT_LFS_SKIP_SMUDGE=1</div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="SSH" name="ssh">
@@ -58,9 +55,6 @@
             <div class="text-[#909399]"># Make sure you have git-lfs installed (https://git-lfs.com)</div>
             <div>git lfs install</div>
             <div>git clone {{ cloneSshUrl }}</div>
-            <div class="text-[#909399]"># if you want to clone without large files – just their pointers</div>
-            <div class="text-[#909399]"># prepend your git clone with the following env var:</div>
-            <div>GIT_LFS_SKIP_SMUDGE=1</div>
           </div>
         </el-tab-pane>
       </el-tabs>
