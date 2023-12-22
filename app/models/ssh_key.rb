@@ -8,8 +8,8 @@ class SshKey < ApplicationRecord
   validates_uniqueness_of :name, :ssh_key, scope: :user_id
 
   def starhub_synced!
-    self.starhub_synced = true
-    self.save
+    # do not trigger the callback again
+    self.update_column('starhub_synced', true)
   end
 
   def starhub_synced?
