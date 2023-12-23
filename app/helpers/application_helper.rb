@@ -50,10 +50,6 @@ module ApplicationHelper
     I18n.locale
   end
 
-  def little_assistant_monster_pages?
-    request.path.match(/\/partners|\/experts/)
-  end
-
   def campaign_status_type status
     case status
     when 'prestart'
@@ -64,6 +60,15 @@ module ApplicationHelper
       'success'
     when 'ended'
       'danger'
+    end
+  end
+
+  def feature_flags
+    system_config = SystemConfig.first
+    if system_config
+      system_config.feature_flags rescue {}
+    else
+      {}
     end
   end
 end

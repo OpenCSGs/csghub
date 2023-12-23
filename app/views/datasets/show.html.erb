@@ -1,0 +1,17 @@
+<div class="bg-white border-b border-[#EBEEF5]">
+  <dataset-detail
+    local-dataset-id="<%= @local_dataset.id %>"
+    :dataset="<%= @dataset %>"
+    :files="<%= @files|| {} %>"
+    :last-commit="<%= @last_commit %>"
+    :branches="<%= @branches %>"
+    current-branch="<%= @current_branch || 'main' %>"
+    current-path="<%= @current_path || '' %>"
+    default-tab="<%= @default_tab || 'summary' %>"
+    :readme="<%= @readme %>"
+    :content="<%= @content || {} %>"
+    :action-name="'<%= action_name %>'"
+    avatar="<%= @avatar_url %>"
+  >
+  </dataset-detail>
+</div>

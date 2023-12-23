@@ -1,48 +1,60 @@
-require 'rest_client'
-
 module Starhub
   class Client
     class ApiError < StandardError; end
-
     include Singleton
 
-    def get(path, options = {})
-      request(:get, path, options)
+    API_VERSION = '/api/v1'
+
+    def get(path, params = {})
+      starhub_api_connection.get(request_path(path), params)
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
     end
 
     def post(path, options = {})
-      request(:post, path, options)
+      starhub_api_connection.post(request_path(path)) do |req|
+        req.body = options.to_json
+      end
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
+    end
+
+    def put(path, options = {})
+      starhub_api_connection.put(request_path(path)) do |req|
+        req.body = options.to_json
+      end
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
+    end
+
+    def delete(path, params = {})
+      starhub_api_connection.delete(request_path(path), params)
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
     end
 
     private
 
-    def build_request_url(path)
-      starhub_configs = SystemConfig.first&.starhub_configs
-      base_url = starhub_configs.blank? ?  'http://localhost:8080/api/v1' : starhub_configs['base_url']
-      base_url + path
+    def starhub_configs
+      system_config = SystemConfig.first
+      starhub_configs = system_config.starhub_configs rescue {}
+      base_url = starhub_configs['base_url'] || Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
+      token = starhub_configs['token'] || Rails.application.credentials.starhub_api.send("#{Rails.env}").token
+      [base_url, token]
+    end
+    
+    def request_path(path)
+      API_VERSION + path
     end
 
-    def request(verb, path, options = {})
-      headers = options[:headers] || {}
-      headers['content-type'] ||= 'application/json'
-
-      request = ::RestClient::Request.new(
-        method: verb,
-        url: build_request_url(path),
-        headers: headers,
-        payload: options[:body]
-      )
-
-      response = request.execute do |resp, &blk|
-        if resp.code >= 300
-          # TODO: handle more types of error
-          raise APIError.new(resp)
-        else 
-          resp.return!(&blk)
-        end
-      end
-
-      response.body
+    def starhub_api_connection
+      base_url, token = starhub_configs
+      Faraday.new(
+        url: base_url,
+        headers: {
+          'Content-Type' => 'application/json',
+          'Authorization' => token
+        })
     end
   end
 end

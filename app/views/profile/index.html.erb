@@ -1,12 +1,13 @@
 <div class="flex justify-center md:flex-col  my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
   <div class="md:mb-[24px] mr-[24px] bg-[#FAFAFA] sm:bg-white md:bg-white">
     <profile name="<%= current_user.name %>"
-               phone="<%= current_user.phone %>"
-               email="<%= current_user.email %>"
-               avatar="<%= current_user.avatar_url %>"
-               last-login-time="<%= current_user.last_login_at %>"
-               login-identity="<%= current_user.login_identity %>"
-               roles="<%= current_user.roles.to_json %>"
+             phone="<%= current_user.phone %>"
+             email="<%= current_user.email %>"
+             avatar="<%= current_user.avatar_url %>"
+             last-login-time="<%= current_user.last_login_at %>"
+             login-identity="<%= current_user.login_identity %>"
+             roles="<%= current_user.roles.to_json %>"
+             orgs="<%= current_user.organizations.to_json %>"
     ></profile>
   </div>
   <div class="grow pr-4 py-[36px]">
@@ -49,7 +50,15 @@
         <span class="text-[20px] leading-[28px] font-semibold">模型</span>
       </div>
     </div>
-    <div class="mb-[34px]">暂无数据</div>
+    <% if JSON.parse(@models)['total'] != 0 %>
+      <div class="flex flex-wrap gap-4 mb-4">
+        <% JSON.parse(@models)['data'].each do |model| %>
+          <model-item :model="<%= model.to_json %>"></model-item>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mb-[34px]">暂无数据</div>
+    <% end %>
     <%# Datasets %>
     <div class="flex items-center justify-between mb-[16px]">
       <div class="flex items-center gap-[8px]">
@@ -57,7 +66,15 @@
         <span class="text-[20px] leading-[28px] font-semibold">数据集</span>
       </div>
     </div>
-    <div>暂无数据</div>
+    <% if JSON.parse(@datasets)['total'] != 0 %>
+      <div class="flex flex-wrap gap-4 mb-4">
+        <% JSON.parse(@datasets)['data'].each do |dataset| %>
+          <dataset-item :dataset="<%= dataset.to_json %>"></dataset-item>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mb-[34px]">暂无数据</div>
+    <% end %>
   </div>
 </div>
 

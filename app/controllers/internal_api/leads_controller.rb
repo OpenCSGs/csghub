@@ -1,6 +1,4 @@
-class Api::LeadsController < Api::ApplicationController
-  skip_before_action :set_current_user
-
+class InternalApi::LeadsController < InternalApi::ApplicationController
   def create
     lead = Lead.new(create_params)
 
@@ -17,4 +15,3 @@ class Api::LeadsController < Api::ApplicationController
     params.require(:lead).permit(:name, :title, :phone, :company, :expertise, :introduction, :email, :company_site, :industry, :lead_source, :lead_type)
   end
 end
-

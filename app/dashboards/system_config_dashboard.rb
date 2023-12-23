@@ -12,6 +12,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     application_env: Field::String,
     oidc_configs: Field::JSONB,
     starhub_configs: Field::JSONB,
+    license_configs: Field::JSONB,
+    feature_flags: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -34,6 +36,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     application_env
     oidc_configs
     starhub_configs
+    license_configs
+    feature_flags
     created_at
     updated_at
   ].freeze
@@ -45,6 +49,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     application_env
     oidc_configs
     starhub_configs
+    license_configs
+    feature_flags
   ].freeze
 
   # COLLECTION_FILTERS

@@ -25,4 +25,9 @@ module SessionsHelper
     cookies.delete :idToken, domain: current_cookie_domain
     cookies.delete :userinfos, domain: current_cookie_domain
   end
+
+  def login_url
+    oidc_configs = SystemConfig.first&.oidc_configs || Rails.application.credentials.oidc_config.send(Rails.env)
+    oidc_configs["login_url"]
+  end
 end

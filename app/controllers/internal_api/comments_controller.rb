@@ -1,11 +1,20 @@
-class Api::CommentsController < Api::ApplicationController
+class InternalApi::CommentsController < InternalApi::ApplicationController
+  before_action :authenticate_user
+
+  def index
+    commentable = find_commentable
+    comments = commentable.comments
+
+    render json: comments.as_json, status: :ok
+  end
+
   def create
     commentable = find_commentable
     comment = commentable.comments.build(comment_params)
-    comment.user = @current_user
+    comment.user = current_user
 
     if comment.save
-      render json: comment.as_json_data, status: :created
+      render json: comment.as_json, status: :created
     else
       render json: comment.errors, status: :unprocessable_entity
     end

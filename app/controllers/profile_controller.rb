@@ -2,8 +2,9 @@ class ProfileController < ApplicationController
   before_action :authenticate_user
 
   def index
-    # @datasets = current_user.datasets
-    # @models = current_user.models
+    @models = Starhub.api.get_user_models(current_user.name, current_user.name)
+    @datasets = Starhub.api.get_user_datasets(current_user.name, current_user.name)
     @spaces = current_user.spaces
+    @organizations = current_user.organizations
   end
 end

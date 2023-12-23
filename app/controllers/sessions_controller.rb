@@ -3,35 +3,27 @@ require 'jwt'
 class SessionsController < ApplicationController
   layout 'login'
 
+  skip_before_action :check_user_login
+
+  def signup
+    redirect_to SystemConfig.first.oidc_configs['sign_up_url'], allow_other_host: true
+  end
+
   def new
+    redirect_to SystemConfig.first.oidc_configs['login_url'], allow_other_host: true
   end
 
   def oidc
     current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
-    @openid_client = OPENID_CLIENT
+    @openid_client = ::OPENID_CLIENT
     @openid_client.authorization_code = params['code']
     access_token = @openid_client.access_token!
     user_infos = JWT.decode(access_token.id_token, nil, false).first
+    Rails.logger.warn "===== User Info =====: #{user_infos}"
     cookies[:idToken] = {value: access_token.id_token, domain: current_domain}
     cookies[:oidcUuid] = {value: user_infos['sub'], domain: current_domain}
     cookies[:userinfos] = {value: user_infos.to_json, domain: current_domain}
-    user_uuid = user_infos['sub']
-
-    user = User.find_or_create_by(login_identity: user_uuid) do |u|
-      u.roles = :personal_user
-      u.avatar = user_infos['avatar']
-      u.name = user_infos['displayName']
-      u.phone = user_infos['phone']
-      u.email = user_infos['email']
-      u.email_verified = user_infos['emailVerified']
-      u.gender = user_infos['gender']
-      u.last_login_at = Time.now
-    end
-
-    helpers.log_in user
-
-    redirect_path = session.delete(:original_request_path) || root_path
-    redirect_to redirect_path
+    login_by_user_infos user_infos
   end
 
   def authing

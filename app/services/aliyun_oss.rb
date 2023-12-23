@@ -18,10 +18,12 @@ class AliyunOss
     object_key = case type
                  when 'user-avatar'
                    "avatar/#{random_file_name}"
-                 when 'company-logo'
-                   "logo/#{random_file_name}"
+                 when 'org-logo'
+                   "org_logo/#{random_file_name}"
                  when 'space-cover'
                    "space/#{random_file_name}"
+                 when 'comment'
+                   "comment/#{random_file_name}"
                  else
                    random_file_name
                  end

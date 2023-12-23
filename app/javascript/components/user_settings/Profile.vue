@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
+  <div class="max-w-[500px] pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
     <div>
       <el-avatar :size="120" :src="avatar"> </el-avatar>
     </div>
@@ -7,7 +7,10 @@
     <div class="text-[16px] px-[3px] bg-[#90939950] rounded-[5px] max-w-[max-content] leading-[24px] mb-[16px]">
       {{ loginIdentity }}
     </div>
-    <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">编辑个人信息</a>
+    <div>
+      <a href="/settings/profile" class="mr-[10px] px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">编辑个人信息</a>
+      <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">设置</a>
+    </div>
     <div v-show="userRoles" class="mt-[16px] text-[#606266] text-[16px] leading-[24px] flex items-center gap-[8px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.66663 12.533C2.66663 10.7657 4.09931 9.33301 5.86663 9.33301H10.1333C11.9006 9.33301 13.3333 10.7657 13.3333 12.533V12.533C13.3333 13.7112 12.3782 14.6663 11.2 14.6663H4.79996C3.62175 14.6663 2.66663 13.7112 2.66663 12.533V12.533Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.6666 3.99967C10.6666 5.47243 9.47272 6.66634 7.99996 6.66634C6.5272 6.66634 5.33329 5.47243 5.33329 3.99967C5.33329 2.52692 6.5272 1.33301 7.99996 1.33301C9.47272 1.33301 10.6666 2.52692 10.6666 3.99967Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/></svg>
       {{ userRoles.join(', ') }}
     </div>
@@ -30,7 +33,14 @@
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
         组织机构
       </div>
-      <div class="text-[#909399]">暂无数据</div>
+      <div v-if="userOrgs != {}" class="flex gap-[10px] flex-wrap">
+        <p v-for="org in userOrgs">
+          <a :href="`/organizations/${org.name}`">
+            <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />
+          </a>
+        </p>
+      </div>
+      <div v-else class="text-[#909399]">暂无数据</div>
     </div>
   </div>
 </template>
@@ -44,13 +54,16 @@ export default {
     lastLoginTime: String,
     loginIdentity: String,
     roles: String,
+    orgs: String
   },
   data() {
     return {
       theLastLoginTime: this.lastLoginTime ? this.lastLoginTime.slice(0, -6) : "",
       userRoles: this.roles ? JSON.parse(this.roles) : [],
+      userOrgs: this.orgs ? JSON.parse(this.orgs) : []
     };
   },
-  mounted() {},
+  mounted() {
+  },
 };
 </script>
