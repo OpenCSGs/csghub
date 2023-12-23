@@ -71,7 +71,6 @@
       orgAvatar.value = file.name;
     } else {
       orgAvatar.value = '待上传';
-      orgAvatarFileInput.value = null;
       ElMessage.error('请上传不超过1MB的图片文件');
     }
   }
