@@ -3,6 +3,10 @@ class SystemConfig < ApplicationRecord
     self[:oidc_configs] = value.is_a?(String) ? JSON.parse(value) : value
   end
 
+  def starhub_configs=(value)
+    self[:starhub_configs] = value.is_a?(String) ? JSON.parse(value) : value
+  end
+
   def license_configs=(value)
     self[:license_configs] = value.is_a?(String) ? JSON.parse(value) : value
   end
