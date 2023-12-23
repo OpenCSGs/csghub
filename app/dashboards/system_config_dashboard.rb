@@ -11,6 +11,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     id: Field::Number,
     application_env: Field::String,
     oidc_configs: Field::JSONB,
+    starhub_configs: Field::JSONB,
     license_configs: Field::JSONB,
     feature_flags: Field::JSONB,
     created_at: Field::DateTime,
@@ -34,6 +35,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     id
     application_env
     oidc_configs
+    starhub_configs
     license_configs
     feature_flags
     created_at
@@ -46,6 +48,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     application_env
     oidc_configs
+    starhub_configs
     license_configs
     feature_flags
   ].freeze

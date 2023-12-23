@@ -27,7 +27,7 @@ class AliyunOss
                  else
                    random_file_name
                  end
-    if bucket.put_object(object_key, file: file.path)
+    if bucket.put_object(object_key, file: file.path, acl: 'public-read')
       object_key
     else
       ''
@@ -35,15 +35,7 @@ class AliyunOss
   end
 
   def download object_key
-    # 6000s 过期
-    bucket.object_url(object_key, true, 6000)
-  rescue Aliyun::OSS::ServerError
-    ""
-  end
-
-  def download_public object_key
-    # 10年过期时间
-    bucket.object_url(object_key, true, 315360000)
+    bucket.object_url(object_key, false)
   rescue Aliyun::OSS::ServerError
     ""
   end
