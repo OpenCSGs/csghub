@@ -95,7 +95,7 @@
         <a v-if="file.type === 'dir'" :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline">
           {{ file.name }}
         </a>
-        <a v-else-if="canPreview(file.path)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline">
+        <a v-else-if="canPreview(file)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline">
           {{ file.name }}
         </a>
         <el-popover
@@ -179,11 +179,26 @@
     return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
   }
 
-  const canPreview = (path) => {
-    const parts = path.split('.')
-    const extension = parts[parts.length - 1]
+
+  // 预览放行规则：非 LFS，文件大小不超过 10MB，后缀名为 rb、gitattributes、md、json、yaml、sh、py、js、ts、cpp、c、txt 或为空
+  const canPreview = (file) => {
+    const extension = getFileExtension(file)
     const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt']
-    return previewExtensions.includes(extension)
+
+    const isFileLFS = file.lfs
+    const isExtensionIncluded = !extension || previewExtensions.includes(extension)
+    const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
+
+    return !isFileLFS && isExtensionIncluded && isFileSizeLessThan10MB
+  }
+
+  const getFileExtension = (file) => {
+    const fileName = file.path.split('/').pop()
+    const lastDotIndex = fileName.lastIndexOf('.')
+    if (lastDotIndex === -1) {
+      return ''
+    }
+    return fileName.substr(lastDotIndex + 1)
   }
 
   onMounted(() => {
