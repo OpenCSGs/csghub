@@ -14,6 +14,13 @@
   const markdownContent = ref('')
 
   const parseMetadata = (input) => {
+    if (!input.trim().startsWith('---\n')) {
+      return {
+        metadata: '',
+        content: input
+      }
+    }
+
     const separator = '---\n'
     const [_, metadata, content] = input.split(separator, 3)
 
@@ -25,8 +32,8 @@
 
   onMounted(() => {
     const { _metadata, content } = parseMetadata(props.content)
-    markdownContent.value = content
+    markdownContent.value = content || props.content
   })
 
-  const mdParser = new MarkdownIt()
+  const mdParser = new MarkdownIt({ html: true });
 </script>
