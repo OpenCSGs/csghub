@@ -18,6 +18,13 @@ class ModelsController < ApplicationController
     @license_tags = Tag.where(tag_type: 'license').as_json
   end
 
+  def new
+    @available_namespaces = current_user.available_namespaces
+    system_config = SystemConfig.first
+    license_configs = system_config.license_configs rescue nil
+    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
+  end
+
   def show
     @default_tab = 'summary'
     @files = Starhub.api.get_model_files(params[:namespace], params[:model_name])
@@ -31,13 +38,6 @@ class ModelsController < ApplicationController
   def blob
     @content = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], params[:path], { ref: @current_branch })
     render :show
-  end
-
-  def new
-    @available_namespaces = current_user.available_namespaces
-    system_config = SystemConfig.first
-    license_configs = system_config.license_configs rescue nil
-    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 
   private

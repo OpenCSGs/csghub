@@ -5,16 +5,6 @@ class DatasetsController < ApplicationController
   before_action :load_dataset_detail, only: [:show, :files, :blob]
   before_action :load_branch_and_path, only: [:files, :blob]
 
-  def show
-    @default_tab = 'summary'
-    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name])
-  end
-
-  def files
-    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name], files_options)
-    render :show
-  end
-
   def index
     response = {}
     Tag::DATASET_TAG_FIELDS.each do |field|
@@ -33,6 +23,16 @@ class DatasetsController < ApplicationController
     system_config = SystemConfig.first
     license_configs = system_config.license_configs rescue nil
     @licenses = license_configs.presence || Model::DEFAULT_LICENSES
+  end
+
+  def show
+    @default_tab = 'summary'
+    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name])
+  end
+
+  def files
+    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name], files_options)
+    render :show
   end
 
   def blob
