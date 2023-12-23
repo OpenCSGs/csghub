@@ -54,10 +54,12 @@
         emit('createComment', createdComment);
         newCommentContent.value = ''; // Clear the input field
       } else {
-        ElMessage({
-          message: '创建失败，请重试',
-          type: 'warning'
-        });
+        response.json().then((err) => {
+          ElMessage({
+            message: err.message,
+            type: 'warning'
+          });
+        })
       }
     } catch (error) {
       console.error(error);

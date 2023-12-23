@@ -1,3 +1,8 @@
+<p>
+  <% if flash[:alert].present? %>
+    <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+  <% end %>
+</p>
 <div class="h-full flex items-center justify-center flex-col bg-[#F3F0FF] py-[223px]">
   <div class="flex flex-col items-center">
     <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

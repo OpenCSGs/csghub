@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-[#fff] flex-col">
+  <div class="flex bg-[#fff] flex-col pr-[20px]">
     <div class="mb-[16px]">
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="Task"
@@ -36,8 +36,8 @@
         />
         <div class="mt-[16px]">
           <div v-for="tagField in theTaskTags">
-            <h3 class="text-[#909399] text-[12px] mb-[11px]">{{ tagField.zh_name }}</h3>
-            <div class="flex gap-[8px]">
+            <h3 class="text-[#909399] text-[12px] my-[11px]">{{ tagField.zh_name }}</h3>
+            <div class="flex gap-[8px] flex-wrap">
               <span v-for="tag in tagField.tags" class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer"
                     :data-tag_name="tag.name"
                     :style="setTagColor(tag.name, tagField.color)"
@@ -62,6 +62,10 @@
         <JAX @setActiveFrameworkTag="setActiveFrameworkTag"
              :activeTag="activeFrameworkTag" />
         <PaddlePaddle @setActiveFrameworkTag="setActiveFrameworkTag"
+                      :activeTag="activeFrameworkTag" />
+        <Joblib @setActiveFrameworkTag="setActiveFrameworkTag"
+                      :activeTag="activeFrameworkTag" />
+        <GGUF @setActiveFrameworkTag="setActiveFrameworkTag"
                       :activeTag="activeFrameworkTag" />
       </div>
 
@@ -88,6 +92,8 @@
   import JAX from './frameworks/JAX.vue'
   import ONNX from './frameworks/ONNX.vue'
   import PaddlePaddle from './frameworks/PaddlePaddle.vue'
+  import Joblib from './frameworks/Joblib.vue'
+  import GGUF from './frameworks/GGUF.vue'
 
   const props = defineProps({
     taskTags: String,

@@ -6,9 +6,6 @@ class ModelsController < ApplicationController
   before_action :load_branch_and_path, only: [:files, :blob]
 
   def index
-  end
-
-  def new_index
     response = {}
     Tag::MODEL_TAG_FIELDS.each do |field|
       response[field] = {}
@@ -19,6 +16,13 @@ class ModelsController < ApplicationController
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
     @license_tags = Tag.where(tag_type: 'license').as_json
+  end
+
+  def new
+    @available_namespaces = current_user.available_namespaces
+    system_config = SystemConfig.first
+    license_configs = system_config.license_configs rescue nil
+    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
   end
 
   def show
@@ -36,13 +40,6 @@ class ModelsController < ApplicationController
     render :show
   end
 
-  def new
-    @available_namespaces = current_user.available_namespaces
-    system_config = SystemConfig.first
-    license_configs = system_config.license_configs rescue nil
-    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
-  end
-
   private
 
   def load_model_detail
@@ -51,7 +48,7 @@ class ModelsController < ApplicationController
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到模型"
-      return redirect_to "/new_models"
+      return redirect_to "/models"
     end
     if @local_model.model_private?
       if @local_model.owner.instance_of? User
@@ -60,6 +57,7 @@ class ModelsController < ApplicationController
         return redirect_to errors_unauthorized_path unless current_user.org_role(@local_model.owner)
       end
     end
+    @avatar_url = owner.avatar_url
     @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
     @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])

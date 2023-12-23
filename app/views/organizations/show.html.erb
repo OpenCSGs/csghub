@@ -46,10 +46,10 @@
             <span>模型</span>
           </h3>
           <div class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-            <% if @models.count == 0 %>
+            <% if JSON.parse(@models)['total'] == 0 %>
               暂无数据
             <% else %>
-              <% @models.each do |model| %>
+              <% JSON.parse(@models)['data'].each do |model| %>
                 <model-item :model="<%= model.to_json %>"></model-item>
               <% end %>
             <% end %>
@@ -64,10 +64,10 @@
             <span>数据集</span>
           </h3>
           <div class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-            <% if @datasets.count == 0 %>
+            <% if JSON.parse(@datasets)['total'] == 0 %>
               暂无数据
             <% else %>
-              <% @datasets.each do |dataset| %>
+              <% JSON.parse(@datasets)['data'].each do |dataset| %>
                 <dataset-item :dataset="<%= dataset.to_json %>"></dataset-item>
               <% end %>
             <% end %>

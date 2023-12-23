@@ -45,8 +45,8 @@
     <!-- <CommunityTimeLine :timelineData="timelineData"></CommunityTimeLine> -->
     <CommunityMDTextarea ref="mdTextarea" :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="create">Comment</el-button>
-      <el-button @click="cancel">Cancel</el-button>
+      <el-button type="primary" @click="create">评论</el-button>
+      <el-button @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
@@ -137,7 +137,7 @@ export default {
         this.getComment(this.discussionId)
       })
       .catch(err => {
-        ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
+        ElMessage({ message: err.message, type: 'warning' });
       })
       // let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
       // this.timelineData.push(data)

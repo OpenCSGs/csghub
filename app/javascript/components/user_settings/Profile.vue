@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
+  <div class="max-w-[500px] pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
     <div>
       <el-avatar :size="120" :src="avatar"> </el-avatar>
     </div>
@@ -33,7 +33,7 @@
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
         组织机构
       </div>
-      <div v-if="userOrgs != {}" class="flex gap-[10px]">
+      <div v-if="userOrgs != {}" class="flex gap-[10px] flex-wrap">
         <p v-for="org in userOrgs">
           <a :href="`/organizations/${org.name}`">
             <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />

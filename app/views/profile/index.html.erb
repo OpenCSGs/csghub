@@ -50,9 +50,9 @@
         <span class="text-[20px] leading-[28px] font-semibold">模型</span>
       </div>
     </div>
-    <% if @models.count != 0 %>
+    <% if JSON.parse(@models)['total'] != 0 %>
       <div class="flex flex-wrap gap-4 mb-4">
-        <% @models.each do |model| %>
+        <% JSON.parse(@models)['data'].each do |model| %>
           <model-item :model="<%= model.to_json %>"></model-item>
         <% end %>
       </div>
@@ -66,9 +66,9 @@
         <span class="text-[20px] leading-[28px] font-semibold">数据集</span>
       </div>
     </div>
-    <% if @datasets.count != 0 %>
+    <% if JSON.parse(@datasets)['total'] != 0 %>
       <div class="flex flex-wrap gap-4 mb-4">
-        <% @datasets.each do |dataset| %>
+        <% JSON.parse(@datasets)['data'].each do |dataset| %>
           <dataset-item :dataset="<%= dataset.to_json %>"></dataset-item>
         <% end %>
       </div>
