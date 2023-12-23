@@ -19,9 +19,10 @@
     <div class="ml-6 border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{private?'私有':'公开'}}</div>
   </div>
   <HeaderTags
-    :task-tags="taskTags"
-    :framework-tags="frameworkTags"
-    :license="license"
+    :task-tags="tags.task_tags"
+    :framework-tags="tags.framework_tags"
+    :license-tags="tags.license_tags"
+    :other-tags="tags.other_tags"
   />
 </template>
 
@@ -34,5 +35,6 @@
     name: String,
     path: String,
     license: String,
+    tags: Object,
   });
 </script>

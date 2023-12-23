@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div class="w-full bg-[#FAFCFF] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <dataset-header
         :private="dataset.data.private"
@@ -7,6 +7,7 @@
         :name="dataset.data.name"
         :path="dataset.data.path"
         :avatar="avatar"
+        :tags="tags"
       />
     </div>
   </div>
@@ -46,7 +47,8 @@ const props = defineProps({
   readme: Object,
   content: Object,
   actionName: String,
-  avatar: String
+  avatar: String,
+  tags: Object
 })
 </script>
 
