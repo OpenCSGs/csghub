@@ -20,6 +20,8 @@ class Space < ApplicationRecord
   has_many :tags, through: :taggings
   has_many :comments, as: :commentable
 
+  before_save :detect_sensitive_content
+
   def cover_image_url
     if cover_image
       # retrive the image temp url from aliyun
@@ -63,5 +65,21 @@ class Space < ApplicationRecord
       space_type: readable_type,
       author_uuid: user.login_identity
     }
+  end
+
+  private
+
+  def detect_sensitive_content
+    text_content = "#{title} #{desc} #{tags.map(&:name)}"
+    Starhub.api.text_secure_check('nickname_detection', text_content)
+    Starhub.api.image_secure_check('baselineCheck', bucket_name, cover_image) if cover_image.present?
+  end
+
+  def bucket_name
+    if Rails.env.production?
+      Rails.application.credentials.aliyun_oss.production.bucket_name
+    else
+      Rails.application.credentials.aliyun_oss.staging.bucket_name
+    end
   end
 end

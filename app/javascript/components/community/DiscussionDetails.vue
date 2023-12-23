@@ -137,7 +137,7 @@ export default {
         this.getComment(this.discussionId)
       })
       .catch(err => {
-        ElMessage({ message: '创建评论失败，请重试', type: 'warning' });
+        ElMessage({ message: err.message, type: 'warning' });
       })
       // let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
       // this.timelineData.push(data)
