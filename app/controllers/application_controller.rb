@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from StarhubError do |e|
     log_error e.message, e.backtrace
+    flash[:alert] = e.message
     redirect_to errors_not_found_path
   end
 
@@ -43,7 +44,7 @@ class ApplicationController < ActionController::Base
   def log_error message, backtrace
     ErrorLog.create(
       message: message,
-      user_info: "#{current_user.name} / #{current_user.id} / #{current_user.phone} / #{current_user.email}",
+      user_info: "#{current_user&.name} / #{current_user&.id} / #{current_user&.phone} / #{current_user&.email}",
       request: "#{request.method} #{request.path}",
       payload: request.params.to_s,
       backtrace: backtrace

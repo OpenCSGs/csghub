@@ -104,7 +104,31 @@ module Starhub
       res.body
     end
 
+    def get_user_models(namespace, username, options = {})
+      res = @client.get("/user/#{namespace}/models?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def get_org_models(namespace, username, options = {})
+      res = @client.get("/organization/#{namespace}/models?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # datasets
+
+    def get_user_datasets(namespace, username, options = {})
+      res = @client.get("/user/#{namespace}/datasets?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def get_org_datasets(namespace, username, options = {})
+      res = @client.get("/organization/#{namespace}/datasets?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
 
     def get_datasets(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/datasets?per=#{per}&page=#{page}"
@@ -187,11 +211,29 @@ module Starhub
     end
 
     def text_secure_check(scenario, content)
+      return if content.blank?
       options = {
         scenario: scenario,
         text: content
       }
       res = @client.post("/sensitive/text", options)
+      if res.status == 400
+        raise SensitiveContentError, '监测到敏感内容'
+      elsif res.status == 500
+        raise StarhubError, "Git服务器报错"
+      else
+        res
+      end
+    end
+
+    def image_secure_check(scenario, oss_bucket_name, oss_object_name)
+      return if oss_object_name.blank?
+      options = {
+        scenario: scenario,
+        oss_bucket_name: oss_bucket_name,
+        oss_object_name: oss_object_name
+      }
+      res = @client.post("/sensitive/image", options)
       if res.status == 400
         raise SensitiveContentError, '监测到敏感内容'
       elsif res.status == 500

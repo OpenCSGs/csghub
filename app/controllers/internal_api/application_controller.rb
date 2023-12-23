@@ -6,6 +6,6 @@ class InternalApi::ApplicationController < ApplicationController
 
   rescue_from SensitiveContentError do |e|
     log_error e.message, e.backtrace
-    render json: {message: "监测到敏感词！！！"}, status: 500
+    render json: {message: "监测到敏感内容！！！"}, status: 500
   end
 end
