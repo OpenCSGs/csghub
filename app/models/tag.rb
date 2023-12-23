@@ -62,4 +62,21 @@ class Tag < ApplicationRecord
       zh_name: zh_name
       }
   end
+
+  def self.build_detail_tags(tags)
+    task_tags, framework_tags, license_tags, other_tags = [], [], [], []
+    tags.map do |tag|
+      case tag['category']
+      when 'task'
+        task_tags << tag.merge('color' => Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color], 'zh_name' => Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:zh_name])
+      when 'framework'
+        framework_tags << tag
+      when 'license'
+        license_tags << tag
+      else
+        other_tags << tag
+      end
+    end
+    { 'task_tags' => task_tags, 'framework_tags' => framework_tags, 'license_tags' => license_tags, 'other_tags' => other_tags }
+  end
 end

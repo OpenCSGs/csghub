@@ -61,6 +61,8 @@ class ModelsController < ApplicationController
       end
     end
     @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
+    raw_tags = Starhub.api.get_model_tags(params[:namespace], params[:model_name])
+    @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
     @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
     @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')

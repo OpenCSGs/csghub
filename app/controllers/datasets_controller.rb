@@ -61,6 +61,8 @@ class DatasetsController < ApplicationController
     end
 
     @dataset = Starhub.api.get_datasets_detail(params[:namespace], params[:dataset_name])
+    raw_tags = Starhub.api.get_model_tags(params[:namespace], params[:model_name])
+    @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
     @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
     @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
     @readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')

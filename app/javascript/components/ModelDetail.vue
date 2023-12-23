@@ -1,10 +1,11 @@
 <template>
-  <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6">
+  <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <model-header
         :license="model.data.license"
         :name="model.data.name"
         :path="model.data.path"
+        :tags="tags"
         :avatar="avatar"
       />
     </div>
@@ -40,6 +41,7 @@ const props = defineProps({
   files: Object,
   lastCommit: Object,
   branches: Object,
+  tags: Object,
   currentBranch: String,
   currentPath: String,
   readme: Object,
