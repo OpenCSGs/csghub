@@ -1,6 +1,6 @@
 <template>
   <div class="py-[32px] md:px-[10px]">
-    <DiscussionCards v-if="theFlag=='show'" :cards="cards" @getDiscussion="getDiscussion" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
+    <DiscussionCards v-if="theFlag=='show'" :cards="cards" :userId="userId" @getDiscussion="getDiscussion" @updateDetails="updateDetails" @changeFlag="changeFlag"></DiscussionCards>
     <NewCommunityDiscussion v-if="theFlag=='new'" :type="type" @getDiscussion="getDiscussion" @changeFlag="changeFlag" :localModelId="localModelId"></NewCommunityDiscussion>
   </div>
 </template>
@@ -10,7 +10,8 @@ import NewCommunityDiscussion from "./NewCommunityDiscussion.vue";
 export default {
   props: {
     localModelId: String,
-    type:String
+    userId: String,
+    type: String
   },
   components: {
     DiscussionCards,
