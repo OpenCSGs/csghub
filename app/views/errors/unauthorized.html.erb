@@ -1,5 +1,16 @@
-<div class="h-full flex items-center justify-center flex-col">
-  <p class="text-[24px] text-[#303133]">
-    资源未授权
-  </p>
+<p>
+  <% if flash[:alert].present? %>
+    <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+  <% end %>
+</p>
+<div class="h-full flex items-center justify-center flex-col bg-[#F3F0FF] py-[223px]">
+  <div class="flex flex-col items-center">
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.5 20V17C17.5 12.7996 17.5 10.6994 18.3175 9.09507C19.0365 7.68386 20.1839 6.5365 21.5951 5.81745C23.1994 5 25.2996 5 29.5 5H30.5C34.7004 5 36.8006 5 38.4049 5.81745C39.8161 6.5365 40.9635 7.68386 41.6825 9.09507C42.5 10.6994 42.5 12.7996 42.5 17V20M30 35V40M23.5 55H36.5C42.1005 55 44.9008 55 47.0399 53.9101C48.9215 52.9513 50.4513 51.4215 51.4101 49.5399C52.5 47.4008 52.5 44.6005 52.5 39V36C52.5 30.3995 52.5 27.5992 51.4101 25.4601C50.4513 23.5785 48.9215 22.0487 47.0399 21.0899C44.9008 20 42.1005 20 36.5 20H23.5C17.8995 20 15.0992 20 12.9601 21.0899C11.0785 22.0487 9.54867 23.5785 8.58993 25.4601C7.5 27.5992 7.5 30.3995 7.5 36V39C7.5 44.6005 7.5 47.4008 8.58993 49.5399C9.54867 51.4215 11.0785 52.9513 12.9601 53.9101C15.0992 55 17.8995 55 23.5 55Z" stroke="#2F384C" stroke-width="3.75" stroke-linecap="round"/>
+    </svg>
+    <div class="flex flex-col gap-[8px] items-center text-center mt-[24px] px-[16px] text-[#303133]">
+      <p class="font-semibold text-[48px]">暂无权限</p>
+      <p class="text-[20px]">请联系管理员授权</p>
+    </div>
+  </div>
 </div>

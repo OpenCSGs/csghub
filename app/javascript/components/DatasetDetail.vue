@@ -1,11 +1,17 @@
 <template>
   <div class="w-full h-[170px] bg-[#FAFCFF] pt-9 xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
-      <dataset-header :license="dataset.data.license" :name="dataset.data.name" :path="dataset.data.path"/>
+      <dataset-header
+        :license="dataset.data.license"
+        :name="dataset.data.name"
+        :path="dataset.data.path"
+        :avatar="avatar"
+      />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
+      :content="content.data"
       :local-dataset-id="localDatasetId"
       :dataset-path="dataset.data.path"
       :dataset-default-branch="dataset.data.default_branch"
@@ -18,6 +24,7 @@
       :current-path="currentPath"
       :default-tab="defaultTab"
       :readme="readme.data"
+      :actionName="actionName"
     />
   </div>
 </template>
@@ -35,7 +42,10 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  readme: Object
+  readme: Object,
+  content: Object,
+  actionName: String,
+  avatar: String
 })
 </script>
 

@@ -44,11 +44,11 @@ Rails.application.routes.draw do
     resources :git_token, only: [:create]
     resources :users, only: [:update]
 
-    resources :models, only: [:create]
+    resources :models, only: [:index, :create]
     delete '/models/:namespace/:model_name', to: 'models#destroy'
     put '/models/:namespace/:model_name', to: 'models#update'
 
-    resources :datasets, only: [:create]
+    resources :datasets, only: [:index, :create]
     delete '/datasets/:namespace/:dataset_name', to: 'datasets#destroy'
 
     resources :tags, only: [] do
@@ -98,8 +98,10 @@ Rails.application.routes.draw do
 
     get '/models/:namespace/:model_name', to: 'models#show'
     get '/models/:namespace/:model_name/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
+    get '/models/:namespace/:model_name/blob/:branch/*path', to: 'models#blob', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/:dataset_name', to: 'datasets#show'
     get '/datasets/:namespace/:dataset_name/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
+    get '/datasets/:namespace/:dataset_name/blob/:branch/*path', to: 'datasets#blob', format: false, defaults: {format: 'html'}
     get '/new_models', to: 'models#new_index'
     get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'
