@@ -5,9 +5,6 @@ class DatasetsController < ApplicationController
   before_action :load_dataset_detail, only: [:show, :files, :blob]
   before_action :load_branch_and_path, only: [:files, :blob]
 
-  def index
-  end
-
   def show
     @default_tab = 'summary'
     @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name])
@@ -18,7 +15,7 @@ class DatasetsController < ApplicationController
     render :show
   end
 
-  def new_index
+  def index
     response = {}
     Tag::DATASET_TAG_FIELDS.each do |field|
       response[field] = {}
@@ -50,7 +47,7 @@ class DatasetsController < ApplicationController
     @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     unless @local_dataset
       flash[:alert] = "未找到数据集"
-      return redirect_to "/new_datasets"
+      return redirect_to "/datasets"
     end
     if @local_dataset.dataset_private?
       if @local_dataset.owner.instance_of? User

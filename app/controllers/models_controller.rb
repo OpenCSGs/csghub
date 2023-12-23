@@ -6,9 +6,6 @@ class ModelsController < ApplicationController
   before_action :load_branch_and_path, only: [:files, :blob]
 
   def index
-  end
-
-  def new_index
     response = {}
     Tag::MODEL_TAG_FIELDS.each do |field|
       response[field] = {}
@@ -51,7 +48,7 @@ class ModelsController < ApplicationController
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到模型"
-      return redirect_to "/new_models"
+      return redirect_to "/models"
     end
     if @local_model.model_private?
       if @local_model.owner.instance_of? User
