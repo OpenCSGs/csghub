@@ -15,6 +15,8 @@
         <ONNX v-if="tag.name.toLowerCase() === 'onnx'" />
         <JAX v-if="tag.name.toLowerCase() === 'jax'" />
         <PaddlePaddle v-if="tag.name.toLowerCase() === 'paddlepaddle'" />
+        <GGUF v-if="tag.name.toLowerCase() === 'gguf'" />
+        <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
       </div>
     </div>
     <div v-if="taskTags.length" class="flex flex-wrap items-center gap-2">
@@ -40,6 +42,8 @@
   import JAX from '../../components/tags/frameworks/JAX.vue'
   import ONNX from '../../components/tags/frameworks/ONNX.vue'
   import PaddlePaddle from '../../components/tags/frameworks/PaddlePaddle.vue'
+  import GGUF from '../../components/tags/frameworks/GGUF.vue'
+  import Joblib from '../../components/tags/frameworks/Joblib.vue'
 
   const props = defineProps({
     taskTags: Array,
