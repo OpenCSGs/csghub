@@ -102,8 +102,6 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/:dataset_name', to: 'datasets#show'
     get '/datasets/:namespace/:dataset_name/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/datasets/:namespace/:dataset_name/blob/:branch/*path', to: 'datasets#blob', format: false, defaults: {format: 'html'}
-    # get '/new_models', to: 'models#new_index'
-    # get '/new_datasets', to: 'datasets#new_index'
     get '/profile/:user_id', to: 'profile#index'
     get '/partners', to: 'partners#index'
     get '/partners/apply', to: 'partners#apply'
