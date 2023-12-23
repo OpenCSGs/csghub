@@ -58,16 +58,16 @@ export default {
       return mdParser.render(text);
     },
     create() {
-      if (this.title === '' || this.desc === '') {
+      if (this.title.trim() === '' || this.desc.trim() === '') {
         ElMessage({ message: "标题和内容不能为空", type: "warning" });
         return;
       }
       this.createDiscussion().then(discussion => {
+        ElMessage({ message: "添加话题成功", type: "success" });
         this.createComment(discussion.id).catch(err => {
           ElMessage({ message: ('评论中： ' + err.message), type: 'warning' });
           return
         })
-        ElMessage({ message: "添加discussion成功", type: "success" });
         this.$emit("changeFlag", 'show');
         this.$emit("getDiscussion");
         // 此处应重新获取最新的 discussions
