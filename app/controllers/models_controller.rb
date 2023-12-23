@@ -60,6 +60,7 @@ class ModelsController < ApplicationController
         return redirect_to errors_unauthorized_path unless current_user.org_role(@local_model.owner)
       end
     end
+    @avatar_url = owner.avatar_url
     @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
     raw_tags = Starhub.api.get_model_tags(params[:namespace], params[:model_name])
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json

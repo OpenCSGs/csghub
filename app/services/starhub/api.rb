@@ -211,11 +211,29 @@ module Starhub
     end
 
     def text_secure_check(scenario, content)
+      return if content.blank?
       options = {
         scenario: scenario,
         text: content
       }
       res = @client.post("/sensitive/text", options)
+      if res.status == 400
+        raise SensitiveContentError, '监测到敏感内容'
+      elsif res.status == 500
+        raise StarhubError, "Git服务器报错"
+      else
+        res
+      end
+    end
+
+    def image_secure_check(scenario, oss_bucket_name, oss_object_name)
+      return if oss_object_name.blank?
+      options = {
+        scenario: scenario,
+        oss_bucket_name: oss_bucket_name,
+        oss_object_name: oss_object_name
+      }
+      res = @client.post("/sensitive/image", options)
       if res.status == 400
         raise SensitiveContentError, '监测到敏感内容'
       elsif res.status == 500

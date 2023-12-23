@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from StarhubError do |e|
     log_error e.message, e.backtrace
+    flash[:alert] = e.message
     redirect_to errors_not_found_path
   end
 

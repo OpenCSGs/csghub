@@ -60,6 +60,7 @@ class DatasetsController < ApplicationController
       end
     end
 
+    @avatar_url = owner.avatar_url
     @dataset = Starhub.api.get_datasets_detail(params[:namespace], params[:dataset_name])
     raw_tags = Starhub.api.get_model_tags(params[:namespace], params[:model_name])
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
