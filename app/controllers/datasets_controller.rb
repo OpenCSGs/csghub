@@ -60,6 +60,7 @@ class DatasetsController < ApplicationController
       end
     end
 
+    @avatar_url = owner.avatar_url
     @dataset = Starhub.api.get_datasets_detail(params[:namespace], params[:dataset_name])
     @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
     @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
