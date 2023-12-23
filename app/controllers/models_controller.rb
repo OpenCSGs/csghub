@@ -48,6 +48,8 @@ class ModelsController < ApplicationController
   def load_model_detail
     owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @local_model = owner && owner.models.find_by(name: params[:model_name])
+    @local_model = Model.last
+    owner = User.last
     unless @local_model
       # ToDo: 在模型列表页渲染 alert message
       flash[:alert] = "未找到模型"
@@ -64,6 +66,7 @@ class ModelsController < ApplicationController
     @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
     raw_tags = Starhub.api.get_model_tags(params[:namespace], params[:model_name])
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
+    p @tags
     @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
     @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
