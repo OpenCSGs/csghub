@@ -46,7 +46,7 @@ module Starhub
     def get_model_file_content(username, model_name, path, options = {})
       res = @client.get("/models/#{username}/#{model_name}/raw/#{path}?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def create_user(name, nickname, email)
@@ -176,7 +176,7 @@ module Starhub
     def get_datasets_file_content(username, dataset_name, path, options = {})
       res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def delete_dataset(namespace, dataset_name, params = {})
