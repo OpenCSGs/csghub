@@ -67,25 +67,27 @@ class Tag < ApplicationRecord
 
   def self.build_detail_tags(tags)
     task_tags, framework_tags, license_tags, other_tags = [], [], [], []
-    tags.map do |tag|
-      if !tag['built_in']
-        other_tags << tag
-      else
-        case tag['category']
-        when 'task'
-          local_tag = Tag.find_by(name: tag['name'])
-          if local_tag
-            color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
-            task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
+    if tags
+      tags.map do |tag|
+        if !tag['built_in']
+          other_tags << tag
+        else
+          case tag['category']
+          when 'task'
+            local_tag = Tag.find_by(name: tag['name'])
+            if local_tag
+              color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
+              task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
+            else
+              other_tags << tag
+            end
+          when 'framework'
+            framework_tags << tag
+          when 'license'
+            license_tags << tag
           else
             other_tags << tag
           end
-        when 'framework'
-          framework_tags << tag
-        when 'license'
-          license_tags << tag
-        else
-          other_tags << tag
         end
       end
     end
