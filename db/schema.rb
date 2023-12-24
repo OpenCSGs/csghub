@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_20_033509) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_24_101815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -235,11 +235,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_033509) do
   create_table "system_configs", force: :cascade do |t|
     t.string "application_env"
     t.jsonb "oidc_configs", default: {}
-    t.jsonb "starhub_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "license_configs", default: {}
     t.jsonb "feature_flags", default: {}
+    t.jsonb "starhub_configs", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -280,6 +280,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_033509) do
     t.string "nickname"
     t.string "git_token"
     t.boolean "starhub_synced", default: false
+    t.string "git_token_name"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
