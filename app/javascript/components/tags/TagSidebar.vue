@@ -13,14 +13,14 @@
             :class="activeNavItem === 'Framework' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        框架标签
+        任务框架标签
       </span>
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="License"
             :class="activeNavItem === 'License' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-      许可证标签
+      框架许可证标签
       </span>
     </div>
     <div>
