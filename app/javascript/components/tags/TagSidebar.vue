@@ -6,21 +6,21 @@
             :class="activeNavItem === 'Task' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        任务标签
+        任务
       </span>
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="Framework"
             :class="activeNavItem === 'Framework' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        任务框架标签
+        框架
       </span>
       <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
             data-type="License"
             :class="activeNavItem === 'License' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-      框架许可证标签
+      License
       </span>
     </div>
     <div>
