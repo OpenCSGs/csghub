@@ -75,10 +75,10 @@
           placement="top"
           effect="dark"
           trigger="hover"
-          :content="lastCommit.committer_date"
+          :content="beiJingTimeParser(lastCommit.committer_date)"
         >
           <template #reference>
-            {{ format(lastCommit.committer_date, 'zh_CN') }}
+            {{ format(beiJingTimeParser(lastCommit.committer_date), 'zh_CN') }}
           </template>
         </el-popover>
       </div>
@@ -124,10 +124,10 @@
           placement="top"
           effect="dark"
           trigger="hover"
-          :content="file.commit.created_at"
+          :content="beiJingTimeParser(file.commit.committer_date)"
         >
           <template #reference>
-            {{ format(file.commit.created_at, 'zh_CN') }}
+            {{ format(beiJingTimeParser(file.commit.committer_date), 'zh_CN') }}
           </template>
         </el-popover>
       </div>
@@ -199,6 +199,11 @@
       return ''
     }
     return fileName.substr(lastDotIndex + 1)
+  }
+
+  const beiJingTimeParser = (utcTimeStr) => {
+    utcTime = new Date(utcTimeStr)
+    return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
   }
 
   onMounted(() => {
