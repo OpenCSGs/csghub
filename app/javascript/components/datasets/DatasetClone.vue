@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center flex-wrap gap-2 pl-4 py-4 mt-4 md:pl-0 md:pb-0 z-10 border-t border-[#EBEEF5]">
+  <div class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10 flex-row-reverse">
     <div v-show="false" class="rounded border border-[#DCDFE6] flex items-center justify-center px-4 py-[5px] cursor-pointer hover:bg-[#F9FAFB]" @click="dialogLibraryVisible = true">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M4.6665 3.5L1.1665 7L4.6665 10.5M9.33317 3.5L12.8332 7L9.33317 10.5" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
