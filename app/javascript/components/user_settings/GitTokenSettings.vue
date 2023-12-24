@@ -12,7 +12,7 @@
           <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">用户 Git Token</h3>
           <p class="text-[#606266] text-[14px]"> Git Token 用于授权您执行 Git 相关操作 </p>
         </div>
-        <div v-if="gitToken" class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
+        <div class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
           <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">git token</h3>
           <div class="flex items-center">
             <el-input
@@ -30,26 +30,16 @@
             </div>
           </div>
         </div>
-        <div v-else @click="addTokenDialogVisible = true"
-             class="py-[6px] px-[12px] w-[95px] border rounded-[8px] text-[14px] text-[#FFFFFF] mt-[16px] cursor-pointer bg-[#9FCEFF] hover:text-[#606266] hover:bg-[#8AA2FF]">
-          New token
+        <div class="my-[16px]">
+          <el-button type="default" @click="confirmRefreshGitToken" class="h-[30px] mb-[16px]">刷新 Git Token</el-button>
         </div>
-        <el-dialog v-model="addTokenDialogVisible"
-                   title="Create a new access token"
-                   class="max-w-[500px] !w-[90%]">
-          <div class="mb-[16px]">
-            <p class="text-[#303133] text-[14px] mb-[8px]"> Name <span class="text-red-400">*</span></p>
-            <el-input v-model="gitTokenName" class="h-[40px]" placeholder="What's this token for?" maxlength="20"/>
-          </div>
-          <el-button type="primary" @click="addGitToken" class="w-full h-[30px] mb-[16px]">Generate a token</el-button>
-        </el-dialog>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Menu from "./Menu.vue";
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 
 export default {
@@ -68,48 +58,65 @@ export default {
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
-      gitTokenName: '',
-      addTokenDialogVisible: false
+      gitTokenName: ''
     };
   },
-  mounted() {},
+  mounted() {
+    // 如果 gitToken 为空，那么刷新获取 token
+    if (!this.theGitToken.trim()) {
+      this.refreshGitToken()
+    }
+  },
   methods: {
     copyToken() {
-      navigator.clipboard.writeText(this.gitToken);
+      navigator.clipboard.writeText(this.theGitToken);
       ElMessage({
         message: '复制成功！',
         type: 'success'
       })
     },
 
-    async addGitToken() {
-      if (this.gitTokenName === '') {
-        ElMessage({message: "请您填写 Git Token 的名字", type: "warning"})
-        return
-      }
+    confirmRefreshGitToken() {
+      ElMessageBox.confirm(
+        "刷新之后现有的 Git Token 将会失效，确认继续吗?",
+        'Warning',
+        {
+          confirmButtonText: '继续刷新',
+          cancelButtonText: '取消',
+          type: 'warning',
+        }
+      ).then(() => {
+        this.refreshGitToken().then((data) => {
+          ElMessage({message: data.message, type: "success"})
+        })
+        .catch(err => {
+          ElMessage({
+            message: err.message,
+            type: 'warning'
+          })
+        })
+      }).catch(() => {
+        ElMessage({message: '操作已取消', type: "info"})
+      })
+    },
 
-      const GitTokenCreateEndpoint = "/internal_api/git_token"
-      const option = {
+    async refreshGitToken() {
+      const refreshTokenEndpoint = "/internal_api/git_token/refresh"
+      const options = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({name: this.gitTokenName})
+        headers: { 'Content-Type': 'application/json' }
       }
-      const response = await csrfFetch(GitTokenCreateEndpoint, option)
+      const response = await csrfFetch(refreshTokenEndpoint, options)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          console.log(data)
-          ElMessage({message: data.message, type: "warning"})
-        })
+        return response.json().then(data => { throw new Error(data.message) })
       } else {
-        setTimeout(() => {
-          window.location.href = "/settings/git-token"
-        }, 1000)
-        ElMessage({message: "添加成功", type: "success"})
+        response.json().then((data) => {
+          this.theGitToken = data.token
+        })
+        return response.json;
       }
-    },
+    }
   }
 }
 </script>
