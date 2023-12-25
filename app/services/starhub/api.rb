@@ -6,6 +6,20 @@ module Starhub
       @client = Starhub::Client.instance
     end
 
+    def get_model_detail_data_in_parallel(username, model_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/models/#{username}/#{model_name}/detail",
+        "/models/#{username}/#{model_name}/tags",
+        "/models/#{username}/#{model_name}/last_commit",
+        "/models/#{username}/#{model_name}/branches",
+        "/models/#{username}/#{model_name}/raw/README.md",
+        "/models/#{username}/#{model_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
     def get_models(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/models?per=#{per}&page=#{page}"
       url += "&search=#{keyword}" if keyword.present?
@@ -117,6 +131,20 @@ module Starhub
     end
 
     # datasets
+
+    def get_dataset_detail_data_in_parallel(username, dataset_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/datasets/#{username}/#{dataset_name}/detail",
+        "/datasets/#{username}/#{dataset_name}/tags",
+        "/datasets/#{username}/#{dataset_name}/last_commit",
+        "/datasets/#{username}/#{dataset_name}/branches",
+        "/datasets/#{username}/#{dataset_name}/raw/README.md",
+        "/datasets/#{username}/#{dataset_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
+      ]
+      @client.get_in_parallel(paths, options)
+    end
 
     def get_user_datasets(namespace, username, options = {})
       res = @client.get("/user/#{namespace}/datasets?current_user=#{username}", options)

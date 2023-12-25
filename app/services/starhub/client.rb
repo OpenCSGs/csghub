@@ -33,6 +33,20 @@ module Starhub
       raise StarhubError, "Git服务器超时"
     end
 
+    def get_in_parallel(paths, params = {})
+      responses = []
+      starhub_api_connection.in_parallel do
+        paths.map do |path|
+          res = starhub_api_connection.get(request_path(path), params)
+          raise StarhubError, res.body unless res.success?
+          responses << res.body
+        end
+      end
+      responses
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
+    end
+
     private
 
     def starhub_configs
@@ -54,7 +68,9 @@ module Starhub
         headers: {
           'Content-Type' => 'application/json',
           'Authorization' => token
-        })
+        }) do |conn|
+        conn.adapter :typhoeus
+      end
     end
   end
 end

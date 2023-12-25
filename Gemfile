@@ -51,6 +51,7 @@ gem 'aliyun-sdk'
 gem 'activestorage-aliyun'
 
 gem 'faraday'
+gem 'typhoeus'
 
 # pagination
 gem 'kaminari'
