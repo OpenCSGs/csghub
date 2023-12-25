@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy, :index]
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
-    resources :git_token, only: [:create] do
+    resources :git_token, only: [] do
       collection do
         post 'refresh', to: 'git-tokens/refresh'
       end
