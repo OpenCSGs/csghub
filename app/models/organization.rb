@@ -1,6 +1,7 @@
 class Organization < ApplicationRecord
   enum :org_type, {'企业': 'company', '高校': 'university', '非营利组织': 'non_profit', '社区组织': 'community'}
 
+  validates_presence_of :name, :org_type
   validates_uniqueness_of :name
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
