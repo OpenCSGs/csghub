@@ -86,16 +86,7 @@ export default {
           type: 'warning',
         }
       ).then(() => {
-        this.refreshGitToken().then((data) => {
-          this.theGitToken = data.token
-          ElMessage({message: data.message, type: "success"})
-        })
-        .catch(err => {
-          ElMessage({
-            message: err.message,
-            type: 'warning'
-          })
-        })
+        this.refreshGitToken()
       }).catch(() => {
         ElMessage({message: '操作已取消', type: "info"})
       })
@@ -110,9 +101,17 @@ export default {
       const response = await csrfFetch(refreshTokenEndpoint, options)
 
       if (!response.ok) {
-        return response.json().then(data => { throw new Error(data.message) })
+        response.json().then(err => {
+          ElMessage({ message: err.message, type: 'warning' })
+        })
       } else {
-        return response.json();
+        response.json().then((data) => {
+          // 仅在刷新操作的时候提醒，首次自动生成不提醒
+          if (this.theGitToken) {
+            ElMessage({ message: data.message, type: "success" })
+          }
+          this.theGitToken = data.token
+        })
       }
     }
   }
