@@ -34,7 +34,6 @@ class DatasetsController < ApplicationController
   end
 
   def blob
-    @content = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
     render :show
   end
 
@@ -57,7 +56,11 @@ class DatasetsController < ApplicationController
 
     @avatar_url = owner.avatar_url
     
-    @dataset, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    if action_name == 'blob'
+      @dataset, raw_tags, @last_commit, @branches, @readme, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    else
+      @dataset, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    end
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
   end
 
