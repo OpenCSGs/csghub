@@ -86,8 +86,8 @@ export default {
           type: 'warning',
         }
       ).then(() => {
-        this.refreshGitToken().then(() => {
-          ElMessage({message: "刷新 Git Token 成功", type: "success"})
+        this.refreshGitToken().then((data) => {
+          ElMessage({message: data.message, type: "success"})
         })
         .catch(err => {
           ElMessage({
@@ -114,6 +114,7 @@ export default {
         response.json().then((data) => {
           this.theGitToken = data.token
         })
+        return response.json();
       }
     }
   }
