@@ -34,7 +34,6 @@ class ModelsController < ApplicationController
   end
 
   def blob
-    @content = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], params[:path], { ref: @current_branch })
     render :show
   end
 
@@ -57,7 +56,11 @@ class ModelsController < ApplicationController
     end
     @avatar_url = owner.avatar_url
 
-    @model, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
+    if action_name == 'blob'
+      @model, raw_tags, @last_commit, @branches, @readme, @content = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
+    else
+      @model, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
+    end
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
   end
 
