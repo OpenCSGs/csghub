@@ -2,6 +2,7 @@
   <dataset-detail
     :tags="<%= @tags %>"
     local-dataset-id="<%= @local_dataset.id %>"
+    user-id="<%= current_user.id %>"
     :dataset="<%= @dataset %>"
     :files="<%= @files|| {} %>"
     :last-commit="<%= @last_commit %>"
