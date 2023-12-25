@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
-    <TabContainer :default-tab="defaultTab">
+    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <model-summary :readme="readme" :download-count="modelDetail.download_count" />
       </template>
@@ -28,7 +28,7 @@
       <template #community>
         <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
-      <template #settings>
+      <template v-if="settingsVisibility" #settings>
         <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
       </template>
     </TabContainer>
@@ -65,6 +65,6 @@ const props = defineProps({
   readme: String,
   content: String,
   actionName: String,
-  currentUserName: String
+  settingsVisibility: Boolean
 })
 </script>

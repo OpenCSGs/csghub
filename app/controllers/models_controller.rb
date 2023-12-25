@@ -64,8 +64,7 @@ class ModelsController < ApplicationController
     @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
     @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
     @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
-    settings_visibility = current_user == owner.name
-    current_user_name = current_user.name
+    @settings_visibility = current_user == owner
   end
 
   def load_branch_and_path
