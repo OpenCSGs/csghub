@@ -87,6 +87,7 @@ export default {
         }
       ).then(() => {
         this.refreshGitToken().then((data) => {
+          this.theGitToken = data.token
           ElMessage({message: data.message, type: "success"})
         })
         .catch(err => {
@@ -111,9 +112,6 @@ export default {
       if (!response.ok) {
         return response.json().then(data => { throw new Error(data.message) })
       } else {
-        response.json().then((data) => {
-          this.theGitToken = data.token
-        })
         return response.json();
       }
     }
