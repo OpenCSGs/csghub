@@ -64,6 +64,7 @@ const props = defineProps({
   defaultTab: String,
   readme: String,
   content: String,
-  actionName: String
+  actionName: String,
+  currentUserName: String
 })
 </script>

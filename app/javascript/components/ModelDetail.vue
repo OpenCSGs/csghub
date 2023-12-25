@@ -27,6 +27,7 @@
       :default-tab="defaultTab"
       :readme="readme.data"
       :actionName="actionName"
+      :currentUserName="currentUserName"
     />
   </div>
 </template>
@@ -48,6 +49,7 @@ const props = defineProps({
   readme: Object,
   content: Object,
   actionName: String,
+  currentUserName: String,
   avatar: String
 })
 </script>
