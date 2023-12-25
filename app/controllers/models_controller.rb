@@ -2,8 +2,8 @@ class ModelsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_model_detail, only: [:show, :files, :blob]
   before_action :load_branch_and_path, only: [:files, :blob]
+  before_action :load_model_detail, only: [:show, :files, :blob]
 
   def index
     response = {}
@@ -27,11 +27,9 @@ class ModelsController < ApplicationController
 
   def show
     @default_tab = 'summary'
-    @files = Starhub.api.get_model_files(params[:namespace], params[:model_name])
   end
 
   def files
-    @files = Starhub.api.get_model_files(params[:namespace], params[:model_name], files_options)
     render :show
   end
 
@@ -58,12 +56,9 @@ class ModelsController < ApplicationController
       end
     end
     @avatar_url = owner.avatar_url
-    @model = Starhub.api.get_model_detail(params[:namespace], params[:model_name])
-    raw_tags = Starhub.api.get_model_tags(params[:namespace], params[:model_name])
+
+    @model, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
-    @last_commit = Starhub.api.get_model_last_commit(params[:namespace], params[:model_name])
-    @branches = Starhub.api.get_model_branches(params[:namespace], params[:model_name])
-    @readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
   end
 
   def load_branch_and_path
