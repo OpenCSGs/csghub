@@ -34,7 +34,6 @@ class DatasetsController < ApplicationController
   end
 
   def blob
-    @content = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
     render :show
   end
 
