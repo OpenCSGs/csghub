@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <TabContainer :default-tab="defaultTab">
+    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary
           :introduction="datasetDetail.introduction"
@@ -33,7 +33,7 @@
       <template #settings>
         <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
-      <template #community>
+      <template v-if="settingsVisibility" #community>
         <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
       </template>
     </TabContainer>
@@ -68,6 +68,7 @@ const props = defineProps({
   defaultTab: String,
   readme: String,
   content: String,
-  actionName: String
+  actionName: String,
+  settingsVisibility: Boolean
 })
 </script>

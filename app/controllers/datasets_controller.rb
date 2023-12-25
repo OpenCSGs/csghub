@@ -64,6 +64,7 @@ class DatasetsController < ApplicationController
     @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
     @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
     @readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
+    @settings_visibility = current_user == owner
   end
 
   def load_branch_and_path

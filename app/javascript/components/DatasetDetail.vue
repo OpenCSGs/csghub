@@ -27,6 +27,7 @@
       :default-tab="defaultTab"
       :readme="readme.data"
       :actionName="actionName"
+      :settingsVisibility="settingsVisibility"
     />
   </div>
 </template>
@@ -48,6 +49,7 @@ const props = defineProps({
   content: Object,
   actionName: String,
   avatar: String,
+  settingsVisibility: Boolean,
   tags: Object
 })
 </script>
