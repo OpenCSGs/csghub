@@ -39,7 +39,7 @@ module Starhub
         paths.map do |path|
           res = starhub_api_connection.get(request_path(path), params)
           raise StarhubError, res.body unless res.success?
-          responses << res.body
+          responses << res.body.force_encoding('UTF-8')
         end
       end
       responses
