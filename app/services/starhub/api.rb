@@ -112,6 +112,10 @@ module Starhub
       res.body
     end
 
+    def delete_git_token(username, token_name)
+      @client.delete("/user/#{username}/tokens/#{token_name}")
+    end
+
     def get_model_tags(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/tags")
       raise StarhubError, res.body unless res.success?
