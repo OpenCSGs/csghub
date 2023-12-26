@@ -16,7 +16,10 @@
 </template>
 
 <script setup>
+  import { ref, onMounted } from 'vue'
   const props = defineProps({
     model: Object,
+  })
+  onMounted(() => {
   })
 </script>
