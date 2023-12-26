@@ -141,7 +141,7 @@
 
   const confirmInviteNewMember = () => {
     inviteNewMember().then(() => {
-      emit('resetMemberList', selectedUsers.value)
+      emit('resetMemberList', selectedUsers.value, userRoleInput.value)
       dialogVisible.value = false
       ElMessage({
         message: '添加成员成功',
