@@ -62,7 +62,7 @@ class DatasetsController < ApplicationController
       @dataset, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
-    @settings_visibility = has_in_org_roles?(owner)
+    @settings_visibility = current_user ? current_user.has_in_org_roles?(current_user, owner) : false
   end
 
   def load_branch_and_path

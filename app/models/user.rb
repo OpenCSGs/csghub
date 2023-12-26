@@ -79,8 +79,8 @@ class User < ApplicationRecord
     org_memberships.find_by(organization: org)&.role
   end
 
-  def has_in_org_roles? owner
-    current_user ? (current_user == owner || ['write', 'admin'].include?(current_user.org_role(owner))) : false
+  def has_in_org_roles? user, owner
+    user == owner || ['write', 'admin'].include?(user.org_role(owner))
   end
 
   def starhub_synced!
