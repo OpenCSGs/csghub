@@ -89,6 +89,7 @@ Rails.application.routes.draw do
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
     get '/datasets', to: 'datasets#index'
+    get '/solution', to: 'solution#index'
 
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'
