@@ -32,6 +32,7 @@
 
           <InviteMember :org-name="organization.name"
                         @resetMemberList="resetMemberList"
+                        :admin="admin"
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
@@ -89,7 +90,8 @@
     organization: Object,
     members: Array,
     models: Object,
-    datasets: Object
+    datasets: Object,
+    admin: Boolean
   })
 
   const modelList = props.models.data
@@ -108,5 +110,6 @@
   }
 
   onMounted(() => {
+    console.log(props.admin)
   })
 </script>
