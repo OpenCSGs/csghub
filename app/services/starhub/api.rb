@@ -34,8 +34,9 @@ module Starhub
       @client.get_in_parallel(paths, options)
     end
 
-    def get_models(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/models?per=#{per}&page=#{page}"
+      url += "&current_user=#{current_user}" if current_user.present?
       url += "&search=#{keyword}" if keyword.present?
       url += "&sort=#{sort_by}" if sort_by.present?
       url += "&task_tag=#{task_tag}" if task_tag.present?
@@ -189,8 +190,9 @@ module Starhub
       res.body
     end
 
-    def get_datasets(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+    def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/datasets?per=#{per}&page=#{page}"
+      url += "&current_user=#{current_user}" if current_user.present?
       url += "&search=#{keyword}" if keyword.present?
       url += "&sort=#{sort_by}" if sort_by.present?
       url += "&task_tag=#{task_tag}" if task_tag.present?
