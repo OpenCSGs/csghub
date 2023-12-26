@@ -3,10 +3,8 @@
     <div>
       <el-avatar :size="120" :src="avatar"> </el-avatar>
     </div>
-    <div class="text-[24px] leading-[32px] font-semibold">{{ name }}</div>
-    <div class="text-[16px] px-[3px] bg-[#90939950] rounded-[5px] max-w-[max-content] leading-[24px] mb-[16px]">
-      {{ loginIdentity }}
-    </div>
+    <div class="text-[24px] leading-[32px] font-semibold">{{ displayName }}</div>
+    <div class="text-[16px] text-[#909399] max-w-[max-content] leading-[24px] mb-[16px]">@{{name}}</div>
     <div>
       <a href="/settings/profile" class="mr-[10px] px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">编辑个人信息</a>
       <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">设置</a>
@@ -48,6 +46,7 @@
 export default {
   props: {
     name: String,
+    displayName: String,
     phone: String,
     avatar: String,
     email: String,
