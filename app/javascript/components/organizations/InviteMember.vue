@@ -109,11 +109,7 @@
 
   const showUserList = (e) => {
     getUsers(e.data).then(data => {
-      if (data.users.length > 0) {
-        shouldShowUserList.value = true
-      } else {
-        shouldShowUserList.value = false
-      }
+      shouldShowUserList.value = data.users.length > 0
       userList.value = data.users
     })
     .catch(err => {
