@@ -34,8 +34,14 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
       user_names.each do |user_name|
         user = User.find_by(name: user_name)
         next unless user
-        next if user.org_role(org) == params[:user_role]
-        OrgMembership.create!(organization: org, user: user, role: params[:user_role])
+        user_org_role = user.org_role(org)
+        if !user_org_role
+          OrgMembership.create!(organization: org, user: user, role: params[:user_role])
+        elsif user_org_role == params[:user_role]
+          next
+        else
+          user.set_org_role(org, params[:user_role])
+        end
       end
     end
     render json: {message: '添加组织成员成功'}
