@@ -60,24 +60,22 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>
-              <a :href="userProfile">个人信息</a>
-            </el-dropdown-item>
-            <el-dropdown-item @click="showDialog"
-              >联系我们</el-dropdown-item
-            >
-            <el-dropdown-item v-if="decemberRelease" divided>
-              <a href="/models/new">+ 新建模型</a>
-            </el-dropdown-item>
-            <el-dropdown-item v-if="decemberRelease">
-              <a href="/datasets/new">+ 新建数据集</a>
-            </el-dropdown-item>
-            <el-dropdown-item v-if="decemberRelease" divided>
-              <a href="/organizations/new">新建组织</a>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
-              <a :href="logout" @click="cleanUpAuthing"> 退出登录 </a>
-            </el-dropdown-item>
+            <a :href="userProfile">
+              <el-dropdown-item> 个人信息 </el-dropdown-item>
+            </a>
+            <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
+            <a href="/models/new">
+              <el-dropdown-item v-if="decemberRelease" divided> + 新建模型 </el-dropdown-item>
+            </a>
+            <a href="/datasets/new">
+              <el-dropdown-item v-if="decemberRelease"> + 新建数据集 </el-dropdown-item>
+            </a>
+            <a href="/organizations/new">
+              <el-dropdown-item v-if="decemberRelease" divided> 新建组织 </el-dropdown-item>
+            </a>
+            <a :href="logout" @click="cleanUpAuthing">
+              <el-dropdown-item divided>  退出登录 </el-dropdown-item>
+            </a>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
