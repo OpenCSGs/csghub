@@ -33,6 +33,10 @@ export default {
       this.lastCommentId = card.id
     },
     changeFlag(flag){
+      if (flag=='new' && !this.userId){
+        location.href = '/login'
+        return false
+      }
       this.theFlag=flag
     },
     async getDiscussion(){
