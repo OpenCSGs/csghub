@@ -21,6 +21,5 @@
     model: Object,
   })
   onMounted(() => {
-    console.log(props.model)
   })
 </script>
