@@ -64,11 +64,11 @@ class DatasetsController < ApplicationController
     @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
     @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
     @readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
-    @settings_visibility = current_user == owner
+    @settings_visibility = current_user == owner || ['write', 'admin'].include?(current_user.org_role(owner))
   end
 
   def load_branch_and_path
-    @default_tab = 'files'
+    @default_tab = 'files's
     @current_branch = params[:branch] || 'main'
     @current_path = params[:path] || ''
   end
