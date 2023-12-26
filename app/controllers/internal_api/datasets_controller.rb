@@ -2,7 +2,8 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: :index
 
   def index
-    res_body = Starhub.api.get_datasets(params[:search],
+    res_body = Starhub.api.get_datasets(current_user&.name,
+                                        params[:search],
                                         params[:sort],
                                         params[:task_tag],
                                         params[:framework_tag],
