@@ -89,7 +89,7 @@
           type: 'success'
         })
         setTimeout(() => {
-          window.location.href = props.currentUserProfile
+          window.location.href = "/organizations/" + orgName.value
         }, 500)
       })
       .catch(err => {
