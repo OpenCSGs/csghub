@@ -77,7 +77,7 @@
 
   const dialogVisible = ref(false)
   const userNameInput = ref('')
-  const userRoleInput = ref('')
+  const userRoleInput = ref('read')
   const selectedUsers = ref([])
   const userList = ref([])
   const shouldShowUserList = ref(false)
