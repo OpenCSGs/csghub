@@ -3,7 +3,7 @@
     <div class="py-[16px] bg-[#FAFCFF]">
       <div class="max-w-[1280px] m-auto py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
-          <img :src="organization.avatar_url" class="h-[60px] w-[60px] rounded-[50%]" />
+          <img :src="organization.avatar" class="h-[60px] w-[60px] rounded-[50%]" />
           <div>
             <h3 class="text-[24px] text-[#303133] font-[600]"> {{ organization.name }}</h3>
             <p class="text-[16px]"> @{{ organization.name }} </p>
@@ -34,9 +34,9 @@
                         @resetMemberList="resetMemberList"
           />
 
-          <div class="mt-[16px] flex">
+          <div class="mt-[16px] flex flex-wrap gap-[8px]">
             <a v-for="user in membersList" :href="`/profile/${user.name}`">
-              <img :src="user.avatar_url" class="h-[32px] w-[32px] rounded-[50%] border" />
+              <img :src="user.avatar" class="h-[32px] w-[32px] rounded-[50%] border p-[2px]" />
             </a>
           </div>
         </div>
@@ -96,8 +96,9 @@
   const membersList = ref(props.members)
 
   const resetMemberList = (newMembers) => {
-    membersList.value = membersList.value + newMembers
+    membersList.value = membersList.value.concat(newMembers)
   }
 
-  onMounted(() => {})
+  onMounted(() => {
+  })
 </script>

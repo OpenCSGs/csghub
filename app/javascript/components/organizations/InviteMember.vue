@@ -46,7 +46,6 @@
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-                :disabled="item.disabled"
               />
             </el-select>
           </div>
@@ -55,7 +54,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
+          <el-button type="primary" @click="confirmInviteNewMember">
             确认
           </el-button>
         </span>
@@ -133,6 +132,44 @@
       }
     }
     const response = await csrfFetch(usersEndpoint, options)
+    if (!response.ok) {
+      return response.json().then(data => { throw new Error(data.message) })
+    } else {
+      return response.json();
+    }
+  }
+
+  const confirmInviteNewMember = () => {
+    inviteNewMember().then(() => {
+      emit('resetMemberList', selectedUsers.value)
+      dialogVisible.value = false
+      ElMessage({
+        message: '添加成员成功',
+        type: 'success'
+      })
+    })
+    .catch(err => {
+      ElMessage({
+        message: err.message,
+        type: 'warning'
+      })
+    })
+  }
+
+  async function inviteNewMember() {
+    const inviteNewMemberEndpoint = '/internal_api/organizations/new-members';
+    const options = {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        org_name: props.orgName,
+        user_names: selectedUsers.value.map(user => user.name).join(','),
+        user_role: userRoleInput.value
+      })
+    }
+    const response = await csrfFetch(inviteNewMemberEndpoint, options)
     if (!response.ok) {
       return response.json().then(data => { throw new Error(data.message) })
     } else {
