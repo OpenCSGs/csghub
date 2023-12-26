@@ -6,6 +6,7 @@
         :frameworkTags="props.frameworkTags"
         :licenseTags="props.licenseTags"
         @resetTags="resetTags"
+        type="model"
       />
     </div>
     <div class="mlg:mx-[20px] mlg:pr-[0] xl:w-full pr-[20px]">
