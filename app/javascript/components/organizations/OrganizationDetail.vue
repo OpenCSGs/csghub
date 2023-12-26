@@ -96,8 +96,8 @@
 
   const modelList = props.models.data
   const datasetList = props.datasets.data
-  const hasModels = props.models.total === 0 ? false : true
-  const hasDatasets = props.datasets.total === 0 ? false : true
+  const hasModels = props.models.total !== 0
+  const hasDatasets = props.datasets.total !== 0
   const membersList = ref(props.members)
 
   const resetMemberList = (newMembers, userRole) => {
@@ -109,7 +109,5 @@
     membersList.value = uniqNewMembersList.reverse()
   }
 
-  onMounted(() => {
-    console.log(props.admin)
-  })
+  onMounted(() => {})
 </script>
