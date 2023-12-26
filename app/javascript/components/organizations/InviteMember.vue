@@ -18,15 +18,10 @@
             <p class="text-[#344054] text-[14px] mb-[6px]">用户名</p>
             <div class="flex gap-[4px] items-center w-full border rounded-[4px] border-gray-300 h-[40px] p-[6px]">
               <div class="flex gap-[4px]">
-                <span class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
-                  <img src="https://cdn.casbin.org/img/casbin.svg" height="16" width="16">
-                  hiveer
-                  <el-icon><Close /></el-icon>
-                </span>
-                <span class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
-                  <img src="https://cdn.casbin.org/img/casbin.svg" height="16" width="16">
-                  hiveer
-                  <el-icon><Close /></el-icon>
+                <span v-for="user in selectedUsers" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                  <img :src="user.avatar" height="16" width="16">
+                  {{ user.name }}
+                  <el-icon><Close @click="removeUser(user.name)" /></el-icon>
                 </span>
               </div>
               <input class="w-full h-[36px] outline-none" v-model="userNameInput" @change="showUserList" placeholder="" />
@@ -63,6 +58,8 @@
   import csrfFetch from '../../packs/csrfFetch.js';
   import { ElMessage } from 'element-plus'
 
+  const emit = defineEmits(['resetMemberList'])
+
   const props = defineProps({
     orgName: String,
   })
@@ -70,8 +67,12 @@
   const dialogVisible = ref(false)
   const userNameInput = ref('')
   const userRoleInput = ref('')
-  const shouldShowUserList = ref(false)
+  const selectedUsers = ref([
+    {name: 'hiveer', avatar: "https://cdn.casbin.org/img/casbin.svg", url: "http://localhost:3000"},
+    {name: 'hiveer2', avatar: "https://cdn.casbin.org/img/casbin.svg", url: "http://localhost:3000"}
+  ])
   const userList = ref([])
+  const shouldShowUserList = ref(false)
   const roleMappings = [
     {
       value: 'read',
@@ -86,6 +87,10 @@
       label: 'admin'
     }
   ]
+
+  const removeUser = (username) => {
+    selectedUsers.value = selectedUsers.value.filter( item => item.name !== username )
+  }
 
   const showUserList = (value) => {
     getUsers(value).then(data => {

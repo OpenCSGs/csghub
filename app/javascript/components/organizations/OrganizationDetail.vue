@@ -27,11 +27,15 @@
                 </clipPath>
               </defs>
             </svg>
-            <span class="text-[#303133] text-[20px]">团队成员 <span class="text-[#A8ABB2] text-[20px]">{{ members.length }} </span></span>
+            <span class="text-[#303133] text-[20px]">团队成员 <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
           </h3>
-          <InviteMember :org-name="organization.name" />
+
+          <InviteMember :org-name="organization.name"
+                        @resetMemberList="resetMemberList"
+          />
+
           <div class="mt-[16px] flex">
-            <a v-for="user in members" :href="`/profile/${user.name}`">
+            <a v-for="user in membersList" :href="`/profile/${user.name}`">
               <img :src="user.avatar_url" class="h-[32px] w-[32px] rounded-[50%] border" />
             </a>
           </div>
@@ -73,7 +77,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import ModelItem from '../models/ModelItem.vue';
   import DatasetItem from '../datasets/DatasetItem.vue';
   import InviteMember from './InviteMember.vue'
@@ -89,6 +93,11 @@
   const datasetList = props.datasets.data
   const hasModels = props.models.total === 0 ? false : true
   const hasDatasets = props.datasets.total === 0 ? false : true
+  const membersList = ref(props.members)
+
+  const resetMemberList = (newMembers) => {
+    membersList.value = membersList.value + newMembers
+  }
 
   onMounted(() => {})
 </script>
