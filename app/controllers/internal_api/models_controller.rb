@@ -2,7 +2,8 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: :index
 
   def index
-    res_body = Starhub.api.get_models(params[:search],
+    res_body = Starhub.api.get_models(current_user&.name,
+                                      params[:search],
                                       params[:sort],
                                       params[:task_tag],
                                       params[:framework_tag],
