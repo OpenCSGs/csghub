@@ -33,6 +33,8 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     Organization.transaction do
       user_names.each do |user_name|
         user = User.find_by(name: user_name)
+        # 不允许改自己的角色
+        next if current_user == user
         next unless user
         user_org_role = user.org_role(org)
         if !user_org_role
