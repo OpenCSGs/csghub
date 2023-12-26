@@ -20,6 +20,8 @@ class Tag < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :spaces, through: :taggings
 
+  before_save :detect_sensitive_content
+
   # 在 issue 中查看颜色对应关系：
   # https://git-devops.opencsg.com/product/community/open-portal/-/issues/50#note_1596
   TAG_FIELD_COLOR_MAPPINGS = {
@@ -61,5 +63,40 @@ class Tag < ApplicationRecord
       name: name,
       zh_name: zh_name
       }
+  end
+
+  def self.build_detail_tags(tags)
+    task_tags, framework_tags, license_tags, other_tags = [], [], [], []
+    if tags
+      tags.map do |tag|
+        if !tag['built_in']
+          other_tags << tag
+        else
+          case tag['category']
+          when 'task'
+            local_tag = Tag.find_by(name: tag['name'])
+            if local_tag
+              color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
+              task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
+            else
+              other_tags << tag
+            end
+          when 'framework'
+            framework_tags << tag
+          when 'license'
+            license_tags << tag
+          else
+            other_tags << tag
+          end
+        end
+      end
+    end
+    { 'task_tags' => task_tags, 'framework_tags' => framework_tags, 'license_tags' => license_tags, 'other_tags' => other_tags }
+  end
+
+  private
+
+  def detect_sensitive_content
+    Starhub.api.text_secure_check('nickname_detection', "#{name} #{zh_name}")
   end
 end

@@ -3,8 +3,11 @@ class Discussion < ApplicationRecord
 
   has_many :comments, as: :commentable
   belongs_to :user
+  belongs_to :discussionable, polymorphic: true
 
-  def as_json_data
+  before_save :detect_sensitive_content
+
+  def as_json options={}
     {
       id: id,
       title: title,
@@ -21,5 +24,9 @@ class Discussion < ApplicationRecord
       name: user.display_name,
       avatar: user.avatar
     }
+  end
+
+  def detect_sensitive_content
+    Starhub.api.text_secure_check('nickname_detection', title)
   end
 end

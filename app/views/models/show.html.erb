@@ -1,8 +1,18 @@
 <div class="bg-white border-b border-[#EBEEF5]">
   <model-detail
+    :tags="<%= @tags %>"
+    local-model-id="<%= @local_model.id %>"
+    user-id="<%= current_user&.id || '' %>"
     :model="<%= @model %>"
-    :files="<%= @files %>"
+    :files="<%= @files || {} %>"
     :last-commit="<%= @last_commit %>"
     :branches="<%= @branches %>"
+    current-branch="<%= @current_branch || 'main' %>"
+    current-path="<%= @current_path || '' %>"
+    default-tab="<%= @default_tab || 'summary' %>"
+    :readme="<%= @readme %>"
+    :content="<%= @content || {} %>"
+    :action-name="'<%= action_name %>'"
+    avatar="<%= @avatar_url %>"
   ></model-detail>
 </div>

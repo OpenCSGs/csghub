@@ -1,4 +1,4 @@
-class InternalApi::TagsController < ApplicationController
+class InternalApi::TagsController < InternalApi::ApplicationController
   def task_tags
     response = {}
     Tag::TAG_FIELD_COLOR_MAPPINGS.keys.each do |field|
