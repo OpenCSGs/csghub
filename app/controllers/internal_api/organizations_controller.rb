@@ -23,6 +23,10 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   end
 
   def new_members
+    unless OrgMembership.roles.keys.include? params[:user_role]
+      return render json: {message: '请提供角色信息'}, status: 400
+    end
+
     user_names = params[:user_names].split(',').map(&:strip)
     return render json: {message: '请提供成员信息'}, status: 400 unless user_names.present?
 
