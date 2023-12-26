@@ -4,13 +4,11 @@
     <div class="py-4 w-[20%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
       <div class="text-[#606266] text-base font-medium leading-[22px] pl-4 md:pl-0">月下载量</div>
       <div class="text-[#303133] text-base font-semibold leading-6 mt-1 pl-4 md:pl-0">{{ downloadCount }}</div>
-      <DatasetClone :http-clone-url="httpCloneUrl" :ssh-clone-url="sshCloneUrl" />
     </div>
   </div>
 </template>
 
 <script setup>
-  import DatasetClone from './DatasetClone.vue';
   import { onMounted, ref } from 'vue';
   import MarkdownIt from 'markdown-it';
   import 'github-markdown-css';

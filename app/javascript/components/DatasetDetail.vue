@@ -15,6 +15,7 @@
     <dataset-tabs
       :content="content.data"
       :local-dataset-id="localDatasetId"
+      :user-id="userId"
       :dataset-path="dataset.data.path"
       :dataset-default-branch="dataset.data.default_branch"
       :dataset-private="dataset.data.private"
@@ -37,6 +38,7 @@ import DatasetTabs from './datasets/DatasetTabs.vue';
 
 const props = defineProps({
   dataset: Object,
+  userId: String,
   files: Object,
   lastCommit: Object,
   branches: Object,

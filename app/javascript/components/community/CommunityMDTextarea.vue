@@ -111,7 +111,7 @@ export default {
       this.$emit('inputChange', value);
     },
     quote(content){
-      this.theDesc = content
+      this.theDesc = content + '\n' + '\n'
     },
     clearTextarea(){
       this.theDesc=''

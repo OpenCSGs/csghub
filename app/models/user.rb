@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
-  validates_uniqueness_of :name, :git_token, allow_blank: true
+  validates_uniqueness_of :name, :git_token, :email, allow_blank: true
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
 
   validate :unique_name_by_organization
