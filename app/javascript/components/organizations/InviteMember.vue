@@ -24,7 +24,18 @@
                   <el-icon><Close @click="removeUser(user.name)" /></el-icon>
                 </span>
               </div>
-              <input class="w-full h-[36px] outline-none" v-model="userNameInput" @change="showUserList" placeholder="" />
+              <input class="w-full h-[36px] outline-none"
+                     v-model="userNameInput"
+                     @input="showUserList" />
+            </div>
+            <div v-show="shouldShowUserList" class="rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+              <p v-for="user in userList"
+                 @click="selectUser(user)"
+                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+              >
+                <img :src="user.avatar" height="16" width="16">
+                {{ user.name }}
+              </p>
             </div>
           </div>
           <div>
@@ -67,10 +78,7 @@
   const dialogVisible = ref(false)
   const userNameInput = ref('')
   const userRoleInput = ref('')
-  const selectedUsers = ref([
-    {name: 'hiveer', avatar: "https://cdn.casbin.org/img/casbin.svg", url: "http://localhost:3000"},
-    {name: 'hiveer2', avatar: "https://cdn.casbin.org/img/casbin.svg", url: "http://localhost:3000"}
-  ])
+  const selectedUsers = ref([])
   const userList = ref([])
   const shouldShowUserList = ref(false)
   const roleMappings = [
@@ -92,8 +100,21 @@
     selectedUsers.value = selectedUsers.value.filter( item => item.name !== username )
   }
 
-  const showUserList = (value) => {
-    getUsers(value).then(data => {
+  const selectUser = (newUser) => {
+    const findUser = selectedUsers.value.find(user => user.name === newUser.name)
+    if (!findUser) {
+      selectedUsers.value.push({name: newUser.name, avatar: newUser.avatar})
+    }
+  }
+
+  const showUserList = (e) => {
+    getUsers(e.data).then(data => {
+      if (data.users.length > 0) {
+        shouldShowUserList.value = true
+      } else {
+        shouldShowUserList.value = false
+      }
+      userList.value = data.users
     })
     .catch(err => {
       ElMessage({
@@ -105,7 +126,13 @@
 
   async function getUsers(username) {
     const usersEndpoint = `/internal_api/users?name=${username}`;
-    const response = await csrfFetch(usersEndpoint)
+    const options = {
+      method:'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    const response = await csrfFetch(usersEndpoint, options)
     if (!response.ok) {
       return response.json().then(data => { throw new Error(data.message) })
     } else {
