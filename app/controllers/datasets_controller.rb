@@ -68,7 +68,7 @@ class DatasetsController < ApplicationController
   end
 
   def load_branch_and_path
-    @default_tab = 'files's
+    @default_tab = 'files'
     @current_branch = params[:branch] || 'main'
     @current_path = params[:path] || ''
   end
