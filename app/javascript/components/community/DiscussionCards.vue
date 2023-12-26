@@ -11,11 +11,11 @@
     </div>
     <EmptyCommunity v-if="cards.length <= 0" @changeFlag="changeFlag" />
     <template v-else>
-      <DiscussionDetails v-if="showDetail" 
+      <DiscussionDetails v-if="showDetail"
         :discussionId="currentDiscussion"
         :title="currentTitle"
         :userName="currentUserName"
-        :createUserId="currentUserId"
+        :createUserId="createUserId"
         :userId="userId"
         :time="currentTime"
         @getDiscussion="getDiscussion"
@@ -58,7 +58,7 @@ export default {
       this.currentDiscussion = card.id
       this.currentTitle = card.title
       this.currentUserName = card.user.name
-      this.currentUserId = card.user.id
+      this.createUserId = card.user.id
       this.currentTime = card.time
       this.showDetail = true
     },
