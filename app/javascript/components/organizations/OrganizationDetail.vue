@@ -5,7 +5,7 @@
         <div class="flex gap-[10px]">
           <img :src="organization.avatar" class="h-[60px] w-[60px] rounded-[50%]" />
           <div>
-            <h3 class="text-[24px] text-[#303133] font-[600]"> {{ organization.name }}</h3>
+            <h3 class="text-[24px] text-[#303133] font-[600]"> {{ organization.nickname.trim() || organization.name }}</h3>
             <p class="text-[16px]"> @{{ organization.name }} </p>
           </div>
         </div>
