@@ -46,7 +46,7 @@ Rails.application.routes.draw do
         post 'refresh', to: 'git-tokens/refresh'
       end
     end
-    resources :users, only: [:update]
+    resources :users, only: [:index, :update]
 
     resources :models, only: [:index, :create]
     delete '/models/:namespace/:model_name', to: 'models#destroy'
