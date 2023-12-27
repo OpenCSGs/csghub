@@ -8,7 +8,7 @@
   <%= stylesheet_link_tag "tailwind", "inter-font" %>
   <%= stylesheet_link_tag "application" %>
   <%= stylesheet_link_tag "application.assets" %>
-  <%= javascript_include_tag "application", defer: true %>
+  <%= javascript_include_tag "about_application", defer: true %>
   <%= favicon_link_tag asset_path('favicon.png') %>
   <script>
       var _hmt = _hmt || [];
@@ -24,13 +24,11 @@
 </head>
 
 <body class="h-full bg-[#F2F3F5]">
-<div id="app" class="min-h-full flex flex-col">
+<div id="app2" class="min-h-full flex flex-col">
   <div class="grow">
-    <%= render partial: 'partials/navbar' %>
+    <%= render partial: 'about/partials/navbar' %>
     <%= yield.force_encoding(Encoding::UTF_8) %>
-    <%= render partial: 'partials/little_monster' %>
   </div>
-  <%= render partial: 'partials/foot' %>
 </div>
 </body>
 </html>
