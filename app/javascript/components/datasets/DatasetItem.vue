@@ -11,6 +11,12 @@
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
       </span>
+      <span>{{ visibility }}</span>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
+          <path d="M0.5 0V8" stroke="#DCDFE6"/>
+        </svg>
+      </span>
       <span>下载量：{{ dataset.downloads }}</span>
     </div>
   </a>
@@ -20,6 +26,8 @@
   const props = defineProps({
     dataset: Object,
   })
+
+  const visibility = props.dataset.private ? '私有' : '公开'
 </script>
 
 <style scoped>
