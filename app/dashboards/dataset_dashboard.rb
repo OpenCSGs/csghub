@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class ModelDashboard < Administrate::BaseDashboard
+class DatasetDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -24,17 +24,17 @@ class ModelDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    name
-    owner
+    creator
+    visibility
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
+    creator
     name
     owner
-    creator
     visibility
     created_at
     updated_at
@@ -59,10 +59,10 @@ class ModelDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how models are displayed
+  # Overwrite this method to customize how datasets are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(model)
-  #   "Model ##{model.id}"
+  # def display_resource(dataset)
+  #   "Dataset ##{dataset.id}"
   # end
 end

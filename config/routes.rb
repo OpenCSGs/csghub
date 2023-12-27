@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :ssh_keys
     resources :error_logs
     resources :models, except: [:new, :create]
+    resources :datasets, except: [:new, :create]
 
     root to: "spaces#index"
   end
