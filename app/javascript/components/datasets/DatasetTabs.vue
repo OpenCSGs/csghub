@@ -59,6 +59,7 @@ import DatasetClone from './DatasetClone.vue';
 
 const props = defineProps({
   localDatasetId: String,
+  userId: String,
   datasetPath: String,
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,

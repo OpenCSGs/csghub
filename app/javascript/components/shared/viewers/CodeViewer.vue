@@ -2,7 +2,7 @@
   <div class="overflow-x-auto">
     <table class="w-full text-sm code-preview">
       <tr :id="`L${index + 1}`" v-for="row, index in highlightContent.split('\n')" :key="row">
-        <td class="w-8 text-center text-gray-300 cursor-pointer hover:text-black">{{ index + 1 }}</td>
+        <td class="blob-line-number w-8 text-center text-gray-300 cursor-pointer hover:text-black" :data-line-number="index + 1"></td>
         <td class="overflow-visible whitespace-pre px-3" v-html="row"></td>
       </tr>
     </table>
@@ -57,5 +57,9 @@
 <style scoped>
   .code-preview {
     font-family: 'Ubuntu Mono', monospace;
+  }
+
+  .blob-line-number::before {
+    content: attr(data-line-number);
   }
 </style>

@@ -8,7 +8,8 @@
       >
         任务
       </span>
-      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
+      <span v-show="type === 'model'"
+            class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
             data-type="Framework"
             :class="activeNavItem === 'Framework' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
@@ -98,7 +99,8 @@
   const props = defineProps({
     taskTags: String,
     frameworkTags: String,
-    licenseTags: String
+    licenseTags: String,
+    type: String
   })
 
   const emit = defineEmits(['resetTags'])

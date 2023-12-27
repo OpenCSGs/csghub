@@ -26,6 +26,12 @@ class Organization < ApplicationRecord
     end
   end
 
+  def members
+    users.map {|user|
+      user.as_json.merge(role: user.org_role(self))
+    }
+  end
+
   def as_json options={}
     {
       avatar: avatar_url,

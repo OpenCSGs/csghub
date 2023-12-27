@@ -87,6 +87,12 @@ class User < ApplicationRecord
     end
   end
 
+  def set_org_role org, role
+    membership = org_memberships.find_by(organization: org)
+    if membership
+      membership.update(role: role)
+    end
+  end
 
   def starhub_synced!
     # do not trigger the callback again
