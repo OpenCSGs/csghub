@@ -79,6 +79,14 @@ class User < ApplicationRecord
     org_memberships.find_by(organization: org)&.role
   end
 
+  def can_manage? repository
+    if repository.owner.class == Organization
+      org_role(repository.owner) == 'admin'
+    else
+      self == repository.owner
+    end
+  end
+
   def set_org_role org, role
     membership = org_memberships.find_by(organization: org)
     if membership

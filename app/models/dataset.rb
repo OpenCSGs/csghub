@@ -8,6 +8,7 @@ class Dataset < ApplicationRecord
   after_create :sync_created_dataset_to_starhub_server
   after_destroy :delete_dataset_from_starhub_server
   before_save :detect_sensitive_content
+  after_update :update_starhub_server_dataset
 
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
@@ -32,6 +33,14 @@ class Dataset < ApplicationRecord
 
   def sync_created_dataset_to_starhub_server
     res = Starhub.api.create_dataset(creator.name, name, owner.name, { license: license, private: dataset_private?  })
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def update_starhub_server_dataset
+    res = Starhub.api.update_dataset(creator.name,
+                                     name,
+                                     owner.name,
+                                     { private: dataset_private? })
     raise StarhubError, res.body unless res.success?
   end
 
