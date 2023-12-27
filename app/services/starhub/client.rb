@@ -56,7 +56,7 @@ module Starhub
       token = starhub_configs['token'].presence || Rails.application.credentials.starhub_api.send("#{Rails.env}").token
       [base_url, token]
     end
-    
+
     def request_path(path)
       API_VERSION + path
     end
