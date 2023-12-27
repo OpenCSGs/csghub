@@ -39,7 +39,8 @@
           <div v-for="tagField in theTaskTags">
             <h3 class="text-[#909399] text-[12px] my-[11px]">{{ tagField.zh_name }}</h3>
             <div class="flex gap-[8px] flex-wrap">
-              <span v-for="tag in tagField.tags" class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer"
+              <span v-for="tag in tagField.tags"
+                    class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer"
                     :data-tag_name="tag.name"
                     :style="setTagColor(tag.name, tagField.color)"
                     @click="setActiveTaskTag"
@@ -165,7 +166,7 @@
     if(activeTaskTag.value === tagName) {
       return `color: white; background-color: ${tagFieldColor}`
     } else {
-      return `color: ${tagFieldColor}; border: solid`
+      return `color: ${tagFieldColor}; background-color: #d3d3d354`
     }
   }
 
