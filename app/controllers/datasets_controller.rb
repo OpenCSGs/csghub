@@ -55,14 +55,14 @@ class DatasetsController < ApplicationController
     end
 
     @avatar_url = owner.avatar_url
-    
+
     if action_name == 'blob'
       @dataset, raw_tags, @last_commit, @branches, @readme, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     else
       @dataset, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
-    @settings_visibility = current_user ? current_user.has_in_org_roles?(current_user, owner) : false
+    @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end
 
   def load_branch_and_path

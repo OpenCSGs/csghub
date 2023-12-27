@@ -79,9 +79,14 @@ class User < ApplicationRecord
     org_memberships.find_by(organization: org)&.role
   end
 
-  def has_in_org_roles? user, owner
-    user == owner || ['write', 'admin'].include?(user.org_role(owner))
+  def can_manage? repository
+    if repository.owner.class == Organization
+      org_role(repository.owner) == 'admin' or 'write'
+    else
+      self == repository.owner
+    end
   end
+
 
   def starhub_synced!
     # do not trigger the callback again
