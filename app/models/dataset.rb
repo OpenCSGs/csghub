@@ -38,9 +38,9 @@ class Dataset < ApplicationRecord
 
   def update_starhub_server_dataset
     res = Starhub.api.update_dataset(creator.name,
-                                   name,
-                                   owner.name,
-                                   { private: dataset_private? })
+                                     name,
+                                     owner.name,
+                                     { private: dataset_private? })
     raise StarhubError, res.body unless res.success?
   end
 

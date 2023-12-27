@@ -247,7 +247,7 @@ module Starhub
     def update_dataset(username, dataset_name, namespace, options = {})
       options[:username] = username
       options[:name] = dataset_name
-      res = @client.put("/datasets/#{namespace}/#{dataset_name}", options)
+      @client.put("/datasets/#{namespace}/#{dataset_name}", options)
     end
 
     def create_ssh_key(username, key_name, content)
