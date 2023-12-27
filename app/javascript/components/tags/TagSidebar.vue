@@ -1,24 +1,24 @@
 <template>
   <div class="flex bg-[#fff] flex-col pr-[20px]">
     <div class="mb-[16px]">
-      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
+      <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Task"
-            :class="activeNavItem === 'Task' ? 'text-[#344054] font-[600]' : ''"
+            :class="activeNavItem === 'Task' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
         任务
       </span>
       <span v-show="type === 'model'"
-            class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
+            class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Framework"
-            :class="activeNavItem === 'Framework' ? 'text-[#344054] font-[600]' : ''"
+            :class="activeNavItem === 'Framework' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
         框架
       </span>
-      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
+      <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="License"
-            :class="activeNavItem === 'License' ? 'text-[#344054] font-[600]' : ''"
+            :class="activeNavItem === 'License' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
       License
@@ -193,3 +193,10 @@
     return newJson
   }
 </script>
+
+<style scoped>
+  .active-type {
+    box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
+    border-radius: 6px;
+  }
+</style>
