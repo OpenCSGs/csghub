@@ -6,8 +6,37 @@ module Starhub
       @client = Starhub::Client.instance
     end
 
-    def get_models(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+    def get_model_detail_files_data_in_parallel(username, model_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/models/#{username}/#{model_name}/detail",
+        "/models/#{username}/#{model_name}/tags",
+        "/models/#{username}/#{model_name}/last_commit",
+        "/models/#{username}/#{model_name}/branches",
+        "/models/#{username}/#{model_name}/raw/README.md",
+        "/models/#{username}/#{model_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
+    def get_model_detail_blob_data_in_parallel(username, model_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/models/#{username}/#{model_name}/detail",
+        "/models/#{username}/#{model_name}/tags",
+        "/models/#{username}/#{model_name}/last_commit",
+        "/models/#{username}/#{model_name}/branches",
+        "/models/#{username}/#{model_name}/raw/README.md",
+        "/models/#{username}/#{model_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
+    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/models?per=#{per}&page=#{page}"
+      url += "&current_user=#{current_user}" if current_user.present?
       url += "&search=#{keyword}" if keyword.present?
       url += "&sort=#{sort_by}" if sort_by.present?
       url += "&task_tag=#{task_tag}" if task_tag.present?
@@ -98,6 +127,10 @@ module Starhub
       res.body
     end
 
+    def delete_git_token(username, token_name)
+      @client.delete("/user/#{username}/tokens/#{token_name}")
+    end
+
     def get_model_tags(username, model_name, options = {})
       res = @client.get("/models/#{username}/#{model_name}/tags")
       raise StarhubError, res.body unless res.success?
@@ -118,6 +151,33 @@ module Starhub
 
     # datasets
 
+    def get_dataset_detail_files_data_in_parallel(username, dataset_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/datasets/#{username}/#{dataset_name}/detail",
+        "/datasets/#{username}/#{dataset_name}/tags",
+        "/datasets/#{username}/#{dataset_name}/last_commit",
+        "/datasets/#{username}/#{dataset_name}/branches",
+        "/datasets/#{username}/#{dataset_name}/raw/README.md",
+        "/datasets/#{username}/#{dataset_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
+    def get_dataset_detail_blob_data_in_parallel(username, dataset_name, options = {})
+      options[:ref] ||= 'main'
+      paths = [
+        "/datasets/#{username}/#{dataset_name}/detail",
+        "/datasets/#{username}/#{dataset_name}/tags",
+        "/datasets/#{username}/#{dataset_name}/last_commit",
+        "/datasets/#{username}/#{dataset_name}/branches",
+        "/datasets/#{username}/#{dataset_name}/raw/README.md",
+        "/datasets/#{username}/#{dataset_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
     def get_user_datasets(namespace, username, options = {})
       res = @client.get("/user/#{namespace}/datasets?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
@@ -130,8 +190,9 @@ module Starhub
       res.body
     end
 
-    def get_datasets(keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+    def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
       url = "/datasets?per=#{per}&page=#{page}"
+      url += "&current_user=#{current_user}" if current_user.present?
       url += "&search=#{keyword}" if keyword.present?
       url += "&sort=#{sort_by}" if sort_by.present?
       url += "&task_tag=#{task_tag}" if task_tag.present?

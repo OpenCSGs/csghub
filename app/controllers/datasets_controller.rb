@@ -2,8 +2,8 @@ class DatasetsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_dataset_detail, only: [:show, :files, :blob]
   before_action :load_branch_and_path, only: [:files, :blob]
+  before_action :load_dataset_detail, only: [:show, :files, :blob]
 
   def index
     response = {}
@@ -27,16 +27,13 @@ class DatasetsController < ApplicationController
 
   def show
     @default_tab = 'summary'
-    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name])
   end
 
   def files
-    @files = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name], files_options)
     render :show
   end
 
   def blob
-    @content = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
     render :show
   end
 
@@ -58,12 +55,13 @@ class DatasetsController < ApplicationController
     end
 
     @avatar_url = owner.avatar_url
-    @dataset = Starhub.api.get_datasets_detail(params[:namespace], params[:dataset_name])
-    raw_tags = Starhub.api.get_datasets_tags(params[:namespace], params[:dataset_name])
+    
+    if action_name == 'blob'
+      @dataset, raw_tags, @last_commit, @branches, @readme, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    else
+      @dataset, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    end
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
-    @last_commit = Starhub.api.get_datasets_last_commit(params[:namespace], params[:dataset_name])
-    @branches = Starhub.api.get_datasets_branches(params[:namespace], params[:dataset_name])
-    @readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
   end
 
   def load_branch_and_path

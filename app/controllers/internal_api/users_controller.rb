@@ -1,6 +1,11 @@
 class InternalApi::UsersController < InternalApi::ApplicationController
   before_action :authenticate_user
 
+  def index
+    users = User.where("name ~* ?", params[:name])
+    render json: {users: users.as_json}
+  end
+
   def update
     current_user.name = user_params[:name]
     current_user.nickname = user_params[:nickname]

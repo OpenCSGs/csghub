@@ -1,5 +1,6 @@
 <template>
   <div class="relative">
+    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url" />
     <TabContainer :default-tab="defaultTab">
       <template #summary>
         <dataset-summary
@@ -34,7 +35,7 @@
         <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
       <template #community>
-        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+        <CommunityPage type="Dataset" :userId="userId" :localModelId="localDatasetId" ></CommunityPage>
       </template>
     </TabContainer>
   </div>
@@ -53,9 +54,12 @@ import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 import DatasetBlob from './DatasetBlob.vue'
+import DatasetClone from './DatasetClone.vue';
+
 
 const props = defineProps({
   localDatasetId: String,
+  userId: String,
   datasetPath: String,
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,

@@ -11,10 +11,12 @@
     </div>
     <EmptyCommunity v-if="cards.length <= 0" @changeFlag="changeFlag" />
     <template v-else>
-      <DiscussionDetails v-if="showDetail" 
+      <DiscussionDetails v-if="showDetail"
         :discussionId="currentDiscussion"
         :title="currentTitle"
         :userName="currentUserName"
+        :createUserId="createUserId"
+        :userId="userId"
         :time="currentTime"
         @getDiscussion="getDiscussion"
         @toggleDetails="toggleDetails" />
@@ -35,6 +37,7 @@ import DiscussionCard from "./DiscussionCard.vue";
 import DiscussionDetails from "./DiscussionDetails.vue";
 export default {
   props: {
+    userId: String,
     cards: Array
   },
   components: {
@@ -55,6 +58,7 @@ export default {
       this.currentDiscussion = card.id
       this.currentTitle = card.title
       this.currentUserName = card.user.name
+      this.createUserId = card.user.id
       this.currentTime = card.time
       this.showDetail = true
     },

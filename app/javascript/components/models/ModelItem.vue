@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  model: Object,
-})
+  const props = defineProps({
+    model: Object,
+  })
 </script>

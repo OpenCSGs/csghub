@@ -1,26 +1,27 @@
 <template>
   <div class="flex bg-[#fff] flex-col pr-[20px]">
     <div class="mb-[16px]">
-      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
+      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
             data-type="Task"
             :class="activeNavItem === 'Task' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        任务标签
+        任务
       </span>
-      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
+      <span v-show="type === 'model'"
+            class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
             data-type="Framework"
             :class="activeNavItem === 'Framework' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-        框架标签
+        框架
       </span>
-      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085]"
+      <span class="mr-[16px] py-[4px] text-[12px] text-[#667085] cursor-pointer"
             data-type="License"
             :class="activeNavItem === 'License' ? 'text-[#344054] font-[600]' : ''"
             @click="changeActiveItem"
       >
-      许可证标签
+      License
       </span>
     </div>
     <div>
@@ -98,7 +99,8 @@
   const props = defineProps({
     taskTags: String,
     frameworkTags: String,
-    licenseTags: String
+    licenseTags: String,
+    type: String
   })
 
   const emit = defineEmits(['resetTags'])

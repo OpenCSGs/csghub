@@ -35,14 +35,22 @@ Rails.application.routes.draw do
 
   # internal api
   namespace :internal_api do
-    resources :organizations, only: [:create, :update]
+    resources :organizations, only: [:create, :update] do
+      collection do
+        post '/new-members', to: 'organizations#new_members'
+      end
+    end
     resources :spaces, only: [:index, :update]
     resources :campaigns, only: [:index]
     resources :comments, only: [:create, :destroy, :index]
     resources :leads, only: [:create]
     resources :ssh_keys, only: [:create, :destroy]
-    resources :git_token, only: [:create]
-    resources :users, only: [:update]
+    resources :git_token, only: [] do
+      collection do
+        post 'refresh', to: 'git-tokens/refresh'
+      end
+    end
+    resources :users, only: [:index, :update]
 
     resources :models, only: [:index, :create]
     delete '/models/:namespace/:model_name', to: 'models#destroy'
