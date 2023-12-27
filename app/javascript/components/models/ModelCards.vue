@@ -44,7 +44,7 @@
       <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
         <ModelItem v-for="model in modelsData" :model="model" />
       </div>
-      <div>
+      <div v-show="totalModels > perPage">
         <el-pagination background
                       v-model:current-page="currentPage"
                       :default-current-page=1
