@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url" />
-    <TabContainer :default-tab="defaultTab">
+    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary
           :introduction="datasetDetail.introduction"
@@ -34,8 +34,8 @@
       <template #settings>
         <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
-      <template #community>
-        <CommunityPage type="Dataset" :userId="userId" :localModelId="localDatasetId" ></CommunityPage>
+      <template v-if="settingsVisibility" #community>
+        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
       </template>
     </TabContainer>
   </div>
@@ -72,6 +72,7 @@ const props = defineProps({
   defaultTab: String,
   readme: String,
   content: String,
-  actionName: String
+  actionName: String,
+  settingsVisibility: Boolean
 })
 </script>
