@@ -127,5 +127,7 @@ Rails.application.routes.draw do
     # errors
     get '/errors/not-found', to: 'errors#not_found'
     get '/errors/unauthorized', to: 'errors#unauthorized'
+
+    get '/about/opencsg', to: 'about/opencsg#index'
   end
 end
