@@ -48,7 +48,7 @@
   }
   const setTagColor = () => {
     if (props.activeTag === 'TensorFlow') {
-      return "color: white; background-color: rgb(5 183 141 / 63%)"
+      return "color: white; background-color: #4D6AD6"
     }
   }
   onMounted(() => {

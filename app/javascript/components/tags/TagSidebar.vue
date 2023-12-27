@@ -202,7 +202,7 @@
 
   const setLicenseTagColor = (tagName) => {
     if (activeLicenseTag.value === tagName) {
-      return "color: white; background-color: rgb(5 183 141 / 63%)"
+      return "color: white; background-color: #4D6AD6"
     } else {
       return `color: #303133`
     }
