@@ -65,10 +65,6 @@ module ApplicationHelper
 
   def feature_flags
     system_config = SystemConfig.first
-    if system_config
-      system_config.feature_flags rescue {}
-    else
-      {}
-    end
+    (system_config.feature_flags rescue {}) || {}
   end
 end
