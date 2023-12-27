@@ -81,7 +81,7 @@ class User < ApplicationRecord
 
   def can_manage? repository
     if repository.owner.class == Organization
-      org_role(repository.owner) == 'admin' or 'write'
+      org_role(repository.owner) == 'admin'
     else
       self == repository.owner
     end
