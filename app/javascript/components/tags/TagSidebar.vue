@@ -249,7 +249,6 @@
   }
 
   onMounted(() => {
-    console.log(props.frameworkTags)
   })
 
 </script>
