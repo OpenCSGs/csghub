@@ -1,7 +1,8 @@
 <template>
-  <a :href="`/datasets/${ dataset.path }`" class="p-4 min-w-[433px] sm:w-full sm:min-w-0 border border-[#EAECF0] rounded-xl">
+  <a :href="`/datasets/${ dataset.path }`"
+     class="dataset-card hover:active-dataset-card p-4 min-w-[433px] sm:w-full sm:min-w-0 border border-gray-200 rounded-xl">
     <div class="flex items-center mb-[5px]">
-      <div class="text-sm text-[#303133] font-medium">{{ dataset.path }}</div>
+      <div class="dataset-path text-sm text-[#303133] font-medium">{{ dataset.path }}</div>
     </div>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
       <span>更新时间：{{ dataset.updated_at.substring(0, 10) }}</span>
@@ -20,3 +21,9 @@
     dataset: Object,
   })
 </script>
+
+<style scoped>
+  .dataset-card:hover .dataset-path {
+    color: var(--blue-blue-5001-f-75-cb, #1F75CB);
+  }
+</style>

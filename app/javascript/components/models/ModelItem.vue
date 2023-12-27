@@ -1,8 +1,8 @@
 <template>
   <a :href="`/models/${ model.path }`"
-     class="p-4 min-w-[433px] sm:w-full sm:min-w-0 border border-[#F5F7FA] rounded-xl hover:bg-[#EAECF0] active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#FFFFFF]">
+     class="model-card p-4 min-w-[433px] hover:active-model-card sm:w-full sm:min-w-0 border border-gray-200 bg-white rounded-xl hover:active">
     <div class="flex items-center mb-[5px]">
-      <div id="pathColor" class="text-sm text-[#303133] font-medium">{{ model.path }}</div>
+      <div id="pathColor" class="model-path text-sm text-[#303133] font-medium">{{ model.path }}</div>
     </div>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
       <span>更新时间：{{ model.updated_at.substring(0, 10) }}</span>
@@ -21,3 +21,9 @@
     model: Object,
   })
 </script>
+
+<style scoped>
+  .model-card:hover .model-path {
+    color: var(--theme-dark-red-t-red-500-ad-4-a-3-b, #AD4A3B);
+  }
+</style>
