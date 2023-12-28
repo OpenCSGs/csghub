@@ -36,6 +36,8 @@ class InternalApi::SpacesController < InternalApi::ApplicationController
     end
   rescue Pundit::NotAuthorizedError
     render json: {message: '更新未授权!'}, status: 401
+  rescue ActiveRecord::RecordInvalid => e
+    render json: {message: e.message}, status: 400
   end
 
   private

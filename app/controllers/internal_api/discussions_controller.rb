@@ -16,7 +16,7 @@ class InternalApi::DiscussionsController < InternalApi::ApplicationController
     if discussion.save
       render json: discussion.as_json, status: :created
     else
-      render json: discussion.errors, status: :unprocessable_entity
+      render json: { message: discussion.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
