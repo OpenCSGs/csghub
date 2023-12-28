@@ -128,6 +128,6 @@ Rails.application.routes.draw do
     get '/errors/not-found', to: 'errors#not_found'
     get '/errors/unauthorized', to: 'errors#unauthorized'
 
-    get '/about/opencsg', to: 'about/opencsg#index'
+    get '/about', to: 'about#index'
   end
 end

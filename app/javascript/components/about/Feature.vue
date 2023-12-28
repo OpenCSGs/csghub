@@ -39,9 +39,9 @@
                      :autoplay="true"
                      arrow="always"
         >
-          <el-carousel-item class="">
+          <el-carousel-item class="" v-for="item in 10" :key="item">
             <div>
-              <img src="/images/about/home/carousel/feature-1.png" class="w-full rounded-[8px] h-[600px] xl:h-[520px] lg:h-[400px] sm:h-[200px]" alt="OpenCSG"/>
+              <img :src="`/images/about/home/carousel/feature-${item}.png`" class="w-full rounded-[8px] h-[600px] xl:h-[520px] lg:h-[400px] sm:h-[200px]" alt="OpenCSG"/>
             </div>
           </el-carousel-item>
         </el-carousel>

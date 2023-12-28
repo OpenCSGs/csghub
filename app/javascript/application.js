@@ -37,6 +37,7 @@ import ModelCards from "./components/models/ModelCards.vue"
 import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
+import About from "./components/about/About.vue"
 
 const app = createApp({
   components: {
@@ -69,7 +70,8 @@ const app = createApp({
     DatasetItem,
     ModelCards,
     DatasetCards,
-    OrganizationDetail
+    OrganizationDetail,
+    About
   },
   provide:{
     defaultTags: DefaultTags
