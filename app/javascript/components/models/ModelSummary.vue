@@ -2,7 +2,7 @@
   <div class="flex min-h-[300px] md:px-5 md:flex-col-reverse">
     <div class="max-w-[80%] pt-4 pb-10 pr-5 break-words flex-1 markdown-body border-t border-[#EBEEF5] md:border-t-0" v-html="mdParser.render(markdownContent)"></div>
     <div class="p-4 w-[20%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="text-[#606266] text-base font-medium leading-[22px]">月下载量</div>
+      <div class="text-[#606266] text-base font-medium leading-[22px]">下载量</div>
       <div class="text-[#303133] text-base font-semibold leading-6 mt-1">{{ downloadCount }}</div>
     </div>
   </div>
