@@ -60,7 +60,7 @@ class ModelsController < ApplicationController
       end
     end
 
-    return if action_name == 'blob' && params[:download] != 'true'
+    return if action_name == 'blob' && params[:download] == 'true'
 
     @avatar_url = owner.avatar_url
     if action_name == 'blob'
