@@ -15,8 +15,37 @@ zh:
       edit_resource: 'Edit %{name}'
 
   activerecord:
+    attributes:
+      tag:
+        name: "Tag名称"
+      user:
+        nickname: '昵称'
+        email: '邮箱'
+        phone: '电话'
+      discussion:
+        title: '标题'
+      organization:
+        name: '名称'
+        nickname: '别名'
+        homepage: '主页地址'
+        org_type: '组织类别'
+
     errors:
+      messages:
+        record_invalid: '字段不符合规范'
       models:
+        tag:
+          too_long: "长度超出限制"
+          taken: "已被使用"
+        user:
+          too_long: "长度超出限制"
+          taken: "已被使用"
+          invalid: "不符合规范"
+          attributes:
+            email:
+              invalid: "不符合规范"
+            phone:
+              taken: "已被使用"
         space:
           blank: "字段不能为空"
           taken: "不能创建重复的空间"
@@ -26,6 +55,17 @@ zh:
         ssh_key:
           blank: "字段不能为空"
           taken: "不能创建重复"
+        organization:
+          invalid: '不符合规范'
+          blank: "字段不能为空"
+          taken: "已存在，请重新命名"
+          attributes:
+            nickname:
+              too_long: "长度超出限制"
+            homepage:
+              too_long: "长度超出限制"
+        discussion:
+          too_long: "长度超出限制"
 
   datetime:
     distance_in_words:

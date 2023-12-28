@@ -3,12 +3,22 @@ require 'jwt'
 class SessionsController < ApplicationController
   layout 'login'
 
+  skip_before_action :check_user_login
+
   def signup
-    redirect_to SystemConfig.first.oidc_configs['sign_up_url'], allow_other_host: true
+    default_signup_url = Rails.application.credentials.oidc_config.send(Rails.env)['signup_url']
+    system_config = SystemConfig.first
+    oidc_configs = system_config.oidc_configs rescue {}
+    signup_url = (oidc_configs && oidc_configs['sign_up_url'].presence) || default_signup_url
+    redirect_to signup_url, allow_other_host: true
   end
 
   def new
-    redirect_to SystemConfig.first.oidc_configs['login_url'], allow_other_host: true
+    default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
+    system_config = SystemConfig.first
+    oidc_configs = system_config.oidc_configs rescue {}
+    login_url = (oidc_configs && oidc_configs['login_url'].presence) || default_login_url
+    redirect_to login_url, allow_other_host: true
   end
 
   def oidc

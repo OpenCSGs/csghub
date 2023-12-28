@@ -16,7 +16,7 @@
     </div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
-      <p class="text-gray-500 text-[12px] italic">* 2-20位字母数字以及 _ 构成的字符串</p>
+      <p class="text-gray-500 text-[12px] italic">* 2-20位字母数字以及 _ - 构成的字符串，- _ 不能连续出现</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 disabled
@@ -44,7 +44,6 @@
       </div>
       <el-input class="max-w-[400px]"
                 v-model="inputEmail"
-                disabled
                 placeholder="邮箱">
       </el-input>
     </div>
@@ -97,6 +96,7 @@ export default {
       }
       formData.append("name", this.inputName);
       formData.append("nickname", this.inputNickname);
+      formData.append("email", this.inputEmail);
       const options = {
         method: "PUT",
         body: formData,
@@ -105,10 +105,12 @@ export default {
       try {
         const response = await csrfFetch(profileUpdateEndpoint, options);
         if (!response.ok) {
-          ElMessage({
-            message: "profile更新失败",
-            type: "warning",
-          });
+          response.json().then(data => {
+            ElMessage({
+              message: data.message,
+              type: "warning",
+            })
+          })
         } else {
           ElMessage({
             message: "profile已更新",

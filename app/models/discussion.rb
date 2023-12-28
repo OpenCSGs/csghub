@@ -1,10 +1,15 @@
 class Discussion < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
-  has_many :comments, as: :commentable
-  belongs_to :user
+  validates_length_of :title, maximum: 100
 
-  def as_json_data
+  has_many :comments, as: :commentable, dependent: :destroy
+  belongs_to :user
+  belongs_to :discussionable, polymorphic: true
+
+  before_save :detect_sensitive_content
+
+  def as_json options={}
     {
       id: id,
       title: title,
@@ -21,5 +26,9 @@ class Discussion < ApplicationRecord
       name: user.display_name,
       avatar: user.avatar
     }
+  end
+
+  def detect_sensitive_content
+    Starhub.api.text_secure_check('nickname_detection', title)
   end
 end

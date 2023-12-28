@@ -13,13 +13,11 @@
           </div>
         </div>
         <div class="flex flex-col">
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+          <a href="/settings/profile" class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
                :class="menuClass('/settings/profile')"
           >
-            <a href="/settings/profile">
               个人资料
-            </a>
-          </div>
+          </a>
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/account')"
           >
@@ -30,20 +28,16 @@
           >
             Access Token
           </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
-               :class="menuClass('/settings/accessTokens')"
+          <a href="/settings/git-token" class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/git-token')"
           >
-            <a href="/settings/git-token">
               Git Token
-            </a>
-          </div>
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
-               :class="menuClass('/settings/keys')"
+          </a>
+          <a href="/settings/ssh-keys" class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+               :class="menuClass('/settings/ssh-keys')"
           >
-            <a href="/settings/ssh-keys">
               SSH Keys
-            </a>
-          </div>
+          </a>
           <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/billing')"
           >

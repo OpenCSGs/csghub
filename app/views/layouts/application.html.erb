@@ -27,11 +27,10 @@
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
         <%= render partial: 'partials/navbar' %>
-        <%= yield %>
+        <%= yield.force_encoding(Encoding::UTF_8) %>
         <%= render partial: 'partials/little_monster' %>
       </div>
       <%= render partial: 'partials/foot' %>
     </div>
   </body>
 </html>
-

@@ -1,12 +1,10 @@
 <template>
-  <div class="pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
+  <div class="max-w-[500px] pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
     <div>
       <el-avatar :size="120" :src="avatar"> </el-avatar>
     </div>
-    <div class="text-[24px] leading-[32px] font-semibold">{{ name }}</div>
-    <div class="text-[16px] px-[3px] bg-[#90939950] rounded-[5px] max-w-[max-content] leading-[24px] mb-[16px]">
-      {{ loginIdentity }}
-    </div>
+    <div class="text-[24px] leading-[32px] font-semibold">{{ displayName }}</div>
+    <div class="text-[16px] text-[#909399] max-w-[max-content] leading-[24px] mb-[16px]">@{{name}}</div>
     <div>
       <a href="/settings/profile" class="mr-[10px] px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">编辑个人信息</a>
       <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium">设置</a>
@@ -33,9 +31,11 @@
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
         组织机构
       </div>
-      <div v-if="userOrgs != {}" class="flex gap-[10px]">
+      <div v-if="userOrgs != {}" class="flex gap-[10px] flex-wrap">
         <p v-for="org in userOrgs">
-          <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />
+          <a :href="`/organizations/${org.name}`">
+            <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />
+          </a>
         </p>
       </div>
       <div v-else class="text-[#909399]">暂无数据</div>
@@ -46,6 +46,7 @@
 export default {
   props: {
     name: String,
+    displayName: String,
     phone: String,
     avatar: String,
     email: String,

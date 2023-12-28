@@ -44,3 +44,25 @@ img, video {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/*
+  Define tailwindcss group class
+*/
+
+@layer utilities {
+  .active-model-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+
+  .active-dataset-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+}

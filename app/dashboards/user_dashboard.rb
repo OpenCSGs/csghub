@@ -16,13 +16,15 @@ class UserDashboard < Administrate::BaseDashboard
     last_login_at: Field::DateTime,
     login_identity: Field::String,
     name: Field::String,
+    git_token: Field::String,
     phone: Field::String,
     phone_verified: Field::Boolean,
     roles_mask: Field::Number,
     roles: Field::Select.with_options(include_blank: true, searchable: false, collection: User::ROLES),
     created_at: Field::DateTime.with_options(format: '%Y-%m-%d %H:%M'),
     updated_at: Field::DateTime,
-    company_verified: Field::Boolean
+    company_verified: Field::Boolean,
+    starhub_synced: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -37,6 +39,7 @@ class UserDashboard < Administrate::BaseDashboard
     roles
     phone
     email
+    starhub_synced
     created_at
   ].freeze
 
@@ -54,6 +57,7 @@ class UserDashboard < Administrate::BaseDashboard
     phone
     phone_verified
     roles
+    git_token
     created_at
     updated_at
   ].freeze
@@ -90,7 +94,7 @@ class UserDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how users are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(user)
-  #   "User ##{user.id}"
-  # end
+  def display_resource(user)
+    "User ##{user.name}"
+  end
 end

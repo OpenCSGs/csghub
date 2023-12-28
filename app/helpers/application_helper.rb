@@ -65,10 +65,12 @@ module ApplicationHelper
 
   def feature_flags
     system_config = SystemConfig.first
-    if system_config
-      system_config.feature_flags rescue {}
-    else
-      {}
-    end
+    (system_config.feature_flags rescue {}) || {}
+  end
+
+  def docs_url
+    system_config = SystemConfig.first
+    general_configs = (system_config.general_configs rescue {}) || {}
+    general_configs['docs_url']
   end
 end
