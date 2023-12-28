@@ -73,7 +73,13 @@ class ApplicationController < ActionController::Base
       user.login_identity = user_infos['sub']
       user.name = user_infos['name'] if user.name.blank?
       user.avatar = user_infos['avatar'] if user.avatar.blank?
-      user.save
+      user.phone = user_infos['phone'] if user.phone.blank?
+      user.email = user_infos['email'] if user.email.blank?
+      unless user.save
+        flash[:alert] = "当前用户存在历史数据冲突，请联系管理员处理"
+        log_error "用户登录历史数据问题", user.errors.messages
+        return redirect_to errors_unauthorized_path
+      end
     else
       user = User.find_or_create_by(login_identity: user_infos['sub']) do |u|
         u.roles = :personal_user
