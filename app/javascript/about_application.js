@@ -7,12 +7,12 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import Navbar from "./about/components/home/Navbar.vue"
-import Hero from "./about/components/home/Hero.vue"
-import Feature from "./about/components/home/Feature.vue"
-import Team from "./about/components/home/Team.vue"
-import Joinus from "./about/components/home/Joinus.vue"
-import Foot from "./about/components/home/Footer.vue"
+import Navbar from "./components/about/Navbar.vue"
+import Hero from "./components/about/Hero.vue"
+import Feature from "./components/about/Feature.vue"
+import Team from "./components/about/Team.vue"
+import Joinus from "./components/about/Joinus.vue"
+import Foot from "./components/about/Footer.vue"
 
 const app2 = createApp({
     components: {

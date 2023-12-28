@@ -3,9 +3,9 @@
     <div
       class="flex justify-between items-center h-[80px] bg-white text-[#303133] mx-auto w-full max-w-[1280px] ml-[20px] mr-[20px] xl:px-[20px] md:h-[60px]">
       <div>
-        <nuxt-link to="/">
-          <img :src="logo" class="w-[135px] md:w-[90px]" alt="OpenCsg">
-        </nuxt-link>
+        <a href="/">
+          <img src="/images/about/opencsg_logo.png" class="w-[135px] md:w-[90px]" alt="OpenCsg">
+        </a>
       </div>
       <div class="flex justify-center">
         <div class="cursor-pointer md:hidden" @click="changeLang">
@@ -25,72 +25,66 @@
             </defs>
           </svg>
         </div>
-        <div class="items-center">
-          <div class="hidden md:block">
-            <el-popover class="popperList w-[150px]" placement="bottom" v-model="popshow" trigger="click">
-              <div @click="closePop">
-                <nuxt-link
-                  :class="this.$route.path == '/' ? 'activeMenu block' : 'menuItem'"
-                           to="/">{{$t('Overview')}}
-                </nuxt-link>
-              </div>
-              <div @click="closePop">
-                <div
-                  :class="this.$route.path == '/Models' ? 'activeMenu block' : 'menuItem'"
-                  @click="goModels">{{$t('Models') }}
-                </div>
-              </div>
-              <div @click="closePop">
-                <div
-                  :class="this.$route.path == '/MarketPlace' ? 'activeMenu block' : 'menuItem'"
-                  @click="goMarketPlace">{{$t('MarketPlace') }}
-                </div>
-              </div>
-              <div @click="closePop">
-                <div
-                  :class="this.$route.path == '/Scheme' ? 'activeMenu block' : 'menuItem'"
-                  @click="goScheme">方案
-                </div>
-              </div>
-              <div @click="closePop">
-                <div
-                  :class="this.$route.path == '/Train' ? 'activeMenu block' : 'menuItem'"
-                  @click="goTrain">培训
-                </div>
-              </div>
-              <div @click="closePop">
-                <div
-                  :class="this.$route.path == '/Pricing' ? 'activeMenu block' : 'menuItem'"
-                  @click="goPricing">价格
-                </div>
-              </div>
-              <div @click="goBlog" class="menuItem block">博客
-              </div>
-              <el-button class="hidden menu border-0 mx-auto backdrop-blur-[15px] bg-transparent" slot="reference">
-                <svg xmlns="http://www.w3.org/2000/svg" class="md:align-baseline w-[20px] h-[20px]" viewBox="0 0 1024 1024">
-                  <path fill="currentColor"
-                        d="M27 193.6c-8.2-8.2-12.2-18.6-12.2-31.2s4-23 12.2-31.2S45.6 119 58.2 119h912.4c12.6 0 23 4 31.2 12.2s12.2 18.6 12.2 31.2s-4 23-12.2 31.2s-18.6 12.2-31.2 12.2H58.2c-12.6 0-23-4-31.2-12.2zm974.8 285.2c8.2 8.2 12.2 18.6 12.2 31.2s-4 23-12.2 31.2s-18.6 12.2-31.2 12.2H58.2c-12.6 0-23-4-31.2-12.2S14.8 522.6 14.8 510s4-23 12.2-31.2s18.6-12.2 31.2-12.2h912.4c12.6 0 23 4 31.2 12.2zm0 347.4c8.2 8.2 12.2 18.6 12.2 31.2s-4 23-12.2 31.2s-18.6 12.2-31.2 12.2H58.2c-12.6 0-23-4-31.2-12.2S14.8 870 14.8 857.4s4-23 12.2-31.2S45.6 814 58.2 814h912.4c12.6 0 23 4.2 31.2 12.2z"/>
-                </svg>
-              </el-button>
-            </el-popover>
-          </div>
-        </div>
+<!--        <div class="items-center">-->
+<!--          <div class="hidden md:block">-->
+<!--            <el-popover class="popperList w-[150px]" placement="bottom" v-model="popshow" trigger="click">-->
+<!--              <div @click="closePop">-->
+<!--                <a-->
+<!--                  :class="this.$route.path === '/' ? 'activeMenu block' : 'menuItem'"-->
+<!--                  href="/">首页-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div @click="closePop">-->
+<!--                <div-->
+<!--                  :class="this.$route.path == '/Models' ? 'activeMenu block' : 'menuItem'"-->
+<!--                  @click="goModels">模型-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div @click="closePop">-->
+<!--                <div-->
+<!--                  :class="this.$route.path == '/MarketPlace' ? 'activeMenu block' : 'menuItem'"-->
+<!--                  @click="goMarketPlace">应用-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div @click="closePop">-->
+<!--                <div-->
+<!--                  :class="this.$route.path == '/Scheme' ? 'activeMenu block' : 'menuItem'"-->
+<!--                  @click="goScheme">方案-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div @click="closePop">-->
+<!--                <div-->
+<!--                  :class="this.$route.path == '/Train' ? 'activeMenu block' : 'menuItem'"-->
+<!--                  @click="goTrain">培训-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div @click="closePop">-->
+<!--                <div-->
+<!--                  :class="this.$route.path == '/Pricing' ? 'activeMenu block' : 'menuItem'"-->
+<!--                  @click="goPricing">价格-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div @click="goBlog" class="menuItem block">博客-->
+<!--              </div>-->
+<!--              <el-button class="hidden menu border-0 mx-auto backdrop-blur-[15px] bg-transparent" slot="reference">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" class="md:align-baseline w-[20px] h-[20px]" viewBox="0 0 1024 1024">-->
+<!--                  <path fill="currentColor"-->
+<!--                        d="M27 193.6c-8.2-8.2-12.2-18.6-12.2-31.2s4-23 12.2-31.2S45.6 119 58.2 119h912.4c12.6 0 23 4 31.2 12.2s12.2 18.6 12.2 31.2s-4 23-12.2 31.2s-18.6 12.2-31.2 12.2H58.2c-12.6 0-23-4-31.2-12.2zm974.8 285.2c8.2 8.2 12.2 18.6 12.2 31.2s-4 23-12.2 31.2s-18.6 12.2-31.2 12.2H58.2c-12.6 0-23-4-31.2-12.2S14.8 522.6 14.8 510s4-23 12.2-31.2s18.6-12.2 31.2-12.2h912.4c12.6 0 23 4 31.2 12.2zm0 347.4c8.2 8.2 12.2 18.6 12.2 31.2s-4 23-12.2 31.2s-18.6 12.2-31.2 12.2H58.2c-12.6 0-23-4-31.2-12.2S14.8 870 14.8 857.4s4-23 12.2-31.2S45.6 814 58.2 814h912.4c12.6 0 23 4.2 31.2 12.2z"/>-->
+<!--                </svg>-->
+<!--              </el-button>-->
+<!--            </el-popover>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
-    <ContactUS :dialogFormVisible="dialogFormVisible" @closeDialog="closeDialog"/>
   </div>
 </template>
 
 <script>
-import ContactUS from '../ContactUs.vue'
 
 export default {
   name: 'Header',
-  props: {
-    logo: String
-  },
   components: {
-    ContactUS
   },
   data() {
     return {
