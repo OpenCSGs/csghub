@@ -1,7 +1,7 @@
 class Discussion < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
   belongs_to :discussionable, polymorphic: true
 
