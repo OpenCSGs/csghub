@@ -59,7 +59,7 @@ class DatasetsController < ApplicationController
       end
     end
 
-    return if action_name == 'blob' && params[:download] != 'true'
+    return if action_name == 'blob' && params[:download] == 'true'
 
     @avatar_url = owner.avatar_url
 
