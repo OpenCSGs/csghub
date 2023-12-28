@@ -34,7 +34,12 @@ class DatasetsController < ApplicationController
   end
 
   def blob
-    render :show
+    if params[:download] == 'true'
+      file = Starhub.api.download_datasets_file(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
+      send_data file, filename: params[:path].split('/').last
+    else
+      render :show
+    end
   end
 
   private
@@ -53,6 +58,8 @@ class DatasetsController < ApplicationController
         return redirect_to errors_unauthorized_path unless current_user.org_role(@local_dataset.owner)
       end
     end
+
+    return if action_name == 'blob' && params[:download] != 'true'
 
     @avatar_url = owner.avatar_url
 
