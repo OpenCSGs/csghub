@@ -43,5 +43,5 @@
     markdownContent.value = content.trim() || defaultText
   })
 
-  const mdParser = new MarkdownIt()
+  const mdParser = new MarkdownIt({ html: true })
 </script>
