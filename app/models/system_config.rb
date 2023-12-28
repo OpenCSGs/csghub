@@ -14,4 +14,8 @@ class SystemConfig < ApplicationRecord
   def feature_flags=(value)
     self[:feature_flags] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def general_configs=(value)
+    self[:general_configs] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end
