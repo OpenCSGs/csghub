@@ -21,9 +21,17 @@
   })
 
   const markdownContent = ref('')
+  const defaultText = '```\nREADME文件内容为空，请下载文件，补充描述内容。\n```'
 
   const parseMetadata = (input) => {
-    const separator = '---\n';
+    if (!input.trim().startsWith('---\n')) {
+      return {
+        metadata: '',
+        content: input
+      }
+    }
+
+    const separator = '---\n'
     const [_, metadata, content] = input.split(separator, 3)
 
     return {
@@ -32,9 +40,10 @@
     }
   }
 
+
   onMounted(() => {
     const { _metadata, content } = parseMetadata(props.readme)
-    markdownContent.value = content
+    markdownContent.value = content.trim() || defaultText
   })
 
   const mdParser = new MarkdownIt()
