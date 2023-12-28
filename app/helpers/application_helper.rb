@@ -67,4 +67,10 @@ module ApplicationHelper
     system_config = SystemConfig.first
     (system_config.feature_flags rescue {}) || {}
   end
+
+  def docs_url
+    system_config = SystemConfig.first
+    general_configs = (system_config.general_configs rescue {}) || {}
+    general_configs['docs_url']
+  end
 end
