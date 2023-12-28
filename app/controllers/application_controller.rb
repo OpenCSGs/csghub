@@ -68,7 +68,8 @@ class ApplicationController < ActionController::Base
       return redirect_to redirect_path
     end
 
-    user = User.find_by(phone: user_infos['phone']) || User.find_by(email: user_infos['email'])
+    user = (user_infos['phone'].presence && User.find_by(phone: user_infos['phone'])) ||
+           (user_infos['email'].presence && User.find_by(email: user_infos['email']))
     if user
       user.login_identity = user_infos['sub']
       user.name = user_infos['name'] if user.name.blank?
