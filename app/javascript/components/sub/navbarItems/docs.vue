@@ -1,5 +1,5 @@
 <template>
-  <a href="/docs/"
+  <a :href="url"
      class="flex items-center hover:text-[#00b8e6]"
      :class="this.active ? 'text-[#00b8e6]' : ''"
   >
@@ -13,6 +13,10 @@
 </template>
 <script>
 export default {
+  props: {
+    url: String
+  },
+
   data() {
     return {
       active: false
