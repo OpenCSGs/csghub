@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
-  validates_uniqueness_of :name, :git_token, :phone, :email, allow_blank: true
+  validates_uniqueness_of :name, :git_token, :phone, :email, allow_blank: true, on: :create
   validates_length_of :nickname, maximum: 20
   validates_length_of :email, maximum: 30
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
@@ -107,6 +107,9 @@ class User < ApplicationRecord
   end
 
   def sync_to_starhub_server
+    # user info missing 不同步
+    return if name.blank? or email.blank?
+
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
     Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
