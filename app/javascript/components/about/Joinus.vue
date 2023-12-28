@@ -20,20 +20,18 @@
         <div class="text-[18px] text-[#ADADAD] leading-[26px] font-medium md:leading-[21px]">{{ item.desc }}</div>
       </div>
     </div>
-    <el-dialog title="详情" v-if="jobVisible" width="80%" :show-close="true" center>
-      <div class="center tracking-[2px]">
-        <template>
-          <div class="text-[39px] leading-[47px] text-center mb-[25px]">{{ job.title }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B]">工作地点:{{ job.place }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">岗位职责</div>
-          <div class="lg:hidden" v-for="item in job.zhize" :key="item">{{ item }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">岗位要求</div>
-          <div class="lg:hidden" v-for="item in job.yaoqiu" :key="item">{{ item }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">薪酬待遇</div>
-          <div class="lg:hidden" v-for="item in job.xinzi" :key="item">{{ item }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">投递方式</div>
-          <div class="lg:hidden">投递地址 ： hr@opencsg.com</div>
-        </template>
+    <el-dialog title="详情" v-model="jobVisible" width="80%" :show-close="true" center>
+      <div class="center tracking-[2px] py-[16px]">
+        <div class="text-[39px] leading-[47px] text-center mb-[25px]">{{ job.title }}</div>
+        <div class="text-[20px] font-medium leading-[30px] text-[#41414B]">工作地点:{{ job.place }}</div>
+        <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">岗位职责</div>
+        <div class="lg:hidden" v-for="item in job.zhize" :key="item">{{ item }}</div>
+        <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">岗位要求</div>
+        <div class="lg:hidden" v-for="item in job.yaoqiu" :key="item">{{ item }}</div>
+        <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">薪酬待遇</div>
+        <div class="lg:hidden" v-for="item in job.xinzi" :key="item">{{ item }}</div>
+        <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">投递方式</div>
+        <div class="lg:hidden">投递地址 ： hr@opencsg.com</div>
       </div>
     </el-dialog>
   </div>
@@ -45,7 +43,7 @@ export default {
   name: 'Joinus',
   data() {
     return {
-      jobVisible: true,
+      jobVisible: false,
       job: {title: '', desc: '', place: '', zhize: [], yaoqiu: [], xinzi: []},
       joinData: [{
         isHot: true,
@@ -163,12 +161,7 @@ export default {
       this.job.xinzi = item.xinzi ? item.xinzi : ''
       this.job.place = item.place ? item.place : ''
       this.jobVisible = true
-      // ElMessageBox({
-      //   title: '详情',
-      //   message: h('p', null, [
-      //     h('span', null, '修改可见性为'),
-      //   ]),
-      // })
+      console.log(this.job.place)
     },
   }
 }
