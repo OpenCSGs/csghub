@@ -31,11 +31,11 @@
           :namespace-path="datasetDetail.path"
         />
       </template>
-      <template #settings>
-        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
-      </template>
-      <template v-if="settingsVisibility" #community>
+      <template #community>
         <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+      </template>
+      <template v-if="settingsVisibility" #settings>
+        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
     </TabContainer>
   </div>
