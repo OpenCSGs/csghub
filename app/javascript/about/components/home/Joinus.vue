@@ -1,8 +1,8 @@
 <template>
   <div class="mx-auto max-w-[1280px] pt-[127px] md:pt-[40px] mb-[70px] md:pb-[40px] md:px-[20px]">
-    <div class="text-[#303133] text-[30px] leading-[38px] font-semibold mb-[24px] text-center md:text-[28px] md:text-center">{{ $t('JoinUS') }}</div>
+    <div class="text-[#303133] text-[30px] leading-[38px] font-semibold mb-[24px] text-center md:text-[28px] md:text-center">加入我们</div>
     <div class="grid grid-cols-3 gap-[24px] xl:px-[20px] md:flex md:flex-col">
-      <div class="hover:text-[#1A8B7B] leading-[28px] p-[20px] bg-white shadow-md text-[20px] font-medium text-[#41414B] cursor-pointer min-h-[120px] rounded-[8px] md:text-[18px] md:w-auto md:min-h-[90px] md:leading-[26px]" v-for="item in this.$i18n.locale == 'zh' ? joinData : joinData_en" :key="item.desc"
+      <div class="hover:text-[#1A8B7B] leading-[28px] p-[20px] bg-white shadow-md text-[20px] font-medium text-[#41414B] cursor-pointer min-h-[120px] rounded-[8px] md:text-[18px] md:w-auto md:min-h-[90px] md:leading-[26px]" v-for="item in joinData" :key="item.desc"
         @click="jobDetails(item)">
         <div class="flex justify-between mb-[10px]">{{ item.title }}<span class="w-[20px] h-[20px]" v-if="item.isHot"><svg t="1693197896423" class="icon"
               viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4038" width="25"
@@ -14,19 +14,19 @@
         <div class="text-[18px] text-[#ADADAD] leading-[26px] font-medium md:leading-[21px]">{{ item.desc }}</div>
       </div>
     </div>
-    <el-dialog :title="$t('Details')" :visible.sync="jobVisible" width="80%" :show-close="true" center>
+    <el-dialog title="详情" :visible.sync="jobVisible" width="80%" :show-close="true" center>
       <div class="center tracking-[2px]">
         <template>
           <div class="text-[39px] leading-[47px] text-center mb-[25px]">{{ job.title }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B]">{{ $t('WorkPlace') }}:{{ job.place }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">{{ $t('JobResponsibilities') }}</div>
+          <div class="text-[20px] font-medium leading-[30px] text-[#41414B]">工作地点:{{ job.place }}</div>
+          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">岗位职责</div>
           <div class="lg:hidden" v-for="item in job.zhize" :key="item">{{ item }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">{{ $t('JobRequirements') }}</div>
+          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">岗位要求</div>
           <div class="lg:hidden" v-for="item in job.yaoqiu" :key="item">{{ item }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">{{ $t('Remuneration') }}</div>
+          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">薪酬待遇</div>
           <div class="lg:hidden" v-for="item in job.xinzi" :key="item">{{ item }}</div>
-          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">{{ $t('WaysToSubmitResume') }}</div>
-          <div class="lg:hidden">{{ $t('WaysEmail') }} ： hr@opencsg.com</div>
+          <div class="text-[20px] font-medium leading-[30px] text-[#41414B] mt-[10px]">投递方式</div>
+          <div class="lg:hidden">投递地址 ： hr@opencsg.com</div>
         </template>
       </div>
     </el-dialog>

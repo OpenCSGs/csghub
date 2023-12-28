@@ -3,9 +3,9 @@
     <div
       class="flex justify-between items-center h-[80px] bg-white text-[#303133] mx-auto w-full max-w-[1280px] ml-[20px] mr-[20px] xl:px-[20px] md:h-[60px]">
       <div>
-<!--        <nuxt-link to="/">-->
-<!--          <img :src="logo" class="w-[135px] md:w-[90px]" alt="OpenCsg">-->
-<!--        </nuxt-link>-->
+        <nuxt-link to="/">
+          <img :src="logo" class="w-[135px] md:w-[90px]" alt="OpenCsg">
+        </nuxt-link>
       </div>
       <div class="flex justify-center">
         <div class="cursor-pointer md:hidden" @click="changeLang">
@@ -29,10 +29,10 @@
           <div class="hidden md:block">
             <el-popover class="popperList w-[150px]" placement="bottom" v-model="popshow" trigger="click">
               <div @click="closePop">
-<!--                <nuxt-link-->
-<!--                  :class="this.$route.path == '/' ? 'activeMenu block' : 'menuItem'"-->
-<!--                           to="/">{{$t('Overview')}}-->
-<!--                </nuxt-link>-->
+                <nuxt-link
+                  :class="this.$route.path == '/' ? 'activeMenu block' : 'menuItem'"
+                           to="/">{{$t('Overview')}}
+                </nuxt-link>
               </div>
               <div @click="closePop">
                 <div
@@ -49,22 +49,22 @@
               <div @click="closePop">
                 <div
                   :class="this.$route.path == '/Scheme' ? 'activeMenu block' : 'menuItem'"
-                  @click="goScheme">{{$t('Scheme') }}
+                  @click="goScheme">方案
                 </div>
               </div>
               <div @click="closePop">
                 <div
                   :class="this.$route.path == '/Train' ? 'activeMenu block' : 'menuItem'"
-                  @click="goTrain">{{$t('Train') }}
+                  @click="goTrain">培训
                 </div>
               </div>
               <div @click="closePop">
                 <div
                   :class="this.$route.path == '/Pricing' ? 'activeMenu block' : 'menuItem'"
-                  @click="goPricing">{{$t('Pricing') }}
+                  @click="goPricing">价格
                 </div>
               </div>
-              <div @click="goBlog" class="menuItem block">{{ $t('Blog') }}
+              <div @click="goBlog" class="menuItem block">博客
               </div>
               <el-button class="hidden menu border-0 mx-auto backdrop-blur-[15px] bg-transparent" slot="reference">
                 <svg xmlns="http://www.w3.org/2000/svg" class="md:align-baseline w-[20px] h-[20px]" viewBox="0 0 1024 1024">
