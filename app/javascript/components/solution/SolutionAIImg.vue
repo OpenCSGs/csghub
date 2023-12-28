@@ -1,7 +1,7 @@
 <template>
   <div class="py-[96px] text-center w-full bg-white">
     <div class="max-w-[1280px] m-auto">
-      <div class="flex flex-col items-center mb-[32px]">
+      <div class="flex flex-col md:px-[20px] items-center mb-[32px]">
         <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">解决方案 #3</div>
         <div class="text-[36px] leading-[44px] text-[#101828]">OpenCSG Imagen AI 智能图像助手</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] font-light">OpenCSG Imagen AI 智能图像助手是一款在 Stable Diffusion 2.1开源模型基础上研发的，致力于增强人类智能的视觉工具集，旨在为创作者提供更好用的工具，催化灵感的萌芽，并实现创意和生产力的指数级放大。OpenCSG Imagen AI 智能图像助手适应专业设计工作流程，提供多种功能。</div>

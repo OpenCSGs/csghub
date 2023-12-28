@@ -1,7 +1,7 @@
 <template>
   <div class="py-[96px] text-center w-full bg-white">
     <div class="max-w-[1280px] m-auto">
-      <div class="flex flex-col items-center mb-[64px]">
+      <div class="flex flex-col items-center md:px-[20px] mb-[64px]">
         <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">解决方案 #1</div>
         <div class="text-[36px] leading-[44px] text-[#101828]">OpenCSG EKB AI 智能企业知识库</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] font-light">EKB AI 将文档结构化并转换为数字资，实现信息数字化存储和管理，夯实企业资产的数字化转型基础。</div>
