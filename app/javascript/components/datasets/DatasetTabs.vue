@@ -32,7 +32,7 @@
         />
       </template>
       <template #community>
-        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+        <CommunityPage type="Dataset" :userId="userId"  :localModelId="localDatasetId" ></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
         <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
