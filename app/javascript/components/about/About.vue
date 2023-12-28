@@ -1,8 +1,9 @@
 <template>
   <Hero />
   <Feature />
-  <Joinus />
   <Team />
+  <Joinus>
+  </Joinus>
 </template>
 <script setup>
   import Hero from './Hero.vue'
