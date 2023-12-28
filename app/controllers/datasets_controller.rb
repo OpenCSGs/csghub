@@ -34,10 +34,6 @@ class DatasetsController < ApplicationController
   end
 
   def blob
-    render :show
-  end
-
-  def blob
     if params[:download] == 'true'
       file = Starhub.api.download_datasets_file(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
       send_data file, filename: params[:path].split('/').last
