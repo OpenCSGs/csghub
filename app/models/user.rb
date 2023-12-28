@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
-  validates_uniqueness_of :name, :git_token, allow_blank: true
+  validates_uniqueness_of :name, :git_token, :phone, :email, allow_blank: true
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
 
   validate :unique_name_by_organization
@@ -77,6 +77,21 @@ class User < ApplicationRecord
 
   def org_role org
     org_memberships.find_by(organization: org)&.role
+  end
+
+  def can_manage? repository
+    if repository.owner.class == Organization
+      org_role(repository.owner) == 'admin'
+    else
+      self == repository.owner
+    end
+  end
+
+  def set_org_role org, role
+    membership = org_memberships.find_by(organization: org)
+    if membership
+      membership.update(role: role)
+    end
   end
 
   def starhub_synced!

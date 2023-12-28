@@ -2,6 +2,7 @@
   <model-detail
     :tags="<%= @tags %>"
     local-model-id="<%= @local_model.id %>"
+    user-id="<%= current_user&.id || '' %>"
     :model="<%= @model %>"
     :files="<%= @files || {} %>"
     :last-commit="<%= @last_commit %>"
@@ -12,6 +13,7 @@
     :readme="<%= @readme %>"
     :content="<%= @content || {} %>"
     :action-name="'<%= action_name %>'"
+    :settings-visibility="<%= @settings_visibility %>"
     avatar="<%= @avatar_url %>"
   ></model-detail>
 </div>

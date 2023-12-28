@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
-    <TabContainer :default-tab="defaultTab">
+    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <model-summary :readme="readme" :download-count="modelDetail.download_count" />
       </template>
@@ -26,9 +26,9 @@
         />
       </template>
       <template #community>
-        <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
+        <CommunityPage type="Model" :userId="userId" :localModelId="localModelId" ></CommunityPage>
       </template>
-      <template #settings>
+      <template v-if="settingsVisibility" #settings>
         <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
       </template>
     </TabContainer>
@@ -52,6 +52,7 @@ import ModelBlob from './ModelBlob.vue'
 
 const props = defineProps({
   localModelId: String,
+  userId: String,
   modelPath: String,
   modelDefaultBranch: String,
   modelPrivate: Boolean,
@@ -64,6 +65,7 @@ const props = defineProps({
   defaultTab: String,
   readme: String,
   content: String,
-  actionName: String
+  actionName: String,
+  settingsVisibility: Boolean
 })
 </script>

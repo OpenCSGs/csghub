@@ -16,7 +16,7 @@
         <li class="px-5 mlg:!hidden lg:!hidden"> <partner></partner> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <campaigns></campaigns> </li>
-        <!-- <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li> -->
+        <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs :url="docsUrl"></docs> </li>
       </ul>
       <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
@@ -31,7 +31,7 @@
             <el-dropdown-item class="!hidden lg:!flex"> <partner></partner> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex xl:!flex"> <expert></expert> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex xl:!flex"> <campaigns></campaigns> </el-dropdown-item>
-            <!-- <el-dropdown-item class="!hidden xl:!flex"> <docs></docs> </el-dropdown-item> -->
+            <el-dropdown-item class="!hidden xl:!flex"> <docs :url="docsUrl"></docs> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -60,24 +60,22 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>
-              <a :href="userProfile">个人信息</a>
-            </el-dropdown-item>
-            <el-dropdown-item @click="showDialog"
-              >联系我们</el-dropdown-item
-            >
-            <el-dropdown-item v-if="decemberRelease" divided>
-              <a href="/organizations/new">+ 新建组织</a>
-            </el-dropdown-item>
-            <el-dropdown-item v-if="decemberRelease">
-              <a href="/models/new">+ 新建模型</a>
-            </el-dropdown-item>
-            <el-dropdown-item v-if="decemberRelease">
-              <a href="/datasets/new">+ 新建数据集</a>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
-              <a :href="logout" @click="cleanUpAuthing"> 退出登录 </a>
-            </el-dropdown-item>
+            <a :href="userProfile">
+              <el-dropdown-item> 个人信息 </el-dropdown-item>
+            </a>
+            <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
+            <a href="/models/new">
+              <el-dropdown-item v-if="decemberRelease" divided> + 新建模型 </el-dropdown-item>
+            </a>
+            <a href="/datasets/new">
+              <el-dropdown-item v-if="decemberRelease"> + 新建数据集 </el-dropdown-item>
+            </a>
+            <a href="/organizations/new">
+              <el-dropdown-item v-if="decemberRelease" divided> 新建组织 </el-dropdown-item>
+            </a>
+            <a :href="logout" @click="cleanUpAuthing">
+              <el-dropdown-item divided>  退出登录 </el-dropdown-item>
+            </a>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -117,7 +115,8 @@ export default {
     isLoggedIn: String,
     userName: String,
     loginUrl: String,
-    decemberRelease: Boolean
+    decemberRelease: Boolean,
+    docsUrl: String
   },
   data() {
     return {

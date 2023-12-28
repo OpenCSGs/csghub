@@ -33,14 +33,14 @@
 <!--      </svg>-->
 <!--      <div class="ml-2 text-[#606266] text-sm font-medium">Use with library</div>-->
 <!--    </div>-->
-    <div class="rounded border border-[#DCDFE6] flex items-center justify-center w-[158px] h-8 cursor-pointer" @click="cloneRepositoryVisible = true">
+    <div class="rounded border border-[#DCDFE6] flex items-center justify-center w-[118px] h-8 cursor-pointer hover:bg-[#F9FAFB]" @click="cloneRepositoryVisible = true">
       <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <rect opacity="0.12" x="1.3335" y="1.3335" width="13.3333" height="13.3333" rx="3.33333" fill="#2F384C"/>
         <path
             d="M6.66683 5.3335L4.00016 8.00016L6.66683 10.6668M9.3335 5.3335L12.0002 8.00016L9.3335 10.6668M6.66682 14.6668H9.3335C11.2003 14.6668 12.1338 14.6668 12.8468 14.3035C13.474 13.9839 13.9839 13.474 14.3035 12.8468C14.6668 12.1338 14.6668 11.2003 14.6668 9.3335V6.66683C14.6668 4.79999 14.6668 3.86657 14.3035 3.15353C13.9839 2.52632 13.474 2.01639 12.8468 1.69681C12.1338 1.3335 11.2003 1.3335 9.3335 1.3335H6.66683C4.79999 1.3335 3.86657 1.3335 3.15353 1.69681C2.52632 2.01639 2.01639 2.52632 1.69681 3.15353C1.3335 3.86657 1.3335 4.79999 1.3335 6.66682V9.3335C1.3335 11.2003 1.3335 12.1338 1.69681 12.8468C2.01639 13.474 2.52632 13.9839 3.15353 14.3035C3.86657 14.6668 4.79999 14.6668 6.66682 14.6668Z"
             stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <div class="ml-2 text-[#606266] text-sm font-medium">克隆仓库</div>
+      <div class="ml-2 text-[#606266] text-sm font-medium">下载模型</div>
     </div>
     <el-dialog v-model="dialogLibraryVisible" title="Model library is unknown" class="md:!w-[80%]">
       <div class="text-[#a0a1a7] p-2"># Type of model/library unknown.</div>

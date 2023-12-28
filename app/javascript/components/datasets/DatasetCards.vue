@@ -6,6 +6,7 @@
         :frameworkTags="props.frameworkTags"
         :licenseTags="props.licenseTags"
         @resetTags="resetTags"
+        type="dataset"
       />
     </div>
     <div class="mlg:mx-[20px] mlg:pr-[0] xl:w-full pr-[20px]">
@@ -43,7 +44,7 @@
       <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
         <DatasetItem v-for="dataset in datasetsData" :dataset="dataset" />
       </div>
-      <div>
+      <div v-show="totalDatasets > perPage">
         <el-pagination background
                       v-model:current-page="currentPage"
                       :default-current-page=1

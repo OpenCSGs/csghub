@@ -4,7 +4,10 @@
     <div class="mt-[16px]">
       <div class="flex sm:flex-col gap-[16px] mb-[16px]">
         <div class="w-[284px] sm:w-auto">
-          <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">组织命名空间<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg></p>
+          <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">
+            组织命名空间
+            <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg>
+          </p>
           <el-input v-model="orgName" placeholder="2-20位字母数字以及 _ 构成的字符串" input-style="height: 40px" />
         </div>
         <div class="w-[284px] sm:w-auto">
@@ -23,7 +26,10 @@
         </div>
       </div>
       <div class="max-w-[284px] mb-[16px]">
-        <p class="text-[#303133] text-[14px] mb-[8px]">组织类型</p>
+          <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">
+          组织类型
+          <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg>
+        </p>
         <el-select v-model="orgType" placeholder="选择" size="large">
           <el-option
             v-for="item in theOrgTypes"
@@ -83,7 +89,7 @@
           type: 'success'
         })
         setTimeout(() => {
-          window.location.href = props.currentUserProfile
+          window.location.href = "/organizations/" + orgName.value
         }, 500)
       })
       .catch(err => {

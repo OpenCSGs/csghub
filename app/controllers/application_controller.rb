@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
       user_infos = JWT.decode(authing_id_token, nil, false).first
       login_by_user_infos user_infos
     else
-      session[:original_request_path] = request.fullpath
+      session[:original_request_path] = redirect_path_from_request(request.fullpath)
       redirect_to root_path
     end
   rescue => e
@@ -103,6 +103,14 @@ class ApplicationController < ActionController::Base
 
     unless current_user.starhub_synced?
       current_user.sync_to_starhub_server
+    end
+  end
+
+  def redirect_path_from_request (request_path)
+    if request_path.match(/\/internal_api.*/)
+      root_path
+    else
+      request_path
     end
   end
 end

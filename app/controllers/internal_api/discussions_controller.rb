@@ -22,6 +22,10 @@ class InternalApi::DiscussionsController < InternalApi::ApplicationController
 
   def update
     discussion = Discussion.find_by(id: params[:id])
+    if discussion.user != current_user
+      render json: { message: '只有创建者才能更新' }, status: :unauthorized
+      return
+    end
     if discussion && discussion.update(discussion_params)
       render json: discussion.as_json, status: :ok
     else

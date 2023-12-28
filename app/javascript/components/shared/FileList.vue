@@ -33,7 +33,8 @@
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 贡献者
         </div>
-        <a href="#" class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden">
+        <!-- Todo 暂时先隐藏 -->
+        <a href="#" class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden hidden">
           <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <g clip-path="url(#clip0_3745_32637)">
               <path d="M7.00033 4.6665V6.99984L8.75033 8.1665M7.00033 12.8332C3.77866 12.8332 1.16699 10.2215 1.16699 6.99984C1.16699 3.77818 3.77866 1.1665 7.00033 1.1665C10.222 1.1665 12.8337 3.77818 12.8337 6.99984C12.8337 10.2215 10.222 12.8332 7.00033 12.8332Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,15 +47,15 @@
           </svg>
           历史提交: 4 commits
         </a>
-        <el-dropdown split-button>
-            + 添加文件
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>创建新文件</el-dropdown-item>
-                <el-dropdown-item>上传文件</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+<!--        <el-dropdown split-button>-->
+<!--            + 添加文件-->
+<!--            <template #dropdown>-->
+<!--              <el-dropdown-menu>-->
+<!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
+<!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
+<!--              </el-dropdown-menu>-->
+<!--            </template>-->
+<!--          </el-dropdown>-->
       </div>
     </div>
 
@@ -112,8 +113,15 @@
         </el-popover>
         <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
       </div>
-      <div class="text-sm text-[#606266] w-[20%]">
+      <div class="text-sm text-[#606266] flex-shrink-0 text-right w-[15%]">
         <span v-if="file.type === 'file'">{{ formatBytes(file.size) }}</span>
+      </div>
+      <div class="w-[20%] flex items-center">
+        <a v-if="file.type === 'file' && !file.lfs" class="ml-2" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}?download=true`" download>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+            <path d="M6.99967 1.6665V10.4165M6.99967 10.4165L10.4997 6.9165M6.99967 10.4165L3.49967 6.9165M2.33301 10.9998V11.7332C2.33301 12.2932 2.33301 12.5732 2.442 12.7872C2.53787 12.9753 2.69086 13.1283 2.87902 13.2242C3.09293 13.3332 3.37296 13.3332 3.93301 13.3332H10.0663C10.6264 13.3332 10.9064 13.3332 11.1203 13.2242C11.3085 13.1283 11.4615 12.9753 11.5573 12.7872C11.6663 12.5732 11.6663 12.2932 11.6663 11.7332V10.9998" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
       <a href="#" class="text-[#606266] w-[30%] text-sm hover:underline">
         {{ file.commit.message }}

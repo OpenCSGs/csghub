@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
-    <TabContainer :default-tab="defaultTab">
+    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url" />
+    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary
           :introduction="datasetDetail.introduction"
@@ -30,11 +31,11 @@
           :namespace-path="datasetDetail.path"
         />
       </template>
-      <template #settings>
-        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
-      </template>
       <template #community>
         <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+      </template>
+      <template v-if="settingsVisibility" #settings>
+        <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
       </template>
     </TabContainer>
   </div>
@@ -53,9 +54,12 @@ import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 import DatasetBlob from './DatasetBlob.vue'
+import DatasetClone from './DatasetClone.vue';
+
 
 const props = defineProps({
   localDatasetId: String,
+  userId: String,
   datasetPath: String,
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,
@@ -68,6 +72,7 @@ const props = defineProps({
   defaultTab: String,
   readme: String,
   content: String,
-  actionName: String
+  actionName: String,
+  settingsVisibility: Boolean
 })
 </script>

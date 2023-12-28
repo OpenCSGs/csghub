@@ -31,7 +31,7 @@ zh:
         organization:
           invalid: '不符合规范'
           blank: "字段不能为空"
-          taken: "不能创建重复"
+          taken: "已存在，请重新命名"
 
   datetime:
     distance_in_words:

@@ -15,6 +15,7 @@
     <dataset-tabs
       :content="content.data"
       :local-dataset-id="localDatasetId"
+      :user-id="userId"
       :dataset-path="dataset.data.path"
       :dataset-default-branch="dataset.data.default_branch"
       :dataset-private="dataset.data.private"
@@ -27,6 +28,7 @@
       :default-tab="defaultTab"
       :readme="readme.data"
       :actionName="actionName"
+      :settingsVisibility="settingsVisibility"
     />
   </div>
 </template>
@@ -37,6 +39,7 @@ import DatasetTabs from './datasets/DatasetTabs.vue';
 
 const props = defineProps({
   dataset: Object,
+  userId: String,
   files: Object,
   lastCommit: Object,
   branches: Object,
@@ -48,6 +51,7 @@ const props = defineProps({
   content: Object,
   actionName: String,
   avatar: String,
+  settingsVisibility: Boolean,
   tags: Object
 })
 </script>

@@ -54,8 +54,9 @@ class Tag < ApplicationRecord
     'text_processing',
     'graphics',
     'audio',
-    'multimodal',
-    'scientific_computing'
+    'multimodal'
+    # ToDo 暂时隐藏
+    #'scientific_computing'
   ]
 
   def as_json options = nil

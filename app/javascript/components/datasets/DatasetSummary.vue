@@ -4,13 +4,11 @@
     <div class="py-4 w-[20%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
       <div class="text-[#606266] text-base font-medium leading-[22px] pl-4 md:pl-0">月下载量</div>
       <div class="text-[#303133] text-base font-semibold leading-6 mt-1 pl-4 md:pl-0">{{ downloadCount }}</div>
-      <DatasetClone :http-clone-url="httpCloneUrl" :ssh-clone-url="sshCloneUrl" />
     </div>
   </div>
 </template>
 
 <script setup>
-  import DatasetClone from './DatasetClone.vue';
   import { onMounted, ref } from 'vue';
   import MarkdownIt from 'markdown-it';
   import 'github-markdown-css';
@@ -23,9 +21,17 @@
   })
 
   const markdownContent = ref('')
+  const defaultText = '```\nREADME文件内容为空，请下载文件，补充描述内容。\n```'
 
   const parseMetadata = (input) => {
-    const separator = '---\n';
+    if (!input.trim().startsWith('---\n')) {
+      return {
+        metadata: '',
+        content: input
+      }
+    }
+
+    const separator = '---\n'
     const [_, metadata, content] = input.split(separator, 3)
 
     return {
@@ -34,9 +40,10 @@
     }
   }
 
+
   onMounted(() => {
     const { _metadata, content } = parseMetadata(props.readme)
-    markdownContent.value = content
+    markdownContent.value = content.trim() || defaultText
   })
 
   const mdParser = new MarkdownIt()
