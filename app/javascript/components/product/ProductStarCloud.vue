@@ -15,9 +15,9 @@
       </div>
     </div>
   </div>
-  <div class="w-full bg-white pb-[96px]">
+  <div class="w-full bg-white pb-[48px]">
     <div class="max-w-[1400px] m-auto mr-0">
-      <div class="pl-[32px] lg:px-[32px] flex lg:flex-col gap-[64px] mb-[64px]">
+      <div class="relative pl-[32px] lg:px-[32px] flex items-center justify-center lg:flex-col gap-[64px] mb-[64px]">
         <div class="grid grid-cols-2 gap-[32px] py-[32px] w-[600px] lg:w-auto lg:grid-cols-1 items-start">
           <div class="flex flex-col items-start gap-[20px] md:px-[24px]">
             <div class="px-[12px] py-[12px] bg-[#3250BD] rounded-[10px]">
@@ -72,7 +72,9 @@
             </div>
           </div>
         </div>
-        <div class="bg-[#F2F4F7] w-[730px] h-[620px] rounded-l-[24px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-auto mlg:px-[32px]"></div>
+        <div class="bg-[#F2F4F7] w-[730px] h-[620px] rounded-l-[24px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]">
+          <img src="/images/computer.png" class="w-full" alt="">
+        </div>
       </div>
     </div>
   </div>
