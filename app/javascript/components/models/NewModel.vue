@@ -110,7 +110,7 @@
 </style>
 
 <script setup>
-  import { ref, computed, defineProps } from 'vue'
+  import { ref, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
 
