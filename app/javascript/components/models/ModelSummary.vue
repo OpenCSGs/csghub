@@ -9,8 +9,9 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
   import MarkdownIt from 'markdown-it';
+  import parseMD from 'parse-md'
   import 'github-markdown-css';
 
   const props = defineProps({
@@ -21,27 +22,8 @@
   const markdownContent = ref('')
   const defaultText = '```\nREADME文件内容为空，请下载文件，补充描述内容。\n```'
 
-  const parseMetadata = (input) => {
-    if (!input.trim().startsWith('---\n')) {
-      return {
-        metadata: '',
-        content: input
-      }
-    }
-
-    const separator = '---\n'
-    const [_, metadata, content] = input.split(separator, 3)
-
-    return {
-      metadata,
-      content
-    }
-  }
-
-  onMounted(() => {
-    const { _metadata, content } = parseMetadata(props.readme)
-    markdownContent.value = content.trim() || defaultText
-  })
+  const { _metadata, content } = parseMD(props.readme)
+  markdownContent.value = content || defaultText
 
   const mdParser = new MarkdownIt({ html: true })
 </script>
