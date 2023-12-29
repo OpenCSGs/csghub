@@ -1,8 +1,8 @@
 <template>
   <a :href="`/models/${ model.path }`"
-     class="model-card p-4 min-w-[433px] hover:active-model-card sm:w-full sm:min-w-0 border border-gray-200 bg-white rounded-xl hover:active">
-    <div class="flex items-center mb-[5px]">
-      <div class="model-path text-sm text-[#303133] font-medium">{{ model.path }}</div>
+     class="model-card p-4 min-w-[433px] hover:active-model-card sm:min-w-0 border border-gray-200 bg-white rounded-xl hover:active sm:w-[calc(100%-40px)]">
+    <div class="flex items-center mb-[5px] w-[399px] sm:w-[calc(100%-32px)]">
+      <div :title="model.path" class="model-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">{{ model.path }}</div>
     </div>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
       <span>更新时间：{{ model.updated_at.substring(0, 10) }}</span>

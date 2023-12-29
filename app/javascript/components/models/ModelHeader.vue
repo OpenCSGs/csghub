@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center mb-5 text-lg text-[#606266] font-semibold md:pl-5">
-    <el-avatar :size="24" :src="avatar"></el-avatar>
+  <div class="flex items-center mb-5 text-lg text-[#606266] font-semibold md:pl-5 sm:w-[calc(100%-40px)] text-ellipsis overflow-hidden whitespace-nowrap">
+    <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
     <a class="ml-2 mr-1" href="#">
       {{ path.split('/')[0] }}
     </a>
