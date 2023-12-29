@@ -38,7 +38,7 @@ import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import SolutionPage from "./components/solution/SolutionPage.vue"
-
+import ProductPage from "./components/product/ProductPage.vue"
 app = createApp({
   components: {
     Navbar,
@@ -71,7 +71,8 @@ app = createApp({
     ModelCards,
     DatasetCards,
     OrganizationDetail,
-    SolutionPage
+    SolutionPage,
+    ProductPage
   },
   provide:{
     defaultTags: DefaultTags
