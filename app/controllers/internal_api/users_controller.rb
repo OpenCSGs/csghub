@@ -17,7 +17,7 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     if current_user.save
       render json: {message: '用户更新成功'}
     else
-      render json: {message: '用户更新失败'}, status: 500
+      render json: {message: current_user.errors.full_messages.to_sentence}, status: 500
     end
   end
 

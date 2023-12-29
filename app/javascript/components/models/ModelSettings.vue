@@ -39,10 +39,10 @@
       </div>
       <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">此操作<span
           class="text-black font-semibold">无法</span> 撤销. 这将永久删除<span
-          class="text-black font-semibold">{{ path }}</span>模型仓库及其所有文件。
+          class="text-black font-semibold break-words">{{ path }}</span>模型仓库及其所有文件。
       </div>
       <div class="ml-[36px] text-[14px] text-[#606266] leading-[22px]">请输入<span
-          class="text-black font-semibold">{{ path }}</span>以确认删除.
+          class="text-black font-semibold break-words">{{ path }}</span>以确认删除.
       </div>
       <el-input
           v-model="delDesc"
