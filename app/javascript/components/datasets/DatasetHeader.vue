@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center flex-wrap mb-5 text-lg text-[#606266] font-semibold md:pl-5 flex-wrap">
+  <div class="flex items-center flex-wrap mb-5 text-lg text-[#606266] font-semibold md:px-5">
     <div class="flex items-center md:w-full md:mb-1">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path opacity="0.12" d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z" fill="#A8ABB2"/>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center mb-5 text-lg text-[#606266] font-semibold md:pl-5 flex-wrap">
+  <div class="flex items-center mb-5 text-lg text-[#606266] font-semibold md:px-5 flex-wrap">
     <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
     <a class="ml-2 mr-1" href="#">
       {{ path.split('/')[0] }}
