@@ -10,9 +10,9 @@
             产品演示
           </div>
         </div>
-        <iframe class="w-[768px] h-[512px] mlg:w-full mt-[16px] rounded-[10px]">
-          <img src="/images/demo.png" class="w-full h-full" alt="">
-        </iframe>
+        <div class="w-[768px] mlg:w-full mt-[16px] rounded-[10px] border-[4px] border-[#101828]">
+          <el-image src="/images/demo.png" :fit="fit" :preview-src-list="['/images/demo.png']" />
+        </div>
         <div class="flex md:flex-col md:gap-[16px] mt-[80px] text-left">
             <div class="max-w-[405px] cursor-pointer pt-[24px] px-[16px] border-t-[4px] border-t-[#F2F4F7] hover:border-t-[#3250BD]" v-for="item in data" :key="item.id">
               <div class="text-[#101828] text-[20px] leading-[30px] text-center">{{item.title}}</div>
