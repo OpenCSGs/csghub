@@ -2,6 +2,7 @@
   <a :href="url"
      class="flex items-center hover:text-[#00b8e6]"
      :class="this.active ? 'text-[#00b8e6]' : ''"
+     target="_blank"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="currentColor"
       :class="this.active ? 'text-[#00b8e6]' : 'text-white'"
