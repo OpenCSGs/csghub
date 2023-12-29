@@ -35,6 +35,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       return render json: { message: "未找到对应模型" }, status: 404
     end
 
+    unless current_user.can_manage?(@model)
+      render json: { message: '无权限' }, status: :unauthorized
+      return
+    end
+
     if params[:private].to_s == 'true'
       @model.visibility = 'private'
     else
@@ -54,6 +59,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
     unless @model
       return render json: { message: "未找到对应模型" }, status: 404
+    end
+
+    unless current_user.can_manage?(@model)
+      render json: { message: '无权限' }, status: :unauthorized
+      return
     end
 
     if @model.destroy

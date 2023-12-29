@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class OrganizationDashboard < Administrate::BaseDashboard
+class DatasetDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,16 +9,10 @@ class OrganizationDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    creator_id: Field::Number,
-    homepage: Field::String,
-    logo: Field::String,
+    creator: Field::BelongsTo,
     name: Field::String,
-    nickname: Field::String,
-    org_memberships: Field::HasMany,
-    org_type: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
-    starhub_synced: Field::Boolean,
-    users: Field::HasMany,
-    verified: Field::Boolean,
+    owner: Field::Polymorphic,
+    visibility: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -30,28 +24,18 @@ class OrganizationDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    creator_id
-    homepage
     name
-    nickname
-    starhub_synced
-    logo
+    owner
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    creator_id
-    homepage
-    logo
+    creator
     name
-    nickname
-    org_memberships
-    org_type
-    starhub_synced
-    users
-    verified
+    owner
+    visibility
     created_at
     updated_at
   ].freeze
@@ -60,16 +44,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    creator_id
-    homepage
-    logo
-    name
-    nickname
-    org_memberships
-    org_type
-    starhub_synced
-    users
-    verified
+    visibility
   ].freeze
 
   # COLLECTION_FILTERS
@@ -84,10 +59,10 @@ class OrganizationDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how organizations are displayed
+  # Overwrite this method to customize how datasets are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(organization)
-    "Organization ##{organization.name}"
-  end
+  # def display_resource(dataset)
+  #   "Dataset ##{dataset.id}"
+  # end
 end

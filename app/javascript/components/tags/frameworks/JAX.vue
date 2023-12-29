@@ -1,5 +1,5 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[4px] cursor-pointer"
+  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[4px] rounded-[4px] cursor-pointer"
         :style="setTagColor()"
         @click="toggleActive"
   >
@@ -66,7 +66,7 @@
   }
   const setTagColor = () => {
     if (props.activeTag === 'JAX') {
-      return "color: white; background-color: rgb(5 183 141 / 63%)"
+      return "color: white; background-color: #4D6AD6"
     }
   }
   onMounted(() => {

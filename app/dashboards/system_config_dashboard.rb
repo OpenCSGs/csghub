@@ -14,6 +14,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     starhub_configs: Field::JSONB,
     license_configs: Field::JSONB,
     feature_flags: Field::JSONB,
+    general_configs: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -34,6 +35,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     application_env
+    general_configs
     oidc_configs
     starhub_configs
     license_configs
@@ -47,6 +49,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     application_env
+    general_configs
     oidc_configs
     starhub_configs
     license_configs

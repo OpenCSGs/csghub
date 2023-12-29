@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :authenticate_user
+  before_action :check_user_info_integrity
 
   def new
   end
