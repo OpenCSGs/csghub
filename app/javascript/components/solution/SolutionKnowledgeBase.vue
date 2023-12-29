@@ -19,8 +19,12 @@
             <div class="text-[#101828] text-[16px] leading-[24px] font-light">{{item.desc}}</div>
           </div>
         </div>
-        <div class="grow">
-          <div class="bg-[#DADCDF] w-[592px] h-[528px] md:w-full">demo</div>
+        <div class="grow flex items-center">
+          <div class="w-[592px] md:w-full">
+            <video style="width: 100%;" controls autoplay muted>
+              <source src="https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starship-v4.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
     </div>
