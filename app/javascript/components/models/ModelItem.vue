@@ -23,11 +23,15 @@
 </template>
 
 <script setup>
+  import { computed } from 'vue'
+
   const props = defineProps({
     model: Object,
   })
 
-  const visibility = props.model.private ? '私有' : '公开'
+  const visibility = computed(() => {
+    return props.model.private ? '私有' : '公开'
+  })
 </script>
 
 <style scoped>
