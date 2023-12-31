@@ -3,6 +3,8 @@ class Organization < ApplicationRecord
 
   validates_presence_of :name, :org_type
   validates_uniqueness_of :name
+  validates_length_of :nickname, maximum: 20
+  validates_length_of :homepage, maximum: 100
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
 
   validate :unique_name_by_user
@@ -21,8 +23,7 @@ class Organization < ApplicationRecord
       # retrive the image temp url from aliyun
       AliyunOss.instance.download logo
     else
-      asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
-      "#{asset_host}/assets/default_org.png"
+      "/images/default_org.png"
     end
   end
 

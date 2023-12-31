@@ -7,8 +7,11 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
-  validates_uniqueness_of :name, :git_token, :email, allow_blank: true
+  validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
+  validates_length_of :nickname, maximum: 20
+  validates_length_of :email, maximum: 30
   validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
 
   validate :unique_name_by_organization
 
@@ -79,6 +82,14 @@ class User < ApplicationRecord
     org_memberships.find_by(organization: org)&.role
   end
 
+  def can_manage? repository
+    if repository.owner.class == Organization
+      org_role(repository.owner) == 'admin'
+    else
+      self == repository.owner
+    end
+  end
+
   def set_org_role org, role
     membership = org_memberships.find_by(organization: org)
     if membership
@@ -96,6 +107,9 @@ class User < ApplicationRecord
   end
 
   def sync_to_starhub_server
+    # user info missing 不同步
+    return if name.blank? or email.blank?
+
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
     Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 

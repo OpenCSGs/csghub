@@ -3,8 +3,9 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
   import MarkdownIt from 'markdown-it';
+  import parseMD from 'parse-md'
   import 'github-markdown-css';
 
   const props = defineProps({
@@ -13,27 +14,8 @@
 
   const markdownContent = ref('')
 
-  const parseMetadata = (input) => {
-    if (!input.trim().startsWith('---\n')) {
-      return {
-        metadata: '',
-        content: input
-      }
-    }
-
-    const separator = '---\n'
-    const [_, metadata, content] = input.split(separator, 3)
-
-    return {
-      metadata,
-      content
-    }
-  }
-
-  onMounted(() => {
-    const { _metadata, content } = parseMetadata(props.content)
-    markdownContent.value = content || props.content
-  })
+  const { _metadata, content } = parseMD(props.content)
+  markdownContent.value = content
 
   const mdParser = new MarkdownIt({ html: true });
 </script>

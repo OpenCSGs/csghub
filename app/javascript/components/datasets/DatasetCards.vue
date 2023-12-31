@@ -18,7 +18,7 @@
           </svg>
           <span>数据集 <span class="text-gray-400 text-[16px] italic"> {{ totalDatasets }} </span></span>
         </h3>
-        <div class="xl:mt-[16px]">
+        <div class="xl:mt-[16px] sm:w-[calc(100%-40px)]">
           <ElInput
             v-model="nameFilterInput"
             class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"

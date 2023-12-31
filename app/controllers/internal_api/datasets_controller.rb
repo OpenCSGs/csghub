@@ -35,6 +35,11 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
       return render json: { message: "未找到对应数据集" }, status: 404
     end
 
+    unless current_user.can_manage?(@dataset)
+      render json: { message: '无权限' }, status: :unauthorized
+      return
+    end
+
     if @dataset.destroy
       render json: { message: '删除成功' }
     else

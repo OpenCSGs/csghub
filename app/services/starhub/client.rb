@@ -52,11 +52,11 @@ module Starhub
     def starhub_configs
       system_config = SystemConfig.first
       starhub_configs = system_config.starhub_configs rescue {}
-      base_url = starhub_configs['base_url'].presence || Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
-      token = starhub_configs['token'].presence || Rails.application.credentials.starhub_api.send("#{Rails.env}").token
+      base_url = (starhub_configs && starhub_configs['base_url'].presence) || Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
+      token = (starhub_configs && starhub_configs['token'].presence) || Rails.application.credentials.starhub_api.send("#{Rails.env}").token
       [base_url, token]
     end
-    
+
     def request_path(path)
       API_VERSION + path
     end

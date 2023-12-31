@@ -16,7 +16,7 @@
     "highlight.js": "^11.9.0",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
-    "sass": "^1.69.5",
+    "parse-md": "^3.0.3",
     "timeago.js": "^4.0.2",
     "trix": "^2.0.7",
     "vue": "^3.3.4",
