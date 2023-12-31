@@ -1,8 +1,8 @@
 <template>
-  <div class="py-[96px] text-center w-full">
+  <div class="py-[96px] md:py-[16px] text-center w-full">
     <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col items-center mlg:px-[20px] mb-[64px]">
-        <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">产品 #1</div>
+        <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">产品 #2</div>
         <div class="text-[36px] leading-[44px] text-[#101828]">OpenCSG StarShip 星舰平台</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] text-left font-light text-center">StarShip 致力于为大模型应用开发团队提供一套完整的模型/数据管理及应用搭建平台，利用大模型技术打造软件工程2.0的新体验</div>
         <div class="flex gap-[16px] mb-[16px]">
