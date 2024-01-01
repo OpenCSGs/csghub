@@ -33,8 +33,8 @@ class Tag < ApplicationRecord
     text_processing: {color: '#7f71de', zh_name: '文本'},
     graphics: {color: '#db7a7a', zh_name: '图像'},
     audio: {color: '#538f72', zh_name: '音频'},
-    video: {color: 'rgb(5 151 132)', zh_name: '视频'},
-    scientific_computing: {color: '#33cc33', zh_name: '科学计算'}
+    video: {color: '#059784', zh_name: '视频'},
+    scientific_computing: {color: '#525852', zh_name: '科学计算'}
   }.with_indifferent_access
 
   DEFAULT_TAGS = [
@@ -56,9 +56,9 @@ class Tag < ApplicationRecord
     'graphics',
     'audio',
     'video',
-    'multimodal'
+    'multimodal',
     # ToDo 暂时隐藏
-    #'scientific_computing'
+    # 'scientific_computing'
   ]
 
   def as_json options = nil
