@@ -56,7 +56,7 @@ class Tag < ApplicationRecord
     'graphics',
     'audio',
     'video',
-    'multimodal',
+    'multimodal'
     # ToDo 暂时隐藏
     # 'scientific_computing'
   ]
