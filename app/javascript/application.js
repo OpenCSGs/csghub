@@ -39,7 +39,9 @@ import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
-app = createApp({
+import About from "./components/about/About.vue"
+
+const app = createApp({
   components: {
     Navbar,
     SpaceIntro,
@@ -72,7 +74,8 @@ app = createApp({
     DatasetCards,
     OrganizationDetail,
     SolutionPage,
-    ProductPage
+    ProductPage,
+    About
   },
   provide:{
     defaultTags: DefaultTags
