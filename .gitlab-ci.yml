@@ -93,13 +93,13 @@ main-deploy:
         ssh root@$OPEN_PORTAL_PRD_HOST "/bin/bash -s" << EOT
           cd /root/open_portal/
           docker compose -f docker_compose_production.yml pull
-          docker compose -f docker_compose_production.yml up -d --force-recreate web
+          docker compose -f docker_compose_production.yml up -d --force-recreate web docs
           docker image prune -f
         EOT
     - |
         ssh root@$OPEN_PORTAL_PRD_TWO_HOST "/bin/bash -s" << EOT
           cd /root/open_portal/
           docker compose -f docker_compose_production.yml pull
-          docker compose -f docker_compose_production.yml up -d --force-recreate web
+          docker compose -f docker_compose_production.yml up -d --force-recreate web docs
           docker image prune -f
         EOT

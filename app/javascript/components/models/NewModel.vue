@@ -27,7 +27,7 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">模型名称</p>
-          <el-input v-model="modelName" placeholder="2-20个字母数字_-的字符串，_-不能并列出现" input-style="width: 100%" />
+          <el-input v-model="modelName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
         </div>
       </div>
       <div class="mb-9">
@@ -124,7 +124,7 @@
   const modelName = ref('')
   const visibility = ref('private')
 
-  const canCreateModel = computed(() => { return /^(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+$/.test(modelName.value) })
+  const canCreateModel = computed(() => { return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(modelName.value) })
 
   const createModel = async () => {
     try {

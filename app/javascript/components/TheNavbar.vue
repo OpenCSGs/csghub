@@ -16,7 +16,7 @@
         <li class="px-5 mlg:!hidden lg:!hidden"> <partner></partner> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <expert></expert> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <campaigns></campaigns> </li>
-        <!-- <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs></docs> </li> -->
+        <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs :url="docsUrl"></docs> </li>
       </ul>
       <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
@@ -31,7 +31,7 @@
             <el-dropdown-item class="!hidden lg:!flex"> <partner></partner> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex xl:!flex"> <expert></expert> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex xl:!flex"> <campaigns></campaigns> </el-dropdown-item>
-            <!-- <el-dropdown-item class="!hidden xl:!flex"> <docs></docs> </el-dropdown-item> -->
+            <el-dropdown-item class="!hidden xl:!flex"> <docs :url="docsUrl"></docs> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -62,6 +62,9 @@
           <el-dropdown-menu>
             <a :href="userProfile">
               <el-dropdown-item> 个人信息 </el-dropdown-item>
+            </a>
+            <a href="/settings/profile">
+              <el-dropdown-item> 账号设置 </el-dropdown-item>
             </a>
             <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
             <a href="/models/new">
@@ -115,7 +118,8 @@ export default {
     isLoggedIn: String,
     userName: String,
     loginUrl: String,
-    decemberRelease: Boolean
+    decemberRelease: Boolean,
+    docsUrl: String
   },
   data() {
     return {

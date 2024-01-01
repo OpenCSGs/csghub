@@ -1,6 +1,7 @@
 class Tag < ApplicationRecord
   validates_presence_of :tag_origin, :tag_type, :name
   validates_uniqueness_of :name, scope: :tag_field
+  validates_length_of :name, maximum: 20
 
   enum :tag_origin, user_created: 'user_created', system: 'system'
   enum :tag_type, task: 'task', framework: 'framework', language: 'language', license: 'license'
@@ -29,11 +30,11 @@ class Tag < ApplicationRecord
     natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理'},
     audio_processing: {color: '#538f72', zh_name: '语音处理'},
     multimodal: {color: '#e69832', zh_name: '多模态'},
-    text_processing: {color: '#ff33cc', zh_name: '文本'},
-    graphics: {color: '#0073e6', zh_name: '图像'},
-    audio: {color: '#cccc00', zh_name: '音频'},
-    video: {color: '#33cccc', zh_name: '视频'},
-    scientific_computing: {color: '#33cc33', zh_name: '科学计算'}
+    text_processing: {color: '#7f71de', zh_name: '文本'},
+    graphics: {color: '#db7a7a', zh_name: '图像'},
+    audio: {color: '#538f72', zh_name: '音频'},
+    video: {color: '#059784', zh_name: '视频'},
+    scientific_computing: {color: '#525852', zh_name: '科学计算'}
   }.with_indifferent_access
 
   DEFAULT_TAGS = [
@@ -54,8 +55,10 @@ class Tag < ApplicationRecord
     'text_processing',
     'graphics',
     'audio',
-    'multimodal',
-    'scientific_computing'
+    'video',
+    'multimodal'
+    # ToDo 暂时隐藏
+    # 'scientific_computing'
   ]
 
   def as_json options = nil

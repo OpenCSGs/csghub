@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
       user_infos = JWT.decode(authing_id_token, nil, false).first
       login_by_user_infos user_infos
     else
-      session[:original_request_path] = request.fullpath
+      session[:original_request_path] = redirect_path_from_request(request.fullpath)
       redirect_to root_path
     end
   rescue => e
@@ -68,12 +68,19 @@ class ApplicationController < ActionController::Base
       return redirect_to redirect_path
     end
 
-    user = User.find_by(phone: user_infos['phone']) || User.find_by(email: user_infos['email'])
+    user = (user_infos['phone'].presence && User.find_by(phone: user_infos['phone'])) ||
+           (user_infos['email'].presence && User.find_by(email: user_infos['email']))
     if user
       user.login_identity = user_infos['sub']
       user.name = user_infos['name'] if user.name.blank?
       user.avatar = user_infos['avatar'] if user.avatar.blank?
-      user.save
+      user.phone = user_infos['phone'] if user.phone.blank?
+      user.email = user_infos['email'] if user.email.blank?
+      unless user.save
+        flash[:alert] = "当前用户存在历史数据冲突，请联系管理员处理"
+        log_error "用户登录历史数据问题", user.errors.messages
+        return redirect_to errors_unauthorized_path
+      end
     else
       user = User.find_or_create_by(login_identity: user_infos['sub']) do |u|
         u.roles = :personal_user
@@ -103,6 +110,14 @@ class ApplicationController < ActionController::Base
 
     unless current_user.starhub_synced?
       current_user.sync_to_starhub_server
+    end
+  end
+
+  def redirect_path_from_request (request_path)
+    if request_path.match(/\/internal_api.*/)
+      root_path
+    else
+      request_path
     end
   end
 end

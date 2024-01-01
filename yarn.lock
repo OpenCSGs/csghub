@@ -1114,6 +1114,13 @@ js-beautify@^1.14.9:
     glob "^10.3.3"
     nopt "^7.2.0"
 
+js-yaml@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
+  integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
+  dependencies:
+    argparse "^2.0.1"
+
 jsdom@^22.1.0:
   version "22.1.0"
   resolved "https://mirrors.huaweicloud.com/repository/npm/jsdom/-/jsdom-22.1.0.tgz#0fca6d1a37fbeb7f4aac93d1090d782c56b611c8"
@@ -1334,6 +1341,13 @@ p-limit@^4.0.0:
   integrity sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==
   dependencies:
     yocto-queue "^1.0.0"
+
+parse-md@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/parse-md/-/parse-md-3.0.3.tgz#aede95c45b5eaa82088d2c26a833d156b8be6bb1"
+  integrity sha512-2kpNrrW1GBgli5VT9X9/Y6n4PVsIFVdG49tguq1PHwzsRSK0Cu0yJPTUFOwWouFT85atYNWQ1T/rmqfj7kLd8g==
+  dependencies:
+    js-yaml "^4.1.0"
 
 parse-node-version@^1.0.1:
   version "1.0.1"

@@ -149,6 +149,12 @@ module Starhub
       res.body
     end
 
+    def download_model_file(username, model_name, path, options = {})
+      res = @client.get("/models/#{username}/#{model_name}/download/#{path}?ref=#{options[:ref]}")
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # datasets
 
     def get_dataset_detail_files_data_in_parallel(username, dataset_name, options = {})
@@ -238,6 +244,12 @@ module Starhub
       res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
+    end
+
+    def download_datasets_file(username, dataset_name, path, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}?ref=#{options[:ref]}")
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     def delete_dataset(namespace, dataset_name, params = {})
