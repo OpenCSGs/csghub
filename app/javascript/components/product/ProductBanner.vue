@@ -29,7 +29,7 @@ export default {
 </script>
 <style scoped>
   .banner{
-    background-image: url(../../../assets/images/solution/BackgroundPattern.png);
+    background-image: url('/images/solution/BackgroundPattern.png');
     background-repeat: no-repeat;
     background-size: auto;
     background-position: top
