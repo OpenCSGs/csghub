@@ -117,6 +117,8 @@ Rails.application.routes.draw do
     get '/partners/apply', to: 'partners#apply'
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
+    get '/solution', to: 'solution#index'
+    get '/product', to: 'product#index'
 
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'
@@ -129,5 +131,7 @@ Rails.application.routes.draw do
     # errors
     get '/errors/not-found', to: 'errors#not_found'
     get '/errors/unauthorized', to: 'errors#unauthorized'
+
+    get '/about', to: 'about#index'
   end
 end

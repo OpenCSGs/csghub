@@ -7,7 +7,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import Navbar from "./components/TheNavbar.vue"
+// import Navbar from "./components/TheNavbar.vue"
+import Navbar from "./components/NewNavbar.vue"
 import SpaceIntro from "./components/SpaceIntro.vue"
 import SpaceCard from "./components/SpaceCard.vue"
 import SpaceCards from "./components/SpaceCards.vue"
@@ -37,8 +38,11 @@ import ModelCards from "./components/models/ModelCards.vue"
 import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
+import SolutionPage from "./components/solution/SolutionPage.vue"
+import ProductPage from "./components/product/ProductPage.vue"
+import About from "./components/about/About.vue"
 
-app = createApp({
+const app = createApp({
   components: {
     Navbar,
     SpaceIntro,
@@ -69,7 +73,10 @@ app = createApp({
     DatasetItem,
     ModelCards,
     DatasetCards,
-    OrganizationDetail
+    OrganizationDetail,
+    SolutionPage,
+    ProductPage,
+    About
   },
   provide:{
     defaultTags: DefaultTags
