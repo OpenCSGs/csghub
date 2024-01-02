@@ -69,7 +69,7 @@ export default {
 </script>
 <style scoped>
   .codeOptimizationBg{
-    background-image: url('/images/solution/codeOptimization.png');
+    background-image: url('../images/codeOptimization.png');
     background-repeat: no-repeat;
     background-size: auto;
     background-position: center;
