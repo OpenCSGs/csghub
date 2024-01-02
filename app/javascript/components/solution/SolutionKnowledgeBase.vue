@@ -26,7 +26,7 @@
         <div class="grow flex items-center">
           <div class="w-[592px] md:w-full">
             <video style="width: 100%;" controls autoplay muted>
-              <source src="https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starship-v4.mp4" type="video/mp4" />
+              <source src="https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/EKBAI.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default {
 
   data() {
     return {
-      videoSrc:'https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starship-v4.mp4',
+      videoSrc:'https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/EKBAI.mp4',
       data:[{id:"1",title:"基于企业知识、文档和数据资产的大模型知识管理平台 ",desc:"我们的平台旨在全面管理您企业的知识、文档和数据资产，为您提供一个综合性的管理解决方案。"},
             {id:"2",title:"全知全能无处不在的 AI 助理",desc:"我们强大而智能的 AI 助理就像您的随身专家助手，随时随地为您提供所需的帮助和支持。"},
             {id:"3",title:"助力企业资产数字化转型",desc:"我们致力于协助企业顺利进行资产的数字化转型，提高效率和竞争力。"},
