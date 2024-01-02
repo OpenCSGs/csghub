@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      theVideoSrc:videoSrc,
+      theVideoSrc:this.videoSrc,
       dialogVisible: false,
     };
   },
@@ -35,9 +35,6 @@ export default {
   },
     mounted() {},
     methods: {
-      goDemo(){
-        window.open('https://starcloud-stg.opencsg.com/ ', '_blank');
-      },
       openDialog() {
         this.dialogVisible = true;
       },
