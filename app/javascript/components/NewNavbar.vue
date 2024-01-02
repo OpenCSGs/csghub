@@ -1,5 +1,5 @@
 <template>
-  <div class="flex text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
+  <div class="flex navbar text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
     <div class="flex">
       <div class="py-2 mr-[100px] sm:mr-[30px]">
         <a href="/">
@@ -14,19 +14,19 @@
         :ellipsis="true"
         class="w-full justify-end"
       >
-        <el-sub-menu index="1">
+        <el-sub-menu index="1" popper-class="my-submenu">
           <template #title>产品</template>
           <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">产品1</el-menu-item>
           <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">产品2</el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="2">
+        <el-sub-menu index="2" popper-class="my-submenu">
           <template #title>解决方案</template>
           <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">解决方案1</el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">解决方案2</el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">解决方案3</el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">解决方案4</el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="3">
+        <el-sub-menu index="3" popper-class="my-submenu">
           <template #title>开发者</template>
           <a href="/models"><el-menu-item index="/models">模型</el-menu-item></a>
           <a href="/datasets"><el-menu-item index="/datasets">数据集</el-menu-item></a>
@@ -34,7 +34,7 @@
           <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
         </el-sub-menu>
-        <el-sub-menu index="4">
+        <el-sub-menu index="4" popper-class="my-submenu">
           <template #title>公司</template>
           <el-menu-item index="4-1">公司介绍</el-menu-item>
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
@@ -146,16 +146,21 @@ export default {
 }
 </script>
 
-<style scoped>
-.el-dropdown {
-  color: #303133;
-}
-.el-dropdown-link {
-  &:focus {
-    outline: none;
+<style>
+.navbar{
+  .el-dropdown {
+    color: #303133;
+  }
+ .el-dropdown-link {
+    &:focus {
+      outline: none;
+    }
+  }
+  .el-menu--horizontal.el-menu {
+    border-bottom: none;
   }
 }
-.el-menu--horizontal.el-menu {
-  border-bottom: none;
+.my-submenu .el-menu{
+  min-width: 150px;
 }
 </style>
