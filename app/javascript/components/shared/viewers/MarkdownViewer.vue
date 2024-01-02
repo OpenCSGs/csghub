@@ -5,6 +5,7 @@
 <script setup>
   import { ref } from 'vue';
   import MarkdownIt from 'markdown-it';
+  import markdownItAnchor from 'markdown-it-anchor'
   import parseMD from 'parse-md'
   import 'github-markdown-css';
 
@@ -21,7 +22,11 @@
 
   markdownContent.value = props.setDefaultText ? (content.trim() || defaultText) : content
 
-  const mdParser = new MarkdownIt({ html: true });
+  const anchorOptions = {
+    tabIndex: false,
+  }
+
+  const mdParser = new MarkdownIt({ html: true }).use(markdownItAnchor, anchorOptions)
 </script>
 
 <style scoped>
