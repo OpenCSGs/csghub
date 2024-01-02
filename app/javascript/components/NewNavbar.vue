@@ -36,7 +36,7 @@
         </el-sub-menu>
         <el-sub-menu index="4" popper-class="my-submenu">
           <template #title>公司</template>
-          <el-menu-item index="4-1">公司介绍</el-menu-item>
+          <a href="/about"><el-menu-item index="/about">公司介绍</el-menu-item></a>
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
