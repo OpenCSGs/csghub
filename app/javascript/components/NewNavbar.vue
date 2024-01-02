@@ -7,7 +7,7 @@
         </a>
       </div>
     </div>
-    <div class="flex justify-between items-center gap-4 w-full md:gap-0 md:w-[70%]">
+    <div class="flex justify-between items-center gap-4 w-full md:gap-0 md:w-[50%]">
       <el-menu
         :default-active="activeIndex"
         mode="horizontal"
@@ -162,5 +162,9 @@ export default {
 }
 .my-submenu .el-menu{
   min-width: 150px;
+}
+
+.el-sub-menu__title {
+  border-bottom: unset !important;
 }
 </style>
