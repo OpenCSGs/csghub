@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[96px] text-center w-full bg-white">
+  <div class="KnowledgeBase py-[96px] text-center w-full bg-white">
     <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col items-center md:px-[20px] mb-[64px]">
         <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">解决方案 #1</div>

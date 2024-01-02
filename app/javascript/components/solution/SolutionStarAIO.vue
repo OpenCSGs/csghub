@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[96px] w-full">
+  <div class="StarAIO py-[96px] w-full">
     <div class="max-w-[1280px] m-auto">
       <div class="px-[32px] flex md:flex-col gap-[64px] mb-[64px]">
         <div class="flex flex-col items-start max-w-[380px]">

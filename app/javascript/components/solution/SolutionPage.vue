@@ -19,7 +19,10 @@ export default {
   props: {},
 
   data() {
-    return {};
+    const classParam = new URLSearchParams(window.location.search).get('class');
+    return {
+      scrollToClass: classParam ?  classParam : ''
+    };
   },
 
   components: {
@@ -30,6 +33,16 @@ export default {
     SolutionProgramming
   },
 
-  mounted() {},
+  mounted() {
+    this.scrollToContent()
+  },
+  methods: {
+    scrollToContent() {
+      const element = document.getElementsByClassName(this.scrollToClass);
+      if (element.length > 0) {
+        element[0].scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  },
 };
 </script>
