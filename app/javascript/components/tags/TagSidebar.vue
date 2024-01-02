@@ -209,21 +209,21 @@
   }
 
   const filterTaskTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords);
+    const keywordsRegex = new RegExp(keywords, 'i');
     const newTags = JSON.parse(props.taskTags)
     const result = removeNotMatchedTags(newTags, keywordsRegex)
     theTaskTags.value = result
   }
 
   const filterFrameworkTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords);
+    const keywordsRegex = new RegExp(keywords, 'i');
     const newTags = JSON.parse(props.frameworkTags)
     const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
     theFrameworkTags.value = result
   }
 
   const filterLicenseTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords);
+    const keywordsRegex = new RegExp(keywords, 'i');
     const newTags = JSON.parse(props.licenseTags)
     const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
     theLicenseTags.value = result
@@ -235,7 +235,7 @@
   }
 
   const frameworkTagExist = (tagName) => {
-    result = theFrameworkTags.value.find(ftag => ftag.name === tagName)
+    result = theFrameworkTags.value.find(ftag => ftag.name.toLowerCase() === tagName.toLowerCase())
     return result
   }
 
