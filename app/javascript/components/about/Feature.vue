@@ -7,7 +7,7 @@
       <div
         class="flex justify-between mb-[139px] xl:px-[20px] md:flex-col md:items-center md:justify-center md:mb-[40px] md:mt-[20px] md:gap-[20px]">
         <div class="flex items-center flex-col gap-4 max-w-[256px] md:gap-2">
-          <img src="/images/about/home/integrate.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
+          <img src="/images/about/integrate.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
           <div class="text-[#000] text-[30px] font-semibold leading-[38px] md:text-[24px] mb-0">
             整合
           </div>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="flex items-center flex-col gap-4 max-w-[256px] md:gap-2">
-          <img src="/images/about/home/governance.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
+          <img src="/images/about/governance.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
           <div class="text-[#000] text-[30px] font-semibold leading-[38px] md:text-[24px] mb-0">
               治理
           </div>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="flex items-center flex-col gap-4 max-w-[256px] md:gap-2">
-          <img src="/images/about/home/empower.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
+          <img src="/images/about/empower.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
           <div class="text-[#000] text-[30px] font-semibold leading-[38px] md:text-[24px] mb-0">
             赋能
           </div>
@@ -41,7 +41,7 @@
         >
           <el-carousel-item class="" v-for="item in 10" :key="item">
             <div>
-              <img :src="`/images/about/home/carousel/feature-${item}.png`" class="w-full rounded-[8px] h-[600px] xl:h-[520px] lg:h-[400px] sm:h-[200px]" alt="OpenCSG"/>
+              <img :src="`/images/about/carousel/feature-${item}.png`" class="w-full rounded-[8px] h-[600px] xl:h-[520px] lg:h-[400px] sm:h-[200px]" alt="OpenCSG"/>
             </div>
           </el-carousel-item>
         </el-carousel>
