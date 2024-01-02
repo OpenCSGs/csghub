@@ -26,5 +26,11 @@
     tabIndex: false,
   }
 
-  const mdParser = new MarkdownIt({ html: true }).use(markdownItAnchor, anchorOptions);
+  const mdParser = new MarkdownIt({ html: true }).use(markdownItAnchor, anchorOptions)
 </script>
+
+<style scoped>
+  .markdown-body :deep(img) {
+    max-width: 100% !important;
+  }
+</style>
