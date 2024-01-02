@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-[96px] text-center w-full">
+  <div class="StarCloud pt-[96px] text-center w-full">
     <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col items-center md:px-[20px] mb-[64px] relative">
         <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">产品 #1</div>
