@@ -17,7 +17,9 @@
               <source :src="videoSrc" type="video/mp4" />
             </video>
           </el-dialog>
-          <div class="cursor-pointer py-[8px] px-[12px] text-[14px] leading-[20px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">立即体验</div>
+          <div @click="goEkb" class="cursor-pointer py-[8px] px-[12px] text-[14px] leading-[20px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
+            立即体验
+          </div>
         </div>
       </div>
       <div class="flex md:flex-col gap-[64px] px-[32px] text-left">
@@ -69,14 +71,17 @@ export default {
   },
   mounted() {},
   methods: {
-  openDialog() {
-    this.dialogVisible = true;
-  },
-  closeDialog() {
-    this.$refs.videoPlayer.pause();
-    this.dialogVisible = false;
+    goEkb(){
+      window.open('http://ekb.opencsg.com:9080/', '_blank');
+    },
+    openDialog() {
+      this.dialogVisible = true;
+    },
+    closeDialog() {
+      this.$refs.videoPlayer.pause();
+      this.dialogVisible = false;
+    }
   }
-}
 };
 </script>
 <style>
