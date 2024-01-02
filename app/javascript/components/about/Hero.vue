@@ -3,7 +3,7 @@
     <div
         class="2xl:h-[75vh] xl:h-[100%] flex items-center mx-auto max-w-[1280px] gap-[104px] xl:flex-col xl:gap-[20px] xl:py-[40px] xl:px-[20px]">
       <div class="h-auto">
-        <img src="/images/about/home/hero.png" class="w-[600px]" alt="OpenCSG"/>
+        <img src="/images/about/hero.png" class="w-[600px]" alt="OpenCSG"/>
       </div>
       <div class="xl:flex xl:flex-col xl:items-center">
         <div class="text-[48px] font-semibold text-[#303133] mb-[24px] md:text-[28px] md:text-center">
