@@ -14,6 +14,7 @@
         :ellipsis="true"
         class="w-full justify-end"
         text-color="#475467"
+        active-text-color="black"
       >
         <el-sub-menu index="1" popper-class="popper-submenu">
           <template #title>产品</template>
@@ -87,7 +88,7 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <button v-else class="bg-[#303133] rounded-[100px] py-[2px] px-[12px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
+      <button v-else class="min-w-[72px] sm:min-w-[46px] bg-[#303133] rounded-[100px] p-[2px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
         <a class="sm:hidden" :href="loginUrl">
           登录/注册
         </a>
