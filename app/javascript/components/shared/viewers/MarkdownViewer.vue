@@ -13,7 +13,7 @@
     setDefaultText: Boolean
   })
 
-  const defaultText = '<p><img src="https://raw.githubusercontent.com/justinpinkney/stable-diffusion/main/assets/im-vars-thin.jpg" alt=""></p>'
+  const defaultText = '```\nREADME文件内容为空，请下载文件，补充描述内容。\n```'
 
   const markdownContent = ref('')
 
