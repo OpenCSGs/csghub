@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="flex flex-col gap-[32px] mb-[64px]">
         <div class="flex gap-[32px] md:pl-[10px] flex-nowrap w-full overflow-hidden">
           <div class="min-w-[360px] h-[480px] bg-[#ECBF55] transition-transform duration-300 ease" v-for="(item,index) in srcList" :style="{ transform: `translateX(${translateValue}px)` }">
@@ -23,7 +23,7 @@
           <div class="cursor-pointer py-[16px] px-[16px] rounded-[28px] border border-[#EAECF0]" @click="nextSlide"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
-      
+
       <div class="grid grid-cols-3 gap-[32px] md:grid-cols-1 px-[20px]">
         <div class="flex flex-col items-center gap-[20px] md:mb-[0px] mb-[96px]">
           <div class="px-[12px] py-[12px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
@@ -93,7 +93,7 @@ export default {
     return {
       currentIndex: 0,
       translateValue: 0,
-      srcList:['/images/Image2.png','/images/Image5.png','/images/Image6.png','/images/Image1.png','/images/Image3.png','/images/Image4.png',]
+      srcList:['/images/solution/ImagenAI2.png','/images/solution/ImagenAI5.png','/images/solution/ImagenAI6.png','/images/solution/ImagenAI1.png','/images/solution/ImagenAI3.png','/images/solution/ImagenAI4.png']
     };
   },
 

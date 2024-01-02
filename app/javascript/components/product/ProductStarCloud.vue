@@ -58,7 +58,7 @@
           </div>
         </div>
         <div class="grow bg-[#F2F4F7] max-w-[730px] max-h-[620px] rounded-l-[24px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]">
-          <el-image src="/images/computer.png" :fit="fit" :preview-src-list="['/images/computer.png']" />
+          <el-image src="/images/product/computer.png" :fit="fit" :preview-src-list="['/images/product/computer.png']" />
         </div>
       </div>
     </div>
