@@ -21,6 +21,7 @@
             立即体验
           </div>
         </div>
+        <div class="text-[16px] leading-[24px] text-[#475467] font-light mt-[16px]">联系 contact@opencsg.com 开通试用权限</div>
       </div>
       <div class="flex md:flex-col gap-[64px] px-[32px] text-left">
         <div class="grow">
