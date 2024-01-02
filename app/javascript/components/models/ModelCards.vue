@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-[24px] max-w-[1280px] mb-[60px] m-auto mt-[32px]">
-    <div class="w-[30%] min-w-[360px] xl:mx-[20px] mlg:hidden">
+    <div class="w-[30%] min-w-[360px] xl:px-[20px] mlg:hidden">
       <TagSidebar
         :taskTags="props.taskTags"
         :frameworkTags="props.frameworkTags"
@@ -9,7 +9,7 @@
         type="model"
       />
     </div>
-    <div class="mlg:mx-[20px] mlg:pr-[0] xl:w-full pr-[20px]">
+    <div class="pr-[20px] mlg:px-[20px] xl:w-full">
       <div class="flex xl:flex-col justify-between">
         <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -18,7 +18,7 @@
           </svg>
           <span>模型 <span class="text-gray-400 text-[16px] italic"> {{ totalModels }} </span></span>
         </h3>
-        <div class="xl:mt-[16px] sm:w-[calc(100%-40px)]">
+        <div class="xl:mt-[16px]">
           <ElInput
             v-model="nameFilterInput"
             class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
