@@ -1,6 +1,6 @@
 <template>
   <a :href="`/datasets/${ dataset.path }`"
-     class="dataset-card hover:active-dataset-card p-4 min-w-[433px] sm:min-w-0 border border-gray-200 rounded-xl">
+     class="dataset-card hover:active-dataset-card p-4 sm:w-full border border-gray-200 rounded-xl">
     <div class="flex items-center mb-[5px] w-[399px]">
       <div class="dataset-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">{{ dataset.path }}</div>
     </div>

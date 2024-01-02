@@ -1,6 +1,6 @@
 <template>
   <a :href="`/models/${ model.path }`"
-     class="model-card p-4 min-w-[433px] hover:active-model-card sm:min-w-0 border border-gray-200 bg-white rounded-xl hover:active">
+     class="model-card p-4 hover:active-model-card sm:w-full border border-gray-200 bg-white rounded-xl hover:active">
     <div class="flex items-center mb-[5px] w-[399px]">
       <div :title="model.path" class="model-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">{{ model.path }}</div>
     </div>
