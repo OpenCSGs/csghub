@@ -38,6 +38,8 @@ import ModelCards from "./components/models/ModelCards.vue"
 import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
+import SolutionPage from "./components/solution/SolutionPage.vue"
+import ProductPage from "./components/product/ProductPage.vue"
 import About from "./components/about/About.vue"
 
 const app = createApp({
@@ -72,6 +74,8 @@ const app = createApp({
     ModelCards,
     DatasetCards,
     OrganizationDetail,
+    SolutionPage,
+    ProductPage,
     About
   },
   provide:{

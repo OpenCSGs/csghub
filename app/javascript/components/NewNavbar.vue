@@ -18,15 +18,27 @@
       >
         <el-sub-menu index="1" popper-class="popper-submenu">
           <template #title>产品</template>
-          <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">产品1</el-menu-item>
-          <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">产品2</el-menu-item>
+          <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
+            <span>StarCloud 星云平台</span>
+          </el-menu-item>
+          <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">
+            <span>StarShip 星舰平台</span>
+          </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2" popper-class="popper-submenu">
           <template #title>解决方案</template>
-          <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">解决方案1</el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">解决方案2</el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">解决方案3</el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">解决方案4</el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">
+            <span>EKB AI 智能企业知识库</span>
+          </el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">
+            <span>StarAIO 大模型一体机</span>
+          </el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">
+            <span>Imagen AI 智能图像助手</span>
+          </el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">
+            <span>StarCode AI 智能编程助手</span>
+          </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>开发者</template>
