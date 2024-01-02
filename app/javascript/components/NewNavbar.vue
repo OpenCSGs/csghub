@@ -16,31 +16,31 @@
       >
         <el-sub-menu index="1">
           <template #title>产品</template>
-          <el-menu-item index="1-1">产品1</el-menu-item>
-          <el-menu-item index="1-2">产品2</el-menu-item>
+          <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">产品1</el-menu-item>
+          <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">产品2</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2">
           <template #title>解决方案</template>
-          <el-menu-item index="2-1">解决方案1</el-menu-item>
-          <el-menu-item index="2-2">解决方案2</el-menu-item>
-          <el-menu-item index="2-3">解决方案3</el-menu-item>
-          <el-menu-item index="2-4">解决方案4</el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">解决方案1</el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">解决方案2</el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">解决方案3</el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">解决方案4</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3">
           <template #title>开发者</template>
-          <a href="/models"><el-menu-item index="3-1">模型</el-menu-item></a>
-          <a href="/datasets"><el-menu-item index="3-2">数据集</el-menu-item></a>
+          <a href="/models"><el-menu-item index="/models">模型</el-menu-item></a>
+          <a href="/datasets"><el-menu-item index="/datasets">数据集</el-menu-item></a>
           <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
-          <a href="/spaces"><el-menu-item index="3-4">应用空间</el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item index="3-5">文档中心</el-menu-item></a>
+          <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
+          <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
         </el-sub-menu>
         <el-sub-menu index="4">
           <template #title>公司</template>
           <el-menu-item index="4-1">公司介绍</el-menu-item>
-          <a href="/partners"><el-menu-item index="4-2">合作伙伴</el-menu-item></a>
-          <a href="/experts"><el-menu-item index="4-3">技术专家</el-menu-item></a>
+          <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
+          <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-        <a href="/campaigns"><el-menu-item index="5">社区活动</el-menu-item></a>
+        <a href="/campaigns"><el-menu-item index="/campaigns">社区活动</el-menu-item></a>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
@@ -118,7 +118,9 @@ export default {
     decemberRelease: Boolean
   },
   data() {
+    const classParam = new URLSearchParams(window.location.search).get('class');
     return {
+      activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
       userProfile: `/profile/${this.userName}`
     }
@@ -127,6 +129,9 @@ export default {
     ContactUs,
   },
   methods: {
+    handleNavigation(path,className){
+      window.location.href = path + '?class=' + className;
+    },
     showDialog() {
       this.$refs.child.showDialog()
     },
@@ -137,8 +142,7 @@ export default {
       localStorage.removeItem("__authing__multiple_accounts");
     }
   },
-  mounted() {
-  }
+  mounted() {}
 }
 </script>
 
