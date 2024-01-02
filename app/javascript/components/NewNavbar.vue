@@ -1,13 +1,13 @@
 <template>
   <div class="flex top-navbar-menu text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
     <div class="flex">
-      <div class="py-2 mr-[100px] sm:mr-[30px]">
+      <div class="py-2 mr-[100px] xl:mr-[50px] sm:mr-[30px]">
         <a href="/">
           <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px]" />
         </a>
       </div>
     </div>
-    <div class="flex justify-between items-center gap-4 w-full md:gap-0 md:w-[50%]">
+    <div class="flex items-center justify-end gap-4 w-full md:gap-0 md:w-[50%]">
       <el-menu
         :default-active="activeIndex"
         mode="horizontal"
