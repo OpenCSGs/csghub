@@ -23,3 +23,9 @@
 
   const mdParser = new MarkdownIt({ html: true });
 </script>
+
+<style scoped>
+  .markdown-body :deep(img) {
+    max-width: 100% !important;
+  }
+</style>
