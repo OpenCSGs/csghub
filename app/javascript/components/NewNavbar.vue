@@ -84,6 +84,9 @@
             <a :href="userProfile">
               <el-dropdown-item> 个人信息 </el-dropdown-item>
             </a>
+            <a href="/settings/profile">
+              <el-dropdown-item> 账号设置 </el-dropdown-item>
+            </a>
             <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
             <a href="/models/new">
               <el-dropdown-item v-if="decemberRelease" divided> + 新建模型 </el-dropdown-item>
