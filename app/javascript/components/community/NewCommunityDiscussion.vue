@@ -29,7 +29,6 @@
 import FormLabel from "../form/sub/FormLabel.vue"
 import MarkdownIt from 'markdown-it';
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
-import 'github-markdown-css';
 import csrfFetch from "../../packs/csrfFetch";
 import { ElMessage } from 'element-plus'
 export default {

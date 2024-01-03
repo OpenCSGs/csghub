@@ -11,5 +11,6 @@
  * It is generally better to create a new file per style scope.
  *
  *= require actiontext
+ *= require markdown
  *= require_self
  */

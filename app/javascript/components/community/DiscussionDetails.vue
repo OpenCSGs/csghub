@@ -57,7 +57,6 @@ import { format } from 'timeago.js';
 import csrfFetch from "../../packs/csrfFetch";
 import { ElMessage } from 'element-plus'
 import MarkdownIt from "markdown-it";
-import 'github-markdown-css';
 export default {
   props: {
     discussionId: String,
