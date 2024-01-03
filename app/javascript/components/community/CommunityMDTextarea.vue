@@ -54,7 +54,6 @@
 </template>
 <script>
 import MarkdownIt from "markdown-it"
-import 'github-markdown-css'
 import csrfFetch from "../../packs/csrfFetch.js"
 import { ElMessage } from 'element-plus'
 export default {

@@ -7,7 +7,6 @@
   import MarkdownIt from 'markdown-it';
   import markdownItAnchor from 'markdown-it-anchor'
   import parseMD from 'parse-md'
-  import 'github-markdown-css';
 
   const props = defineProps({
     content: String,

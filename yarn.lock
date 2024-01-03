@@ -1061,11 +1061,6 @@ get-func-name@^2.0.1, get-func-name@^2.0.2:
   resolved "https://mirrors.huaweicloud.com/repository/npm/get-func-name/-/get-func-name-2.0.2.tgz#0d7cf20cd13fda808669ffa88f4ffc7a3943fc41"
   integrity sha512-8vXOvuE167CtIc3OyItco7N/dpRtBbYOsPsXCz7X/PMnlGjYjSGuZJgM1Y7mmew7BKf9BqvLX2tnOVy1BBUsxQ==
 
-github-markdown-css@^5.4.0:
-  version "5.5.0"
-  resolved "https://mirrors.huaweicloud.com/repository/npm/github-markdown-css/-/github-markdown-css-5.5.0.tgz#799a2d8b11c8c36cd0239524e1f76307cd8f244c"
-  integrity sha512-Ncp4putm+cGteDhtNYKGdchM4uiIm5tmQcAQx/eEYhuM0sOdjZYNQOauQTaodjDQjfw7whU99MijwC1M0FUY4w==
-
 glob@^10.3.3:
   version "10.3.10"
   resolved "https://mirrors.huaweicloud.com/repository/npm/glob/-/glob-10.3.10.tgz#0351ebb809fd187fe421ab96af83d3a70715df4b"
