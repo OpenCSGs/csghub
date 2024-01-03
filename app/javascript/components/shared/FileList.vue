@@ -108,7 +108,7 @@
           content="暂不支持预览，请通过 git clone 下载"
         >
           <template #reference>
-            <div class="ml-2 text-sm text-[#303133] hover:underline">{{ file.name }}</div>
+            <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
           </template>
         </el-popover>
         <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
