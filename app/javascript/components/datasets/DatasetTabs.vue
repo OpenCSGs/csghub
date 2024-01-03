@@ -5,7 +5,7 @@
       <template #summary>
         <dataset-summary
           :introduction="datasetDetail.introduction"
-          :download-count="datasetDetail.download_count"
+          :download-count="datasetDetail.downloads"
           :http-clone-url="datasetDetail.http_clone_url"
           :ssh-clone-url="datasetDetail.ssh_clone_url"
           :readme="readme"
