@@ -71,7 +71,7 @@ export default {
   .codeOptimizationBg{
     background-image: url('../images/codeOptimization.png');
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     background-position: center;
   }
 </style>

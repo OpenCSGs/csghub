@@ -54,7 +54,7 @@
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-        <a href="/campaigns"><el-menu-item index="/campaigns">社区活动</el-menu-item></a>
+       <el-menu-item index="/campaigns" style="border:none"><a class="w-full" href="/campaigns">社区活动</a></el-menu-item>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
