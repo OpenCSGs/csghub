@@ -4,7 +4,6 @@
     local-dataset-id="<%= @local_dataset.id %>"
     user-id="<%= current_user&.id %>"
     :dataset="<%= @dataset %>"
-    :files="<%= @files|| {} %>"
     :last-commit="<%= @last_commit %>"
     :branches="<%= @branches %>"
     current-branch="<%= @current_branch || 'main' %>"

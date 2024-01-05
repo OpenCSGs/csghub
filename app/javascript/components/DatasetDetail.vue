@@ -20,7 +20,6 @@
       :dataset-default-branch="dataset.data.default_branch"
       :dataset-private="dataset.data.private"
       :dataset-detail="dataset.data"
-      :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
       :current-branch="currentBranch"
@@ -40,7 +39,6 @@ import DatasetTabs from './datasets/DatasetTabs.vue';
 const props = defineProps({
   dataset: Object,
   userId: String,
-  files: Object,
   lastCommit: Object,
   branches: Object,
   localDatasetId: String,

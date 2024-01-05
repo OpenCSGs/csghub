@@ -1,5 +1,6 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: :index
+  before_action :authenticate_user, except: [:index, :files]
+  before_action :validate_authorization, only: :files
 
   def index
     res_body = Starhub.api.get_datasets(current_user&.name,
@@ -12,6 +13,11 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                         params[:per_page])
     api_response = JSON.parse(res_body)
     render json: {datasets: api_response['data'], total: api_response['total']}
+  end
+
+  def files
+    last_commit, files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
   end
 
   def create
@@ -63,5 +69,45 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
       end
     end
     { valid: true }
+  end
+
+  def files_options
+    {
+      ref: params[:branch],
+      path: params[:path]
+    }
+  end
+
+  def validate_authorization
+    owner = find_user_or_organization_by_name(params[:namespace])
+    local_dataset = find_dataset_by_owner_and_name(owner, params[:dataset_name])
+
+    return render_unauthorized('数据集不存在') unless local_dataset
+
+    return render_unauthorized('无权限') unless valid_authorization?(local_dataset)
+  end
+
+  def find_user_or_organization_by_name(name)
+    User.find_by(name: name) || Organization.find_by(name: name)
+  end
+
+  def find_dataset_by_owner_and_name(owner, dataset_name)
+    owner&.datasets&.find_by(name: dataset_name)
+  end
+
+  def valid_authorization?(dataset)
+    return true unless dataset.dataset_private?
+
+    return false unless current_user
+
+    if dataset.owner.instance_of?(User)
+      return dataset.owner == current_user
+    end
+
+    return current_user.org_role(dataset.owner)
+  end
+
+  def render_unauthorized(message)
+    render json: { message: message }, status: :unauthorized
   end
 end
