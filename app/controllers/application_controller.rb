@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
         return redirect_to errors_unauthorized_path
       end
     else
-      user = User.find_or_create_by(login_identity: user_infos['sub']) do |u|
+      user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
         u.roles = :personal_user
         u.avatar = user_infos['avatar']
         u.name = user_infos['name']
