@@ -104,10 +104,10 @@
         </template>
       </el-dropdown>
       <button v-else class="min-w-[72px] sm:min-w-[46px] bg-[#303133] rounded-[100px] p-[2px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
-        <a class="sm:hidden" :href="loginUrl">
+        <a class="sm:hidden" href="/login">
           登录/注册
         </a>
-        <a class="hidden sm:block" :href="loginUrl">
+        <a class="hidden sm:block" href="/login">
           登录
         </a>
       </button>
@@ -131,7 +131,6 @@ export default {
     phone: String,
     isLoggedIn: String,
     userName: String,
-    loginUrl: String,
     decemberRelease: Boolean
   },
   data() {
