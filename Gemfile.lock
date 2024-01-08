@@ -102,6 +102,7 @@ GEM
       logging (~> 2.3)
       minitest (~> 5.14, >= 5.14.4)
       uri-query_params (~> 0.7.2)
+    bcrypt (3.1.20)
     bindata (2.4.15)
     bindex (0.8.1)
     bootsnap (1.17.0)
@@ -428,6 +429,7 @@ DEPENDENCIES
   administrate_exportable
   aliyun-sdk
   authing_ruby
+  bcrypt (~> 3.1.7)
   bootsnap
   capybara
   debug
