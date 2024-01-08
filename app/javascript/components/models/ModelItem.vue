@@ -17,7 +17,7 @@
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
       </span>
-      <span>下载量：{{ model.downloads }}</span>
+      <span>下载热度：{{ model.downloads }}</span>
     </div>
   </a>
 </template>

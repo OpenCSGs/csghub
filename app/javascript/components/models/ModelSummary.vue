@@ -8,7 +8,7 @@
       </MarkdownViewer>
     </div>
     <div class="p-4 w-[20%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="text-[#606266] text-base font-medium leading-[22px]">下载量</div>
+      <div class="text-[#606266] text-base font-medium leading-[22px]">下载热度</div>
       <div class="text-[#303133] text-base font-semibold leading-6 mt-1">{{ downloadCount }}</div>
     </div>
   </div>
