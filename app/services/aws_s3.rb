@@ -5,7 +5,7 @@ class AwsS3
     @s3 = Aws::S3::Resource::new(
       credentials: Aws::Credentials.new(access_id, access_secret),
       endpoint: endpoint,
-      region: 'beijing'
+      region: region
     )
   end
 
@@ -43,33 +43,41 @@ class AwsS3
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 
   def endpoint
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.endpoint
+      Rails.application.credentials.s3.production.endpoint
     else
-      Rails.application.credentials.aliyun_oss.staging.endpoint
+      Rails.application.credentials.s3.staging.endpoint
     end
   end
 
   def access_id
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.access_id
+      Rails.application.credentials.s3.production.access_id
     else
-      Rails.application.credentials.aliyun_oss.staging.access_id
+      Rails.application.credentials.s3.staging.access_id
     end
   end
 
   def access_secret
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.access_secret
+      Rails.application.credentials.s3.production.access_secret
     else
-      Rails.application.credentials.aliyun_oss.staging.access_secret
+      Rails.application.credentials.s3.staging.access_secret
+    end
+  end
+
+  def region
+    if Rails.env.production?
+      Rails.application.credentials.s3.production.region
+    else
+      Rails.application.credentials.s3.staging.region
     end
   end
 

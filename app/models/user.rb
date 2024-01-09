@@ -65,7 +65,7 @@ class User < ApplicationRecord
   def avatar_url
     if avatar.to_s.match(/^avatar\/*/)
       # retrive the image temp url from aliyun
-      $oss_client.download avatar
+      AwsS3.instance.download avatar
     elsif avatar.present?
       avatar
     else
@@ -138,9 +138,9 @@ class User < ApplicationRecord
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 

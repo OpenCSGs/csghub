@@ -1,8 +1,8 @@
 class InternalApi::UploadController < InternalApi::ApplicationController
   def create
-    bucket_code = $oss_client.upload 'comment', upload_params[:file]
-    # Starhub.api.image_secure_check('baselineCheck', bucket_name, bucket_code) if bucket_code.present?
-    public_url = $oss_client.download bucket_code
+    bucket_code = AwsS3.instance.upload 'comment', upload_params[:file]
+    Starhub.api.image_secure_check('baselineCheck', bucket_name, bucket_code) if bucket_code.present?
+    public_url = AwsS3.instance.download bucket_code
     if public_url.blank?
       render json: {message: '上传文件失败'}, status: 400
     else
@@ -18,9 +18,9 @@ class InternalApi::UploadController < InternalApi::ApplicationController
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 end

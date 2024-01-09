@@ -77,9 +77,9 @@ class Space < ApplicationRecord
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 end

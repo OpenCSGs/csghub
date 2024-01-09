@@ -56,7 +56,7 @@ class Organization < ApplicationRecord
 
   def detect_sensitive_content
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
-    # Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
+    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
   end
 
   def sync_to_starhub_server
@@ -71,9 +71,9 @@ class Organization < ApplicationRecord
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 end
