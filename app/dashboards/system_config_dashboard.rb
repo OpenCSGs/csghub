@@ -15,6 +15,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     license_configs: Field::JSONB,
     feature_flags: Field::JSONB,
     general_configs: Field::JSONB,
+    s3_configs: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -40,6 +41,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     starhub_configs
     license_configs
     feature_flags
+    s3_configs
     created_at
     updated_at
   ].freeze
@@ -54,6 +56,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     starhub_configs
     license_configs
     feature_flags
+    s3_configs
   ].freeze
 
   # COLLECTION_FILTERS
