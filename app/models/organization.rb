@@ -21,7 +21,7 @@ class Organization < ApplicationRecord
   def avatar_url
     if logo
       # retrive the image temp url from aliyun
-      AliyunOss.instance.download logo
+      $oss_client.download logo
     else
       "/images/default_org.png"
     end
@@ -56,7 +56,7 @@ class Organization < ApplicationRecord
 
   def detect_sensitive_content
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
+    # Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
   end
 
   def sync_to_starhub_server

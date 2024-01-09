@@ -11,7 +11,7 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     current_user.nickname = user_params[:nickname]
     current_user.email = user_params[:email]
     if user_params[:avatar].present?
-      avatar_url_code = AliyunOss.instance.upload 'user-avatar', user_params[:avatar]
+      avatar_url_code = $oss_client.upload 'user-avatar', user_params[:avatar]
       current_user.avatar = avatar_url_code
     end
     if current_user.save

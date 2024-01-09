@@ -65,7 +65,7 @@ class User < ApplicationRecord
   def avatar_url
     if avatar.to_s.match(/^avatar\/*/)
       # retrive the image temp url from aliyun
-      AliyunOss.instance.download avatar
+      $oss_client.download avatar
     elsif avatar.present?
       avatar
     else
@@ -111,7 +111,7 @@ class User < ApplicationRecord
     return if name.blank? or email.blank?
 
     Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
+    # Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
     if starhub_synced?
       res = Starhub.api.update_user(name, nickname, email)

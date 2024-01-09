@@ -1,8 +1,8 @@
 class InternalApi::UploadController < InternalApi::ApplicationController
   def create
-    bucket_code = AliyunOss.instance.upload 'comment', upload_params[:file]
-    Starhub.api.image_secure_check('baselineCheck', bucket_name, bucket_code) if bucket_code.present?
-    public_url = AliyunOss.instance.download bucket_code
+    bucket_code = $oss_client.upload 'comment', upload_params[:file]
+    # Starhub.api.image_secure_check('baselineCheck', bucket_name, bucket_code) if bucket_code.present?
+    public_url = $oss_client.download bucket_code
     if public_url.blank?
       render json: {message: '上传文件失败'}, status: 400
     else
