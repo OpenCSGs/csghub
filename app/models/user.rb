@@ -61,6 +61,7 @@ class User < ApplicationRecord
   end
 
   def password
+    return nil unless password_hash.present?
     @password ||= Password.new(password_hash)
   end
 

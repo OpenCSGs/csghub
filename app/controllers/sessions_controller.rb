@@ -30,6 +30,30 @@ class SessionsController < ApplicationController
   end
 
   def create
+    user_name = params[:name]
+    user = User.find_by!(name: user_name)
+
+    if user.password != params[:password].strip
+      flash[:alert] = "用户名密码错误"
+      return redirect_to login_path
+    end
+
+    helpers.log_in user
+    redirect_path = session.delete(:original_request_path) || root_path
+    redirect_to redirect_path
+  end
+
+  def registration
+    user = User.create!(name: params['name'].strip,
+                        login_identity: SecureRandom.uuid,
+                        password: params['password'].strip,
+                        roles: :personal_user,
+                        phone: params['phone'].strip,
+                        email: params['email'].strip)
+
+    helpers.log_in user
+    redirect_path = session.delete(:original_request_path) || root_path
+    redirect_to redirect_path
   end
 
   def oidc

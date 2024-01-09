@@ -1,8 +1,22 @@
 <div>
+  <p>
+    <% if flash[:alert].present? %>
+      <%= flash[:alert] %>
+      <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+    <% end %>
+  </p>
   <h3>登录</h3>
-  <%= form_tag('/posts') do %>
-    <label for="name">Name</label>
-    <%= text_field_tag 'name' %>
-    <div><%= submit_tag 'Save' %></div>
+  <%= form_tag('/login', method: 'post') do %>
+    <div class="form-group">
+      <%= label_tag(:name, '用户名') %>
+      <%= text_field_tag(:name, nil, class: 'form-control') %>
+    </div>
+    <div class="form-group">
+      <%= label_tag(:password, '密码') %>
+      <%= password_field_tag(:password, nil, class: 'form-control') %>
+    </div>
+    <div class="form-group">
+      <%= submit_tag('提交', class: 'btn btn-primary') %>
+    </div>
   <% end %>
 </div>
