@@ -21,7 +21,7 @@ class Organization < ApplicationRecord
   def avatar_url
     if logo
       # retrive the image temp url from aliyun
-      $oss_client.download logo
+      AwsS3.instance.download logo
     else
       "/images/default_org.png"
     end
