@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   skip_before_action :check_user_login
 
   def signup
-    if ENV.fetch('ON_PREMISE', 'false').strip == 'true'
+    if helpers.is_on_premise?
       render 'signup'
     else
       default_signup_url = Rails.application.credentials.oidc_config.send(Rails.env)['signup_url']
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
   end
 
   def new
-    if ENV.fetch('ON_PREMISE', 'false').strip == 'true'
+    if helpers.is_on_premise?
       render 'new'
     else
       default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
