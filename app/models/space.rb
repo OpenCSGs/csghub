@@ -25,7 +25,7 @@ class Space < ApplicationRecord
   def cover_image_url
     if cover_image
       # retrive the image temp url from aliyun
-      AliyunOss.instance.download cover_image
+      AwsS3.instance.download cover_image
     else
       nil
     end

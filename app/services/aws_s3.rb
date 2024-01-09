@@ -42,46 +42,35 @@ class AwsS3
   end
 
   def bucket_name
-    if Rails.env.production?
-      Rails.application.credentials.s3.production.bucket_name
-    else
-      Rails.application.credentials.s3.staging.bucket_name
-    end
+    load_s3_config 'bucket_name'
   end
 
   def endpoint
-    if Rails.env.production?
-      Rails.application.credentials.s3.production.endpoint
-    else
-      Rails.application.credentials.s3.staging.endpoint
-    end
+    load_s3_config 'endpoint'
   end
 
   def access_id
-    if Rails.env.production?
-      Rails.application.credentials.s3.production.access_id
-    else
-      Rails.application.credentials.s3.staging.access_id
-    end
+    load_s3_config 'access_id'
   end
 
   def access_secret
-    if Rails.env.production?
-      Rails.application.credentials.s3.production.access_secret
-    else
-      Rails.application.credentials.s3.staging.access_secret
-    end
+    load_s3_config 'access_secret'
   end
 
   def region
-    if Rails.env.production?
-      Rails.application.credentials.s3.production.region
-    else
-      Rails.application.credentials.s3.staging.region
-    end
+    load_s3_config 'region'
+  end
+
+  def load_s3_config key
+    env_config = ENV.fetch(key.upcase, nil)
+    system_config = SystemConfig.first
+    s3_configs = (system_config.s3_configs rescue {}) || {}
+    sc_config = s3_configs[key]
+    default_config = Rails.application.credentials.s3.send(Rails.env)&.send(key)
+    env_config || sc_config || default_config
   end
 
   def random_file_name
-    SecureRandom.base58(8)
+    SecureRandom.uuid
   end
 end
