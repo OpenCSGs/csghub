@@ -64,7 +64,8 @@ class Tag < ApplicationRecord
   def as_json options = nil
     {
       name: name,
-      zh_name: zh_name
+      zh_name: zh_name,
+      display_name: display_name
       }
   end
 
@@ -87,7 +88,12 @@ class Tag < ApplicationRecord
           when 'framework'
             framework_tags << tag
           when 'license'
-            license_tags << tag
+            local_tag = Tag.find_by(name: tag['name'])
+            if local_tag
+              license_tags << tag.merge('display_name' => local_tag.display_name)
+            else
+              other_tags << tag
+            end
           else
             other_tags << tag
           end
