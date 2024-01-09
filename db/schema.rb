@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_28_023742) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_09_100305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -241,6 +241,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_28_023742) do
     t.jsonb "feature_flags", default: {}
     t.jsonb "starhub_configs", default: {}
     t.jsonb "general_configs", default: {}
+    t.jsonb "s3_configs"
   end
 
   create_table "taggings", force: :cascade do |t|
