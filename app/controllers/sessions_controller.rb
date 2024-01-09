@@ -1,8 +1,6 @@
 require 'jwt'
 
 class SessionsController < ApplicationController
-  layout 'login'
-
   skip_before_action :check_user_login
 
   def signup
@@ -54,6 +52,9 @@ class SessionsController < ApplicationController
     helpers.log_in user
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:alert] = e.message
+    return redirect_to signup_path
   end
 
   def oidc

@@ -1,29 +1,33 @@
-<div>
-  <p>
-    <% if flash[:alert].present? %>
-      <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+<div class="relative">
+  <%= image_tag('new_organization_bg.png', class: "w-full object-cover") %>
+  <div class="absolute top-[35%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+    <h3 class="text-[#101828] text-[30px] font-[500] my-[32px]">创建一个账号</h3>
+    <p>
+      <% if flash[:alert].present? %>
+        <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+      <% end %>
+    </p>
+    <%= form_tag('/signup', method: 'post') do %>
+      <div class="my-[20px] flex flex-col gap-[6px]">
+        <%= label_tag(:name, '用户名 *') %>
+        <%= text_field_tag(:name, nil, placeholder: "输入2-20位子母数字_-.等字符", class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+      </div>
+      <div class="my-[20px] flex flex-col gap-[6px]">
+        <%= label_tag(:password, '密码 *') %>
+        <%= password_field_tag(:password, nil, class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+      </div>
+      <div class="my-[20px] flex flex-col gap-[6px]">
+        <%= label_tag(:email, '电子邮件 *') %>
+        <%= email_field_tag(:email, nil, class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+      </div>
+      <div class="my-[20px] flex flex-col gap-[6px]">
+        <%= label_tag(:phone, '电话 *') %>
+        <%= phone_field_tag(:phone, nil, class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+      </div>
+      <div class="my-[20px]">
+        <%= submit_tag('提交', class: 'w-[332px] h-[44px] bg-[#3250BD] text-white rounded-[8px]') %>
+      </div>
+      <P>有账号？<a href="/login" class="text-[#3250BD]"> 登录 </a><p>
     <% end %>
-  </p>
-  <h3>注册</h3>
-  <%= form_tag('/signup', method: 'post') do %>
-    <div class="form-group">
-      <%= label_tag(:name, '用户名') %>
-      <%= text_field_tag(:name, nil, class: 'form-control') %>
-    </div>
-    <div class="form-group">
-      <%= label_tag(:password, '密码') %>
-      <%= password_field_tag(:password, nil, class: 'form-control') %>
-    </div>
-    <div class="form-group">
-      <%= label_tag(:email, '电子邮件') %>
-      <%= email_field_tag(:email, nil, class: 'form-control') %>
-    </div>
-    <div class="form-group">
-      <%= label_tag(:phone, '电话') %>
-      <%= phone_field_tag(:phone, nil, class: 'form-control') %>
-    </div>
-    <div class="form-group">
-      <%= submit_tag('提交', class: 'btn btn-primary') %>
-    </div>
-  <% end %>
+  </div>
 </div>
