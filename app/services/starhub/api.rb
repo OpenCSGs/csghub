@@ -290,6 +290,7 @@ module Starhub
     end
 
     def text_secure_check(scenario, content)
+      return unless sensitive_check_enabled?
       return if content.blank?
       options = {
         scenario: scenario,
@@ -306,6 +307,7 @@ module Starhub
     end
 
     def image_secure_check(scenario, oss_bucket_name, oss_object_name)
+      return unless sensitive_check_enabled?
       return if oss_object_name.blank?
       options = {
         scenario: scenario,
@@ -323,5 +325,15 @@ module Starhub
     end
 
     # TODO: add more starhub api
+
+    private
+
+    def sensitive_check_enabled?
+      config_from_env = ENV.fetch('SENSITIVE_CHECK', nil)
+      system_config = SystemConfig.first
+      feature_flags = (system_config.feature_flags rescue {}) || {}
+      sensitive_check = config_from_env || feature_flags['sensitive_check']
+      sensitive_check.to_s == 'true'
+    end
   end
 end
