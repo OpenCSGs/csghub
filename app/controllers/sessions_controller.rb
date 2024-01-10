@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
   rescue => e
-    flash[:alert] = e.message
+    flash[:alert] = "用户名密码错误"
     return redirect_to login_path
   end
 
