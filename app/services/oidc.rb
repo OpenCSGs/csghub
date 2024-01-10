@@ -37,6 +37,10 @@ class Oidc
   end
 
   def oidc_configs
+    @oidc_configs ||= load_oidc_configs
+  end
+
+  def load_oidc_configs
     default_configs = Rails.application.credentials.oidc_config.send(Rails.env)
     system_config = SystemConfig.first
     sc_conifgs = (system_config.oidc_configs rescue {}) || {}
