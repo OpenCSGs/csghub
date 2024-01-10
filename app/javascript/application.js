@@ -41,6 +41,7 @@ import OrganizationDetail from "./components/organizations/OrganizationDetail.vu
 import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
 import About from "./components/about/About.vue"
+import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 
 const app = createApp({
   components: {
@@ -76,7 +77,8 @@ const app = createApp({
     OrganizationDetail,
     SolutionPage,
     ProductPage,
-    About
+    About,
+    OnPremiseFooter
   },
   provide:{
     defaultTags: DefaultTags
