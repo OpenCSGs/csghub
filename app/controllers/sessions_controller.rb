@@ -69,7 +69,7 @@ class SessionsController < ApplicationController
 
   def oidc
     current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
-    @openid_client = ::OPENID_CLIENT
+    @openid_client = Oidc.instance.client
     @openid_client.authorization_code = params['code']
     access_token = @openid_client.access_token!
     user_infos = JWT.decode(access_token.id_token, nil, false).first
