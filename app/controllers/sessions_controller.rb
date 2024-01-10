@@ -45,19 +45,21 @@ class SessionsController < ApplicationController
   end
 
   def registration
-    user = User.create!(name: params['name'],
-                        login_identity: SecureRandom.uuid,
-                        password: params['password'],
-                        roles: :personal_user,
-                        phone: params['phone'],
-                        email: params['email'])
+    user = User.new(name: params['name'],
+                    login_identity: SecureRandom.uuid,
+                    password: params['password'],
+                    roles: :personal_user,
+                    phone: params['phone'],
+                    email: params['email'])
 
-    helpers.log_in user
-    redirect_path = session.delete(:original_request_path) || root_path
-    redirect_to redirect_path
-  rescue => e
-    flash[:alert] = e.message
-    return redirect_to signup_path
+    if user.save
+      helpers.log_in user
+      redirect_path = session.delete(:original_request_path) || root_path
+      redirect_to redirect_path
+    else
+      flash[:alert] = user.errors.full_messages
+      return redirect_to signup_path
+    end
   end
 
   def oidc
