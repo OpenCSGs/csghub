@@ -21,7 +21,7 @@ class Organization < ApplicationRecord
   def avatar_url
     if logo
       # retrive the image temp url from aliyun
-      AliyunOss.instance.download logo
+      AwsS3.instance.download logo
     else
       "/images/default_org.png"
     end
@@ -71,9 +71,9 @@ class Organization < ApplicationRecord
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 end

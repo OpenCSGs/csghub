@@ -4,7 +4,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   def create
     new_org = Organization.new organization_params
     if params[:logo].present?
-      image_url_code = AliyunOss.instance.upload 'org-logo', params[:logo]
+      image_url_code = AwsS3.instance.upload 'org-logo', params[:logo]
       new_org.logo = image_url_code
     end
     new_org.creator = current_user
