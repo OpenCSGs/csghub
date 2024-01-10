@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
     user_name = params[:name]
     user = User.find_by!(name: user_name)
 
-    if user.password != params[:password].strip
+    if user.password != params[:password]
       flash[:alert] = "用户名密码错误"
       return redirect_to login_path
     end
@@ -39,23 +39,23 @@ class SessionsController < ApplicationController
     helpers.log_in user
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
-  rescue ActiveRecord::RecordInvalid => e
+  rescue => e
     flash[:alert] = e.message
     return redirect_to login_path
   end
 
   def registration
-    user = User.create!(name: params['name'].strip,
+    user = User.create!(name: params['name'],
                         login_identity: SecureRandom.uuid,
-                        password: params['password'].strip,
+                        password: params['password'],
                         roles: :personal_user,
-                        phone: params['phone'].strip,
-                        email: params['email'].strip)
+                        phone: params['phone'],
+                        email: params['email'])
 
     helpers.log_in user
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
-  rescue ActiveRecord::RecordInvalid => e
+  rescue => e
     flash[:alert] = e.message
     return redirect_to signup_path
   end
