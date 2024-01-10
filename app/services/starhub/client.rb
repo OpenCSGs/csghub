@@ -50,6 +50,11 @@ module Starhub
     private
 
     def starhub_configs
+      env_base_url = ENV.fetch('STARHUB_BASE_URL', nil)
+      env_token = ENV.fetch('STARHUB_TOKEN', nil)
+
+      return [env_base_url, env_token] if env_base_url.present? && env_token.present?
+
       system_config = SystemConfig.first
       starhub_configs = system_config.starhub_configs rescue {}
       base_url = (starhub_configs && starhub_configs['base_url'].presence) || Rails.application.credentials.starhub_api.send("#{Rails.env}").base_url
