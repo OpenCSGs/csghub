@@ -72,7 +72,7 @@ module Starhub
         url: base_url,
         headers: {
           'Content-Type' => 'application/json',
-          'Authorization' => token
+          'Authorization' => "Bearer #{token}"
         }) do |conn|
         conn.adapter :typhoeus
       end
