@@ -26,10 +26,13 @@ module SessionsHelper
     cookies.delete :userinfos, domain: current_cookie_domain
   end
 
-  def login_url
-    default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
+  def is_on_premise?
+    on_premise_from_env = ENV.fetch('ON_PREMISE', nil)
+
     system_config = SystemConfig.first
-    oidc_configs = system_config.oidc_configs rescue {}
-    login_url = (oidc_configs && oidc_configs['login_url'].presence) || default_login_url
+    feature_flags = (system_config.feature_flags rescue {}) || {}
+    on_premise = on_premise_from_env || feature_flags['on_premise']
+
+    on_premise.to_s == 'true'
   end
 end

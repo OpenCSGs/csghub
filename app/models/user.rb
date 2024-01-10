@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include BCrypt
+
   # 特别强调：这里的顺序不能打乱，新的角色依次放在最后
   ROLES = %i(super_user
              admin
@@ -56,6 +58,16 @@ class User < ApplicationRecord
 
   def company_user?
     has_role?('company_user')
+  end
+
+  def password
+    return nil unless password_hash.present?
+    @password ||= Password.new(password_hash)
+  end
+
+  def password=(new_password)
+    @password = Password.create(new_password)
+    self.password_hash = @password
   end
 
   def display_name

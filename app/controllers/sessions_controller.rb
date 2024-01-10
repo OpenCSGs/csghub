@@ -1,24 +1,70 @@
 require 'jwt'
 
 class SessionsController < ApplicationController
-  layout 'login'
-
   skip_before_action :check_user_login
 
   def signup
-    default_signup_url = Rails.application.credentials.oidc_config.send(Rails.env)['signup_url']
-    system_config = SystemConfig.first
-    oidc_configs = system_config.oidc_configs rescue {}
-    signup_url = (oidc_configs && oidc_configs['sign_up_url'].presence) || default_signup_url
-    redirect_to signup_url, allow_other_host: true
+    if helpers.is_on_premise?
+      render 'signup'
+    else
+      default_signup_url = Rails.application.credentials.oidc_config.send(Rails.env)['signup_url']
+      system_config = SystemConfig.first
+      oidc_configs = system_config.oidc_configs rescue {}
+      signup_url = (oidc_configs && oidc_configs['sign_up_url'].presence) || default_signup_url
+      redirect_to signup_url, allow_other_host: true
+    end
   end
 
   def new
-    default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
-    system_config = SystemConfig.first
-    oidc_configs = system_config.oidc_configs rescue {}
-    login_url = (oidc_configs && oidc_configs['login_url'].presence) || default_login_url
-    redirect_to login_url, allow_other_host: true
+    if helpers.is_on_premise?
+      render 'new'
+    else
+      default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
+      system_config = SystemConfig.first
+      oidc_configs = system_config.oidc_configs rescue {}
+      login_url = (oidc_configs && oidc_configs['login_url'].presence) || default_login_url
+      redirect_to login_url, allow_other_host: true
+    end
+  end
+
+  def create
+    user_name = params[:name]
+    user = User.find_by!(name: user_name)
+
+    if user.password != params[:password]
+      flash[:alert] = "用户名密码错误"
+      return redirect_to login_path
+    end
+
+    helpers.log_in user
+    redirect_path = session.delete(:original_request_path) || root_path
+    redirect_to redirect_path
+  rescue => e
+    flash[:alert] = "用户名密码错误"
+    return redirect_to login_path
+  end
+
+  def registration
+    if params['name'].blank? || params['password'].blank?
+      flash[:alert] = '用户名不能为空'
+      return redirect_to signup_path
+    end
+
+    user = User.new(name: params['name'],
+                    login_identity: SecureRandom.uuid,
+                    password: params['password'],
+                    roles: :personal_user,
+                    phone: params['phone'],
+                    email: params['email'])
+
+    if user.save
+      helpers.log_in user
+      redirect_path = session.delete(:original_request_path) || root_path
+      redirect_to redirect_path
+    else
+      flash[:alert] = user.errors.full_messages
+      redirect_to signup_path
+    end
   end
 
   def oidc

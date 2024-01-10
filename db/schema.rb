@@ -283,6 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_09_100305) do
     t.string "git_token"
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
+    t.string "password_hash"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
