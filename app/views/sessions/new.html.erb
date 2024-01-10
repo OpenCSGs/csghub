@@ -10,11 +10,11 @@
     <%= form_tag('/login', method: 'post') do %>
       <div class="my-[20px] flex flex-col gap-[6px]">
         <%= label_tag(:name, '用户名 *') %>
-        <%= text_field_tag(:name, nil, placeholder: "输入2-20位子母数字_-.等字符", class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+        <%= text_field_tag(:name, nil, placeholder: "输入用户名", class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
       </div>
       <div class="my-[20px] flex flex-col gap-[6px]">
         <%= label_tag(:password, '密码 *') %>
-        <%= password_field_tag(:password, nil, class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+        <%= password_field_tag(:password, nil, placeholder: "输入密码", class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
       </div>
       <div class="my-[20px]">
         <%= submit_tag('提交', class: 'w-[332px] h-[44px] bg-[#3250BD] text-white rounded-[8px]') %>
