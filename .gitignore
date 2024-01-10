@@ -49,3 +49,6 @@ yarn-error.log
 config/database.yml
 
 coverage/
+
+config/credentials.yml.enc.backup
+config/master.key.starhub
