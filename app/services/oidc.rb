@@ -44,6 +44,6 @@ class Oidc
     default_configs = Rails.application.credentials.oidc_config.send(Rails.env)
     system_config = SystemConfig.first
     sc_conifgs = (system_config.oidc_configs rescue {}) || {}
-    default_configs || sc_conifgs
+    sc_conifgs.presence || default_configs
   end
 end
