@@ -18,6 +18,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_type: Field::Select.with_options(searchable: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     taggings: Field::HasMany,
     zh_name: Field::String,
+    weight: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -34,6 +35,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_field
     tag_origin
     zh_name
+    weight
     desc
   ].freeze
 
@@ -50,6 +52,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_field
     taggings
     zh_name
+    weight
     created_at
     updated_at
   ].freeze
@@ -64,6 +67,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_type
     tag_field
     desc
+    weight
   ].freeze
 
   # COLLECTION_FILTERS
