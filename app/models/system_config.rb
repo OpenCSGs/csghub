@@ -18,4 +18,8 @@ class SystemConfig < ApplicationRecord
   def general_configs=(value)
     self[:general_configs] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def s3_configs=(value)
+    self[:s3_configs] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end

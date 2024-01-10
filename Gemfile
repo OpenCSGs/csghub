@@ -50,6 +50,9 @@ gem 'aliyun-sdk'
 
 gem 'activestorage-aliyun'
 
+# aws s3
+gem 'aws-sdk-s3', '~> 1'
+
 gem 'faraday'
 gem 'typhoeus'
 

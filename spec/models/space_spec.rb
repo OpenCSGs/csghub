@@ -28,7 +28,7 @@ RSpec.describe Space, type: :model do
     let(:image_url) { 'http://aliyun.oss.test' }
     context 'when cover_image present' do
       before do
-        allow(AliyunOss.instance).to receive(:download).and_return image_url
+        allow(AwsS3.instance).to receive(:download).and_return image_url
       end
       it 'returns correct aliyun oss url' do
         space.cover_image = 'asfafa'
