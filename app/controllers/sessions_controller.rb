@@ -45,6 +45,11 @@ class SessionsController < ApplicationController
   end
 
   def registration
+    if params['name'].blank? || params['password'].blank?
+      flash[:alert] = '用户名不能为空'
+      return redirect_to signup_path
+    end
+
     user = User.new(name: params['name'],
                     login_identity: SecureRandom.uuid,
                     password: params['password'],
@@ -58,7 +63,7 @@ class SessionsController < ApplicationController
       redirect_to redirect_path
     else
       flash[:alert] = user.errors.full_messages
-      return redirect_to signup_path
+      redirect_to signup_path
     end
   end
 
