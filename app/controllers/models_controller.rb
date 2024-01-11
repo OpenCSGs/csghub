@@ -15,7 +15,7 @@ class ModelsController < ApplicationController
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
-    @license_tags = Tag.where(tag_type: 'license').as_json
+    @license_tags = Tag.where(tag_type: 'license').order(weight: :asc).as_json
   end
 
   def new
