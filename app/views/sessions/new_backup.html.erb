@@ -1,0 +1,61 @@
+<script type="text/javascript" src="https://cdn.authing.co/packages/guard/latest/guard.min.js"></script>
+<link rel="stylesheet" href="https://cdn.authing.co/packages/guard/latest/guard.min.css" />
+
+<%# overwrite authing css%>
+<style>
+  .authing-g2-render-module-normal {
+    position: unset !important;
+    transform: unset !important;
+  }
+  .authing-ant-btn-primary {
+    background: #1C8B7F;
+    border-color: #1C8B7F;
+  }
+  .authing-ant-btn-primary:hover {
+    background: #116259;
+  }
+  .authing-ant-tabs-tab.authing-ant-tabs-tab-active .authing-ant-tabs-tab-btn {
+    color: #1C8B7F;
+  }
+  .authing-ant-tabs-ink-bar {
+    background: #1C8B7F;
+  }
+</style>
+
+<div class="w-full h-full flex items-center justify-center sm:flex-col bg-gradient-to-r from-cyan-500 to-green-600">
+  <div class="h-full sm:w-auto flex justify-center items-center" id="authing-guard-container"></div>
+</div>
+
+<% if Rails.env.production? || Rails.env.staging? %>
+  <script>
+    const authingAppId = "<%= authing_app_id %>"
+    const guard = new GuardFactory.Guard({
+      appId: authingAppId
+    })
+    guard.start('#authing-guard-container').then(userInfo => {
+      document.cookie = `authingUuid=${userInfo.id};domain=opencsg.com;`;
+      document.cookie = `idToken=${userInfo.token};domain=opencsg.com;`;
+      document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
+      document.cookie = `isCompanyUser=${userInfo.customData.isCompanyUser};`;
+      delete userInfo['token']
+      document.cookie = `userinfos=${JSON.stringify(userInfo)};domain=opencsg.com;`;
+      window.location.href = "/authing/callback"
+    })
+  </script>
+<% else %>
+  <script>
+    const authingAppId = "<%= authing_app_id %>"
+    const guard = new GuardFactory.Guard({
+      appId: authingAppId
+    })
+    guard.start('#authing-guard-container').then(userInfo => {
+      document.cookie = `idToken=${userInfo.token};domain=localhost;`;
+      document.cookie = `authingUuid=${userInfo.id};domain=localhost;`;
+      document.cookie = `lastLoginAt=${userInfo.lastLogin};`;
+      document.cookie = `isCompanyUser=${userInfo.customData.isCompanyUser};`;
+      delete userInfo['token']
+      document.cookie = `userinfos=${JSON.stringify(userInfo)};domain=localhost;`;
+      window.location.href = "/authing/callback"
+    })
+  </script>
+<% end %>

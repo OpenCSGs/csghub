@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include BCrypt
+
   # 特别强调：这里的顺序不能打乱，新的角色依次放在最后
   ROLES = %i(super_user
              admin
@@ -58,6 +60,16 @@ class User < ApplicationRecord
     has_role?('company_user')
   end
 
+  def password
+    return nil unless password_hash.present?
+    @password ||= Password.new(password_hash)
+  end
+
+  def password=(new_password)
+    @password = Password.create(new_password)
+    self.password_hash = @password
+  end
+
   def display_name
     nickname.presence || name.presence || phone.presence || login_identity.presence
   end
@@ -65,7 +77,7 @@ class User < ApplicationRecord
   def avatar_url
     if avatar.to_s.match(/^avatar\/*/)
       # retrive the image temp url from aliyun
-      AliyunOss.instance.download avatar
+      AwsS3.instance.download avatar
     elsif avatar.present?
       avatar
     else
@@ -138,9 +150,9 @@ class User < ApplicationRecord
 
   def bucket_name
     if Rails.env.production?
-      Rails.application.credentials.aliyun_oss.production.bucket_name
+      Rails.application.credentials.s3.production.bucket_name
     else
-      Rails.application.credentials.aliyun_oss.staging.bucket_name
+      Rails.application.credentials.s3.staging.bucket_name
     end
   end
 

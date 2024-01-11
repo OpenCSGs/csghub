@@ -8,10 +8,10 @@ local:
 
 aliyun_staging:
   service: Aliyun
-  access_key_id: <%= Rails.application.credentials.aliyun_oss.staging[:access_id] %>
-  access_key_secret: <%= Rails.application.credentials.aliyun_oss.staging[:access_secret] %>
-  bucket: <%= Rails.application.credentials.aliyun_oss.staging[:bucket_name] %>
-  endpoint: <%= Rails.application.credentials.aliyun_oss.staging[:endpoint] %>
+  access_key_id: <%= Rails.application.credentials.s3.staging[:access_id] %>
+  access_key_secret: <%= Rails.application.credentials.s3.staging[:access_secret] %>
+  bucket: <%= Rails.application.credentials.s3.staging[:bucket_name] %>
+  endpoint: <%= Rails.application.credentials.s3.staging[:endpoint] %>
   # path prefix, default: /
   path: "active_storage"
   # Bucket public: true/false, default: true, for generate public/private URL.
@@ -19,10 +19,10 @@ aliyun_staging:
 
 aliyun:
   service: Aliyun
-  access_key_id: <%= Rails.application.credentials.aliyun_oss.production[:access_id] %>
-  access_key_secret: <%= Rails.application.credentials.aliyun_oss.production[:access_secret] %>
-  bucket: <%= Rails.application.credentials.aliyun_oss.production[:bucket_name] %>
-  endpoint: <%= Rails.application.credentials.aliyun_oss.production[:endpoint] %>
+  access_key_id: <%= Rails.application.credentials.s3.production[:access_id] %>
+  access_key_secret: <%= Rails.application.credentials.s3.production[:access_secret] %>
+  bucket: <%= Rails.application.credentials.s3.production[:bucket_name] %>
+  endpoint: <%= Rails.application.credentials.s3.production[:endpoint] %>
   # path prefix, default: /
   path: "active_storage"
   # Bucket public: true/false, default: true, for generate public/private URL.

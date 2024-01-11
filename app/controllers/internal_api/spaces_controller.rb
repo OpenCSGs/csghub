@@ -20,7 +20,7 @@ class InternalApi::SpacesController < InternalApi::ApplicationController
     end
     space.tags = new_tags
     if update_params[:cover_image].present?
-      image_url_code = AliyunOss.instance.upload 'space-cover', update_params[:cover_image]
+      image_url_code = AwsS3.instance.upload 'space-cover', update_params[:cover_image]
       space.cover_image = image_url_code
     end
     space.space_type = update_params[:space_type]
