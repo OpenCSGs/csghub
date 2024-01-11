@@ -77,7 +77,7 @@ class Tag < ApplicationRecord
         else
           case tag['category']
           when 'task'
-            local_tag = Tag.find_by(tag_type: 'task', name: tag['name'])
+            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'])
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
               task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
