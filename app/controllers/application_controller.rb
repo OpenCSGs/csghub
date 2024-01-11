@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
       login_by_user_infos user_infos
     else
       session[:original_request_path] = redirect_path_from_request(request.fullpath)
-      redirect_to root_path
+      redirect_to login_path
     end
   rescue => e
     redirect_to root_path
