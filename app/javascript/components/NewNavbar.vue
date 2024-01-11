@@ -89,13 +89,13 @@
             </a>
             <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
             <a href="/models/new">
-              <el-dropdown-item v-if="decemberRelease" divided> + 新建模型 </el-dropdown-item>
+              <el-dropdown-item divided> + 新建模型 </el-dropdown-item>
             </a>
             <a href="/datasets/new">
-              <el-dropdown-item v-if="decemberRelease"> + 新建数据集 </el-dropdown-item>
+              <el-dropdown-item> + 新建数据集 </el-dropdown-item>
             </a>
             <a href="/organizations/new">
-              <el-dropdown-item v-if="decemberRelease" divided> 新建组织 </el-dropdown-item>
+              <el-dropdown-item divided> 新建组织 </el-dropdown-item>
             </a>
             <a :href="logout" @click="cleanUpAuthing">
               <el-dropdown-item divided>  退出登录 </el-dropdown-item>
@@ -130,8 +130,7 @@ export default {
     companyVerified: String,
     phone: String,
     isLoggedIn: String,
-    userName: String,
-    decemberRelease: Boolean
+    userName: String
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
