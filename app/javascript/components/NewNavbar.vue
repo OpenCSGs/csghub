@@ -97,7 +97,7 @@
             <a href="/organizations/new">
               <el-dropdown-item divided> 新建组织 </el-dropdown-item>
             </a>
-            <a :href="logout" @click="cleanUpAuthing">
+            <a href="/logout">
               <el-dropdown-item divided>  退出登录 </el-dropdown-item>
             </a>
           </el-dropdown-menu>
@@ -122,7 +122,6 @@ import ContactUs from "./form/ContactUs.vue";
 
 export default {
   props: {
-    logout: String,
     logo: String,
     avatar: String,
     starChainUrl: String,
@@ -149,12 +148,6 @@ export default {
     },
     showDialog() {
       this.$refs.child.showDialog()
-    },
-    cleanUpAuthing() {
-      localStorage.removeItem("_guard_i18nextLng");
-      localStorage.removeItem("_authing_token");
-      localStorage.removeItem("_authing_user");
-      localStorage.removeItem("__authing__multiple_accounts");
     }
   },
   mounted() {}

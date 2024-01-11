@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
 
   def signup
     if helpers.is_on_premise?
+      return redirect_to root_path if helpers.logged_in?
       render 'signup'
     else
       default_signup_url = Rails.application.credentials.oidc_config.send(Rails.env)['signup_url']
@@ -17,6 +18,7 @@ class SessionsController < ApplicationController
 
   def new
     if helpers.is_on_premise?
+      return redirect_to root_path if helpers.logged_in?
       render 'new'
     else
       default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
