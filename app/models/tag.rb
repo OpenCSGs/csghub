@@ -1,7 +1,7 @@
 class Tag < ApplicationRecord
   validates_presence_of :tag_origin, :tag_type, :name
   validates_uniqueness_of :name, scope: :tag_field
-  validates_length_of :name, maximum: 20
+  validates_length_of :name, maximum: 30
 
   enum :tag_origin, user_created: 'user_created', system: 'system'
   enum :tag_type, task: 'task', framework: 'framework', language: 'language', license: 'license'
@@ -87,7 +87,12 @@ class Tag < ApplicationRecord
           when 'framework'
             framework_tags << tag
           when 'license'
-            license_tags << tag
+            local_tag = Tag.find_by(name: tag['name'])
+            if local_tag
+              license_tags << tag.merge('zh_name' => local_tag.zh_name)
+            else
+              other_tags << tag
+            end
           else
             other_tags << tag
           end

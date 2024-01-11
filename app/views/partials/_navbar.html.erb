@@ -9,7 +9,6 @@
             phone="<%= current_user.phone %>"
             user-name="<%= current_user.display_name%>"
             is-logged-in="true"
-            :december-release="<%= !!feature_flags['december_release'] %>"
             docs-url="<%= docs_url %>"
     />
   <% else %>
