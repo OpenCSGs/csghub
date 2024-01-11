@@ -51,5 +51,10 @@ config/database.yml
 coverage/
 
 config/credentials.yml.enc.backup
-config/master.key.starhub
 config/master.key.main
+config/master.key.starhub
+
+/app/.env.development
+/app/Gemfile.lock
+/app/config/credentials.yml.enc
+/app/config/database.yml
