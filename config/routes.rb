@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get :export, on: :collection
     end
     resources :comments
+    resources :discussions
     resources :leads
     resources :campaigns do
       member do
