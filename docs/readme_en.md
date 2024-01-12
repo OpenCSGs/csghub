@@ -13,7 +13,7 @@ You can try the free SaaS version of CSGHub through the OpenCSG Community offici
 
 ### UPDATES
 - [2024.02.15] v0.2 Plan: Built-in code Repo; automatic conversion for datasets, complete dataset preview function. *
-- [2024.1.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as blew.
+- [2024.01.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as blew.
 
 ### CORE FUNCTIONS
 In the ear of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. CSGHub is an open-source project designed to address these issues.
