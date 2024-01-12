@@ -55,7 +55,7 @@
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-       <el-menu-item index="/campaigns" style="border:none"><a class="w-full" href="/campaigns">社区</a></el-menu-item>
+       <el-menu-item index="/campaigns" style="border:none"><a class="w-full" href="/campaigns">活动</a></el-menu-item>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
@@ -136,7 +136,7 @@ export default {
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
     return {
-      csgHubUrl:'https://github.com/OpenCSGs',
+      csgHubUrl:'https://github.com/OpenCSGs/csghub-portal',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
       userProfile: `/profile/${this.userName}`
