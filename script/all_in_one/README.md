@@ -23,7 +23,7 @@ docker engine（>=5:20.10.24）
 
 ### 使用方法
 1. 切换到all_in_one目录
-2. 编辑.env文件，设置`SERVER_DOMAIN`为当前主机的ip地址或者自定义域名（推荐使用ip）。请不要使用`127.0.0.1`或者`localhost`。
+2. 编辑.env文件，设置`SERVER_DOMAIN`为当前主机的ip地址或者自定义域名（域名可能会有备案问题，因此推荐使用ip地址，公网/内网ip皆可）。请不要使用`127.0.0.1`或者`localhost`。
 3. 运行`startup.sh`脚本，待所有服务启动完毕，即可以通过`http://[SERVER_DOMAIN]`访问到自部署的CSGHub服务。
 
 ### 注意事项
