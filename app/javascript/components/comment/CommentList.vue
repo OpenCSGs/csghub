@@ -20,7 +20,6 @@
   import { ref } from 'vue';
   import CreateComment from './CreateComment.vue';
   import CommentItem from './CommentItem.vue';
-  import { onMounted } from 'vue'
 
   const props = defineProps({
     commentable_type: {
@@ -50,8 +49,4 @@
   const deleteComment = (commentId) => {
     commentListRef.value = commentListRef.value.filter((comment) => comment.id !== commentId);
   };
-
-  onMounted(() => {
-    console.log('Component is mounted');
-  });
 </script>

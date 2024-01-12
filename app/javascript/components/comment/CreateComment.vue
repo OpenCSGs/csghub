@@ -38,8 +38,10 @@
   const emit = defineEmits(['createComment']);
 
   const clickCreateComment = () => {
-    console.log("test")
-    console.log(props.current_user_id)
+    if (props.current_user_id === '') {
+      window.location.href = "/login"
+    }
+    createComment()
   }
 
   const createComment = async () => {
