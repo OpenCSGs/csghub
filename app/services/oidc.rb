@@ -41,7 +41,6 @@ class Oidc
   def signup_url
     ENV.fetch('SIGNUP_URL', nil) || oidc_configs['signup_url']
   end
-  end
 
   def oidc_configs
     @oidc_configs ||= load_oidc_configs
