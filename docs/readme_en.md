@@ -1,11 +1,13 @@
 ## CSGHub README
+[README 中文版本](./docs/readme.md)
+
 CSGHub is an open source, trustworthy large model asset management platform that can assist users in governing the assets involved in the lifecycle of LLM and LLM applications (datasets, model files, code, etc).
 
 With CSGHub, users can perform operations on LLM assets, including uploading, downloading, storing, verifying, and distributing, through Web interface, Git command line, or natural language Chatbot. Meanwhile, the platform provides microservice submodules and standardized OpenAPIs, which could be easily integrated with users' own systems.
 
 CSGHub is committed to bringing users an asset management platform that is natively designed for large models and can be deployed On-Premise for fully offline operation. CSGHub offers functionalities similar to a privatized Huggingface(on-premise Huggingface), managing LLM assets in a manner akin to how OpenStack Glance manages virtual machine images, Harbor manages container images, and Sonatype Nexus manages artifacts.
 
-You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://portal.opencsg.com/
+You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://portal.opencsg.com/models
 
 <img src="./images/project_intro.jpg" width='800'>
 
@@ -33,12 +35,9 @@ The technical design of CSGHub are as follows:
 
 Our R&D team has been focusing on AI + DevOps for a long time, and we hope to solve the pain points in the development process of large models through the CSGHub project. We encourage everyone to contribute high-quality development and operation and maintenance documents, and work together to improve the platform, so that large models assets can be more traceable and efficient.
 
-<img src="./images/functions.jpeg" width='800'>
-
 ### DEMO VIDEOS
-In order to help users to quickly understand the features and usage of CSGHub, we have recorded a series of demo videos. You can watch these videos to get a quick understanding of the main features and operation procedures of this program.
-- CSGHub Web Demo: [Demo Video](https://portal.opencsg.com/)
-- CSGHub Git Operation Demo：[Demo Video](https://portal.opencsg.com/)
+In order to help users to quickly understand the features and usage of CSGHub, we have recorded a demo video. You can watch this video to get a quick understanding of the main features and operation procedures of this program.
+- CSGHub Demo: [Demo Video](https://portal.opencsg.com/)
 
 ### ROADMAP
 - **Asset Management**
