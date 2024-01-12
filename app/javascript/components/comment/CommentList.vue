@@ -4,6 +4,7 @@
       @createComment="createComment"
       :commentable_type="commentable_type"
       :commentable_id="commentable_id"
+      :current_user_id="current_user_id"
     />
     <CommentItem
       v-for="comment in commentListRef"
@@ -19,6 +20,7 @@
   import { ref } from 'vue';
   import CreateComment from './CreateComment.vue';
   import CommentItem from './CommentItem.vue';
+  import { onMounted } from 'vue'
 
   const props = defineProps({
     commentable_type: {
@@ -48,4 +50,8 @@
   const deleteComment = (commentId) => {
     commentListRef.value = commentListRef.value.filter((comment) => comment.id !== commentId);
   };
+
+  onMounted(() => {
+    console.log('Component is mounted');
+  });
 </script>

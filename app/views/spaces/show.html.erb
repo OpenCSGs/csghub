@@ -21,7 +21,7 @@
     </iframe>
     <p class="my-[24px] text-[14px] text-[#606266]"><%= @space.desc %></p>
     <div class="pt-6 border-t border-[#DCDFE6]">
-      <comment-list comments='<%= @comments.to_json %>' commentable_id="<%= @space.id %>" commentable_type="Space" current_user_id="<%= current_user.id %>"></comment-list>
+      <comment-list comments='<%= @comments.to_json %>' commentable_id="<%= @space.id %>" commentable_type="Space" current_user_id="<%= current_user.id if current_user.present? %>"></comment-list>
     </div>
   </div>
 </div>
