@@ -53,7 +53,7 @@ In order to help users to quickly understand the features and usage of CSGHub, w
   - [ ] GitServer Adapter: Generic GitServer adapter to support multiple major Git repository types through Adaptor mode.
   - [ ] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
 
-The detailed roadmap is designed as follows: ：[function roadmap](./roadmap.md)
+The detailed roadmap is designed as follows: ：[full roadmap](./roadmap_en.md)
 
 ### DOCS
 #### CSGHub Portal Architecture
