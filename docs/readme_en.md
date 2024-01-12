@@ -1,5 +1,5 @@
 ## CSGHub README
-[README 中文版本](./docs/readme.md)
+[README 中文版本](/README.md)
 
 CSGHub is an open source, trustworthy large model asset management platform that can assist users in governing the assets involved in the lifecycle of LLM and LLM applications (datasets, model files, code, etc).
 
