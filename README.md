@@ -52,7 +52,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
   - [ ] GitServer适配器: 通用GitServer适配器，通过Adaptor模式实现对多种主流Git仓库后端的支持。
   - [ ] 资产元数据: 资产元数据管理机制， 支持自定义元数据类型和对应的AutoTag规则。
 
-详细路线图设计如下：[功能规划路线明细](./docs/roadmap.md)
+详细路线图设计如下：[完整路线图](./docs/roadmap.md)
 
 ### 详细架构
 #### CSGHub Portal 架构图
@@ -64,7 +64,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 ### 快速使用
 - [参见详细文档](./script/all_in_one/README.md)
 
-#### 详细技术文档
+### 详细技术文档
 - [开发环境搭建](./docs/setup.md)
 
 ### 致谢
