@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+/tmp/**/*.keep
 !/log/.keep
 !/tmp/.keep
 
@@ -32,3 +33,23 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+.vite/
+docker-compose-staging.yml
+docker-compose-production.yml
+
+/node_modules
+
+yarn-error.log
+**/*.icloud
+**/.DS_Store
+
+/.idea
+
+config/database.yml
+
+coverage/
+
+config/credentials.yml.enc.backup
+config/master.key.main
+config/master.key.starhub

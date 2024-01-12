@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: test_app_development
+  database: csghub_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: test_app_test
+  database: csghub_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -79,8 +79,9 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+staging:
+  <<: *default
+  database: csghub_staging
 production:
   <<: *default
-  database: test_app_production
-  username: test_app
-  password: <%= ENV["TEST_APP_DATABASE_PASSWORD"] %>
+  database: csghub_production

@@ -1,13 +1,72 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /*
+  Overwrite plugin css like ElementUI here
+*/
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+.is-active {
+  font-weight: bold !important;
+}
+
+.el-button {
+  &:focus-visible {
+    outline: none !important;
   }
 }
 
+.el-dialog__body {
+  padding: 10px 20px !important;
+}
+
+.el-upload-list--picture-card {
+  width: 100% !important;
+}
+
+.el-upload--picture-card {
+  width: 100% !important;
+}
+
+.el-upload-list__item {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.el-upload-list__item > div {
+    width: 100% !important;
+}
+.el-upload-list--picture-card .el-upload-list__item-thumbnail {
+  object-fit: cover !important;
+}
+img, video {
+  max-width: unset !important;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+  Define tailwindcss group class
 */
+
+@layer utilities {
+  .active-model-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+
+  .active-dataset-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+}

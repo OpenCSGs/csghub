@@ -31,3 +31,13 @@
 
 en:
   hello: "Hello world"
+  en: 'English'
+  zh: 'Chinese'
+  logout: 'Logout'
+
+  activerecord:
+    errors:
+      models:
+        space:
+          blank: "Field can't be blank"
+          taken: "Can't create duplicate space"

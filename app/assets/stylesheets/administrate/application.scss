@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+/* ../../../.asdf/installs/ruby/3.2.2/lib/ruby/gems/3.2.0/gems/actiontext-7.0.7.2/app/assets/stylesheets/trix.css */
+@import "trix";
+
+@import "reset/normalize";
+
+@import "selectize";
+
+@import "library/clearfix";
+@import "library/data-label";
+@import "library/variables";
+
+@import "base/forms";
+@import "base/layout";
+@import "base/lists";
+@import "base/tables";
+@import "base/typography";
+
+@import "components/app-container";
+@import "components/attributes";
+@import "components/buttons";
+@import "components/cells";
+@import "components/field-unit";
+@import "components/flashes";
+@import "components/form-actions";
+@import "components/main-content";
+@import "components/navigation";
+@import "components/pagination";
+@import "components/search";
+
+@import "utilities/text-color";

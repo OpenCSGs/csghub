@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: open_portal_db
+  web:
+    build: .
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/open_portal_db
+      RAILS_ENV: staging
+    command: >
+      bash -c "bundle exec rails assets:precompile
+      && bundle exec rails db:create
+      && bundle exec rails db:migrate
+      && bundle exec rails db:seed
+      && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db

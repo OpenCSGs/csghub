@@ -1,0 +1,32 @@
+image: docker:24.0.6
+
+include:
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+variables:
+  CI_USER: $GITLAB_USER
+  CI_TOKEN: $GITLAB_USER_TOKEN_HIVEER
+  GIT_DEPTH: 100
+
+stages:
+  - test
+  - build
+
+# 判断是不是正确的project，正确的branch，以及是不是forked repo过来的MR
+.if-starhub-main-original-repo: &if-starhub-main-original-repo
+  if: '$CI_COMMIT_REF_NAME == "starhub-main" && $CI_PROJECT_ID == "32" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == null'
+
+starhub-build:
+  stage: build
+  services:
+    - docker:24.0.6-dind
+  tags:
+    - linux-medium-amd64
+  rules:
+    - <<: *if-starhub-main-original-repo
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker login $CI_REGISTRY -u $CI_USER -p $CI_TOKEN
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG

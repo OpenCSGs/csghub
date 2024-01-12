@@ -1,0 +1,14 @@
+<p>
+  <% if flash[:alert].present? %>
+    <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
+  <% end %>
+</p>
+<div class="h-full flex items-center justify-center flex-col bg-[#F3F0FF] py-[223px]">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-col gap-[8px] items-center text-center mt-[24px] px-[16px] text-[#303133]">
+      <p class="text-[48px]">404</p>
+      <p class="font-semibold text-[48px]">无法访问网页</p>
+      <p class="text-[20px]">抱歉，OpenCSG找不到该网页。该网页或许由于产品更新已被删除，或者您的网址不正确。</p>
+    </div>
+  </div>
+</div>

@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full">
   <head>
-    <title>TestApp</title>
+    <title>OpenCSG</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "application.assets" %>
+    <%= javascript_include_tag "application", defer: true %>
+    <%= favicon_link_tag asset_path('favicon.png') %>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?95555b86ed4a344b0aa4f20afeee20c1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+      const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+    </script>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="h-full bg-[#F2F3F5]">
+    <div id="app" class="min-h-full flex flex-col">
+      <div class="grow">
+        <%= render partial: 'partials/navbar' %>
+        <%= yield.force_encoding(Encoding::UTF_8) %>
+      </div>
+      <%= render partial: 'partials/foot' %>
+    </div>
   </body>
 </html>

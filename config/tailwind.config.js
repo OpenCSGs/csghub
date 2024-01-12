@@ -1,23 +1,20 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './public/*.html',
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}'
+    './app/javascript/**/*',
+    './app/views/**/*',
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-      },
+    extend: {},
+    screens: {
+      '2xl': {'max': '1536px'},
+      'xl': {'max': '1280px'},
+      'lg': {'max': '1024px'},
+      'mlg': {'max': '826px'},
+      'md': {'max': '768px'},
+      'sm': {'max': '640px'},
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/container-queries'),
-  ]
+  plugins: [],
 }
