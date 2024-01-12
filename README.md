@@ -1,12 +1,12 @@
 ## CSGHub产品说明文档
 
-[English Version](./docs/readme_en.md)
+[README English Version](./docs/readme_en.md)
 
 CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户治理LLM和LLM应用生命周期中涉及到的资产（数据集、模型文件、代码等）。基于CSGHub，用户可以通过Web界面、Git命令行或者自然语言Chatbot等方式，实现对模型文件、数据集、代码等资产的操作，包括上传、下载、存储、校验和分发；同时平台提供微服务子模块和标准化API，便于用户与自有系统集成。
 
 CSGHub致力于为用户带来针对大模型原生设计的、可私有化部署离线运行的资产管理平台。CSGHub提供类似私有化的Huggingface功能，以类似OpenStack Glance管理虚拟机镜像、Harbor管理容器镜像以及Sonatype Nexus管理制品的方式，实现对LLM资产的管理。
 
-您可以通过OpenCSG传神社区官网体验SaaS版功能：https://portal.opencsg.com/
+您可以通过OpenCSG传神社区官网体验SaaS版功能：https://portal.opencsg.com/models
 
 <img src="./docs/images/project_intro.jpg" width='800'>
 
@@ -32,14 +32,11 @@ CSGHub的技术特点如下：
 - CSGHub借助Apache Arrow和DuckDB等优秀开源项目，支持Parquet数据文件格式的预览，便于算法研究人员和爱好者进行本地化数据集管理。
 - CSGHub提供直观的Web界面和面向企业组织架构的权限设计，用户可通过Web UI实现版本控制管理、在线浏览和下载，也可以设置数据集和模型文件的可见范围，实现数据安全隔离，还可以对模型和数据集发起话题讨论。
 
-我们的研发团队长期专注于 AI + DevOps领域，希望通过CSGHub项目解决大模型开发过程中的痛点。我们鼓励大家贡献高质量的开发和运维文档，共同改进这个平台，让大模型"有据可循"。
-
-<img src="./docs/images/functions.jpeg" width='800'>
+OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型开发过程中的痛点。我们鼓励大家贡献高质量的开发和运维文档，共同改进这个平台，让大模型"有据可循"。
 
 ### 演示视频
-为了帮助您更直观地了解 CSGHub 的功能和使用方法，我们录制了一系列演示视频。您可以通过观看这些视频，快速了解本项目的主要特性和操作流程。
-- CSGHub Web功能演示：[演示视频](https://portal.opencsg.com/)
-- CSGHub Git操作演示：[演示视频](https://portal.opencsg.com/)
+为了帮助您更直观地了解 CSGHub 的功能和使用方法，我们录制了演示视频。您可以通过观看视频，快速了解本项目的主要特性和操作流程。
+- CSGHub功能演示：[演示视频](https://portal.opencsg.com/)
 
 ### 路线图
 - **资产管理**
