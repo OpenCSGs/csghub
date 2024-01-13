@@ -10,8 +10,6 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/logs:/var/log/nginx
       - ./nginx/tmpdata:/var/nginx/client_body_temp
-    environment:
-      - NGINX_PORT=${SERVER_PORT:-80}
     privileged: true
     networks:
       - opencsg
@@ -124,7 +122,7 @@ services:
       - GITEA_SMTP_ENABLED=false
       - BITNAMI_DEBUG=true
       - GITEA_LFS_START_SERVER=true
-      - GITEA_LFS_ROOT_PATH=/bitnami/gitea/data/lfs
+      - GITEA_LFS_ROOT_PATH=/opt/bitnami/gitea/data/lfs
       - GITEA_LFS_STORAGE_TYPE=minio
       - GITEA_LFS_MINIO_ACCESS_KEY_ID=admin
       - GITEA_LFS_MINIO_SECRET_ACCESS_KEY=Password_123
@@ -133,6 +131,7 @@ services:
       - GITEA_LFS_MINIO_LOCATION=cn-beijing
       - GITEA_LFS_MINIO_USE_SSL=false
       - GITEA_SERVICE_DEFAULT_ALLOW_CREATE_ORGANIZATION=true
+      - GITEA_SERVICE_DISABLE_REGISTRATION=false
       - GITEA_LOG_MODE=file
       - GITEA_LOG_ROOT_PATH=/bitnami/logs
     ports:
