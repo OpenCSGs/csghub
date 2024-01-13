@@ -65,7 +65,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 可使用如下命令快速部署一个CSBHub实例到指定环境。
 ```
 export SERVER_DOMAIN=[IP Address]
-docker compose -f https://github.com/OpenCSGs/CSGHub/blob/main/all-in-one.yml up -d
+docker compose -f https://raw.githubusercontent.com/OpenCSGs/CSGHub/main/all-in-one.yml up -d
 ```
 **说明：**
 * `SERVER_DOMAIN`为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`
