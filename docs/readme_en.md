@@ -63,7 +63,16 @@ The detailed roadmap is designed as follows: ：[full roadmap](./roadmap_en.md)
 <img src="./images/server_tech_graph.png" width='800'>
 
 ### QUICK START
-- [refer to details](./script/all_in_one/README.md)
+You can quickly deploy a CSGHub instance to the specified environment using the following commands:
+```
+export SERVER_DOMAIN=[IP Address]
+docker compose -f https://github.com/OpenCSGs/CSGHub/blob/main/all-in-one.yml up -d
+```
+
+**Note:**
+
+* `SERVER_DOMAIN` should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
+* The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Alternatively, you can use the [this script](./script/all_in_one/README.md) for service deployment.
 
 #### Tech docs in detail
 - [setup development env](./docs/setup_en.md)
