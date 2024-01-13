@@ -62,7 +62,14 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 <img src="./docs/images/server_tech_graph.png" width='800'>
 
 ### 快速使用
-- [参见详细文档](./script/all_in_one/README.md)
+可使用如下命令快速部署一个CSBHub实例到指定环境。
+```
+export SERVER_DOMAIN=[IP Address]
+docker compose -f https://github.com/OpenCSGs/CSGHub/blob/main/all-in-one.yml up -d
+```
+**说明：**
+* `SERVER_DOMAIN`为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`
+* 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动，或者使用完整版[一键部署](./script/all_in_one/README.md)脚本进行服务部署。
 
 ### 详细技术文档
 - [开发环境搭建](./docs/setup.md)
