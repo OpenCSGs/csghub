@@ -68,6 +68,7 @@ export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o all-in-one.yml
 docker compose -f all-in-one.yml up -d
 ```
+部署完毕后，就可以在浏览器上通过http://[IP Address]访问到新部署的CSGHub实例。（初始化管理员账号：admin001/admin001）
 
 **注意：**
 * `SERVER_DOMAIN` 为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`
