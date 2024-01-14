@@ -35,7 +35,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 
 ### 演示视频
 为了帮助您更直观地了解 CSGHub 的功能和使用方法，我们录制了演示视频。您可以通过观看视频，快速了解本项目的主要特性和操作流程。
-- CSGHub功能演示如下，高清版本请参见[YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) 或 [Bilibili](https://www.bilibili.com/video/BV12T4y187bv/)
+- CSGHub功能演示如下，外部网络视频请参见[YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) 或 [Bilibili](https://www.bilibili.com/video/BV12T4y187bv/)
 <video width="658" height="432" src="https://github-production-user-asset-6210df.s3.amazonaws.com/3232817/296556812-205d07f2-de9d-4a7f-b3f5-83514a71453e.mp4"></video>
 
 ### 近期路线图
