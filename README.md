@@ -86,12 +86,12 @@ docker compose -f all-in-one-CN.yml up -d
 ```
 
 部署完毕后，就可以在浏览器上通过`http://[IP Address]`访问到新部署的CSGHub实例；
-实例启动后，您可以使用初始管理员账号：admin001/admin001，详细用户文档可参看[使用文档](https://portal.opencsg.com/docs/）
+实例启动后，您可以使用初始管理员账号：admin001/admin001，详细用户文档可参看[使用文档](https://portal.opencsg.com/docs/)
 
 **快速安装注意事项：**
 * `SERVER_DOMAIN` ([IP Address])为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`。
-* 当前仅发布x86_64架构容器，已测试Linux/Windows和Mac，Mac Silicon架构环境需开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
-* **请注意：快速安装仅适用于试用测试，不能支持生产级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动，或者使用完整版[一键部署](./script/all_in_one/README.md)脚本进行服务部署。
+* 当前发布的容器为x86_64架构，已测试Linux/Windows和Mac环境，Mac Silicon架构环境需要开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
+* **请注意：快速安装仅适用于试用测试，不能支持生产级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动，或者使用完整版[完整部署](./script/all_in_one/README.md)功能进行服务部署。
 
 ### 详细技术文档
 - [开发环境搭建](./docs/setup.md)
