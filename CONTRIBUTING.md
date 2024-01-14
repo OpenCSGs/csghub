@@ -12,7 +12,7 @@ CSGHub 是一个开源、可信的大模型资产管理平台，旨在帮助用�
 
 为了对项目做出贡献，请按照以下的 "fork and pull request" 工作流程进行操作。请注意，除非您是维护者，否则请不要直接推送更改到该存储库。
 
-1. 在 GitHub 上 fork 本项目的存储库(https://github.com/OpenCSGs/CSGHub) 到您的账号下。
+1. 在 GitHub 上 fork 本项目的存储库(https://github.com/OpenCSGs/csghub) 到您的账号下。
 2. 进入您 fork 后的存储库，进行修改和改进。
 3. 在您的 fork 后的存储库中，创建一个新的分支来承载您的修改。建议基于 main 分支创建新分支。
 4. 在新分支上进行修改和改进。
@@ -29,7 +29,7 @@ CSGHub 是一个开源、可信的大模型资产管理平台，旨在帮助用�
 报告问题和提出建议
 ----------------------
 
-如果您发现了问题、改进或功能请求，请在我们的 [Issues 页面](https://github.com/OpenCSGs/CSGHub/issues)进行报告。我们会定期查看并回复您的问题。
+如果您发现了问题、改进或功能请求，请在我们的 [Issues 页面](https://github.com/OpenCSGs/csghub/issues)进行报告。我们会定期查看并回复您的问题。
 
 在报告问题和提出建议时，请遵循以下准则：
 
@@ -39,7 +39,7 @@ CSGHub 是一个开源、可信的大模型资产管理平台，旨在帮助用�
 标签说明
 ----------------------
 
-我们使用标签对问题和 Pull Request 进行分类和归类，详细的标签说明请参考[这个页面](docs/all_in_one_readme_en.md)。
+我们使用标签对问题和 Pull Request 进行分类和归类，详细的标签说明请参考[这个页面](https://github.com/OpenCSGs/csghub/labels)。
 
 本地开发
 ----------------------

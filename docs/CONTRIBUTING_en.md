@@ -12,7 +12,7 @@ Contribution Workflow
 
 To contribute to the project, please follow the "fork and pull request" workflow. Please refrain from pushing directly to the main repository unless you are a maintainer.
 
-1. Fork the repository from GitHub (https://github.com/OpenCSGs/CSGHub) to your own GitHub account.
+1. Fork the repository from GitHub (https://github.com/OpenCSGs/csghub) to your own GitHub account.
 2. Make the desired changes and improvements in your forked repository.
 3. Create a new branch in your forked repository to accommodate your modifications. It is recommended to base your branch on the `main` branch.
 4. Make the necessary modifications and improvements in your new branch.
@@ -29,7 +29,7 @@ Make sure your contributions adhere to the following guidelines:
 Reporting Issues and Making Suggestions
 ----------------------
 
-If you encounter any issues, have suggestions for improvements, or want to request new features, please report them on our [Issues](https://github.com/OpenCSGs/CSGHub/issues) page. We regularly review and respond to your feedback.
+If you encounter any issues, have suggestions for improvements, or want to request new features, please report them on our [Issues](https://github.com/OpenCSGs/csghub/issues) page. We regularly review and respond to your feedback.
 
 When reporting issues or making suggestions, please follow these guidelines:
 
@@ -39,7 +39,7 @@ When reporting issues or making suggestions, please follow these guidelines:
 Issue Labels
 ----------------------
 
-For an overview of the labeling system we use to tag issues and pull requests, please refer to [this page](https://github.com/OpenCSGs/CSGHub/labels).  
+For an overview of the labeling system we use to tag issues and pull requests, please refer to [this page](https://github.com/OpenCSGs/csghub/labels).  
 
 
 Local Development
