@@ -68,7 +68,17 @@ export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o all-in-one.yml
 docker compose -f all-in-one.yml up -d
 ```
-部署完毕后，就可以在浏览器上通过http://[IP Address]访问到新部署的CSGHub实例。（初始化管理员账号：admin001/admin001）
+
+国内用户可选择使用阿里容器镜像服务的部署脚本，加快服务启动，命令如下：
+```
+export SERVER_DOMAIN=[IP Address]
+curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
+docker compose -f all-in-one-CN.yml up -d
+```
+
+部署完毕后，就可以在浏览器上通过`http://[IP Address]`访问到新部署的CSGHub实例。（初始化管理员账号：admin001/admin001）
+
+详细使用方法可参看[使用文档](https://portal.opencsg.com/docs/)
 
 **注意：**
 * `SERVER_DOMAIN` 为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`
