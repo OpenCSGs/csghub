@@ -75,6 +75,12 @@ export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
 docker compose -f all-in-one-CN.yml up -d
 ```
+或者从阿里云对象存储中拉取一键部署脚本：
+```
+export SERVER_DOMAIN=[IP Address]
+curl -L https://opencsg-public-resource.oss-cn-beijing.aliyuncs.com/csghub/all-in-one-CN.yml -o all-in-one-CN.yml
+docker compose -f all-in-one-CN.yml up -d
+```
 
 部署完毕后，就可以在浏览器上通过`http://[IP Address]`访问到新部署的CSGHub实例。（初始化管理员账号：admin001/admin001）
 
