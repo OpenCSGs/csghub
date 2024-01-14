@@ -100,7 +100,7 @@ You can check our website for more user guide information: [User Guide](https://
 * `SERVER_DOMAIN` ([IP Address]) should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
 * Released container images are for the x86_64 architecture only and have been tested on Linux/Windows and Mac environments. For Mac Silicon user, it is necessary to enable the [Rosetta for x86/AMD64 emulation Feature](https://docs.docker.com/desktop/settings/mac/#general) in your Docker Desktop.
 * **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it.
-* For any other situation, you should always follow the [Step-by-Step Deployment Guide](script/all_in_one/README.md) for regular service deployment.
+* For any other situation, you should always follow the [Step-by-Step Deployment Guide](/script/all_in_one/README.md) for regular service deployment.
 
 #### Tech docs in detail
 - [setup development env](/docs/setup_en.md)
