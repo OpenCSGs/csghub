@@ -5,7 +5,6 @@ services:
     image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_nginx:latest
     ports:
       - 80:80
-      - 443:443
     volumes:
       - ./nginx/logs:/var/log/nginx
       - ./nginx/tmpdata:/var/nginx/client_body_temp
