@@ -11,7 +11,7 @@ CSGHub致力于为用户带来针对大模型原生设计的、可私有化部�
 <img src="./docs/images/project_intro.jpg" width='800'>
 
 ### 更新
-- [2024.02.15] v0.2 规划: 内置代码Repo；数据集自动转换，完整的数据集预览功能。*
+- [2024.02.15] v0.2 版本规划: 内置代码Repo；数据集自动转换，完整的数据集预览功能。*
 - [2024.01.15] v0.1 CSGHub Alpha版本发布，支持模型和数据集管理功能，详细功能说明参见下文。
 
 ### 核心理念
@@ -21,7 +21,7 @@ CSGHub的功能特点如下（持续迭代中）：
 - **资产统一管理**： 一站式Hub统一管理模型文件、数据集、大模型应用代码。
 - **研发生态兼容**： 同时支持HTTPS和SSH协议的Git命令和Web界面操作， 确保不同用户均可方便使用。
 - **大模型能力扩展**：原生支持版本化管理、模型格式转化、数据自动预处理、数据集预览等功能。
-- **权限与安全**： 支持与企业用户系统集成、支持资产可见范围设置、外部内部零信任的鉴权接口设计， 最大化满足企业安全。
+- **权限与安全**： 支持与企业用户系统集成、支持资产可见范围设置、外内部接口鉴权设计，满足企业安全需求。
 - **私有化部署支持**： 无互联网依赖、无云厂商依赖等外部依赖，可一键启动私有化部署。
 - **大模型原生设计**： 支持自然语言交互、模型一键部署、Agent与Copilot App等资产管理。
 
@@ -32,7 +32,7 @@ CSGHub的技术特点如下：
 - CSGHub借助Apache Arrow和DuckDB等优秀开源项目，支持Parquet数据文件格式的预览，便于算法研究人员和爱好者进行本地化数据集管理。
 - CSGHub提供直观的Web界面和面向企业组织架构的权限设计，用户可通过Web UI实现版本控制管理、在线浏览和下载，也可以设置数据集和模型文件的可见范围，实现数据安全隔离，还可以对模型和数据集发起话题讨论。
 
-OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型开发过程中的痛点。我们鼓励大家贡献高质量的开发和运维文档，共同改进这个平台，让大模型"有据可循"。
+OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型开发过程中的痛点。我们鼓励大家贡献高质量的开发和运维文档，共同改进这个平台，让大模型的管理"有据可循"。
 
 ### 演示视频
 为了帮助您更直观地了解 CSGHub 的功能和使用方法，我们录制了演示视频。您可以通过观看视频，快速了解本项目的主要特性和操作流程。
@@ -52,7 +52,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
   - [ ] GitServer适配器: 通用GitServer适配器，通过Adaptor模式实现对多种主流Git仓库后端的支持。
   - [ ] 资产元数据: 资产元数据管理机制， 支持自定义元数据类型和对应的AutoTag规则。
 
-详细路线图设计如下：[完整路线图](./docs/roadmap.md)
+详细路线图设计请参见：[完整路线图](./docs/roadmap.md)
 
 ### 详细架构
 #### CSGHub Portal 架构图
@@ -63,33 +63,35 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 
 ### 快速使用
 可使用如下命令快速部署一个CSBHub实例到指定环境。
-```
+```shell
+# 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o all-in-one.yml
 docker compose -f all-in-one.yml up -d
 ```
 
-国内用户可选择使用阿里容器镜像服务的部署脚本，加快服务启动，命令如下：
-```
+中国国内用户可选择使用阿里容器镜像服务的部署脚本，加快服务启动，命令如下：
+```shell
+# 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
 docker compose -f all-in-one-CN.yml up -d
 ```
-或者从阿里云对象存储中拉取一键部署脚本：
-```
+如果遇到网络问题，你可以选择从阿里云对象存储中下载一键部署脚本：
+```shell
+# 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
 curl -L https://opencsg-public-resource.oss-cn-beijing.aliyuncs.com/csghub/all-in-one-CN.yml -o all-in-one-CN.yml
 docker compose -f all-in-one-CN.yml up -d
 ```
 
-部署完毕后，就可以在浏览器上通过`http://[IP Address]`访问到新部署的CSGHub实例。（初始化管理员账号：admin001/admin001）
+部署完毕后，就可以在浏览器上通过`http://[IP Address]`访问到新部署的CSGHub实例；
+实例启动后，您可以使用初始管理员账号：admin001/admin001，详细用户文档可参看[使用文档](https://portal.opencsg.com/docs/）
 
-详细使用方法可参看[使用文档](https://portal.opencsg.com/docs/)
-
-**注意：**
-* `SERVER_DOMAIN` 为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`
-* 当前仅仅支持x86_64架构系统。
-* 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动，或者使用完整版[一键部署](./script/all_in_one/README.md)脚本进行服务部署。
+**快速安装注意事项：**
+* `SERVER_DOMAIN` ([IP Address])为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`。
+* 当前仅发布x86_64架构容器，已测试Linux/Windows和Mac，Mac Silicon架构环境需开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
+* **请注意：快速安装仅适用于试用测试，不能支持生产级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动，或者使用完整版[一键部署](./script/all_in_one/README.md)脚本进行服务部署。
 
 ### 详细技术文档
 - [开发环境搭建](./docs/setup.md)
