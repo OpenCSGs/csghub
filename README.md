@@ -51,7 +51,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
   - [ ] GitServer适配器: 通用GitServer适配器，通过Adaptor模式实现对多种主流Git仓库后端的支持。
   - [ ] 资产元数据: 资产元数据管理机制， 支持自定义元数据类型和对应的AutoTag规则。
 
-详细路线图设计请参见：[完整路线图](./docs/roadmap.md)
+详细路线图设计请参见：[完整路线图](/docs/roadmap.md)
 
 ### 详细架构
 CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHub Portal，而CSGHub Server则是由golang实现的一个高性能后端。
@@ -94,17 +94,18 @@ docker compose -f all-in-one-CN.yml up -d
 * `SERVER_DOMAIN` ([IP Address])为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`。
 * 当前发布的容器为x86_64架构，已测试Linux/Windows和Mac环境，Mac Silicon架构环境需要开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
 * **请注意：快速安装仅适用于试用测试，不能支持服务级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动。
-* 任何情况下，如果您计划正式使用CSGHub，请务必参照[完整部署指南](./script/all_in_one/README.md)进行服务部署。
+* 任何情况下，如果您计划正式使用CSGHub，请务必参照[完整部署指南](/script/all_in_one/README.md)进行服务部署。
 
 ### 详细技术文档
-- [开发环境搭建](./docs/setup.md)
+- [开发环境搭建](/docs/setup.md)
 
 ### 贡献指南
-我们欢迎各种级别的开发者为我们的开源项目 CSGHub 做出贡献。如果您想要参与贡献，请查阅我们的[贡献指南](./CONTRIBUTING.md)，我们期待您的参与和建议。
+我们欢迎各种级别的开发者为我们的开源项目 CSGHub 做出贡献。如果您想要参与贡献，请查阅我们的[贡献指南](/CONTRIBUTING.md)，我们期待您的参与和建议。
 
 ### 致谢
 本项目基于 Rails、Vue3、Tailwind CSS、Administrate、Postgresql、Apache Arrow、DuckDB 和 GoGin，在此深深感谢他们的开源贡献！
 
 ### 联系我们
 使用过程中的任何问题， 您可以在github 发起issue或者加入我们的微信讨论群.
-<img src="./docs/images/little_asistant.jpeg" width='500'>
+<img src="./docs/images/wechat-group.jpeg" width='250'>
+<img src="./docs/images/little_asistant.jpeg" width='250'>
