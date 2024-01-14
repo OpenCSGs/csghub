@@ -37,7 +37,7 @@ Our R&D team has been focusing on AI + DevOps for a long time, and we hope to so
 
 ### DEMO VIDEO
 In order to help users to quickly understand the features and usage of CSGHub, we have recorded a demo video. You can watch this video to get a quick understanding of the main features and operation procedures of this program.
-- CSGHub Demo video is as blew，you can also check it at [YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) or [Bilibili](https://www.bilibili.com/video/BV12T4y187bv/)
+- CSGHub Demo video is as blew，you can also check it at [YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) or [Bilibili](https://www.bilibili.com/video/BV1wk4y1X7G7/)
 <video width="658" height="432" src="https://github-production-user-asset-6210df.s3.amazonaws.com/3232817/296556812-205d07f2-de9d-4a7f-b3f5-83514a71453e.mp4"></video>
 
 ### ROADMAP
