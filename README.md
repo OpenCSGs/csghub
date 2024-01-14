@@ -35,7 +35,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 
 ### 演示视频
 为了帮助您更直观地了解 CSGHub 的功能和使用方法，我们录制了演示视频。您可以通过观看视频，快速了解本项目的主要特性和操作流程。
-- CSGHub功能演示：
+- CSGHub功能演示如下，高清版本请参见[YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) 或 [Bilibili](https://www.bilibili.com/video/BV12T4y187bv/)
 <video width="549" height="360" src="https://github-production-user-asset-6210df.s3.amazonaws.com/3232817/296553219-6a3825a0-9c83-4f83-9521-ec82c07cc101.mp4"></video>
 
 ### 近期路线图
@@ -65,7 +65,7 @@ CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHu
 <img src="./docs/images/server_tech_graph.png" width='800'>
 
 ### 快速使用
-可使用如下命令快速部署一个CSBHub实例（包含Portal、Server和完整的其他依赖组件）到本地环境。
+【适合高速访问github和dockerhub用户】可使用如下命令快速部署一个CSBHub实例（包含Portal、Server和完整的其他依赖组件）到本地环境。
 ```shell
 # 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
@@ -73,14 +73,14 @@ curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o
 docker compose -f all-in-one.yml up -d
 ```
 
-中国国内用户可选择使用阿里云容器镜像版本的部署脚本，以加快镜像下载和服务启动，完整命令如下：
+【适合访问dockerhub慢/异常的用户】中国国内用户可选择使用阿里云容器镜像版本的部署脚本，以加快镜像下载和服务启动，完整命令如下：
 ```shell
 # 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
 docker compose -f all-in-one-CN.yml up -d
 ```
-如果遇到Github网络连接和下载问题，你可以选择从阿里云对象存储中下载一键部署脚本：
+【适合访问github和dockerhub慢/异常的用户】如果遇到Github网络连接和下载问题，你可以选择从阿里云对象存储中下载一键部署脚本：
 ```shell
 # 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
