@@ -37,7 +37,7 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 为了帮助您更直观地了解 CSGHub 的功能和使用方法，我们录制了演示视频。您可以通过观看视频，快速了解本项目的主要特性和操作流程。
 - CSGHub功能演示：
   
-[![](https://github.com/OpenCSGs/csghub/blob/main/docs/images/demo-cover.jpg)](https://player.bilibili.com/player.html?aid=923863037&bvid=BV12T4y187bv&cid=1406501079&high_quality=1&p=1)
+[![](https://github.com/OpenCSGs/csghub/blob/main/docs/images/demo-cover.jpg)](https://player.bilibili.com/player.html?aid=923863037&bvid=BV12T4y187bv&cid=1406501079&p=1&high_quality=1)
 
 ### 近期路线图
 - **资产管理**
