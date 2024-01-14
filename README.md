@@ -1,6 +1,5 @@
-## CSGHub产品说明文档
-
-[README English Version](/docs/readme_en.md)
+**[English](/docs/readme_en.md) ∙ [简体中文](README.md)**
+## CSGHub说明文档
 
 CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户治理LLM和LLM应用生命周期中涉及到的资产（数据集、模型文件、代码等）。基于CSGHub，用户可以通过Web界面、Git命令行或者自然语言Chatbot等方式，实现对模型文件、数据集、代码等资产的操作，包括上传、下载、存储、校验和分发；同时平台提供微服务子模块和标准化API，便于用户与自有系统集成。
 
@@ -55,6 +54,9 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 详细路线图设计请参见：[完整路线图](./docs/roadmap.md)
 
 ### 详细架构
+CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHub Portal，而CSGHub Server则是由golang实现的一个高性能后端。
+
+如果您想深入了解CSGHub Server或者想集成Server到自己的前端系统或进行二次开发，可以查看[CSGHub Server开源项目](https://github.com/OpenCSGs/csghub-server)。
 #### CSGHub Portal 架构图
 <img src="./docs/images/portal_tech_graph.png" width='800'>
 
