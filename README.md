@@ -72,14 +72,14 @@ curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o
 docker compose -f all-in-one.yml up -d
 ```
 
-中国国内用户可选择使用阿里容器镜像服务的部署脚本，加快服务启动，命令如下：
+中国国内用户可选择使用阿里云容器镜像版本的部署脚本，以加快镜像下载和服务启动，完整命令如下：
 ```shell
 # 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
 curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
 docker compose -f all-in-one-CN.yml up -d
 ```
-如果遇到网络问题，你可以选择从阿里云对象存储中下载一键部署脚本：
+如果遇到Github网络连接和下载问题，你可以选择从阿里云对象存储中下载一键部署脚本：
 ```shell
 # 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
