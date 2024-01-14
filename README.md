@@ -110,5 +110,5 @@ docker compose -f all-in-one-CN.yml up -d
 <div style="display:inline-block">
 <img src="./docs/images/wechat-group-new.png" width='250'>
 <span style="width: 100px"></span>
-<img src="./docs/images/wechat-assistant-new.png" width='250'>
+<img src="./docs/images/wechat-assistant-new.png" width='250' style="margin-left: 100px;">
 </div>
