@@ -16,6 +16,8 @@
         text-color="#475467"
         active-text-color="black"
       >
+        <el-menu-item index="/models" style="border:none"><a class="w-full" href="/models">模型</a></el-menu-item>
+        <el-menu-item index="/datasets" style="border:none"><a class="w-full" href="/datasets">数据集</a></el-menu-item>
         <el-sub-menu index="1" popper-class="popper-submenu">
           <template #title>产品</template>
           <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
@@ -26,7 +28,7 @@
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2" popper-class="popper-submenu">
-          <template #title>解决方案</template>
+          <template #title>方案</template>
           <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">
             <span>EKB AI 智能企业知识库</span>
           </el-menu-item>
@@ -42,8 +44,7 @@
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>开发者</template>
-          <a href="/models"><el-menu-item index="/models">模型</el-menu-item></a>
-          <a href="/datasets"><el-menu-item index="/datasets">数据集</el-menu-item></a>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">开源CSGHub</el-menu-item></a>
           <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
           <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
@@ -54,7 +55,7 @@
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-       <el-menu-item index="/campaigns" style="border:none"><a class="w-full" href="/campaigns">社区活动</a></el-menu-item>
+       <el-menu-item index="/campaigns" style="border:none"><a class="w-full" href="/campaigns">活动</a></el-menu-item>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
@@ -135,6 +136,7 @@ export default {
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
     return {
+      csgHubUrl:'https://github.com/OpenCSGs/CSGHub',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
       userProfile: `/profile/${this.userName}`
