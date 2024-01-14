@@ -1,7 +1,7 @@
+**[简体中文](/README.md) ∙ [English](/docs/readme_en.md)**
 ## CSGHub README
-[README 中文版本](/README.md)
 
-CSGHub is an open source, trustworthy large model asset management platform that can assist users in governing the assets involved in the lifecycle of LLM and LLM applications (datasets, model files, code, etc).
+CSGHub is an open source, trustworthy large model asset management platform that can assist users in governing the assets involved in the lifecycle of LLM and LLM applications (datasets, model files, codes, etc).
 
 With CSGHub, users can perform operations on LLM assets, including uploading, downloading, storing, verifying, and distributing, through Web interface, Git command line, or natural language Chatbot. Meanwhile, the platform provides microservice submodules and standardized OpenAPIs, which could be easily integrated with users' own systems.
 
@@ -35,7 +35,7 @@ The technical design of CSGHub are as follows:
 
 Our R&D team has been focusing on AI + DevOps for a long time, and we hope to solve the pain points in the development process of large models through the CSGHub project. We encourage everyone to contribute high-quality development and operation and maintenance documents, and work together to improve the platform, so that large models assets can be more traceable and efficient.
 
-### DEMO VIDEOS
+### DEMO VIDEO
 In order to help users to quickly understand the features and usage of CSGHub, we have recorded a demo video. You can watch this video to get a quick understanding of the main features and operation procedures of this program.
 - CSGHub Demo: [Demo Video](https://portal.opencsg.com/)
 
@@ -53,9 +53,13 @@ In order to help users to quickly understand the features and usage of CSGHub, w
   - [ ] GitServer Adapter: Generic GitServer adapter to support multiple major Git repository types through Adaptor mode.
   - [ ] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
 
-The detailed roadmap is designed as follows: ：[full roadmap](docs/roadmap_en.md)
+The detailed roadmap is designed as follows: [full roadmap](docs/roadmap_en.md)
 
-### DOCS
+### ARCHITECTURE
+CSGHub is made with two typical parts: Portal and Server. This repo corresponds to CSGHub Portal, while CSGHub Server is another high-performance backend project implemented with Golang.
+
+If you want to dive deep into CSGHub Server detail or wish to integrate the Server with your own frontend system or more, you can check the [CSGHub Server open-source project](https://github.com/OpenCSGs/csghub-server).
+
 #### CSGHub Portal Architecture
 <img src="./images/portal_tech_graph.png" width='800'>
 
@@ -63,16 +67,39 @@ The detailed roadmap is designed as follows: ：[full roadmap](docs/roadmap_en.m
 <img src="./images/server_tech_graph.png" width='800'>
 
 ### QUICK START
-You can quickly deploy a CSGHub instance to the specified environment using the following commands:
-```
+You can quickly deploy a CSGHub instance with portal/server and all other relevant dependencies to your environment using the following commands:
+```shell
+# please replace [IP Address] with your own LAN/WLAN ip address
 export SERVER_DOMAIN=[IP Address]
-docker compose -f https://github.com/OpenCSGs/CSGHub/blob/main/all-in-one.yml up -d
+curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o all-in-one.yml
+docker compose -f all-in-one.yml up -d
 ```
+
+if you are in China or you meet dockerhub network connection issue, you can try our aliyun docker registry alternative version with blew:
+```shell
+# please replace [IP Address] with your own LAN/WLAN ip address
+export SERVER_DOMAIN=[IP Address]
+curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
+docker compose -f all-in-one-CN.yml up -d
+```
+
+or if you still meet Github network connection issue, you can try this one:
+```shell
+# please replace [IP Address] with your own LAN/WLAN ip address
+export SERVER_DOMAIN=[IP Address]
+curl -L https://opencsg-public-resource.oss-cn-beijing.aliyuncs.com/csghub/all-in-one-CN.yml -o all-in-one-CN.yml
+docker compose -f all-in-one-CN.yml up -d
+```
+
+After all, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
+inital admin account: admin001/admin001
+You can check our website for more user guide information: [User Guide](https://portal.opencsg.com/docs/) (Chinese version only for now*)
 
 **Note:**
 
-* `SERVER_DOMAIN` should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
-* The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Alternatively, you can use the [this script](script/all_in_one/README.md) for service deployment.
+* `SERVER_DOMAIN` ([IP Address]) should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
+* Released container images are for the x86_64 architecture only and have been tested on Linux/Windows and Mac environments. For Mac Silicon user, it is necessary to enable the [Rosetta for x86/AMD64 emulation Feature](https://docs.docker.com/desktop/settings/mac/#general) in your Docker Desktop.
+* **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Alternatively, you should use the [Step-by-Step Deployment Guide](script/all_in_one/README.md) for regular service deployment.
 
 #### Tech docs in detail
 - [setup development env](docs/setup_en.md)
