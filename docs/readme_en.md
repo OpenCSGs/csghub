@@ -103,10 +103,10 @@ You can check our website for more user guide information: [User Guide](https://
 * For any other situation, you should always follow the [Step-by-Step Deployment Guide](script/all_in_one/README.md) for regular service deployment.
 
 #### Tech docs in detail
-- [setup development env](docs/setup_en.md)
+- [setup development env](/docs/setup_en.md)
 
 ### Contributing
-We welcome developers of all levels to contribute to our open-source project, CSGHub. If you would like to get involved, please refer to our [contributing guidelines](docs/CONTRIBUTING_en.md). We look forward to your participation and suggestions.
+We welcome developers of all levels to contribute to our open-source project, CSGHub. If you would like to get involved, please refer to our [contributing guidelines](/docs/CONTRIBUTING_en.md). We look forward to your participation and suggestions.
 
 ### ACKNOWLEDGEMENTS
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
