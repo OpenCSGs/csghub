@@ -1,7 +1,7 @@
 **[English](/docs/readme_en.md) ∙ [简体中文](README.md)**
 ## CSGHub说明文档
 
-CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户治理LLM和LLM应用生命周期中涉及到的资产（数据集、模型文件、代码等）。基于CSGHub，用户可以通过Web界面、Git命令行或者自然语言Chatbot等方式，实现对模型文件、数据集、代码等资产的操作，包括上传、下载、存储、校验和分发；同时平台提供微服务子模块和标准化API，便于用户与自有系统集成。
+CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户治理LLM和LLM应用生命周期中涉及到的资产(数据集、模型文件、代码等)。基于CSGHub，用户可以通过Web界面、Git命令行或者自然语言Chatbot等方式，实现对模型文件、数据集、代码等资产的操作，包括上传、下载、存储、校验和分发；同时平台提供微服务子模块和标准化API，便于用户与自有系统集成。
 
 CSGHub致力于为用户带来针对大模型原生设计的、可私有化部署离线运行的资产管理平台。CSGHub提供类似私有化的Huggingface功能，以类似OpenStack Glance管理虚拟机镜像、Harbor管理容器镜像以及Sonatype Nexus管理制品的方式，实现对LLM资产的管理。
 
@@ -64,7 +64,7 @@ CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHu
 <img src="./docs/images/server_tech_graph.png" width='800'>
 
 ### 快速使用
-可使用如下命令快速部署一个CSBHub实例到指定环境。
+可使用如下命令快速部署一个CSBHub实例（包含Portal、Server和完整的其他依赖组件）到本地环境。
 ```shell
 # 请将[IP Address]替换为您的内网IP地址
 export SERVER_DOMAIN=[IP Address]
