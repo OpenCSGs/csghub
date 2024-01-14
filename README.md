@@ -93,7 +93,8 @@ docker compose -f all-in-one-CN.yml up -d
 **快速安装注意事项：**
 * `SERVER_DOMAIN` ([IP Address])为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`。
 * 当前发布的容器为x86_64架构，已测试Linux/Windows和Mac环境，Mac Silicon架构环境需要开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
-* **请注意：快速安装仅适用于试用测试，不能支持生产级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动，或者使用完整版[完整部署](./script/all_in_one/README.md)功能进行服务部署。
+* **请注意：快速安装仅适用于试用测试，不能支持生产级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动。
+* 任何情况下，如果您计划正式使用CSGHub，请务必参照完整版[部署指南](./script/all_in_one/README.md)进行服务部署。
 
 ### 详细技术文档
 - [开发环境搭建](./docs/setup.md)
