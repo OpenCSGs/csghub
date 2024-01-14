@@ -108,6 +108,6 @@ docker compose -f all-in-one-CN.yml up -d
 ### 联系我们
 使用过程中的任何问题， 您可以在github 发起issue或者加入我们的微信讨论群。<br/>如果遇到微信群二维码失效或人数过多，请添加企业微信传神小助手账号回复"开源"或者"open source"入群。
 <div style="display:inline-block">
-<img src="./docs/images/wechat-group.jpeg" width='350'>
-<img src="./docs/images/little_asistant.jpeg" width='350'>
+<img src="./docs/images/wechat-group-new.png" width='350'>
+<img src="./docs/images/wechat-assistant-new.png" width='350'>
 </div>
