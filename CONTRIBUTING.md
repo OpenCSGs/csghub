@@ -1,48 +1,49 @@
-Contributing to CSGHub
+贡献指南 - CSGHub
 =======================
 
-Welcome to CSGHub and thank you for your interest in contributing to this project!
+[English Version](docs/CONTRIBUTING_en.md)
 
-CSGHub is an open-source and trusted asset management platform for large models. It aims to assist users in governing assets, such as datasets, model files, and code, throughout the lifecycle of LLM (Large Language Models) and LLM applications. CSGHub provides functionality similar to a private version of Huggingface and manages LLM assets in a way that is similar to OpenStack Glance for managing virtual machine images, Harbor for managing container images, and Sonatype Nexus for managing artifacts.
+欢迎您对 CSGHub 项目的贡献！我们非常感谢您对这个开源项目的兴趣。
 
-Contribution Workflow
+CSGHub 是一个开源、可信的大模型资产管理平台，旨在帮助用户治理 LLM 和 LLM 应用生命周期中涉及的资产，包括数据集、模型文件和代码等。CSGHub 提供类似私有化的 Huggingface 功能，并以类似 OpenStack Glance 管理虚拟机镜像、Harbor 管理容器镜像以及 Sonatype Nexus 管理制品的方式，实现对 LLM 资产的管理。
+
+贡献流程
 ----------------------
 
-To contribute to the project, please follow the "fork and pull request" workflow. Please refrain from pushing directly to the main repository unless you are a maintainer.
+为了对项目做出贡献，请按照以下的 "fork and pull request" 工作流程进行操作。请注意，除非您是维护者，否则请不要直接推送更改到该存储库。
 
-1. Fork the repository from GitHub (https://github.com/OpenCSGs/CSGHub) to your own GitHub account.
-2. Make the desired changes and improvements in your forked repository.
-3. Create a new branch in your forked repository to accommodate your modifications. It is recommended to base your branch on the `main` branch.
-4. Make the necessary modifications and improvements in your new branch.
-5. Once you have completed your changes, submit a Pull Request (PR) to the `main` branch of the original repository.
-6. Maintainers will review your PR, provide feedback, and engage in discussions.
-7. After necessary modifications and discussions, your PR will be merged into the `main` branch.
+1. 在 GitHub 上 fork 本项目的存储库(https://github.com/OpenCSGs/CSGHub) 到您的账号下。
+2. 进入您 fork 后的存储库，进行修改和改进。
+3. 在您的 fork 后的存储库中，创建一个新的分支来承载您的修改。建议基于 main 分支创建新分支。
+4. 在新分支上进行修改和改进。
+5. 当您完成修改后，向原存储库的 main 分支提交 Pull Request（简称 PR）。
+6. 维护者将会审查您的 PR，并提供反馈和讨论。
+7. 在经过必要的修改和讨论后，您的 PR 将被合并到 main 分支中。 
 
-Make sure your contributions adhere to the following guidelines:
+请确保您的贡献符合以下要求： 
 
-- Maintain consistent code style with the project.
-- New features or improvements should have appropriate tests.
-- Document additions or modifications should be clear and understandable to facilitate usage by other developers.
+- 代码风格与项目保持一致。
+- 新功能或改进应该经过适当的测试。
+- 文档的新增或修改应该清晰明了，以便其他开发者能够理解和使用。
 
-Reporting Issues and Making Suggestions
+报告问题和提出建议
 ----------------------
 
-If you encounter any issues, have suggestions for improvements, or want to request new features, please report them on our [Issues](https://github.com/OpenCSGs/CSGHub/issues) page. We regularly review and respond to your feedback.
+如果您发现了问题、改进或功能请求，请在我们的 [Issues 页面](https://github.com/OpenCSGs/CSGHub/issues)进行报告。我们会定期查看并回复您的问题。
 
-When reporting issues or making suggestions, please follow these guidelines:
+在报告问题和提出建议时，请遵循以下准则：
 
-- Provide as much detail as possible. Clearly describe what is going wrong, how it is failing, and if there are any error messages. A description like "XY doesn't work" is not helpful for troubleshooting. Always include the code you ran and, if possible, extract the relevant parts instead of including the entire script. This helps us reproduce the error.
-- If you need to include long code blocks, logs, or tracebacks, wrap them in `<details>` and `</details>` tags. This collapses the content, making the issue easier to read and follow. Refer to [this link](https://developer.mozilla.org/en/docs/Web/HTML/Element/details) for more information on collapsing content.
+- 尽可能提供详细的信息，说明具体出错的地方、错误类型以及相关的代码片段等。"某个功能不工作" 这样的描述对于解决问题并不具有帮助性。请提供您运行的代码和相关的上下文信息，以便我们能够重现并定位问题。 
+- 如果需要包含大段的代码、日志或追踪信息，你可以使用 `<details>` 和 `</details>` 标签将它们包裹起来。这样可以折叠内容，使问题更易于阅读和跟踪。你可以参考[这个链接](https://developer.mozilla.org/en/docs/Web/HTML/Element/details)了解更多关于折叠内容和使用HTML中的 `<details>` 标签的信息。
 
-Issue Labels
+标签说明
 ----------------------
 
-For an overview of the labeling system we use to tag issues and pull requests, please refer to [this page](https://github.com/OpenCSGs/CSGHub/labels).  
+我们使用标签对问题和 Pull Request 进行分类和归类，详细的标签说明请参考[这个页面](docs/all_in_one_readme_en.md)。
 
-
-Local Development
+本地开发
 ----------------------
 
-You can develop CSGHub using [Docker Compose](https://github.com/OpenCSGs/csghub/blob/main/docs/all_in_one_readme_en.md) or your [local environment](https://github.com/OpenCSGs/csghub/blob/main/docs/setup_en.md).
+您可以使用[ Docker Compose](docs/all_in_one_readme.md) 或[本地环境](docs/setup.md)进行 CSGHub 的开发。
 
-Thank you for contributing to the CSGHub project! We look forward to your involvement and suggestions.
+感谢您对 CSGHub 项目的贡献！我们期待您的参与和建议。

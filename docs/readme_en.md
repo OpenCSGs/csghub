@@ -53,7 +53,7 @@ In order to help users to quickly understand the features and usage of CSGHub, w
   - [ ] GitServer Adapter: Generic GitServer adapter to support multiple major Git repository types through Adaptor mode.
   - [ ] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
 
-The detailed roadmap is designed as follows: ：[full roadmap](./roadmap_en.md)
+The detailed roadmap is designed as follows: ：[full roadmap](docs/roadmap_en.md)
 
 ### DOCS
 #### CSGHub Portal Architecture
@@ -72,10 +72,13 @@ docker compose -f https://github.com/OpenCSGs/CSGHub/blob/main/all-in-one.yml up
 **Note:**
 
 * `SERVER_DOMAIN` should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
-* The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Alternatively, you can use the [this script](./script/all_in_one/README.md) for service deployment.
+* The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Alternatively, you can use the [this script](script/all_in_one/README.md) for service deployment.
 
 #### Tech docs in detail
-- [setup development env](./docs/setup_en.md)
+- [setup development env](docs/setup_en.md)
+
+### Contributing
+We welcome developers of all levels to contribute to our open-source project, CSGHub. If you would like to get involved, please refer to our [contributing guidelines](docs/CONTRIBUTING_en.md). We look forward to your participation and suggestions.
 
 ### ACKNOWLEDGEMENTS
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!

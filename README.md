@@ -78,6 +78,9 @@ docker compose -f all-in-one.yml up -d
 ### 详细技术文档
 - [开发环境搭建](./docs/setup.md)
 
+### 贡献指南
+我们欢迎各种级别的开发者为我们的开源项目 CSGHub 做出贡献。如果您想要参与贡献，请查阅我们的[贡献指南](./CONTRIBUTING.md)，我们期待您的参与和建议。
+
 ### 致谢
 本项目基于 Rails、Vue3、Tailwind CSS、Administrate、Postgresql、Apache Arrow、DuckDB 和 GoGin，在此深深感谢他们的开源贡献！
 
