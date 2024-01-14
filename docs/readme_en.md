@@ -9,7 +9,9 @@ CSGHub is committed to bringing users an asset management platform that is nativ
 
 You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://portal.opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 
-<img src="./images/project_intro.jpg" width='800'>
+<kbd>
+<img src="./docs/images/project_intro.jpg" width='800' />
+</kdb>
 
 ### UPDATES
 - [2024.02.15] v0.2 Plan: Built-in code Repo; automatic conversion for datasets, complete dataset preview function. *
