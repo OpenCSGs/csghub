@@ -61,7 +61,7 @@ end
   ['audio_processing', 'auto-speech-recognition', '语音识别'],
   ['audio_processing', 'text-to-speech', '语音合成'],
   ['audio_processing', 'audio-classification', '音频分类'],
-  ['multimodal', 'text-to-image-synthesis', '文本生成图片'],
+  ['multimodal', 'text-to-image', '文本生成图片'],
   ['multimodal', 'visual-question-answering', '视觉问答'],
   ['multimodal', 'image-text-retrieval', '图文检索'],
 ].each do |tag|
@@ -103,7 +103,7 @@ end
   ['video', 'video-segmentation', '视频分割'],
   ['multimodal', 'image-captioning', '图像描述'],
   ['multimodal', 'visual-grounding', '视觉定位'],
-  ['multimodal', 'text-to-image-synthesis', '文本生成图片'],
+  ['multimodal', 'text-to-image', '文本生成图片'],
   ['multimodal', 'feature-extraction', '特征抽取'],
   ['scientific_computing', 'biomedicine', '生物医学'],
   ['scientific_computing', 'protein-structure', '蛋白质结构生成'],
