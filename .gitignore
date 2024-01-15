@@ -53,5 +53,7 @@ coverage/
 config/credentials.yml.enc.backup
 config/master.key.main
 config/master.key.starhub
+config/database.yml.main
+config/database.yml.starhub
 
 /.env.development
