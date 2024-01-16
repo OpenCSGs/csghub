@@ -27,7 +27,6 @@
       <div class="flex items-center gap-[4px] mb-[8px]">用户昵称</div>
       <el-input class="max-w-[400px]"
                 v-model="inputNickname"
-                @change="inputChange"
                 placeholder="昵称">
       </el-input>
     </div>
@@ -45,7 +44,6 @@
       </div>
       <el-input class="max-w-[400px]"
                 v-model="inputEmail"
-                @change="inputChange"
                 placeholder="邮箱">
       </el-input>
     </div>
@@ -72,22 +70,13 @@ export default {
     return {
       inputName: this.name,
       inputNickname: this.nickname,
-      oldInputNickname:this.nickname,
       inputPhone: this.phone,
       inputEmail: this.email,
-      oldInputEmail: this.email,
       avatarUrl: this.avatar,
     };
   },
   mounted() {},
   methods: {
-    inputChange() {
-      if(this.inputNickname!=this.oldInputNickname||this.inputEmail!=this.oldInputEmail){
-        this.$emit('isInputChange', true)
-      }else{
-        this.$emit('isInputChange', false)
-      }
-    },
     uploadImage() {
       this.$refs.fileInput.click();
     },

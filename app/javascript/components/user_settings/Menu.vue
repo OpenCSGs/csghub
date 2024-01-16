@@ -1,11 +1,11 @@
 <template>
     <div>
       <div class="w-[294px] border rounded-[8px] bg-[#FAFAFA] border-[#DCDFE6] mx-[24px]">
-        <div class="flex p-[16px] border-b border-[#DCDFE6]" @click="goProfile">
+        <div class="flex p-[16px] border-b border-[#DCDFE6]">
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div class="ml-[10px]">
             <div class="text-[24px] leading-[32px] font-semibold">
-              <a>
+              <a :href="'/profile/' + displayName">
                 {{displayName}}
               </a>
             </div>
@@ -48,8 +48,6 @@
     </div>
 </template>
 <script>
-import {h} from 'vue'
-import {ElMessage, ElMessageBox} from 'element-plus'
 export default {
   props: {
     name: String,
@@ -57,35 +55,10 @@ export default {
     avatar: String,
   },
   data() {
-    return {
-      isChange:false,
-    };
+    return {};
   },
   mounted() {},
   methods: {
-    isInputChange(isChange) {
-      // 处理来自 ProfileEdit 组件传递过来的数据
-      this.isChange = isChange // 根据需要修改 isChange 的值
-    },
-    goProfile(){
-      if(this.isChange){
-        ElMessageBox({
-        title: '是否确认返回',
-        message: h('p', null, [
-          h('span', null, '返回后修改将不会被保存，是否确认返回？')
-        ]),
-        showCancelButton: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then((action) => {
-        window.location.href  = `/profile/${this.displayName}`
-      }).catch(() => {
-        console.log('cancel');
-      })
-      }else{
-      window.location.href  = `/profile/${this.displayName}`
-      }
-    },
     menuClass(menuPath) {
       if (menuPath === window.location.pathname) {
         return 'text-[#303133] font-semibold'
