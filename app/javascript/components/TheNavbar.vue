@@ -12,7 +12,7 @@
         <li class="px-5 mlg:!hidden"> <model></model> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
       </ul>
-      <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
+      <el-dropdown class="!hidden lg:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
           <el-icon><ArrowDownBold /></el-icon>
         </span>
