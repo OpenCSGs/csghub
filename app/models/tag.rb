@@ -14,7 +14,8 @@ class Tag < ApplicationRecord
        graphics: 'graphics',
        audio: 'audio',
        video: 'video',
-       multimodal: 'multimodal',
+       model_multimodal: 'model_multimodal',
+       dataset_multimodal: 'dataset_multimodal',
        scientific_computing: 'scientific_computing'
 
 
@@ -28,7 +29,8 @@ class Tag < ApplicationRecord
     computer_vision: {color: '#db7a7a', zh_name: '计算机视觉'},
     natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理'},
     audio_processing: {color: '#538f72', zh_name: '语音处理'},
-    multimodal: {color: '#e69832', zh_name: '多模态'},
+    model_multimodal: {color: '#e69832', zh_name: '多模态'},
+    dataset_multimodal: {color: '#e69832', zh_name: '多模态'},
     text_processing: {color: '#7f71de', zh_name: '文本'},
     graphics: {color: '#db7a7a', zh_name: '图像'},
     audio: {color: '#538f72', zh_name: '音频'},
@@ -47,7 +49,7 @@ class Tag < ApplicationRecord
     'computer_vision',
     'natural_language_processing',
     'audio_processing',
-    'multimodal'
+    'model_multimodal'
   ]
 
   DATASET_TAG_FIELDS = [
@@ -55,7 +57,7 @@ class Tag < ApplicationRecord
     'graphics',
     'audio',
     'video',
-    'multimodal'
+    'dataset_multimodal'
     # ToDo 暂时隐藏
     # 'scientific_computing'
   ]
