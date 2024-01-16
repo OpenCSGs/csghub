@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="max-w-[411px] md:mb-[24px]"
+          ref="profileMenu"
           :name="profileName"
           :displayName="profileDisplayName"
           :avatar="profileAvatar">
@@ -12,6 +13,7 @@
                  :phone="phone"
                  :email="email"
                  :displayName="displayName"
+                 @isInputChange="isInputChange"
                  @updateUserInfo="updateUserInfo">
     </ProfileEdit>
   </div>
@@ -41,6 +43,9 @@ export default {
   },
   mounted() {},
   methods: {
+    isInputChange(isChange){
+      this.$refs.profileMenu.isInputChange(isChange)
+    },
     updateUserInfo(data) {
       const { nickname, name, avatar } = data;
       this.profileName = name || this.name;
