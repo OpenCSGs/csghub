@@ -20,13 +20,9 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
       return render json: { message: res[:message] }, status: :unprocessable_entity
     end
     dataset = current_user.created_datasets.build(dataset_params)
-    begin
-      if dataset.save
-        render json: { path: dataset.path, message: '数据集创建成功!' }, status: :created
-      else
-        render json: { message: '已存在相同的数据集，数据集创建失败!' }, status: :unprocessable_entity
-      end
-    rescue StarhubError
+    if dataset.save
+      render json: { path: dataset.path, message: '数据集创建成功!' }, status: :created
+    else
       render json: { message: '已存在相同的数据集，数据集创建失败!' }, status: :unprocessable_entity
     end
   end
