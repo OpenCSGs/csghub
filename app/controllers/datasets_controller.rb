@@ -48,7 +48,7 @@ class DatasetsController < ApplicationController
     owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     unless @local_dataset
-      redirect_to errors_not_found_path
+      return redirect_to errors_not_found_path
     end
     if @local_dataset.dataset_private?
       if @local_dataset.owner.instance_of? User
