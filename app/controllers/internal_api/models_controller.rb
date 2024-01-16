@@ -20,10 +20,14 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       return render json: { message: res[:message] }, status: :unprocessable_entity
     end
     model = current_user.created_models.build(model_params)
-    if model.save
-      render json: { path: model.path, message: '模型创建成功!' }, status: :created
-    else
-      render json: { message: '模型创建失败!' }, status: :unprocessable_entity
+    begin
+      if model.save
+        render json: { path: model.path, message: '模型创建成功!' }, status: :created
+      else
+        render json: { message: '已存在相同的仓库，模型创建失败!' }, status: :unprocessable_entity
+      end
+    rescue StarhubError
+      render json: { message: '已存在相同的仓库，模型创建失败!' }, status: :unprocessable_entity
     end
   end
 
