@@ -46,8 +46,6 @@ yarn-error.log
 
 /.idea
 
-config/database.yml
-
 coverage/
 
 config/credentials.yml.enc.backup
