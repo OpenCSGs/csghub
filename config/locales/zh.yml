@@ -60,6 +60,10 @@ zh:
               too_long: "长度超出限制"
         discussion:
           too_long: "长度超出限制"
+        model:
+          taken: "模型不能创建重复"
+        dataset:
+          taken: "数据集不能创建重复"
 
   datetime:
     distance_in_words:

@@ -23,7 +23,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     if model.save
       render json: { path: model.path, message: '模型创建成功!' }, status: :created
     else
-      render json: { message: '已存在相同的仓库，模型创建失败!' }, status: :unprocessable_entity
+      render json: { message: model.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
