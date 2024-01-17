@@ -10,8 +10,6 @@ class Oidc
                               userinfo_endpoint: userinfo_endpoint
   end
 
-  private
-
   def identifier
     ENV.fetch('OIDC_IDENTIFIER', nil) || oidc_configs['identifier']
   end
@@ -34,6 +32,14 @@ class Oidc
 
   def userinfo_endpoint
     ENV.fetch('OIDC_USERINFO_ENDPOINT', nil) || oidc_configs['userinfo_endpoint']
+  end
+
+  def login_url
+    ENV.fetch('LOGIN_URL', nil) || oidc_configs['login_url']
+  end
+
+  def signup_url
+    ENV.fetch('SIGNUP_URL', nil) || oidc_configs['signup_url']
   end
 
   def oidc_configs
