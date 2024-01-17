@@ -1,6 +1,4 @@
 class SpacesController < ApplicationController
-  before_action :authenticate_user, only: :stopped
-
   def index
     # 重置为全部应用
     cookies[:mySpaces] = 'false'

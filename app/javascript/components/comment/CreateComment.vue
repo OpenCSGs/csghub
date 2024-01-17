@@ -40,6 +40,7 @@
   const clickCreateComment = () => {
     if (props.current_user_id === '') {
       window.location.href = "/login"
+      return
     }
     createComment()
   }
