@@ -1,6 +1,6 @@
 class Tag < ApplicationRecord
   validates_presence_of :tag_origin, :tag_type, :name
-  validates_uniqueness_of :name, scope: :tag_field
+  validates_uniqueness_of :name, scope: [:scope, :tag_field]
   validates_length_of :name, maximum: 30
 
   enum :tag_origin, user_created: 'user_created', system: 'system'
@@ -14,10 +14,8 @@ class Tag < ApplicationRecord
        graphics: 'graphics',
        audio: 'audio',
        video: 'video',
-       model_multimodal: 'model_multimodal',
-       dataset_multimodal: 'dataset_multimodal',
+       multimodal: 'multimodal',
        scientific_computing: 'scientific_computing'
-
 
   has_many :taggings, dependent: :destroy
 
@@ -29,8 +27,7 @@ class Tag < ApplicationRecord
     computer_vision: {color: '#db7a7a', zh_name: '计算机视觉'},
     natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理'},
     audio_processing: {color: '#538f72', zh_name: '语音处理'},
-    model_multimodal: {color: '#e69832', zh_name: '多模态'},
-    dataset_multimodal: {color: '#e69832', zh_name: '多模态'},
+    multimodal: {color: '#e69832', zh_name: '多模态'},
     text_processing: {color: '#7f71de', zh_name: '文本'},
     graphics: {color: '#db7a7a', zh_name: '图像'},
     audio: {color: '#538f72', zh_name: '音频'},
@@ -49,7 +46,7 @@ class Tag < ApplicationRecord
     'computer_vision',
     'natural_language_processing',
     'audio_processing',
-    'model_multimodal'
+    'multimodal'
   ]
 
   DATASET_TAG_FIELDS = [
@@ -57,7 +54,7 @@ class Tag < ApplicationRecord
     'graphics',
     'audio',
     'video',
-    'dataset_multimodal'
+    'multimodal'
     # ToDo 暂时隐藏
     # 'scientific_computing'
   ]
@@ -78,7 +75,7 @@ class Tag < ApplicationRecord
         else
           case tag['category']
           when 'task'
-            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'])
+            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: tag['scope'])
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
               task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)

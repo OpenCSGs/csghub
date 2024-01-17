@@ -11,7 +11,7 @@ class ModelsController < ApplicationController
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
-      response[field][:tags] = Tag.where(tag_field: field)
+      response[field][:tags] = Tag.where(tag_field: field, scope: 'model')
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
@@ -66,6 +66,7 @@ class ModelsController < ApplicationController
     else
       @model, raw_tags, @last_commit, @branches, @readme, @files = Starhub.api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
+    puts raw_tags
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end

@@ -61,13 +61,13 @@ end
   ['audio_processing', 'auto-speech-recognition', '语音识别'],
   ['audio_processing', 'text-to-speech', '语音合成'],
   ['audio_processing', 'audio-classification', '音频分类'],
-  ['model_multimodal', 'text-to-image', '文本生成图片'],
-  ['model_multimodal', 'visual-question-answering', '视觉问答'],
-  ['model_multimodal', 'image-text-retrieval', '图文检索'],
+  ['multimodal', 'text-to-image', '文本生成图片'],
+  ['multimodal', 'visual-question-answering', '视觉问答'],
+  ['multimodal', 'image-text-retrieval', '图文检索'],
 ].each do |tag|
-  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
+  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], scope: 'model')
   next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2])
+  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'model')
 end
 
 # 初始化数据集标签
@@ -101,16 +101,16 @@ end
   ['video', 'video-generation', '视频生成'],
   ['video', 'video-super-resolution', '视频超分辨率'],
   ['video', 'video-segmentation', '视频分割'],
-  ['dataset_multimodal', 'image-captioning', '图像描述'],
-  ['dataset_multimodal', 'visual-grounding', '视觉定位'],
-  ['dataset_multimodal', 'text-to-image', '文本生成图片'],
-  ['dataset_multimodal', 'feature-extraction', '特征抽取'],
+  ['multimodal', 'image-captioning', '图像描述'],
+  ['multimodal', 'visual-grounding', '视觉定位'],
+  ['multimodal', 'text-to-image', '文本生成图片'],
+  ['multimodal', 'feature-extraction', '特征抽取'],
   ['scientific_computing', 'biomedicine', '生物医学'],
   ['scientific_computing', 'protein-structure', '蛋白质结构生成'],
 ].each do |tag|
-  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
+  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], scope: 'dataset')
   next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2])
+  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'dataset')
 end
 
 [
