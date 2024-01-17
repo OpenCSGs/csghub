@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
       user_infos = JWT.decode(authing_id_token, nil, false).first
       login_by_user_infos user_infos
     else
-      session[:original_request_path] = redirect_path_from_request(request.fullpath)
+      session[:original_request_path] = redirect_path_from_request(request.headers["Referer"])
       redirect_to root_path
     end
   rescue => e
