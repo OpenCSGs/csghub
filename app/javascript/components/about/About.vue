@@ -1,7 +1,7 @@
 <template>
   <Hero />
   <Feature />
-  <Team />
+  <Team v-if="false" />
   <Joinus>
   </Joinus>
 </template>

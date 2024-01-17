@@ -2,7 +2,7 @@
   <div class="py-[96px] text-center w-full banner bg-white">
     <div class="max-w-[1280px] m-auto">
       <div class="mb-[12px] text-[16px] text-[#475467] leading-[24px]">
-        Smart. Simple. Scaleable.
+        Smart. Simple. Scalable.
       </div>
       <div class="mb-[24px] max-w-[768px] m-auto text-[72px] md:text-[48px] md:leading-[60px] text-[#101828] leading-[90px]">
         大模型重新定义软件开发和工程交付新范式
