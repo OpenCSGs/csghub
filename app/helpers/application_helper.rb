@@ -23,13 +23,6 @@ module ApplicationHelper
     end
   end
 
-  def logout_address
-    asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
-    "#{asset_host}/logout"
-    # ToDo: will remove in later
-    # "#{authing_domain}/login/profile/logout?redirect_uri=#{asset_host}/logout"
-  end
-
   def starchain_address
     if logged_in?
       raw_starchain_address
