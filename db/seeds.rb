@@ -67,11 +67,8 @@ end
 ].each do |tag|
   local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
   if local_tag
-    if local_tag.scope.blank?
-      local_tag.update(scope: 'model')
-    else
-      next
-    end
+    next if local.tag.scope.present?
+    local_tag.update(scope: 'model')
   else
     Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'model')
   end
@@ -117,11 +114,8 @@ end
 ].each do |tag|
   local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
   if local_tag
-    if local_tag.scope.blank?
-      local_tag.update(scope: 'dataset')
-    else
-      next
-    end
+    next if local.tag.scope.present?
+    local_tag.update(scope: 'dataset')
   else
     Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'dataset')
   end
