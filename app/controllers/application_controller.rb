@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
       if request.fullpath.match(/\/internal_api.*/)
         render json: {message: "登录之后才能操作"}, status: 404
       else
-        redirect_to root_path
+        redirect_to login_path
       end
     end
   rescue => e
