@@ -1,5 +1,6 @@
 <template>
   <div class="flex text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
+    <!-- 平台 logo -->
     <div class="flex">
       <div class="py-2 mr-[100px] sm:mr-[30px]">
         <a href="/">
@@ -7,7 +8,9 @@
         </a>
       </div>
     </div>
+
     <div class="flex justify-between items-center pl-4">
+      <!-- desktop 导航栏 -->
       <ul class="flex justify-between items-center">
         <li v-if="isLoggedInBoolean" class="px-5 sm:!hidden"> <starchain :star-chain-url="starChainUrl"></starchain> </li>
         <li class="px-5 md:!hidden"> <space></space> </li>
@@ -18,7 +21,8 @@
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <campaigns></campaigns> </li>
         <li class="px-5 mlg:!hidden lg:!hidden xl:!hidden"> <docs :url="docsUrl"></docs> </li>
       </ul>
-      <el-dropdown class="!hidden xl:!block pr-8 sm:px-[15px]">
+      <!-- mobile 导航栏 -->
+      <el-dropdown class="!hidden lg:!block pr-8 sm:px-[15px]">
         <span class="el-dropdown-link">
           <el-icon><ArrowDownBold /></el-icon>
         </span>
@@ -35,6 +39,8 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+
+      <!-- logged in: 用户头像和下拉 -->
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
           <el-avatar :size="35" :src="avatar">
@@ -82,6 +88,7 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+      <!-- not logged in: 登录注册按钮 -->
       <button v-else class="bg-[#303133] rounded-[100px] py-[2px] px-[12px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
         <a class="sm:hidden" href="/login">
           登录/注册
