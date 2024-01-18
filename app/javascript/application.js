@@ -7,7 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import Navbar from "./components/TheNavbar.vue"
+import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ModelDetail from "./components/ModelDetail.vue"
 import DatasetDetail from "./components/DatasetDetail.vue"
