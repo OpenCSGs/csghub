@@ -2,7 +2,7 @@
     <div class="company">
       <div class="bg-[#F9FAFB] pb-40 md:pb-[20px]">
         <div class="m-auto max-w-[1280px] px-[20px] pt-[96px] md:py-[40px] md:px-[20px]">
-          <div class="flex justify-between items-center gap-[64px] md:flex-col md:gap-[20px] px-[32px]">
+          <div class="flex justify-between gap-[64px] md:flex-col md:gap-[20px] px-[32px]">
             <div>
               <div class="text-[16px] leading-[24px] text-[#223B99] mb-[10px]">联系我们</div>
               <div class="text-[36px] leading-[44px] text-[#101828] mb-[20px]">与我们的团队交流</div>
