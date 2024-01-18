@@ -65,9 +65,16 @@ end
   ['multimodal', 'visual-question-answering', '视觉问答'],
   ['multimodal', 'image-text-retrieval', '图文检索'],
 ].each do |tag|
-  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], scope: 'model')
-  next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'model')
+  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
+  if local_tag
+    if local_tag.scope.blank?
+      local_tag.update(scope: 'model')
+    else
+      next
+    end
+  else
+    Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'model')
+  end
 end
 
 # 初始化数据集标签
@@ -108,9 +115,16 @@ end
   ['scientific_computing', 'biomedicine', '生物医学'],
   ['scientific_computing', 'protein-structure', '蛋白质结构生成'],
 ].each do |tag|
-  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], scope: 'dataset')
-  next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'dataset')
+  local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
+  if local_tag
+    if local_tag.scope.blank?
+      local_tag.update(scope: 'dataset')
+    else
+      next
+    end
+  else
+    Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'dataset')
+  end
 end
 
 [
