@@ -9,8 +9,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
-import ModelDetail from "./components/ModelDetail.vue"
-import DatasetDetail from "./components/DatasetDetail.vue"
+import ModelDetail from "./components/models/ModelDetail.vue"
+import DatasetDetail from "./components/datasets/DatasetDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
