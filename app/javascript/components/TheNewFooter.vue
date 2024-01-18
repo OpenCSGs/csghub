@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 flex gap-[16px] justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] lg:flex-col bg-white sm:hidden">
+  <div class="py-4 flex gap-[16px] justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] xl:flex-col bg-white sm:hidden">
     <div class="flex items-center gap-[16px] mr-40 text-[14px] text-[#475467] cursor-pointer xl:mr-0 sm:flex-col sm:gap-[4px] sm:mr-0">
       <a href="https://opencsg.com" target="_blank">关于我们</a>
       <a href="https://opencsg.com/blog" target="_blank">新闻动态</a>
