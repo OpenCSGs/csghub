@@ -8,9 +8,9 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import Navbar from "./components/navbar/NewNavbar.vue"
-import SpaceIntro from "./components/SpaceIntro.vue"
-import SpaceCard from "./components/SpaceCard.vue"
-import SpaceCards from "./components/SpaceCards.vue"
+import SpaceIntro from "./components/spaces/SpaceIntro.vue"
+import SpaceCard from "./components/spaces/SpaceCard.vue"
+import SpaceCards from "./components/spaces/SpaceCards.vue"
 import Footer from "./components/TheFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"

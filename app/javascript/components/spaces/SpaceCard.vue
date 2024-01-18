@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import SpaceRunning from './sub/SpaceRunning.vue'
-import SpaceStopped from './sub/SpaceStopped.vue'
-import SpaceEdit from './sub/SpaceEdit.vue'
+import SpaceRunning from './SpaceRunning.vue'
+import SpaceStopped from './SpaceStopped.vue'
+import SpaceEdit from './SpaceEdit.vue'
 import { useCookies } from "vue3-cookies";
 
 export default {
