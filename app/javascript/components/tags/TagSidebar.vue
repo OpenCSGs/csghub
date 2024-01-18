@@ -152,10 +152,10 @@
 
   const changeActiveItem = (e) => {
     activeNavItem.value = e.target.dataset.type
-    toggle_tag_type()
+    toggleTagType()
   }
 
-  const toggle_tag_type = () => {
+  const toggleTagType = () => {
     if (activeNavItem.value === 'Task') {
       showTask.value = true
       showFramework.value = false
@@ -270,7 +270,7 @@
 
   const setTagTypeFromParams = () => {
     activeNavItem.value = props.selectedTagType
-    toggle_tag_type()
+    toggleTagType()
   }
 
   const emitTagFromParams = () => {
