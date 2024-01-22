@@ -8,6 +8,7 @@
     </button>
     <el-dialog
       v-model="dialogVisible"
+      :style="{ borderRadius: '10px' }"
       width="350"
     >
     <template #header="{ close, titleId, titleClass }">
@@ -122,7 +123,7 @@
   const showUserList = (e) => {
     getUsers(e.data).then(data => {
       shouldShowUserList.value = data.users.length > 0
-      userList.value = data.users
+      userList.value = data.users.slice(0, 6);
     })
     .catch(err => {
       ElMessage({
