@@ -1,5 +1,5 @@
 class InternalApi::CommentsController < InternalApi::ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, only: [:create, :destroy]
 
   def index
     commentable = find_commentable
