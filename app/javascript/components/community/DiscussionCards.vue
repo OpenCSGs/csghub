@@ -16,7 +16,6 @@
         :title="currentTitle"
         :userName="currentUserName"
         :createUserId="createUserId"
-        :userId="userId"
         :time="currentTime"
         @getDiscussion="getDiscussion"
         @toggleDetails="toggleDetails" />
@@ -37,7 +36,6 @@ import DiscussionCard from "./DiscussionCard.vue";
 import DiscussionDetails from "./DiscussionDetails.vue";
 export default {
   props: {
-    userId: String,
     cards: Array
   },
   components: {

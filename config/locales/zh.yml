@@ -29,6 +29,10 @@ zh:
         nickname: '别名'
         homepage: '主页地址'
         org_type: '组织类别'
+      model:
+        name: "模型"
+      dataset:
+        name: "数据集"
 
     errors:
       messages:
@@ -60,6 +64,10 @@ zh:
               too_long: "长度超出限制"
         discussion:
           too_long: "长度超出限制"
+        model:
+          taken: "已存在，请重新命名"
+        dataset:
+          taken: "已存在，请重新命名"
 
   datetime:
     distance_in_words:
