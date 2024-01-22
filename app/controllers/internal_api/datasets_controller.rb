@@ -29,7 +29,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     if dataset.save
       render json: { path: dataset.path, message: '数据集创建成功!' }, status: :created
     else
-      render json: { message: '数据集创建失败!' }, status: :unprocessable_entity
+      render json: { message: dataset.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 

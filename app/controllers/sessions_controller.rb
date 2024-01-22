@@ -4,27 +4,22 @@ class SessionsController < ApplicationController
   skip_before_action :check_user_login
 
   def signup
+    return redirect_to root_path if helpers.logged_in?
+
     if helpers.is_on_premise?
-      return redirect_to root_path if helpers.logged_in?
       render 'signup'
     else
-      default_signup_url = Rails.application.credentials.oidc_config.send(Rails.env)['signup_url']
-      system_config = SystemConfig.first
-      oidc_configs = system_config.oidc_configs rescue {}
-      signup_url = (oidc_configs && oidc_configs['sign_up_url'].presence) || default_signup_url
+      signup_url = Oidc.instance.signup_url
       redirect_to signup_url, allow_other_host: true
     end
   end
 
   def new
+    return redirect_to root_path if helpers.logged_in?
     if helpers.is_on_premise?
-      return redirect_to root_path if helpers.logged_in?
       render 'new'
     else
-      default_login_url = Rails.application.credentials.oidc_config.send(Rails.env)['login_url']
-      system_config = SystemConfig.first
-      oidc_configs = system_config.oidc_configs rescue {}
-      login_url = (oidc_configs && oidc_configs['login_url'].presence) || default_login_url
+      login_url = Oidc.instance.login_url
       redirect_to login_url, allow_other_host: true
     end
   end

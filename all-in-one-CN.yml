@@ -130,7 +130,6 @@ services:
       - GITEA_LFS_MINIO_USE_SSL=false
       - GITEA_SERVICE_DEFAULT_ALLOW_CREATE_ORGANIZATION=true
       - GITEA_SERVICE_DISABLE_REGISTRATION=false
-      - GITEA_LOG_MODE=file
     ports:
       - "3001:3001"
       - "2222:2222"

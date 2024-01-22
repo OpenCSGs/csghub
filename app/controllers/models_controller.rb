@@ -11,7 +11,7 @@ class ModelsController < ApplicationController
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
-      response[field][:tags] = Tag.where(tag_field: field)
+      response[field][:tags] = Tag.where(tag_field: field, scope: 'model')
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
@@ -48,9 +48,7 @@ class ModelsController < ApplicationController
     owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
-      # ToDo: 在模型列表页渲染 alert message
-      flash[:alert] = "未找到模型"
-      return redirect_to "/models"
+      return redirect_to errors_not_found_path
     end
     if @local_model.model_private?
       if @local_model.owner.instance_of? User

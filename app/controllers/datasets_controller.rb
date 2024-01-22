@@ -11,7 +11,7 @@ class DatasetsController < ApplicationController
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
-      response[field][:tags] = Tag.where(tag_field: field)
+      response[field][:tags] = Tag.where(tag_field: field, scope: 'dataset')
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
@@ -48,8 +48,7 @@ class DatasetsController < ApplicationController
     owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     unless @local_dataset
-      flash[:alert] = "未找到数据集"
-      return redirect_to "/datasets"
+      return redirect_to errors_not_found_path
     end
     if @local_dataset.dataset_private?
       if @local_dataset.owner.instance_of? User

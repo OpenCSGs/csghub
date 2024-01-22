@@ -66,8 +66,12 @@ end
   ['multimodal', 'image-text-retrieval', '图文检索'],
 ].each do |tag|
   local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
-  next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2])
+  if local_tag
+    next if local_tag.scope.present?
+    local_tag.update(scope: 'model')
+  else
+    Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'model')
+  end
 end
 
 # 初始化数据集标签
@@ -109,8 +113,12 @@ end
   ['scientific_computing', 'protein-structure', '蛋白质结构生成'],
 ].each do |tag|
   local_tag = Tag.find_by(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1])
-  next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2])
+  if local_tag
+    next if local_tag.scope.present?
+    local_tag.update(scope: 'dataset')
+  else
+    Tag.create(tag_origin: 'system', tag_type: 'task', tag_field: tag[0], name: tag[1], zh_name: tag[2], scope: 'dataset')
+  end
 end
 
 [
