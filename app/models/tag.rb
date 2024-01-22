@@ -1,6 +1,6 @@
 class Tag < ApplicationRecord
   validates_presence_of :tag_origin, :tag_type, :name
-  validates_uniqueness_of :name, scope: :tag_field
+  validates_uniqueness_of :name, scope: [:scope, :tag_field]
   validates_length_of :name, maximum: 30
 
   enum :tag_origin, user_created: 'user_created', system: 'system'
@@ -16,7 +16,6 @@ class Tag < ApplicationRecord
        video: 'video',
        multimodal: 'multimodal',
        scientific_computing: 'scientific_computing'
-
 
   has_many :taggings, dependent: :destroy
   has_many :spaces, through: :taggings
@@ -77,7 +76,7 @@ class Tag < ApplicationRecord
         else
           case tag['category']
           when 'task'
-            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'])
+            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: tag['scope'])
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
               task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
