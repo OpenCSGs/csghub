@@ -32,7 +32,7 @@
         />
       </template>
       <template #community>
-        <CommunityPage type="Dataset" :userId="userId"  :localModelId="localDatasetId" ></CommunityPage>
+        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
         <Settings :path="datasetPath" :default_branch="datasetDefaultBranch" :private="datasetPrivate"/>
@@ -59,7 +59,6 @@ import DatasetClone from './DatasetClone.vue';
 
 const props = defineProps({
   localDatasetId: String,
-  userId: String,
   datasetPath: String,
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,
