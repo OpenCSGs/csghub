@@ -11,7 +11,7 @@ class DatasetsController < ApplicationController
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
-      response[field][:tags] = Tag.where(tag_field: field)
+      response[field][:tags] = Tag.where(tag_field: field, scope: 'dataset')
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json

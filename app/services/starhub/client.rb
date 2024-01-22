@@ -68,6 +68,8 @@ module Starhub
 
     def starhub_api_connection
       base_url, token = starhub_configs
+      # add this config to solve URL with unicode query
+      Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         url: base_url,
         headers: {
