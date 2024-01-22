@@ -15,7 +15,6 @@
     <model-tabs
       :content="content.data"
       :local-model-id="localModelId"
-      :user-id="userId"
       :model-path="model.data.path"
       :model-default-branch="model.data.default_branch"
       :model-private="model.data.private"
@@ -39,7 +38,6 @@ import ModelTabs from './ModelTabs.vue'
 
 const props = defineProps({
   localModelId: String,
-  userId: String,
   defaultTab: String,
   model: Object,
   files: Object,
