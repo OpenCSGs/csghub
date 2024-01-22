@@ -12,7 +12,7 @@ class Dataset < ApplicationRecord
 
   validates :name, format: { with: /\A(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+\Z/ }
 
-  validates :name, uniqueness: { scope: [:owner_type, :owner_id] }
+  validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }
 
   def path
     "#{owner.name}/#{name}"

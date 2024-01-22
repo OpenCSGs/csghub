@@ -27,7 +27,7 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">数据集名称</p>
-          <el-input v-model="datasetName" placeholder="2-70个小写字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
+          <el-input v-model="datasetName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
         </div>
       </div>
       <div class="mb-9">
