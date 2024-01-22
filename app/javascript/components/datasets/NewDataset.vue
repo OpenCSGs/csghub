@@ -144,7 +144,7 @@
     const [ownerId, ownerType] = owner.value.split('_')
     formData.append('owner_id', ownerId)
     formData.append('owner_type', ownerType)
-    formData.append('name', datasetName.value.toLowerCase())
+    formData.append('name', datasetName.value)
     formData.append('license', license.value)
     formData.append('visibility', visibility.value)
 
