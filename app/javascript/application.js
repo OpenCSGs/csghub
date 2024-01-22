@@ -13,6 +13,7 @@ import SpaceIntro from "./components/SpaceIntro.vue"
 import SpaceCard from "./components/SpaceCard.vue"
 import SpaceCards from "./components/SpaceCards.vue"
 import Foot from "./components/TheFooter.vue"
+import NewFoot from "./components/TheNewFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
@@ -59,6 +60,7 @@ const app = createApp({
     PartnerCard,
     PartnerForm,
     Foot,
+    NewFoot,
     CampaignCard,
     CampaignCards,
     Profile,
