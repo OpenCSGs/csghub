@@ -1,5 +1,5 @@
 class InternalApi::DiscussionsController < InternalApi::ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, only: [:create, :update]
 
   def index
     discussionable = find_discussionable
