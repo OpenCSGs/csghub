@@ -17,6 +17,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_type: Field::Select.with_options(searchable: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     taggings: Field::HasMany,
     zh_name: Field::String,
+    scope: Field::String,
     weight: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -34,6 +35,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_field
     tag_origin
     zh_name
+    scope
     desc
     weight
   ].freeze
@@ -50,6 +52,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_field
     taggings
     zh_name
+    scope
     weight
     created_at
     updated_at
@@ -61,6 +64,7 @@ class TagDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     name
     zh_name
+    scope
     tag_origin
     tag_type
     tag_field
