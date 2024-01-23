@@ -62,10 +62,10 @@ CSGHub is made with two typical parts: Portal and Server. This repo corresponds 
 If you want to dive deep into CSGHub Server detail or wish to integrate the Server with your own frontend system or more, you can check the [CSGHub Server open-source project](https://github.com/OpenCSGs/csghub-server).
 
 #### CSGHub Portal Architecture
-<img src="./images/portal_tech_graph.png" width='800'>
+<img src="/docs/images/portal_tech_graph.png" width='800'>
 
 #### CSGHub Server Architecture
-<img src="./images/server_tech_graph.png" width='800'>
+<img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### QUICK START
 You can quickly deploy a CSGHub instance with portal/server and all other relevant dependencies to your environment using the following commands:
