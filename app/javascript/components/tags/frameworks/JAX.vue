@@ -65,7 +65,7 @@
     emit('setActiveFrameworkTag', 'JAX')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'JAX') {
+    if (props.activeTag?.toLowerCase() === 'jax') {
       return "color: white; background-color: #4D6AD6"
     }
   }
