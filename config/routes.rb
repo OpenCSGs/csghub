@@ -135,5 +135,6 @@ Rails.application.routes.draw do
     get '/errors/unauthorized', to: 'errors#unauthorized'
 
     get '/about', to: 'about#index'
+    get '/computing', to: 'computing#index'
   end
 end
