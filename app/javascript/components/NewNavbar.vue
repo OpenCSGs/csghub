@@ -42,6 +42,7 @@
             <span>StarCode AI 智能编程助手</span>
           </el-menu-item>
         </el-sub-menu>
+        <el-menu-item index="/computing" style="border:none"><a class="w-full" href="/computing">算力</a></el-menu-item>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>开发者</template>
           <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">开源CSGHub</el-menu-item></a>
