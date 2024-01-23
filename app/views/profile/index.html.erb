@@ -9,6 +9,7 @@
              login-identity="<%= @user.login_identity %>"
              roles="<%= @user.roles.to_json %>"
              orgs="<%= @user.organizations.to_json %>"
+             :is-logged-in="<%= @is_current_user_access %>"
     ></profile>
   </div>
   <div class="grow pr-4 py-[36px]">
