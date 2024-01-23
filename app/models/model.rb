@@ -47,6 +47,8 @@ class Model < ApplicationRecord
     {
       id: id,
       name: name,
+      nickname: nickname,
+      desc: desc,
       visibility: visibility,
       license: license,
       path: path,

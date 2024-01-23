@@ -29,7 +29,11 @@
         <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
-        <Settings :path="modelPath" :default_branch="modelDefaultBranch" :private="modelPrivate" />
+        <Settings :path="modelPath"
+                  :model-nickname="modelNickname"
+                  :model-desc="modelDesc"
+                  :default_branch="modelDefaultBranch"
+                  :private="modelPrivate" />
       </template>
     </TabContainer>
   </div>
@@ -53,6 +57,8 @@ import ModelBlob from './ModelBlob.vue'
 const props = defineProps({
   localModelId: String,
   modelPath: String,
+  modelNickname: String,
+  modelDesc: String,
   modelDefaultBranch: String,
   modelPrivate: Boolean,
   modelDetail: Object,
