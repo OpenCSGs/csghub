@@ -9,6 +9,7 @@
     <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">新建模型仓库</h3>
     <p class="text-[#606266] text-base font-medium md:text-center">仓库包含所有的模型文件和修订的历史记录</p>
     <div class="mt-9">
+      <!-- 模型名称选择 -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">所有者</p>
@@ -30,17 +31,35 @@
           <el-input v-model="modelName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
         </div>
       </div>
-      <div class="mb-9">
-        <p class="text-[#303133] text-sm mb-2">License</p>
-        <el-select v-model="license" placeholder="选择" size="large">
-          <el-option
-            v-for="item in licenses"
-            :key="item[0]"
-            :label="item[1]"
-            :value="item[0]"
-          />
-        </el-select>
+
+      <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
+        <div class="flex-1">
+          <p class="text-[#303133] text-sm mb-2">模型别名</p>
+          <el-input v-model="modelNickName" placeholder="请输入别名" />
+        </div>
+        <div class="">
+          <p class="text-[#303133] text-sm mb-2">License</p>
+          <el-select v-model="license" placeholder="选择" size="large">
+            <el-option
+              v-for="item in licenses"
+              :key="item[0]"
+              :label="item[1]"
+              :value="item[0]"
+            />
+          </el-select>
+        </div>
       </div>
+
+      <div class="w-full flex sm:flex-col mb-9">
+        <div class="flex-1">
+          <p class="text-[#303133] text-sm mb-2">模型简介</p>
+          <el-input v-model="modelDesc"
+                    :rows="6"
+                    type="textarea"
+                    placeholder="请输入简介" />
+        </div>
+      </div>
+
       <hr class="mb-9" />
       <div class="mb-9">
         <el-radio-group v-model="visibility" class="!block">
@@ -73,7 +92,6 @@
 
 <style scoped>
   :deep(.el-input) {
-    width: 240px;
     height: 40px;
 
     @media screen and (max-width: 768px) {
@@ -122,6 +140,8 @@
   const license = ref(props.licenses[0][0])
   const owner = ref(props.namespaces[0][0])
   const modelName = ref('')
+  const modelNickName = ref('')
+  const modelDesc = ref('')
   const visibility = ref('private')
 
   const canCreateModel = computed(() => { return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(modelName.value) })
@@ -143,6 +163,8 @@
     formData.append('owner_id', ownerId)
     formData.append('owner_type', ownerType)
     formData.append('name', modelName.value)
+    formData.append('nickname', modelNickName.value)
+    formData.append('desc', modelDesc.value)
     formData.append('license', license.value)
     formData.append('visibility', visibility.value)
 

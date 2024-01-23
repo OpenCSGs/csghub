@@ -76,7 +76,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   private
 
   def model_params
-    params.permit(:name, :owner_id, :owner_type, :visibility, :license)
+    params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
   end
 
   def validate_owner
