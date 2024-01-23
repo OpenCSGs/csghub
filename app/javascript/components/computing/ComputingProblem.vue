@@ -4,14 +4,13 @@
       <div>
         <p class="font-medium text-[36px] mb-[20px]">常见问题</p>
         <p class="font-light text-[20px] text-[#475467]">您需要了解的有关产品和计费的一切信息。</p>
-        <div class="font-light text-[20px] text-[#475467]">找不到您想要的答案？请联系我们的<a href="#"
-                                                                              class="underline underline-[#475467] cursor-pointer">售前工程团队</a>。
+        <div class="font-light text-[20px] text-[#475467]">找不到您想要的答案？请联系我们的
+          <a href="#" class="underline underline-[#475467] cursor-pointer">售前工程团队</a>。
         </div>
       </div>
       <div class="grid grid-cols-3 gap-[32px] md:grid-cols-1">
         <div class="flex flex-col gap-[20px] md:mb-[0px] mb-[48px]">
-          <div
-              class="flex justify-center items-center w-[64px] h-[64px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
+          <div class="flex justify-center items-center w-[64px] h-[64px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
             <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                   d="M21 6H1M10 10H5M1 4.2L1 11.8C1 12.9201 1 13.4802 1.21799 13.908C1.40973 14.2843 1.71569 14.5903 2.09202 14.782C2.51984 15 3.07989 15 4.2 15L17.8 15C18.9201 15 19.4802 15 19.908 14.782C20.2843 14.5903 20.5903 14.2843 20.782 13.908C21 13.4802 21 12.9201 21 11.8V4.2C21 3.0799 21 2.51984 20.782 2.09202C20.5903 1.7157 20.2843 1.40974 19.908 1.21799C19.4802 1 18.9201 1 17.8 1L4.2 1C3.0799 1 2.51984 1 2.09202 1.21799C1.7157 1.40973 1.40973 1.71569 1.21799 2.09202C1 2.51984 1 3.07989 1 4.2Z"
@@ -38,8 +37,7 @@
           </div>
         </div>
         <div class="flex flex-col gap-[20px]">
-          <div
-              class="flex justify-center items-center w-[64px] h-[64px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
+          <div class="flex justify-center items-center w-[64px] h-[64px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
             <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                   d="M21 8H1M10 17L17.8 17C18.9201 17 19.4802 17 19.908 16.782C20.2843 16.5903 20.5903 16.2843 20.782 15.908C21 15.4802 21 14.9201 21 13.8V6.2C21 5.0799 21 4.51984 20.782 4.09202C20.5903 3.7157 20.2843 3.40974 19.908 3.21799C19.4802 3 18.9201 3 17.8 3H16M10 17L12 19M10 17L12 15M6 17H4.2C3.07989 17 2.51984 17 2.09202 16.782C1.71569 16.5903 1.40973 16.2843 1.21799 15.908C1 15.4802 1 14.9201 1 13.8V6.2C1 5.0799 1 4.51984 1.21799 4.09202C1.40973 3.71569 1.7157 3.40973 2.09202 3.21799C2.51984 3 3.0799 3 4.2 3H12M12 3L10 5M12 3L10 1"
@@ -54,8 +52,7 @@
           </div>
         </div>
         <div class="flex flex-col gap-[20px]">
-          <div
-              class="flex justify-center items-center w-[64px] h-[64px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
+          <div class="flex justify-center items-center w-[64px] h-[64px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                   d="M5 5H5.01M5 17H5.01M4.2 9H17.8C18.9201 9 19.4802 9 19.908 8.78201C20.2843 8.59027 20.5903 8.28431 20.782 7.90798C21 7.48016 21 6.92011 21 5.8V4.2C21 3.0799 21 2.51984 20.782 2.09202C20.5903 1.71569 20.2843 1.40973 19.908 1.21799C19.4802 1 18.9201 1 17.8 1H4.2C3.07989 1 2.51984 1 2.09202 1.21799C1.71569 1.40973 1.40973 1.71569 1.21799 2.09202C1 2.51984 1 3.07989 1 4.2V5.8C1 6.92011 1 7.48016 1.21799 7.90798C1.40973 8.28431 1.71569 8.59027 2.09202 8.78201C2.51984 9 3.0799 9 4.2 9ZM4.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V16.2C21 15.0799 21 14.5198 20.782 14.092C20.5903 13.7157 20.2843 13.4097 19.908 13.218C19.4802 13 18.9201 13 17.8 13H4.2C3.07989 13 2.51984 13 2.09202 13.218C1.71569 13.4097 1.40973 13.7157 1.21799 14.092C1 14.5198 1 15.0799 1 16.2V17.8C1 18.9201 1 19.4802 1.21799 19.908C1.40973 20.2843 1.71569 20.5903 2.09202 20.782C2.51984 21 3.0799 21 4.2 21Z"
@@ -100,27 +97,13 @@
           </div>
         </div>
       </div>
-      <div
-          class="flex justify-between md:flex-col items-center md:items-start p-[32px] md:px-[20px] bg-[#F9FAFB] rounded-[16px]">
+      <div class="flex justify-between md:flex-col items-center md:items-start p-[32px] md:px-[20px] bg-[#F9FAFB] rounded-[16px]">
         <div>
           <p class="font-medium text-[20px] text-[#101828] mb-[8px]">仍有疑问？</p>
           <p class="font-light text-[18px] text-[#475467] md:mb-[24px]">找不到您想要的答案？请联系我们的售前工程团队。</p>
         </div>
-        <div class="bg-[#3250BD] w-[90px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p
-            class="text-[#FFFFFF] font-medium text-[16px]">
-          联系我们</p></div>
+        <div class="bg-[#3250BD] w-[90px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">联系我们</p></div>
       </div>
     </div>
   </div>
-
 </template>
-
-<script>
-export default {
-  name: "ComputingProblem.vue"
-}
-</script>
-
-<style scoped>
-
-</style>

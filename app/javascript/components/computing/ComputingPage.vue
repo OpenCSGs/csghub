@@ -5,7 +5,6 @@
     <ComputingProblem />
   </div>
 </template>
-
 <script>
 import ComputingBanner from "./ComputingBanner.vue"
 import ComputingPrice from "./ComputingPrice.vue"
