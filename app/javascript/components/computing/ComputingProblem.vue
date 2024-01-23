@@ -5,7 +5,7 @@
         <p class="font-medium text-[36px] mb-[20px]">常见问题</p>
         <p class="font-light text-[20px] text-[#475467]">您需要了解的有关产品和计费的一切信息。</p>
         <div class="font-light text-[20px] text-[#475467]">找不到您想要的答案？请联系我们的
-          <a href="#" class="underline underline-[#475467] cursor-pointer">售前工程团队</a>。
+          <a href="#" class="underline cursor-pointer">售前工程团队</a>。
         </div>
       </div>
       <div class="grid grid-cols-3 gap-[32px] md:grid-cols-1">
