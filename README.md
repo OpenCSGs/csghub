@@ -113,4 +113,9 @@ We welcome developers of all levels to contribute to our open-source project, CS
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
 
 ### CONTACT WITH US
-Any problems in the process of use, you can initiate an issue in github.
+Any problems in the process of use, you can initiate an issue in github or join our WeChat group.
+<div style="display:inline-block">
+<img src="/docs/images/wechat-group-new.png" width='250'>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/docs/images/wechat-assistant-new.png" width='250'>
+</div>
