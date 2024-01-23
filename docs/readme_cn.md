@@ -59,10 +59,10 @@ CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHu
 
 如果您想深入了解CSGHub Server或者想集成Server到自己的前端系统或进行二次开发，可以查看[CSGHub Server开源项目](https://github.com/OpenCSGs/csghub-server)。
 #### CSGHub Portal 架构图
-<img src="./docs/images/portal_tech_graph.png" width='800'>
+<img src="/docs/images/portal_tech_graph.png" width='800'>
 
 #### CSGHub Server 架构图
-<img src="./docs/images/server_tech_graph.png" width='800'>
+<img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### 快速使用
 【适合高速访问github和dockerhub用户】可使用如下命令快速部署一个CSBHub实例（包含Portal、Server和完整的其他依赖组件）到本地环境。
@@ -109,7 +109,7 @@ docker compose -f all-in-one-CN.yml up -d
 ### 联系我们
 使用过程中的任何问题， 您可以在github 发起issue或者加入我们的微信讨论群。<br/>如果遇到微信群二维码失效或人数过多，请添加企业微信传神小助手账号回复"开源"或者"open source"入群。
 <div style="display:inline-block">
-<img src="./docs/images/wechat-group-new.png" width='250'>
+<img src="/docs/images/wechat-group-new.png" width='250'>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./docs/images/wechat-assistant-new.png" width='250'>
+<img src="/docs/images/wechat-assistant-new.png" width='250'>
 </div>
