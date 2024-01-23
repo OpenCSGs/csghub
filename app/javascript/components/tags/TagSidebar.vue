@@ -129,7 +129,9 @@
     taskTags: String,
     frameworkTags: String,
     licenseTags: String,
-    type: String
+    type: String,
+    selectedTag: String,
+    selectedTagType: String
   })
 
   const emit = defineEmits(['resetTags'])
@@ -150,18 +152,22 @@
 
   const changeActiveItem = (e) => {
     activeNavItem.value = e.target.dataset.type
+    toggleTagType()
+  }
+
+  const toggleTagType = () => {
     if (activeNavItem.value === 'Task') {
       showTask.value = true
       showFramework.value = false
       showLicense.value = false
     } else if (activeNavItem.value === 'Framework') {
-      showFramework.value = true
       showTask.value = false
+      showFramework.value = true
       showLicense.value = false
     } else if (activeNavItem.value === 'License') {
-      showLicense.value = true
-      showFramework.value = false
       showTask.value = false
+      showFramework.value = false
+      showLicense.value = true
     }
   }
 
@@ -171,7 +177,7 @@
     } else {
       activeTaskTag.value = e.target.dataset.tag_name
     }
-    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
+    emitTag()
   }
 
   const setActiveFrameworkTag = (tagName) => {
@@ -180,7 +186,7 @@
     } else {
       activeFrameworkTag.value = tagName
     }
-    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
+    emitTag()
   }
 
   const setActiveLicenseTag = (e) => {
@@ -189,7 +195,7 @@
     } else {
       activeLicenseTag.value = e.target.dataset.tag_name
     }
-    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
+    emitTag()
   }
 
   const setTagColor = (tagName, tagFieldColor) => {
@@ -248,7 +254,33 @@
     return newJson
   }
 
+  const emitTag = () => {
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
+  }
+
+  const setTagNameFromParams = () => {
+    if (props.selectedTagType === 'Task') {
+      activeTaskTag.value = props.selectedTag
+    } else if (props.selectedTagType === 'Framework') {
+      activeFrameworkTag.value = props.selectedTag
+    } else if (props.selectedTagType === 'License') {
+      activeLicenseTag.value = props.selectedTag
+    }
+  }
+
+  const setTagTypeFromParams = () => {
+    activeNavItem.value = props.selectedTagType
+    toggleTagType()
+  }
+
+  const emitTagFromParams = () => {
+    setTagTypeFromParams()
+    setTagNameFromParams()
+    emitTag()
+  }
+
   onMounted(() => {
+    emitTagFromParams()
   })
 
 </script>
