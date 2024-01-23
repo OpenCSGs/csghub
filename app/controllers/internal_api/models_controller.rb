@@ -36,8 +36,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
 
     unless current_user.can_manage?(@model)
-      render json: { message: '无权限' }, status: :unauthorized
-      return
+      return render json: { message: '无权限' }, status: :unauthorized
     end
 
     if params[:private].to_s == 'true'
@@ -45,6 +44,9 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     else
       @model.visibility = 'public'
     end
+
+    @model.nickname = params[:nickname] if params[:nickname].present?
+    @model.desc = params[:desc] if params[:desc].present?
 
     if @model.save
       render json: { message: '更新成功' }

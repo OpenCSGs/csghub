@@ -37,7 +37,7 @@
             size="large"
             class="!w-[512px] sm:!w-full"
         />
-        <el-button class="w-[100px]">更新</el-button>
+        <el-button @click="updateNickname" class="w-[100px]">更新</el-button>
       </div>
     </div>
 
@@ -61,7 +61,7 @@
             type="textarea"
             class="!w-[512px] sm:!w-full"
         />
-        <el-button class="w-[100px]">更新</el-button>
+        <el-button @click="updateModelDesc" class="w-[100px]">更新</el-button>
       </div>
     </div>
 
@@ -155,8 +155,8 @@ export default {
       visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       modelName: this.path.split('/')[1],
-      theModelNickname: this.modelNickname,
-      theModelDesc: this.modelDesc,
+      theModelNickname: this.modelNickname || "",
+      theModelDesc: this.modelDesc || "",
       modelPath: this.path,
       options: [{value: 'Private', label: '私有'},
         {value: 'Public', label: '公开'}]
@@ -226,6 +226,36 @@ export default {
           .catch((err) => {
             ElMessage({ message: err.message, type: "warning" })
           })
+    },
+
+    updateNickname() {
+      if (!!this.theModelNickname.trim()) {
+        const payload = {nickname: this.theModelNickname}
+        this.updateModel(payload)
+            .then((data) => {
+              ElMessage({ message: data.message, type: "success" })
+            })
+            .catch((err) => {
+              ElMessage({ message: err.message, type: "warning" })
+            })
+      } else {
+        ElMessage({ message: "请先提供模型别名", type: "warning" })
+      }
+    },
+
+    updateModelDesc() {
+      if (!!this.theModelDesc.trim()) {
+        const payload = {desc: this.theModelDesc}
+        this.updateModel(payload)
+            .then((data) => {
+              ElMessage({ message: data.message, type: "success" })
+            })
+            .catch((err) => {
+              ElMessage({ message: err.message, type: "warning" })
+            })
+      } else {
+        ElMessage({ message: "请先提供模型介绍", type: "warning" })
+      }
     },
 
     async updateModel(payload) {
