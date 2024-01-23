@@ -175,6 +175,7 @@ export default {
         })
       }
     },
+
     async deleteModel() {
       const modelDeleteEndpoint = "/internal_api/models/" + this.path
       const option = {method: 'DELETE'}
@@ -205,18 +206,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消'
       }).then(() => {
-        this.changeVisibilityApi(value).then((data) => {
-                                          ElMessage({
-                                            message: data.message,
-                                            type: "success",
-                                          })
-                                        })
-                                        .catch((err) => {
-                                          ElMessage({
-                                            message: err.message,
-                                            type: "warning",
-                                          })
-                                        })
+        this.changeVisibilityCall(value)
       }).catch(() => {
         this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
@@ -226,28 +216,33 @@ export default {
       })
     },
 
-    async changeVisibilityApi(value) {
+    changeVisibilityCall(value) {
+      const privateSelected = (value === 'Private') ? true : false
+      const payload = {private: privateSelected}
+      this.updateModel(payload)
+          .then((data) => {
+            ElMessage({ message: data.message, type: "success" })
+          })
+          .catch((err) => {
+            ElMessage({ message: err.message, type: "warning" })
+          })
+    },
+
+    async updateModel(payload) {
       const modelUpdateEndpoint = "/internal_api/models/" + this.path
-      const jsonData = {
-        private: (value === 'Private') ? true : false,
-        default_branch: this.default_branch,
-        description: "Starhub Server Project Editedaaa."
-      }
-      const jsonStr = JSON.stringify(jsonData)
-      const option = {
+      const options = {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: jsonStr
+        body: JSON.stringify(payload)
       }
-
-      const response = await csrfFetch(modelUpdateEndpoint, option)
-
+      const response = await csrfFetch(modelUpdateEndpoint, options)
       if (!response.ok) {
         return response.json().then((data) => { throw new Error(data.message) })
       } else {
         return response.json()
       }
     },
+
     handleMouseOver() {
       if (this.delDesc !== '') {
         document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
