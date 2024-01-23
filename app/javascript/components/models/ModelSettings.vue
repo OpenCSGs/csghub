@@ -220,24 +220,12 @@ export default {
       const privateSelected = (value === 'Private') ? true : false
       const payload = {private: privateSelected}
       this.updateModel(payload)
-          .then((data) => {
-            ElMessage({ message: data.message, type: "success" })
-          })
-          .catch((err) => {
-            ElMessage({ message: err.message, type: "warning" })
-          })
     },
 
     updateNickname() {
       if (!!this.theModelNickname.trim()) {
         const payload = {nickname: this.theModelNickname}
         this.updateModel(payload)
-            .then((data) => {
-              ElMessage({ message: data.message, type: "success" })
-            })
-            .catch((err) => {
-              ElMessage({ message: err.message, type: "warning" })
-            })
       } else {
         ElMessage({ message: "请先提供模型别名", type: "warning" })
       }
@@ -247,12 +235,6 @@ export default {
       if (!!this.theModelDesc.trim()) {
         const payload = {desc: this.theModelDesc}
         this.updateModel(payload)
-            .then((data) => {
-              ElMessage({ message: data.message, type: "success" })
-            })
-            .catch((err) => {
-              ElMessage({ message: err.message, type: "warning" })
-            })
       } else {
         ElMessage({ message: "请先提供模型介绍", type: "warning" })
       }
@@ -267,9 +249,13 @@ export default {
       }
       const response = await csrfFetch(modelUpdateEndpoint, options)
       if (!response.ok) {
-        return response.json().then((data) => { throw new Error(data.message) })
+        response.json().then((err) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
       } else {
-        return response.json()
+        response.json().then((data) => {
+          ElMessage({ message: data.message, type: "success" })
+        })
       }
     },
 
