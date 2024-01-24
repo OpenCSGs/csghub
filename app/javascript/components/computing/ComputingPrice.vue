@@ -13,7 +13,7 @@
           <div class="w-[304px] py-[12px] px-[24px]" style="width: 310px;">显卡数</div>
           <div class="w-[304px] py-[12px] px-[24px]" style="width: 310px;">标资（元/月）</div>
         </div>
-        <div v-for="specification in specificationsList" class="flex items-center text-[#101828] text-[14px] border border-[#EAECF0]">
+        <div v-for="specification in specificationsList" class="flex items-center text-[#101828] text-[14px] border-b border-[#EAECF0]">
           <div class="flex items-center w-[304px] py-[12px] px-[24px]" style="width: 310px;">
             <img src="/images/computing/nvidia.png" class="w-[40px] h-[40px]" alt="nvidia">
             <p class="ml-[8px]">{{specification.specificationName}}</p>
