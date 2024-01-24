@@ -27,6 +27,28 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     end
   end
 
+  def update
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
+
+    unless @dataset
+      return render json: { message: "未找到对应数据集" }, status: 404
+    end
+
+    unless current_user.can_manage?(@dataset)
+      return render json: { message: '无权限' }, status: :unauthorized
+    end
+
+    @dataset.nickname = params[:nickname] if params[:nickname].present?
+    @dataset.desc = params[:desc] if params[:desc].present?
+
+    if @dataset.save
+      render json: { message: '更新成功' }
+    else
+      render json: { message: "更新失败" }, status: :bad_request
+    end
+  end
+
   def destroy
     owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
@@ -50,7 +72,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   private
 
   def dataset_params
-    params.permit(:name, :owner_id, :owner_type, :license)
+    params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :license)
   end
 
   def validate_owner
