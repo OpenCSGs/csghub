@@ -35,10 +35,12 @@
   const mdParser = new MarkdownIt({
     html: true,
     highlight: function (str, lang) {
+      const escapeHtml = mdParser.utils.escapeHtml
+
       const copyButtonFragment = `
         <clipboard-copy
           class="copy-button p-1 h-fit hidden group-hover:block hover:bg-[#F0F2F5] rounded cursor-pointer"
-          value='${str}'>${copyIcon}</clipboard-copy>`
+          value="${escapeHtml(str)}">${copyIcon}</clipboard-copy>`
 
       if (lang && hljs.getLanguage(lang)) {
         try {
@@ -49,7 +51,6 @@
         }
       }
 
-      const escapeHtml = mdParser.utils.escapeHtml
       return `<pre class="group flex space-between"><code class="hl-code flex-1">${escapeHtml(str)}</code> ${copyButtonFragment} </pre>`
     }
   }).use(markdownItAnchor, anchorOptions)
