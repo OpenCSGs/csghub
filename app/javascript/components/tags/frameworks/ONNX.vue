@@ -36,7 +36,7 @@
     emit('setActiveFrameworkTag', 'ONNX')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'ONNX') {
+    if (props.activeTag?.toLowerCase() === 'onnx') {
       return "color: white; background-color: #4D6AD6"
     }
   }

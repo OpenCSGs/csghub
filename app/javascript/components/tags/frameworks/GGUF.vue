@@ -21,7 +21,7 @@
     emit('setActiveFrameworkTag', 'GGUF')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'GGUF') {
+    if (props.activeTag?.toLowerCase() === 'gguf') {
       return "color: white; background-color: #4D6AD6"
     }
   }

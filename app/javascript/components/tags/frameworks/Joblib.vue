@@ -29,7 +29,7 @@
     emit('setActiveFrameworkTag', 'Joblib')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'Joblib') {
+    if (props.activeTag?.toLowerCase() === 'joblib') {
       return "color: white; background-color: #4D6AD6"
     }
   }

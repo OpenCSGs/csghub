@@ -26,7 +26,7 @@
     emit('setActiveFrameworkTag', 'PyTorch')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'PyTorch') {
+    if (props.activeTag?.toLowerCase() === 'pytorch') {
       return "color: white; background-color: #4D6AD6"
     }
   }
