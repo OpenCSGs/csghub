@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-[96px] md:pb-[64px] w-full bg-white overflow-hidden">
+  <div class="mb-[96px] md:mb-[64px] w-full bg-white overflow-x-auto">
     <div class="rounded-[12px] border md:border-0 border-[#EAECF0] max-w-[1280px] min-w-[750px] m-auto">
       <div class="flex md:flex-col justify-between py-[24px] px-[20px] md:py-0">
         <div class="flex items-center font-medium text-[18px] md:mb-[16px]"><p>GPU 云主机</p></div>

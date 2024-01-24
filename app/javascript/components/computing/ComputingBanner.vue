@@ -1,13 +1,13 @@
 <template>
-  <div class="py-[96px] md:py-[64px] text-center w-full banner bg-white">
+  <div class="py-[96px] md:py-[64px] md:mb-[32px] text-center w-full banner bg-white">
     <div class="flex justify-center items-center flex-col max-w-[1280px] m-auto xl:px-[20px]">
-      <div class="font-medium text-[16px] text-[#223B99] leading-[24px]">
+      <div class="font-medium md:mb-[12px] text-[16px] text-[#223B99] leading-[24px] md:leading-[24px]">
         算力服务
       </div>
-      <div class="mb-[12px] max-w-[768px] m-auto font-medium text-[48px] md:text-[32px] md:text-[48px] md:leading-[44px] text-[#101828] leading-[90px]">
-        适合您的规模的算力租赁计划
+      <div class="max-w-[768px] m-auto md:mb-[12px] font-medium text-[48px] md:text-[36px] md:text-[48px] md:leading-[50px] text-[#101828] leading-[90px]">
+        适合您的算力租赁计划
       </div>
-      <div class="mb-[48px] text-[20px] md:text-[18px] font-light text-[#475467] leading-[30px]">
+      <div class="mb-[48px] md:mb-[24px] text-[20px] md:text-[18px] font-light text-[#475467] leading-[30px]">
         我们认为 OpenCSG 的算力服务对所有的团队都是友好的，无论其规模大小。
       </div>
       <div class="flex justify-center items-center bg-[#F9FAFB] p-[6px] gap-[4px] rounded-[12px] border border-[#EAECF0] text-[#344054]">
