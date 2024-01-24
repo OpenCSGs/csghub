@@ -146,7 +146,7 @@ export default {
           ],
         }, {
           id: "3",
-          title: "信创版",
+          title: "国产版",
           enTitle: "ITAI",
           details: [
             "寒武纪<br><br>(Tower-ITAICam-370X8)",
