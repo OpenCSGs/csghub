@@ -2,16 +2,16 @@
   <div class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
-        <div class="text-[20px] leading-[28px] font-semibold">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           数据集名称
         </div>
-        <div class="text-[14px] text-[#606266] leading-[22px]">
+        <div class="text-[14px] text-[#475467] leading-[20px]">
           应用于数据集路径，创建后不可更改
         </div>
       </div>
-      <div class="flex flex-col gap-[20px]">
-        <p>命名空间/数据集名称</p>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[14px] text-[#475467]">命名空间/数据集名称</p>
         <div class="w-[512px] sm:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
           {{ datasetPath }}
         </div>
@@ -22,15 +22,15 @@
 
     <!-- 更新数据集别名 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
-        <div class="text-[20px] leading-[28px] font-semibold">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           数据集别名
         </div>
-        <div class="text-[14px] text-[#606266] leading-[22px]">
+        <div class="text-[14px] text-[#475467] leading-[20px]">
           将会显示在数据集列表页面中，选填
         </div>
       </div>
-      <div class="flex flex-col gap-[20px]">
+      <div class="flex flex-col gap-[6px]">
         <el-input
             v-model="theDatasetNickname"
             clearable
@@ -45,15 +45,15 @@
 
     <!-- 更新模型简介 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
-        <div class="text-[20px] leading-[28px] font-semibold">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           数据集简介
         </div>
-        <div class="text-[14px] text-[#606266] leading-[22px]">
+        <div class="text-[14px] text-[#475467] leading-[20px]">
           一段关于数据集的介绍，选填
         </div>
       </div>
-      <div class="flex flex-col gap-[20px]">
+      <div class="flex flex-col gap-[6px]">
         <el-input
             v-model="theDatasetDesc"
             clearable
@@ -69,18 +69,18 @@
 
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
-        <div class="text-[20px] leading-[28px] font-semibold">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           修改数据集可见性
         </div>
-        <div class="max-w-[864px] text-[14px] text-[#606266] leading-[22px]">
+        <div class="max-w-[864px] text-[14px] text-[#475467] leading-[20px]">
           当前数据集目前是
-          <span class="text-black font-semibold">【{{ visibility=='Private'?'私有':'公开' }}】</span>
+          <span class="text-black font-medium">【{{ visibility=='Private'?'私有':'公开' }}】</span>
           状态。{{ visibility=='Private'?'只有创建者或组织成员可见':'任何人都可以看到此数据集'}}
         </div>
       </div>
-      <div class="flex flex-col gap-[20px]">
-        <p>数据集可见性</p>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[14px] text-[#475467]">数据集可见性</p>
         <el-select v-model="visibility"
                    @change="changeVisibility"
                    placeholder="Select"
@@ -102,21 +102,26 @@
 
     <!-- 数据集删除 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
-        <div class="text-[20px] leading-[28px] font-semibold">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           删除数据集
         </div>
-        <div class="text-[14px] text-[#606266] leading-[22px]">此操作<span
-            class="text-black font-semibold">无法</span> 撤销. 这将永久删除<span
-            class="text-black font-semibold break-words">{{ path }}</span>数据集及其所有文件。
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          此操作
+          <span class="text-black font-medium">无法</span>
+          撤销，这将永久删除
+          <span class="text-black font-medium break-words">{{ path }}</span>
+          数据集及其所有文件。
         </div>
-        <div class="text-[14px] text-[#606266] leading-[22px]">请输入<span
-            class="text-black font-semibold break-words">{{ path }}</span>以确认删除.
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          请输入
+          <span class="text-black font-medium break-words">{{ path }}</span>
+          以确认删除.
         </div>
       </div>
 
       <div class="flex flex-col gap-[8px]">
-        <p>模型名称</p>
+        <p class="text-[14px] text-[#475467]">模型名称</p>
         <el-input
             v-model="delDesc"
             clearable
