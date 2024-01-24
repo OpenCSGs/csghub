@@ -2,7 +2,7 @@
   <div class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[280px] flex flex-col gap-[20px]">
+      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
         <div class="text-[20px] leading-[28px] font-semibold">
           模型名称
         </div>
@@ -22,7 +22,7 @@
 
     <!-- 更新模型别名 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[280px] flex flex-col gap-[20px]">
+      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
         <div class="text-[20px] leading-[28px] font-semibold">
           模型别名
         </div>
@@ -45,7 +45,7 @@
 
     <!-- 更新模型简介 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[280px] flex flex-col gap-[20px]">
+      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
         <div class="text-[20px] leading-[28px] font-semibold">
           模型简介
         </div>
@@ -69,7 +69,7 @@
 
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[280px] flex flex-col gap-[20px]">
+      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
         <div class="text-[20px] leading-[28px] font-semibold">
           修改模型可见性
         </div>
@@ -82,10 +82,10 @@
       <div class="flex flex-col gap-[20px]">
         <p>模型可见性</p>
         <el-select v-model="visibility"
-                  @change="changeVisibility"
-                  placeholder="Select"
-                  size="large"
-                  class="!w-[512px] sm:!w-full"
+                   @change="changeVisibility"
+                   placeholder="Select"
+                   size="large"
+                   class="!w-[512px] sm:!w-full"
         >
           <el-option
               v-for="item in options"
@@ -101,7 +101,7 @@
 
     <!-- 删除模型 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[280px] flex flex-col gap-[20px]">
+      <div class="w-[380px] sm:w-full flex flex-col gap-[20px]">
         <div class="text-[20px] leading-[28px] font-semibold">
           删除模型
         </div>
