@@ -66,6 +66,5 @@ const props = defineProps({
   content: String,
   actionName: String,
   settingsVisibility: Boolean,
-  repoUser: Boolean
 })
 </script>
