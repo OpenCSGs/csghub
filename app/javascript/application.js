@@ -43,7 +43,8 @@ import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
 import About from "./components/about/About.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
-
+import LandingBanner from "./components/landing/LandingBanner.vue"
+import Feature from "./components/landing/Feature.vue"
 const app = createApp({
   components: {
     Navbar,
@@ -80,7 +81,9 @@ const app = createApp({
     SolutionPage,
     ProductPage,
     About,
-    OnPremiseFooter
+    OnPremiseFooter,
+    LandingBanner,
+    Feature
   },
   provide:{
     defaultTags: DefaultTags
