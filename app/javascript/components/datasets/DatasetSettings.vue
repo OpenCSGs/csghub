@@ -230,7 +230,7 @@ export default {
     updateDatasetDesc() {
       if (!!this.theDatasetDesc.trim()) {
         const payload = {desc: this.theDatasetDesc}
-        this.updateModel(payload)
+        this.updateDataset(payload)
       } else {
         ElMessage({ message: "请先提供数据集介绍", type: "warning" })
       }
