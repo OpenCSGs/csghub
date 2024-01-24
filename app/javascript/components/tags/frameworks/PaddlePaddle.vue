@@ -33,7 +33,7 @@
     emit('setActiveFrameworkTag', 'PaddlePaddle')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'PaddlePaddle') {
+    if (props.activeTag?.toLowerCase() === 'paddlepaddle') {
       return "color: white; background-color: #4D6AD6"
     }
   }
