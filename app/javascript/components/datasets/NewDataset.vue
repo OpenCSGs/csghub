@@ -9,6 +9,7 @@
     <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">新建数据集仓库</h3>
     <p class="text-[#606266] text-base font-medium md:text-center">仓库包含所有的数据集文件和修订的历史记录</p>
     <div class="mt-9">
+      <!-- 数据集名称选择 -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">所有者</p>
@@ -30,17 +31,35 @@
           <el-input v-model="datasetName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
         </div>
       </div>
-      <div class="mb-9">
-        <p class="text-[#303133] text-sm mb-2">License</p>
-        <el-select v-model="license" placeholder="选择" size="large">
-          <el-option
-            v-for="item in licenses"
-            :key="item[0]"
-            :label="item[1]"
-            :value="item[0]"
-          />
-        </el-select>
+
+      <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
+        <div class="flex-1">
+          <p class="text-[#303133] text-sm mb-2">数据集别名</p>
+          <el-input v-model="datasetNickName" placeholder="请输入别名" />
+        </div>
+        <div class="">
+          <p class="text-[#303133] text-sm mb-2">License</p>
+          <el-select v-model="license" placeholder="选择" size="large">
+            <el-option
+              v-for="item in licenses"
+              :key="item[0]"
+              :label="item[1]"
+              :value="item[0]"
+            />
+          </el-select>
+        </div>
       </div>
+
+      <div class="w-full flex sm:flex-col mb-9">
+        <div class="flex-1">
+          <p class="text-[#303133] text-sm mb-2">数据集简介</p>
+          <el-input v-model="datasetDesc"
+                    :rows="6"
+                    type="textarea"
+                    placeholder="请输入简介" />
+        </div>
+      </div>
+
       <hr class="mb-9" />
       <div class="mb-9">
         <el-radio-group v-model="visibility" class="!block">
@@ -73,9 +92,65 @@
   </div>
 </template>
 
+<script setup>
+  import { ref, computed } from 'vue'
+  import { ElInput, ElMessage } from 'element-plus'
+  import csrfFetch from "../../packs/csrfFetch.js"
+
+  const props = defineProps({
+    licenses: Array,
+    namespaces: Array,
+  })
+
+  const license = ref(props.licenses[0][0])
+  const owner = ref(props.namespaces[0][0])
+  const datasetName = ref('')
+  const datasetNickName = ref('')
+  const datasetDesc = ref('')
+  const visibility = ref('private')
+
+  const canCreateDataset = computed(() => { return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(datasetName.value) })
+
+  const createDataset = async () => {
+    try {
+      const res = await submitDatasetForm()
+      ElMessage.success('数据集创建成功')
+      toDatasetDetail(res.path)
+    } catch (err) {
+      ElMessage.warning(err.message)
+    }
+  }
+
+  async function submitDatasetForm() {
+    const datasetCreateEndpoint = `/internal_api/datasets`
+    const formData = new FormData()
+    const [ownerId, ownerType] = owner.value.split('_')
+    formData.append('owner_id', ownerId)
+    formData.append('owner_type', ownerType)
+    formData.append('name', datasetName.value)
+    formData.append('nickname', datasetNickName.value)
+    formData.append('desc', datasetDesc.value)
+    formData.append('license', license.value)
+    formData.append('visibility', visibility.value)
+
+    const options = { method: 'POST', body: formData }
+
+    const response = await csrfFetch(datasetCreateEndpoint, options)
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(data.message)
+    } else {
+      return response.json()
+    }
+  }
+
+  const toDatasetDetail = (path) => {
+    window.location.pathname = `/datasets/${path}`
+  }
+</script>
+
 <style scoped>
   :deep(.el-input) {
-    width: 240px;
     height: 40px;
 
     @media screen and (max-width: 768px) {
@@ -110,56 +185,3 @@
     }
   }
 </style>
-
-<script setup>
-  import { ref, computed } from 'vue'
-  import { ElInput, ElMessage } from 'element-plus'
-  import csrfFetch from "../../packs/csrfFetch.js"
-
-  const props = defineProps({
-    licenses: Array,
-    namespaces: Array,
-  })
-
-  const license = ref(props.licenses[0][0])
-  const owner = ref(props.namespaces[0][0])
-  const datasetName = ref('')
-  const visibility = ref('private')
-
-  const canCreateDataset = computed(() => { return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(datasetName.value) })
-
-  const createDataset = async () => {
-    try {
-      const res = await submitDatasetForm()
-      ElMessage.success('数据集创建成功')
-      toDatasetDetail(res.path)
-    } catch (err) {
-      ElMessage.warning(err.message)
-    }
-  }
-
-  async function submitDatasetForm() {
-    const datasetCreateEndpoint = `/internal_api/datasets`
-    const formData = new FormData()
-    const [ownerId, ownerType] = owner.value.split('_')
-    formData.append('owner_id', ownerId)
-    formData.append('owner_type', ownerType)
-    formData.append('name', datasetName.value)
-    formData.append('license', license.value)
-    formData.append('visibility', visibility.value)
-
-    const options = { method: 'POST', body: formData }
-
-    const response = await csrfFetch(datasetCreateEndpoint, options)
-    if (!response.ok) {
-      const data = await response.json()
-      throw new Error(data.message)
-    } else {
-      return response.json()
-    }
-  }
-
-  const toDatasetDetail = (path) => {
-    window.location.pathname = `/datasets/${path}`
-  }
-</script>
