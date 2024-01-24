@@ -1,4 +1,5 @@
 class ModelsController < ApplicationController
+  include ApplicationHelper
   layout 'new_application'
 
   before_action :check_user_info_integrity
@@ -45,8 +46,11 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_model = owner && owner.models.find_by(name: params[:model_name])
+    user = User.find_by(name: params[:namespace])
+    organization = Organization.find_by(name: params[:namespace])
+    owner = user || organization
+      @redirect_url = set_redirect_url owner if owner
+      @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
       return redirect_to errors_not_found_path
     end

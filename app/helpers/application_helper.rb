@@ -28,4 +28,12 @@ module ApplicationHelper
     system_config = SystemConfig.first
     (system_config.feature_flags rescue {}) || {}
   end
+
+  def set_redirect_url owner
+    if owner.is_a?(User)
+      '/profile/' + owner.name
+    else
+      '/organizations/' + owner.name
+    end
+  end
 end

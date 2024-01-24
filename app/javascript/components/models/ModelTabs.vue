@@ -65,6 +65,7 @@ const props = defineProps({
   readme: String,
   content: String,
   actionName: String,
-  settingsVisibility: Boolean
+  settingsVisibility: Boolean,
+  repoUser: Boolean
 })
 </script>
