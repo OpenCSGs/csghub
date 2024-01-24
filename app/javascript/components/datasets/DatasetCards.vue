@@ -5,6 +5,8 @@
         :taskTags="props.taskTags"
         :frameworkTags="props.frameworkTags"
         :licenseTags="props.licenseTags"
+        :selectedTag="props.selectedTag"
+        :selectedTagType="props.selectedTagType"
         @resetTags="resetTags"
         type="dataset"
       />
@@ -68,7 +70,9 @@
   const props = defineProps({
     taskTags: String,
     frameworkTags: String,
-    licenseTags: String
+    licenseTags: String,
+    selectedTag: String,
+    selectedTagType: String
   })
 
   const nameFilterInput = ref('')
@@ -135,7 +139,9 @@
   }
 
   onMounted(() => {
-    const url = `/internal_api/datasets?page=${currentPage.value}&per_page=${perPage.value}`
-    loadDatasets(url)
+    if (!props.selectedTag) {
+      const url = `/internal_api/datasets?page=${currentPage.value}&per_page=${perPage.value}`
+      loadDatasets(url)
+    }
   })
 </script>
