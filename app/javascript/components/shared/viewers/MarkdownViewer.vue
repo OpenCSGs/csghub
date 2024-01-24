@@ -38,9 +38,9 @@
       const escapeHtml = mdParser.utils.escapeHtml
 
       const copyButtonFragment = `
-        <clipboard-copy
-          class="copy-button p-1 h-fit hidden group-hover:block hover:bg-[#F0F2F5] rounded cursor-pointer"
-          value="${escapeHtml(str)}">${copyIcon}</clipboard-copy>`
+        <clipboard-copy value="${escapeHtml(str)}"
+                        class="copy-button p-1 h-fit hidden group-hover:block hover:bg-[#F0F2F5] rounded cursor-pointer"
+        >${copyIcon}</clipboard-copy>`
 
       if (lang && hljs.getLanguage(lang)) {
         try {
