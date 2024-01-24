@@ -11,8 +11,8 @@ import Navbar from "./components/navbar/NewNavbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
 import SpaceCard from "./components/spaces/SpaceCard.vue"
 import SpaceCards from "./components/spaces/SpaceCards.vue"
-import Footer from "./components/TheFooter.vue"
-import NewFooter from "./components/TheNewFooter.vue"
+import LogoutFooter from "./components/footer/TheFooter.vue"
+import LoginFooter from "./components/footer/TheNewFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
@@ -58,8 +58,8 @@ const app = createApp({
     ModelDetail,
     PartnerCard,
     PartnerForm,
-    Footer,
-    NewFooter,
+    LogoutFooter,
+    LoginFooter,
     CampaignCard,
     CampaignCards,
     Profile,
