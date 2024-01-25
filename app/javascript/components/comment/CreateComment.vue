@@ -5,7 +5,7 @@
       :disabled="newCommentContent.trim().length === 0"
       :class="{ 'bg-[#409EFF]': newCommentContent.trim().length > 0, 'bg-[#9FCEFF]': newCommentContent.trim().length === 0 }"
       class="flex justify-center items-center rounded-[4px] w-[88px] h-[32px] text-white text-sm font-medium"
-      @click="clickCreateComment">
+      @click="createComment">
       添加评论
     </button>
   </div>
@@ -28,22 +28,10 @@
     commentable_id: {
       type: String,
       required: true,
-    },
-    current_user_id: {
-      type: String,
-      required: true,
-    },
+    }
   });
 
   const emit = defineEmits(['createComment']);
-
-  const clickCreateComment = () => {
-    if (props.current_user_id === '') {
-      window.location.href = "/login"
-      return
-    }
-    createComment()
-  }
 
   const createComment = async () => {
     try {

@@ -4,7 +4,6 @@
       @createComment="createComment"
       :commentable_type="commentable_type"
       :commentable_id="commentable_id"
-      :current_user_id="current_user_id"
     />
     <CommentItem
       v-for="comment in commentListRef"
