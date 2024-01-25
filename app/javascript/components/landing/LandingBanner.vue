@@ -10,7 +10,7 @@
         <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]">
           大模型驱动全民，推动技术加速创新。
         </div>
-        <span class="md:block md:mx-[20px] px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer">加入社区</span>
+        <a href="/login" class="md:block md:mx-[20px] px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer">加入社区</a>
       </div>
     </div>
   </template>
