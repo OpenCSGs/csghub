@@ -28,7 +28,7 @@
     emit('setActiveFrameworkTag', 'Safetensors')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'Safetensors') {
+    if (props.activeTag?.toLowerCase() === 'safetensors') {
       return "color: white; background-color: #4D6AD6"
     }
   }

@@ -7,20 +7,19 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-// import Navbar from "./components/TheNavbar.vue"
-import Navbar from "./components/NewNavbar.vue"
-import SpaceIntro from "./components/SpaceIntro.vue"
-import SpaceCard from "./components/SpaceCard.vue"
-import SpaceCards from "./components/SpaceCards.vue"
-import Foot from "./components/TheFooter.vue"
-import NewFoot from "./components/TheNewFooter.vue"
+import Navbar from "./components/navbar/NewNavbar.vue"
+import SpaceIntro from "./components/spaces/SpaceIntro.vue"
+import SpaceCard from "./components/spaces/SpaceCard.vue"
+import SpaceCards from "./components/spaces/SpaceCards.vue"
+import LogoutFooter from "./components/footer/TheFooter.vue"
+import LoginFooter from "./components/footer/TheNewFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
 import DatasetCard from "./components/DatasetCard.vue"
-import ModelDetail from "./components/ModelDetail.vue"
+import ModelDetail from "./components/models/ModelDetail.vue"
+import DatasetDetail from "./components/datasets/DatasetDetail.vue"
 import ModelCard from "./components/ModelCard.vue"
-import DatasetDetail from "./components/DatasetDetail.vue"
 import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
@@ -42,7 +41,7 @@ import OrganizationDetail from "./components/organizations/OrganizationDetail.vu
 import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
 import About from "./components/about/About.vue"
-import OnPremiseFooter from "./components/OnPremiseFooter.vue"
+import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import LandingOthers from "./components/landing/LandingOthers.vue"
 const app = createApp({
   components: {
@@ -59,8 +58,8 @@ const app = createApp({
     ModelDetail,
     PartnerCard,
     PartnerForm,
-    Foot,
-    NewFoot,
+    LogoutFooter,
+    LoginFooter,
     CampaignCard,
     CampaignCards,
     Profile,

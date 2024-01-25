@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_info_integrity
-    return unless helpers.logged_in?
+    return if !helpers.logged_in?
 
     if current_user.email.blank?
       flash[:alert] = "请补充邮箱，以便能使用完整的功能"
