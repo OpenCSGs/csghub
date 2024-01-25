@@ -5,7 +5,7 @@
         <p class="font-medium text-[36px] mb-[20px]">常见问题</p>
         <p class="font-light text-[20px] text-[#475467]">您需要了解的有关产品和计费的一切信息。</p>
         <div class="font-light text-[20px] text-[#475467]">找不到您想要的答案？请联系我们的
-          <a href="#" class="underline cursor-pointer">售前工程团队</a>。
+          <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="underline cursor-pointer">售前工程团队</a>。
         </div>
       </div>
       <div class="grid grid-cols-3 gap-[32px] md:grid-cols-1">
@@ -102,7 +102,7 @@
           <p class="font-medium text-[20px] text-[#101828] mb-[8px]">仍有疑问？</p>
           <p class="font-light text-[18px] text-[#475467] md:mb-[24px]">找不到您想要的答案？请联系我们的售前工程团队。</p>
         </div>
-        <div class="bg-[#3250BD] w-[90px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">联系我们</p></div>
+        <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="bg-[#3250BD] w-[90px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">联系我们</p></a>
       </div>
     </div>
   </div>
