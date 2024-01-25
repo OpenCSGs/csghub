@@ -1,7 +1,12 @@
 <div class="max-w-7xl m-auto pb-[120px] sm:pb-[60px]">
   <div class="mb-[60px]">
-    <%= image_tag url_for(@lead_form.campaign.desktop_banner), class: "sm:hidden w-full" %>
-    <%= image_tag url_for(@lead_form.campaign.mobile_banner), class: "hidden sm:block w-full" %>
+    <% if @lead_form.campaign.desktop_banner.present? %>
+      <%= image_tag url_for(@lead_form.campaign.desktop_banner), class: "sm:hidden w-full" %>
+    <% end %>
+
+    <% if @lead_form.campaign.mobile_banner.present? %>
+      <%= image_tag url_for(@lead_form.campaign.mobile_banner), class: "hidden sm:block w-full" %>
+    <% end %>
   </div>
   <div class="text-[48px] font-[600] mb-[16px] text-center"> <%= @lead_form.title %> </div>
   <div class="text-[20px] leading-[28px] text-center mb-[36px]"> <%= @lead_form.description %> </div>
