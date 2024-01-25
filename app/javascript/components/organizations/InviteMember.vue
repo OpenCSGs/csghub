@@ -30,15 +30,15 @@
               </el-select>
             </div>
             <p class="text-[#344054] text-[14px] mb-[6px]">用户名</p>
-            <div class="flex gap-[4px] items-center w-full border rounded-[4px] border-gray-300 h-[40px] p-[6px]">
-              <div class="flex gap-[4px]">
+            <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+              <div class="flex gap-[4px] flex-wrap overflow-x-hidden">
                 <span v-for="user in selectedUsers" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
                   <img :src="user.avatar" height="16" width="16">
                   {{ user.name }}
                   <el-icon><Close @click="removeUser(user.name)" /></el-icon>
                 </span>
               </div>
-              <input class="w-full h-[36px] outline-none"
+              <input class="w-full max-h-[36px] outline-none"
                      v-model="userNameInput"
                      @input="showUserList" />
             </div>
@@ -111,7 +111,7 @@
   }
 
   const showUserList = (e) => {
-    getUsers(e.data).then(data => {
+    getUsers(userNameInput.value).then(data => {
       shouldShowUserList.value = data.users.length > 0
       userList.value = data.users.slice(0, 6);
     })
