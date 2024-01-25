@@ -1,5 +1,6 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: :index
+  before_action :validate_model, only: [:update, :destroy]
 
   def index
     res_body = Starhub.api.get_models(current_user&.name,
@@ -28,17 +29,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def update
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-
-    unless @model
-      return render json: { message: "未找到对应模型" }, status: 404
-    end
-
-    unless current_user.can_manage?(@model)
-      return render json: { message: '无权限' }, status: :unauthorized
-    end
-
     if params[:private].to_s == 'true'
       @model.visibility = 'private'
     else
@@ -56,18 +46,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def destroy
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-
-    unless @model
-      return render json: { message: "未找到对应模型" }, status: 404
-    end
-
-    unless current_user.can_manage?(@model)
-      render json: { message: '无权限' }, status: :unauthorized
-      return
-    end
-
     if @model.destroy
       render json: { message: '删除成功' }
     else
@@ -79,6 +57,20 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def model_params
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
+  end
+
+  def validate_model
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @model = owner && owner.models.find_by(name: params[:model_name])
+
+    unless @model
+      return render json: { message: "未找到对应模型" }, status: 404
+    end
+
+    unless current_user.can_manage?(@model)
+      render json: { message: '无权限' }, status: :unauthorized
+      return
+    end
   end
 
   def validate_owner
