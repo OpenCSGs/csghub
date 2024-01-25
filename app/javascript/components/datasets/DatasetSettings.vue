@@ -43,7 +43,7 @@
 
     <el-divider/>
 
-    <!-- 更新模型简介 -->
+    <!-- 更新数据集简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -121,7 +121,7 @@
       </div>
 
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[14px] text-[#475467]">模型名称</p>
+        <p class="text-[14px] text-[#475467]">数据集名称</p>
         <el-input
             v-model="delDesc"
             clearable
