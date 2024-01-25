@@ -32,6 +32,8 @@ module LeadFormsHelper
       "不接受邮件#{custom_required?('email_opt_out') ? '*' : ''}"
     when 'num_of_employees'
       "员工数量#{custom_required?('num_of_employees') ? '*' : ''}"
+    when 'computing_demand'
+      "算力需求"
     when 'additional_notes'
       "备注#{custom_required?('additional_notes') ? '*' : ''}"
     end
