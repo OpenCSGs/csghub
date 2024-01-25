@@ -62,6 +62,8 @@ class Model < ApplicationRecord
     res = Starhub.api.create_model(creator.name,
                                    name,
                                    owner.name,
+                                   nickname,
+                                   desc,
                                    { license: license,
                                      private: model_private? })
     raise StarhubError, res.body unless res.success?
@@ -76,6 +78,8 @@ class Model < ApplicationRecord
     res = Starhub.api.update_model(creator.name,
                                    name,
                                    owner.name,
+                                   nickname,
+                                   desc,
                                    { private: model_private? })
     raise StarhubError, res.body unless res.success?
   end
