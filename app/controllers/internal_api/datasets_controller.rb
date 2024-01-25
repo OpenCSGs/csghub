@@ -96,7 +96,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def valid_authorization?(dataset)
-    return true unless dataset.dataset_private?
+    return true if dataset.dataset_public?
 
     return false unless helpers.logged_in?
 

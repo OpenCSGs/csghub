@@ -122,7 +122,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def valid_authorization?(model)
-    return true unless model.model_private?
+    return true if model.model_public?
 
     return false unless helpers.logged_in?
 
