@@ -69,17 +69,17 @@ export default {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
           brand: 'NVIDIA',
           specification: 'H20',
-          power: 'TF32 74 TFLOPS, FL16 148 TFLOPS, FP8 296 TFLOPS',
+          power: 'TF32 74 TFLOPS, FL16 148 TFLOPS',
         },
         {
           logo: ['/images/computing/ascend.png','w-[100px] h-[32px]'],
           brand: '华为昇腾',
           specification: '910B',
-          power: 'INT8 640 TOPS / FP16 320 TFLOPS',
+          power: 'INT8 640 TOPS, FP16 320 TFLOPS',
         },
         {
           logo: ['/images/computing/enflame.png','w-[100px] h-[32px]'],
-          brand: '燧原',
+          brand: '燧原科技',
           specification: 'T20',
           power: 'INT8 256 TOPS',
         }
