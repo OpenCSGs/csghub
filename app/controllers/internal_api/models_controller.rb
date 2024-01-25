@@ -124,7 +124,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def valid_authorization?(model)
     return true unless model.model_private?
 
-    return false unless current_user
+    return false unless helpers.logged_in?
 
     if model.owner.instance_of?(User)
       return model.owner == current_user

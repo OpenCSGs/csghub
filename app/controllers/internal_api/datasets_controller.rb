@@ -98,7 +98,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   def valid_authorization?(dataset)
     return true unless dataset.dataset_private?
 
-    return false unless current_user
+    return false unless helpers.logged_in?
 
     if dataset.owner.instance_of?(User)
       return dataset.owner == current_user
