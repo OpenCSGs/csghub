@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_25_124208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -163,6 +162,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
     t.text "expertise"
     t.text "introduction"
     t.string "company_site"
+    t.text "computing_demand"
   end
 
   create_table "models", force: :cascade do |t|
@@ -238,9 +238,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
     t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "starhub_configs", default: {}
     t.jsonb "license_configs", default: {}
     t.jsonb "feature_flags", default: {}
-    t.jsonb "starhub_configs", default: {}
     t.jsonb "general_configs", default: {}
     t.jsonb "s3_configs"
   end
@@ -299,6 +299,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
   add_foreign_key "ssh_keys", "users"
-  add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end
