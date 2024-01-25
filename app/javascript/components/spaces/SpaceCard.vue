@@ -14,7 +14,7 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit v-if="authorUuid === currentAuthor"
+      <SpaceEdit v-if="authorUuid === currentUserLoginIdentity"
                  :title="title"
                  :tags="tags"
                  :star-chain-id="starChainId"
@@ -68,15 +68,15 @@ export default {
     status: String,
     starChainId: String,
     spaceType: String,
-    authorUuid: String
+    authorUuid: String,
+    currentUserLoginIdentity: String
   },
 
   data() {
     return {
       coverImageUrl: this.coverImage,
       spaceTags: this.tags,
-      spaceTypes: this.spaceType,
-      currentAuthor: useCookies().cookies.get('oidcUuid')
+      spaceTypes: this.spaceType
     };
   },
 
