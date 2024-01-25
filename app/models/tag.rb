@@ -63,8 +63,9 @@ class Tag < ApplicationRecord
   def as_json options = nil
     {
       name: name,
-      zh_name: zh_name
-      }
+      zh_name: zh_name,
+      color: color
+    }
   end
 
   def self.build_detail_tags(tags)
