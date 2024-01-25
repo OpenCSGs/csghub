@@ -1,25 +1,24 @@
 <template>
   <div class="w-full bg-[#FAFCFF] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
-      <model-header
-        :private="model.data.private"
-        :license="model.data.license"
-        :name="model.data.name"
-        :path="model.data.path"
-        :tags="tags"
+      <dataset-header
+        :private="dataset.data.private"
+        :license="dataset.data.license"
+        :name="dataset.data.name"
+        :path="dataset.data.path"
         :avatar="avatar"
+        :tags="tags"
       />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
-    <model-tabs
+    <dataset-tabs
       :content="content.data"
-      :local-model-id="localModelId"
-      :user-id="userId"
-      :model-path="model.data.path"
-      :model-default-branch="model.data.default_branch"
-      :model-private="model.data.private"
-      :model-detail="model.data"
+      :local-dataset-id="localDatasetId"
+      :dataset-path="dataset.data.path"
+      :dataset-default-branch="dataset.data.default_branch"
+      :dataset-private="dataset.data.private"
+      :dataset-detail="dataset.data"
       :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
@@ -34,30 +33,29 @@
 </template>
 
 <script setup>
-import ModelHeader from './models/ModelHeader.vue'
-import ModelTabs from './models/ModelTabs.vue'
+import DatasetHeader from './DatasetHeader.vue';
+import DatasetTabs from './DatasetTabs.vue';
 
 const props = defineProps({
-  localModelId: String,
-  userId: String,
-  defaultTab: String,
-  model: Object,
+  dataset: Object,
   files: Object,
   lastCommit: Object,
   branches: Object,
-  tags: Object,
+  localDatasetId: String,
   currentBranch: String,
   currentPath: String,
+  defaultTab: String,
   readme: Object,
   content: Object,
   actionName: String,
+  avatar: String,
   settingsVisibility: Boolean,
-  avatar: String
+  tags: Object
 })
 </script>
 
 <style scoped>
-  body {
-    background: #fff !important;
-  }
+body {
+  background: #fff !important;
+}
 </style>

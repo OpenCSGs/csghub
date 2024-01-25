@@ -23,8 +23,12 @@ class ApplicationController < ActionController::Base
       user_infos = JWT.decode(authing_id_token, nil, false).first
       login_by_user_infos user_infos
     else
-      session[:original_request_path] = redirect_path_from_request(request.fullpath)
-      redirect_to login_path
+      session[:original_request_path] = request.headers["Referer"]
+      if request.fullpath.match(/\/internal_api.*/)
+        render json: {message: "登录之后才能操作"}, status: 404
+      else
+        redirect_to login_path
+      end
     end
   rescue => e
     redirect_to root_path
@@ -101,7 +105,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_info_integrity
-    return unless helpers.logged_in?
+    return if !helpers.logged_in?
 
     if current_user.email.blank?
       flash[:alert] = "请补充邮箱，以便能使用完整的功能"
@@ -110,14 +114,6 @@ class ApplicationController < ActionController::Base
 
     unless current_user.starhub_synced?
       current_user.sync_to_starhub_server
-    end
-  end
-
-  def redirect_path_from_request (request_path)
-    if request_path.match(/\/internal_api.*/)
-      root_path
-    else
-      request_path
     end
   end
 end

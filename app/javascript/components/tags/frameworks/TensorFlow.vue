@@ -47,7 +47,7 @@
     emit('setActiveFrameworkTag', 'TensorFlow')
   }
   const setTagColor = () => {
-    if (props.activeTag === 'TensorFlow') {
+    if (props.activeTag?.toLowerCase() === 'tensorflow') {
       return "color: white; background-color: #4D6AD6"
     }
   }
