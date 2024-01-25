@@ -72,13 +72,13 @@ export default {
           power: 'TF32 74 TFLOPS, FL16 148 TFLOPS',
         },
         {
-          logo: ['/images/computing/ascend.png','w-[100px] h-[32px]'],
+          logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
           brand: '华为昇腾',
           specification: '910B',
           power: 'INT8 640 TOPS, FP16 320 TFLOPS',
         },
         {
-          logo: ['/images/computing/enflame.png','w-[100px] h-[32px]'],
+          logo: ['/images/computing/enflame.png','w-[40px] h-[40px]'],
           brand: '燧原科技',
           specification: 'T20',
           power: 'INT8 256 TOPS',
