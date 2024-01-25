@@ -225,21 +225,19 @@
   const fetchData = async () => {
     const url = `/internal_api/${prefixPath}/${props.namespacePath}/files?branch=${props.currentBranch}&path=${props.currentPath}`
 
-    const response = await fetch(url);
-
-    loading.value = false
-
-    if (!response.ok) {
-      ElMessage({
-        message: "加载数据报错",
-        type: 'warning'
-      })
-    } else {
+    fetch(url).then((response) => {
       response.json().then((data) => {
         files.value = data.files
         lastCommit.value = data.last_commit
+      }).catch((error) => {
+        ElMessage({
+          message: '加载数据报错',
+          type: 'warning'
+        })
+      }).then(() => {
+        loading.value = false
       })
-    }
+    })
   }
 
   onMounted(() => {
