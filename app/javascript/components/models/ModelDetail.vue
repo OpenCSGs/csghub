@@ -8,7 +8,7 @@
         :path="model.data.path"
         :tags="tags"
         :avatar="avatar"
-        :redirect-url="redirectUrl"
+        :owner-url="ownerUrl"
       />
     </div>
   </div>
@@ -52,7 +52,7 @@ const props = defineProps({
   actionName: String,
   settingsVisibility: Boolean,
   avatar: String,
-  redirectUrl: String
+  ownerUrl: String
 })
 </script>
 

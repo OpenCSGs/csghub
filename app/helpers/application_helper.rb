@@ -29,7 +29,7 @@ module ApplicationHelper
     (system_config.feature_flags rescue {}) || {}
   end
 
-  def set_redirect_url owner
+  def code_repo_owner_url owner
     if owner.is_a?(User)
       '/profile/' + owner.name
     else

@@ -8,6 +8,7 @@
         :path="dataset.data.path"
         :avatar="avatar"
         :tags="tags"
+        :owner-url="ownerUrl"
       />
     </div>
   </div>
@@ -50,7 +51,8 @@ const props = defineProps({
   actionName: String,
   avatar: String,
   settingsVisibility: Boolean,
-  tags: Object
+  tags: Object,
+  ownerUrl: String
 })
 </script>
 

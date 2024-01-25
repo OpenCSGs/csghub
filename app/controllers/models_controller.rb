@@ -1,5 +1,4 @@
 class ModelsController < ApplicationController
-  include ApplicationHelper
   layout 'new_application'
 
   before_action :check_user_info_integrity
@@ -46,14 +45,12 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    user = User.find_by(name: params[:namespace])
-    organization = Organization.find_by(name: params[:namespace])
-    owner = user || organization
-      @redirect_url = set_redirect_url owner if owner
-      @local_model = owner && owner.models.find_by(name: params[:model_name])
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @local_model = owner && owner.models.find_by(name: params[:model_name])
     unless @local_model
       return redirect_to errors_not_found_path
     end
+    @owner_url = helpers.code_repo_owner_url owner
     if @local_model.model_private?
       if @local_model.owner.instance_of? User
         return redirect_to errors_unauthorized_path if @local_model.owner != current_user
