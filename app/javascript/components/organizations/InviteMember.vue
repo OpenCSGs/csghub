@@ -31,7 +31,7 @@
             </div>
             <p class="text-[#344054] text-[14px] mb-[6px]">用户名</p>
             <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
-              <div class="flex gap-[4px] flex-wrap overflow-x-hidden">
+              <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
                 <span v-for="user in selectedUsers" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
                   <img :src="user.avatar" height="16" width="16">
                   {{ user.name }}
@@ -177,3 +177,27 @@
     }
   }
 </script>
+<style scoped>
+  .scroll-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px; /* 滚动条宽度 */
+    background-color: #ccc; /* 滚动条颜色 */
+    border-radius: 4px; /* 滚动条圆角 */
+  }
+
+  .scroll-container .content {
+    padding-right: 8px; /* 留出滚动条的空间 */
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    width: 8px; /* 滚动条宽度 */
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* 滚动条thumb颜色 */
+    border-radius: 4px; /* 滚动条thumb圆角 */
+  }
+</style>
