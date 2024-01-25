@@ -19,7 +19,6 @@
       :model-default-branch="model.data.default_branch"
       :model-private="model.data.private"
       :model-detail="model.data"
-      :files="files.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
       :current-branch="currentBranch"
@@ -40,7 +39,6 @@ const props = defineProps({
   localModelId: String,
   defaultTab: String,
   model: Object,
-  files: Object,
   lastCommit: Object,
   branches: Object,
   tags: Object,
