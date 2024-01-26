@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       hasEmail: this.email.length !== 0
-    };
+    }
   },
   mounted() {},
   methods: {
