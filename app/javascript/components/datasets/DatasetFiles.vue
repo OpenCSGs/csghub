@@ -1,7 +1,5 @@
 <template>
   <FileList
-    :files="files"
-    :last-commit="lastCommit"
     :branches="branches"
     :current-branch="currentBranch"
     :current-path="currentPath"
@@ -14,8 +12,6 @@
   import FileList from '../shared/FileList.vue'
 
   const props = defineProps({
-    files: Object,
-    lastCommit: Object,
     branches: Object,
     currentBranch: String,
     currentPath: String,

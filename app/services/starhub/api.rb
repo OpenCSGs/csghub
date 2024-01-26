@@ -6,15 +6,23 @@ module Starhub
       @client = Starhub::Client.instance
     end
 
-    def get_model_detail_files_data_in_parallel(username, model_name, options = {})
+    def get_model_detail_data_in_parallel(username, model_name, options = {})
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
         "/models/#{username}/#{model_name}/detail",
         "/models/#{username}/#{model_name}/tags",
-        "/models/#{username}/#{model_name}/last_commit",
         "/models/#{username}/#{model_name}/branches",
         "/models/#{username}/#{model_name}/raw/README.md",
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
+    def get_model_detail_files_data_in_parallel(username, model_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/models/#{username}/#{model_name}/last_commit",
         "/models/#{username}/#{model_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
@@ -96,10 +104,12 @@ module Starhub
       @client.put("/users/#{name}", options)
     end
 
-    def create_model(username, model_name, namespace, options = {})
+    def create_model(username, model_name, namespace, nickname, desc, options = {})
       options[:username] = username
       options[:name] = model_name
       options[:namespace] = namespace
+      options[:nickname] = nickname
+      options[:description] = desc
       @client.post("/models", options)
     end
 
@@ -107,17 +117,33 @@ module Starhub
       @client.delete("/models/#{namespace}/#{model_name}")
     end
 
-    def update_model(username, model_name, namespace, options = {})
+    def update_model(username, model_name, namespace, nickname, desc, options = {})
       options[:username] = username
       options[:name] = model_name
+      options[:nickname] = nickname
+      options[:description] = desc
       res = @client.put("/models/#{namespace}/#{model_name}", options)
     end
 
-    def create_dataset(username, dataset_name, namespace, options = {})
+    def create_dataset(username, dataset_name, namespace, nickname, desc, options = {})
       options[:username] = username
       options[:name] = dataset_name
       options[:namespace] = namespace
+      options[:nickname] = nickname
+      options[:description] = desc
       @client.post("/datasets", options)
+    end
+
+    def delete_dataset(namespace, dataset_name, params = {})
+      @client.delete("/datasets/#{namespace}/#{dataset_name}")
+    end
+
+    def update_dataset(username, dataset_name, namespace, nickname, desc, options = {})
+      options[:username] = username
+      options[:name] = dataset_name
+      options[:nickname] = nickname
+      options[:description] = desc
+      @client.put("/datasets/#{namespace}/#{dataset_name}", options)
     end
 
     def generate_git_token(username, name, options = {})
@@ -157,15 +183,23 @@ module Starhub
 
     # datasets
 
-    def get_dataset_detail_files_data_in_parallel(username, dataset_name, options = {})
+    def get_dataset_detail_data_in_parallel(username, dataset_name, options = {})
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
         "/datasets/#{username}/#{dataset_name}/detail",
         "/datasets/#{username}/#{dataset_name}/tags",
-        "/datasets/#{username}/#{dataset_name}/last_commit",
         "/datasets/#{username}/#{dataset_name}/branches",
         "/datasets/#{username}/#{dataset_name}/raw/README.md",
+      ]
+      @client.get_in_parallel(paths, options)
+    end
+
+    def get_dataset_detail_files_data_in_parallel(username, dataset_name, options = {})
+      options[:path] ||= '/'
+      options[:ref] ||= 'main'
+      paths = [
+        "/datasets/#{username}/#{dataset_name}/last_commit",
         "/datasets/#{username}/#{dataset_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
@@ -250,16 +284,6 @@ module Starhub
       res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
       res.body
-    end
-
-    def delete_dataset(namespace, dataset_name, params = {})
-      @client.delete("/datasets/#{namespace}/#{dataset_name}")
-    end
-
-    def update_dataset(username, dataset_name, namespace, options = {})
-      options[:username] = username
-      options[:name] = dataset_name
-      @client.put("/datasets/#{namespace}/#{dataset_name}", options)
     end
 
     def create_ssh_key(username, key_name, content)
