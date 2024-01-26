@@ -172,7 +172,7 @@ module Starhub
     def get_org_models(namespace, username, options = {})
       res = @client.get("/organization/#{namespace}/models?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def download_model_file(username, model_name, path, options = {})
@@ -227,7 +227,7 @@ module Starhub
     def get_org_datasets(namespace, username, options = {})
       res = @client.get("/organization/#{namespace}/datasets?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
