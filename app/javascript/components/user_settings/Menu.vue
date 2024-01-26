@@ -13,31 +13,41 @@
           </div>
         </div>
         <div class="flex flex-col">
-          <a href="/settings/profile" class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
-               :class="menuClass('/settings/profile')"
+          <a href="/settings/profile"
+             class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+             :class="menuClass('/settings/profile')"
           >
               个人资料
           </a>
+
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/account')"
           >
             账户信息
           </div>
+
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/accessTokens')"
           >
             Access Token
           </div>
-          <a href="/settings/git-token" class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
-               :class="menuClass('/settings/git-token')"
+
+          <a v-if="hasEmail"
+             href="/settings/git-token"
+             class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+             :class="menuClass('/settings/git-token')"
           >
               Git Token
           </a>
-          <a href="/settings/ssh-keys" class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
-               :class="menuClass('/settings/ssh-keys')"
+
+          <a v-if="hasEmail"
+             href="/settings/ssh-keys"
+             class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+             :class="menuClass('/settings/ssh-keys')"
           >
               SSH Keys
           </a>
+
           <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/billing')"
           >
@@ -53,9 +63,12 @@ export default {
     name: String,
     displayName: String,
     avatar: String,
+    email: String
   },
   data() {
-    return {};
+    return {
+      hasEmail: this.email.length !== 0
+    }
   },
   mounted() {},
   methods: {
