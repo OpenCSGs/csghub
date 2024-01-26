@@ -27,8 +27,10 @@ module Starhub
       raise StarhubError, "Git服务器超时"
     end
 
-    def delete(path, params = {})
-      starhub_api_connection.delete(request_path(path), params)
+    def delete(path, options = {})
+      starhub_api_connection.delete(request_path(path)) do |req|
+        req.body = options.to_json
+      end
     rescue Faraday::ConnectionFailed
       raise StarhubError, "Git服务器超时"
     end

@@ -43,10 +43,12 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
         user_org_role = user.org_role(org)
         if !user_org_role
           OrgMembership.create!(organization: org, user: user, role: params[:user_role])
+          sync_create_membership(org, user)
         elsif user_org_role == params[:user_role]
           next
         else
           user.set_org_role(org, params[:user_role])
+          sync_update_membership(org, user, role)
         end
       end
     end
@@ -59,5 +61,20 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
   def organization_params
     params.permit(:name, :nickname, :homepage, :org_type)
+  end
+
+  def sync_create_membership(org, user)
+    res = Starhub.api.create_membership(org.name, current_user.name, params[:user_role], user.name)
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def sync_delete_membership(org, user, role)
+    res = Starhub.api.delete_membership(org.name, current_user.name, role, user.name)
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def sync_update_membership(org, user, role)
+    sync_delete_membership(org, user, role)
+    sync_create_membership(org, user)
   end
 end
