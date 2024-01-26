@@ -35,13 +35,13 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update]
 
     resources :models, only: [:index, :create]
-    get '/models/:namespace/:model_name/files', to: 'models#files'
-    delete '/models/:namespace/*model_name', to: 'models#destroy', format: false, defaults: {format: 'html'}
-    put '/models/:namespace/*model_name', to: 'models#update', format: false, defaults: {format: 'html'}
+    get '/models/:namespace/(*model_name)/files', to: 'models#files'
+    delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
+    put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
 
     resources :datasets, only: [:index, :create]
-    get '/datasets/:namespace/:dataset_name/files', to: 'datasets#files'
-    delete '/datasets/:namespace/*dataset_name', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
+    get '/datasets/:namespace/(*dataset_name)/files', to: 'datasets#files'
+    delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
 
     resources :tags, only: [] do
       collection do
@@ -72,10 +72,10 @@ Rails.application.routes.draw do
 
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
-    get '/models/:namespace/*model_name', to: 'models#show', format: false, defaults: {format: 'html'}
+    get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/blob/:branch/(*path)', to: 'datasets#blob', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
-    get '/datasets/:namespace/*dataset_name', to: 'datasets#show', format: false, defaults: {format: 'html'}
+    get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
 
