@@ -8,6 +8,7 @@
         :path="model.data.path"
         :tags="tags"
         :avatar="avatar"
+        :owner-url="ownerUrl"
       />
     </div>
   </div>
@@ -51,7 +52,8 @@ const props = defineProps({
   content: Object,
   actionName: String,
   settingsVisibility: Boolean,
-  avatar: String
+  avatar: String,
+  ownerUrl: String
 })
 </script>
 

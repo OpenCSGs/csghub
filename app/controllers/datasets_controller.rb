@@ -50,6 +50,7 @@ class DatasetsController < ApplicationController
     unless @local_dataset
       return redirect_to errors_not_found_path
     end
+    @owner_url = helpers.code_repo_owner_url owner
     if @local_dataset.dataset_private?
       if @local_dataset.owner.instance_of? User
         return redirect_to errors_unauthorized_path if @local_dataset.owner != current_user

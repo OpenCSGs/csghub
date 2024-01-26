@@ -50,6 +50,7 @@ class ModelsController < ApplicationController
     unless @local_model
       return redirect_to errors_not_found_path
     end
+    @owner_url = helpers.code_repo_owner_url owner
     if @local_model.model_private?
       if @local_model.owner.instance_of? User
         return redirect_to errors_unauthorized_path if @local_model.owner != current_user

@@ -65,5 +65,13 @@ module ApplicationHelper
     system_config = SystemConfig.first
     general_configs = (system_config.general_configs rescue {}) || {}
     general_configs['docs_url']
+
+    def code_repo_owner_url owner
+      if owner.is_a?(User)
+        '/profile/' + owner.name
+      else
+        '/organizations/' + owner.name
+      end
+    end
   end
-end
+end 
