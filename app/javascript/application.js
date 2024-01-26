@@ -42,7 +42,7 @@ import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
 import About from "./components/about/About.vue"
 import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
-import LandingPage from "./components/landing/LandingPage.vue"
+import LandingPage from "./components/landing_page/LandingPage.vue"
 const app = createApp({
   components: {
     Navbar,

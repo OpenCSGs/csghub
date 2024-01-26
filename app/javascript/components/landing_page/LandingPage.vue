@@ -1,13 +1,13 @@
 <template>
   <div>
     <JoinUs />
-    <!-- <LandingSolution /> -->
+    <!-- <Solution /> -->
   </div>
 </template>
 
 <script>
 import JoinUs from "./JoinUs.vue";
-import LandingSolution from "./LandingSolution.vue";
+import Solution from "./Solution.vue";
 export default {
   props: {},
 
@@ -17,7 +17,7 @@ export default {
 
   components: {
     JoinUs,
-    LandingSolution
+    Solution
   },
 
   mounted() {},
