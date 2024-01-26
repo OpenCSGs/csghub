@@ -1,4 +1,4 @@
-**[English](/docs/readme_en.md) ∙ [简体中文](/README.md)**
+**[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md)**
 ## CSGHub说明文档
 
 CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户治理LLM和LLM应用生命周期中涉及到的资产(数据集、模型文件、代码等)。基于CSGHub，用户可以通过Web界面、Git命令行或者自然语言Chatbot等方式，实现对模型文件、数据集、代码等资产的操作，包括上传、下载、存储、校验和分发；同时平台提供微服务子模块和标准化API，便于用户与自有系统集成。
@@ -59,10 +59,10 @@ CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHu
 
 如果您想深入了解CSGHub Server或者想集成Server到自己的前端系统或进行二次开发，可以查看[CSGHub Server开源项目](https://github.com/OpenCSGs/csghub-server)。
 #### CSGHub Portal 架构图
-<img src="./docs/images/portal_tech_graph.png" width='800'>
+<img src="/docs/images/portal_tech_graph.png" width='800'>
 
 #### CSGHub Server 架构图
-<img src="./docs/images/server_tech_graph.png" width='800'>
+<img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### 快速使用
 【适合高速访问github和dockerhub用户】可使用如下命令快速部署一个CSBHub实例（包含Portal、Server和完整的其他依赖组件）到本地环境。
@@ -109,7 +109,7 @@ docker compose -f all-in-one-CN.yml up -d
 ### 联系我们
 使用过程中的任何问题， 您可以在github 发起issue或者加入我们的微信讨论群。<br/>如果遇到微信群二维码失效或人数过多，请添加企业微信传神小助手账号回复"开源"或者"open source"入群。
 <div style="display:inline-block">
-<img src="./docs/images/wechat-group-new.png" width='250'>
+<img src="/docs/images/wechat-group-new.png" width='250'>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="./docs/images/wechat-assistant-new.png" width='250'>
+<img src="/docs/images/wechat-assistant-new.png" width='250'>
 </div>

@@ -1,6 +1,7 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: :index
+  before_action :authenticate_user, except: [:index, :files]
   before_action :validate_model, only: [:update, :destroy]
+  before_action :validate_authorization, only: :files
 
   def index
     res_body = Starhub.api.get_models(current_user&.name,
@@ -13,6 +14,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                       params[:per_page])
     api_response = JSON.parse(res_body)
     render json: {models: api_response['data'], total: api_response['total']}
+  end
+
+  def files
+    last_commit, files = Starhub.api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
+    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
   end
 
   def create
@@ -83,5 +89,45 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       end
     end
     { valid: true }
+  end
+
+  def files_options
+    {
+      ref: params[:branch],
+      path: params[:path]
+    }
+  end
+
+  def validate_authorization
+    owner = find_user_or_organization_by_name(params[:namespace])
+    local_model = find_model_by_owner_and_name(owner, params[:model_name])
+
+    return render_unauthorized('模型不存在') unless local_model
+
+    return render_unauthorized('无权限') unless valid_authorization?(local_model)
+  end
+
+  def find_user_or_organization_by_name(name)
+    User.find_by(name: name) || Organization.find_by(name: name)
+  end
+
+  def find_model_by_owner_and_name(owner, model_name)
+    owner&.models&.find_by(name: model_name)
+  end
+
+  def valid_authorization?(model)
+    return true if model.model_public?
+
+    return false unless helpers.logged_in?
+
+    if model.owner.instance_of?(User)
+      return model.owner == current_user
+    end
+
+    return current_user.org_role(model.owner)
+  end
+
+  def render_unauthorized(message)
+    render json: { message: message }, status: :unauthorized
   end
 end

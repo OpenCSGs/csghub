@@ -1,10 +1,13 @@
 class ProfileController < ApplicationController
-  before_action :authenticate_user
   before_action :check_user_info_integrity
 
   def index
-    @models = Starhub.api.get_user_models(current_user.name, current_user.name)
-    @datasets = Starhub.api.get_user_datasets(current_user.name, current_user.name)
-    @organizations = current_user.organizations
+    @user ||= User.find_by(name: params[:user_id])
+    return redirect_to errors_not_found_path unless @user
+
+    @models = Starhub.api.get_user_models(@user.name, current_user&.name)
+    @datasets = Starhub.api.get_user_datasets(@user.name, current_user&.name)
+    @organizations = @user.organizations
+    @is_current_user_access = current_user.present? && (current_user == @user)
   end
 end

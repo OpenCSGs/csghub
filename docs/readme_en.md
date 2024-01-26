@@ -1,4 +1,4 @@
-**[简体中文](/README.md) ∙ [English](/docs/readme_en.md)**
+**[简体中文](/docs/readme_cn.md) ∙ [English](/docs/readme_en.md)**
 ## CSGHub README
 
 CSGHub is an open source, trustworthy large model asset management platform that can assist users in governing the assets involved in the lifecycle of LLM and LLM applications (datasets, model files, codes, etc).
@@ -62,10 +62,10 @@ CSGHub is made with two typical parts: Portal and Server. This repo corresponds 
 If you want to dive deep into CSGHub Server detail or wish to integrate the Server with your own frontend system or more, you can check the [CSGHub Server open-source project](https://github.com/OpenCSGs/csghub-server).
 
 #### CSGHub Portal Architecture
-<img src="./images/portal_tech_graph.png" width='800'>
+<img src="/docs/images/portal_tech_graph.png" width='800'>
 
 #### CSGHub Server Architecture
-<img src="./images/server_tech_graph.png" width='800'>
+<img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### QUICK START
 You can quickly deploy a CSGHub instance with portal/server and all other relevant dependencies to your environment using the following commands:
@@ -113,4 +113,9 @@ We welcome developers of all levels to contribute to our open-source project, CS
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
 
 ### CONTACT WITH US
-Any problems in the process of use, you can initiate an issue in github.
+Any problems in the process of use, you can initiate an issue in github or join our WeChat group.
+<div style="display:inline-block">
+<img src="/docs/images/wechat-group-new.png" width='250'>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/docs/images/wechat-assistant-new.png" width='250'>
+</div>

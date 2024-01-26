@@ -7,8 +7,6 @@
       </template>
       <template #files v-if="actionName !== 'blob'">
         <model-files
-          :files="files"
-          :last-commit="lastCommit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
@@ -62,7 +60,6 @@ const props = defineProps({
   modelDefaultBranch: String,
   modelPrivate: Boolean,
   modelDetail: Object,
-  files: Object,
   lastCommit: Object,
   branches: Object,
   currentBranch: String,

@@ -13,8 +13,6 @@
       </template>
       <template #files v-if="actionName !== 'blob'">
         <dataset-files
-          :files="files"
-          :last-commit="lastCommit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
@@ -69,7 +67,6 @@ const props = defineProps({
   datasetDefaultBranch: String,
   datasetPrivate: Boolean,
   datasetDetail: Object,
-  files: Object,
   lastCommit: Object,
   branches: Object,
   currentBranch: String,
