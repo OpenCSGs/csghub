@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="InviteMember">
     <button v-if="admin" @click="dialogVisible = true" class="px-[12px] py-[8px] my-[16px] flex gap-[4px] rounded-md border border-gray-300 text-[14px]">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.99984 12.9167H6.24984C5.08687 12.9167 4.50538 12.9167 4.03222 13.0602C2.96688 13.3834 2.1332 14.217 1.81004 15.2824C1.6665 15.7555 1.6665 16.337 1.6665 17.5M15.8332 17.5V12.5M13.3332 15H18.3332M12.0832 6.25C12.0832 8.32107 10.4042 10 8.33317 10C6.2621 10 4.58317 8.32107 4.58317 6.25C4.58317 4.17893 6.2621 2.5 8.33317 2.5C10.4042 2.5 12.0832 4.17893 12.0832 6.25Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>邀请</span>
     </button>
-    <el-dialog v-model="dialogVisible" :style="{ borderRadius: '10px' }" width="350">
+    <el-dialog v-model="dialogVisible" :style="{ borderRadius: '10px' }" width="450" class="invite_dialog">
       <template #header="{ close }">
         <div class="flex justify-between">
           <div class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-[#EAECF0]">
@@ -177,8 +177,13 @@
     }
   }
 </script>
-<style scoped>
-  .scroll-container::after {
+<style>
+  @media (max-width: 768px) {
+    .InviteMember .invite_dialog{
+      width:350px;
+    }
+  }
+  .InviteMember .scroll-container::after {
     content: "";
     position: absolute;
     top: 0;
@@ -188,15 +193,15 @@
     border-radius: 4px; /* 滚动条圆角 */
   }
 
-  .scroll-container .content {
+  .InviteMember .scroll-container .content {
     padding-right: 8px; /* 留出滚动条的空间 */
   }
 
-  .scroll-container::-webkit-scrollbar {
+  .InviteMember .scroll-container::-webkit-scrollbar {
     width: 8px; /* 滚动条宽度 */
   }
 
-  .scroll-container::-webkit-scrollbar-thumb {
+  .InviteMember .scroll-container::-webkit-scrollbar-thumb {
     background-color: #888; /* 滚动条thumb颜色 */
     border-radius: 4px; /* 滚动条thumb圆角 */
   }
