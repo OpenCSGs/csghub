@@ -1,0 +1,4 @@
+<div class="w-[320px] lg:w-full">
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: "computing_demand"} %>
+  <%= text_area_tag "computing_demand", @lead.computing_demand, required: custom_required?('computing_demand'), class: "w-full h-[80px] rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]" %>
+</div>

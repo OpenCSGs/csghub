@@ -22,7 +22,8 @@ class LeadForm < ApplicationRecord
       'province',
       'email_opt_out',
       'num_of_employees',
-      'additional_notes'
+      'additional_notes',
+      'computing_demand'
     ]
   end
 

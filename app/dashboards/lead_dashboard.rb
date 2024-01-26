@@ -32,6 +32,7 @@ class LeadDashboard < Administrate::BaseDashboard
     sync_status: Field::String,
     title: Field::String,
     uploads_tag: Field::String,
+    computing_demand: Field::Text,
     utm_campaign: Field::String,
     utm_content: Field::String,
     utm_keyword: Field::String,
@@ -85,6 +86,7 @@ class LeadDashboard < Administrate::BaseDashboard
     sync_status
     title
     uploads_tag
+    computing_demand
     utm_campaign
     utm_content
     utm_keyword
