@@ -28,7 +28,7 @@
     commentable_id: {
       type: String,
       required: true,
-    },
+    }
   });
 
   const emit = defineEmits(['createComment']);

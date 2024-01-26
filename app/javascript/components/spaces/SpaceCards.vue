@@ -21,6 +21,7 @@
       :title="space.title"
       :desc="space.desc"
       :author="space.author"
+      :current-user-login-identity="currentUserLoginIdentity"
       :createdAt="space.created_at"
       :coverImage="space.cover_image"
       :tags="space.tags"
@@ -48,7 +49,8 @@
     props: {
       spaces: String,
       totalCards: String,
-      isLoggedIn: String
+      isLoggedIn: String,
+      currentUserLoginIdentity: String
     },
     components: {
       SpaceCard
