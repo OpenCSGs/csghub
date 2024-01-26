@@ -1,7 +1,7 @@
 <template>
   <div>
     <JoinUs />
-    <LandingSolution />
+    <!-- <LandingSolution /> -->
   </div>
 </template>
 
