@@ -348,6 +348,23 @@ module Starhub
       end
     end
 
+    def create_membership(org_name, op_user, role, user)
+      options = {
+        op_user: op_user,
+        role: role,
+        user: user
+      }
+      @client.post("/organizations/#{org_name}/members", options)
+    end
+
+    def delete_membership(org_name, op_user, role, user)
+      options = {
+        op_user: op_user,
+        role: role
+      }
+      @client.delete("/organizations/#{org_name}/members/#{user}", options)
+    end
+
     # TODO: add more starhub api
 
     private
