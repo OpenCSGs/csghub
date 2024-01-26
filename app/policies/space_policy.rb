@@ -4,15 +4,15 @@ class SpacePolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    record.public_s? || user&.admin? || belongs_to_current_user?
   end
 
   def edit?
-    user.super_user? || (user.login_identity == record.user.login_identity)
+    user.admin? || belongs_to_current_user?
   end
 
   def update?
-    user.super_user? || (user.login_identity == record.user.login_identity)
+    user.admin? || belongs_to_current_user?
   end
 
   def destroy?

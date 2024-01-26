@@ -14,7 +14,7 @@
         <span class="mr-2">·</span>
         <span>{{createdAt}}</span>
       </p>
-      <SpaceEdit v-if="authorUuid === currentAuthor"
+      <SpaceEdit v-if="authorUuid === currentUserLoginIdentity"
                  :title="title"
                  :tags="tags"
                  :star-chain-id="starChainId"
@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import SpaceRunning from './sub/SpaceRunning.vue'
-import SpaceStopped from './sub/SpaceStopped.vue'
-import SpaceEdit from './sub/SpaceEdit.vue'
+import SpaceRunning from './SpaceRunning.vue'
+import SpaceStopped from './SpaceStopped.vue'
+import SpaceEdit from './SpaceEdit.vue'
 import { useCookies } from "vue3-cookies";
 
 export default {
@@ -68,15 +68,15 @@ export default {
     status: String,
     starChainId: String,
     spaceType: String,
-    authorUuid: String
+    authorUuid: String,
+    currentUserLoginIdentity: String
   },
 
   data() {
     return {
       coverImageUrl: this.coverImage,
       spaceTags: this.tags,
-      spaceTypes: this.spaceType,
-      currentAuthor: useCookies().cookies.get('oidcUuid')
+      spaceTypes: this.spaceType
     };
   },
 

@@ -18,6 +18,7 @@
   <% else %>
     <div>
       <space-cards is-logged-in="<%= logged_in? %>"
+                   current-user-login-identity="<%= current_user&.login_identity %>"
                    total-cards=<%= @total_spaces.count %>
                    spaces='<%= @spaces.to_json %>'
       >

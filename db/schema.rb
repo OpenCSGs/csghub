@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_25_124208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +90,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
     t.bigint "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "nickname"
+    t.text "desc"
     t.index ["creator_id"], name: "index_datasets_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_datasets_on_owner"
   end
@@ -163,6 +164,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
     t.text "expertise"
     t.text "introduction"
     t.string "company_site"
+    t.text "computing_demand"
   end
 
   create_table "models", force: :cascade do |t|
@@ -174,6 +176,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_070355) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "creator_id"
+    t.string "nickname"
+    t.text "desc"
     t.index ["creator_id"], name: "index_models_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_models_on_owner"
   end

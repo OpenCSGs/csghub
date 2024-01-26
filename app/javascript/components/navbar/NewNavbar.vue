@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import ContactUs from "./form/ContactUs.vue";
+import ContactUs from "../form/ContactUs.vue";
 
 export default {
   props: {
