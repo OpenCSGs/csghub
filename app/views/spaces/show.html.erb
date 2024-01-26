@@ -23,6 +23,7 @@
     <div class="pt-6 border-t border-[#DCDFE6]">
       <comment-list comments='<%= @comments.to_json %>'
                     commentable_id="<%= @space.id %>"
+                    current_user_id="<%= current_user.id %>"
                     commentable_type="Space"
       >
       </comment-list>
