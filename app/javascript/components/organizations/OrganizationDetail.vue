@@ -32,7 +32,7 @@
 
           <InviteMember :org-name="organization.name"
                         @resetMemberList="resetMemberList"
-                        :admin="false"
+                        :admin="admin"
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
