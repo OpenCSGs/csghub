@@ -16,6 +16,8 @@
       :content="content.data"
       :local-model-id="localModelId"
       :model-path="model.data.path"
+      :model-nickname="localModel.nickname"
+      :model-desc="localModel.desc"
       :model-default-branch="model.data.default_branch"
       :model-private="model.data.private"
       :model-detail="model.data"
@@ -39,6 +41,7 @@ const props = defineProps({
   localModelId: String,
   defaultTab: String,
   model: Object,
+  localModel: Object,
   lastCommit: Object,
   branches: Object,
   tags: Object,

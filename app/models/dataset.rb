@@ -22,6 +22,8 @@ class Dataset < ApplicationRecord
     {
       id: id,
       name: name,
+      nickname: nickname,
+      desc: desc,
       visibility: visibility,
       license: license,
       path: path,
@@ -32,7 +34,12 @@ class Dataset < ApplicationRecord
   private
 
   def sync_created_dataset_to_starhub_server
-    res = Starhub.api.create_dataset(creator.name, name, owner.name, { license: license, private: dataset_private?  })
+    res = Starhub.api.create_dataset(creator.name,
+                                     name,
+                                     owner.name,
+                                     nickname,
+                                     desc,
+                                     { license: license, private: dataset_private?  })
     raise StarhubError, res.body unless res.success?
   end
 
@@ -40,6 +47,8 @@ class Dataset < ApplicationRecord
     res = Starhub.api.update_dataset(creator.name,
                                      name,
                                      owner.name,
+                                     nickname,
+                                     desc,
                                      { private: dataset_private? })
     raise StarhubError, res.body unless res.success?
   end
