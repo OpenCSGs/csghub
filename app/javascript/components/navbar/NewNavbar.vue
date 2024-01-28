@@ -16,8 +16,8 @@
         text-color="#475467"
         active-text-color="black"
       >
-        <el-menu-item index="/models" style="border:none"><a class="w-full px-[20px]" href="/models">模型</a></el-menu-item>
-        <el-menu-item index="/datasets" style="border:none"><a class="w-full px-[20px]" href="/datasets">数据集</a></el-menu-item>
+        <el-menu-item index="/models" style="border:none" @click="routerLink('/models')"><a class="w-full">模型</a></el-menu-item>
+        <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')"><a class="w-full">数据集</a></el-menu-item>
         <el-sub-menu index="1" popper-class="popper-submenu">
           <template #title>产品</template>
           <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
@@ -49,14 +49,14 @@
           <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
         </el-sub-menu>
-        <el-menu-item index="/computing" style="border:none"><a class="w-full px-[20px]" href="/computing">算力</a></el-menu-item>
+        <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')"><a class="w-full">算力</a></el-menu-item>
         <el-sub-menu index="4" popper-class="popper-submenu">
           <template #title>公司</template>
           <a href="/about"><el-menu-item index="/about">公司介绍</el-menu-item></a>
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-       <el-menu-item index="/campaigns" style="border:none"><a class="w-full px-[20px]" href="/campaigns">活动</a></el-menu-item>
+       <el-menu-item index="/campaigns" style="border:none" @click="routerLink('/campaigns')"><a class="w-full">活动</a></el-menu-item>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
@@ -146,6 +146,9 @@ export default {
     ContactUs,
   },
   methods: {
+    routerLink(path){
+      window.location.href = path
+    },
     handleNavigation(path,className){
       window.location.href = path + '?class=' + className;
     },
@@ -176,7 +179,6 @@ export default {
   }
   .el-menu-item {
     font-size: 16px;
-    padding:0;
   }
 }
 .popper-submenu .el-menu{
