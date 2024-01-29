@@ -3,7 +3,7 @@
     <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <model-summary :readme="readme" :download-count="modelDetail.downloads" />
+        <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
       </template>
       <template #files v-if="actionName !== 'blob'">
         <model-files
@@ -65,7 +65,6 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  readme: String,
   content: String,
   actionName: String,
   settingsVisibility: Boolean,
