@@ -1,9 +1,11 @@
 <template>
   <div class="flex min-h-[300px] md:px-5 md:flex-col-reverse">
-    <div class="max-w-[80%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-b border-[#EBEEF5] md:border-t-0">
+    <div class="max-w-[80%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-[#EBEEF5] md:border-t-0">
+      <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
       <MarkdownViewer
-        :content="readme"
+        :content="readmeContent"
         :setDefaultText="true"
+        v-if="!loading"
       >
       </MarkdownViewer>
     </div>
@@ -15,10 +17,32 @@
 </template>
 
 <script setup>
+  import { ref, onMounted } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
 
   const props = defineProps({
-    readme: String,
+    namespacePath: String,
     downloadCount: Number
+  })
+
+  const loading = ref(true)
+  const readmeContent = ref('')
+
+  const fetchData = async () => {
+    const url = `/internal_api/datasets/${props.namespacePath}/readme`
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        readmeContent.value = data.readme
+      }).catch((error) => {
+        console.error(error)
+      }).then(() => {
+        loading.value = false
+      })
+    })
+  }
+
+  onMounted(() => {
+    fetchData()
   })
 </script>
