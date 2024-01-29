@@ -4,7 +4,7 @@
       <a href="https://opencsg.com" target="_blank">关于我们</a>
       <a href="https://opencsg.com/blog" target="_blank">新闻动态</a>
       <a href="https://portal.opencsg.com/docs" target="_blank">文档中心</a>
-      <a href="https://opencsg.com" target="_blank">加入我们</a>
+      <a href="https://opencsg.com#joinUs" target="_blank">加入我们</a>
       <a @click="showDialog" target="_blank">联系我们</a>
       <a href="#" target="_blank">法律声明及隐私权政策</a>
     </div>
@@ -47,7 +47,7 @@
           <p><a href="https://opencsg.com" target="_blank">公司介绍</a></p>
           <p><a href="https://opencsg.com/blog" target="_blank">新闻动态</a></p>
           <p><a href="https://portal.opencsg.com/docs" target="_blank">文档中心</a></p>
-          <p><a href="https://opencsg.com" target="_blank">加入我们</a></p>
+          <p><a href="https://opencsg.com#joinUs" target="_blank">加入我们</a></p>
         </div>
       </div>
       <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0">

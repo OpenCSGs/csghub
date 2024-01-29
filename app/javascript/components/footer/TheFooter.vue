@@ -10,7 +10,7 @@
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2">
             <p><a href="https://opencsg.com" target="_blank">公司介绍</a></p>
             <p><a href="https://opencsg.com/blog" target="_blank">新闻动态</a></p>
-            <p><a href="https://opencsg.com" target="_blank">加入我们</a></p>
+            <p><a href="https://opencsg.com#joinUs" target="_blank">加入我们</a></p>
           </div>
         </div>
       </div>
