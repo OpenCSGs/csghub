@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col py-[96px] md:py-[64px] text-left">
+  <div id="joinUs" class="flex flex-col py-[96px] md:py-[64px] text-left">
     <div class="max-w-[1280px] m-auto md:px-[16px] px-[32px]">
       <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">加入我们</div>
       <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">我们正在寻找优秀的人才</div>
