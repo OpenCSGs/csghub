@@ -1,5 +1,4 @@
 class LeadFormsController < ApplicationController
-  before_action :remember_lead_form, except: [:thank_you]
   before_action :init_lead, except: [:thank_you]
 
   def show_form
@@ -21,10 +20,6 @@ class LeadFormsController < ApplicationController
     @lead.utm_medium = params['utm_medium']
     @lead.utm_source = params['utm_source']
     @lead.utm_keyword = params['utm_keyword']
-  end
-
-  def remember_lead_form
-    session[:original_request_path] = request.fullpath
   end
 
   def lead_form_params
