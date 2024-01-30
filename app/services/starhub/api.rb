@@ -12,8 +12,7 @@ module Starhub
       paths = [
         "/models/#{username}/#{model_name}/detail",
         "/models/#{username}/#{model_name}/tags",
-        "/models/#{username}/#{model_name}/branches",
-        "/models/#{username}/#{model_name}/raw/README.md",
+        "/models/#{username}/#{model_name}/branches"
       ]
       @client.get_in_parallel(paths, options)
     end
@@ -36,7 +35,6 @@ module Starhub
         "/models/#{username}/#{model_name}/tags",
         "/models/#{username}/#{model_name}/last_commit",
         "/models/#{username}/#{model_name}/branches",
-        "/models/#{username}/#{model_name}/raw/README.md",
         "/models/#{username}/#{model_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
@@ -189,8 +187,7 @@ module Starhub
       paths = [
         "/datasets/#{username}/#{dataset_name}/detail",
         "/datasets/#{username}/#{dataset_name}/tags",
-        "/datasets/#{username}/#{dataset_name}/branches",
-        "/datasets/#{username}/#{dataset_name}/raw/README.md",
+        "/datasets/#{username}/#{dataset_name}/branches"
       ]
       @client.get_in_parallel(paths, options)
     end
@@ -212,7 +209,6 @@ module Starhub
         "/datasets/#{username}/#{dataset_name}/tags",
         "/datasets/#{username}/#{dataset_name}/last_commit",
         "/datasets/#{username}/#{dataset_name}/branches",
-        "/datasets/#{username}/#{dataset_name}/raw/README.md",
         "/datasets/#{username}/#{dataset_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)

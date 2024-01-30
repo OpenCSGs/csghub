@@ -1,7 +1,7 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files]
+  before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_model, only: [:update, :destroy]
-  before_action :validate_authorization, only: :files
+  before_action :validate_authorization, only: [:files, :readme]
 
   def index
     res_body = Starhub.api.get_models(current_user&.name,
@@ -19,6 +19,13 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def files
     last_commit, files = Starhub.api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
+  end
+
+  def readme
+    readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+    render json: { readme: JSON.parse(readme)['data'] }
+  rescue StarhubError
+    render json: { readme: '' }
   end
 
   def create
