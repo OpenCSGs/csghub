@@ -23,7 +23,7 @@ class LeadsController < ApplicationController
   end
 
   def current_lead_form_path
-    session[:original_request_path] + '#error'
+    params[:lead_redirect_url] + '#error'
   end
 
   def lead_params
