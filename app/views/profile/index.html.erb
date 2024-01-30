@@ -53,7 +53,7 @@
       </div>
     </div>
     <% if JSON.parse(@models)['total'] != 0 %>
-      <div class="flex flex-wrap gap-4 mb-4">
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4">
         <% JSON.parse(@models)['data'].each do |model| %>
           <model-item :model="<%= model.to_json %>"></model-item>
         <% end %>
@@ -69,7 +69,7 @@
       </div>
     </div>
     <% if JSON.parse(@datasets)['total'] != 0 %>
-      <div class="flex flex-wrap gap-4 mb-4">
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4">
         <% JSON.parse(@datasets)['data'].each do |dataset| %>
           <dataset-item :dataset="<%= dataset.to_json %>"></dataset-item>
         <% end %>
