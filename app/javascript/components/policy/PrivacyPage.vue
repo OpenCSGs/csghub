@@ -33,7 +33,7 @@ export default {
   props: {},
   data() {
     return {
-      theFlag: 'policy'
+      theFlag: 'protocol'
     }
   },
   components: {
