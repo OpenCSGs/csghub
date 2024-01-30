@@ -6,7 +6,7 @@
       <a href="https://portal.opencsg.com/docs" target="_blank">文档中心</a>
       <a href="https://opencsg.com#joinUs" target="_blank">加入我们</a>
       <a @click="showDialog" target="_blank">联系我们</a>
-      <a href="#" target="_blank">法律声明及隐私权政策</a>
+      <a href="/policy" target="_blank">法律声明及隐私权政策</a>
     </div>
     <div class="flex items-center sm:flex-col lg:mt-[4px] lg:ml-[8px]">
       <div class="flex gap-x-1.5 mx-[5px]">
@@ -65,7 +65,7 @@
     <div class="border-t mt-[30px] mb-[4px] font-normal"></div>
     <div class="flex flex-col gap-[12px]">
       <div class="flex gap-[24px] text-[14px] font-normal">
-        <p>法律声明及隐私权政策</p>
+        <a class="cursor-pointer" href="/policy">法律声明及隐私权政策</a>
         <p>Cookies政策</p>
       </div>
       <div class="text-[14px] text-[#909399] font-normal">©2023 OpenCSG.com版权所有</div>
