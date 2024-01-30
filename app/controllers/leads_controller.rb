@@ -5,7 +5,7 @@ class LeadsController < ApplicationController
   
   def create
     if @lead.save
-      redirect_to thank_you_lead_forms_path
+      redirect_to thank_you_lead_forms_path(lead_redirect_url: params[:lead_redirect_url])
     else
       flash[:alert] = @lead.errors.full_messages.first || "请填写完整的信息"
       redirect_to current_lead_form_path
