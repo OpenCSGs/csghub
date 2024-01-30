@@ -35,6 +35,6 @@
   });
 
   const copyName = () => {
-    copyToClipboard(props.name)
+    copyToClipboard(props.path)
   }
 </script>
