@@ -27,7 +27,6 @@
       :current-branch="currentBranch"
       :current-path="currentPath"
       :default-tab="defaultTab"
-      :readme="readme.data"
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
     />
@@ -48,7 +47,6 @@ const props = defineProps({
   tags: Object,
   currentBranch: String,
   currentPath: String,
-  readme: Object,
   content: Object,
   actionName: String,
   settingsVisibility: Boolean,

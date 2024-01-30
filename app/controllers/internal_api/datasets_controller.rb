@@ -1,7 +1,7 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files]
+  before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_dataset, only: [:update, :destroy]
-  before_action :validate_authorization, only: :files
+  before_action :validate_authorization, only: [:files, :readme]
 
   def index
     res_body = Starhub.api.get_datasets(current_user&.name,
@@ -19,6 +19,13 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   def files
     last_commit, files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
+  end
+
+  def readme
+    readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
+    render json: { readme: JSON.parse(readme)['data'] }
+  rescue StarhubError
+    render json: { readme: '' }
   end
 
   def create
