@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-  import { ElMessage } from 'element-plus'
-  import HeaderTags from '../shared/HeaderTags.vue';
+  import HeaderTags from '../shared/HeaderTags.vue'
+  import { copyToClipboard } from '../../packs/clipboard'
 
   const props = defineProps({
     private: String,
@@ -35,10 +35,6 @@
   });
 
   const copyName = () => {
-    navigator.clipboard.writeText(props.name);
-    ElMessage({
-      message: '复制成功！',
-      type: 'success'
-    })
+    copyToClipboard(props.path)
   }
 </script>
