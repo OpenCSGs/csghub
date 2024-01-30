@@ -53,3 +53,5 @@ config/master.key.starhub
 config/master.key.main
 
 /.env.development
+
+db/schema_backup.rb

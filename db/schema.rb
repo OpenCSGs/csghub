@@ -242,9 +242,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_25_124208) do
     t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "starhub_configs", default: {}
     t.jsonb "license_configs", default: {}
     t.jsonb "feature_flags", default: {}
-    t.jsonb "starhub_configs", default: {}
     t.jsonb "general_configs", default: {}
     t.jsonb "s3_configs"
   end
