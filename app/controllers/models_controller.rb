@@ -36,10 +36,16 @@ class ModelsController < ApplicationController
   def blob
     if params[:download] == 'true'
       if params[:lfs] == 'true'
-        file_url = Starhub.api.download_model_file(params[:namespace], params[:model_name], params[:lfs_path], { ref: @current_branch, lfs: true })
+        file_url = Starhub.api.download_model_file(params[:namespace],
+                                                   params[:model_name],
+                                                   params[:lfs_path],
+                                                   { ref: @current_branch, lfs: true })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
-        file = Starhub.api.download_model_file(params[:namespace], params[:model_name], params[:path], { ref: @current_branch })
+        file = Starhub.api.download_model_file(params[:namespace],
+                                               params[:model_name],
+                                               params[:path],
+                                               { ref: @current_branch })
         send_data file, filename: params[:path].split('/').last
       end
     else
