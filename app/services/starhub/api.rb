@@ -174,7 +174,7 @@ module Starhub
     end
 
     def download_model_file(username, model_name, path, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/download/#{path}?ref=#{options[:ref]}")
+      res = @client.get("/models/#{username}/#{model_name}/download/#{path}?ref=#{options[:ref]}&lfs=#{options[:lfs]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -277,7 +277,7 @@ module Starhub
     end
 
     def download_datasets_file(username, dataset_name, path, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}?ref=#{options[:ref]}")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}?ref=#{options[:ref]}&lfs=#{options[:lfs]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
