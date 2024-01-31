@@ -114,6 +114,8 @@ Rails.application.routes.draw do
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show]
+    resources :daily_papers, only: [:index, :new, :create, :show], param: :uuid
+
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
     get '/models/:namespace/(*model_name)/:branch/upload', to: 'models#upload_file'
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}

@@ -99,6 +99,9 @@
             <a href="/organizations/new">
               <el-dropdown-item divided> 新建组织 </el-dropdown-item>
             </a>
+            <a href="/daily_papers/new" v-if="isAdminUser == 'true'">
+              <el-dropdown-item> 论文推荐 </el-dropdown-item>
+            </a>
             <a href="/logout">
               <el-dropdown-item divided>  退出登录 </el-dropdown-item>
             </a>
@@ -131,7 +134,8 @@ export default {
     companyVerified: String,
     phone: String,
     isLoggedIn: String,
-    userName: String
+    userName: String,
+    isAdminUser: String,
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
