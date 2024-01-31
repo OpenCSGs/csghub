@@ -17,7 +17,7 @@
           </div>
           <div class="py-[8px] px-[12px] md:px-[38px] rounded-[6px] cursor-pointer"
                :class="theFlag === 'policy' ?'bg-white border':'text-[#667085]'"
-               @click="theFlag = 'policy'"><p class="cursor-pointer">隐私政策</p>
+               @click="theFlag = 'policy'">隐私政策
           </div>
         </div>
       </div>
