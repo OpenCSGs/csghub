@@ -39,7 +39,7 @@ class DatasetsController < ApplicationController
         file_url = Starhub.api.download_datasets_file(params[:namespace],
                                                       params[:dataset_name],
                                                       params[:lfs_path],
-                                                      e{ ref: @current_branch,
+                                                      { ref: @current_branch,
                                                         lfs: true })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
