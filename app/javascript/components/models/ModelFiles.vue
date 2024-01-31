@@ -1,5 +1,6 @@
 <template>
-  <FileList
+  <UploadFile v-if="theFlag === 'uploadFile'" @changeFlag="changeFlag"/>
+  <FileList v-if="theFlag === 'fileList'" @changeFlag="changeFlag"
     :branches="branches"
     :current-branch="currentBranch"
     :current-path="currentPath"
@@ -10,6 +11,10 @@
 
 <script setup>
   import FileList from '../shared/FileList.vue'
+  import UploadFile from '../shared/file/UploadFile.vue'
+  import {ref} from 'vue'
+
+  let theFlag = ref('uploadFile')
 
   const props = defineProps({
     branches: Object,
@@ -20,7 +25,12 @@
 
   const changeBranch = (branch) => {
     if (branch !== props.currentBranch) {
-      window.location.href = `/models/${props.namespacePath}/files/${branch}`
+      window.location.href = `../../../../public/images/files/${branch}`
     }
+  }
+
+  function changeFlag(flag) {
+    console.log(theFlag.value)
+    theFlag.value = flag
   }
 </script>

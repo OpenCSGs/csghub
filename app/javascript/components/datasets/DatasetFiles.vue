@@ -20,7 +20,7 @@
 
   const changeBranch = (branch) => {
     if (branch !== props.currentBranch) {
-      window.location.href = `/datasets/${props.namespacePath}/files/${branch}`
+      window.location.href = `../../../../public/images/files/${branch}`
     }
   }
 </script>

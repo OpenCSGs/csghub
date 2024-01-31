@@ -29,7 +29,7 @@
         </el-breadcrumb>
       </div>
       <div class="flex items-center text-sm text-[#606266]">
-        <div class="flex items-center py-[1px] md:hidden">
+        <div class="flex items-center py-[1px] md:hidden mr-[16px]">
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 贡献者
         </div>
@@ -47,15 +47,15 @@
           </svg>
           历史提交: 4 commits
         </a>
-<!--        <el-dropdown split-button>-->
-<!--            + 添加文件-->
-<!--            <template #dropdown>-->
-<!--              <el-dropdown-menu>-->
-<!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
-<!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
-<!--              </el-dropdown-menu>-->
-<!--            </template>-->
-<!--          </el-dropdown>-->
+        <el-dropdown split-button>
+            + 添加文件
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>创建新文件</el-dropdown-item>
+                <el-dropdown-item @click="changeUpload('uploadFile')">上传文件</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
       </div>
     </div>
 
@@ -148,6 +148,7 @@
   import { ref, onMounted } from 'vue'
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
+  import { getCurrentInstance } from "vue"
 
   const props = defineProps({
     branches: Object,
@@ -238,6 +239,14 @@
         loading.value = false
       })
     })
+  }
+
+  // 在setup中需要这样使用来获取$emit, 必须在外面获取getCurrentInstance()
+  const instance = getCurrentInstance()
+
+  function changeUpload(flag) {
+    console.log('test')
+    instance.emit("changeFlag", flag)
   }
 
   onMounted(() => {
