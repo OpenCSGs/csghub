@@ -205,7 +205,7 @@
   }
 
   const canDownload = (file) => {
-    return (file.size <= 10 * 1024 * 1024 && !file.lfs) || file.lfs
+    return file.lfs || (file.size <= 10 * 1024 * 1024)
   }
 
   const getFileExtension = (file) => {
