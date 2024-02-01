@@ -113,7 +113,6 @@
           ],
           recommendation: [{ required: true, message: '请输入文章推荐语', trigger: 'blur' }],
           description: [{ required: true, message: '请输入文章摘要', trigger: 'blur' }],
-          video_link: [{ required: true, message: '请输入文章关联视频链接', trigger: 'blur' }],
         }
       }
     },
