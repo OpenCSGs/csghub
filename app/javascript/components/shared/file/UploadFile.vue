@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col gap-[16px] min-h-[300px] py-[32px] md:px-5">
     <div class="test-[14px]"><p>repo/</p></div>
-
     <div class="border border-[#DCDFE6] rounded-[4px] bg-[#F5F7FA]">
       <div class="flex text-[14px] text-[#4D6AD6] leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
@@ -35,29 +34,27 @@
           <div class="ml-[16px] w-full">
             <div>
               <a @click="deleteFile(index)" class="cursor-pointer">
-                <svg v-if="!uploadDoneList.includes(index)" class="float-right" width="18" height="20" viewBox="0 0 18 20"
+                <svg v-if="!uploadDoneList.includes(index)" class="float-right" width="18" height="20"
+                     viewBox="0 0 18 20"
                      fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                       d="M12.3333 4.99984V4.33317C12.3333 3.39975 12.3333 2.93304 12.1517 2.57652C11.9919 2.26292 11.7369 2.00795 11.4233 1.84816C11.0668 1.6665 10.6001 1.6665 9.66667 1.6665H8.33333C7.39991 1.6665 6.9332 1.6665 6.57668 1.84816C6.26308 2.00795 6.00811 2.26292 5.84832 2.57652C5.66667 2.93304 5.66667 3.39975 5.66667 4.33317V4.99984M7.33333 9.58317V13.7498M10.6667 9.58317V13.7498M1.5 4.99984H16.5M14.8333 4.99984V14.3332C14.8333 15.7333 14.8333 16.4334 14.5608 16.9681C14.3212 17.4386 13.9387 17.821 13.4683 18.0607C12.9335 18.3332 12.2335 18.3332 10.8333 18.3332H7.16667C5.76654 18.3332 5.06647 18.3332 4.53169 18.0607C4.06129 17.821 3.67883 17.4386 3.43915 16.9681C3.16667 16.4334 3.16667 15.7333 3.16667 14.3332V4.99984"
                       stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
-              <svg v-if="uploadDoneList.includes(index)" class="float-right" width="16" height="16" viewBox="0 0 16 16"
-                   fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill="#3250BD"/>
-                <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#3250BD"/>
-                <path d="M12 5L6.5 10.5L4 8" stroke="white" stroke-width="1.6666" stroke-linecap="round"
-                      stroke-linejoin="round"/>
-              </svg>
-              <p class="text-[14px]">{{file.file.name}}</p>
+              <!--              <svg v-if="uploadDoneList.includes(index)" class="float-right" width="16" height="16" viewBox="0 0 16 16"-->
+              <!--                   fill="none" xmlns="http://www.w3.org/2000/svg">-->
+              <!--                <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill="#3250BD"/>-->
+              <!--                <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#3250BD"/>-->
+              <!--                <path d="M12 5L6.5 10.5L4 8" stroke="white" stroke-width="1.6666" stroke-linecap="round"-->
+              <!--                      stroke-linejoin="round"/>-->
+              <!--              </svg>-->
+              <p class="text-[14px]">{{ file.file.name }}</p>
             </div>
-            <p class="font-light text-[14px] text-[#475467]">{{file.fileSize}} KB</p>
+            <p class="font-light text-[14px] text-[#475467]">{{ file.fileSize }} KB</p>
             <!--展示进度条-->
-            <div :id="'progress-container-' + index" class="flex items-center rounded-[4px] hidden">
-              <div class="w-full">
-                <div :id="'progress-bar-' + index" class="w-0 h-[8px] bg-[#3250BD] rounded-[4px]"></div>
-              </div>
-              <p :id="'progress-bar-percent-' + index" class="ml-[8px]"></p>
+            <div :id="'progress-bar-' + index" class="hidden">
+              <el-progress :status="filesList[index].status" :percentage="filesList[index].percentage" stroke-width="10" :duration="30" striped striped-flow/>
             </div>
           </div>
         </div>
@@ -131,7 +128,8 @@
                 d="M1.99992 11.9997L4.51355 9.48605C5.03457 8.96503 5.29507 8.70452 5.59611 8.60523C5.86095 8.51788 6.14652 8.51577 6.41263 8.5992C6.7151 8.69403 6.97943 8.95066 7.50809 9.46393L9.65733 11.5506M14.3333 11.7913L13.3834 10.8415C12.8554 10.3135 12.5914 10.0495 12.2869 9.95055C12.0192 9.86354 11.7307 9.86354 11.4629 9.95055C11.1585 10.0495 10.8943 10.3136 10.3661 10.8418C9.96312 11.2448 9.65733 11.5506 9.65733 11.5506M12.3333 14.2265L9.65733 11.5506M11.9999 5.33301C11.9999 6.06939 11.403 6.66634 10.6666 6.66634C9.93021 6.66634 9.33325 6.06939 9.33325 5.33301C9.33325 4.59663 9.93021 3.99967 10.6666 3.99967C11.403 3.99967 11.9999 4.59663 11.9999 5.33301ZM7.73325 14.6663H8.26658C10.5068 14.6663 11.6269 14.6663 12.4825 14.2304C13.2352 13.8469 13.8471 13.235 14.2306 12.4823C14.6666 11.6267 14.6666 10.5066 14.6666 8.26634V7.73301C14.6666 5.4928 14.6666 4.37269 14.2306 3.51705C13.8471 2.7644 13.2352 2.15248 12.4825 1.76898C11.6269 1.33301 10.5068 1.33301 8.26659 1.33301H7.73325C5.49304 1.33301 4.37294 1.33301 3.51729 1.76898C2.76464 2.15248 2.15272 2.7644 1.76923 3.51705C1.33325 4.37269 1.33325 5.4928 1.33325 7.73301V8.26634C1.33325 10.5066 1.33325 11.6267 1.76923 12.4823C2.15272 13.235 2.76464 13.8469 3.51729 14.2304C4.37294 14.6663 5.49304 14.6663 7.73325 14.6663Z"
                 stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <label for="fileInput" class="cursor-pointer hover:text-[#6C757D]">Upload images, audio, and videos by dragging in the text input, pasting, or
+          <label for="fileInput" class="cursor-pointer hover:text-[#6C757D]">Upload images, audio, and videos by
+            dragging in the text input, pasting, or
             <label class="underline cursor-pointer">click here<input id="fileInput" type="file"
                                                                      @change="handleFileInput"
                                                                      class="hidden"/></label>.</label>
@@ -147,7 +145,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import {getCurrentInstance} from 'vue'
 import MarkdownIt from "markdown-it"
@@ -190,28 +187,32 @@ function handleDrop(e) {
 // 点击上传文件
 function handleFileInput(e) {
   const file = e.target.files[0]
-  const fileKb = file.size/1024
+  const fileKb = file.size / 1024
   filesList.value.push({
     fileImage: getFileImage(file.name),
     fileSize: fileKb.toFixed(2),
-    file: file
+    file: file,
+    percentage: '0',
+    status: ''
   })
 }
 
 // 传入文件名，筛选文件图片
 function getFileImage(fileName) {
   // 使用正则表达式匹配文件名中的后缀部分
-  const parts = fileName.split('.')
-  const extension = parts.length > 1 ? parts.pop().toLowerCase() : null  // 转换为小写，以避免大小写不敏感的问题
-  if (extension === 'pdf') {
-    return '/assets/files/PDF.png'
-  } else if (extension === 'png') {
-    return '/assets/files/PNG.png'
-  } else if (extension === 'txt') {
-    return '/assets/files/TXT.png'
-  } else if (extension === 'zip') {
-    return '/assets/files/ZIP.png'
-  } else { return '/assets/files/Default.png' }
+  // const parts = fileName.split('.')
+  // const extension = parts.length > 1 ? parts.pop().toLowerCase() : null  // 转换为小写，以避免大小写不敏感的问题
+  // if (extension === 'pdf') {
+  //   return '/assets/files/PDF.png'
+  // } else if (extension === 'png') {
+  //   return '/assets/files/PNG.png'
+  // } else if (extension === 'txt') {
+  //   return '/assets/files/TXT.png'
+  // } else if (extension === 'zip') {
+  //   return '/assets/files/ZIP.png'
+  // } else { return '/assets/files/Default.png' }
+
+  return '/images/files/Default.png'  // 先使用默认图片
 }
 
 // 删除文件
@@ -222,11 +223,11 @@ function deleteFile(index) {
 // 上传文件
 async function uploadImage() {
   if (!filesList.value[0]) {
-    alert('请选择文件')
+    ElMessage({message: "请选择文件", type: "warning"})
     return
   }
 
-  for (let [index,item] of filesList.value.entries()) {
+  for (let [index, item] of filesList.value.entries()) {
     let formData = new FormData()
     formData.append('file' + index.toString(), item.file)
 
@@ -242,14 +243,16 @@ async function uploadImage() {
 
     // 上传完成回调
     xhr.addEventListener('load', function () {
+      filesList.value[index].status = 'success'
       uploadDoneList.value.push(index)
       ElMessage({message: "上传完成", type: "success"})
     });
 
     // 上传错误回调
     xhr.addEventListener('error', function () {
-      ElMessage({message: "上传错误", type: "warning"})
-      resetProgressBar()
+      filesList.value[index].status = 'exception'
+      ElMessage({message: "上传异常", type: "warning"})
+      // resetProgressBar(index)   设置进度条为0
     });
 
     // 设置请求
@@ -257,17 +260,16 @@ async function uploadImage() {
     xhr.send(formData)
 
     // 显示进度条
-    document.getElementById('progress-container-'+index).style.display = 'flex'
+    document.getElementById('progress-bar-' + index).style.display = 'block'
   }
 }
 
 function updateProgressBar(percentComplete, index) {
-  document.getElementById('progress-bar-'+index).style.width = percentComplete + '%'
-  document.getElementById('progress-bar-percent-'+index).textContent = Math.round(percentComplete).toString() + '%'
+  filesList.value[index].percentage = Math.round(percentComplete).toString()
 }
 
-function resetProgressBar() {
-  document.getElementById('progress-container').style.display = 'none'
-  document.getElementById('progress-bar').style.width = '0'
+function resetProgressBar(index) {
+  filesList.value[index].percentage = '0'
 }
 </script>
+
