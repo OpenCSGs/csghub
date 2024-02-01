@@ -65,9 +65,13 @@
 
     <div class="flex flex-col">
       <div class="flex gap-[8px] items-center">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg v-if="showCommit === true" class="cursor-pointer" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="2" y="2" width="10" height="10" rx="5" fill="white"/>
           <rect x="2" y="2" width="10" height="10" rx="5" stroke="#4D6AD6" stroke-width="4"/>
+        </svg>
+        <svg v-else @click="showCommit = true" class="cursor-pointer" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" fill="white"/>
+          <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" stroke="#DCDFE6"/>
         </svg>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="8.00002" cy="7.99984" r="2.33333" stroke="#606266" stroke-linecap="round"
@@ -78,7 +82,11 @@
         <p>commit directly to the main branch</p>
       </div>
       <div class="flex gap-[8px] items-center mt-[8px]">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg v-if="showCommit === false" class="cursor-pointer" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="10" height="10" rx="5" fill="white"/>
+          <rect x="2" y="2" width="10" height="10" rx="5" stroke="#4D6AD6" stroke-width="4"/>
+        </svg>
+        <svg v-else @click="showCommit = false" class="cursor-pointer" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" fill="white"/>
           <rect x="0.5" y="0.5" width="13" height="13" rx="6.5" stroke="#DCDFE6"/>
         </svg>
@@ -159,6 +167,7 @@ const instance = getCurrentInstance()
 let filesList = ref([])
 let uploadDoneList = ref([])
 let commitChanges = ref('')
+let showCommit = ref(true)
 
 function create() {
   instance.emit("changeFlag", 'fileList')
