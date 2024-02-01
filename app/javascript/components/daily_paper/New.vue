@@ -130,7 +130,7 @@
         this.showUpload = false
       },
       handleSubmit() {
-        this.$refs['dataForm'].validate((valid) => {
+        this.$refs['dataForm'].validate(async (valid) => {
           if (valid) {
             const params = Object.assign({}, this.dataForm)
             delete params.cover_image
@@ -140,26 +140,28 @@
             if (params.dataset_links) {
               params.dataset_links = params.dataset_links.split("\n")
             }
-            csrfFetch('/daily_papers', {
+            const options = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(params)
-            }).then(res => res.json())
-              .then(res => {
-              console.log("res", res);
-              if (res.success) {
-                this.$message({
-                  message: '创建成功',
-                  type: 'success'
-                });
-                window.location.href = "/daily_papers"
-              } else {
-                this.$message({
-                  message: `创建失败: ${res.message}`,
-                  type: 'error'
-                });
-              }
-            })
+            }
+            const uploadEndpoint = '/internal_api/daily_papers'
+            const response = await csrfFetch(uploadEndpoint, options)
+            if (response.ok) {
+              this.$message({
+                message: '创建成功',
+                type: 'success'
+              });
+              window.location.href = "/daily_papers"
+            } else {
+              response.json()
+                .then(res => { 
+                  this.$message({
+                    message: `创建失败: ${res.message}`,
+                    type: 'error'
+                  });
+                })
+            }
           } else {
             return false
           }

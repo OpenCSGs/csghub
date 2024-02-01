@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     # resources :discussions, only: :create
     resources :discussions, only: [:create, :index, :update]
     resources :upload, only: [:create]
+    resources :daily_papers, only: [:create]
   end
 
   # lead form
