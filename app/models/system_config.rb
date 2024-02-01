@@ -22,4 +22,12 @@ class SystemConfig < ApplicationRecord
   def s3_configs=(value)
     self[:s3_configs] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def hot_models=(value)
+    self[:hot_models] = value.is_a?(String) ? JSON.parse(value) : value
+  end
+
+  def hot_datasets=(value)
+    self[:hot_datasets] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end

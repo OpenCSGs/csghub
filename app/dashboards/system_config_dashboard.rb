@@ -16,6 +16,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     feature_flags: Field::JSONB,
     general_configs: Field::JSONB,
     s3_configs: Field::JSONB,
+    hot_models: Field::JSONB,
+    hot_datasets: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -42,6 +44,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     license_configs
     feature_flags
     s3_configs
+    hot_models
+    hot_datasets
     created_at
     updated_at
   ].freeze
@@ -57,6 +61,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     license_configs
     feature_flags
     s3_configs
+    hot_models
+    hot_datasets
   ].freeze
 
   # COLLECTION_FILTERS
