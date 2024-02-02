@@ -197,6 +197,19 @@ function handleDrop(e) {
 function handleFileInput(e) {
   const file = e.target.files[0]
   const fileKb = file.size / 1024
+
+  // 目前只支持单文件上传
+  if (filesList.value.length === 1) {
+    filesList.value[0] = {
+      fileImage: getFileImage(file.name),
+      fileSize: fileKb.toFixed(2),
+      file: file,
+      percentage: '0',
+      status: ''
+    }
+    return
+  }
+
   filesList.value.push({
     fileImage: getFileImage(file.name),
     fileSize: fileKb.toFixed(2),
