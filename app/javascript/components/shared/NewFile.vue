@@ -26,7 +26,7 @@
     </div>
     <CommunityMDTextarea desc="" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="createFile">创建话题</el-button>
+      <el-button type="primary" @click="createFile" :disabled="!commitValid">创建话题</el-button>
       <el-button @click="cancel">取消</el-button>
     </div>
   </div>
@@ -49,6 +49,7 @@ const commitDesc = ref('')
 const fileName = ref('')
 const new_branch = ref('main')
 const commitTitlePlaceholder = ref('Create new file')
+const commitValid = ref(false)
 
 const prefixPath = document.location.pathname.split('/')[1]
 
@@ -59,8 +60,10 @@ const handleCommentInputChange = (value) => {
 const handleFileNameChange = (value) => {
   if (value.trim() === '') {
     commitTitlePlaceholder.value = `Create new file`
+    commitValid.value = false
   } else {
     commitTitlePlaceholder.value = `Create ${value}`
+    commitValid.value = true
   }
 }
 
