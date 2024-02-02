@@ -98,15 +98,6 @@ const cancel = () => {
 </script>
 
 <style scoped>
-  :deep(.cm-scroller, .cm-gutters) {
-    min-height: 200px;
-  }
-
-  :deep(.vue-codemirror) {
-    border: 1px solid #efefef;
-    height: 200px;
-  }
-
   :deep(.el-radio__label) {
     color: #303133 !important;
     font-weight: 400;
