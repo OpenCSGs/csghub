@@ -13,5 +13,29 @@ class LandingPageController < ApplicationController
                 {url:'landing/new3.png',href:'https://opencsg.com/blog/news/10/',time:'2023/9/28',title:'“模速空间”创新生态社区揭幕仪式',text:'9月28日，上海“模速空间”创新生态社区暨人工智能大模型产业生态集聚区在揭牌，创始人&CEO陈冉代表OpenCSG上台揭幕，成为首批入驻上海市人工智能产业生态的企业之一...'}]
     @latest_spaces = Space.where(space_type: 'public_s').order(created_at: :desc).limit(3)
     @partners = PARTNERS.sort_by {|partner| PinYin.abbr(partner['name'])}
+    @hot_models = load_hot_models
+    @hot_datasets = load_hot_datasets
+  end
+
+  private
+
+  def load_hot_models
+    system_config = SystemConfig.first
+    hot_models = system_config.hot_models rescue []
+    hot_models.map do |model_path|
+      namespace, model_name = model_path.split('/')
+      res = Starhub.api.get_model_detail(namespace, model_name)
+      JSON.parse(res)['data']
+    end
+  end
+
+  def load_hot_datasets
+    system_config = SystemConfig.first
+    hot_datasets = system_config.hot_datasets rescue []
+    hot_datasets.map do |dataset_path|
+      namespace, dataset_name = dataset_path.split('/')
+      res = Starhub.api.get_datasets_detail(namespace, dataset_name)
+      JSON.parse(res)['data']
+    end
   end
 end
