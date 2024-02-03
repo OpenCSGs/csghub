@@ -47,7 +47,7 @@
           </svg>
           历史提交: 4 commits
         </a>
-        <el-dropdown split-button>
+        <el-dropdown split-button v-if="canWrite">
           + 添加文件
           <template #dropdown>
             <el-dropdown-menu>
@@ -155,6 +155,7 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
+    canWrite: Boolean
   })
 
   const loading = ref(true)

@@ -1,6 +1,8 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_model, only: [:update, :destroy]
+  before_action :validate_model, only: [:update, :destroy, :create_file]
+  before_action :validate_manage, only: [:update, :destroy]
+  before_action :validate_write, only: [:create_file]
   before_action :validate_authorization, only: [:files, :readme]
 
   def index
@@ -102,14 +104,21 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def validate_model
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-
+    @model = Model.find_by(name: params[:model_name])
     unless @model
       return render json: { message: "未找到对应模型" }, status: 404
     end
+  end
 
+  def validate_manage
     unless current_user.can_manage?(@model)
+      render json: { message: '无权限' }, status: :unauthorized
+      return
+    end
+  end
+
+  def validate_write
+    unless current_user.can_write?(@model)
       render json: { message: '无权限' }, status: :unauthorized
       return
     end

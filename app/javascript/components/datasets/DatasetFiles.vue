@@ -4,6 +4,7 @@
     :current-branch="currentBranch"
     :current-path="currentPath"
     :namespace-path="namespacePath"
+    :can-write="canWrite"
     @change-branch="changeBranch"
   />
 </template>
@@ -16,6 +17,7 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
+    canWrite: Boolean
   })
 
   const changeBranch = (branch) => {

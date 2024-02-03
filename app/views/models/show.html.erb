@@ -14,5 +14,6 @@
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
+    :can-write="<%= current_user&.can_write?(@local_model) %>"
   ></model-detail>
 </div>

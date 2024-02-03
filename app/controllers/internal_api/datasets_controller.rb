@@ -1,6 +1,8 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_dataset, only: [:update, :destroy]
+  before_action :validate_dataset, only: [:update, :destroy, :create_file]
+  before_action :validate_manage, only: [:update, :destroy]
+  before_action :validate_write, only: [:create_file]
   before_action :validate_authorization, only: [:files, :readme]
 
   def index
@@ -96,15 +98,23 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def validate_dataset
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
-
+    @dataset = Dataset.find_by(name: params[:dataset_name])
     unless @dataset
-      return render json: { message: "未找到对应数据集" }, status: 404
+      return render json: { message: "未找到对应模型" }, status: 404
     end
+  end
 
+  def validate_manage
     unless current_user.can_manage?(@dataset)
-      return render json: { message: '无权限' }, status: :unauthorized
+      render json: { message: '无权限' }, status: :unauthorized
+      return
+    end
+  end
+
+  def validate_write
+    unless current_user.can_write?(@dataset)
+      render json: { message: '无权限' }, status: :unauthorized
+      return
     end
   end
 

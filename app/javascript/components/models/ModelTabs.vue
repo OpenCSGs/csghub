@@ -29,6 +29,7 @@
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="modelDetail.path"
+          :can-write="canWrite"
         />
       </template>
       <template #community>
@@ -77,5 +78,6 @@ const props = defineProps({
   content: String,
   actionName: String,
   settingsVisibility: Boolean,
+  canWrite: Boolean
 })
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4 my-[30px] md:px-5">
     <div class="flex items-center gap-[10px]">
-      <div class="">{{ repoName }}</div>
+      <div class="whitespace-nowrap">{{ repoName }}</div>
       <div class="text-[#909399]"> / </div>
       <el-input v-model="fileName"
                 :maxLength="200"
@@ -26,7 +26,7 @@
     </div>
     <CommunityMDTextarea desc="" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="createFile" :disabled="!commitValid">创建话题</el-button>
+      <el-button type="primary" @click="createFile" :disabled="!commitValid || submiting">创建文件</el-button>
       <el-button @click="cancel">取消</el-button>
     </div>
   </div>
@@ -50,6 +50,7 @@ const fileName = ref('')
 const new_branch = ref('main')
 const commitTitlePlaceholder = ref('Create new file')
 const commitValid = ref(false)
+const submiting = ref(false)
 
 const prefixPath = document.location.pathname.split('/')[1]
 
@@ -68,6 +69,7 @@ const handleFileNameChange = (value) => {
 }
 
 const createFile = async () => {
+  submiting.value = true
   // TODO: main branch for now; should support different branches
   const createFileEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main`
   const bodyData = {
@@ -87,7 +89,9 @@ const createFile = async () => {
   if (response.ok) {
     redirectToFilePreview()
   } else {
-    return response.json().then(data => { throw new Error(data.message) })
+    return response.json().then(data => { throw new Error(data.message) }).finally(() => {
+      submiting.value = false
+    })
   }
 }
 

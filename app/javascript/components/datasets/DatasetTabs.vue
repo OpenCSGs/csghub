@@ -32,6 +32,7 @@
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="datasetDetail.path"
+          :can-write="canWrite"
         />
       </template>
       <template #community>
@@ -80,6 +81,7 @@ const props = defineProps({
   defaultTab: String,
   content: String,
   actionName: String,
-  settingsVisibility: Boolean
+  settingsVisibility: Boolean,
+  canWrite: Boolean
 })
 </script>
