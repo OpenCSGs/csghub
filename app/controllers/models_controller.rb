@@ -2,8 +2,8 @@ class ModelsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_branch_and_path, only: [:files, :blob]
-  before_action :load_model_detail, only: [:show, :files, :blob]
+  before_action :load_branch_and_path, only: [:files, :blob, :upload_file]
+  before_action :load_model_detail, only: [:show, :files, :blob, :upload_file]
 
   def index
     response = {}
@@ -52,6 +52,10 @@ class ModelsController < ApplicationController
     else
       render :show
     end
+  end
+
+  def upload_file
+    render :show
   end
 
   private

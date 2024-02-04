@@ -47,15 +47,16 @@
           </svg>
           历史提交: 4 commits
         </a>
-        <el-dropdown split-button>
-            + 添加文件
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>创建新文件</el-dropdown-item>
-                <el-dropdown-item @click="changeUpload('uploadFile')">上传文件</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+        <el-dropdown split-button v-if="canWrite">
+          + 上传文件
+          <template #dropdown>
+            <el-dropdown-menu>
+              <a :href="`/${prefixPath}/${namespacePath}/main/upload`">
+                <el-dropdown-item>上传文件</el-dropdown-item>
+              </a>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
 
@@ -148,13 +149,13 @@
   import { ref, onMounted } from 'vue'
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
-  import { getCurrentInstance } from "vue"
 
   const props = defineProps({
     branches: Object,
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
+    canWrite: Boolean
   })
 
   const loading = ref(true)
@@ -240,17 +241,13 @@
       })
     })
   }
-
-  // 在setup中需要这样使用来获取$emit, 必须在外面获取getCurrentInstance()
-  const instance = getCurrentInstance()
-
-  function changeUpload(flag) {
-    console.log('test')
-    instance.emit("changeFlag", flag)
+  const test = () => {
+    console.log(props.canWrite)
   }
 
   onMounted(() => {
     updateBreadcrumb()
     fetchData()
+    test()
   })
 </script>

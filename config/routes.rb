@@ -73,9 +73,11 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show]
 
+    get '/models/:namespace/(*model_name)/:branch/upload', to: 'models#upload_file'
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}
+    get '/datasets/:namespace/(*dataset_name)/:branch/upload', to: 'datasets#upload_file'
     get '/datasets/:namespace/(*dataset_name)/blob/:branch/(*path)', to: 'datasets#blob', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
