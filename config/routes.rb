@@ -37,12 +37,14 @@ Rails.application.routes.draw do
     resources :models, only: [:index, :create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme'
     get '/models/:namespace/(*model_name)/files', to: 'models#files'
+    post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file'
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
 
     resources :datasets, only: [:index, :create]
     get '/datasets/:namespace/(*dataset_name)/readme', to: 'datasets#readme'
     get '/datasets/:namespace/(*dataset_name)/files', to: 'datasets#files'
+    post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
 

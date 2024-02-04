@@ -66,10 +66,43 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
   end
 
+  def upload_file
+    puts "success!!!!!!!!!!!!!!!"
+    options = file_params.slice(:branch).merge({
+                                                 new_branch: 'main',
+                                                 namespace: params[:namespace],
+                                                 name: params[:model_name],
+                                                 file_path: params[:file_path],
+                                                 file: params[:file],
+                                                 email: current_user.email,
+                                                 message: build_commit_message,
+                                                 username: current_user.name
+                                               })
+    sync_upload_file(options)
+    render json: { message: '上传文件成功' }
+  end
+
   private
 
   def model_params
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
+  end
+
+  def file_params
+    params.permit(:file_path, :file, :branch, :commit_title, :commit_desc)
+  end
+
+  def build_commit_message
+    if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
+      return "Upload #{params[:path]}"
+    end
+
+    "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
+  end
+
+  def sync_upload_file(options)
+    res = Starhub.api.upload_model_file(params[:namespace], params[:model_name], options)
+    raise StarhubError, res.body unless res.success?
   end
 
   def validate_model

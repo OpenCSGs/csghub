@@ -119,6 +119,7 @@ function handleUploadFileInput(e) {
     filesList.value[0] = {
       fileImage: getFileImage(file.name),
       fileSize: fileKb.toFixed(2),
+      fileName: file.name,
       file: file,
       percentage: '0',
       status: ''
@@ -170,7 +171,10 @@ async function uploadImage() {
 
   for (let [index, item] of filesList.value.entries()) {
     let formData = new FormData()
-    formData.append('file' + index.toString(), item.file)
+    formData.append('file_path', filesList.value[0].fileName)
+    formData.append('commit_title', commitTitle.value)
+    formData.append('commit_desc', commitDesc.value)
+    formData.append('file', item.file)
 
     let xhr = new XMLHttpRequest()
 
@@ -197,13 +201,44 @@ async function uploadImage() {
     });
 
     // 设置请求
-    xhr.open('POST', 'http://127.0.0.1:8000/api/upload', true)
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    xhr.open('POST', `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`, true)
+    xhr.setRequestHeader('X-CSRF-Token', csrfToken)
+    xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.send(formData)
 
     // 显示进度条
     document.getElementById('progress-bar-' + index).style.display = 'block'
   }
 }
+
+const createFile = async () => {
+  submiting.value = true
+  // TODO: main branch for now; should support different branches
+  const createFileEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main`
+  const bodyData = {
+    path: fileName.value,
+    content: codeContent.value,
+    commit_title: commitTitle.value,
+    commit_desc: commitDesc.value
+  }
+  const option = {
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(bodyData)
+  }
+  const response = await csrfFetch(createFileEndpoint, option)
+  if (response.ok) {
+    redirectToFilePreview()
+  } else {
+    return response.json().then(data => { throw new Error(data.message) }).finally(() => {
+      submiting.value = false
+    })
+  }
+}
+
 
 function updateProgressBar(percentComplete, index) {
   filesList.value[index].percentage = Math.round(percentComplete).toString()

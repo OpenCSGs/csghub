@@ -179,6 +179,10 @@ module Starhub
       res.body
     end
 
+    def upload_model_file(username, model_name, options = {})
+      @client.post("/models/#{username}/#{model_name}/upload_file", options)
+    end
+
     # datasets
 
     def get_dataset_detail_data_in_parallel(username, dataset_name, options = {})
