@@ -4,12 +4,10 @@
         <div class="flex p-[16px] pt-[16px]">
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div class="ml-[10px]">
-            <div class="text-[24px] leading-[32px] font-semibold">
-              <a>
-                ccececece
-              </a>
+            <div :title="nickName" class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[24px] leading-[32px] font-semibold">
+                {{nickName}}
             </div>
-            <div class="text-[16px] text-[#909399] leading-[24px]">@2222222222222222222</div>
+            <div class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-[#909399] leading-[24px]" :title="homepage">{{homepage}}</div>
           </div>
         </div>
         <div class="p-[16px] text-[20px] leading-[30px] text-[#344054]">组织设置</div>
@@ -26,7 +24,11 @@
 </template>
 <script>
 export default {
-  props: {},
+  props: {
+    nickName: String,
+    homepage: String,
+    logo: String
+  },
   data() {
     return {}
   },

@@ -18,10 +18,29 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     message = message.presence || error.message
     render json: {message: message}, status: 500
   end
-
+  
   def update
+    org = Organization.find_by(name: params[:name])
+    return render json: {message: '未找到组织'}, status: 400 unless org
+    return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
+    
+    # 更新组织的信息
+    org.update(organization_params)
+    # 如果存在新的 logo 参数
+    if params[:logo].present?
+      # 上传新的 logo 并获取其 URL
+      image_url_code = AwsS3.instance.upload 'org-logo', params[:logo]
+      org.logo = image_url_code
+    end
+    
+    # 保存组织信息
+    org.save
+    
+    render json: {message: '组织更新成功'}
+  rescue => e
+    render json: {message: "组织更新失败, #{e.message}"}, status: 500
   end
-
+  
   def new_members
     unless OrgMembership.roles.keys.include? params[:user_role]
       return render json: {message: '请提供角色信息'}, status: 400

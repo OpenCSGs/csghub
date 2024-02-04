@@ -4,17 +4,16 @@
     <div>
       <div class="flex items-center text-[#344054] text-[14px] leading-[20px] gap-[4px] mb-[8px]">组织别名</div>
       <el-input class="w-full"
-                v-model="orgDisplayName"
+                v-model="orgNickName"
                 placeholder="">
       </el-input>
     </div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">组织命名空间</div>
       <el-input class="w-full mb-[10px]"
-                v-model="orgNickName"
+                v-model="orgName"
                 disabled
                 placeholder="组织命名空间">
-      <template #prepend>{{orgNameSpace}}</template>
       </el-input>
       <p class="text-gray-500 text-[12px]">创建完成后，命名空间不可更改</p>
     </div>
@@ -37,17 +36,8 @@
     <div>
       <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">组织主页</div>
       <el-input class="w-full mb-[10px]"
-                v-model="httpUrl"
+                v-model="homepage"
                 placeholder="组织主页">
-      <template #prepend>https://</template>
-      </el-input>
-    </div>
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">组织类型<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
-      </div>
-      <el-input class="w-full"
-                v-model="test"
-                placeholder="组织类型">
       </el-input>
     </div>
     <div class="mb-[16px]">
@@ -75,14 +65,16 @@ import { useCookies } from "vue3-cookies";
 import { ElMessage } from "element-plus";
 const { cookies } = useCookies();
 export default {
-  props: {},
+  props: {
+    organization: Object
+  },
   data() {
     return {
-      orgDisplayName:'适普软件(北京)有限公司',
-      orgNameSpace:'portal.opencsg.com/',
-      orgNickName:'shipu',
-      avatarUrl:'',
-      httpUrl:'www.getlayers.io',
+      orgName:this.organization.name?this.organization.name:'',
+      orgNickName:this.organization.nickname?this.organization.nickname:'',
+      avatarUrl:this.organization.avatar?this.organization.avatar:'',
+      homepage:this.organization.homepage?this.organization.homepage:'',
+      orgType:this.organization.org_type?this.organization.org_type:'',
       theOrgTypes:[{key:'1',label:'企业',value:'企业'},
                    {key:'2',label:'高校',value:'高校'},
                    {key:'3',label:'非营利组织',value:'非营利组织'},
@@ -102,22 +94,23 @@ export default {
       this.avatarUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `/internal_api/users/${this.displayName}`;
+      const organizationUpdateEndpoint = `/internal_api/organizations/${this.orgName}`;
       const formData = new FormData();
       const file = this.$refs.fileInput.files[0];
       if (file !== undefined) {
-        formData.append("avatar", file);
+        formData.append("logo", file);
       }
-      formData.append("name", this.inputName);
-      formData.append("nickname", this.inputNickname);
-      formData.append("email", this.inputEmail);
+      formData.append("name", this.orgName);
+      formData.append("nickname", this.orgNickName);
+      formData.append("homepage", this.homepage);
+      formData.append("org_type", this.orgType);
       const options = {
         method: "PUT",
         body: formData,
       };
 
       try {
-        const response = await csrfFetch(profileUpdateEndpoint, options);
+        const response = await csrfFetch(organizationUpdateEndpoint, options);
         if (!response.ok) {
           response.json().then(data => {
             ElMessage({
@@ -127,13 +120,13 @@ export default {
           })
         } else {
           ElMessage({
-            message: "profile已更新",
+            message: "organization已更新",
             type: "success",
           });
-          this.$emit("updateUserInfo", {
-            avatar: file && URL.createObjectURL(file),
-            name: this.inputName,
-            nickname: this.inputNickname
+          this.$emit("updateOrganization", {
+            logo: file && URL.createObjectURL(file),
+            nickname: this.orgNickName,
+            homepage: this.homepage,
           });
           // 处理成功响应
         }
