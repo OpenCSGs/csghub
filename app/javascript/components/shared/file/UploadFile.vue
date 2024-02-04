@@ -171,7 +171,7 @@ async function uploadImage() {
 
   for (let [index, item] of filesList.value.entries()) {
     let formData = new FormData()
-    formData.append('file_path', filesList.value[0].fileName)
+    formData.append('file_path', item.fileName)
     formData.append('commit_title', commitTitle.value)
     formData.append('commit_desc', commitDesc.value)
     formData.append('file', item.file)
