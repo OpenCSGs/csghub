@@ -35,8 +35,20 @@ class DatasetsController < ApplicationController
 
   def blob
     if params[:download] == 'true'
-      file = Starhub.api.download_datasets_file(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
-      send_data file, filename: params[:path].split('/').last
+      if params[:lfs] == 'true'
+        file_url = Starhub.api.download_datasets_file(params[:namespace],
+                                                      params[:dataset_name],
+                                                      params[:lfs_path],
+                                                      { ref: @current_branch,
+                                                        lfs: true })
+        redirect_to JSON.parse(file_url)['data'], allow_other_host: true
+      else
+        file = Starhub.api.download_datasets_file(params[:namespace],
+                                                  params[:dataset_name],
+                                                  params[:path],
+                                                  { ref: @current_branch })
+        send_data file, filename: params[:path].split('/').last
+      end
     else
       render :show
     end
