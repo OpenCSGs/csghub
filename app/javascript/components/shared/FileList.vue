@@ -48,7 +48,7 @@
           历史提交: 4 commits
         </a>
         <el-dropdown split-button v-if="canWrite">
-          + 上传文件
+          + 添加文件
           <template #dropdown>
             <el-dropdown-menu>
               <a :href="`/${prefixPath}/${namespacePath}/main/upload`">

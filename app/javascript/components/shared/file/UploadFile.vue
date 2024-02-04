@@ -4,7 +4,7 @@
     <div class="border border-[#DCDFE6] rounded-[4px] bg-[#F5F7FA]">
       <div class="flex text-[14px] text-[#4D6AD6] leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
-          Upload file(s)
+          上传文件
         </div>
         <div class="border-b w-full"></div>
       </div>
@@ -71,8 +71,8 @@
     </div>
     <CommunityMDTextarea desc="" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="uploadImage">Commit new file to main</el-button>
-      <el-button @click="cancel">Cancel</el-button>
+      <el-button type="primary" @click="uploadImage">上传文件</el-button>
+      <el-button @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
