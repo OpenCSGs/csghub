@@ -54,7 +54,7 @@ module Starhub
     end
 
     def get_model_detail(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/detail")
+      res = @client.get("/models/#{username}/#{model_name}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -240,7 +240,7 @@ module Starhub
     end
 
     def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/detail")
+      res = @client.get("/datasets/#{username}/#{dataset_name}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
