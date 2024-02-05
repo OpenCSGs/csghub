@@ -21,7 +21,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
   def update
     org = Organization.find_by(name: params[:name])
-    return render json: {message: '未找到组织'}, status: 400 unless org
+    return render json: {message: '未找到组织'}, status: 404 unless org
     return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
     
     # 更新组织的信息
@@ -34,7 +34,10 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     end
     
     # 保存组织信息
-    org.save
+    if org.save
+    else
+    end
+    
     
     render json: {message: '组织更新成功'}
   rescue => e
