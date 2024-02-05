@@ -212,34 +212,6 @@ async function uploadImage() {
   }
 }
 
-const createFile = async () => {
-  submiting.value = true
-  // TODO: main branch for now; should support different branches
-  const createFileEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main`
-  const bodyData = {
-    path: fileName.value,
-    content: codeContent.value,
-    commit_title: commitTitle.value,
-    commit_desc: commitDesc.value
-  }
-  const option = {
-    method:'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(bodyData)
-  }
-  const response = await csrfFetch(createFileEndpoint, option)
-  if (response.ok) {
-    redirectToFilePreview()
-  } else {
-    return response.json().then(data => { throw new Error(data.message) }).finally(() => {
-      submiting.value = false
-    })
-  }
-}
-
-
 function updateProgressBar(percentComplete, index) {
   filesList.value[index].percentage = Math.round(percentComplete).toString()
 }
