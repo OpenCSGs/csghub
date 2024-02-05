@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show] do
-      get 'settings', on: :member
+      get 'edit', on: :member
     end
 
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
