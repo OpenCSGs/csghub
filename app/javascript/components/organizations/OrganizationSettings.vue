@@ -2,7 +2,7 @@
     <div class="flex justify-center md:flex-col px-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
       <Menu class="max-w-[411px] md:mb-[24px]" :nickName="organizationNickname"
                                                :homepage="organizationHomepage"
-                                               :logo="organizationLogo">
+                                               :logo="organizationAvatar">
       </Menu>
       <OrganizationEdit class="grow py-[24px]"
                         :organization="organization"
@@ -25,7 +25,7 @@
       return {
         organizationNickname: this.organization.nickname,
         organizationHomepage: this.organization.homepage,
-        organizationLogo: this.organization.logo,
+        organizationAvatar: this.organization.avatar,
       };
     },
     mounted() {},
@@ -34,7 +34,7 @@
         const { nickname, homepage, logo } = data;
         this.organizationNickname = nickname || this.nickname;
         this.organizationHomepage = homepage || this.homepage;
-        this.organizationLogo = logo || this.logo;
+        this.organizationAvatar = logo || this.logo;
       },
     },
   };

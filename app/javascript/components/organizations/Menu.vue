@@ -2,7 +2,7 @@
     <div class="border-r border-[#EAECF0]">
       <div class="w-[294px] rounded-[8px] mx-[24px] py-[24px]">
         <div class="flex p-[16px] pt-[16px]">
-          <el-avatar :size="60" :src="avatar"> </el-avatar>
+          <el-avatar :size="60" :src="logo"> </el-avatar>
           <div class="ml-[10px]">
             <div :title="nickName" class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[24px] leading-[32px] font-semibold">
                 {{nickName}}
