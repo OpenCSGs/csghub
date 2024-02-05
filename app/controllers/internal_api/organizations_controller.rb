@@ -18,14 +18,14 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     message = message.presence || error.message
     render json: {message: message}, status: 500
   end
-  
+
   def update
     org = Organization.find_by(name: params[:name])
     return render json: {message: '未找到组织'}, status: 400 unless org
     return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
     
     # 更新组织的信息
-    org.update(organization_params)
+    org.assign_attributes(organization_params)
     # 如果存在新的 logo 参数
     if params[:logo].present?
       # 上传新的 logo 并获取其 URL
