@@ -33,9 +33,9 @@
     methods: {
       updateOrganization(data) {
         const { nickname, homepage, logo } = data;
-        this.organizationNickname = nickname || this.nickname;
-        this.organizationHomepage = homepage || this.homepage;
-        this.organizationAvatar = logo || this.logo;
+        this.organizationNickname = nickname || this.organizationNickname;
+        this.organizationHomepage = homepage || this.organizationHomepage;
+        this.organizationAvatar = logo || this.organizationAvatar;
       },
     },
   };
