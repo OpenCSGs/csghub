@@ -61,20 +61,18 @@
 </template>
 <script>
 import csrfFetch from "../../packs/csrfFetch.js"
-import { useCookies } from "vue3-cookies";
 import { ElMessage } from "element-plus";
-const { cookies } = useCookies();
 export default {
   props: {
     organization: Object
   },
   data() {
     return {
-      orgName:this.organization.name?this.organization.name:'',
-      orgNickName:this.organization.nickname?this.organization.nickname:'',
-      avatarUrl:this.organization.avatar?this.organization.avatar:'',
-      homepage:this.organization.homepage?this.organization.homepage:'',
-      orgType:this.organization.org_type?this.organization.org_type:'',
+      orgName:this.organization.name,
+      orgNickName:this.organization.nickname,
+      avatarUrl:this.organization.avatar,
+      homepage:this.organization.homepage,
+      orgType:this.organization.org_type,
       theOrgTypes:[{key:'1',label:'企业',value:'企业'},
                    {key:'2',label:'高校',value:'高校'},
                    {key:'3',label:'非营利组织',value:'非营利组织'},
