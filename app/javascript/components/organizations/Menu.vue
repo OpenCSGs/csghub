@@ -12,9 +12,8 @@
         </div>
         <div class="p-[16px] text-[20px] leading-[30px] text-[#344054]">组织设置</div>
         <div class="flex flex-col">
-          <a href="/org"
-             class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-[#667085] leading-[24px] cursor-pointer"
-             :class="menuClass('/org')"
+          <a  class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-[#667085] leading-[24px] cursor-pointer"
+             :class="menuClass(`/organizations/${this.name}/settings`)"
           >
               组织信息
           </a>
@@ -25,6 +24,7 @@
 <script>
 export default {
   props: {
+    name:String,
     nickName: String,
     homepage: String,
     logo: String
