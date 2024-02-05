@@ -1,27 +1,15 @@
 <template>
   <div class="border border-[#DCDFE6] rounded">
     <Codemirror
-      :modelValue="modelValue"
-      @change="onChange"
+      v-model="codeContent"
     />
   </div>
 </template>
 
 <script setup>
-import { defineEmits } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 
-const props = defineProps({
-  modelValue: String
-})
-
-const emits = defineEmits(['update:modelValue'])
-
-const onChange = (code) => {
-  if (props.modelValue !== code) {
-    emits('update:modelValue', code)
-  }
-}
+const codeContent = defineModel()
 </script>
 
 <style scoped>
