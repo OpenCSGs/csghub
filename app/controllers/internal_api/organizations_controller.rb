@@ -40,8 +40,8 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     
     
     render json: {message: '组织更新成功'}
-  rescue => e
-    render json: {message: "组织更新失败, #{e.message}"}, status: 500
+    rescue => e
+      render json: {message: "组织更新失败, #{e.message}"}, status: 500
   end
   
   def new_members
@@ -54,7 +54,8 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
     org = Organization.find_by(name: params[:org_name])
     return render json: {message: '未找到组织'}, status: 400 unless org
-    return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
+    rescue Pundit::NotAuthorizedError
+      render json: {message: '更新未授权!'}, status: 401
 
     Organization.transaction do
       user_names.each do |user_name|

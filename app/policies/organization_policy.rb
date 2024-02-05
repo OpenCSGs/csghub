@@ -20,7 +20,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    user.admin? || belongs_to_current_user?
   end
 
   def destroy?
