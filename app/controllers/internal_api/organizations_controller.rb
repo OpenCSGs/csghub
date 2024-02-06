@@ -22,26 +22,24 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   def update
     org = Organization.find_by(name: params[:name])
     return render json: {message: '未找到组织'}, status: 404 unless org
-    return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
-    
+    authorize org
+
     # 更新组织的信息
     org.assign_attributes(organization_params)
-    # 如果存在新的 logo 参数
+
     if params[:logo].present?
-      # 上传新的 logo 并获取其 URL
       image_url_code = AwsS3.instance.upload 'org-logo', params[:logo]
       org.logo = image_url_code
     end
     
     # 保存组织信息
     if org.save
+      render json: {message: '组织更新成功'}
     else
+      render json: {message: "组织更新失败"}, status: 500
     end
-    
-    
-    render json: {message: '组织更新成功'}
-    rescue => e
-      render json: {message: "组织更新失败, #{e.message}"}, status: 500
+  rescue Pundit::NotAuthorizedError
+    render json: {message: '更新未授权!'}, status: 401
   end
   
   def new_members
@@ -53,9 +51,8 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     return render json: {message: '请提供成员信息'}, status: 400 unless user_names.present?
 
     org = Organization.find_by(name: params[:org_name])
-    return render json: {message: '未找到组织'}, status: 400 unless org
-    rescue Pundit::NotAuthorizedError
-      render json: {message: '更新未授权!'}, status: 401
+    return render json: {message: '未找到组织'}, status: 404 unless org
+    return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
 
     Organization.transaction do
       user_names.each do |user_name|
