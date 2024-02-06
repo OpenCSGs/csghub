@@ -286,6 +286,10 @@ module Starhub
       res.body
     end
 
+    def upload_datasets_file(username, dataset_name, options = {})
+      @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
+    end
+
     def create_ssh_key(username, key_name, content)
       options = {
         username: username,

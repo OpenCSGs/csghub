@@ -61,16 +61,15 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def upload_file
-    options = file_params.slice(:branch).merge({
-                                                 new_branch: 'main',
-                                                 namespace: params[:namespace],
-                                                 name: params[:dataset_name],
-                                                 file_path: params[:file_path],
-                                                 file: params[:file],
-                                                 email: current_user.email,
-                                                 message: build_commit_message,
-                                                 username: current_user.name
-                                               })
+    file = params[:file]
+    options = {
+      branch: 'main',
+      file_path: file.original_filename,
+      file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
+      email: current_user.email,
+      message: build_commit_message,
+      username: current_user.name
+    }
     sync_upload_file(options)
     render json: { message: '上传文件成功' }
   end
@@ -94,7 +93,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def sync_upload_file(options)
-    res = Starhub.api.upload_model_file(params[:namespace], params[:dataset_name], options)
+    res = Starhub.api.upload_datasets_file(params[:namespace], params[:dataset_name], options)
     raise StarhubError, res.body unless res.success?
   end
 
