@@ -16,7 +16,7 @@
         />
       </template>
       <template #files v-if="actionName === 'upload_file'">
-        <upload-file
+        <new-upload-file
             :current-branch="currentBranch"
             :repo-name="modelDetail.name"
             :namespace-path="modelDetail.path"
@@ -59,7 +59,7 @@ import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
 import ModelBlob from './ModelBlob.vue'
-import UploadFile from '../shared/file/UploadFile.vue'
+import NewUploadFile from '../shared/file/NewUploadFile.vue'
 
 const props = defineProps({
   localModelId: String,

@@ -184,7 +184,6 @@ async function uploadImage() {
     formData.append('commit_title', commitTitle.value)
     formData.append('commit_desc', commitDesc.value)
     formData.append('file', item.file)
-    console.log(formData)
     let xhr = new XMLHttpRequest()
 
     // 上传进度回调事件
@@ -214,7 +213,7 @@ async function uploadImage() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     xhr.open('POST', `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`, true)
     xhr.setRequestHeader('X-CSRF-Token', csrfToken)
-    // xhr.setRequestHeader('Content-Type', 'multipart/form-data')
+    // xhr.setRequestHeader('Content-Type', 'multipart/form-data')   不能重复使用
     xhr.send(formData)
 
     // 显示进度条

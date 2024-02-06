@@ -70,7 +70,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     file = params[:file]
     options = {
       branch: 'main',
-      file_path: params[:file_path],
+      file_path: file.original_filename,
       file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
       email: current_user.email,
       message: build_commit_message,
@@ -92,7 +92,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def build_commit_message
     if params[:commit_title]&.strip.blank? && params[:commit_desc]&.strip.blank?
-      return "Upload #{params[:file_path]}"
+      return "Upload #{params[:file].original_filename}"
     end
 
     "#{params[:commit_title]&.strip} \n #{params[:commit_desc]&.strip}"
