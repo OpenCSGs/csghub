@@ -104,7 +104,8 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def validate_model
-    @model = Model.find_by(name: params[:model_name])
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @model = owner && owner.models.find_by(name: params[:model_name])
     unless @model
       return render json: { message: "未找到对应模型" }, status: 404
     end
