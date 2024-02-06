@@ -98,12 +98,9 @@ module Starhub
       Faraday.new(
         url: base_url,
         headers: {
-          'Content-Type' => "multipart/form-data",
           'Authorization' => "Bearer #{token}"
         }) do |conn|
-        conn.adapter :typhoeus
         conn.request :multipart
-        conn.adapter Faraday.default_adapter
       end
     end
   end

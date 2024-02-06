@@ -67,13 +67,10 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def upload_file
-    # 打印文件路径
-    # debugger
     file = params[:file]
     options = {
       branch: 'main',
-      file_path: URI.encode_www_form_component(params[:file_path]),
-      # file: params[:file],
+      file_path: params[:file_path],
       file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
       email: current_user.email,
       message: build_commit_message,
@@ -102,7 +99,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def sync_upload_file(options)
-    puts "success??????????????????"
     res = Starhub.api.upload_model_file(params[:namespace], params[:model_name], options)
     raise StarhubError, res.body unless res.success?
   end
