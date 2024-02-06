@@ -170,12 +170,21 @@ async function uploadImage() {
   }
 
   for (let [index, item] of filesList.value.entries()) {
+
+    // const bodyData = {
+    //   file_path: item.file.name,
+    //   commit_title: commitTitle.value,
+    //   commit_desc: commitDesc.value,
+    //   file: item.file
+    // }
+    // console.log(bodyData)
+
     let formData = new FormData()
-    formData.append('file_path', item.fileName)
+    formData.append('file_path', item.file.name)
     formData.append('commit_title', commitTitle.value)
     formData.append('commit_desc', commitDesc.value)
     formData.append('file', item.file)
-
+    console.log(formData)
     let xhr = new XMLHttpRequest()
 
     // 上传进度回调事件
@@ -186,25 +195,26 @@ async function uploadImage() {
       }
     });
 
-    // 上传完成回调
-    xhr.addEventListener('load', function () {
-      filesList.value[index].status = 'success'
-      uploadDoneList.value.push(index)
-      ElMessage({message: "上传完成", type: "success"})
-    });
-
-    // 上传错误回调
-    xhr.addEventListener('error', function () {
-      filesList.value[index].status = 'exception'
-      ElMessage({message: "上传异常", type: "warning"})
-      // resetProgressBar(index)   设置进度条为0
-    });
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        // 请求成功
+        filesList.value[index].status = 'success'
+        uploadDoneList.value.push(index)
+        ElMessage({message: "上传完成", type: "success"})
+      } else {
+        // 请求失败
+        filesList.value[index].status = 'exception'
+        ElMessage({message: "上传错误", type: "warning"})
+        // 终止上传
+        xhr.abort()
+      }
+    };
 
     // 设置请求
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     xhr.open('POST', `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`, true)
     xhr.setRequestHeader('X-CSRF-Token', csrfToken)
-    xhr.setRequestHeader('Content-Type', 'application/json')
+    // xhr.setRequestHeader('Content-Type', 'multipart/form-data')
     xhr.send(formData)
 
     // 显示进度条

@@ -180,7 +180,7 @@ module Starhub
     end
 
     def upload_model_file(username, model_name, options = {})
-      @client.post("/models/#{username}/#{model_name}/upload_file", options)
+      @client.upload("/models/#{username}/#{model_name}/upload_file", options)
     end
 
     # datasets

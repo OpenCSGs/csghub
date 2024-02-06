@@ -13,7 +13,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                       params[:page],
                                       params[:per_page])
     api_response = JSON.parse(res_body)
-    render json: {models: api_response['data'], total: api_response['total']}
+    render json: { models: api_response['data'], total: api_response['total'] }
   end
 
   def files
@@ -67,19 +67,20 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def upload_file
-    puts "success!!!!!!!!!!!!!!!"
-    options = file_params.slice(:branch).merge({
-                                                 new_branch: 'main',
-                                                 namespace: params[:namespace],
-                                                 name: params[:model_name],
-                                                 file_path: params[:file_path],
-                                                 file: params[:file],
-                                                 email: current_user.email,
-                                                 message: build_commit_message,
-                                                 username: current_user.name
-                                               })
+    # 打印文件路径
+    # debugger
+    file = params[:file]
+    options = {
+      branch: 'main',
+      file_path: URI.encode_www_form_component(params[:file_path]),
+      # file: params[:file],
+      file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
+      email: current_user.email,
+      message: build_commit_message,
+      username: current_user.name
+    }
     sync_upload_file(options)
-    render json: { message: '上传文件成功' }
+    render json: { message: '上传文件成功' }, status: 200
   end
 
   private
@@ -93,14 +94,15 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def build_commit_message
-    if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
-      return "Upload #{params[:path]}"
+    if params[:commit_title]&.strip.blank? && params[:commit_desc]&.strip.blank?
+      return "Upload #{params[:file_path]}"
     end
 
-    "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
+    "#{params[:commit_title]&.strip} \n #{params[:commit_desc]&.strip}"
   end
 
   def sync_upload_file(options)
+    puts "success??????????????????"
     res = Starhub.api.upload_model_file(params[:namespace], params[:model_name], options)
     raise StarhubError, res.body unless res.success?
   end
