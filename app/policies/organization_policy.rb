@@ -20,11 +20,17 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || belongs_to_current_user?
+    user.admin? || is_org_creator?
   end
 
   def destroy?
     user.super_user?
+  end
+  
+  private
+
+  def is_org_creator?
+    record.creator_id == user.id
   end
 
   class Scope < Scope
