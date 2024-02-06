@@ -2,8 +2,9 @@ class DatasetsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_branch_and_path, only: [:files, :blob]
-  before_action :load_dataset_detail, only: [:show, :files, :blob]
+  before_action :authenticate_user, only: [:new_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file]
+  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file]
 
   def index
     response = {}
@@ -52,6 +53,10 @@ class DatasetsController < ApplicationController
     else
       render :show
     end
+  end
+
+  def new_file
+    render :show
   end
 
   private

@@ -5,14 +5,6 @@
       <template #summary>
         <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
       </template>
-      <template #files v-if="actionName !== 'blob'">
-        <model-files
-          :branches="branches"
-          :current-branch="currentBranch"
-          :current-path="currentPath"
-          :namespace-path="modelDetail.path"
-        />
-      </template>
       <template #files v-if="actionName === 'blob'">
         <model-blob
           :content="content"
@@ -21,6 +13,23 @@
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="modelDetail.path"
+        />
+      </template>
+      <template #files v-if="actionName === 'new_file'">
+        <new-file
+          :current-branch="currentBranch"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
+          originalCodeContent=""
+        />
+      </template>
+      <template #files v-if="actionName === 'show' || actionName === 'files'">
+        <model-files
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="modelDetail.path"
+          :can-write="canWrite"
         />
       </template>
       <template #community>
@@ -51,6 +60,7 @@ import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
 import ModelBlob from './ModelBlob.vue'
+import NewFile from '../shared/NewFile.vue'
 
 const props = defineProps({
   localModelId: String,
@@ -68,5 +78,6 @@ const props = defineProps({
   content: String,
   actionName: String,
   settingsVisibility: Boolean,
+  canWrite: Boolean
 })
 </script>
