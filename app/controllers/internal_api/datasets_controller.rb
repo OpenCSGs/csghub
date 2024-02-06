@@ -98,7 +98,8 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def validate_dataset
-    @dataset = Dataset.find_by(name: params[:dataset_name])
+    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     unless @dataset
       return render json: { message: "未找到对应数据集" }, status: 404
     end
