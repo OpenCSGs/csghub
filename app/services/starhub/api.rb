@@ -361,6 +361,18 @@ module Starhub
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
 
+    def datasets_by_paths list
+      res = @client.post("/list/datasets_by_path", {paths: list})
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def models_by_paths list
+      res = @client.post("/list/models_by_path", {paths: list})
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # TODO: add more starhub api
 
     private
