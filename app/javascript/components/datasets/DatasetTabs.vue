@@ -8,14 +8,6 @@
           :namespace-path="datasetDetail.path"
         />
       </template>
-      <template #files v-if="actionName !== 'blob'">
-        <dataset-files
-          :branches="branches"
-          :current-branch="currentBranch"
-          :current-path="currentPath"
-          :namespace-path="datasetDetail.path"
-        />
-      </template>
       <template #files v-if="actionName === 'blob'">
         <dataset-blob
           :content="content"
@@ -24,6 +16,23 @@
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="datasetDetail.path"
+        />
+      </template>
+      <template #files v-if="actionName === 'new_file'">
+        <new-file
+          :current-branch="currentBranch"
+          :repo-name="datasetDetail.name"
+          :namespace-path="datasetDetail.path"
+          originalCodeContent=""
+        />
+      </template>
+      <template #files v-if="actionName === 'show' || actionName === 'files'">
+        <dataset-files
+          :branches="branches"
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :namespace-path="datasetDetail.path"
+          :can-write="canWrite"
         />
       </template>
       <template #community>
@@ -54,6 +63,7 @@ import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 import DatasetBlob from './DatasetBlob.vue'
 import DatasetClone from './DatasetClone.vue';
+import NewFile from '../shared/NewFile.vue'
 
 
 const props = defineProps({
@@ -71,6 +81,7 @@ const props = defineProps({
   defaultTab: String,
   content: String,
   actionName: String,
-  settingsVisibility: Boolean
+  settingsVisibility: Boolean,
+  canWrite: Boolean
 })
 </script>

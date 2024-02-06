@@ -29,6 +29,7 @@
       :default-tab="defaultTab"
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
+      :can-write="canWrite"
     />
   </div>
 </template>
@@ -52,7 +53,8 @@ const props = defineProps({
   avatar: String,
   settingsVisibility: Boolean,
   tags: Object,
-  ownerUrl: String
+  ownerUrl: String,
+  canWrite: Boolean
 })
 </script>
 
