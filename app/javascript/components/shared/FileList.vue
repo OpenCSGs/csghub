@@ -76,11 +76,11 @@
       </div>
       <div class="text-[#909399] text-sm cursor-pointer md:hidden">
         <el-popover
-            width="158"
-            placement="top"
-            effect="dark"
-            trigger="hover"
-            :content="beiJingTimeParser(lastCommit.committer_date)"
+          width="158"
+          placement="top"
+          effect="dark"
+          trigger="hover"
+          :content="beiJingTimeParser(lastCommit.committer_date)"
         >
           <template #reference>
             {{ format(beiJingTimeParser(lastCommit.committer_date), 'zh_CN') }}
@@ -104,12 +104,12 @@
           {{ file.name }}
         </a>
         <el-popover
-            v-else
-            placement="top"
-            :width="270"
-            trigger="hover"
-            effect="dark"
-            content="暂不支持预览，请通过 git clone 下载"
+          v-else
+          placement="top"
+          :width="270"
+          trigger="hover"
+          effect="dark"
+          content="暂不支持预览，请通过 git clone 下载"
         >
           <template #reference>
             <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
@@ -132,11 +132,11 @@
       </a>
       <div class="text-[#909399] w-[20%] text-sm text-right cursor-pointer md:hidden">
         <el-popover
-            width="158"
-            placement="top"
-            effect="dark"
-            trigger="hover"
-            :content="beiJingTimeParser(file.commit.committer_date)"
+          width="158"
+          placement="top"
+          effect="dark"
+          trigger="hover"
+          :content="beiJingTimeParser(file.commit.committer_date)"
         >
           <template #reference>
             {{ format(beiJingTimeParser(file.commit.committer_date), 'zh_CN') }}
@@ -149,104 +149,104 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { format } from 'timeago.js';
-import { ElMessage } from "element-plus"
+  import { ref, onMounted } from 'vue'
+  import { format } from 'timeago.js';
+  import { ElMessage } from "element-plus"
 
-const props = defineProps({
-  branches: Object,
-  currentBranch: String,
-  currentPath: String,
-  namespacePath: String,
-  canWrite: Boolean
-})
-
-const loading = ref(true)
-
-const breadcrumb = ref([])
-const files = ref([])
-const lastCommit = ref({})
-
-const prefixPath = document.location.pathname.split('/')[1]
-
-const extractNameFromPath = (path) => {
-  const parts = path.split('/')
-  return parts[parts.length - 1]
-};
-
-const updateBreadcrumb = () => {
-  const breadcrumbArray = props.currentPath.split('/').filter(Boolean);
-  let breadcrumbPath = ''
-  breadcrumb.value = breadcrumbArray.map((item) => {
-    breadcrumbPath += '/' + item
-    return breadcrumbPath
+  const props = defineProps({
+    branches: Object,
+    currentBranch: String,
+    currentPath: String,
+    namespacePath: String,
+    canWrite: Boolean
   })
-}
 
-const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+  const loading = ref(true)
 
-function formatBytes(bytes) {
-  let level = 0;
-  let n = parseInt(bytes, 10) || 0;
+  const breadcrumb = ref([])
+  const files = ref([])
+  const lastCommit = ref({})
 
-  while (n >= 1024 && ++level) {
-    n = n / 1024;
-  }
+  const prefixPath = document.location.pathname.split('/')[1]
 
-  return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
-}
+  const extractNameFromPath = (path) => {
+    const parts = path.split('/')
+    return parts[parts.length - 1]
+  };
 
-
-// 预览放行规则：非 LFS，文件大小不超过 10MB，后缀名为 rb、gitattributes、md、json、yaml、sh、py、js、ts、cpp、c、txt 或为空
-const canPreview = (file) => {
-  const extension = getFileExtension(file)
-  const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt']
-
-  const isFileLFS = file.lfs
-  const isExtensionIncluded = !extension || previewExtensions.includes(extension)
-  const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
-
-  return !isFileLFS && isExtensionIncluded && isFileSizeLessThan10MB
-}
-
-const canDownload = (file) => {
-  return file.lfs || (file.size <= 10 * 1024 * 1024)
-}
-
-const getFileExtension = (file) => {
-  const fileName = file.path.split('/').pop()
-  const lastDotIndex = fileName.lastIndexOf('.')
-  if (lastDotIndex === -1) {
-    return ''
-  }
-  return fileName.substr(lastDotIndex + 1)
-}
-
-const beiJingTimeParser = (utcTimeStr) => {
-  utcTime = new Date(utcTimeStr)
-  return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
-}
-
-const fetchData = async () => {
-  const url = `/internal_api/${prefixPath}/${props.namespacePath}/files?branch=${props.currentBranch}&path=${props.currentPath}`
-
-  fetch(url).then((response) => {
-    response.json().then((data) => {
-      files.value = data.files
-      lastCommit.value = data.last_commit
-    }).catch((error) => {
-      ElMessage({
-        message: '加载数据报错',
-        type: 'warning'
-      })
-    }).then(() => {
-      loading.value = false
+  const updateBreadcrumb = () => {
+    const breadcrumbArray = props.currentPath.split('/').filter(Boolean);
+    let breadcrumbPath = ''
+    breadcrumb.value = breadcrumbArray.map((item) => {
+      breadcrumbPath += '/' + item
+      return breadcrumbPath
     })
-  })
-}
+  }
 
-onMounted(() => {
-  updateBreadcrumb()
-  fetchData()
-})
+  const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+
+  function formatBytes(bytes) {
+    let level = 0;
+    let n = parseInt(bytes, 10) || 0;
+
+    while (n >= 1024 && ++level) {
+      n = n / 1024;
+    }
+
+    return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
+  }
+
+
+  // 预览放行规则：非 LFS，文件大小不超过 10MB，后缀名为 rb、gitattributes、md、json、yaml、sh、py、js、ts、cpp、c、txt 或为空
+  const canPreview = (file) => {
+    const extension = getFileExtension(file)
+    const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt']
+
+    const isFileLFS = file.lfs
+    const isExtensionIncluded = !extension || previewExtensions.includes(extension)
+    const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
+
+    return !isFileLFS && isExtensionIncluded && isFileSizeLessThan10MB
+  }
+
+  const canDownload = (file) => {
+    return file.lfs || (file.size <= 10 * 1024 * 1024)
+  }
+
+  const getFileExtension = (file) => {
+    const fileName = file.path.split('/').pop()
+    const lastDotIndex = fileName.lastIndexOf('.')
+    if (lastDotIndex === -1) {
+      return ''
+    }
+    return fileName.substr(lastDotIndex + 1)
+  }
+
+  const beiJingTimeParser = (utcTimeStr) => {
+    utcTime = new Date(utcTimeStr)
+    return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
+  }
+
+  const fetchData = async () => {
+    const url = `/internal_api/${prefixPath}/${props.namespacePath}/files?branch=${props.currentBranch}&path=${props.currentPath}`
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        files.value = data.files
+        lastCommit.value = data.last_commit
+      }).catch((error) => {
+        ElMessage({
+          message: '加载数据报错',
+          type: 'warning'
+        })
+      }).then(() => {
+        loading.value = false
+      })
+    })
+  }
+
+  onMounted(() => {
+    updateBreadcrumb()
+    fetchData()
+  })
 </script>
