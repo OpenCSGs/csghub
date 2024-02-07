@@ -25,9 +25,9 @@
       </template>
       <template #files v-if="actionName === 'upload_file'">
         <new-upload-file
-            :current-branch="currentBranch"
-            :repo-name="modelDetail.name"
-            :namespace-path="modelDetail.path"
+          :current-branch="currentBranch"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
         />
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
@@ -43,11 +43,12 @@
         <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
-        <Settings :path="modelPath"
-                  :model-nickname="modelNickname"
-                  :model-desc="modelDesc"
-                  :default_branch="modelDefaultBranch"
-                  :private="modelPrivate" />
+        <Settings
+          :path="modelPath"
+          :model-nickname="modelNickname"
+          :model-desc="modelDesc"
+          :default_branch="modelDefaultBranch"
+          :private="modelPrivate" />
       </template>
     </TabContainer>
   </div>
