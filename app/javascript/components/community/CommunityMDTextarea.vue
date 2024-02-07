@@ -29,7 +29,7 @@
         clearable
         type="textarea"
         :autosize="{minRows: 8, maxRows: 30}"
-        placeholder="留下评论"
+        :placeholder="placeholder"
         class="w-full text-[#606266] mb-[10px]"
       />
       <div class="flex items-center gap-[8px] text-[#909399] text-[14px] leading-[22px]">
@@ -58,6 +58,10 @@ import csrfFetch from "../../packs/csrfFetch.js"
 import { ElMessage } from 'element-plus'
 export default {
   props:{
+    placeholder: {
+      type: String,
+      default: '留下评论'
+    },
     desc: String
   },
   data() {
