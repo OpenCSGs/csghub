@@ -71,9 +71,7 @@ Rails.application.routes.draw do
 
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
-    resources :organizations, only: [:new, :show] do
-      get 'edit', on: :member
-    end
+    resources :organizations, only: [:new, :show, :edit]
 
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
