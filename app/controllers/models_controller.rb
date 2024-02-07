@@ -2,8 +2,9 @@ class ModelsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_branch_and_path, only: [:files, :blob, :upload_file]
-  before_action :load_model_detail, only: [:show, :files, :blob, :upload_file]
+  before_action :authenticate_user, only: [:new_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file]
+  before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file]
 
   def index
     response = {}
@@ -40,7 +41,8 @@ class ModelsController < ApplicationController
                                                    params[:model_name],
                                                    params[:lfs_path],
                                                    { ref: @current_branch,
-                                                     lfs: true })
+                                                     lfs: true,
+                                                     save_as: params[:path]})
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_model_file(params[:namespace],
@@ -55,6 +57,10 @@ class ModelsController < ApplicationController
   end
 
   def upload_file
+    render :show
+  end
+
+  def new_file
     render :show
   end
 

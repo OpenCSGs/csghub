@@ -74,7 +74,7 @@ module Starhub
     end
 
     def request_path(path)
-      API_VERSION + path
+      API_VERSION + Addressable::URI.encode_component(path)
     end
 
     def starhub_api_connection

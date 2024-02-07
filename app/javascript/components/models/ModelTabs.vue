@@ -15,6 +15,14 @@
           :namespace-path="modelDetail.path"
         />
       </template>
+      <template #files v-if="actionName === 'new_file'">
+        <new-file
+          :current-branch="currentBranch"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
+          originalCodeContent=""
+        />
+      </template>
       <template #files v-if="actionName === 'upload_file'">
         <new-upload-file
             :current-branch="currentBranch"
@@ -60,6 +68,7 @@ import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
 import ModelBlob from './ModelBlob.vue'
 import NewUploadFile from '../shared/file/NewUploadFile.vue'
+import NewFile from '../shared/NewFile.vue'
 
 const props = defineProps({
   localModelId: String,

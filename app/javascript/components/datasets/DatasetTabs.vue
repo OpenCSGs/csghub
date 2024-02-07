@@ -1,21 +1,29 @@
 <template>
   <div class="relative">
-    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url" />
+    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url"/>
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary
-          :download-count="datasetDetail.downloads"
-          :namespace-path="datasetDetail.path"
+            :download-count="datasetDetail.downloads"
+            :namespace-path="datasetDetail.path"
         />
       </template>
       <template #files v-if="actionName === 'blob'">
         <dataset-blob
-          :content="content"
-          :last-commit="lastCommit"
-          :branches="branches"
-          :current-branch="currentBranch"
-          :current-path="currentPath"
-          :namespace-path="datasetDetail.path"
+            :content="content"
+            :last-commit="lastCommit"
+            :branches="branches"
+            :current-branch="currentBranch"
+            :current-path="currentPath"
+            :namespace-path="datasetDetail.path"
+        />
+      </template>
+      <template #files v-if="actionName === 'new_file'">
+        <new-file
+            :current-branch="currentBranch"
+            :repo-name="datasetDetail.name"
+            :namespace-path="datasetDetail.path"
+            originalCodeContent=""
         />
       </template>
       <template #files v-if="actionName === 'upload_file'">
@@ -27,15 +35,15 @@
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
         <dataset-files
-          :branches="branches"
-          :current-branch="currentBranch"
-          :current-path="currentPath"
-          :namespace-path="datasetDetail.path"
-          :can-write="canWrite"
+            :branches="branches"
+            :current-branch="currentBranch"
+            :current-path="currentPath"
+            :namespace-path="datasetDetail.path"
+            :can-write="canWrite"
         />
       </template>
       <template #community>
-        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+        <CommunityPage type="Dataset" :localModelId="localDatasetId"></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
         <Settings :path="datasetPath"
@@ -49,9 +57,9 @@
 </template>
 
 <style>
-  .clone-tabs .el-tabs__header {
-    padding-left: 12px;
-  }
+.clone-tabs .el-tabs__header {
+  padding-left: 12px;
+}
 </style>
 
 <script setup>
@@ -63,6 +71,7 @@ import Settings from './DatasetSettings.vue'
 import DatasetBlob from './DatasetBlob.vue'
 import DatasetClone from './DatasetClone.vue'
 import UploadFile from '../shared/file/UploadFile.vue'
+import NewFile from '../shared/NewFile.vue'
 
 const props = defineProps({
   localDatasetId: String,
