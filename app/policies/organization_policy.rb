@@ -20,7 +20,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    user.org_role(record) == 'admin'
+    user.admin? || user.org_role(record) == 'admin'
   end
 
   def destroy?
