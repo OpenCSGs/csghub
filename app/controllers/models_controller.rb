@@ -41,7 +41,8 @@ class ModelsController < ApplicationController
                                                    params[:model_name],
                                                    params[:lfs_path],
                                                    { ref: @current_branch,
-                                                     lfs: true })
+                                                     lfs: true,
+                                                     save_as: params[:path]})
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_model_file(params[:namespace],
