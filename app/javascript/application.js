@@ -37,6 +37,7 @@ import ModelItem from "./components/models/ModelItem.vue"
 import ModelCards from "./components/models/ModelCards.vue"
 import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
+import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
@@ -85,7 +86,8 @@ const app = createApp({
     OnPremiseFooter,
     ComputingPage,
     LandingPage,
-    PrivacyPage
+    PrivacyPage,
+    OrganizationSettings
   },
   provide:{
     defaultTags: DefaultTags
