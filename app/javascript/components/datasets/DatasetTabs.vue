@@ -71,7 +71,7 @@ import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 import DatasetBlob from './DatasetBlob.vue'
 import DatasetClone from './DatasetClone.vue'
-import UploadFile from '../shared/file/UploadFile.vue'
+import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 
 const props = defineProps({

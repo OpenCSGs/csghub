@@ -61,7 +61,7 @@
   </div>
 </template>
 <script setup>
-import CommunityMDTextarea from '../../community/CommunityMDTextarea.vue'
+import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
 import {ref} from 'vue'
 import {ElMessage} from "element-plus"
 
