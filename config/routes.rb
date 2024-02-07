@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       end
     end
     resources :users, only: [:index, :update]
+    get '/users/:namespace/models', to: 'users#models'
+    get '/users/:namespace/datasets', to: 'users#datasets'
 
     resources :models, only: [:index, :create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme'

@@ -26,6 +26,7 @@ import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
+import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 
 const app = createApp({
   components: {
@@ -47,7 +48,8 @@ const app = createApp({
     ModelCards,
     DatasetCards,
     OrganizationDetail,
-    OnPremiseFooter
+    OnPremiseFooter,
+    ProfileRepoList
   },
   provide:{
     defaultTags: DefaultTags
