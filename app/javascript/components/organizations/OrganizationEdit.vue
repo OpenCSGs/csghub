@@ -71,11 +71,11 @@ export default {
   },
   data() {
     return {
-      orgName:this.organization.name,
-      orgNickName:this.organization.nickname,
-      avatarUrl:this.organization.avatar,
-      homepage:this.organization.homepage,
-      orgType:this.organization.org_type,
+      orgName: this.organization.name,
+      orgNickName: this.organization.nickname,
+      avatarUrl: this.organization.avatar,
+      homepage: this.organization.homepage,
+      orgType: this.organization.org_type,
       theOrgTypes:[{key: '1', label: '企业', value: '企业'},
                    {key: '2', label: '高校', value: '高校'},
                    {key: '3', label: '非营利组织', value: '非营利组织'},
