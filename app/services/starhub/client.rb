@@ -1,6 +1,7 @@
 module Starhub
   class Client
     class ApiError < StandardError; end
+
     include Singleton
 
     API_VERSION = '/api/v1'
@@ -14,6 +15,14 @@ module Starhub
     def post(path, options = {})
       starhub_api_connection.post(request_path(path)) do |req|
         req.body = options.to_json
+      end
+    rescue Faraday::ConnectionFailed
+      raise StarhubError, "Git服务器超时"
+    end
+
+    def upload(path, options = {})
+      starhub_api_connection_upload.post(request_path(path)) do |req|
+        req.body = options
       end
     rescue Faraday::ConnectionFailed
       raise StarhubError, "Git服务器超时"
@@ -79,6 +88,18 @@ module Starhub
           'Authorization' => "Bearer #{token}"
         }) do |conn|
         conn.adapter :typhoeus
+      end
+    end
+
+    def starhub_api_connection_upload
+      base_url, token = starhub_configs
+      # add this config to solve URL with unicode query
+      Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
+      Faraday.new(
+        url: base_url,
+        headers: { 'Authorization' => "Bearer #{token}" }
+      ) do |conn|
+        conn.request :multipart
       end
     end
   end

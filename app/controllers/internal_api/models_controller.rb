@@ -1,8 +1,8 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_model, only: [:update, :destroy, :create_file]
+  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
   before_action :validate_manage, only: [:update, :destroy]
-  before_action :validate_write, only: [:create_file]
+  before_action :validate_write, only: [:create_file, :upload_file]
   before_action :validate_authorization, only: [:files, :readme]
 
   def index
@@ -15,7 +15,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                       params[:page],
                                       params[:per_page])
     api_response = JSON.parse(res_body)
-    render json: {models: api_response['data'], total: api_response['total']}
+    render json: { models: api_response['data'], total: api_response['total'] }
   end
 
   def files
@@ -70,14 +70,28 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def create_file
     options = file_params.slice(:branch).merge({
-      message: build_commit_message,
-      new_branch: 'main',
-      username: current_user.name,
-      email: current_user.email,
-      content: Base64.encode64(params[:content])
-    })
+                                                 message: build_commit_message,
+                                                 new_branch: 'main',
+                                                 username: current_user.name,
+                                                 email: current_user.email,
+                                                 content: Base64.encode64(params[:content])
+                                               })
     sync_create_file(options)
     render json: { message: '创建文件成功' }
+  end
+
+  def upload_file
+    file = params[:file]
+    options = {
+      branch: 'main',
+      file_path: file.original_filename,
+      file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
+      email: current_user.email,
+      message: build_upload_commit_message,
+      username: current_user.name
+    }
+    sync_upload_file(options)
+    render json: { message: '上传文件成功' }, status: 200
   end
 
   private
@@ -90,12 +104,25 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     params.permit(:path, :content, :branch, :commit_title, :commit_desc)
   end
 
+  def sync_upload_file(options)
+    res = Starhub.api.upload_model_file(params[:namespace], params[:model_name], options)
+    raise StarhubError, res.body unless res.success?
+  end
+
   def build_commit_message
     if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
       return "Create #{params[:path]}"
     end
 
     "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
+  end
+
+  def build_upload_commit_message
+    if params[:commit_title]&.strip.blank? && params[:commit_desc]&.strip.blank?
+      return "Upload #{params[:file].original_filename}"
+    end
+
+    "#{params[:commit_title]&.strip} \n #{params[:commit_desc]&.strip}"
   end
 
   def sync_create_file(options)

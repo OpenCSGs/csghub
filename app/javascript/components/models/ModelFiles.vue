@@ -4,14 +4,13 @@
     :current-branch="currentBranch"
     :current-path="currentPath"
     :namespace-path="namespacePath"
-    @change-branch="changeBranch"
     :can-write="canWrite"
+    @change-branch="changeBranch"
   />
 </template>
 
 <script setup>
   import FileList from '../shared/FileList.vue'
-
   const props = defineProps({
     branches: Object,
     currentBranch: String,
