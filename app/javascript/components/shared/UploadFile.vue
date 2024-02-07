@@ -71,7 +71,7 @@ const props = defineProps({
 })
 
 const uploadRef = ref();
-let filesList = ref([])
+const filesList = ref([])
 const commitTitle = ref('')
 const commitTitlePlaceholder = ref('Upload file')
 const new_branch = ref('main')
