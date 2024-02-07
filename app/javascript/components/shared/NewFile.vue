@@ -24,7 +24,7 @@
                 :placeholder="commitTitlePlaceholder"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
-    <CommunityMDTextarea desc="" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" placeholder="提供更多描述" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="createFile" :disabled="!commitValid || submiting">创建文件</el-button>
       <el-button @click="cancel">取消</el-button>
