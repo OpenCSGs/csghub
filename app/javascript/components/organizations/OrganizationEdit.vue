@@ -76,10 +76,10 @@ export default {
       avatarUrl:this.organization.avatar,
       homepage:this.organization.homepage,
       orgType:this.organization.org_type,
-      theOrgTypes:[{key:'1',label:'企业',value:'企业'},
-                   {key:'2',label:'高校',value:'高校'},
-                   {key:'3',label:'非营利组织',value:'非营利组织'},
-                   {key:'4',label:'社区组织',value:'社区组织'},]
+      theOrgTypes:[{key: '1', label: '企业', value: '企业'},
+                   {key: '2', label: '高校', value: '高校'},
+                   {key: '3', label: '非营利组织', value: '非营利组织'},
+                   {key: '4', label: '社区组织', value: '社区组织'},]
     };
   },
   mounted() {},
