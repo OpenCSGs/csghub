@@ -268,13 +268,9 @@ const fetchData = async () => {
     })
   })
 }
-const test = () => {
-  console.log(props.canWrite)
-}
 
 onMounted(() => {
   updateBreadcrumb()
   fetchData()
-  test()
 })
 </script>
