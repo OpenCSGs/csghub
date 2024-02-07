@@ -97,9 +97,8 @@ module Starhub
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         url: base_url,
-        headers: {
-          'Authorization' => "Bearer #{token}"
-        }) do |conn|
+        headers: { 'Authorization' => "Bearer #{token}" }
+      ) do |conn|
         conn.request :multipart
       end
     end
