@@ -31,6 +31,7 @@
         <div @click="removeImage" class="text-[14px] leading-[20px] text-center text-[#223B99] cursor-pointer">
           移除
         </div>
+        <el-avatar :size="60" :src="avatarUrl"> </el-avatar>
       </div>
     </div>
     <div>
