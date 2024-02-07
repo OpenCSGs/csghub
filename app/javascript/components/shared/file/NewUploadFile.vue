@@ -37,7 +37,7 @@
           </div>
           <template #tip>
             <div class="el-upload__tip">
-              files with a size less than 500kb
+              支持 5M 以内大小的文件上传
             </div>
           </template>
         </el-upload>
@@ -49,11 +49,11 @@
     </el-radio-group>
 
     <div>
-      <p class="text-[14px] mb-[8px]">上传文件</p>
+      <p class="text-[14px] mb-[8px]">提交变更</p>
       <el-input v-model="commitTitle" :maxLength="200" show-word-limit clearable
                 :placeholder="commitTitlePlaceholder"></el-input>
     </div>
-    <CommunityMDTextarea desc="" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" placeholder="提供更多描述" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="submitUpload" :disabled="filesList.length === 0">上传文件</el-button>
       <el-button @click="cancel">取消</el-button>
@@ -92,7 +92,7 @@ const submitUpload = () => {
 }
 
 const handleBeforeUpload = (file) => {
-  if (file.size / 1024 <= 500) {
+  if (file.size / 1024 <= 5000) {
     return true
   } else {
     ElMessage({message: "文件过大", type: "warning"})
@@ -108,6 +108,7 @@ const handleFileChange = (file) => {
 const handleSuccess = (response, file, fileList) => {
   ElMessage({message: "上传完成", type: "success"})
   filesList.value = []
+  window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
 };
 
 const handleError = (err, file, fileList) => {
