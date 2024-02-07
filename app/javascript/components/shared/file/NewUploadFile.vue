@@ -33,7 +33,7 @@
             </svg>
           </el-icon>
           <div class="el-upload__text py-[16px] px-[24px]">
-            Drop file here or <em>click to upload</em>
+            拖拽文件到这里或者 <em>点击上传</em>（只支持单个文件）
           </div>
           <template #tip>
             <div class="el-upload__tip">
