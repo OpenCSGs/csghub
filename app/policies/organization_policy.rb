@@ -20,7 +20,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || is_org_creator?
+    user.admin? || user.org_role(record) == 'admin'
   end
 
   def destroy?
@@ -28,10 +28,6 @@ class OrganizationPolicy < ApplicationPolicy
   end
   
   private
-
-  def is_org_creator?
-    record.creator_id == user.id
-  end
 
   class Scope < Scope
     def resolve
