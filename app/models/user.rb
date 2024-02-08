@@ -101,6 +101,14 @@ class User < ApplicationRecord
     end
   end
 
+  def can_write? repository
+    if repository.owner.class == Organization
+      org_role(repository.owner) == 'admin' || org_role(repository.owner) == 'write'
+    else
+      self == repository.owner
+    end
+  end
+
   def set_org_role org, role
     membership = org_memberships.find_by(organization: org)
     if membership
