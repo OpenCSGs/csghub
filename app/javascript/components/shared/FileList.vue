@@ -54,6 +54,9 @@
               <a :href="`/${prefixPath}/${namespacePath}/main/new`">
                 <el-dropdown-item>创建新文件</el-dropdown-item>
               </a>
+              <a :href="`/${prefixPath}/${namespacePath}/main/upload`">
+                <el-dropdown-item>上传文件</el-dropdown-item>
+              </a>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
