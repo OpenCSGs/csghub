@@ -9,9 +9,13 @@
       >
       </MarkdownViewer>
     </div>
-    <div class="p-4 w-[20%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="text-[#606266] text-base font-medium leading-[22px]">下载热度</div>
-      <div class="text-[#303133] text-base font-semibold leading-6 mt-1">{{ downloadCount }}</div>
+    <div class="w-[40%] sm:w-[100%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
+      <div class="p-4">
+        <div class="text-[#606266] text-base font-medium leading-[22px]">下载热度</div>
+        <div class="text-[#303133] text-base font-semibold leading-6 mt-1">{{ downloadCount }}</div>
+      </div>
+
+      <QuestionAnswer class="border-t border-[#EBEEF5] p-4" />
     </div>
   </div>
 </template>
@@ -19,6 +23,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
+  import QuestionAnswer from './widgets/QuestionAnswer.vue';
 
   const props = defineProps({
     namespacePath: String,
