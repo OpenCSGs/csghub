@@ -12,7 +12,7 @@ You can try the free SaaS version of CSGHub through the OpenCSG Community offici
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
 ### UPDATES
-- [2024.03.15] v0.3 Plan: Files online editing, daily paper, organization edit, llm-inference, dataset preview
+- [2024.03.15] v0.3 Plan: Files online editing, daily paper, organization edit, llm-inference, dataset preview.
 - [2024.02.15] v0.2 Improve the function of model dataset hosting, and add the feature of inviting new organization members.
 - [2024.01.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as blew.
 
