@@ -2,9 +2,9 @@ class DatasetsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file]
-  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file]
+  before_action :authenticate_user, only: [:new_file, :upload_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file]
+  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file]
 
   def index
     response = {}
@@ -41,7 +41,8 @@ class DatasetsController < ApplicationController
                                                       params[:dataset_name],
                                                       params[:lfs_path],
                                                       { ref: @current_branch,
-                                                        lfs: true })
+                                                        lfs: true,
+                                                        save_as: params[:path] })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_datasets_file(params[:namespace],
@@ -53,6 +54,10 @@ class DatasetsController < ApplicationController
     else
       render :show
     end
+  end
+
+  def upload_file
+    render :show
   end
 
   def new_file

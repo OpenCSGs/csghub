@@ -23,6 +23,13 @@
           originalCodeContent=""
         />
       </template>
+      <template #files v-if="actionName === 'upload_file'">
+        <upload-file
+          :current-branch="currentBranch"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
+        />
+      </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
         <model-files
           :branches="branches"
@@ -36,11 +43,12 @@
         <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
-        <Settings :path="modelPath"
-                  :model-nickname="modelNickname"
-                  :model-desc="modelDesc"
-                  :default_branch="modelDefaultBranch"
-                  :private="modelPrivate" />
+        <Settings
+          :path="modelPath"
+          :model-nickname="modelNickname"
+          :model-desc="modelDesc"
+          :default_branch="modelDefaultBranch"
+          :private="modelPrivate" />
       </template>
     </TabContainer>
   </div>
@@ -60,6 +68,7 @@ import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
 import ModelBlob from './ModelBlob.vue'
+import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 
 const props = defineProps({

@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url" />
+    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url"/>
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary
@@ -26,6 +26,13 @@
           originalCodeContent=""
         />
       </template>
+      <template #files v-if="actionName === 'upload_file'">
+        <upload-file
+          :current-branch="currentBranch"
+          :repo-name="datasetDetail.name"
+          :namespace-path="datasetDetail.path"
+        />
+      </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
         <dataset-files
           :branches="branches"
@@ -36,23 +43,24 @@
         />
       </template>
       <template #community>
-        <CommunityPage type="Dataset" :localModelId="localDatasetId" ></CommunityPage>
+        <CommunityPage type="Dataset" :localModelId="localDatasetId"></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
-        <Settings :path="datasetPath"
-                  :dataset-nickname="datasetNickname"
-                  :dataset-desc="datasetDesc"
-                  :default_branch="datasetDefaultBranch"
-                  :private="datasetPrivate"/>
+        <Settings
+          :path="datasetPath"
+          :dataset-nickname="datasetNickname"
+          :dataset-desc="datasetDesc"
+          :default_branch="datasetDefaultBranch"
+          :private="datasetPrivate"/>
       </template>
     </TabContainer>
   </div>
 </template>
 
 <style>
-  .clone-tabs .el-tabs__header {
-    padding-left: 12px;
-  }
+.clone-tabs .el-tabs__header {
+  padding-left: 12px;
+}
 </style>
 
 <script setup>
@@ -62,9 +70,9 @@ import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 import DatasetBlob from './DatasetBlob.vue'
-import DatasetClone from './DatasetClone.vue';
+import DatasetClone from './DatasetClone.vue'
+import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
-
 
 const props = defineProps({
   localDatasetId: String,
