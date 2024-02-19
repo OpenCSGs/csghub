@@ -39,7 +39,8 @@ class Organization < ApplicationRecord
       name: name,
       nickname: nickname,
       org_type: org_type,
-      homepage: homepage
+      homepage: homepage,
+      verified: verified
     }
   end
 
