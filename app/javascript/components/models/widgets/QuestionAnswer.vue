@@ -5,6 +5,7 @@
     <el-input
       v-model="textInput"
       :rows="3"
+      @input="countTextLength"
       type="textarea"
       placeholder="以关键词’幸福‘写一首诗"
     />
@@ -16,7 +17,7 @@
         <span class="text-[14px]">参数调整</span>
       </div>
       <div class="flex justify-center items-center gap-[8px]">
-        <p class="text-[16px] text-[#667085]"> 单词数：{{ }} / 1000 </p>
+        <p class="text-[16px] text-[#667085]"> 单词数：{{ textInputLength }} / 1000 </p>
         <button class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]">执行测试</button>
       </div>
     </div>
@@ -35,7 +36,13 @@
     data() {
       return {
         textInput: '',
-        textOutput: ''
+        textOutput: '',
+        textInputLength: 0
+      }
+    },
+    methods: {
+      countTextLength(input) {
+        this.textInputLength = input.length
       }
     }
   }
