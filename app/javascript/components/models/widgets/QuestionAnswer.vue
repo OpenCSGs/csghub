@@ -18,7 +18,11 @@
       </div>
       <div class="flex justify-center items-center gap-[8px]">
         <p class="text-[16px] text-[#667085]"> 单词数：{{ textInputLength }} / 1000 </p>
-        <button class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]">执行测试</button>
+        <button class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
+                @click="sendInferenceTest"
+        >
+          执行测试
+        </button>
       </div>
     </div>
     <p class="text-[#344054] text-[14px] mb-[6px]">测试内容</p>
@@ -27,22 +31,52 @@
       :rows="3"
       type="textarea"
       placeholder=""
+      disabled=true
     />
   </div>
 </template>
 
 <script>
+  import csrfFetch from "../../../packs/csrfFetch"
   export default {
     data() {
       return {
         textInput: '',
         textOutput: '',
-        textInputLength: 0
+        textInputLength: 0,
+        namespace: 'test_user_name',
+        modelName: 'test_model_name',
+        currentUser: 'string',
       }
     },
     methods: {
       countTextLength(input) {
         this.textInputLength = input.length
+      },
+      async sendInferenceTest() {
+        const predictEndpoint = `/internal_api/models/${this.namespace}/${this.modelName}/predict`
+        const payload = {
+          namespace: this.namespace,
+          model_name: this.modelName,
+          current_user: this.currentUser,
+          input: this.textInput
+        }
+        const options = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        }
+        const response = await csrfFetch(predictEndpoint, options)
+        if (!response.ok) {
+          response.json().then((err) => {
+            ElMessage({ message: '推理失败', type: "warning" })
+          })
+        } else {
+          response.json().then((data) => {
+            this.textOutput = data.result
+            ElMessage({ message: data.result, type: "success" })
+          })
+        }
       }
     }
   }
