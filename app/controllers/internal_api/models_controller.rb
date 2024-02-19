@@ -1,6 +1,6 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
+  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file, :predict]
   before_action :validate_manage, only: [:update, :destroy]
   before_action :validate_write, only: [:create_file, :upload_file]
   before_action :validate_authorization, only: [:files, :readme]
@@ -92,6 +92,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     }
     sync_upload_file(options)
     render json: { message: '上传文件成功' }, status: 200
+  end
+
+  def predict
+    res = Starhub.api.model_predict('test_user_name', 'test_model_name', 'string', 'test prompt', '')
+    render json: { message: '推理成功', result: JSON.parse(res)['data']['content'] }
   end
 
   private

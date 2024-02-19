@@ -383,7 +383,9 @@ module Starhub
         input: input,
         version: version
       }
-      @client.post("/models/#{namespace}/#{name}/predict", options)
+      res = @client.post("/models/#{namespace}/#{name}/predict", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     # TODO: add more starhub api
