@@ -87,7 +87,7 @@ const app = createApp({
     OnPremiseFooter,
     ComputingPage,
     LandingPage,
-    PrivacyPage
+    PrivacyPage,
     DailyPaperNew
   },
   provide:{
