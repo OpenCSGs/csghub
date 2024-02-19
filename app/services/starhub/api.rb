@@ -377,6 +377,15 @@ module Starhub
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
 
+    def model_predict(namespace, name, user, input, version)
+      options = {
+        current_user: user,
+        input: input,
+        version: version
+      }
+      @client.post("/models/#{namespace}/#{name}/predict", options)
+    end
+
     # TODO: add more starhub api
 
     private
