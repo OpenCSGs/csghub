@@ -148,5 +148,6 @@ Rails.application.routes.draw do
 
     get '/about', to: 'about#index'
     get '/computing', to: 'computing#index'
+    get '/policy', to: 'policy#index'
   end
 end

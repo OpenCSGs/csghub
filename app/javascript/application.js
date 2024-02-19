@@ -44,6 +44,8 @@ import About from "./components/about/About.vue"
 import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import ComputingPage from "./components/computing/ComputingPage.vue"
 import LandingPage from "./components/landing_page/LandingPage.vue"
+import PrivacyPage from "./components/policy/PrivacyPage.vue"
+
 const app = createApp({
   components: {
     Navbar,
@@ -82,7 +84,8 @@ const app = createApp({
     About,
     OnPremiseFooter,
     ComputingPage,
-    LandingPage
+    LandingPage,
+    PrivacyPage
   },
   provide:{
     defaultTags: DefaultTags
