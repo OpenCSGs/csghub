@@ -122,7 +122,6 @@
         this.dataForm.cover_url = res.url
       },
       handleRemoveImage() {
-        console.log("handleRemoveImage");
         this.showUpload = true
         this.dataForm.cover_url = ""
       },

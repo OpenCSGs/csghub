@@ -99,7 +99,7 @@
             <a href="/organizations/new">
               <el-dropdown-item divided> 新建组织 </el-dropdown-item>
             </a>
-            <a href="/daily_papers/new" v-if="canCreateDailyPaper == 'true'">
+            <a href="/daily_papers/new" v-if="canCreateDailyPaper">
               <el-dropdown-item> 论文推荐 </el-dropdown-item>
             </a>
             <a href="/logout">
@@ -135,7 +135,7 @@ export default {
     phone: String,
     isLoggedIn: String,
     userName: String,
-    canCreateDailyPaper: String,
+    canCreateDailyPaper: Boolean,
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');

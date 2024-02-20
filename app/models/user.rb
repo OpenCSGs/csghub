@@ -26,7 +26,7 @@ class User < ApplicationRecord
   has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
   has_many :ssh_keys, dependent: :destroy
 
-  # after_save :sync_to_starhub_server
+  after_save :sync_to_starhub_server
 
   has_many :datasets, as: :owner
   has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
