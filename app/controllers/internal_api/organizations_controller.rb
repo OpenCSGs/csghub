@@ -58,13 +58,11 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   end
 
   def models
-    res = Starhub.api.get_org_models(params[:namespace], current_user&.name, { per: params[:per] })
-    render json: res.body
+    render json: Starhub.api.get_org_models(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def datasets
-    res = Starhub.api.get_org_datasets(params[:namespace], current_user&.name, { per: params[:per] })
-    render json: res.body
+    render json: Starhub.api.get_org_datasets(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   private

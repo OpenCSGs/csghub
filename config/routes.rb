@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update]
     get '/users/:namespace/models', to: 'users#models'
     get '/users/:namespace/datasets', to: 'users#datasets'
+    get '/organizations/:namespace/models', to: 'organizations#models'
+    get '/organizations/:namespace/datasets', to: 'organizations#datasets'
 
     resources :models, only: [:index, :create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme'

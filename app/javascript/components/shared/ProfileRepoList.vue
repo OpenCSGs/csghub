@@ -67,6 +67,8 @@ import { ElSkeleton } from 'element-plus';
   const moreModels = ref(props.modelList?.total > 6)
   const moreDatasets = ref(props.datasetList?.total > 6)
 
+  const prefixPath = document.location.pathname.split('/')[1] === 'organizations' ? 'organizations' : 'users'
+
   const viewMoreTargets = (target) => {
     loading.value = true
     if (target === 'models') {
@@ -77,13 +79,13 @@ import { ElSkeleton } from 'element-plus';
   }
 
   const fetchMoreModels = async () => {
-    const url = `/internal_api/users/${props.name}/models?per=${props.modelList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/models?per=${props.modelList.total}`
     await fetchData(url, models)
     moreModels.value = false
   }
 
   const fetchMoreDatasets = async () => {
-    const url = `/internal_api/users/${props.name}/datasets?per=${props.datasetList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/datasets?per=${props.datasetList.total}`
     await fetchData(url, datasets)
     moreDatasets.value = false
   }
