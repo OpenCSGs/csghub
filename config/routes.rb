@@ -25,6 +25,7 @@ Rails.application.routes.draw do
         post '/new-members', to: 'organizations#new_members'
       end
     end
+    resources :spaces, only: [:index, :update, :create]
     resources :comments, only: [:create, :destroy, :index]
     resources :ssh_keys, only: [:create, :destroy]
     resources :git_token, only: [] do

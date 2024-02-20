@@ -93,7 +93,7 @@
               :headers="{ 'X-CSRF-TOKEN': csrf_token }"
               :data="{ owner: owner, spaceName: spaceName, spaceNickName: spaceNickName, license: license, spaceDesc: spaceDesc, SDK: SDK, spaceResource: spaceResource, visibility: visibility}"
               :auto-upload="false"
-              :action="`/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`"
+              :action="`/internal_api/spaces`"
               :limit="1"
               @change="handleFileChange"
               :on-success="handleSuccess"
@@ -217,12 +217,13 @@
         创建应用空间后，你可以使用网页或 Git 上传你的文件。
       </p>
       <div class="flex justify-end">
+        <el-button @click="cancel">取消</el-button>
         <button
             class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
-            @click="createModel"
+            @click="createSpace"
             :disabled="!canCreateModel"
         >
-          创建模型
+          创建应用空间
         </button>
       </div>
     </div>
@@ -245,10 +246,13 @@ const spaceNickName = ref('')
 const spaceDesc = ref('')
 const visibility = ref('private')
 const SDK = ref('Gradio')
+const uploadRef = ref()
+const filesList = ref([])
+const prefixPath = document.location.pathname.split('/')[1]
 const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
 const canCreateModel = computed(() => {
-  return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(modelName.value)
+  return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(spaceName.value)
 })
 
 const spaceResources = ref([
@@ -258,48 +262,51 @@ const spaceResources = ref([
   {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
 ])
 const spaceResource = ref('CPU basic · 2 vCPU · 16GB')
-
 const disabledOptions = ref([
   "NVIDIA T4 · 4 vCPU · 15 GB",
   "NVIDIA A10G · 4 vCPU · 15 GB",
   "NVIDIA A10G · 12 vCPU · 46 GB"
 ])
 
-const createModel = async () => {
-  try {
-    const res = await submitModelForm()
-    ElMessage.success('模型创建成功')
-    toModelDetail(res.path)
-  } catch (err) {
-    ElMessage.warning(err.message)
+const createSpace = () => {
+  if (filesList.value.length === 0) {
+    ElMessage({message: "请选择封面图片", type: "warning"})
+    return
   }
+  uploadRef.value.submit()
 }
 
-async function submitModelForm() {
-  const modelCreateEndpoint = `/internal_api/models`
-  const formData = new FormData()
-  const [ownerId, ownerType] = owner.value.split('_')
-  formData.append('owner_id', ownerId)
-  formData.append('owner_type', ownerType)
-  formData.append('name', modelName.value)
-  formData.append('nickname', modelNickName.value)
-  formData.append('desc', modelDesc.value)
-  formData.append('license', license.value)
-  formData.append('visibility', visibility.value)
-
-  const options = {method: 'POST', body: formData}
-
-  const response = await csrfFetch(modelCreateEndpoint, options)
-  if (!response.ok) {
-    const data = await response.json()
-    throw new Error(data.message)
+const handleBeforeUpload = (file) => {
+  if (file.size / 1024 <= 5000) {
+    return true
   } else {
-    return response.json()
+    ElMessage({message: "文件过大", type: "warning"})
+    return false
   }
 }
 
-const toModelDetail = (path) => {
-  window.location.pathname = `/models/${path}`
+const handleFileChange = (file) => {
+  filesList.value.push(file.raw)
+}
+
+const handleSuccess = (response, file, fileList) => {
+  ElMessage({message: "上传完成", type: "success"})
+  filesList.value = []
+  // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
+};
+
+const handleError = (err, file, fileList) => {
+  ElMessage({message: "上传错误", type: "warning"})
+  filesList.value.splice(-1, 1)
+}
+
+
+const toSpaceDetail = (path) => {
+  window.location.pathname = `/spaces/${path}`
+}
+
+const cancel = () => {
+  window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
 }
 </script>
 <style scoped>
