@@ -23,13 +23,13 @@ class LandingPageController < ApplicationController
     system_config = SystemConfig.first
     hot_models = system_config.hot_models rescue []
     res = Starhub.api.models_by_paths hot_models
-    JSON.parse(res)['data']
+    JSON.parse(res)['data'] || []
   end
 
   def load_hot_datasets
     system_config = SystemConfig.first
     hot_datasets = system_config.hot_datasets rescue []
     res = Starhub.api.datasets_by_paths hot_datasets
-    JSON.parse(res)['data']
+    JSON.parse(res)['data'] || []
   end
 end

@@ -20,12 +20,14 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    user.admin? || user.org_role(record) == 'admin'
   end
 
   def destroy?
     user.super_user?
   end
+  
+  private
 
   class Scope < Scope
     def resolve
