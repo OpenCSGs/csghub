@@ -178,6 +178,7 @@ GEM
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
     ffi (1.16.3)
+    ffi (1.16.3-x64-mingw-ucrt)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -270,6 +271,8 @@ GEM
     nio4r (2.6.1)
     nokogiri (1.15.5-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.5-x64-mingw-ucrt)
+      racc (~> 1.4)
     openid_connect (1.4.2)
       activemodel
       attr_required (>= 1.0.0)
@@ -282,6 +285,7 @@ GEM
       validate_url
       webfinger (~> 1.2)
     pg (1.5.4)
+    pg (1.5.4-x64-mingw-ucrt)
     psych (5.1.1.1)
       stringio
     public_suffix (5.0.4)
@@ -400,6 +404,8 @@ GEM
       httpclient (>= 2.4)
     tailwindcss-rails (2.0.32-arm64-darwin)
       railties (>= 6.0.0)
+    tailwindcss-rails (2.0.32-x64-mingw-ucrt)
+      railties (>= 6.0.0)
     thor (1.3.0)
     tilt (2.3.0)
     timeout (0.4.1)
@@ -407,6 +413,8 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2023.4)
+      tzinfo (>= 1.0.0)
     uri-query_params (0.7.2)
     validate_email (0.1.6)
       activemodel (>= 3.0)
@@ -437,6 +445,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
+  x64-mingw-ucrt
 
 DEPENDENCIES
   activestorage-aliyun
