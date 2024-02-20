@@ -73,6 +73,11 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :spaces, only: ['index', 'show', 'new'] do
+      collection do
+        get 'stopped'
+      end
+    end
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
