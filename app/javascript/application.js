@@ -26,13 +26,7 @@ import DatasetCards from "./components/datasets/DatasetCards.vue"
 import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
-import SolutionPage from "./components/solution/SolutionPage.vue"
-import ProductPage from "./components/product/ProductPage.vue"
-import About from "./components/about/About.vue"
-import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
-import ComputingPage from "./components/computing/ComputingPage.vue"
-import LandingPage from "./components/landing_page/LandingPage.vue"
-import PrivacyPage from "./components/policy/PrivacyPage.vue"
+import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 import NewSpace from "./components/spaces/NewSpace.vue"
 
 const app = createApp({
@@ -57,9 +51,6 @@ const app = createApp({
     OrganizationDetail,
     OnPremiseFooter,
     OrganizationSettings,
-    ComputingPage,
-    LandingPage,
-    PrivacyPage,
     NewSpace
   },
   provide:{
