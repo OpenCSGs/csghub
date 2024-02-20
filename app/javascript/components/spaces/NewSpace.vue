@@ -217,9 +217,8 @@
         创建应用空间后，你可以使用网页或 Git 上传你的文件。
       </p>
       <div class="flex justify-end">
-        <el-button @click="cancel">取消</el-button>
         <button
-            class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
+            class="bg-[#3250BD] w-[118px] ml-[10px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
             @click="createSpace"
             :disabled="!canCreateModel"
         >
@@ -298,15 +297,6 @@ const handleSuccess = (response, file, fileList) => {
 const handleError = (err, file, fileList) => {
   ElMessage({message: "上传错误", type: "warning"})
   filesList.value.splice(-1, 1)
-}
-
-
-const toSpaceDetail = (path) => {
-  window.location.pathname = `/spaces/${path}`
-}
-
-const cancel = () => {
-  window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
 }
 </script>
 <style scoped>
