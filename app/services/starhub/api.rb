@@ -325,6 +325,16 @@ module Starhub
       @client.post("/organizations", options)
     end
 
+    def update_organization(username, org_name, org_full_name, desc)
+      options = {
+        current_user: username,
+        name: org_name,
+        full_name: org_full_name,
+        description: desc
+      }
+      @client.put("/organizations/#{org_name}", options)
+    end
+
     def text_secure_check(scenario, content)
       return unless sensitive_check_enabled?
       return if content.blank?
