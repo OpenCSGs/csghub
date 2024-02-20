@@ -49,7 +49,6 @@
   import ModelItem from '../models/ModelItem.vue'
   import DatasetItem from '../datasets/DatasetItem.vue'
   import ViewMore from './ViewMore.vue'
-import { ElSkeleton } from 'element-plus';
 
   const props = defineProps({
     modelList: Object,
@@ -94,12 +93,13 @@ import { ElSkeleton } from 'element-plus';
     fetch(url).then((response) => {
       response.json().then((data) => {
         targetRef.value = data
-        loading.value = false
       }).catch((error) => {
         ElMessage({
           message: '加载数据报错',
           type: 'warning'
         })
+      }).finally(() => {
+        loading.value = false
       })
     })
   }

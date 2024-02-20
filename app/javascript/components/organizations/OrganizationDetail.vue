@@ -44,7 +44,11 @@
             </a>
           </div>
         </div>
-        <profile-repo-list :model-list="models" :dataset-list="datasets" />
+        <profile-repo-list
+          :model-list="models"
+          :dataset-list="datasets"
+          :name="organization.name"
+        />
       </div>
     </div>
   </div>
