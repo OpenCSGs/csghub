@@ -10,4 +10,8 @@ class DailyPapersController < ApplicationController
   def new
     authorize DailyPaper
   end
+
+  def show
+    @daily_paper = DailyPaper.find_by(uuid: params[:uuid])
+  end
 end

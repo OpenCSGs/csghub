@@ -88,7 +88,7 @@
 
 <script setup>
   import dayjs from "dayjs";
-  import { defineProps, ref } from 'vue'
+  import { ref } from 'vue'
   const props = defineProps({
     canCreateDailyPaper: Boolean,
     dailyPapers: String,

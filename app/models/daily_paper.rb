@@ -20,7 +20,15 @@ class DailyPaper < ApplicationRecord
       recommendation: recommendation,
       cover_url: cover_url,
       recommender_name: recommender_name,
-      recommender_avatar_url: recommender_avatar_url
+      recommender_avatar_url: recommender_avatar_url,
+      article_link: article_link,
+      pdf_link: pdf_link,
+      description: description,
+      video_link: video_link,
+      model_links: model_links,
+      dataset_links: dataset_links,
+      created_at: created_at,
+      updated_at: updated_at
     }
   end
 end
