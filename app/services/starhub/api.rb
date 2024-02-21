@@ -40,7 +40,7 @@ module Starhub
       @client.get_in_parallel(paths, options)
     end
 
-    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page = 1, per = 16)
       url = "/models?per=#{per}&page=#{page}"
       url += "&current_user=#{current_user}" if current_user.present?
       url += "&search=#{keyword}" if keyword.present?
@@ -178,9 +178,17 @@ module Starhub
     end
 
     def download_model_file(username, model_name, path, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/download/#{path}?ref=#{options[:ref]}")
+      res = @client.get("/models/#{username}/#{model_name}/download/#{path}", options)
       raise StarhubError, res.body unless res.success?
       res.body
+    end
+
+    def create_model_file(username, model_name, path, options = {})
+      @client.post("/models/#{username}/#{model_name}/raw/#{path}", options)
+    end
+
+    def upload_model_file(username, model_name, options = {})
+      @client.upload("/models/#{username}/#{model_name}/upload_file", options)
     end
 
     # datasets
@@ -234,7 +242,7 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
-    def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page=1, per=16)
+    def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page = 1, per = 16)
       url = "/datasets?per=#{per}&page=#{page}"
       url += "&current_user=#{current_user}" if current_user.present?
       url += "&search=#{keyword}" if keyword.present?
@@ -285,9 +293,17 @@ module Starhub
     end
 
     def download_datasets_file(username, dataset_name, path, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}?ref=#{options[:ref]}")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}", options)
       raise StarhubError, res.body unless res.success?
       res.body
+    end
+
+    def create_dataset_file(username, dataset_name, path, options = {})
+      @client.post("/datasets/#{username}/#{dataset_name}/raw/#{path}", options)
+    end
+
+    def upload_datasets_file(username, dataset_name, options = {})
+      @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
     end
 
     def create_ssh_key(username, key_name, content)
@@ -315,6 +331,16 @@ module Starhub
         description: desc
       }
       @client.post("/organizations", options)
+    end
+
+    def update_organization(username, org_name, org_full_name, desc)
+      options = {
+        current_user: username,
+        name: org_name,
+        full_name: org_full_name,
+        description: desc
+      }
+      @client.put("/organizations/#{org_name}", options)
     end
 
     def text_secure_check(scenario, content)

@@ -2,8 +2,9 @@ class DatasetsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :load_branch_and_path, only: [:files, :blob]
-  before_action :load_dataset_detail, only: [:show, :files, :blob]
+  before_action :authenticate_user, only: [:new_file, :upload_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file]
+  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file]
 
   def index
     response = {}
@@ -35,11 +36,32 @@ class DatasetsController < ApplicationController
 
   def blob
     if params[:download] == 'true'
-      file = Starhub.api.download_datasets_file(params[:namespace], params[:dataset_name], params[:path], { ref: @current_branch })
-      send_data file, filename: params[:path].split('/').last
+      if params[:lfs] == 'true'
+        file_url = Starhub.api.download_datasets_file(params[:namespace],
+                                                      params[:dataset_name],
+                                                      params[:lfs_path],
+                                                      { ref: @current_branch,
+                                                        lfs: true,
+                                                        save_as: params[:path] })
+        redirect_to JSON.parse(file_url)['data'], allow_other_host: true
+      else
+        file = Starhub.api.download_datasets_file(params[:namespace],
+                                                  params[:dataset_name],
+                                                  params[:path],
+                                                  { ref: @current_branch })
+        send_data file, filename: params[:path].split('/').last
+      end
     else
       render :show
     end
+  end
+
+  def upload_file
+    render :show
+  end
+
+  def new_file
+    render :show
   end
 
   private
