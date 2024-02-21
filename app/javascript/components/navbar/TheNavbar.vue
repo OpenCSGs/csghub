@@ -67,6 +67,9 @@
             <a href="/datasets/new">
               <el-dropdown-item> + 新建数据集 </el-dropdown-item>
             </a>
+            <a href="/spaces/new">
+              <el-dropdown-item> + 新建应用空间 </el-dropdown-item>
+            </a>
             <a href="/organizations/new">
               <el-dropdown-item divided> 新建组织 </el-dropdown-item>
             </a>
