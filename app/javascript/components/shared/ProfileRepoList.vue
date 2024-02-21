@@ -19,7 +19,7 @@
         target="models"
         @view-more-targets="viewMoreTargets"
       ></view-more>
-      <el-skeleton class="pr-6" v-if="loading" :rows="2" animated />
+      <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
     </div>
     <div class="mt-[32px]">
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
@@ -40,6 +40,7 @@
         target="datasets"
         @view-more-targets="viewMoreTargets"
       ></view-more>
+      <el-skeleton class="pr-6" v-if="datasetsLoading" :rows="2" animated />
     </div>
   </div>
 </template>
@@ -58,7 +59,8 @@
 
   const models = ref(props.modelList)
   const datasets = ref(props.datasetList)
-  const loading = ref(false)
+  const modelsLoading = ref(false)
+  const datasetsLoading = ref(false)
 
   const hasModels = computed(() => props.modelList?.total > 0)
   const hasDatasets = computed(() => props.datasetList?.total > 0)
@@ -69,10 +71,11 @@
   const prefixPath = document.location.pathname.split('/')[1] === 'organizations' ? 'organizations' : 'users'
 
   const viewMoreTargets = (target) => {
-    loading.value = true
     if (target === 'models') {
+      modelsLoading.value = true
       fetchMoreModels()
     } else if (target === 'datasets') {
+      datasetsLoading.value = true
       fetchMoreDatasets()
     }
   }
@@ -91,16 +94,24 @@
 
   const fetchData = async (url, targetRef) => {
     fetch(url).then((response) => {
-      response.json().then((data) => {
-        targetRef.value = data
-      }).catch((error) => {
+      if (!response.ok) {
         ElMessage({
           message: '加载数据报错',
           type: 'warning'
         })
-      }).finally(() => {
-        loading.value = false
-      })
+      } else {
+        response.json().then((data) => {
+          targetRef.value = data
+        })
+      }
+    }).catch((error) => {
+      console.error(error)
+    }).finally(() => {
+      if (targetRef === models) {
+        modelsLoading.value = false
+      } else if (targetRef === datasets) {
+        datasetsLoading.value = false
+      }
     })
   }
 </script>
