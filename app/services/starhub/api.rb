@@ -298,6 +298,16 @@ module Starhub
       @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
     end
 
+    # application_spaces
+
+    def create_application_spaces(username, space_name, namespace, sdk, options = {})
+      options[:name] = space_name
+      options[:namespace] = namespace
+      options[:sdk] = sdk
+      options[:username] = username
+      @client.post("/spaces", options)
+    end
+
     def create_ssh_key(username, key_name, content)
       options = {
         username: username,

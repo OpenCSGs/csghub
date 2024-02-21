@@ -20,6 +20,8 @@ class AwsS3
                    "org_logo/#{random_file_name}"
                  when 'comment'
                    "comment/#{random_file_name}"
+                 when 'space-cover_image'
+                   "space/#{random_file_name}"
                  else
                    random_file_name
                  end

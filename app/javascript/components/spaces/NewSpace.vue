@@ -91,7 +91,7 @@
               drag
               multiple
               :headers="{ 'X-CSRF-TOKEN': csrf_token }"
-              :data="{ owner: owner, spaceName: spaceName, spaceNickName: spaceNickName, license: license, spaceDesc: spaceDesc, SDK: SDK, spaceResource: spaceResource, visibility: visibility}"
+              :data="{ owner_id: owner.split('_')[0], owner_type: owner.split('_')[1], name: spaceName, nickname: spaceNickName, license: license, desc: spaceDesc, sdk: SDK, cloud_resource: spaceResource, visibility: visibility}"
               :auto-upload="false"
               :action="`/internal_api/spaces`"
               :limit="1"
@@ -231,7 +231,6 @@
 <script setup>
 import {ref, computed} from 'vue'
 import {ElInput, ElMessage} from 'element-plus'
-import csrfFetch from "../../packs/csrfFetch.js"
 
 const props = defineProps({
   licenses: Array,
@@ -295,7 +294,8 @@ const handleSuccess = (response, file, fileList) => {
 };
 
 const handleError = (err, file, fileList) => {
-  ElMessage({message: "上传错误", type: "warning"})
+  ElMessage({message: err.message, type: "warning"})
+  console.log(err)
   filesList.value.splice(-1, 1)
 }
 </script>
