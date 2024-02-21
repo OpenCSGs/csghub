@@ -48,6 +48,7 @@ import ComputingPage from "./components/computing/ComputingPage.vue"
 import LandingPage from "./components/landing_page/LandingPage.vue"
 import PrivacyPage from "./components/policy/PrivacyPage.vue"
 import DailyPaperNew from "./components/daily_paper/New.vue"
+import DailyPaperIndex from "./components/daily_paper/Index.vue"
 
 const app = createApp({
   components: {
@@ -89,8 +90,9 @@ const app = createApp({
     ComputingPage,
     LandingPage,
     PrivacyPage,
+    OrganizationSettings,
     DailyPaperNew,
-    OrganizationSettings
+    DailyPaperIndex
   },
   provide:{
     defaultTags: DefaultTags
