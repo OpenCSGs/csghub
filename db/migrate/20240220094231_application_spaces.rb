@@ -12,6 +12,8 @@ class ApplicationSpaces < ActiveRecord::Migration[7.0]
       t.bigint "creator_id"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.string "nickname"
+      t.text "desc"
       t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
       t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
     end

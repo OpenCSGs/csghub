@@ -276,7 +276,7 @@ const createSpace = () => {
 }
 
 const handleBeforeUpload = (file) => {
-  if (file.size / 1024 <= 5000) {
+  if (file.size / 1024 <= 2000) {
     return true
   } else {
     ElMessage({message: "文件过大", type: "warning"})
@@ -341,5 +341,4 @@ const handleError = (err, file, fileList) => {
 
 }
 </style>
-
 
