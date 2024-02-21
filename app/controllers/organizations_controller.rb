@@ -1,5 +1,8 @@
 class OrganizationsController < ApplicationController
   before_action :check_user_info_integrity
+  def edit
+    @organization = Organization.find_by(name: params[:id])
+  end
 
   def new
   end
