@@ -21,6 +21,14 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     end
   end
 
+  def models
+    render json: Starhub.api.get_user_models(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
+  def datasets
+    render json: Starhub.api.get_user_datasets(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
   private
 
   def user_params
