@@ -46,6 +46,7 @@ import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import ComputingPage from "./components/computing/ComputingPage.vue"
 import LandingPage from "./components/landing_page/LandingPage.vue"
 import PrivacyPage from "./components/policy/PrivacyPage.vue"
+import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 
 const app = createApp({
   components: {
@@ -87,6 +88,7 @@ const app = createApp({
     ComputingPage,
     LandingPage,
     PrivacyPage,
+    ProfileRepoList,
     OrganizationSettings
   },
   provide:{

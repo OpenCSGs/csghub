@@ -162,13 +162,19 @@ module Starhub
     end
 
     def get_user_models(namespace, username, options = {})
-      res = @client.get("/user/#{namespace}/models?current_user=#{username}", options)
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/models", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
 
     def get_org_models(namespace, username, options = {})
-      res = @client.get("/organization/#{namespace}/models?current_user=#{username}", options)
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/models", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
@@ -223,13 +229,19 @@ module Starhub
     end
 
     def get_user_datasets(namespace, username, options = {})
-      res = @client.get("/user/#{namespace}/datasets?current_user=#{username}", options)
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/datasets", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
 
     def get_org_datasets(namespace, username, options = {})
-      res = @client.get("/organization/#{namespace}/datasets?current_user=#{username}", options)
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/datasets", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
