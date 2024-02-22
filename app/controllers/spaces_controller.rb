@@ -1,4 +1,6 @@
 class SpacesController < ApplicationController
+  before_action :authenticate_user
+
   def new
     @available_namespaces = current_user.available_namespaces
     system_config = SystemConfig.first

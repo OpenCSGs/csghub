@@ -8,7 +8,7 @@ class InternalApi::SpacesController < InternalApi::ApplicationController
     end
     space = current_user.created_application_spaces.build(create_params)
     if params[:file].present?
-      cover_image_code = AwsS3.instance.upload 'space-cover_image', params[:file]
+      cover_image_code = AwsS3.instance.upload 'application-space-cover-image', params[:file]
       space.cover_image = cover_image_code
     end
     if space.save
