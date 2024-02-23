@@ -46,20 +46,20 @@ class ModelsController < ApplicationController
                                                    params[:lfs_path],
                                                    { ref: @current_branch,
                                                      lfs: true,
-                                                     save_as: params[:path]})
+                                                     save_as: @current_path})
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_model_file(params[:namespace],
                                                params[:model_name],
-                                               params[:path],
+                                               @current_path,
                                                { ref: @current_branch })
         send_data file, filename: params[:path].split('/').last
       end
     else
       result = Starhub.api.get_model_file_content(params[:namespace],
-                                                    params[:model_name],
-                                                    params[:path],
-                                                    { ref: @current_branch })
+                                                  params[:model_name],
+                                                  @current_path,
+                                                  { ref: @current_branch })
       @content = JSON.parse(result)['data']
       respond_to do |format|
         format.txt  { render plain: @content }
@@ -113,7 +113,11 @@ class ModelsController < ApplicationController
   def load_branch_and_path
     @default_tab = 'files'
     @current_branch = params[:branch] || 'main'
-    @current_path = params[:path] || ''
+    @current_path = if request.path.split('/').last.split('.').last == params[:format]
+                      "#{params[:path]}.#{params[:format]}"
+                    else
+                      params[:path]
+                    end
   end
 
   def files_options
