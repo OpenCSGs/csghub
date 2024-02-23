@@ -3,7 +3,7 @@ class DatasetsController < ApplicationController
 
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new_file, :upload_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve]
   before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file]
 
   def index
@@ -35,6 +35,10 @@ class DatasetsController < ApplicationController
   end
 
   def blob
+    render :show
+  end
+
+  def resolve
     if params[:download] == 'true'
       if params[:lfs] == 'true'
         file_url = Starhub.api.download_datasets_file(params[:namespace],
@@ -52,7 +56,20 @@ class DatasetsController < ApplicationController
         send_data file, filename: params[:path].split('/').last
       end
     else
-      render :show
+      result = Starhub.api.get_datasets_file_content(params[:namespace],
+                                                     params[:dataset_name],
+                                                     params[:path],
+                                                     { ref: @current_branch })
+      @content = JSON.parse(result)['data']
+      respond_to do |format|
+        format.txt  { render plain: @content }
+        format.json { render json: @content }
+        format.jpg { send_data @content, type: 'image/jpeg', disposition: 'inline' }
+        format.jpeg { send_data @content, type: 'image/jpeg', disposition: 'inline' }
+        format.png { send_data @content, type: 'image/png', disposition: 'inline' }
+        format.gif { send_data @content, type: 'image/gif', disposition: 'inline' }
+        format.svg  { render xml: @content }
+      end
     end
   end
 
