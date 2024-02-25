@@ -28,6 +28,7 @@ import OrganizationSettings from "./components/organizations/OrganizationSetting
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 import NewSpace from "./components/spaces/NewSpace.vue"
+import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 
 const app = createApp({
   components: {
@@ -51,7 +52,8 @@ const app = createApp({
     OrganizationDetail,
     OnPremiseFooter,
     OrganizationSettings,
-    NewSpace
+    NewSpace,
+    ProfileRepoList,
   },
   provide:{
     defaultTags: DefaultTags
