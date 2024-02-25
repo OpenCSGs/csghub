@@ -53,22 +53,21 @@ class ModelsController < ApplicationController
                                                params[:model_name],
                                                @current_path,
                                                { ref: @current_branch })
-        send_data file, filename: params[:path].split('/').last
+        send_data file, filename: @current_path
       end
     else
-      result = Starhub.api.get_model_file_content(params[:namespace],
-                                                  params[:model_name],
-                                                  @current_path,
-                                                  { ref: @current_branch })
-      @content = JSON.parse(result)['data']
-      respond_to do |format|
-        format.txt  { render plain: @content }
-        format.json { render json: @content }
-        format.jpg { send_data @content, type: 'image/jpeg', disposition: 'inline' }
-        format.jpeg { send_data @content, type: 'image/jpeg', disposition: 'inline' }
-        format.png { send_data @content, type: 'image/png', disposition: 'inline' }
-        format.gif { send_data @content, type: 'image/gif', disposition: 'inline' }
-        format.svg  { render xml: @content }
+      if params[:format] == 'txt'
+        result = Starhub.api.get_model_file_content(params[:namespace],
+                                                    params[:model_name],
+                                                    @current_path,
+                                                    { ref: @current_branch })
+        render plain: JSON.parse(result)['data']
+      else
+        result = Starhub.api.download_model_file(params[:namespace],
+                                                 params[:model_name],
+                                                 @current_path,
+                                                 { ref: @current_branch })
+        send_data result, type: 'image/jpeg', disposition: 'inline'
       end
     end
   end
