@@ -16,7 +16,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin?
+    user.admin? || user.org_role(record) == 'admin'
   end
 
   def update?
