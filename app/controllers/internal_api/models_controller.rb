@@ -25,6 +25,9 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def readme
     readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+    readme_content = JSON.parse(readme)['data']
+    readme_content = readme_content.gsub(/\!\[.*?\]\((.*?)\)/) do |match|
+    end
     render json: { readme: JSON.parse(readme)['data'] }
   rescue StarhubError
     render json: { readme: '' }
