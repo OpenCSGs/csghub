@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     log_error "Record Not Found", e.backtrace
     redirect_to errors_not_found_path
   end
-
+  
   def authenticate_user
     if helpers.logged_in?
       return true
