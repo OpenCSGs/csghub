@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
              when 'model'
                "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
              when 'dataset'
-               "/datasets/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
+               "/datasets/#{params[:namespace]}/#{params[:dataset_name]}/resolve/main/"
              end
 
     content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|

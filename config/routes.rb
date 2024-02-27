@@ -92,7 +92,7 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/:branch/upload', to: 'datasets#upload_file'
     get '/datasets/:namespace/(*dataset_name)/blob/:branch/(*path)', to: 'datasets#blob', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
-    get '/datasets/:namespace/(*model_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}
+    get '/datasets/:namespace/(*dataset_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
