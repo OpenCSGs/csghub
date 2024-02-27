@@ -86,7 +86,7 @@
     </div>
 
     <div class="px-4 py-4 border border-t-0 border-[#DCDFE6] rounded-b">
-      <MarkdownViewer v-if="fileType === 'md'" :content="content" />
+      <MarkdownViewer v-if="['jpg', 'png', 'jpeg', 'gif', 'svg', 'md'].includes(fileType)" :content="content" />
       <CodeViewer v-else :extension="fileType" :content="content" />
     </div>
   </div>
