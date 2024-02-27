@@ -2,9 +2,9 @@ class DatasetsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new_file, :upload_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file]
-  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file]
+  before_action :authenticate_user, only: [:new_file, :upload_file, :edit_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :edit_file]
+  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
 
   def index
     response = {}
@@ -64,6 +64,10 @@ class DatasetsController < ApplicationController
     render :show
   end
 
+  def edit_file
+    render :show
+  end
+
   private
 
   def load_dataset_detail
@@ -85,8 +89,8 @@ class DatasetsController < ApplicationController
 
     @avatar_url = owner.avatar_url
 
-    if action_name == 'blob'
-      @dataset, raw_tags, @last_commit, @branches, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    if action_name == 'blob' || action_name == 'edit_file'
+      @dataset, raw_tags, @last_commit, @branches, @blob = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     else
       @dataset, raw_tags, @branches = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
