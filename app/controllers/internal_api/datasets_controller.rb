@@ -26,16 +26,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   def readme
     readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
     readme_content = JSON.parse(readme)['data']
-    prefix = "/datasets/#{params[:namespace]}/#{params[:dataset_name]}/resolve/main/"
-    readme_content = readme_content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|
-      alt_text = $1
-      image_path = $2
-      if image_path.start_with?('http')
-        match
-      else
-        "![#{alt_text}](#{prefix}#{image_path})"
-      end
-    end
+    readme_content = relative_path_to_resolve_path 'dataset', readme_content
     render json: { readme: readme_content }
   rescue StarhubError
     render json: { readme: '' }

@@ -105,6 +105,7 @@ class ModelsController < ApplicationController
     else
       @model, raw_tags, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
+    @content = relative_path_to_resolve_path 'model', @content
     @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end

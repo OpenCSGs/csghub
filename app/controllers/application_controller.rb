@@ -116,4 +116,24 @@ class ApplicationController < ActionController::Base
       current_user.sync_to_starhub_server
     end
   end
+
+  def relative_path_to_resolve_path type, content
+    prefix = case type
+             when 'model'
+               "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
+             when 'dataset'
+               "/datasets/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
+             end
+
+    content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|
+      alt_text = $1
+      image_path = $2
+      if image_path.start_with?('http')
+        match
+      else
+        "![#{alt_text}](#{prefix}#{image_path})"
+      end
+    end
+
+  end
 end
