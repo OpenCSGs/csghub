@@ -200,7 +200,7 @@
   // 预览放行规则：非 LFS，文件大小不超过 10MB，后缀名为 rb、gitattributes、md、json、yaml、sh、py、js、ts、cpp、c、txt 或为空
   const canPreview = (file) => {
     const extension = getFileExtension(file)
-    const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt']
+    const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt', 'png', 'jpg', 'jpeg', 'gif', 'svg']
 
     const isFileLFS = file.lfs
     const isExtensionIncluded = !extension || previewExtensions.includes(extension)
