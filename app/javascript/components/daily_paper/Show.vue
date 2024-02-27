@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white pt-[36px]">
+  <div class="bg-white py-[36px]">
     <div class="flex md:flex-col max-w-[1280px] px-[20px] m-auto">
       <div class="w-[752px] md:w-full md:border-none pr-[16px] border-r-[1px] border-[#EAECF0]">
         <a :href="backUrl" class="flex gap-[5px] text-[#475467] cursor-pointer hover-filter-primary px-[12px] py-[8px]">
