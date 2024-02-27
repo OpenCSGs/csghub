@@ -118,6 +118,7 @@ class ApplicationController < ActionController::Base
   end
 
   def relative_path_to_resolve_path type, content
+    return unless content
     prefix = case type
              when 'model'
                "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
