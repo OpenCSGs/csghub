@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
     redirect_to errors_unauthorized_path
   end
 
+  rescue_from Pundit::NotAuthorizedError do |e|
+    log_error "Pundit Not Allow", e.backtrace
+    redirect_to errors_unauthorized_path
+  end
+  
   def authenticate_user
     if helpers.logged_in?
       return true
