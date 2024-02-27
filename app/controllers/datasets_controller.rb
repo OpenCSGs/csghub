@@ -39,6 +39,8 @@ class DatasetsController < ApplicationController
   end
 
   def resolve
+    dataset_ability_check
+
     if params[:download] == 'true'
       if params[:lfs] == 'true'
         file_url = Starhub.api.download_datasets_file(params[:namespace],
@@ -56,18 +58,19 @@ class DatasetsController < ApplicationController
         send_data file, filename: @current_path
       end
     else
-      if params[:format] == 'txt'
+      content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
+      if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? params[:format]
+        result = Starhub.api.download_datasets_file(params[:namespace],
+                                                    params[:dataset_name],
+                                                    @current_path,
+                                                    { ref: @current_branch })
+        send_data result, type: content_type, disposition: 'inline'
+      else
         result = Starhub.api.get_datasets_file_content(params[:namespace],
-                                                       params[:model_name],
+                                                       params[:dataset_name],
                                                        @current_path,
                                                        { ref: @current_branch })
         render plain: JSON.parse(result)['data']
-      else
-        result = Starhub.api.download_datasets_file(params[:namespace],
-                                                    params[:model_name],
-                                                    @current_path,
-                                                    { ref: @current_branch })
-        send_data result, type: 'image/jpeg', disposition: 'inline'
       end
     end
   end
@@ -82,13 +85,12 @@ class DatasetsController < ApplicationController
 
   private
 
-  def load_dataset_detail
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
+  def dataset_ability_check
+    @owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @local_dataset = @owner && @owner.datasets.find_by(name: params[:dataset_name])
     unless @local_dataset
       return redirect_to errors_not_found_path
     end
-    @owner_url = helpers.code_repo_owner_url owner
     if @local_dataset.dataset_private?
       if @local_dataset.owner.instance_of? User
         return redirect_to errors_unauthorized_path if @local_dataset.owner != current_user
@@ -96,10 +98,15 @@ class DatasetsController < ApplicationController
         return redirect_to errors_unauthorized_path unless current_user.org_role(@local_dataset.owner)
       end
     end
+  end
+
+  def load_dataset_detail
+    dataset_ability_check
 
     return if action_name == 'blob' && params[:download] == 'true'
 
-    @avatar_url = owner.avatar_url
+    @owner_url = helpers.code_repo_owner_url @owner
+    @avatar_url = @owner.avatar_url
 
     if action_name == 'blob'
       @dataset, raw_tags, @last_commit, @branches, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
