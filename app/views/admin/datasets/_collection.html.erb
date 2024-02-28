@@ -60,16 +60,14 @@ to display a collection of resources in an HTML table.
       <tr class="js-table-row"
           <% if accessible_action?(resource, :show) %>
             <%= %(tabindex=0 role=link data-url=#{polymorphic_path([namespace, resource])}) %>
-          <% end %>
-          >
+          <% end %>>
         <% collection_presenter.attributes_for(resource).each do |attribute| %>
           <td class="cell-data cell-data--<%= attribute.html_class %>">
             <% if accessible_action?(resource, :show) -%>
               <a href="/datasets/<%= resource.path %>"
                  tabindex="-1"
                  class="action-show"
-                 target="_blank"
-                 >
+                 target="_blank">
                 <%= render_field attribute %>
               </a>
             <% else %>
