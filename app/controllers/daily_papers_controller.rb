@@ -13,11 +13,16 @@ class DailyPapersController < ApplicationController
 
   def show
     @daily_paper = DailyPaper.find_by(uuid: params[:uuid])
-    model_links = @daily_paper.model_links rescue []
-    dataset_links = @daily_paper.dataset_links rescue []
-    model_data = Starhub.api.models_by_paths(model_links)
-    dataset_data = Starhub.api.datasets_by_paths(dataset_links)
-    @model_data = JSON.parse(model_data)['data'] || []
-    @dataset_data = JSON.parse(dataset_data)['data'] || []
+
+    unless @daily_paper
+      redirect_to errors_not_found_path
+    else
+      model_links = @daily_paper.model_links rescue []
+      dataset_links = @daily_paper.dataset_links rescue []
+      model_data = Starhub.api.models_by_paths(model_links)
+      dataset_data = Starhub.api.datasets_by_paths(dataset_links)
+      @model_data = JSON.parse(model_data)['data'] || []
+      @dataset_data = JSON.parse(dataset_data)['data'] || []
+    end
   end
 end
