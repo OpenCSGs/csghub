@@ -92,7 +92,7 @@
         <div v-if="data.video_link!=''&&data.video_link!=nil" class="flex gap-[8px] items-center mt-[48px] mb-[16px]">
           <div class="text-[16px] font-[500] leading-[24px] text-[#303133]">关联视频</div>
         </div>
-        <div v-if="data.video_link!=''&&data.video_link!=nil" class="flex flex-col gap-[16px]">
+        <div v-if="data.video_link!=''&&data.video_link!=nil" class="max-w-[480px] flex flex-col gap-[16px]">
           <video ref="videoPlayer" style="width: 100%" controls muted>
             <source :src="data.video_link" type="video/mp4" />
           </video>
