@@ -44,12 +44,11 @@ to display a collection of resources in an HTML table.
           <% end %>
         </th>
       <% end %>
-      <%= render(
-        "collection_header_actions",
-        collection_presenter: collection_presenter,
-        page: page,
-        resources: resources,
-        table_title: "page-title") %>
+      <%= render("collection_header_actions",
+                 collection_presenter: collection_presenter,
+                 page: page,
+                 resources: resources,
+                 table_title: "page-title") %>
     </tr>
   </thead>
 
@@ -74,14 +73,13 @@ to display a collection of resources in an HTML table.
           </td>
         <% end %>
 
-        <%= render(
-          "collection_item_actions",
-          collection_presenter: collection_presenter,
-          collection_field_name: collection_field_name,
-          page: page,
-          namespace: namespace,
-          resource: resource,
-          table_title: "page-title") %>
+        <%= render("collection_item_actions",
+                   collection_presenter: collection_presenter,
+                   collection_field_name: collection_field_name,
+                   page: page,
+                   namespace: namespace,
+                   resource: resource,
+                   table_title: "page-title") %>
       </tr>
     <% end %>
   </tbody>
