@@ -63,7 +63,7 @@
                 </template>
               </el-dropdown>
             </div>
-            <div class="px-[12px] py-[12px] markdown-body" v-html="renderMarkdown(comment.content)"></div>
+            <MarkdownViewer class="px-[12px] py-[12px]" :content="comment.content" :setDefaultText="true"></MarkdownViewer>
           </div>
           <CommunityMDTextarea ref="mdTextarea" :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
           <div>
@@ -106,7 +106,7 @@
   import dayjs from "dayjs";
 </script>
 <script>
-  import MarkdownIt from "markdown-it";
+  import MarkdownViewer from "../shared/viewers/MarkdownViewer.vue";
   import { ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch"
   import CommunityMDTextarea from "../community/CommunityMDTextarea.vue"
@@ -160,10 +160,6 @@
     methods: {
       handleInputChange(value) {
         this.desc = value;
-      },
-      renderMarkdown(text) {
-        const mdParser = new MarkdownIt();
-        return mdParser.render(text);
       },
       async create(){
         if (this.desc === '') {
