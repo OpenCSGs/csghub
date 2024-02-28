@@ -40,6 +40,7 @@ import { ref } from 'vue'
 import CodeEditor from '../shared/CodeEditor.vue'
 import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
 import csrfFetch from "../../packs/csrfFetch"
+import { ElMessage } from 'element-plus'
 
 const props = defineProps({
   originalCodeContent: String,
@@ -97,7 +98,9 @@ const updateFile = async () => {
   if (response.ok) {
     redirectToFilePreview()
   } else {
-    return response.json().then(data => { throw new Error(data.message) }).finally(() => {
+    response.json().then(data => {
+      ElMessage({ message: data.message, type: "warning" })
+    }).finally(() => {
       submiting.value = false
     })
   }
