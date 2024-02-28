@@ -23,17 +23,17 @@ to display a collection of resources in an HTML table.
     <tr>
       <% collection_presenter.attribute_types.each do |attr_name, attr_type| %>
         <th class="cell-label
-        cell-label--<%= attr_type.html_class %>
-        cell-label--<%= collection_presenter.ordered_html_class(attr_name) %>
-        cell-label--<%= "#{collection_presenter.resource_name}_#{attr_name}" %>"
-        scope="col"
-        aria-sort="<%= sort_order(collection_presenter.ordered_html_class(attr_name)) %>">
-        <%= link_to(sanitized_order_params(page, collection_field_name).merge(
-          collection_presenter.order_params_for(attr_name, key: collection_field_name)
-        )) do %>
-        <%= t(
-          "helpers.label.#{collection_presenter.resource_name}.#{attr_name}",
-          default: resource_class.human_attribute_name(attr_name).titleize,) %>
+                   cell-label--<%= attr_type.html_class %>
+                   cell-label--<%= collection_presenter.ordered_html_class(attr_name) %>
+                   cell-label--<%= "#{collection_presenter.resource_name}_#{attr_name}" %>"
+            scope="col"
+            aria-sort="<%= sort_order(collection_presenter.ordered_html_class(attr_name)) %>"
+        >
+          <%= link_to(sanitized_order_params(page, collection_field_name).merge(
+            collection_presenter.order_params_for(attr_name, key: collection_field_name)
+          )) do %>
+            <%= t("helpers.label.#{collection_presenter.resource_name}.#{attr_name}",
+                  default: resource_class.human_attribute_name(attr_name).titleize) %>
             <% if collection_presenter.ordered_by?(attr_name) %>
               <span class="cell-label__sort-indicator cell-label__sort-indicator--<%= collection_presenter.ordered_html_class(attr_name) %>">
                 <svg aria-hidden="true">
@@ -55,9 +55,10 @@ to display a collection of resources in an HTML table.
   <tbody>
     <% resources.each do |resource| %>
       <tr class="js-table-row"
-          <% if accessible_action?(resource, :show) %>
-            <%= %(tabindex=0 role=link data-url=#{polymorphic_path([namespace, resource])}) %>
-          <% end %>>
+        <% if accessible_action?(resource, :show) %>
+          <%= %(tabindex=0 role=link data-url=#{polymorphic_path([namespace, resource])}) %>
+        <% end %>
+      >
         <% collection_presenter.attributes_for(resource).each do |attribute| %>
           <td class="cell-data cell-data--<%= attribute.html_class %>">
             <% if accessible_action?(resource, :show) -%>
