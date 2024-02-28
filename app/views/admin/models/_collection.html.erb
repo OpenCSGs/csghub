@@ -29,12 +29,10 @@ to display a collection of resources in an HTML table.
         scope="col"
         aria-sort="<%= sort_order(collection_presenter.ordered_html_class(attr_name)) %>">
         <%= link_to(sanitized_order_params(page, collection_field_name).merge(
-          collection_presenter.order_params_for(attr_name, key: collection_field_name)
-        )) do %>
+          collection_presenter.order_params_for(attr_name, key: collection_field_name))) do %>
         <%= t(
           "helpers.label.#{collection_presenter.resource_name}.#{attr_name}",
-          default: resource_class.human_attribute_name(attr_name).titleize,
-        ) %>
+          default: resource_class.human_attribute_name(attr_name).titleize,) %>
             <% if collection_presenter.ordered_by?(attr_name) %>
               <span class="cell-label__sort-indicator cell-label__sort-indicator--<%= collection_presenter.ordered_html_class(attr_name) %>">
                 <svg aria-hidden="true">
@@ -50,8 +48,7 @@ to display a collection of resources in an HTML table.
         collection_presenter: collection_presenter,
         page: page,
         resources: resources,
-        table_title: "page-title"
-      ) %>
+        table_title: "page-title") %>
     </tr>
   </thead>
 
@@ -83,8 +80,7 @@ to display a collection of resources in an HTML table.
           page: page,
           namespace: namespace,
           resource: resource,
-          table_title: "page-title"
-        ) %>
+          table_title: "page-title") %>
       </tr>
     <% end %>
   </tbody>
