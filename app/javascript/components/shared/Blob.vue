@@ -86,7 +86,7 @@
     </div>
 
     <div class="border border-t-0 border-[#DCDFE6] rounded-b">
-      <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-between border-b border-[#DCDFE6]">
+      <div v-if="canWrite" class="text-xs text-[#303133] px-4 py-2 flex items-center justify-between border-b border-[#DCDFE6]">
         <div class="flex items-center gap-4">
           <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">预览</div>
           <div class="flex items-center gap-1">
@@ -120,7 +120,8 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
-    size: String
+    size: String,
+    canWrite: Boolean
   })
 
   const breadcrumb = ref([])

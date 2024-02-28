@@ -17,6 +17,7 @@
           :current-path="currentPath"
           :namespace-path="datasetDetail.path"
           :size="blob.size"
+          :can-write="canWrite"
         />
       </template>
       <template #files v-if="actionName === 'new_file'">

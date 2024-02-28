@@ -1,8 +1,8 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_dataset, only: [:update, :destroy, :create_file, :upload_file]
+  before_action :validate_dataset, only: [:update, :destroy, :create_file, :upload_file, :update_file]
   before_action :validate_manage, only: [:update, :destroy]
-  before_action :validate_write, only: [:create_file, :upload_file]
+  before_action :validate_write, only: [:create_file, :upload_file, :update_file]
   before_action :validate_authorization, only: [:files, :readme]
 
   def index
