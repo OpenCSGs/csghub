@@ -11,7 +11,7 @@
       <template #files v-if="actionName === 'blob'">
         <dataset-blob
           :content="decodedContent"
-          :last-commit="lastCommit"
+          :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
