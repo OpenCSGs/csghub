@@ -31,7 +31,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/models/#{username}/#{model_name}&current_user=#{options[:current_user]}",
+        "/models/#{username}/#{model_name}?current_user=#{options[:current_user]}",
         "/models/#{username}/#{model_name}/tags",
         "/models/#{username}/#{model_name}/last_commit",
         "/models/#{username}/#{model_name}/branches",
@@ -54,7 +54,7 @@ module Starhub
     end
 
     def get_model_detail(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}&current_user=#{options[:current_user]}")
+      res = @client.get("/models/#{username}/#{model_name}?current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
