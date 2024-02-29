@@ -1,4 +1,8 @@
 export default {
+    "all": {
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+    },
     "about": {
         "hero": {
             "headTitle": "Empowering everyone with Large Language Models",
@@ -43,4 +47,15 @@ export default {
             "Desc2": "The \"Chuanshen\" open community of OpenCSG is based on independently developed computing power algorithm platforms and application development tool platforms, providing users with a one-stop service for building large model applications, helping users efficiently and low-cost create personalized large model applications. The company has successfully implemented projects in fields such as finance, government affairs, and manufacturing, and actively collaborated with ecological partners to explore practical applications in more fields such as healthcare, industry, and media. At present, OpenCSG has completed angel round financing with tens of millions of yuan from Guoxin Zhongshu and Lenovo Venture Capital."
         }
     },
+    "space": {
+        "Desc1": "Hi! This is an open application space for large models.",
+        "Desc2": "You can base it on",
+        "Desc3": " Quickly build your exclusive big model application and publish it to the OpenCSG big model application space, share it with the community/friends/colleagues, support hosting and API calls.",
+        "Desc4": "More gameplay awaits you to discover!",
+        "SpaceList": "Space List",
+        "Running": "running",
+        "Stopping": "stopping",
+        "ClickTag": "Click to select the system default tag:",
+        "Img": "picture",
+    }
 };

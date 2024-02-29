@@ -45,7 +45,7 @@
                     :style="setTagColor(tag.name, tagField.color)"
                     @click="setActiveTaskTag"
               >
-                {{ tag.zh_name }}
+                {{ tag.zh_name ? this.$i18n.locale === 'zh': tag.name }}
               </span>
             </div>
           </div>

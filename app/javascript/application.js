@@ -11,7 +11,6 @@ import { createI18n } from 'vue-i18n'
 import en from '../../config/locales/en.js'
 import zh from '../../config/locales/zh.js'
 
-
 import Navbar from "./components/navbar/NewNavbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
 import SpaceCard from "./components/spaces/SpaceCard.vue"
@@ -104,7 +103,7 @@ const app = createApp({
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'en',
+  locale: 'zh',
   messages: {
     en,
     zh
