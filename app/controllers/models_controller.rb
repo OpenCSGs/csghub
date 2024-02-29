@@ -102,7 +102,8 @@ class ModelsController < ApplicationController
   def files_options
     {
       ref: @current_branch,
-      path: @current_path
+      path: @current_path,
+      current_user: current_user&.name
     }
   end
 end
