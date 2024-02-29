@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
   validates_length_of :nickname, maximum: 20
   validates_length_of :email, maximum: 30
-  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
+  validates :name, format: { with: /\A(?=.{2,50}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
 
   validate :unique_name_by_organization

@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     log_error "Record Not Found", e.backtrace
     redirect_to errors_not_found_path
   end
-  
+
   def authenticate_user
     if helpers.logged_in?
       return true
@@ -76,6 +76,7 @@ class ApplicationController < ActionController::Base
 
   def login_by_user_infos user_infos
     user = User.find_by(login_identity: user_infos['sub'])
+
     if user
       helpers.log_in user
       redirect_path = session.delete(:original_request_path) || root_path
@@ -84,9 +85,18 @@ class ApplicationController < ActionController::Base
 
     user = (user_infos['phone'].presence && User.find_by(phone: user_infos['phone'])) ||
            (user_infos['email'].presence && User.find_by(email: user_infos['email']))
+
+    user_name = user_infos['name']
+    nickname = user_infos['displayName']
+
+    if user_infos['wechat'].present?
+      user_name = JSON.parse(user_infos['properties']['oauth_WeChat_extra'])['wechat_unionid']
+    end
+
     if user
       user.login_identity = user_infos['sub']
-      user.name = user_infos['name'] if user.name.blank?
+      user.name = user_name if user.name.blank?
+      user.nickname = nickname if user.nickname.blank? && nickname.present?
       user.avatar = user_infos['avatar'] if user.avatar.blank?
       user.phone = user_infos['phone'] if user.phone.blank?
       user.email = user_infos['email'] if user.email.blank?
@@ -99,7 +109,8 @@ class ApplicationController < ActionController::Base
       user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
         u.roles = :personal_user
         u.avatar = user_infos['avatar']
-        u.name = user_infos['name']
+        u.name = user_name
+        u.nickname = nickname if nickname.present?
         u.phone = user_infos['phone']
         u.email = user_infos['email']
         u.email_verified = user_infos['emailVerified']
