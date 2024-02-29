@@ -1,15 +1,15 @@
 <template>
     <div>
       <div class="w-[294px] border rounded-[8px] bg-[#FAFAFA] border-[#DCDFE6] mx-[24px]">
-        <div class="flex p-[16px] border-b border-[#DCDFE6]">
+        <div class="flex flex-col p-[16px] border-b border-[#DCDFE6]">
           <el-avatar :size="60" :src="avatar"> </el-avatar>
-          <div class="ml-[10px]">
+          <div class="">
             <div class="text-[24px] leading-[32px] font-semibold">
               <a :href="'/profile/' + displayName">
                 {{displayName}}
               </a>
             </div>
-            <div class="text-[16px] text-[#909399] leading-[24px]">@{{name}}</div>
+            <div class="text-[16px] text-[#909399] leading-[24px] break-word">@{{name}}</div>
           </div>
         </div>
         <div class="flex flex-col">
