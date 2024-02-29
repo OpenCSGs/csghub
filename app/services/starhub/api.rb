@@ -10,7 +10,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/models/#{username}/#{model_name}/detail",
+        "/models/#{username}/#{model_name}",
         "/models/#{username}/#{model_name}/tags",
         "/models/#{username}/#{model_name}/branches"
       ]
@@ -31,7 +31,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/models/#{username}/#{model_name}/detail",
+        "/models/#{username}/#{model_name}",
         "/models/#{username}/#{model_name}/tags",
         "/models/#{username}/#{model_name}/last_commit",
         "/models/#{username}/#{model_name}/branches",
@@ -54,7 +54,7 @@ module Starhub
     end
 
     def get_model_detail(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/detail")
+      res = @client.get("/models/#{username}/#{model_name}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -199,7 +199,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/datasets/#{username}/#{dataset_name}/detail",
+        "/datasets/#{username}/#{dataset_name}",
         "/datasets/#{username}/#{dataset_name}/tags",
         "/datasets/#{username}/#{dataset_name}/branches"
       ]
@@ -219,7 +219,7 @@ module Starhub
     def get_dataset_detail_blob_data_in_parallel(username, dataset_name, options = {})
       options[:ref] ||= 'main'
       paths = [
-        "/datasets/#{username}/#{dataset_name}/detail",
+        "/datasets/#{username}/#{dataset_name}",
         "/datasets/#{username}/#{dataset_name}/tags",
         "/datasets/#{username}/#{dataset_name}/last_commit",
         "/datasets/#{username}/#{dataset_name}/branches",
@@ -260,7 +260,7 @@ module Starhub
     end
 
     def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/detail")
+      res = @client.get("/datasets/#{username}/#{dataset_name}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
