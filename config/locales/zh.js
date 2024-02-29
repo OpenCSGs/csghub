@@ -57,5 +57,13 @@ export default {
         "Stopping": "已暂停",
         "ClickTag": "点击选择系统默认 tag:",
         "Img": "图片",
-    }
+    },
+    "campaign": {
+        "Organizer": "举办方",
+        "More": "了解更多",
+        "SignUp": "立即报名",
+        "Time": "活动时间",
+        "Site": "活动地点",
+        "Related": "相关应用"
+    },
 };

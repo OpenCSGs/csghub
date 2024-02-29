@@ -57,5 +57,13 @@ export default {
         "Stopping": "stopping",
         "ClickTag": "Click to select the system default tag:",
         "Img": "picture",
-    }
+    },
+    "campaign": {
+        "Organizer": "Organizer",
+        "More": "Learn more",
+        "SignUp": "Sign up",
+        "Time": "Campaign time",
+        "Site": "Campaign location",
+        "Related": "Related space"
+    },
 };

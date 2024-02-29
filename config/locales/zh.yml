@@ -96,3 +96,9 @@ zh:
       words_connector: "，"
       two_words_connector: "，"
       last_word_connector: "，"
+
+  campaign:
+    related: "相关应用"
+    sign_up: "立即报名"
+    time: "活动时间"
+    site: "活动地点"

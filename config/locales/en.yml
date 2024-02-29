@@ -41,3 +41,9 @@ en:
         space:
           blank: "Field can't be blank"
           taken: "Can't create duplicate space"
+
+  campaign:
+    related: "Related space"
+    sign_up: "Sign up"
+    time: "Campaign time"
+    site: "Campaign location"
