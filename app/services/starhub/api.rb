@@ -260,7 +260,7 @@ module Starhub
     end
 
     def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}")
+      res = @client.get("/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
