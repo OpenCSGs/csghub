@@ -3,7 +3,7 @@
       <div class="w-[294px] border rounded-[8px] bg-[#FAFAFA] border-[#DCDFE6] mx-[24px]">
         <div class="flex flex-col p-[16px] border-b border-[#DCDFE6]">
           <el-avatar :size="60" :src="avatar"> </el-avatar>
-          <div class="">
+          <div>
             <div class="text-[24px] leading-[32px] font-semibold">
               <a :href="'/profile/' + displayName">
                 {{displayName}}
