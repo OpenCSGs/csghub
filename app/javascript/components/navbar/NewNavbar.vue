@@ -56,7 +56,11 @@
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-       <el-menu-item index="/campaigns" style="border:none" @click="routerLink('/campaigns')">活动</el-menu-item>
+        <el-sub-menu index="5" popper-class="popper-submenu">
+          <template #title>社区</template>
+          <a href="/campaigns"><el-menu-item index="/campaigns">社区活动</el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="/daily_papers">社区文章</el-menu-item></a>
+        </el-sub-menu>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
