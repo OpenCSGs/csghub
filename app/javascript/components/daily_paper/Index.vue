@@ -40,7 +40,7 @@
             <div class="flex gap-x-[32px] gap-y-[48px] flex-wrap justify-between border-b border-[#EAECF0] pb-[64px]">
               <div class="w-[452px] md:w-full" :key="item.uuid" v-for="item in JSON.parse(dailyPapers)">
                 <div class="flex w-full flex-col cursor-pointer" @click="visitDetail(item.uuid)">
-                  <img :src="item.cover_url" alt="" class="h-[240px]">
+                  <img :src="item.cover_url" alt="" class="h-[240px] object-contain">
                   <div class="flex justify-between gap-[16px] mt-[20px] items-start">
                     <div class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828]">
                       {{ item.title }}
@@ -88,7 +88,7 @@
 
 <script setup>
   import dayjs from "dayjs";
-  import { defineProps, ref } from 'vue'
+  import { ref } from 'vue'
   const props = defineProps({
     canCreateDailyPaper: Boolean,
     dailyPapers: String,
