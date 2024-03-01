@@ -7,6 +7,11 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+import { useCookies } from "vue3-cookies"
+import { createI18n } from 'vue-i18n'
+import en from '../../config/locales/en.js'
+import zh from '../../config/locales/zh.js'
+
 import Navbar from "./components/navbar/NewNavbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
 import SpaceCard from "./components/spaces/SpaceCard.vue"
@@ -96,8 +101,20 @@ const app = createApp({
   }
 }).use(ElementPlus);
 
+const { cookies } = useCookies()
+
+const i18n = createI18n({
+  legacy: false,
+  locale: cookies.get('locale') || 'zh',
+  messages: {
+    en,
+    zh
+  }
+});
+
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+app.use(i18n)
 app.mount("#app")
