@@ -155,7 +155,7 @@ export default {
         {
           logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
           brand: '华为',
-          brand_en: 'Huawei',
+          brand_en: 'Ascend',
           specification: '910B / 64GB PCIe',
           power: 'INT8 640 TOPS, FP16 320 TFLOPS',
           number: '28',
@@ -169,7 +169,7 @@ export default {
         {
           logo: ['/images/computing/enflame.png','w-[40px] h-[40px]'],
           brand: '燧原',
-          brand_en: 'Suiyuan',
+          brand_en: 'Enflame',
           specification: 'i20 / 16GB PCIe',
           power: 'INT8 256 TOPS, FP16 128 TFLOPS',
           number: '200',

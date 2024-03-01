@@ -136,5 +136,72 @@ export default {
             "desc": "StarShip is committed to providing a complete model/data management and application building platform for large model application development teams, utilizing large model technology to create a new experience in software engineering 2.0.",
             "demo": "Product demonstration"
         },
-    }
+    },
+    "solution": {
+        "banner": {
+            "headline": "The big model redefines a new paradigm for software development and engineering delivery",
+            "solution": "OpenCSG Solution"
+        },
+        "knowledge": {
+            "solution1": "Solution #1",
+            "headline": "OpenCSG EKB AI Intelligent Enterprise Knowledge Base",
+            "desc": "EKB AI structures documents and transforms them into digital assets, achieving digital storage and management of information, and solidifying the foundation for digital transformation of enterprise assets.",
+            "demoVideo": "Product Demonstration",
+            "demo": "Experience Now",
+            "remarks": "Registration is temporarily closed. Please contact contact@opencsg.com Obtain trial permissions",
+        },
+        "starAIO": {
+            "solution2": "Solution #2",
+            "headline": "OpenCSG StarAIO large model all-in-one machine",
+            "desc": "Provides excellent open-source tools and platforms for developers to assist enterprises in customizing private large-scale models.",
+            "part1": "Continuously iterating and freely changing base models",
+            "part1-": "Large models can be continuously updated and upgraded to adapt to different application scenarios and needs.",
+            "part2": "Open source framework, convenient development of large model applications",
+            "part2-": "Using open-source frameworks, it is convenient for developers to build and customize large model applications.",
+            "part3": "Local deployment, security compliance",
+            "part3-": "Deploy large-scale model services within our own data centers to ensure data privacy and security compliance.",
+            "part4": "Container deployment, seamless migration",
+            "part4-": "Support the development of plugins that comply with standard API interface specifications, expand product functionality and application scenarios.",
+            "subpart1": "Unlocking unlimited creativity and achieving personalized AI experience",
+            "subpart1-": "The large model all-in-one machine provides continuous iteration and easy replacement of large model services, allowing you to unleash your creativity and customize your own unique AI experience. Whether it's chatting, Chinese writing, or other application scenarios, our product will open up unlimited possibilities for you.",
+            "subpart2": "Data security guarantee, a secure choice for mastering sensitive information",
+            "subpart2-": "In the era of advocating data security, we are well aware of your importance on privacy protection. The big model all-in-one machine supports localized deployment, ensuring that your big model and data always run in a secure and controllable environment. Choose our product to ensure the most reliable protection of your sensitive information.",
+            "subpart3": "Easy deployment, efficient migration to cloud services or other hardware",
+            "subpart3-": "With containerized deployment technology, large model all-in-one machines can be easily migrated to other hardware devices or cloud service platforms. Whether you need elastic scalability or use cloud computing resources, we provide you with simple and fast solutions to ensure that your large model is always in the best state.",
+            "subpart4": "Open source framework to assist developers in building custom applications",
+            "subpart4-": "The big model all-in-one machine is based on an open-source framework, providing developers with excellent tools and platforms to help them build and customize applications for big models. Whether you are looking for innovative breakthroughs or hoping to provide personalized services, we will work together with you to achieve common value goals.",
+            "subpart5": "Meeting the needs of localization and leading the digital transformation of the industry",
+            "subpart5-": "The large model all-in-one machine is compatible with domestic hardware and adapts to the information and innovation system, providing localized Al solutions for traditional enterprises such as finance, government, and operators. Through comprehensive adaptation with the information and innovation ecosystem, we are committed to promoting the digital transformation of the industry and perfectly combining the computing power of domestic CPUs with the compatibility of large models."
+        },
+        "AIImg": {
+            "solution3": "Solution #3",
+            "headline": "OpenCSG Imagen AI Intelligent Image Assistant",
+            "desc": "OpenCSG Imagen AI Intelligent Image Assistant is a visual toolkit developed on the basis of the Stable Diffusion 2.1 open-source model, dedicated to enhancing human intelligence. It aims to provide creators with better tools, catalyze the emergence of inspiration, and achieve exponential amplification of creativity and productivity. OpenCSG Imagen AI Intelligent Image Assistant adapts to professional design workflows and provides multiple functions.",
+            "part1": "Cultural and graphic drawing mode",
+            "part1-": "No need for professional painting skills, users can generate high-quality paintings in seconds with just a simple description.",
+            "part2": "Diagram drawing mode",
+            "part2-": "Choose multiple painting styles and artist references, and improve design quality and drawing efficiency by borrowing works of different styles for creation.",
+            "part3": "Generate images based on textual descriptions",
+            "part3-": "Generate corresponding images based on user provided text descriptions to expand creative possibilities.",
+            "part4": "Modifying images based on text guidance",
+            "part4-": "Users can use text guidance to modify existing images to meet their creative needs.",
+            "part5": "Artist's Style Transfer",
+            "part5-": "By learning from works of different artists or styles and integrating them, generate images with specific artistic styles to help creators explore new ways of expression.",
+            "part6": "Image super-resolution",
+            "part6-": "OpenCSG Image AI Image Assistant improves image resolution for clearer and more detailed images."
+        },
+        "programming": {
+            "solution4": "Solution #4",
+            "headline": "OpenCSG StarCode AI Intelligent Programming Assistant",
+            "desc": "StarCode AI is a versatile intelligent programming assistant that helps developers improve their work efficiency through innovative features based on large model technology. It integrates the advantages of other auxiliary programming assistants and provides developers with more powerful features.",
+            "part1": "Automatic code generation and completion",
+            "part1-": "Supports automatic code generation based on natural language annotations, as well as generating subsequent code based on existing code, making the coding process faster and more accurate. OpenCSG StarCode AI further provides completion functionality for the current line or generating subsequent lines of code, helping developers easily complete programming tasks.",
+            "part2": "Automatically generate unit tests",
+            "part2-": "Supports generating unit tests and interpreting code related to unit tests based on common unit testing frameworks. StarCode AI further provides completion functionality for the current or subsequent lines of code, helping developers easily complete programming tasks.",
+            "part3": "Q&A on R&D knowledge",
+            "part3-": "Supports intelligent question answering function, allowing developers to directly ask technical questions to assistants without leaving the integrated development environment (IDE) to search for answers on search engines. This seamless integration experience allows developers to focus more on solving problems and improve work efficiency. StarCode AI also provides completion function for the current line or generating subsequent lines of code, helping developers easily complete programming tasks.",
+            "part4": "Code Translation",
+            "part4-": "Not only does it support mutual translation between multiple mainstream programming languages, but it also draws on the features of CoPilot to achieve more accurate and high-quality code translation based on artificial intelligence models. StarCode AI further provides completion functionality for the current line or generating subsequent line codes, helping developers easily complete programming tasks."
+        },
+    },
 }
