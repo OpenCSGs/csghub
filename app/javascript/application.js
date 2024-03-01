@@ -50,6 +50,7 @@ import PrivacyPage from "./components/policy/PrivacyPage.vue"
 import DailyPaperNew from "./components/daily_paper/New.vue"
 import DailyPaperIndex from "./components/daily_paper/Index.vue"
 import DailyPaperShow from "./components/daily_paper/Show.vue"
+import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 
 const app = createApp({
   components: {
@@ -94,7 +95,8 @@ const app = createApp({
     OrganizationSettings,
     DailyPaperNew,
     DailyPaperIndex,
-    DailyPaperShow
+    DailyPaperShow,
+    ProfileRepoList
   },
   provide:{
     defaultTags: DefaultTags

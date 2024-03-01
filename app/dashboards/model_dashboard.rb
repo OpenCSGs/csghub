@@ -26,6 +26,7 @@ class ModelDashboard < Administrate::BaseDashboard
     id
     name
     owner
+    visibility
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
