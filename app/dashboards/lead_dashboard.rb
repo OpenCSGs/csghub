@@ -21,7 +21,7 @@ class LeadDashboard < Administrate::BaseDashboard
     lead_form: Field::BelongsTo,
     lead_form_uuid: Field::String,
     lead_source: Field::String,
-    lead_status: Field::String,
+    lead_status: Field::Select.with_options(include_blank: false, collection: -> { Lead.human_enum_options(:lead_status) }),
     lead_type: Field::String,
     local_channel: Field::String,
     name: Field::String,
@@ -57,6 +57,8 @@ class LeadDashboard < Administrate::BaseDashboard
     email
     title
     company
+    lead_status
+    additional_notes
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -100,6 +102,7 @@ class LeadDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
+    lead_status
     additional_notes
     channel
     company
@@ -112,7 +115,6 @@ class LeadDashboard < Administrate::BaseDashboard
     lead_form
     lead_form_uuid
     lead_source
-    lead_status
     lead_type
     local_channel
     name
