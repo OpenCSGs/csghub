@@ -10,8 +10,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/models/#{username}/#{model_name}/detail",
-        "/models/#{username}/#{model_name}/tags",
+        "/models/#{username}/#{model_name}?current_user=#{options[:current_user]}",
         "/models/#{username}/#{model_name}/branches"
       ]
       @client.get_in_parallel(paths, options)
@@ -21,7 +20,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/models/#{username}/#{model_name}/last_commit",
+        "/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}",
         "/models/#{username}/#{model_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
@@ -31,9 +30,8 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/models/#{username}/#{model_name}/detail",
-        "/models/#{username}/#{model_name}/tags",
-        "/models/#{username}/#{model_name}/last_commit",
+        "/models/#{username}/#{model_name}?current_user=#{options[:current_user]}",
+        "/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}",
         "/models/#{username}/#{model_name}/branches",
         "/models/#{username}/#{model_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
       ]
@@ -54,7 +52,7 @@ module Starhub
     end
 
     def get_model_detail(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/detail")
+      res = @client.get("/models/#{username}/#{model_name}?current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -67,7 +65,7 @@ module Starhub
     end
 
     def get_model_last_commit(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/last_commit")
+      res = @client.get("/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -199,8 +197,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/datasets/#{username}/#{dataset_name}/detail",
-        "/datasets/#{username}/#{dataset_name}/tags",
+        "/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}",
         "/datasets/#{username}/#{dataset_name}/branches"
       ]
       @client.get_in_parallel(paths, options)
@@ -210,7 +207,7 @@ module Starhub
       options[:path] ||= '/'
       options[:ref] ||= 'main'
       paths = [
-        "/datasets/#{username}/#{dataset_name}/last_commit",
+        "/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}",
         "/datasets/#{username}/#{dataset_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
@@ -219,9 +216,8 @@ module Starhub
     def get_dataset_detail_blob_data_in_parallel(username, dataset_name, options = {})
       options[:ref] ||= 'main'
       paths = [
-        "/datasets/#{username}/#{dataset_name}/detail",
-        "/datasets/#{username}/#{dataset_name}/tags",
-        "/datasets/#{username}/#{dataset_name}/last_commit",
+        "/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}",
+        "/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}",
         "/datasets/#{username}/#{dataset_name}/branches",
         "/datasets/#{username}/#{dataset_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
       ]
@@ -260,7 +256,7 @@ module Starhub
     end
 
     def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/detail")
+      res = @client.get("/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -273,7 +269,7 @@ module Starhub
     end
 
     def get_datasets_last_commit(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit")
+      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
