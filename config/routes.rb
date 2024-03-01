@@ -83,8 +83,6 @@ Rails.application.routes.draw do
     # resources :discussions, only: :create
     resources :discussions, only: [:create, :index, :update]
     resources :upload, only: [:create]
-
-    get '/internationalize', to: 'internationalize#index'
   end
 
   # lead form

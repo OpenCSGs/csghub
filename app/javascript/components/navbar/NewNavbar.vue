@@ -166,10 +166,7 @@ export default {
       } else {
         this.$i18n.locale = 'zh'
       }
-      this.submitLang()
-    },
-    submitLang() {
-      const response = csrfFetch(`/internal_api/internationalize?flag=${this.$i18n.locale}`, { method: 'GET' })
+      this.$i18n.global.locale
     }
   },
 }
