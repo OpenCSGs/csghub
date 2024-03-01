@@ -19,21 +19,21 @@ export default {
         },
         "team": {
             "Introduction": "Team Introduction",
-            "Sam":"Sam Chen（陈冉）",
-            "FounderCEO":"Founder | CEO",
-            "WangWei":"Wei Wang（王伟）",
-            "CoFounderCTO":"Co founder | CTO",
-            "JiaQing":"Jiaqing Zhang（张家庆）",
-            "CoFounderCMO":"Co founder | CMO",
+            "Sam": "Sam Chen（陈冉）",
+            "FounderCEO": "Founder | CEO",
+            "WangWei": "Wei Wang（王伟）",
+            "CoFounderCTO": "Co founder | CTO",
+            "JiaQing": "Jiaqing Zhang（张家庆）",
+            "CoFounderCMO": "Co founder | CMO",
         },
         "joinus": {
-            "JoinUS":"Join Us",
-            "WorkPlace":"Work Place",
-            "JobResponsibilities":"Job Responsibilities",
-            "JobRequirements":"Job Requirements",
-            "Remuneration":"Remuneration",
-            "WaysToSubmitResume":"Ways to submit your resume",
-            "WaysEmail":"Email",
+            "JoinUS": "Join Us",
+            "WorkPlace": "Work Place",
+            "JobResponsibilities": "Job Responsibilities",
+            "JobRequirements": "Job Requirements",
+            "Remuneration": "Remuneration",
+            "WaysToSubmitResume": "Ways to submit your resume",
+            "WaysEmail": "Email",
         },
         "company": {
             "ContactUs": "Contact us",
@@ -106,6 +106,35 @@ export default {
             "problem": "Still have doubts?",
             "problem-": "Can't find the answer you're looking for? Please contact our pre-sales engineering team.",
             "contact": "Contact Us",
-        },
+        }
     },
-};
+    "product": {
+        "banner": {
+            "headline1": "From computing power to application",
+            "headline2": "Big models lead software engineering transformation",
+            "solution": "OpenCSG Solution"
+        },
+        "starCloud":{
+            "product1": "Product #1",
+            "headline": "OpenCSG StarCloud Nebula Platform",
+            "desc": "StarCloud is a one-stop model development and service operation platform based on deep learning, providing complete dataset management, model training, evaluation, and inference services. Its features include convenient publishing methods, stable operating environment, and enterprise level service security, aiming to support generative AI applications in various industries and help customers build high-precision and high-performance large models.",
+            "demoVideo": "Demonstration video",
+            "demo": "Demo Experience",
+            "remarks": "Registration is temporarily closed. Please contact contact@opencsg.com Obtain trial permissions",
+            "part1": "Training and fine-tuning of large models",
+            "part1-": "The core function of the StarCloud platform is to train and fine tune large models, allowing users to view training status and choose training methods. At the same time, it supports enterprise customers to fine tune models according to business needs, use proprietary datasets to reduce costs, and optimize the performance of specific tasks.",
+            "part2": "Complete process and convenient release",
+            "part2-": "Provide full process services: a one-stop service covering dataset management, model training, service publishing, and supervision. Visual management: Implement management of the entire lifecycle of large models through an intuitive interface, simplifying the implementation process from data to services.",
+            "part3": "Stable operation and co construction of ecology",
+            "part3-": "Complete technology stack: The platform provides a complete technology stack and a long-term stable model development engine to ensure the stability and performance of algorithms. Low technology threshold: suitable for various industries, reducing access barriers, and helping to complete the development and construction of industry models.",
+            "part4": "Safe and reliable, one click enable",
+            "part4-": "Enterprise level services: provide secure and trustworthy enterprise level services, combined with underlying content security functions, to ensure the review of inference content and sensitive word filtering. Algorithm data protection: adopt enterprise level multi tenant design to protect data and security privacy.",
+        },
+        "starShip": {
+            "product2": "Product #2",
+            "headline": "OpenCSG StarShip Starship Platform",
+            "desc": "StarShip is committed to providing a complete model/data management and application building platform for large model application development teams, utilizing large model technology to create a new experience in software engineering 2.0.",
+            "demo": "Product demonstration"
+        },
+    }
+}
