@@ -58,11 +58,20 @@
         </el-sub-menu>
        <el-menu-item index="/campaigns" style="border:none" @click="routerLink('/campaigns')">活动</el-menu-item>
       </el-menu>
-      <div class="cursor-pointer md:hidden" @click="changeLang">
-        <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10.7607 13.1667H16.739M10.7607 13.1667L9.1665 16.5M10.7607 13.1667L13.1484 8.17419C13.3408 7.77189 13.437 7.57075 13.5686 7.50718C13.6831 7.4519 13.8166 7.4519 13.931 7.50718C14.0627 7.57075 14.1589 7.77189 14.3513 8.17419L16.739 13.1667M16.739 13.1667L18.3332 16.5M1.6665 3.16667H6.6665M6.6665 3.16667H9.58317M6.6665 3.16667V1.5M9.58317 3.16667H11.6665M9.58317 3.16667C9.16972 5.63107 8.21033 7.86349 6.80446 9.73702M8.33317 10.6667C7.82273 10.4373 7.30204 10.1184 6.80446 9.73702M6.80446 9.73702C5.67736 8.87314 4.66881 7.68886 4.1665 6.5M6.80446 9.73702C5.46722 11.5191 3.72603 12.9765 1.6665 14" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
+      <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
+        <span class="flex items-center text-base outline-none">
+          <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" width="1.2em" height="1.2em" data-v-12008bb2=""><path fill="currentColor" d="m18.5 10l4.4 11h-2.155l-1.201-3h-4.09l-1.199 3h-2.154L16.5 10h2zM10 2v2h6v2h-1.968a18.222 18.222 0 0 1-3.62 6.301a14.864 14.864 0 0 0 2.336 1.707l-.751 1.878A17.015 17.015 0 0 1 9 13.725a16.676 16.676 0 0 1-6.201 3.548l-.536-1.929a14.7 14.7 0 0 0 5.327-3.042A18.078 18.078 0 0 1 4.767 8h2.24A16.032 16.032 0 0 0 9 10.877a16.165 16.165 0 0 0 2.91-4.876L2 6V4h6V2h2zm7.5 10.885L16.253 16h2.492L17.5 12.885z"></path></svg>
+          <el-icon class="el-icon--right">
+            <arrow-down />
+          </el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="zh">中文</el-dropdown-item>
+            <el-dropdown-item command="en">English</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
           <el-avatar :size="35" :src="avatar">
@@ -160,13 +169,8 @@ export default {
     showDialog() {
       this.$refs.child.showDialog()
     },
-    changeLang() {
-      if (this.$i18n.locale === 'zh') {
-        this.$i18n.locale = 'en'
-      } else {
-        this.$i18n.locale = 'zh'
-      }
-      this.$i18n.global.locale
+    handleLocaleChange(locale) {
+      location.href = `/${locale}/settings/locale`
     }
   },
 }

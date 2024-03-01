@@ -7,6 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+import { useCookies } from "vue3-cookies"
 import { createI18n } from 'vue-i18n'
 import en from '../../config/locales/en.js'
 import zh from '../../config/locales/zh.js'
@@ -100,15 +101,17 @@ const app = createApp({
   }
 }).use(ElementPlus);
 
+const { cookies } = useCookies()
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'zh',
+  locale: cookies.get('locale') || 'zh',
   messages: {
     en,
     zh
   }
-});
+})
+
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)

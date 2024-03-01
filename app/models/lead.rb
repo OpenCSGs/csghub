@@ -1,6 +1,11 @@
 class Lead < ApplicationRecord
   PHONE_REGEX = /\A\d{7,11}\Z/
 
+  enum lead_status: {
+    processing: 'processing',
+    completed: 'completed'
+  }
+
   belongs_to :lead_form, primary_key: :uuid, foreign_key: :lead_form_uuid, optional: true
 
   validates_presence_of :company, :phone, :name

@@ -204,4 +204,7 @@ export default {
             "part4-": "Not only does it support mutual translation between multiple mainstream programming languages, but it also draws on the features of CoPilot to achieve more accurate and high-quality code translation based on artificial intelligence models. StarCode AI further provides completion functionality for the current line or generating subsequent line codes, helping developers easily complete programming tasks."
         },
     },
+    models: {
+      title: 'Models'
+    }
 }
