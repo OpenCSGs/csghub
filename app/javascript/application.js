@@ -6,6 +6,7 @@ import { createApp } from "vue/dist/vue.esm-bundler.js"
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 import Navbar from "./components/navbar/NewNavbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
@@ -46,6 +47,9 @@ import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import ComputingPage from "./components/computing/ComputingPage.vue"
 import LandingPage from "./components/landing_page/LandingPage.vue"
 import PrivacyPage from "./components/policy/PrivacyPage.vue"
+import DailyPaperNew from "./components/daily_paper/New.vue"
+import DailyPaperIndex from "./components/daily_paper/Index.vue"
+import DailyPaperShow from "./components/daily_paper/Show.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 
 const app = createApp({
@@ -88,13 +92,18 @@ const app = createApp({
     ComputingPage,
     LandingPage,
     PrivacyPage,
-    ProfileRepoList,
-    OrganizationSettings
+    OrganizationSettings,
+    DailyPaperNew,
+    DailyPaperIndex,
+    DailyPaperShow,
+    ProfileRepoList
   },
   provide:{
     defaultTags: DefaultTags
   }
-}).use(ElementPlus);
+}).use(ElementPlus, {
+  locale: zhCn,
+});
 
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
