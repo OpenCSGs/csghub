@@ -7,8 +7,20 @@ class DailyPaperPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def edit?
+    user.admin?
+  end
+
+  def update?
+    user.admin?
+  end
+
   def create?
     new?
+  end
+
+  def destroy?
+    user.super_user?
   end
 
   class Scope < Scope
