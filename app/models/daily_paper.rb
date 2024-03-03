@@ -5,7 +5,7 @@ class DailyPaper < ApplicationRecord
   validates_uniqueness_of :article_link
 
   belongs_to :recommender, class_name: 'User', foreign_key: :user_id
-  delegate :name, :avatar_url, to: :recommender, prefix: true, allow_nil: true
+  delegate :nickname, :avatar_url, to: :recommender, prefix: true, allow_nil: true
 
   has_many :comments, as: :commentable, dependent: :destroy
 
@@ -23,7 +23,7 @@ class DailyPaper < ApplicationRecord
       recommendation: recommendation,
       cover_url: cover_url,
       comments:comments.as_json,
-      recommender_name: recommender_name,
+      recommender_name: recommender_nickname,
       recommender_avatar_url: recommender_avatar_url,
       article_link: article_link,
       pdf_link: pdf_link,
