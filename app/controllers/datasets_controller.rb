@@ -109,9 +109,9 @@ class DatasetsController < ApplicationController
     @avatar_url = @owner.avatar_url
 
     if action_name == 'blob'
-      @dataset, raw_tags, @last_commit, @branches, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+      @dataset, @last_commit, @branches, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     else
-      @dataset, raw_tags, @branches = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+      @dataset, @branches = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
 
     if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? request.fullpath.split('.').last
@@ -120,7 +120,7 @@ class DatasetsController < ApplicationController
       @content = relative_path_to_resolve_path 'dataset', @content
     end
 
-    @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
+    @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_dataset) : false
   end
 
@@ -137,7 +137,8 @@ class DatasetsController < ApplicationController
   def files_options
     {
       ref: @current_branch,
-      path: @current_path
+      path: @current_path,
+      current_user: current_user&.name
     }
   end
 end

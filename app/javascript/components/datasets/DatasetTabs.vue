@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <DatasetClone :http-clone-url="datasetDetail.http_clone_url" :ssh-clone-url="datasetDetail.ssh_clone_url"/>
+    <DatasetClone :http-clone-url="datasetDetail.repository.http_clone_url" :ssh-clone-url="datasetDetail.repository.ssh_clone_url"/>
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary

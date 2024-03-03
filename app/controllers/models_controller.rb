@@ -108,9 +108,9 @@ class ModelsController < ApplicationController
     @owner_url = helpers.code_repo_owner_url @owner
     @avatar_url = @owner.avatar_url
     if action_name == 'blob'
-      @model, raw_tags, @last_commit, @branches, @content = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      @model, @last_commit, @branches, @content = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
     else
-      @model, raw_tags, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      @model, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
 
     if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? request.fullpath.split('.').last
@@ -119,7 +119,7 @@ class ModelsController < ApplicationController
       @content = relative_path_to_resolve_path 'model', @content
     end
 
-    @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
+    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end
 
@@ -136,7 +136,8 @@ class ModelsController < ApplicationController
   def files_options
     {
       ref: @current_branch,
-      path: @current_path
+      path: @current_path,
+      current_user: current_user&.name
     }
   end
 end
