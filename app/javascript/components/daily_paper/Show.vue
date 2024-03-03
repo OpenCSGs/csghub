@@ -25,13 +25,13 @@
         <div class="my-[48px]">
           <div class="flex gap-[12px]">
             <a v-if="data.article_link" :href="data.article_link" class="flex gap-[4px] px-[14px] py-[10px] border-[1px] border-[#D0D5DD] rounded-[8px] cursor-pointer hover-filter-primary" target="_blank">
-              <arrow-up-right width="20px" height="20px" />
+              <el-icon><TopRight /></el-icon>
               <span class="text-[14px] font-[500] leading-[20px]">
                 查看 arXiv 页面
               </span>
             </a>
             <a v-if="data.pdf_link" :href="data.pdf_link" class="flex gap-[4px] px-[14px] py-[10px] border-[1px] border-[#D0D5DD] rounded-[8px] cursor-pointer hover-filter-primary" target="_blank">
-              <arrow-up-right width="20px" height="20px" />
+              <el-icon><TopRight /></el-icon>
               <span class="text-[14px] font-[500] leading-[20px]">
                 查看 PDF
               </span>
@@ -239,7 +239,6 @@
         const commentCreateEndpoint = `/internal_api/comments?commentable_type=DailyPaper&commentable_id=${discussionId}`
         const response = await fetch(commentCreateEndpoint);
         response.json().then((data) => {
-          console.log(data);
           this.commentData=data
         })
       },
