@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :error_logs
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
+    resources :daily_papers, except: [:new, :create]
 
     root to: "spaces#index"
   end

@@ -3,6 +3,10 @@ class DailyPaperPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   def new?
     user.admin?
   end
@@ -25,7 +29,7 @@ class DailyPaperPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all
+      DailyPaper.all
     end
   end
 end
