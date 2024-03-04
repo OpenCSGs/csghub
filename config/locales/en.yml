@@ -41,3 +41,18 @@ en:
         space:
           blank: "Field can't be blank"
           taken: "Can't create duplicate space"
+
+  sessions:
+    sign_in_title: 'Sign in'
+    sign_up_title: 'Sign up'
+    name: 'Name *'
+    name_placeholder: 'Enter name'
+    sign_up_name_placeholder: '2-20 a-z and _- (_- not connected)'
+    email: 'Email *'
+    password: 'Password *'
+    phone: 'Phone *'
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
+    submit: 'Submit'
+    no_account: 'No account?'
+    already_has_account: 'Already has an account?'
