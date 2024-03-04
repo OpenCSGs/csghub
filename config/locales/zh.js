@@ -204,6 +204,39 @@ export default {
             "part4-": "不仅支持多种主流编程语言之间的互译，还借鉴了 CoPilot 的功能，基于人工智能大模型实现了更准确、高质量的代码翻译。 StarCode AI 还进一步提供了针对当前行或生成后续若干行代码的补全功能，帮助开发者轻松完成编程任务。"
         },
     },
+    "community": {
+        "discussion": {
+            "back": "回到话题列表",
+            "new": "新建话题"
+        },
+        "discussionDetail": {
+            "reply": "回复",
+            "comment": "评论",
+            "cancel": "取消",
+            "updateSuccess": "标题更新成功！",
+            "warn": "内容不能为空",
+            "addSuccess": "添加评论成功"
+        },
+        "MD": {
+            "edit": "编辑",
+            "preview": "预览",
+            "desc": "通过拖拽上传图片，音频，视频，或者",
+            "click": "点击这里上传",
+            "default": "留下评论"
+        },
+        "newDiscussion": {
+            "new": "新建话题",
+            "title": "标题",
+            "content": "内容",
+            "create": "创建话题",
+            "cancel": "取消"
+        },
+        "empty": {
+            "wellcome": "欢迎来讨论",
+            "decs": "这里是与OpenCSG讨论和合作的地方！",
+            "new": "新建话题"
+        },
+    },
     models: {
       title: '模型'
     }
