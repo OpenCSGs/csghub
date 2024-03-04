@@ -99,7 +99,7 @@
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div class="p-4">
-        <MarkdownViewer v-if="fileType === 'md'" :content="content" />
+        <MarkdownViewer v-if="['jpg', 'png', 'jpeg', 'gif', 'svg', 'md'].includes(fileType)" :content="content" />
         <CodeViewer v-else :extension="fileType" :content="content" />
       </div>
     </div>

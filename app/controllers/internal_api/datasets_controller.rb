@@ -25,7 +25,9 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def readme
     readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
-    render json: { readme: JSON.parse(readme)['data'] }
+    readme_content = JSON.parse(readme)['data']
+    readme_content = relative_path_to_resolve_path 'dataset', readme_content
+    render json: { readme: readme_content }
   rescue StarhubError
     render json: { readme: '' }
   end

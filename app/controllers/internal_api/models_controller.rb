@@ -25,7 +25,9 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def readme
     readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
-    render json: { readme: JSON.parse(readme)['data'] }
+    readme_content = JSON.parse(readme)['data']
+    readme_content = relative_path_to_resolve_path 'model', readme_content
+    render json: { readme: readme_content }
   rescue StarhubError
     render json: { readme: '' }
   end

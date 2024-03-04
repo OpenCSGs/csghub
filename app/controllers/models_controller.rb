@@ -3,7 +3,7 @@ class ModelsController < ApplicationController
 
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new_file, :upload_file, :edit_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :edit_file]
+  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
   before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
 
   def index
@@ -35,6 +35,12 @@ class ModelsController < ApplicationController
   end
 
   def blob
+    render :show
+  end
+
+  def resolve
+    model_ability_check
+
     if params[:download] == 'true'
       if params[:lfs] == 'true'
         file_url = Starhub.api.download_model_file(params[:namespace],
@@ -42,17 +48,30 @@ class ModelsController < ApplicationController
                                                    params[:lfs_path],
                                                    { ref: @current_branch,
                                                      lfs: true,
-                                                     save_as: params[:path]})
+                                                     save_as: @current_path})
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_model_file(params[:namespace],
                                                params[:model_name],
-                                               params[:path],
+                                               @current_path,
                                                { ref: @current_branch })
-        send_data file, filename: params[:path].split('/').last
+        send_data file, filename: @current_path
       end
     else
-      render :show
+      content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
+      if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? params[:format]
+        result = Starhub.api.download_model_file(params[:namespace],
+                                                 params[:model_name],
+                                                 @current_path,
+                                                 { ref: @current_branch })
+        send_data result, type: content_type, disposition: 'inline'
+      else
+        result = Starhub.api.get_model_file_content(params[:namespace],
+                                                    params[:model_name],
+                                                    @current_path,
+                                                    { ref: @current_branch })
+        render plain: JSON.parse(result)['data']
+      end
     end
   end
 
@@ -70,13 +89,12 @@ class ModelsController < ApplicationController
 
   private
 
-  def load_model_detail
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_model = owner && owner.models.find_by(name: params[:model_name])
+  def model_ability_check
+    @owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
+    @local_model = @owner && @owner.models.find_by(name: params[:model_name])
     unless @local_model
       return redirect_to errors_not_found_path
     end
-    @owner_url = helpers.code_repo_owner_url owner
     if @local_model.model_private?
       if @local_model.owner.instance_of? User
         return redirect_to errors_unauthorized_path if @local_model.owner != current_user
@@ -84,15 +102,27 @@ class ModelsController < ApplicationController
         return redirect_to errors_unauthorized_path unless current_user.org_role(@local_model.owner)
       end
     end
+  end
+
+  def load_model_detail
+    model_ability_check
 
     return if action_name == 'blob' && params[:download] == 'true'
 
-    @avatar_url = owner.avatar_url
+    @owner_url = helpers.code_repo_owner_url @owner
+    @avatar_url = @owner.avatar_url
     if action_name == 'blob' || action_name == 'edit_file'
       @model, @last_commit, @branches, @blob = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
     else
       @model, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
+
+    if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? request.fullpath.split('.').last
+      @content = {data: "<img src='#{request.fullpath.gsub('blob', 'resolve')}'>"}.to_json
+    else
+      @content = relative_path_to_resolve_path 'model', @content
+    end
+
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end
@@ -100,7 +130,11 @@ class ModelsController < ApplicationController
   def load_branch_and_path
     @default_tab = 'files'
     @current_branch = params[:branch] || 'main'
-    @current_path = params[:path] || ''
+    @current_path = if request.path.split('/').last.split('.').last == params[:format]
+                      "#{params[:path]}.#{params[:format]}"
+                    else
+                      params[:path]
+                    end
   end
 
   def files_options
