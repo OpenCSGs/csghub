@@ -1,0 +1,8 @@
+en:
+  errors_page:
+    not_found:
+      title: 'Page not found'
+      desc: 'Sorry, the page you were looking for could not be found.'
+    unauthorized:
+      title: 'Not authorized'
+      desc: 'You are not authorized to view this page.'
