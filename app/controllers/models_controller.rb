@@ -113,14 +113,9 @@ class ModelsController < ApplicationController
     @avatar_url = @owner.avatar_url
     if action_name == 'blob' || action_name == 'edit_file'
       @model, @last_commit, @branches, @blob = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      update_blob_content
     else
       @model, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
-    end
-
-    if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? request.fullpath.split('.').last
-      @content = {data: "<img src='#{request.fullpath.gsub('blob', 'resolve')}'>"}.to_json
-    else
-      @content = relative_path_to_resolve_path 'model', @content
     end
 
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags']).to_json
@@ -143,5 +138,15 @@ class ModelsController < ApplicationController
       path: @current_path,
       current_user: current_user&.name
     }
+  end
+
+  def update_blob_content
+    if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? request.url.split('.').last
+      content = "<img src='#{request.url.gsub('blob', 'resolve')}'>"
+    else
+      parsed_blob_content = Base64.decode64(JSON.parse(@blob)['data']['content']).force_encoding('UTF-8')
+      content = relative_path_to_resolve_path 'model', parsed_blob_content
+    end
+    @blob = {data: JSON.parse(@blob)['data'].merge(content: Base64.encode64(content))}.to_json
   end
 end
