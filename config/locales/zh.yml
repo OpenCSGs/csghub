@@ -96,25 +96,3 @@ zh:
       words_connector: "，"
       two_words_connector: "，"
       last_word_connector: "，"
-
-  profile:
-    no_data: '暂无数据'
-    spaces: '应用空间'
-    view_all: '查看全部'
-
-  campains:
-    show:
-      sign_up: '立即报名'
-      time: '活动时间'
-      location: '活动地点'
-
-  experts:
-    index:
-      title: '开放传神（OpenCSG）邀请您作为专家入驻社区，让我们共建开源开放、共享开源生态。希望您为用户提供技术支持及咨询，解决方案设计指导等。'
-      apply_button: 成为社区专家
-    apply:
-      welcome_title: '欢迎加入 OpenCSG 专家社区'
-      welcome_content_1: '开放传神（OpenCSG）邀请您入驻专家社区，让我们共建开源开放、共享开源生态。'
-      welcome_content_2: '希望您为用户提供技术支持及咨询，解决方案设计指导等。'
-      welcome_content_3: '您可以是人工智能专家，软件开发专家，开源专家，算法专家，法务专家等。'
-      welcome_content_4: '诚挚的欢迎您入驻专家社区。'
