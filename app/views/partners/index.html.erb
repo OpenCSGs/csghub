@@ -2,11 +2,11 @@
   <%# banner %>
   <div class="flex justify-center items-center sm:flex-col w-full pl-[36px] pr-[20px] gap-x-[109px] bg-white max-w-[1280px] m-auto mb-[68px]">
     <div class="grow-[1.5]">
-      <div class="text-[48px] lg:text-[36px] sm:text-[23px] sm:pt-[10px] text-[#303133] font-semibold mb-[18px]">成为 OpenCSG 合作伙伴</div>
-      <div class="text-[18px] sm:text-[18px] font-normal leading-[26px]">连接与共建解决方案生态，携手合作伙伴，打造共创、共赢、共享的合作伙伴新生态。</div>
+      <div class="text-[48px] lg:text-[36px] sm:text-[23px] sm:pt-[10px] text-[#303133] font-semibold mb-[18px]"><%= t('partners.index.banner_text_one') %></div>
+      <div class="text-[18px] sm:text-[18px] font-normal leading-[26px]"><%= t('partners.index.banner_text_two') %></div>
       <p class="my-[20px]">
         <a href="partners/apply">
-          <button class="bg-black text-white text-[20px] h-[60px] w-[180px] rounded">成为合作伙伴</button>
+          <button class="bg-black text-white text-[20px] h-[60px] w-[180px] rounded"><%= t('partners.index.to_be_partner') %></button>
         </a>
       </p>
     </div>
@@ -16,7 +16,7 @@
   </div>
   <%# cards %>
   <div class="max-w-[1280px] m-auto mb-[10px]">
-    <p class="w-[1280px] xl:w-[96vw] sm:w-full text-gray-500 font-light italic"> * 以下数据根据拼音首字母排序 * </p>
+    <p class="w-[1280px] xl:w-[96vw] sm:w-full text-gray-500 font-light italic"> <%= t('partners.index.sort_alert') %> </p>
   </div>
   <div class="grid grid-cols-4 xl:grid-cols-2 mlg:grid-cols-1 gap-[24px] justify-items-center mb-[60px] max-w-[1280px] m-auto">
     <% @partners.each do |partner| %>

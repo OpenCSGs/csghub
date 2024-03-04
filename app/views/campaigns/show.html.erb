@@ -10,14 +10,14 @@
         <% if @campaign.signing_up? %>
           <a href="<%= @campaign.form_url %>">
             <el-button type="primary" round>
-              立即报名
+              <%= t("campaigns.show.sign_up") %>
             </el-button>
           </a>
         <% end %>
       </div>
-      <el-tag class="mb-[8px]" type="<%= campaign_status_type(@campaign.status) %>"><%= t("campaign.#{@campaign.status}") %></el-tag>
-      <p class="text-[#909399] text-[14px] my-[8px]">活动时间: <%= @campaign.start_date.strftime("%Y-%m-%d") %> ~ <%= @campaign.end_date.strftime("%Y-%m-%d") %></p>
-      <p class="text-[#909399] text-[14px] my-[8px]">活动地点: <%= @campaign.location %></p>
+      <el-tag class="mb-[8px]" type="<%= campaign_status_type(@campaign.status) %>"><%= t("campaigns.show.#{@campaign.status}") %></el-tag>
+      <p class="text-[#909399] text-[14px] my-[8px]"><%= t("campaigns.show.time") %>: <%= @campaign.start_date.strftime("%Y-%m-%d") %> ~ <%= @campaign.end_date.strftime("%Y-%m-%d") %></p>
+      <p class="text-[#909399] text-[14px] my-[8px]"><%= t("campaigns.show.location") %>: <%= @campaign.location %></p>
       <hr class="my-[30px]" />
       <p><%= @campaign.content %></p>
     </div>

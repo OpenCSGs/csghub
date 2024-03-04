@@ -1,0 +1,11 @@
+en:
+  experts:
+    index:
+      title: 'OpenCSG invites you to join our expert community, where we can collaborate to build an open, inclusive, and shared open-source ecosystem. We would like you to provide technical support, consulting, and guidance in solution design to our users.'
+      apply_button: 'Become a community expert'
+    apply:
+      welcome_title: 'Welcome to the OpenCSG Experts Community'
+      welcome_content_1: 'OpenCSG invites you to join the expert community, where we can collaborate to build an open-source, open, and shared open-source ecosystem.'
+      welcome_content_2: 'We hope you can provide technical support and consulting to users, as well as guidance in solution design.'
+      welcome_content_3: 'You can be an AI expert, software development expert, open-source expert, algorithm expert, legal expert, and more.'
+      welcome_content_4: 'We sincerely welcome you to join the expert community.'
