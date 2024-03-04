@@ -148,6 +148,6 @@ class DatasetsController < ApplicationController
       parsed_blob_content = Base64.decode64(JSON.parse(@blob)['data']['content']).force_encoding('UTF-8')
       content = relative_path_to_resolve_path 'dataset', parsed_blob_content
     end
-    @blob = {data: JSON.parse(@blob)['data'].merge(content: Base64.encode64(content))}.to_json
+    @blob = {data: JSON.parse(@blob)['data'].merge(content: content)}.to_json
   end
 end

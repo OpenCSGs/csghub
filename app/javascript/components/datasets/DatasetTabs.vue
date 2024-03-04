@@ -106,5 +106,5 @@ const props = defineProps({
   canWrite: Boolean
 })
 
-const decodedContent = window.atob(props.blob?.content || '')
+const decodedContent = props.blob?.content || ''
 </script>
