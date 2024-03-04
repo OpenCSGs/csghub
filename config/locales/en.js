@@ -142,6 +142,42 @@ export default {
         "Can't find the answer you're looking for? Please contact our pre-sales engineering team.",
       contact: "Contact Us",
     },
+    community: {
+      discussion: {
+        back: "Back to topic list",
+        new: "New topic",
+      },
+      discussionDetail: {
+        reply: "Reply",
+        comment: "Comment",
+        cancel: "Cancel",
+        updateSuccess: "Title update successful!",
+        warn: "Content cannot be empty",
+        addSuccess: "Add comment successfully",
+      },
+      MD: {
+        edit: "Edit",
+        preview: "Preview",
+        desc: "Upload pictures, audio, video, or by dragging and dropping ",
+        click: "Click here to upload",
+        default: "Leave a comment",
+      },
+      newDiscussion: {
+        new: "New topic",
+        title: "Title",
+        content: "Content",
+        create: "Create a topic",
+        cancel: "Cancel",
+        warn: "The title and content cannot be empty",
+        success: "Successfully added topic",
+        comment: "In the comment:",
+      },
+      empty: {
+        welcome: "Welcome to discuss ",
+        desc: "This is the place to discuss and collaborate with OpenCSG!",
+        new: "New topic ",
+      },
+    },
   },
   product: {
     banner: {

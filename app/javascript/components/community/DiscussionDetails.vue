@@ -104,7 +104,7 @@ export default {
       this.updateDiscussion(this.discussionId).then((data) => {
         this.$emit("getDiscussion")
         ElMessage({
-          message: $t('community.discussionDetail.updateSuccess'),
+          message: this.$t('community.discussionDetail.updateSuccess'),
           type: 'success'
         })
       })
@@ -135,11 +135,11 @@ export default {
     },
     async create(){
       if (this.desc === '') {
-        ElMessage({ message: $t('community.discussionDetail.warn'), type: "warning" });
+        ElMessage({ message: this.$t('community.discussionDetail.warn'), type: "warning" });
         return;
       }
       this.createComment(this.discussionId).then((data) => {
-        ElMessage({ message: $t('community.discussionDetail.addSuccess'), type: "success" });
+        ElMessage({ message: this.$t('community.discussionDetail.addSuccess'), type: "success" });
         this.getComment(this.discussionId)
       })
       .catch(err => {
