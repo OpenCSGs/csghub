@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <ModelClone :clone-http-url="modelDetail.http_clone_url" :clone-ssh-url="modelDetail.ssh_clone_url" />
+    <ModelClone :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
