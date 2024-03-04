@@ -75,7 +75,6 @@
       }
     },
     mounted() {
-      console.log(this.$t('space.AllSpace'))
     },
     methods: {
       async nextPage() {
