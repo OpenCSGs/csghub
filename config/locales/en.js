@@ -65,11 +65,10 @@ export default {
     },
     "campaign": {
         "Organizer": "Organizer",
-        "More": "Learn more",
+        "More": "learn more",
         "SignUp": "Sign up",
         "Time": "Campaign time",
-        "Site": "Campaign location",
-        "Related": "Related space"
+        "Site": "Campaign location"
     },
     "computing": {
         "banner": {

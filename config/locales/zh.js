@@ -68,8 +68,7 @@ export default {
         "More": "了解更多",
         "SignUp": "立即报名",
         "Time": "活动时间",
-        "Site": "活动地点",
-        "Related": "相关应用"
+        "Site": "活动地点"
     },
     "computing": {
         "banner": {
