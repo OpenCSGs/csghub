@@ -10,12 +10,14 @@
       </template>
       <template #files v-if="actionName === 'blob'">
         <dataset-blob
-          :content="content"
-          :last-commit="lastCommit"
+          :content="decodedContent"
+          :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="datasetDetail.path"
+          :size="blob.size"
+          :can-write="canWrite"
         />
       </template>
       <template #files v-if="actionName === 'new_file'">
@@ -24,6 +26,16 @@
           :repo-name="datasetDetail.name"
           :namespace-path="datasetDetail.path"
           originalCodeContent=""
+        />
+      </template>
+      <template #files v-if="actionName === 'edit_file'">
+        <edit-file
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :repo-name="datasetDetail.name"
+          :namespace-path="datasetDetail.path"
+          :originalCodeContent="decodedContent"
+          :sha="blob.sha"
         />
       </template>
       <template #files v-if="actionName === 'upload_file'">
@@ -73,6 +85,7 @@ import DatasetBlob from './DatasetBlob.vue'
 import DatasetClone from './DatasetClone.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
+import EditFile from '../shared/EditFile.vue'
 
 const props = defineProps({
   localDatasetId: String,
@@ -87,9 +100,11 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  content: String,
+  blob: Object,
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean
 })
+
+const decodedContent = window.atob(props.blob?.content || '')
 </script>

@@ -1,8 +1,8 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
+  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file, :update_file]
   before_action :validate_manage, only: [:update, :destroy]
-  before_action :validate_write, only: [:create_file, :upload_file]
+  before_action :validate_write, only: [:create_file, :upload_file, :update_file]
   before_action :validate_authorization, only: [:files, :readme]
 
   def index
@@ -71,15 +71,26 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def create_file
-    options = file_params.slice(:branch).merge({
-                                                 message: build_commit_message,
-                                                 new_branch: 'main',
-                                                 username: current_user.name,
-                                                 email: current_user.email,
-                                                 content: Base64.encode64(params[:content])
-                                               })
+    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(params[:content])
+                                                      })
     sync_create_file(options)
     render json: { message: '创建文件成功' }
+  end
+
+
+  def update_file
+    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(params[:content])
+                                                      })
+    sync_update_file(options)
+    render json: { message: '更新文件成功' }
   end
 
   def upload_file
@@ -102,8 +113,12 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
   end
 
-  def file_params
+  def create_file_params
     params.permit(:path, :content, :branch, :commit_title, :commit_desc)
+  end
+
+  def update_file_params
+    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 
   def sync_upload_file(options)
@@ -111,9 +126,17 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     raise StarhubError, res.body unless res.success?
   end
 
-  def build_commit_message
+  def build_create_commit_message
     if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
       return "Create #{params[:path]}"
+    end
+
+    "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
+  end
+
+  def build_update_commit_message
+    if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
+      return "Update #{params[:path]}"
     end
 
     "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
@@ -129,6 +152,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def sync_create_file(options)
     res = Starhub.api.create_model_file(params[:namespace], params[:model_name], params[:path], options)
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def sync_update_file(options)
+    res = Starhub.api.update_model_file(params[:namespace], params[:model_name], params[:path], options)
     raise StarhubError, res.body unless res.success?
   end
 
