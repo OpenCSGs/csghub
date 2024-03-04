@@ -57,6 +57,11 @@ export default {
         "Stopping": "stopping",
         "ClickTag": "Click to select the system default tag:",
         "Img": "picture",
+        "addComment": "Comment",
+        "confirm": "Are you sure you want to delete this comment?",
+        "tip": "prompt",
+        "sure": "Confirm",
+        "cancel": "Cancel",
     },
     "campaign": {
         "Organizer": "Organizer",

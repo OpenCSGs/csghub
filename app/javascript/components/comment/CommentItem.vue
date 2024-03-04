@@ -37,9 +37,9 @@
   const emit = defineEmits(['deleteComment']);
 
   const confirmDelete = async (commentId) => {
-    const confirmResult = await ElMessageBox.confirm('确认删除此评论？', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    const confirmResult = await ElMessageBox.confirm(this.$t('space.confirm'), this.$t('space.tip'), {
+      confirmButtonText: this.$t('space.sure'),
+      cancelButtonText: this.$t('space.cancel'),
       type: 'warning',
     });
 

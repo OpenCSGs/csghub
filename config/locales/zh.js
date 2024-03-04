@@ -1,6 +1,6 @@
 export default {
     "all": {
-        "sure": "确定",
+        "confirm": "确定",
         "cancel": "取消",
     },
     "about": {
@@ -57,6 +57,11 @@ export default {
         "Stopping": "已暂停",
         "ClickTag": "点击选择系统默认 tag:",
         "Img": "图片",
+        "addComment": "添加评论",
+        "confirm": "确认删除此评论？",
+        "tip": "提示",
+        "sure": "确定",
+        "cancel": "取消",
     },
     "campaign": {
         "Organizer": "举办方",
