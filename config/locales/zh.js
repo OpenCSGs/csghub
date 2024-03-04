@@ -229,11 +229,14 @@ export default {
             "title": "标题",
             "content": "内容",
             "create": "创建话题",
-            "cancel": "取消"
+            "cancel": "取消",
+            "warn": "标题和内容不能为空",
+            "success": "添加话题成功",
+            "comment": "评论中： "
         },
         "empty": {
-            "wellcome": "欢迎来讨论",
-            "decs": "这里是与OpenCSG讨论和合作的地方！",
+            "welcome": "欢迎来讨论",
+            "desc": "这里是与OpenCSG讨论和合作的地方！",
             "new": "新建话题"
         },
     },

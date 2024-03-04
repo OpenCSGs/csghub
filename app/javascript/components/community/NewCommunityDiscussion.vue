@@ -5,19 +5,19 @@
       {{ $t('community.newDiscussion.new') }}
     </div>
     <div>
-      <FormLabel labelName="标题" :required="true" />
+      <FormLabel :labelName="this.$t('community.newDiscussion.title')" :required="true" />
       <el-input v-model="title"
                   :maxLength="200"
                   show-word-limit
                   clearable
-                  placeholder="新建话题"
+                  :placeholder="this.$t('community.newDiscussion.create')"
                   class="w-full h-[40px] text-[#606266]">
                   <template #suffix>
         <span>{{ title.length }} / 200</span>
       </template>
     </el-input>
     </div>
-    <FormLabel labelName="内容" :required="true" />
+    <FormLabel :labelName="this.$t('community.newDiscussion.content')" :required="true" />
     <CommunityMDTextarea :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="create">{{ $t('community.newDiscussion.create') }}</el-button>
@@ -58,13 +58,13 @@ export default {
     },
     create() {
       if (this.title.trim() === '' || this.desc.trim() === '') {
-        ElMessage({ message: "标题和内容不能为空", type: "warning" });
+        ElMessage({ message: this.$t('community.newDiscussion.warn'), type: "warning" });
         return;
       }
       this.createDiscussion().then(discussion => {
-        ElMessage({ message: "添加话题成功", type: "success" });
+        ElMessage({ message: this.$t('community.newDiscussion.success'), type: "success" });
         this.createComment(discussion.id).catch(err => {
-          ElMessage({ message: ('评论中： ' + err.message), type: 'warning' });
+          ElMessage({ message: (this.$t('community.newDiscussion.comment') + err.message), type: 'warning' });
           return
         })
         this.$emit("changeFlag", 'show');

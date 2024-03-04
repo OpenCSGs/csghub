@@ -29,7 +29,7 @@
         clearable
         type="textarea"
         :autosize="{minRows: 8, maxRows: 30}"
-        :placeholder="placeholder"
+        :placeholder="placeholder==='留下评论' ? $t('community.MD.default'): placeholder"
         class="w-full text-[#606266] mb-[10px]"
       />
       <div class="flex items-center gap-[8px] text-[#909399] text-[14px] leading-[22px]">

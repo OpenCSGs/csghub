@@ -229,11 +229,14 @@ export default {
                 "title": "Title",
                 "content": "Content",
                 "create": "Create a topic",
-                "cancel": "Cancel"
+                "cancel": "Cancel",
+                "warn": "The title and content cannot be empty",
+                "success": "Successfully added topic",
+                "comment": "In the comment:"
             },
             "empty": {
-                "wellcome": "Welcome to discuss ",
-                "decs": "This is the place to discuss and collaborate with OpenCSG!" ,
+                "welcome": "Welcome to discuss ",
+                "desc": "This is the place to discuss and collaborate with OpenCSG!" ,
                 "new": "New topic ",
             }
     },
