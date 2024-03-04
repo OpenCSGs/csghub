@@ -46,6 +46,11 @@ en:
         dataset:
           taken: "Can't create duplicate dataset"
 
+  profile:
+    no_data: 'No data'
+    spaces: 'Spaces'
+    view_all: 'View all'
+
   campains:
     show:
       sign_up: 'Sign up'
