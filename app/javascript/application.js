@@ -6,6 +6,13 @@ import { createApp } from "vue/dist/vue.esm-bundler.js"
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+
+import { useCookies } from "vue3-cookies"
+import { createI18n } from 'vue-i18n'
+import en from '../../config/locales/en.js'
+import zh from '../../config/locales/zh.js'
+
 
 import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
@@ -54,10 +61,25 @@ const app = createApp({
   provide:{
     defaultTags: DefaultTags
   }
-}).use(ElementPlus);
+}).use(ElementPlus, {
+  locale: zhCn,
+});
+
+const { cookies } = useCookies()
+
+const i18n = createI18n({
+  legacy: false,
+  locale: cookies.get('locale') || 'zh',
+  messages: {
+    en,
+    zh
+  }
+});
+
 
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+app.use(i18n)
 app.mount("#app")
