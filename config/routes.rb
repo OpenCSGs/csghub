@@ -70,6 +70,7 @@ Rails.application.routes.draw do
         get 'profile'
         get 'git-token'
         get 'ssh-keys'
+        get 'locale'
       end
     end
 
