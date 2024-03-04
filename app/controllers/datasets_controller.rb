@@ -60,10 +60,10 @@ class DatasetsController < ApplicationController
     else
       content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
       if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? params[:format]
-        result = Starhub.api.download_datasets_file(params[:namespace],
-                                                    params[:dataset_name],
-                                                    @current_path,
-                                                    { ref: @current_branch })
+        result = Starhub.api.download_datasets_resolve_file(params[:namespace],
+                                                            params[:dataset_name],
+                                                            @current_path,
+                                                            { ref: @current_branch })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_datasets_file_content(params[:namespace],

@@ -302,6 +302,12 @@ module Starhub
       res.body
     end
 
+    def download_datasets_resolve_file(username, dataset_name, path, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/resolve/#{path}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_dataset_file(username, dataset_name, path, options = {})
       @client.post("/datasets/#{username}/#{dataset_name}/raw/#{path}", options)
     end
