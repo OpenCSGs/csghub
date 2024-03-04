@@ -56,7 +56,11 @@
           <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
           <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
         </el-sub-menu>
-       <el-menu-item index="/campaigns" style="border:none" @click="routerLink('/campaigns')">活动</el-menu-item>
+        <el-sub-menu index="5" popper-class="popper-submenu">
+          <template #title>社区</template>
+          <a href="/campaigns"><el-menu-item index="/campaigns">社区活动</el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="/daily_papers">社区文章</el-menu-item></a>
+        </el-sub-menu>
       </el-menu>
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
         <span class="flex items-center text-base outline-none">
@@ -113,6 +117,9 @@
             <a href="/organizations/new">
               <el-dropdown-item divided> 新建组织 </el-dropdown-item>
             </a>
+            <a href="/daily_papers/new" v-if="canCreateDailyPaper">
+              <el-dropdown-item> 论文推荐 </el-dropdown-item>
+            </a>
             <a href="/logout">
               <el-dropdown-item divided>  退出登录 </el-dropdown-item>
             </a>
@@ -145,7 +152,8 @@ export default {
     companyVerified: String,
     phone: String,
     isLoggedIn: String,
-    userName: String
+    userName: String,
+    canCreateDailyPaper: Boolean,
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');

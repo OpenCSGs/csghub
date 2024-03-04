@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :error_logs
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
+    resources :daily_papers, except: [:new, :create]
 
     root to: "spaces#index"
   end
@@ -83,6 +84,7 @@ Rails.application.routes.draw do
     # resources :discussions, only: :create
     resources :discussions, only: [:create, :index, :update]
     resources :upload, only: [:create]
+    resources :daily_papers, only: [:create]
   end
 
   # lead form
@@ -119,6 +121,7 @@ Rails.application.routes.draw do
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
+    resources :daily_papers, only: [:index, :new, :create, :show], param: :uuid
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
     get '/models/:namespace/(*model_name)/:branch/upload', to: 'models#upload_file'
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}

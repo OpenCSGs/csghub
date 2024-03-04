@@ -81,6 +81,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "daily_papers", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "uuid"
+    t.string "title"
+    t.string "article_link"
+    t.datetime "published_at"
+    t.string "pdf_link"
+    t.string "recommendation"
+    t.string "cover_url"
+    t.string "description"
+    t.string "video_link"
+    t.string "model_links", default: [], array: true
+    t.string "dataset_links", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "datasets", force: :cascade do |t|
     t.string "name"
     t.string "license"

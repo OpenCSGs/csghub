@@ -1,6 +1,6 @@
 class InternalApi::UploadController < InternalApi::ApplicationController
   def create
-    bucket_code = AwsS3.instance.upload 'comment', upload_params[:file]
+    bucket_code = AwsS3.instance.upload namespace, upload_params[:file]
     Starhub.api.image_secure_check('baselineCheck', bucket_name, bucket_code) if bucket_code.present?
     public_url = AwsS3.instance.download bucket_code
     if public_url.blank?
@@ -14,6 +14,10 @@ class InternalApi::UploadController < InternalApi::ApplicationController
 
   def upload_params
     params.permit(:file)
+  end
+
+  def namespace
+    params[:namespace] || 'comment'
   end
 
   def bucket_name
