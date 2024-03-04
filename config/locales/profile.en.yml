@@ -1,5 +1,6 @@
 en:
   profile:
-    no_data: 'No data'
-    spaces: 'Spaces'
-    view_all: 'View all'
+    index:
+      no_data: 'No data'
+      spaces: 'Spaces'
+      view_all: 'View all'
