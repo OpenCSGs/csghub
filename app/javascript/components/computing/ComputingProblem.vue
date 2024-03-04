@@ -2,10 +2,10 @@
   <div class="w-full pb-[96px] md:pb-[50px] banner bg-white">
     <div class="flex flex-col flex-wrap gap-[64px] max-w-[1280px] m-auto xl:px-[20px]">
       <div>
-        <p class="font-medium text-[36px] mb-[20px]">常见问题</p>
-        <p class="font-light text-[20px] text-[#475467]">您需要了解的有关产品和计费的一切信息。</p>
-        <div class="font-light text-[20px] text-[#475467]">找不到您想要的答案？请联系我们的
-          <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="underline cursor-pointer">售前工程团队</a>。
+        <p class="font-medium text-[36px] mb-[20px]">{{ $t('computing.problem.headline') }}</p>
+        <p class="font-light text-[20px] text-[#475467]">{{ $t('computing.problem.desc1') }}</p>
+        <div class="font-light text-[20px] text-[#475467]">{{ $t('computing.problem.desc2') }}
+          <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="underline cursor-pointer">{{ $t('computing.problem.pre-sales') }}</a>。
         </div>
       </div>
       <div class="grid grid-cols-3 gap-[32px] md:grid-cols-1">
@@ -18,8 +18,8 @@
             </svg>
           </div>
           <div class="flex flex-col gap-[8px]">
-            <div class="text-[20px] text-[#101828] leading-[30px]">如何租用算力？</div>
-            <div class="text-[16px] text-[##75467] leading-[24px] font-light">请点击“咨询销售”填写您的信息，我们将第一时间为您提供专属服务。</div>
+            <div class="text-[20px] text-[#101828] leading-[30px]">{{ $t('computing.problem.part1') }}</div>
+            <div class="text-[16px] text-[##75467] leading-[24px] font-light">{{ $t('computing.problem.part1-') }}</div>
           </div>
         </div>
         <div class="flex flex-col gap-[20px]">
@@ -32,8 +32,8 @@
             </svg>
           </div>
           <div class="flex flex-col gap-[8px]">
-            <div class="text-[20px] text-[#101828] leading-[30px]">租赁费用是如何计算的？</div>
-            <div class="text-[16px] text-[##75467] leading-[24px] font-light">目前我们提供按月度、季度和年度的租用计费方式。</div>
+            <div class="text-[20px] text-[#101828] leading-[30px]">{{ $t('computing.problem.part2') }}</div>
+            <div class="text-[16px] text-[##75467] leading-[24px] font-light">{{ $t('computing.problem.part2-') }}</div>
           </div>
         </div>
         <div class="flex flex-col gap-[20px]">
@@ -45,9 +45,9 @@
             </svg>
           </div>
           <div class="flex flex-col gap-[8px]">
-            <div class="text-[20px] text-[#101828] leading-[30px]">对服务不满意是否可以退款？</div>
+            <div class="text-[20px] text-[#101828] leading-[30px]">{{ $t('computing.problem.part3') }}</div>
             <div class="text-[16px] text-[##75467] leading-[24px] font-light">
-              我们的退款政策将在服务条款和用户协议中明确说明，在签约前会确保您知悉相关服务的退款政策。
+              {{ $t('computing.problem.part3-') }}
             </div>
           </div>
         </div>
@@ -60,9 +60,9 @@
             </svg>
           </div>
           <div class="flex flex-col gap-[8px]">
-            <div class="text-[20px] text-[#101828] leading-[30px]">是否能够提供其他规格的服务器？</div>
+            <div class="text-[20px] text-[#101828] leading-[30px]">{{ $t('computing.problem.part4') }}</div>
             <div class="text-[16px] text-[##75467] leading-[24px] font-light">
-              我们正在积极扩充算力资源，也非常欢迎您联系我们告知您的需求，我们将努力为您寻找匹配的资源。
+              {{ $t('computing.problem.part4-') }}
             </div>
           </div>
         </div>
@@ -76,9 +76,9 @@
             </svg>
           </div>
           <div class="flex flex-col gap-[8px]">
-            <div class="text-[20px] text-[#101828] leading-[30px]">如何保障我的数据安全？</div>
+            <div class="text-[20px] text-[#101828] leading-[30px]">{{ $t('computing.problem.part5') }}</div>
             <div class="text-[16px] text-[##75467] leading-[24px] font-light">
-              我们将采取多种安全措施保障用户数据的保密性和完整性，请联系我们获取数据安全和隐私保护的具体信息。
+              {{ $t('computing.problem.part5-') }}
             </div>
           </div>
         </div>
@@ -92,17 +92,17 @@
             </svg>
           </div>
           <div class="flex flex-col gap-[8px]">
-            <div class="text-[20px] text-[#101828] leading-[30px]">是否提供技术支持？</div>
-            <div class="text-[16px] text-[##75467] leading-[24px] font-light">我们通过邮件和电话方式为客户提供7 x 24小时的技术支持服务。</div>
+            <div class="text-[20px] text-[#101828] leading-[30px]">{{ $t('computing.problem.part6') }}</div>
+            <div class="text-[16px] text-[##75467] leading-[24px] font-light">{{ $t('computing.problem.part6-') }}</div>
           </div>
         </div>
       </div>
       <div class="flex justify-between md:flex-col items-center md:items-start p-[32px] md:px-[20px] bg-[#F9FAFB] rounded-[16px]">
         <div>
-          <p class="font-medium text-[20px] text-[#101828] mb-[8px]">仍有疑问？</p>
-          <p class="font-light text-[18px] text-[#475467] md:mb-[24px]">找不到您想要的答案？请联系我们的售前工程团队。</p>
+          <p class="font-medium text-[20px] text-[#101828] mb-[8px]">{{ $t('computing.problem.problem') }}</p>
+          <p class="font-light text-[18px] text-[#475467] md:mb-[24px]">{{ $t('computing.problem.problem-') }}</p>
         </div>
-        <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="bg-[#3250BD] w-[90px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">联系我们</p></a>
+        <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="flex justify-center items-center bg-[#3250BD] w-[110px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">{{ $t('computing.problem.contact') }}</p></a>
       </div>
     </div>
   </div>

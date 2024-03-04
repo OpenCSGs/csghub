@@ -119,7 +119,7 @@ const i18n = createI18n({
     en,
     zh
   }
-});
+})
 
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
