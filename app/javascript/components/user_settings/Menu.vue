@@ -5,7 +5,7 @@
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div>
             <div class="text-[24px] leading-[32px] font-semibold">
-              <a :href="'/profile/' + displayName">
+              <a :href="'/profile/' + loginIdentity">
                 {{displayName}}
               </a>
             </div>
@@ -61,6 +61,7 @@
 export default {
   props: {
     name: String,
+    loginIdentity: String,
     displayName: String,
     avatar: String,
     email: String

@@ -2,6 +2,7 @@
   <div class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="max-w-[411px] md:mb-[24px]"
           :name="profileName"
+          :loginIdentity="loginIdentity"
           :email="email"
           :displayName="profileDisplayName"
           :avatar="profileAvatar">
@@ -27,6 +28,7 @@ export default {
     phone: String,
     avatar: String,
     email: String,
+    loginIdentity: String,
     displayName: String,
   },
   components: {
@@ -40,7 +42,9 @@ export default {
       profileAvatar: this.avatar,
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.loginIdentity)
+  },
   methods: {
     updateUserInfo(data) {
       const { nickname, name, avatar } = data;

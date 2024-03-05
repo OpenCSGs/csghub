@@ -46,7 +46,7 @@
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
-            <a v-for="user in membersList" :href="`/profile/${user.name}`">
+            <a v-for="user in membersList" :href="`/profile/${user.login_identity}`">
               <div class="flex flex-col items-center">
                 <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
                 <span class="text-[#A8ABB2] text-[12px]">{{ user.role }}</span>

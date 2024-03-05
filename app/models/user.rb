@@ -146,6 +146,7 @@ class User < ApplicationRecord
   def as_json options = nil
     {
       id: id,
+      login_identity: login_identity,
       name: name,
       nickname: nickname,
       email: email,
