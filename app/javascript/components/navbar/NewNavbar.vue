@@ -131,7 +131,8 @@ export default {
     companyVerified: String,
     phone: String,
     isLoggedIn: String,
-    userName: String
+    userName: String,
+    userId: String
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
@@ -139,7 +140,7 @@ export default {
       csgHubUrl:'https://github.com/OpenCSGs/CSGHub',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
-      userProfile: `/profile/${this.userName}`
+      userProfile: `/profile/${this.userId}`
     }
   },
   components: {
