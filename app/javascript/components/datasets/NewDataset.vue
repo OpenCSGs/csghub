@@ -13,7 +13,7 @@
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.owner') }}</p>
-          <el-select v-model="owner" placeholder="选择" size="large">
+          <el-select v-model="owner" :placeholder="this.$t('all.select')" size="large">
             <el-option
               v-for="item in namespaces"
               :key="item[0]"
@@ -39,7 +39,7 @@
         </div>
         <div class="">
           <p class="text-[#303133] text-sm mb-2">License</p>
-          <el-select v-model="license" placeholder="选择" size="large">
+          <el-select v-model="license" :placeholder="this.$t('all.select')" size="large">
             <el-option
               v-for="item in licenses"
               :key="item[0]"
@@ -96,12 +96,14 @@
   import { ref, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     licenses: Array,
     namespaces: Array,
   })
 
+  const { t } = useI18n();
   const license = ref(props.licenses[0][0])
   const owner = ref(props.namespaces[0][0])
   const datasetName = ref('')
@@ -114,7 +116,7 @@
   const createDataset = async () => {
     try {
       const res = await submitDatasetForm()
-      ElMessage.success('数据集创建成功')
+      ElMessage.success(t('datasets.newDataset.createSuccess'))
       toDatasetDetail(res.path)
     } catch (err) {
       ElMessage.warning(err.message)

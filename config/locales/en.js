@@ -23,6 +23,7 @@ export default {
         "Only you (individual) or members of your organization can see and contribute to this repository.",
       tips: "After creating the model, you can upload your files using the web or Git.",
       createModel: "Create Model",
+      createSuccess: "Model created successfully",
     },
   },
   datasets: {
@@ -46,6 +47,7 @@ export default {
       tips2:
         "Creating public datasets is currently not supported. Please contact the administrator for manual review if needed.",
       createDataset: "Create Dataset",
+      createSuccess: "Dataset created successfully",
     },
   },
   organization: {

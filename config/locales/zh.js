@@ -20,6 +20,7 @@ export default {
       privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
       tips: "创建模型后，你可以使用网页或 Git 上传你的文件。",
       createModel: "创建模型",
+      createSuccess: "模型创建成功",
     },
   },
   datasets: {
@@ -40,6 +41,7 @@ export default {
       tips: "创建数据集后，你可以使用网页或 Git 上传你的文件。",
       tips2: "暂不支持创建公开的数据集，如有需要可以联系管理员进行人工审核。",
       createDataset: "创建数据集",
+      createSuccess: "数据集创建成功",
     },
   },
   organization: {
