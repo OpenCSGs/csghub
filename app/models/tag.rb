@@ -24,15 +24,15 @@ class Tag < ApplicationRecord
   # 在 issue 中查看颜色对应关系：
   # https://git-devops.opencsg.com/product/community/open-portal/-/issues/50#note_1596
   TAG_FIELD_COLOR_MAPPINGS = {
-    computer_vision: {color: '#db7a7a', zh_name: I18n.t('tags.field.computer_vision')},
-    natural_language_processing: {color: '#7f71de', zh_name: I18n.t('tags.field.natural_language_processing')},
-    audio_processing: {color: '#538f72', zh_name: I18n.t('tags.field.audio_processing')},
-    multimodal: {color: '#e69832', zh_name: I18n.t('tags.field.multimodal')},
-    text_processing: {color: '#7f71de', zh_name: I18n.t('tags.field.text_processing')},
-    graphics: {color: '#db7a7a', zh_name: I18n.t('tags.field.graphics')},
-    audio: {color: '#538f72', zh_name: I18n.t('tags.field.audio')},
-    video: {color: '#059784', zh_name: I18n.t('tags.field.video')},
-    scientific_computing: {color: '#525852', zh_name: I18n.t('tags.field.scientific_computing')}
+    computer_vision: {color: '#db7a7a', zh_name: '计算机视觉'},
+    natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理'},
+    audio_processing: {color: '#538f72', zh_name: '语音处理'},
+    multimodal: {color: '#e69832', zh_name: '多模态'},
+    text_processing: {color: '#7f71de', zh_name: '文本'},
+    graphics: {color: '#db7a7a', zh_name: '图像'},
+    audio: {color: '#538f72', zh_name: '音频'},
+    video: {color: '#059784', zh_name: '视频'},
+    scientific_computing: {color: '#525852', zh_name: '科学计算'}
   }.with_indifferent_access
 
   DEFAULT_TAGS = [
