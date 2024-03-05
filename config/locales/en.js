@@ -146,6 +146,13 @@ export default {
     login: "Login",
   },
   all: {
+    contributors: "Contributors",
+    historyCommits: "History commits",
+    addFile: "Add file",
+    createFile: "Create new file",
+    uploadFile: "Upload file",
+    loadError:"Load Error",
+    notSupportPreview:"Preview is not supported at the moment, please download via git clone",
     changeVis: "Change visibility to",
     enterPls: "Enter Please",
     sureDel: "Sure to Del",
