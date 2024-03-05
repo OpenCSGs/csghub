@@ -146,6 +146,10 @@ export default {
     login: "Login",
   },
   all: {
+    summary:"Summary",
+    files:"Files",
+    community:"Community",
+    settings:"Settings",
     tasks:"Tasks",
     framework:"Framework",
     others:"Others",

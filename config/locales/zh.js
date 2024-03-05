@@ -136,6 +136,10 @@ export default {
     login: "登录",
   },
   all: {
+    summary:"介绍",
+    files:"文件",
+    community:"讨论",
+    settings:"设置",
     tasks:"任务",
     framework:"框架",
     others:"其他",
