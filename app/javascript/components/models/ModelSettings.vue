@@ -4,14 +4,14 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          模型名称
+          {{ $t('models.modelName')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          应用于模型路径，创建后不可更改
+          {{ $t('models.modelNickName')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">命名空间/模型名称</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('models.namespaceModelName')}}</p>
         <div class="w-[512px] sm:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
           {{ modelPath }}
         </div>
@@ -24,10 +24,10 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          模型别名
+          {{ $t('models.modelNickName')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          将会显示在模型列表页面中，选填
+          {{ $t('models.edit.tips')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -37,7 +37,7 @@
             size="large"
             class="!w-[512px] sm:!w-full"
         />
-        <el-button @click="updateNickname" class="w-[100px]">更新</el-button>
+        <el-button @click="updateNickname" class="w-[100px]">{{ $t('all.update')}}</el-button>
       </div>
     </div>
 
@@ -47,10 +47,10 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          模型简介
+          {{ $t('models.modelDesc')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          一段关于模型的介绍，选填
+          {{ $t('models.edit.tips2')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -61,7 +61,7 @@
             type="textarea"
             class="!w-[512px] sm:!w-full"
         />
-        <el-button @click="updateModelDesc" class="w-[100px]">更新</el-button>
+        <el-button @click="updateModelDesc" class="w-[100px]">{{ $t('all.update')}}</el-button>
       </div>
     </div>
 
@@ -71,16 +71,16 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          修改模型可见性
+          {{ $t('models.edit.changeVisibility')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          当前模型目前是
-          <span class="text-black font-semibold">【{{ visibility=='Private'?'私有':'公开' }}】</span>
-          状态。{{ visibility=='Private'?'只有创建者或组织成员可见':'任何人都可以看到此模型'}}
+          {{ $t('models.edit.statusText')}}
+          <span class="text-black font-semibold">【{{ visibility=='Private' ? this.$t('all.private') : this.$t('all.public') }}】</span>
+          {{ $t('models.edit.status')}}。{{ visibility=='Private' ? this.$t('models.edit.privateVis') : this.$t('models.edit.publicVis')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">模型可见性</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('models.edit.modelVisibility')}}</p>
         <el-select v-model="visibility"
                    @change="changeVisibility"
                    placeholder="Select"
@@ -103,23 +103,23 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          删除模型
+          {{ $t('models.edit.delModel')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          此操作
-          <span class="text-black font-medium">无法</span>
-          撤销，这将永久删除
+          {{ $t('models.edit.delTips')}}
+          <span class="text-black font-medium">{{ $t('all.canNot')}}</span>
+          {{ $t('models.edit.delTips2')}}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          模型仓库及其所有文件。
+          {{ $t('models.edit.delTips3')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          请输入
+          {{ $t('all.enterPls')}}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          以确认删除.
+          {{ $t('all.sureDel')}}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">模型名称</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('models.modelName')}}</p>
         <el-input
             v-model="delDesc"
             clearable
@@ -133,7 +133,7 @@
               :class="delDesc === modelPath ?'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white':'bg-[#F2F4F7]'"
               @mouseover="handleMouseOver"
               @mouseleave="handleMouseLeave">
-              我已知晓,确认删除
+              {{ $t('models.edit.confirmDel')}}
           </div>
         </div>
       </div>
@@ -163,8 +163,8 @@ export default {
       theModelNickname: this.modelNickname || "",
       theModelDesc: this.modelDesc || "",
       modelPath: this.path,
-      options: [{value: 'Private', label: '私有'},
-        {value: 'Public', label: '公开'}]
+      options: [{value: 'Private', label: this.$t('all.private')},
+        {value: 'Public', label:  this.$t('all.public')}]
     };
   },
   mounted() {
@@ -191,7 +191,7 @@ export default {
           throw new Error(data.message)
         })
       } else {
-        ElMessage({message: "删除成功", type: "success"})
+        ElMessage({message: this.$t('all.delSuccess'), type: "success"})
         setTimeout(() => {
           window.location.href = "/models"
         }, 500)
@@ -201,22 +201,22 @@ export default {
 
     changeVisibility(value) {
       ElMessageBox({
-        title: '修改模型可见性',
+        title: this.$t('models.edit.changeVisibility'),
         message: h('p', null, [
-          h('span', null, '修改可见性为'),
-          h('span', null, this.visibility=='Private'?'私有':'公开'),
-          h('span', null, this.visibility=='Private'?'，仅创建者或者组织管理员可进行提交':'， 任何互联网上的人都可以看到此模型。')
+          h('span', null, this.$t('all.changeVis')),
+          h('span', null, this.visibility=='Private'? this.$t('all.private') : this.$t('all.public')),
+          h('span', null, this.visibility=='Private'? this.$t('models.edit.privateInfo') : this.$t('models.edit.publicInfo'))
         ]),
         showCancelButton: true,
-        confirmButtonText: '确认',
-        cancelButtonText: '取消'
+        confirmButtonText: this.$t('all.confirm'),
+        cancelButtonText: this.$t('all.cancel')
       }).then(() => {
         this.changeVisibilityCall(value)
       }).catch(() => {
         this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
-          message: '操作取消',
+          message: this.$t('all.changeCancel'),
         })
       })
     },
@@ -232,7 +232,7 @@ export default {
         const payload = {nickname: this.theModelNickname}
         this.updateModel(payload)
       } else {
-        ElMessage({ message: "请先提供模型别名", type: "warning" })
+        ElMessage({ message: this.$t('models.edit.needDatasetName'), type: "warning" })
       }
     },
 
@@ -241,7 +241,7 @@ export default {
         const payload = {desc: this.theModelDesc}
         this.updateModel(payload)
       } else {
-        ElMessage({ message: "请先提供模型介绍", type: "warning" })
+        ElMessage({ message: this.$t('models.edit.needDatasetDesc'), type: "warning" })
       }
     },
 
