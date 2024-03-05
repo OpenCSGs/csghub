@@ -78,6 +78,8 @@ export default {
   all: {
     confirm: "Confirm",
     cancel: "Cancel",
+    add: "Add",
+    addSuccess: "Added successfully",
     recentlyUpdate: "Recently Update",
     trending: "Trending",
     mostDownload: "Most Download",
@@ -157,5 +159,13 @@ export default {
       "After refreshing, the existing Git Token will become invalid. Are you sure you want to continue?",
     confirm: "Continue",
     cancelInfo: "Operation cancelled",
+  },
+  sshKey: {
+    addSshKey: "Add SSH Key",
+    noKeyTips: "There are currently no SSH keys added to your account",
+    sshKeyName: "SSH Key Name",
+    sshKeyContent: "SSH Key Content",
+    nameWarning: "Please enter the SSH Key Name",
+    contentWarning: "Please enter the SSH Key Content",
   },
 };

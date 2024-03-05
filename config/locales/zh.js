@@ -72,6 +72,8 @@ export default {
   all: {
     sure: "确定",
     cancel: "取消",
+    add: "添加",
+    addSuccess: "添加成功",
     recentlyUpdate: "最近更新",
     trending: "热门",
     mostDownload: "最多下载",
@@ -150,5 +152,13 @@ export default {
     refreshWarning: "刷新之后现有的 Git Token 将会失效，确认继续吗?",
     confirm: "继续刷新",
     cancelInfo: "操作已取消",
+  },
+  sshKey: {
+    addSshKey: "添加 SSH Key",
+    noKeyTips: "现在还没有添加SSH key到您的账户",
+    sshKeyName: "SSH Key 名称",
+    sshKeyContent: "SSH Key 内容",
+    nameWarning: "请您填写SSH Key 名称",
+    contentWarning: "请您填写SSH Key 内容",
   },
 };
