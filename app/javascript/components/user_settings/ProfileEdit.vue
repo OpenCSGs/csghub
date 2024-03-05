@@ -15,36 +15,36 @@
       </div>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.username') }}</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.username') }}</div>
       <p class="text-gray-500 text-[12px] italic">{{ $t('rule.nameRule') }}</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 disabled
-                :placeholder="this.$t('profile.edit.username')">
+                :placeholder="this.$t('all.username')">
       </el-input>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.nickName') }}</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
       <el-input class="max-w-[400px]"
                 v-model="inputNickname"
-                :placeholder="this.$t('profile.edit.nickName')">
+                :placeholder="this.$t('all.nickName')">
       </el-input>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.phone') }}<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.phone') }}<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
       </div>
       <el-input class="max-w-[400px]"
                 v-model="inputPhone"
                 disabled
-                :placeholder="this.$t('profile.edit.phone')">
+                :placeholder="this.$t('all.phone')">
       </el-input>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.email') }}<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.email') }}<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
       </div>
       <el-input class="max-w-[400px]"
                 v-model="inputEmail"
-                :placeholder="this.$t('profile.edit.email')">
+                :placeholder="this.$t('all.email')">
       </el-input>
     </div>
     <div @click="saveProfile" class="w-[111px] text-[14px] border border-[#DCDFE6] px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
