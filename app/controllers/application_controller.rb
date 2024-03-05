@@ -134,7 +134,7 @@ class ApplicationController < ActionController::Base
     content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|
       alt_text = $1
       image_path = $2
-      if image_path.start_with?('http')
+      if image_path.start_with?('http') || image_path.start_with?("/#{type}s/")
         match
       else
         "![#{alt_text}](#{prefix}#{image_path})"
