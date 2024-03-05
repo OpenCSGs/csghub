@@ -6,6 +6,8 @@ export default {
   models: {
     title: "模型",
     placeholder: "模型名字",
+    downloadModel: "下载模型数据",
+    download: "下载模型",
     newModel: {
       title: "新建模型仓库",
       titleDesc: "仓库包含所有的模型文件和修订的历史记录",
@@ -26,6 +28,7 @@ export default {
   datasets: {
     title: "数据集",
     placeholder: "数据集名字",
+    downloadDataset: "下载数据集",
     newDataset: {
       title: "新建数据集仓库",
       titleDesc: "仓库包含所有的模型文件和修订的历史记录",
@@ -110,6 +113,8 @@ export default {
     inputPls: "请输入",
     inputNickNamePlc: "请输入别名",
     inputDescPlc: "请输入简介",
+    lfsTips: "在下载前请确认您安装了git-lfs  (https://git-lfs.com)",
+    lfsTips2: "如果您不想下载LFS文件的内容，请在环境变量中添加",
   },
   community: {
     discussion: {

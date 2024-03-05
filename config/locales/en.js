@@ -8,6 +8,8 @@ export default {
   models: {
     title: "Models",
     placeholder: "Models name",
+    downloadModel: "Download Model",
+    download: "Download Model",
     newModel: {
       title: "Create Model Repository",
       titleDesc: "The repository contains all model files and revision history",
@@ -29,6 +31,7 @@ export default {
   datasets: {
     title: "Datasets",
     placeholder: "Datasets name",
+    downloadDataset: "Download Dataset",
     newDataset: {
       title: "Create New Dataset Repository",
       titleDesc:
@@ -116,6 +119,10 @@ export default {
     inputPls: "Please enter",
     inputNickNamePlc: "Enter nickname",
     inputDescPlc: "Enter description",
+    cloneTips:
+      "Before downloading, please make sure you have installed git-lfs (https://git-lfs.com).",
+    cloneTips2:
+      "If you do not want to download the content of LFS files, please add it to the environment variables.",
   },
   community: {
     discussion: {
