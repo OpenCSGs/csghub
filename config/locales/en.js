@@ -1,12 +1,11 @@
 export default {
   models: {
     title: "Models",
-    placeholder:"Models name",
+    placeholder: "Models name",
   },
   datasets: {
     title: "Datasets",
-    placeholder:"Datasets name",
-
+    placeholder: "Datasets name",
   },
   navbar: {
     models: "Models",
@@ -27,6 +26,7 @@ export default {
     trending: "Trending",
     mostDownload: "Most Download",
     mostFavorite: "Most Favorite",
+    noData: "No Data",
   },
   community: {
     discussion: {
@@ -59,6 +59,20 @@ export default {
       wellcome: "Welcome to discuss ",
       decs: "This is the place to discuss and collaborate with OpenCSG!",
       new: "New topic ",
+    },
+  },
+  profile: {
+    editProfile: "Edit Profile",
+    settings: "Settings",
+    interests: "Interests",
+    organization: "Organization",
+    menu: {
+      profile: "Profile",
+      accountInformation: "Account Information",
+      accessToken: "Access Token",
+      gitToken: "Git Token",
+      sshKey: "SSH Keys",
+      billing: "Billing",
     },
   },
 };

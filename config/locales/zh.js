@@ -26,6 +26,7 @@ export default {
     trending: "热门",
     mostDownload: "最多下载",
     mostFavorite: "最多喜欢",
+    noData: "暂无数据",
   },
   community: {
     discussion: {
@@ -58,6 +59,20 @@ export default {
       wellcome: "欢迎来讨论",
       decs: "这里是与OpenCSG讨论和合作的地方！",
       new: "新建话题",
+    },
+  },
+  profile: {
+    editProfile: "编辑个人信息",
+    settings: "设置",
+    interests: "兴趣",
+    organization: "组织机构",
+    menu: {
+      profile: "个人资料",
+      accountInformation: "账户信息",
+      accessToken: "Access Token",
+      gitToken: "Git Token",
+      sshKey: "SSH Keys",
+      billing: "账单",
     },
   },
 };
