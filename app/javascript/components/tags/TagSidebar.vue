@@ -45,7 +45,7 @@
                     :style="setTagColor(tag.name, tagField.color)"
                     @click="setActiveTaskTag"
               >
-                {{ tag.zh_name }}
+                {{ cookies.get('locale') === 'en' ? tag.name.replace(/-/g, ' ') : tag.zh_name }}
               </span>
             </div>
           </div>
@@ -124,6 +124,7 @@
   import PaddlePaddle from './frameworks/PaddlePaddle.vue'
   import Joblib from './frameworks/Joblib.vue'
   import GGUF from './frameworks/GGUF.vue'
+  import { useCookies } from "vue3-cookies"
 
   const props = defineProps({
     taskTags: String,
@@ -133,6 +134,8 @@
     selectedTag: String,
     selectedTagType: String
   })
+
+  const { cookies } = useCookies()
 
   const emit = defineEmits(['resetTags'])
 
