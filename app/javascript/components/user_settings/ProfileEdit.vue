@@ -17,7 +17,13 @@
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
       <p class="text-gray-500 text-[12px] italic">* 2-50位字母数字以及 _ - 构成的字符串，- _ 不能连续出现</p>
-      <el-input class="max-w-[400px]"
+      <el-input v-if="name.trim().length === 0"
+                class="max-w-[400px]"
+                v-model="inputName"
+                placeholder="username">
+      </el-input>
+      <el-input v-else
+                class="max-w-[400px]"
                 v-model="inputName"
                 disabled
                 placeholder="username">
