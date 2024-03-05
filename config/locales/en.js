@@ -27,6 +27,7 @@ export default {
     mostDownload: "Most Download",
     mostFavorite: "Most Favorite",
     noData: "No Data",
+    save:"Save",
   },
   community: {
     discussion: {
@@ -73,6 +74,17 @@ export default {
       gitToken: "Git Token",
       sshKey: "SSH Keys",
       billing: "Billing",
+    },
+    edit: {
+      title: "Profile Edit",
+      uploadAvatar: "Upload Avatar",
+      removeAvatar: "Remove Avatar",
+      username: "Username,",
+      usernameDesc:
+        "* Must be a string of 2-20 characters including letters, numbers, and _ - (hyphen and underscore) without consecutive occurrences of - or _",
+      nickName: "Nickname",
+      phone: "Phone Number",
+      email: "Email",
     },
   },
 };

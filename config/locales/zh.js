@@ -27,6 +27,7 @@ export default {
     mostDownload: "最多下载",
     mostFavorite: "最多喜欢",
     noData: "暂无数据",
+    save:"保存",
   },
   community: {
     discussion: {
@@ -74,5 +75,15 @@ export default {
       sshKey: "SSH Keys",
       billing: "账单",
     },
+    edit:{
+        title:"个人资料设置",
+        uploadAvatar:"上传头像",
+        removeAvatar:"移除头像",
+        username:"用户名",
+        usernameDesc:"* 2-20位字母数字以及 _ - 构成的字符串，- _ 不能连续出现",
+        nickName:"用户昵称",
+        phone:"手机号码",
+        email:"邮箱"
+    }
   },
 };
