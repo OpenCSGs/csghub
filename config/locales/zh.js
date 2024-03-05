@@ -147,6 +147,7 @@ export default {
     historyCommits: "历史提交",
     addFile: "添加文件",
     fileName: "文件名",
+    filterTags:"筛选标签",
     provideMoreDesc: "提供更多描述",
     submitNewFile: "提交新文件",
     submitChange: "提交变更",

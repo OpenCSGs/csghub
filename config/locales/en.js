@@ -157,6 +157,7 @@ export default {
     historyCommits: "History commits",
     addFile: "Add file",
     fileName: "File name",
+    filterTags: "Filter tags",
     provideMoreDesc: "Provide more description",
     submitNewFile: "Submit new file",
     submitChange: "Submit changes",
