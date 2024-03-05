@@ -24,6 +24,22 @@ export default {
   datasets: {
     title: "数据集",
     placeholder: "数据集名字",
+    newDataset: {
+      title: "新建数据集仓库",
+      titleDesc: "仓库包含所有的模型文件和修订的历史记录",
+      owner: "所有者",
+      datasetName: "数据集名称",
+      datasetNickName: "数据集别名",
+      datasetDesc: "数据集简介",
+      public: "公开",
+      publicDesc:
+        "任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。",
+      private: "私有",
+      privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
+      tips: "创建数据集后，你可以使用网页或 Git 上传你的文件。",
+      tips2: "暂不支持创建公开的数据集，如有需要可以联系管理员进行人工审核。",
+      createDataset: "创建数据集",
+    },
   },
   navbar: {
     models: "模型",
@@ -46,8 +62,8 @@ export default {
     mostFavorite: "最多喜欢",
     noData: "暂无数据",
     save: "保存",
-    inputNickNamePlc:"请输入别名",
-    inputDescPlc:"请输入简介",
+    inputNickNamePlc: "请输入别名",
+    inputDescPlc: "请输入简介",
   },
   community: {
     discussion: {

@@ -26,6 +26,25 @@ export default {
   datasets: {
     title: "Datasets",
     placeholder: "Datasets name",
+    newDataset: {
+      title: "Create New Dataset Repository",
+      titleDesc:
+        "The repository contains all model files and revision history.",
+      owner: "Owner",
+      datasetName: "Dataset Name",
+      datasetNickName: "Dataset Nickname",
+      datasetDesc: "Dataset Description",
+      public: "Public",
+      publicDesc:
+        "Anyone on the internet can see this repository. Only you (individual) or members of your organization can commit.",
+      private: "Private",
+      privateDesc:
+        "Only you (individual) or members of your organization can view and commit to this repository.",
+      tips: "After creating the model, you can use the web or Git to upload your files.",
+      tips2:
+        "Creating public datasets is currently not supported. Please contact the administrator for manual review if needed.",
+      createDataset: "Create Dataset",
+    },
   },
   navbar: {
     models: "Models",
@@ -48,8 +67,8 @@ export default {
     mostFavorite: "Most Favorite",
     noData: "No Data",
     save: "Save",
-    inputNickNamePlc:"Enter nickname",
-    inputDescPlc:"Enter description",
+    inputNickNamePlc: "Enter nickname",
+    inputDescPlc: "Enter description",
   },
   community: {
     discussion: {
