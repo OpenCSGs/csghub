@@ -266,7 +266,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_055917) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
-    t.jsonb "ldap_configs", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -311,7 +310,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_055917) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
-    t.boolean "ldap_synced", default: false
     t.string "wechat_id"
     t.string "github_id"
     t.string "gitlab_id"

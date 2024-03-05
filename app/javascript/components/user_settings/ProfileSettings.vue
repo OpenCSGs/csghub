@@ -42,9 +42,7 @@ export default {
       profileAvatar: this.avatar,
     };
   },
-  mounted() {
-    console.log(this.loginIdentity)
-  },
+  mounted() { },
   methods: {
     updateUserInfo(data) {
       const { nickname, name, avatar } = data;
