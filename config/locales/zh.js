@@ -1,6 +1,7 @@
 export default {
   rule: {
     nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
+    nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
   },
   models: {
     title: "模型",
@@ -41,6 +42,19 @@ export default {
       createDataset: "创建数据集",
     },
   },
+  organization: {
+    newOrganization: {
+      title: "新建组织",
+      nameSpace: "组织命名空间",
+      orgNickName: "组织别名",
+      orgAvatar: "组织头像",
+      orgType: "组织类型",
+      orgHomepage: "组织主页",
+      createOrg: "创建组织",
+      createSuccess: "组织创建成功",
+      inputSpaceNamePls: "请填写组织命名空间",
+    },
+  },
   navbar: {
     models: "模型",
     datasets: "数据集",
@@ -62,6 +76,11 @@ export default {
     mostFavorite: "最多喜欢",
     noData: "暂无数据",
     save: "保存",
+    toBeUploaded: "待上传",
+    clickUpload: "点击上传",
+    uploadPic1Mb: "请上传不超过1MB的图片文件",
+    select: "选择",
+    inputPls: "请输入",
     inputNickNamePlc: "请输入别名",
     inputDescPlc: "请输入简介",
   },

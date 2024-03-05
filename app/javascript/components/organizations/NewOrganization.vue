@@ -1,36 +1,36 @@
 <template>
   <div class="rounded-[16px] bg-white p-[36px]">
-    <h3 class="text-[#303133] text-[20px] font-[600]">新建组织</h3>
+    <h3 class="text-[#303133] text-[20px] font-[600]">{{ $t('organization.newOrganization.title') }}</h3>
     <div class="mt-[16px]">
       <div class="flex sm:flex-col gap-[16px] mb-[16px]">
         <div class="w-[284px] sm:w-auto">
           <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">
-            组织命名空间
+            {{ $t('organization.newOrganization.nameSpace') }}
             <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg>
           </p>
-          <el-input v-model="orgName" placeholder="2-20位字母数字以及 _ 构成的字符串" input-style="height: 40px" />
+          <el-input v-model="orgName" :placeholder="this.$t('rule.nameSpaceRule')" input-style="height: 40px" />
         </div>
         <div class="w-[284px] sm:w-auto">
-          <p class="text-[#303133] text-[14px] mb-[8px]">组织别名</p>
-          <el-input v-model="orgNickname" placeholder="请输入" input-style="height: 40px" />
+          <p class="text-[#303133] text-[14px] mb-[8px]">{{ $t('organization.newOrganization.orgNickName') }}</p>
+          <el-input v-model="orgNickname" :placeholder="this.$t('all.inputPls')" input-style="height: 40px" />
         </div>
       </div>
       <div class="flex sm:flex-col gap-[16px] mb-[16px]">
         <div class="max-w-[284px]">
-          <p class="text-[#303133] text-[14px] mb-[8px]">组织头像</p>
+          <p class="text-[#303133] text-[14px] mb-[8px]">{{ $t('organization.newOrganization.orgAvatar') }}</p>
           <div>
             <input type="file" ref="orgAvatarFileInput" class="hidden" accept="image/*" @change="previewAvatar" />
-            <el-button class="mr-[8px]" @click="uploadOrgAvatar">点击上传</el-button>
+            <el-button class="mr-[8px]" @click="uploadOrgAvatar">{{ $t('all.clickUpload') }}</el-button>
             <span class="text-[#606266] text-[14px]">{{ orgAvatar }}</span>
           </div>
         </div>
       </div>
       <div class="max-w-[284px] mb-[16px]">
           <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">
-          组织类型
+            {{ $t('organization.newOrganization.orgType') }}
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg>
         </p>
-        <el-select v-model="orgType" placeholder="选择" size="large">
+        <el-select v-model="orgType" :placeholder="this.$t('all.select')" size="large">
           <el-option
             v-for="item in theOrgTypes"
             :key="item[1]"
@@ -40,10 +40,10 @@
         </el-select>
       </div>
       <div class="mb-[16px]">
-        <p class="text-[#303133] text-[14px] mb-[8px]">组织主页</p>
+        <p class="text-[#303133] text-[14px] mb-[8px]">{{ $t('organization.newOrganization.orgHomepage') }}</p>
         <el-input v-model="orgHomepage" placeholder="https://example.com" input-style="height: 40px" />
       </div>
-      <button class="bg-[#8AA2FF] w-full rounded-[4px] px-[20px] py-[9px] text-white" @click="createOrg">创建组织</button>
+      <button class="bg-[#8AA2FF] w-full rounded-[4px] px-[20px] py-[9px] text-white" @click="createOrg">{{ $t('organization.newOrganization.createOrg') }}</button>
     </div>
   </div>
 </template>
@@ -52,15 +52,17 @@
   import { nextTick, ref, inject, onMounted } from 'vue'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { ElInput, ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     orgTypes: String,
     currentUserProfile: String
   })
 
+  const { t } = useI18n();
   const theOrgTypes = JSON.parse(props.orgTypes)
   const orgType = ref('')
-  const orgAvatar = ref('待上传')
+  const orgAvatar = ref(t('all.toBeUploaded'))
   const orgAvatarFileInput = ref(null)
   const orgName = ref('')
   const orgNickname = ref('')
@@ -76,8 +78,8 @@
     if (file && file.size <= maxSize) {
       orgAvatar.value = file.name;
     } else {
-      orgAvatar.value = '待上传';
-      ElMessage.error('请上传不超过1MB的图片文件');
+      orgAvatar.value = t('all.toBeUploaded');
+      ElMessage.error(t('all.uploadPic1Mb'));
     }
   }
 
@@ -85,7 +87,7 @@
     if(orgName.value&&orgName.value!=''){
       submitOrgForm().then((data) => {
         ElMessage({
-          message: '组织创建成功',
+          message:t('organization.newOrganization.createSuccess'),
           type: 'success'
         })
         setTimeout(() => {
@@ -100,7 +102,7 @@
       })
     }else{
       ElMessage({
-          message: '请填写组织命名空间',
+          message: t('inputSpaceNamePls'),
           type: 'warning'
         })
     }

@@ -2,6 +2,8 @@ export default {
   rule: {
     nameRule:
       "* Must be a string of 2-20 characters including letters, numbers, and _ - (hyphen and underscore) without consecutive occurrences of - or _",
+    nameSpaceRule:
+      "A string composed of 2-20 alphanumeric characters and underscores _",
   },
   models: {
     title: "Models",
@@ -46,6 +48,19 @@ export default {
       createDataset: "Create Dataset",
     },
   },
+  organization: {
+    newOrganization: {
+      title: "Create New Organization",
+      nameSpace: "Organization Namespace",
+      orgNickName: "Organization Nickname",
+      orgAvatar: "Organization Avatar",
+      orgType: "Organization Type",
+      orgHomepage: "Organization Homepage",
+      createOrg: "Create Organization",
+      createSuccess: "Organization created successfully",
+      inputSpaceNamePls: "Please enter the organization namespace",
+    },
+  },
   navbar: {
     models: "Models",
     datasets: "Datasets",
@@ -67,6 +82,11 @@ export default {
     mostFavorite: "Most Favorite",
     noData: "No Data",
     save: "Save",
+    toBeUploaded: "to be uploaded",
+    clickUpload: "Click Upload",
+    uploadPic1Mb: "Please upload image files not exceeding 1MB.",
+    select: "Select",
+    inputPls: "Please enter",
     inputNickNamePlc: "Enter nickname",
     inputDescPlc: "Enter description",
   },
