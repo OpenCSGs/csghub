@@ -1,9 +1,11 @@
 export default {
   models: {
     title: "模型",
+    placeholder: "模型名字",
   },
   datasets: {
     title: "数据集",
+    placeholder: "数据集名字",
   },
   navbar: {
     models: "模型",
@@ -20,6 +22,10 @@ export default {
   all: {
     sure: "确定",
     cancel: "取消",
+    recentlyUpdate: "最近更新",
+    trending: "热门",
+    mostDownload: "最多下载",
+    mostFavorite: "最多喜欢",
   },
   community: {
     discussion: {
@@ -53,8 +59,5 @@ export default {
       decs: "这里是与OpenCSG讨论和合作的地方！",
       new: "新建话题",
     },
-  },
-  models: {
-    title: "模型",
   },
 };

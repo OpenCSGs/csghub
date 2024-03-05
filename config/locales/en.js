@@ -1,9 +1,12 @@
 export default {
   models: {
     title: "Models",
+    placeholder:"Models name",
   },
   datasets: {
     title: "Datasets",
+    placeholder:"Datasets name",
+
   },
   navbar: {
     models: "Models",
@@ -20,6 +23,10 @@ export default {
   all: {
     confirm: "Confirm",
     cancel: "Cancel",
+    recentlyUpdate: "Recently Update",
+    trending: "Trending",
+    mostDownload: "Most Download",
+    mostFavorite: "Most Favorite",
   },
   community: {
     discussion: {
@@ -53,8 +60,5 @@ export default {
       decs: "This is the place to discuss and collaborate with OpenCSG!",
       new: "New topic ",
     },
-  },
-  models: {
-    title: "Models",
   },
 };
