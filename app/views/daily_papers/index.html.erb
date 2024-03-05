@@ -1,0 +1,7 @@
+<daily-paper-index
+  :can-create-daily-paper="<%= !!current_user&.admin? %>"
+  daily-papers="<%= @daily_papers.map(&:as_json).to_json %>"
+  keywords="<%= @keywords %>"
+  page="<%= @page %>"
+  total-count="<%= @daily_papers.total_count %>"
+/>

@@ -8,14 +8,13 @@
             phone="<%= current_user.phone %>"
             user-name="<%= current_user.name %>"
             user-id="<%= current_user.login_identity %>"
+            :can-create-daily-paper="<%= policy(DailyPaper).create? %>"
             is-logged-in="true"
-            docs-url="<%= docs_url %>"
     />
   <% else %>
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
             star-chain-url="<%= starchain_address %>"
             is-logged-in="false"
-            docs-url="<%= docs_url %>"
     />
   <% end %>
 </div>

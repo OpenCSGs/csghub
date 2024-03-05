@@ -11,3 +11,7 @@ zh:
           signing_up: '报名中'
           in_progress: '正在进行'
           ended: '已结束'
+      lead:
+        lead_statuses:
+          processing: 处理中
+          completed: 已完成

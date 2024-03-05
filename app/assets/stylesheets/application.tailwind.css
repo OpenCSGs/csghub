@@ -48,7 +48,9 @@ img, video {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
+.hover-filter-primary:hover {
+  filter: invert(37%) sepia(96%) saturate(699%) hue-rotate(175deg) brightness(89%) contrast(92%);
+}
 /*
   Define tailwindcss group class
 */
