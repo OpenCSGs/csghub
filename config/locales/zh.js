@@ -45,6 +45,16 @@ export default {
     },
   },
   organization: {
+    orgSetting: "组织设置",
+    orgTeam: "团队成员",
+    model: "模型",
+    dataset: "数据集",
+    invite: {
+      title: "邀请",
+      inviteNew: "邀请新成员",
+      inviteDesc: "你正在邀请新成员到组织",
+      addSuccess: "添加成员成功",
+    },
     newOrganization: {
       title: "新建组织",
       nameSpace: "组织命名空间",
@@ -70,7 +80,9 @@ export default {
     login: "登录",
   },
   all: {
-    sure: "确定",
+    role: "角色",
+    userName: "用户名",
+    confirm: "确认",
     cancel: "取消",
     add: "添加",
     addSuccess: "添加成功",

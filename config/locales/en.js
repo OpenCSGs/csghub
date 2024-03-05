@@ -51,6 +51,16 @@ export default {
     },
   },
   organization: {
+    orgSetting: "Organization Settings",
+    orgTeam: "Team Members",
+    model: "Model",
+    dataset: "Dataset",
+    invite: {
+      title: "Invite",
+      inviteNew: "Invite New Member",
+      inviteDesc: "You are inviting a new member to the organization",
+      addSuccess: "Member added successfully",
+    },
     newOrganization: {
       title: "Create New Organization",
       nameSpace: "Organization Namespace",
@@ -76,6 +86,8 @@ export default {
     login: "Login",
   },
   all: {
+    role: "Role",
+    userName: "UserName",
     confirm: "Confirm",
     cancel: "Cancel",
     add: "Add",
