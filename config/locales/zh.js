@@ -136,10 +136,17 @@ export default {
     login: "登录",
   },
   all: {
+    tasks:"任务",
+    framework:"框架",
+    others:"其他",
     contributors: "贡献者",
     historyCommits: "历史提交",
     addFile: "添加文件",
-    createFile: "创建新文件",
+    fileName:"文件名",
+    provideMoreDesc:"提供更多描述",
+    submitNewFile:"提交新文件",
+    createNewFile: "创建新文件",
+    createFile: "创建文件",
     uploadFile: "上传文件",
     loadError:"加载数据报错",
     notSupportPreview:"暂不支持预览，请通过 git clone 下载",
@@ -252,4 +259,7 @@ export default {
     nameWarning: "请您填写SSH Key 名称",
     contentWarning: "请您填写SSH Key 内容",
   },
+  shared:{
+    commitToMain:"直接提交到 main 分支",
+  }
 };

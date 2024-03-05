@@ -52,7 +52,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <a :href="`/${prefixPath}/${namespacePath}/main/new`">
-                <el-dropdown-item>{{ $t('all.createFile') }}</el-dropdown-item>
+                <el-dropdown-item>{{ $t('all.createNewFile') }}</el-dropdown-item>
               </a>
               <a :href="`/${prefixPath}/${namespacePath}/main/upload`">
                 <el-dropdown-item>{{ $t('all.uploadFile') }}</el-dropdown-item>

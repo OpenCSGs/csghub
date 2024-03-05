@@ -146,10 +146,17 @@ export default {
     login: "Login",
   },
   all: {
+    tasks:"Tasks",
+    framework:"Framework",
+    others:"Others",
     contributors: "Contributors",
     historyCommits: "History commits",
     addFile: "Add file",
-    createFile: "Create new file",
+    fileName:"File name",
+    provideMoreDesc: "Provide more description",
+    submitNewFile: "Submit new file",
+    createNewFile: "Create new file",
+    createFile: "Create File",
     uploadFile: "Upload file",
     loadError:"Load Error",
     notSupportPreview:"Preview is not supported at the moment, please download via git clone",
@@ -265,4 +272,7 @@ export default {
     nameWarning: "Please enter the SSH Key Name",
     contentWarning: "Please enter the SSH Key Content",
   },
+  shared:{
+    commitToMain:"Commit directly to the main branch",
+}
 };
