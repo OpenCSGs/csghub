@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_05_055917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "daily_papers", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "uuid"
+    t.string "title"
+    t.string "article_link"
+    t.datetime "published_at"
+    t.string "pdf_link"
+    t.string "recommendation"
+    t.string "cover_url"
+    t.string "description"
+    t.string "video_link"
+    t.string "model_links", default: [], array: true
+    t.string "dataset_links", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "datasets", force: :cascade do |t|
@@ -249,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
+    t.jsonb "ldap_configs", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -293,6 +311,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
+    t.boolean "ldap_synced", default: false
+    t.string "wechat_id"
+    t.string "github_id"
+    t.string "gitlab_id"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
