@@ -24,13 +24,15 @@
 
 <script setup>
   import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     dataset: Object,
   })
 
+  const { t } = useI18n();
   const visibility = computed(() => {
-    return props.dataset.private ? this.$t('all.private')  : this.$t('all.public') 
+    return props.dataset.private ? t('all.private')  : t('all.public')
   })
 </script>
 
