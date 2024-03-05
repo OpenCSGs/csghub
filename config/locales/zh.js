@@ -46,7 +46,14 @@ export default {
   },
   organization: {
     orgSetting: "组织设置",
+    orgInfo: "组织信息",
     orgTeam: "团队成员",
+    orgNameSpace: "组织命名空间",
+    orgSpaceTips: "创建完成后，命名空间不可更改",
+    orgNickName: "组织别名",
+    orgAvatar: "组织头像",
+    orgType: "组织类型",
+    orgHomepage: "组织主页",
     model: "模型",
     dataset: "数据集",
     invite: {
@@ -65,6 +72,9 @@ export default {
       createOrg: "创建组织",
       createSuccess: "组织创建成功",
       inputSpaceNamePls: "请填写组织命名空间",
+    },
+    edit: {
+      updateSuccess: "organization已更新",
     },
   },
   navbar: {
@@ -95,8 +105,11 @@ export default {
     mostFavorite: "最多喜欢",
     noData: "暂无数据",
     save: "保存",
+    remove: "移除",
+    saveSetting: "保存设置",
     toBeUploaded: "待上传",
     clickUpload: "点击上传",
+    uploadAvatar: "上传头像",
     uploadPic1Mb: "请上传不超过1MB的图片文件",
     select: "选择",
     inputPls: "请输入",
