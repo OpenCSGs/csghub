@@ -56,6 +56,7 @@ export default {
         "Running": "running",
         "Stopping": "stopping",
         "ClickTag": "Click to select the system default tag:",
+        "reTag": "The current tag has been added!",
         "Img": "picture",
         "addComment": "Comment",
         "confirm": "Are you sure you want to delete this comment?",
@@ -402,4 +403,23 @@ export default {
         "join2": "We are looking for excellent talents",
         "join3": "We are a distributed remote team distributed throughout the country. Join us",
     },
+    "footer":{
+        "about": "About us",
+        "news": "News updates",
+        "docs": "Document center",
+        "join": "Join us",
+        "contact": "Contact us",
+        "policy": "Privacy policy",
+        "illegal": "Illegal and Adverse Information Reporting Center",
+        "police": "No. 11011202004415",
+        "company": "Company Introduction",
+        "partner": "Business cooperation: partner@opencsg.com",
+        "resume": "Resume: hr@opencsg.com",
+        "pr": "Media collaboration: pr@opencsg.com",
+        "ir": "Investment relationship: ir@opencsg.com",
+        "cookies": "Cookies Policy",
+        "publish": "©Copyright 2023 OpenCSG.com",
+        "ICP": "Beijing ICPB 2023006263-1"
+},
+
 }
