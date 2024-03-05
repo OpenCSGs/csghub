@@ -1,7 +1,7 @@
 <template>
   <div class="flex top-navbar-menu text-[#303133] justify-between items-center max-w-[1280px] m-auto xl:mx-[20px] h-[80px] sm:h-[60px]">
     <div class="flex">
-      <div class="py-2 mr-[100px] xl:mr-[50px] sm:mr-[30px]">
+      <div class="py-2 mr-[50px] xl:mr-[50px] sm:mr-[30px]">
         <a href="/">
           <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px]" />
         </a>
@@ -12,7 +12,7 @@
         :default-active="activeIndex"
         mode="horizontal"
         :ellipsis="true"
-        class="w-full justify-end"
+        class="w-full"
         text-color="#475467"
         active-text-color="black"
       >
@@ -135,13 +135,13 @@
         </a>
       </button>
     </div>
-
   </div>
   <ContactUs ref='child' />
 </template>
 
 <script>
 import ContactUs from "../form/ContactUs.vue";
+import csrfFetch from "../../packs/csrfFetch";
 
 export default {
   props: {
@@ -181,7 +181,6 @@ export default {
       location.href = `/${locale}/settings/locale`
     }
   },
-  mounted() {}
 }
 </script>
 

@@ -3,9 +3,10 @@
     <div class="max-w-[1280px] m-auto">
       <div class="px-[32px] flex md:flex-col gap-[64px] mb-[64px]">
         <div class="flex flex-col items-start max-w-[380px]">
-          <div class="block mb-[24px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">解决方案 #2</div>
-          <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] leading-[44px]">OpenCSG StarAIO 大模型一体机</div>
-          <div class="text-[#606266] text-[18px] leading-[28px] font-light">为开发者们提供了优秀的开源工具和平台，助力企业定制私有化大模型。</div>
+          <div class="block mb-[24px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">
+            {{ $t('solution.starAIO.solution2') }}</div>
+          <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] leading-[44px]">{{ $t('solution.starAIO.headline') }}</div>
+          <div class="text-[#606266] text-[18px] leading-[28px] font-light">{{ $t('solution.starAIO.desc') }}</div>
         </div>
         <div class="grid grid-cols-2 gap-[32px] md:grid-cols-1">
           <div class="flex flex-col items-start gap-[64px] px-[24px] py-[24px]">
@@ -13,8 +14,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 22L10 19M10 19L13 16M10 19H15C18.866 19 22 15.866 22 12C22 9.2076 20.3649 6.7971 18 5.67363M6 18.3264C3.63505 17.2029 2 14.7924 2 12C2 8.13401 5.13401 5 9 5H14M14 5L11 2M14 5L11 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">持续迭代、随意更换的底座大模型</div>
-              <div class="text-[16px] leading-[24px] text-[#475467]">大模型可以不断更新和升级，以适应不同的应用场景和需求。</div>
+              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">{{ $t('solution.starAIO.part1') }}</div>
+              <div class="text-[16px] leading-[24px] text-[#475467]">{{ $t('solution.starAIO.part1-') }}</div>
             </div>
           </div>
           <div class="flex flex-col items-start gap-[64px] px-[24px] py-[24px]">
@@ -22,8 +23,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21L11.8999 20.8499C11.2053 19.808 10.858 19.287 10.3991 18.9098C9.99286 18.5759 9.52476 18.3254 9.02161 18.1726C8.45325 18 7.82711 18 6.57482 18H5.2C4.07989 18 3.51984 18 3.09202 17.782C2.71569 17.5903 2.40973 17.2843 2.21799 16.908C2 16.4802 2 15.9201 2 14.8V6.2C2 5.07989 2 4.51984 2.21799 4.09202C2.40973 3.71569 2.71569 3.40973 3.09202 3.21799C3.51984 3 4.07989 3 5.2 3H5.6C7.84021 3 8.96031 3 9.81596 3.43597C10.5686 3.81947 11.1805 4.43139 11.564 5.18404C12 6.03968 12 7.15979 12 9.4M12 21V9.4M12 21L12.1001 20.8499C12.7947 19.808 13.142 19.287 13.6009 18.9098C14.0071 18.5759 14.4752 18.3254 14.9784 18.1726C15.5467 18 16.1729 18 17.4252 18H18.8C19.9201 18 20.4802 18 20.908 17.782C21.2843 17.5903 21.5903 17.2843 21.782 16.908C22 16.4802 22 15.9201 22 14.8V6.2C22 5.07989 22 4.51984 21.782 4.09202C21.5903 3.71569 21.2843 3.40973 20.908 3.21799C20.4802 3 19.9201 3 18.8 3H18.4C16.1598 3 15.0397 3 14.184 3.43597C13.4314 3.81947 12.8195 4.43139 12.436 5.18404C12 6.03968 12 7.15979 12 9.4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">开源框架、 便捷的大模型应用开发</div>
-              <div class="text-[16px] leading-[24px] text-[#475467]">采用开源框架，方便开发人员构建和定制大模型的应用程序。</div>
+              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">{{ $t('solution.starAIO.part2') }}</div>
+              <div class="text-[16px] leading-[24px] text-[#475467]">{{ $t('solution.starAIO.part2-') }}</div>
             </div>
           </div>
           <div class="flex flex-col items-start gap-[64px] px-[24px] py-[24px]">
@@ -31,8 +32,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 11.5004L11 13.5004L15.5 9.00036M20 12.0004C20 16.9088 14.646 20.4788 12.698 21.6152C12.4766 21.7444 12.3659 21.809 12.2097 21.8425C12.0884 21.8685 11.9116 21.8685 11.7903 21.8425C11.6341 21.809 11.5234 21.7444 11.302 21.6152C9.35396 20.4788 4 16.9088 4 12.0004V7.21796C4 6.41845 4 6.01869 4.13076 5.67506C4.24627 5.3715 4.43398 5.10064 4.67766 4.88589C4.9535 4.6428 5.3278 4.50243 6.0764 4.22171L11.4382 2.21103C11.6461 2.13307 11.75 2.09409 11.857 2.07864C11.9518 2.06493 12.0482 2.06493 12.143 2.07864C12.25 2.09409 12.3539 2.13307 12.5618 2.21103L17.9236 4.22171C18.6722 4.50243 19.0465 4.6428 19.3223 4.88589C19.566 5.10064 19.7537 5.3715 19.8692 5.67506C20 6.01869 20 6.41845 20 7.21796V12.0004Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">本地部署，安全合规</div>
-              <div class="text-[16px] leading-[24px] text-[#475467]">自有数据中心内部署大模型服务，以保障数据隐私及安全合规性。</div>
+              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">{{ $t('solution.starAIO.part3') }}</div>
+              <div class="text-[16px] leading-[24px] text-[#475467]">{{ $t('solution.starAIO.part3-') }}</div>
             </div>
           </div>
           <div class="flex flex-col items-start gap-[64px] px-[24px] py-[24px]">
@@ -40,8 +41,8 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.5 7.27832L12 12.0005M12 12.0005L3.49997 7.27832M12 12.0005L12 21.5006M21 16.0591V7.94202C21 7.59937 21 7.42805 20.9495 7.27526C20.9049 7.14008 20.8318 7.016 20.7354 6.91131C20.6263 6.79297 20.4766 6.70977 20.177 6.54337L12.777 2.43225C12.4934 2.2747 12.3516 2.19592 12.2015 2.16503C12.0685 2.1377 11.9315 2.1377 11.7986 2.16503C11.6484 2.19592 11.5066 2.2747 11.223 2.43226L3.82297 6.54337C3.52345 6.70977 3.37369 6.79297 3.26463 6.91131C3.16816 7.016 3.09515 7.14008 3.05048 7.27526C3 7.42806 3 7.59938 3 7.94202V16.0591C3 16.4018 3 16.5731 3.05048 16.7259C3.09515 16.8611 3.16816 16.9851 3.26463 17.0898C3.37369 17.2082 3.52345 17.2914 3.82297 17.4578L11.223 21.5689C11.5066 21.7264 11.6484 21.8052 11.7986 21.8361C11.9315 21.8634 12.0685 21.8634 12.2015 21.8361C12.3516 21.8052 12.4934 21.7264 12.777 21.5689L20.177 17.4578C20.4766 17.2914 20.6263 17.2082 20.7354 17.0898C20.8318 16.9851 20.9049 16.8611 20.9495 16.7259C21 16.5731 21 16.4018 21 16.0591Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">容器部署，无缝迁移</div>
-              <div class="text-[16px] leading-[24px] text-[#475467]">支持开发符合标准API接口规范的插件，扩展产品功能和应用场景。</div>
+              <div class="text-[18px] leading-[28px] text-[#101828] mb-[8px]">{{ $t('solution.starAIO.part4') }}</div>
+              <div class="text-[16px] leading-[24px] text-[#475467]">{{ $t('solution.starAIO.part4-') }}</div>
             </div>
           </div>
         </div>
@@ -50,11 +51,11 @@
       <div class="grid grid-cols-3 gap-[32px] mb-[64px] md:grid-cols-1 px-[20px]">
         <div v-for="item in cardVersion" :key="item.id" class="flex flex-col justify-between py-[40px] px-[32px] rounded-[16px] bg-[#FFF] border border-[#EAECF0] shadow-lg">
           <div class="mb-[32px]">
-            <div class="text-[48px] leading-[60px] text-[#101828] mb-[16px] text-center">{{item.title}}</div>
-            <div class="text-[20px] leading-[30px] text-[#101828] text-center">{{item.enTitle}}</div>
+            <div class="text-[48px] leading-[60px] text-[#101828] mb-[16px] text-center">{{ this.$i18n.locale === 'zh' ? item.title: item.enTitle }}</div>
+            <div class="text-[20px] leading-[30px] text-[#101828] text-center">{{ this.$i18n.locale === 'zh' ? item.enTitle: item.title }}</div>
           </div>
           <div class="flex flex-col gap-[16px]">
-            <div v-for="(detailsItem,index) in item.details" :key="index" class="flex gap-[12px] text-[#475467] text-[16px] leading-[24px] font-light">
+            <div v-for="(detailsItem,index) in this.$i18n.locale === 'zh' ? item.details: item.details_en" :key="index" class="flex gap-[12px] text-[#475467] text-[16px] leading-[24px] font-light">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="12" fill="#DCFAE6"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.0965 7.38967L9.9365 14.2997L8.0365 12.2697C7.6865 11.9397 7.1365 11.9197 6.7365 12.1997C6.3465 12.4897 6.2365 12.9997 6.4765 13.4097L8.7265 17.0697C8.9465 17.4097 9.3265 17.6197 9.7565 17.6197C10.1665 17.6197 10.5565 17.4097 10.7765 17.0697C11.1365 16.5997 18.0065 8.40967 18.0065 8.40967C18.9065 7.48967 17.8165 6.67967 17.0965 7.37967V7.38967Z" fill="#17B26A"/></svg>
             <span v-html="detailsItem"></span>
             </div>
@@ -68,8 +69,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18.5 8V3M5.5 21V16M16 5.5H21M3 18.5H8M6.5 2L5.71554 3.56892C5.45005 4.09989 5.31731 4.36538 5.13997 4.59545C4.98261 4.79959 4.79959 4.98261 4.59545 5.13997C4.36538 5.31731 4.0999 5.45005 3.56892 5.71554L2 6.5L3.56892 7.28446C4.0999 7.54995 4.36538 7.68269 4.59545 7.86003C4.79959 8.01739 4.98261 8.20041 5.13997 8.40455C5.31731 8.63462 5.45005 8.9001 5.71554 9.43108L6.5 11L7.28446 9.43108C7.54995 8.9001 7.68269 8.63462 7.86003 8.40455C8.01739 8.20041 8.20041 8.01739 8.40455 7.86003C8.63462 7.68269 8.9001 7.54995 9.43108 7.28446L11 6.5L9.43108 5.71554C8.9001 5.45005 8.63462 5.31731 8.40455 5.13997C8.20041 4.98261 8.01739 4.79959 7.86003 4.59545C7.68269 4.36538 7.54995 4.0999 7.28446 3.56892L6.5 2ZM17 12L16.0489 13.9022C15.7834 14.4332 15.6506 14.6987 15.4733 14.9288C15.3159 15.1329 15.1329 15.3159 14.9288 15.4733C14.6987 15.6506 14.4332 15.7834 13.9023 16.0489L12 17L13.9023 17.9511C14.4332 18.2166 14.6987 18.3494 14.9288 18.5267C15.1329 18.6841 15.3159 18.8671 15.4733 19.0712C15.6506 19.3013 15.7834 19.5668 16.0489 20.0977L17 22L17.9511 20.0978C18.2166 19.5668 18.3494 19.3013 18.5267 19.0712C18.6841 18.8671 18.8671 18.6841 19.0712 18.5267C19.3013 18.3494 19.5668 18.2166 20.0977 17.9511L22 17L20.0977 16.0489C19.5668 15.7834 19.3013 15.6506 19.0712 15.4733C18.8671 15.3159 18.6841 15.1329 18.5267 14.9288C18.3494 14.6987 18.2166 14.4332 17.9511 13.9023L17 12Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="flex flex-col ">
-            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">解锁无限创意，实现个性化 AI 体验</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light">大模型一体机提供了持续迭代和随意更换的大模型服务，让您尽情释放创造力，定制属于自己的独特AI体验。无论是聊天、中文写作还是其他应用场景，我们的产品将为您打开无限可能的大门。</div>
+            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">{{ $t('solution.starAIO.subpart1') }}</div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light">{{ $t('solution.starAIO.subpart1-') }}</div>
           </div>
         </div>
         <div class="flex flex-col items-start gap-[20px]">
@@ -77,8 +78,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 11.5004L11 13.5004L15.5 9.00036M20 12.0004C20 16.9088 14.646 20.4788 12.698 21.6152C12.4766 21.7444 12.3659 21.809 12.2097 21.8425C12.0884 21.8685 11.9116 21.8685 11.7903 21.8425C11.6341 21.809 11.5234 21.7444 11.302 21.6152C9.35396 20.4788 4 16.9088 4 12.0004V7.21796C4 6.41845 4 6.01869 4.13076 5.67506C4.24627 5.3715 4.43398 5.10064 4.67766 4.88589C4.9535 4.6428 5.3278 4.50243 6.0764 4.22171L11.4382 2.21103C11.6461 2.13307 11.75 2.09409 11.857 2.07864C11.9518 2.06493 12.0482 2.06493 12.143 2.07864C12.25 2.09409 12.3539 2.13307 12.5618 2.21103L17.9236 4.22171C18.6722 4.50243 19.0465 4.6428 19.3223 4.88589C19.566 5.10064 19.7537 5.3715 19.8692 5.67506C20 6.01869 20 6.41845 20 7.21796V12.0004Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="flex flex-col ">
-            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">数据安全保障，掌握敏感信息的安心选择</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light">在崇尚数据安全的时代，我们深知您对于隐私保护的重视。大模型一体机支持本地化部署，确保您的大模型和数据始终在安全可控的环境下运行。选择我们的产品，让您的敏感信息得到最可靠的保护。</div>
+            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">{{ $t('solution.starAIO.subpart2') }}</div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light">{{ $t('solution.starAIO.subpart2-') }}</div>
           </div>
         </div>
         <div class="flex flex-col items-start gap-[20px]">
@@ -86,8 +87,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 17.5L21.3083 7.46975C21.1997 5.89504 21.1454 5.10768 20.8041 4.51082C20.5036 3.98533 20.0512 3.56304 19.5062 3.29942C18.8873 3 18.0981 3 16.5196 3H7.48037C5.90191 3 5.11268 3 4.49376 3.29942C3.94884 3.56304 3.49642 3.98533 3.19594 4.51082C2.85464 5.10768 2.80034 5.89503 2.69174 7.46975L2 17.5M22 17.5C22 19.433 20.433 21 18.5 21H5.5C3.567 21 2 19.433 2 17.5M22 17.5C22 15.567 20.433 14 18.5 14H5.5C3.567 14 2 15.567 2 17.5M6 17.5H6.01M12 17.5H18" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="flex flex-col ">
-            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">轻松部署，高效迁移至云服务或其他硬件</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light">借助容器化部署技术，大模型一体机可以轻松迁移到其他硬件设备或云服务平台。无论是需要弹性扩展能力还是使用云计算资源，我们为您提供简单快捷的解决方案，确保您的大模型始终处于最佳状态。</div>
+            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">{{ $t('solution.starAIO.subpart3') }}</div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light">{{ $t('solution.starAIO.subpart3-') }}</div>
           </div>
         </div>
         <div class="flex flex-col items-start gap-[20px]">
@@ -95,8 +96,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21L11.8999 20.8499C11.2053 19.808 10.858 19.287 10.3991 18.9098C9.99286 18.5759 9.52476 18.3254 9.02161 18.1726C8.45325 18 7.82711 18 6.57482 18H5.2C4.07989 18 3.51984 18 3.09202 17.782C2.71569 17.5903 2.40973 17.2843 2.21799 16.908C2 16.4802 2 15.9201 2 14.8V6.2C2 5.07989 2 4.51984 2.21799 4.09202C2.40973 3.71569 2.71569 3.40973 3.09202 3.21799C3.51984 3 4.07989 3 5.2 3H5.6C7.84021 3 8.96031 3 9.81596 3.43597C10.5686 3.81947 11.1805 4.43139 11.564 5.18404C12 6.03968 12 7.15979 12 9.4M12 21V9.4M12 21L12.1001 20.8499C12.7947 19.808 13.142 19.287 13.6009 18.9098C14.0071 18.5759 14.4752 18.3254 14.9784 18.1726C15.5467 18 16.1729 18 17.4252 18H18.8C19.9201 18 20.4802 18 20.908 17.782C21.2843 17.5903 21.5903 17.2843 21.782 16.908C22 16.4802 22 15.9201 22 14.8V6.2C22 5.07989 22 4.51984 21.782 4.09202C21.5903 3.71569 21.2843 3.40973 20.908 3.21799C20.4802 3 19.9201 3 18.8 3H18.4C16.1598 3 15.0397 3 14.184 3.43597C13.4314 3.81947 12.8195 4.43139 12.436 5.18404C12 6.03968 12 7.15979 12 9.4" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="flex flex-col ">
-            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">开源框架，助力开发者构建自定义应用程序</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light">大模型一体机基于开源框架，为开发者们提供了优秀的工具和平台，助力他们构建和定制化大模型的应用程序。无论您是寻找创新突破点还是希望提供个性化服务，我们都会与您携手共进，实现共同的价值目标。</div>
+            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">{{ $t('solution.starAIO.subpart4') }}</div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light">{{ $t('solution.starAIO.subpart4-') }}</div>
           </div>
         </div>
         <div class="flex flex-col items-start gap-[20px]">
@@ -104,8 +105,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7.5 4.5C7.5 3.11929 8.61929 2 10 2C11.3807 2 12.5 3.11929 12.5 4.5V6H13.5C14.8978 6 15.5967 6 16.1481 6.22836C16.8831 6.53284 17.4672 7.11687 17.7716 7.85195C18 8.40326 18 9.10218 18 10.5H19.5C20.8807 10.5 22 11.6193 22 13C22 14.3807 20.8807 15.5 19.5 15.5H18V17.2C18 18.8802 18 19.7202 17.673 20.362C17.3854 20.9265 16.9265 21.3854 16.362 21.673C15.7202 22 14.8802 22 13.2 22H12.5V20.25C12.5 19.0074 11.4926 18 10.25 18C9.00736 18 8 19.0074 8 20.25V22H6.8C5.11984 22 4.27976 22 3.63803 21.673C3.07354 21.3854 2.6146 20.9265 2.32698 20.362C2 19.7202 2 18.8802 2 17.2V15.5H3.5C4.88071 15.5 6 14.3807 6 13C6 11.6193 4.88071 10.5 3.5 10.5H2C2 9.10218 2 8.40326 2.22836 7.85195C2.53284 7.11687 3.11687 6.53284 3.85195 6.22836C4.40326 6 5.10218 6 6.5 6H7.5V4.5Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="flex flex-col ">
-            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">满足国产化需求，引领行业数字化转型</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light">大模型一体机兼容国产化硬件，适配信创体系，为金融、政府、运营商等传统企业提供国产化的Al解决方案。通过与信创生态的全面适配，我们致力于推动行业的数字化转型，让国产CPU的算力与大模型的兼容性完美结合。</div>
+            <div class="mb-[8px] text-[20px] text-[#101828] leading-[30px]">{{ $t('solution.starAIO.subpart5') }}</div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light">{{ $t('solution.starAIO.subpart5-') }}</div>
           </div>
         </div>
       </div>
@@ -128,9 +129,17 @@ export default {
             "DSK-Mac-Studio-M2Ultra",
             "Tower-Mac-Pro-M2Ultra",
             "Rack-Mac-Pro-M2Ultra",
-            "Tower-NV-4090（2卡）",
-            "Rack-NV-4090（2卡/4卡/8卡）"
+            "Tower-NV-4090（2 cards）",
+            "Rack-NV-4090 (2 cards/4 cards/8 cards)"
           ],
+          details_en: [
+            "DSK-Mac-Studio-M2Max",
+            "DSK-Mac-Studio-M2Ultra",
+            "Tower-Mac-Pro-M2Ultra",
+            "Rack-Mac-Pro-M2Ultra",
+            "Tower-NV-4090（2 cards）",
+            "Rack-NV-4090（2 cards/4 cards/8 cards）"
+          ]
         },
         {
           id: "2",
@@ -144,6 +153,14 @@ export default {
             "Rack-NV-H20 (Coming soon)",
             "Rack-NV-L20 ( Coming soon)"
           ],
+          details_en: [
+            "DSK-Mac-Studio-M2Max",
+            "DSK-Mac-Studio-M2Ultra",
+            "Tower-Mac-Pro-M2Ultra",
+            "Rack-Mac-Pro-M2Ultra",
+            "Tower-NV-4090（2 cards）",
+            "Rack-NV-4090（2 cards/4 cards/8 cards）"
+          ]
         }, {
           id: "3",
           title: "国产版",
@@ -153,6 +170,11 @@ export default {
             "燧原<br><br>(Coming soon)",
             "华为<br><br>(Coming soon)"
           ],
+          details_en: [
+            "Cambricon<br><br>(Tower-ITAICam-370X8)",
+            "Enflame<br><br>(Coming soon)",
+            "Ascend<br><br>(Coming soon)"
+          ]
         }]
     };
   },

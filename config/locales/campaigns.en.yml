@@ -1,0 +1,11 @@
+en:
+  campaigns:
+    show:
+      prestart: 'prestart'
+      signing_up: 'signing_up'
+      in_progress: 'in_progress'
+      ended: 'ended'
+      sign_up: 'Sign up'
+      time: 'Time'
+      location: 'Location'
+      related: 'Related Space'

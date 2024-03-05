@@ -5,10 +5,10 @@
         Smart. Simple. Scalable.
       </div>
       <div class="mb-[24px] max-w-[1216px] m-auto text-[72px] md:text-[48px] md:leading-[60px] text-[#101828] leading-[90px]">
-        从算力到应用<br/>大模型引领软件工程变革
+        {{ $t('product.banner.headline1') }}<br/>{{ $t('product.banner.headline2') }}
       </div>
       <div class="text-[20px] font-light text-[#475467] leading-[30px]">
-        OpenCSG 解决方案
+        {{ $t('product.banner.solution') }}
       </div>
     </div>
   </div>
