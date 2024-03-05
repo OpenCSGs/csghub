@@ -71,22 +71,22 @@
         <template #dropdown>
           <el-dropdown-menu>
             <a :href="userProfile">
-              <el-dropdown-item> 个人信息 </el-dropdown-item>
+              <el-dropdown-item> {{ $t('navbar.profile') }} </el-dropdown-item>
             </a>
             <a href="/settings/profile">
-              <el-dropdown-item> 账号设置 </el-dropdown-item>
+              <el-dropdown-item> {{ $t('navbar.editProfile') }} </el-dropdown-item>
             </a>
             <a href="/models/new">
-              <el-dropdown-item divided> + 新建模型 </el-dropdown-item>
+              <el-dropdown-item divided> + {{ $t('navbar.newModel') }} </el-dropdown-item>
             </a>
             <a href="/datasets/new">
-              <el-dropdown-item> + 新建数据集 </el-dropdown-item>
+              <el-dropdown-item> + {{ $t('navbar.newDataset') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
-              <el-dropdown-item divided> 新建组织 </el-dropdown-item>
+              <el-dropdown-item divided> {{ $t('navbar.newOrganization') }} </el-dropdown-item>
             </a>
             <a href="/logout">
-              <el-dropdown-item divided>  退出登录 </el-dropdown-item>
+              <el-dropdown-item divided>  {{ $t('navbar.logout') }} </el-dropdown-item>
             </a>
           </el-dropdown-menu>
         </template>
@@ -94,10 +94,10 @@
       <!-- not logged in: 登录注册按钮 -->
       <button v-else class="bg-[#303133] rounded-[100px] py-[2px] px-[12px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
         <a class="sm:hidden" href="/login">
-          登录/注册
+          {{ $t('navbar.loginRegister') }}
         </a>
         <a class="hidden sm:block" href="/login">
-          登录
+          {{ $t('navbar.login') }}
         </a>
       </button>
     </div>
