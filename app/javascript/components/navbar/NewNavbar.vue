@@ -44,7 +44,8 @@
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>开发者</template>
-          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">开源CSGHub</el-menu-item></a>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1">开源CSGHub</el-menu-item></a>
+          <a :href="llmInference" target="_blank"><el-menu-item index="3-2">开源Inference</el-menu-item></a>
           <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
           <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
@@ -145,6 +146,7 @@ export default {
     const classParam = new URLSearchParams(window.location.search).get('class');
     return {
       csgHubUrl:'https://github.com/OpenCSGs/CSGHub',
+      llmInference: 'https://github.com/OpenCSGs/llm-inference',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
       userProfile: `/profile/${this.userName}`
