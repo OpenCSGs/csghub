@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="联系我们"
+      :title="this.$t('form.contactUs.contact')"
       v-model="dialogVisible"
       width="80%"
       :show-close="false"
@@ -11,37 +11,37 @@
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
-          placeholder="名字"
+          :placeholder="this.$t('form.contactUs.name')"
           name="user_name"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
-          placeholder="公司 请务必填写工商信息名称!"
+          :placeholder="this.$t('form.contactUs.company')"
           name="user_company"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="email"
-          placeholder="邮箱"
+          :placeholder="this.$t('form.contactUs.email')"
           name="user_email"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="tel"
-          placeholder="手机"
+          :placeholder="this.$t('form.contactUs.phone')"
           name="user_tel"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
-          placeholder="职位"
+          :placeholder="this.$t('form.contactUs.job')"
           name="user_job"
         />
-        <textarea name="message" class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0" placeholder="你在寻找什么帮助"></textarea>
+        <textarea name="message" class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0" :placeholder="this.$t('form.contactUs.help')"></textarea>
         <div class="text-center">
-          <input class="w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] mr-20 cursor-pointer" type="submit" :value="'提交'" />
-          <div class="inline-block w-[70px] text-[#606266] bg-white border border-solid border-[#DCDFE6] rounded-[4px] leading-[40px] cursor-pointer" @click="dialogVisible = false">关闭</div>
+          <input class="w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] mr-20 cursor-pointer" type="submit" :value="this.$t('form.contactUs.submit')" />
+          <div class="inline-block w-[70px] text-[#606266] bg-white border border-solid border-[#DCDFE6] rounded-[4px] leading-[40px] cursor-pointer" @click="dialogVisible = false">{{$t('form.contactUs.close')}}</div>
         </div>
       </form>
     </el-dialog>
