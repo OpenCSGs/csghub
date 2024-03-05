@@ -16,7 +16,7 @@
     </div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.username') }}</div>
-      <p class="text-gray-500 text-[12px] italic">{{ $t('profile.edit.usernameDesc') }}</p>
+      <p class="text-gray-500 text-[12px] italic">{{ $t('rule.nameRule') }}</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 disabled

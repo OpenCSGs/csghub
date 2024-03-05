@@ -1,7 +1,25 @@
 export default {
+  rule: {
+    nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
+  },
   models: {
     title: "模型",
     placeholder: "模型名字",
+    newModel: {
+      title: "新建模型仓库",
+      titleDesc: "仓库包含所有的模型文件和修订的历史记录",
+      owner: "所有者",
+      modelName: "模型名称",
+      modelNickName: "模型别名",
+      modelDesc: "模型简介",
+      public: "公开",
+      publicDesc:
+        "任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。",
+      private: "私有",
+      privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
+      tips: "创建模型后，你可以使用网页或 Git 上传你的文件。",
+      createModel: "创建模型",
+    },
   },
   datasets: {
     title: "数据集",
@@ -27,7 +45,9 @@ export default {
     mostDownload: "最多下载",
     mostFavorite: "最多喜欢",
     noData: "暂无数据",
-    save:"保存",
+    save: "保存",
+    inputNickNamePlc:"请输入别名",
+    inputDescPlc:"请输入简介",
   },
   community: {
     discussion: {
@@ -75,15 +95,14 @@ export default {
       sshKey: "SSH Keys",
       billing: "账单",
     },
-    edit:{
-        title:"个人资料设置",
-        uploadAvatar:"上传头像",
-        removeAvatar:"移除头像",
-        username:"用户名",
-        usernameDesc:"* 2-20位字母数字以及 _ - 构成的字符串，- _ 不能连续出现",
-        nickName:"用户昵称",
-        phone:"手机号码",
-        email:"邮箱"
-    }
+    edit: {
+      title: "个人资料设置",
+      uploadAvatar: "上传头像",
+      removeAvatar: "移除头像",
+      username: "用户名",
+      nickName: "用户昵称",
+      phone: "手机号码",
+      email: "邮箱",
+    },
   },
 };

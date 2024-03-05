@@ -1,7 +1,27 @@
 export default {
+  rule: {
+    nameRule:
+      "* Must be a string of 2-20 characters including letters, numbers, and _ - (hyphen and underscore) without consecutive occurrences of - or _",
+  },
   models: {
     title: "Models",
     placeholder: "Models name",
+    newModel: {
+      title: "Create Model Repository",
+      titleDesc: "The repository contains all model files and revision history",
+      owner: "Owner",
+      modelName: "Model Name",
+      modelNickName: "Model Nickname",
+      modelDesc: "Model Description",
+      public: "Public",
+      publicDesc:
+        "Anyone on the internet can see this repository. Only you (individual) or members of your organization can contribute.",
+      private: "Private",
+      privateDesc:
+        "Only you (individual) or members of your organization can see and contribute to this repository.",
+      tips: "After creating the model, you can upload your files using the web or Git.",
+      createModel: "Create Model",
+    },
   },
   datasets: {
     title: "Datasets",
@@ -27,7 +47,9 @@ export default {
     mostDownload: "Most Download",
     mostFavorite: "Most Favorite",
     noData: "No Data",
-    save:"Save",
+    save: "Save",
+    inputNickNamePlc:"Enter nickname",
+    inputDescPlc:"Enter description",
   },
   community: {
     discussion: {
@@ -80,8 +102,6 @@ export default {
       uploadAvatar: "Upload Avatar",
       removeAvatar: "Remove Avatar",
       username: "Username,",
-      usernameDesc:
-        "* Must be a string of 2-20 characters including letters, numbers, and _ - (hyphen and underscore) without consecutive occurrences of - or _",
       nickName: "Nickname",
       phone: "Phone Number",
       email: "Email",

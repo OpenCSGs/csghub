@@ -6,13 +6,13 @@
         <path d="M18.5 18.75L32 10.5M18.5 18.75L5 10.5M18.5 18.75V33.75M3.5 15.9354V20.0646C3.5 22.0466 3.5 23.0377 3.78438 23.9281C4.03603 24.7162 4.44792 25.4436 4.99417 26.0649C5.61145 26.7669 6.46124 27.2767 8.16084 28.2965L13.5608 31.5365C15.3566 32.614 16.2545 33.1527 17.2131 33.3632C18.0609 33.5494 18.9391 33.5494 19.7869 33.3632C20.7455 33.1527 21.6434 32.614 23.4392 31.5365L28.8392 28.2965C30.5388 27.2767 31.3886 26.7669 32.0058 26.0649C32.5521 25.4436 32.964 24.7162 33.2156 23.9281C33.5 23.0377 33.5 22.0466 33.5 20.0646V15.9354C33.5 13.9534 33.5 12.9623 33.2156 12.0719C32.964 11.2838 32.5521 10.5564 32.0058 9.93514C31.3886 9.23313 30.5388 8.72325 28.8392 7.7035L23.4392 4.4635C21.6434 3.38601 20.7455 2.84727 19.7869 2.63678C18.9391 2.4506 18.0609 2.4506 17.2131 2.63678C16.2545 2.84727 15.3566 3.38601 13.5608 4.46349L8.16084 7.7035C6.46124 8.72325 5.61145 9.23313 4.99417 9.93514C4.44792 10.5564 4.03603 11.2838 3.78438 12.0719C3.5 12.9623 3.5 13.9534 3.5 15.9354Z" stroke="#AD4A3B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">新建模型仓库</h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">仓库包含所有的模型文件和修订的历史记录</p>
+    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('models.newModel.title') }}</h3>
+    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('models.newModel.titleDesc') }}</p>
     <div class="mt-9">
       <!-- 模型名称选择 -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
-          <p class="text-[#303133] text-sm mb-2">所有者</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('models.newModel.owner') }}</p>
           <el-select v-model="owner" placeholder="选择" size="large">
             <el-option
               v-for="item in namespaces"
@@ -27,15 +27,15 @@
           <p class="text-[#909399] text-xl font-light">/</p>
         </div>
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">模型名称</p>
-          <el-input v-model="modelName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
+          <p class="text-[#303133] text-sm mb-2">{{ $t('models.newModel.modelName') }}</p>
+          <el-input v-model="modelName" :placeholder="this.$t('rule.nameRule')" input-style="width: 100%" />
         </div>
       </div>
 
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">模型别名</p>
-          <el-input v-model="modelNickName" placeholder="请输入别名" />
+          <p class="text-[#303133] text-sm mb-2">{{ $t('models.newModel.modelNickName') }}</p>
+          <el-input v-model="modelNickName" :placeholder="this.$t('all.inputNickNamePlc')" />
         </div>
         <div class="">
           <p class="text-[#303133] text-sm mb-2">License</p>
@@ -52,11 +52,11 @@
 
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">模型简介</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('models.newModel.modelDesc') }}</p>
           <el-input v-model="modelDesc"
                     :rows="6"
                     type="textarea"
-                    placeholder="请输入简介" />
+                    :placeholder="this.$t('all.inputDescPlc')" />
         </div>
       </div>
 
@@ -64,18 +64,18 @@
       <div class="mb-9">
         <el-radio-group v-model="visibility" class="!block">
           <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
-            公开
-            <p class="whitespace-normal text-[#475467] font-light">任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。</p>
+            {{ $t('models.newModel.public') }}
+            <p class="whitespace-normal text-[#475467] font-light">{{ $t('models.newModel.publicDesc') }}</p>
           </el-radio>
           <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
-            私有
-            <p class="whitespace-normal text-[#475467] font-light">只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。</p>
+            {{ $t('models.newModel.private') }}
+            <p class="whitespace-normal text-[#475467] font-light">{{ $t('models.newModel.privateDesc') }}</p>
           </el-radio>
         </el-radio-group>
       </div>
       <hr class="mb-9" />
       <p class="mb-9 rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
-        创建模型后，你可以使用网页或 Git 上传你的文件。
+        {{ $t('models.newModel.tips') }}
       </p>
       <div class="flex justify-end">
         <button
@@ -83,7 +83,7 @@
           @click="createModel"
           :disabled="!canCreateModel"
         >
-          创建模型
+          {{ $t('models.newModel.createModel') }}
         </button>
       </div>
     </div>
