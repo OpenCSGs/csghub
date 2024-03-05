@@ -139,6 +139,11 @@ class ApplicationController < ActionController::Base
       return redirect_to '/settings/profile'
     end
 
+    if current_user.name.blank?
+      flash[:alert] = "请补充用户名，以便能使用完整的功能"
+      return redirect_to '/settings/profile'
+    end
+
     unless current_user.starhub_synced?
       current_user.sync_to_starhub_server
     end
