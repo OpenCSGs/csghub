@@ -146,6 +146,7 @@ export default {
       nickName: "Nickname",
       phone: "Phone Number",
       email: "Email",
+      updateSuccess: "Profile updated successfully",
     },
   },
 };

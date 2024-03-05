@@ -113,7 +113,7 @@ export default {
           })
         } else {
           ElMessage({
-            message: "profile已更新",
+            message: this.$t('profile.edit.updateSuccess'),
             type: "success",
           });
           this.$emit("updateUserInfo", {

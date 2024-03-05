@@ -140,6 +140,7 @@ export default {
       nickName: "用户昵称",
       phone: "手机号码",
       email: "邮箱",
+      updateSuccess: "profile已更新",
     },
   },
 };
