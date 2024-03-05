@@ -66,6 +66,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import DatasetItem from './DatasetItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     taskTags: String,
@@ -75,6 +76,7 @@
     selectedTagType: String
   })
 
+  const { t } = useI18n();
   const nameFilterInput = ref('')
   const sortSelection = ref('recently_update')
   const currentPage = ref(1)
@@ -88,19 +90,19 @@
   const sortOptions = [
                         {
                           value: 'recently_update',
-                          label: '最近更新'
+                          label: t('all.recentlyUpdate')
                         },
                         {
                           value: 'trending',
-                          label: '热门'
+                          label: t('all.trending')
                         },
                         {
                           value: 'most_download',
-                          label: '最多下载'
+                          label: t('all.mostDownload')
                         },
                         {
                           value: 'most_favorite',
-                          label: '最多喜欢'
+                          label: t('all.mostFavorite')
                         },
                       ]
 
