@@ -70,11 +70,6 @@ export default {
     },
     newOrganization: {
       title: "Create New Organization",
-      nameSpace: "Organization Namespace",
-      orgNickName: "Organization Nickname",
-      orgAvatar: "Organization Avatar",
-      orgType: "Organization Type",
-      orgHomepage: "Organization Homepage",
       createOrg: "Create Organization",
       createSuccess: "Organization created successfully",
       inputSpaceNamePls: "Please enter the organization namespace",

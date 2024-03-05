@@ -64,11 +64,6 @@ export default {
     },
     newOrganization: {
       title: "新建组织",
-      nameSpace: "组织命名空间",
-      orgNickName: "组织别名",
-      orgAvatar: "组织头像",
-      orgType: "组织类型",
-      orgHomepage: "组织主页",
       createOrg: "创建组织",
       createSuccess: "组织创建成功",
       inputSpaceNamePls: "请填写组织命名空间",
