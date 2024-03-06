@@ -54,6 +54,10 @@ export default {
       needModelDesc: "Please provide a model description first",
     },
   },
+  comment: {
+    sureDel: "Are you sure you want to delete this comment?",
+    createComment: "Add a comment"
+  },
   datasets: {
     title: "Datasets",
     placeholder: "Datasets name",
@@ -146,6 +150,7 @@ export default {
     login: "Login",
   },
   all: {
+    tip: "tip",
     summary: "Summary",
     files: "Files",
     community: "Community",

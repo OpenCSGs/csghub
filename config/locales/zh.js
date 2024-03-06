@@ -49,6 +49,10 @@ export default {
       needModelDesc: "请先提供模型介绍",
     },
   },
+  comment: {
+    sureDel: "确认删除此评论？",
+    createComment:"添加评论"
+  },
   datasets: {
     title: "数据集",
     placeholder: "数据集名字",
@@ -136,6 +140,7 @@ export default {
     login: "登录",
   },
   all: {
+    tip: "提示",
     summary: "介绍",
     files: "文件",
     community: "讨论",
@@ -147,7 +152,7 @@ export default {
     historyCommits: "历史提交",
     addFile: "添加文件",
     fileName: "文件名",
-    filterTags:"筛选标签",
+    filterTags: "筛选标签",
     provideMoreDesc: "提供更多描述",
     submitNewFile: "提交新文件",
     submitChange: "提交变更",
