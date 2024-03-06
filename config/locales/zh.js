@@ -421,6 +421,7 @@ export default {
         "ir": "投资关系：ir@opencsg.com",
         "cookies": "Cookies政策",
         "publish": "©2023 OpenCSG.com版权所有",
-        "ICP": "京ICP备2023006263号-1"
-    },
+        "ICP": "京ICP备2023006263号-1",
+        "wx": "微信公众号"
+    }
 }

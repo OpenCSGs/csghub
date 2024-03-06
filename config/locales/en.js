@@ -276,7 +276,7 @@ export default {
         "newOrg": "New organization",
         "recommendation": "Paper recommendation",
         "logout": "Sign out",
-        "register": "Login/Register",
+        "register": "Login",
         "login": "Login",
     },
     "dailyPaper": {
@@ -419,7 +419,8 @@ export default {
         "ir": "Investment relationship: ir@opencsg.com",
         "cookies": "Cookies Policy",
         "publish": "©Copyright 2023 OpenCSG.com",
-        "ICP": "Beijing ICPB 2023006263-1"
+        "ICP": "Beijing ICPB 2023006263-1",
+        "wx": "WeChat Official Account"
 },
 
 }
