@@ -47,4 +47,8 @@ const toggleRow = (_row, _column, event) => {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+
+  :deep(.el-table__header-wrapper th) {
+    background-color: #F9FAFB;
+  }
 </style>
