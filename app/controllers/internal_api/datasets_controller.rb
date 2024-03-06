@@ -1,9 +1,9 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet]
   before_action :validate_dataset, only: [:update, :destroy, :create_file, :upload_file]
   before_action :validate_manage, only: [:update, :destroy]
   before_action :validate_write, only: [:create_file, :upload_file]
-  before_action :validate_authorization, only: [:files, :readme]
+  before_action :validate_authorization, only: [:files, :readme, :preview_parquet]
 
   def index
     res_body = Starhub.api.get_datasets(current_user&.name,
@@ -86,6 +86,19 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     }
     sync_upload_file(options)
     render json: { message: '上传文件成功' }
+  end
+
+  def preview_parquet
+    json_data = Starhub.api.get_datasets_files(params[:namespace], params[:dataset_name], { path: params[:path] })
+    parquet_file_path = JSON.parse(json_data)['data']
+                            .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
+                            .sort_by { |path| path.downcase }.first
+    if parquet_file_path
+      preview_data = Starhub.api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path)
+      render json: preview_data
+    else
+      render json: {}
+    end
   end
 
   private

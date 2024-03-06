@@ -2,6 +2,7 @@
   <div class="flex min-h-[300px] md:px-5 md:flex-col-reverse">
     <div class="max-w-[80%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-[#EBEEF5] md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
+      <ParquetViewer v-if="previewData.data" :previewData="previewData.data" />
       <MarkdownViewer
         :content="readmeContent"
         :setDefaultText="true"
@@ -19,6 +20,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
+  import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
 
   const props = defineProps({
     namespacePath: String,
@@ -27,6 +29,7 @@
 
   const loading = ref(true)
   const readmeContent = ref('')
+  const previewData = ref({})
 
   const fetchData = async () => {
     const url = `/internal_api/datasets/${props.namespacePath}/readme`
@@ -42,7 +45,20 @@
     })
   }
 
+  const fetchPreviewData = async () => {
+    const url = `/internal_api/datasets/${props.namespacePath}/preview`
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        previewData.value = data
+      }).catch((error) => {
+        console.error(error)
+      })
+    })
+  }
+
   onMounted(() => {
     fetchData()
+    fetchPreviewData()
   })
 </script>

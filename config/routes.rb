@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :create]
     get '/datasets/:namespace/(*dataset_name)/readme', to: 'datasets#readme'
     get '/datasets/:namespace/(*dataset_name)/files', to: 'datasets#files'
+    get '/datasets/:namespace/(*dataset_name)/preview', to: 'datasets#preview_parquet'
     post '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#create_file'
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}

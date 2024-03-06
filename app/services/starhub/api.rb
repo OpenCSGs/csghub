@@ -306,6 +306,13 @@ module Starhub
       @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
     end
 
+    def preview_datasets_parquet_file(username, dataset_name, path, options = {})
+      options[:count] ||= 6
+      res = @client.get("/datasets/#{username}/#{dataset_name}/viewer/#{path}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_ssh_key(username, key_name, content)
       options = {
         username: username,
