@@ -399,7 +399,7 @@ module Starhub
       options = {
         current_user: user,
         input: input,
-        version: version
+        version: "" #暂时不支持制定 version
       }
       res = @client.post("/models/#{namespace}/#{name}/predict", options)
       raise StarhubError, res.body unless res.success?
