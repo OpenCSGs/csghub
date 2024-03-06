@@ -15,11 +15,11 @@
       </template>
       <div class="relative">
         <div class="text-[18px] leading-[28px] text-[#101828]">{{ $t('organization.invite.inviteNew') }}</div>
-        <span class="text-[14px] leading-[20px] text-[#475467] font-light">{{ $t('organization.invite.inviteDesc') }}<span class="font-bold">{{ orgName }}</span></span>
+        <span class="text-[14px] leading-[20px] text-[#475467] font-light">{{ $t('organization.invite.inviteDesc') }}  <span class="font-bold">{{ orgName }}</span></span>
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('all.Role') }}</p>
+              <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('all.role') }}</p>
               <el-select v-model="userRoleInput" :placeholder="this.$t('all.select')" size="large" class="w-full">
                 <el-option
                   v-for="item in roleMappings"
