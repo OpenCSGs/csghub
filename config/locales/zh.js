@@ -258,6 +258,7 @@ export default {
     "starCode": "StarCode AI 智能编程助手",
     "developer": "开发者",
     "open": "开源CSGHub",
+    "llm_inference_open": "开源Inference",
     "space": "应用空间",
     "docs": "文档中心",
     "computer": "算力",

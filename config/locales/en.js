@@ -258,6 +258,7 @@ export default {
     "starCode": "StarCode AI Intelligent Programming Assistant",
     "developer": "Developer",
     "open": "Open source CSGHub",
+    "llm_inference_open": "Open source Inference",
     "space": "Space",
     "docs": "Document center",
     "computer": "Computing power",
