@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class ModelDashboard < Administrate::BaseDashboard
+class OrgMembershipDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,10 +9,9 @@ class ModelDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    creator: Field::BelongsTo,
-    name: Field::String,
-    owner: Field::Polymorphic,
-    visibility: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
+    organization: Field::BelongsTo,
+    role: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
+    user: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -24,19 +23,18 @@ class ModelDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    name
-    owner
-    visibility
+    organization
+    role
+    user
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    name
-    owner
-    creator
-    visibility
+    organization
+    role
+    user
     created_at
     updated_at
   ].freeze
@@ -45,7 +43,9 @@ class ModelDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    visibility
+    organization
+    role
+    user
   ].freeze
 
   # COLLECTION_FILTERS
@@ -60,10 +60,10 @@ class ModelDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how models are displayed
+  # Overwrite this method to customize how org memberships are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(model)
-  #   "Model ##{model.id}"
+  # def display_resource(org_membership)
+  #   "OrgMembership ##{org_membership.id}"
   # end
 end

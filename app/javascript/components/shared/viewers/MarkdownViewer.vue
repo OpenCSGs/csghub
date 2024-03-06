@@ -22,9 +22,13 @@
 
   const markdownContent = ref('')
 
-  const { _metadata, content } = parseMD(props.content)
-
-  markdownContent.value = props.setDefaultText ? (content.trim() || defaultText) : content
+  try {
+    const { _metadata, content } = parseMD(props.content)
+    markdownContent.value = props.setDefaultText ? (content.trim() || defaultText) : content
+  } catch (error) {
+    console.error(error)
+    markdownContent.value = props.content
+  }
 
   const anchorOptions = {
     tabIndex: false,

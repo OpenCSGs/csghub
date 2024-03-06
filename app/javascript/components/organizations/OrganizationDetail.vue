@@ -1,20 +1,24 @@
 <template>
   <div>
     <div class="py-[16px] bg-[#FAFCFF]">
-      <div class="max-w-[1280px] m-auto py-[16px] xl:px-[16px]">
-        <div class="flex justify-between items-center">
-          <div class="flex gap-[10px]">
+      <div class="max-w-[1280px] m-auto flex items-center justify-between py-[16px] xl:px-[16px]">
+        <div class="flex gap-[10px]">
+          <span v-if="organization.verified" class="relative">
             <img :src="organization.avatar" class="h-[60px] w-[60px] rounded-[50%]" />
-            <div>
-              <h3 class="text-[24px] text-[#303133] font-[600]"> {{ organization.nickname.trim() || organization.name }}</h3>
-              <p class="text-[16px]"> @{{ organization.name }} </p>
-            </div>
+            <svg class="absolute bottom-0 right-0" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none"><g clip-path="url(#clip0_7299_1409)"><path d="M13.899 3.18734C14.07 3.6008 14.3981 3.92944 14.8113 4.10101L16.2602 4.70116C16.6737 4.87243 17.0022 5.20094 17.1735 5.61443C17.3448 6.02791 17.3448 6.4925 17.1735 6.90598L16.5738 8.35382C16.4024 8.76748 16.4022 9.23254 16.5743 9.64601L17.173 11.0934C17.2579 11.2982 17.3016 11.5177 17.3016 11.7394C17.3017 11.9611 17.258 12.1807 17.1732 12.3855C17.0883 12.5903 16.964 12.7764 16.8072 12.9331C16.6504 13.0899 16.4643 13.2142 16.2594 13.2989L14.8116 13.8987C14.3981 14.0696 14.0695 14.3978 13.8979 14.811L13.2978 16.2598C13.1265 16.6733 12.798 17.0018 12.3845 17.1731C11.971 17.3444 11.5064 17.3444 11.0929 17.1731L9.64511 16.5734C9.23161 16.4025 8.7672 16.4029 8.35396 16.5744L6.90508 17.1736C6.49183 17.3445 6.02764 17.3444 5.6145 17.1732C5.20135 17.0021 4.87302 16.674 4.70163 16.2609L4.10131 14.8116C3.93035 14.3982 3.6022 14.0695 3.18901 13.898L1.74014 13.2978C1.32683 13.1266 0.998417 12.7983 0.827083 12.3851C0.655748 11.9718 0.655516 11.5075 0.826437 11.094L1.42615 9.6462C1.597 9.23271 1.59665 8.76829 1.42518 8.35505L0.826328 6.90513C0.741422 6.70034 0.697703 6.48082 0.697668 6.25912C0.697632 6.03743 0.741281 5.8179 0.82612 5.61308C0.91096 5.40826 1.03533 5.22216 1.19212 5.06542C1.3489 4.90868 1.53504 4.78438 1.73989 4.6996L3.18772 4.09989C3.60082 3.92908 3.92926 3.60135 4.10096 3.18863L4.70111 1.73976C4.87238 1.32627 5.20089 0.997758 5.61438 0.826487C6.02786 0.655216 6.49245 0.655216 6.90593 0.826487L8.35377 1.4262C8.76726 1.59705 9.23168 1.5967 9.64492 1.42523L11.0944 0.827417C11.5078 0.656242 11.9723 0.656277 12.3857 0.827514C12.7991 0.998752 13.1276 1.32717 13.2989 1.74055L13.8992 3.18985L13.899 3.18734Z" fill="#2E90FA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5249 6.64035C12.6452 6.45148 12.6855 6.22258 12.6369 6.00401C12.5884 5.78544 12.455 5.59509 12.2662 5.47485C12.0773 5.35461 11.8484 5.31432 11.6298 5.36284C11.4113 5.41137 11.2209 5.54473 11.1007 5.7336L7.79654 10.9255L6.28454 9.03547C6.14476 8.86063 5.94124 8.74848 5.71876 8.72369C5.49629 8.6989 5.27308 8.7635 5.09823 8.90329C4.92339 9.04307 4.81123 9.24659 4.78644 9.46907C4.76165 9.69154 4.82626 9.91476 4.96604 10.0896L7.21604 12.9021C7.2999 13.007 7.4076 13.0905 7.53018 13.1454C7.65277 13.2003 7.7867 13.2252 7.92084 13.2179C8.05498 13.2107 8.18544 13.1715 8.30138 13.1036C8.41732 13.0358 8.51539 12.9412 8.58742 12.8278L12.5249 6.64035Z" fill="white"/></g><defs><clipPath id="clip0_7299_1409"><rect width="18" height="18" fill="white"/></clipPath></defs></svg>
+          </span>
+          <span v-else class="relative">
+            <img :src="organization.avatar" class="h-[60px] w-[60px] rounded-[50%]" />
+          </span>
+          <div>
+            <h3 class="text-[24px] text-[#303133] font-[600]"> {{ organization.nickname.trim() || organization.name }}</h3>
+            <p class="text-[16px]"> @{{ organization.name }} </p>
           </div>
-          <a v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
+        </div>
+        <a v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.99984 12.9167H6.24984C5.08687 12.9167 4.50538 12.9167 4.03222 13.0602C2.96688 13.3834 2.1332 14.217 1.81004 15.2824C1.6665 15.7555 1.6665 16.337 1.6665 17.5M15.8332 17.5V12.5M13.3332 15H18.3332M12.0832 6.25C12.0832 8.32107 10.4042 10 8.33317 10C6.2621 10 4.58317 8.32107 4.58317 6.25C4.58317 4.17893 6.2621 2.5 8.33317 2.5C10.4042 2.5 12.0832 4.17893 12.0832 6.25Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
             组织设置
           </a>
-        </div>
       </div>
     </div>
 
@@ -50,38 +54,11 @@
             </a>
           </div>
         </div>
-        <div class="xl:px-[16px] sm:w-[100%] sm:mt-[36px]">
-          <div>
-            <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path opacity="0.12" d="M16.5 10.0327V5.46176C16.5 5.33063 16.4312 5.20911 16.3188 5.14164C16.1996 5.07018 16.0507 5.07075 15.9321 5.14313L11.5012 7.84833C10.5927 8.40303 10.1384 8.68038 9.65249 8.78865C9.22277 8.88441 8.77723 8.88441 8.34751 8.78865C7.86162 8.68038 7.40734 8.40303 6.49878 7.84833L2.06785 5.14313C1.9493 5.07075 1.80036 5.07018 1.68125 5.14164C1.5688 5.20911 1.5 5.33063 1.5 5.46176V10.0327C1.5 11.0237 1.5 11.5192 1.64219 11.9645C1.76802 12.3585 1.97396 12.7222 2.24708 13.0328C2.55572 13.3838 2.98062 13.6388 3.83042 14.1486L6.53042 15.7686C7.42832 16.3074 7.87727 16.5768 8.35653 16.682C8.78046 16.7751 9.21954 16.7751 9.64346 16.682C10.1227 16.5768 10.5717 16.3074 11.4696 15.7686L14.1696 14.1486C15.0194 13.6388 15.4443 13.3838 15.7529 13.0328C16.026 12.7222 16.232 12.3585 16.3578 11.9645C16.5 11.5192 16.5 11.0237 16.5 10.0327Z" fill="#AD4A3B"/>
-                <path d="M9 9.375L15.75 5.25M9 9.375L2.25 5.25M9 9.375V16.875M1.5 7.96771V10.0323C1.5 11.0233 1.5 11.5188 1.64219 11.9641C1.76802 12.3581 1.97396 12.7218 2.24708 13.0324C2.55572 13.3834 2.98062 13.6384 3.83042 14.1483L6.53042 15.7683C7.42832 16.307 7.87727 16.5764 8.35653 16.6816C8.78046 16.7747 9.21954 16.7747 9.64346 16.6816C10.1227 16.5764 10.5717 16.307 11.4696 15.7683L14.1696 14.1483C15.0194 13.6384 15.4443 13.3834 15.7529 13.0324C16.026 12.7218 16.232 12.3581 16.3578 11.9641C16.5 11.5188 16.5 11.0233 16.5 10.0323V7.96771C16.5 6.97669 16.5 6.48117 16.3578 6.03593C16.232 5.64192 16.026 5.27818 15.7529 4.96757C15.4443 4.61657 15.0194 4.36163 14.1696 3.85175L11.4696 2.23175C10.5717 1.69301 10.1227 1.42364 9.64346 1.31839C9.21954 1.2253 8.78046 1.2253 8.35653 1.31839C7.87727 1.42364 7.42832 1.69301 6.53042 2.23175L3.83042 3.85175C2.98062 4.36163 2.55572 4.61657 2.24708 4.96757C1.97396 5.27818 1.76802 5.64192 1.64219 6.03593C1.5 6.48117 1.5 6.97669 1.5 7.96771Z" stroke="#AD4A3B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>模型</span>
-            </h3>
-            <div v-if="hasModels" class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-              <model-item v-for="model in modelList" :model="model"></model-item>
-            </div>
-            <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-                暂无数据
-            </div>
-          </div>
-          <div class="mt-[32px]">
-            <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path opacity="0.12" d="M9 16.5C12.7279 16.5 15.75 15.4926 15.75 14.25V3.75C15.75 3.75 15.375 6 9 6C2.625 6 2.25 3.75 2.25 3.75V14.25C2.25 15.4926 5.27208 16.5 9 16.5Z" fill="#1F75CB"/>
-                <path d="M15.75 9C15.75 10.2426 12.7279 11.25 9 11.25C5.27208 11.25 2.25 10.2426 2.25 9M15.75 3.75C15.75 4.99264 12.7279 6 9 6C5.27208 6 2.25 4.99264 2.25 3.75M15.75 3.75C15.75 2.50736 12.7279 1.5 9 1.5C5.27208 1.5 2.25 2.50736 2.25 3.75M15.75 3.75V14.25C15.75 15.4926 12.7279 16.5 9 16.5C5.27208 16.5 2.25 15.4926 2.25 14.25V3.75" stroke="#1F75CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>数据集</span>
-            </h3>
-            <div v-if="hasDatasets" class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-              <dataset-item v-for="dataset in datasetList" :dataset="dataset"></dataset-item>
-            </div>
-            <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-                暂无数据
-            </div>
-          </div>
-        </div>
+        <profile-repo-list
+          :model-list="models"
+          :dataset-list="datasets"
+          :name="organization.name"
+        />
       </div>
     </div>
   </div>
@@ -91,6 +68,7 @@
   import ModelItem from '../models/ModelItem.vue';
   import DatasetItem from '../datasets/DatasetItem.vue';
   import InviteMember from './InviteMember.vue'
+  import ProfileRepoList from '../shared/ProfileRepoList.vue'
 
   const props = defineProps({
     organization: Object,
@@ -100,10 +78,6 @@
     admin: Boolean
   })
 
-  const modelList = props.models.data
-  const datasetList = props.datasets.data
-  const hasModels = props.models.total !== 0
-  const hasDatasets = props.datasets.total !== 0
   const membersList = ref(props.members)
 
   const resetMemberList = (newMembers, userRole) => {

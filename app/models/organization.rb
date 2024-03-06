@@ -15,7 +15,7 @@ class Organization < ApplicationRecord
   has_many :datasets, as: :owner
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
-  after_create :sync_to_starhub_server
+  after_save :sync_to_starhub_server
   before_save :detect_sensitive_content
 
   def avatar_url
@@ -39,7 +39,8 @@ class Organization < ApplicationRecord
       name: name,
       nickname: nickname,
       org_type: org_type,
-      homepage: homepage
+      homepage: homepage,
+      verified: verified
     }
   end
 
@@ -60,9 +61,14 @@ class Organization < ApplicationRecord
   end
 
   def sync_to_starhub_server
-    res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
-    raise StarhubError, res.body unless res.success?
-    starhub_synced!
+    if starhub_synced?
+      res = Starhub.api.update_organization(creator.name, name, nickname, homepage)
+      raise StarhubError, res.body unless res.success?
+    else
+      res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
+      raise StarhubError, res.body unless res.success?
+      starhub_synced!
+    end
   end
 
   def unique_name_by_user

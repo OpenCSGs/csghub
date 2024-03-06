@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       end
     end
     resources :users, only: [:index, :update]
+    get '/users/:namespace/models', to: 'users#models'
+    get '/users/:namespace/datasets', to: 'users#datasets'
+    get '/organizations/:namespace/models', to: 'organizations#models'
+    get '/organizations/:namespace/datasets', to: 'organizations#datasets'
 
     resources :models, only: [:index, :create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme'
@@ -77,6 +81,7 @@ Rails.application.routes.draw do
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
+
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
     get '/models/:namespace/(*model_name)/:branch/upload', to: 'models#upload_file'
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
