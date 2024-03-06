@@ -215,9 +215,9 @@ export default {
     inputPls: "Please enter",
     inputNickNamePlc: "Enter nickname",
     inputDescPlc: "Enter description",
-    cloneTips:
+    lfsTips:
       "Before downloading, please make sure you have installed git-lfs (https://git-lfs.com).",
-    cloneTips2:
+    lfsTips2:
       "If you do not want to download the content of LFS files, please add it to the environment variables.",
   },
   community: {
