@@ -33,7 +33,7 @@
 <!--      </svg>-->
 <!--      <div class="ml-2 text-[#606266] text-sm font-medium">Use with library</div>-->
 <!--    </div>-->
-    <div class="rounded border border-[#DCDFE6] flex items-center justify-center w-[118px] h-8 cursor-pointer hover:bg-[#F9FAFB]" @click="cloneRepositoryVisible = true">
+    <div class="rounded border border-[#DCDFE6] flex items-center justify-center px-4 py-[5px] h-8 cursor-pointer hover:bg-[#F9FAFB]" @click="cloneRepositoryVisible = true">
       <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <rect opacity="0.12" x="1.3335" y="1.3335" width="13.3333" height="13.3333" rx="3.33333" fill="#2F384C"/>
         <path
