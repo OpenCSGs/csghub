@@ -85,6 +85,7 @@
   import { nextTick, ref, inject, onMounted } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { useI18n } from 'vue-i18n'
 
   const emit = defineEmits(['retriveSpaceCard'])
 
@@ -106,6 +107,7 @@
   const dynamicTags = ref(spaceTagsNameArray)
   const inputVisible = ref(false)
   const InputRef = ref<InstanceType<typeof ElInput>>()
+  const { t } = useI18n();
 
   const closeEditDialog = () => {
     dialogVisible.value = false
@@ -134,7 +136,7 @@
     const currentSelectedTag = event.target.innerHTML
     if (dynamicTags.value.includes(currentSelectedTag)) {
       ElMessage({
-        message: '当前 Tag 已经添加！',
+        message: t('space.reTag'),
         type: 'warning'
       })
     } else {

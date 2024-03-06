@@ -16,50 +16,50 @@
         text-color="#475467"
         active-text-color="black"
       >
-        <el-menu-item index="/models" style="border:none" @click="routerLink('/models')">模型</el-menu-item>
-        <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')">数据集</el-menu-item>
+        <el-menu-item index="/models" style="border:none" @click="routerLink('/models')">{{ $t('navbar.models') }}</el-menu-item>
+        <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')">{{ $t('navbar.datasets') }}</el-menu-item>
         <el-sub-menu index="1" popper-class="popper-submenu">
-          <template #title>产品</template>
+          <template #title>{{ $t('navbar.product') }}</template>
           <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
-            <span>StarCloud 星云平台</span>
+            <span>{{ $t('navbar.starCloud') }}</span>
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">
-            <span>StarShip 星舰平台</span>
+            <span>{{ $t('navbar.starShip') }}</span>
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2" popper-class="popper-submenu">
-          <template #title>方案</template>
+          <template #title>{{ $t('navbar.solution') }}</template>
           <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">
-            <span>EKB AI 智能企业知识库</span>
+            <span>{{ $t('navbar.EKB') }}</span>
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">
-            <span>StarAIO 大模型一体机</span>
+            <span>{{ $t('navbar.starAIO') }}</span>
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">
-            <span>Imagen AI 智能图像助手</span>
+            <span>{{ $t('navbar.imagen') }}</span>
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">
-            <span>StarCode AI 智能编程助手</span>
+            <span>{{ $t('navbar.starCode') }}</span>
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
-          <template #title>开发者</template>
-          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">开源CSGHub</el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
-          <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
+          <template #title>{{ $t('navbar.developer') }}</template>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">{{ $t('navbar.open') }}</el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">{{ $t('navbar.docs') }}</el-menu-item></a>
+          <a href="/spaces"><el-menu-item index="/spaces">{{ $t('navbar.space') }}</el-menu-item></a>
+          <a href="/docs" target="_blank"><el-menu-item index="/docs">{{ $t('navbar.docs') }}</el-menu-item></a>
         </el-sub-menu>
-        <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">算力</el-menu-item>
+        <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
         <el-sub-menu index="4" popper-class="popper-submenu">
-          <template #title>公司</template>
-          <a href="/about"><el-menu-item index="/about">公司介绍</el-menu-item></a>
-          <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
-          <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
+          <template #title>{{ $t('navbar.enterprise') }}</template>
+          <a href="/about"><el-menu-item index="/about">{{ $t('navbar.about') }}</el-menu-item></a>
+          <a href="/partners"><el-menu-item index="/partners">{{ $t('navbar.partner') }}</el-menu-item></a>
+          <a href="/experts"><el-menu-item index="/experts">{{ $t('navbar.expert') }}</el-menu-item></a>
         </el-sub-menu>
         <el-sub-menu index="5" popper-class="popper-submenu">
-          <template #title>社区</template>
-          <a href="/campaigns"><el-menu-item index="/campaigns">社区活动</el-menu-item></a>
-          <a href="/daily_papers"><el-menu-item index="/daily_papers">社区文章</el-menu-item></a>
+          <template #title>{{ $t('navbar.community') }}</template>
+          <a href="/campaigns"><el-menu-item index="/campaigns">{{ $t('navbar.campaign') }}</el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="/daily_papers">{{ $t('navbar.dailyPaper') }}</el-menu-item></a>
         </el-sub-menu>
       </el-menu>
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
@@ -102,36 +102,36 @@
         <template #dropdown>
           <el-dropdown-menu>
             <a :href="userProfile">
-              <el-dropdown-item> 个人信息 </el-dropdown-item>
+              <el-dropdown-item> {{ $t('navbar.profile') }} </el-dropdown-item>
             </a>
             <a href="/settings/profile">
-              <el-dropdown-item> 账号设置 </el-dropdown-item>
+              <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
-            <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
+            <el-dropdown-item @click="showDialog" > {{ $t('navbar.contact') }} </el-dropdown-item>
             <a href="/models/new">
-              <el-dropdown-item divided> + 新建模型 </el-dropdown-item>
+              <el-dropdown-item divided> + {{ $t('navbar.newModel') }} </el-dropdown-item>
             </a>
             <a href="/datasets/new">
-              <el-dropdown-item> + 新建数据集 </el-dropdown-item>
+              <el-dropdown-item> + {{ $t('navbar.newDataset') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
-              <el-dropdown-item divided> 新建组织 </el-dropdown-item>
+              <el-dropdown-item divided> {{ $t('navbar.newOrg') }} </el-dropdown-item>
             </a>
             <a href="/daily_papers/new" v-if="canCreateDailyPaper">
-              <el-dropdown-item> 论文推荐 </el-dropdown-item>
+              <el-dropdown-item> {{ $t('navbar.recommendation') }} </el-dropdown-item>
             </a>
             <a href="/logout">
-              <el-dropdown-item divided>  退出登录 </el-dropdown-item>
+              <el-dropdown-item divided>  {{ $t('navbar.logout') }} </el-dropdown-item>
             </a>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
       <button v-else class="min-w-[72px] sm:min-w-[46px] bg-[#303133] rounded-[100px] p-[2px] flex items-center justify-center text-[12px] font-500 text-white leading-[20px]">
         <a class="sm:hidden" href="/login">
-          登录/注册
+          {{ $t('navbar.register') }}
         </a>
         <a class="hidden sm:block" href="/login">
-          登录
+          {{ $t('navbar.login') }}
         </a>
       </button>
     </div>
