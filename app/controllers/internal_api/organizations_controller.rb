@@ -77,6 +77,14 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     render json: {message: "添加组织成员失败, #{e.message}"}, status: 400
   end
 
+  def models
+    render json: Starhub.api.get_org_models(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
+  def datasets
+    render json: Starhub.api.get_org_datasets(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
   private
 
   def organization_params

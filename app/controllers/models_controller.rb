@@ -11,7 +11,7 @@ class ModelsController < ApplicationController
     Tag::MODEL_TAG_FIELDS.each do |field|
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
-      response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
+      response[field][:zh_name] = I18n.t("tags.field.#{field}")
       response[field][:tags] = Tag.where(tag_field: field, scope: 'model')
     end
     @task_tags = response.as_json
@@ -85,11 +85,11 @@ class ModelsController < ApplicationController
 
     @avatar_url = owner.avatar_url
     if action_name == 'blob'
-      @model, raw_tags, @last_commit, @branches, @content = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      @model, @last_commit, @branches, @content = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
     else
-      @model, raw_tags, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      @model, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
-    @tags = Tag.build_detail_tags(JSON.parse(raw_tags)['data']).to_json
+    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end
 
@@ -102,7 +102,8 @@ class ModelsController < ApplicationController
   def files_options
     {
       ref: @current_branch,
-      path: @current_path
+      path: @current_path,
+      current_user: current_user&.name
     }
   end
 end
