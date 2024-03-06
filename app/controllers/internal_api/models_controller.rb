@@ -95,7 +95,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def predict
-    res = Starhub.api.model_predict('test_user_name', 'test_model_name', 'string', 'test prompt', '')
+    res = Starhub.api.model_predict(params[:namespace], params[:model_name], current_user.name, params[:input], params[:current_branch])
     render json: { message: '推理成功', result: JSON.parse(res)['data']['content'] }
   end
 

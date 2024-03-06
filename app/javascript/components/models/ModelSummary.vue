@@ -15,7 +15,11 @@
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1">{{ downloadCount }}</div>
       </div>
 
-      <QuestionAnswer class="border-t border-[#EBEEF5] p-4" />
+      <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
+                      class="border-t border-[#EBEEF5] p-4"
+                      :namespacePath="namespacePath"
+                      :currentBranch="currentBranch"
+      />
     </div>
   </div>
 </template>
@@ -28,6 +32,9 @@
   const props = defineProps({
     namespacePath: String,
     downloadCount: Number,
+    currentBranch: String,
+    widgetType: String,
+    inferenceStatus: String
   })
 
   const loading = ref(true)

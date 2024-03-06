@@ -3,7 +3,12 @@
     <ModelClone :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
+        <model-summary :namespace-path="modelDetail.path"
+                       :download-count="modelDetail.downloads"
+                       :currentBranch="currentBranch"
+                       :widget-type="modelDetail.widget_type"
+                       :inference-status="modelDetail.status"
+        />
       </template>
       <template #files v-if="actionName === 'blob'">
         <model-blob

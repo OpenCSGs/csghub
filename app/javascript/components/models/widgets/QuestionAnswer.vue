@@ -39,14 +39,15 @@
 <script>
   import csrfFetch from "../../../packs/csrfFetch"
   export default {
+    props: {
+      namespacePath:String,
+      currentBranch: String
+    },
     data() {
       return {
         textInput: '',
         textOutput: '',
-        textInputLength: 0,
-        namespace: 'test_user_name',
-        modelName: 'test_model_name',
-        currentUser: 'string',
+        textInputLength: 0
       }
     },
     methods: {
@@ -54,11 +55,11 @@
         this.textInputLength = input.length
       },
       async sendInferenceTest() {
-        const predictEndpoint = `/internal_api/models/${this.namespace}/${this.modelName}/predict`
+        const predictEndpoint = `/internal_api/models/${this.namespacePath}/predict`
         const payload = {
-          namespace: this.namespace,
-          model_name: this.modelName,
-          current_user: this.currentUser,
+          namespace: this.namespacePath.split('/')[0],
+          model_name: this.namespacePath.split('/')[1],
+          current_branch: this.currentBranch,
           input: this.textInput
         }
         const options = {
