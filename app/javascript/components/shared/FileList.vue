@@ -83,7 +83,7 @@
           :content="beiJingTimeParser(lastCommit.committer_date)"
         >
           <template #reference>
-            {{ format(beiJingTimeParser(lastCommit.committer_date), 'zh_CN') }}
+            {{ format(beiJingTimeParser(lastCommit.committer_date), locale=='en' ? 'en_US' : 'zh_CN') }}
           </template>
         </el-popover>
       </div>
@@ -139,7 +139,7 @@
           :content="beiJingTimeParser(file.commit.committer_date)"
         >
           <template #reference>
-            {{ format(beiJingTimeParser(file.commit.committer_date), 'zh_CN') }}
+            {{ format(beiJingTimeParser(file.commit.committer_date), locale=='en' ? 'en_US' : 'zh_CN') }}
           </template>
         </el-popover>
       </div>
@@ -162,7 +162,7 @@
     canWrite: Boolean
   })
 
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const loading = ref(true)
 
   const breadcrumb = ref([])
