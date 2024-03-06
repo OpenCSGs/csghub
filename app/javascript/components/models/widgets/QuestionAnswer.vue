@@ -38,6 +38,8 @@
 
 <script>
   import csrfFetch from "../../../packs/csrfFetch"
+  import { ElMessage } from 'element-plus'
+
   export default {
     props: {
       namespacePath:String,
