@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[8px] items-center mb-5 text-2xl text-[#606266] font-light md:px-5 flex-wrap">
+  <div class="flex gap-[8px] items-center mb-5 text-xl text-[#606266] font-light md:px-5 flex-wrap">
     <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
     <a class="hover:text-[#223B99]" :href="ownerUrl">
       {{ path.split('/')[0] }}
@@ -20,7 +20,7 @@
       {{ path.split('/')[1] }}
     </a>
   </div>
-  <div class="text-lg text-[#344054] font-normal mb-5">
+  <div class="text-base text-[#344054] font-normal mb-5">
     {{ desc }}
   </div>
   <HeaderTags

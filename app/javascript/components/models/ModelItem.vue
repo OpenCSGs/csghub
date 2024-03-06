@@ -7,9 +7,9 @@
         {{ model.path.split('/')[0] + '/' + (model.nickname === '' ? model.name : model.nickname) }}
       </div>
     </div>
-      <p class="h-[40px] w-[399px] sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
-        {{ model.description }}
-      </p>
+    <p class="h-[40px] w-[399px] sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
+      {{ model.description }}
+    </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
       <span>图像分类</span>
       <span>
