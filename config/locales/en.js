@@ -56,7 +56,7 @@ export default {
   },
   comment: {
     sureDel: "Are you sure you want to delete this comment?",
-    createComment: "Add a comment"
+    createComment: "Add a comment",
   },
   datasets: {
     title: "Datasets",
@@ -150,6 +150,8 @@ export default {
     login: "Login",
   },
   all: {
+    defaultText:
+      "```\nREADME file is empty, please download the file and add description content.\n```",
     tip: "tip",
     summary: "Summary",
     files: "Files",
@@ -246,8 +248,8 @@ export default {
       cancel: "Cancel",
     },
     empty: {
-      wellcome: "Welcome to discuss ",
-      decs: "This is the place to discuss and collaborate with OpenCSG!",
+      welcome: "Welcome to discuss ",
+      desc: "This is the place to discuss and collaborate with OpenCSG!",
       new: "New topic ",
     },
   },
@@ -287,6 +289,9 @@ export default {
     sshKeyContent: "SSH Key Content",
     nameWarning: "Please enter the SSH Key Name",
     contentWarning: "Please enter the SSH Key Content",
+    sureDelKey:
+      "Are you sure you want to delete this key from your account? This action cannot be undone.",
+    delKeyName: "Delete Key 'key name'",
   },
   shared: {
     commitToMain: "Commit directly to the main branch",

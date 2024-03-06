@@ -51,7 +51,7 @@ export default {
   },
   comment: {
     sureDel: "确认删除此评论？",
-    createComment:"添加评论"
+    createComment: "添加评论",
   },
   datasets: {
     title: "数据集",
@@ -140,6 +140,7 @@ export default {
     login: "登录",
   },
   all: {
+    defaultText: "```\nREADME文件内容为空，请下载文件，补充描述内容。\n```",
     tip: "提示",
     summary: "介绍",
     files: "文件",
@@ -233,8 +234,8 @@ export default {
       cancel: "取消",
     },
     empty: {
-      wellcome: "欢迎来讨论",
-      decs: "这里是与OpenCSG讨论和合作的地方！",
+      welcome: "欢迎来讨论",
+      desc: "这里是与OpenCSG讨论和合作的地方！",
       new: "新建话题",
     },
   },
@@ -273,6 +274,8 @@ export default {
     sshKeyContent: "SSH Key 内容",
     nameWarning: "请您填写SSH Key 名称",
     contentWarning: "请您填写SSH Key 内容",
+    sureDelKey: "你确定要从你的帐户中删除此密钥吗？此操作无法撤消。",
+    delKeyName: "删除 Key “key name”",
   },
   shared: {
     commitToMain: "直接提交到 main 分支",
