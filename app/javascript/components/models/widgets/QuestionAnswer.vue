@@ -32,13 +32,12 @@
       </div>
     </div>
     <p class="text-[#344054] text-[14px] mb-[6px]">测试结果</p>
-    <el-input
-      v-model="textOutput"
-      :rows="8"
-      type="textarea"
-      placeholder=""
-      disabled=true
-    />
+    <div class="h-[130px] border rounded-md border-gray-300 bg-white shadow-xs">
+      <MarkdownViewer
+        :content="textOutput"
+      >
+      </MarkdownViewer>
+    </div>
     <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">模型推理耗时：{{ timeSpend }} ms</p>
   </div>
 </template>
@@ -46,6 +45,7 @@
 <script>
   import csrfFetch from "../../../packs/csrfFetch"
   import { ElMessage } from 'element-plus'
+  import MarkdownViewer from "../../shared/viewers/MarkdownViewer.vue";
 
   export default {
     props: {
@@ -60,6 +60,9 @@
         textOutput: '',
         textInputLength: 0
       }
+    },
+    components: {
+      MarkdownViewer
     },
     methods: {
       countTextLength(input) {
