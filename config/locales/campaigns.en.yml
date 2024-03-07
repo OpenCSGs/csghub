@@ -1,11 +1,11 @@
 en:
   campaigns:
     show:
-      prestart: 'prestart'
-      signing_up: 'signing_up'
-      in_progress: 'in_progress'
-      ended: 'ended'
-      sign_up: 'Sign up'
+      prestart: 'Coming soon'
+      signing_up: 'Open for registration'
+      in_progress: 'In progress'
+      ended: 'Closed'
+      sign_up: 'Register now'
       time: 'Time'
-      location: 'Location'
-      related: 'Related Space'
+      location: 'Venue'
+      related: 'Related Spaces'

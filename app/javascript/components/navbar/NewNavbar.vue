@@ -46,7 +46,7 @@
           <template #title>{{ $t('navbar.developer') }}</template>
           <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">{{ $t('navbar.open') }}</el-menu-item></a>
           <a :href="llmInference" target="_blank"><el-menu-item index="3-2">{{ $t('navbar.llm_inference_open') }}</el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">{{ $t('navbar.docs') }}</el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
           <a href="/spaces"><el-menu-item index="/spaces">{{ $t('navbar.space') }}</el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item index="/docs">{{ $t('navbar.docs') }}</el-menu-item></a>
         </el-sub-menu>
