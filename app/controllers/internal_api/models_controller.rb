@@ -1,13 +1,10 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
+  before_action :authenticate_user, except: [:index, :files, :readme]
+
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
-
-  before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
-  before_action :validate_manage, only: [:update, :destroy]
-  before_action :validate_write, only: [:create_file, :upload_file]
-  before_action :validate_authorization, only: [:files, :readme]
+  include Api::RepoValidation
 
   def index
     res_body = Starhub.api.get_models(current_user&.name,
@@ -106,72 +103,5 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def file_params
     params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def validate_model
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-    unless @model
-      return render json: { message: "未找到对应模型" }, status: 404
-    end
-  end
-
-  def validate_manage
-    unless current_user.can_manage?(@model)
-      render json: { message: '无权限' }, status: :unauthorized
-      return
-    end
-  end
-
-  def validate_write
-    unless current_user.can_write?(@model)
-      render json: { message: '无权限' }, status: :unauthorized
-      return
-    end
-  end
-
-  def validate_owner
-    if params[:owner_type] == 'User' && current_user.id.to_i != params[:owner_id].to_i
-      return { valid: false, message: '用户不存在' }
-    elsif params[:owner_type] == 'Organization'
-      org = current_user.organizations.find_by(id: params[:owner_id])
-      if !org || current_user.org_role(org) == 'read'
-        return { valid: false, message: '组织不存在或无权限' }
-      end
-    end
-    { valid: true }
-  end
-
-  def validate_authorization
-    owner = find_user_or_organization_by_name(params[:namespace])
-    local_model = find_model_by_owner_and_name(owner, params[:model_name])
-
-    return render_unauthorized('模型不存在') unless local_model
-
-    return render_unauthorized('无权限') unless valid_authorization?(local_model)
-  end
-
-  def find_user_or_organization_by_name(name)
-    User.find_by(name: name) || Organization.find_by(name: name)
-  end
-
-  def find_model_by_owner_and_name(owner, model_name)
-    owner&.models&.find_by(name: model_name)
-  end
-
-  def valid_authorization?(model)
-    return true if model.model_public?
-
-    return false unless helpers.logged_in?
-
-    if model.owner.instance_of?(User)
-      return model.owner == current_user
-    end
-
-    return current_user.org_role(model.owner)
-  end
-
-  def render_unauthorized(message)
-    render json: { message: message }, status: :unauthorized
   end
 end
