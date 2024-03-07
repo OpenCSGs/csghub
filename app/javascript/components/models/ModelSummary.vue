@@ -15,7 +15,7 @@
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1">{{ downloadCount }}</div>
       </div>
 
-      <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
+      <QuestionAnswer v-if="true"
                       class="border-t border-[#EBEEF5] p-4"
                       :namespacePath="namespacePath"
                       :currentBranch="currentBranch"
