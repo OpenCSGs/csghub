@@ -1,6 +1,7 @@
 class DatasetsController < ApplicationController
   include TagListHelper
   include LicenseListHelper
+  include LocalRepoValidation
 
   layout 'new_application'
 
@@ -59,23 +60,9 @@ class DatasetsController < ApplicationController
   private
 
   def load_dataset_detail
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
-    unless @local_dataset
-      return redirect_to errors_not_found_path
-    end
-    @owner_url = helpers.code_repo_owner_url owner
-    if @local_dataset.dataset_private?
-      if @local_dataset.owner.instance_of? User
-        return redirect_to errors_unauthorized_path if @local_dataset.owner != current_user
-      else
-        return redirect_to errors_unauthorized_path unless current_user.org_role(@local_dataset.owner)
-      end
-    end
+    local_repo_validation('dataset')
 
     return if action_name == 'blob' && params[:download] == 'true'
-
-    @avatar_url = owner.avatar_url
 
     if action_name == 'blob'
       @dataset, @last_commit, @branches, @content = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)

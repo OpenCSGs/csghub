@@ -1,6 +1,7 @@
 class ModelsController < ApplicationController
   include TagListHelper
   include LicenseListHelper
+  include LocalRepoValidation
 
   layout 'new_application'
 
@@ -59,23 +60,10 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @local_model = owner && owner.models.find_by(name: params[:model_name])
-    unless @local_model
-      return redirect_to errors_not_found_path
-    end
-    @owner_url = helpers.code_repo_owner_url owner
-    if @local_model.model_private?
-      if @local_model.owner.instance_of? User
-        return redirect_to errors_unauthorized_path if @local_model.owner != current_user
-      else
-        return redirect_to errors_unauthorized_path unless current_user.org_role(@local_model.owner)
-      end
-    end
+    local_repo_validation('model')
 
     return if action_name == 'blob' && params[:download] == 'true'
 
-    @avatar_url = owner.avatar_url
     if action_name == 'blob'
       @model, @last_commit, @branches, @content = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
     else
