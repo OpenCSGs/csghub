@@ -1,6 +1,7 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
+  include Api::FileOptionsHelper
 
   before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_dataset, only: [:update, :destroy, :create_file, :upload_file]
@@ -133,13 +134,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
       end
     end
     { valid: true }
-  end
-
-  def files_options
-    {
-      ref: params[:branch],
-      path: params[:path]
-    }
   end
 
   def validate_authorization

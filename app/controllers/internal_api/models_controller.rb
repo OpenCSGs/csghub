@@ -1,6 +1,7 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
+  include Api::FileOptionsHelper
 
   before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
@@ -139,13 +140,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       end
     end
     { valid: true }
-  end
-
-  def files_options
-    {
-      ref: params[:branch],
-      path: params[:path]
-    }
   end
 
   def validate_authorization
