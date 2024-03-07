@@ -1,0 +1,17 @@
+en:
+  activerecord:
+    enums:
+      campaign:
+        campaign_types:
+          live_competition: 'Live broadcast'
+          training_camp: 'Creative bootcamp'
+          offline_campaign: 'Offline event'
+        statuses:
+          prestart: 'Coming soon'
+          signing_up: 'Open for registration'
+          in_progress: 'In progress'
+          ended: 'Closed'
+      lead:
+        lead_statuses:
+          processing: 'Being processed'
+          completed: 'Completed'

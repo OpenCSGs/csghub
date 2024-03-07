@@ -44,23 +44,23 @@
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.developer') }}</template>
-          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-2">{{ $t('navbar.open') }}</el-menu-item></a>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1">{{ $t('navbar.open') }}</el-menu-item></a>
           <a :href="llmInference" target="_blank"><el-menu-item index="3-2">{{ $t('navbar.llm_inference_open') }}</el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">{{ $t('navbar.docs') }}</el-menu-item></a>
-          <a href="/spaces"><el-menu-item index="/spaces">{{ $t('navbar.space') }}</el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item index="/docs">{{ $t('navbar.docs') }}</el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
+          <a href="/spaces"><el-menu-item index="3-4">{{ $t('navbar.space') }}</el-menu-item></a>
+          <a href="/docs" target="_blank"><el-menu-item index="3-5">{{ $t('navbar.docs') }}</el-menu-item></a>
         </el-sub-menu>
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
         <el-sub-menu index="4" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.enterprise') }}</template>
-          <a href="/about"><el-menu-item index="/about">{{ $t('navbar.about') }}</el-menu-item></a>
-          <a href="/partners"><el-menu-item index="/partners">{{ $t('navbar.partner') }}</el-menu-item></a>
-          <a href="/experts"><el-menu-item index="/experts">{{ $t('navbar.expert') }}</el-menu-item></a>
+          <a href="/about"><el-menu-item index="4-1">{{ $t('navbar.about') }}</el-menu-item></a>
+          <a href="/partners"><el-menu-item index="4-2">{{ $t('navbar.partner') }}</el-menu-item></a>
+          <a href="/experts"><el-menu-item index="4-3">{{ $t('navbar.expert') }}</el-menu-item></a>
         </el-sub-menu>
         <el-sub-menu index="5" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.community') }}</template>
-          <a href="/campaigns"><el-menu-item index="/campaigns">{{ $t('navbar.campaign') }}</el-menu-item></a>
-          <a href="/daily_papers"><el-menu-item index="/daily_papers">{{ $t('navbar.dailyPaper') }}</el-menu-item></a>
+          <a href="/campaigns"><el-menu-item index="5-1">{{ $t('navbar.campaign') }}</el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="5-2">{{ $t('navbar.dailyPaper') }}</el-menu-item></a>
         </el-sub-menu>
       </el-menu>
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
