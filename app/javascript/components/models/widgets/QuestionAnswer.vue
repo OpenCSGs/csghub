@@ -32,7 +32,7 @@
       </div>
     </div>
     <p class="text-[#344054] text-[14px] mb-[6px]">测试结果</p>
-    <div class="h-[130px] p-[10px] border rounded-md border-gray-300 bg-white shadow-xs"
+    <div class="h-[130px] p-[10px] border markdown-body rounded-md border-gray-300 bg-white shadow-xs overflow-scroll"
       v-html="renderMarkdown(textOutput)"
     ></div>
     <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">模型推理耗时：{{ timeSpend }} ms</p>
