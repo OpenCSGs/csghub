@@ -1,4 +1,6 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
+  include Api::SyncStarhubHelper
+
   before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_dataset, only: [:update, :destroy, :create_file, :upload_file]
   before_action :validate_manage, only: [:update, :destroy]
@@ -70,7 +72,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                                  email: current_user.email,
                                                  content: Base64.encode64(params[:content])
                                                })
-    sync_create_file(options)
+    sync_create_file('dataset', options)
     render json: { message: '创建文件成功' }
   end
 
@@ -84,7 +86,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
       message: build_upload_commit_message,
       username: current_user.name
     }
-    sync_upload_file(options)
+    sync_upload_file('dataset', options)
     render json: { message: '上传文件成功' }
   end
 
@@ -112,16 +114,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     end
 
     "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
-  end
-
-  def sync_create_file(options)
-    res = Starhub.api.create_dataset_file(params[:namespace], params[:dataset_name], params[:path], options)
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def sync_upload_file(options)
-    res = Starhub.api.upload_datasets_file(params[:namespace], params[:dataset_name], options)
-    raise StarhubError, res.body unless res.success?
   end
 
   def validate_dataset

@@ -302,7 +302,7 @@ module Starhub
       @client.post("/datasets/#{username}/#{dataset_name}/raw/#{path}", options)
     end
 
-    def upload_datasets_file(username, dataset_name, options = {})
+    def upload_dataset_file(username, dataset_name, options = {})
       @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
     end
 

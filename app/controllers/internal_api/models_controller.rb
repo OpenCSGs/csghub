@@ -1,4 +1,6 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
+  include Api::SyncStarhubHelper
+
   before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
   before_action :validate_manage, only: [:update, :destroy]
@@ -76,7 +78,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                  email: current_user.email,
                                                  content: Base64.encode64(params[:content])
                                                })
-    sync_create_file(options)
+    sync_create_file('model', options)
     render json: { message: '创建文件成功' }
   end
 
@@ -90,7 +92,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       message: build_upload_commit_message,
       username: current_user.name
     }
-    sync_upload_file(options)
+    sync_upload_file('model', options)
     render json: { message: '上传文件成功' }, status: 200
   end
 
@@ -102,11 +104,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def file_params
     params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def sync_upload_file(options)
-    res = Starhub.api.upload_model_file(params[:namespace], params[:model_name], options)
-    raise StarhubError, res.body unless res.success?
   end
 
   def build_commit_message
@@ -123,11 +120,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
 
     "#{params[:commit_title]&.strip} \n #{params[:commit_desc]&.strip}"
-  end
-
-  def sync_create_file(options)
-    res = Starhub.api.create_model_file(params[:namespace], params[:model_name], params[:path], options)
-    raise StarhubError, res.body unless res.success?
   end
 
   def validate_model
