@@ -18,22 +18,17 @@
       </div>
       <div class="flex justify-center items-center gap-[8px]">
         <p class="text-[16px] text-[#667085]"> 单词数：{{ textInputLength }} / 1000 </p>
-        <button v-if="loading === false"
-                class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
+        <button class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
                 @click="sendInferenceTest"
         >
           执行测试
-        </button>
-        <button v-else
-                class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
-        >
-          loading <el-icon><Loading /></el-icon>
         </button>
       </div>
     </div>
     <p class="text-[#344054] text-[14px] mb-[6px]">测试结果</p>
     <div class="h-[130px] p-[10px] border markdown-body rounded-md border-gray-300 bg-white shadow-xs overflow-scroll"
-      v-html="renderMarkdown(textOutput)"
+         v-loading="loading"
+         v-html="renderMarkdown(textOutput)"
     ></div>
     <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">模型推理耗时：{{ timeSpend }} ms</p>
   </div>
