@@ -2,7 +2,7 @@ en:
   errors_page:
     not_found:
       title: 'Page not found'
-      desc: 'Sorry, the page you were looking for could not be found.'
+      desc: 'Sorry, OpenCSG could not find this web page. This web page may have been removed due to a product update, or your URL is incorrect.'
     unauthorized:
       title: 'Not authorized'
-      desc: 'You are not authorized to view this page.'
+      desc: 'Please contact the administrator for authorization'
