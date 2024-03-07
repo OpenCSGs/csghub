@@ -1,5 +1,6 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   include Api::SyncStarhubHelper
+  include Api::BuildCommitHelper
 
   before_action :authenticate_user, except: [:index, :files, :readme]
   before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file]
@@ -72,7 +73,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def create_file
     options = file_params.slice(:branch).merge({
-                                                 message: build_commit_message,
+                                                 message: build_create_commit_message,
                                                  new_branch: 'main',
                                                  username: current_user.name,
                                                  email: current_user.email,
@@ -104,22 +105,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def file_params
     params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def build_commit_message
-    if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
-      return "Create #{params[:path]}"
-    end
-
-    "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
-  end
-
-  def build_upload_commit_message
-    if params[:commit_title]&.strip.blank? && params[:commit_desc]&.strip.blank?
-      return "Upload #{params[:file].original_filename}"
-    end
-
-    "#{params[:commit_title]&.strip} \n #{params[:commit_desc]&.strip}"
   end
 
   def validate_model
