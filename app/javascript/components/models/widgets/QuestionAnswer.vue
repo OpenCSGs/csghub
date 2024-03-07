@@ -27,17 +27,14 @@
         <button v-else
                 class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
         >
-          <el-icon><Loading /></el-icon>
+          loading <el-icon><Loading /></el-icon>
         </button>
       </div>
     </div>
     <p class="text-[#344054] text-[14px] mb-[6px]">测试结果</p>
-    <div class="h-[130px] border rounded-md border-gray-300 bg-white shadow-xs">
-      <MarkdownViewer
-        :content="textOutput"
-      >
-      </MarkdownViewer>
-    </div>
+    <div class="h-[130px] p-[10px] border rounded-md border-gray-300 bg-white shadow-xs"
+      v-html="renderMarkdown(textOutput)"
+    ></div>
     <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">模型推理耗时：{{ timeSpend }} ms</p>
   </div>
 </template>
@@ -45,7 +42,7 @@
 <script>
   import csrfFetch from "../../../packs/csrfFetch"
   import { ElMessage } from 'element-plus'
-  import MarkdownViewer from "../../shared/viewers/MarkdownViewer.vue";
+  import MarkdownIt from "markdown-it"
 
   export default {
     props: {
@@ -61,10 +58,12 @@
         textInputLength: 0
       }
     },
-    components: {
-      MarkdownViewer
-    },
+    components: {},
     methods: {
+      renderMarkdown(text) {
+        const mdParser = new MarkdownIt();
+        return mdParser.render(text);
+      },
       countTextLength(input) {
         this.textInputLength = input.length
       },
