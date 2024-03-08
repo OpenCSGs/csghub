@@ -24,7 +24,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def readme
-    readme = Starhub.api.get_datasets_file_content(params[:namespace], params[:dataset_name], 'README.md')
+    readme = Starhub.api.get_dataset_file_content(params[:namespace], params[:dataset_name], 'README.md')
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'dataset', readme_content
     render json: { readme: readme_content }
@@ -151,7 +151,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def sync_upload_file(options)
-    res = Starhub.api.upload_datasets_file(params[:namespace], params[:dataset_name], options)
+    res = Starhub.api.upload_dataset_file(params[:namespace], params[:dataset_name], options)
     raise StarhubError, res.body unless res.success?
   end
 

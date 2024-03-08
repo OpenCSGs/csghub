@@ -43,7 +43,7 @@ class DatasetsController < ApplicationController
 
     if params[:download] == 'true'
       if params[:lfs] == 'true'
-        file_url = Starhub.api.download_datasets_file(params[:namespace],
+        file_url = Starhub.api.download_dataset_file(params[:namespace],
                                                       params[:dataset_name],
                                                       params[:lfs_path],
                                                       { ref: @current_branch,
@@ -51,7 +51,7 @@ class DatasetsController < ApplicationController
                                                         save_as: @current_path })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
-        file = Starhub.api.download_datasets_file(params[:namespace],
+        file = Starhub.api.download_dataset_file(params[:namespace],
                                                   params[:dataset_name],
                                                   @current_path,
                                                   { ref: @current_branch })
@@ -66,7 +66,7 @@ class DatasetsController < ApplicationController
                                                             { ref: @current_branch })
         send_data result, type: content_type, disposition: 'inline'
       else
-        result = Starhub.api.get_datasets_file_content(params[:namespace],
+        result = Starhub.api.get_dataset_file_content(params[:namespace],
                                                        params[:dataset_name],
                                                        @current_path,
                                                        { ref: @current_branch })
