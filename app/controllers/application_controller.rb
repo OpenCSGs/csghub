@@ -76,36 +76,53 @@ class ApplicationController < ActionController::Base
 
   def login_by_user_infos user_infos
     user = User.find_by(login_identity: user_infos['sub'])
+
     if user
       helpers.log_in user
       redirect_path = session.delete(:original_request_path) || root_path
       return redirect_to redirect_path
     end
 
-    user = (user_infos['phone'].presence && User.find_by(phone: user_infos['phone'])) ||
-           (user_infos['email'].presence && User.find_by(email: user_infos['email']))
-    if user
-      user.login_identity = user_infos['sub']
-      user.name = user_infos['name'] if user.name.blank?
-      user.avatar = user_infos['avatar'] if user.avatar.blank?
-      user.phone = user_infos['phone'] if user.phone.blank?
-      user.email = user_infos['email'] if user.email.blank?
-      unless user.save
-        flash[:alert] = "当前用户存在历史数据冲突，请联系管理员处理"
-        log_error "用户登录历史数据问题", user.errors.messages
-        return redirect_to errors_unauthorized_path
+    # 非第三方授权场景
+    if user_infos['wechat'].blank? && user_infos['github'].blank? && user_infos['gitlab'].blank?
+      user = (user_infos['phone'].presence && User.find_by(phone: user_infos['phone'])) ||
+            (user_infos['email'].presence && User.find_by(email: user_infos['email']))
+      user_name = user_infos['name']
+      nickname = user_infos['displayName']
+      if user
+        user.login_identity = user_infos['sub']
+        user.name = user_name if user.name.blank?
+        user.nickname = nickname if user.nickname.blank? && nickname.present?
+        user.avatar = user_infos['avatar'] if user.avatar.blank?
+        user.phone = user_infos['phone'] if user.phone.blank?
+        user.email = user_infos['email'] if user.email.blank?
+        unless user.save
+          flash[:alert] = "当前用户存在历史数据冲突，请联系管理员处理"
+          log_error "用户登录历史数据问题", user.errors.messages
+          return redirect_to errors_unauthorized_path
+        end
+      else
+        user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
+          u.roles = :personal_user
+          u.avatar = user_infos['avatar']
+          u.name = user_name
+          u.nickname = nickname if nickname.present?
+          u.phone = user_infos['phone']
+          u.email = user_infos['email']
+          u.email_verified = user_infos['emailVerified']
+          u.gender = user_infos['gender']
+          u.last_login_at = Time.now
+        end
       end
     else
-      user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
-        u.roles = :personal_user
-        u.avatar = user_infos['avatar']
-        u.name = user_infos['name']
-        u.phone = user_infos['phone']
-        u.email = user_infos['email']
-        u.email_verified = user_infos['emailVerified']
-        u.gender = user_infos['gender']
-        u.last_login_at = Time.now
-      end
+      user = User.new
+      user.login_identity = user_infos['sub']
+      user.nickname = user_infos['displayName']
+      user.avatar = user_infos['avatar']
+      user.wechat_id = user_infos['wechat']
+      user.github_id = user_infos['github']
+      user.gitlab_id = user_infos['gitlab']
+      user.save
     end
 
     # 确保如果新的用户uuid没有保存，那么我们登录老的用户
@@ -119,6 +136,11 @@ class ApplicationController < ActionController::Base
 
     if current_user.email.blank?
       flash[:alert] = "请补充邮箱，以便能使用完整的功能"
+      return redirect_to '/settings/profile'
+    end
+
+    if current_user.name.blank?
+      flash[:alert] = "请补充用户名，以便能使用完整的功能"
       return redirect_to '/settings/profile'
     end
 
