@@ -3,7 +3,7 @@
      class="dataset-card hover:active-dataset-card p-4 sm:w-full border border-gray-200 rounded-xl">
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div class="dataset-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">
-        {{ dataset.path.split('/')[0] + '/' + (dataset.nickname === '' ? dataset.name : dataset.nickname) }}
+        {{ getPath }}
       </div>
     </div>
     <p class="h-[40px] w-[399px] sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
@@ -34,30 +34,26 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
+import { computed } from 'vue'
 
-  const props = defineProps({
-    dataset: Object,
-  })
+const props = defineProps({
+  dataset: Object,
+})
 
-  const visibility = computed(() => {
-    return props.dataset.private ? '私有' : '公开'
-  })
+const getPath = computed(() => {
+  return props.dataset.path.split('/')[0] + '/' + (props.dataset.nickname === '' ? props.dataset.name : props.dataset.nickname)
+})
 
-  const getTaskTagName = computed(() => {
-    let taskTagName = ''
-    try {
-      props.model.tags.forEach(function (tag) {
-        if (tag.category === "task" && !taskTagName) {
-          taskTagName = tag["show_name"]
-          return false
-        }
-      });
-    } catch (error) {
-      console.error(error)
-    }
-    return taskTagName
-  })
+const visibility = computed(() => {
+  return props.dataset.private ? '私有' : '公开'
+})
+
+const getTaskTagName = computed(() => {
+  const taskTag = (props.dataset.tags || []).find(function(tag) {
+    return tag.category === "task"
+  });
+  return taskTag ? taskTag["show_name"] : null
+})
 </script>
 
 <style scoped>

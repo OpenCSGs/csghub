@@ -4,7 +4,7 @@
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div :title="model.path"
            class="model-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">
-        {{ model.path.split('/')[0] + '/' + (model.nickname === '' ? model.name : model.nickname) }}
+        {{ getPath }}
       </div>
     </div>
     <p class="h-[40px] w-[399px] sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
@@ -35,10 +35,14 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   model: Object,
+})
+
+const getPath = computed(() => {
+  return props.model.path.split('/')[0] + '/' + (props.model.nickname === '' ? props.model.name : props.model.nickname)
 })
 
 const visibility = computed(() => {
@@ -46,18 +50,10 @@ const visibility = computed(() => {
 })
 
 const getTaskTagName = computed(() => {
-  let taskTagName = ''
-  try {
-    props.model.tags.forEach(function (tag) {
-      if (tag.category === "task" && !taskTagName) {
-        taskTagName = tag["show_name"]
-        return false
-      }
-    });
-  } catch (error) {
-    console.error(error)
-  }
-  return taskTagName
+   const taskTag = (props.model.tags || []).find(function(tag) {
+     return tag.category === "task"
+   });
+  return taskTag ? taskTag["show_name"] : null
 })
 </script>
 
