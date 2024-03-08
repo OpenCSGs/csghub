@@ -2,7 +2,7 @@ module Api::RepoValidation
   extend ActiveSupport::Concern
 
   included do
-    before_action except: [:index] do
+    before_action except: [:index, :create] do
       validate_repo(controller_name)
     end
 
@@ -17,6 +17,8 @@ module Api::RepoValidation
     before_action only: [:files, :readme] do
       validate_authorization(controller_name)
     end
+
+    before_action :validate_owner, only: [:create]
   end
 
   private
@@ -48,14 +50,15 @@ module Api::RepoValidation
 
   def validate_owner
     if params[:owner_type] == 'User' && current_user.id.to_i != params[:owner_id].to_i
-      return { valid: false, message: '用户不存在' }
+      render_unauthorized('用户不存在')
+      return
     elsif params[:owner_type] == 'Organization'
       org = current_user.organizations.find_by(id: params[:owner_id])
       if !org || current_user.org_role(org) == 'read'
-        return { valid: false, message: '组织不存在或无权限' }
+        render_unauthorized('组织不存在或无权限')
+        return
       end
     end
-    { valid: true }
   end
 
   def validate_authorization(type)

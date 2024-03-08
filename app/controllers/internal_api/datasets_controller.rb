@@ -32,10 +32,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def create
-    res = validate_owner
-    if !res[:valid]
-      return render json: { message: res[:message] }, status: :unprocessable_entity
-    end
     dataset = current_user.created_datasets.build(dataset_params)
     if dataset.save
       render json: { path: dataset.path, message: '数据集创建成功!' }, status: :created

@@ -32,10 +32,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def create
-    res = validate_owner
-    if !res[:valid]
-      return render json: { message: res[:message] }, status: :unprocessable_entity
-    end
     model = current_user.created_models.build(model_params)
     if model.save
       render json: { path: model.path, message: '模型创建成功!' }, status: :created
