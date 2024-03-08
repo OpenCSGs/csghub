@@ -109,6 +109,12 @@ module Starhub
       res.body
     end
 
+    def download_repo_resolve_file(repo_type, namespace, repo_name, path, options = {})
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/resolve/#{path}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_repo_file(repo_type, namespace, repo_name, path, options = {})
       @client.post("/#{repo_type}/#{namespace}/#{repo_name}/raw/#{path}", options)
     end

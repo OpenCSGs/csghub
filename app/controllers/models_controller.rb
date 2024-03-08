@@ -55,10 +55,10 @@ class ModelsController < ApplicationController
     else
       content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
       if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? params[:format]
-        result = Starhub.api.download_model_file(params[:namespace],
-                                                 params[:model_name],
-                                                 @current_path,
-                                                 { ref: @current_branch })
+        result = Starhub.api.download_model_resolve_file(params[:namespace],
+                                                         params[:model_name],
+                                                         @current_path,
+                                                         { ref: @current_branch })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_model_file_content(params[:namespace],
