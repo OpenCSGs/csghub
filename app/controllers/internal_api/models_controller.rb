@@ -86,7 +86,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                         email: current_user.email,
                                                         content: Base64.encode64(params[:content])
                                                       })
-    sync_update_file(options)
+    sync_update_file('model', options)
     render json: { message: '更新文件成功' }
   end
 

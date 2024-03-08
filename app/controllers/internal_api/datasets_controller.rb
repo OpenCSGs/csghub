@@ -81,7 +81,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content]),
                                                         sha: params[:sha]
                                                       })
-    sync_update_file(options)
+    sync_update_file('dataset', options)
     render json: { message: '更新文件成功' }
   end
 
