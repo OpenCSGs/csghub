@@ -35,9 +35,7 @@
     private: String,
     avatar: String,
     name: String,
-    nickname: String,
     path: String,
-    desc: String,
     license: String,
     tags: Object,
     ownerUrl: String
