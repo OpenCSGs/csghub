@@ -104,7 +104,7 @@ module Starhub
     end
 
     def download_repo_file(repo_type, namespace, repo_name, path, options = {})
-      res = @client.get("/#{repp_type}/#{namespace}/#{repo_name}/download/#{path}", options)
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/download/#{path}", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
