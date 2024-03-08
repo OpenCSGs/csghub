@@ -27,7 +27,7 @@ module Starhub
         "/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{options[:current_user]}",
         "/#{repo_type}/#{namespace}/#{repo_name}/last_commit?ref=#{options[:ref]}",
         "/#{repo_type}/#{namespace}/#{repo_name}/branches",
-        "/#{repo_type}/#{namespace}/#{repo_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
+        "/#{repo_type}/#{namespace}/#{repo_name}/blob/#{options[:path]}?ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
     end
