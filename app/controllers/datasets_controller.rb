@@ -34,7 +34,7 @@ class DatasetsController < ApplicationController
   end
 
   def resolve
-    dataset_ability_check
+    local_repo_validation
 
     if params[:download] == 'true'
       if params[:lfs] == 'true'

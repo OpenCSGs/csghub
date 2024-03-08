@@ -34,7 +34,7 @@ class ModelsController < ApplicationController
   end
 
   def resolve
-    model_ability_check
+    local_repo_validation
 
     if params[:download] == 'true'
       if params[:lfs] == 'true'
