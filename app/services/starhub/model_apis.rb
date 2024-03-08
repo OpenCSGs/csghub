@@ -60,6 +60,10 @@ module Starhub
       create_repo_file('models', namespace, model_name, path, options)
     end
 
+    def update_model_file(namespace, model_name, path, options = {})
+      update_repo_file('models', namespace, model_name, path, options)
+    end
+
     def upload_model_file(namespace, model_name, options = {})
       upload_repo_file('models', namespace, model_name, options)
     end

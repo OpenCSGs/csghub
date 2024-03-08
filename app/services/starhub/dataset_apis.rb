@@ -59,6 +59,10 @@ module Starhub
       create_repo_file('datasets', namespace, dataset_name, path, options)
     end
 
+    def update_dataset_file(namespace, dataset_name, path, options = {})
+      update_repo_file('models', namespace, dataset_name, path, options)
+    end
+
     def upload_dataset_file(namespace, dataset_name, options = {})
       upload_repo_file('datasets', namespace, dataset_name, options)
     end

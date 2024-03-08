@@ -113,6 +113,10 @@ module Starhub
       @client.post("/#{repo_type}/#{namespace}/#{repo_name}/raw/#{path}", options)
     end
 
+    def update_repo_file(repo_type, username, repo_name, path, options = {})
+      @client.put("/#{repo_type}/#{username}/#{repo_name}/raw/#{path}", options)
+    end
+
     def upload_repo_file(repo_type, namespace, repo_name, options = {})
       @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file", options)
     end
