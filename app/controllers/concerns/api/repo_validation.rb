@@ -34,7 +34,7 @@ module Api::RepoValidation
     repo = get_repo(type)
 
     unless current_user.can_manage?(repo)
-      render json: { message: '无权限' }, status: :unauthorized
+      render_unauthorized('无权限')
       return
     end
   end
@@ -43,7 +43,7 @@ module Api::RepoValidation
     repo = get_repo(type)
 
     unless current_user.can_write?(repo)
-      render json: { message: '无权限' }, status: :unauthorized
+      render_unauthorized('无权限')
       return
     end
   end
