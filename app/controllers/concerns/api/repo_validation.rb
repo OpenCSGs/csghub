@@ -22,7 +22,6 @@ module Api::RepoValidation
   private
 
   def validate_repo(type)
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     repo = get_repo(type)
     unless repo
       return render json: { message: "未找到对应仓库" }, status: 404
