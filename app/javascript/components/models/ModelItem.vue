@@ -11,8 +11,8 @@
       {{ model.description }}
     </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
-      <span>图像分类</span>
-      <span>
+      <span v-if="getTaskTagName">{{ getTaskTagName }}</span>
+      <span v-if="getTaskTagName">
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
@@ -35,15 +35,29 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
 
 const props = defineProps({
   model: Object,
 })
 
 const visibility = computed(() => {
-  console.log(props.model)
   return props.model.private ? '私有' : '公开'
+})
+
+const getTaskTagName = computed(() => {
+  let taskTagName = ''
+  try {
+    props.model.tags.forEach(function (tag) {
+      if (tag.category === "task" && !taskTagName) {
+        taskTagName = tag["show_name"]
+        return false
+      }
+    });
+  } catch (error) {
+    console.error(error)
+  }
+  return taskTagName
 })
 </script>
 
