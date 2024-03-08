@@ -2,7 +2,7 @@ module Api::RepoValidation
   extend ActiveSupport::Concern
 
   included do
-    before_action only: [:update, :destroy, :create_file, :upload_file] do
+    before_action except: [:index] do
       validate_repo(controller_name)
     end
 
@@ -59,21 +59,11 @@ module Api::RepoValidation
   end
 
   def validate_authorization(type)
-    owner = get_owner
-    local_repo = find_repo_by_owner_and_name(owner, type)
+    local_repo = get_repo(type)
 
     return render_unauthorized('仓库不存在') unless local_repo
 
     return render_unauthorized('无权限') unless valid_authorization?(local_repo, type)
-  end
-
-  def find_repo_by_owner_and_name(owner, type)
-    case type
-    when 'models'
-      owner&.models&.find_by(name: params[:model_name])
-    when 'datasets'
-      owner&.datasets&.find_by(name: params[:dataset_name])
-    end
   end
 
   def valid_authorization?(repo, type)
