@@ -36,4 +36,16 @@ module ApplicationHelper
       '/organizations/' + owner.name
     end
   end
+
+  def content_type_format_mapping
+    {
+      'jpg': 'image/jpeg',
+      'jpeg': 'image/jpeg',
+      'png': 'image/png',
+      'gif': 'image/gif',
+      'svg': 'image/svg+xml',
+      'pdf': 'application/pdf',
+      'md': 'text/markdown'
+    }.with_indifferent_access
+  end
 end

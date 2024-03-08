@@ -7,6 +7,10 @@ module Api::BuildCommitHelper
     build_commit_message('Create')
   end
 
+  def build_update_commit_message
+    build_commit_message('Update')
+  end
+
   def build_upload_commit_message
     build_commit_message('Upload')
   end

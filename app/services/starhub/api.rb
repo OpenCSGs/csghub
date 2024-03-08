@@ -33,7 +33,7 @@ module Starhub
         "/models/#{username}/#{model_name}?current_user=#{options[:current_user]}",
         "/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}",
         "/models/#{username}/#{model_name}/branches",
-        "/models/#{username}/#{model_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
+        "/models/#{username}/#{model_name}/blob/#{options[:path]}?ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
     end
@@ -187,6 +187,10 @@ module Starhub
       @client.post("/models/#{username}/#{model_name}/raw/#{path}", options)
     end
 
+    def update_model_file(username, model_name, path, options = {})
+      res = @client.put("/models/#{username}/#{model_name}/raw/#{path}", options)
+    end
+
     def upload_model_file(username, model_name, options = {})
       @client.upload("/models/#{username}/#{model_name}/upload_file", options)
     end
@@ -219,7 +223,7 @@ module Starhub
         "/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}",
         "/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}",
         "/datasets/#{username}/#{dataset_name}/branches",
-        "/datasets/#{username}/#{dataset_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
+        "/datasets/#{username}/#{dataset_name}/blob/#{options[:path]}?ref=#{options[:ref]}"
       ]
       @client.get_in_parallel(paths, options)
     end
@@ -298,11 +302,21 @@ module Starhub
       res.body
     end
 
+    def download_datasets_resolve_file(username, dataset_name, path, options = {})
+      res = @client.get("/datasets/#{username}/#{dataset_name}/resolve/#{path}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_dataset_file(username, dataset_name, path, options = {})
       @client.post("/datasets/#{username}/#{dataset_name}/raw/#{path}", options)
     end
 
-    def upload_dataset_file(username, dataset_name, options = {})
+    def update_dataset_file(username, dataset_name, path, options = {})
+      @client.put("/datasets/#{username}/#{dataset_name}/raw/#{path}", options)
+    end
+
+    def upload_datasets_file(username, dataset_name, options = {})
       @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
     end
 

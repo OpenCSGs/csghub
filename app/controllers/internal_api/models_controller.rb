@@ -26,7 +26,9 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def readme
     readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
-    render json: { readme: JSON.parse(readme)['data'] }
+    readme_content = JSON.parse(readme)['data']
+    readme_content = relative_path_to_resolve_path 'model', readme_content
+    render json: { readme: readme_content }
   rescue StarhubError
     render json: { readme: '' }
   end
@@ -66,15 +68,26 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def create_file
-    options = file_params.slice(:branch).merge({
-                                                 message: build_create_commit_message,
-                                                 new_branch: 'main',
-                                                 username: current_user.name,
-                                                 email: current_user.email,
-                                                 content: Base64.encode64(params[:content])
-                                               })
+    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(params[:content])
+                                                      })
     sync_create_file('model', options)
     render json: { message: '创建文件成功' }
+  end
+
+
+  def update_file
+    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(params[:content])
+                                                      })
+    sync_update_file('model', options)
+    render json: { message: '更新文件成功' }
   end
 
   def upload_file
@@ -97,7 +110,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
   end
 
-  def file_params
+  def create_file_params
     params.permit(:path, :content, :branch, :commit_title, :commit_desc)
+  end
+
+  def update_file_params
+    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 end

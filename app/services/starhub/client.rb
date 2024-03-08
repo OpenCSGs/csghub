@@ -86,7 +86,8 @@ module Starhub
         headers: {
           'Content-Type' => 'application/json',
           'Authorization' => "Bearer #{token}"
-        }) do |conn|
+      }) do |conn|
+        conn.use Faraday::FollowRedirects::Middleware
         conn.adapter :typhoeus
       end
     end
