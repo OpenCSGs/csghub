@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     log_error "Record Not Found", e.backtrace
     redirect_to errors_not_found_path
   end
-  
+
   def authenticate_user
     if helpers.logged_in?
       return true
@@ -124,6 +124,26 @@ class ApplicationController < ActionController::Base
 
     unless current_user.starhub_synced?
       current_user.sync_to_starhub_server
+    end
+  end
+
+  def relative_path_to_resolve_path type, content
+    return unless content
+    prefix = case type
+             when 'model'
+               "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
+             when 'dataset'
+               "/datasets/#{params[:namespace]}/#{params[:dataset_name]}/resolve/main/"
+             end
+
+    content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|
+      alt_text = $1
+      image_path = $2
+      if image_path.start_with?('http') || image_path.start_with?("/#{type}s/")
+        match
+      else
+        "![#{alt_text}](#{prefix}#{image_path})"
+      end
     end
   end
 end
