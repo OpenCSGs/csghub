@@ -3,15 +3,16 @@ module LocalRepoValidation
 
   private
 
-  def local_repo_validation(type)
+  def local_repo_validation
     get_owner_info
+    type = controller_name
     local_repo = get_local_repo(type)
 
     unless local_repo
       return redirect_to errors_not_found_path
     end
 
-    if local_repo.send("#{type}_private?")
+    if local_repo.send("#{type.singularize}_private?")
       if local_repo.owner.instance_of? User
         return redirect_to errors_unauthorized_path if local_repo.owner != current_user
       else
@@ -28,9 +29,9 @@ module LocalRepoValidation
 
   def get_local_repo(type)
     case type
-    when 'model'
+    when 'models'
       @local_model = @owner && @owner.models.find_by(name: params[:model_name])
-    when 'dataset'
+    when 'datasets'
       @local_dataset = @owner && @owner.datasets.find_by(name: params[:dataset_name])
     end
   end

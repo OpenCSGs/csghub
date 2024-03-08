@@ -85,7 +85,7 @@ class DatasetsController < ApplicationController
   private
 
   def load_dataset_detail
-    local_repo_validation('dataset')
+    local_repo_validation
 
     return if action_name == 'blob' && params[:download] == 'true'
 

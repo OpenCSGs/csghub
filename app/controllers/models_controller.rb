@@ -85,7 +85,7 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    local_repo_validation('model')
+    local_repo_validation
 
     return if action_name == 'blob' && params[:download] == 'true'
 
