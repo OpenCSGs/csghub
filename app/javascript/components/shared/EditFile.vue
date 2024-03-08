@@ -7,19 +7,20 @@
                 :maxLength="200"
                 show-word-limit
                 clearable
-                :placeholder="this.$t('all.fileName')"
+                placeholder="文件名"
                 @input="handleFileNameChange"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
     <code-editor
       v-model="codeContent"
-      originalCodeContent=""
+      :fileName="fileName"
+      :originalCodeContent="originalCodeContent"
     />
     <el-radio-group v-model="new_branch" class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0">
-      <el-radio label="main" size="large">{{ $t('shared.commitToMain') }}</el-radio>
+      <el-radio label="main" size="large">直接提交到 main 分支</el-radio>
     </el-radio-group>
     <div>
-      <div class="mb-2 text-sm">{{ $t('all.submitNewFile') }}</div>
+      <div class="mb-2 text-sm">提交更新</div>
       <el-input v-model="commitTitle"
                 :maxLength="200"
                 show-word-limit
@@ -27,10 +28,10 @@
                 :placeholder="commitTitlePlaceholder"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
-    <CommunityMDTextarea desc="" :placeholder="this.$t('all.provideMoreDesc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" placeholder="提供更多描述" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="createFile" :disabled="!commitValid || submiting">{{ $t('all.createFile')}}</el-button>
-      <el-button @click="cancel">{{ $t('all.cancel')}}</el-button>
+      <el-button type="primary" @click="updateFile" :disabled="!commitValid || submiting">更新文件</el-button>
+      <el-button @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
@@ -39,20 +40,24 @@ import { ref } from 'vue'
 import CodeEditor from '../shared/CodeEditor.vue'
 import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
 import csrfFetch from "../../packs/csrfFetch"
+import { ElMessage } from 'element-plus'
 
 const props = defineProps({
   originalCodeContent: String,
   repoName: String,
-  namespacePath: String
+  namespacePath: String,
+  currentPath: String,
+  sha: String
 })
 
 const codeContent = ref(props.originalCodeContent)
+
+const fileName = ref(props.currentPath)
 const commitTitle = ref('')
 const commitDesc = ref('')
-const fileName = ref('')
 const new_branch = ref('main')
-const commitTitlePlaceholder = ref('Create new file')
-const commitValid = ref(false)
+const commitTitlePlaceholder = ref(`Update ${fileName.value}`)
+const commitValid = ref(true)
 const submiting = ref(false)
 
 const prefixPath = document.location.pathname.split('/')[1]
@@ -63,36 +68,39 @@ const handleCommentInputChange = (value) => {
 
 const handleFileNameChange = (value) => {
   if (value.trim() === '') {
-    commitTitlePlaceholder.value = `Create new file`
+    commitTitlePlaceholder.value = `Update ${fileName.value}`
     commitValid.value = false
   } else {
-    commitTitlePlaceholder.value = `Create ${value}`
+    commitTitlePlaceholder.value = `Update ${value}`
     commitValid.value = true
   }
 }
 
-const createFile = async () => {
+const updateFile = async () => {
   submiting.value = true
   // TODO: main branch for now; should support different branches
-  const createFileEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main`
+  const updateFileEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main`
   const bodyData = {
     path: fileName.value,
     content: codeContent.value,
     commit_title: commitTitle.value,
-    commit_desc: commitDesc.value
+    commit_desc: commitDesc.value,
+    sha: props.sha
   }
   const option = {
-    method:'POST',
+    method:'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(bodyData)
   }
-  const response = await csrfFetch(createFileEndpoint, option)
+  const response = await csrfFetch(updateFileEndpoint, option)
   if (response.ok) {
     redirectToFilePreview()
   } else {
-    return response.json().then(data => { throw new Error(data.message) }).finally(() => {
+    response.json().then(data => {
+      ElMessage({ message: data.message, type: "warning" })
+    }).finally(() => {
       submiting.value = false
     })
   }
@@ -103,7 +111,7 @@ const redirectToFilePreview = () => {
 }
 
 const cancel = () => {
-  window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+  redirectToFilePreview()
 }
 </script>
 
