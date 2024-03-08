@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/files', to: 'models#files'
     post '/models/:namespace/(*model_name)/files/:branch', to: 'models#create_file'
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file'
+    put '/models/:namespace/(*model_name)/files/:branch', to: 'models#update_file'
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict'
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/files', to: 'datasets#files'
     post '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#create_file'
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file'
+    put '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#update_file'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
 
@@ -83,14 +85,19 @@ Rails.application.routes.draw do
     resources :organizations, only: [:new, :show, :edit]
 
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
+    get '/models/:namespace/(*model_name)/edit/:branch/(*path)', to: 'models#edit_file', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/:branch/upload', to: 'models#upload_file'
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
+    get '/models/:namespace/(*model_name)/resolve/:branch/(*path)', to: 'models#resolve', defaults: {format: 'txt'}
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}
+
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file'
+    get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/:branch/upload', to: 'datasets#upload_file'
     get '/datasets/:namespace/(*dataset_name)/blob/:branch/(*path)', to: 'datasets#blob', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
+    get '/datasets/:namespace/(*dataset_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
