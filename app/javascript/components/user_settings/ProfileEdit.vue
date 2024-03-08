@@ -17,6 +17,7 @@
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户名</div>
       <p class="text-gray-500 text-[12px] italic">* 2-50位字母数字以及 _ - 构成的字符串，- _ 不能连续出现</p>
+      <p class="text-gray-500 text-[12px] italic">* 设置后不可更改</p>
       <el-input v-if="name.trim().length === 0"
                 class="max-w-[400px]"
                 v-model="inputName"
@@ -134,6 +135,14 @@ export default {
       }
     },
     saveProfile() {
+      if (this.inputName.trim().length === 0 || this.inputEmail.trim().length === 0) {
+        ElMessage({
+          message: "请提供用户名和邮箱",
+          type: "warning",
+        });
+
+        return
+      }
       this.updateProfile();
     },
   },

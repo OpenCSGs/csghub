@@ -134,13 +134,8 @@ class ApplicationController < ActionController::Base
   def check_user_info_integrity
     return if !helpers.logged_in?
 
-    if current_user.email.blank?
-      flash[:alert] = "请补充邮箱，以便能使用完整的功能"
-      return redirect_to '/settings/profile'
-    end
-
-    if current_user.name.blank?
-      flash[:alert] = "请补充用户名，以便能使用完整的功能"
+    if current_user.email.blank? || current_user.name.blank?
+      flash[:alert] = "请补充用户名和邮箱，以便能使用完整的功能"
       return redirect_to '/settings/profile'
     end
 
