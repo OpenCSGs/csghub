@@ -9,7 +9,7 @@
         />
       </template>
       <template #files v-if="actionName === 'blob'">
-        <dataset-blob
+        <blob
           :content="content"
           :last-commit="lastCommit"
           :branches="branches"
@@ -69,10 +69,10 @@ import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
-import DatasetBlob from './DatasetBlob.vue'
 import DatasetClone from './DatasetClone.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
+import Blob from '../shared/Blob.vue'
 
 const props = defineProps({
   localDatasetId: String,

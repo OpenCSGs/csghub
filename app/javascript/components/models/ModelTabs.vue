@@ -6,7 +6,7 @@
         <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
       </template>
       <template #files v-if="actionName === 'blob'">
-        <model-blob
+        <blob
           :content="content"
           :last-commit="lastCommit"
           :branches="branches"
@@ -67,9 +67,9 @@ import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
-import ModelBlob from './ModelBlob.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
+import Blob from '../shared/Blob.vue'
 
 const props = defineProps({
   localModelId: String,
