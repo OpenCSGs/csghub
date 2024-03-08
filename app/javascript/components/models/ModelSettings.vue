@@ -69,7 +69,7 @@
 
         <!-- 模型标签 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
+      <div class="w-[380px] sm:w-full flex flex-col"> 
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           模型标签
         </div>
@@ -78,16 +78,29 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">模型可见性</p>
+        <p class="text-[#344054] text-[14px]">模型标签</p>
         <div class="flex flex-col gap-[6px]">
-        <el-input
-            v-model="theModelNickname"
-            clearable
-            size="large"
-            class="!w-[512px] sm:!w-full"
-        />
-        <el-button @click="updateNickname" class="w-[100px]">更新</el-button>
-      </div>
+          <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              <span v-for="tag in selectedTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                {{ tag.name }}
+                <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
+              </span>
+            </div>
+            <input class="w-full max-h-[36px] outline-none"
+                    v-model="tagInput"
+                    @input="showTagList" />
+          </div>
+          <div v-show="shouldShowTagList" class="rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <p v-for="tag in theTagList"
+                @click="selectTag(tag)"
+                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+            >
+              {{ tag.name }}
+            </p>
+          </div>
+          <el-button @click="updateNickname" class="w-[100px]">更新</el-button>
+        </div>
       </div>
     </div>
 
@@ -178,11 +191,16 @@ export default {
     modelNickname: String,
     modelDesc: String,
     default_branch: String,
+    tagList: Object,
     private: Boolean
   },
   components: {},
   data() {
     return {
+      theTagList:[{name:"tag"},{name:'tag2'},{name:'tag3'}],
+      selectedTags:[],
+      shouldShowTagList:false,
+      tagInput:'',
       visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       modelName: this.path.split('/')[1],
@@ -205,6 +223,20 @@ export default {
           })
         })
       }
+    },
+    showTagList(e){
+      this.shouldShowTagList = true
+    },
+
+    selectTag(newTag){
+      const findUser = this.selectedTags.find(user => user.name === newTag.name)
+      if (!findUser) {
+        this.selectedTags.push({name: newTag.name, avatar: newTag.avatar})
+      }
+    },
+
+    removeTag(tagName){
+      this.selectedTags = this.selectedTags.filter( item => item.name !== tagName )
     },
 
     async deleteModel() {

@@ -30,6 +30,7 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      :tag-list="tagList"
     />
   </div>
 </template>
@@ -37,11 +38,13 @@
 <script setup>
 import ModelHeader from './ModelHeader.vue'
 import ModelTabs from './ModelTabs.vue'
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   localModelId: String,
   defaultTab: String,
   model: Object,
+  tagList: Object,
   localModel: Object,
   lastCommit: Object,
   branches: Object,
@@ -55,6 +58,10 @@ const props = defineProps({
   ownerUrl: String,
   canWrite: Boolean
 })
+onMounted(() => {
+  console.log(props.tagList);
+  console.log(props.settingsVisibility);
+  })
 </script>
 
 <style scoped>
