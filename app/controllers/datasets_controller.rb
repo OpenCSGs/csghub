@@ -13,7 +13,7 @@ class DatasetsController < ApplicationController
   before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
 
   def index
-    get_tag_list('dataset')
+    get_tag_list('datasets')
   end
 
   def new

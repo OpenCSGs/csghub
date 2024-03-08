@@ -13,7 +13,7 @@ class ModelsController < ApplicationController
   before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
 
   def index
-    get_tag_list('model')
+    get_tag_list('models')
   end
 
   def new

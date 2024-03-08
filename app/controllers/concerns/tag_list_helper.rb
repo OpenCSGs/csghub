@@ -9,7 +9,7 @@ module TagListHelper
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
       response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
-      response[field][:tags] = Tag.where(tag_field: field, scope: type)
+      response[field][:tags] = Tag.where(tag_field: field, scope: type.singularize)
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
@@ -18,9 +18,9 @@ module TagListHelper
 
   def tag_fields(type)
     case type
-    when 'model'
+    when 'models'
       Tag::MODEL_TAG_FIELDS
-    when 'dataset'
+    when 'datasets'
       Tag::DATASET_TAG_FIELDS
     end
   end
