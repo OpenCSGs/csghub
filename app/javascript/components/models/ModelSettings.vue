@@ -67,6 +67,32 @@
 
     <el-divider/>
 
+        <!-- 模型标签 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          模型标签
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          选择模型对应的分类标签，便于用户在筛选时更快的找到您的模型。
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[#344054] text-[14px]">模型可见性</p>
+        <div class="flex flex-col gap-[6px]">
+        <el-input
+            v-model="theModelNickname"
+            clearable
+            size="large"
+            class="!w-[512px] sm:!w-full"
+        />
+        <el-button @click="updateNickname" class="w-[100px]">更新</el-button>
+      </div>
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
