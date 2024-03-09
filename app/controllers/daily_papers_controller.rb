@@ -1,7 +1,7 @@
 class DailyPapersController < ApplicationController
   def index
     @daily_papers = DailyPaper.search_by(params[:keywords])
-                              .order(created_at: :desc)
+                              .order(id: :desc)
                               .page(params[:page]).per(9)
     @keywords = params[:keywords]
     @page = params[:page]
