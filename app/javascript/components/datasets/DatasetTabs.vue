@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <DatasetClone :http-clone-url="datasetDetail.repository.http_clone_url" :ssh-clone-url="datasetDetail.repository.ssh_clone_url"/>
+    <repo-clone repo-type="dataset" :http-clone-url="datasetDetail.repository.http_clone_url" :ssh-clone-url="datasetDetail.repository.ssh_clone_url"/>
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <dataset-summary
@@ -69,7 +69,7 @@ import DatasetSummary from './DatasetSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
-import DatasetClone from './DatasetClone.vue'
+import RepoClone from '../shared/RepoClone.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'

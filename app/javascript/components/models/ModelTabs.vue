@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <ModelClone :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
+    <repo-clone repo-type="model" :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
@@ -61,7 +61,7 @@
 </style>
 
 <script setup>
-import ModelClone from './ModelClone.vue'
+import RepoClone from '../shared/RepoClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import ModelSummary from './ModelSummary.vue'
 import ModelFiles from './ModelFiles.vue'
