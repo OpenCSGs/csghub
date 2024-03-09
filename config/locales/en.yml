@@ -37,7 +37,39 @@ en:
 
   activerecord:
     errors:
+      messages:
+        record_invalid: 'Field does not conform to the specification'
       models:
+        tag:
+          too_long: "Length exceeds the limit"
+          taken: "Already in use"
+        user:
+          too_long: "Length exceeds the limit"
+          taken: "Already in use"
+          invalid: "Does not conform to the specification"
+          attributes:
+            email:
+              invalid: "Does not conform to the specification"
+            phone:
+              taken: "Already in use"
+        ssh_key:
+          blank: "Field cannot be empty"
+          taken: "Duplicates cannot be created"
+        organization:
+          invalid: 'Field does not conform to the specification'
+          blank: "Field cannot be empty"
+          taken: "Already exists, please rename"
+          attributes:
+            nickname:
+              too_long: "Length exceeds the limit"
+            homepage:
+              too_long: "Length exceeds the limit"
+        discussion:
+          too_long: "Length exceeds the limit"
+        model:
+          taken: "Already exists, please rename"
+        dataset:
+          taken: "Already exists, please rename"
         space:
           blank: "Field can't be blank"
           taken: "Can't create duplicate space"
