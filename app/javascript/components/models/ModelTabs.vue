@@ -1,18 +1,18 @@
 <template>
   <div class="relative">
-    <repo-clone :repo-type="repoType" :clone-http-url="repoDetail.repository.http_clone_url" :clone-ssh-url="repoDetail.repository.ssh_clone_url" />
-    <tab-container :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
+    <ModelClone :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
+    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <repo-summary :repo-type="repoType" :namespace-path="repoDetail.path" :download-count="repoDetail.downloads" />
+        <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
       </template>
       <template #files v-if="actionName === 'blob'">
-        <blob
+        <model-blob
           :content="decodedContent"
           :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :namespace-path="repoDetail.path"
+          :namespace-path="modelDetail.path"
           :size="blob.size"
           :can-write="canWrite"
         />
@@ -20,8 +20,8 @@
       <template #files v-if="actionName === 'new_file'">
         <new-file
           :current-branch="currentBranch"
-          :repo-name="repoDetail.name"
-          :namespace-path="repoDetail.path"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
           originalCodeContent=""
         />
       </template>
@@ -29,8 +29,8 @@
         <edit-file
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :repo-name="repoDetail.name"
-          :namespace-path="repoDetail.path"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
           :originalCodeContent="decodedContent"
           :sha="blob.sha"
         />
@@ -38,40 +38,31 @@
       <template #files v-if="actionName === 'upload_file'">
         <upload-file
           :current-branch="currentBranch"
-          :repo-name="repoDetail.name"
-          :namespace-path="repoDetail.path"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
         />
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
-        <repo-files
+        <model-files
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :namespace-path="repoDetail.path"
+          :namespace-path="modelDetail.path"
           :can-write="canWrite"
-          :repo-type="repoType"
         />
       </template>
       <template #community>
-        <community-page :type="repoType === 'model' ? 'Model ': 'Dataset'" :localModelId="localRepoId" ></community-page>
+        <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
       </template>
       <template v-if="settingsVisibility" #settings>
-        <model-settings
-          v-if="repoType === 'model'"
-          :path="repoDetail.path"
-          :model-nickname="repoDetail.nickname"
-          :model-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
-          :private="repoDetail.private" />
-        <dataset-settings
-          v-if="repoType === 'dataset'"
-          :path="repoDetail.path"
-          :dataset-nickname="repoDetail.nickname"
-          :dataset-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
-          :private="repoDetail.private" />
+        <Settings
+          :path="modelPath"
+          :model-nickname="modelNickname"
+          :model-desc="modelDesc"
+          :default_branch="modelDefaultBranch"
+          :private="modelPrivate" />
       </template>
-    </tab-container>
+    </TabContainer>
   </div>
 </template>
 
@@ -82,21 +73,25 @@
 </style>
 
 <script setup>
-import RepoClone from '../shared/RepoClone.vue'
+import ModelClone from './ModelClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
-import RepoSummary from '../shared/RepoSummary.vue'
-import RepoFiles from '../shared/RepoFiles.vue'
+import ModelSummary from './ModelSummary.vue'
+import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
-import ModelSettings from '../models/ModelSettings.vue'
-import DatasetSettings from '../datasets/DatasetSettings.vue'
+import Settings from './ModelSettings.vue'
+import ModelBlob from './ModelBlob.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
-import Blob from '../shared/Blob.vue'
 import EditFile from '../shared/EditFile.vue'
 
 const props = defineProps({
-  localRepoId: String,
-  repoDetail: Object,
+  localModelId: String,
+  modelPath: String,
+  modelNickname: String,
+  modelDesc: String,
+  modelDefaultBranch: String,
+  modelPrivate: Boolean,
+  modelDetail: Object,
   lastCommit: Object,
   branches: Object,
   currentBranch: String,
@@ -105,8 +100,7 @@ const props = defineProps({
   blob: Object,
   actionName: String,
   settingsVisibility: Boolean,
-  canWrite: Boolean,
-  repoType: String
+  canWrite: Boolean
 })
 
 const decodedContent = props.blob?.content || ''

@@ -5,6 +5,8 @@
         :private="model.data.private"
         :license="model.data.license"
         :name="model.data.name"
+        :nickname="model.data.nickname"
+        :desc="model.data.description"
         :path="model.data.path"
         :tags="tags"
         :avatar="avatar"
@@ -15,7 +17,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :content="content.data"
+      :blob="blob.data"
       :local-repo-id="localRepoId"
       :repo-detail="model.data"
       :last-commit="lastCommit.data"
@@ -44,7 +46,7 @@ const props = defineProps({
   tags: Object,
   currentBranch: String,
   currentPath: String,
-  content: Object,
+  blob: Object,
   actionName: String,
   settingsVisibility: Boolean,
   avatar: String,

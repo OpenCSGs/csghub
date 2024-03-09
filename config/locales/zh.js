@@ -174,7 +174,7 @@ export default {
     confirm: "确认",
     cancel: "取消",
     add: "添加",
-    upDate: "更新",
+    update: "更新",
     changeSuccess: "切换成功",
     changeCancel: "操作取消",
     addSuccess: "添加成功",
@@ -232,6 +232,8 @@ export default {
       content: "内容",
       create: "创建话题",
       cancel: "取消",
+      warn: "内容不能为空",
+      success: "新建话题成功",
     },
     empty: {
       welcome: "欢迎来讨论",

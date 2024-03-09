@@ -37,7 +37,7 @@
             size="large"
             class="!w-[512px] sm:!w-full"
         />
-        <el-button @click="updateNickname" class="w-[100px]">{{ $t('all.upDate')}}</el-button>
+        <el-button @click="updateNickname" class="w-[100px]">{{ $t('all.update')}}</el-button>
       </div>
     </div>
 
@@ -61,7 +61,7 @@
             type="textarea"
             class="!w-[512px] sm:!w-full"
         />
-        <el-button @click="updateDatasetDesc" class="w-[100px]">{{ $t('all.upDate')}}</el-button>
+        <el-button @click="updateDatasetDesc" class="w-[100px]">{{ $t('all.update')}}</el-button>
       </div>
     </div>
 
