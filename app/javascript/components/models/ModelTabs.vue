@@ -3,7 +3,7 @@
     <repo-clone repo-type="model" :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <model-summary :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
+        <repo-summary repo-type="model" :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
       </template>
       <template #files v-if="actionName === 'blob'">
         <blob
@@ -63,7 +63,7 @@
 <script setup>
 import RepoClone from '../shared/RepoClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
-import ModelSummary from './ModelSummary.vue'
+import RepoSummary from '../shared/RepoSummary.vue'
 import ModelFiles from './ModelFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'

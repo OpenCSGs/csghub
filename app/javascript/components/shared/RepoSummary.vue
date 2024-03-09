@@ -22,14 +22,15 @@
 
   const props = defineProps({
     namespacePath: String,
-    downloadCount: Number
+    downloadCount: Number,
+    repoType: String
   })
 
   const loading = ref(true)
   const readmeContent = ref('')
 
   const fetchData = async () => {
-    const url = `/internal_api/datasets/${props.namespacePath}/readme`
+    const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
 
     fetch(url).then((response) => {
       response.json().then((data) => {

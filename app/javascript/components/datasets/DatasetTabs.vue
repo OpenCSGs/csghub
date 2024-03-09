@@ -3,7 +3,8 @@
     <repo-clone repo-type="dataset" :http-clone-url="datasetDetail.repository.http_clone_url" :ssh-clone-url="datasetDetail.repository.ssh_clone_url"/>
     <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <dataset-summary
+        <repo-summary
+          repo-type="dataset"
           :download-count="datasetDetail.downloads"
           :namespace-path="datasetDetail.path"
         />
@@ -65,7 +66,7 @@
 
 <script setup>
 import TabContainer from '../shared/TabContainer.vue'
-import DatasetSummary from './DatasetSummary.vue'
+import RepoSummary from '../shared/RepoSummary.vue'
 import DatasetFiles from './DatasetFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
