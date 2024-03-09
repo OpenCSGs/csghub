@@ -24,7 +24,7 @@
                 style="width: 100%;"
                 size="large"
                 v-model="searchForm.keywords"
-                :placeholder="this.$t('dailyPaper.placeholder')"
+                :placeholder="$t('dailyPaper.placeholder')"
                 clearable
                 suffix-icon="el-icon-search"
                 @keyup.enter="handleSearch"

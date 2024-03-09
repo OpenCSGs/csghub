@@ -20,8 +20,10 @@
   import { useCookies } from "vue3-cookies";
   import { ElMessage, ElMessageBox } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { useI18n } from 'vue-i18n'
 
   const { cookies } = useCookies();
+  const { t } = useI18n();
 
   const props = defineProps({
     comment: {
@@ -37,9 +39,9 @@
   const emit = defineEmits(['deleteComment']);
 
   const confirmDelete = async (commentId) => {
-    const confirmResult = await ElMessageBox.confirm(this.$t('space.confirm'), this.$t('space.tip'), {
-      confirmButtonText: this.$t('space.sure'),
-      cancelButtonText: this.$t('space.cancel'),
+    const confirmResult = await ElMessageBox.confirm(t('space.confirm'), t('space.tip'), {
+      confirmButtonText: t('space.sure'),
+      cancelButtonText: t('space.cancel'),
       type: 'warning',
     });
 
