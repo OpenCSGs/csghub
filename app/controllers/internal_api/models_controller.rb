@@ -1,9 +1,10 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:index, :files, :readme]
-  before_action :validate_model, only: [:update, :destroy, :create_file, :upload_file, :update_file]
-  before_action :validate_manage, only: [:update, :destroy]
-  before_action :validate_write, only: [:create_file, :upload_file, :update_file]
-  before_action :validate_authorization, only: [:files, :readme]
+
+  include Api::SyncStarhubHelper
+  include Api::BuildCommitHelper
+  include Api::FileOptionsHelper
+  include Api::RepoValidation
 
   def index
     res_body = Starhub.api.get_models(current_user&.name,
@@ -33,10 +34,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def create
-    res = validate_owner
-    if !res[:valid]
-      return render json: { message: res[:message] }, status: :unprocessable_entity
-    end
     model = current_user.created_models.build(model_params)
     if model.save
       render json: { path: model.path, message: '模型创建成功!' }, status: :created
@@ -77,7 +74,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                         email: current_user.email,
                                                         content: Base64.encode64(params[:content])
                                                       })
-    sync_create_file(options)
+    sync_create_file('model', options)
     render json: { message: '创建文件成功' }
   end
 
@@ -89,7 +86,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                         email: current_user.email,
                                                         content: Base64.encode64(params[:content])
                                                       })
-    sync_update_file(options)
+    sync_update_file('model', options)
     render json: { message: '更新文件成功' }
   end
 
@@ -103,7 +100,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       message: build_upload_commit_message,
       username: current_user.name
     }
-    sync_upload_file(options)
+    sync_upload_file('model', options)
     render json: { message: '上传文件成功' }, status: 200
   end
 
@@ -119,118 +116,5 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def update_file_params
     params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
-  end
-
-  def sync_upload_file(options)
-    res = Starhub.api.upload_model_file(params[:namespace], params[:model_name], options)
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def build_create_commit_message
-    if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
-      return "Create #{params[:path]}"
-    end
-
-    "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
-  end
-
-  def build_update_commit_message
-    if params[:commit_title].strip.blank? && params[:commit_desc].strip.blank?
-      return "Update #{params[:path]}"
-    end
-
-    "#{params[:commit_title].strip} \n #{params[:commit_desc].strip}"
-  end
-
-  def build_upload_commit_message
-    if params[:commit_title]&.strip.blank? && params[:commit_desc]&.strip.blank?
-      return "Upload #{params[:file].original_filename}"
-    end
-
-    "#{params[:commit_title]&.strip} \n #{params[:commit_desc]&.strip}"
-  end
-
-  def sync_create_file(options)
-    res = Starhub.api.create_model_file(params[:namespace], params[:model_name], params[:path], options)
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def sync_update_file(options)
-    res = Starhub.api.update_model_file(params[:namespace], params[:model_name], params[:path], options)
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def validate_model
-    owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
-    @model = owner && owner.models.find_by(name: params[:model_name])
-    unless @model
-      return render json: { message: "未找到对应模型" }, status: 404
-    end
-  end
-
-  def validate_manage
-    unless current_user.can_manage?(@model)
-      render json: { message: '无权限' }, status: :unauthorized
-      return
-    end
-  end
-
-  def validate_write
-    unless current_user.can_write?(@model)
-      render json: { message: '无权限' }, status: :unauthorized
-      return
-    end
-  end
-
-  def validate_owner
-    if params[:owner_type] == 'User' && current_user.id.to_i != params[:owner_id].to_i
-      return { valid: false, message: '用户不存在' }
-    elsif params[:owner_type] == 'Organization'
-      org = current_user.organizations.find_by(id: params[:owner_id])
-      if !org || current_user.org_role(org) == 'read'
-        return { valid: false, message: '组织不存在或无权限' }
-      end
-    end
-    { valid: true }
-  end
-
-  def files_options
-    {
-      ref: params[:branch],
-      path: params[:path]
-    }
-  end
-
-  def validate_authorization
-    owner = find_user_or_organization_by_name(params[:namespace])
-    local_model = find_model_by_owner_and_name(owner, params[:model_name])
-
-    return render_unauthorized('模型不存在') unless local_model
-
-    return render_unauthorized('无权限') unless valid_authorization?(local_model)
-  end
-
-  def find_user_or_organization_by_name(name)
-    User.find_by(name: name) || Organization.find_by(name: name)
-  end
-
-  def find_model_by_owner_and_name(owner, model_name)
-    owner&.models&.find_by(name: model_name)
-  end
-
-  def valid_authorization?(model)
-    return true if model.model_public?
-
-    return false unless helpers.logged_in?
-
-    if model.owner.instance_of?(User)
-      return model.owner == current_user
-    end
-
-    return current_user.org_role(model.owner)
-  end
-
-  def render_unauthorized(message)
-    render json: { message: message }, status: :unauthorized
   end
 end
