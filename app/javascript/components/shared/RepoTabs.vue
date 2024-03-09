@@ -53,7 +53,7 @@
         />
       </template>
       <template #community>
-        <community-page :type="repoType === 'model' ? 'Model ': 'Dataset'" :localModelId="localRepoId" ></community-page>
+        <community-page :type="repoType === 'model' ? 'Model': 'Dataset'" :localModelId="localRepoId" ></community-page>
       </template>
       <template v-if="settingsVisibility" #settings>
         <model-settings
