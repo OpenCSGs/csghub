@@ -232,7 +232,7 @@ export default {
         const payload = {nickname: this.theModelNickname}
         this.updateModel(payload)
       } else {
-        ElMessage({ message: this.$t('models.edit.needDatasetName'), type: "warning" })
+        ElMessage({ message: this.$t('models.edit.needModelName'), type: "warning" })
       }
     },
 
@@ -241,7 +241,7 @@ export default {
         const payload = {desc: this.theModelDesc}
         this.updateModel(payload)
       } else {
-        ElMessage({ message: this.$t('models.edit.needDatasetDesc'), type: "warning" })
+        ElMessage({ message: this.$t('models.edit.needModelDesc'), type: "warning" })
       }
     },
 
