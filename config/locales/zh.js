@@ -396,9 +396,6 @@ export default {
       "expertiseWarn": "请您填写职称",
       "webWarn": "请您填写公司/产品官网",
       "industryWarn": "请您选择公司行业",
-    },
-    models: {
-      title: '模型'
     }
   },
   "landing": {

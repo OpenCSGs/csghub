@@ -394,9 +394,6 @@ export default {
       "expertiseWarn": "Please fill in your professional title",
       "webWarn": "Please fill in the company/product official website",
       "industryWarn": "Please choose your company's industry",
-    },
-    models: {
-      title: 'Models'
     }
   },
   "landing": {
@@ -423,5 +420,4 @@ export default {
     "ICP": "Beijing ICPB 2023006263-1",
     "wx": "WeChat Official Account"
   },
-
 }
