@@ -18,14 +18,14 @@
             <path opacity="0.12" d="M9 16.5C12.7279 16.5 15.75 15.4926 15.75 14.25V3.75C15.75 3.75 15.375 6 9 6C2.625 6 2.25 3.75 2.25 3.75V14.25C2.25 15.4926 5.27208 16.5 9 16.5Z" fill="#1F75CB"/>
             <path d="M15.75 9C15.75 10.2426 12.7279 11.25 9 11.25C5.27208 11.25 2.25 10.2426 2.25 9M15.75 3.75C15.75 4.99264 12.7279 6 9 6C5.27208 6 2.25 4.99264 2.25 3.75M15.75 3.75C15.75 2.50736 12.7279 1.5 9 1.5C5.27208 1.5 2.25 2.50736 2.25 3.75M15.75 3.75V14.25C15.75 15.4926 12.7279 16.5 9 16.5C5.27208 16.5 2.25 15.4926 2.25 14.25V3.75" stroke="#1F75CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>数据集 <span class="text-gray-400 text-[16px] italic"> {{ totalDatasets }} </span></span>
+          <span>{{ $t('datasets.title') }} <span class="text-gray-400 text-[16px] italic"> {{ totalDatasets }} </span></span>
         </h3>
         <div class="xl:mt-[16px]">
           <ElInput
             v-model="nameFilterInput"
             class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
             size="large"
-            placeholder="数据集名字"
+            :placeholder="this.$t('datasets.placeholder')"
             :prefix-icon="Search"
             @change = "reloadDatasets"
           />
@@ -66,6 +66,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import DatasetItem from './DatasetItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     taskTags: String,
@@ -75,6 +76,7 @@
     selectedTagType: String
   })
 
+  const { t } = useI18n();
   const nameFilterInput = ref('')
   const sortSelection = ref('recently_update')
   const currentPage = ref(1)
@@ -84,22 +86,23 @@
   const frameworkTag = ref('')
   const licenseTag = ref('')
   const datasetsData = ref(Array)
+  const placeholder = ref('');
   const sortOptions = [
                         {
                           value: 'recently_update',
-                          label: '最近更新'
+                          label: t('all.recentlyUpdate')
                         },
                         {
                           value: 'trending',
-                          label: '热门'
+                          label: t('all.trending')
                         },
                         {
                           value: 'most_download',
-                          label: '最多下载'
+                          label: t('all.mostDownload')
                         },
                         {
                           value: 'most_favorite',
-                          label: '最多喜欢'
+                          label: t('all.mostFavorite')
                         },
                       ]
 

@@ -10,7 +10,7 @@
       </MarkdownViewer>
     </div>
     <div class="py-4 w-[20%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="text-[#606266] text-base font-medium leading-[22px] pl-4 md:pl-0">下载热度</div>
+      <div class="text-[#606266] text-base font-medium leading-[22px] pl-4 md:pl-0">{{ $t('all.downloadCount') }}</div>
       <div class="text-[#303133] text-base font-semibold leading-6 mt-1 pl-4 md:pl-0">{{ downloadCount }}</div>
     </div>
   </div>
