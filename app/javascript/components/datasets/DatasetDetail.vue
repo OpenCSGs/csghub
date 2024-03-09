@@ -5,6 +5,8 @@
         :private="dataset.data.private"
         :license="dataset.data.license"
         :name="dataset.data.name"
+        :nickname="dataset.data.nickname"
+        :desc="dataset.data.description"
         :path="dataset.data.path"
         :avatar="avatar"
         :tags="tags"
