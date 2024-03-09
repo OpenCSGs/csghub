@@ -125,7 +125,7 @@ export default {
       "desc": "StarCloud is a deep learning-based one-stop platform for Large Language Models development and service, offering complete dataset management, model training, evaluation, and inference services, as well as convenient publishing methods, a stable operating environment, and enterprise-level service security, with the goal of supporting generative AI applications in various industries and assisting customers in building high-precision and high-performance Large Language models.",
       "demoVideo": "Demonstration video",
       "demo": "Demo Experience",
-      "remarks": "Please contact@opencsg.com to get trial access as registration is not yet available.",
+      "remarks": "Please {contact} to get trial access as registration is not yet available.",
       "part1": "Large Language Models training and fine-tuning",
       "part1-": "The core function of the StarCloud platform is to train and fine tune large models, allowing users to view training status and choose training methods. At the same time, it supports enterprise customers to fine tune models according to business needs, use proprietary datasets to reduce costs, and optimize the performance of specific tasks.",
       "part2": "Excellent process, easy to publish",
@@ -153,7 +153,7 @@ export default {
       "desc": "EKB AI structures documents and transforms them into digital assets, achieving digital storage and management of information, and solidifying the foundation for digital transformation of enterprise assets.",
       "demoVideo": "Product demonstration",
       "demo": "Get Started",
-      "remarks": "Please contact@opencsg.com to get trial access as registration is not yet available.",
+      "remarks": "Please {contact} to get trial access as registration is not yet available.",
     },
     "starAIO": {
       "solution2": "Solution #2",

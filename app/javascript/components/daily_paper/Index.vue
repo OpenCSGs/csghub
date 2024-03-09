@@ -73,7 +73,7 @@
                 v-model:current-page="searchForm.page"
                 :default-current-page="1"
                 :page-size="8"
-                layout="prev, pager, next" 
+                layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
                 @update:current-page="handleSearch"
