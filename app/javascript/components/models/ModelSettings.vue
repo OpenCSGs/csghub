@@ -77,7 +77,7 @@
           选择模型对应的分类标签，便于用户在筛选时更快的找到您的模型。
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-[6px]" ref="tagListContainer">
         <p class="text-[#344054] text-[14px]">模型标签</p>
         <div class="flex flex-col gap-[6px]">
           <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
@@ -91,15 +91,15 @@
                     v-model="tagInput"
                     @input="showTagList" />
           </div>
-          <div v-show="shouldShowTagList" class="rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+          <div v-show="shouldShowTagList" class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
             <p v-for="tag in theTagList"
                 @click="selectTag(tag)"
                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
             >
-              {{ tag.name }}
+              {{ tag.zh_name? tag.zh_name : tag.name }}
             </p>
           </div>
-          <el-button @click="updateNickname" class="w-[100px]">更新</el-button>
+          <el-button @click="updateTags" class="w-[100px]">更新</el-button>
         </div>
       </div>
     </div>
@@ -192,12 +192,13 @@ export default {
     modelDesc: String,
     default_branch: String,
     tagList: Object,
+    tags: Object,
     private: Boolean
   },
   components: {},
   data() {
     return {
-      theTagList:[{name:"tag"},{name:'tag2'},{name:'tag3'}],
+      theTagList:this.tagList,
       selectedTags:[],
       shouldShowTagList:false,
       tagInput:'',
@@ -212,8 +213,36 @@ export default {
     };
   },
   mounted() {
+    console.log(this.tags);
+    // 监听全局点击事件
+    document.addEventListener('click', this.handleOutsideClick);
+
+    if (typeof this.tags === 'object' && this.tags !== null) {
+      for (const key in this.tags) {
+        if (Array.isArray(this.tags[key]) && this.tags[key].length > 0) {
+          console.log(`Processing ${key} tags:`);
+          this.getSelectTags(this.tags[key]);
+        }
+      }
+    } else {
+      console.error("this.tags is not an object");
+    }
+  },
+  beforeDestroy() {
+    // 组件销毁前移除事件监听
+    document.removeEventListener('click', this.handleOutsideClick);
   },
   methods: {
+    handleOutsideClick(event) {
+      if (!this.$refs.tagListContainer.contains(event.target)) {
+        this.shouldShowTagList = false;
+      }
+    },
+    getSelectTags(tags){
+      tags.forEach(item=>{
+        this.selectedTags.push(item)
+      })
+    },
     clickDelete() {
       if (this.delDesc === this.modelPath) {
         this.deleteModel().catch((err) => {
@@ -226,12 +255,24 @@ export default {
     },
     showTagList(e){
       this.shouldShowTagList = true
+      if(this.tagInput != ''){
+        this.theTagList = this.tagList.filter(tag => {
+          if(tag.zh_name){
+            return tag.zh_name.includes(this.tagInput);
+          }else{
+            return tag.name.includes(this.tagInput);
+          }
+        });
+      }else{
+        this.theTagList = this.tagList
+      }
     },
 
     selectTag(newTag){
-      const findUser = this.selectedTags.find(user => user.name === newTag.name)
-      if (!findUser) {
-        this.selectedTags.push({name: newTag.name, avatar: newTag.avatar})
+      console.log(newTag);
+      const findTag = this.selectedTags.find(tag => tag.name === newTag.name)
+      if (!findTag) {
+        this.selectedTags.push({name: newTag.name, zh_name: newTag.zh_name})
       }
     },
 
@@ -283,6 +324,15 @@ export default {
       const privateSelected = (value === 'Private') ? true : false
       const payload = {private: privateSelected}
       this.updateModel(payload)
+    },
+    updateTags(){
+      if(!!(this.selectedTags && this.selectedTags.length)){
+        const payload = {tags: this.selectedTags}
+        this.updateModel(payload)
+      } else {
+        ElMessage({ message: "请先提供模型标签", type: "warning" })
+      }
+
     },
 
     updateNickname() {

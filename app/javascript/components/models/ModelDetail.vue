@@ -30,6 +30,7 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      :tags="tags"
       :tag-list="tagList"
     />
   </div>

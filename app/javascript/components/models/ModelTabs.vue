@@ -48,6 +48,7 @@
           :model-nickname="modelNickname"
           :model-desc="modelDesc"
           :tag-list="tagList"
+          :tags="tags"
           :default_branch="modelDefaultBranch"
           :private="modelPrivate" />
       </template>
@@ -87,6 +88,7 @@ const props = defineProps({
   defaultTab: String,
   content: String,
   actionName: String,
+  tags: Object,
   tagList: Object,
   settingsVisibility: Boolean,
   canWrite: Boolean
