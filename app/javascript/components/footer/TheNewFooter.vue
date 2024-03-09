@@ -54,10 +54,10 @@
         <div class="flex flex-none items-start flex-col gap-y-4">
           <p class="text-base font-semibold">{{ $t('footer.contact') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
-            <p>{{ $t('footer.partner') }}</p>
-            <p>{{ $t('footer.resume') }}</p>
-            <p>{{ $t('footer.pr') }}</p>
-            <p>{{ $t('footer.ir') }}</p>
+            <p>{{ $t('footer.partner') }}: partner@opencsg.com</p>
+            <p>{{ $t('footer.resume') }}: hr@opencsg.com</p>
+            <p>{{ $t('footer.pr') }}: pr@opencsg.com</p>
+            <p>{{ $t('footer.ir') }}: ir@opencsg.com</p>
           </div>
         </div>
       </div>
