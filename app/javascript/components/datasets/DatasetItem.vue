@@ -49,9 +49,7 @@ const visibility = computed(() => {
 })
 
 const getTaskTagName = computed(() => {
-  const taskTag = (props.dataset.tags || []).find(function(tag) {
-    return tag.category === "task"
-  });
+  const taskTag = (props.dataset.tags || []).find(tag => tag.category === "task")
   return taskTag ? taskTag["show_name"] : null
 })
 </script>

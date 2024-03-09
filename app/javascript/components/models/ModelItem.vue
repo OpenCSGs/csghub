@@ -50,9 +50,7 @@ const visibility = computed(() => {
 })
 
 const getTaskTagName = computed(() => {
-   const taskTag = (props.model.tags || []).find(function(tag) {
-     return tag.category === "task"
-   });
+  const taskTag = (props.model.tags || []).find(tag => tag.category === "task")
   return taskTag ? taskTag["show_name"] : null
 })
 </script>
