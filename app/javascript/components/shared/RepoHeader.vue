@@ -1,6 +1,14 @@
 <template>
   <div class="flex gap-[8px] items-center mb-5 text-lg text-[#606266] font-semibold md:px-5 flex-wrap">
-    <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
+    <div class="flex items-center md:w-full md:mb-1" v-if="repoType === 'dataset'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path opacity="0.12" d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z" fill="#A8ABB2"/>
+        <path d="M14 8.00016C14 9.10473 11.3137 10.0002 8 10.0002C4.68629 10.0002 2 9.10473 2 8.00016M14 3.3335C14 4.43807 11.3137 5.3335 8 5.3335C4.68629 5.3335 2 4.43807 2 3.3335M14 3.3335C14 2.22893 11.3137 1.3335 8 1.3335C4.68629 1.3335 2 2.22893 2 3.3335M14 3.3335V12.6668C14 13.7714 11.3137 14.6668 8 14.6668C4.68629 14.6668 2 13.7714 2 12.6668V3.3335" stroke="#A8ABB2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="text-[#A8ABB2] text-[18px] font-semibold ml-1 mr-2">Dataset:</span>
+      <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
+    </div>
+    <el-avatar :size="24" :src="avatar" class="flex-shrink-0" v-if="repoType === 'model'"></el-avatar>
     <a class="hover:text-[#223B99]" :href="ownerUrl">
       {{ path.split('/')[0] }}
     </a>
@@ -31,7 +39,8 @@
     path: String,
     license: String,
     tags: Object,
-    ownerUrl: String
+    ownerUrl: String,
+    repoType: String
   });
 
   const copyName = () => {

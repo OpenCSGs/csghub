@@ -9,6 +9,7 @@
         :tags="tags"
         :avatar="avatar"
         :owner-url="ownerUrl"
+        repo-type="model"
       />
     </div>
   </div>

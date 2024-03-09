@@ -9,6 +9,7 @@
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
+        repo-type="dataset"
       />
     </div>
   </div>
