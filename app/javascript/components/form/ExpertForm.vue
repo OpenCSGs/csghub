@@ -19,42 +19,42 @@
           <p class="mt-[16px]">{{ $t('form.expert.p1') }}</p>
           <p class="mt-[16px]">{{ $t('form.expert.p2') }}。</p>
         </div>
-        <form-label :labelName="this.$t('form.expert.name')" :required="true" />
+        <form-label :labelName="$t('form.expert.name')" :required="true" />
         <el-input v-model="userName"
                   clearable
-                  :placeholder="this.$t('form.expert.name')"
+                  :placeholder="$t('form.expert.name')"
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
-        <form-label :labelName="this.$t('form.expert.job')" :required="true" />
+        <form-label :labelName="$t('form.expert.job')" :required="true" />
         <el-input v-model="jobName"
                   clearable
-                  :placeholder="this.$t('form.expert.job')"
+                  :placeholder="$t('form.expert.job')"
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
-        <form-label :labelName="this.$t('form.expert.phone')" :required="true" />
+        <form-label :labelName="$t('form.expert.phone')" :required="true" />
         <el-input v-model="phone"
                   clearable
-                  :placeholder="this.$t('form.expert.phone')"
+                  :placeholder="$t('form.expert.phone')"
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
-        <form-label :labelName="this.$t('form.expert.company')" :required="true" />
+        <form-label :labelName="$t('form.expert.company')" :required="true" />
         <el-input v-model="companyName"
                   clearable
-                  :placeholder="this.$t('form.expert.company')"
+                  :placeholder="$t('form.expert.company')"
                   class="w-full h-[40px] text-[#606266] mb-[24px]"/>
 
-        <form-label :labelName="this.$t('form.expert.expertise')" :required="true" />
+        <form-label :labelName="$t('form.expert.expertise')" :required="true" />
         <el-input v-model="expertise"
                   clearable
                   type="textarea"
-                  :placeholder="this.$t('form.expert.expertise')"
+                  :placeholder="$t('form.expert.expertise')"
                   class="w-full h-auto text-[#606266] mb-[24px]"/>
 
-        <form-label :labelName="this.$t('form.expert.desc')" :required="true" />
+        <form-label :labelName="$t('form.expert.desc')" :required="true" />
         <el-input v-model="introduction"
                   clearable
                   type="textarea"
-                  :placeholder="this.$t('form.expert.desc')"
+                  :placeholder="$t('form.expert.desc')"
                   class="w-full h-auto text-[#606266] mb-[24px]"/>
 
         <div class="flex mt-[16px] gap-x-[16px]">

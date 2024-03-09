@@ -12,7 +12,7 @@
           <VideoDialog ref="videoDialogRef" :videoSrc="videoSrc" />
         </div>
         <div class="w-[768px] mlg:w-full mt-[16px] rounded-[10px] border-[4px] border-[#101828]">
-          <el-image src="/images/product/demo.png" :fit="fit" :preview-src-list="['/images/product/demo.png']" />
+          <el-image src="/images/product/demo.png" :preview-src-list="['/images/product/demo.png']" />
         </div>
         <div class="flex md:flex-col md:gap-[16px] mt-[80px] text-left">
             <div class="max-w-[405px] cursor-pointer pt-[24px] px-[16px] border-t-[4px] border-t-[#F2F4F7] hover:border-t-[#3250BD]" v-for="item in data" :key="item.id">

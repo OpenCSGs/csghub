@@ -17,10 +17,10 @@
           :rules="rules"
           label-position="top"
           class="mt-[48px] text-left">
-          <el-form-item :label="this.$t('dailyPaper.title')" prop="title">
-            <el-input v-model="dataForm.title" :placeholder="this.$t('dailyPaper.articleTitle')"></el-input>
+          <el-form-item :label="$t('dailyPaper.title')" prop="title">
+            <el-input v-model="dataForm.title" :placeholder="$t('dailyPaper.articleTitle')"></el-input>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.img')" prop="cover_image">
+          <el-form-item :label="$t('dailyPaper.img')" prop="cover_image">
             <el-upload
               :class="`w-full ${this.showUpload ? 'h-[229px]' : 'hide'}`"
               :limit="1"
@@ -49,36 +49,36 @@
               </div>
             </el-upload>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.link')" prop="article_link">
-            <el-input v-model="dataForm.article_link" :placeholder="this.$t('dailyPaper.articleLink')"></el-input>
+          <el-form-item :label="$t('dailyPaper.link')" prop="article_link">
+            <el-input v-model="dataForm.article_link" :placeholder="$t('dailyPaper.articleLink')"></el-input>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.publishTime')" prop="published_at">
+          <el-form-item :label="$t('dailyPaper.publishTime')" prop="published_at">
             <el-date-picker
               v-model="dataForm.published_at"
               type="date"
               style="width: 100%;"
-              :placeholder="this.$t('dailyPaper.date')">
+              :placeholder="$t('dailyPaper.date')">
             </el-date-picker>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.pdfLink')" prop="pdf_link">
-            <el-input v-model="dataForm.pdf_link" :placeholder="this.$t('dailyPaper.recommendPdfLink')"></el-input>
+          <el-form-item :label="$t('dailyPaper.pdfLink')" prop="pdf_link">
+            <el-input v-model="dataForm.pdf_link" :placeholder="$t('dailyPaper.recommendPdfLink')"></el-input>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.recommendation')" prop="recommendation">
+          <el-form-item :label="$t('dailyPaper.recommendation')" prop="recommendation">
             <el-input :rows="5" type="textarea" v-model="dataForm.recommendation"></el-input>
           </el-form-item>
 
-          <el-form-item :label="this.$t('dailyPaper.articleRemark')" prop="description">
+          <el-form-item :label="$t('dailyPaper.articleRemark')" prop="description">
             <el-input :rows="5" type="textarea" v-model="dataForm.description"></el-input>
           </el-form-item>
 
-          <el-form-item :label="this.$t('dailyPaper.videoLin')" prop="video_link">
+          <el-form-item :label="$t('dailyPaper.videoLin')" prop="video_link">
             <el-input v-model="dataForm.video_link"></el-input>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.articleModel')" prop="model_links">
-            <el-input :rows="5" type="textarea" v-model="dataForm.model_links" :placeholder="this.$t('dailyPaper.linkDesc')"></el-input>
+          <el-form-item :label="$t('dailyPaper.articleModel')" prop="model_links">
+            <el-input :rows="5" type="textarea" v-model="dataForm.model_links" :placeholder="$t('dailyPaper.linkDesc')"></el-input>
           </el-form-item>
-          <el-form-item :label="this.$t('dailyPaper.articleDataset')" prop="dataset_links">
-            <el-input :rows="5" type="textarea" v-model="dataForm.dataset_links" :placeholder="this.$t('dailyPaper.linkDesc')"></el-input>
+          <el-form-item :label="$t('dailyPaper.articleDataset')" prop="dataset_links">
+            <el-input :rows="5" type="textarea" v-model="dataForm.dataset_links" :placeholder="$t('dailyPaper.linkDesc')"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]" @click="handleSubmit">{{ $t('dailyPaper.submit') }}</el-button>
@@ -161,7 +161,7 @@
           window.location.href = "/daily_papers"
         } else {
           response.json()
-            .then(res => { 
+            .then(res => {
               this.$message({
                 message: this.$t('dailyPaper.createFail') + `: ${res.message}`,
                 type: 'error'
