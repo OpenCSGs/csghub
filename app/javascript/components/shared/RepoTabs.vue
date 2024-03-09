@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <repo-clone repo-type="model" :clone-http-url="modelDetail.repository.http_clone_url" :clone-ssh-url="modelDetail.repository.ssh_clone_url" />
-    <TabContainer :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
+    <repo-clone :repo-type="repoType" :clone-http-url="repoDetail.repository.http_clone_url" :clone-ssh-url="repoDetail.repository.ssh_clone_url" />
+    <tab-container :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <repo-summary repo-type="model" :namespace-path="modelDetail.path" :download-count="modelDetail.downloads" />
+        <repo-summary :repo-type="repoType" :namespace-path="repoDetail.path" :download-count="repoDetail.downloads" />
       </template>
       <template #files v-if="actionName === 'blob'">
         <blob
@@ -12,22 +12,22 @@
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :namespace-path="modelDetail.path"
+          :namespace-path="repoDetail.path"
         />
       </template>
       <template #files v-if="actionName === 'new_file'">
         <new-file
           :current-branch="currentBranch"
-          :repo-name="modelDetail.name"
-          :namespace-path="modelDetail.path"
+          :repo-name="repoDetail.name"
+          :namespace-path="repoDetail.path"
           originalCodeContent=""
         />
       </template>
       <template #files v-if="actionName === 'upload_file'">
         <upload-file
           :current-branch="currentBranch"
-          :repo-name="modelDetail.name"
-          :namespace-path="modelDetail.path"
+          :repo-name="repoDetail.name"
+          :namespace-path="repoDetail.path"
         />
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
@@ -35,23 +35,31 @@
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :namespace-path="modelDetail.path"
+          :namespace-path="repoDetail.path"
           :can-write="canWrite"
-          repo-type="model"
+          :repo-type="repoType"
         />
       </template>
       <template #community>
-        <CommunityPage type="Model" :localModelId="localModelId" ></CommunityPage>
+        <community-page :type="repoType === 'model' ? 'Model ': 'Dataset'" :localModelId="localRepoId" ></community-page>
       </template>
       <template v-if="settingsVisibility" #settings>
-        <Settings
-          :path="modelPath"
-          :model-nickname="modelNickname"
-          :model-desc="modelDesc"
-          :default_branch="modelDefaultBranch"
-          :private="modelPrivate" />
+        <model-settings
+          v-if="repoType === 'model'"
+          :path="repoDetail.path"
+          :model-nickname="repoDetail.nickname"
+          :model-desc="repoDetail.description"
+          :default_branch="repoDetail.default_branch"
+          :private="repoDetail.private" />
+        <dataset-settings
+          v-if="repoType === 'dataset'"
+          :path="repoDetail.path"
+          :dataset-nickname="repoDetail.nickname"
+          :dataset-desc="repoDetail.description"
+          :default_branch="repoDetail.default_branch"
+          :private="repoDetail.private" />
       </template>
-    </TabContainer>
+    </tab-container>
   </div>
 </template>
 
@@ -67,19 +75,15 @@ import TabContainer from '../shared/TabContainer.vue'
 import RepoSummary from '../shared/RepoSummary.vue'
 import RepoFiles from '../shared/RepoFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
-import Settings from './ModelSettings.vue'
+import ModelSettings from '../models/ModelSettings.vue'
+import DatasetSettings from '../datasets/DatasetSettings.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'
 
 const props = defineProps({
-  localModelId: String,
-  modelPath: String,
-  modelNickname: String,
-  modelDesc: String,
-  modelDefaultBranch: String,
-  modelPrivate: Boolean,
-  modelDetail: Object,
+  localRepoId: String,
+  repoDetail: Object,
   lastCommit: Object,
   branches: Object,
   currentBranch: String,
@@ -88,6 +92,7 @@ const props = defineProps({
   content: String,
   actionName: String,
   settingsVisibility: Boolean,
-  canWrite: Boolean
+  canWrite: Boolean,
+  repoType: String
 })
 </script>

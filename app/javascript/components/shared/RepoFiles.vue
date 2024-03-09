@@ -1,5 +1,5 @@
 <template>
-  <FileList
+  <file-list
     :branches="branches"
     :current-branch="currentBranch"
     :current-path="currentPath"

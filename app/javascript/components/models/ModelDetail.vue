@@ -14,15 +14,10 @@
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
-    <model-tabs
+    <repo-tabs
       :content="content.data"
-      :local-model-id="localModelId"
-      :model-path="model.data.path"
-      :model-nickname="localModel.nickname"
-      :model-desc="localModel.desc"
-      :model-default-branch="model.data.default_branch"
-      :model-private="model.data.private"
-      :model-detail="model.data"
+      :local-repo-id="localRepoId"
+      :repo-detail="model.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
       :current-branch="currentBranch"
@@ -31,19 +26,19 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      repo-type="model"
     />
   </div>
 </template>
 
 <script setup>
 import RepoHeader from '../shared/RepoHeader.vue'
-import ModelTabs from './ModelTabs.vue'
+import RepoTabs from '../shared/RepoTabs.vue'
 
 const props = defineProps({
-  localModelId: String,
+  localRepoId: String,
   defaultTab: String,
   model: Object,
-  localModel: Object,
   lastCommit: Object,
   branches: Object,
   tags: Object,

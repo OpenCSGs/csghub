@@ -14,15 +14,10 @@
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
-    <dataset-tabs
+    <repo-tabs
       :content="content.data"
-      :local-dataset-id="localDatasetId"
-      :dataset-path="dataset.data.path"
-      :dataset-nickname="localDataset.nickname"
-      :dataset-desc="localDataset.desc"
-      :dataset-default-branch="dataset.data.default_branch"
-      :dataset-private="dataset.data.private"
-      :dataset-detail="dataset.data"
+      :local-repo-id="localRepoId"
+      :repo-detail="dataset.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
       :current-branch="currentBranch"
@@ -31,21 +26,21 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      repo-type="dataset"
     />
   </div>
 </template>
 
 <script setup>
 import RepoHeader from '../shared/RepoHeader.vue';
-import DatasetTabs from './DatasetTabs.vue';
+import RepoTabs from '../shared/RepoTabs.vue'
 
 const props = defineProps({
   dataset: Object,
-  localDataset: Object,
   files: Object,
   lastCommit: Object,
   branches: Object,
-  localDatasetId: String,
+  localRepoId: String,
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
