@@ -35,12 +35,13 @@
         />
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
-        <dataset-files
+        <repo-files
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="datasetDetail.path"
           :can-write="canWrite"
+          repo-type="dataset"
         />
       </template>
       <template #community>
@@ -67,7 +68,7 @@
 <script setup>
 import TabContainer from '../shared/TabContainer.vue'
 import RepoSummary from '../shared/RepoSummary.vue'
-import DatasetFiles from './DatasetFiles.vue'
+import RepoFiles from '../shared/RepoFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './DatasetSettings.vue'
 import RepoClone from '../shared/RepoClone.vue'

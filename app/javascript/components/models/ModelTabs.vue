@@ -31,12 +31,13 @@
         />
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
-        <model-files
+        <repo-files
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="modelDetail.path"
           :can-write="canWrite"
+          repo-type="model"
         />
       </template>
       <template #community>
@@ -64,7 +65,7 @@
 import RepoClone from '../shared/RepoClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import RepoSummary from '../shared/RepoSummary.vue'
-import ModelFiles from './ModelFiles.vue'
+import RepoFiles from '../shared/RepoFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import Settings from './ModelSettings.vue'
 import UploadFile from '../shared/UploadFile.vue'
