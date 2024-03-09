@@ -181,19 +181,17 @@ export default {
     "AIImg": {
       "solution3": "Solution #3",
       "headline": "OpenCSG Imagen AI Intelligent Image Assistant",
-
-
-      "desc": "OpenCSG Imagen AI Intelligent Image Assistant is a visual toolkit developed on the basis of the Stable Diffusion 2.1 open-source model, dedicated to enhancing human intelligence. It aims to provide creators with better tools, catalyze the emergence of inspiration, and achieve exponential amplification of creativity and productivity. OpenCSG Imagen AI Intelligent Image Assistant adapts to professional design workflows and provides multiple functions.",
-      "part1": "Cultural and graphic drawing mode",
-      "part1-": "No need for professional painting skills, users can generate high-quality paintings in seconds with just a simple description.",
-      "part2": "Diagram drawing mode",
-      "part2-": "Choose multiple painting styles and artist references, and improve design quality and drawing efficiency by borrowing works of different styles for creation.",
-      "part3": "Generate images based on textual descriptions",
+      "desc": "OpenCSG Imagen AI Image Assistant is a visual toolset based on the Stable Diffusion 2.1 open source model, dedicated to augmenting human intelligence, aiming to provide creators with better tools and amplify creativity and productivity. OpenCSG Imagen AI Image Assistant adapts to professional design workflows, providing a wide range of features.",
+      "part1": "Text-to-image plotting mode",
+      "part1-": "No specialized drawing skills are required, and users can generate high-quality drawings in seconds with a simple description.",
+      "part2": "Image-to-image plotting mode",
+      "part2-": "Choose from a wide range of drawing styles and artist references to enhance design quality and drawing efficiency by drawing on different styles of work.",
+      "part3": "Generate images based on text descriptions",
       "part3-": "Generate corresponding images based on user provided text descriptions to expand creative possibilities.",
-      "part4": "Modifying images based on text guidance",
+      "part4": "Text-based guided modification of images",
       "part4-": "Users can use text guidance to modify existing images to meet their creative needs.",
-      "part5": "Artist's Style Transfer",
-      "part5-": "By learning from works of different artists or styles and integrating them, generate images with specific artistic styles to help creators explore new ways of expression.",
+      "part5": "Stylistic migration of artists' works",
+      "part5-": "Assist creators explore new ways of expression by studying the work of different artists or styles and blending them to generate images with a specific artistic style.",
       "part6": "Image super-resolution",
       "part6-": "OpenCSG Image AI Image Assistant improves image resolution for clearer and more detailed images."
     },
@@ -205,9 +203,9 @@ export default {
       "part1-": "Supports automatic code generation based on natural language annotations, as well as generating subsequent code based on existing code, making the coding process faster and more accurate. OpenCSG StarCode AI further provides completion functionality for the current line or generating subsequent lines of code, helping developers easily complete programming tasks.",
       "part2": "Automatically generate unit tests",
       "part2-": "Supports generating unit tests and interpreting code related to unit tests based on common unit testing frameworks. StarCode AI further provides completion functionality for the current or subsequent lines of code, helping developers easily complete programming tasks.",
-      "part3": "Q&A on R&D knowledge",
+      "part3": "Q&A on research and development",
       "part3-": "Supports intelligent question answering function, allowing developers to directly ask technical questions to assistants without leaving the integrated development environment (IDE) to search for answers on search engines. This seamless integration experience allows developers to focus more on solving problems and improve work efficiency. StarCode AI also provides completion function for the current line or generating subsequent lines of code, helping developers easily complete programming tasks.",
-      "part4": "Code Translation",
+      "part4": "Code translation",
       "part4-": "Not only does it support mutual translation between multiple mainstream programming languages, but it also draws on the features of CoPilot to achieve more accurate and high-quality code translation based on artificial intelligence models. StarCode AI further provides completion functionality for the current line or generating subsequent line codes, helping developers easily complete programming tasks."
     },
   },
@@ -220,9 +218,9 @@ export default {
       "reply": "Reply",
       "comment": "Comment",
       "cancel": "Cancel",
-      "updateSuccess": "Title update successful!",
+      "updateSuccess": "Title update successfully!",
       "warn": "Content cannot be empty",
-      "addSuccess": "Add comment successfully",
+      "addSuccess": "Comments added successfully",
     },
     "MD": {
       "edit": "Edit",
@@ -235,16 +233,16 @@ export default {
       "new": "New topic",
       "title": "Title",
       "content": "Content",
-      "create": "Create a topic",
+      "create": "Create topic",
       "cancel": "Cancel",
       "warn": "The title and content cannot be empty",
-      "success": "Successfully added topic",
+      "success": "Topic added successfully",
       "comment": "In the comment:"
     },
     "empty": {
-      "welcome": "Welcome to discuss ",
+      "welcome": "Welcome to the discussion",
       "desc": "This is the place to discuss and collaborate with OpenCSG!",
-      "new": "New topic ",
+      "new": "New topic",
     }
   },
   "navbar": {
