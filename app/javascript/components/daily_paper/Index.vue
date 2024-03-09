@@ -17,8 +17,9 @@
           </a>
         </div>
 
-        <div class="mt-[64px] flex gap-[64px] md:flex-col md:px-[16px]">
-          <div class="flex">
+        <div class="mt-[64px] gap-[64px] flex-col md:px-[16px]">
+
+          <div class="flex justify-center mb-[64px]">
             <div class="w-[280px] md:w-full">
               <el-input
                 style="width: 100%;"
@@ -38,7 +39,7 @@
           <div class="flex flex-col">
 
             <div class="flex gap-x-[32px] gap-y-[48px] flex-wrap justify-between border-b border-[#EAECF0] pb-[64px]">
-              <div class="w-[452px] md:w-full" :key="item.uuid" v-for="item in JSON.parse(dailyPapers)">
+              <div class="w-[405px] md:w-full" :key="item.uuid" v-for="item in JSON.parse(dailyPapers)">
                 <div class="flex w-full flex-col cursor-pointer" @click="visitDetail(item.uuid)">
                   <img :src="item.cover_url" alt="" class="h-[240px] object-contain">
                   <div class="flex justify-between gap-[16px] mt-[20px] items-start">
