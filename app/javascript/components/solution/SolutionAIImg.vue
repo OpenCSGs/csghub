@@ -16,7 +16,7 @@
       <div class="flex flex-col gap-[32px] mb-[64px]">
         <div class="flex gap-[32px] md:pl-[10px] flex-nowrap w-full overflow-hidden">
           <div class="min-w-[360px] h-[480px] bg-[#ECBF55] transition-transform duration-300 ease" v-for="(item,index) in srcList" :style="{ transform: `translateX(${translateValue}px)` }">
-            <el-image style="width: 360px; height: 480px" :src="item" :initial-index="index" :preview-teleported="true" :preview-src-list="srcList" :fit="fit" />
+            <el-image style="width: 360px; height: 480px" :src="item" :initial-index="index" :preview-teleported="true" :preview-src-list="srcList" />
           </div>
         </div>
         <div class="flex gap-[32px]">

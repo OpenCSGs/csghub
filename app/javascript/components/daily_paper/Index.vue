@@ -24,7 +24,7 @@
                 style="width: 100%;"
                 size="large"
                 v-model="searchForm.keywords"
-                :placeholder="this.$t('dailyPaper.placeholder')"
+                :placeholder="$t('dailyPaper.placeholder')"
                 clearable
                 suffix-icon="el-icon-search"
                 @keyup.enter="handleSearch"
@@ -73,7 +73,7 @@
                 v-model:current-page="searchForm.page"
                 :default-current-page="1"
                 :page-size="8"
-                layout="prev, pager, next" 
+                layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
                 @update:current-page="handleSearch"

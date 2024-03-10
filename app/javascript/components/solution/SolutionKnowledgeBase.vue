@@ -14,7 +14,7 @@
             {{ $t('solution.knowledge.demo') }}
           </div>
         </div>
-        <div class="text-[14px] leading-[20px] text-[#223B99] mt-[16px]">{{ $t('solution.knowledge.remarks') }}</div>
+        <div class="text-[14px] leading-[20px] text-[#223B99] mt-[16px]">{{ $t('solution.knowledge.remarks', {contact: 'contact@opencsg.com'}) }}</div>
       </div>
       <div class="flex md:flex-col gap-[64px] px-[32px] text-left">
         <div class="grow">

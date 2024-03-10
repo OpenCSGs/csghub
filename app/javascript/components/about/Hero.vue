@@ -12,7 +12,7 @@
         <div class="text-[20px] leading-[28px] text-[#60626] mb-[24px] md:text-[14px]">{{ $t('about.hero.headDesc') }}</div>
         <div class="flex justify-center gap-[8px]">
           <a href="https://portal.opencsg.com/" target="_blank"
-             class="flex w-[200px] h-[48px] justify-center items-center rounded-[40px] text-[#fff] bg-[#000] text-[20px] leading-[28px] font-semibold no-underline">{{ $t('about.hero.JoinC') }}</a>
+             class="flex w-[230px] h-[48px] justify-center items-center rounded-[40px] text-[#fff] bg-[#000] text-[20px] leading-[28px] font-semibold no-underline">{{ $t('about.hero.JoinC') }}</a>
         </div>
       </div>
     </div>

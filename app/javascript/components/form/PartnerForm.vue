@@ -11,28 +11,28 @@
           </div>
           <div class="flex md:flex-col md:gap-y-[20px] gap-x-[80px]">
             <div class="w-[320px] lg:w-full">
-              <form-label :labelName="this.$t('form.partner.name')" :required="true" />
+              <form-label :labelName="$t('form.partner.name')" :required="true" />
               <el-input
                 v-model="userName"
                 clearable
-                :placeholder="this.$t('form.partner.name-')"
+                :placeholder="$t('form.partner.name-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
 
             <div class="w-[320px] lg:w-full md:flex-col">
-              <form-label :labelName="this.$t('form.partner.phone')" :required="true" />
+              <form-label :labelName="$t('form.partner.phone')" :required="true" />
               <el-input
                 v-model="phone"
                 clearable
-                :placeholder="this.$t('form.partner.phone')"
+                :placeholder="$t('form.partner.phone')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
           </div>
 
           <div class="w-[306px] mt-[24px] lg:w-full md:flex-col">
-            <form-label :labelName="this.$t('form.partner.email')" :required="true" />
+            <form-label :labelName="$t('form.partner.email')" :required="true" />
             <el-input
               v-model="email"
               clearable
@@ -45,21 +45,21 @@
         <div class="w-full h-auto mt-[24px]">
           <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
             <div class="w-[320px] lg:w-full md:flex-col">
-              <form-label :labelName="this.$t('form.partner.company')" :required="true" />
+              <form-label :labelName="$t('form.partner.company')" :required="true" />
               <el-input
                 v-model="companyName"
                 clearable
-                :placeholder="this.$t('form.partner.company-')"
+                :placeholder="$t('form.partner.company-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
 
             <div class="w-[320px] lg:w-full md:flex-col">
-              <form-label :labelName="this.$t('form.partner.expertise')" :required="true" />
+              <form-label :labelName="$t('form.partner.expertise')" :required="true" />
               <el-input
                 v-model="profession"
                 clearable
-                :placeholder="this.$t('form.partner.expertise-')"
+                :placeholder="$t('form.partner.expertise-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
@@ -67,20 +67,20 @@
 
           <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
             <div class="w-[320px] mt-[24px] lg:w-full md:flex-col">
-              <form-label :labelName="this.$t('form.partner.web')" :required="true" />
+              <form-label :labelName="$t('form.partner.web')" :required="true" />
               <el-input
                 v-model="companyWeb"
                 clearable
-                :placeholder="this.$t('form.partner.web-')"
+                :placeholder="$t('form.partner.web-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
             <div class="w-[320px] mt-[24px] md:mt-0 lg:w-full md:flex-col">
-              <form-label :labelName="this.$t('form.partner.industry')" :required="true" />
+              <form-label :labelName="$t('form.partner.industry')" :required="true" />
               <el-input
                   v-model="industry"
                   clearable
-                  :placeholder="this.$t('form.partner.industry-')"
+                  :placeholder="$t('form.partner.industry-')"
                   class="w-full h-[40px] text-[#606266]"
               />
             </div>
@@ -89,11 +89,11 @@
 
         <div class="w-full h-auto mt-[24px]">
           <div class="w-full">
-            <form-label :labelName="this.$t('form.partner.desc')" :required="true" />
+            <form-label :labelName="$t('form.partner.desc')" :required="true" />
             <el-input
               v-model="desc"
               clearable
-              :placeholder="this.$t('form.partner.desc-')"
+              :placeholder="$t('form.partner.desc-')"
               type="textarea"
               class="w-full h-auto text-[#606266]"
             />

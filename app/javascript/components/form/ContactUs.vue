@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      :title="this.$t('form.contactUs.contact')"
+      :title="$t('form.contactUs.contact')"
       v-model="dialogVisible"
       width="80%"
       :show-close="false"
@@ -11,36 +11,36 @@
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
-          :placeholder="this.$t('form.contactUs.name')"
+          :placeholder="$t('form.contactUs.name')"
           name="user_name"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
-          :placeholder="this.$t('form.contactUs.company')"
+          :placeholder="$t('form.contactUs.company')"
           name="user_company"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="email"
-          :placeholder="this.$t('form.contactUs.email')"
+          :placeholder="$t('form.contactUs.email')"
           name="user_email"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="tel"
-          :placeholder="this.$t('form.contactUs.phone')"
+          :placeholder="$t('form.contactUs.phone')"
           name="user_tel"
         />
         <input
           class="formInput w-full bg-white text-[#606266] rounded-[4px] border-solid border border-[#DCDFE6] leading-[40px] px-[15px] my-[10px]  outline-0"
           type="text"
-          :placeholder="this.$t('form.contactUs.job')"
+          :placeholder="$t('form.contactUs.job')"
           name="user_job"
         />
-        <textarea name="message" class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0" :placeholder="this.$t('form.contactUs.help')"></textarea>
+        <textarea name="message" class="w-full bg-white text-[#606266] rounded-[4px] border leading-normal border-solid border-[#DCDFE6] py-[5px] px-[15px] outline-0" :placeholder="$t('form.contactUs.help')"></textarea>
         <div class="text-center">
-          <input class="w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] mr-20 cursor-pointer" type="submit" :value="this.$t('form.contactUs.submit')" />
+          <input class="w-[70px] text-white bg-[#409EFF] rounded-[4px] leading-[40px] mr-20 cursor-pointer" type="submit" :value="$t('form.contactUs.submit')" />
           <div class="inline-block w-[70px] text-[#606266] bg-white border border-solid border-[#DCDFE6] rounded-[4px] leading-[40px] cursor-pointer" @click="dialogVisible = false">{{$t('form.contactUs.close')}}</div>
         </div>
       </form>
