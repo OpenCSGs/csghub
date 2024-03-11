@@ -168,7 +168,7 @@ module Starhub
       options = {
         current_user: username
       }
-      res = @client.get("/jwt/token", options)
+      res = @client.post("/jwt/token", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
