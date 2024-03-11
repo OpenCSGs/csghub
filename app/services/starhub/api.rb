@@ -5,6 +5,8 @@ module Starhub
     include SharedRepoApis
     include ModelApis
     include DatasetApis
+    include ApplicationSpaceApis
+    include CodeApis
 
     def initialize
       @client = Starhub::Client.instance
