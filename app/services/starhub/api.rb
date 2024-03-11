@@ -2,84 +2,12 @@ require 'starhub/client'
 
 module Starhub
   class Api
+    include SharedRepoApis
+    include ModelApis
+    include DatasetApis
+
     def initialize
       @client = Starhub::Client.instance
-    end
-
-    def get_model_detail_data_in_parallel(username, model_name, options = {})
-      options[:path] ||= '/'
-      options[:ref] ||= 'main'
-      paths = [
-        "/models/#{username}/#{model_name}?current_user=#{options[:current_user]}",
-        "/models/#{username}/#{model_name}/branches"
-      ]
-      @client.get_in_parallel(paths, options)
-    end
-
-    def get_model_detail_files_data_in_parallel(username, model_name, options = {})
-      options[:path] ||= '/'
-      options[:ref] ||= 'main'
-      paths = [
-        "/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}",
-        "/models/#{username}/#{model_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
-      ]
-      @client.get_in_parallel(paths, options)
-    end
-
-    def get_model_detail_blob_data_in_parallel(username, model_name, options = {})
-      options[:path] ||= '/'
-      options[:ref] ||= 'main'
-      paths = [
-        "/models/#{username}/#{model_name}?current_user=#{options[:current_user]}",
-        "/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}",
-        "/models/#{username}/#{model_name}/branches",
-        "/models/#{username}/#{model_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
-      ]
-      @client.get_in_parallel(paths, options)
-    end
-
-    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page = 1, per = 16)
-      url = "/models?per=#{per}&page=#{page}"
-      url += "&current_user=#{current_user}" if current_user.present?
-      url += "&search=#{keyword}" if keyword.present?
-      url += "&sort=#{sort_by}" if sort_by.present?
-      url += "&task_tag=#{task_tag}" if task_tag.present?
-      url += "&framework_tag=#{framework_tag}" if framework_tag.present?
-      url += "&license_tag=#{license_tag}" if license_tag.present?
-      res = @client.get(url)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_model_detail(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}?current_user=#{options[:current_user]}")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_model_files(username, model_name, options = {})
-      options[:path] ||= '/'
-      res = @client.get("/models/#{username}/#{model_name}/tree?path=#{options[:path]}&ref=#{options[:ref]}")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_model_last_commit(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/last_commit?ref=#{options[:ref]}")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_model_branches(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/branches")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_model_file_content(username, model_name, path, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/raw/#{path}?ref=#{options[:ref]}")
-      raise StarhubError, res.body unless res.success?
-      res.body.force_encoding('UTF-8')
     end
 
     def create_user(name, nickname, email)
@@ -100,48 +28,6 @@ module Starhub
       @client.put("/users/#{name}", options)
     end
 
-    def create_model(username, model_name, namespace, nickname, desc, options = {})
-      options[:username] = username
-      options[:name] = model_name
-      options[:namespace] = namespace
-      options[:nickname] = nickname
-      options[:description] = desc
-      @client.post("/models", options)
-    end
-
-    def delete_model(namespace, model_name, params = {})
-      @client.delete("/models/#{namespace}/#{model_name}")
-    end
-
-    def update_model(username, model_name, namespace, nickname, desc, options = {})
-      options[:username] = username
-      options[:name] = model_name
-      options[:nickname] = nickname
-      options[:description] = desc
-      res = @client.put("/models/#{namespace}/#{model_name}", options)
-    end
-
-    def create_dataset(username, dataset_name, namespace, nickname, desc, options = {})
-      options[:username] = username
-      options[:name] = dataset_name
-      options[:namespace] = namespace
-      options[:nickname] = nickname
-      options[:description] = desc
-      @client.post("/datasets", options)
-    end
-
-    def delete_dataset(namespace, dataset_name, params = {})
-      @client.delete("/datasets/#{namespace}/#{dataset_name}")
-    end
-
-    def update_dataset(username, dataset_name, namespace, nickname, desc, options = {})
-      options[:username] = username
-      options[:name] = dataset_name
-      options[:nickname] = nickname
-      options[:description] = desc
-      @client.put("/datasets/#{namespace}/#{dataset_name}", options)
-    end
-
     def generate_git_token(username, name, options = {})
       options[:name] = name
       res = @client.post("/user/#{username}/tokens", options)
@@ -151,12 +37,6 @@ module Starhub
 
     def delete_git_token(username, token_name)
       @client.delete("/user/#{username}/tokens/#{token_name}")
-    end
-
-    def get_model_tags(username, model_name, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/tags")
-      raise StarhubError, res.body unless res.success?
-      res.body
     end
 
     def get_user_models(namespace, username, options = {})
@@ -177,53 +57,6 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
-    def download_model_file(username, model_name, path, options = {})
-      res = @client.get("/models/#{username}/#{model_name}/download/#{path}", options)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def create_model_file(username, model_name, path, options = {})
-      @client.post("/models/#{username}/#{model_name}/raw/#{path}", options)
-    end
-
-    def upload_model_file(username, model_name, options = {})
-      @client.upload("/models/#{username}/#{model_name}/upload_file", options)
-    end
-
-    # datasets
-
-    def get_dataset_detail_data_in_parallel(username, dataset_name, options = {})
-      options[:path] ||= '/'
-      options[:ref] ||= 'main'
-      paths = [
-        "/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}",
-        "/datasets/#{username}/#{dataset_name}/branches"
-      ]
-      @client.get_in_parallel(paths, options)
-    end
-
-    def get_dataset_detail_files_data_in_parallel(username, dataset_name, options = {})
-      options[:path] ||= '/'
-      options[:ref] ||= 'main'
-      paths = [
-        "/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}",
-        "/datasets/#{username}/#{dataset_name}/tree?#{options[:path]}&ref=#{options[:ref]}"
-      ]
-      @client.get_in_parallel(paths, options)
-    end
-
-    def get_dataset_detail_blob_data_in_parallel(username, dataset_name, options = {})
-      options[:ref] ||= 'main'
-      paths = [
-        "/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}",
-        "/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}",
-        "/datasets/#{username}/#{dataset_name}/branches",
-        "/datasets/#{username}/#{dataset_name}/raw/#{options[:path]}?ref=#{options[:ref]}"
-      ]
-      @client.get_in_parallel(paths, options)
-    end
-
     def get_user_datasets(namespace, username, options = {})
       options[:per] ||= 6
       options[:page] ||= 1
@@ -240,70 +73,6 @@ module Starhub
       res = @client.get("/organization/#{namespace}/datasets", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
-    end
-
-    def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page = 1, per = 16)
-      url = "/datasets?per=#{per}&page=#{page}"
-      url += "&current_user=#{current_user}" if current_user.present?
-      url += "&search=#{keyword}" if keyword.present?
-      url += "&sort=#{sort_by}" if sort_by.present?
-      url += "&task_tag=#{task_tag}" if task_tag.present?
-      url += "&framework_tag=#{framework_tag}" if framework_tag.present?
-      url += "&license_tag=#{license_tag}" if license_tag.present?
-      res = @client.get(url)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_datasets_detail(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}?current_user=#{options[:current_user]}")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_datasets_files(username, dataset_name, options = {})
-      options[:path] ||= '/'
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tree?path=#{options[:path]}&ref=#{options[:ref]}")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_datasets_last_commit(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/last_commit?ref=#{options[:ref]}")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_datasets_branches(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/branches")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_datasets_tags(username, dataset_name, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/tags")
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def get_datasets_file_content(username, dataset_name, path, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/raw/#{path}?ref=#{options[:ref]}")
-      raise StarhubError, res.body unless res.success?
-      res.body.force_encoding('UTF-8')
-    end
-
-    def download_datasets_file(username, dataset_name, path, options = {})
-      res = @client.get("/datasets/#{username}/#{dataset_name}/download/#{path}", options)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def create_dataset_file(username, dataset_name, path, options = {})
-      @client.post("/datasets/#{username}/#{dataset_name}/raw/#{path}", options)
-    end
-
-    def upload_datasets_file(username, dataset_name, options = {})
-      @client.upload("/datasets/#{username}/#{dataset_name}/upload_file", options)
     end
 
     def create_ssh_key(username, key_name, content)
