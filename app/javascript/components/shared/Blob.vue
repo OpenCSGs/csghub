@@ -85,7 +85,7 @@
       </div>
     </div>
 
-    <div class="border border-t-0 border-[#DCDFE6] rounded-b">
+    <div v-if="!file.lfs" class="border border-t-0 border-[#DCDFE6] rounded-b">
       <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-between border-b border-[#DCDFE6]">
         <div class="flex items-center gap-4">
           <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">预览</div>
@@ -103,6 +103,13 @@
         <CodeViewer v-else :extension="fileType" :content="content" />
       </div>
     </div>
+
+    <div v-if="file.lfs" class="border border-t-0 border-[#DCDFE6] rounded-b">
+      <div class="px-4 py-10 border-b border-[#DCDFE6] text-center">This file is stored with Git LFS . It is too big to display, but you can still download it.</div>
+      <div class="p-4">
+        <CodeViewer :extension="fileType" :content="content" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -112,6 +119,7 @@
   import MarkdownViewer from './viewers/MarkdownViewer.vue';
   import TextViewer from './viewers/TextViewer.vue';
   import CodeViewer from './viewers/CodeViewer.vue';
+  import {ElMessage} from "element-plus";
 
   const props = defineProps({
     content: String,
@@ -126,6 +134,7 @@
 
   const breadcrumb = ref([])
   const fileType = ref('')
+  const file = ref([])
 
   const prefixPath = document.location.pathname.split('/')[1]
 
@@ -141,6 +150,8 @@
       breadcrumbPath += '/' + item
       return breadcrumbPath
     })
+    console.log(props.size)
+    console.log(props.canWrite)
   }
 
   const detectFileType = () => {
@@ -164,4 +175,27 @@
 
     return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
   }
+
+  const fetchData = async () => {
+    const url = `/internal_api/${prefixPath}/${props.namespacePath}/files?branch=${props.currentBranch}&path=${props.currentPath}`
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        file.value = data.files[0]
+        console.log(file.value)
+        // lastCommit.value = data.last_commit
+      }).catch((error) => {
+        ElMessage({
+          message: '加载数据报错',
+          type: 'warning'
+        })
+      }).then(() => {
+        // loading.value = false
+      })
+    })
+  }
+
+  onMounted(() => {
+    fetchData()
+  })
 </script>
