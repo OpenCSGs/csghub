@@ -168,7 +168,9 @@ module Starhub
       options = {
         current_user: username
       }
-      @client.get("/jwt/token", options)
+      res = @client.get("/jwt/token", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     # TODO: add more starhub api
