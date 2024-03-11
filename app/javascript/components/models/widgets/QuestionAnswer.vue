@@ -7,7 +7,7 @@
       :rows="3"
       @input="countTextLength"
       type="textarea"
-      placeholder="以关键词’幸福‘写一首诗"
+      placeholder=""
     />
     <div class="my-[16px] flex justify-end">
       <div class="hidden w-[108px] flex px-[12px] py-[8px] justify-center items-center gap-[4px] border rounded-[8px] shadow-sm">
