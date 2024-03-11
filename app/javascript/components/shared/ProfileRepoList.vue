@@ -9,7 +9,7 @@
         <span>{{ $t('organization.model') }}</span>
       </h3>
       <div v-if="hasModels" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
-        <model-item v-for="model in models.data" :model="model"></model-item>
+        <repo-item v-for="model in models.data" :repo="model" repo-type="model"></repo-item>
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
@@ -30,7 +30,7 @@
         <span>{{ $t('organization.dataset') }}</span>
       </h3>
       <div v-if="hasDatasets" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
-        <dataset-item v-for="dataset in datasets.data" :dataset="dataset"></dataset-item>
+        <repo-item v-for="dataset in datasets.data" :repo="dataset" repo-type="dataset"></repo-item>
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
@@ -47,8 +47,7 @@
 
 <script setup>
   import { computed, ref } from 'vue'
-  import ModelItem from '../models/ModelItem.vue'
-  import DatasetItem from '../datasets/DatasetItem.vue'
+  import RepoItem from './RepoItem.vue'
   import ViewMore from './ViewMore.vue'
   import { useI18n } from 'vue-i18n'
 

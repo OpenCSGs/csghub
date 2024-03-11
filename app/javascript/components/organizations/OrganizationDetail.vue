@@ -65,8 +65,6 @@
 </template>
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue'
-  import ModelItem from '../models/ModelItem.vue';
-  import DatasetItem from '../datasets/DatasetItem.vue';
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
 

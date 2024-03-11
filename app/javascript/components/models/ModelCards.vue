@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
-        <ModelItem v-for="model in modelsData" :model="model" />
+        <repo-item v-for="model in modelsData" :repo="model" repo-type="model" />
       </div>
       <div v-show="totalModels > perPage">
         <el-pagination background
@@ -64,7 +64,7 @@
   import { onMounted, ref } from 'vue';
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
-  import ModelItem from './ModelItem.vue'
+  import RepoItem from '../shared/RepoItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
   import { useI18n } from 'vue-i18n'
 

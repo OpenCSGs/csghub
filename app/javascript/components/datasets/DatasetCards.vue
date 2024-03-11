@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
-        <DatasetItem v-for="dataset in datasetsData" :dataset="dataset" />
+        <repo-item v-for="dataset in datasetsData" :repo="dataset" repo-type="dataset" />
       </div>
       <div v-show="totalDatasets > perPage">
         <el-pagination background
@@ -64,7 +64,7 @@
   import { onMounted, ref } from 'vue';
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
-  import DatasetItem from './DatasetItem.vue'
+  import RepoItem from '../shared/RepoItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
   import { useI18n } from 'vue-i18n'
 
