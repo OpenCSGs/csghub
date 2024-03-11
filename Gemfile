@@ -55,6 +55,8 @@ gem 'aws-sdk-s3', '~> 1'
 
 gem 'faraday'
 gem 'typhoeus'
+gem 'faraday-multipart'
+gem 'faraday-follow_redirects'
 
 # pagination
 gem 'kaminari'
@@ -75,8 +77,6 @@ gem "ruby-pinyin", "~> 0.5.0"
 gem 'openid_connect'
 
 gem 'administrate-field-jsonb'
-
-gem 'faraday-multipart'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
