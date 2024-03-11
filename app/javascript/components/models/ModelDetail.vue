@@ -5,6 +5,8 @@
         :private="model.data.private"
         :license="model.data.license"
         :name="model.data.name"
+        :nickname="model.data.nickname"
+        :desc="model.data.description"
         :path="model.data.path"
         :tags="tags"
         :avatar="avatar"
