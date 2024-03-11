@@ -1,5 +1,6 @@
 import "trix"
 import "@rails/actiontext"
+import "./packs/checkLogin.js"
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"
