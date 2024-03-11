@@ -106,10 +106,6 @@ class ApplicationController < ActionController::Base
     # 确保如果新的用户uuid没有保存，那么我们登录老的用户
     helpers.log_in user.reload
 
-    if user.starhub_synced?
-      setup_jwt_token user.name
-    end
-
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
   end
@@ -145,12 +141,5 @@ class ApplicationController < ActionController::Base
         "![#{alt_text}](#{prefix}#{image_path})"
       end
     end
-  end
-
-  def setup_jwt_token username
-    res = Starhub.api.get_jwt_token(username)
-    token = JSON.parse(res)['data']
-    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
-    cookies['user_token'] = {value: token, domain: current_domain}
   end
 end
