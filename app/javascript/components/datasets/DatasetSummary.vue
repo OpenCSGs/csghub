@@ -49,11 +49,17 @@
     const url = `/internal_api/datasets/${props.namespacePath}/preview`
 
     fetch(url).then((response) => {
-      response.json().then((data) => {
-        previewData.value = data
-      }).catch((error) => {
-        console.error(error)
-      })
+      if (!response.ok) {
+        response.json().then((data) => {
+          console.error(data.message)
+        })
+      } else {
+        response.json().then((data) => {
+          previewData.value = data
+        })
+      }
+    }).catch((error) => {
+      console.error(error)
     })
   }
 
