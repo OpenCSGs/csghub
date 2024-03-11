@@ -21,46 +21,49 @@
         <el-sub-menu index="1" popper-class="popper-submenu">
           <template #title>产品</template>
           <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
-            <span>StarCloud 星云平台</span>
+            <StarCloud />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">
-            <span>StarShip 星舰平台</span>
+            <StarShip />
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2" popper-class="popper-submenu">
           <template #title>方案</template>
           <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">
-            <span>EKB AI 智能企业知识库</span>
+            <EKB />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">
-            <span>StarAIO 大模型一体机</span>
+            <StarAIO />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">
-            <span>Imagen AI 智能图像助手</span>
+            <Imagen />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">
-            <span>StarCode AI 智能编程助手</span>
+            <StarCode />
+          </el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution')" index="Programming">
+            <AllSolution />
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>开发者</template>
-          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1">开源CSGHub</el-menu-item></a>
-          <a :href="llmInference" target="_blank"><el-menu-item index="3-2">开源Inference</el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
-          <a href="/spaces"><el-menu-item index="/spaces">应用空间</el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item index="/docs">文档中心</el-menu-item></a>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1"><CSGHub /></el-menu-item></a>
+          <a :href="llmInference" target="_blank"><el-menu-item index="3-2"><Inference /></el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3"><StarChain /></el-menu-item></a>
+          <a href="/spaces"><el-menu-item index="/spaces"><Space /></el-menu-item></a>
+          <a href="/docs" target="_blank"><el-menu-item index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">算力</el-menu-item>
         <el-sub-menu index="4" popper-class="popper-submenu">
           <template #title>公司</template>
-          <a href="/about"><el-menu-item index="/about">公司介绍</el-menu-item></a>
-          <a href="/partners"><el-menu-item index="/partners">合作伙伴</el-menu-item></a>
-          <a href="/experts"><el-menu-item index="/experts">技术专家</el-menu-item></a>
+          <a href="/about"><el-menu-item index="/about"><About /></el-menu-item></a>
+          <a href="/partners"><el-menu-item index="/partners"><Partners /></el-menu-item></a>
+          <a href="/experts"><el-menu-item index="/experts"><Experts /></el-menu-item></a>
         </el-sub-menu>
         <el-sub-menu index="5" popper-class="popper-submenu">
           <template #title>社区</template>
-          <a href="/campaigns"><el-menu-item index="/campaigns">社区活动</el-menu-item></a>
-          <a href="/daily_papers"><el-menu-item index="/daily_papers">社区文章</el-menu-item></a>
+          <a href="/campaigns"><el-menu-item index="/campaigns"><Campaigns /></el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="/daily_papers"><DailyPapers /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
@@ -129,6 +132,23 @@
 
 <script>
 import ContactUs from "../form/ContactUs.vue";
+import StarCloud from "./menuItem/StarCloud.vue"
+import StarShip from "./menuItem/StarShip.vue"
+import EKB from "./menuItem/EKB.vue"
+import StarAIO from "./menuItem/StarAIO.vue"
+import Imagen from "./menuItem/Imagen.vue"
+import StarCode from "./menuItem/StarCode.vue"
+import AllSolution from "./menuItem/AllSolution.vue"
+import CSGHub from "./menuItem/CSGHub.vue"
+import Inference from "./menuItem/Inference.vue"
+import StarChain from "./menuItem/StarChain.vue"
+import Space from "./menuItem/Space.vue"
+import Doc from "./menuItem/Doc.vue"
+import About from "./menuItem/About.vue"
+import Partners from "./menuItem/Partners.vue"
+import Experts from "./menuItem/Experts.vue"
+import Campaigns from "./menuItem/Campaigns.vue"
+import DailyPapers from "./menuItem/DailyPapers.vue"
 
 export default {
   props: {
@@ -155,6 +175,22 @@ export default {
   },
   components: {
     ContactUs,
+    StarCloud,
+    StarShip,
+    EKB,
+    StarAIO,
+    Imagen,
+    StarCode,
+    AllSolution,
+    CSGHub,
+    Inference,
+    StarChain,
+    Space,
+    Doc,
+    About,
+    Experts,
+    Campaigns,
+    DailyPapers
   },
   methods: {
     routerLink(path){
@@ -196,6 +232,8 @@ export default {
   min-width: 150px;
   .el-menu-item {
     font-size: 16px;
+    height:auto;
+    line-height:24px;
   }
 }
 </style>
