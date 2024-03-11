@@ -164,6 +164,13 @@ module Starhub
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
 
+    def get_jwt_token(username)
+      options = {
+        current_user: username
+      }
+      @client.get("/jwt/token", options)
+    end
+
     # TODO: add more starhub api
 
     private
