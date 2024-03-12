@@ -40,15 +40,9 @@ const props = defineProps({
   dataset: Object,
 })
 
-const nickName = computed(() => {
-  return props.dataset.nickname !== undefined ? props.dataset.nickname : ''
-})
-
-const datasetName = computed(() => {
-  return props.dataset.name || props.dataset.path.split('/')[1]
-})
-
 const getComputed = computed(() => {
+  const nickName = props.dataset.nickname !== undefined ? props.dataset.nickname : ''
+  const datasetName = props.dataset.name || props.dataset.path.split('/')[1]
   const displayName = nickName || datasetName
   const path = props.dataset.path.split('/')[0] + '/' + displayName
 
