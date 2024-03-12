@@ -1,5 +1,5 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -97,6 +97,19 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     }
     sync_upload_file('dataset', options)
     render json: { message: '上传文件成功' }
+  end
+
+  def preview_parquet
+    json_data = Starhub.api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path] })
+    parquet_file_path = JSON.parse(json_data)['data']
+                            .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
+                            .sort_by { |path| path.downcase }.first
+    if parquet_file_path
+      preview_data = Starhub.api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path)
+      render json: preview_data
+    else
+      render json: {}
+    end
   end
 
   private
