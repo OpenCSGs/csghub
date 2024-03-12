@@ -11,8 +11,8 @@
       {{ model.description }}
     </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
-      <span v-if="getTaskTagName">{{ getComputed.taskTag }}</span>
-      <span v-if="getTaskTagName">
+      <span v-if="getComputed.taskTag">{{ getComputed.taskTag }}</span>
+      <span v-if="getComputed.taskTag">
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
