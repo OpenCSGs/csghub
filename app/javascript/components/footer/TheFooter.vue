@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0">
+      <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0 items-center">
         <div class="flex flex-none items-start flex-col gap-y-4">
           <p class="text-base font-semibold">{{ $t('footer.contact') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
@@ -32,7 +32,7 @@
     </div>
 
     <div class="my-2 rounded-lg hidden mlg:block text-center text-sm font-medium pb-10">
-      <img :src="footCode" height=120 width=120 alt="OpenCSG Logo"/>
+      <img class="m-auto" :src="footCode" height=120 width=120 alt="OpenCSG Logo"/>
       <p class="mt-[8px]">{{ $t('footer.wx') }}</p>
     </div>
 
