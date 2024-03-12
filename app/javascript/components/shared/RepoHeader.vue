@@ -32,7 +32,7 @@
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"
     :other-tags="tags.other_tags"
-    prefix="models/"
+    :prefix="`${repoType}s/`"
   />
 </template>
 
