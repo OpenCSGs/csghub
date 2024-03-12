@@ -10,8 +10,8 @@ class User < ApplicationRecord
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
   validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
-  validates_length_of :nickname, maximum: 20
-  validates_length_of :email, maximum: 30
+  validates_length_of :nickname, maximum: 100
+  validates_length_of :email, maximum: 100
   validates :name, format: { with: /\A(?=.{2,50}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
 
