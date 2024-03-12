@@ -53,7 +53,7 @@
         />
       </template>
       <template #community>
-        <community-page :type="repoType === 'model' ? 'Model': 'Dataset'" :localModelId="localRepoId" ></community-page>
+        <community-page :type="repoTypeClass" :localModelId="localRepoId" ></community-page>
       </template>
       <template v-if="settingsVisibility" #settings>
         <model-settings
@@ -93,6 +93,7 @@ import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'
 import EditFile from '../shared/EditFile.vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   localRepoId: String,
@@ -107,6 +108,10 @@ const props = defineProps({
   settingsVisibility: Boolean,
   canWrite: Boolean,
   repoType: String
+})
+
+const repoTypeClass = computed(() => {
+  return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`;
 })
 
 const decodedContent = props.blob?.content || ''
