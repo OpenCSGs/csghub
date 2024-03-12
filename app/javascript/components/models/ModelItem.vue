@@ -41,8 +41,16 @@ const props = defineProps({
   model: Object,
 })
 
+const nickName = computed(() => {
+  return props.model.nickname !== undefined ? props.model.nickname : ''
+})
+
+const modelName = computed(() => {
+  return props.model.name || props.model.path.split('/')[1]
+})
+
 const getComputed = computed(() => {
-  const displayName = props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name
+  const displayName = nickName || modelName
   const path = props.model.path.split('/')[0] + '/' + displayName
 
   const visibility = props.model.private ? '私有' : '公开'

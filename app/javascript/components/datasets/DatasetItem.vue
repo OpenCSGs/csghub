@@ -40,8 +40,16 @@ const props = defineProps({
   dataset: Object,
 })
 
+const nickName = computed(() => {
+  return props.dataset.nickname !== undefined ? props.dataset.nickname : ''
+})
+
+const datasetName = computed(() => {
+  return props.dataset.name || props.dataset.path.split('/')[1]
+})
+
 const getComputed = computed(() => {
-  const displayName = props.dataset.nickname !== undefined && props.dataset.nickname.trim().length > 0 ? props.dataset.nickname : props.dataset.name
+  const displayName = nickName || datasetName
   const path = props.dataset.path.split('/')[0] + '/' + displayName
 
   const visibility = props.dataset.private ? '私有' : '公开'
