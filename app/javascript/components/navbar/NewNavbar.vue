@@ -7,7 +7,7 @@
         </a>
       </div>
     </div>
-    <div class="flex items-center justify-end gap-4 w-full md:gap-0 md:w-[50%]">
+    <div class="flex items-center justify-end gap-4 w-full md:gap-0 xl:w-[30%]">
       <el-menu
         :default-active="activeIndex"
         mode="horizontal"
@@ -142,7 +142,6 @@
 
 <script>
 import ContactUs from "../form/ContactUs.vue";
-import csrfFetch from "../../packs/csrfFetch";
 
 export default {
   props: {

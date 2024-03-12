@@ -18,14 +18,14 @@
         <div class="flex flex-none items-start flex-col gap-y-4">
           <p class="text-base font-semibold">{{ $t('footer.contact') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
-            <p>{{ $t('footer.partner') }}: partner@opencsg.com</p>
-            <p>{{ $t('footer.resume') }}: hr@opencsg.com</p>
-            <p>{{ $t('footer.pr') }}: pr@opencsg.com</p>
-            <p>{{ $t('footer.ir') }}: ir@opencsg.com</p>
+            <p>{{ $t('footer.partner') }}: <br /> partner@opencsg.com</p>
+            <p>{{ $t('footer.resume') }}: <br /> hr@opencsg.com</p>
+            <p>{{ $t('footer.pr') }}: <br /> pr@opencsg.com</p>
+            <p>{{ $t('footer.ir') }}: <br /> ir@opencsg.com</p>
           </div>
         </div>
         <div class="my-2 rounded-lg mlg:w-full mlg:hidden text-center text-sm font-medium">
-          <img :src="footCode" height=100 width=100 alt="OpenCSG Logo"/>
+          <img class="m-auto" :src="footCode" height=100 width=100 alt="OpenCSG Logo"/>
           <p class="mt-[8px]">{{ $t('footer.wx') }}</p>
         </div>
       </div>
