@@ -4,14 +4,14 @@
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div :title="model.path"
            class="model-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">
-        {{ getPath }}
+        {{ getComputed.path }}
       </div>
     </div>
     <p class="h-[40px] w-[399px] sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
       {{ model.description }}
     </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
-      <span v-if="getTaskTagName">{{ getTaskTagName }}</span>
+      <span v-if="getTaskTagName">{{ getComputed.taskTag }}</span>
       <span v-if="getTaskTagName">
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
@@ -23,7 +23,7 @@
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
       </span>
-      <span>{{ visibility }}</span>
+      <span>{{ getComputed.visibility }}</span>
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
@@ -41,17 +41,15 @@ const props = defineProps({
   model: Object,
 })
 
-const getPath = computed(() => {
-  return props.model.path.split('/')[0] + '/' + (props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name)
-})
+const getComputed = computed(() => {
+  let path = props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name
+  path = props.model.path.split('/')[0] + '/' + path
 
-const visibility = computed(() => {
-  return props.model.private ? '私有' : '公开'
-})
+  const visibility = props.model.private ? '私有' : '公开'
 
-const getTaskTagName = computed(() => {
-  const taskTag = (props.model.tags || []).find(tag => tag.category === "task")
-  return taskTag ? taskTag["show_name"] : null
+  let taskTag = (props.model.tags || []).find(tag => tag.category === "task")
+  taskTag = taskTag? taskTag["show_name"] : null
+  return { path: path, visibility: visibility, taskTag: taskTag }
 })
 </script>
 
