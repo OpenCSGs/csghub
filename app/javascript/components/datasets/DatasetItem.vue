@@ -41,8 +41,8 @@ const props = defineProps({
 })
 
 const getComputed = computed(() => {
-  const displayNam = props.dataset.nickname !== undefined && props.dataset.nickname.trim().length > 0 ? props.dataset.nickname : props.dataset.name
-  path = props.dataset.path.split('/')[0] + '/' + displayNam
+  const displayName = props.dataset.nickname !== undefined && props.dataset.nickname.trim().length > 0 ? props.dataset.nickname : props.dataset.name
+  const path = props.dataset.path.split('/')[0] + '/' + displayName
 
   const visibility = props.dataset.private ? '私有' : '公开'
 

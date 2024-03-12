@@ -43,7 +43,7 @@ const props = defineProps({
 
 const getComputed = computed(() => {
   const displayName = props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name
-  path = props.model.path.split('/')[0] + '/' + displayName
+  const path = props.model.path.split('/')[0] + '/' + displayName
 
   const visibility = props.model.private ? '私有' : '公开'
 
