@@ -42,7 +42,7 @@ const props = defineProps({
 })
 
 const getPath = computed(() => {
-  return props.model.path.split('/')[0] + '/' + (props.model.nickname === '' ? props.model.name : props.model.nickname)
+  return props.model.path.split('/')[0] + '/' + (props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name)
 })
 
 const visibility = computed(() => {

@@ -41,7 +41,7 @@ const props = defineProps({
 })
 
 const getPath = computed(() => {
-  return props.dataset.path.split('/')[0] + '/' + (props.dataset.nickname === '' ? props.dataset.name : props.dataset.nickname)
+  return props.dataset.path.split('/')[0] + '/' + (props.dataset.nickname !== undefined && props.dataset.nickname.trim().length > 0 ? props.dataset.nickname : props.dataset.name)
 })
 
 const visibility = computed(() => {
