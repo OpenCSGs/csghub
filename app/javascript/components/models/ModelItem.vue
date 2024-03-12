@@ -4,7 +4,7 @@
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div :title="model.path"
            class="model-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">
-        {{ getComputed.path }}
+        {{ getComputed.displayNam }}
       </div>
     </div>
     <p class="h-[40px] w-[399px] sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
@@ -42,14 +42,14 @@ const props = defineProps({
 })
 
 const getComputed = computed(() => {
-  let path = props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name
-  path = props.model.path.split('/')[0] + '/' + path
+  let displayNam = props.model.nickname !== undefined && props.model.nickname.trim().length > 0 ? props.model.nickname : props.model.name
+  displayNam = props.model.path.split('/')[0] + '/' + displayNam
 
   const visibility = props.model.private ? '私有' : '公开'
 
   let taskTag = (props.model.tags || []).find(tag => tag.category === "task")
   taskTag = taskTag? taskTag["show_name"] : null
-  return { path: path, visibility: visibility, taskTag: taskTag }
+  return { displayNam: displayNam, visibility: visibility, taskTag: taskTag }
 })
 </script>
 
