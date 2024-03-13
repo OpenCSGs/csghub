@@ -64,7 +64,7 @@
     <div class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
       <div class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
-          <el-avatar :size="24" class="mr-2" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
+          <el-avatar :size="24" class="mr-2" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           <a href="#" class="text-[#303133] hover:underline">{{ lastCommit.author_name }}</a>
         </div>
         <a href="#" class="mr-2 text-[#606266] truncate hover:underline">{{ lastCommit.message }}</a>
@@ -92,8 +92,7 @@
           <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">预览</div>
           <div v-if="canWrite" class="flex items-center gap-1">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 10.5H2M8 2C7.875 2.875 8.625 3.625 9.5 3.5M3.5 8L3.57005 7.71979C3.73008 7.07967 3.8101 6.7596 3.93877 6.4612C4.05301 6.19627 4.19557 5.94448 4.36397 5.71022C4.55366 5.44635 4.78694 5.21307 5.25351 4.74651L8.25006 1.74999C8.66428 1.33578 9.33585 1.33579 9.75005 1.75001V1.75001C10.1642 2.16422 10.1642 2.83577 9.75003 3.24997L6.75349 6.24651C6.28693 6.71307 6.05364 6.94636 5.78978 7.13604C5.55553 7.30443 5.30374 7.44699 5.03881 7.56123C4.74041 7.6899 4.42035 7.76991 3.78023 7.92994L3.5 8Z"
-                    stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 10.5H2M8 2C7.875 2.875 8.625 3.625 9.5 3.5M3.5 8L3.57005 7.71979C3.73008 7.07967 3.8101 6.7596 3.93877 6.4612C4.05301 6.19627 4.19557 5.94448 4.36397 5.71022C4.55366 5.44635 4.78694 5.21307 5.25351 4.74651L8.25006 1.74999C8.66428 1.33578 9.33585 1.33579 9.75005 1.75001V1.75001C10.1642 2.16422 10.1642 2.83577 9.75003 3.24997L6.75349 6.24651C6.28693 6.71307 6.05364 6.94636 5.78978 7.13604C5.55553 7.30443 5.30374 7.44699 5.03881 7.56123C4.74041 7.6899 4.42035 7.76991 3.78023 7.92994L3.5 8Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <a :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`">编辑</a>
           </div>
@@ -101,8 +100,8 @@
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div class="p-4">
-        <MarkdownViewer v-if="['jpg', 'png', 'jpeg', 'gif', 'svg', 'md'].includes(fileType)" :content="content"/>
-        <CodeViewer v-else :extension="fileType" :content="content"/>
+        <MarkdownViewer v-if="['jpg', 'png', 'jpeg', 'gif', 'svg', 'md'].includes(fileType)" :content="content" />
+        <CodeViewer v-else :extension="fileType" :content="content" />
       </div>
     </div>
     <div v-if="lfs" class="border border-t-0 border-[#DCDFE6] rounded-b">
