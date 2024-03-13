@@ -15,6 +15,10 @@
           :namespace-path="modelDetail.path"
           :size="blob.size"
           :can-write="canWrite"
+          :path="blob.path"
+          :lfs="blob.lfs"
+          :lfs-pointer-size="blob.lfs_pointer_size"
+          :lfs-relative-path="blob.lfs_relative_path"
         />
       </template>
       <template #files v-if="actionName === 'new_file'">

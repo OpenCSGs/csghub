@@ -103,25 +103,9 @@
         <a v-else-if="canPreview(file)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
           {{ file.name }}
         </a>
-
-        <!--lfs-->
-
         <a v-else :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
           {{ file.name }}
         </a>
-
-<!--        <el-popover-->
-<!--          v-else-->
-<!--          placement="top"-->
-<!--          :width="270"-->
-<!--          trigger="hover"-->
-<!--          effect="dark"-->
-<!--          content="暂不支持预览，请通过 git clone 下载"-->
-<!--        >-->
-<!--          <template #reference>-->
-<!--            <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>-->
-<!--          </template>-->
-<!--        </el-popover>-->
         <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
       </div>
       <div class="text-sm text-[#606266] flex-shrink-0 text-right w-[8%]">

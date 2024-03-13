@@ -9,6 +9,10 @@
     @change-branch="changeBranch"
     :size = "size"
     :can-write="canWrite"
+    :path="path"
+    :lfs="lfs"
+    :lfs-pointer-size="lfsPointerSize"
+    :lfs-relative-path="lfsRelativePath"
   />
 </template>
 
@@ -22,8 +26,12 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
-    size: String,
-    canWrite: Boolean
+    size: Number,
+    canWrite: Boolean,
+    path: String,
+    lfs: Boolean,
+    lfsPointerSize: Number,
+    lfsRelativePath: String
   })
 
   const changeBranch = (branch) => {
