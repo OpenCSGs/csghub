@@ -1,20 +1,22 @@
-class InternalApi::SpacesController < InternalApi::ApplicationController
+class InternalApi::ApplicationSpacesController < InternalApi::ApplicationController
   before_action :authenticate_user
 
+  include Api::SyncStarhubHelper
+  include Api::BuildCommitHelper
+  include Api::FileOptionsHelper
+  include Api::RepoValidation
+
   def create
-    res = validate_owner
-    if !res[:valid]
-      return render json: { message: res[:message] }, status: :unprocessable_entity
-    end
-    space = current_user.created_application_spaces.build(create_params)
+    application_space = current_user.created_application_spaces.build(create_params)
     if params[:file].present?
       cover_image_code = AwsS3.instance.upload 'application-space-cover-image', params[:file]
-      space.cover_image = cover_image_code
+      cover_image_url = AwsS3.instance.download cover_image_code
+      application_space.cover_image = cover_image_url
     end
-    if space.save
-      render json: { path: space.path, message: '应用空间创建成功!' }, status: :created
+    if application_space.save
+      render json: { path: application_space.path, message: I18n.t('application_space.space_created') }, status: :created
     else
-      render json: { message: space.errors.full_messages.to_sentence }, status: :unprocessable_entity
+      render json: { message: application_space.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
@@ -22,17 +24,5 @@ class InternalApi::SpacesController < InternalApi::ApplicationController
 
   def create_params
     params.permit(:name, :nickname, :desc, :sdk, :cloud_resource, :owner_id, :owner_type, :visibility, :license)
-  end
-
-  def validate_owner
-    if params[:owner_type] == 'User' && current_user.id.to_i != params[:owner_id].to_i
-      return { valid: false, message: '用户不存在' }
-    elsif params[:owner_type] == 'Organization'
-      org = current_user.organizations.find_by(id: params[:owner_id])
-      if !org || current_user.org_role(org) == 'read'
-        return { valid: false, message: '组织不存在或无权限' }
-      end
-    end
-    { valid: true }
   end
 end
