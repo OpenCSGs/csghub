@@ -12,7 +12,7 @@
       <span class="max-w-full break-words">{{nickname}}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
     </div>
-    <div v-if="repoType === 'model'"
+    <div v-else
          class="flex flex-wrap w-full gap-[8px] items-center mb-[16px]"
     >
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
