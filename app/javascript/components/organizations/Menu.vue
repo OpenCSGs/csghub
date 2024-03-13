@@ -10,12 +10,12 @@
             <div class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-[#909399] leading-[24px]" :title="homepage">{{homepage}}</div>
           </div>
         </div>
-        <div class="p-[16px] text-[20px] leading-[30px] text-[#344054]">组织设置</div>
+        <div class="p-[16px] text-[20px] leading-[30px] text-[#344054]">{{ $t('organization.orgSetting') }}</div>
         <div class="flex flex-col">
           <a  class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-[#667085] leading-[24px] cursor-pointer"
              :class="menuClass(`/organizations/${this.name}/settings`)"
           >
-              组织信息
+          {{ $t('organization.orgInfo') }}
           </a>
         </div>
       </div>

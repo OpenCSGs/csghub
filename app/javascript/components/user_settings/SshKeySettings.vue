@@ -11,10 +11,10 @@
       <h3 class="text-[#303133] text-[20px] font-[600]">SSH Keys</h3>
       <button @click="centerDialogVisible = true"
               class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]">
-        添加 SSH Key
+        {{ $t('sshKey.addSshKey') }}
       </button>
       <div v-if="theSshKeys === '[]'"
-           class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">现在还没有添加SSH key到您的账户
+           class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">{{ $t('sshKey.noKeyTips') }}
       </div>
       <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
                     :ssh-key-name="sshkey.name"
@@ -22,16 +22,16 @@
                     :ssh-key-id="sshkey.id"
                     :create-time="sshkey.created_at">
       </ssh-key-card>
-      <el-dialog v-model="centerDialogVisible" title="添加 SSH Key" width="30%" class="dialogWidth"
+      <el-dialog v-model="centerDialogVisible" :title="this.$t('sshKey.addSshKey')" width="30%" class="dialogWidth"
                  style="border-radius: 0.5rem;" left>
 
         <el-form :model="formData" :rules="formRules" ref="formRules">
           <div class="mb-[16px]">
-            <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 名称 <span class="text-red-400">*</span></p>
+            <p class="text-[#303133] text-[14px] mb-[8px]">{{ $t('sshKey.sshKeyName') }} <span class="text-red-400">*</span></p>
             <el-input v-model="theSshKeyName" placeholder="Key" maxlength="20"/>
           </div>
           <div>
-            <p class="text-[#303133] text-[14px] mb-[8px]"> SSH Key 内容 <span class="text-red-400">*</span></p>
+            <p class="text-[#303133] text-[14px] mb-[8px]">{{ $t('sshKey.sshKeyContent') }}<span class="text-red-400">*</span></p>
             <el-form-item prop="theSshKey">
               <el-input
                   v-model="formData.theSshKey"
@@ -46,7 +46,7 @@
           <span class="dialog-footer">
             <el-button @click="centerDialogVisible = false">Cancel</el-button>
             <el-button type="primary" @click="submitSshKey">
-              添加
+              {{ $t('all.add') }}
             </el-button>
         </span>
         </template>
@@ -113,11 +113,11 @@ export default {
 
     submitSshKey() {
       if (this.theSshKeyName == '') {
-        ElMessage({message: "请您填写SSH Key 名称", type: "warning"})
+        ElMessage({message: this.$t('sshKey.nameWarning'), type: "warning"})
         return
       }
       if (this.formData.theSshKey == '') {
-        ElMessage({message: "请您填写SSH Key 内容", type: "warning"})
+        ElMessage({message: this.$t('sshKey.contentWarning'), type: "warning"})
         return
       }
 
@@ -162,7 +162,7 @@ export default {
         setTimeout(() => {
           window.location.href = "/settings/ssh-keys"
         }, 1000);
-        ElMessage({message: "添加成功", type: "success"})
+        ElMessage({message: this.$t('all.addSuccess'), type: "success"})
       }
     },
   },
