@@ -3,11 +3,12 @@
     <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
   <% end %>
 </p>
-<dataset-cards
+<repo-cards
   task-tags="<%= @task_tags.to_json %>"
   framework-tags="<%= @framework_tags.to_json %>"
   license-tags="<%= @license_tags.to_json %>"
   selected-tag="<%= params[:tag] %>"
   selected-tag-type="<%= params[:tag_type] %>"
+  repo-type="dataset"
 >
-</dataset-cards>
+</repo-cards>
