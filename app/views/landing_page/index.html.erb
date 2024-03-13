@@ -35,7 +35,7 @@
           <span>模型</span>
         </p>
         <% @hot_models.each do |model| %>
-          <model-item class="w-[560px]" :model="<%= model.to_json %>"></model-item>
+          <repo-item class="w-[560px]" :repo="<%= model.to_json %>" repo-type="model"></repo-item>
         <% end %>
         <div class="w-full relative flex items-center">
           <div class="flex-grow border border-[#EAECF0]"></div>
@@ -55,7 +55,7 @@
           <span>数据集</span>
         </p>
         <% @hot_datasets.each do |dataset| %>
-          <dataset-item class="w-[560px]" :dataset="<%= dataset.to_json %>"></dataset-item>
+          <repo-item class="w-[560px]" :repo="<%= dataset.to_json %>" repo-type="dataset"></repo-item>
         <% end %>
         <div class="w-full relative flex items-center">
           <div class="flex-grow border border-[#EAECF0]"></div>

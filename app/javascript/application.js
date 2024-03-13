@@ -53,6 +53,7 @@ import DailyPaperIndex from "./components/daily_paper/Index.vue"
 import DailyPaperShow from "./components/daily_paper/Show.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
+import RepoItem from "./components/shared/RepoItem.vue"
 
 const app = createApp({
   components: {
@@ -95,7 +96,8 @@ const app = createApp({
     DailyPaperIndex,
     DailyPaperShow,
     ProfileRepoList,
-    RepoCards
+    RepoCards,
+    RepoItem
   },
   provide:{
     defaultTags: DefaultTags
