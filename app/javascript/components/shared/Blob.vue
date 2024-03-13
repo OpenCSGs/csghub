@@ -9,14 +9,12 @@
               <circle cx="3.25" cy="9.5" r="1.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M3.25 4L3.25 7.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="3.25" cy="2.25" r="1.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3.25 7.75V7.75C3.25 6.64543 4.14543 5.75 5.25 5.75H7C7.9665 5.75 8.75 4.9665 8.75 4V4"
-                    stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3.25 7.75V7.75C3.25 6.64543 4.14543 5.75 5.25 5.75H7C7.9665 5.75 8.75 4.9665 8.75 4V4" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             {{ currentBranch }}
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}
-                </el-dropdown-item>
+                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -26,21 +24,20 @@
             <a :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`">{{ namespacePath.split('/')[1] }}</a>
           </el-breadcrumb-item>
           <el-breadcrumb-item v-for="path, index in breadcrumb" :key="path">
-            <a :href="`/${prefixPath}/${namespacePath}/${ index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`">{{extractNameFromPath(path) }}</a>
+            <a :href="`/${prefixPath}/${namespacePath}/${ index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`">{{ extractNameFromPath(path) }}</a>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="flex items-center text-sm text-[#606266]">
         <div class="flex items-center py-[1px] md:hidden">
-          <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
+          <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 contributors
         </div>
         <!-- Todo 暂时先隐藏 -->
         <a href="#" class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden hidden">
           <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <g clip-path="url(#clip0_3745_32637)">
-              <path d="M7.00033 4.6665V6.99984L8.75033 8.1665M7.00033 12.8332C3.77866 12.8332 1.16699 10.2215 1.16699 6.99984C1.16699 3.77818 3.77866 1.1665 7.00033 1.1665C10.222 1.1665 12.8337 3.77818 12.8337 6.99984C12.8337 10.2215 10.222 12.8332 7.00033 12.8332Z"
-                    stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.00033 4.6665V6.99984L8.75033 8.1665M7.00033 12.8332C3.77866 12.8332 1.16699 10.2215 1.16699 6.99984C1.16699 3.77818 3.77866 1.1665 7.00033 1.1665C10.222 1.1665 12.8337 3.77818 12.8337 6.99984C12.8337 10.2215 10.222 12.8332 7.00033 12.8332Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
             <defs>
               <clipPath id="clip0_3745_32637">
