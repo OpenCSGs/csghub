@@ -30,7 +30,7 @@ import NewDataset from "./components/datasets/NewDataset.vue"
 import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
-import NewSpace from "./components/spaces/NewSpace.vue"
+import NewApplicationSpace from "./components/spaces/NewApplicationSpace.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 
@@ -51,7 +51,7 @@ const app = createApp({
     NewDataset,
     OrganizationDetail,
     OnPremiseFooter,
-    NewSpace,
+    NewApplicationSpace,
     ProfileRepoList,
     OrganizationSettings,
     RepoCards
