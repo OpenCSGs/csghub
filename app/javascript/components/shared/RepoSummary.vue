@@ -36,7 +36,7 @@
     downloadCount: Number,
     currentBranch: String,
     widgetType: String,
-    inferenceStatus: String
+    inferenceStatus: String,
     repoType: String
   })
 
