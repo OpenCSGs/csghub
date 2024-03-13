@@ -1,4 +1,4 @@
-class SpacesController < ApplicationController
+class ApplicationSpacesController < ApplicationController
   before_action :authenticate_user
 
   def new
