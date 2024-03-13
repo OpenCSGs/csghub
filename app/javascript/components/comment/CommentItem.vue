@@ -20,6 +20,7 @@
   import { useCookies } from "vue3-cookies";
   import { ElMessage, ElMessageBox } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { useI18n } from 'vue-i18n'
 
   const { cookies } = useCookies();
 
@@ -34,12 +35,14 @@
     },
   });
 
+  const { t } = useI18n();
+
   const emit = defineEmits(['deleteComment']);
 
   const confirmDelete = async (commentId) => {
-    const confirmResult = await ElMessageBox.confirm('确认删除此评论？', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
+    const confirmResult = await ElMessageBox.confirm(t('comment.sureDel'), t('all.tip'), {
+      confirmButtonText: t('all.confirm'),
+      cancelButtonText: t('all.cancel'),
       type: 'warning',
     });
 

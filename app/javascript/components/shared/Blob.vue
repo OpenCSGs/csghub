@@ -14,7 +14,7 @@
             {{ currentBranch }}
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}</el-dropdown-item>
+                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="changeBranch(branch.name)">{{ branch.name }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -47,15 +47,6 @@
           </svg>
           history: 4 commits
         </a>
-<!--        <el-dropdown split-button>-->
-<!--            + 添加文件-->
-<!--            <template #dropdown>-->
-<!--              <el-dropdown-menu>-->
-<!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
-<!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
-<!--              </el-dropdown-menu>-->
-<!--            </template>-->
-<!--          </el-dropdown>-->
       </div>
     </div>
 
@@ -147,6 +138,12 @@
     const parts = props.currentPath.split('.')
     const extension = parts[parts.length - 1]
     fileType.value = extension
+  }
+
+  const changeBranch = (branch) => {
+    if (branch !== props.currentBranch) {
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${branch}`
+    }
   }
 
   updateBreadcrumb()
