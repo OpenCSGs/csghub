@@ -15,7 +15,7 @@ export default {
       "Governance": "Governance",
       "GovernanceText": "Making Large Language Models more user-friendly, customizing solutions for vertical industries, enabling every company and individual to have their own LLMs",
       "Empowerment": "Empowerment",
-      "EmpowermentText": "Harnessing the full potential of LLMs through natural language, fundamentally transforming the approach to software development, empowering individuals to design, create, implement, and swiftly integrate software products into existing systems.""
+      "EmpowermentText": "Harnessing the full potential of LLMs through natural language, fundamentally transforming the approach to software development, empowering individuals to design, create, implement, and swiftly integrate software products into existing systems."
     },
     "team": {
       "Introduction": "Team Profile",
