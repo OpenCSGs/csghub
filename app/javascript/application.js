@@ -27,14 +27,11 @@ import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
 import NewDataset from "./components/datasets/NewDataset.vue"
-import ModelItem from "./components/models/ModelItem.vue"
-import ModelCards from "./components/models/ModelCards.vue"
-import DatasetCards from "./components/datasets/DatasetCards.vue"
-import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
+import RepoCards from "./components/shared/RepoCards.vue"
 
 const app = createApp({
   components: {
@@ -51,14 +48,11 @@ const app = createApp({
     NewModel,
     TagSidebar,
     NewDataset,
-    ModelItem,
-    DatasetItem,
-    ModelCards,
-    DatasetCards,
     OrganizationDetail,
     OnPremiseFooter,
     ProfileRepoList,
-    OrganizationSettings
+    OrganizationSettings,
+    RepoCards
   },
   provide:{
     defaultTags: DefaultTags
