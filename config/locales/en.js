@@ -5,17 +5,17 @@ export default {
   },
   "about": {
     "hero": {
-      "headTitle": "Empowering everyone with Large Language Models",
-      "headDesc": "Large Language Models motivate everyone to drive technology-fueled innovation.",
-      "JoinC": "Join the community"
+      "headTitle": "Empowering Everyone with Large LanguageModels",
+      "headDesc": "Unleashing Innovation and Advancing Evolutionary AI for Human Society",
+      "JoinC": "Join the Community"
     },
     "feature": {
       "Integration": "Integration",
-      "IntegrationText": "By leveraging natural language to enable the integration of hybrid cloud resources, natural language processing technology can streamline workflows, minimize IT infrastructure costs and improve team collaboration.",
+      "IntegrationText": "By leveraging natural language for integrating and utilizing hybrid cloud resources, natural language processing technology can streamline workflows, reduce IT infrastructure costs, and enhance collaboration efficiency among teams.",
       "Governance": "Governance",
-      "GovernanceText": "Make large language models easier to use, customize solutions for vertical industries, so that every company and individual can have their own large language models.",
+      "GovernanceText": "Making Large Language Models more user-friendly, customizing solutions for vertical industries, enabling every company and individual to have their own LLMs",
       "Empowerment": "Empowerment",
-      "EmpowermentText": "Revolutionize software development by harnessing the potential of Large Language Models using natural language to empower everyone to design, create, implement, and rapidly integrate software products into existing systems."
+      "EmpowermentText": "Harnessing the full potential of LLMs through natural language, fundamentally transforming the approach to software development, empowering individuals to design, create, implement, and swiftly integrate software products into existing systems.""
     },
     "team": {
       "Introduction": "Team Profile",
@@ -261,7 +261,7 @@ export default {
     "llm_inference_open": "Open source Inference",
     "space": "Space",
     "docs": "Documents",
-    "computer": "Computing power",
+    "computer": "Computing resources",
     "enterprise": "Company",
     "about": "Company profile",
     "partner": "Business partner",
