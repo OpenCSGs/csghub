@@ -19,11 +19,13 @@ class ApplicationSpace < ApplicationRecord
   private
 
   def sync_created_space_to_starhub_server
-    res = Starhub.api.create_application_spaces(creator.name,
-                                                name,
-                                                owner.name,
-                                                sdk,
-                                                { license: license, private: space_private? })
+    res = Starhub.api.create_application_space(creator.name, name, owner.name, nickname, desc,
+                                               { license: license,
+                                                 private: space_private?,
+                                                 cover_image_url: cover_image,
+                                                 hardware: cloud_resource,
+                                                 sdk: sdk
+                                               })
     raise StarhubError, res.body unless res.success?
   end
 
