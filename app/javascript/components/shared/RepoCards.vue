@@ -31,7 +31,7 @@
           />
           <el-select v-model="sortSelection"
                      @change="reloadRepos"
-                     class="w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
+                     class="!w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
                      size="large"
           >
             <el-option
