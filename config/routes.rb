@@ -57,6 +57,8 @@ Rails.application.routes.draw do
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
 
+    resources :codes, only: [:create]
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -83,6 +85,7 @@ Rails.application.routes.draw do
 
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
+    resources :codes, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
 
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
