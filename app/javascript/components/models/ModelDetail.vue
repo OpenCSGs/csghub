@@ -5,6 +5,8 @@
         :private="model.data.private"
         :license="model.data.license"
         :name="model.data.name"
+        :nickname="model.data.nickname"
+        :desc="model.data.description"
         :path="model.data.path"
         :tags="tags"
         :avatar="avatar"
@@ -14,7 +16,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <model-tabs
-      :content="content.data"
+      :blob="blob.data"
       :local-model-id="localModelId"
       :model-path="model.data.path"
       :model-nickname="localModel.nickname"
@@ -52,7 +54,7 @@ const props = defineProps({
   tags: Object,
   currentBranch: String,
   currentPath: String,
-  content: Object,
+  blob: Object,
   actionName: String,
   settingsVisibility: Boolean,
   avatar: String,

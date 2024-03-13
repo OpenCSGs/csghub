@@ -5,6 +5,8 @@
         :private="dataset.data.private"
         :license="dataset.data.license"
         :name="dataset.data.name"
+        :nickname="dataset.data.nickname"
+        :desc="dataset.data.description"
         :path="dataset.data.path"
         :avatar="avatar"
         :tags="tags"
@@ -14,7 +16,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <dataset-tabs
-      :content="content.data"
+      :blob="blob.data"
       :local-dataset-id="localDatasetId"
       :dataset-path="dataset.data.path"
       :dataset-nickname="localDataset.nickname"
@@ -48,7 +50,7 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  content: Object,
+  blob: Object,
   actionName: String,
   avatar: String,
   settingsVisibility: Boolean,

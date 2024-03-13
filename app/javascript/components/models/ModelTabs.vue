@@ -7,12 +7,14 @@
       </template>
       <template #files v-if="actionName === 'blob'">
         <model-blob
-          :content="content"
-          :last-commit="lastCommit"
+          :content="decodedContent"
+          :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="modelDetail.path"
+          :size="blob.size"
+          :can-write="canWrite"
         />
       </template>
       <template #files v-if="actionName === 'new_file'">
@@ -21,6 +23,16 @@
           :repo-name="modelDetail.name"
           :namespace-path="modelDetail.path"
           originalCodeContent=""
+        />
+      </template>
+      <template #files v-if="actionName === 'edit_file'">
+        <edit-file
+          :current-branch="currentBranch"
+          :current-path="currentPath"
+          :repo-name="modelDetail.name"
+          :namespace-path="modelDetail.path"
+          :originalCodeContent="decodedContent"
+          :sha="blob.sha"
         />
       </template>
       <template #files v-if="actionName === 'upload_file'">
@@ -72,6 +84,7 @@ import Settings from './ModelSettings.vue'
 import ModelBlob from './ModelBlob.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
+import EditFile from '../shared/EditFile.vue'
 
 const props = defineProps({
   localModelId: String,
@@ -86,11 +99,13 @@ const props = defineProps({
   currentBranch: String,
   currentPath: String,
   defaultTab: String,
-  content: String,
+  blob: Object,
   actionName: String,
   tags: Object,
   tagList: Object,
   settingsVisibility: Boolean,
   canWrite: Boolean
 })
+
+const decodedContent = props.blob?.content || ''
 </script>
