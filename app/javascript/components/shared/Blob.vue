@@ -92,7 +92,7 @@
         <CodeViewer v-else :extension="fileType" :content="content" />
       </div>
     </div>
-    <div v-if="lfs" class="border border-t-0 border-[#DCDFE6] rounded-b">
+    <div v-else class="border border-t-0 border-[#DCDFE6] rounded-b">
       <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-end border-b border-[#DCDFE6]">
         <div>{{ formatBytes(size) }}</div>
       </div>
