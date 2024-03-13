@@ -28,7 +28,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
-  import QuestionAnswer from './widgets/QuestionAnswer.vue';
+  import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
 
   const props = defineProps({
