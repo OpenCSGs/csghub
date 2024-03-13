@@ -25,7 +25,7 @@ Rails.application.routes.draw do
         post '/new-members', to: 'organizations#new_members'
       end
     end
-    resources :spaces, only: [:create]
+    resources :application_spaces, only: [:create]
     resources :comments, only: [:create, :destroy, :index]
     resources :ssh_keys, only: [:create, :destroy]
     resources :git_token, only: [] do
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :spaces, only: [:new]
+    resources :application_spaces, only: [:new]
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
