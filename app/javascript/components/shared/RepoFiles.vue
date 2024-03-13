@@ -6,11 +6,6 @@
     :namespace-path="namespacePath"
     :can-write="canWrite"
     @change-branch="changeBranch"
-    :size = "size"
-    :path="path"
-    :lfs="lfs"
-    :lfs-pointer-size="lfsPointerSize"
-    :lfs-relative-path="lfsRelativePath"
   />
 </template>
 
@@ -22,12 +17,7 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
-    size: Number,
     canWrite: Boolean,
-    path: String,
-    lfs: Boolean,
-    lfsPointerSize: Number,
-    lfsRelativePath: String,
     repoType: String
   })
 
