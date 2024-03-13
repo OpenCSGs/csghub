@@ -14,16 +14,16 @@
     </div>
     <div class="pt-[16px]"><p class="break-all text-[#606266] text-sm">{{ theSshKey }}</p></div>
   </div>
-  <el-dialog v-model="deleteDialogVisible" title="删除 Key “key name”" width="30%" class="dialogWidth"
+  <el-dialog v-model="deleteDialogVisible" :title="this.$t('sshKey.delKeyName')" width="30%" class="dialogWidth"
              style="border-radius: 0.5rem;" left>
     <div class="flex items-center justify-center h-[108px]">
-      <p>你确定要从你的帐户中删除此密钥吗？此操作无法撤消。</p>
+      <p>{{ $t('sshKey.sureDelKey') }}</p>
     </div>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="deleteDialogVisible = false">Cancel</el-button>
         <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyId)">
-          确认
+          {{ $t('all.confirm') }}
         </el-button>
       </span>
     </template>
@@ -88,7 +88,7 @@ export default {
         setTimeout(() => {
           window.location.href = "/settings/ssh-keys"
         }, 1000)
-        ElMessage({message: "删除成功", type: "success"})
+        ElMessage({message: this.$t('all.delSuccess'), type: "success"})
       }
     }
   }

@@ -2,7 +2,7 @@
   <div class="InviteMember">
     <button v-if="admin" @click="dialogVisible = true" class="px-[12px] py-[8px] my-[16px] flex gap-[4px] rounded-md border border-gray-300 text-[14px]">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.99984 12.9167H6.24984C5.08687 12.9167 4.50538 12.9167 4.03222 13.0602C2.96688 13.3834 2.1332 14.217 1.81004 15.2824C1.6665 15.7555 1.6665 16.337 1.6665 17.5M15.8332 17.5V12.5M13.3332 15H18.3332M12.0832 6.25C12.0832 8.32107 10.4042 10 8.33317 10C6.2621 10 4.58317 8.32107 4.58317 6.25C4.58317 4.17893 6.2621 2.5 8.33317 2.5C10.4042 2.5 12.0832 4.17893 12.0832 6.25Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>邀请</span>
+      <span>{{ $t('organization.invite.title') }}</span>
     </button>
     <el-dialog v-model="dialogVisible" :style="{ borderRadius: '10px' }" width="450" class="invite_dialog">
       <template #header="{ close }">
@@ -14,13 +14,13 @@
         </div>
       </template>
       <div class="relative">
-        <div class="text-[18px] leading-[28px] text-[#101828]">邀请新成员</div>
-        <span class="text-[14px] leading-[20px] text-[#475467] font-light">你正在邀请新成员到组织 <span class="font-bold">{{ orgName }}</span></span>
+        <div class="text-[18px] leading-[28px] text-[#101828]">{{ $t('organization.invite.inviteNew') }}</div>
+        <span class="text-[14px] leading-[20px] text-[#475467] font-light">{{ $t('organization.invite.inviteDesc') }}  <span class="font-bold">{{ orgName }}</span></span>
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-[#344054] text-[14px] mb-[6px]">角色</p>
-              <el-select v-model="userRoleInput" placeholder="选择角色" size="large" class="w-full">
+              <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('all.role') }}</p>
+              <el-select v-model="userRoleInput" :placeholder="this.$t('all.select')" size="large" class="w-full">
                 <el-option
                   v-for="item in roleMappings"
                   :key="item.value"
@@ -29,7 +29,7 @@
                 />
               </el-select>
             </div>
-            <p class="text-[#344054] text-[14px] mb-[6px]">用户名</p>
+            <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('all.userName') }}</p>
             <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
               <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
                 <span v-for="user in selectedUsers" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
@@ -56,9 +56,9 @@
       </div>
       <template #footer>
         <span class="flex justify-between">
-          <el-button class="w-[50%]" size="large" @click="dialogVisible = false">取消</el-button>
+          <el-button class="w-[50%]" size="large" @click="dialogVisible = false">{{ $t('all.cancel') }}</el-button>
           <el-button class="w-[50%]" size="large" type="primary" @click="confirmInviteNewMember">
-            确认
+            {{ $t('all.confirm') }}
           </el-button>
         </span>
       </template>
@@ -70,6 +70,7 @@
   import { ref } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js';
   import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
 
   const emit = defineEmits(['resetMemberList'])
 
@@ -78,6 +79,7 @@
     admin: Boolean
   })
 
+  const { t } = useI18n();
   const dialogVisible = ref(false)
   const userNameInput = ref('')
   const userRoleInput = ref('read')
@@ -144,7 +146,7 @@
       emit('resetMemberList', selectedUsers.value, userRoleInput.value)
       dialogVisible.value = false
       ElMessage({
-        message: '添加成员成功',
+        message: t('organization.invite.addSuccess'),
         type: 'success'
       })
     })
