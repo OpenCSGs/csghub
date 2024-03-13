@@ -1,24 +1,24 @@
 <template>
   <div class="flex flex-col gap-[32px] p-[16px] pt-[24px]">
-    <div class="font-semibold text-[20px] leading-[28px] pt-[16px]">组织信息</div>
+    <div class="font-semibold text-[20px] leading-[28px] pt-[16px]">{{ $t('organization.orgInfo') }}</div>
     <div>
-      <div class="flex items-center text-[#344054] text-[14px] leading-[20px] gap-[4px] mb-[8px]">组织别名</div>
+      <div class="flex items-center text-[#344054] text-[14px] leading-[20px] gap-[4px] mb-[8px]">{{ $t('organization.orgNickName') }}</div>
       <el-input class="w-full"
                 v-model="orgNickName"
                 placeholder="">
       </el-input>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">组织命名空间</div>
+      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">{{ $t('organization.orgNameSpace') }}</div>
       <el-input class="w-full mb-[10px]"
                 v-model="orgName"
                 disabled
-                placeholder="组织命名空间">
+                :placeholder="this.$t('organization.orgNameSpace')">
       </el-input>
-      <p class="text-gray-500 text-[12px]">创建完成后，命名空间不可更改</p>
+      <p class="text-gray-500 text-[12px]">{{ $t('organization.orgSpaceTips') }}</p>
     </div>
     <div class="flex flex-col gap-[12px] fileInput">
-      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">组织头像</div>
+      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">{{ $t('organization.orgAvatar') }}</div>
       <input ref="fileInput"
              type="file"
              class="hidden"
@@ -28,27 +28,27 @@
         <div class="flex  gap-[20px] items-center">
           <div @click="uploadImage" class="flex gap-[4px] text-[14px] border border-[#3250BD] px-[12px] py-[8px] leading-[20px] text-center rounded-[8px] text-white cursor-pointer bg-[#3250BD]">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3.33366 13.5352C2.32867 12.8625 1.66699 11.7168 1.66699 10.4167C1.66699 8.46369 3.15992 6.85941 5.06678 6.68281C5.45684 4.31011 7.5172 2.5 10.0003 2.5C12.4835 2.5 14.5438 4.31011 14.9339 6.68281C16.8407 6.85941 18.3337 8.46369 18.3337 10.4167C18.3337 11.7168 17.672 12.8625 16.667 13.5352M6.66699 13.3333L10.0003 10M10.0003 10L13.3337 13.3333M10.0003 10V17.5" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            上传头像
+            {{ $t('all.uploadAvatar')}}
           </div>
           <div @click="removeImage" class="text-[14px] leading-[20px] text-center text-[#223B99] cursor-pointer">
-            移除
+            {{ $t('all.remove')}}
           </div>
         </div>
       </div>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">组织主页</div>
+      <div class="flex items-center gap-[4px] mb-[8px] text-[#344054] text-[14px] leading-[20px]">{{ $t('organization.orgHomepage') }}</div>
       <el-input class="w-full mb-[10px]"
                 v-model="homepage"
-                placeholder="组织主页">
+                :placeholder="this.$t('organization.orgHomepage')">
       </el-input>
     </div>
     <div class="mb-[16px]">
           <p class="text-[#303133] flex gap-[4px] items-center text-[14px] mb-[8px]">
-          组织类型
+          {{ $t('organization.orgType') }}
           <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.2179L3.35474 3.8499L4.49234 5.2179L5.12594 4.7571L4.20434 3.2595L5.77394 2.6115L5.52914 1.8771L3.88754 2.2659L3.74354 0.537903H2.96594L2.82194 2.2803L1.18034 1.8771L0.921143 2.6115L2.49074 3.2595L1.58354 4.7571L2.21714 5.2179Z" fill="#F56C6C"/></svg>
         </p>
-        <el-select v-model="orgType" placeholder="选择" class="w-full">
+        <el-select v-model="orgType" :placeholder="this.$t('all.select')" class="w-full">
           <el-option
             v-for="item in theOrgTypes"
             :key="item.key"
@@ -58,7 +58,7 @@
         </el-select>
       </div>
     <div @click="saveProfile" class="w-max text-[14px] border border-[#3250BD] px-[12px] py-[8px] leading-[20px] text-center rounded-[8px] text-white cursor-pointer bg-[#3250BD]">
-      保存设置
+      {{ $t('all.saveSetting')}}
     </div>
   </div>
 </template>
@@ -121,7 +121,7 @@ export default {
           })
         } else {
           ElMessage({
-            message: "organization已更新",
+            message: this.$t('organization.edit.updateSuccess'),
             type: "success",
           });
           this.$emit("updateOrganization", {

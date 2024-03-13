@@ -14,7 +14,7 @@
             {{ currentBranch }}
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}</el-dropdown-item>
+                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="changeBranch(branch.name)">{{ branch.name }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -47,15 +47,6 @@
           </svg>
           history: 4 commits
         </a>
-<!--        <el-dropdown split-button>-->
-<!--            + 添加文件-->
-<!--            <template #dropdown>-->
-<!--              <el-dropdown-menu>-->
-<!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
-<!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
-<!--              </el-dropdown-menu>-->
-<!--            </template>-->
-<!--          </el-dropdown>-->
       </div>
     </div>
     <div class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
@@ -197,6 +188,12 @@
       const oidRegex = /sha256:(\S+)/;
       version.value = props.content.match(versionRegex)[1];
       sha.value = props.content.match(oidRegex)[1];
+    }
+  }
+
+  const changeBranch = (branch) => {
+    if (branch !== props.currentBranch) {
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${branch}`
     }
   }
 
