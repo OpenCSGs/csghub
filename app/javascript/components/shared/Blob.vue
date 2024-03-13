@@ -15,8 +15,7 @@
             {{ currentBranch }}
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-for="branch in branches" :key="branch.name"
-                                  @click="$emit('change-branch', branch.name)">{{ branch.name }}
+                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -27,9 +26,7 @@
             <a :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`">{{ namespacePath.split('/')[1] }}</a>
           </el-breadcrumb-item>
           <el-breadcrumb-item v-for="path, index in breadcrumb" :key="path">
-            <a :href="`/${prefixPath}/${namespacePath}/${ index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`">{{
-                extractNameFromPath(path)
-              }}</a>
+            <a :href="`/${prefixPath}/${namespacePath}/${ index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`">{{extractNameFromPath(path) }}</a>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -39,13 +36,11 @@
           1 contributors
         </div>
         <!-- Todo 暂时先隐藏 -->
-        <a href="#"
-           class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden hidden">
+        <a href="#" class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden hidden">
           <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <g clip-path="url(#clip0_3745_32637)">
-              <path
-                  d="M7.00033 4.6665V6.99984L8.75033 8.1665M7.00033 12.8332C3.77866 12.8332 1.16699 10.2215 1.16699 6.99984C1.16699 3.77818 3.77866 1.1665 7.00033 1.1665C10.222 1.1665 12.8337 3.77818 12.8337 6.99984C12.8337 10.2215 10.222 12.8332 7.00033 12.8332Z"
-                  stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.00033 4.6665V6.99984L8.75033 8.1665M7.00033 12.8332C3.77866 12.8332 1.16699 10.2215 1.16699 6.99984C1.16699 3.77818 3.77866 1.1665 7.00033 1.1665C10.222 1.1665 12.8337 3.77818 12.8337 6.99984C12.8337 10.2215 10.222 12.8332 7.00033 12.8332Z"
+                    stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
             <defs>
               <clipPath id="clip0_3745_32637">
@@ -97,9 +92,8 @@
           <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">预览</div>
           <div v-if="canWrite" class="flex items-center gap-1">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                  d="M10 10.5H2M8 2C7.875 2.875 8.625 3.625 9.5 3.5M3.5 8L3.57005 7.71979C3.73008 7.07967 3.8101 6.7596 3.93877 6.4612C4.05301 6.19627 4.19557 5.94448 4.36397 5.71022C4.55366 5.44635 4.78694 5.21307 5.25351 4.74651L8.25006 1.74999C8.66428 1.33578 9.33585 1.33579 9.75005 1.75001V1.75001C10.1642 2.16422 10.1642 2.83577 9.75003 3.24997L6.75349 6.24651C6.28693 6.71307 6.05364 6.94636 5.78978 7.13604C5.55553 7.30443 5.30374 7.44699 5.03881 7.56123C4.74041 7.6899 4.42035 7.76991 3.78023 7.92994L3.5 8Z"
-                  stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 10.5H2M8 2C7.875 2.875 8.625 3.625 9.5 3.5M3.5 8L3.57005 7.71979C3.73008 7.07967 3.8101 6.7596 3.93877 6.4612C4.05301 6.19627 4.19557 5.94448 4.36397 5.71022C4.55366 5.44635 4.78694 5.21307 5.25351 4.74651L8.25006 1.74999C8.66428 1.33578 9.33585 1.33579 9.75005 1.75001V1.75001C10.1642 2.16422 10.1642 2.83577 9.75003 3.24997L6.75349 6.24651C6.28693 6.71307 6.05364 6.94636 5.78978 7.13604C5.55553 7.30443 5.30374 7.44699 5.03881 7.56123C4.74041 7.6899 4.42035 7.76991 3.78023 7.92994L3.5 8Z"
+                    stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <a :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`">编辑</a>
           </div>
@@ -115,12 +109,12 @@
       <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-end border-b border-[#DCDFE6]">
         <div>{{ formatBytes(size) }}</div>
       </div>
-      <div
-          class="flex items-center justify-center px-4 py-10 border-b border-[#DCDFE6] font-medium text-[#667085] text-[14px] whitespace-pre-wrap">
-        <p>This file is stored with <a :href="version" target="_blank" class="underline">Git LFS</a>. It is too big to display, but you
-          can still
+      <div class="flex items-center justify-center px-4 py-10 border-b border-[#DCDFE6] font-medium text-[#667085] text-[14px] whitespace-pre-wrap">
+        <p>This file is stored with <a :href="version" target="_blank" class="underline">Git LFS</a>. It is too big to display, but you can still
           <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${currentPath}?download=true&lfs=${lfs}&lfs_path=${lfsRelativePath}`"
-             download class="underline">download</a> it.</p>
+             download class="underline">download
+          </a> it.
+        </p>
       </div>
       <div class="p-4 flex flex-col gap-[4px] text-sm font-medium">
         <p class="mb-[4px]">Git LFS Details</p>
@@ -143,8 +137,7 @@
           <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${path}`" target="_blank" class="underline text-[12px]">Raw pointer file</a>
         </div>
         <div class="flex items-center mt-[4px] text-[#667085] text-[12px] font-light">
-          <p>Git Large File Storage (LFS) replaces large files with text pointers inside Git, while storing the file
-            contents on a remote server.</p>
+          <p>Git Large File Storage (LFS) replaces large files with text pointers inside Git, while storing the file contents on a remote server.</p>
           <a :href="version" target="_blank" class="underline">More info.</a>
         </div>
       </div>
@@ -153,8 +146,8 @@
 </template>
 
 <script setup>
-  import {ref, onMounted} from 'vue'
-  import {format} from 'timeago.js';
+  import { ref, onMounted } from 'vue'
+  import { format } from 'timeago.js';
   import MarkdownViewer from './viewers/MarkdownViewer.vue';
   import TextViewer from './viewers/TextViewer.vue';
   import CodeViewer from './viewers/CodeViewer.vue';
@@ -208,13 +201,6 @@
       const oidRegex = /sha256:(\S+)/;
       version.value = props.content.match(versionRegex)[1];
       sha.value = props.content.match(oidRegex)[1];
-      console.log(version.value)
-      console.log(sha.value)
-      console.log(props.size)
-      console.log(props.path)
-      console.log(props.lfs)
-      console.log(props.lfsPointerSize)
-      console.log(props.lfsRelativePath)
     }
   }
 
