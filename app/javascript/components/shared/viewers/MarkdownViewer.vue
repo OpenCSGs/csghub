@@ -12,13 +12,15 @@
   import '@github/clipboard-copy-element'
   import tippy from 'tippy.js'
   import 'tippy.js/dist/tippy.css'
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n();
   const props = defineProps({
     content: String,
     setDefaultText: Boolean
   })
 
-  const defaultText = '```\nREADME文件内容为空，请下载文件，补充描述内容。\n```'
+  const defaultText = t('all.defaultText')
 
   const markdownContent = ref('')
 

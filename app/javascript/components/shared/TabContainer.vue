@@ -1,16 +1,16 @@
 <template>
   <div class="relative">
     <el-tabs v-model="activeName">
-      <el-tab-pane label="介绍" name="summary">
+      <el-tab-pane :label="this.$t('all.summary')" name="summary">
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane label="文件" name="files">
+      <el-tab-pane :label="this.$t('all.files')" name="files">
         <slot name="files"></slot>
       </el-tab-pane>
-      <el-tab-pane label="讨论" name="community" class="min-h-[300px]">
+      <el-tab-pane :label="this.$t('all.community')" name="community" class="min-h-[300px]">
         <slot name="community"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="settingsVisibility" label="设置" name="settings" class="min-h-[300px]">
+      <el-tab-pane v-if="settingsVisibility" :label="this.$t('all.settings')" name="settings" class="min-h-[300px]">
         <slot name="settings"></slot>
       </el-tab-pane>
     </el-tabs>

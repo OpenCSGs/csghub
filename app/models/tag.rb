@@ -25,15 +25,15 @@ class Tag < ApplicationRecord
   # 在 issue 中查看颜色对应关系：
   # https://git-devops.opencsg.com/product/community/open-portal/-/issues/50#note_1596
   TAG_FIELD_COLOR_MAPPINGS = {
-    computer_vision: {color: '#db7a7a', zh_name: '计算机视觉'},
-    natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理'},
-    audio_processing: {color: '#538f72', zh_name: '语音处理'},
-    multimodal: {color: '#e69832', zh_name: '多模态'},
-    text_processing: {color: '#7f71de', zh_name: '文本'},
-    graphics: {color: '#db7a7a', zh_name: '图像'},
-    audio: {color: '#538f72', zh_name: '音频'},
-    video: {color: '#059784', zh_name: '视频'},
-    scientific_computing: {color: '#525852', zh_name: '科学计算'}
+    computer_vision: {color: '#db7a7a', zh_name: '计算机视觉', en_name: 'Computer vision'},
+    natural_language_processing: {color: '#7f71de', zh_name: '自然语言处理', en_name: 'Natural language processing'},
+    audio_processing: {color: '#538f72', zh_name: '语音处理', en_name: 'Audio processing'},
+    multimodal: {color: '#e69832', zh_name: '多模态', en_name: 'Text processing'},
+    text_processing: {color: '#7f71de', zh_name: '文本', en_name: 'Graphics'},
+    graphics: {color: '#db7a7a', zh_name: '图像', en_name: 'Audio'},
+    audio: {color: '#538f72', zh_name: '音频', en_name: 'Video'},
+    video: {color: '#059784', zh_name: '视频', en_name: 'Multimodal'},
+    scientific_computing: {color: '#525852', zh_name: '科学计算', en_name: 'Scientific computing'}
   }.with_indifferent_access
 
   DEFAULT_TAGS = [
@@ -80,7 +80,7 @@ class Tag < ApplicationRecord
             local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: tag['scope'])
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
-              task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
+              task_tags << tag.merge('color' => color, 'zh_name' => I18n.locale == :en ? local_tag.zh_name : local_tag.name)
             else
               other_tags << tag
             end
