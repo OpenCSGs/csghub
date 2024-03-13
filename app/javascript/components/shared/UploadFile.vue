@@ -4,7 +4,7 @@
     <div class="border border-[#DCDFE6] rounded-[4px] bg-[#F5F7FA]">
       <div class="flex text-[14px] text-[#4D6AD6] leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
-          上传文件
+          {{ $t('all.uploadFile') }}
         </div>
         <div class="border-b w-full"></div>
       </div>
@@ -31,11 +31,11 @@
             </svg>
           </el-icon>
           <div class="el-upload__text py-[16px] px-[24px]">
-            拖拽文件到这里或者 <em>点击上传</em>（只支持单个文件）
+            {{ $t('shared.dragOr') }} <em>{{ $t('all.clickUpload') }}</em>（{{ $t('shared.onlyOneFile') }}）
           </div>
           <template #tip>
             <div class="el-upload__tip">
-              支持 5M 以内大小的文件上传
+              {{ $t('shared.uploadFile5Mb') }}
             </div>
           </template>
         </el-upload>
@@ -43,18 +43,18 @@
     </div>
 
     <el-radio-group v-model="new_branch" class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0">
-      <el-radio label="main" size="large">直接提交到 main 分支</el-radio>
+      <el-radio label="main" size="large">{{ $t('shared.commitToMain') }}</el-radio>
     </el-radio-group>
 
     <div>
-      <p class="text-[14px] mb-[8px]">提交变更</p>
+      <p class="text-[14px] mb-[8px]">{{ $t('all.submitChange') }}</p>
       <el-input v-model="commitTitle" :maxLength="200" show-word-limit clearable
                 :placeholder="commitTitlePlaceholder"></el-input>
     </div>
-    <CommunityMDTextarea desc="" placeholder="提供更多描述" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" :placeholder="this.$t('all.provideMoreDesc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="submitUpload" :disabled="filesList.length === 0">上传文件</el-button>
-      <el-button @click="cancel">取消</el-button>
+      <el-button type="primary" @click="submitUpload" :disabled="filesList.length === 0">{{ $t('all.uploadFile') }}</el-button>
+      <el-button @click="cancel">{{ $t('all.cancel') }}</el-button>
     </div>
   </div>
 </template>
@@ -62,12 +62,14 @@
 import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
 import {ref} from 'vue'
 import {ElMessage} from "element-plus"
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   repoName: String,
   namespacePath: String
 })
 
+const { t } = useI18n();
 const uploadRef = ref();
 const filesList = ref([])
 const commitTitle = ref('')
@@ -83,7 +85,7 @@ const handleCommentInputChange = (value) => {
 
 const submitUpload = () => {
   if (filesList.value.length === 0) {
-    ElMessage({message: "请选择文件", type: "warning"})
+    ElMessage({message: t('all.selectFilePls'), type: "warning"})
     return
   }
   uploadRef.value.submit()
@@ -93,7 +95,7 @@ const handleBeforeUpload = (file) => {
   if (file.size / 1024 <= 5000) {
     return true
   } else {
-    ElMessage({message: "文件过大", type: "warning"})
+    ElMessage({message: t('all.fileTooLarge'), type: "warning"})
     return false
   }
 }
@@ -104,13 +106,13 @@ const handleFileChange = (file) => {
 }
 
 const handleSuccess = (response, file, fileList) => {
-  ElMessage({message: "上传完成", type: "success"})
+  ElMessage({message: t('all.upLoadSuccess'), type: "success"})
   filesList.value = []
   window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
 };
 
 const handleError = (err, file, fileList) => {
-  ElMessage({message: "上传错误", type: "warning"})
+  ElMessage({message: t('all.upLoadError'), type: "warning"})
   filesList.value.splice(-1, 1)
 }
 

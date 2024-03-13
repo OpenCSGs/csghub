@@ -1,6 +1,9 @@
 import { ElMessage } from 'element-plus'
+import { useCookies } from "vue3-cookies"
 
 export const copyToClipboard = async (textToCopy) => {
+  const { cookies } = useCookies()
+
   try {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(textToCopy)
@@ -15,7 +18,7 @@ export const copyToClipboard = async (textToCopy) => {
       textArea.remove()
     }
     ElMessage({
-      message: '复制成功！',
+      message: cookies.get('locale') === 'en' ? 'Copied!' : '复制成功!',
       type: 'success'
     })
   } catch (error) {

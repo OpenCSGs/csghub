@@ -1,5 +1,5 @@
 <template>
-  <FileList
+  <file-list
     :branches="branches"
     :current-branch="currentBranch"
     :current-path="currentPath"
@@ -11,17 +11,19 @@
 
 <script setup>
   import FileList from '../shared/FileList.vue'
+
   const props = defineProps({
     branches: Object,
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    repoType: String
   })
 
   const changeBranch = (branch) => {
     if (branch !== props.currentBranch) {
-      window.location.href = `/models/${props.namespacePath}/files/${branch}`
+      window.location.href = `/${props.repoType}s/${props.namespacePath}/files/${branch}`
     }
   }
 </script>

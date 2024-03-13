@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
     redirect_to errors_unauthorized_path
   end
 
+  rescue_from Pundit::NotAuthorizedError do |e|
+    log_error "Pundit Not Allow", e.backtrace
+    redirect_to errors_unauthorized_path
+  end
+
   def authenticate_user
     if helpers.logged_in?
       return true
@@ -60,8 +65,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_locale
-    I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
-    session[:locale] = I18n.locale
+    I18n.locale = params[:locale] || cookies[:locale] || I18n.default_locale
+    cookies[:locale] = I18n.locale
   end
 
   def login_by_user_infos user_infos
@@ -114,6 +119,26 @@ class ApplicationController < ActionController::Base
 
     unless current_user.starhub_synced?
       current_user.sync_to_starhub_server
+    end
+  end
+
+  def relative_path_to_resolve_path type, content
+    return unless content
+    prefix = case type
+             when 'model'
+               "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
+             when 'dataset'
+               "/datasets/#{params[:namespace]}/#{params[:dataset_name]}/resolve/main/"
+             end
+
+    content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|
+      alt_text = $1
+      image_path = $2
+      if image_path.start_with?('http') || image_path.start_with?("/#{type}s/")
+        match
+      else
+        "![#{alt_text}](#{prefix}#{image_path})"
+      end
     end
   end
 end

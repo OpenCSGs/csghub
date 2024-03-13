@@ -249,6 +249,27 @@
   resolved "https://mirrors.huaweicloud.com/repository/npm/@hotwired/turbo/-/turbo-7.3.0.tgz#2226000fff1aabda9fd9587474565c9929dbf15d"
   integrity sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g==
 
+"@intlify/core-base@9.10.1":
+  version "9.10.1"
+  resolved "https://registry.npmjs.org/@intlify/core-base/-/core-base-9.10.1.tgz#e61d507d35beb0c69f9c94566313f9520c25a84a"
+  integrity sha512-0+Wtjj04GIyglh5KKiNjRwgjpHrhqqGZhaKY/QVjjogWKZq5WHROrTi84pNVsRN18QynyPmjtsVUWqFKPQ45xQ==
+  dependencies:
+    "@intlify/message-compiler" "9.10.1"
+    "@intlify/shared" "9.10.1"
+
+"@intlify/message-compiler@9.10.1":
+  version "9.10.1"
+  resolved "https://registry.npmjs.org/@intlify/message-compiler/-/message-compiler-9.10.1.tgz#d70c9ec211dab67d50a42ad1fb782c0e02f89c42"
+  integrity sha512-b68UTmRhgZfswJZI7VAgW6BXZK5JOpoi5swMLGr4j6ss2XbFY13kiw+Hu+xYAfulMPSapcHzdWHnq21VGnMCnA==
+  dependencies:
+    "@intlify/shared" "9.10.1"
+    source-map-js "^1.0.2"
+
+"@intlify/shared@9.10.1":
+  version "9.10.1"
+  resolved "https://registry.npmjs.org/@intlify/shared/-/shared-9.10.1.tgz#024ad6dd4ee9581962437570b3dc25516c82f4e9"
+  integrity sha512-liyH3UMoglHBUn70iCYcy9CQlInx/lp50W2aeSxqqrvmG+LDj/Jj7tBJhBoQL4fECkldGhbmW0g2ommHfL6Wmw==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://mirrors.huaweicloud.com/repository/npm/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"
@@ -574,6 +595,11 @@
     "@vue/compiler-dom" "3.4.0"
     "@vue/shared" "3.4.0"
 
+"@vue/devtools-api@^6.5.0":
+  version "6.6.1"
+  resolved "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.6.1.tgz#7c14346383751d9f6ad4bea0963245b30220ef83"
+  integrity sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==
+
 "@vue/reactivity-transform@3.3.13":
   version "3.3.13"
   resolved "https://mirrors.huaweicloud.com/repository/npm/@vue/reactivity-transform/-/reactivity-transform-3.3.13.tgz#dc8e9be961865dc666e367e1aaaea0716afa5c90"
@@ -661,6 +687,11 @@ abab@^2.0.6:
   version "2.0.6"
   resolved "https://mirrors.huaweicloud.com/repository/npm/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
   integrity sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==
+
+abbrev@1:
+  version "1.1.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
+  integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
 abbrev@^2.0.0:
   version "2.0.0"
@@ -893,6 +924,26 @@ diff-sequences@^29.4.3:
   version "29.6.3"
   resolved "https://mirrors.huaweicloud.com/repository/npm/diff-sequences/-/diff-sequences-29.6.3.tgz#4deaf894d11407c51efc8418012f9e70b84ea921"
   integrity sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==
+
+diff2html@^3.4.47:
+  version "3.4.47"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/diff2html/-/diff2html-3.4.47.tgz#a9d33bb63815031981fac682eeb2a5d74a931109"
+  integrity sha512-2llDp8750FRUJl8n7apM0tlcqZYxbDHTw7qhzv/kGddByHRpn3Xg/sWHHIy34h492aGSpStEULydxqrITYpuoA==
+  dependencies:
+    diff "5.1.0"
+    hogan.js "3.0.2"
+  optionalDependencies:
+    highlight.js "11.9.0"
+
+diff@5.1.0:
+  version "5.1.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/diff/-/diff-5.1.0.tgz#bc52d298c5ea8df9194800224445ed43ffc87e40"
+  integrity sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==
+
+diff@^5.2.0:
+  version "5.2.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/diff/-/diff-5.2.0.tgz#26ded047cd1179b78b9537d5ef725503ce1ae531"
+  integrity sha512-uIFDxqpRZGZ6ThOk84hEfqWoHx2devRFvpTZcTHur85vImfaxUbTW9Ryh4CpCuDnToOP1CEtXKIgytHBPVff5A==
 
 domexception@^4.0.0:
   version "4.0.0"
@@ -1188,10 +1239,18 @@ graceful-fs@^4.1.2:
   resolved "https://mirrors.huaweicloud.com/repository/npm/graceful-fs/-/graceful-fs-4.2.11.tgz#4183e4e8bf08bb6e05bbb2f7d2e0c8f712ca40e3"
   integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
 
-highlight.js@^11.9.0:
+highlight.js@11.9.0, highlight.js@^11.9.0:
   version "11.9.0"
   resolved "https://mirrors.huaweicloud.com/repository/npm/highlight.js/-/highlight.js-11.9.0.tgz#04ab9ee43b52a41a047432c8103e2158a1b8b5b0"
   integrity sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==
+
+hogan.js@3.0.2:
+  version "3.0.2"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/hogan.js/-/hogan.js-3.0.2.tgz#4cd9e1abd4294146e7679e41d7898732b02c7bfd"
+  integrity sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg==
+  dependencies:
+    mkdirp "0.3.0"
+    nopt "1.0.10"
 
 html-encoding-sniffer@^3.0.0:
   version "3.0.0"
@@ -1454,6 +1513,11 @@ minimatch@^9.0.1:
   resolved "https://mirrors.huaweicloud.com/repository/npm/minipass/-/minipass-7.0.4.tgz#dbce03740f50a4786ba994c1fb908844d27b038c"
   integrity sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==
 
+mkdirp@0.3.0:
+  version "0.3.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/mkdirp/-/mkdirp-0.3.0.tgz#1bbf5ab1ba827af23575143490426455f481fe1e"
+  integrity sha512-OHsdUcVAQ6pOtg5JYWpCBo9W/GySVuwvP9hueRMW7UqshC0tbfzLv8wjySTPm3tfUZ/21CE9E1pJagOA91Pxew==
+
 mlly@^1.2.0, mlly@^1.4.0:
   version "1.4.2"
   resolved "https://mirrors.huaweicloud.com/repository/npm/mlly/-/mlly-1.4.2.tgz#7cf406aa319ff6563d25da6b36610a93f2a8007e"
@@ -1481,6 +1545,13 @@ needle@^3.1.0:
   dependencies:
     iconv-lite "^0.6.3"
     sax "^1.2.4"
+
+nopt@1.0.10:
+  version "1.0.10"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
+  integrity sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==
+  dependencies:
+    abbrev "1"
 
 nopt@^7.2.0:
   version "7.2.0"
@@ -1936,6 +2007,15 @@ vue-demi@*:
   version "0.14.6"
   resolved "https://mirrors.huaweicloud.com/repository/npm/vue-demi/-/vue-demi-0.14.6.tgz#dc706582851dc1cdc17a0054f4fec2eb6df74c92"
   integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==
+
+vue-i18n@^9.10.1:
+  version "9.10.1"
+  resolved "https://registry.npmjs.org/vue-i18n/-/vue-i18n-9.10.1.tgz#b3244233da31a55a07a2ae72cdddab7296bca814"
+  integrity sha512-37HVJQZ/pZaRXGzFmmMomM1u1k7kndv3xCBPYHKEVfv5W3UVK67U/TpBug71ILYLNmjHLHdvTUPRF81pFT5fFg==
+  dependencies:
+    "@intlify/core-base" "9.10.1"
+    "@intlify/shared" "9.10.1"
+    "@vue/devtools-api" "^6.5.0"
 
 vue-turbolinks@^2.2.2:
   version "2.2.2"
