@@ -55,8 +55,8 @@
 
   const getComputed = computed(() => {
     const nickName = props.repo.nickname !== undefined ? props.repo.nickname : ''
-    const modelName = props.repo.name || props.repo.path.split('/')[1]
-    const displayName = nickName || modelName
+    const repoName = props.repo.name || props.repo.path.split('/')[1]
+    const displayName = nickName || repoName
     const path = props.repo.path.split('/')[0] + '/' + displayName
 
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
