@@ -8,6 +8,11 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
+import { useCookies } from "vue3-cookies"
+import { createI18n } from 'vue-i18n'
+import en from '../../config/locales/en.js'
+import zh from '../../config/locales/zh.js'
+
 import Navbar from "./components/navbar/NewNavbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
 import SpaceCard from "./components/spaces/SpaceCard.vue"
@@ -34,10 +39,6 @@ import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
 import NewDataset from "./components/datasets/NewDataset.vue"
-import ModelItem from "./components/models/ModelItem.vue"
-import ModelCards from "./components/models/ModelCards.vue"
-import DatasetCards from "./components/datasets/DatasetCards.vue"
-import DatasetItem from "./components/datasets/DatasetItem.vue"
 import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import SolutionPage from "./components/solution/SolutionPage.vue"
@@ -51,6 +52,8 @@ import DailyPaperNew from "./components/daily_paper/New.vue"
 import DailyPaperIndex from "./components/daily_paper/Index.vue"
 import DailyPaperShow from "./components/daily_paper/Show.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
+import RepoCards from "./components/shared/RepoCards.vue"
+import RepoItem from "./components/shared/RepoItem.vue"
 
 const app = createApp({
   components: {
@@ -80,10 +83,6 @@ const app = createApp({
     NewModel,
     TagSidebar,
     NewDataset,
-    ModelItem,
-    DatasetItem,
-    ModelCards,
-    DatasetCards,
     OrganizationDetail,
     SolutionPage,
     ProductPage,
@@ -96,7 +95,9 @@ const app = createApp({
     DailyPaperNew,
     DailyPaperIndex,
     DailyPaperShow,
-    ProfileRepoList
+    ProfileRepoList,
+    RepoCards,
+    RepoItem
   },
   provide:{
     defaultTags: DefaultTags
@@ -105,8 +106,20 @@ const app = createApp({
   locale: zhCn,
 });
 
+const { cookies } = useCookies()
+
+const i18n = createI18n({
+  legacy: false,
+  locale: cookies.get('locale') || 'zh',
+  messages: {
+    en,
+    zh
+  }
+});
+
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+app.use(i18n)
 app.mount("#app")

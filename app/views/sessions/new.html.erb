@@ -1,7 +1,7 @@
 <div class="relative">
   <%= image_tag('new_organization_bg.png', class: "w-full object-cover") %>
   <div class="absolute top-[35%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-    <h3 class="text-[#101828] text-[30px] font-[500] my-[32px]">登录账号</h3>
+    <h3 class="text-[#101828] text-[30px] font-[500] my-[32px]"><%= t('sessions.sign_in_title') %></h3>
     <p>
       <% if flash[:alert].present? %>
         <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
@@ -9,17 +9,17 @@
     </p>
     <%= form_tag('/login', method: 'post') do %>
       <div class="my-[20px] flex flex-col gap-[6px]">
-        <%= label_tag(:name, '用户名 *') %>
-        <%= text_field_tag(:name, nil, placeholder: "输入用户名", class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+        <%= label_tag(:name, t('sessions.name')) %>
+        <%= text_field_tag(:name, nil, placeholder: t('sessions.name_placeholder'), class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
       </div>
       <div class="my-[20px] flex flex-col gap-[6px]">
-        <%= label_tag(:password, '密码 *') %>
-        <%= password_field_tag(:password, nil, placeholder: "输入密码", class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
+        <%= label_tag(:password, t('sessions.password')) %>
+        <%= password_field_tag(:password, nil, placeholder: t('sessions.password_placeholder'), class: 'w-[332px] h-[44px] rounded-[8px] py-[10px] px-[14px]') %>
       </div>
       <div class="my-[20px]">
-        <%= submit_tag('提交', class: 'w-[332px] h-[44px] bg-[#3250BD] text-white rounded-[8px]') %>
+        <%= submit_tag(t('sessions.submit'), class: 'w-[332px] h-[44px] bg-[#3250BD] text-white rounded-[8px]') %>
       </div>
-      <P>没有账号？<a href="/signup" class="text-[#3250BD]"> 注册 </a><p>
+      <P><%= t('sessions.no_account') %> <a href="/signup" class="text-[#3250BD]"> <%= t('sessions.sign_up') %> </a><p>
     <% end %>
   </div>
 </div>

@@ -17,19 +17,19 @@
              class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
              :class="menuClass('/settings/profile')"
           >
-              个人资料
+              {{ $t('profile.menu.profile')}}
           </a>
 
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/account')"
           >
-            账户信息
+            {{ $t('profile.menu.accountInformation')}}
           </div>
 
           <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/accessTokens')"
           >
-            Access Token
+            {{ $t('profile.menu.accessToken')}}
           </div>
 
           <a v-if="hasEmail"
@@ -37,7 +37,7 @@
              class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
              :class="menuClass('/settings/git-token')"
           >
-              Git Token
+            {{ $t('profile.menu.gitToken')}}
           </a>
 
           <a v-if="hasEmail"
@@ -45,13 +45,13 @@
              class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
              :class="menuClass('/settings/ssh-keys')"
           >
-              SSH Keys
+            {{ $t('profile.menu.sshKey')}}
           </a>
 
           <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/billing')"
           >
-            账单
+            {{ $t('profile.menu.billing')}}
           </div>
         </div>
       </div>

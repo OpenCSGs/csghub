@@ -4,7 +4,8 @@
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
                @change="reloadCards"
-               class="w-[100px] xl:mr-[20px]"
+               style="width: 100px;"
+               class="xl:mr-[20px]"
     >
       <el-option
         v-for="item in filterValues"
