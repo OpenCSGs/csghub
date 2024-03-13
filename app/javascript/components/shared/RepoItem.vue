@@ -54,7 +54,9 @@
   })
 
   const getComputed = computed(() => {
-    const displayName = props.repo.nickname !== undefined && props.repo.nickname.trim().length > 0 ? props.repo.nickname : props.repo.name
+    const nickName = props.repo.nickname !== undefined ? props.repo.nickname : ''
+    const modelName = props.repo.name || props.repo.path.split('/')[1]
+    const displayName = nickName || modelName
     const path = props.repo.path.split('/')[0] + '/' + displayName
 
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
