@@ -55,15 +55,15 @@
           </svg>
           history: 4 commits
         </a>
-        <!--        <el-dropdown split-button>-->
-        <!--            + 添加文件-->
-        <!--            <template #dropdown>-->
-        <!--              <el-dropdown-menu>-->
-        <!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
-        <!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
-        <!--              </el-dropdown-menu>-->
-        <!--            </template>-->
-        <!--          </el-dropdown>-->
+<!--        <el-dropdown split-button>-->
+<!--            + 添加文件-->
+<!--            <template #dropdown>-->
+<!--              <el-dropdown-menu>-->
+<!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
+<!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
+<!--              </el-dropdown-menu>-->
+<!--            </template>-->
+<!--          </el-dropdown>-->
       </div>
     </div>
     <div class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
@@ -79,11 +79,11 @@
       </div>
       <div class="text-[#909399] text-sm cursor-pointer flex-shrink-0 md:hidden">
         <el-popover
-            width="158"
-            placement="top"
-            effect="dark"
-            trigger="hover"
-            :content="lastCommit.committer_date"
+          width="158"
+          placement="top"
+          effect="dark"
+          trigger="hover"
+          :content="lastCommit.committer_date"
         >
           <template #reference>
             {{ format(lastCommit.committer_date, 'zh_CN') }}
@@ -153,86 +153,85 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
-import {format} from 'timeago.js';
-import MarkdownViewer from './viewers/MarkdownViewer.vue';
-import TextViewer from './viewers/TextViewer.vue';
-import CodeViewer from './viewers/CodeViewer.vue';
-import {ElMessage} from "element-plus";
+  import {ref, onMounted} from 'vue'
+  import {format} from 'timeago.js';
+  import MarkdownViewer from './viewers/MarkdownViewer.vue';
+  import TextViewer from './viewers/TextViewer.vue';
+  import CodeViewer from './viewers/CodeViewer.vue';
+  import {ElMessage} from "element-plus";
 
-const props = defineProps({
-  content: String,
-  lastCommit: Object,
-  branches: Object,
-  currentBranch: String,
-  currentPath: String,
-  namespacePath: String,
-  size: Number,
-  canWrite: Boolean,
-  path: String,
-  lfs: Boolean,
-  lfsPointerSize: Number,
-  lfsRelativePath: String
-})
-
-const breadcrumb = ref([])
-const fileType = ref('')
-const version = ref('')
-const sha = ref('')
-
-const prefixPath = document.location.pathname.split('/')[1]
-
-const extractNameFromPath = (path) => {
-  const parts = path.split('/')
-  return parts[parts.length - 1]
-};
-
-const updateBreadcrumb = () => {
-  const breadcrumbArray = props.currentPath.split('/').filter(Boolean);
-  let breadcrumbPath = ''
-  breadcrumb.value = breadcrumbArray.map((item) => {
-    breadcrumbPath += '/' + item
-    return breadcrumbPath
+  const props = defineProps({
+    content: String,
+    lastCommit: Object,
+    branches: Object,
+    currentBranch: String,
+    currentPath: String,
+    namespacePath: String,
+    size: Number,
+    canWrite: Boolean,
+    path: String,
+    lfs: Boolean,
+    lfsPointerSize: Number,
+    lfsRelativePath: String
   })
-}
 
-const detectFileType = () => {
-  const parts = props.currentPath.split('.')
-  const extension = parts[parts.length - 1]
-  fileType.value = extension
-}
+  const breadcrumb = ref([])
+  const fileType = ref('')
+  const version = ref('')
+  const sha = ref('')
 
-const lfsContentRegex = () => {
-  if (props.lfs) {
-    const versionRegex = /version\s+(\S+)/;
-    const oidRegex = /sha256:(\S+)/;
-    version.value = props.content.match(versionRegex)[1];
-    sha.value = props.content.match(oidRegex)[1];
-    console.log(version.value)
-    console.log(sha.value)
-    console.log(props.size)
-    console.log(props.path)
-    console.log(props.lfs)
-    console.log(props.lfsPointerSize)
-    console.log(props.lfsRelativePath)
-  }
-}
+  const prefixPath = document.location.pathname.split('/')[1]
 
-updateBreadcrumb()
-detectFileType()
-lfsContentRegex()
+  const extractNameFromPath = (path) => {
+    const parts = path.split('/')
+    return parts[parts.length - 1]
+  };
 
-
-const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
-
-function formatBytes(bytes) {
-  let level = 0;
-  let n = parseInt(bytes, 10) || 0;
-
-  while (n >= 1024 && ++level) {
-    n = n / 1024;
+  const updateBreadcrumb = () => {
+    const breadcrumbArray = props.currentPath.split('/').filter(Boolean);
+    let breadcrumbPath = ''
+    breadcrumb.value = breadcrumbArray.map((item) => {
+      breadcrumbPath += '/' + item
+      return breadcrumbPath
+    })
   }
 
-  return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
-}
+  const detectFileType = () => {
+    const parts = props.currentPath.split('.')
+    const extension = parts[parts.length - 1]
+    fileType.value = extension
+  }
+
+  const lfsContentRegex = () => {
+    if (props.lfs) {
+      const versionRegex = /version\s+(\S+)/;
+      const oidRegex = /sha256:(\S+)/;
+      version.value = props.content.match(versionRegex)[1];
+      sha.value = props.content.match(oidRegex)[1];
+      console.log(version.value)
+      console.log(sha.value)
+      console.log(props.size)
+      console.log(props.path)
+      console.log(props.lfs)
+      console.log(props.lfsPointerSize)
+      console.log(props.lfsRelativePath)
+    }
+  }
+
+  updateBreadcrumb()
+  detectFileType()
+  lfsContentRegex()
+
+  const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+
+  function formatBytes(bytes) {
+    let level = 0;
+    let n = parseInt(bytes, 10) || 0;
+
+    while (n >= 1024 && ++level) {
+      n = n / 1024;
+    }
+
+    return n.toFixed(n < 10 && level > 0 ? 1 : 0) + ' ' + units[level];
+  }
 </script>
