@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[500px] pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
+  <div class="max-w-[400px] pl-[80px] pr-[106px] md:px-0 sm:px-0 sm:w-full py-[36px]">
     <div>
       <el-avatar :size="120" :src="avatar"> </el-avatar>
     </div>
