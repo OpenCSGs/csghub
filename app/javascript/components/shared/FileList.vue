@@ -31,7 +31,7 @@
       <div class="flex items-center text-sm text-[#606266]">
         <div class="flex items-center mr-4 py-[1px] md:hidden">
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-          1 贡献者
+          1 {{ $t('all.contributors') }}
         </div>
         <!-- Todo 暂时先隐藏 -->
         <a href="#" class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden hidden">
@@ -45,17 +45,17 @@
               </clipPath>
             </defs>
           </svg>
-          历史提交: 4 commits
+          {{ $t('all.historyCommits') }}: 4 commits
         </a>
         <el-dropdown split-button v-if="canWrite">
-          + 添加文件
+          + {{ $t('all.addFile') }}
           <template #dropdown>
             <el-dropdown-menu>
               <a :href="`/${prefixPath}/${namespacePath}/main/new`">
-                <el-dropdown-item>创建新文件</el-dropdown-item>
+                <el-dropdown-item>{{ $t('all.createNewFile') }}</el-dropdown-item>
               </a>
               <a :href="`/${prefixPath}/${namespacePath}/main/upload`">
-                <el-dropdown-item>上传文件</el-dropdown-item>
+                <el-dropdown-item>{{ $t('all.uploadFile') }}</el-dropdown-item>
               </a>
             </el-dropdown-menu>
           </template>
@@ -83,7 +83,7 @@
           :content="beiJingTimeParser(lastCommit.committer_date)"
         >
           <template #reference>
-            {{ format(beiJingTimeParser(lastCommit.committer_date), 'zh_CN') }}
+            {{ format(beiJingTimeParser(lastCommit.committer_date), locale=='en' ? 'en_US' : 'zh_CN') }}
           </template>
         </el-popover>
       </div>
@@ -109,7 +109,7 @@
           :width="270"
           trigger="hover"
           effect="dark"
-          content="暂不支持预览，请通过 git clone 下载"
+          :content="this.$t('all.notSupportPreview')"
         >
           <template #reference>
             <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
@@ -121,7 +121,7 @@
         <span v-if="file.type === 'file'">{{ formatBytes(file.size) }}</span>
       </div>
       <div class="w-[20%] flex items-center">
-        <a v-if="file.type === 'file' && canDownload(file)" class="ml-2" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}?download=true&lfs=${file.lfs}&lfs_path=${file.lfs_relative_path}`" download>
+        <a v-if="file.type === 'file' && canDownload(file)" class="ml-2" :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${file.path}?download=true&lfs=${file.lfs}&lfs_path=${file.lfs_relative_path}`" download>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
             <path d="M6.99967 1.6665V10.4165M6.99967 10.4165L10.4997 6.9165M6.99967 10.4165L3.49967 6.9165M2.33301 10.9998V11.7332C2.33301 12.2932 2.33301 12.5732 2.442 12.7872C2.53787 12.9753 2.69086 13.1283 2.87902 13.2242C3.09293 13.3332 3.37296 13.3332 3.93301 13.3332H10.0663C10.6264 13.3332 10.9064 13.3332 11.1203 13.2242C11.3085 13.1283 11.4615 12.9753 11.5573 12.7872C11.6663 12.5732 11.6663 12.2932 11.6663 11.7332V10.9998" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -139,7 +139,7 @@
           :content="beiJingTimeParser(file.commit.committer_date)"
         >
           <template #reference>
-            {{ format(beiJingTimeParser(file.commit.committer_date), 'zh_CN') }}
+            {{ format(beiJingTimeParser(file.commit.committer_date), locale=='en' ? 'en_US' : 'zh_CN') }}
           </template>
         </el-popover>
       </div>
@@ -152,6 +152,7 @@
   import { ref, onMounted } from 'vue'
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     branches: Object,
@@ -161,6 +162,7 @@
     canWrite: Boolean
   })
 
+  const { t, locale } = useI18n();
   const loading = ref(true)
 
   const breadcrumb = ref([])
@@ -200,7 +202,7 @@
   // 预览放行规则：非 LFS，文件大小不超过 10MB，后缀名为 rb、gitattributes、md、json、yaml、sh、py、js、ts、cpp、c、txt 或为空
   const canPreview = (file) => {
     const extension = getFileExtension(file)
-    const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt']
+    const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt', 'png', 'jpg', 'jpeg', 'gif', 'svg']
 
     const isFileLFS = file.lfs
     const isExtensionIncluded = !extension || previewExtensions.includes(extension)
@@ -236,7 +238,7 @@
         lastCommit.value = data.last_commit
       }).catch((error) => {
         ElMessage({
-          message: '加载数据报错',
+          message: t('all.loadError'),
           type: 'warning'
         })
       }).then(() => {

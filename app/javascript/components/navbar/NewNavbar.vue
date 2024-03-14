@@ -153,7 +153,8 @@ export default {
     phone: String,
     isLoggedIn: String,
     userName: String,
-    canCreateDailyPaper: Boolean,
+    userId: String,
+    canCreateDailyPaper: Boolean
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
@@ -162,7 +163,7 @@ export default {
       llmInference: 'https://github.com/OpenCSGs/llm-inference',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
-      userProfile: `/profile/${this.userName}`
+      userProfile: `/profile/${this.userId}`
     }
   },
   components: {

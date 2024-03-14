@@ -4,12 +4,16 @@
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
                @change="reloadCards"
-               class="w-[100px] xl:mr-[20px]">
-      <el-option v-for="item in filterValues"
-                 :key="item.value"
-                 :label="$i18n.locale === 'zh'? item.label: item.label_en"
-                 :value="item.value"
-                 :disabled="item.disabled"/>
+               style="width: 100px;"
+               class="xl:mr-[20px]"
+    >
+      <el-option
+        v-for="item in filterValues"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      />
     </el-select>
   </div>
   <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[20px] justify-items-center xl:px-[20px]">

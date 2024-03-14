@@ -10,8 +10,8 @@
     <div class="grow py-[24px]">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
-          <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">用户 Git Token</h3>
-          <p class="text-[#606266] text-[14px]"> Git Token 用于授权您执行 Git 相关操作 </p>
+          <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">{{ $t('gitToken.title') }}</h3>
+          <p class="text-[#606266] text-[14px]">{{ $t('gitToken.desc') }}</p>
         </div>
         <div class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
           <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">git token</h3>
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="my-[16px]">
-          <el-button type="default" @click="confirmRefreshGitToken" class="h-[30px] mb-[16px]">刷新 Git Token</el-button>
+          <el-button type="default" @click="confirmRefreshGitToken" class="h-[30px] mb-[16px]">{{ $t('gitToken.refresh') }}</el-button>
         </div>
       </div>
     </div>
@@ -80,17 +80,17 @@ export default {
 
     confirmRefreshGitToken() {
       ElMessageBox.confirm(
-        "刷新之后现有的 Git Token 将会失效，确认继续吗?",
+        this.$t('gitToken.refreshWarning'),
         'Warning',
         {
-          confirmButtonText: '继续刷新',
-          cancelButtonText: '取消',
+          confirmButtonText: this.$t('gitToken.confirm'),
+          cancelButtonText:  this.$t('all.cancel'),
           type: 'warning',
         }
       ).then(() => {
         this.refreshGitToken()
       }).catch(() => {
-        ElMessage({message: '操作已取消', type: "info"})
+        ElMessage({message: this.$t('gitToken.cancelInfo'), type: "info"})
       })
     },
 

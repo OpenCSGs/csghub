@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_05_055917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -310,6 +310,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_142615) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
+    t.string "wechat_id"
+    t.string "github_id"
+    t.string "gitlab_id"
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 

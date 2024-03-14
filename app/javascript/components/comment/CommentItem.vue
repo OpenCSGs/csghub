@@ -36,12 +36,14 @@
     },
   });
 
+  const { t } = useI18n();
+
   const emit = defineEmits(['deleteComment']);
 
   const confirmDelete = async (commentId) => {
-    const confirmResult = await ElMessageBox.confirm(t('space.confirm'), t('space.tip'), {
-      confirmButtonText: t('space.sure'),
-      cancelButtonText: t('space.cancel'),
+    const confirmResult = await ElMessageBox.confirm(t('comment.sureDel'), t('all.tip'), {
+      confirmButtonText: t('all.confirm'),
+      cancelButtonText: t('all.cancel'),
       type: 'warning',
     });
 
