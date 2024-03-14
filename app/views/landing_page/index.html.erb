@@ -3,16 +3,16 @@
   <div class="text-center w-full bg-top bg-no-repeat bg-[url('images/landing/BackgroundPattern.png')] py-[96px] md:px-[16px]">
     <div class="sm:w-full max-w-[1280px] m-auto">
       <div class="relative mb-[24px] tracking-[-1.2px] md:tracking-[-0.72px] m-auto text-[60px] md:text-[36px] md:leading-[44px] text-[#101828] leading-[72px]">
-        <span class="relative z-10 font-medium md:font-normal">让大模型 赋能 每一个人</span>
+        <span class="relative z-10 font-medium md:font-normal"><%= t("landing_page.index.title") %></span>
         <!-- underline svg -->
         <svg class="absolute bottom-0 left-[40%] md:hidden" xmlns="http://www.w3.org/2000/svg" width="264" height="24" viewBox="0 0 264 24" fill="none"><path d="M8 8H195.741L61.8999 16H256" stroke="#ACBDFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="absolute bottom-0 left-[37%] hidden md:block" xmlns="http://www.w3.org/2000/svg" width="98" height="20" viewBox="0 0 98 20" fill="none"><path d="M6 6H71.1038L24.6911 14H92" stroke="#ACBDFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]">
-        大模型驱动全民，推动技术加速创新。
+        <%= t("landing_page.index.subtitle") %>
       </div>
       <% if !logged_in? %>
-      <a href="/login" class="md:block md:mx-[20px] px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer">加入社区</a>
+      <a href="/login" class="md:block md:mx-[20px] px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer"><%= t("landing_page.index.join_button") %></a>
       <% end %>
     </div>
   </div>
@@ -20,9 +20,9 @@
   <%# 社区热门趋势 %>
   <div class="bg-[#F9FAFB] flex flex-col justify-center py-[96px] md:py-[64px] text-center">
     <div class="max-w-[1280px] m-auto md:px-[16px]">
-      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">热门趋势</div>
-      <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">本周社区热门</div>
-      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px]" >了解体验最新社区开源模型、数据集</div>
+      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]"><%= t("landing_page.index.trends_subtitle") %></div>
+      <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]"><%= t("landing_page.index.trends_title") %></div>
+      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px]" ><%= t("landing_page.index.trends_desc") %></div>
     </div>
     <div class="max-w-[1280px] sm:w-full sm:px-[16px] m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]">
       <%# 热门模型 %>
@@ -32,7 +32,7 @@
             <path opacity="0.12" d="M16.5 10.0327V5.46176C16.5 5.33063 16.4312 5.20911 16.3188 5.14164C16.1996 5.07018 16.0507 5.07075 15.9321 5.14313L11.5012 7.84833C10.5927 8.40303 10.1384 8.68038 9.65249 8.78865C9.22277 8.88441 8.77723 8.88441 8.34751 8.78865C7.86162 8.68038 7.40734 8.40303 6.49878 7.84833L2.06785 5.14313C1.9493 5.07075 1.80036 5.07018 1.68125 5.14164C1.5688 5.20911 1.5 5.33063 1.5 5.46176V10.0327C1.5 11.0237 1.5 11.5192 1.64219 11.9645C1.76802 12.3585 1.97396 12.7222 2.24708 13.0328C2.55572 13.3838 2.98062 13.6388 3.83042 14.1486L6.53042 15.7686C7.42832 16.3074 7.87727 16.5768 8.35653 16.682C8.78046 16.7751 9.21954 16.7751 9.64346 16.682C10.1227 16.5768 10.5717 16.3074 11.4696 15.7686L14.1696 14.1486C15.0194 13.6388 15.4443 13.3838 15.7529 13.0328C16.026 12.7222 16.232 12.3585 16.3578 11.9645C16.5 11.5192 16.5 11.0237 16.5 10.0327Z" fill="#AD4A3B"/>
             <path d="M9 9.375L15.75 5.25M9 9.375L2.25 5.25M9 9.375V16.875M1.5 7.96771V10.0323C1.5 11.0233 1.5 11.5188 1.64219 11.9641C1.76802 12.3581 1.97396 12.7218 2.24708 13.0324C2.55572 13.3834 2.98062 13.6384 3.83042 14.1483L6.53042 15.7683C7.42832 16.307 7.87727 16.5764 8.35653 16.6816C8.78046 16.7747 9.21954 16.7747 9.64346 16.6816C10.1227 16.5764 10.5717 16.307 11.4696 15.7683L14.1696 14.1483C15.0194 13.6384 15.4443 13.3834 15.7529 13.0324C16.026 12.7218 16.232 12.3581 16.3578 11.9641C16.5 11.5188 16.5 11.0233 16.5 10.0323V7.96771C16.5 6.97669 16.5 6.48117 16.3578 6.03593C16.232 5.64192 16.026 5.27818 15.7529 4.96757C15.4443 4.61657 15.0194 4.36163 14.1696 3.85175L11.4696 2.23175C10.5717 1.69301 10.1227 1.42364 9.64346 1.31839C9.21954 1.2253 8.78046 1.2253 8.35653 1.31839C7.87727 1.42364 7.42832 1.69301 6.53042 2.23175L3.83042 3.85175C2.98062 4.36163 2.55572 4.61657 2.24708 4.96757C1.97396 5.27818 1.76802 5.64192 1.64219 6.03593C1.5 6.48117 1.5 6.97669 1.5 7.96771Z" stroke="#AD4A3B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>模型</span>
+          <span><%= t("landing_page.index.models") %></span>
         </p>
         <% @hot_models.each do |model| %>
           <repo-item class="w-[560px]" :repo="<%= model.to_json %>" repo-type="model"></repo-item>
@@ -40,7 +40,7 @@
         <div class="w-full relative flex items-center">
           <div class="flex-grow border border-[#EAECF0]"></div>
           <span class="text-[14px] text-[#475467] px-3 text-gray-500">
-            <a href="/models"> 查看更多 </a>
+            <a href="/models"> <%= t("landing_page.index.load_more") %> </a>
           </span>
           <div class="flex-grow border border-[#EAECF0]"></div>
         </div>
@@ -52,7 +52,7 @@
             <path opacity="0.12" d="M9 16.5C12.7279 16.5 15.75 15.4926 15.75 14.25V3.75C15.75 3.75 15.375 6 9 6C2.625 6 2.25 3.75 2.25 3.75V14.25C2.25 15.4926 5.27208 16.5 9 16.5Z" fill="#1F75CB"/>
             <path d="M15.75 9C15.75 10.2426 12.7279 11.25 9 11.25C5.27208 11.25 2.25 10.2426 2.25 9M15.75 3.75C15.75 4.99264 12.7279 6 9 6C5.27208 6 2.25 4.99264 2.25 3.75M15.75 3.75C15.75 2.50736 12.7279 1.5 9 1.5C5.27208 1.5 2.25 2.50736 2.25 3.75M15.75 3.75V14.25C15.75 15.4926 12.7279 16.5 9 16.5C5.27208 16.5 2.25 15.4926 2.25 14.25V3.75" stroke="#1F75CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>数据集</span>
+          <span><%= t("landing_page.index.datasets") %></span>
         </p>
         <% @hot_datasets.each do |dataset| %>
           <repo-item class="w-[560px]" :repo="<%= dataset.to_json %>" repo-type="dataset"></repo-item>
@@ -60,7 +60,7 @@
         <div class="w-full relative flex items-center">
           <div class="flex-grow border border-[#EAECF0]"></div>
           <span class="text-[14px] text-[#475467] px-3 text-gray-500">
-            <a href="/datasets"> 查看更多 </a>
+            <a href="/datasets"> <%= t("landing_page.index.load_more") %> </a>
           </span>
           <div class="flex-grow border border-[#EAECF0]"></div>
         </div>
@@ -75,8 +75,8 @@
   <div class="flex flex-col justify-center py-[96px] sm:pb-[50px] h-screen sm:h-auto pl-20 md:px-[16px]">
     <div class="flex justify-center items-center md:flex-col md:gap-[48px] sm:w-full max-w-[1280px] m-auto ">
       <div class="md:text-center">
-        <div class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]">加强开源大模型的<br class="md:hidden"/>商业应用</div>
-        <div class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]">OpenCSG 将帮助您找到最合适、最经济、和活跃的开源大模型</div>
+        <div class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]"><%= t("landing_page.index.value_title_1") %><br /><%= t("landing_page.index.value_title_2") %></div>
+        <div class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]"><%= t("landing_page.index.value_subtitle") %></div>
       </div>
       <div>
         <img src="images/landing/frame.png" alt="" class="w-full max-h-[600px]" />
@@ -86,30 +86,30 @@
   <%# Feature %>
   <div class="bg-[#F9FAFB] flex flex-col justify-center py-[96px] md:py-[64px] text-center">
     <div class="max-w-[1280px] m-auto md:px-[16px]">
-      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">我们的价值</div>
-      <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">为什么选择 OpenCSG</div>
-      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px]" >我们的共同价值观是我们团结的纽带，引领我们作为一个团队共同前进。</div>
+      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]"><%= t("landing_page.index.feature_subtitle") %></div>
+      <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]"><%= t("landing_page.index.feature_title") %></div>
+      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px]" ><%= t("landing_page.index.feature_desc") %></div>
       <div class="grid grid-cols-3  md:grid-cols-1 gap-[32px] justify-items-center">
         <div class="flex flex-col items-center">
           <div class="mb-[16px] px-[12px] py-[12px] border border-[ #EAECF0] bg-[#FFF] rounded-[10px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21.2104 15.8906C20.5742 17.395 19.5792 18.7208 18.3123 19.7519C17.0454 20.7829 15.5452 21.488 13.9428 21.8053C12.3405 22.1227 10.6848 22.0427 9.12055 21.5724C7.55627 21.102 6.13103 20.2556 4.96942 19.1072C3.80782 17.9588 2.94522 16.5433 2.45704 14.9845C1.96886 13.4257 1.86996 11.771 2.169 10.1652C2.46804 8.55934 3.1559 7.05119 4.17245 5.77259C5.189 4.49399 6.50329 3.48388 8.0004 2.83056M21.2392 8.17372C21.6395 9.14019 21.8851 10.1619 21.9684 11.2014C21.989 11.4582 21.9993 11.5866 21.9483 11.7023C21.9057 11.7989 21.8213 11.8903 21.7284 11.9405C21.6172 12.0006 21.4783 12.0006 21.2004 12.0006H12.8004C12.5204 12.0006 12.3804 12.0006 12.2734 11.9461C12.1793 11.8981 12.1028 11.8216 12.0549 11.7276C12.0004 11.6206 12.0004 11.4806 12.0004 11.2006V2.80056C12.0004 2.52269 12.0004 2.38376 12.0605 2.27254C12.1107 2.17964 12.2021 2.09525 12.2987 2.05265C12.4144 2.00166 12.5428 2.01195 12.7996 2.03254C13.839 2.11588 14.8608 2.36144 15.8272 2.76176C17.0405 3.26431 18.1429 4.0009 19.0715 4.92949C20.0001 5.85808 20.7367 6.96047 21.2392 8.17372Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="text-[20px] mb-[8px] md:text-[18px] md:leading-[28px] text-[#101828] leading-[30px]">整合</div>
-          <div class="text-[16px] text-[#475467] leading-[24px] font-light">通过运用自然语言实现混合云资源的整合利用，自然语言处理技术能够简化工作流程，降低IT基础设施成本同时提高团队之间的协作效率</div>
+          <div class="text-[20px] mb-[8px] md:text-[18px] md:leading-[28px] text-[#101828] leading-[30px]"><%= t("landing_page.index.feature_item_1_title") %></div>
+          <div class="text-[16px] text-[#475467] leading-[24px] font-light"><%= t("landing_page.index.feature_item_1_desc") %></div>
         </div>
         <div class="flex flex-col items-center">
           <div class="mb-[16px] px-[12px] py-[12px] border border-[ #EAECF0] bg-[#FFF] rounded-[10px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.09344 12.6879C3.74463 13.1064 3.57023 13.3157 3.56756 13.4925C3.56524 13.6461 3.63372 13.7923 3.75324 13.8889C3.89073 14 4.16316 14 4.70802 14H12L11 22L19.9065 11.3121C20.2553 10.8936 20.4297 10.6843 20.4324 10.5075C20.4347 10.3539 20.3663 10.2077 20.2467 10.1111C20.1092 10 19.8368 10 19.292 10H12L13 2Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="text-[20px] mb-[8px] md:text-[18px] md:leading-[28px] text-[#101828] leading-[30px]">治理</div>
-          <div class="text-[16px] text-[#475467] leading-[24px] font-light">使大模型更易于使用，为垂直行业定制解决方案，使得每个公司及个人都能够拥有自己的大模型</div>
+          <div class="text-[20px] mb-[8px] md:text-[18px] md:leading-[28px] text-[#101828] leading-[30px]"><%= t("landing_page.index.feature_item_2_title") %></div>
+          <div class="text-[16px] text-[#475467] leading-[24px] font-light"><%= t("landing_page.index.feature_item_2_desc") %></div>
         </div>
         <div class="flex flex-col items-center">
           <div class="mb-[16px] px-[12px] py-[12px] border border-[ #EAECF0] bg-[#FFF] rounded-[10px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V13M12 8H16V12M15.5 3.5V2M19.4393 4.56066L20.5 3.5M20.5103 8.5H22.0103M3 13.3471C3.65194 13.4478 4.31987 13.5 5 13.5C9.38636 13.5 13.2653 11.3276 15.6197 8" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="text-[20px] mb-[8px] md:text-[18px] md:leading-[28px] text-[#101828] leading-[30px]">赋能</div>
-          <div class="text-[16px] text-[#475467] leading-[24px] font-light">通过利用自然语言发挥大模型的潜力从而彻底改变软件开发的方式，赋能每个人设计、创建、实施、并快速集成软件产品到现有系统</div>
+          <div class="text-[20px] mb-[8px] md:text-[18px] md:leading-[28px] text-[#101828] leading-[30px]"><%= t("landing_page.index.feature_item_3_title") %></div>
+          <div class="text-[16px] text-[#475467] leading-[24px] font-light"><%= t("landing_page.index.feature_item_3_desc") %></div>
         </div>
       </div>
     </div>
@@ -117,9 +117,9 @@
   <%# Latest News %>
   <div class="flex flex-col justify-center py-[96px] md:py-[64px] text-center">
     <div class="max-w-[1280px] m-auto md:px-[16px]">
-      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">公司博客</div>
-      <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">最新动态</div>
-      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" >获取 OpenCSG 最新动态</div>
+      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]"><%= t("landing_page.index.blog_subtitle") %></div>
+      <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]"><%= t("landing_page.index.blog_title") %></div>
+      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" ><%= t("landing_page.index.blog_desc") %></div>
       <div class="grid grid-cols-3 mb-[64px] md:grid-cols-1 gap-[32px] text-left">
         <div class="flex flex-col">
           <a href="https://opencsg.com/blog/news/8/">
@@ -127,8 +127,8 @@
               <img src="images/landing/news_bg1.png" alt="" class="w-full" />
             </div>
             <div class="text-[14px] text-[#223B99] leading-[20px] mb-[8px]">2023.9.2</div>
-            <div class="overflow-hidden whitespace-nowrap text-ellipsis text-[24px] mb-[8px] md:text-[20px] md:leading-[30px] text-[#101828] leading-[32px]" title="OpenCSG 荣获千万天使轮融资">OpenCSG 荣获千万天使轮融资</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light mb-[24px]">9月伊始，北京开放传神科技有限公司（以下简称“OpenCSG”）获数千万元天使轮融资，本轮投资由 联想创投集团，北京国信中数投资管理有限公司阶段性联合领投，源合资本担任财务顾问...</div>
+            <div class="overflow-hidden whitespace-nowrap text-ellipsis text-[24px] mb-[8px] md:text-[20px] md:leading-[30px] text-[#101828] leading-[32px]" title="<%= t("landing_page.index.blog_item_1_title") %>"><%= t("landing_page.index.blog_item_1_title") %></div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light mb-[24px]"><%= t("landing_page.index.blog_item_1_content") %>...</div>
             <div class="flex gap-[8px] text-[14px] leading-[20px]">
               <div class="px-[10px] py-[2px] rounded-[16px] border border-[#99AFFF] bg-[#CED8FF] text-[#223B99]">Tech</div>
               <div class="px-[10px] py-[2px] rounded-[16px] border border-[#C7D7FE] bg-[#EEF4FF] text-[#3538CD]">AI</div>
@@ -142,8 +142,8 @@
               <img src="images/landing/news_bg2.png" alt="" class="w-full" />
             </div>
             <div class="text-[14px] text-[#223B99] leading-[20px] mb-[8px]">2023.9.15</div>
-            <div class="overflow-hidden whitespace-nowrap text-ellipsis text-[24px] mb-[8px] md:text-[20px] md:leading-[30px] text-[#101828] leading-[32px]" title="开源开放驱动大模型生态繁荣”主题研讨">“开源开放驱动大模型生态繁荣”主题研讨</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light mb-[24px]">2023年9月15日，由上海市徐汇区科学技术委员会、上海西岸集团、中国信通院华东分院共同承办，以“开源开放驱动大模型生态繁荣”为主题的研讨会在上海徐汇西岸AI Tower举办...</div>
+            <div class="overflow-hidden whitespace-nowrap text-ellipsis text-[24px] mb-[8px] md:text-[20px] md:leading-[30px] text-[#101828] leading-[32px]" title="<%= t("landing_page.index.blog_item_2_title") %>"><%= t("landing_page.index.blog_item_2_title") %></div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light mb-[24px]"><%= t("landing_page.index.blog_item_2_content") %>...</div>
             <div class="flex gap-[8px] text-[14px] leading-[20px]">
               <div class="px-[10px] py-[2px] rounded-[16px] border border-[#C7D7FE] bg-[#EEF4FF] text-[#3538CD]">AI</div>
             </div>
@@ -155,15 +155,15 @@
               <img src="images/landing/news_bg3.png" alt="" class="w-full" />
             </div>
             <div class="text-[14px] text-[#223B99] leading-[20px] mb-[8px]">2023.9.28</div>
-            <div class="overflow-hidden whitespace-nowrap text-ellipsis text-[24px] mb-[8px] md:text-[20px] md:leading-[30px] text-[#101828] leading-[32px]" title="“模速空间”创新生态社区揭幕仪式">“模速空间”创新生态社区揭幕仪式</div>
-            <div class="text-[16px] text-[#475467] leading-[24px] font-light mb-[24px]">9月28日，上海“模速空间”创新生态社区暨人工智能大模型产业生态集聚区在揭牌，创始人&CEO陈冉代表OpenCSG上台揭幕，成为首批入驻上海市人工智能产业生态的企业之一...</div>
+            <div class="overflow-hidden whitespace-nowrap text-ellipsis text-[24px] mb-[8px] md:text-[20px] md:leading-[30px] text-[#101828] leading-[32px]" title="<%= t("landing_page.index.blog_item_3_title") %>"><%= t("landing_page.index.blog_item_3_title") %></div>
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light mb-[24px]"><%= t("landing_page.index.blog_item_3_content") %>...</div>
             <div class="flex gap-[8px] text-[14px] leading-[20px]">
               <div class="px-[10px] py-[2px] rounded-[16px] border border-[#ABEFC6] bg-[#ECFDF3] text-[#067647]">Tech</div>
             </div>
           </a>
         </div>
       </div>
-      <a href="https://opencsg.com/blog" class="inline md:block px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer">了解更多</a>
+      <a href="https://opencsg.com/blog" class="inline md:block px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer"><%= t("landing_page.index.view_more") %></a>
     </div>
   </div>
   <landing-page>

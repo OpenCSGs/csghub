@@ -1,0 +1,6 @@
+en:
+  profile:
+    index:
+      no_data: 'No data available'
+      spaces: 'Spaces'
+      view_all: 'View all'

@@ -61,7 +61,7 @@ zh:
           taken: "不能推荐重复的论文"
         ssh_key:
           blank: "字段不能为空"
-          taken: "不能创建重复"
+          taken: "不能创建重复 SSH Key"
         organization:
           invalid: '不符合规范'
           blank: "字段不能为空"

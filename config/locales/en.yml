@@ -73,3 +73,7 @@ en:
         space:
           blank: "Field can't be blank"
           taken: "Can't create duplicate space"
+        model:
+          taken: "Can't create duplicate model"
+        dataset:
+          taken: "Can't create duplicate dataset"

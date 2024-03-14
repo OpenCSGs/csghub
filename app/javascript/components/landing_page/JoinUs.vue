@@ -1,12 +1,12 @@
 <template>
   <div id="joinUs" class="flex flex-col py-[96px] md:py-[64px] text-left">
     <div class="max-w-[1280px] m-auto md:px-[16px] px-[32px]">
-      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">加入我们</div>
-      <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">我们正在寻找优秀的人才</div>
-      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" >我们是一支分布在全国的分布式远程团队。加入我们吧</div>
+      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">{{ $t('landing.join1') }}</div>
+      <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">{{ $t('landing.join2') }}</div>
+      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" >{{ $t('landing.join3') }}</div>
       <div class="grid grid-cols-2  gap-x-[64px] gap-y-[48px] mb-[64px] md:grid-cols-1 text-left">
         <a class="w-[578px] md:w-full flex flex-col pt-[24px] border-t border-t-[1px] border-[#EAECF0]"
-         v-for="(item,index) in data" :key="index" :href="hrefUrl">
+         v-for="(item,index) in this.$i18n.locale === 'zh' ? data: data_en" :key="index" :href="hrefUrl">
           <div class=" flex gap-[8px] mb-[8px]">
             <div class="text-[#101828] text-[18px] leading-[28px]">{{item.name}}</div>
             <div :style="getTagStyles(item)" class="px-[10px] text-[14px] leading-[20px] border border-[#B2DDFF] bg-[#EFF8FF] rounded-[16px] flex items-center gap-[8px]">
@@ -45,7 +45,13 @@
               {pointColor:"#2E90FA",color:"#175CD3",bgColor:"#EFF8FF",borderColor:"#B2DDFF",name:'数据工程师',tag:'数据开发',desc:'负责数据抓取、清洗、融合等工作',remote:'北京 海淀区 学院路',time:'1-3年',isInternship:false},
               {pointColor:"#17B26A",color:"#067647",bgColor:"#ECFDF3",borderColor:"#ABEFC6",name:'AI工程方向实习生',tag:'机器学习算法/工程化经验',desc:'参与研发AI算法管理平台及AI应用的研发与落地。',remote:'北京 海淀区 学院路',time:'4天/周',isInternship:true},
               {pointColor:"#2E90FA",color:"#175CD3",bgColor:"#EFF8FF",borderColor:"#B2DDFF",name:'算法实习生',tag:'研究导向',desc:'参与多模态理解与生成模型的的研发与优化',remote:'北京 海淀区 学院路',time:'4天/周',isInternship:true},
-              {pointColor:"#EF6820",color:"#B93815",bgColor:"#FEF6EE",borderColor:"#F9DBAF",name:'销售实习生',tag:'互联网/科技',desc:'我们正在寻找一名聪明、伶俐、懂技术、背景出色、学习速度快的销售实习生，以加入我们的团队。',remote:'北京 海淀区 学院路',time:'4天/周',isInternship:true}]
+              {pointColor:"#EF6820",color:"#B93815",bgColor:"#FEF6EE",borderColor:"#F9DBAF",name:'销售实习生',tag:'互联网/科技',desc:'我们正在寻找一名聪明、伶俐、懂技术、背景出色、学习速度快的销售实习生，以加入我们的团队。',remote:'北京 海淀区 学院路',time:'4天/周',isInternship:true}],
+        data_en:[{pointColor:"#2E90FA",color:"#175CD3",bgColor:"#EFF8FF",borderColor:"#B2DDFF",name:'Chief Scientist',tag: 'Machine Learning',desc: 'Tracking cutting-edge developments in academia and industry, algorithms in areas such as large model training, supervised fine-tuning, and reinforcement learning',remote: 'Xueyuan Road, Haidian District, Beijing',time: '5-10 years',isInternship:false},
+                 {pointColor:"#2E90FA",color:"#175CD3",bgColor:"#EFF8FF",borderColor:"#B2DDFF",name:'Algorithm Engineer',tag:'Large Model Development',desc:'Participated in the research and development, deployment, and fine-tuning of large language models, researched and developed NLP domain algorithms, and applied them to actual business scenarios',remote:' Xueyuan Road, Haidian District, Beijing ',time:' 3-5 years',isInternship:false},
+                 {pointColor:"#2E90FA",color:"#175CD3",bgColor:"#EFF8FF",borderColor:"#B2DDFF",name:'Data Engineer',tag:'Data Development',desc:'Responsible for data capture, cleaning, fusion, etc.',remote:'Xueyuan Road, Haidian District, Beijing',time:'1-3 years',isInternship:false},
+                 {pointColor:"#17B26A",color:"#067647",bgColor:"#ECFDF3",borderColor:"#ABEFC6",name:'Intern in AI Engineering',tag: 'Machine Learning Algorithms/Engineering Experience',desc:'Participate in the development and implementation of AI algorithm management platforms and AI applications.',remote:'Xueyuan Road, Haidian District, Beijing',time:'4 days/week',isInternship:true},
+                 {pointColor:"#2E90FA",color:"#175CD3",bgColor:"#EFF8FF",borderColor:"#B2DDFF",name: 'Algorithm Intern',tag: 'Research orientation',desc: 'Participate in the development and optimization of multimodal understanding and generation models',remote:' Xueyuan Road, Haidian District, Beijing ',time:'4 days/week ',isInternship:true},
+                 {pointColor:"#EF6820",color:"#B93815",bgColor:"#FEF6EE",borderColor:"#F9DBAF",name: 'Sales Intern',tag:'Internet/Technology',desc:'We are looking for a sales intern who is smart, smart, skilled, with excellent background and fast learning speed to join our team.',remote: 'Xueyuan Road, Haidian District, Beijing',time: '4 days/week',isInternship:true}]
       };
     },
   

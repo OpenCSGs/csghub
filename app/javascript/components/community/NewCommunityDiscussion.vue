@@ -5,19 +5,19 @@
       {{ $t('community.newDiscussion.new') }}
     </div>
     <div>
-      <FormLabel :labelName="this.$t('community.newDiscussion.title')" :required="true" />
+      <FormLabel :labelName="$t('community.newDiscussion.title')" :required="true" />
       <el-input v-model="title"
                   :maxLength="200"
                   show-word-limit
                   clearable
-                  :placeholder="this.$t('community.newDiscussion.create')"
+                  :placeholder="$t('community.newDiscussion.create')"
                   class="w-full h-[40px] text-[#606266]">
                   <template #suffix>
         <span>{{ title.length }} / 200</span>
       </template>
     </el-input>
     </div>
-    <FormLabel :labelName="this.$t('community.newDiscussion.content')" :required="true" />
+    <FormLabel :labelName="$t('community.newDiscussion.content')" :required="true" />
     <CommunityMDTextarea :desc="desc"  @inputChange="handleInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="create">{{ $t('community.newDiscussion.create') }}</el-button>

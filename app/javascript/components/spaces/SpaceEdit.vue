@@ -40,7 +40,7 @@
     </el-button>
 
     <div class="mt-2">
-      <p class="text-[12px]">点击选择系统默认 tag:</p>
+      <p class="text-[12px]">{{ $t('space.ClickTag') }}</p>
       <div class="flex gap-2 my-2 flex-wrap">
         <p v-for="tag in globalDefaultTags" class="rounded px-2 h-4 flex items-center text-xs bg-[#E7F4F6]">
           <span :class="[`text-[${tag.color}]`]" class="cursor-pointer" @click="selectTag"> {{ tag.name }}</span>
@@ -54,7 +54,7 @@
       <el-radio :label="'public'">public</el-radio>
     </el-radio-group>
 
-    <h3 class="mb-2 mt-4 font-[500]">图片</h3>
+    <h3 class="mb-2 mt-4 font-[500]">{{ $t('space.Img') }}</h3>
     <input ref="fileInput" type="file" class="hidden" @change="previewImage" />
     <div class="relative">
       <img v-if="imageUrl" :src="imageUrl" class="rounded w-full h-[140px] object-cover" />
@@ -72,9 +72,9 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="dialogVisible = false">{{ $t('all.cancel') }}</el-button>
         <el-button type="primary" @click="submitTheForm" class="bg-[#409EFF]">
-          确定
+          {{ $t('all.confirm') }}
         </el-button>
       </span>
     </template>
@@ -85,6 +85,7 @@
   import { nextTick, ref, inject, onMounted } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { useI18n } from 'vue-i18n'
 
   const emit = defineEmits(['retriveSpaceCard'])
 
@@ -106,6 +107,7 @@
   const dynamicTags = ref(spaceTagsNameArray)
   const inputVisible = ref(false)
   const InputRef = ref<InstanceType<typeof ElInput>>()
+  const { t } = useI18n();
 
   const closeEditDialog = () => {
     dialogVisible.value = false
@@ -134,7 +136,7 @@
     const currentSelectedTag = event.target.innerHTML
     if (dynamicTags.value.includes(currentSelectedTag)) {
       ElMessage({
-        message: '当前 Tag 已经添加！',
+        message: t('space.reTag'),
         type: 'warning'
       })
     } else {

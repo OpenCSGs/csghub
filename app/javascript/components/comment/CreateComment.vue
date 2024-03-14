@@ -1,6 +1,6 @@
 <template>
   <div class="p-[14px] flex items-center justify-between rounded-[8px] border border-gray-300 mb-6">
-    <textarea rows="1" :placeholder="this.$t('comment.createComment')" v-model="newCommentContent" class="flex-1 outline-none mr-4 text-sm text-[#606266] h-[40px]"></textarea>
+    <textarea rows="1" :placeholder="$t('comment.createComment')" v-model="newCommentContent" class="flex-1 outline-none mr-4 text-sm text-[#606266] h-[40px]"></textarea>
     <button
       :disabled="newCommentContent.trim().length === 0"
       :class="{ 'bg-[#409EFF]': newCommentContent.trim().length > 0, 'bg-[#9FCEFF]': newCommentContent.trim().length === 0 }"

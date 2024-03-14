@@ -3,17 +3,17 @@
     <div class="max-w-[1280px] m-auto">
       <div class="py-[96px] text-center">
         <div class="text-[#223B99] text-[16px] font-[500] leading-[24px]">
-          社区文章
+          {{ $t('dailyPaper.article') }}
         </div>
         <div class="mt-[12px] text-[48px] font-[500] leading-[60px] tracking-[-0.96px]">
-          每期精选文章
+          {{ $t('dailyPaper.eachArticle') }}
         </div>
         <div class="mt-[24px] text-[20px] font-[300] leading-[30px]">
-          来自 arxiv 最新的新闻、技术和资源
+          {{ $t('dailyPaper.arxiv') }}
         </div>
         <div class="mt-[24px]" v-if="canCreateDailyPaper">
           <a href="/daily_papers/new" class="inline-block text-center px-[18px] py-[12px] text-[16px] text-white bg-[#3250BD] rounded-[8px] border-[1px] border-[#3250BD]">
-            发布新的社区文章
+            {{ $t('dailyPaper.newArticle') }}
           </a>
         </div>
 
@@ -25,7 +25,7 @@
                 style="width: 100%;"
                 size="large"
                 v-model="searchForm.keywords"
-                placeholder="搜索文章标题"
+                :placeholder="$t('dailyPaper.placeholder')"
                 clearable
                 suffix-icon="el-icon-search"
                 @keyup.enter="handleSearch"
@@ -74,7 +74,7 @@
                 v-model:current-page="searchForm.page"
                 :default-current-page="1"
                 :page-size="8"
-                layout="prev, pager, next" 
+                layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
                 @update:current-page="handleSearch"

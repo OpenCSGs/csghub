@@ -4,11 +4,11 @@
       <div class="mb-[12px] text-[16px] text-[#475467] leading-[24px]">
         Smart. Simple. Scalable.
       </div>
-      <div class="mb-[24px] max-w-[768px] m-auto text-[72px] md:text-[48px] md:leading-[60px] text-[#101828] leading-[90px]">
-        大模型重新定义软件开发和工程交付新范式
+      <div class="mb-[24px] m-auto text-[72px] md:text-[48px] md:leading-[60px] text-[#101828] leading-[90px]" :class="this.$i18n.locale === 'zh' ? 'max-w-[768px]': ''">
+        {{ $t('solution.banner.headline') }}
       </div>
       <div class="text-[20px] font-light text-[#475467] leading-[30px]">
-        OpenCSG 解决方案
+        {{ $t('solution.banner.solution') }}
       </div>
     </div>
   </div>

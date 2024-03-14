@@ -23,13 +23,13 @@
     </div>
     <div class="flex items-center justify-between text-[14px] leading-[22px]">
       <div class="text-[#303133]">
-        举办方：
+        {{ $t('campaign.Organizer') }}：
         <a :href="organizerWebsite" class="text-[#409EFF]" target="_blank">
           {{ organizer }}
         </a>
       </div>
       <a :href="'/campaigns/' + campaignId" class="text-white font-semibold w-[88px] h-[32px] flex items-center justify-center bg-[#409EFF] rounded-[100px]">
-        了解更多
+        {{ $t('campaign.More') }}
       </a>
     </div>
   </a>
