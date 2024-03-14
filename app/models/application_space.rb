@@ -1,5 +1,5 @@
 class ApplicationSpace < ApplicationRecord
-  enum :visibility, { space_public: 'public', space_private: 'private' }, default: :space_private
+  enum :visibility, { application_space_public: 'public', application_space_private: 'private' }, default: :space_private
 
   belongs_to :owner, polymorphic: true
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
