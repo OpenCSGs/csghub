@@ -59,8 +59,9 @@
           :path="modelPath"
           :model-nickname="modelNickname"
           :model-desc="modelDesc"
-          :tag-list="tagList"
+          :tag-list="tagList.task_tags"
           :tags="tags"
+         
           :default_branch="modelDefaultBranch"
           :private="modelPrivate" />
       </template>
