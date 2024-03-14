@@ -47,6 +47,9 @@
   }
 
   const fetchPreviewData = async () => {
+    if (props.repoType !== 'dataset') {
+      return
+    }
     const url = `/internal_api/datasets/${props.namespacePath}/preview`
 
     fetch(url).then((response) => {
