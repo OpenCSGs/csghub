@@ -103,9 +103,21 @@
         <a v-else-if="canPreview(file)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
           {{ file.name }}
         </a>
-        <a v-else :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
+        <a v-else class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
           {{ file.name }}
         </a>
+        <el-popover
+            v-else
+            placement="top"
+            :width="270"
+            trigger="hover"
+            effect="dark"
+            :content="this.$t('all.notSupportPreview')"
+        >
+          <template #reference>
+            <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
+          </template>
+        </el-popover>
         <span v-if="file.lfs" class="text-xs text-[#909399] ml-2 rounded px-1 border border-[#909399]">LFS</span>
       </div>
       <div class="text-sm text-[#606266] flex-shrink-0 text-right w-[8%]">
@@ -195,11 +207,11 @@
     const extension = getFileExtension(file)
     const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt', 'png', 'jpg', 'jpeg', 'gif', 'svg']
 
-    const isFileLFS = file.lfs
+    // const isFileLFS = file.lfs
     const isExtensionIncluded = !extension || previewExtensions.includes(extension)
     const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
 
-    return !isFileLFS && isExtensionIncluded && isFileSizeLessThan10MB
+    return (isExtensionIncluded && isFileSizeLessThan10MB) || file.lfs
   }
 
   const canDownload = (file) => {
