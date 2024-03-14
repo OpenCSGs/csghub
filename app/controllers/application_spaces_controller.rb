@@ -14,9 +14,7 @@ class ApplicationSpacesController < ApplicationController
 
   def new
     @available_namespaces = current_user.available_namespaces
-    system_config = SystemConfig.first
-    license_configs = system_config.license_configs rescue nil
-    @licenses = license_configs.presence || Model::DEFAULT_LICENSES
+    get_license_list
   end
 
   def show
@@ -76,10 +74,10 @@ class ApplicationSpacesController < ApplicationController
     return if action_name == 'blob' && params[:download] == 'true'
 
     if action_name == 'blob' || action_name == 'edit_file'
-      @application_space, @last_commit, @branches, @blob = Starhub.api.get_application_space_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      @application_space, @last_commit, @branches, @blob = Starhub.api.get_application_space_detail_blob_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
       update_blob_content
     else
-      @application_space, @branches = Starhub.api.get_application_space_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
+      @application_space, @branches = Starhub.api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     end
 
     @tags = Tag.build_detail_tags(JSON.parse(@application_space)['data']['tags']).to_json
