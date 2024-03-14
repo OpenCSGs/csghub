@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <repo-clone :repo-type="repoType" :clone-http-url="repoDetail.repository.http_clone_url" :clone-ssh-url="repoDetail.repository.ssh_clone_url" />
+    <repo-clone :repo-type="repoType" :http-clone-url="repoDetail.repository.http_clone_url" :ssh-clone-url="repoDetail.repository.ssh_clone_url" />
     <tab-container :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
         <repo-summary :repo-type="repoType" :namespace-path="repoDetail.path" :download-count="repoDetail.downloads" />
