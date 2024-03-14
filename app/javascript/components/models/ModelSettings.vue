@@ -222,7 +222,9 @@ export default {
       for (const key in this.tags) {
         if (Array.isArray(this.tags[key]) && this.tags[key].length > 0) {
           console.log(`Processing ${key} tags:`);
-          this.getSelectTags(this.tags[key]);
+          if(key == 'task_tags' || key == "other_tags"){
+            this.getSelectTags(this.tags[key]);
+          }
         }
       }
     } else {
