@@ -80,30 +80,30 @@
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">封面图片</p>
           <el-upload
-              ref="uploadRef"
-              class="upload-demo"
-              drag
-              multiple
-              :headers="{ 'X-CSRF-TOKEN': csrf_token }"
-              :data="{ owner_id: owner.split('_')[0], owner_type: owner.split('_')[1], name: spaceName, nickname: spaceNickName, license: license, desc: spaceDesc, sdk: SDK, cloud_resource: spaceResource, visibility: visibility}"
-              :auto-upload="false"
-              :action="`/internal_api/spaces`"
-              :limit="1"
-              @change="handleFileChange"
-              :on-success="handleSuccess"
-              :on-error="handleError"
-              :before-upload="handleBeforeUpload"
-              accept="image/jpeg,image/png">
-            <el-icon>
-              <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M6.66663 12.3333L9.99996 9M9.99996 9L13.3333 12.3333M9.99996 9V16.5M16.6666 12.9524C17.6845 12.1117 18.3333 10.8399 18.3333 9.41667C18.3333 6.88536 16.2813 4.83333 13.75 4.83333C13.5679 4.83333 13.3975 4.73833 13.3051 4.58145C12.2183 2.73736 10.212 1.5 7.91663 1.5C4.46485 1.5 1.66663 4.29822 1.66663 7.75C1.66663 9.47175 2.36283 11.0309 3.48908 12.1613"
-                    stroke="#475467" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </el-icon>
-            <div class="el-upload__text py-[16px] px-[24px]">
-              <div><em>点击上传</em>，或将文件拖到此处</div>
-              <div class="font-light text-[12px]">支持 PNG, JPG 格式，高宽比5:2</div>
+            :class="`${!imageUploaded ? 'h-auto' : 'hide'}`"
+            :limit="1"
+            v-model:file-list="images"
+            list-type="picture-card"
+            :headers="{ 'X-CSRF-TOKEN': csrf_token }"
+            accept="image/png, image/jpeg, image/gif, image/svg+xml"
+            :data="{namespace: 'application_space'}"
+            action="/internal_api/upload"
+            :before-upload="handleBeforeUpload"
+            :on-remove="handleRemoveImage"
+            :on-success="handleUploadSuccess"
+          >
+            <div class="flex flex-col items-center">
+              <el-icon>
+                <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                      d="M6.66663 12.3333L9.99996 9M9.99996 9L13.3333 12.3333M9.99996 9V16.5M16.6666 12.9524C17.6845 12.1117 18.3333 10.8399 18.3333 9.41667C18.3333 6.88536 16.2813 4.83333 13.75 4.83333C13.5679 4.83333 13.3975 4.73833 13.3051 4.58145C12.2183 2.73736 10.212 1.5 7.91663 1.5C4.46485 1.5 1.66663 4.29822 1.66663 7.75C1.66663 9.47175 2.36283 11.0309 3.48908 12.1613"
+                      stroke="#475467" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </el-icon>
+              <div class="el-upload__text">
+                <div><em>点击上传</em>，或将文件拖到此处</div>
+                <div class="font-light text-[12px]">支持 PNG, JPG 格式，高宽比5:2</div>
+              </div>
             </div>
           </el-upload>
         </div>
@@ -211,125 +211,153 @@
       <div class="flex justify-end">
         <button
             class="bg-[#3250BD] w-[118px] ml-[10px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
-            @click="createSpace"
-            :disabled="!canCreateModel">
+            @click="createApplicationSpace"
+            :disabled="!canCreateApplicationSpace">
           创建应用空间
         </button>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
-import {ref, computed} from 'vue'
-import {ElInput, ElMessage} from 'element-plus'
+  import {ref, computed} from 'vue'
+  import {ElInput, ElMessage} from 'element-plus'
+  import csrfFetch from '../../packs/csrfFetch'
+  import { useI18n } from 'vue-i18n'
 
-const props = defineProps({
-  licenses: Array,
-  namespaces: Array,
-})
+  const props = defineProps({
+    licenses: Array,
+    namespaces: Array,
+  })
 
-const license = ref(props.licenses[0][0])
-const owner = ref(props.namespaces[0][0])
-const spaceName = ref('')
-const spaceNickName = ref('')
-const spaceDesc = ref('')
-const visibility = ref('private')
-const SDK = ref('gradio')
-const uploadRef = ref()
-const filesList = ref([])
-const prefixPath = document.location.pathname.split('/')[1]
-const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+  const { t } = useI18n()
 
-const canCreateModel = computed(() => {
-  return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(spaceName.value)
-})
+  const license = ref(props.licenses[0][0])
+  const owner = ref(props.namespaces[0][0])
+  const imageUploaded = ref(false)
+  const spaceName = ref('')
+  const spaceNickName = ref('')
+  const spaceDesc = ref('')
+  const visibility = ref('private')
+  const SDK = ref('gradio')
+  const images = ref([])
+  const coverImage = ref('')
+  const prefixPath = document.location.pathname.split('/')[1]
+  const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-const spaceResources = ref([
-  {label: "CPU basic · 2 vCPU · 16GB ·免费", value: "CPU basic · 2 vCPU · 16GB"},
-  {label: "NVIDIA T4 · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA T4 · 4 vCPU · 15 GB"},
-  {label: "NVIDIA A10G · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA A10G · 4 vCPU · 15 GB"},
-  {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
-])
-const spaceResource = ref('CPU basic · 2 vCPU · 16GB')
-const disabledOptions = ref([
-  "NVIDIA T4 · 4 vCPU · 15 GB",
-  "NVIDIA A10G · 4 vCPU · 15 GB",
-  "NVIDIA A10G · 12 vCPU · 46 GB"
-])
+  const canCreateApplicationSpace = computed(() => {
+    return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(spaceName.value)
+  })
 
-const createSpace = () => {
-  if (filesList.value.length === 0) {
-    ElMessage({message: "请选择封面图片", type: "warning"})
-    return
+  const spaceResources = ref([
+    {label: "CPU basic · 2 vCPU · 16GB ·免费", value: "CPU basic · 2 vCPU · 16GB"},
+    {label: "NVIDIA T4 · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA T4 · 4 vCPU · 15 GB"},
+    {label: "NVIDIA A10G · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA A10G · 4 vCPU · 15 GB"},
+    {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
+  ])
+  const spaceResource = ref('CPU basic · 2 vCPU · 16GB')
+  const disabledOptions = ref([
+    "NVIDIA T4 · 4 vCPU · 15 GB",
+    "NVIDIA A10G · 4 vCPU · 15 GB",
+    "NVIDIA A10G · 12 vCPU · 46 GB"
+  ])
+
+  const createApplicationSpace = async () => {
+    try {
+      const res = await submitApplicationSpaceForm()
+      debugger
+      ElMessage.success(t('application_spaces.new.createSuccess'))
+      toApplicationSpaceDetail(res.path)
+    } catch (err) {
+      ElMessage.warning(err.message)
+    }
   }
-  uploadRef.value.submit()
-}
 
-const handleBeforeUpload = (file) => {
-  if (file.size / 1024 <= 2000) {
-    return true
-  } else {
-    ElMessage({message: "文件过大", type: "warning"})
-    return false
+  async function submitApplicationSpaceForm() {
+    const modelCreateEndpoint = `/internal_api/application_spaces`
+    const formData = new FormData()
+    const [ownerId, ownerType] = owner.value.split('_')
+    formData.append('owner_id', ownerId)
+    formData.append('owner_type', ownerType)
+    formData.append('name', spaceName.value)
+    formData.append('nickname', spaceNickName.value)
+    formData.append('desc', spaceDesc.value)
+    formData.append('license', license.value)
+    formData.append('visibility', visibility.value)
+    formData.append('sdk', SDK.value)
+    formData.append('cloud_resource', spaceResource.value)
+    formData.append('cover_image', coverImage.value)
+
+    const options = { method: 'POST', body: formData }
+
+    const response = await csrfFetch(modelCreateEndpoint, options)
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(data.message)
+    } else {
+      return response.json()
+    }
   }
-}
+  const toApplicationSpaceDetail = (path) => {
+    window.location.pathname = `/application_spaces/${path}`
+  }
 
-const handleFileChange = (file) => {
-  filesList.value.push(file.raw)
-}
+  const handleBeforeUpload = (file) => {
+    if (file.size / 1024 <= 2000) {
+      return true
+    } else {
+      ElMessage({message: "文件过大", type: "warning"})
+      return false
+    }
+  }
 
-const handleSuccess = (response, file, fileList) => {
-  ElMessage({message: "上传完成", type: "success"})
-  filesList.value = []
-  // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
-};
+  const handleRemoveImage = () => {
+    coverImage.value = ""
+    imageUploaded.value = false
+  }
 
-const handleError = (err, file, fileList) => {
-  ElMessage({message: err.message, type: "warning"})
-  console.log(err)
-  filesList.value.splice(-1, 1)
-}
+  const handleUploadSuccess = (res) => {
+    coverImage.value = res.url
+    imageUploaded.value = true
+  }
+
 </script>
+
 <style scoped>
-:deep(.el-input) {
-  height: 40px;
+  :deep(.el-input) {
+    height: 40px;
 
-@media screen and (max-width: 768px) {
-  width:
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
 
-100%;
-}
+  :deep(.el-radio__input) {
+    margin-top: 4px;
+  }
 
-}
+  :deep(.el-radio__label) {
+    color: #344054 !important;
+    font-weight: 400;
+  }
 
-:deep(.el-radio__input) {
-  margin-top: 4px;
-}
+  :deep(.el-radio.is-bordered.is-checked ) {
+    border: 2px solid #3250BD;
+  }
 
-:deep(.el-radio__label) {
-  color: #344054 !important;
-  font-weight: 400;
-}
+  :deep(.el-radio__input.is-checked .el-radio__inner) {
+    background: #3250BD;
+    border-color: #3250BD;
+  }
 
-:deep(.el-radio.is-bordered.is-checked ) {
-  border: 2px solid #3250BD;
-}
+  :deep(.el-select) {
+    width: 240px;
+    height: 40px;
 
-:deep(.el-radio__input.is-checked .el-radio__inner) {
-  background: #3250BD;
-  border-color: #3250BD;
-}
-
-:deep(.el-select) {
-  width: 240px;
-  height: 40px;
-
-@media screen and (max-width: 768px) {
-  width:
-
-100%;
-}
-
-}
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
 </style>
 
