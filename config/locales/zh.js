@@ -134,6 +134,7 @@ export default {
     editProfile: "账号设置",
     newModel: "新建模型",
     newDataset: "新建数据集",
+    newCode: "新建代码仓库",
     newOrganization: "新建组织",
     logout: "退出登录",
     loginRegister: "登录/注册",
