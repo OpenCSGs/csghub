@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3 class="text-[16px] text-[#344054] font-[500] mb-[16px]">在线体验</h3>
-    <p class="text-[#344054] text-[14px] mb-[6px]">测试内容</p>
+    <h3 class="text-[16px] text-[#344054] font-[500] mb-[16px]">{{ $t('widgets.onlineDemo') }}</h3>
+    <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('widgets.testInput') }}</p>
     <el-input
       v-model="textInput"
       :rows="3"
@@ -17,20 +17,20 @@
         <span class="text-[14px]">参数调整</span>
       </div>
       <div class="flex justify-center items-center gap-[8px]">
-        <p class="text-[16px] text-[#667085]"> 单词数：{{ textInputLength }} / 1000 </p>
+        <p class="text-[16px] text-[#667085]"> {{ `${$t('widgets.testInput')}: ${textInputLength}` }} / 1000 </p>
         <button class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
                 @click="sendInferenceTest"
         >
-          执行测试
+          {{ $t('widgets.runTest') }}
         </button>
       </div>
     </div>
-    <p class="text-[#344054] text-[14px] mb-[6px]">测试结果</p>
+    <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('widgets.testOutput') }}</p>
     <div class="h-[130px] p-[10px] border markdown-body rounded-md border-gray-300 bg-white shadow-xs overflow-scroll"
          v-loading="loading"
          v-html="renderMarkdown(textOutput)"
     ></div>
-    <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">模型推理耗时：{{ timeSpend }} ms</p>
+    <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">{{ `${$t('widgets.timeCost')}: ${timeSpend}` }} ms</p>
   </div>
 </template>
 
@@ -38,6 +38,7 @@
   import csrfFetch from "../../../packs/csrfFetch"
   import { ElMessage } from 'element-plus'
   import MarkdownIt from "markdown-it"
+  import { useI18n } from 'vue-i18n'
 
   export default {
     props: {
@@ -50,7 +51,8 @@
         loading: false,
         textInput: '',
         textOutput: '',
-        textInputLength: 0
+        textInputLength: 0,
+        t: useI18n()
       }
     },
     components: {},

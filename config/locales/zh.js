@@ -3,6 +3,14 @@ export default {
     nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
     nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
   },
+  widgets: {
+    onlineDemo: "在线体验",
+    testInput: "测试内容",
+    testOutput: "测试结果",
+    wordsNumber: "单词数",
+    runTest: "执行测试",
+    timeCost: "模型推理耗时"
+  },
   models: {
     title: "模型",
     placeholder: "模型名字",
