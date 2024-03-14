@@ -3,6 +3,11 @@ export default {
     nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
     nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
   },
+  application_spaces: {
+    new: {
+      createSuccess: "应用空间创建成功",
+    }
+  },
   models: {
     title: "模型",
     placeholder: "模型名字",

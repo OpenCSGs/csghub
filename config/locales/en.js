@@ -5,6 +5,11 @@ export default {
     nameSpaceRule:
       "String of 2-20 charaters, numbers and _",
   },
+  application_spaces: {
+    new: {
+      createSuccess: "Application Space created successfully",
+    }
+  },
   models: {
     title: "Model",
     placeholder: "Models name",
