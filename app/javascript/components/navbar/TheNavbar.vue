@@ -104,14 +104,13 @@
         </a>
       </button>
     </div>
-
   </div>
-  <ContactUs ref='child' />
 </template>
 
 <script>
 import Model from "./model.vue";
 import Dataset from "./dataset.vue";
+
 export default {
   props: {
     logo: String,
