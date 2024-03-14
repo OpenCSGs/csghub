@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     post '/models/:namespace/(*model_name)/files/:branch', to: 'models#create_file'
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file'
     put '/models/:namespace/(*model_name)/files/:branch', to: 'models#update_file'
+    put '/models/:namespace/(*model_name)/update_readme_tags', to: 'models#update_readme_tags'
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
 
