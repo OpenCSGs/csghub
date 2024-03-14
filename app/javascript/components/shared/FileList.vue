@@ -207,7 +207,6 @@
     const extension = getFileExtension(file)
     const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt', 'png', 'jpg', 'jpeg', 'gif', 'svg']
 
-    // const isFileLFS = file.lfs
     const isExtensionIncluded = !extension || previewExtensions.includes(extension)
     const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
 

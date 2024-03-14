@@ -97,35 +97,35 @@
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div class="flex items-center justify-center px-4 py-10 border-b border-[#DCDFE6] font-medium text-[#667085] text-[14px] whitespace-pre-wrap">
-        <p>This file is stored with <a :href="version" target="_blank" class="underline">Git LFS</a>. It is too big to display, but you can still
+        <p>{{ $t('shared.lfs1') }} <a :href="version" target="_blank" class="underline">{{ $t('shared.lfs2') }}</a>{{ $t('shared.lfs3') }}
           <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${currentPath}?download=true&lfs=${lfs}&lfs_path=${lfsRelativePath}`"
-             download class="underline">download
-          </a> it.
+             download class="underline">{{ $t('shared.lfs4') }}
+          </a> {{ $t('shared.lfs5') }}
         </p>
       </div>
       <div class="p-4 flex flex-col gap-[4px] text-sm font-medium">
-        <p class="mb-[4px]">Git LFS Details</p>
+        <p class="mb-[4px]">{{ $t('shared.lfs6') }}</p>
         <div class="flex">
           <p class="">SHA256:&nbsp;</p>
           <p class="text-[12px] font-light">{{ sha }}</p>
         </div>
         <div class="flex">
-          <p class="">Pointer size:&nbsp;</p>
+          <p class="">{{ $t('shared.lfs7') }}:&nbsp;</p>
           <p class="text-[12px] font-light">{{ formatBytes(lfsPointerSize) }}</p>
         </div>
         <div class="flex">
-          <p>Size of remote file:&nbsp;</p>
+          <p>{{ $t('shared.lfs8') }}:&nbsp;</p>
           <p class="text-[12px] font-light">{{ formatBytes(size) }}</p>
         </div>
         <div class="flex items-center mt-[4px] mr-[4px]">
           <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
             <path d="M25.7 9.3l-7-7A.908.908 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.908.908 0 0 0-.3-.7zM18 4.4l5.6 5.6H18zM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6z" fill="currentColor"></path>
           </svg>
-          <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${path}`" target="_blank" class="underline text-[12px]">Raw pointer file</a>
+          <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${path}`" target="_blank" class="underline text-[12px]">{{ $t('shared.lfs9') }}</a>
         </div>
         <div class="flex items-center mt-[4px] text-[#667085] text-[12px] font-light">
-          <p>Git Large File Storage (LFS) replaces large files with text pointers inside Git, while storing the file contents on a remote server.</p>
-          <a :href="version" target="_blank" class="underline">More info.</a>
+          <p>{{ $t('shared.lfs10') }}</p>
+          <a :href="version" target="_blank" class="underline">{{ $t('shared.lfs11') }}</a>.
         </div>
       </div>
     </div>
