@@ -1,8 +1,4 @@
 export default {
-  "all": {
-    "confirm": "确定",
-    "cancel": "取消",
-  },
   "about": {
     "hero": {
       "headTitle": "让大模型赋能每个人",
@@ -271,13 +267,16 @@ export default {
     "dailyPaper": "社区文章",
     "profile": "个人信息",
     "setting": "账号设置",
+    editProfile: "账号设置",
     "contact": "联系我们",
     "newModel": "新建模型",
     "newDataset": "新建数据集",
     "newOrg": "新建组织",
+    newOrganization: "新建组织",
     "recommendation": "论文推荐",
     "logout": "退出登录",
     "register": "登录/注册",
+    loginRegister: "登录/注册",
     "login": "登录",
   },
   "dailyPaper": {
@@ -551,18 +550,6 @@ export default {
       updateSuccess: "organization已更新",
     },
   },
-  navbar: {
-    models: "模型",
-    datasets: "数据集",
-    profile: "个人信息",
-    editProfile: "账号设置",
-    newModel: "新建模型",
-    newDataset: "新建数据集",
-    newOrganization: "新建组织",
-    logout: "退出登录",
-    loginRegister: "登录/注册",
-    login: "登录",
-  },
   all: {
     defaultText: "```\nREADME文件内容为空，请下载文件，补充描述内容。\n```",
     tip: "提示",
@@ -629,41 +616,6 @@ export default {
     inputDescPlc: "请输入简介",
     lfsTips: "在下载前请确认您安装了git-lfs  (https://git-lfs.com)",
     lfsTips2: "如果您不想下载LFS文件的内容，请在环境变量中添加",
-  },
-  community: {
-    discussion: {
-      back: "回到话题列表",
-      new: "新建话题",
-    },
-    discussionDetail: {
-      reply: "回复",
-      comment: "评论",
-      cancel: "取消",
-      updateSuccess: "标题更新成功！",
-      warn: "内容不能为空",
-      addSuccess: "添加评论成功",
-    },
-    MD: {
-      edit: "编辑",
-      preview: "预览",
-      desc: "通过拖拽上传图片，音频，视频，或者",
-      click: "点击这里上传",
-      default: "留下评论",
-    },
-    newDiscussion: {
-      new: "新建话题",
-      title: "标题",
-      content: "内容",
-      create: "创建话题",
-      cancel: "取消",
-      warn: "内容不能为空",
-      success: "新建话题成功",
-    },
-    empty: {
-      welcome: "欢迎来讨论",
-      desc: "这里是与OpenCSG讨论和合作的地方！",
-      new: "新建话题",
-    },
   },
   profile: {
     editProfile: "编辑个人信息",

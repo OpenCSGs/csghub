@@ -1,8 +1,4 @@
 export default {
-  "all": {
-    "confirm": "Confirm",
-    "cancel": "Cancel",
-  },
   "about": {
     "hero": {
       "headTitle": "Empowering Everyone with Large Language Models",
@@ -270,14 +266,17 @@ export default {
     "campaign": "Community Activities",
     "dailyPaper": "Community Article",
     "profile": "Your Profile",
+    editProfile: "Account Settings",
     "setting": "Settings",
     "contact": "Contact Us",
     "newModel": "New Model",
     "newDataset": "New Dataset",
     "newOrg": "New Organization",
+    newOrganization: "New Organization",
     "recommendation": "Paper Recommendation",
     "logout": "Sign Out",
     "register": "Login",
+    loginRegister: "Login/Registe",
     "login": "Login",
   },
   "dailyPaper": {
@@ -560,18 +559,6 @@ export default {
       updateSuccess: "organization updated successfully",
     },
   },
-  navbar: {
-    models: "Models",
-    datasets: "Datasets",
-    profile: "Profile",
-    editProfile: "Account Settings",
-    newModel: "New Model",
-    newDataset: "New Dataset",
-    newOrganization: "New Organization",
-    logout: "Logout",
-    loginRegister: "Login/Registe",
-    login: "Login",
-  },
   all: {
     defaultText:
       "```\nREADME file is empty, please download the file and add description content.\n```",
@@ -642,41 +629,6 @@ export default {
       "Before downloading, please make sure you have installed git-lfs (https://git-lfs.com).",
     lfsTips2:
       "If you do not want to download the content of LFS files, please add it to the environment variables.",
-  },
-  community: {
-    discussion: {
-      back: "Back to topic list",
-      new: "New topic",
-    },
-    discussionDetail: {
-      reply: "Reply",
-      comment: "Comment",
-      cancel: "Cancel",
-      updateSuccess: "Title update successfully!",
-      warn: "Content cannot be empty",
-      addSuccess: "Add comment successfully",
-    },
-    MD: {
-      edit: "Edit",
-      preview: "Preview",
-      desc: "Upload pictures, audio, video, or by dragging and dropping ",
-      click: "Click here to upload",
-      default: "Leave a comment",
-    },
-    newDiscussion: {
-      new: "New topic",
-      title: "Title",
-      content: "Content",
-      create: "Create a topic",
-      cancel: "Cancel",
-      warn: "Content cannot be empty",
-      success: "Create topic successfully!",
-    },
-    empty: {
-      welcome: "Welcome to discuss ",
-      desc: "This is the place to discuss and collaborate with OpenCSG!",
-      new: "New topic ",
-    },
   },
   profile: {
     editProfile: "Edit Profile",

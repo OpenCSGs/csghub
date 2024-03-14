@@ -17,13 +17,9 @@
 </template>
 
 <script setup>
-  import { useCookies } from "vue3-cookies";
   import { ElMessage, ElMessageBox } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
-
-  const { cookies } = useCookies();
-  const { t } = useI18n();
 
   const props = defineProps({
     comment: {
