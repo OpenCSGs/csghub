@@ -266,7 +266,6 @@
   const createApplicationSpace = async () => {
     try {
       const res = await submitApplicationSpaceForm()
-      debugger
       ElMessage.success(t('application_spaces.new.createSuccess'))
       toApplicationSpaceDetail(res.path)
     } catch (err) {
