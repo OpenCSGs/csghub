@@ -12,10 +12,11 @@
           <div class="w-40 py-[12px] px-[24px] responsive-div">品牌</div>
           <div class="w-48 py-[12px] px-[24px] responsive-div">规格</div>
           <div class="w-80 py-[12px] px-[24px] responsive-div">算力</div>
-          <div class="w-24 py-[12px] px-[24px] responsive-div">整机数量</div>
-          <div class="w-40 py-[12px] px-[24px] responsive-div">(库存) / (可供)</div>
+          <div class="w-24 py-[12px] px-[24px] responsive-div">配置</div>
+          <div class="w-20 py-[12px] px-[24px] responsive-div">数量</div>
+          <div class="w-20 py-[12px] px-[24px] responsive-div">状态</div>
           <div class="w-40 py-[12px] px-[24px] responsive-div">类型</div>
-          <div class="w-40 py-[12px] px-[24px] responsive-div">价格区间（单位）</div>
+          <div class="w-35 py-[12px] px-[24px] responsive-div">价格</div>
         </div>
         <div v-for="specification in specificationsList"
              class="flex items-center text-[#101828] text-[14px] border-b border-[#EAECF0] last-of-type:border-0">
@@ -30,15 +31,18 @@
               <p>{{ specification.power }}</p>
           </div>
           <div class="w-24 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+            {{ specification.config }}
+          </div>
+          <div class="w-20 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.number }}
           </div>
-          <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+          <div class="w-20 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.status }}
           </div>
           <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.type }}
           </div>
-          <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+          <div class="w-35 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.price }}
           </div>
         </div>
@@ -53,92 +57,134 @@ export default {
       specificationsList: [
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
+          brand: '英伟达/\nNVIDIA',
           specification: 'RTX4090 / 24GB PCIe',
           power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
-          number: '65',
+          config: '4卡',
+          number: '30',
           status: '可供',
-          type: '销售',
-          price: '65000/台'
+          type: '物理机',
+          price: '98000/台'
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
+          brand: '英伟达/\nNVIDIA',
+          specification: 'RTX4090 / 24GB PCIe',
+          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+          config: '8卡',
+          number: '30',
+          status: '可供',
+          type: '物理机',
+          price: '218000/台'
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: '英伟达/\nNVIDIA',
           specification: 'A800 / 80GB NVLink',
           power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
-          number: '53',
+          config: '8卡',
+          number: '16',
           status: '可供',
-          type: '长租',
-          price: '48000/月'
+          type: '物理机',
+          price: '咨询销售'
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          specification: 'A800 / 80GB PCIe',
-          power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
-          number: '101',
-          status: '可供',
-          type: '长租',
-          price: '42000/月'
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          specification: 'H800 / 80GB NVLink',
+          brand: '英伟达/\nNVIDIA',
+          specification: 'A800 / 80GB NVLink',
           power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
-          number: '23',
+          config: '8卡',
+          number: '32',
           status: '可供',
-          type: '长租',
-          price: '110000/月'
+          type: '物理机',
+          price: '咨询销售'
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          specification: 'V100 / 32GB NVLink',
-          power: 'FP32 15.7 TFLOPS,  FP16 125 TFLOPS',
-          number: '33',
-          status: '库存',
-          type: '长租',
-          price: 'N/A'
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
+          brand: '英伟达/\nNVIDIA',
           specification: 'L20 / 48GB PCIe',
           power: 'FP32 59.8 TFLOPS, FP16 119.5 TFLOPS',
-          number: '36',
-          status: '可供',
-          type: '销售',
-          price: '180000/台'
+          config: '8卡',
+          number: '0',
+          status: '暂无',
+          type: '物理机',
+          price: '待定'
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
+          brand: '英伟达/\nNVIDIA',
           specification: 'H20 / 96GB NVLink',
           power: 'FP32 44 TFLOPS, FP16 148 TFLOPS',
-          number: '8',
-          status: '库存',
-          type: '长租',
-          price: 'N/A'
+          config: '8卡',
+          number: '0',
+          status: '暂无',
+          type: '物理机',
+          price: '待定'
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: '英伟达/\nNVIDIA',
+          specification: 'RTX4090 / 24GB PCIe',
+          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+          config: '8卡',
+          number: '99',
+          status: '可供',
+          type: '裸金属/云主机',
+          price: '12000/台/月'
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: '英伟达/\nNVIDIA',
+          specification: 'V100 / 32GB NVLink',
+          power: 'FP32 15.7 TFLOPS,  FP16 125 TFLOPS',
+          config: '8卡',
+          number: '199',
+          status: '可供',
+          type: '裸金属/云主机',
+          price: '15000/台/月'
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: '英伟达/\nNVIDIA',
+          specification: 'A800 / 80GB NVLink',
+          power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
+          config: '8卡',
+          number: '16',
+          status: '可供',
+          type: '裸金属/云主机',
+          price: '48000/台/月'
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: '英伟达/\nNVIDIA',
+          specification: 'H800 / 80GB NVLink',
+          power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
+          config: '8卡',
+          number: '32',
+          status: '可供',
+          type: '裸金属/云主机',
+          price: '980000/台/月'
         },
         {
           logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
-          brand: '华为',
+          brand: '华为昇腾/\nHuawei',
           specification: '910B / 64GB PCIe',
           power: 'INT8 640 TOPS, FP16 320 TFLOPS',
-          number: '28',
-          status: '库存',
-          type: '长租',
+          config: '8卡',
+          number: '32',
+          status: '可供',
+          type: '裸金属/云主机',
           price: 'N/A'
         },
         {
           logo: ['/images/computing/enflame.png','w-[40px] h-[40px]'],
-          brand: '燧原',
+          brand: '燧原云燧/\nEnflame',
           specification: 'i20 / 16GB PCIe',
           power: 'INT8 256 TOPS, FP16 128 TFLOPS',
-          number: '200',
-          status: '库存',
-          type: '长租',
+          config: '8卡',
+          number: '199',
+          status: '可供',
+          type: '裸金属/云主机',
           price: 'N/A'
         }
       ]
