@@ -99,6 +99,24 @@ export default {
       needDatasetDesc: "请先提供数据集介绍",
     },
   },
+  codes: {
+    newCode: {
+      title: "新建代码仓库",
+      titleDesc: "仓库包含所有的代码文件和修订的历史记录",
+      owner: "所有者",
+      codeName: "代码仓库名称",
+      codeNickName: "代码仓库别名",
+      codeDesc: "代码仓库简介",
+      public: "公开",
+      publicDesc:
+        "任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。",
+      private: "私有",
+      privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
+      tips: "创建代码仓库后，你可以使用网页或 Git 上传你的文件。",
+      createCode: "创建代码仓库",
+      createSuccess: "代码仓库创建成功",
+    },
+  },
   organization: {
     orgSetting: "组织设置",
     orgInfo: "组织信息",

@@ -6,14 +6,14 @@
         <path d="M15.5 12L9.5 18L15.5 24M21.5 12L27.5 18L21.5 24M18.5 33V33C23.1594 33 25.4891 33 27.3268 32.2388C29.7771 31.2239 31.7239 29.2771 32.7388 26.8268C33.5 24.9891 33.5 22.6594 33.5 18V18C33.5 13.3406 33.5 11.0109 32.7388 9.17317C31.7239 6.72288 29.7771 4.77614 27.3268 3.7612C25.4891 3 23.1594 3 18.5 3V3C13.8406 3 11.5109 3 9.67317 3.7612C7.22288 4.77614 5.27614 6.72288 4.2612 9.17317C3.5 11.0109 3.5 13.3406 3.5 18V18C3.5 22.6594 3.5 24.9891 4.2612 26.8268C5.27614 29.2771 7.22288 31.2239 9.67317 32.2388C11.5109 33 13.8406 33 18.5 33Z" stroke="#667085" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">新建代码仓库</h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">仓库包含所有的代码文件和修订的历史记录</p>
+    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('codes.newCode.title') }}</h3>
+    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('codes.newCode.titleDesc') }}</p>
     <div class="mt-9">
       <!-- 名称选择 -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
-          <p class="text-[#303133] text-sm mb-2">所有者</p>
-          <el-select v-model="owner" placeholder="选择" size="large">
+          <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.owner') }}</p>
+          <el-select v-model="owner" :placeholder="$t('all.select')" size="large">
             <el-option
               v-for="item in namespaces"
               :key="item[0]"
@@ -27,19 +27,19 @@
           <p class="text-[#909399] text-xl font-light">/</p>
         </div>
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">代码名称</p>
-          <el-input v-model="codeName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%" />
+          <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.codeName') }}</p>
+          <el-input v-model="codeName" :placeholder="$t('rule.nameRule')" input-style="width: 100%" />
         </div>
       </div>
 
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">代码别名</p>
-          <el-input v-model="codeNickName" placeholder="请输入别名" />
+          <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.codeNickName') }}</p>
+          <el-input v-model="codeNickName" :placeholder="$t('all.inputNickNamePlc')" />
         </div>
         <div class="">
           <p class="text-[#303133] text-sm mb-2">License</p>
-          <el-select v-model="license" placeholder="选择" size="large">
+          <el-select v-model="license" :placeholder="$t('all.select')" size="large">
             <el-option
               v-for="item in licenses"
               :key="item[0]"
@@ -52,11 +52,11 @@
 
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">代码简介</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.codeDesc') }}</p>
           <el-input v-model="codeDesc"
                     :rows="6"
                     type="textarea"
-                    placeholder="请输入简介" />
+                    :placeholder="$t('all.inputDescPlc')" />
         </div>
       </div>
 
@@ -64,18 +64,18 @@
       <div class="mb-9">
         <el-radio-group v-model="visibility" class="!block">
           <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
-            公开
-            <p class="whitespace-normal text-[#475467] font-light">任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。</p>
+            {{ $t('codes.newCode.public') }}
+            <p class="whitespace-normal text-[#475467] font-light">{{ $t('codes.newCode.publicDesc') }}</p>
           </el-radio>
           <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
-            私有
-            <p class="whitespace-normal text-[#475467] font-light">只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。</p>
+            {{ $t('codes.newCode.private') }}
+            <p class="whitespace-normal text-[#475467] font-light">{{ $t('codes.newCode.privateDesc') }}</p>
           </el-radio>
         </el-radio-group>
       </div>
       <hr class="mb-9" />
       <p class="mb-9 rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
-        创建代码仓库后，你可以使用网页或 Git 上传你的文件。
+        {{ $t('codes.newCode.tips') }}
       </p>
       <div class="flex justify-end">
         <button
@@ -83,7 +83,7 @@
           @click="createCode"
           :disabled="!canCreateCode"
         >
-          创建代码仓库
+          {{ $t('codes.newCode.createCode') }}
         </button>
       </div>
     </div>
@@ -131,6 +131,9 @@
   import { ref, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     licenses: Array,
@@ -149,7 +152,7 @@
   const createCode = async () => {
     try {
       const res = await submitCodeForm()
-      ElMessage.success('代码仓库创建成功')
+      ElMessage.success(t('codes.newCode.createSuccess'))
       toCodelDetail(res.path)
     } catch (err) {
       ElMessage.warning(err.message)
