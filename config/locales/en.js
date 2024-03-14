@@ -110,6 +110,15 @@ export default {
     },
   },
   codes: {
+    title: "Codes",
+    placeholder: "Codes name",
+    downloadDataset: "Download Code",
+    datasetName: "Code Name",
+    datasetNameTips:
+      "Applied to the code path, cannot be changed after creation",
+    namespaceDatasetName: "Namespace/Code Name",
+    datasetNickName: "Code Nickname",
+    datasetDesc: "Code Description",
     newCode: {
       title: "Create New Code Repository",
       titleDesc:

@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
 
-    resources :codes, only: [:create]
+    resources :codes, only: [:index, :create]
 
     resources :tags, only: [] do
       collection do

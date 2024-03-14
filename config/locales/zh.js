@@ -100,6 +100,14 @@ export default {
     },
   },
   codes: {
+    title: "代码仓库",
+    placeholder: "代码仓库名字",
+    downloadCode: "下载代码仓库",
+    codeName: "代码仓库名称",
+    codeNameTips: "应用于代码仓库路径，创建后不可更改",
+    namespaceCodeName: "命名空间/代码仓库名称",
+    codeNickName: "代码仓库别名",
+    codeDesc: "代码仓库简介",
     newCode: {
       title: "新建代码仓库",
       titleDesc: "仓库包含所有的代码文件和修订的历史记录",
