@@ -6,7 +6,9 @@ export default {
   application_spaces: {
     new: {
       createSuccess: "应用空间创建成功",
-    }
+    },
+    download: "下载应用空间",
+    downloadSpace: "下载应用空间数据",
   },
   models: {
     title: "模型",

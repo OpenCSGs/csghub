@@ -8,7 +8,9 @@ export default {
   application_spaces: {
     new: {
       createSuccess: "Application Space created successfully",
-    }
+    },
+    download: "Download Space",
+    downloadSpace: "Download space data",
   },
   models: {
     title: "Model",
