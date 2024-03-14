@@ -193,7 +193,8 @@ export default {
     default_branch: String,
     tagList: Object,
     tags: Object,
-    private: Boolean
+    private: Boolean,
+    // sha: String
   },
   components: {},
   data() {
@@ -327,14 +328,41 @@ export default {
     },
     updateTags(){
       if(!!(this.selectedTags && this.selectedTags.length)){
-        const payload = {tags: this.selectedTags}
-        this.updateModel(payload)
+        let tags=[]
+        this.selectedTags.array.forEach(item => {
+          tags.push(item.name)
+        });
+        this.updateTagsAPI(tags)
       } else {
         ElMessage({ message: "请先提供模型标签", type: "warning" })
       }
 
     },
-
+    async updateTagsAPI(tags){
+      const tagsUpdateEndpoint = "/internal_api/models/" + this.path + "/update_readme_tags"
+      const bodyData = {
+        path: "README.md",
+        commit_title: '',
+        commit_desc: '',
+        sha: this.sha,
+        tags:tags
+      }
+      const options = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(bodyData)
+      }
+      const response = await csrfFetch(tagsUpdateEndpoint, options)
+      if (!response.ok) {
+        response.json().then((err) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then((data) => {
+          ElMessage({ message: data.message, type: "success" })
+        })
+      }
+    },
     updateNickname() {
       if (!!this.theModelNickname.trim()) {
         const payload = {nickname: this.theModelNickname}
