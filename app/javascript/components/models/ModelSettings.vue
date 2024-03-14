@@ -329,7 +329,7 @@ export default {
     updateTags(){
       if(!!(this.selectedTags && this.selectedTags.length)){
         let tags=[]
-        this.selectedTags.array.forEach(item => {
+        this.selectedTags.forEach(item => {
           tags.push(item.name)
         });
         this.updateTagsAPI(tags)
