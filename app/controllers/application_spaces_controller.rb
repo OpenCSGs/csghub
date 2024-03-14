@@ -66,6 +66,18 @@ class ApplicationSpacesController < ApplicationController
     end
   end
 
+  def upload_file
+    render :show
+  end
+
+  def new_file
+    render :show
+  end
+
+  def edit_file
+    render :show
+  end
+
   private
 
   def load_application_space_detail

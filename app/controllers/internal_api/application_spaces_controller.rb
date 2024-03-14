@@ -29,9 +29,54 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     end
   end
 
+  def create_file
+    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(params[:content])
+                                                      })
+    sync_create_file('application_space', options)
+    render json: { message: '创建文件成功' }
+  end
+
+
+  def update_file
+    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(params[:content])
+                                                      })
+    sync_update_file('application_space', options)
+    render json: { message: '更新文件成功' }
+  end
+
+  def upload_file
+    file = params[:file]
+    options = {
+      branch: 'main',
+      file_path: file.original_filename,
+      file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
+      email: current_user.email,
+      message: build_upload_commit_message,
+      username: current_user.name
+    }
+    sync_upload_file('application_space', options)
+    render json: { message: '上传文件成功' }, status: 200
+  end
+
   private
 
   def create_params
     params.permit(:name, :nickname, :desc, :sdk, :cloud_resource, :owner_id, :owner_type, :visibility, :license, :cover_image)
+  end
+
+  def create_file_params
+    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
+  end
+
+  def update_file_params
+    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 end
