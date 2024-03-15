@@ -87,13 +87,13 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def update_readme_tags
     tags = params[:tags]
+
     # 更新 README 元数据中的 tags
-    readme_metadata = Starhub.api.get_dataset_file_content(params[:namespace], params[:dataset_name], 'README.md')
-    blob =  Starhub.api.get_dataset_sha(params[:namespace], params[:dataset_name], 'README.md')
+    blob =  Starhub.api.get_dataset_blob(params[:namespace], params[:dataset_name], 'README.md')
     blob_data = JSON.parse(blob) if blob.present?
+    readme_metadata = blob_data&.dig("data", "content")
+    metadata_data = Base64.decode64(readme_metadata)
     sha = blob_data&.dig("data", "sha")
-    metadata = JSON.parse(readme_metadata)
-    metadata_data = metadata['data']
 
     
     # 查找元数据部分的开始和结束位置

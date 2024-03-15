@@ -24,7 +24,7 @@ module Starhub
       get_repo_files('models', namespace, model_name, options)
     end
 
-    def get_model_sha(namespace, model_name, path, options = {})
+    def get_model_blob(namespace, model_name, path, options = {})
       get_blob_sha('models', namespace, model_name, path, options)
     end
 
