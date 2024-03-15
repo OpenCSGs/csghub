@@ -295,5 +295,17 @@ export default {
     lfs9: "原始指针文件",
     lfs10: "Git大文件存储（LFS）将大文件替换为Git内部的文本指针，同时将文件内容存储在远程服务器上。",
     lfs11: "更多信息",
+    preview: "预览",
+    edit: "编辑",
   },
+  repo: {
+    edit: {
+      fileName: "文件名",
+      main: "直接提交到 main 分支",
+      submit: "提交更新",
+      desc: "提供更多描述",
+      update: "更新文件",
+      cancel: "取消",
+    }
+  }
 };

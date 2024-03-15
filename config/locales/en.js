@@ -311,5 +311,17 @@ export default {
     lfs9: "Raw pointer file",
     lfs10: "Git Large File Storage (LFS) replaces large files with text pointers inside Git, while storing the file contents on a remote server.",
     lfs11: "More info",
+    preview: "Preview",
+    edit: "Edit",
   },
+  repo: {
+    edit: {
+      fileName: "File Name",
+      main: "Directly submit to the main branch",
+      submit: "Submit Update",
+      desc: "Provide more description",
+      update: "Update file",
+      cancel: "Cancel",
+    }
+  }
 };
