@@ -33,6 +33,7 @@ import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
+import CodeDetail from "./components/codes/CodeDetail.vue"
 
 const app = createApp({
   components: {
@@ -54,7 +55,8 @@ const app = createApp({
     ProfileRepoList,
     OrganizationSettings,
     RepoCards,
-    NewCode
+    NewCode,
+    CodeDetail
   },
   provide:{
     defaultTags: DefaultTags

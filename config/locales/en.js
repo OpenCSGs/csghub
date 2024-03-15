@@ -112,7 +112,7 @@ export default {
   codes: {
     title: "Codes",
     placeholder: "Codes name",
-    downloadDataset: "Download Code",
+    downloadCode: "Download Code",
     datasetName: "Code Name",
     datasetNameTips:
       "Applied to the code path, cannot be changed after creation",
@@ -134,7 +134,7 @@ export default {
       privateDesc:
         "Only you (individual) or members of your organization can view and commit to this repository.",
       tips: "After creating the code, you can use the web or Git to upload your files.",
-      createCode: "Create Code Repository",
+      createCode: "Create Code",
       createSuccess: "Code Repository created successfully",
     },
   },

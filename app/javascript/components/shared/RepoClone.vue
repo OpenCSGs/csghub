@@ -61,6 +61,8 @@ const downloadButtonKey = computed(() => {
       return 'datasets.downloadDataset'
     case 'model':
       return 'models.download'
+    case 'code':
+      return 'codes.downloadCode'
     default:
       return ''
   }
