@@ -9,6 +9,7 @@ export default {
     },
     download: "下载应用空间",
     downloadSpace: "下载应用空间数据",
+    app: "应用"
   },
   models: {
     title: "模型",

@@ -11,6 +11,7 @@ export default {
     },
     download: "Download Space",
     downloadSpace: "Download space data",
+    app: 'App'
   },
   models: {
     title: "Model",
