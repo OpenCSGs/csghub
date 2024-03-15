@@ -6,7 +6,16 @@
                    :repoType="repoType"
     >
       <template #summary>
-        <repo-summary :repo-type="repoType" :namespace-path="repoDetail.path" :download-count="repoDetail.downloads" />
+        <InitializeGuide v-if="repoType === 'application_space' && appStatus === 'NoAppFile'"
+                         :http-clone-url="repoDetail.repository.http_clone_url"
+                         :ssh-clone-url="repoDetail.repository.ssh_clone_url"
+                         :sdk="sdk"
+        />
+        <ApplicationPage v-else-if="repoType === 'application_space' && appStatus === 'NoAppFile'" />
+        <repo-summary v-else
+                      :repo-type="repoType"
+                      :namespace-path="repoDetail.path"
+                      :download-count="repoDetail.downloads" />
       </template>
       <template #files v-if="actionName === 'blob'">
         <blob
@@ -96,7 +105,9 @@ import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'
 import EditFile from '../shared/EditFile.vue'
-import { computed } from 'vue'
+import InitializeGuide from '../application_spaces/initializeGuide.vue'
+import ApplicationPage from '../application_spaces/applicationPage.vue'
+import { computed, onMounted } from 'vue'
 
 const props = defineProps({
   localRepoId: String,
@@ -110,7 +121,14 @@ const props = defineProps({
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean,
-  repoType: String
+  repoType: String,
+  appStatus: String,
+  appEndpoint: String,
+  sdk: String
+})
+
+onMounted(() => {
+  console.log(props)
 })
 
 const repoTypeClass = computed(() => {
