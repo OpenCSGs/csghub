@@ -11,7 +11,9 @@
                          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
                          :sdk="sdk"
         />
-        <ApplicationPage v-else-if="repoType === 'application_space' && appStatus === 'NoAppFile'" />
+        <ApplicationPage v-else-if="repoType === 'application_space' && appStatus === 'Running'"
+                         :appEndpoint="appEndpoint"
+         />
         <repo-summary v-else
                       :repo-type="repoType"
                       :namespace-path="repoDetail.path"
