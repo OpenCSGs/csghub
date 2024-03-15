@@ -179,7 +179,7 @@ export default {
     sureDel: "Sure to Del",
     canNot: "Cannot",
     role: "Role",
-    userName: "UserName",
+    userName: "Username",
     nickName: "Nickname",
     phone: "Phone Number",
     email: "Email",
