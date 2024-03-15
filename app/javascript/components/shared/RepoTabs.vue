@@ -71,6 +71,8 @@
           :dataset-nickname="repoDetail.nickname"
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
+          :tag-list="tagList"
+          :tags="tags"
           :private="repoDetail.private" />
       </template>
     </tab-container>

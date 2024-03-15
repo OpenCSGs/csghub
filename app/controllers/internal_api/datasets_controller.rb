@@ -85,6 +85,46 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     render json: { message: '更新文件成功' }
   end
 
+  def update_readme_tags
+    tags = params[:tags]
+    # 更新 README 元数据中的 tags
+    readme_metadata = Starhub.api.get_dataset_file_content(params[:namespace], params[:dataset_name], 'README.md')
+    blob =  Starhub.api.get_dataset_sha(params[:namespace], params[:dataset_name], 'README.md')
+    blob_data = JSON.parse(blob) if blob.present?
+    sha = blob_data&.dig("data", "sha")
+    metadata = JSON.parse(readme_metadata)
+    metadata_data = metadata['data']
+
+    
+    # 查找元数据部分的开始和结束位置
+    start_index = metadata_data.index('---')
+    end_index = metadata_data.index('---', start_index + 3)
+  
+    # 提取元数据部分
+    metadata_part = metadata_data[start_index...end_index + 4]
+    metadata_hash = YAML.safe_load(metadata_part)
+
+    # 更新或添加 tags
+    metadata_hash['tags'] = tags
+    # 重新生成元数据部分
+    updated_metadata_part = YAML.dump(metadata_hash)
+    updated_metadata_part += "---\n"  # 手动添加`---`标记
+  
+    # 更新 README 内容
+    updated_readme_content = metadata_data.sub(metadata_part, updated_metadata_part)
+    options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
+                                                              new_branch: 'main',
+                                                              username: current_user.name,
+                                                              email: current_user.email,
+                                                              content: Base64.encode64(updated_readme_content),
+                                                              sha:sha
+                                                            })
+    sync_update_file('dataset', options)
+    render json: { message: 'README tags updated successfully' }
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   def upload_file
     file = params[:file]
     options = {

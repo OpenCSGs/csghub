@@ -67,6 +67,45 @@
 
     <el-divider/>
 
+    <!-- 数据集标签 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col"> 
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          数据集标签
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]" ref="tagListContainer">
+        <p class="text-[#344054] text-[14px]">数据集标签</p>
+        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+          <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              <span v-for="tag in selectedTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                {{ tag.name }}
+                <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
+              </span>
+            </div>
+            <input class="w-full max-h-[36px] outline-none"
+                    v-model="tagInput"
+                    @input="showTagList" />
+          </div>
+          <div v-show="shouldShowTagList" class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <p v-for="tag in theTagList"
+                @click="selectTag(tag)"
+                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+            >
+              {{ tag.zh_name? tag.zh_name : tag.name }}
+            </p>
+          </div>
+          <el-button @click="updateTags" class="w-[100px]">更新</el-button>
+        </div>
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -153,11 +192,17 @@ export default {
     datasetNickname: String,
     datasetDesc: String,
     default_branch: String,
+    tagList: Object,
+    tags: Object,
     private: Boolean
   },
   components: {},
   data() {
     return {
+      theTagList:this.tagList,
+      selectedTags:[],
+      shouldShowTagList:false,
+      tagInput:'',
       visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       datasetName: this.path.split('/')[1],
@@ -168,8 +213,40 @@ export default {
         {value: 'Public', label: this.$t('all.public')}]
     };
   },
-  mounted() {},
+  mounted() {
+      // 监听全局点击事件
+    document.addEventListener('click', this.handleOutsideClick);
+
+    if (typeof this.tags === 'object' && this.tags !== null) {
+      for (const key in this.tags) {
+        if (Array.isArray(this.tags[key]) && this.tags[key].length > 0) {
+          console.log(`Processing ${key} tags:`);
+          if(key == 'task_tags' || key == "other_tags"){
+            this.getSelectTags(this.tags[key]);
+          }
+        }
+      }
+    } else {
+      console.error("this.tags is not an object");
+    }
+  },
+  beforeDestroy() {
+    // 组件销毁前移除事件监听
+    document.removeEventListener('click', this.handleOutsideClick);
+  },
   methods: {
+    handleOutsideClick(event) {
+      if (!this.$refs.tagListContainer.contains(event.target)) {
+        this.shouldShowTagList = false;
+      }
+    },
+    getSelectTags(tags){
+      tags.forEach(item=>{
+        if(item.category == 'task'){
+          this.selectedTags.push(item)          
+        }
+      })
+    },
     clickDelete() {
       if (this.delDesc === this.datasetPath) {
         this.deleteDataset().catch((err) => {
@@ -180,6 +257,33 @@ export default {
         })
       }
     },
+    showTagList(e){
+      this.shouldShowTagList = true
+      if(this.tagInput != ''){
+        this.theTagList = this.tagList.filter(tag => {
+          if(tag.zh_name){
+            return tag.zh_name.includes(this.tagInput);
+          }else{
+            return tag.name.includes(this.tagInput);
+          }
+        });
+      }else{
+        this.theTagList = this.tagList
+      }
+    },
+
+    selectTag(newTag){
+      console.log(newTag);
+      const findTag = this.selectedTags.find(tag => tag.name === newTag.name)
+      if (!findTag) {
+        this.selectedTags.push({name: newTag.name, zh_name: newTag.zh_name})
+      }
+    },
+
+    removeTag(tagName){
+      this.selectedTags = this.selectedTags.filter( item => item.name !== tagName )
+    },
+
     async deleteDataset() {
       const datesetDeleteEndpoint = "/internal_api/datasets/" + this.path
       const option = {method: 'DELETE'}
@@ -221,6 +325,45 @@ export default {
           message: this.$t('all.changeCancel'),
         })
       })
+    },
+
+    updateTags(){
+      if(!!(this.selectedTags && this.selectedTags.length)){
+        let tags=[]
+        this.selectedTags.forEach(item => {
+          tags.push(item.name)
+        });
+        this.updateTagsAPI(tags)
+      } else {
+        ElMessage({ message: "请先提供数据集标签", type: "warning" })
+      }
+
+    },
+
+    async updateTagsAPI(tags){
+      const tagsUpdateEndpoint = "/internal_api/datasets/" + this.path + "/update_readme_tags"
+      const bodyData = {
+        path: "README.md",
+        commit_title: '',
+        commit_desc: '',
+        sha: this.sha,
+        tags:tags
+      }
+      const options = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(bodyData)
+      }
+      const response = await csrfFetch(tagsUpdateEndpoint, options)
+      if (!response.ok) {
+        response.json().then((err) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then((data) => {
+          ElMessage({ message: data.message, type: "success" })
+        })
+      }
     },
 
     updateNickname() {
