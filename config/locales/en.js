@@ -292,6 +292,7 @@ export default {
     "register": "Login",
     loginRegister: "Login/Registe",
     "login": "Login",
+    "source": "My Source",
   },
   "dailyPaper": {
     "article": "Community Article",

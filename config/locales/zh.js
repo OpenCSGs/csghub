@@ -292,6 +292,7 @@ export default {
     "register": "登录/注册",
     loginRegister: "登录/注册",
     "login": "登录",
+    "source": "我的资源",
   },
   "dailyPaper": {
     "article": "社区文章",

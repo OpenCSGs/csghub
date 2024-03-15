@@ -108,14 +108,10 @@
             <a href="/settings/profile">
               <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
-<<<<<<< HEAD
-            <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
-            <a href="http://starcloud-stg.opencsg.com:8090/">
-             <el-dropdown-item> 我的资源 </el-dropdown-item>
-            </a>
-=======
             <el-dropdown-item @click="showDialog" > {{ $t('navbar.contact') }} </el-dropdown-item>
->>>>>>> 8d5fabd66bba7ce837a0c8e4f2724e57f6d90bc5
+            <a href="http://starcloud-stg.opencsg.com:8090/">
+              <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
+            </a>
             <a href="/models/new">
               <el-dropdown-item divided> + {{ $t('navbar.newModel') }} </el-dropdown-item>
             </a>
