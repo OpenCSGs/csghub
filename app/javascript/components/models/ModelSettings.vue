@@ -71,14 +71,14 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col"> 
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          模型标签
+          {{ $t('models.modelTag')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          选择模型对应的分类标签，便于用户在筛选时更快的找到您的模型。
+          {{ $t('models.edit.tips3')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]" ref="tagListContainer">
-        <p class="text-[#344054] text-[14px]">模型标签</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('models.modelTag')}}</p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
           <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
             <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
@@ -99,7 +99,7 @@
               {{ tag.zh_name? tag.zh_name : tag.name }}
             </p>
           </div>
-          <el-button @click="updateTags" class="w-[100px]">更新</el-button>
+          <el-button @click="updateTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
         </div>
       </div>
     </div>
@@ -336,7 +336,7 @@ export default {
         });
         this.updateTagsAPI(tags)
       } else {
-        ElMessage({ message: "请先提供模型标签", type: "warning" })
+        ElMessage({ message: this.$t('models.edit.needModelTag'), type: "warning" })
       }
 
     },

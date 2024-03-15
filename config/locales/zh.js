@@ -13,6 +13,7 @@ export default {
     namespaceModelName: "命名空间/模型名称",
     modelNickName: "模型别名",
     modelDesc: "模型简介",
+    modelTag:"模型标签",
     newModel: {
       title: "新建模型仓库",
       titleDesc: "仓库包含所有的模型文件和修订的历史记录",
@@ -32,6 +33,7 @@ export default {
     edit: {
       tips: "将会显示在模型列表页面中，选填",
       tips2: "一段关于模型的介绍，选填",
+      tips3:"选择模型对应的分类标签，便于用户在筛选时更快的找到您的模型。",
       changeVisibility: "修改模型可见性",
       statusText: "当前模型目前是",
       status: "状态",
@@ -47,6 +49,7 @@ export default {
       publicInfo: "， 任何互联网上的人都可以看到此数据集。",
       needModelName: "请先提供模型别名",
       needModelDesc: "请先提供模型介绍",
+      needModelTag:'请先提供模型标签'
     },
   },
   comment: {
@@ -62,6 +65,7 @@ export default {
     namespaceDatasetName: "命名空间/数据集名称",
     datasetNickName: "数据集别名",
     datasetDesc: "数据集简介",
+    datasetTag: "数据集标签",
     newDataset: {
       title: "新建数据集仓库",
       titleDesc: "仓库包含所有的模型文件和修订的历史记录",
@@ -76,6 +80,7 @@ export default {
       privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
       tips: "创建数据集后，你可以使用网页或 Git 上传你的文件。",
       tips2: "暂不支持创建公开的数据集，如有需要可以联系管理员进行人工审核。",
+      tips3:" 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
       createDataset: "创建数据集",
       createSuccess: "数据集创建成功",
     },
@@ -97,6 +102,7 @@ export default {
       publicInfo: "， 任何互联网上的人都可以看到此数据集。",
       needDatasetName: "请先提供数据集别名",
       needDatasetDesc: "请先提供数据集介绍",
+      needDatasetTag:'请先提供模型标签'
     },
   },
   organization: {

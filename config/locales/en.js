@@ -16,6 +16,7 @@ export default {
     namespaceModelName: "Name space/Model name",
     modelNickName: "Model alias",
     modelDesc: "Model Profile",
+    modelTag:"Model Tags",
     newModel: {
       title: "Create a new model repository",
       titleDesc: "The repository contains all model files and revision history",
@@ -36,6 +37,7 @@ export default {
     edit: {
       tips: "Will be displayed on the model list page, optional",
       tips2: "An introduction about the model, optional",
+      tips3: "Choose classification labels corresponding to the model to facilitate users in quickly finding your model during filtering.",
       changeVisibility: "Change model visibility",
       statusText: "The current model is now",
       status: "Status",
@@ -52,6 +54,7 @@ export default {
       publicInfo: ", visible to anyone on the internet.",
       needModelName: "Please provide a model nickname first",
       needModelDesc: "Please provide a model description first",
+      needModelTag: "Please provide a model tag first",
     },
   },
   comment: {
@@ -68,6 +71,7 @@ export default {
     namespaceDatasetName: "Namespace/Dataset Name",
     datasetNickName: "Dataset Nickname",
     datasetDesc: "Dataset Description",
+    datasetTag: "Dataset Tags",
     newDataset: {
       title: "Create New Dataset Repository",
       titleDesc:
@@ -85,6 +89,7 @@ export default {
       tips: "After creating the model, you can use the web or Git to upload your files.",
       tips2:
         "Creating public datasets is currently not supported. Please contact the administrator for manual review if needed.",
+      tips3:"Choose classification labels corresponding to the dataset to facilitate users in quickly finding your model during filtering.",
       createDataset: "Create Dataset",
       createSuccess: "Dataset created successfully",
     },
