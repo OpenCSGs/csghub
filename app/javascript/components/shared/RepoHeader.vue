@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-[8px] flex-wrap mb-5 text-lg text-[#606266] font-semibold md:px-5">
     <div v-if="repoType === 'dataset'"
-         class="mb-[16px] w-full flex flex-wrap gap-[8px] items-center items-center md:w-full md:mb-1"
+         class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center items-center md:w-full md:mb-1"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path opacity="0.12" d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z" fill="#A8ABB2"/>
@@ -13,11 +13,12 @@
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
     </div>
     <div v-else
-         class="flex flex-wrap w-full gap-[8px] items-center mb-[16px]"
+         class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
     >
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{nickname || name}}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
+      <AppStatus v-if="appStatus" :appStatus="appStatus" />
     </div>
     <div class="flex gap-[8px] items-center">
       <a class="md:ml-0 hover:text-[#223B99]" :href="ownerUrl">
@@ -42,6 +43,7 @@
 
 <script setup>
   import HeaderTags from '../shared/HeaderTags.vue'
+  import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
 
   const props = defineProps({

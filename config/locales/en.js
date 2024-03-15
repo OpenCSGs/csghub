@@ -11,7 +11,19 @@ export default {
     },
     download: "Download Space",
     downloadSpace: "Download space data",
-    app: 'App'
+    app: 'App',
+    status: {
+      noAppfile: 'Uninitialized',
+      building: 'Building',
+      deploying: 'Deploying',
+      startup: 'Startup',
+      running: 'Running',
+      sleeping: 'Sleeping',
+      stopped: 'Stopped',
+      buildingFailed: 'Building Failed',
+      deployFailed: 'Deploy Failed',
+      runtimeError: 'Runtime Error'
+    }
   },
   models: {
     title: "Model",

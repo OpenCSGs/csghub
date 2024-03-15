@@ -9,7 +9,19 @@ export default {
     },
     download: "下载应用空间",
     downloadSpace: "下载应用空间数据",
-    app: "应用"
+    app: "应用",
+    status: {
+      noAppfile: '待初始化',
+      building: '构建中',
+      deploying: '部署中',
+      startup: '启动中',
+      running: '运行中',
+      sleeping: '待机中',
+      stopped: '暂停中',
+      buildingFailed: '构建失败',
+      deployFailed: '部署失败',
+      runtimeError: '运行报错'
+    }
   },
   models: {
     title: "模型",
