@@ -54,7 +54,8 @@
     license: String,
     tags: Object,
     ownerUrl: String,
-    repoType: String
+    repoType: String,
+    appStatus: String
   });
 
   const copyName = () => {
