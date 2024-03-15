@@ -57,12 +57,7 @@ const props = defineProps({
   ownerUrl: String,
   canWrite: Boolean
 })
-onMounted(() => {
-  console.log(props.tagList);
-  console.log(props.settingsVisibility);
-  })
 </script>
-
 <style scoped>
   body {
     background: #fff !important;

@@ -194,7 +194,6 @@ export default {
     tagList: Object,
     tags: Object,
     private: Boolean,
-    // sha: String
   },
   components: {},
   data() {
@@ -214,7 +213,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.tags);
     // 监听全局点击事件
     document.addEventListener('click', this.handleOutsideClick);
 
