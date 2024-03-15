@@ -8,7 +8,7 @@ module TagListHelper
     tag_fields(type).each do |field|
       response[field] = {}
       response[field][:color] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:color]
-      response[field][:zh_name] = Tag::TAG_FIELD_COLOR_MAPPINGS[field][:zh_name]
+      response[field][:zh_name] = I18n.t("tags.field.#{field}")
       response[field][:tags] = Tag.where(tag_field: field, scope: type.singularize)
     end
     @task_tags = response.as_json

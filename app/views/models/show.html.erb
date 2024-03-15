@@ -2,9 +2,8 @@
   <model-detail
     :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
-    local-model-id="<%= @local_model.id %>"
+    local-repo-id="<%= @local_model.id %>"
     :model="<%= @model %>"
-    :local-model="<%= @local_model.to_json %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"
     current-branch="<%= @current_branch || 'main' %>"

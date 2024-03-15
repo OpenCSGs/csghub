@@ -16,7 +16,7 @@
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
       </span>
-      <span>更新时间：{{ dataset.updated_at.substring(0, 10) }}</span>
+      <span>{{$t('all.lastTime')}}：{{ dataset.updated_at.substring(0, 10) }}</span>
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
@@ -28,28 +28,31 @@
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
       </span>
-      <span>下载热度：{{ dataset.downloads }}</span>
+      <span>{{$t('all.downloadCount')}}：{{ dataset.downloads }}</span>
     </div>
   </a>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
 
-const props = defineProps({
-  dataset: Object,
-})
+  const props = defineProps({
+    dataset: Object,
+  })
 
-const getComputed = computed(() => {
-  const displayName = props.dataset.nickname !== undefined && props.dataset.nickname.trim().length > 0 ? props.dataset.nickname : props.dataset.name
-  const path = props.dataset.path.split('/')[0] + '/' + displayName
+  const { t } = useI18n();
 
-  const visibility = props.dataset.private ? '私有' : '公开'
+  const getComputed = computed(() => {
+    const displayName = props.dataset.nickname !== undefined && props.dataset.nickname.trim().length > 0 ? props.dataset.nickname : props.dataset.name
+    const path = props.dataset.path.split('/')[0] + '/' + displayName
 
-  let taskTag = (props.dataset.tags || []).find(tag => tag.category === "task")
-  taskTag = taskTag? taskTag["show_name"] : null
-  return { path: path, visibility: visibility, taskTag: taskTag }
-})
+    const visibility = props.dataset.private ? t('all.private')  : t('all.public')
+
+    let taskTag = (props.dataset.tags || []).find(tag => tag.category === "task")
+    taskTag = taskTag? taskTag["show_name"] : null
+    return { path: path, visibility: visibility, taskTag: taskTag }
+  })
 </script>
 
 <style scoped>
