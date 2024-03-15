@@ -32,6 +32,13 @@ module Starhub
       @client.get_in_parallel(paths, options)
     end
 
+    def get_blob_sha(repo_type, namespace, repo_name, path, options = {})
+      options[:path] ||= '/'
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/blob/#{path}?ref=#{options[:ref]}")
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def get_repos(repo_type, current_user, keyword, sort_by, task_tag, framework_tag, license_tag, page = 1, per = 16)
       url = "/#{repo_type}?per=#{per}&page=#{page}"
       url += "&current_user=#{current_user}" if current_user.present?

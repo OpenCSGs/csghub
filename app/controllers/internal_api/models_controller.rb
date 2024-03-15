@@ -82,6 +82,9 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     tags = params[:tags]
     # 更新 README 元数据中的 tags
     readme_metadata = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+    blob =  Starhub.api.get_model_sha(params[:namespace], params[:model_name], 'README.md')
+    blob_data = JSON.parse(blob) if blob.present?
+    sha = blob_data&.dig("data", "sha")
     metadata = JSON.parse(readme_metadata)
     metadata_data = metadata['data']
 
@@ -101,11 +104,12 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   
     # 更新 README 内容
     updated_readme_content = metadata_data.sub(metadata_part, updated_metadata_part)
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
+    options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
                                                               new_branch: 'main',
                                                               username: current_user.name,
                                                               email: current_user.email,
-                                                              content: Base64.encode64(updated_readme_content)
+                                                              content: Base64.encode64(updated_readme_content),
+                                                              sha:sha
                                                             })
     sync_update_file('model', options)
     render json: { message: 'README tags updated successfully' }
