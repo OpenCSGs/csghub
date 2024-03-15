@@ -62,6 +62,8 @@
           :model-nickname="repoDetail.nickname"
           :model-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
+          :tag-list="tagList"
+          :tags="tags"
           :private="repoDetail.private" />
         <dataset-settings
           v-if="repoType === 'dataset'"
@@ -104,6 +106,7 @@ const props = defineProps({
   currentPath: String,
   defaultTab: String,
   blob: Object,
+  tags: Object,
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean,
