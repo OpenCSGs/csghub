@@ -11,19 +11,20 @@
       </div>
       <div>
         <div class="flex items-center text-[#475467] text-[12px] bg-[#F9FAFB] border border-[#EAECF0]">
-          <div class="w-40 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.brand') }}</div>
+          <div class="w-36 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.brand') }}</div>
           <div class="w-48 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.specifications') }}</div>
           <div class="w-80 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.power') }}</div>
-          <div class="w-24 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.inventory') }}</div>
-          <div class="w-40 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.service') }}</div>
-          <div class="w-40 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.type') }}</div>
+          <div class="w-24 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.config') }}</div>
+          <div class="w-20 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.inventory') }}</div>
+          <div class="w-24 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.service') }}</div>
+          <div class="w-48 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.type') }}</div>
           <div class="w-40 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.price') }}</div>
         </div>
         <div v-for="specification in specificationsList"
              class="flex items-center text-[#101828] text-[14px] border-b border-[#EAECF0] last-of-type:border-0">
-          <div class="w-40 flex items-center py-[12px] pl-[24px] responsive-div">
+          <div class="w-36 flex items-center py-[12px] pl-[24px] responsive-div">
               <img :src="specification.logo[0]" :class="specification.logo[1]" alt="nvidia">
-              <p class="ml-[12px]">{{ this.$i18n.locale === 'zh' ? specification.brand: specification.brand_en }}</p>
+              <p class="ml-[12px]">{{ specification.brand }}</p>
           </div>
           <div class="w-48 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
               {{ specification.specification }}
@@ -32,16 +33,19 @@
               <p>{{ specification.power }}</p>
           </div>
           <div class="w-24 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+            {{ specification.config }}
+          </div>
+          <div class="w-20 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.number }}
           </div>
-          <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
-            {{ this.$i18n.locale === 'zh' ? specification.status: specification.status_en }}
+          <div class="w-24 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+            {{ specification.status }}
+          </div>
+          <div class="w-48 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+            {{ specification.type }}
           </div>
           <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
-            {{ this.$i18n.locale === 'zh' ? specification.type: specification.type_en }}
-          </div>
-          <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
-            {{ this.$i18n.locale === 'zh' ? specification.price: specification.price_en }}
+            {{ specification.price }}
           </div>
         </div>
       </div>
@@ -55,130 +59,135 @@ export default {
       specificationsList: [
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
+          brand: this.$t('computing.price.NVIDIA'),
           specification: 'RTX4090 / 24GB PCIe',
           power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
-          number: '65',
-          status: '可供',
-          status_en: 'Available',
-          type: '销售',
-          type_en: 'Sales',
-          price: '65000/台',
-          price_en: '65000/unit'
+          config: this.$t('computing.price.4ka'),
+          number: '30',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.physical'),
+          price: '98000/' + this.$t('computing.price.unit')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'RTX4090 / 24GB PCIe',
+          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+          config: this.$t('computing.price.8ka'),
+          number: '30',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.physical'),
+          price: '218000/' + this.$t('computing.price.unit')
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: this.$t('computing.price.NVIDIA'),
           specification: 'A800 / 80GB NVLink',
           power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
-          number: '53',
-          status: '可供',
-          status_en: 'Available',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: '48000/月',
-          price_en: '48000/month'
+          config: this.$t('computing.price.8ka'),
+          number: '16',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.physical'),
+          price: this.$t('computing.price.console')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
-          specification: 'A800 / 80GB PCIe',
-          power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
-          number: '101',
-          status: '可供',
-          status_en: 'Available',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: '42000/月',
-          price_en: '42000/month'
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
-          specification: 'H800 / 80GB NVLink',
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'A800 / 80GB NVLink',
           power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
-          number: '23',
-          status: '可供',
-          status_en: 'Available',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: '110000/月',
-          price_en: '110000/month'
+          config: this.$t('computing.price.8ka'),
+          number: '32',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.physical'),
+          price: this.$t('computing.price.console')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
-          specification: 'V100 / 32GB NVLink',
-          power: 'FP32 15.7 TFLOPS,  FP16 125 TFLOPS',
-          number: '33',
-          status: '库存',
-          status_en: 'Inventory',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: 'N/A',
-          price_en: 'N/A'
-
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
+          brand: this.$t('computing.price.NVIDIA'),
           specification: 'L20 / 48GB PCIe',
           power: 'FP32 59.8 TFLOPS, FP16 119.5 TFLOPS',
-          number: '36',
-          status: '可供',
-          status_en: 'Available',
-          type: '销售',
-          type_en: 'Sales',
-          price: '180000/台',
-          price_en: '180000/unit'
+          config: this.$t('computing.price.8ka'),
+          number: '0',
+          status: this.$t('computing.price.unavailable'),
+          type: this.$t('computing.price.physical'),
+          price: this.$t('computing.price.waiting')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: 'NVIDIA',
-          brand_en: 'NVIDIA',
+          brand: this.$t('computing.price.NVIDIA'),
           specification: 'H20 / 96GB NVLink',
           power: 'FP32 44 TFLOPS, FP16 148 TFLOPS',
-          number: '8',
-          status: '库存',
-          status_en: 'Inventory',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: 'N/A',
-          price_en: 'N/A'
+          config: this.$t('computing.price.8ka'),
+          number: '0',
+          status: this.$t('computing.price.unavailable'),
+          type: this.$t('computing.price.physical'),
+          price: this.$t('computing.price.waiting')
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'RTX4090 / 24GB PCIe',
+          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+          config: this.$t('computing.price.8ka'),
+          number: '99',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.cloud'),
+          price: '12000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'V100 / 32GB NVLink',
+          power: 'FP32 15.7 TFLOPS,  FP16 125 TFLOPS',
+          config: this.$t('computing.price.8ka'),
+          number: '199',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.cloud'),
+          price: '15000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'A800 / 80GB NVLink',
+          power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
+          config: this.$t('computing.price.8ka'),
+          number: '16',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.cloud'),
+          price: '48000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'H800 / 80GB NVLink',
+          power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
+          config: this.$t('computing.price.8ka'),
+          number: '32',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.cloud'),
+          price: '980000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
         },
         {
           logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
-          brand: '华为',
-          brand_en: 'Ascend',
+          brand: this.$t('computing.price.Huawei'),
           specification: '910B / 64GB PCIe',
           power: 'INT8 640 TOPS, FP16 320 TFLOPS',
-          number: '28',
-          status: '库存',
-          status_en: 'Inventory',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: 'N/A',
-          price_en: 'N/A'
+          config: this.$t('computing.price.8ka'),
+          number: '32',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.cloud'),
+          price: 'N/A'
         },
         {
           logo: ['/images/computing/enflame.png','w-[40px] h-[40px]'],
-          brand: '燧原',
-          brand_en: 'Enflame',
+          brand: this.$t('computing.price.Enflame'),
           specification: 'i20 / 16GB PCIe',
           power: 'INT8 256 TOPS, FP16 128 TFLOPS',
-          number: '200',
-          status: '库存',
-          status_en: 'Inventory',
-          type: '长租',
-          type_en: 'Long term rental',
-          price: 'N/A',
-          price_en: 'N/A'
+          config: this.$t('computing.price.8ka'),
+          number: '199',
+          status: this.$t('computing.price.available'),
+          type: this.$t('computing.price.cloud'),
+          price: 'N/A'
         }
       ]
     }
