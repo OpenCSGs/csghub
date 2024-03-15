@@ -6,33 +6,33 @@
       <div class="text-[#303133] text-sm gap-y-[48px]">
         <div class="w-full h-auto">
           <div class="hidden md:block text-sm text-[#606266] mb-[24px]">
-            <p class="mt-[16px]">如您有意加入OpenCSG开放传神社区并成为我们的合作伙伴，请填写下方信息</p>
-            <p class="mt-[16px]">我们会尽快与您联系并详细沟通，感谢您对OpenCSG的支持。</p>
+            <p class="mt-[16px]">{{ $t('form.partner.p1') }}</p>
+            <p class="mt-[16px]">{{ $t('form.partner.p2') }}</p>
           </div>
           <div class="flex md:flex-col md:gap-y-[20px] gap-x-[80px]">
             <div class="w-[320px] lg:w-full">
-              <form-label labelName="姓名" :required="true" />
+              <form-label :labelName="$t('form.partner.name')" :required="true" />
               <el-input
                 v-model="userName"
                 clearable
-                placeholder="你的名字"
+                :placeholder="$t('form.partner.name-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
 
             <div class="w-[320px] lg:w-full md:flex-col">
-              <form-label labelName="手机号码" :required="true" />
+              <form-label :labelName="$t('form.partner.phone')" :required="true" />
               <el-input
                 v-model="phone"
                 clearable
-                placeholder="手机号码"
+                :placeholder="$t('form.partner.phone')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
           </div>
 
           <div class="w-[306px] mt-[24px] lg:w-full md:flex-col">
-            <form-label labelName="工作电子邮箱地址" :required="true" />
+            <form-label :labelName="$t('form.partner.email')" :required="true" />
             <el-input
               v-model="email"
               clearable
@@ -45,21 +45,21 @@
         <div class="w-full h-auto mt-[24px]">
           <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
             <div class="w-[320px] lg:w-full md:flex-col">
-              <form-label labelName="公司/单位名称" :required="true" />
+              <form-label :labelName="$t('form.partner.company')" :required="true" />
               <el-input
                 v-model="companyName"
                 clearable
-                placeholder="开放传神"
+                :placeholder="$t('form.partner.company-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
 
             <div class="w-[320px] lg:w-full md:flex-col">
-              <form-label labelName="职称" :required="true" />
+              <form-label :labelName="$t('form.partner.expertise')" :required="true" />
               <el-input
                 v-model="profession"
                 clearable
-                placeholder="首席执行官"
+                :placeholder="$t('form.partner.expertise-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
@@ -67,20 +67,20 @@
 
           <div class="flex flex md:flex-col md:gap-y-[20px] gap-x-[80px] gap-x-[80px]">
             <div class="w-[320px] mt-[24px] lg:w-full md:flex-col">
-              <form-label labelName="公司/产品官网" :required="true" />
+              <form-label :labelName="$t('form.partner.web')" :required="true" />
               <el-input
                 v-model="companyWeb"
                 clearable
-                placeholder="例：https://opencsg.com"
+                :placeholder="$t('form.partner.web-')"
                 class="w-full h-[40px] text-[#606266]"
               />
             </div>
             <div class="w-[320px] mt-[24px] md:mt-0 lg:w-full md:flex-col">
-              <form-label labelName="公司行业" :required="true" />
+              <form-label :labelName="$t('form.partner.industry')" :required="true" />
               <el-input
                   v-model="industry"
                   clearable
-                  placeholder="请填写您的行业信息"
+                  :placeholder="$t('form.partner.industry-')"
                   class="w-full h-[40px] text-[#606266]"
               />
             </div>
@@ -89,11 +89,11 @@
 
         <div class="w-full h-auto mt-[24px]">
           <div class="w-full">
-            <form-label labelName="请简要描述您的合作需求" :required="true" />
+            <form-label :labelName="$t('form.partner.desc')" :required="true" />
             <el-input
               v-model="desc"
               clearable
-              placeholder="请提供您的合作意向及需求"
+              :placeholder="$t('form.partner.desc-')"
               type="textarea"
               class="w-full h-auto text-[#606266]"
             />
@@ -102,7 +102,7 @@
       </div>
 
       <div class="flex gap-x-[16px]">
-        <el-button type="primary" @click="submitTheForm">提交表单</el-button>
+        <el-button type="primary" @click="submitTheForm">{{ $t('form.partner.submit') }}</el-button>
       </div>
     </div>
   </div>
@@ -152,25 +152,25 @@ export default {
     },
     submitTheForm() {
       if (this.userName == null) {
-        ElMessage({ message: "请您填写姓名", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.nameWarn'), type: "warning" });
         return;
       } else if (this.phone == null) {
-        ElMessage({ message: "请您填写电话号码", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.phoneWarn'), type: "warning" });
         return;
       } else if (this.email == null) {
-        ElMessage({ message: "请您填写邮箱", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.emailWarn'), type: "warning" });
         return;
       } else if (this.companyName == null) {
-        ElMessage({ message: "请您填写公司/单位名称", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.companyWarn'), type: "warning" });
         return;
       } else if (this.profession == null) {
-        ElMessage({ message: "请您填写职称", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.expertiseWarn'), type: "warning" });
         return;
       } else if (this.companyWeb == null) {
-        ElMessage({ message: "请您填写公司/产品官网", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.webWarn'), type: "warning" });
         return;
       } else if (this.industry == null) {
-        ElMessage({ message: "请您选择公司行业", type: "warning" });
+        ElMessage({ message: this.$t('form.partner.industryWarn'), type: "warning" });
         return;
       }
       this.createPartner().catch((err) => {
@@ -212,7 +212,7 @@ export default {
           throw new Error(data.message);
         });
       } else {
-        ElMessage({ message: "表单发送成功", type: "success" });
+        ElMessage({ message: this.$t('form.expert.success'), type: "success" });
 
         setTimeout(() => {
           window.location.href = "/partners";

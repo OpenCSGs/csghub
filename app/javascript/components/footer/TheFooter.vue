@@ -6,34 +6,34 @@
           <img :src="footLogo" class="w-[103px] h-[120px]" alt="OpenCSG Logo"/>
         </div>
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
-          <p class="text-base font-semibold">关于我们</p>
+          <p class="text-base font-semibold">{{ $t('footer.about') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2">
-            <p><a href="https://opencsg.com" target="_blank">公司介绍</a></p>
-            <p><a href="https://opencsg.com/blog" target="_blank">新闻动态</a></p>
-            <p><a href="https://opencsg.com#joinUs" target="_blank">加入我们</a></p>
+            <p><a href="https://opencsg.com" target="_blank">{{ $t('footer.company') }}</a></p>
+            <p><a href="https://opencsg.com/blog" target="_blank">{{ $t('footer.news') }}</a></p>
+            <p><a href="https://opencsg.com#joinUs" target="_blank">{{ $t('footer.join') }}</a></p>
           </div>
         </div>
       </div>
-      <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0">
+      <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0 items-center">
         <div class="flex flex-none items-start flex-col gap-y-4">
-          <p class="text-base font-semibold">联系我们</p>
+          <p class="text-base font-semibold">{{ $t('footer.contact') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
-            <p>商务合作：partner@opencsg.com</p>
-            <p>简历投递：hr@opencsg.com</p>
-            <p>媒体合作：pr@opencsg.com</p>
-            <p>投资关系：ir@opencsg.com</p>
+            <p>{{ $t('footer.partner') }}: <br /> partner@opencsg.com</p>
+            <p>{{ $t('footer.resume') }}: <br /> hr@opencsg.com</p>
+            <p>{{ $t('footer.pr') }}: <br /> pr@opencsg.com</p>
+            <p>{{ $t('footer.ir') }}: <br /> ir@opencsg.com</p>
           </div>
         </div>
         <div class="my-2 rounded-lg mlg:w-full mlg:hidden text-center text-sm font-medium">
-          <img :src="footCode" height=100 width=100 alt="OpenCSG Logo"/>
-          <p class="mt-[8px]">微信公众号</p>
+          <img class="m-auto" :src="footCode" height=100 width=100 alt="OpenCSG Logo"/>
+          <p class="mt-[8px]">{{ $t('footer.wx') }}</p>
         </div>
       </div>
     </div>
 
     <div class="my-2 rounded-lg hidden mlg:block text-center text-sm font-medium pb-10">
-      <img :src="footCode" height=120 width=120 alt="OpenCSG Logo"/>
-      <p class="mt-[8px]">微信公众号</p>
+      <img class="m-auto" :src="footCode" height=120 width=120 alt="OpenCSG Logo"/>
+      <p class="mt-[8px]">{{ $t('footer.wx') }}</p>
     </div>
 
     <div class="py-4 flex justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] sm:flex-col">
@@ -51,16 +51,16 @@
             </clipPath>
           </defs>
         </svg>
-        <p><a href="https://12377.cn/" target="_blank">违法和不良信息举报中心</a></p>
+        <p><a href="https://12377.cn/" target="_blank">{{ $t('footer.illegal') }}</a></p>
       </div>
       <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <p class="lg:hidden">｜</p>
         <img :src="emblemLogo" class="h-4 w-4" alt="OpenCSG Logo"/>
-        <p><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011202004415"> 京公网安备11011202004415号 </a></p>
+        <p><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011202004415"> {{ $t('footer.police') }} </a></p>
       </div>
       <div class="flex gap-x-1.5 mx-[5px] mb-[5px]">
         <p class="lg:hidden">｜</p>
-        <p><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank"> 京ICP备2023006263号-1 </a></p>
+        <p><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank"> {{ $t('footer.ICP') }} </a></p>
       </div>
     </div>
   </div>

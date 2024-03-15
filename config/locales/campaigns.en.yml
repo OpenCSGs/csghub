@@ -1,0 +1,11 @@
+en:
+  campaigns:
+    show:
+      prestart: 'Coming soon'
+      signing_up: 'Open for registration'
+      in_progress: 'In progress'
+      ended: 'Closed'
+      sign_up: 'Register now'
+      time: 'Time'
+      location: 'Venue'
+      related: 'Related Spaces'
