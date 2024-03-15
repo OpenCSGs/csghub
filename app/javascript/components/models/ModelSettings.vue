@@ -79,7 +79,7 @@
       </div>
       <div class="flex flex-col gap-[6px]" ref="tagListContainer">
         <p class="text-[#344054] text-[14px]">模型标签</p>
-        <div class="flex flex-col gap-[6px]">
+        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
           <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
             <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
               <span v-for="tag in selectedTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
@@ -241,7 +241,9 @@ export default {
     },
     getSelectTags(tags){
       tags.forEach(item=>{
-        this.selectedTags.push(item)
+        if(item.category == 'task'){
+          this.selectedTags.push(item)          
+        }
       })
     },
     clickDelete() {
