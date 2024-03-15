@@ -95,6 +95,9 @@
               <el-dropdown-item> 账号设置 </el-dropdown-item>
             </a>
             <el-dropdown-item @click="showDialog" > 联系我们 </el-dropdown-item>
+            <a href="http://starcloud-stg.opencsg.com:8090/">
+             <el-dropdown-item> 我的资源 </el-dropdown-item>
+            </a>
             <a href="/models/new">
               <el-dropdown-item divided> + 新建模型 </el-dropdown-item>
             </a>
