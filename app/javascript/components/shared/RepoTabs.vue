@@ -109,6 +109,7 @@ const props = defineProps({
   defaultTab: String,
   blob: Object,
   tags: Object,
+  tagList: String,
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean,
