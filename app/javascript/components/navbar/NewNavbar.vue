@@ -56,14 +56,14 @@
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
         <el-sub-menu index="4" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.enterprise') }}</template>
-          <a href="/about"><el-menu-item index="4-1">{{ $t('navbar.about') }}</el-menu-item></a>
-          <a href="/partners"><el-menu-item index="4-2">{{ $t('navbar.partner') }}</el-menu-item></a>
-          <a href="/experts"><el-menu-item index="4-3">{{ $t('navbar.expert') }}</el-menu-item></a>
+          <a href="/about"><el-menu-item index="4-1"><About /></el-menu-item></a>
+          <a href="/partners"><el-menu-item index="4-2"><Partners /></el-menu-item></a>
+          <a href="/experts"><el-menu-item index="4-3"><Experts /></el-menu-item></a>
         </el-sub-menu>
         <el-sub-menu index="5" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.community') }}</template>
-          <a href="/campaigns"><el-menu-item index="5-1">{{ $t('navbar.campaign') }}</el-menu-item></a>
-          <a href="/daily_papers"><el-menu-item index="5-2">{{ $t('navbar.dailyPaper') }}</el-menu-item></a>
+          <a href="/campaigns"><el-menu-item index="5-1"><Campaigns /></el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="5-2"><DailyPapers /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
