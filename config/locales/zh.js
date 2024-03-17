@@ -87,6 +87,7 @@ export default {
     edit: {
       tips: "将会显示在数据集列表页面中，选填",
       tips2: "一段关于数据集的介绍，选填",
+      tips3:" 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
       changeVisibility: "修改数据集可见性",
       statusText: "当前数据集目前是",
       status: "状态",
