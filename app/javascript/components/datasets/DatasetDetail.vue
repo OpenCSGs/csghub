@@ -28,6 +28,8 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      :tags="tags"
+      :tag-list="tagList"
       repo-type="dataset"
     />
   </div>
@@ -51,6 +53,7 @@ const props = defineProps({
   avatar: String,
   settingsVisibility: Boolean,
   tags: Object,
+  tagList: Object,
   ownerUrl: String,
   canWrite: Boolean
 })
