@@ -18,7 +18,7 @@
       </svg>
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div id="nav_title">StarCloud 星云平台</div>
+      <div id="nav_title">{{ $t('navbar.starCloud') }}</div>
       <div
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
