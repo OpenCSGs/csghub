@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        为大模型应用开发团队提供一套完整的模型/数据管理及应用搭建平台。
+      {{ $t('navbar.starShipText') }}
       </div>
     </div>
   </div>

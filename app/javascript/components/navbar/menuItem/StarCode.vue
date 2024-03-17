@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        通过基于大模型技术的创新功能，帮助开发者提高工作效率。
+        {{ $t('navbar.starCodeText') }}
       </div>
     </div>
   </div>

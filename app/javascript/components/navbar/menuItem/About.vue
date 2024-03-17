@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        关于 OpenCSG 团队
+        {{ $t('navbar.aboutText') }}
       </div>
     </div>
   </div>

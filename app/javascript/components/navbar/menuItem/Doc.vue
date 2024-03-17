@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        传神社区及产品的说明文档及常见问题解答。
+        {{ $t('navbar.docsText') }}
       </div>
     </div>
   </div>

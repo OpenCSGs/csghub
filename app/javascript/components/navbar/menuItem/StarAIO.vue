@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        为开发者们提供了优秀的开源工具和平台，助力企业定制私有化大模型。
+        {{ $t('navbar.starAIOText') }}
       </div>
     </div>
   </div>

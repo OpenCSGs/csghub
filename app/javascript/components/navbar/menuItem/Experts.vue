@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        与专家一起共建、共享开源开放生态
+        {{ $t('navbar.expertText') }}
       </div>
     </div>
   </div>

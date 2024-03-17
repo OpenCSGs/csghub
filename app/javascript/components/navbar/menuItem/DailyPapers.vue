@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        精选来自 arxiv 最新新闻、技术和资源
+      {{ $t('navbar.dailyPaperText') }}
       </div>
     </div>
   </div>

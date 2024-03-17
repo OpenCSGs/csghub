@@ -44,7 +44,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        可用于部署开源应用的大模型应用空间
+        {{ $t('navbar.spaceText') }}
       </div>
     </div>
   </div>

@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        Imagen AI 智能图像助手适应专业设计工作流程，提供多种功能。
+        {{ $t('navbar.imagenText') }}
       </div>
     </div>
   </div>

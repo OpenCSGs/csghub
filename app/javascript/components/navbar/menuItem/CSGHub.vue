@@ -20,7 +20,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        私有化开源版本的社区产品
+       {{ $t('navbar.openText') }}
       </div>
     </div>
   </div>

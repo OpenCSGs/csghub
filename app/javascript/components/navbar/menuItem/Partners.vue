@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        连接与共建解决方案生态
+      {{ $t('navbar.partnerText') }}
       </div>
     </div>
   </div>

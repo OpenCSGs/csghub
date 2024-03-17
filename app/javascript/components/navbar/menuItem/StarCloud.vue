@@ -23,7 +23,7 @@
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        将文档结构化并转换为数字资产，实现信息数字化存储和管理。
+      {{ $t('navbar.starCloudText') }}
       </div>
     </div>
   </div>

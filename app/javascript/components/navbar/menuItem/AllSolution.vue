@@ -1,6 +1,6 @@
 <template>
   <div class="menuItem min-h-max w-full bg-[#F9FAFB] flex items-center justify-center gap-[8px] py-[14px]">
-    <div class="text-[#223B99]">全部解决方案</div>
+    <div class="text-[#223B99]">{{ $t('navbar.allSolution')}}</div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="21"

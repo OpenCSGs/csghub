@@ -18,12 +18,12 @@
       </svg>
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div id="nav_title">StarChain 星链平台</div>
+      <div id="nav_title">{{ $t('navbar.starChain') }}</div>
       <div
         id="nav_text"
         class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
       >
-        开源开放的多模态LLM应用构建、测试、托管运行和分享平台。
+        {{ $t('navbar.starChainText') }}
       </div>
     </div>
   </div>
