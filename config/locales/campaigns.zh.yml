@@ -1,0 +1,11 @@
+zh:
+  campaigns:
+    show:
+      prestart: '即将开始'
+      signing_up: '报名中'
+      in_progress: '正在进行'
+      ended: '已结束'
+      sign_up: '立即报名'
+      time: '活动时间'
+      location: '活动地点'
+      related: '相关应用'

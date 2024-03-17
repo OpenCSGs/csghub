@@ -9,28 +9,28 @@
         <div class="flex items-center flex-col gap-4 max-w-[256px] md:gap-2">
           <img src="/images/about/integrate.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
           <div class="text-[#000] text-[30px] font-semibold leading-[38px] md:text-[24px] mb-0">
-            整合
+            {{ $t('about.feature.Integration') }}
           </div>
           <div class="text-center text-[18px] leading-[26px] text-[#909399] md:text-[14px]">
-            通过运用自然语言实现混合云资源的整合利用，自然语言处理技术能够简化工作流程，降低IT基础设施成本同时提高团队之间的协作效率
+            {{ $t('about.feature.IntegrationText') }}
           </div>
         </div>
         <div class="flex items-center flex-col gap-4 max-w-[256px] md:gap-2">
           <img src="/images/about/governance.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
           <div class="text-[#000] text-[30px] font-semibold leading-[38px] md:text-[24px] mb-0">
-              治理
+            {{ $t('about.feature.Governance') }}
           </div>
           <div class="text-center  text-[18px] leading-[26px] text-[#909399] md:text-[14px]">
-            使大模型更易于使用，为垂直行业定制解决方案，使得每个公司及个人都能够拥有自己的大模型
+            {{ $t('about.feature.GovernanceText') }}
           </div>
         </div>
         <div class="flex items-center flex-col gap-4 max-w-[256px] md:gap-2">
           <img src="/images/about/empower.png" class="feature-icon w-[140px] h-[140px]" alt="OpenCSG"/>
           <div class="text-[#000] text-[30px] font-semibold leading-[38px] md:text-[24px] mb-0">
-            赋能
+            {{ $t('about.feature.Empowerment') }}
           </div>
           <div class="text-center  text-[18px] leading-[26px] text-[#909399] md:text-[14px]">
-            通过利用自然语言发挥大模型的潜力从而彻底改变软件开发的方式，赋能每个人设计、创建、实施、并快速集成软件产品到现有系统；
+            {{ $t('about.feature.EmpowermentText') }}
           </div>
         </div>
       </div>

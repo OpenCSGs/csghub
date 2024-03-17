@@ -2,7 +2,7 @@
   <space-intro star-chain-address="<%= starchain_address %>"></space-intro>
   <% if Space.count == 0 %>
     <div class="flex flex-col xl:px-[20px] sm:mb-[40px]">
-      <p>您还没有属于自己的应用，点击下面的链接去 StarChain 构建您的第一个应用吧!！</p>
+      <p><%= t('spaces.index.no_space_alert') %></p>
       <div>
         <p class="mt-5">
           <button onclick="window.open('<%= starchain_address %>', '_blank')" class="flex items-center justify-center group relative h-12 w-48 overflow-hidden rounded-2xl bg-[#1a8b7b] text-lg font-bold text-white">

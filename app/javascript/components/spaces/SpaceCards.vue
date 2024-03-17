@@ -1,10 +1,11 @@
 <template>
   <div class="flex justify-between">
-    <h3 class="pl-[10px] xl:pl-[25px] mb-[20px] font-semibold text-xl">Space 列表</h3>
+    <h3 class="pl-[10px] xl:pl-[25px] mb-[20px] font-semibold text-xl">{{ $t('space.SpaceList') }}</h3>
     <el-select v-if="isLoggedInBoolean"
                v-model="filterValue"
                @change="reloadCards"
-               class="w-[100px] xl:mr-[20px]"
+               style="width: 100px;"
+               class="xl:mr-[20px]"
     >
       <el-option
         v-for="item in filterValues"
@@ -66,11 +67,13 @@
         filterValues: [
           {
             value: 'all',
-            label: '全部应用'
+            label: '全部应用',
+            label_en: 'All Space'
           },
           {
             value: 'mine',
-            label: '我的应用'
+            label: '我的应用',
+            label_en: 'My Space'
           }
         ]
       }

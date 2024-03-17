@@ -3,28 +3,29 @@
     <div class="max-w-[1280px] m-auto">
       <div class="py-[96px] text-center">
         <div class="text-[#223B99] text-[16px] font-[500] leading-[24px]">
-          社区文章
+          {{ $t('dailyPaper.article') }}
         </div>
         <div class="mt-[12px] text-[48px] font-[500] leading-[60px] tracking-[-0.96px]">
-          每期精选文章
+          {{ $t('dailyPaper.eachArticle') }}
         </div>
         <div class="mt-[24px] text-[20px] font-[300] leading-[30px]">
-          来自 arxiv 最新的新闻、技术和资源
+          {{ $t('dailyPaper.arxiv') }}
         </div>
         <div class="mt-[24px]" v-if="canCreateDailyPaper">
           <a href="/daily_papers/new" class="inline-block text-center px-[18px] py-[12px] text-[16px] text-white bg-[#3250BD] rounded-[8px] border-[1px] border-[#3250BD]">
-            发布新的社区文章
+            {{ $t('dailyPaper.newArticle') }}
           </a>
         </div>
 
-        <div class="mt-[64px] flex gap-[64px] md:flex-col md:px-[16px]">
-          <div class="flex">
+        <div class="mt-[64px] gap-[64px] flex-col md:px-[16px]">
+
+          <div class="flex justify-center mb-[64px]">
             <div class="w-[280px] md:w-full">
               <el-input
                 style="width: 100%;"
                 size="large"
                 v-model="searchForm.keywords"
-                placeholder="搜索文章标题"
+                :placeholder="$t('dailyPaper.placeholder')"
                 clearable
                 suffix-icon="el-icon-search"
                 @keyup.enter="handleSearch"
@@ -38,7 +39,7 @@
           <div class="flex flex-col">
 
             <div class="flex gap-x-[32px] gap-y-[48px] flex-wrap justify-between border-b border-[#EAECF0] pb-[64px]">
-              <div class="w-[452px] md:w-full" :key="item.uuid" v-for="item in JSON.parse(dailyPapers)">
+              <div class="w-[405px] md:w-full" :key="item.uuid" v-for="item in JSON.parse(dailyPapers)">
                 <div class="flex w-full flex-col cursor-pointer" @click="visitDetail(item.uuid)">
                   <img :src="item.cover_url" alt="" class="h-[240px] object-contain">
                   <div class="flex justify-between gap-[16px] mt-[20px] items-start">
@@ -73,7 +74,7 @@
                 v-model:current-page="searchForm.page"
                 :default-current-page="1"
                 :page-size="8"
-                layout="prev, pager, next" 
+                layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
                 @update:current-page="handleSearch"

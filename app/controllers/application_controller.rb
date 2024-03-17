@@ -70,8 +70,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_locale
-    I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
-    session[:locale] = I18n.locale
+    I18n.locale = params[:locale] || cookies[:locale] || I18n.default_locale
+    cookies[:locale] = I18n.locale
   end
 
   def login_by_user_infos user_infos
@@ -122,7 +122,11 @@ class ApplicationController < ActionController::Base
       user.wechat_id = user_infos['wechat']
       user.github_id = user_infos['github']
       user.gitlab_id = user_infos['gitlab']
-      user.save
+      unless user.save
+        flash[:alert] = "授权登录出错，请联系管理员处理"
+        log_error "授权登录出错", user.errors.messages
+        return redirect_to errors_unauthorized_path
+      end
     end
 
     # 确保如果新的用户uuid没有保存，那么我们登录老的用户
