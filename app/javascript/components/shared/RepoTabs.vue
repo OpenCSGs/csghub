@@ -84,6 +84,13 @@
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :private="repoDetail.private" />
+        <application-space-settings
+          v-if="repoType === 'application_space'"
+          :path="repoDetail.path"
+          :application-space-nickname="repoDetail.nickname"
+          :application-space-desc="repoDetail.description"
+          :default_branch="repoDetail.default_branch"
+          :private="repoDetail.private" />
       </template>
     </tab-container>
   </div>
@@ -103,6 +110,7 @@ import RepoFiles from '../shared/RepoFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import ModelSettings from '../models/ModelSettings.vue'
 import DatasetSettings from '../datasets/DatasetSettings.vue'
+import ApplicationSpaceSettings from '../application_spaces/ApplicationSpaceSettings.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'
