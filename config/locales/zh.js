@@ -8,6 +8,9 @@ export default {
     nickname: "应用空间别名",
     namespaceName: "命名空间/应用空间名称",
     desc: "应用空间介绍",
+    stoppedDesc: "此空间已被其所有者暂停。",
+    sleepingDesc: "由于长时间未操作，该空间已进入休眠状态。",
+    restart: "重启 Space",
     new: {
       createSuccess: "应用空间创建成功",
     },

@@ -10,6 +10,9 @@ export default {
     nickname: "ApplicationSpace Nickname",
     namespaceName: "Namespace/Name",
     desc: "Application Space intro",
+    stoppedDesc: "This Space has been paused by its owner.",
+    sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",
+    restart: "Restart this Space",
     new: {
       createSuccess: "Application Space created successfully",
     },

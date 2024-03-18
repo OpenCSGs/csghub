@@ -13,7 +13,10 @@
         />
         <ApplicationPage v-else-if="repoType === 'application_space' && appStatus === 'Running'"
                          :appEndpoint="appEndpoint"
-         />
+        />
+        <StoppedPage v-else-if="repoType === 'application_space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
+                     :appStatus="appStatus"
+        />
         <repo-summary v-else
                       :repo-type="repoType"
                       :namespace-path="repoDetail.path"
@@ -119,6 +122,7 @@ import Blob from '../shared/Blob.vue'
 import EditFile from '../shared/EditFile.vue'
 import InitializeGuide from '../application_spaces/initializeGuide.vue'
 import ApplicationPage from '../application_spaces/applicationPage.vue'
+import StoppedPage from '../application_spaces/StoppedPage.vue'
 import { computed, onMounted } from 'vue'
 
 const props = defineProps({
