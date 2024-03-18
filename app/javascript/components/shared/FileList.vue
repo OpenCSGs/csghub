@@ -103,9 +103,6 @@
         <a v-else-if="canPreview(file)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
           {{ file.name }}
         </a>
-        <a v-else class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">
-          {{ file.name }}
-        </a>
         <el-popover
           v-else
           placement="top"
