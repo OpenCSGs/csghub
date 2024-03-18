@@ -173,6 +173,15 @@ module Starhub
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
 
+    def get_jwt_token(username)
+      options = {
+        current_user: username
+      }
+      res = @client.post("/jwt/token", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # TODO: add more starhub api
 
     private
