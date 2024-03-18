@@ -40,7 +40,17 @@ export default {
       "ShangHai": "Shanghai",
       "ShangHaiSite": "OpenCSG, 5/F, F2, International Media Port, No. 180 Longtai Road, Xuhui District",
       "Desc1": "OpenCSG is an artificial intelligence industry startup that was founded in 2023. Its mission is to create an ecosystem of Large Lanuage Models by bringing together the upstream and downstream enterprises to collaboratively provide platforms and solutions for the use of Large Language Models in vertical industries.",
-      "Desc2": "Based on the self-developed arithmetic algorithm platform and application development tool platform, OpenCSG's open community offers users one-stop Large Language Model application building services, assisting them in quickly and affordably creating customized Large Language Model applications. The company has successfully completed projects in the fields of banking, government affairs, manufacturing, etc., and is actively exploring with ecosystem partners for applications landing in additional industries, such as healthcare, industrial, and media. At present, OpenCSG has completed the angel round financing of tens of millions by Digital China Investment Co.,Ltd and Lenovo Capital and Incubator Group. "
+      "Desc2": "Based on the self-developed arithmetic algorithm platform and application development tool platform, OpenCSG's open community offers users one-stop Large Language Model application building services, assisting them in quickly and affordably creating customized Large Language Model applications. The company has successfully completed projects in the fields of banking, government affairs, manufacturing, etc., and is actively exploring with ecosystem partners for applications landing in additional industries, such as healthcare, industrial, and media. At present, OpenCSG has completed the angel round financing of tens of millions by Digital China Investment Co.,Ltd and Lenovo Capital and Incubator Group. ",
+      "timestamp1": "October 2023",
+      "timestamp2": "October 2023",
+      "timestamp3": "January 2024",
+      "timestamp4": "February 2024",
+      "timestamp5": "March 2024",
+      "content1": "Established Shanghai ChuanShen Technology Co., Ltd. in Shanghai, and set up the Shanghai office, located in the Xuhui MoSu space.",
+      "content2": "OpenCSG first launched the StarNet (Xingzhan) large-scale model platform and the \"Transcendence\" open innovation ecosystem community.",
+      "content3": "OpenCSG released the beta version of StarNet (Xingzhan), accelerating the formation of new productive forces. In the same month, they launched an open-source project aimed at solving the difficult problem of large-scale model asset governance.",
+      "content4": "OpenCSG launched the open-source large-scale model on GitLab.",
+      "content5": "OpenCSG once again launched the open-source large-scale model inference project on GitLab.",
     }
   },
   "space": {
