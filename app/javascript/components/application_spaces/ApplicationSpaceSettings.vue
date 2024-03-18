@@ -1,4 +1,24 @@
 <template>
+  <div v-if="true || ['Deploy Failed', 'Building Failed', 'Runtime Error'].includes(appStatus)"
+        class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <g clip-path="url(#clip0_8886_11536)">
+        <path d="M9.99984 6.66699V10.0003M9.99984 13.3337H10.0082M18.3332 10.0003C18.3332 14.6027 14.6022 18.3337 9.99984 18.3337C5.39746 18.3337 1.6665 14.6027 1.6665 10.0003C1.6665 5.39795 5.39746 1.66699 9.99984 1.66699C14.6022 1.66699 18.3332 5.39795 18.3332 10.0003Z" stroke="#D92D20" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <defs>
+        <clipPath id="clip0_8886_11536">
+          <rect width="20" height="20" fill="white"/>
+        </clipPath>
+      </defs>
+    </svg>
+    <div>
+      <h3 class="text-[#475467] text-[14px] font-[500]">应用空间发布失败</h3>
+      <p class="text-[#475467] text-[14px]">代码运行失败，查看日志</p>
+      <p class="text-[#223B99] font-[400] text-[12px] mt-[12px] cursor-pointer">查看日志</p>
+    </div>
+  </div>
+
   <div class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- cloud resource -->
     <div class="flex xl:flex-col gap-[32px]">
@@ -12,9 +32,18 @@
       </div>
       <div class="flex flex-col gap-[6px]">
         <p class="text-[#344054] text-[14px]">{{ $t('application_spaces.edit.currentCloudResource')}}</p>
-        <div class="w-[512px] sm:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
-          {{ applicationSpacePath }}
-        </div>
+        <el-select v-model="theCurrentCloudResource"
+                    placeholder="选择"
+                    size="large"
+                    class="!w-[512px] sm:!w-full"
+        >
+          <el-option
+            v-for="item in spaceResources"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :disabled="disabledOptions.includes(item.value)"/>
+        </el-select>
       </div>
     </div>
 
@@ -195,6 +224,7 @@ export default {
     applicationSpaceDesc: String,
     default_branch: String,
     appStatus: String,
+    cloudResource: String,
     private: Boolean
   },
   components: {},
@@ -206,9 +236,21 @@ export default {
       theApplicationSpaceNickname: this.applicationSpaceNickname || "",
       theApplicationSpaceDesc: this.applicationSpaceDesc || "",
       applicationSpacePath: this.path,
+      theCurrentCloudResource: this.cloudResource,
       isSpaceStopped: this.appStatus === 'Stopped' ? true : false,
       options: [{value: 'Private', label: this.$t('all.private')},
-                {value: 'Public', label:  this.$t('all.public')}]
+                {value: 'Public', label:  this.$t('all.public')}],
+      spaceResources:[
+        {label: "CPU basic · 2 vCPU · 16GB ·免费", value: "CPU basic · 2 vCPU · 16GB"},
+        {label: "NVIDIA T4 · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA T4 · 4 vCPU · 15 GB"},
+        {label: "NVIDIA A10G · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA A10G · 4 vCPU · 15 GB"},
+        {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
+      ],
+      disabledOptions: [
+        "NVIDIA T4 · 4 vCPU · 15 GB",
+        "NVIDIA A10G · 4 vCPU · 15 GB",
+        "NVIDIA A10G · 12 vCPU · 46 GB"
+      ]
     };
   },
   mounted() {

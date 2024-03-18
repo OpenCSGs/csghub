@@ -91,6 +91,7 @@
           :application-space-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
+          :cloudResource="repoDetail.hardware"
           :private="repoDetail.private" />
       </template>
     </tab-container>
@@ -139,7 +140,6 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  console.log(props)
 })
 
 const repoTypeClass = computed(() => {
