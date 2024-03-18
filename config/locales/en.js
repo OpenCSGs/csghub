@@ -192,7 +192,7 @@ export default {
     addSuccess: "Added successfully",
     delSuccess: "Del successfully",
     lastTime: "Last Updated",
-    downloadCount: "Download Count",
+    downloadCount: "Download",
     public: "Public",
     private: "Private",
     recentlyUpdate: "Recently Update",

@@ -8,7 +8,7 @@
       {{ repo.description }}
     </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
-      <span v-if="getComputed.taskTag">{{ getComputed.taskTag }}</span>
+      <span v-if="getComputed.taskTag" class="max-w-[80px] xl:max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">{{ getComputed.taskTag }}</span>
       <span v-if="getComputed.taskTag">
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
@@ -40,7 +40,7 @@
     repoType: String
   })
 
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
   const detailLink = computed(() => {
     switch (props.repoType) {
@@ -60,7 +60,13 @@
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
 
     let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
-    taskTag = taskTag? taskTag["show_name"] : null
+    if (locale.value === 'en') {
+      taskTag = taskTag? taskTag["name"].replace(/-/g, ' ') : null
+    }
+    else {
+      taskTag = taskTag? taskTag["show_name"] : null
+    }
+
     return { path: path, visibility: visibility, taskTag: taskTag }
   })
 </script>
