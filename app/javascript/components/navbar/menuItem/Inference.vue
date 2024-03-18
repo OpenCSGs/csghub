@@ -15,10 +15,9 @@
       </svg>
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div id="nav_title">{{ $t('navbar.llm_inference_open') }}</div>
+      <div class="text-[#101828]">{{ $t('navbar.llm_inference_open') }}</div>
       <div
-        id="nav_text"
-        class="text-[14px] bg-red text-[#475467] font-light leading-[20px] md:hidden"
+        class="text-[14px] text-[#475467] font-light leading-[20px] md:hidden"
       >
         {{ $t('navbar.llm_inference_open') }}
       </div>
@@ -26,10 +25,4 @@
   </div>
 </template>
 <style scoped>
-.menuItem #nav_title {
-  color: #101828;
-}
-.menuItem #nav_text {
-  color: #475467;
-}
 </style>

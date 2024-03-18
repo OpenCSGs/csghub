@@ -19,10 +19,4 @@
   </div>
 </template>
 <style scoped>
-.menuItem #nav_title {
-  color: #101828;
-}
-.menuItem #nav_text {
-  color: #475467;
-}
 </style>
