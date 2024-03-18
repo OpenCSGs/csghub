@@ -12,6 +12,8 @@ export default {
       createSuccess: "应用空间创建成功",
     },
     edit: {
+      runningStatus: '运行状态',
+      runningStatusDesc: '切换运行或关停应用空间',
       tips: "将会显示在应用空间列表页面中，选填",
       tips2: "一段关于应用空间的介绍，选填",
       changeVisibility: "修改应用空间可见性",

@@ -1,5 +1,27 @@
 <template>
   <div class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    <!-- 运行状态 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('application_spaces.edit.runningStatus')}}
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          {{ $t('application_spaces.edit.runningStatusDesc')}}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-switch
+          v-model="isSpaceStopped"
+          size="large"
+          :active-text="$t('application_spaces.status.running')"
+          :inactive-text="$t('application_spaces.status.stopped')"
+        />
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -152,6 +174,7 @@ export default {
     applicationSpaceNickname: String,
     applicationSpaceDesc: String,
     default_branch: String,
+    appStatus: String,
     private: Boolean
   },
   components: {},
@@ -163,8 +186,9 @@ export default {
       theApplicationSpaceNickname: this.applicationSpaceNickname || "",
       theApplicationSpaceDesc: this.applicationSpaceDesc || "",
       applicationSpacePath: this.path,
+      isSpaceStopped: this.appStatus === 'Stopped' ? true : false,
       options: [{value: 'Private', label: this.$t('all.private')},
-        {value: 'Public', label:  this.$t('all.public')}]
+                {value: 'Public', label:  this.$t('all.public')}]
     };
   },
   mounted() {

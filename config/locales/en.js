@@ -14,6 +14,8 @@ export default {
       createSuccess: "Application Space created successfully",
     },
     edit: {
+      runningStatus: 'Running Status',
+      runningStatusDesc: 'Switch running or stop application space',
       tips: "Will be displayed on the application spaces index page, optional",
       tips2: "An introduction about the ApplicationSpace, optional",
       changeVisibility: "Change Space visibility",

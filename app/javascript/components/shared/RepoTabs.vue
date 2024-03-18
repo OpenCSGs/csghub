@@ -90,6 +90,7 @@
           :application-space-nickname="repoDetail.nickname"
           :application-space-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
+          :appStatus="appStatus"
           :private="repoDetail.private" />
       </template>
     </tab-container>
