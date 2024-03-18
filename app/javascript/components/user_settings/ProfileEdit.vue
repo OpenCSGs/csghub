@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.username') }}</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.userName') }}</div>
       <p class="text-gray-500 text-[12px] italic">{{ $t('rule.nameRule') }}</p>
       <p class="text-gray-500 text-[12px] italic">* {{ $t('rule.notChangable') }}</p>
       <el-input v-if="name.trim().length === 0"
@@ -27,7 +27,7 @@
                 class="max-w-[400px]"
                 v-model="inputName"
                 disabled
-                :placeholder="this.$t('all.username')">
+                :placeholder="this.$t('all.userName')">
       </el-input>
     </div>
     <div>
