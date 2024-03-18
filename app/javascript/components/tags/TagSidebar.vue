@@ -31,7 +31,7 @@
           v-model="taskTagFilterInput"
           class="!w-[80%] mt-[28px]"
           size="large"
-          :placeholder="this.$t('all.filterTags')"
+          :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterTaskTags"
         />
@@ -57,7 +57,7 @@
           v-model="frameworkTagFilterInput"
           class="!w-[80%] mt-[28px] mb-[16px]"
           size="large"
-          :placeholder="this.$t('all.filterTags')"
+          :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterFrameworkTags"
         />
@@ -94,7 +94,7 @@
           v-model="licenseTagFilterInput"
           class="!w-[80%] mt-[28px] mb-[16px]"
           size="large"
-          :placeholder="this.$t('all.filterTags')"
+          :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterLicenseTags"
         />
@@ -251,7 +251,7 @@
   const removeNotMatchedTags = (json, regex) => {
     const newJson = {}
     for (const [field, { color, zh_name, tags }] of Object.entries(json)) {
-      const matchedTags = tags.filter((tag) => regex.test(tag.zh_name))
+      const matchedTags = tags.filter((tag) => regex.test(tag.zh_name) || regex.test(tag.name.replace(/-/g, ' ')))
       newJson[field] = { color, zh_name, tags: matchedTags }
     }
     return newJson
