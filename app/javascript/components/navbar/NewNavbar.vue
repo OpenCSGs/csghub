@@ -21,46 +21,49 @@
         <el-sub-menu index="1" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.product') }}</template>
           <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
-            <span>{{ $t('navbar.starCloud') }}</span>
+            <StarCloud />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">
-            <span>{{ $t('navbar.starShip') }}</span>
+            <StarShip />
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.solution') }}</template>
           <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">
-            <span>{{ $t('navbar.EKB') }}</span>
+            <EKB />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">
-            <span>{{ $t('navbar.starAIO') }}</span>
+            <StarAIO />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">
-            <span>{{ $t('navbar.imagen') }}</span>
+            <Imagen />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">
-            <span>{{ $t('navbar.starCode') }}</span>
+            <StarCode />
+          </el-menu-item>
+          <el-menu-item @click="handleNavigation('/solution')" index="Programming">
+            <AllSolution />
           </el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.developer') }}</template>
-          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1">{{ $t('navbar.open') }}</el-menu-item></a>
-          <a :href="llmInference" target="_blank"><el-menu-item index="3-2">{{ $t('navbar.llm_inference_open') }}</el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3">StarChain</el-menu-item></a>
-          <a href="/spaces"><el-menu-item index="3-4">{{ $t('navbar.space') }}</el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item index="3-5">{{ $t('navbar.docs') }}</el-menu-item></a>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1"><CSGHub /></el-menu-item></a>
+          <a :href="llmInference" target="_blank"><el-menu-item index="3-2"><Inference /></el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3"><StarChain /></el-menu-item></a>
+          <a href="/spaces"><el-menu-item index="/spaces"><Space /></el-menu-item></a>
+          <a href="/docs" target="_blank"><el-menu-item index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
         <el-sub-menu index="4" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.enterprise') }}</template>
-          <a href="/about"><el-menu-item index="4-1">{{ $t('navbar.about') }}</el-menu-item></a>
-          <a href="/partners"><el-menu-item index="4-2">{{ $t('navbar.partner') }}</el-menu-item></a>
-          <a href="/experts"><el-menu-item index="4-3">{{ $t('navbar.expert') }}</el-menu-item></a>
+          <a href="/about"><el-menu-item index="4-1"><About /></el-menu-item></a>
+          <a href="/partners"><el-menu-item index="4-2"><Partners /></el-menu-item></a>
+          <a href="/experts"><el-menu-item index="4-3"><Experts /></el-menu-item></a>
         </el-sub-menu>
         <el-sub-menu index="5" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.community') }}</template>
-          <a href="/campaigns"><el-menu-item index="5-1">{{ $t('navbar.campaign') }}</el-menu-item></a>
-          <a href="/daily_papers"><el-menu-item index="5-2">{{ $t('navbar.dailyPaper') }}</el-menu-item></a>
+          <a href="/campaigns"><el-menu-item index="5-1"><Campaigns /></el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item index="5-2"><DailyPapers /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
@@ -145,6 +148,23 @@
 
 <script>
 import ContactUs from "../form/ContactUs.vue";
+import StarCloud from "./menuItem/StarCloud.vue"
+import StarShip from "./menuItem/StarShip.vue"
+import EKB from "./menuItem/EKB.vue"
+import StarAIO from "./menuItem/StarAIO.vue"
+import Imagen from "./menuItem/Imagen.vue"
+import StarCode from "./menuItem/StarCode.vue"
+import AllSolution from "./menuItem/AllSolution.vue"
+import CSGHub from "./menuItem/CSGHub.vue"
+import Inference from "./menuItem/Inference.vue"
+import StarChain from "./menuItem/StarChain.vue"
+import Space from "./menuItem/Space.vue"
+import Doc from "./menuItem/Doc.vue"
+import About from "./menuItem/About.vue"
+import Partners from "./menuItem/Partners.vue"
+import Experts from "./menuItem/Experts.vue"
+import Campaigns from "./menuItem/Campaigns.vue"
+import DailyPapers from "./menuItem/DailyPapers.vue"
 
 export default {
   props: {
@@ -171,6 +191,22 @@ export default {
   },
   components: {
     ContactUs,
+    StarCloud,
+    StarShip,
+    EKB,
+    StarAIO,
+    Imagen,
+    StarCode,
+    AllSolution,
+    CSGHub,
+    Inference,
+    StarChain,
+    Space,
+    Doc,
+    About,
+    Experts,
+    Campaigns,
+    DailyPapers
   },
   methods: {
     routerLink(path){
@@ -214,6 +250,8 @@ export default {
   min-width: 150px;
   .el-menu-item {
     font-size: 16px;
+    height:auto;
+    line-height:24px;
   }
 }
 </style>
