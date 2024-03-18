@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-between lg:justify-normal mt-[48px] gap-[64px] lg:flex-col lg:gap-[48px] px-[32px]">
+          <div class="flex justify-between lg:justify-normal mt-[48px] gap-[64px] lg:flex-col lg:gap-[48px]">
             <el-timeline style="max-width: 600px">
               <el-timeline-item
                 placement="top"
