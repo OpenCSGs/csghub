@@ -151,6 +151,7 @@ export default {
     editProfile: "Account Settings",
     newModel: "New Model",
     newDataset: "New Dataset",
+    newApplicationSpace: "New Application Space",
     newOrganization: "New Organization",
     logout: "Logout",
     loginRegister: "Login/Registe",

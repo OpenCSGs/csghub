@@ -83,7 +83,7 @@
               <el-dropdown-item> + {{ $t('navbar.newDataset') }} </el-dropdown-item>
             </a>
             <a href="/application_spaces/new">
-              <el-dropdown-item> + 新建应用空间 </el-dropdown-item>
+              <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
               <el-dropdown-item divided> {{ $t('navbar.newOrganization') }} </el-dropdown-item>
