@@ -70,6 +70,13 @@
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :private="repoDetail.private" />
+        <code-settings
+          v-if="repoType === 'code'"
+          :path="repoDetail.path"
+          :code-nickname="repoDetail.nickname"
+          :code-desc="repoDetail.description"
+          :default_branch="repoDetail.default_branch"
+          :private="repoDetail.private" />
       </template>
     </tab-container>
   </div>
@@ -89,6 +96,7 @@ import RepoFiles from '../shared/RepoFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import ModelSettings from '../models/ModelSettings.vue'
 import DatasetSettings from '../datasets/DatasetSettings.vue'
+import CodeSettings from '../codes/CodeSettings.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'

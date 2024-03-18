@@ -6,6 +6,8 @@ class Code < ApplicationRecord
   has_many :discussions, as: :discussionable, dependent: :destroy
 
   after_create :sync_created_code_to_starhub_server
+  after_destroy :delete_code_from_starhub_server
+  after_update :update_starhub_server_code
   before_save :detect_sensitive_content
 
   validates :name, format: { with: /\A(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+\Z/ }
@@ -39,6 +41,21 @@ class Code < ApplicationRecord
                                   desc,
                                   { license: license,
                                     private: code_private? })
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def delete_code_from_starhub_server
+    res = Starhub.api.delete_code(owner.name, name, { current_user: owner.name })
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def update_starhub_server_code
+    res = Starhub.api.update_code(creator.name,
+                                   name,
+                                   owner.name,
+                                   nickname,
+                                   desc,
+                                   { private: code_private? })
     raise StarhubError, res.body unless res.success?
   end
 
