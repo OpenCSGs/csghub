@@ -58,7 +58,7 @@ export default {
   mounted() {},
   methods: {
     goEkb(){
-      window.open('http://ekb.opencsg.com:9080/', '_blank');
+      window.open('http://ekb.opencsg.com/', '_blank');
     },
     openDialog(){
       this.$refs.videoDialogRef.openDialog();
