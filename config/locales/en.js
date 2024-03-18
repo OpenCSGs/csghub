@@ -300,5 +300,28 @@ export default {
     dragOr: "Drag and drop files here or",
     onlyOneFile: "Only support one file",
     uploadFile5Mb: "Support uploading files up to 5MB in size",
+    lfs1: "This file is stored with",
+    lfs2: "Git LFS",
+    lfs3: ". It's too big to display, but you can still",
+    lfs4: "download",
+    lfs5: "it.",
+    lfs6: "Git LFS Details",
+    lfs7: "Pointer size",
+    lfs8: "Size of remote file",
+    lfs9: "Raw pointer file",
+    lfs10: "Git Large File Storage (LFS) replaces large files with text pointers inside Git, while storing the file contents on a remote server.",
+    lfs11: "More info",
+    preview: "Preview",
+    edit: "Edit",
   },
+  repo: {
+    edit: {
+      fileName: "File Name",
+      main: "Directly submit to the main branch",
+      submit: "Submit Update",
+      desc: "Provide more description",
+      update: "Update file",
+      cancel: "Cancel",
+    }
+  }
 };
