@@ -12,6 +12,9 @@ export default {
       createSuccess: "应用空间创建成功",
     },
     edit: {
+      cloudResource: '空间云资源',
+      cloudResourceDesc: '可切换到不同的空间云资源。切换到付费资源后，将根据使用时长向您收取费用。',
+      currentCloudResource: '当前云资源',
       runningStatus: '运行状态',
       runningStatusDesc: '切换运行或关停应用空间',
       tips: "将会显示在应用空间列表页面中，选填",

@@ -14,6 +14,9 @@ export default {
       createSuccess: "Application Space created successfully",
     },
     edit: {
+      cloudResource: 'Cloud Resource',
+      cloudResourceDesc: 'Switch to different cloud resources. When you switch to a paid resource, you will be charged based on how long you use it.',
+      currentCloudResource: 'Current Cloud Resource',
       runningStatus: 'Running Status',
       runningStatusDesc: 'Switch running or stop application space',
       tips: "Will be displayed on the application spaces index page, optional",
