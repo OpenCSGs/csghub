@@ -70,7 +70,7 @@ class Model < ApplicationRecord
   end
 
   def delete_model_from_starhub_server
-    res = Starhub.api.delete_model(owner.name, name)
+    res = Starhub.api.delete_model(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 
