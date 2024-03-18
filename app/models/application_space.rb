@@ -42,7 +42,7 @@ class ApplicationSpace < ApplicationRecord
   end
 
   def delete_application_space_from_starhub_server
-    res = Starhub.api.delete_application_space(owner.name, name)
+    res = Starhub.api.delete_application_space(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 
