@@ -7,7 +7,7 @@
                 :maxLength="200"
                 show-word-limit
                 clearable
-                placeholder="文件名"
+                :placeholder="this.$t('all.fileName')"
                 @input="handleFileNameChange"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
@@ -16,10 +16,10 @@
       originalCodeContent=""
     />
     <el-radio-group v-model="new_branch" class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0">
-      <el-radio label="main" size="large">直接提交到 main 分支</el-radio>
+      <el-radio label="main" size="large">{{ $t('shared.commitToMain') }}</el-radio>
     </el-radio-group>
     <div>
-      <div class="mb-2 text-sm">提交新文件</div>
+      <div class="mb-2 text-sm">{{ $t('all.submitNewFile') }}</div>
       <el-input v-model="commitTitle"
                 :maxLength="200"
                 show-word-limit
@@ -27,10 +27,10 @@
                 :placeholder="commitTitlePlaceholder"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
-    <CommunityMDTextarea desc="" placeholder="提供更多描述" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" :placeholder="this.$t('all.provideMoreDesc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="createFile" :disabled="!commitValid || submiting">创建文件</el-button>
-      <el-button @click="cancel">取消</el-button>
+      <el-button type="primary" @click="createFile" :disabled="!commitValid || submiting">{{ $t('all.createFile')}}</el-button>
+      <el-button @click="cancel">{{ $t('all.cancel')}}</el-button>
     </div>
   </div>
 </template>

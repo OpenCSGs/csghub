@@ -6,7 +6,7 @@
             :class="activeNavItem === 'Task' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
-        任务
+        {{ $t('all.tasks') }}
       </span>
       <span v-show="type === 'model'"
             class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
@@ -14,7 +14,7 @@
             :class="activeNavItem === 'Framework' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
-        框架
+      {{ $t('all.framework') }}
       </span>
       <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="License"
@@ -31,7 +31,7 @@
           v-model="taskTagFilterInput"
           class="!w-[80%] mt-[28px]"
           size="large"
-          placeholder="筛选标签"
+          :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterTaskTags"
         />
@@ -45,7 +45,7 @@
                     :style="setTagColor(tag.name, tagField.color)"
                     @click="setActiveTaskTag"
               >
-                {{ tag.zh_name }}
+                {{ cookies.get('locale') === 'en' ? tag.name.replace(/-/g, ' ') : tag.zh_name }}
               </span>
             </div>
           </div>
@@ -57,7 +57,7 @@
           v-model="frameworkTagFilterInput"
           class="!w-[80%] mt-[28px] mb-[16px]"
           size="large"
-          placeholder="筛选标签"
+          :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterFrameworkTags"
         />
@@ -94,7 +94,7 @@
           v-model="licenseTagFilterInput"
           class="!w-[80%] mt-[28px] mb-[16px]"
           size="large"
-          placeholder="筛选标签"
+          :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterLicenseTags"
         />
@@ -124,6 +124,7 @@
   import PaddlePaddle from './frameworks/PaddlePaddle.vue'
   import Joblib from './frameworks/Joblib.vue'
   import GGUF from './frameworks/GGUF.vue'
+  import { useCookies } from "vue3-cookies"
 
   const props = defineProps({
     taskTags: String,
@@ -133,6 +134,8 @@
     selectedTag: String,
     selectedTagType: String
   })
+
+  const { cookies } = useCookies()
 
   const emit = defineEmits(['resetTags'])
 
@@ -248,7 +251,7 @@
   const removeNotMatchedTags = (json, regex) => {
     const newJson = {}
     for (const [field, { color, zh_name, tags }] of Object.entries(json)) {
-      const matchedTags = tags.filter((tag) => regex.test(tag.zh_name))
+      const matchedTags = tags.filter((tag) => regex.test(tag.zh_name) || regex.test(tag.name.replace(/-/g, ' ')))
       newJson[field] = { color, zh_name, tags: matchedTags }
     }
     return newJson

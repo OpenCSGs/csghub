@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center flex-wrap gap-4 md:px-5 md:mb-[30px] md:flex-col md:items-start">
-    <div v-if="taskTags.length" class="text-sm text-[#909399]">任务:</div>
+    <div v-if="taskTags.length" class="text-sm text-[#909399]">{{ $t('all.tasks') }}:</div>
     <a v-for="tag in taskTags"
        :href="`/${prefix}?tag=${tag.name}&tag_type=Task`"
        :style="`color: ${tag.color}`"
@@ -8,7 +8,7 @@
     >
       {{ tag.zh_name || tag.name }}
     </a>
-    <div v-if="frameworkTags.length"  class="text-sm text-[#909399]">框架:</div>
+    <div v-if="frameworkTags.length"  class="text-sm text-[#909399]">{{ $t('all.framework') }}:</div>
     <a
       v-for="tag in frameworkTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
@@ -22,7 +22,7 @@
       <GGUF v-if="tag.name.toLowerCase() === 'gguf'" />
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
-    <div v-if="otherTags.length" class="text-sm text-[#909399]">其他:</div>
+    <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
     <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center border gap-1">
       {{ tag.name }}
     </div>
