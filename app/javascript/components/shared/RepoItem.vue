@@ -2,7 +2,7 @@
   <a :href="detailLink"
      :class="`${repoType}-card hover:active-${repoType}-card p-4 sm:w-full border border-gray-200 rounded-xl`">
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
-      <div :class="`${repoType}-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap`">{{ repo.path }}</div>
+      <div :class="`${repoType}-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap`">{{ getComputed.path }}</div>
     </div>
     <p class="h-[35px] w-[390px] overflow-hidden sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
       {{ repo.description }}
@@ -14,8 +14,8 @@
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
       </span>
-      <span class="flex flex-wrap">{{$t('all.lastTime')}}：<span>{{ repo.updated_at.substring(0, 10) }}</span></span>
-      <span>
+      <span class="flex flex-wrap sm:hidden">{{$t('all.lastTime')}}：<span>{{ repo.updated_at.substring(0, 10) }}</span></span>
+      <span class="sm:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
         </svg>
@@ -61,6 +61,8 @@
 
     let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
     taskTag = taskTag? taskTag["show_name"] : null
+
+
     return { path: path, visibility: visibility, taskTag: taskTag }
   })
 </script>
