@@ -74,6 +74,8 @@ const downloadModalKey = computed(() => {
       return 'datasets.downloadDataset'
     case 'model':
       return 'models.downloadModel'
+    case 'code':
+      return 'codes.downloadCode'
     default:
       return ''
   }
