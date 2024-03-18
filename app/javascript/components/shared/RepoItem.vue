@@ -61,8 +61,6 @@
 
     let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
     taskTag = taskTag? taskTag["show_name"] : null
-
-
     return { path: path, visibility: visibility, taskTag: taskTag }
   })
 </script>
