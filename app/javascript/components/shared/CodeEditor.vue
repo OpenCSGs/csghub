@@ -6,12 +6,12 @@
       @tab-change="changeTab"
       class="rounded"
     >
-      <el-tab-pane label="编辑" name="edit">
+      <el-tab-pane :label="$t('shared.edit')" name="edit">
         <Codemirror
           v-model="codeContent"
         />
       </el-tab-pane>
-      <el-tab-pane label="预览" class="p-4" name="preview">
+      <el-tab-pane :label="$t('shared.preview')" class="p-4" name="preview">
         <div v-html="previewDiff"></div>
       </el-tab-pane>
     </el-tabs>
