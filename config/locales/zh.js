@@ -303,7 +303,7 @@ export default {
     "community": "社区",
     "campaign": "社区活动",
     "campaignText": "汇聚行业和领域内顶尖会议及线下活动",
-    "dailyPaper": "社区文章",
+    "dailyPaper": "论文中心",
     "dailyPaperText": "精选来自 arxiv 最新新闻、技术和资源",
     "profile": "个人信息",
     "setting": "账号设置",
@@ -321,11 +321,11 @@ export default {
     "source": "我的资源",
   },
   "dailyPaper": {
-    "article": "社区文章",
-    "eachArticle": "每期精选文章",
+    "article": "论文中心",
+    "eachArticle": "每期精选论文",
     "arxiv": "来自 arxiv 最新的新闻、技术和资源",
-    "newArticle": "发布新的社区文章",
-    "placeholder": "搜索文章标题",
+    "newArticle": "发布新的社区论文",
+    "placeholder": "按 arxiv id 或标题搜索",
 
 
     "goodArticle": "贡献优质社区文章",
@@ -362,10 +362,9 @@ export default {
     "createFail": "创建失败",
 
 
-    "back": "返回文章列表",
-    "desc1": "原文发布于",
-    "desc2": "刊登于《社区文章》",
+    "back": "返回论文列表",
     "recommendation": "推荐语",
+    "recommendationer": "推荐者",
     "remark": "摘要",
     "arXiv": "查看 arXiv 页面",
     "pdf": "查看 PDF",

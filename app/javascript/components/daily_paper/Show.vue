@@ -9,12 +9,16 @@
         <div class="text-[48px] font-[500] leading-[60px] mt-[16px] text-[#101828]">
           {{ data.title }}
         </div>
-        <div class="mt-[24px] text-[#475467] text-[20px] font-[300] leading-[30px] pb-[30px]">
-          {{ $t('dailyPaper.desc1') }} {{ dayjs(data.published_at).format("MM-DD") }} - {{ dayjs(data.created_at).format("MM-DD") }} {{ $t('dailyPaper.desc2') }}
-        </div>
         <div class="mt-[24px] text-[30px] font-[500] leading-[38px] text-[#101828]">{{ $t('dailyPaper.recommendation') }}</div>
         <div class="mt-[20px] text-[#475467] text-[18px] font-[300] leading-[28px]">
           {{ data.recommendation }}
+        </div>
+        <div class="flex justify-items items-center mt-[20px] text-[#475467] text-[18px] font-[300] leading-[28px]">
+          <div class="w-[24px] h-[24px] mr-[4px]">
+            <img class="w-[24px] h-[24px] rounded-xl" :src="data.recommender_avatar_url " alt="as">
+          </div>
+          <p class="mr-[12px] font-normal text-[14]">{{ $t('dailyPaper.recommendationer') }}</p>
+          {{ dayjs(data.published_at).format("YYYY.M.D HH:mm") }}
         </div>
         <div class="mt-[48px] text-[30px] font-[500] leading-[38px] text-[#101828]">
           {{ $t('dailyPaper.remark') }}
@@ -189,6 +193,8 @@
     },
     mounted() {
       this.getComment(this.dailyPaper.id)
+
+      console.log(this.dailyPaper);
     },
     methods: {
       handleInputChange(value) {
