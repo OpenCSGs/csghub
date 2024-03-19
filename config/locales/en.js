@@ -13,6 +13,11 @@ export default {
     stoppedDesc: "This Space has been paused by its owner.",
     sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",
     restart: "Restart this Space",
+    errorPage: {
+      log: 'Logs',
+      build: 'Build',
+      container: 'Container'
+    },
     new: {
       createSuccess: "Application Space created successfully",
     },

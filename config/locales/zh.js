@@ -11,6 +11,11 @@ export default {
     stoppedDesc: "此空间已被其所有者暂停。",
     sleepingDesc: "由于长时间未操作，该空间已进入休眠状态。",
     restart: "重启 Space",
+    errorPage: {
+      log: '日志',
+      build: '构建',
+      container: '控制台'
+    },
     new: {
       createSuccess: "应用空间创建成功",
     },
