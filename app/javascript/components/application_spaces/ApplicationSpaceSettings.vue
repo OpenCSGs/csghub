@@ -253,8 +253,8 @@ export default {
       ]
     };
   },
-  mounted() {
-  },
+  emits: ['showSpaceLogs'],
+  mounted() {},
   methods: {
     clickDelete() {
       if (this.delDesc === this.applicationSpacePath) {
