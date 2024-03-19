@@ -14,7 +14,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
   def readme
     readme = Starhub.api.get_application_space_file_content(params[:namespace], params[:application_space_name], 'README.md')
     readme_content = JSON.parse(readme)['data']
-    readme_content = relative_path_to_resolve_path 'model', readme_content
+    readme_content = relative_path_to_resolve_path 'application_space', readme_content
     render json: { readme: readme_content }
   rescue StarhubError
     render json: { readme: '' }
