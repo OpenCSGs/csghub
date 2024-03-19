@@ -1,5 +1,5 @@
 class InternalApi::OrganizationsController < InternalApi::ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: [:models, :datasets]
 
   def create
     new_org = Organization.new organization_params
