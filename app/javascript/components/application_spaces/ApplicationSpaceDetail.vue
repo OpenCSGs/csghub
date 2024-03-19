@@ -138,64 +138,78 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import RepoHeader from '../shared/RepoHeader.vue';
-import RepoTabs from '../shared/RepoTabs.vue'
+  import { ref, onMounted } from 'vue'
+  import RepoHeader from '../shared/RepoHeader.vue'
+  import RepoTabs from '../shared/RepoTabs.vue'
+  import { useCookies } from "vue3-cookies";
 
-const props = defineProps({
-  applicationSpace: Object,
-  files: Object,
-  lastCommit: Object,
-  branches: Object,
-  localRepoId: String,
-  currentBranch: String,
-  currentPath: String,
-  defaultTab: String,
-  blob: Object,
-  actionName: String,
-  avatar: String,
-  settingsVisibility: Boolean,
-  tags: Object,
-  ownerUrl: String,
-  canWrite: Boolean
-})
+  const props = defineProps({
+    applicationSpace: Object,
+    files: Object,
+    lastCommit: Object,
+    branches: Object,
+    localRepoId: String,
+    currentBranch: String,
+    currentPath: String,
+    defaultTab: String,
+    blob: Object,
+    actionName: String,
+    avatar: String,
+    settingsVisibility: Boolean,
+    tags: Object,
+    ownerUrl: String,
+    canWrite: Boolean
+  })
 
-const appStatus = ref(props.applicationSpace.data.status)
-const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
+  const { cookies } = useCookies();
+  const appStatus = ref(props.applicationSpace.data.status)
+  const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
 
-const spaceLogsDrawer = ref(inProgressStatus.includes(props.applicationSpace.data.status))
-const buildLogDiv = ref()
-const containerLogDiv = ref()
+  const spaceLogsDrawer = ref(inProgressStatus.includes(props.applicationSpace.data.status))
+  const buildLogDiv = ref()
+  const containerLogDiv = ref()
 
-const isBuildLogTab = ref(true)
-const buildLogTab = ref()
-const containerLogTab = ref()
-const drawerSize = ref("70%")
+  const isBuildLogTab = ref(true)
+  const buildLogTab = ref()
+  const containerLogTab = ref()
+  const drawerSize = ref("70%")
 
-const toggleActiveTab = (event) => {
-  const currentTarget = event.target
-  if (currentTarget.dataset.value === 'build') {
-    isBuildLogTab.value = true
-  } else {
-    isBuildLogTab.value = false
+  const toggleActiveTab = (event) => {
+    const currentTarget = event.target
+    if (currentTarget.dataset.value === 'build') {
+      isBuildLogTab.value = true
+    } else {
+      isBuildLogTab.value = false
+    }
   }
-}
 
-const toggleDrawerSize = () => {
-  if (drawerSize.value === '70%') {
-    drawerSize.value = '100%'
-  } else {
-    drawerSize.value = '70%'
+  const toggleDrawerSize = () => {
+    if (drawerSize.value === '70%') {
+      drawerSize.value = '100%'
+    } else {
+      drawerSize.value = '70%'
+    }
   }
-}
 
-const toggleSpaceLogsDrawer = () => {
-  if (spaceLogsDrawer.value) {
-    spaceLogsDrawer.value = false
-  } else {
-    spaceLogsDrawer.value = true
+  const toggleSpaceLogsDrawer = () => {
+    if (spaceLogsDrawer.value) {
+      spaceLogsDrawer.value = false
+    } else {
+      spaceLogsDrawer.value = true
+    }
   }
-}
+
+  const evtSource = new EventSource(`${csghubServer}/spaces/OpenCSG/my_space10/status?test=true`, {
+    headers: {
+      Authorization: `Bearer ${cookies.get('user_token')}`,
+    },
+  });
+
+  onMounted(() => {
+    evtSource.onmessage = (event) => {
+      console.log("Received message:", event.data);
+    };
+  })
 </script>
 
 <style scoped>
