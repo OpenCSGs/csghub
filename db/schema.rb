@@ -52,20 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_024510) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "codes", force: :cascade do |t|
-    t.string "owner_type", null: false
-    t.bigint "owner_id", null: false
-    t.string "name"
-    t.string "license"
-    t.string "visibility"
-    t.bigint "creator_id"
-    t.string "nickname"
-    t.text "desc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_type", "owner_id"], name: "index_codes_on_owner"
-  end
-
   create_table "application_spaces", force: :cascade do |t|
     t.string "name"
     t.string "license"
@@ -82,6 +68,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_024510) do
     t.text "desc"
     t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
+  end
+
+  create_table "codes", force: :cascade do |t|
+    t.string "owner_type", null: false
+    t.bigint "owner_id", null: false
+    t.string "name"
+    t.string "license"
+    t.string "visibility"
+    t.bigint "creator_id"
+    t.string "nickname"
+    t.text "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_codes_on_owner"
   end
 
   create_table "comments", force: :cascade do |t|
