@@ -98,6 +98,8 @@ module Api::RepoValidation
       @dataset = owner && owner.datasets.find_by(name: params[:dataset_name])
     when 'codes'
       @code = owner && owner.codes.find_by(name: params[:code_name])
+    when 'application_spaces'
+      @application_space = owner && owner.application_spaces.find_by(name: params[:application_space_name])
     end
   end
 end

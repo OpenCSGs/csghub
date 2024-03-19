@@ -87,6 +87,9 @@
             <a href="/codes/new">
               <el-dropdown-item> + {{ $t('navbar.newCode') }} </el-dropdown-item>
             </a>
+            <a href="/application_spaces/new">
+              <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
+            </a>
             <a href="/organizations/new">
               <el-dropdown-item divided> {{ $t('navbar.newOrganization') }} </el-dropdown-item>
             </a>
@@ -106,15 +109,14 @@
         </a>
       </button>
     </div>
-
   </div>
-  <ContactUs ref='child' />
 </template>
 
 <script>
 import Model from "./model.vue";
 import Dataset from "./dataset.vue";
 import CodeNav from "./CodeNav.vue";
+
 export default {
   props: {
     logo: String,

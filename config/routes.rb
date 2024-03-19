@@ -66,6 +66,15 @@ Rails.application.routes.draw do
     delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}
 
+    resources :application_spaces, only: [:index, :create]
+    get '/application_spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme'
+    get '/application_spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files'
+    post '/application_spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#create_file'
+    post '/application_spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file'
+    put '/application_spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#update_file'
+    delete '/application_spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}
+    put '/application_spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -93,6 +102,7 @@ Rails.application.routes.draw do
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
     resources :codes, only: [:index, :new]
+    resources :application_spaces, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
 
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
@@ -118,6 +128,14 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/files/:branch(/*path)', to: 'codes#files', defaults: { path: nil }
     get '/codes/:namespace/(*code_name)/resolve/:branch/(*path)', to: 'codes#resolve', defaults: {format: 'txt'}
     get '/codes/:namespace/(*code_name)', to: 'codes#show', format: false, defaults: {format: 'html'}
+
+    get '/application_spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file'
+    get '/application_spaces/:namespace/(*application_space_name)/edit/:branch/(*path)', to: 'application_spaces#edit_file', format: false, defaults: {format: 'html'}
+    get '/application_spaces/:namespace/(*application_space_name)/:branch/upload', to: 'application_spaces#upload_file'
+    get '/application_spaces/:namespace/(*application_space_name)/blob/:branch/(*path)', to: 'application_spaces#blob', format: false, defaults: {format: 'html'}
+    get '/application_spaces/:namespace/(*application_space_name)/files/:branch(/*path)', to: 'application_spaces#files', defaults: { path: nil }
+    get '/application_spaces/:namespace/(*application_space_name)/resolve/:branch/(*path)', to: 'application_spaces#resolve', defaults: {format: 'txt'}
+    get '/application_spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
     get    '/signup', to: 'sessions#signup'
