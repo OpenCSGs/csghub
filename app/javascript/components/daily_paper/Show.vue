@@ -17,7 +17,7 @@
           <div class="w-[24px] h-[24px] mr-[4px]">
             <img class="w-[24px] h-[24px] rounded-xl" :src="data.recommender_avatar_url " alt="as">
           </div>
-          <p class="mr-[12px] font-normal text-[14]">{{ $t('dailyPaper.recommendationer') }}</p>
+          <p class="mr-[12px] font-normal text-[14]">{{ $t('dailyPaper.recommender') }}</p>
           {{ dayjs(data.published_at).format("YYYY.M.D HH:mm") }}
         </div>
         <div class="mt-[48px] text-[30px] font-[500] leading-[38px] text-[#101828]">

@@ -363,7 +363,7 @@ export default {
 
     "back": "Return to the list of papers",
     "recommendation": "Recommendation",
-    "recommendationer": "Recommendationer",
+    "recommender": "Recommender",
     "remark": "Summary",
     "arXiv": "View arXiv page",
     "pdf": "View PDF",

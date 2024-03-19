@@ -364,7 +364,7 @@ export default {
 
     "back": "返回论文列表",
     "recommendation": "推荐语",
-    "recommendationer": "推荐者",
+    "recommender": "推荐者",
     "remark": "摘要",
     "arXiv": "查看 arXiv 页面",
     "pdf": "查看 PDF",
