@@ -50,7 +50,7 @@
             </el-upload>
           </el-form-item>
           <el-form-item :label="$t('dailyPaper.link')" prop="article_link">
-            <el-input v-model="dataForm.paper_link" :placeholder="$t('dailyPaper.paperLink')"></el-input>
+            <el-input v-model="dataForm.article_link" :placeholder="$t('dailyPaper.paperLink')"></el-input>
           </el-form-item>
           <el-form-item :label="$t('dailyPaper.publishTime')" prop="published_at">
             <el-date-picker
@@ -102,7 +102,7 @@
         rules: {
           title: [{ required: true, message: this.$t('dailyPaper.errorTitle'), trigger: 'blur' }],
           cover_image: [{ required: true, message: this.$t('dailyPaper.errorImg'), trigger: 'blur' }],
-          paper_link: [
+          article_link: [
             { required: true, message: this.$t('dailyPaper.errorpaperLink'), trigger: 'blur' },
             { type: 'url', message: this.$t('dailyPaper.errorpaperLink-'), trigger: 'blur'}
           ],

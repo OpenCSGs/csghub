@@ -193,8 +193,6 @@
     },
     mounted() {
       this.getComment(this.dailyPaper.id)
-
-      console.log(this.dailyPaper);
     },
     methods: {
       handleInputChange(value) {

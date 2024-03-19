@@ -16,9 +16,7 @@
             {{ $t('dailyPaper.newpaper') }}
           </a>
         </div>
-
         <div class="mt-[64px] gap-[64px] flex-col md:px-[16px]">
-
           <div class="flex justify-center mb-[64px]">
             <div class="w-[280px] md:w-full">
               <el-input
@@ -37,33 +35,34 @@
             </div>
           </div>
           <div class="flex flex-col">
-
             <div class="flex gap-x-[32px] gap-y-[48px] flex-wrap justify-between border-b border-[#EAECF0] pb-[64px]">
-              <div class="w-[405px] md:w-full" :key="item.uuid" v-for="item in JSON.parse(dailyPapers)">
-                <div class="flex w-full flex-col cursor-pointer" @click="visitDetail(item.uuid)">
-                  <img :src="item.cover_url" alt="" class="h-[240px] object-contain">
+              <div class="w-[405px] md:w-full" :key="item.daily_paper.uuid" v-for="item in JSON.parse(dailyPapers)">
+                <div class="flex w-full flex-col cursor-pointer" @click="visitDetail(item.daily_paper.uuid)">
+                  <img :src="item.daily_paper.cover_url" alt="" class="h-[240px] object-contain">
                   <div class="flex justify-between gap-[16px] mt-[20px] items-start">
                     <div class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828]">
-                      {{ item.title }}
+                      {{ item.daily_paper.title }}
                     </div>
                     <div class="w-[24px]">
                       <el-icon :size="24"><TopRight /></el-icon>
                     </div>
                   </div>
                   <div class="mt-[8px] text-[16px] font-[300] leading-[24px] text-left line-clamp line-clamp-2 md:line-clamp-3 text-[#475467]">
-                    {{ item.recommendation }}
+                    {{ item.daily_paper.recommendation }}
                   </div>
-                  <div class="flex mt-[24px] gap-[12px] items-center">
-                    <img :src="item.recommender_avatar_url" alt="" class="h-[40px] w-[40px] rounded-full">
-                    <div class="flex flex-col justify-between items-start">
-                      <div class="text-[14px] font-[500] leading-[20px] text-[#101828]">
-                        {{ item.recommender_name }}
-                      </div>
-                      <div class="text-[14px] font-[300] leading-[24px] text-[#475467]">
-                        {{ dayjs(item.published_at).format("YYYY-MM-DD") }}
+                  <a :href="item.recommender_url">
+                    <div class="flex mt-[24px] gap-[12px] items-center">
+                      <img :src="item.daily_paper.recommender_avatar_url" alt="" class="h-[40px] w-[40px] rounded-full">
+                      <div class="flex flex-col justify-between items-start">
+                        <div class="text-[14px] font-[500] leading-[20px] text-[#101828]">
+                          {{ item.daily_paper.recommender_name }}
+                        </div>
+                        <div class="text-[14px] font-[300] leading-[24px] text-[#475467]">
+                          {{ dayjs(item.daily_paper.published_at).format("YYYY-MM-DD") }}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                </a>
                 </div>
               </div>
             </div>
