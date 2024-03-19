@@ -8,7 +8,7 @@
         :nickname="applicationSpace.data.nickname"
         :desc="applicationSpace.data.description"
         :path="applicationSpace.data.path"
-        :appStatus="applicationSpace.data.status"
+        :appStatus="appStatus"
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
@@ -24,7 +24,7 @@
       :repo-detail="applicationSpace.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
-      :appStatus="applicationSpace.data.status"
+      :appStatus="appStatus"
       :sdk="applicationSpace.data.sdk"
       :appEndpoint="applicationSpace.data.endpoint"
       :current-branch="currentBranch"
@@ -137,7 +137,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import RepoHeader from '../shared/RepoHeader.vue';
 import RepoTabs from '../shared/RepoTabs.vue'
 
@@ -159,7 +159,10 @@ const props = defineProps({
   canWrite: Boolean
 })
 
-const spaceLogsDrawer = ref(true)
+const appStatus = ref(props.applicationSpace.data.status)
+const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
+
+const spaceLogsDrawer = ref(inProgressStatus.includes(props.applicationSpace.data.status))
 const buildLogDiv = ref()
 const containerLogDiv = ref()
 
