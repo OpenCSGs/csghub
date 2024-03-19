@@ -15,7 +15,7 @@
     <div>
       <h3 class="text-[#475467] text-[14px] font-[500]">应用空间发布失败</h3>
       <p class="text-[#475467] text-[14px]">代码运行失败，查看日志</p>
-      <p class="text-[#223B99] font-[400] text-[12px] mt-[12px] cursor-pointer">查看日志</p>
+      <p class="text-[#223B99] font-[400] text-[12px] mt-[12px] cursor-pointer" @click="showErrorLogs">查看日志</p>
     </div>
   </div>
 
@@ -357,6 +357,9 @@ export default {
     },
     handleMouseLeave() {
       document.getElementById('confirmDelete').classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
+    },
+    showErrorLogs() {
+      this.$emit("showSpaceLogs");
     }
   }
 }

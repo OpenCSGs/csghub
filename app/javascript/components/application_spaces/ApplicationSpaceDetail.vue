@@ -13,6 +13,7 @@
         :tags="tags"
         :owner-url="ownerUrl"
         repo-type="application_space"
+        @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
     </div>
   </div>
@@ -33,6 +34,7 @@
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
       repo-type="application_space"
+      @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>
   <div>
@@ -180,6 +182,14 @@ const toggleDrawerSize = () => {
     drawerSize.value = '100%'
   } else {
     drawerSize.value = '70%'
+  }
+}
+
+const toggleSpaceLogsDrawer = () => {
+  if (spaceLogsDrawer.value) {
+    spaceLogsDrawer.value = false
+  } else {
+    spaceLogsDrawer.value = true
   }
 }
 </script>

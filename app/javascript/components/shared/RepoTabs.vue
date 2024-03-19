@@ -95,7 +95,8 @@
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
           :cloudResource="repoDetail.hardware"
-          :private="repoDetail.private" />
+          :private="repoDetail.private"
+          @showSpaceLogs="showSpaceLogs" />
       </template>
     </tab-container>
   </div>
@@ -143,6 +144,8 @@ const props = defineProps({
   sdk: String
 })
 
+const emit = defineEmits(['toggleSpaceLogsDrawer']);
+
 onMounted(() => {
 })
 
@@ -151,4 +154,8 @@ const repoTypeClass = computed(() => {
 })
 
 const decodedContent = props.blob?.content || ''
+
+const showSpaceLogs = () => {
+  emit('toggleSpaceLogsDrawer')
+}
 </script>
