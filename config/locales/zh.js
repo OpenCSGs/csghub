@@ -211,11 +211,8 @@ export default {
     editProfile: "账号设置",
     newModel: "新建模型",
     newDataset: "新建数据集",
-<<<<<<< HEAD
     newCode: "新建代码仓库",
-=======
     newApplicationSpace: "新建应用空间",
->>>>>>> csghub__space-codes-release
     newOrganization: "新建组织",
     logout: "退出登录",
     loginRegister: "登录/注册",

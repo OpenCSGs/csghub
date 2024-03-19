@@ -205,11 +205,8 @@ export default {
     editProfile: "Account Settings",
     newModel: "New Model",
     newDataset: "New Dataset",
-<<<<<<< HEAD
     newCode: "New Code",
-=======
     newApplicationSpace: "New Application Space",
->>>>>>> csghub__space-codes-release
     newOrganization: "New Organization",
     logout: "Logout",
     loginRegister: "Login/Registe",
