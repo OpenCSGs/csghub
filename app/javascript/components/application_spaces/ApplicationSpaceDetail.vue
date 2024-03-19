@@ -35,9 +35,21 @@
       repo-type="application_space"
     />
   </div>
+  <div>
+    <el-drawer
+      v-model="spaceLogsDrawer"
+      title="I am the title"
+      direction="btt"
+      size="70%"
+      :before-close="handleClose"
+    >
+      <span>Hi, there!</span>
+    </el-drawer>
+  </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import RepoHeader from '../shared/RepoHeader.vue';
 import RepoTabs from '../shared/RepoTabs.vue'
 
@@ -58,6 +70,8 @@ const props = defineProps({
   ownerUrl: String,
   canWrite: Boolean
 })
+
+const spaceLogsDrawer = ref(true)
 </script>
 
 <style scoped>
