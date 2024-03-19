@@ -82,6 +82,9 @@
             <a href="/datasets/new">
               <el-dropdown-item> + {{ $t('navbar.newDataset') }} </el-dropdown-item>
             </a>
+            <a href="/application_spaces/new">
+              <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
+            </a>
             <a href="/organizations/new">
               <el-dropdown-item divided> {{ $t('navbar.newOrganization') }} </el-dropdown-item>
             </a>
@@ -101,14 +104,13 @@
         </a>
       </button>
     </div>
-
   </div>
-  <ContactUs ref='child' />
 </template>
 
 <script>
 import Model from "./model.vue";
 import Dataset from "./dataset.vue";
+
 export default {
   props: {
     logo: String,
