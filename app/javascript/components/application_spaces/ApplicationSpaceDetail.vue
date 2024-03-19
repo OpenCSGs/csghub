@@ -12,6 +12,7 @@
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
+        :canWrite="canWrite"
         repo-type="application_space"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
@@ -37,7 +38,7 @@
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>
-  <div>
+  <div v-if="canWrite">
     <el-drawer
       v-model="spaceLogsDrawer"
       direction="btt"
