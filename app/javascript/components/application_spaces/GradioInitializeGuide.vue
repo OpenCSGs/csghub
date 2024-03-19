@@ -12,11 +12,11 @@
         </defs>
       </svg>
       <div>
-        <h3 class="text-[#475467] text-[14px] font-[500]">开始使用您的 gradio 应用空间！</h3>
-        <p class="text-[#475467] text-[14px]">应用空间创建成功，请按照以下步骤开始使用（或阅读我们的完整文档）</p>
+        <h3 class="text-[#475467] text-[14px] font-[500]">{{ $t('application_spaces.gradioGuide.notice') }}</h3>
+        <p class="text-[#475467] text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
       </div>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">1. 克隆应用空间</h3>
+    <h3 class="my-[24px] text-[#475467] font-[500]">1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}</h3>
     <div>
       <p class="">
         <span class="px-[12px] py-[8px] cursor-pointer"
@@ -52,26 +52,26 @@
         <pre class="overflow-scroll"><code v-html="highlightedSshCloneCode"></code></pre>
       </div>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">2. 创建 Gradio app.py 文件：</h3>
+    <h3 class="my-[24px] text-[#475467] font-[500]">2. {{ $t('application_spaces.gradioGuide.createTitle') }}</h3>
     <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
       <pre class="overflow-scroll"><code v-html="highlightedAppPyCode"></code></pre>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">3. 提交并推送</h3>
+    <h3 class="my-[24px] text-[#475467] font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
     <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
       <pre class="overflow-scroll"><code v-html="highlightedPushCode"></code></pre>
     </div>
-    <p class="text-[#667085] text-[16px] font-[400] my-[24px]">提交成功后，应用会部署运行在当前页面。</p>
+    <p class="text-[#667085] text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
     <div class="text-[16px] text-[#667085] border border-[#D0D5DD] rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
-        <h3 class="text-[#101828]"> 关于依赖： </h3>
-        <p>您可以在版本库根目录下添加 requirements.txt 文件，以指定 Python 依赖项。</p>
-        <p>如果需要，也可以在版本库根目录下添加 packages.txt 文件，指定 Debian 依赖项。</p>
-        <p>Gradio 软件包已预装，其版本在 README.md 文件的 sdk_version 字段中设置。</p>
+        <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
+        <p>{{ $t('application_spaces.gradioGuide.dependencyNotes1') }}</p>
+        <p>{{ $t('application_spaces.gradioGuide.dependencyNotes2') }}</p>
+        <p>{{ $t('application_spaces.gradioGuide.dependencyNotes3') }}</p>
       </div>
       <br />
       <div>
-        <h3 class="text-[#101828]"> 关于文档： </h3>
-        <p>点击此处查看 gradio Spaces 的完整文档</p>
+        <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.docNotesTitle') }} </h3>
+        <p>{{ $t('application_spaces.gradioGuide.docNotes1') }}</p>
       </div>
     </div>
   </div>

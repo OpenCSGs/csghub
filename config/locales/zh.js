@@ -11,6 +11,20 @@ export default {
     stoppedDesc: "此空间已被其所有者暂停。",
     sleepingDesc: "由于长时间未操作，该空间已进入休眠状态。",
     restart: "重启 Space",
+    gradioGuide: {
+      notice: '开始使用您的 gradio 应用空间！',
+      noticeDesc: '应用空间创建成功，请按照以下步骤开始使用（或阅读我们的完整文档）',
+      cloneTitle: '克隆应用空间',
+      createTitle: '创建 Gradio app.py 文件',
+      submitTitle: '提交并推送',
+      successNotes: '提交成功后，应用会部署运行在当前页面。',
+      dependencyNotesTitle: '关于依赖：',
+      dependencyNotes1: '您可以在版本库根目录下添加 requirements.txt 文件，以指定 Python 依赖项。',
+      dependencyNotes2: '如果需要，也可以在版本库根目录下添加 packages.txt 文件，指定 Debian 依赖项。',
+      dependencyNotes3: 'Gradio 软件包已预装，其版本在 README.md 文件的 sdk_version 字段中设置。',
+      docNotesTitle: '关于文档：',
+      docNotes1: '点击此处查看 gradio Spaces 的完整文档'
+    },
     errorPage: {
       log: '日志',
       build: '构建',

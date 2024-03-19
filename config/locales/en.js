@@ -13,6 +13,20 @@ export default {
     stoppedDesc: "This Space has been paused by its owner.",
     sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",
     restart: "Restart this Space",
+    gradioGuide: {
+      notice: 'Get started with your grario app space!',
+      noticeDesc: 'The app space was created successfully, please follow the steps below to get started (or read our full documentation)',
+      cloneTitle: 'Clone Application Space',
+      createTitle: 'Create Gradio app.py file',
+      submitTitle: 'Submit and Push',
+      successNotes: 'After successful submission, the application will be deployed and run on the current page.',
+      dependencyNotesTitle: 'About Dependencies',
+      dependencyNotes1: 'You can specify Python dependencies by adding a requirements.txt file at the repository root.',
+      dependencyNotes2: 'If necessary, you can also add a packages.txt file in the root directory of the repository to specify Debian dependencies.',
+      dependencyNotes3: 'The Gradio package is preinstalled and its version is set in the sdk_version field of the README.md file.',
+      docNotesTitle: 'About Docs',
+      docNotes1: 'Click here to view the full documentation for gradio Spaces'
+    },
     errorPage: {
       log: 'Logs',
       build: 'Build',
