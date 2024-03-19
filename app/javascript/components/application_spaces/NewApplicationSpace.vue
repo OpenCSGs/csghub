@@ -27,13 +27,13 @@
             stroke="#7B58CF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">新建应用空间</h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">应用空间是托管机器学习演示应用代码的 Git 仓库</p>
-    <p class="text-[#606266] text-base font-medium md:text-center">你可以使用不同的 SDK 构建应用空间</p>
+    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('application_spaces.new.title') }}</h3>
+    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('application_spaces.new.subTitle1') }}</p>
+    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('application_spaces.new.subTitle2') }}</p>
     <div class="mt-9">
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
-          <p class="text-[#303133] text-sm mb-2">所有者</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.owner') }}</p>
           <el-select v-model="owner" placeholder="选择" size="large">
             <el-option
                 v-for="item in namespaces"
@@ -47,15 +47,15 @@
           <p class="text-[#909399] text-xl font-light">/</p>
         </div>
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">空间英文名称</p>
-          <el-input v-model="spaceName" placeholder="2-70个字母数字_.-的字符串，_.-不能并列出现" input-style="width: 100%"/>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.name') }}</p>
+          <el-input v-model="spaceName" :placeholder="$t('application_spaces.new.namePlaceholder')" input-style="width: 100%"/>
         </div>
       </div>
 
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">中文名称</p>
-          <el-input v-model="spaceNickName" placeholder="请输入别名"/>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.nickname') }}</p>
+          <el-input v-model="spaceNickName" :placeholder="$t('application_spaces.new.nicknamePlaceholder')"/>
         </div>
         <div>
           <p class="text-[#303133] text-sm mb-2">License</p>
@@ -71,14 +71,14 @@
 
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">应用空间介绍</p>
-          <el-input v-model="spaceDesc" :rows="6" type="textarea" placeholder="请输入简介"/>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.description') }}</p>
+          <el-input v-model="spaceDesc" :rows="6" type="textarea" :placeholder="$t('application_spaces.new.descriptionPlaceholder')"/>
         </div>
       </div>
 
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">封面图片</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.coverImage') }}</p>
           <el-upload
             :class="`${!imageUploaded ? 'h-auto' : 'hide'}`"
             :limit="1"
@@ -101,8 +101,8 @@
                 </svg>
               </el-icon>
               <div class="el-upload__text">
-                <div><em>点击上传</em>，或将文件拖到此处</div>
-                <div class="font-light text-[12px]">支持 PNG, JPG 格式，高宽比5:2</div>
+                <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
+                <div class="font-light text-[12px]">{{ $t('application_spaces.new.coverImageDesc2') }}</div>
               </div>
             </div>
           </el-upload>
@@ -112,8 +112,8 @@
       <hr class="mb-9"/>
 
       <div class="mb-9 text-sm w-full">
-        <p class="mb-2 text-[#303133] font-medium">选择应用空间SDK</p>
-        <p class="text-[#475467] mt-2 font-light">你可以Gradio作为你的空间。后续将开放 Streamlit、 Static、 Docker 等来托管应用。</p>
+        <p class="mb-2 text-[#303133] font-medium">{{ $t('application_spaces.new.sdk') }}</p>
+        <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.sdkDesc') }}</p>
         <div class="flex gap-[24px] mt-9 sm:flex-col">
           <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] p-[36px] cursor-pointer"
                :class="SDK === 'gradio' ? 'border-[#3250BD] text-[#344054]' : 'text-[#D0D5DD]'">
@@ -177,7 +177,7 @@
       </div>
 
       <div class="mb-9 text-sm w-full">
-        <p class="mb-2 text-[#303133]">空间云资源</p>
+        <p class="mb-2 text-[#303133]">{{ $t('application_spaces.new.cloudResource') }}</p>
         <el-select v-model="spaceResource" placeholder="选择" size="large" style="width: 100%;">
           <el-option
               v-for="item in spaceResources"
@@ -186,8 +186,8 @@
               :value="item.value"
               :disabled="disabledOptions.includes(item.value)"/>
         </el-select>
-        <p class="text-[#475467] mt-2 font-light">您可以随时在空间设置中切换到不同的空间云资源。</p>
-        <p class="text-[#475467] font-light">切换到付费资源后，将根据使用时长向您收取费用。</p>
+        <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.cloudResourceDesc1') }}</p>
+        <p class="text-[#475467] font-light">{{ $t('application_spaces.new.cloudResourceDesc2') }}</p>
       </div>
 
       <hr class="mb-9"/>
@@ -195,25 +195,25 @@
       <div class="mb-9">
         <el-radio-group v-model="visibility" class="!block">
           <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
-            公开
-            <p class="whitespace-normal text-[#475467] font-light">任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。</p>
+            {{ $t('application_spaces.new.public') }}
+            <p class="whitespace-normal text-[#475467] font-light">{{ $t('application_spaces.new.publicDesc') }}</p>
           </el-radio>
           <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
-            私有
-            <p class="whitespace-normal text-[#475467] font-light">只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。</p>
+            {{ $t('application_spaces.new.private') }}
+            <p class="whitespace-normal text-[#475467] font-light">{{ $t('application_spaces.new.privateDesc') }}</p>
           </el-radio>
         </el-radio-group>
       </div>
       <hr class="mb-9"/>
       <p class="mb-9 rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
-        创建应用空间后，你可以使用网页或 Git 上传你的文件。
+        {{ $t('application_spaces.new.notes') }}
       </p>
       <div class="flex justify-end">
         <button
             class="bg-[#3250BD] w-[118px] ml-[10px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
             @click="createApplicationSpace"
             :disabled="!canCreateApplicationSpace">
-          创建应用空间
+          {{ $t('application_spaces.new.create') }}
         </button>
       </div>
     </div>
