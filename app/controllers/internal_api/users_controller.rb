@@ -1,5 +1,5 @@
 class InternalApi::UsersController < InternalApi::ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: [:models, :datasets]
 
   def index
     users = User.where("name ~* ?", params[:name])
