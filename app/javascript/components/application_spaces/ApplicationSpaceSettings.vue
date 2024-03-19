@@ -1,5 +1,5 @@
 <template>
-  <div v-if="true || ['Deploy Failed', 'Building Failed', 'Runtime Error'].includes(appStatus)"
+  <div v-if="deployFailed""
         class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -250,7 +250,8 @@ export default {
         "NVIDIA T4 · 4 vCPU · 15 GB",
         "NVIDIA A10G · 4 vCPU · 15 GB",
         "NVIDIA A10G · 12 vCPU · 46 GB"
-      ]
+      ],
+      deployFailed: ['Building Failed', 'Deploy Failed', 'Runtime Error'].includes(this.appStatus)
     };
   },
   emits: ['showSpaceLogs'],
