@@ -5,6 +5,7 @@ class DailyPapersController < ApplicationController
                               .page(params[:page]).per(9)
     @keywords = params[:keywords]
     @page = params[:page]
+    merge_recommender_url
   end
 
   def new
@@ -23,6 +24,17 @@ class DailyPapersController < ApplicationController
     if @daily_paper.dataset_links.present?
       dataset_list_result = Starhub.api.datasets_by_paths @daily_paper.dataset_links
       @dataset_data = JSON.parse(dataset_list_result)['data']
+    end
+  end
+
+  private
+
+  def merge_recommender_url 
+    @daily_papers = @daily_papers.map do |daily_paper|
+      {
+        daily_paper: daily_paper,
+        recommender_url: '/profile/' + daily_paper.recommender.login_identity
+      }
     end
   end
 end

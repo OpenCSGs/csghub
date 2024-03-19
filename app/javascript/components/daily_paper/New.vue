@@ -3,10 +3,10 @@
     <div class="m-auto w-[480px] md:w-full md:px-[20px]">
       <div class="py-[96px] text-center">
         <div class="text-[#223B99] text-[16px] font-[500] leading-[24px]">
-          {{ $t('dailyPaper.article') }}
+          {{ $t('dailyPaper.paper') }}
         </div>
         <div class="mt-[12px] text-[48px] font-[500] leading-[60px] tracking-[-0.96px]">
-          {{ $t('dailyPaper.goodArticle') }}
+          {{ $t('dailyPaper.goodpaper') }}
         </div>
         <div class="mt-[24px] text-[20px] font-[300] leading-[30px]">
           {{ $t('dailyPaper.recommendUser') }}
@@ -18,7 +18,7 @@
           label-position="top"
           class="mt-[48px] text-left">
           <el-form-item :label="$t('dailyPaper.title')" prop="title">
-            <el-input v-model="dataForm.title" :placeholder="$t('dailyPaper.articleTitle')"></el-input>
+            <el-input v-model="dataForm.title" :placeholder="$t('dailyPaper.paperTitle')"></el-input>
           </el-form-item>
           <el-form-item :label="$t('dailyPaper.img')" prop="cover_image">
             <el-upload
@@ -50,7 +50,7 @@
             </el-upload>
           </el-form-item>
           <el-form-item :label="$t('dailyPaper.link')" prop="article_link">
-            <el-input v-model="dataForm.article_link" :placeholder="$t('dailyPaper.articleLink')"></el-input>
+            <el-input v-model="dataForm.article_link" :placeholder="$t('dailyPaper.paperLink')"></el-input>
           </el-form-item>
           <el-form-item :label="$t('dailyPaper.publishTime')" prop="published_at">
             <el-date-picker
@@ -67,17 +67,17 @@
             <el-input :rows="5" type="textarea" v-model="dataForm.recommendation"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('dailyPaper.articleRemark')" prop="description">
+          <el-form-item :label="$t('dailyPaper.paperRemark')" prop="description">
             <el-input :rows="5" type="textarea" v-model="dataForm.description"></el-input>
           </el-form-item>
 
           <el-form-item :label="$t('dailyPaper.videoLin')" prop="video_link">
             <el-input v-model="dataForm.video_link"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('dailyPaper.articleModel')" prop="model_links">
+          <el-form-item :label="$t('dailyPaper.paperModel')" prop="model_links">
             <el-input :rows="5" type="textarea" v-model="dataForm.model_links" :placeholder="$t('dailyPaper.linkDesc')"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('dailyPaper.articleDataset')" prop="dataset_links">
+          <el-form-item :label="$t('dailyPaper.paperDataset')" prop="dataset_links">
             <el-input :rows="5" type="textarea" v-model="dataForm.dataset_links" :placeholder="$t('dailyPaper.linkDesc')"></el-input>
           </el-form-item>
           <el-form-item>
@@ -103,8 +103,8 @@
           title: [{ required: true, message: this.$t('dailyPaper.errorTitle'), trigger: 'blur' }],
           cover_image: [{ required: true, message: this.$t('dailyPaper.errorImg'), trigger: 'blur' }],
           article_link: [
-            { required: true, message: this.$t('dailyPaper.errorArticleLink'), trigger: 'blur' },
-            { type: 'url', message: this.$t('dailyPaper.errorArticleLink-'), trigger: 'blur'}
+            { required: true, message: this.$t('dailyPaper.errorpaperLink'), trigger: 'blur' },
+            { type: 'url', message: this.$t('dailyPaper.errorpaperLink-'), trigger: 'blur'}
           ],
           published_at: [{ required: true, message: this.$t('dailyPaper.errorPublish'), trigger: 'blur' }],
           pdf_link: [
