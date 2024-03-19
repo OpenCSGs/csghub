@@ -22,6 +22,7 @@
       })();
 
       const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+      const csghubServer = '<%= ENV.fetch('CSGHUB_SERVER', '') %>'
     </script>
     <link rel="preload" href="https://gradio.s3-us-west-2.amazonaws.com/assets/index-c2ca781c.css" as="style" />
   </head>

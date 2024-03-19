@@ -28,6 +28,7 @@ By default, it renders:
   <%= csp_meta_tag if defined?(csp_meta_tag) %>
   <script>
     const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+    const csghubServer = '<%= ENV.fetch('CSGHUB_SERVER', '') %>'
   </script>
 </head>
 <body>

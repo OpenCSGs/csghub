@@ -59,7 +59,8 @@ const app = createApp({
     RepoCards
   },
   provide:{
-    defaultTags: DefaultTags
+    defaultTags: DefaultTags,
+    csghubServer: csghubServer
   }
 }).use(ElementPlus, {
   locale: zhCn,
