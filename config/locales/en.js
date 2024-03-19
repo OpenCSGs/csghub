@@ -16,7 +16,10 @@ export default {
     errorPage: {
       log: 'Logs',
       build: 'Build',
-      container: 'Container'
+      container: 'Container',
+      errorAlert: 'Application Space deploy failed',
+      errorAlertDesc: 'The code failed to run, check the log',
+      showErrorLogs: 'Check error logs'
     },
     new: {
       createSuccess: "Application Space created successfully",

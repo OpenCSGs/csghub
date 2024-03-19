@@ -13,9 +13,9 @@
       </defs>
     </svg>
     <div>
-      <h3 class="text-[#475467] text-[14px] font-[500]">应用空间发布失败</h3>
-      <p class="text-[#475467] text-[14px]">代码运行失败，查看日志</p>
-      <p class="text-[#223B99] font-[400] text-[12px] mt-[12px] cursor-pointer" @click="showErrorLogs">查看日志</p>
+      <h3 class="text-[#475467] text-[14px] font-[500]">{{ $t('application_spaces.errorPage.errorAlert') }}</h3>
+      <p class="text-[#475467] text-[14px]">{{ $t('application_spaces.errorPage.errorAlertDesc') }}</p>
+      <p class="text-[#223B99] font-[400] text-[12px] mt-[12px] cursor-pointer" @click="showErrorLogs">{{ $t('application_spaces.errorPage.showErrorLogs') }}</p>
     </div>
   </div>
 

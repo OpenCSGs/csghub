@@ -14,7 +14,10 @@ export default {
     errorPage: {
       log: '日志',
       build: '构建',
-      container: '控制台'
+      container: '控制台',
+      errorAlert: '应用空间发布失败',
+      errorAlertDesc: '代码运行失败，查看日志',
+      showErrorLogs: '查看日志'
     },
     new: {
       createSuccess: "应用空间创建成功",
