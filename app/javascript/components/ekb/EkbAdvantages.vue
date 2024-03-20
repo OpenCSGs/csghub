@@ -25,7 +25,7 @@
               <img :src="item.icon" />
             </div>
             <div class="text-[#101828] text-[20px] leading-[30px]">
-              {{ item.title }}111
+              {{ item.title }}
             </div>
             <div class="text-[#101828] text-[16px] leading-[24px] font-light">
               {{ item.desc }}
