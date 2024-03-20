@@ -152,7 +152,7 @@
   }
 
   const syncSpaceLogs = () => {
-    fetchEventSource(`${csghubServer}spaces/OpenCSG/my_space10/logs?test=true`, {
+    fetchEventSource(`${csghubServer}spaces/${props.applicationSpace.data.path}/logs?test=true`, {
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
@@ -196,7 +196,7 @@
   }
 
   const syncSpaceStatus = () => {
-    fetchEventSource(`${csghubServer}spaces/OpenCSG/my_space10/status?test=true`, {
+    fetchEventSource(`${csghubServer}spaces/${props.applicationSpace.data.path}/status?test=true`, {
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
@@ -223,7 +223,13 @@
         }
       },
       onmessage(ev) {
-        appStatus.value = ev.data
+        if (appStatus.value !== ev.data) {
+          if (ev.data === 'Building') {
+            buildLogDiv.value.innerHTML = ''
+            containerLogDiv.value.innerHTML = ''
+          }
+          appStatus.value = ev.data
+        }
       },
       onerror(err) {
         console.log('Status Server Error:')
