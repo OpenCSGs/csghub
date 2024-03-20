@@ -132,7 +132,7 @@ export default {
     "starCloud": {
       "product1": "Product #1",
       "headline": "OpenCSG StarCloud",
-      "desc": "One stop large-scale model development and service operation platform, including computing resource scheduling and algorithm training inference services",
+      "desc": "StarCloud is a deep learning-based one-stop platform for Large Language Models development and service, offering complete dataset management, model training, evaluation, and inference services, as well as convenient publishing methods, a stable operating environment, and enterprise-level service security, with the goal of supporting generative AI applications in various industries and assisting customers in building high-precision and high-performance Large Language models.",
       "demoVideo": "Demonstration video",
       "demo": "Demo Experience",
       "remarks": "Please {contact} to get trial access as registration is not yet available.",
@@ -148,7 +148,7 @@ export default {
     "starShip": {
       "product2": "Product #2",
       "headline": "OpenCSG StarShip",
-      "desc": "Provide a complete model/data management and application building platform for the large model application development team",
+      "desc": "StarShip is committed to providing a complete model/data management and application building platform for large model application development teams, utilizing large model technology to create a new experience in software engineering 2.0.",
       "demo": "Product demonstration"
     },
   },
@@ -160,7 +160,7 @@ export default {
     "knowledge": {
       "solution1": "Solution #1",
       "headline": "OpenCSG EKB AI Intelligent Enterprise Knowledge Base",
-      "desc": "Base for Enterprise Knowledge Lifecycle Management in the Era of Big Models",
+      "desc": "EKB AI structures documents and transforms them into digital assets, achieving digital storage and management of information, and solidifying the foundation for digital transformation of enterprise assets.",
       "demoVideo": "Product demonstration",
       "demo": "Get Started",
       "remarks": "Please {contact} to get trial access as registration is not yet available.",
@@ -168,7 +168,7 @@ export default {
     "starAIO": {
       "solution2": "Solution #2",
       "headline": "OpenCSG StarAIO",
-      "desc": "A software and hardware integrated solution that integrates selected open-source large models",
+      "desc": "Excellent open source tools and platforms are available for developers to help enterprises customize private Large Language Models.",
       "part1": "Continuously iterative, change-at-will base LLMs",
       "part1-": "LLMs can be continuously updated and upgraded to adapt to different scenarios and business needs.",
       "part2": "Easy to use LLM application development with an open source framework",
@@ -191,7 +191,7 @@ export default {
     "AIImg": {
       "solution3": "Solution #3",
       "headline": "OpenCSG Imagen AI Intelligent Image Assistant",
-      "desc": "Provide creators with better tools to achieve exponential amplification of creativity and productivity",
+      "desc": "OpenCSG Imagen AI Image Assistant is a visual toolset based on the Stable Diffusion 2.1 open source model, dedicated to augmenting human intelligence, aiming to provide creators with better tools and amplify creativity and productivity. OpenCSG Imagen AI Image Assistant adapts to professional design workflows, providing a wide range of features.",
       "part1": "Text-to-image plotting mode",
       "part1-": "No specialized drawing skills are required, and users can generate high-quality drawings in seconds with a simple description.",
       "part2": "Image-to-image plotting mode",
@@ -208,7 +208,7 @@ export default {
     "programming": {
       "solution4": "Solution #4",
       "headline": "OpenCSG StarCode AI Intelligent Programming Assistant",
-      "desc": "Innovative features based on big model technology to help developers improve work efficiency",
+      "desc": "StarCode AI is a versatile intelligent programming assistant that helps developers improve their work efficiency through innovative features based on large model technology. It integrates the advantages of other auxiliary programming assistants and provides developers with more powerful features.",
       "part1": "Automatic code generation and completion",
       "part1-": "Supports automatic code generation based on natural language annotations, as well as generating subsequent code based on existing code, making the coding process faster and more accurate. OpenCSG StarCode AI further provides completion functionality for the current line or generating subsequent lines of code, helping developers easily complete programming tasks.",
       "part2": "Automatically generate unit tests",
