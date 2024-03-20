@@ -305,7 +305,7 @@ export default {
     "campaign": "社区活动",
     "campaignText": "汇聚行业和领域内顶尖会议及线下活动",
     "dailyPaper": "论文中心",
-    "dailyPaperText": "精选来自 arxiv 最新新闻、技术和资源",
+    "dailyPaperText": "汇聚最新的研究成果，分享前沿的学术论文",
     "profile": "个人信息",
     "setting": "账号设置",
     editProfile: "账号设置",
