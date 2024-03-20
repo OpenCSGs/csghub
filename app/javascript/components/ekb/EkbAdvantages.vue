@@ -31,7 +31,7 @@
               {{ this.$i18n.locale === "zh" ? item.desc : item.desc_en }}
             </div>
           </div>
-          <div class="text-[#223B99] text-[16px] leading-[24px] cursor-pointer">{{ $t('solution.knowledge.demo')}}</div>
+          <div @click="goEKB()" class="text-[#223B99] text-[16px] leading-[24px] cursor-pointer">{{ $t('solution.knowledge.demo')}}</div>
         </div>
       </div>
     </div>
@@ -88,5 +88,10 @@ export default {
   components: {},
 
   mounted() {},
+  methods: {
+    goEKB(){
+      window.open('https://ekb.opencsg.com/', '_blank'); 
+    }
+  },
 };
 </script>

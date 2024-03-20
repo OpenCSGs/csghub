@@ -29,7 +29,7 @@
         </el-sub-menu>
         <el-sub-menu index="2" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.solution') }}</template>
-          <el-menu-item @click="handleNavigation('/solution','KnowledgeBase')" index="KnowledgeBase">
+          <el-menu-item @click="routerLink('/ekb')" index="KnowledgeBase">
             <EKB />
           </el-menu-item>
           <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">

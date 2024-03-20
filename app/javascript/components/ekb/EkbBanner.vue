@@ -16,7 +16,7 @@
       >
         {{ $t("ekb.tips") }}
       </div>
-      <div
+      <div @click="goEKB()"
         class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
       >
         {{ $t("solution.knowledge.demo") }}
@@ -45,6 +45,12 @@ export default {
 
   components: {},
 
-  mounted() {},
+  mounted() {
+  },
+  methods: {
+    goEKB(){
+      window.open('https://ekb.opencsg.com/', '_blank'); 
+    }
+  },
 };
 </script>
