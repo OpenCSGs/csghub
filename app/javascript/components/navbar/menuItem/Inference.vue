@@ -19,7 +19,7 @@
       <div
         class="text-[14px] text-[#475467] font-light leading-[20px] md:hidden"
       >
-        {{ $t('navbar.llm_inference_open') }}
+        {{ $t('navbar.llm_inference_open_text') }}
       </div>
     </div>
   </div>
