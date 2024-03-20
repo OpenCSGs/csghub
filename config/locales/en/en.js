@@ -55,8 +55,8 @@ export default {
     },
   },
   comment: {
-    sureDel: "Confirm to delete this comment?",
-    createComment: "Add a comment",
+    sureDel: "Confirm to delete this comment.js?",
+    createComment: "Add a comment.js",
   },
   datasets: {
     title: "Datasets",
@@ -231,14 +231,14 @@ export default {
       cancel: "Cancel",
       updateSuccess: "Title update successfully!",
       warn: "Content cannot be empty",
-      addSuccess: "Add comment successfully",
+      addSuccess: "Add comment.js successfully",
     },
     MD: {
       edit: "Edit",
       preview: "Preview",
       desc: "Upload pictures, audio, video, or by dragging and dropping ",
       click: "Click here to upload",
-      default: "Leave a comment",
+      default: "Leave a comment.js",
     },
     newDiscussion: {
       new: "New topic",
