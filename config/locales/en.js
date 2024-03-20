@@ -5,6 +5,11 @@ export default {
     nameSpaceRule:
       "String of 2-20 charaters, numbers and _",
   },
+  user_sessions: {
+    expiredTitle: 'Sign Status Invalid',
+    expiredDesc: 'Login has expired. Click "Sign Back In" to log in again',
+    reLogin: 'Sign Back In'
+  },
   application_spaces: {
     name: "ApplicationSpace Name",
     nickname: "ApplicationSpace Nickname",

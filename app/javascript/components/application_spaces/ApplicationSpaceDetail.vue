@@ -94,6 +94,7 @@
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
   import { fetchEventSource } from '@microsoft/fetch-event-source';
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     applicationSpace: Object,
@@ -113,6 +114,7 @@
     canWrite: Boolean
   })
 
+  const { t } = useI18n();
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
   const appEndpoint = ref(props.applicationSpace.data.endpoint)
@@ -161,9 +163,9 @@
           console.log('SSE logs server connected')
           return;
         } else if (response.status === 401) {
-          ElMessageBox.alert('登录已过期，点击确认重新登录', '登录失效提醒', {
+          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
             'show-close': false,
-            confirmButtonText: '重新登录',
+            confirmButtonText: t('user_sessions.reLogin'),
             callback: () => {
               window.location.href = "/logout"
             },
@@ -206,9 +208,9 @@
           return;
         }
         else if (response.status === 401) {
-          ElMessageBox.alert('登录已过期，点击确认重新登录', '登录失效提醒', {
+          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
             'show-close': false,
-            confirmButtonText: '重新登录',
+            confirmButtonText: t('user_sessions.reLogin'),
             callback: () => {
               window.location.href = "/logout"
             },

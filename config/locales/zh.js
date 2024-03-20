@@ -3,6 +3,11 @@ export default {
     nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
     nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
   },
+  user_sessions: {
+    expiredTitle: '登录状态失效',
+    expiredDesc: '登录已失效，请点击重新登录',
+    reLogin: '重新登录'
+  },
   application_spaces: {
     name: "应用空间名称",
     nickname: "应用空间别名",
