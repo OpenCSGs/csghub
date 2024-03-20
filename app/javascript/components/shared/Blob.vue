@@ -14,7 +14,7 @@
             {{ currentBranch }}
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}</el-dropdown-item>
+                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="changeBranch(branch.name)">{{ branch.name }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -47,18 +47,8 @@
           </svg>
           history: 4 commits
         </a>
-<!--        <el-dropdown split-button>-->
-<!--            + 添加文件-->
-<!--            <template #dropdown>-->
-<!--              <el-dropdown-menu>-->
-<!--                <el-dropdown-item>创建新文件</el-dropdown-item>-->
-<!--                <el-dropdown-item>上传文件</el-dropdown-item>-->
-<!--              </el-dropdown-menu>-->
-<!--            </template>-->
-<!--          </el-dropdown>-->
       </div>
     </div>
-
     <div class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
       <div class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
@@ -84,16 +74,15 @@
         </el-popover>
       </div>
     </div>
-
-    <div class="border border-t-0 border-[#DCDFE6] rounded-b">
+    <div v-if="!lfs" class="border border-t-0 border-[#DCDFE6] rounded-b">
       <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-between border-b border-[#DCDFE6]">
         <div class="flex items-center gap-4">
-          <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">预览</div>
+          <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">{{ $t('shared.preview') }}</div>
           <div v-if="canWrite" class="flex items-center gap-1">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10 10.5H2M8 2C7.875 2.875 8.625 3.625 9.5 3.5M3.5 8L3.57005 7.71979C3.73008 7.07967 3.8101 6.7596 3.93877 6.4612C4.05301 6.19627 4.19557 5.94448 4.36397 5.71022C4.55366 5.44635 4.78694 5.21307 5.25351 4.74651L8.25006 1.74999C8.66428 1.33578 9.33585 1.33579 9.75005 1.75001V1.75001C10.1642 2.16422 10.1642 2.83577 9.75003 3.24997L6.75349 6.24651C6.28693 6.71307 6.05364 6.94636 5.78978 7.13604C5.55553 7.30443 5.30374 7.44699 5.03881 7.56123C4.74041 7.6899 4.42035 7.76991 3.78023 7.92994L3.5 8Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <a :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`">编辑</a>
+            <a :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`">{{ $t('shared.edit') }}</a>
           </div>
         </div>
         <div>{{ formatBytes(size) }}</div>
@@ -101,6 +90,43 @@
       <div class="p-4">
         <MarkdownViewer v-if="['jpg', 'png', 'jpeg', 'gif', 'svg', 'md'].includes(fileType)" :content="content" />
         <CodeViewer v-else :extension="fileType" :content="content" />
+      </div>
+    </div>
+    <div v-else class="border border-t-0 border-[#DCDFE6] rounded-b">
+      <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-end border-b border-[#DCDFE6]">
+        <div>{{ formatBytes(size) }}</div>
+      </div>
+      <div class="flex items-center justify-center px-4 py-10 border-b border-[#DCDFE6] font-medium text-[#667085] text-[14px] whitespace-pre-wrap">
+        <p>{{ $t('shared.lfs1') }} <a :href="version" target="_blank" class="underline">{{ $t('shared.lfs2') }}</a>{{ $t('shared.lfs3') }}
+          <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${currentPath}?download=true&lfs=${lfs}&lfs_path=${lfsRelativePath}`"
+             download class="underline">{{ $t('shared.lfs4') }}
+          </a> {{ $t('shared.lfs5') }}
+        </p>
+      </div>
+      <div class="p-4 flex flex-col gap-[4px] text-sm font-medium">
+        <p class="mb-[4px]">{{ $t('shared.lfs6') }}</p>
+        <div class="flex">
+          <p class="">SHA256:&nbsp;</p>
+          <p class="text-[12px] font-light">{{ sha }}</p>
+        </div>
+        <div class="flex">
+          <p class="">{{ $t('shared.lfs7') }}:&nbsp;</p>
+          <p class="text-[12px] font-light">{{ formatBytes(lfsPointerSize) }}</p>
+        </div>
+        <div class="flex">
+          <p>{{ $t('shared.lfs8') }}:&nbsp;</p>
+          <p class="text-[12px] font-light">{{ formatBytes(size) }}</p>
+        </div>
+        <div class="flex items-center mt-[4px] mr-[4px]">
+          <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+            <path d="M25.7 9.3l-7-7A.908.908 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.908.908 0 0 0-.3-.7zM18 4.4l5.6 5.6H18zM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6z" fill="currentColor"></path>
+          </svg>
+          <a :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${path}`" target="_blank" class="underline text-[12px]">{{ $t('shared.lfs9') }}</a>
+        </div>
+        <div class="flex items-center mt-[4px] text-[#667085] text-[12px] font-light">
+          <p>{{ $t('shared.lfs10') }}</p>
+          <a :href="version" target="_blank" class="underline">{{ $t('shared.lfs11') }}</a>.
+        </div>
       </div>
     </div>
   </div>
@@ -112,6 +138,7 @@
   import MarkdownViewer from './viewers/MarkdownViewer.vue';
   import TextViewer from './viewers/TextViewer.vue';
   import CodeViewer from './viewers/CodeViewer.vue';
+  import {ElMessage} from "element-plus";
 
   const props = defineProps({
     content: String,
@@ -120,12 +147,18 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
-    size: String,
-    canWrite: Boolean
+    size: Number,
+    canWrite: Boolean,
+    path: String,
+    lfs: Boolean,
+    lfsPointerSize: Number,
+    lfsRelativePath: String
   })
 
   const breadcrumb = ref([])
   const fileType = ref('')
+  const version = ref('')
+  const sha = ref('')
 
   const prefixPath = document.location.pathname.split('/')[1]
 
@@ -149,8 +182,24 @@
     fileType.value = extension
   }
 
+  const lfsContentRegex = () => {
+    if (props.lfs) {
+      const versionRegex = /version\s+(\S+)/;
+      const oidRegex = /sha256:(\S+)/;
+      version.value = props.content.match(versionRegex)[1];
+      sha.value = props.content.match(oidRegex)[1];
+    }
+  }
+
+  const changeBranch = (branch) => {
+    if (branch !== props.currentBranch) {
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${branch}`
+    }
+  }
+
   updateBreadcrumb()
   detectFileType()
+  lfsContentRegex()
 
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
 

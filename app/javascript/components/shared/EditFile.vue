@@ -7,7 +7,7 @@
                 :maxLength="200"
                 show-word-limit
                 clearable
-                placeholder="文件名"
+                :placeholder="$t('repo.edit.fileName')"
                 @input="handleFileNameChange"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
@@ -17,10 +17,10 @@
       :originalCodeContent="originalCodeContent"
     />
     <el-radio-group v-model="new_branch" class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0">
-      <el-radio label="main" size="large">直接提交到 main 分支</el-radio>
+      <el-radio label="main" size="large">{{ $t('repo.edit.main') }}</el-radio>
     </el-radio-group>
     <div>
-      <div class="mb-2 text-sm">提交更新</div>
+      <div class="mb-2 text-sm">{{ $t('repo.edit.submit') }}</div>
       <el-input v-model="commitTitle"
                 :maxLength="200"
                 show-word-limit
@@ -28,10 +28,10 @@
                 :placeholder="commitTitlePlaceholder"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
-    <CommunityMDTextarea desc="" placeholder="提供更多描述" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" :placeholder="$t('repo.edit.desc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="updateFile" :disabled="!commitValid || submiting">更新文件</el-button>
-      <el-button @click="cancel">取消</el-button>
+      <el-button type="primary" @click="updateFile" :disabled="!commitValid || submiting">{{ $t('repo.edit.update') }}</el-button>
+      <el-button @click="cancel">{{ $t('repo.edit.cancel') }}</el-button>
     </div>
   </div>
 </template>
