@@ -1,6 +1,6 @@
 <template>
   <div class="w-full bg-white md:px-[20px]">
-    <div class="max-w-[1280px] m-auto py-[96px] flex gap-[90px] justify-center items-center xl:flex-col">
+    <div class="max-w-[1280px] m-auto py-[96px] flex gap-[90px] px-[20px] justify-center items-center mlg:flex-col">
       <div>
         <div class="mb-[19px] text-[48px] font-semibold leading-[60px]">{{ $t("ekb.askTitle") }}，<span class=" bg-clip-text text-transparent bg-gradient-to-r from-[#B73FA9] to-[#A45FE6]">{{ $t("ekb.askTitle2") }}</span></div>
         <div class="mb-[27px] text-[#606266] text-[20px] leading-[30px]">{{ $t("ekb.askDesc") }}</div>
@@ -29,17 +29,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {},
-
-  data() {
-    return {};
-  },
-
-  components: {},
-
-  mounted() {},
-};
-</script>

@@ -14,20 +14,11 @@ import EkbMore from "./EkbMore.vue";
 import EkbAdvantages from "./EkbAdvantages.vue";
 
 export default {
-  props: {},
-
-  data() {
-    return {};
-  },
-
   components: {
     EkbBanner,
     EkbAsk,
     EkbMore,
     EkbAdvantages
-  },
-
-  mounted() {},
-  methods: {},
+  }
 };
 </script>
