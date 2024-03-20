@@ -1,6 +1,6 @@
 <template>
-  <div v-if="deployFailed""
-        class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs"
+  <div v-if="deployFailed"
+       class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
       <g clip-path="url(#clip0_8886_11536)">
@@ -61,8 +61,9 @@
       </div>
       <div class="flex flex-col gap-[6px]">
         <el-switch
-          v-model="isSpaceStopped"
+          v-model="isSpaceRunning"
           size="large"
+          :before-change="toggleSpaceStatus"
           :active-text="$t('application_spaces.status.running')"
           :inactive-text="$t('application_spaces.status.stopped')"
         />
@@ -216,6 +217,7 @@
 import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import { useCookies } from "vue3-cookies"
 
 export default {
   props: {
@@ -227,7 +229,9 @@ export default {
     cloudResource: String,
     private: Boolean
   },
+
   components: {},
+
   data() {
     return {
       visibility: this.private ? 'Private' : 'Public',
@@ -237,7 +241,7 @@ export default {
       theApplicationSpaceDesc: this.applicationSpaceDesc || "",
       applicationSpacePath: this.path,
       theCurrentCloudResource: this.cloudResource,
-      isSpaceStopped: this.appStatus === 'Stopped' ? true : false,
+      isSpaceRunning: this.appStatus === 'Stopped' ? false : true,
       options: [{value: 'Private', label: this.$t('all.private')},
                 {value: 'Public', label:  this.$t('all.public')}],
       spaceResources:[
@@ -251,11 +255,15 @@ export default {
         "NVIDIA A10G · 4 vCPU · 15 GB",
         "NVIDIA A10G · 12 vCPU · 46 GB"
       ],
-      deployFailed: ['Building Failed', 'Deploy Failed', 'Runtime Error'].includes(this.appStatus)
+      deployFailed: ['Building Failed', 'Deploy Failed', 'Runtime Error'].includes(this.appStatus),
+      cookies: useCookies().cookies
     };
   },
+
   emits: ['showSpaceLogs'],
+
   mounted() {},
+
   methods: {
     clickDelete() {
       if (this.delDesc === this.applicationSpacePath) {
@@ -265,6 +273,33 @@ export default {
             type: "warning",
           })
         })
+      }
+    },
+
+    async toggleSpaceStatus() {
+      let toggleUrl = ''
+      if (this.appStatus === 'Stopped') {
+        toggleUrl = `${csghubServer}spaces/${this.path}/run`
+      } else {
+        toggleUrl = `${csghubServer}spaces/${this.path}/stop`
+      }
+      const response = await fetch(toggleUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.cookies.get('user_token')}`,
+        }
+      })
+
+      if (response.ok) {
+        ElMessage({message: "更新成功", type: "success"})
+        return true
+      } else {
+        response.json().then(data => {
+          ElMessage({
+            message: data.msg,
+            type: 'warning'
+          });
+        });
       }
     },
 
@@ -356,9 +391,11 @@ export default {
         document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
       }
     },
+
     handleMouseLeave() {
       document.getElementById('confirmDelete').classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
     },
+
     showErrorLogs() {
       this.$emit("showSpaceLogs");
     }
