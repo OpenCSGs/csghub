@@ -27,7 +27,7 @@
       :branches="branches.data"
       :appStatus="appStatus"
       :sdk="applicationSpace.data.sdk"
-      :appEndpoint="applicationSpace.data.endpoint"
+      :appEndpoint="appEndpoint"
       :current-branch="currentBranch"
       :current-path="currentPath"
       :default-tab="defaultTab"
@@ -139,9 +139,11 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { ElMessageBox } from 'element-plus'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
+  import { fetchEventSource } from '@microsoft/fetch-event-source';
 
   const props = defineProps({
     applicationSpace: Object,
@@ -163,9 +165,10 @@
 
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
+  const appEndpoint = ref(props.applicationSpace.data.endpoint)
   const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
 
-  const spaceLogsDrawer = ref(inProgressStatus.includes(props.applicationSpace.data.status))
+  const spaceLogsDrawer = ref(inProgressStatus.includes(appStatus))
   const buildLogDiv = ref()
   const containerLogDiv = ref()
 
@@ -199,16 +202,45 @@
     }
   }
 
-  const evtSource = new EventSource(`${csghubServer}/spaces/OpenCSG/my_space10/status?test=true`, {
-    headers: {
-      Authorization: `Bearer ${cookies.get('user_token')}`,
-    },
-  });
+  const syncSpaceStatus = () => {
+    fetchEventSource(`${csghubServer}spaces/OpenCSG/my_space10/status?test=true`, {
+      headers: {
+        Authorization: `Bearer ${cookies.get('user_token')}`,
+      },
+      async onopen(response) {
+        if (response.ok) {
+          console.log('SSE server connected')
+          return;
+        }
+        else if (response.status === 401) {
+          ElMessageBox.alert('登录已过期，点击确认重新登录', '登录失效提醒', {
+            'show-close': false,
+            confirmButtonText: '重新登录',
+            callback: () => {
+              window.location.href = "/logout"
+            },
+          })
+        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+          console.log('Connection Error')
+          console.log(response.status)
+          console.log(response.body)
+        } else {
+          console.log('Unknow Error')
+          console.log(response.body)
+        }
+      },
+      onmessage(ev) {
+        appStatus.value = ev.data
+      },
+      onerror(err) {
+        console.log('Error:')
+        console.log(err)
+      }
+    })
+  }
 
   onMounted(() => {
-    evtSource.onmessage = (event) => {
-      console.log("Received message:", event.data);
-    };
+    syncSpaceStatus()
   })
 </script>
 
