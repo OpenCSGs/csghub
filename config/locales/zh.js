@@ -280,7 +280,7 @@ export default {
     "EKBText": "大模型时代企业知识全生命周期管理基座",
     "starAIO": "StarAIO 大模型一体机",
     "starAIOText": "集成精选开源大模型的软硬一体化解决方案",
-    "imagen": "Imagen AI 智能图像助手",
+    "imagen": "StarImagen  AI 智能图像助手",
     "imagenText": "为创作者提供更好用的工具，实现创意和生产力的指数级放大",
     "starCode": "StarCode AI 智能编程助手",
     "starCodeText": "基于大模型技术的创新功能，帮助开发者提高工作效率",

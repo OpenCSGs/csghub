@@ -271,7 +271,7 @@ export default {
     "EKBText": "Base for Enterprise Knowledge Lifecycle Management in the Era of Big Models",
     "starAIO": "StarAIO LLM All-in-One",
     "starAIOText": "A software and hardware integrated solution that integrates selected open-source large models",
-    "imagen": "Imagen AI Intelligent Image Assistant",
+    "imagen": "StarImagen AI Intelligent Image Assistant",
     "imagenText": "Provide creators with better tools to achieve exponential amplification of creativity and productivity",
     "starCode": "StarCode AI Intelligent Programming Assistant",
     "starCodeText": "Innovative features based on big model technology to help developers improve work efficiency",
