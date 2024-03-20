@@ -187,6 +187,7 @@ export default {
     orgHomepage: "组织主页",
     model: "模型",
     dataset: "数据集",
+    code: "代码仓库",
     invite: {
       title: "邀请",
       inviteNew: "邀请新成员",

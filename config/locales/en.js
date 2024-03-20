@@ -144,12 +144,12 @@ export default {
     title: "Codes",
     placeholder: "Codes name",
     downloadCode: "Download Code",
-    datasetName: "Code Name",
-    datasetNameTips:
+    codeName: "Code Name",
+    codeNameTips:
       "Applied to the code path, cannot be changed after creation",
-    namespaceDatasetName: "Namespace/Code Name",
-    datasetNickName: "Code Nickname",
-    datasetDesc: "Code Description",
+    namespaceCodeName: "Namespace/Code Name",
+    codeNickName: "Code Nickname",
+    codeDesc: "Code Description",
     newCode: {
       title: "Create New Code Repository",
       titleDesc:
@@ -181,6 +181,7 @@ export default {
     orgTeam: "Team Members",
     model: "Model",
     dataset: "Dataset",
+    code: "Code",
     invite: {
       title: "Invite",
       inviteNew: "Invite New Member",

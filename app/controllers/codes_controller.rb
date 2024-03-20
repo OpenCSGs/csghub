@@ -91,7 +91,7 @@ class CodesController < ApplicationController
 
     if action_name == 'blob' || action_name == 'edit_file'
       @code, @last_commit, @branches, @blob = Starhub.api.get_code_detail_blob_data_in_parallel(params[:namespace], params[:code_name], files_options)
-      update_blob_content
+      update_blob_content('code')
     else
       @code, @branches = Starhub.api.get_code_detail_data_in_parallel(params[:namespace], params[:code_name], files_options)
     end
