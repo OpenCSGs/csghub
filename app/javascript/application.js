@@ -10,8 +10,8 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 import { useCookies } from "vue3-cookies"
 import { createI18n } from 'vue-i18n'
-import en from '../../config/locales/en.js'
-import zh from '../../config/locales/zh.js'
+import en from '../../config/locales/en/en.js'
+import zh from '../../config/locales/zh/zh.js'
 
 
 import Navbar from "./components/navbar/TheNavbar.vue"
