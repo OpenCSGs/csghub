@@ -16,11 +16,11 @@
       >
         {{ $t("ekb.tips") }}
       </div>
-      <div @click="goEKB()"
+      <a href="https://ekb.opencsg.com/" target="_blank"
         class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
       >
         {{ $t("solution.knowledge.demo") }}
-      </div>
+      </a>
       <div class="grow flex justify-center items-center">
         <div class="w-[592px] md:w-full">
           <video style="width: 100%" controls autoplay muted>
@@ -34,23 +34,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {},
-
-  data() {
-    return {};
-  },
-
-  components: {},
-
-  mounted() {
-  },
-  methods: {
-    goEKB(){
-      window.open('https://ekb.opencsg.com/', '_blank'); 
-    }
-  },
-};
-</script>
