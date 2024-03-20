@@ -55,13 +55,11 @@
           </div>
           <div class="flex gap-4 items-center">
             <span class="text-[14px] text-[#667085] cursor-pointer"
-                  ref="buildLogTab"
                   data-value="build"
                   @click="toggleActiveTab"
                   :class="isBuildLogTab ? 'active-tab' : ''"
             >{{ $t('application_spaces.errorPage.build') }}</span>
             <span class="text-[14px] text-[#667085] cursor-pointer"
-                  ref="containerLogTab"
                   data-value="container"
                   @click="toggleActiveTab"
                   :class="isBuildLogTab ? '' : 'active-tab'"
@@ -75,63 +73,15 @@
           <el-icon @click="close"><CloseBold /></el-icon>
         </div>
       </template>
-      <div v-if="isBuildLogTab"
+      <div v-show="isBuildLogTab"
            ref="buildLogDiv"
            class="overflow-scroll"
       >
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
-        <p>build log</p>
       </div>
-      <div v-else
+      <div v-show="!isBuildLogTab"
            ref="containerLogDiv"
            class="overflow-scroll"
       >
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
-        <p>container log</p>
       </div>
     </el-drawer>
   </div>
@@ -173,8 +123,6 @@
   const containerLogDiv = ref()
 
   const isBuildLogTab = ref(true)
-  const buildLogTab = ref()
-  const containerLogTab = ref()
   const drawerSize = ref("70%")
 
   const toggleActiveTab = (event) => {
@@ -199,7 +147,52 @@
       spaceLogsDrawer.value = false
     } else {
       spaceLogsDrawer.value = true
+      syncSpaceLogs()
     }
+  }
+
+  const syncSpaceLogs = () => {
+    fetchEventSource(`${csghubServer}spaces/OpenCSG/my_space10/logs?test=true`, {
+      headers: {
+        Authorization: `Bearer ${cookies.get('user_token')}`,
+      },
+      async onopen(response) {
+        if (response.ok) {
+          console.log('SSE logs server connected')
+          return;
+        } else if (response.status === 401) {
+          ElMessageBox.alert('登录已过期，点击确认重新登录', '登录失效提醒', {
+            'show-close': false,
+            confirmButtonText: '重新登录',
+            callback: () => {
+              window.location.href = "/logout"
+            },
+          })
+        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+          console.log('Logs Server Connection Error')
+          console.log(response.status)
+          console.log(response.body)
+        } else {
+          console.log('Logs Server Unknow Error')
+          console.log(response.body)
+        }
+      },
+      onmessage(ev) {
+        if (ev.event === 'Build') {
+          const node = document.createElement("p");
+          node.innerText = ev.data
+          buildLogDiv.value.appendChild(node)
+        } else if (ev.event === 'Container') {
+          const node = document.createElement("p");
+          node.innerText = ev.data
+          containerLogDiv.value.appendChild(node)
+        }
+      },
+      onerror(err) {
+        console.log('Logs Server Error:')
+        console.log(err)
+      }
+    })
   }
 
   const syncSpaceStatus = () => {
@@ -209,7 +202,7 @@
       },
       async onopen(response) {
         if (response.ok) {
-          console.log('SSE server connected')
+          console.log('SSE status server connected')
           return;
         }
         else if (response.status === 401) {
@@ -221,11 +214,11 @@
             },
           })
         } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
-          console.log('Connection Error')
+          console.log('Status Server Connection Error')
           console.log(response.status)
           console.log(response.body)
         } else {
-          console.log('Unknow Error')
+          console.log('Status Server Unknow Error')
           console.log(response.body)
         }
       },
@@ -233,7 +226,7 @@
         appStatus.value = ev.data
       },
       onerror(err) {
-        console.log('Error:')
+        console.log('Status Server Error:')
         console.log(err)
       }
     })
@@ -241,6 +234,10 @@
 
   onMounted(() => {
     syncSpaceStatus()
+
+    if (spaceLogsDrawer.value) {
+      syncSpaceLogs()
+    }
   })
 </script>
 
