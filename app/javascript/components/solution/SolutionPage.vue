@@ -1,7 +1,6 @@
 <template>
   <div>
     <SolutionBanner />
-    <SolutionKnowledgeBase />
     <SolutionStarAIO />
     <SolutionAIImg />
     <SolutionProgramming />
