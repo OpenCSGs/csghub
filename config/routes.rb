@@ -147,6 +147,7 @@ Rails.application.routes.draw do
     get '/experts', to: 'experts#index'
     get '/experts/apply', to: 'experts#apply'
     get '/solution', to: 'solution#index'
+    get '/ekb', to: 'ekb#index'
     get '/product', to: 'product#index'
 
     get    '/signup', to: 'sessions#signup'

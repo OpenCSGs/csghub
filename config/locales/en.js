@@ -436,6 +436,24 @@ export default {
       "industryWarn": "Please choose your company's industry",
     }
   },
+  "ekb": {
+    "title": "Era of Large Models",
+    "desc": "Comprehensive Enterprise Knowledgebase Management Foundation",
+    "tips": "Versatile Assistant, Large Models Help You Quickly Complete Complex Tasks",
+    "askTitle": "Quick Q&A",
+    "askTitle2": "Smooth and Powerful",
+    "askDesc": "One-click Traceability, Direct to the Source of Knowledge.",
+    "askSTitle": "All-in-One Enterprise Document Management Platform",
+    "askSText": "Greatly enhance knowledge and data query processing efficiency",
+    "askSTitle2": "Focus on Enterprise Information Security",
+    "askStText2": "Hybrid cloud architecture, continuously protect enterprise assets and customer privacy data",
+    "moreP": "More Features",
+    "morePTitle": "Learn More About the Powerful Features of EKB AI",
+    "morePText": "EKB AI, as the infrastructure for comprehensive enterprise knowledge lifecycle management, assists users in realizing the 'extraction, storage, circulation, and utilization' of internal corporate knowledge. Like the human brain, EKB AI assists in storing, understanding, and creating knowledge, opening up a new mode of knowledge management and significantly reducing the threshold for using unstructured internal corporate data.",
+    "adv": "Our Advantages",
+    "advTitle": "More Intelligent Large Language Model Knowledge Assistant",
+    "advText": "Help you solve diverse product usage needs for individuals and teams, support various secure and convenient deployment methods, and possess powerful data analysis capabilities"
+  },
   "landing": {
     "join1": "Join us",
     "join2": "We are looking for excellent talents",
