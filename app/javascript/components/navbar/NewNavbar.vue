@@ -205,6 +205,7 @@ export default {
     Doc,
     About,
     Experts,
+    Partners,
     Campaigns,
     DailyPapers
   },

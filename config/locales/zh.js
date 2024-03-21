@@ -298,7 +298,7 @@ export default {
     "about": "公司介绍",
     "aboutText": "关于 OpenCSG 团队",
     "partner": "合作伙伴",
-    "partnerText": "连接与共建解决方案生态",
+    "partnerText": "携手合作伙伴共建解决方案生态",
     "expert": "技术专家",
     "expertText": "与专家一起共建、共享开源开放生态",
     "community": "社区",

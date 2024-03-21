@@ -299,7 +299,7 @@ export default {
     "about": "Company Profile",
     "aboutText": "About OpenCSG",
     "partner": "Business Partner",
-    "partnerText": "The platform facilitates connectivity and collaborative building within the solution ecosystem",
+    "partnerText": "Work with partners to build a solution ecology",
     "expert": "Technical Expert",
     "expertText": "Collaborate and share within an open and inclusive ecosystem alongside experts",
     "community": "Community",
