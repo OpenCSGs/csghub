@@ -26,7 +26,6 @@
     xhr.open("GET", "http://gradio-test-app-v1-0.spaces.opencsg.com/");
     xhr.setRequestHeader("Authorization", `Bearer ${cookies.get('user_token')}`);
     xhr.onload = function() {
-      debugger
       if (xhr.status === 200) {
           // Handle successful response
           console.log("Request successful:", xhr.responseText);
