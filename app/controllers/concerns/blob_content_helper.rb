@@ -8,7 +8,7 @@ module BlobContentHelper
       content = "<img src='#{request.url.gsub('blob', 'resolve')}'>"
     else
       parsed_blob_content = Base64.decode64(JSON.parse(@blob)['data']['content']).force_encoding('UTF-8')
-      content = relative_path_to_resolve_path(repo_type), parsed_blob_content
+      content = relative_path_to_resolve_path repo_type, parsed_blob_content
     end
     @blob = {data: JSON.parse(@blob)['data'].merge(content: content)}.to_json
   end
