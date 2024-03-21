@@ -59,12 +59,7 @@ class Tag < ApplicationRecord
     # 'scientific_computing'
   ]
 
-  CODE_TAG_FIELDS = [
-    'computer_vision',
-    'natural_language_processing',
-    'audio_processing',
-    'multimodal'
-  ]
+  CODE_TAG_FIELDS = []
 
   def as_json options = nil
     {
