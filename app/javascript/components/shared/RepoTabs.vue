@@ -17,6 +17,11 @@
         <StoppedPage v-else-if="repoType === 'application_space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
                      :appStatus="appStatus"
         />
+        <BuildAndErrorPage v-else-if="repoType === 'application_space'"
+                           :appStatus="appStatus"
+                           :canWrite="canWrite"
+                           @showSpaceLogs="showSpaceLogs"
+        />
         <repo-summary v-else
                       :repo-type="repoType"
                       :namespace-path="repoDetail.path"
@@ -128,6 +133,7 @@ import EditFile from '../shared/EditFile.vue'
 import InitializeGuide from '../application_spaces/InitializeGuide.vue'
 import ApplicationPage from '../application_spaces/ApplicationPage.vue'
 import StoppedPage from '../application_spaces/StoppedPage.vue'
+import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
 import { computed, onMounted } from 'vue'
 
 const props = defineProps({

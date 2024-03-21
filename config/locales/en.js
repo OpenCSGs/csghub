@@ -17,6 +17,8 @@ export default {
     desc: "Application Space intro",
     stoppedDesc: "This Space has been paused by its owner.",
     sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",
+    buildDesc: "This Space is in building, please wait a while",
+    errorDesc: "This Space is in Error, please check the logs",
     restart: "Restart this Space",
     gradioGuide: {
       notice: 'Get started with your grario app space!',
