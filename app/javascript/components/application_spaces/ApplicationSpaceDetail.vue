@@ -117,7 +117,7 @@
   const { t } = useI18n();
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
-  const appEndpoint = ref(props.applicationSpace.data.endpoint)
+  const appEndpoint = ref(`${csghubServer}${props.applicationSpace.data.endpoint}`)
   const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
 
   const spaceLogsDrawer = ref(inProgressStatus.includes(appStatus))
