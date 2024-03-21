@@ -54,6 +54,7 @@ import DailyPaperShow from "./components/daily_paper/Show.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import RepoItem from "./components/shared/RepoItem.vue"
+import EkbLanding from "./components/ekb/EkbLanding.vue"
 
 const app = createApp({
   components: {
@@ -97,7 +98,8 @@ const app = createApp({
     DailyPaperShow,
     ProfileRepoList,
     RepoCards,
-    RepoItem
+    RepoItem,
+    EkbLanding
   },
   provide:{
     defaultTags: DefaultTags
