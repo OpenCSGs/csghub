@@ -92,7 +92,7 @@ Rails.application.routes.draw do
 
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
-    resources :application_spaces, only: [:index, :new]
+    resources :application_spaces, only: [:new]
     resources :organizations, only: [:new, :show, :edit]
 
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
@@ -111,6 +111,7 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
 
+    get '/spaces', to: 'application_spaces#index'
     get '/application_spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file'
     get '/application_spaces/:namespace/(*application_space_name)/edit/:branch/(*path)', to: 'application_spaces#edit_file', format: false, defaults: {format: 'html'}
     get '/application_spaces/:namespace/(*application_space_name)/:branch/upload', to: 'application_spaces#upload_file'

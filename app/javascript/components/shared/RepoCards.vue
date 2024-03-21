@@ -44,7 +44,8 @@
         </div>
       </div>
       <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
-        <repo-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
+        <application-space-item v-if="repoType === 'application_space'" v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
+        <repo-item v-else v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
       </div>
       <div v-show="totalRepos > perPage">
         <el-pagination background
@@ -65,6 +66,7 @@
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
+  import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
   import { useI18n } from 'vue-i18n'
 

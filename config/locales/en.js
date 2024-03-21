@@ -6,6 +6,8 @@ export default {
       "String of 2-20 charaters, numbers and _",
   },
   application_spaces: {
+    title: "Application Space",
+    placeholder: "Application Space Name",
     new: {
       title: 'Create a new ApplicationSpace',
       subTitle1: 'Appspace is a Git repository that hosts machine learning demo application code',

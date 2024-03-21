@@ -4,6 +4,8 @@ export default {
     nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
   },
   application_spaces: {
+    title: "应用空间",
+    placeholder: "应用空间名字",
     new: {
       title: '新建应用空间',
       subTitle1: '应用空间是托管机器学习演示应用代码的 Git 仓库',

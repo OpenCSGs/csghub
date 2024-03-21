@@ -6,6 +6,19 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
   include Api::FileOptionsHelper
   include Api::RepoValidation
 
+  def index
+    res_body = Starhub.api.get_application_spaces(current_user&.name,
+                                        params[:search],
+                                        params[:sort],
+                                        params[:task_tag],
+                                        params[:framework_tag],
+                                        params[:license_tag],
+                                        params[:page],
+                                        params[:per_page])
+    api_response = JSON.parse(res_body)
+    render json: { application_spaces: api_response['data'], total: api_response['total'] }
+  end
+
   def files
     last_commit, files = Starhub.api.get_application_space_detail_files_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
