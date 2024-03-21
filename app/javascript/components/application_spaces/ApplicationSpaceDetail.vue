@@ -121,11 +121,14 @@
   const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
 
   const spaceLogsDrawer = ref(inProgressStatus.includes(appStatus))
-  const buildLogDiv = ref()
-  const containerLogDiv = ref()
+  const buildLogDiv = ref(null)
+  const containerLogDiv = ref(null)
 
   const isBuildLogTab = ref(true)
   const drawerSize = ref("70%")
+
+  const isStatusSSEConnected = ref(false)
+  const isLogsSSEConnected = ref(false)
 
   const toggleActiveTab = (event) => {
     const currentTarget = event.target
@@ -227,10 +230,16 @@
       onmessage(ev) {
         if (appStatus.value !== ev.data) {
           if (ev.data === 'Building') {
-            buildLogDiv.value.innerHTML = ''
-            containerLogDiv.value.innerHTML = ''
+            if (buildLogDiv.value) { buildLogDiv.value.innerHTML = '' }
+            if (containerLogDiv.value) { containerLogDiv.value.innerHTML = '' }
           }
           appStatus.value = ev.data
+        }
+        if (inProgressStatus.includes(ev.data)) {
+          spaceLogsDrawer.value = true
+          if (isLogsSSEConnected.value === false) {
+            syncSpaceLogs()
+          }
         }
       },
       onerror(err) {
@@ -241,9 +250,11 @@
   }
 
   onMounted(() => {
-    syncSpaceStatus()
+    if (isStatusSSEConnected.value === false) {
+      syncSpaceStatus()
+    }
 
-    if (spaceLogsDrawer.value) {
+    if (spaceLogsDrawer.value && isLogsSSEConnected.value === false) {
       syncSpaceLogs()
     }
   })
