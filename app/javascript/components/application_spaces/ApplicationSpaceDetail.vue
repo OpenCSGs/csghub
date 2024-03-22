@@ -117,7 +117,7 @@
   const { t } = useI18n();
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
-  const appEndpoint = ref(`${csghubServer}${props.applicationSpace.data.endpoint}`)
+  const appEndpoint = ref(`${csghubServer}/api/v1/${props.applicationSpace.data.endpoint}`)
   const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
 
   const spaceLogsDrawer = ref(inProgressStatus.includes(appStatus))
@@ -157,7 +157,7 @@
   }
 
   const syncSpaceLogs = () => {
-    fetchEventSource(`${csghubServer}spaces/${props.applicationSpace.data.path}/logs?test=true`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/logs?test=true`, {
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
@@ -201,7 +201,7 @@
   }
 
   const syncSpaceStatus = () => {
-    fetchEventSource(`${csghubServer}spaces/${props.applicationSpace.data.path}/status?test=true`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/status?test=true`, {
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },

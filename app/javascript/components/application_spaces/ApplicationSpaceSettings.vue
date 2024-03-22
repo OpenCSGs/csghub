@@ -283,9 +283,9 @@ export default {
     async toggleSpaceStatus() {
       let toggleUrl = ''
       if (this.appStatus === 'Stopped') {
-        toggleUrl = `${csghubServer}spaces/${this.path}/run`
+        toggleUrl = `${csghubServer}/api/v1/spaces/${this.path}/run`
       } else {
-        toggleUrl = `${csghubServer}spaces/${this.path}/stop`
+        toggleUrl = `${csghubServer}/api/v1/spaces/${this.path}/stop`
       }
       const response = await fetch(toggleUrl, {
         method: "POST",
