@@ -2,40 +2,75 @@
   <div class="py-[20px] overflow-scroll">
     <!-- <gradio-app src="http://gradio-test-app-v1-0.spaces.opencsg.com/"></gradio-app> -->
     <iframe
-      src="http://gradio-test-app-v1-0.spaces.opencsg.com/"
+      :src="endpointWithToken"
       id="application-space-iframe"
       frameborder="0"
-      width="850"
-      height="450"
+      class="w-full h-[70vh]"
     ></iframe>
   </div>
 </template>
 
 <script setup>
   import { useCookies } from "vue3-cookies";
-  import { onMounted } from "vue";
+  import { onMounted, computed } from "vue";
   const { cookies } = useCookies();
 
   const props = defineProps({
     appEndpoint: String
   })
 
-  onMounted(() => {
-    const iframeWindow = document.getElementById("application-space-iframe").contentWindow;
-    const xhr = new iframeWindow.XMLHttpRequest();
-    xhr.open("GET", "http://gradio-test-app-v1-0.spaces.opencsg.com/");
-    xhr.setRequestHeader("Authorization", `Bearer ${cookies.get('user_token')}`);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-          // Handle successful response
-          console.log("Request successful:", xhr.responseText);
-      } else {
-          // Handle other status codes (e.g., 404, 500, etc.)
-          console.error("Request failed with status:", xhr.status);
-      }
-    };
-    xhr.send();
+  const endpointWithToken = computed(() => {
+    const userToken = cookies.get('user_token')
+    return `${props.appEndpoint}?jwt=${userToken}`
   })
+
+  // onMounted(() => {
+  //   fetch("http://gradio-test-app-v1-0.spaces.opencsg.com/", {
+  //     headers: {Authorization: `Bearer ${cookies.get('user_token')}`}
+  //   })
+  //   .then(response => response.blob())
+  //   .then(blob => {
+  //       var url = URL.createObjectURL(blob);
+  //       document.getElementById('application-space-iframe').src = url;
+  //   });
+
+    // const xhr = new XMLHttpRequest();
+    // xhr.open('GET', "http://gradio-test-app-v1-0.spaces.opencsg.com/");
+    // xhr.onreadystatechange = function() {
+    //     if (xhr.readyState === XMLHttpRequest.DONE) {
+    //         if (xhr.status === 200) {
+    //             var blob = new Blob([xhr.response], {type: 'text/html'});
+    //             var url = URL.createObjectURL(blob);
+    //             var iframe = document.getElementById('application-space-iframe');
+    //             iframe.src = url;
+
+    //             // 当 iframe 不再需要这个 Blob URL 时，可以调用以下函数来释放资源
+    //             // URL.revokeObjectURL(url);
+    //         } else {
+    //             console.error('Request failed. Status:', xhr.status);
+    //         }
+    //     }
+    // };
+    // xhr.setRequestHeader('Authorization', `Bearer ${cookies.get('user_token')}`);
+    // xhr.send();
+
+    // const iframe = document.getElementById("application-space-iframe");
+    // const iframeWindow = iframe.contentWindow;
+    // const xhr = new iframeWindow.XMLHttpRequest();
+    // xhr.open("GET", "http://gradio-test-app-v1-0.spaces.opencsg.com/");
+    // xhr.setRequestHeader("Authorization", `Bearer ${cookies.get('user_token')}`);
+    // xhr.onload = function() {
+    //   if (xhr.status === 200) {
+    //       // Handle successful response
+    //       console.log("Request successful:", xhr.responseText);
+    //       iframe.srcdoc = xhr.responseText
+    //   } else {
+    //       // Handle other status codes (e.g., 404, 500, etc.)
+    //       console.error("Request failed with status:", xhr.status);
+    //   }
+    // };
+    // xhr.send();
+  // })
 
   // const handler = () => {
   //   debugger
