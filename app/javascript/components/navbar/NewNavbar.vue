@@ -18,52 +18,52 @@
       >
         <el-menu-item index="/models" style="border:none" @click="routerLink('/models')">{{ $t('navbar.models') }}</el-menu-item>
         <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')">{{ $t('navbar.datasets') }}</el-menu-item>
-        <el-sub-menu index="1" popper-class="popper-submenu">
+        <el-sub-menu style="height: auto;" index="1" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.product') }}</template>
-          <el-menu-item @click="handleNavigation('/product','StarCloud')" index="StarCloud">
+          <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarCloud')" index="StarCloud">
             <StarCloud />
           </el-menu-item>
-          <el-menu-item @click="handleNavigation('/product','StarShip')" index="StarShip">
+          <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarShip')" index="StarShip">
             <StarShip />
           </el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="2" popper-class="popper-submenu">
+        <el-sub-menu style="height: auto;" index="2" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.solution') }}</template>
-          <el-menu-item @click="routerLink('/ekb')" index="KnowledgeBase">
+          <el-menu-item style="height: auto;" @click="routerLink('/ekb')" index="KnowledgeBase">
             <EKB />
           </el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution','StarAIO')" index="StarAIO">
+          <el-menu-item style="height: auto;" @click="handleNavigation('/solution','StarAIO')" index="StarAIO">
             <StarAIO />
           </el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution','AIImg')" index="AIImg">
+          <el-menu-item style="height: auto;" @click="handleNavigation('/solution','AIImg')" index="AIImg">
             <Imagen />
           </el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution','Programming')" index="Programming">
+          <el-menu-item style="height: auto;" @click="handleNavigation('/solution','Programming')" index="Programming">
             <StarCode />
           </el-menu-item>
-          <el-menu-item @click="handleNavigation('/solution')" index="Programming">
+          <el-menu-item style="height: auto;" @click="handleNavigation('/solution')" index="Programming">
             <AllSolution />
           </el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="3" popper-class="popper-submenu">
+        <el-sub-menu style="height: auto;" index="3" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.developer') }}</template>
-          <a :href="csgHubUrl" target="_blank"><el-menu-item index="3-1"><CSGHub /></el-menu-item></a>
-          <a :href="llmInference" target="_blank"><el-menu-item index="3-2"><Inference /></el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item index="3-3"><StarChain /></el-menu-item></a>
-          <a href="/spaces"><el-menu-item index="/spaces"><Space /></el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item index="/docs"><Doc /></el-menu-item></a>
+          <a :href="csgHubUrl" target="_blank"><el-menu-item style="height: auto;" index="3-1"><CSGHub /></el-menu-item></a>
+          <a :href="llmInference" target="_blank"><el-menu-item style="height: auto;" index="3-2"><Inference /></el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item style="height: auto;" index="3-3"><StarChain /></el-menu-item></a>
+          <a href="/spaces"><el-menu-item style="height: auto;" index="/spaces"><Space /></el-menu-item></a>
+          <a href="/docs" target="_blank"><el-menu-item style="height: auto;" index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
-        <el-sub-menu index="4" popper-class="popper-submenu">
+        <el-sub-menu style="height: auto;" index="4" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.enterprise') }}</template>
-          <a href="/about"><el-menu-item index="4-1"><About /></el-menu-item></a>
-          <a href="/partners"><el-menu-item index="4-2"><Partners /></el-menu-item></a>
-          <a href="/experts"><el-menu-item index="4-3"><Experts /></el-menu-item></a>
+          <a href="/about"><el-menu-item style="height: auto;" index="4-1"><About /></el-menu-item></a>
+          <a href="/partners"><el-menu-item style="height: auto;" index="4-2"><Partners /></el-menu-item></a>
+          <a href="/experts"><el-menu-item style="height: auto;" index="4-3"><Experts /></el-menu-item></a>
         </el-sub-menu>
-        <el-sub-menu index="5" popper-class="popper-submenu">
+        <el-sub-menu style="height: auto;" index="5" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.community') }}</template>
-          <a href="/campaigns"><el-menu-item index="5-1"><Campaigns /></el-menu-item></a>
-          <a href="/daily_papers"><el-menu-item index="5-2"><DailyPapers /></el-menu-item></a>
+          <a href="/campaigns"><el-menu-item style="height: auto;" index="5-1"><Campaigns /></el-menu-item></a>
+          <a href="/daily_papers"><el-menu-item style="height: auto;" index="5-2"><DailyPapers /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
