@@ -1,10 +1,10 @@
 <% content_for :meta_title do %>
-  <title>OpenCSG 传神社区 <%= JSON.parse(@model).fetch('data', {}).fetch('nickname', '') || JSON.parse(@model).fetch('data', {}).fetch('name', '') %></title>
+  <title><%= "#{default_meta_title} #{name_for_meta_title(@model)}" %></title>
 <% end %>
 
 <% content_for :meta_desc do %>
   <meta name="description"
-        content="OpenCSG 传神社区旨在打造一个开源的机器学习模型和数据集共享平台，为AI开发者提供灵活、易用的推理，训练，部署，体验服务，让大模型的应用更简单！<%= JSON.parse(@model).fetch('data', {}).fetch('description', '') %>"
+        content="<%= "#{default_meta_description} #{desc_for_meta_description(@model)}" %>"
   >
 <% end %>
 
