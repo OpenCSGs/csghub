@@ -32,7 +32,7 @@
       </div>
       <div class="flex flex-col gap-[6px]">
         <p class="text-[#344054] text-[14px]">{{ $t('application_spaces.edit.currentCloudResource')}}</p>
-        <el-select v-model="theCurrentCloudResource"
+        <el-select v-model="theCloudResource"
                     placeholder="选择"
                     size="large"
                     class="!w-[512px] sm:!w-full"
@@ -236,12 +236,10 @@ export default {
     return {
       visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
-      applicationSpaceName: this.path.split('/')[1],
+      applicationSpacePath: this.path,
       theApplicationSpaceNickname: this.applicationSpaceNickname || "",
       theApplicationSpaceDesc: this.applicationSpaceDesc || "",
-      applicationSpacePath: this.path,
-      theCurrentCloudResource: this.cloudResource,
-      isSpaceRunning: this.appStatus === 'Stopped' ? false : true,
+      theCloudResource: this.cloudResource,
       options: [{value: 'Private', label: this.$t('all.private')},
                 {value: 'Public', label:  this.$t('all.public')}],
       spaceResources:[
@@ -258,6 +256,12 @@ export default {
       deployFailed: ['Building Failed', 'Deploy Failed', 'Runtime Error'].includes(this.appStatus),
       cookies: useCookies().cookies
     };
+  },
+
+  computed: {
+    isSpaceRunning() {
+      return this.appStatus === 'Stopped' ? false : true
+    }
   },
 
   emits: ['showSpaceLogs'],
