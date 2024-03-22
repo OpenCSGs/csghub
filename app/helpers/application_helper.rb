@@ -86,4 +86,14 @@ module ApplicationHelper
       'md': 'text/markdown'
     }.with_indifferent_access
   end
+
+  def meta_title
+    content_for(:meta_title) ||
+    "<title>OpenCSG 传神社区</title>"
+  end
+
+  def meta_desc
+    content_for(:meta_desc) ||
+    "<meta name='description' content='OpenCSG 传神社区旨在打造一个开源的机器学习模型和数据集共享平台，为AI开发者提供灵活、易用的推理，训练，部署，体验服务，让大模型的应用更简单！'>"
+  end
 end
