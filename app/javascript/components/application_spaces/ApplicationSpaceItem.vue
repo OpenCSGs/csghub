@@ -20,12 +20,14 @@
     <div class="my-2">
       <img :src="coverImageUrl" class="w-[402px] xl:w-full object-cover rounded cursor-pointer hover:opacity-50" />
     </div>
+    <div class="h-[36px]" v-if="!repo.description"></div>
     <el-popover
       :width="384"
       trigger="hover"
       placement="bottom"
       effect="dark"
       :content="repo.description"
+      v-else
     >
       <template #reference>
         <p class="max-w-[402px] xl:max-w-full h-[36px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2">
