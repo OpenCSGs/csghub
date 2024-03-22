@@ -113,7 +113,7 @@ We welcome developers of all levels to contribute to our open-source project, CS
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
 
 ### CONTACT WITH US
-Any problems in the process of use, you can contact with us by following ways:
+If you meet any problem during usage, you can contact with us by any following way:
 1. initiate an issue in github
 2. join our WeChat group by scaning wechat helper qrcode
 3. join our offical discord channel: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
