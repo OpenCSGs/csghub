@@ -25,7 +25,7 @@
             v-model="nameFilterInput"
             class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
             size="large"
-            :placeholder="$t(`${repoType}s.placeholder`)"
+            :placeholder="this.$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
             @change = "reloadRepos"
           />
