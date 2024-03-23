@@ -25,7 +25,11 @@
         <repo-summary v-else
                       :repo-type="repoType"
                       :namespace-path="repoDetail.path"
-                      :download-count="repoDetail.downloads" />
+                      :download-count="repoDetail.downloads"
+                      :currentBranch="currentBranch"
+                      :widget-type="repoDetail.widget_type"
+                      :inference-status="repoDetail.status"
+        />
       </template>
       <template #files v-if="actionName === 'blob'">
         <blob

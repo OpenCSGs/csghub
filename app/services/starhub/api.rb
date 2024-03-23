@@ -182,6 +182,17 @@ module Starhub
       res.body
     end
 
+    def model_predict(namespace, name, user, input, version)
+      options = {
+        current_user: user,
+        input: input,
+        version: "" #暂时不支持制定 version
+      }
+      res = @client.post("/models/#{namespace}/#{name}/predict", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # TODO: add more starhub api
 
     private
