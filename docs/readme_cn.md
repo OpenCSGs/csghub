@@ -108,9 +108,15 @@ docker compose -f all-in-one-CN.yml up -d
 本项目基于 Rails、Vue3、Tailwind CSS、Administrate、Postgresql、Apache Arrow、DuckDB 和 GoGin，在此深深感谢他们的开源贡献！
 
 ### 联系我们
-使用过程中的任何问题， 您可以在github 发起issue或者加入我们的微信讨论群。<br/>如果遇到微信群二维码失效或人数过多，请添加企业微信传神小助手账号回复"开源"或者"open source"入群。
+使用过程中的任何问题， 您可以通过以下任何一种方式联系我们：
+1. 在github 发起issue
+2. 扫描下方左侧微信二维码，添加微信小助手回复"开源"或者"open source"入群，加入我们的微信讨论群
+3. 加入我们的Discord频道: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
+4. 假如我们的Slack频道: [OpenCSG Slack Channel](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 <div style="display:inline-block">
-<img src="/docs/images/wechat-group-new.png" width='250'>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="/docs/images/wechat-assistant-new.png" width='250'>
+<img src="/docs/images/wechat-assistant-new.png" width='200'>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/docs/images/discord-qrcode.png" width='200'>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/docs/images/slack-qrcode.png" width='200'>
 </div>

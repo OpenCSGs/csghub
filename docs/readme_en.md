@@ -113,9 +113,15 @@ We welcome developers of all levels to contribute to our open-source project, CS
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
 
 ### CONTACT WITH US
-Any problems in the process of use, you can initiate an issue in github or join our WeChat group.
+If you meet any problem during usage, you can contact with us by any following way:
+1. initiate an issue in github
+2. join our WeChat group by scaning wechat helper qrcode
+3. join our offical discord channel: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
+4. join our slack workspace:[OpenCSG Slack Channel](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 <div style="display:inline-block">
-<img src="/docs/images/wechat-group-new.png" width='250'>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="/docs/images/wechat-assistant-new.png" width='250'>
+<img src="/docs/images/wechat-assistant-new.png" width='200'>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/docs/images/discord-qrcode.png" width='200'>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="/docs/images/slack-qrcode.png" width='200'>
 </div>
