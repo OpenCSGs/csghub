@@ -1,5 +1,5 @@
 class InternalApi::CodesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet]
+  before_action :authenticate_user, except: [:index, :files, :readme]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
