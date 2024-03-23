@@ -77,6 +77,24 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
+    def get_user_codes(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_org_codes(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
     def preview_datasets_parquet_file(username, dataset_name, path, options = {})
       options[:count] ||= 6
       res = @client.get("/datasets/#{username}/#{dataset_name}/viewer/#{path}", options)

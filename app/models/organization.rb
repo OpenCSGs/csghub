@@ -13,6 +13,7 @@ class Organization < ApplicationRecord
   has_many :users, through: :org_memberships
   has_many :models, as: :owner
   has_many :datasets, as: :owner
+  has_many :codes, as: :owner
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   after_save :sync_to_starhub_server

@@ -87,7 +87,7 @@ class ApplicationSpacesController < ApplicationController
 
     if action_name == 'blob' || action_name == 'edit_file'
       @application_space, @last_commit, @branches, @blob = Starhub.api.get_application_space_detail_blob_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
-      update_blob_content
+      update_blob_content('application_space')
     else
       @application_space, @branches = Starhub.api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     end

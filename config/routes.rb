@@ -35,8 +35,10 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update]
     get '/users/:namespace/models', to: 'users#models'
     get '/users/:namespace/datasets', to: 'users#datasets'
+    get '/users/:namespace/codes', to: 'users#codes'
     get '/organizations/:namespace/models', to: 'organizations#models'
     get '/organizations/:namespace/datasets', to: 'organizations#datasets'
+    get '/organizations/:namespace/codes', to: 'organizations#codes'
 
     resources :models, only: [:index, :create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme'
@@ -57,6 +59,15 @@ Rails.application.routes.draw do
     put '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#update_file'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
+
+    resources :codes, only: [:index, :create]
+    get '/codes/:namespace/(*code_name)/readme', to: 'codes#readme'
+    get '/codes/:namespace/(*code_name)/files', to: 'codes#files'
+    post '/codes/:namespace/(*code_name)/files/:branch', to: 'codes#create_file'
+    post '/codes/:namespace/(*code_name)/files/:branch/upload_file', to: 'codes#upload_file'
+    put '/codes/:namespace/(*code_name)/files/:branch', to: 'codes#update_file'
+    delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}
+    put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}
 
     resources :application_spaces, only: [:index, :create]
     get '/application_spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme'
@@ -93,6 +104,7 @@ Rails.application.routes.draw do
 
     resources :models, only: [:index, :new]
     resources :datasets, only: [:index, :new]
+    resources :codes, only: [:index, :new]
     resources :application_spaces, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit]
 
@@ -111,6 +123,14 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/datasets/:namespace/(*dataset_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
+
+    get '/codes/:namespace/(*code_name)/:branch/new', to: 'codes#new_file'
+    get '/codes/:namespace/(*code_name)/edit/:branch/(*path)', to: 'codes#edit_file', format: false, defaults: {format: 'html'}
+    get '/codes/:namespace/(*code_name)/:branch/upload', to: 'codes#upload_file'
+    get '/codes/:namespace/(*code_name)/blob/:branch/(*path)', to: 'codes#blob', format: false, defaults: {format: 'html'}
+    get '/codes/:namespace/(*code_name)/files/:branch(/*path)', to: 'codes#files', defaults: { path: nil }
+    get '/codes/:namespace/(*code_name)/resolve/:branch/(*path)', to: 'codes#resolve', defaults: {format: 'txt'}
+    get '/codes/:namespace/(*code_name)', to: 'codes#show', format: false, defaults: {format: 'html'}
 
     get '/application_spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file'
     get '/application_spaces/:namespace/(*application_space_name)/edit/:branch/(*path)', to: 'application_spaces#edit_file', format: false, defaults: {format: 'html'}
