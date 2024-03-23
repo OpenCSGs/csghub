@@ -164,6 +164,7 @@ export default {
   navbar: {
     models: "模型",
     datasets: "数据集",
+    spaces: "应用空间",
     profile: "个人信息",
     editProfile: "账号设置",
     newModel: "新建模型",

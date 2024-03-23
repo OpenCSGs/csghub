@@ -174,6 +174,7 @@ export default {
   navbar: {
     models: "Models",
     datasets: "Datasets",
+    spaces: "Spaces",
     profile: "Profile",
     editProfile: "Account Settings",
     newModel: "New Model",
