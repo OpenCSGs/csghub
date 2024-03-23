@@ -130,6 +130,8 @@ class ApplicationController < ActionController::Base
                "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
              when 'dataset'
                "/datasets/#{params[:namespace]}/#{params[:dataset_name]}/resolve/main/"
+             when 'code'
+               "/codes/#{params[:namespace]}/#{params[:code_name]}/resolve/main/"
              when 'application_space'
                "/application_spaces/#{params[:namespace]}/#{params[:application_space_name]}/resolve/main/"
              end

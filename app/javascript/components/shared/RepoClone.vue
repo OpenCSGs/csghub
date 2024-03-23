@@ -61,6 +61,8 @@ const downloadButtonKey = computed(() => {
       return 'datasets.downloadDataset'
     case 'model':
       return 'models.download'
+    case 'code':
+      return 'codes.downloadCode'
     case 'application_space':
       return 'application_spaces.download'
     default:
@@ -74,6 +76,8 @@ const downloadModalKey = computed(() => {
       return 'datasets.downloadDataset'
     case 'model':
       return 'models.downloadModel'
+    case 'code':
+      return 'codes.downloadCode'
     case 'application_space':
       return 'application_spaces.downloadSpace'
     default:

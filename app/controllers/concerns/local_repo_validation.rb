@@ -39,6 +39,8 @@ module LocalRepoValidation
       @local_model = @owner && @owner.models.find_by(name: params[:model_name])
     when 'datasets'
       @local_dataset = @owner && @owner.datasets.find_by(name: params[:dataset_name])
+    when 'codes'
+      @local_code = @owner && @owner.codes.find_by(name: params[:code_name])
     when 'application_spaces'
       @local_application_space = @owner && @owner.application_spaces.find_by(name: params[:application_space_name])
     end
