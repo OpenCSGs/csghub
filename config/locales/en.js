@@ -503,6 +503,14 @@ export default {
     nameSpaceRule:
       "String of 2-20 charaters, numbers and _",
   },
+  widgets: {
+    onlineDemo: "Online Experience",
+    testInput: "Test Input",
+    testOutput: "Test Result",
+    wordsNumber: "Word Count",
+    runTest: "Run Test",
+    timeCost: "More inference time"
+  },
   models: {
     title: "Model",
     placeholder: "Models name",

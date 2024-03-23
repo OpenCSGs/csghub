@@ -67,6 +67,7 @@ Rails.application.routes.draw do
     put '/models/:namespace/(*model_name)/files/:branch', to: 'models#update_file'
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
+    post '/models/:namespace/(*model_name)/predict', to: 'models#predict'
 
     resources :datasets, only: [:index, :create]
     get '/datasets/:namespace/(*dataset_name)/readme', to: 'datasets#readme'
