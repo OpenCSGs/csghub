@@ -1,7 +1,7 @@
 module RepoHelper
   def name_for_meta_title repo
-    JSON.parse(repo).fetch('data', {}).fetch('nickname', nil).presence ||
-    JSON.parse(repo).fetch('data', {}).fetch('name', '')
+    JSON.parse(repo).dig('data', 'nickname').presence ||
+    JSON.parse(repo).dig('data', 'name').presence || ''
   end
 
   def desc_for_meta_description repo
