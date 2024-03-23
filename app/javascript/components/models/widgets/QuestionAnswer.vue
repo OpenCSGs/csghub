@@ -18,7 +18,15 @@
       </div>
       <div class="flex justify-center items-center gap-[8px]">
         <p class="text-[16px] text-[#667085]"> {{ `${$t('widgets.testInput')}: ${textInputLength}` }} / 1000 </p>
-        <button class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
+        <button v-if="loading"
+                class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-gray-300 bg-gray-300 shadow-sm text-white text-[14px] font-[500]"
+                @click="sendInferenceTest"
+                disabled=false
+        >
+          {{ $t('widgets.runTest') }}
+        </button>
+        <button v-else
+                class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-blue-700 bg-blue-700 shadow-sm text-white text-[14px] font-[500]"
                 @click="sendInferenceTest"
         >
           {{ $t('widgets.runTest') }}
