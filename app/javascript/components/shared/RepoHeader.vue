@@ -9,14 +9,14 @@
       </svg>
       <span class="text-[#A8ABB2] text-[18px] font-semibold ml-1 mr-2">Dataset:</span>
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
-      <span class="max-w-full break-words">{{nickname}}</span>
+      <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
     </div>
     <div v-if="repoType === 'model'"
          class="flex flex-wrap w-full gap-[8px] items-center mb-[16px]"
     >
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
-      <span class="max-w-full break-words">{{nickname}}</span>
+      <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
     </div>
     <div class="flex gap-[8px] items-center">
