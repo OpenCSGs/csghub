@@ -154,6 +154,7 @@ export default {
     orgTeam: "Team Members",
     model: "Model",
     dataset: "Dataset",
+    space: "Space",
     invite: {
       title: "Invite",
       inviteNew: "Invite New Member",
