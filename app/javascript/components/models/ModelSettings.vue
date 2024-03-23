@@ -83,7 +83,7 @@
           <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
             <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
               <span v-for="tag in selectedTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
-                {{ tag.name }}
+                {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
                 <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
               </span>
             </div>
@@ -96,7 +96,7 @@
                 @click="selectTag(tag)"
                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
             >
-              {{ tag.zh_name? tag.zh_name : tag.name }}
+              {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name}}
             </p>
           </div>
           <el-button @click="updateTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
@@ -259,13 +259,23 @@ export default {
     showTagList(e){
       this.shouldShowTagList = true
       if(this.tagInput != ''){
-        this.theTagList = this.tagList.filter(tag => {
-          if(tag.zh_name){
-            return tag.zh_name.includes(this.tagInput);
-          }else{
-            return tag.name.includes(this.tagInput);
-          }
-        });
+        if(this.$i18n.locale == 'zh'){
+          this.theTagList = this.tagList.filter(tag => {
+            if(tag.zh_name){
+              return tag.zh_name.includes(this.tagInput);
+            }else{
+              return tag.name.includes(this.tagInput);
+            }
+          });
+        }else{
+          this.theTagList = this.tagList.filter(tag => {
+            if(tag.name){
+              return tag.name.includes(this.tagInput);
+            }else{
+              return tag.zh_name.includes(this.tagInput);
+            }
+          });
+        }
       }else{
         this.theTagList = this.tagList
       }
