@@ -242,7 +242,7 @@ export default {
     },
     getSelectTags(tags){
       tags.forEach(item=>{
-        if(item.category == 'task'){
+        if(item.category == 'task' || item.category == 'other'){
           this.selectedTags.push(item)          
         }
       })
