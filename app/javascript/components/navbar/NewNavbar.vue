@@ -248,7 +248,7 @@ export default {
   }
 }
 .popper-submenu .el-menu{
-  min-width: 150px;
+  min-width: 200px;
   .el-menu-item {
     font-size: 16px;
     height:auto;
