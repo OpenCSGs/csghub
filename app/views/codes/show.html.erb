@@ -1,0 +1,18 @@
+<div class="bg-white border-b border-[#EBEEF5]">
+  <code-detail
+    :tags="<%= @tags %>"
+    local-repo-id="<%= @local_code.id %>"
+    :code="<%= @code %>"
+    :last-commit="<%= @last_commit || {} %>"
+    :branches="<%= @branches %>"
+    current-branch="<%= @current_branch || 'main' %>"
+    current-path="<%= @current_path || '' %>"
+    default-tab="<%= @default_tab || 'summary' %>"
+    :blob="<%= @blob || {} %>"
+    :action-name="'<%= action_name %>'"
+    :settings-visibility="<%= @settings_visibility %>"
+    :owner-url="'<%= @owner_url %>'"
+    avatar="<%= @avatar_url %>"
+    :can-write="<%= !!current_user&.can_write?(@local_code) %>"
+  ></code-detail>
+</div>

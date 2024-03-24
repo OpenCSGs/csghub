@@ -89,6 +89,10 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     render json: Starhub.api.get_org_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
+  def codes
+    render json: Starhub.api.get_org_codes(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
   private
 
   def organization_params

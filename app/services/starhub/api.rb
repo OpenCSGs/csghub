@@ -86,11 +86,29 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
+    def get_user_codes(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
     def get_org_application_spaces(namespace, username, options = {})
       options[:per] ||= 6
       options[:page] ||= 1
       options[:current_user] = username
       res = @client.get("/organization/#{namespace}/spaces", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_org_codes(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/codes", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
@@ -196,6 +214,17 @@ module Starhub
         current_user: username
       }
       res = @client.post("/jwt/token", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def model_predict(namespace, name, user, input, version)
+      options = {
+        current_user: user,
+        input: input,
+        version: "" #暂时不支持制定 version
+      }
+      res = @client.post("/models/#{namespace}/#{name}/predict", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end

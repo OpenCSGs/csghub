@@ -1,17 +1,17 @@
 <template>
-  <div class="w-full bg-[#FAFCFF] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-[#EBEEF5]">
+  <div class="w-full bg-[#FAFCFF] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
-        :private="model.data.private"
-        :license="model.data.license"
-        :name="model.data.name"
-        :nickname="model.data.nickname"
-        :desc="model.data.description"
-        :path="model.data.path"
+        :private="code.data.private"
+        :license="code.data.license"
+        :name="code.data.name"
+        :nickname="code.data.nickname"
+        :desc="code.data.description"
+        :path="code.data.path"
         :tags="tags"
         :avatar="avatar"
         :owner-url="ownerUrl"
-        repo-type="model"
+        repo-type="code"
       />
     </div>
   </div>
@@ -19,7 +19,7 @@
     <repo-tabs
       :blob="blob.data"
       :local-repo-id="localRepoId"
-      :repo-detail="model.data"
+      :repo-detail="code.data"
       :last-commit="lastCommit.data"
       :branches="branches.data"
       :current-branch="currentBranch"
@@ -28,7 +28,7 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
-      repo-type="model"
+      repo-type="code"
     />
   </div>
 </template>
@@ -40,7 +40,7 @@ import RepoTabs from '../shared/RepoTabs.vue'
 const props = defineProps({
   localRepoId: String,
   defaultTab: String,
-  model: Object,
+  code: Object,
   lastCommit: Object,
   branches: Object,
   tags: Object,

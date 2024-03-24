@@ -60,6 +60,7 @@ class Tag < ApplicationRecord
   ]
 
   APPLICATION_SPACE_TAG_FIELDS = []
+  CODE_TAG_FIELDS = []
 
   def as_json options = nil
     {

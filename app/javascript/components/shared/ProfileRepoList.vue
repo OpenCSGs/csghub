@@ -48,6 +48,27 @@
           <path opacity="0.12" d="M9 16.5C12.7279 16.5 15.75 15.4926 15.75 14.25V3.75C15.75 3.75 15.375 6 9 6C2.625 6 2.25 3.75 2.25 3.75V14.25C2.25 15.4926 5.27208 16.5 9 16.5Z" fill="#1F75CB"/>
           <path d="M15.75 9C15.75 10.2426 12.7279 11.25 9 11.25C5.27208 11.25 2.25 10.2426 2.25 9M15.75 3.75C15.75 4.99264 12.7279 6 9 6C5.27208 6 2.25 4.99264 2.25 3.75M15.75 3.75C15.75 2.50736 12.7279 1.5 9 1.5C5.27208 1.5 2.25 2.50736 2.25 3.75M15.75 3.75V14.25C15.75 15.4926 12.7279 16.5 9 16.5C5.27208 16.5 2.25 15.4926 2.25 14.25V3.75" stroke="#1F75CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+        <span>{{ $t('organization.code') }}</span>
+      </h3>
+      <div v-if="hasCodes" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
+        <repo-item v-for="code in codes.data" :repo="code" repo-type="code"></repo-item>
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+        {{ $t('all.noData') }}
+      </div>
+      <view-more
+        v-if="moreCodes"
+        target="codes"
+        @view-more-targets="viewMoreTargets"
+      ></view-more>
+      <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
+    </div>
+    <div class="mt-[32px]">
+      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path opacity="0.12" d="M9 16.5C12.7279 16.5 15.75 15.4926 15.75 14.25V3.75C15.75 3.75 15.375 6 9 6C2.625 6 2.25 3.75 2.25 3.75V14.25C2.25 15.4926 5.27208 16.5 9 16.5Z" fill="#1F75CB"/>
+          <path d="M15.75 9C15.75 10.2426 12.7279 11.25 9 11.25C5.27208 11.25 2.25 10.2426 2.25 9M15.75 3.75C15.75 4.99264 12.7279 6 9 6C5.27208 6 2.25 4.99264 2.25 3.75M15.75 3.75C15.75 2.50736 12.7279 1.5 9 1.5C5.27208 1.5 2.25 2.50736 2.25 3.75M15.75 3.75V14.25C15.75 15.4926 12.7279 16.5 9 16.5C5.27208 16.5 2.25 15.4926 2.25 14.25V3.75" stroke="#1F75CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <span>{{ $t('organization.space') }}</span>
       </h3>
       <div v-if="hasSpaces" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
@@ -77,23 +98,28 @@
     modelList: Object,
     datasetList: Object,
     spaceList: Object,
+    codeList: Object,
     name: String
   })
 
   const { t } = useI18n();
   const models = ref(props.modelList)
   const datasets = ref(props.datasetList)
+  const codes = ref(props.codeList)
   const spaces = ref(props.spaceList)
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
+  const codeLoading = ref(false)
   const spacesLoading = ref(false)
 
   const hasModels = computed(() => props.modelList?.total > 0)
   const hasDatasets = computed(() => props.datasetList?.total > 0)
+  const hasCodes = computed(() => props.codeList?.total > 0)
   const hasSpaces = computed(() => props.spaceList?.total > 0)
 
   const moreModels = ref(props.modelList?.total > 6)
   const moreDatasets = ref(props.datasetList?.total > 6)
+  const moreCodes = ref(props.codeList?.total > 6)
   const moreSpaces = ref(props.spaceList?.total > 6)
 
   const prefixPath = document.location.pathname.split('/')[1] === 'organizations' ? 'organizations' : 'users'
@@ -108,6 +134,9 @@
     } else if (target === 'spaces') {
       spacesLoading.value = true
       fetchMoreSpaces()
+    } else if (target === 'codes') {
+      codeLoading.value = true
+      fetchMoreCodes()
     }
   }
 
@@ -129,6 +158,12 @@
     moreSpaces.value = false
   }
 
+  const fetchMoreCodes = async () => {
+    const url = `/internal_api/${prefixPath}/${props.name}/codes?per=${props.codeList.total}`
+    await fetchData(url, codes)
+    moreCodes.value = false
+  }
+
   const fetchData = async (url, targetRef) => {
     fetch(url).then((response) => {
       if (!response.ok) {
@@ -148,6 +183,8 @@
         modelsLoading.value = false
       } else if (targetRef === datasets) {
         datasetsLoading.value = false
+      } else if (targetRef === codes) {
+        codeLoading.value = false
       } else if (targetRef === spaces) {
         spacesLoading.value = false
       }
