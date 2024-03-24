@@ -95,7 +95,11 @@ class DatasetsController < ApplicationController
     else
       @dataset, @branches = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
-    @tags_list = Tag.all.as_json
+    response ={}
+    Tag::DATASET_TAG_FIELDS.each do |field|
+      response = Tag.where(tag_field: field, scope: 'dataset')
+    end
+    @tags_list = response.as_json
     @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags']).to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_dataset) : false
   end
