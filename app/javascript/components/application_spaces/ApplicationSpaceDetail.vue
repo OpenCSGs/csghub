@@ -157,7 +157,7 @@
   }
 
   const syncSpaceLogs = () => {
-    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/logs?test=true`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/logs`, {
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
@@ -203,7 +203,7 @@
   }
 
   const syncSpaceStatus = () => {
-    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/status?test=true`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/status`, {
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
