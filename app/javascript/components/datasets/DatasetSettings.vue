@@ -215,7 +215,7 @@ export default {
   },
   mounted() {
       // 监听全局点击事件
-    document.addEventListener('click', this.handleOutsideClick);
+    document.addEventListener('click', this.collapseTagList);
 
     if (typeof this.tags === 'object' && this.tags !== null) {
       for (const key in this.tags) {
@@ -232,10 +232,10 @@ export default {
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
-    document.removeEventListener('click', this.handleOutsideClick);
+    document.removeEventListener('click', this.collapseTagList);
   },
   methods: {
-    handleOutsideClick(event) {
+    collapseTagList(event) {
       if (!this.$refs.tagListContainer.contains(event.target)) {
         this.shouldShowTagList = false;
       }
