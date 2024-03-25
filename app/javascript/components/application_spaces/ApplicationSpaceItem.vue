@@ -5,8 +5,7 @@
         <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]">{{ getComputed.path }}</h3>
         <div class="flex gap-2">
           <span class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-[#344054] text-[12px]">{{ getComputed.visibility }}</span>
-          <SpaceRunning v-if="status === 'running'" />
-          <SpaceStopped v-else />
+          <AppStatus :appStatus="repo.status || 'NoAppFile'" />
         </div>
       </div>
     </div>
@@ -49,13 +48,11 @@
 <script setup>
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import SpaceRunning from './SpaceRunning.vue'
-  import SpaceStopped from './SpaceStopped.vue'
+  import AppStatus from './AppStatus.vue'
 
   const props = defineProps({
     repo: Object,
     repoType: String,
-    status: String,
   })
 
   const coverImageUrl = computed(() => {
