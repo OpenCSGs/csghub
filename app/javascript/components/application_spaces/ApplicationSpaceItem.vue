@@ -59,7 +59,7 @@
     if (props.repo.cover_image) {
       return props.repo.cover_image
     } else {
-      return '/assets/default_cover_image.png'
+      return '/images/default_cover_image.png'
     }
   })
 
