@@ -66,7 +66,7 @@ class Tag < ApplicationRecord
       }
   end
 
-  def self.build_detail_tags(tags)
+  def self.build_detail_tags(tags, scope)
     task_tags, framework_tags, license_tags, other_tags = [], [], [], []
     if tags
       tags.map do |tag|
@@ -75,7 +75,7 @@ class Tag < ApplicationRecord
         else
           case tag['category']
           when 'task'
-            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: tag['scope'])
+            local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: 'model')
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
               task_tags << tag.merge('color' => color, 'zh_name' => I18n.locale == :en ? local_tag.zh_name : local_tag.name)
