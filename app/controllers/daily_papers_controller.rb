@@ -3,7 +3,7 @@ class DailyPapersController < ApplicationController
     @daily_papers = DailyPaper.search_by(params[:keywords])
                               .order(id: :desc)
                               .page(params[:page]).per(9)
-    @total_count = DailyPaper.search_by(params[:keywords]).count
+    @total_count = @daily_papers.total_count
     @keywords = params[:keywords]
     @page = params[:page]
     merge_recommender_url
