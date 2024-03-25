@@ -102,14 +102,14 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     # 更新 README 内容
     updated_readme_content = updated_metadata_part + readme_content
     options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(updated_readme_content),
-                                                              sha:sha
-                                                            })
+                                                        new_branch: 'main',
+                                                        username: current_user.name,
+                                                        email: current_user.email,
+                                                        content: Base64.encode64(updated_readme_content),
+                                                        sha:sha
+                                                      })
     sync_update_file('model', options)
-    render json: { message: 'README tags updated successfully' }
+    render json: { message: I18n.t('tags.update.success') }
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
