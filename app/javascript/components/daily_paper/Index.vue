@@ -72,7 +72,7 @@
                 hide-on-single-page
                 v-model:current-page="searchForm.page"
                 :default-current-page="1"
-                :page-size="8"
+                :page-size="9"
                 layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
