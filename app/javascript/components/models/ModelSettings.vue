@@ -216,18 +216,6 @@ export default {
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
 
-    // if (typeof this.tags === 'object' && this.tags !== null) {
-    //   for (const key in this.tags) {
-    //     if (Array.isArray(this.tags[key]) && this.tags[key].length > 0) {
-    //       console.log(`Processing ${key} tags:`);
-    //       if(key == 'task_tags' || key == "other_tags"){
-    //         this.getSelectTags(this.tags[key]);
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   console.error("this.tags is not an object");
-    // }
     this.getSelectTags()
   },
   beforeDestroy() {
@@ -241,14 +229,9 @@ export default {
       }
     },
     getSelectTags(tags){
-      // tags.forEach(item=>{
-      //   if(item.category == 'task' || item.category == 'other'){
-      //     this.selectedTags.push(item)          
-      //   }
-      // })
       this.selectedTags = [
-        ...this.tags.task_tags.map(tag => tag.name),
-        ...this.tags.other_tags.map(tag => tag.name)
+        ...this.tags.task_tags.map(tag => tag),
+        ...this.tags.other_tags.map(tag => tag)
       ];
     },
     clickDelete() {
@@ -267,26 +250,8 @@ export default {
         this.theTagList = this.tagList.filter(tag => {
           return tag.zh_name.includes(this.tagInput) || tag.name.includes(this.tagInput)
         })
-
-        // if(this.$i18n.locale == 'zh'){
-        //   this.theTagList = this.tagList.filter(tag => {
-        //     if(tag.zh_name){
-        //       return tag.zh_name.includes(this.tagInput);
-        //     }else{
-        //       return tag.name.includes(this.tagInput);
-        //     }
-        //   });
-        // }else{
-        //   this.theTagList = this.tagList.filter(tag => {
-        //     if(tag.name){
-        //       return tag.name.includes(this.tagInput);
-        //     }else{
-        //       return tag.zh_name.includes(this.tagInput);
-        //     }
-        //   });
-        // }
       }else{
-        this.theTagList = this.tagList
+        this.shouldShowTagList = false
       }
     },
 
@@ -348,16 +313,9 @@ export default {
       this.updateModel(payload)
     },
     updateTags(){
-      if(this.selectedTags !== []){
-
+      if(this.selectedTags.length !== 0){
         const newSelectedTags = this.selectedTags.map(tag => tag.name)
         this.updateTagsAPI(newSelectedTags)
-
-        // let tags=[]
-        // this.selectedTags.forEach(item => {
-        //   tags.push(item.name)
-        // });
-        // this.updateTagsAPI(tags)
       } else {
         ElMessage({ message: this.$t('models.edit.needModelTag'), type: "warning" })
       }
