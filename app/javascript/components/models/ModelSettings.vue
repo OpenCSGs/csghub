@@ -228,7 +228,7 @@ export default {
         this.shouldShowTagList = false;
       }
     },
-    getSelectTags(tags){
+    getSelectTags(){
       this.selectedTags = [
         ...this.tags.task_tags.map(tag => tag),
         ...this.tags.other_tags.map(tag => tag)
