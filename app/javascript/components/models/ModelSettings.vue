@@ -216,18 +216,19 @@ export default {
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
 
-    if (typeof this.tags === 'object' && this.tags !== null) {
-      for (const key in this.tags) {
-        if (Array.isArray(this.tags[key]) && this.tags[key].length > 0) {
-          console.log(`Processing ${key} tags:`);
-          if(key == 'task_tags' || key == "other_tags"){
-            this.getSelectTags(this.tags[key]);
-          }
-        }
-      }
-    } else {
-      console.error("this.tags is not an object");
-    }
+    // if (typeof this.tags === 'object' && this.tags !== null) {
+    //   for (const key in this.tags) {
+    //     if (Array.isArray(this.tags[key]) && this.tags[key].length > 0) {
+    //       console.log(`Processing ${key} tags:`);
+    //       if(key == 'task_tags' || key == "other_tags"){
+    //         this.getSelectTags(this.tags[key]);
+    //       }
+    //     }
+    //   }
+    // } else {
+    //   console.error("this.tags is not an object");
+    // }
+    this.getSelectTags()
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
@@ -240,11 +241,15 @@ export default {
       }
     },
     getSelectTags(tags){
-      tags.forEach(item=>{
-        if(item.category == 'task' || item.category == 'other'){
-          this.selectedTags.push(item)          
-        }
-      })
+      // tags.forEach(item=>{
+      //   if(item.category == 'task' || item.category == 'other'){
+      //     this.selectedTags.push(item)          
+      //   }
+      // })
+      this.selectedTags = [
+        ...this.tags.task_tags.map(tag => tag.name),
+        ...this.tags.other_tags.map(tag => tag.name)
+      ];
     },
     clickDelete() {
       if (this.delDesc === this.modelPath) {
@@ -259,23 +264,27 @@ export default {
     showTagList(e){
       this.shouldShowTagList = true
       if(this.tagInput != ''){
-        if(this.$i18n.locale == 'zh'){
-          this.theTagList = this.tagList.filter(tag => {
-            if(tag.zh_name){
-              return tag.zh_name.includes(this.tagInput);
-            }else{
-              return tag.name.includes(this.tagInput);
-            }
-          });
-        }else{
-          this.theTagList = this.tagList.filter(tag => {
-            if(tag.name){
-              return tag.name.includes(this.tagInput);
-            }else{
-              return tag.zh_name.includes(this.tagInput);
-            }
-          });
-        }
+        this.theTagList = this.tagList.filter(tag => {
+          return tag.zh_name.includes(this.tagInput) || tag.name.includes(this.tagInput)
+        })
+
+        // if(this.$i18n.locale == 'zh'){
+        //   this.theTagList = this.tagList.filter(tag => {
+        //     if(tag.zh_name){
+        //       return tag.zh_name.includes(this.tagInput);
+        //     }else{
+        //       return tag.name.includes(this.tagInput);
+        //     }
+        //   });
+        // }else{
+        //   this.theTagList = this.tagList.filter(tag => {
+        //     if(tag.name){
+        //       return tag.name.includes(this.tagInput);
+        //     }else{
+        //       return tag.zh_name.includes(this.tagInput);
+        //     }
+        //   });
+        // }
       }else{
         this.theTagList = this.tagList
       }
@@ -339,12 +348,16 @@ export default {
       this.updateModel(payload)
     },
     updateTags(){
-      if(!!(this.selectedTags && this.selectedTags.length)){
-        let tags=[]
-        this.selectedTags.forEach(item => {
-          tags.push(item.name)
-        });
-        this.updateTagsAPI(tags)
+      if(this.selectedTags !== []){
+
+        const newSelectedTags = this.selectedTags.map(tag => tag.name)
+        this.updateTagsAPI(newSelectedTags)
+
+        // let tags=[]
+        // this.selectedTags.forEach(item => {
+        //   tags.push(item.name)
+        // });
+        // this.updateTagsAPI(tags)
       } else {
         ElMessage({ message: this.$t('models.edit.needModelTag'), type: "warning" })
       }
