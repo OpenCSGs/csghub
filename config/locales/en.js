@@ -5,6 +5,14 @@ export default {
     nameSpaceRule:
       "String of 2-20 charaters, numbers and _",
   },
+  widgets: {
+    onlineDemo: "Online Experience",
+    testInput: "Test Input",
+    testOutput: "Test Result",
+    wordsNumber: "Word Count",
+    runTest: "Run Test",
+    timeCost: "More inference time"
+  },
   models: {
     title: "Model",
     placeholder: "Models name",
@@ -184,7 +192,7 @@ export default {
     sureDel: "Sure to Del",
     canNot: "Cannot",
     role: "Role",
-    userName: "UserName",
+    userName: "Username",
     nickName: "Nickname",
     phone: "Phone Number",
     email: "Email",
@@ -197,7 +205,7 @@ export default {
     addSuccess: "Added successfully",
     delSuccess: "Del successfully",
     lastTime: "Last Updated",
-    downloadCount: "Download Count",
+    downloadCount: "Download",
     public: "Public",
     private: "Private",
     recentlyUpdate: "Recently Update",
@@ -305,5 +313,28 @@ export default {
     dragOr: "Drag and drop files here or",
     onlyOneFile: "Only support one file",
     uploadFile5Mb: "Support uploading files up to 5MB in size",
+    lfs1: "This file is stored with",
+    lfs2: "Git LFS",
+    lfs3: ". It's too big to display, but you can still",
+    lfs4: "download",
+    lfs5: "it.",
+    lfs6: "Git LFS Details",
+    lfs7: "Pointer size",
+    lfs8: "Size of remote file",
+    lfs9: "Raw pointer file",
+    lfs10: "Git Large File Storage (LFS) replaces large files with text pointers inside Git, while storing the file contents on a remote server.",
+    lfs11: "More info",
+    preview: "Preview",
+    edit: "Edit",
   },
+  repo: {
+    edit: {
+      fileName: "File Name",
+      main: "Directly submit to the main branch",
+      submit: "Submit Update",
+      desc: "Provide more description",
+      update: "Update file",
+      cancel: "Cancel",
+    }
+  }
 };

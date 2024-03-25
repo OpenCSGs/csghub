@@ -34,8 +34,6 @@ class DatasetsController < ApplicationController
   end
 
   def resolve
-    local_repo_validation
-
     if params[:download] == 'true'
       if params[:lfs] == 'true'
         file_url = Starhub.api.download_dataset_file(params[:namespace],
@@ -85,8 +83,6 @@ class DatasetsController < ApplicationController
   private
 
   def load_dataset_detail
-    local_repo_validation
-
     return if action_name == 'blob' && params[:download] == 'true'
 
     if action_name == 'blob' || action_name == 'edit_file'

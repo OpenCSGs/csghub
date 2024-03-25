@@ -54,7 +54,7 @@ class Dataset < ApplicationRecord
   end
 
   def delete_dataset_from_starhub_server
-    res = Starhub.api.delete_dataset(owner.name, name)
+    res = Starhub.api.delete_dataset(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 

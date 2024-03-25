@@ -1,5 +1,5 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:index, :files, :readme, :predict]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -137,6 +137,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     }
     sync_upload_file('model', options)
     render json: { message: '上传文件成功' }, status: 200
+  end
+
+  def predict
+    res = Starhub.api.model_predict(params[:namespace], params[:model_name], current_user&.name, params[:input], params[:current_branch])
+    render json: { message: I18n.t('models.predict_success'), result: JSON.parse(res)['data']['content'] }
   end
 
   private

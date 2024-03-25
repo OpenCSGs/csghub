@@ -3,7 +3,13 @@
     <repo-clone :repo-type="repoType" :http-clone-url="repoDetail.repository.http_clone_url" :ssh-clone-url="repoDetail.repository.ssh_clone_url" />
     <tab-container :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
       <template #summary>
-        <repo-summary :repo-type="repoType" :namespace-path="repoDetail.path" :download-count="repoDetail.downloads" />
+        <repo-summary :repo-type="repoType"
+                      :namespace-path="repoDetail.path"
+                      :download-count="repoDetail.downloads"
+                      :currentBranch="currentBranch"
+                      :widget-type="repoDetail.widget_type"
+                      :inference-status="repoDetail.status"
+        />
       </template>
       <template #files v-if="actionName === 'blob'">
         <blob
@@ -15,6 +21,10 @@
           :namespace-path="repoDetail.path"
           :size="blob.size"
           :can-write="canWrite"
+          :path="blob.path"
+          :lfs="blob.lfs"
+          :lfs-pointer-size="blob.lfs_pointer_size"
+          :lfs-relative-path="blob.lfs_relative_path"
         />
       </template>
       <template #files v-if="actionName === 'new_file'">

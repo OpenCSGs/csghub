@@ -3,6 +3,14 @@ export default {
     nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
     nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
   },
+  widgets: {
+    onlineDemo: "在线体验",
+    testInput: "测试内容",
+    testOutput: "测试结果",
+    wordsNumber: "单词数",
+    runTest: "执行测试",
+    timeCost: "模型推理耗时"
+  },
   models: {
     title: "模型",
     placeholder: "模型名字",
@@ -291,5 +299,28 @@ export default {
     dragOr: "拖拽文件到这里或者",
     onlyOneFile: "只支持单个文件",
     uploadFile5Mb: "支持 5M 以内大小的文件上传",
+    lfs1: "此文件存储在 ",
+    lfs2: "Git LFS",
+    lfs3: " 中。它太大了，无法显示，但您仍然可以",
+    lfs4: "下载",
+    lfs5: "它。",
+    lfs6: "Git LFS 详细信息",
+    lfs7: "指针大小",
+    lfs8: "文件大小",
+    lfs9: "原始指针文件",
+    lfs10: "Git大文件存储（LFS）将大文件替换为Git内部的文本指针，同时将文件内容存储在远程服务器上。",
+    lfs11: "更多信息",
+    preview: "预览",
+    edit: "编辑",
   },
+  repo: {
+    edit: {
+      fileName: "文件名",
+      main: "直接提交到 main 分支",
+      submit: "提交更新",
+      desc: "提供更多描述",
+      update: "更新文件",
+      cancel: "取消",
+    }
+  }
 };

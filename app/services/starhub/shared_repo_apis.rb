@@ -93,7 +93,7 @@ module Starhub
     end
 
     def delete_repo(repo_type, namespace, repo_name, params = {})
-      @client.delete("/#{repo_type}/#{namespace}/#{repo_name}")
+      @client.delete("/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{params[:current_user]}")
     end
 
     def update_repo(repo_type, username, repo_name, namespace, nickname, desc, options = {})
