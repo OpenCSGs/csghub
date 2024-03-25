@@ -90,8 +90,8 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     # 查找元数据部分的结束位置
     end_index = metadata_data.index('---', 3)
   
-    # 提取元数据部分
-    metadata_part = metadata_data[...end_index + 4]
+    # 提取数据部分
+    readme_content = metadata_data[end_index+4 .. -1]
 
     # 更新或添加 tags
     metadata_hash['tags'] = tags
@@ -100,7 +100,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     updated_metadata_part += "---\n"  # 手动添加`---`标记
   
     # 更新 README 内容
-    updated_readme_content = metadata_data.sub(metadata_part, updated_metadata_part)
+    updated_readme_content = updated_metadata_part + readme_content
     options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
                                                               new_branch: 'main',
                                                               username: current_user.name,
