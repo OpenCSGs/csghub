@@ -112,9 +112,9 @@
               <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
             <el-dropdown-item @click="showDialog" > {{ $t('navbar.contact') }} </el-dropdown-item>
-<!--            <a href="http://starcloud-stg.opencsg.com:8090/">-->
-<!--              <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>-->
-<!--            </a>-->
+            <a href="https://console.opencsg.com/">
+              <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
+            </a>
             <a href="/models/new">
               <el-dropdown-item divided> + {{ $t('navbar.newModel') }} </el-dropdown-item>
             </a>
