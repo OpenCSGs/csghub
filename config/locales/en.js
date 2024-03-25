@@ -40,7 +40,9 @@ export default {
       container: 'Container',
       errorAlert: 'Application Space deploy failed',
       errorAlertDesc: 'The code failed to run, check the log',
-      showErrorLogs: 'Check error logs'
+      showErrorLogs: 'Check error logs',
+      startFailed: 'Space failed to start',
+      startSuccess: 'Space started'
     },
     new: {
       title: 'Create a new ApplicationSpace',

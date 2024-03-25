@@ -38,7 +38,9 @@ export default {
       container: '控制台',
       errorAlert: '应用空间发布失败',
       errorAlertDesc: '代码运行失败，查看日志',
-      showErrorLogs: '查看日志'
+      showErrorLogs: '查看日志',
+      startFailed: 'Space 启动失败',
+      startSuccess: 'Space 启动成功'
     },
     new: {
       title: '新建应用空间',

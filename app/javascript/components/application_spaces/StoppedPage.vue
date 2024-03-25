@@ -8,14 +8,45 @@
        class="text-[#6B7280] text-[16px]"
     >
        {{ $t('application_spaces.sleepingDesc') }} </p>
-    <button class="border border-[#3250BD] bg-[#3250BD] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]">
+    <button class="border border-[#3250BD] bg-[#3250BD] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
+            @click="startSpace"
+    >
       {{ $t('application_spaces.restart') }}
     </button>
   </div>
 </template>
 
 <script setup>
+  import { useCookies } from 'vue3-cookies'
+  import { useI18n } from 'vue-i18n'
+
   const props = defineProps({
+    path: String,
     appStatus: String
   })
+
+  const cookies = useCookies()
+  const { t } = useI18n()
+
+  async function startSpace() {
+      const startUrl = `${csghubServer}/api/v1/spaces/${props.path}/run`
+      const response = await fetch(startUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${cookies.get('user_token')}`,
+        }
+      })
+
+      if (response.ok) {
+        ElMessage({message: t('application_spaces.errorPage.startFailed'), type: "success"})
+        return true
+      } else {
+        response.json().then(data => {
+          ElMessage({
+            message: data.msg,
+            type: 'warning'
+          });
+        });
+      }
+    }
 </script>
