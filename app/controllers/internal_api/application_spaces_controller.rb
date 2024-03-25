@@ -42,6 +42,31 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     end
   end
 
+  def update
+    if params[:private].to_s == 'true'
+      @application_space.visibility = 'private'
+    else
+      @application_space.visibility = 'public'
+    end
+
+    @application_space.nickname = params[:nickname] if params[:nickname].present?
+    @application_space.desc = params[:desc] if params[:desc].present?
+
+    if @application_space.save
+      render json: { message: '更新成功' }
+    else
+      render json: { message: "更新失败" }, status: :bad_request
+    end
+  end
+
+  def destroy
+    if @application_space.destroy
+      render json: { message: '删除成功' }
+    else
+      render json: { message: "删除 #{params[:namespace]}/#{params[:model_name]} 失败" }, status: :bad_request
+    end
+  end
+
   def create_file
     options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
                                                         new_branch: 'main',
