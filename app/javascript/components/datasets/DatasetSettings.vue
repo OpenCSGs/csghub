@@ -248,9 +248,13 @@ export default {
     showTagList(e){
       this.shouldShowTagList = true
       if(this.tagInput != ''){
-        this.theTagList = this.tagList.filter(tag => {
+        const userTriggerTagList = this.tagList.filter(tag => {
           return tag.zh_name.includes(this.tagInput) || tag.name.includes(this.tagInput)
         })
+        if (userTriggerTagList.length > 0) {
+          this.theTagList = userTriggerTagList
+          this.shouldShowTagList = true
+        }
       }else{
         this.shouldShowTagList = false
       }
