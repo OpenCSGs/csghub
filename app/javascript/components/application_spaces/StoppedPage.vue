@@ -19,34 +19,35 @@
 <script setup>
   import { useCookies } from 'vue3-cookies'
   import { useI18n } from 'vue-i18n'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     path: String,
     appStatus: String
   })
 
-  const cookies = useCookies()
+  const { cookies } = useCookies()
   const { t } = useI18n()
 
   async function startSpace() {
-      const startUrl = `${csghubServer}/api/v1/spaces/${props.path}/run`
-      const response = await fetch(startUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${cookies.get('user_token')}`,
-        }
-      })
-
-      if (response.ok) {
-        ElMessage({message: t('application_spaces.errorPage.startFailed'), type: "success"})
-        return true
-      } else {
-        response.json().then(data => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          });
-        });
+    const startUrl = `${csghubServer}/api/v1/spaces/${props.path}/run`
+    const response = await fetch(startUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${cookies.get('user_token')}`,
       }
+    })
+
+    if (response.ok) {
+      ElMessage({message: t('application_spaces.errorPage.startSuccess'), type: "success"})
+      return true
+    } else {
+      response.json().then(data => {
+        ElMessage({
+          message: data.msg,
+          type: 'warning'
+        });
+      });
     }
+  }
 </script>
