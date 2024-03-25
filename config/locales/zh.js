@@ -18,6 +18,7 @@ export default {
     buildDesc: "应用空间正在构建中，请稍后",
     errorDesc: "应用空间运行错误，请查看日志",
     restart: "重启 Space",
+    toggleStatusSuccess: '更新成功，请等待 Space 状态切换',
     gradioGuide: {
       notice: '开始使用您的 gradio 应用空间！',
       noticeDesc: '应用空间创建成功，请按照以下步骤开始使用（或阅读我们的完整文档）',

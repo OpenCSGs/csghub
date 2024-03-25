@@ -295,7 +295,7 @@ export default {
       })
 
       if (response.ok) {
-        ElMessage({message: "更新成功", type: "success"})
+        ElMessage({message: this.$t('application_spaces.toggleStatusSuccess'), type: "success"})
         return true
       } else {
         response.json().then(data => {

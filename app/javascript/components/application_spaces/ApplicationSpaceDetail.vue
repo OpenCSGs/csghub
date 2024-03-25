@@ -230,6 +230,7 @@
         }
       },
       onmessage(ev) {
+        console.log(`SyncStatus: ${ev.data}`)
         if (appStatus.value !== ev.data) {
           if (ev.data === 'Building') {
             if (buildLogDiv.value) { buildLogDiv.value.innerHTML = '' }

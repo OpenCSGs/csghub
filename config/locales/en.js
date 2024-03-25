@@ -20,6 +20,7 @@ export default {
     buildDesc: "This Space is in building, please wait a while",
     errorDesc: "This Space is in Error, please check the logs",
     restart: "Restart this Space",
+    toggleStatusSuccess: 'Updated, please with Space status change',
     gradioGuide: {
       notice: 'Get started with your grario app space!',
       noticeDesc: 'The app space was created successfully, please follow the steps below to get started (or read our full documentation)',
