@@ -1,7 +1,9 @@
 <template>
   <div class="relative">
     <el-tabs v-model="activeName">
-      <el-tab-pane :label="$t('all.summary')" name="summary">
+      <el-tab-pane :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
+                   name="summary"
+      >
         <slot name="summary"></slot>
       </el-tab-pane>
       <el-tab-pane :label="$t('all.files')" name="files">
@@ -35,11 +37,16 @@
 </style>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   defaultTab: String,
-  settingsVisibility: Boolean
+  settingsVisibility: Boolean,
+  repoType: String
+})
+
+const isApplicationSpace = computed(() => {
+  return props.repoType === 'application_space'
 })
 
 const activeName = ref(props.defaultTab)
