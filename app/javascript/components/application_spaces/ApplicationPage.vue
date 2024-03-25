@@ -20,6 +20,6 @@
 
   const endpointWithToken = computed(() => {
     const userToken = cookies.get('user_token')
-    return `${props.appEndpoint}?jwt=${userToken}`
+    return `https://gradio-test-app-v1-0.space.opencsg.com?jwt=${userToken}`
   })
 </script>
