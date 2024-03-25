@@ -246,7 +246,6 @@ export default {
       }
     },
     showTagList(e){
-      this.shouldShowTagList = true
       if(this.tagInput != ''){
         const userTriggerTagList = this.tagList.filter(tag => {
           return tag.zh_name.includes(this.tagInput) || tag.name.includes(this.tagInput)
