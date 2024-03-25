@@ -184,13 +184,9 @@
       },
       onmessage(ev) {
         if (ev.event === 'Build') {
-          const node = document.createElement("p");
-          node.innerText = ev.data
-          buildLogDiv.value.appendChild(node)
+          appendLog(buildLogDiv, ev.data)
         } else if (ev.event === 'Container') {
-          const node = document.createElement("p");
-          node.innerText = ev.data
-          containerLogDiv.value.appendChild(node)
+          appendLog(containerLogDiv, ev.data)
         }
       },
       onerror(err) {
@@ -198,6 +194,12 @@
         console.log(err)
       }
     })
+  }
+
+  const appendLog = (refElem, data) => {
+    const node = document.createElement("p");
+    node.innerText = data
+    refElem.value.appendChild(node)
   }
 
   const syncSpaceStatus = () => {
