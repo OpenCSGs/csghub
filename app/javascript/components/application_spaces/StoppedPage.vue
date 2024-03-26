@@ -8,7 +8,8 @@
        class="text-[#6B7280] text-[16px]"
     >
        {{ $t('application_spaces.sleepingDesc') }} </p>
-    <button class="border border-[#3250BD] bg-[#3250BD] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
+    <button v-if="canWrite"
+            class="border border-[#3250BD] bg-[#3250BD] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
             @click="startSpace"
     >
       {{ $t('application_spaces.restart') }}
@@ -23,7 +24,8 @@
 
   const props = defineProps({
     path: String,
-    appStatus: String
+    appStatus: String,
+    canWrite: Boolean
   })
 
   const { cookies } = useCookies()

@@ -16,6 +16,7 @@
         />
         <StoppedPage v-else-if="repoType === 'application_space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
                      :appStatus="appStatus"
+                     :canWrite="canWrite"
                      :path="repoDetail.path"
         />
         <BuildAndErrorPage v-else-if="repoType === 'application_space'"
