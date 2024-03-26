@@ -117,7 +117,7 @@
   const { t } = useI18n();
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
-  const appEndpoint = ref(`${csghubServer}/api/v1/${props.applicationSpace.data.endpoint}`)
+  const appEndpoint = ref(`https://${props.applicationSpace.data.endpoint}`)
 
   const spaceLogsDrawer = ref(false)
   const buildLogDiv = ref(null)
