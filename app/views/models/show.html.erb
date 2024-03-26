@@ -10,6 +10,7 @@
 
 <div class="bg-white border-b border-[#EBEEF5]">
   <model-detail
+    :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
     local-repo-id="<%= @local_model.id %>"
     :model="<%= @model %>"

@@ -10,3 +10,5 @@ zh:
       video: '视频'
       multimodal: '多模态'
       scientific_computing: '科学计算'
+    update:
+      success: 'README标签更新成功'
