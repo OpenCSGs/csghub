@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-[24px] max-w-[1280px] mb-[60px] m-auto mt-[32px]">
-    <div class="w-[30%] min-w-[360px] xl:px-[20px] mlg:hidden">
+    <div v-if="repoType !== 'application_space'" class="w-[30%] min-w-[360px] xl:px-[20px] mlg:hidden">
       <TagSidebar
         :taskTags="props.taskTags"
         :frameworkTags="props.frameworkTags"
@@ -43,9 +43,11 @@
           </el-select>
         </div>
       </div>
-      <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
-        <application-space-item v-if="repoType === 'application_space'" v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
-        <repo-item v-else v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
+      <div v-if="repoType === 'application_space'" class="w-full xl:flex-col flex flex-wrap gap-4 mb-4 mt-[16px]">
+        <application-space-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
+      </div>
+      <div v-else class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
+        <repo-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
       </div>
       <div v-show="totalRepos > perPage">
         <el-pagination background

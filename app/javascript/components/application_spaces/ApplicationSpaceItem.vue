@@ -17,7 +17,7 @@
       </p>
     </div>
     <div class="my-2">
-      <img :src="coverImageUrl" class="w-[402px] xl:w-full object-cover rounded cursor-pointer hover:opacity-50" />
+      <img :src="coverImageUrl" class="w-[362px] xl:w-full object-cover rounded cursor-pointer hover:opacity-50" />
     </div>
     <div class="h-[36px]" v-if="!repo.description"></div>
     <el-popover
