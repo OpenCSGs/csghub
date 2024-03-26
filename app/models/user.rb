@@ -141,6 +141,13 @@ class User < ApplicationRecord
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
+
+    if starhub_synced? && git_token.blank?
+      random_name = SecureRandom.uuid
+      res_body = Starhub.api.generate_git_token(name, random_name)
+      res_json = JSON.parse(res_body)
+      self.update_columns(git_token_name: res_json["data"]["name"], git_token: res_json["data"]["token"])
+    end
   end
 
   def as_json options = nil
