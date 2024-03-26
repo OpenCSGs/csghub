@@ -163,6 +163,7 @@
         if (response.ok) {
           console.log('SSE logs server connected')
           isLogsSSEConnected.value = true
+          spaceLogsDrawer.value = true
         } else if (response.status === 401) {
           ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
             'show-close': false,
@@ -196,10 +197,10 @@
 
   const appendLog = (refElem, data) => {
     const node = document.createElement("p")
-    console.log(`Logs: ${data}`)
-    console.log(`Formatted Logs: ${data.replace(/\\r/g, "<br>")}`)
     node.innerHTML = data.replace(/\\r/g, "<br>")
-    refElem.value.appendChild(node)
+    if (refElem.value) {
+      refElem.value.appendChild(node)
+    }
   }
 
   const syncSpaceStatus = () => {
