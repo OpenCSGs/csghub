@@ -65,9 +65,13 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_locale
-    default_browser = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-    default_browser = default_browser == 'zh' ? default_browser : 'en'
-    I18n.locale = params[:locale] || cookies[:locale] || default_browser
+    browser_language = request.env['HTTP_ACCEPT_LANGUAGE']
+    default_locale = if browser_language
+                        browser_language.scan(/^[a-z]{2}/)&.first == 'zh' ? 'zh' : 'en'
+                     else
+                        I18n.default_locale
+                     end
+    I18n.locale = params[:locale] || cookies[:locale] || default_locale
     cookies[:locale] = I18n.locale
   end
 
