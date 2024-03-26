@@ -197,8 +197,8 @@
   const appendLog = (refElem, data) => {
     const node = document.createElement("p")
     console.log(`Logs: ${data}`)
-    console.log(`Formatted Logs: ${data.replace(/\r/g, "<br>")}`)
-    node.innerHTML = data.replace(/\r/g, "<br>")
+    console.log(`Formatted Logs: ${data.replace(/\\r/g, "<br>")}`)
+    node.innerHTML = data.replace(/\\r/g, "<br>")
     refElem.value.appendChild(node)
   }
 
