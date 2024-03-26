@@ -69,7 +69,6 @@ class ApplicationController < ActionController::Base
     default_browser = default_browser == 'zh' ? default_browser : 'en'
     I18n.locale = params[:locale] || cookies[:locale] || default_browser
     cookies[:locale] = I18n.locale
-    local = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
   end
 
   def login_by_user_infos user_infos
