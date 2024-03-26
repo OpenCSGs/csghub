@@ -114,6 +114,8 @@
     canWrite: Boolean
   })
 
+  const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
+
   const { t } = useI18n();
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
@@ -253,7 +255,7 @@
   }
 
   onMounted(() => {
-    if (isStatusSSEConnected.value === false && appStatus !== 'NoAppFile') {
+    if (isStatusSSEConnected.value === false && allStatus.includes(appStatus)) {
       syncSpaceStatus()
     }
   })
