@@ -88,7 +88,7 @@ class ApplicationSpacesController < ApplicationController
       @application_space, @branches = Starhub.api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     end
 
-    @tags = Tag.build_detail_tags(JSON.parse(@application_space)['data']['tags']).to_json
+    @tags = Tag.build_detail_tags(JSON.parse(@application_space)['data']['tags'], 'space').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_application_space) : false
   end
 end
