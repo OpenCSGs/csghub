@@ -68,6 +68,7 @@
           :inactive-text="$t('application_spaces.status.stopped')"
         />
       </div>
+      <el-button @click="restartSpace" class="w-[100px]">{{ $t('application_spaces.restart')}}</el-button>
     </div>
 
     <el-divider/>
@@ -253,7 +254,7 @@ export default {
         "NVIDIA A10G · 4 vCPU · 15 GB",
         "NVIDIA A10G · 12 vCPU · 46 GB"
       ],
-      deployFailed: ['Building Failed', 'Deploy Failed', 'Runtime Error'].includes(this.appStatus),
+      deployFailed: ['BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       cookies: useCookies().cookies
     };
   },
@@ -277,6 +278,28 @@ export default {
             type: "warning",
           })
         })
+      }
+    },
+
+    async restartSpace() {
+      restartUrl = `${csghubServer}/api/v1/spaces/${this.path}/run`
+      const response = await fetch(restartUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.cookies.get('user_token')}`,
+        }
+      })
+
+      if (response.ok) {
+        ElMessage({message: this.$t('application_spaces.toggleStatusSuccess'), type: "success"})
+        return true
+      } else {
+        response.json().then(data => {
+          ElMessage({
+            message: data.msg,
+            type: 'warning'
+          });
+        });
       }
     },
 
