@@ -24,10 +24,10 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('application_spaces.edit.runningStatus')}}
+          {{ $t('application_spaces.edit.cloudResource')}}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('application_spaces.edit.runningStatusDesc')}}
+          {{ $t('application_spaces.edit.cloudResourceDesc')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -49,25 +49,48 @@
 
     <el-divider/>
 
-    <!-- 运行状态 -->
+    <!-- 暂停 Space -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('application_spaces.edit.runningStatus')}}
-        </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('application_spaces.edit.runningStatusDesc')}}
+          {{ $t('application_spaces.stopSpace')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <el-switch
-          v-model="isSpaceRunning"
+        <div class="flex flex-col gap-[6px]">
+          <el-button @click="stopSpace"
+                     class="w-[100px]"
+                     :disabled="!initialized"
+          >
+            {{ $t('application_spaces.stop')}}
+          </el-button>
+        </div>
+        <!-- <el-switch
+          v-model="isSpaceStopped"
           size="large"
           :before-change="toggleSpaceStatus"
           :active-text="$t('application_spaces.status.running')"
           :inactive-text="$t('application_spaces.status.stopped')"
-        />
-        <el-button @click="restartSpace" class="w-[100px]">{{ $t('application_spaces.restart')}}</el-button>
+        /> -->
+      </div>
+    </div>
+
+    <el-divider/>
+
+    <!-- 重启 Space -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('application_spaces.restartSpace')}}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-button @click="restartSpace"
+                   class="w-[100px]"
+                   :disabled="!initialized"
+        >
+          {{ $t('application_spaces.restart')}}
+        </el-button>
       </div>
     </div>
 
@@ -255,13 +278,14 @@ export default {
         "NVIDIA A10G · 12 vCPU · 46 GB"
       ],
       deployFailed: ['BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
+      initialized: ['building', 'deploying', 'startup', 'running', 'stopped', 'sleeping', 'buildingfailed', 'deployfailed', 'runtimeerror'].includes(this.appStatus),
       cookies: useCookies().cookies
     };
   },
 
   computed: {
-    isSpaceRunning() {
-      return this.appStatus === 'Stopped' ? false : true
+    isSpaceStopped() {
+      return this.appStatus === 'Stopped' ? true : false
     }
   },
 
@@ -278,6 +302,28 @@ export default {
             type: "warning",
           })
         })
+      }
+    },
+
+    async stopSpace() {
+      stopUrl = `${csghubServer}/api/v1/spaces/${this.path}/stop`
+      const response = await fetch(stopUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.cookies.get('user_token')}`,
+        }
+      })
+
+      if (response.ok) {
+        ElMessage({message: this.$t('application_spaces.toggleStatusSuccess'), type: "success"})
+        return true
+      } else {
+        response.json().then(data => {
+          ElMessage({
+            message: data.msg,
+            type: 'warning'
+          });
+        });
       }
     },
 

@@ -17,7 +17,10 @@ export default {
     sleepingDesc: "由于长时间未操作，该空间已进入休眠状态。",
     buildDesc: "应用空间正在构建中，请稍后",
     errorDesc: "应用空间运行错误，请查看日志",
-    restart: "重启 Space",
+    restart: "重启",
+    restartSpace: "重启应用空间",
+    stop: "暂停",
+    stopSpace: "暂停应用空间",
     toggleStatusSuccess: '更新成功，请等待 Space 状态切换',
     gradioGuide: {
       notice: '开始使用您的 gradio 应用空间！',

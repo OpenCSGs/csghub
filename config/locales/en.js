@@ -19,7 +19,10 @@ export default {
     sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",
     buildDesc: "This Space is in building, please wait a while",
     errorDesc: "This Space is in Error, please check the logs",
-    restart: "Restart this Space",
+    restart: "Restart",
+    restartSpace: "Restart the Space",
+    stop: "Stop",
+    stopSpace: "Stop the Space",
     toggleStatusSuccess: 'Updated, please wait Space status change',
     gradioGuide: {
       notice: 'Get started with your grario app space!',
