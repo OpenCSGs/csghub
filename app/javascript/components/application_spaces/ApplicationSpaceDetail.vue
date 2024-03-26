@@ -241,7 +241,7 @@
           appStatus.value = ev.data
         }
         if (inProgressStatus.includes(ev.data)) {
-          spaceLogsDrawer.value = true
+          // spaceLogsDrawer.value = true
           if (isLogsSSEConnected.value === false) {
             syncSpaceLogs()
           }
