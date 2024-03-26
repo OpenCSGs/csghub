@@ -318,12 +318,22 @@ export default {
         ElMessage({message: this.$t('application_spaces.toggleStatusSuccess'), type: "success"})
         return true
       } else {
-        response.json().then(data => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          });
-        });
+        if (response.status === 401) {
+          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
+            'show-close': false,
+            confirmButtonText: t('user_sessions.reLogin'),
+            callback: () => {
+              window.location.href = "/logout"
+            },
+          })
+        } else {
+          response.json().then(data => {
+            ElMessage({
+              message: data.msg,
+              type: 'warning'
+            })
+          })
+        }
       }
     },
 
@@ -340,12 +350,22 @@ export default {
         ElMessage({message: this.$t('application_spaces.toggleStatusSuccess'), type: "success"})
         return true
       } else {
-        response.json().then(data => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          });
-        });
+        if (response.status === 401) {
+          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
+            'show-close': false,
+            confirmButtonText: t('user_sessions.reLogin'),
+            callback: () => {
+              window.location.href = "/logout"
+            },
+          })
+        } else {
+          response.json().then(data => {
+            ElMessage({
+              message: data.msg,
+              type: 'warning'
+            })
+          })
+        }
       }
     },
 
