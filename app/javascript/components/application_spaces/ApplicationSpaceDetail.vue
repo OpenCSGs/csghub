@@ -256,7 +256,7 @@
 
   onMounted(() => {
     console.log(`Space 初始状态：${appStatus.value}`)
-    if (isStatusSSEConnected.value === false && allStatus.includes(appStatus)) {
+    if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
       syncSpaceStatus()
     }
   })
