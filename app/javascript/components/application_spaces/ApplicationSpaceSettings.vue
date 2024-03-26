@@ -67,8 +67,8 @@
           :active-text="$t('application_spaces.status.running')"
           :inactive-text="$t('application_spaces.status.stopped')"
         />
+        <el-button @click="restartSpace" class="w-[100px]">{{ $t('application_spaces.restart')}}</el-button>
       </div>
-      <el-button @click="restartSpace" class="w-[100px]">{{ $t('application_spaces.restart')}}</el-button>
     </div>
 
     <el-divider/>
