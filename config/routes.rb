@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     post '/models/:namespace/(*model_name)/files/:branch', to: 'models#create_file'
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file'
     put '/models/:namespace/(*model_name)/files/:branch', to: 'models#update_file'
+    put '/models/:namespace/(*model_name)/update_readme_tags', to: 'models#update_readme_tags'
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict'
@@ -76,6 +77,7 @@ Rails.application.routes.draw do
     post '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#create_file'
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file'
     put '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#update_file'
+    put '/datasets/:namespace/(*dataset_name)/update_readme_tags', to: 'datasets#update_readme_tags'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
 

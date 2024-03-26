@@ -24,6 +24,10 @@ module Starhub
       get_repo_files('datasets', namespace, dataset_name, options)
     end
 
+    def get_dataset_blob(namespace, dataset_name, path, options = {})
+      get_blob_sha('datasets', namespace, dataset_name, path, options)
+    end
+
     def get_dataset_last_commit(namespace, dataset_name, options = {})
       get_repo_last_commit('datasets', namespace, dataset_name, options)
     end

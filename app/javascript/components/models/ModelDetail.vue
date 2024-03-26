@@ -28,6 +28,8 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      :tags="tags"
+      :tag-list="tagList"
       repo-type="model"
     />
   </div>
@@ -41,6 +43,8 @@ const props = defineProps({
   localRepoId: String,
   defaultTab: String,
   model: Object,
+  tagList: Object,
+  localModel: Object,
   lastCommit: Object,
   branches: Object,
   tags: Object,
@@ -54,7 +58,6 @@ const props = defineProps({
   canWrite: Boolean
 })
 </script>
-
 <style scoped>
   body {
     background: #fff !important;

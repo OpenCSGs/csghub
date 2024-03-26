@@ -10,6 +10,7 @@
 
 <div class="bg-white border-b border-[#EBEEF5]">
   <dataset-detail
+    :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
     local-repo-id="<%= @local_dataset.id %>"
     :dataset="<%= @dataset %>"
