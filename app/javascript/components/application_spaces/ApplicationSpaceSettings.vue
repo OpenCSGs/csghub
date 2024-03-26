@@ -278,7 +278,7 @@ export default {
         "NVIDIA A10G · 12 vCPU · 46 GB"
       ],
       deployFailed: ['BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
-      initialized: ['building', 'deploying', 'startup', 'running', 'stopped', 'sleeping', 'buildingfailed', 'deployfailed', 'runtimeerror'].includes(this.appStatus),
+      initialized: ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       cookies: useCookies().cookies
     };
   },
