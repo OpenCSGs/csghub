@@ -323,9 +323,9 @@ export default {
     "source": "My Source",
   },
   "dailyPaper": {
-    "paper": "Papers center",
-    "eachpaper": "Selected papers for each issue",
-    "arxiv": "The latest news, technology, and resources from arxiv",
+    "paper": "Papers Center",
+    "eachpaper": "Selected Papers Compilation",
+    "arxiv": "The latest news and technology from arxiv",
     "newpaper": "Publish new community papers",
     "placeholder": "Search by arxiv id or title",
 
