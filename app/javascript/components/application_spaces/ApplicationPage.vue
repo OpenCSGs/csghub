@@ -20,6 +20,6 @@
 
   const endpointWithToken = computed(() => {
     const userToken = cookies.get('user_token')
-    return `${appEndpoint}?jwt=${userToken}`
+    return `${props.appEndpoint}?jwt=${userToken}`
   })
 </script>
