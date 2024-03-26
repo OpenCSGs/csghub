@@ -197,8 +197,8 @@
   }
 
   const appendLog = (refElem, data) => {
-    const node = document.createElement("p");
-    node.innerText = data
+    const node = document.createElement("p")
+    node.innerHTML = data.replace(/\r/g, "<br>")
     refElem.value.appendChild(node)
   }
 
