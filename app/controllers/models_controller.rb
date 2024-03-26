@@ -92,7 +92,8 @@ class ModelsController < ApplicationController
       @model, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
 
-    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags']).to_json
+    @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
+    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end
 end

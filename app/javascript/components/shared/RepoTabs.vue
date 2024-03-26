@@ -93,6 +93,8 @@
           :model-nickname="repoDetail.nickname"
           :model-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
+          :tag-list="tagList"
+          :tags="tags"
           :private="repoDetail.private" />
         <dataset-settings
           v-if="repoType === 'dataset'"
@@ -100,6 +102,8 @@
           :dataset-nickname="repoDetail.nickname"
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
+          :tag-list="tagList"
+          :tags="tags"
           :private="repoDetail.private" />
         <application-space-settings
           v-if="repoType === 'application_space'"
@@ -158,6 +162,8 @@ const props = defineProps({
   currentPath: String,
   defaultTab: String,
   blob: Object,
+  tags: Object,
+  tagList: String,
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean,

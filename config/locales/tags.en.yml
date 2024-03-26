@@ -11,3 +11,5 @@ en:
       video: 'Video'
       multimodal: 'Multimodal'
       scientific_computing: 'Scientific Computing'
+    update:
+      success: 'README tags updated successfully'
