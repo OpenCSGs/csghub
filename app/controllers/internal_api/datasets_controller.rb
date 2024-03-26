@@ -98,7 +98,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     end_index = metadata_data.index('---', 3)
   
     # 提取数据部分
-    readme_content = metadata_data[end_index+4 .. -1]
+    readme_content = metadata_data[end_index+4 .. -1] || ""
 
     # 更新或添加 tags
     metadata_hash['tags'] = tags
