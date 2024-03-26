@@ -118,9 +118,8 @@
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
   const appEndpoint = ref(`${csghubServer}/api/v1/${props.applicationSpace.data.endpoint}`)
-  const inProgressStatus = ['Building', 'Deploying', 'Startup', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
-  const spaceLogsDrawer = ref(inProgressStatus.includes(appStatus))
+  const spaceLogsDrawer = ref(false)
   const buildLogDiv = ref(null)
   const containerLogDiv = ref(null)
 
@@ -152,7 +151,6 @@
       spaceLogsDrawer.value = false
     } else {
       spaceLogsDrawer.value = true
-      syncSpaceLogs()
     }
   }
 
@@ -164,7 +162,7 @@
       async onopen(response) {
         if (response.ok) {
           console.log('SSE logs server connected')
-          return;
+          isLogsSSEConnected.value = true
         } else if (response.status === 401) {
           ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
             'show-close': false,
@@ -212,7 +210,7 @@
       async onopen(response) {
         if (response.ok) {
           console.log('SSE status server connected')
-          return;
+          isStatusSSEConnected.value = true
         }
         else if (response.status === 401) {
           ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
@@ -240,11 +238,10 @@
           }
           appStatus.value = ev.data
         }
-        if (inProgressStatus.includes(ev.data)) {
-          // spaceLogsDrawer.value = true
-          if (isLogsSSEConnected.value === false) {
-            syncSpaceLogs()
-          }
+
+        // 启动日志
+        if (isLogsSSEConnected.value === false) {
+          syncSpaceLogs()
         }
       },
       onerror(err) {
@@ -257,10 +254,6 @@
   onMounted(() => {
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
-    }
-
-    if (spaceLogsDrawer.value && isLogsSSEConnected.value === false) {
-      syncSpaceLogs()
     }
   })
 </script>
