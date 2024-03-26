@@ -118,7 +118,7 @@
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
   const appEndpoint = ref(`${csghubServer}/api/v1/${props.applicationSpace.data.endpoint}`)
-  const inProgressStatus = ['Building', 'Deploying', 'Startup', 'Building Failed', 'Deploy Failed', 'Runtime Error']
+  const inProgressStatus = ['Building', 'Deploying', 'Startup', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const spaceLogsDrawer = ref(inProgressStatus.includes(appStatus))
   const buildLogDiv = ref(null)
@@ -198,6 +198,8 @@
 
   const appendLog = (refElem, data) => {
     const node = document.createElement("p")
+    console.log(`Logs: ${data}`)
+    console.log(`Formatted Logs: ${data.replace(/\r/g, "<br>")}`)
     node.innerHTML = data.replace(/\r/g, "<br>")
     refElem.value.appendChild(node)
   }

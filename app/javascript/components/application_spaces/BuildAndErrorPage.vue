@@ -6,7 +6,7 @@
        {{ $t('application_spaces.buildDesc') }}
     </p>
 
-    <p v-if="['Deploy Failed','Building Failed','Runtime Error'].includes(appStatus)"
+    <p v-if="['DeployFailed','BuildingFailed','RuntimeError'].includes(appStatus)"
        class="text-[#6B7280] text-[16px]"
     >
        {{ $t('application_spaces.errorDesc') }}

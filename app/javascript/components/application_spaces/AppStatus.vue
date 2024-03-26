@@ -35,11 +35,11 @@
         return t('application_spaces.status.sleeping')
       case 'Stopped':
         return t('application_spaces.status.stopped')
-      case 'Building Failed':
+      case 'BuildingFailed':
         return t('application_spaces.status.buildingFailed')
-      case 'Deploy Failed':
+      case 'DeployFailed':
         return t('application_spaces.status.deployFailed')
-      case 'Runtime Error':
+      case 'RuntimeError':
         return t('application_spaces.status.runtimeError')
       default:
         return '未知'
@@ -58,9 +58,9 @@
       case 'Sleeping':
       case 'Stopped':
         return 'warning'
-      case 'Building Failed':
-      case 'Deploy Failed':
-      case 'Runtime Error':
+      case 'BuildingFailed':
+      case 'DeployFailed':
+      case 'RuntimeError':
         return 'error'
       default:
         return 'Unknown'
