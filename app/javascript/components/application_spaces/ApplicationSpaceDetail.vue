@@ -253,7 +253,7 @@
   }
 
   onMounted(() => {
-    if (isStatusSSEConnected.value === false) {
+    if (isStatusSSEConnected.value === false && appStatus !== 'NoAppFile') {
       syncSpaceStatus()
     }
   })
