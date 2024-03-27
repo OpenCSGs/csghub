@@ -165,6 +165,8 @@
         if (response.ok) {
           console.log('SSE logs server connected')
           isLogsSSEConnected.value = true
+          if (buildLogDiv.value) { buildLogDiv.value.innerHTML = '' }
+          if (containerLogDiv.value) { containerLogDiv.value.innerHTML = '' }
           spaceLogsDrawer.value = true
         } else if (response.status === 401) {
           ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
