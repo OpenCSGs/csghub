@@ -48,6 +48,10 @@
         return `/models/${props.repo.path}`
       case 'dataset':
         return `/datasets/${props.repo.path}`
+      case 'application_space':
+        return `/application_spaces/${props.repo.path}`
+      case 'code':
+        return `/codes/${props.repo.path}`
       default:
         return ''
     }
@@ -69,7 +73,7 @@
       taskTag = taskTag? taskTag["show_name"] : null
     }
 
-    return { path: path, visibility: visibility, taskTag: taskTag }
+    return { path, visibility, taskTag }
   })
 </script>
 

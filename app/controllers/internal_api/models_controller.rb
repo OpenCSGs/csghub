@@ -36,7 +36,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def create
     model = current_user.created_models.build(model_params)
     if model.save
-      render json: { path: model.path, message: '模型创建成功!' }, status: :created
+      render json: { path: model.path, message: I18n.t('repo.createSuccess') }, status: :created
     else
       render json: { message: model.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
@@ -53,17 +53,17 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     @model.desc = params[:desc] if params[:desc].present?
 
     if @model.save
-      render json: { message: '更新成功' }
+      render json: { message: I18n.t('repo.updateSuccess') }
     else
-      render json: { message: "更新失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.updateFailed') }, status: :bad_request
     end
   end
 
   def destroy
     if @model.destroy
-      render json: { message: '删除成功' }
+      render json: { message: I18n.t('repo.delSuccess') }
     else
-      render json: { message: "删除 #{params[:namespace]}/#{params[:model_name]} 失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
     end
   end
 
@@ -75,12 +75,12 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_create_file('model', options)
-    render json: { message: '创建文件成功' }
+    render json: { message: I18n.t('repo.createFileSuccess') }
   end
 
   def update_readme_tags
     tags = params[:tags]
-    
+
     # # 更新 README 元数据中的 tags
     blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md')
     content =JSON.parse(blob).dig("data", "content")
@@ -89,7 +89,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     sha = JSON.parse(blob).dig("data", "sha")
     # 查找元数据部分的结束位置
     end_index = metadata_data.index('---', 3)
-  
+
     # 提取数据部分
     readme_content = metadata_data[end_index+4 .. -1] || ""
 
@@ -98,7 +98,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     # 重新生成元数据部分
     updated_metadata_part = YAML.dump(metadata_hash)
     updated_metadata_part += "---\n"  # 手动添加`---`标记
-  
+
     # 更新 README 内容
     updated_readme_content = updated_metadata_part + readme_content
     options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
@@ -122,7 +122,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_update_file('model', options)
-    render json: { message: '更新文件成功' }
+    render json: { message: I18n.t('repo.updateFileSuccess') }
   end
 
   def upload_file
@@ -136,7 +136,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       username: current_user.name
     }
     sync_upload_file('model', options)
-    render json: { message: '上传文件成功' }, status: 200
+    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
   end
 
   def predict

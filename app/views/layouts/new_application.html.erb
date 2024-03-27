@@ -23,6 +23,7 @@
       })();
 
       const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+      const csghubServer = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
     </script>
   </head>
 

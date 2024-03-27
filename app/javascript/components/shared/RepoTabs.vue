@@ -1,9 +1,31 @@
 <template>
   <div class="relative">
     <repo-clone :repo-type="repoType" :http-clone-url="repoDetail.repository.http_clone_url" :ssh-clone-url="repoDetail.repository.ssh_clone_url" />
-    <tab-container :default-tab="defaultTab" :settingsVisibility="settingsVisibility">
+    <tab-container :default-tab="defaultTab"
+                   :settingsVisibility="settingsVisibility"
+                   :repoType="repoType"
+    >
       <template #summary>
-        <repo-summary :repo-type="repoType"
+        <InitializeGuide v-if="repoType === 'application_space' && appStatus === 'NoAppFile'"
+                         :http-clone-url="repoDetail.repository.http_clone_url"
+                         :ssh-clone-url="repoDetail.repository.ssh_clone_url"
+                         :sdk="sdk"
+        />
+        <ApplicationPage v-else-if="repoType === 'application_space' && appStatus === 'Running'"
+                         :appEndpoint="appEndpoint"
+        />
+        <StoppedPage v-else-if="repoType === 'application_space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
+                     :appStatus="appStatus"
+                     :canWrite="canWrite"
+                     :path="repoDetail.path"
+        />
+        <BuildAndErrorPage v-else-if="repoType === 'application_space'"
+                           :appStatus="appStatus"
+                           :canWrite="canWrite"
+                           @showSpaceLogs="showSpaceLogs"
+        />
+        <repo-summary v-else
+                      :repo-type="repoType"
                       :namespace-path="repoDetail.path"
                       :download-count="repoDetail.downloads"
                       :currentBranch="currentBranch"
@@ -84,6 +106,23 @@
           :tag-list="tagList"
           :tags="tags"
           :private="repoDetail.private" />
+        <application-space-settings
+          v-if="repoType === 'application_space'"
+          :path="repoDetail.path"
+          :application-space-nickname="repoDetail.nickname"
+          :application-space-desc="repoDetail.description"
+          :default_branch="repoDetail.default_branch"
+          :appStatus="appStatus"
+          :cloudResource="repoDetail.hardware"
+          :private="repoDetail.private"
+          @showSpaceLogs="showSpaceLogs" />
+        <code-settings
+          v-if="repoType === 'code'"
+          :path="repoDetail.path"
+          :code-nickname="repoDetail.nickname"
+          :code-desc="repoDetail.description"
+          :default_branch="repoDetail.default_branch"
+          :private="repoDetail.private" />
       </template>
     </tab-container>
   </div>
@@ -103,11 +142,17 @@ import RepoFiles from '../shared/RepoFiles.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import ModelSettings from '../models/ModelSettings.vue'
 import DatasetSettings from '../datasets/DatasetSettings.vue'
+import ApplicationSpaceSettings from '../application_spaces/ApplicationSpaceSettings.vue'
+import CodeSettings from '../codes/CodeSettings.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'
 import EditFile from '../shared/EditFile.vue'
-import { computed } from 'vue'
+import InitializeGuide from '../application_spaces/InitializeGuide.vue'
+import ApplicationPage from '../application_spaces/ApplicationPage.vue'
+import StoppedPage from '../application_spaces/StoppedPage.vue'
+import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
+import { computed, onMounted } from 'vue'
 
 const props = defineProps({
   localRepoId: String,
@@ -123,7 +168,15 @@ const props = defineProps({
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean,
-  repoType: String
+  repoType: String,
+  appStatus: String,
+  appEndpoint: String,
+  sdk: String
+})
+
+const emit = defineEmits(['toggleSpaceLogsDrawer']);
+
+onMounted(() => {
 })
 
 const repoTypeClass = computed(() => {
@@ -131,4 +184,8 @@ const repoTypeClass = computed(() => {
 })
 
 const decodedContent = props.blob?.content || ''
+
+const showSpaceLogs = () => {
+  emit('toggleSpaceLogsDrawer')
+}
 </script>
