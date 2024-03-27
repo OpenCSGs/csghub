@@ -53,17 +53,17 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     @application_space.desc = params[:desc] if params[:desc].present?
 
     if @application_space.save
-      render json: { message: '更新成功' }
+      render json: { message: I18n.t('repo.updateSuccess') }
     else
-      render json: { message: "更新失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.updateFailed') }, status: :bad_request
     end
   end
 
   def destroy
     if @application_space.destroy
-      render json: { message: '删除成功' }
+      render json: { message: I18n.t('repo.delSuccess') }
     else
-      render json: { message: "删除 #{params[:namespace]}/#{params[:model_name]} 失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
     end
   end
 
@@ -75,7 +75,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_create_file('application_space', options)
-    render json: { message: '创建文件成功' }
+    render json: { message: I18n.t('repo.createFileSuccess') }
   end
 
 
@@ -87,7 +87,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_update_file('application_space', options)
-    render json: { message: '更新文件成功' }
+    render json: { message: I18n.t('repo.updateFileSuccess') }
   end
 
   def upload_file
@@ -101,7 +101,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
       username: current_user.name
     }
     sync_upload_file('application_space', options)
-    render json: { message: '上传文件成功' }, status: 200
+    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
   end
 
   private

@@ -36,7 +36,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
   def create
     code = current_user.created_codes.build(code_params)
     if code.save
-      render json: { path: code.path, message: '代码仓库创建成功!' }, status: :created
+      render json: { path: code.path, message: I18n.t('repo.createSuccess') }, status: :created
     else
       render json: { message: code.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
@@ -53,17 +53,17 @@ class InternalApi::CodesController < InternalApi::ApplicationController
     @code.desc = params[:desc] if params[:desc].present?
 
     if @code.save
-      render json: { message: '更新成功' }
+      render json: { message: I18n.t('repo.updateSuccess') }
     else
-      render json: { message: "更新失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.updateFailed') }, status: :bad_request
     end
   end
 
   def destroy
     if @code.destroy
-      render json: { message: '删除成功' }
+      render json: { message: I18n.t('repo.delSuccess') }
     else
-      render json: { message: "删除 #{params[:namespace]}/#{params[:code_name]} 失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
     end
   end
 
@@ -75,7 +75,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_create_file('code', options)
-    render json: { message: '创建文件成功' }
+    render json: { message: I18n.t('repo.createFileSuccess') }
   end
 
 
@@ -87,7 +87,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_update_file('code', options)
-    render json: { message: '更新文件成功' }
+    render json: { message: I18n.t('repo.updateFileSuccess') }
   end
 
   def upload_file
@@ -101,7 +101,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
       username: current_user.name
     }
     sync_upload_file('code', options)
-    render json: { message: '上传文件成功' }, status: 200
+    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
   end
 
   private
