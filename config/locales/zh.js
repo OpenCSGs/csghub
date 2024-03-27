@@ -20,6 +20,7 @@ export default {
     buildDesc: "应用空间正在构建中，请稍后",
     errorDesc: "应用空间运行错误，请查看日志",
     restart: "重启",
+    wakeup: "唤醒",
     restartSpace: "重启应用空间",
     stop: "暂停",
     stopSpace: "暂停应用空间",

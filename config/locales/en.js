@@ -22,6 +22,7 @@ export default {
     buildDesc: "This Space is in building, please wait a while",
     errorDesc: "This Space is in Error, please check the logs",
     restart: "Restart",
+    wakeup: "Wakeup",
     restartSpace: "Restart the Space",
     stop: "Stop",
     stopSpace: "Stop the Space",
