@@ -84,7 +84,7 @@
 </script>
 
 <style scoped>
-  .application_space-card:hover .dataset-path {
+  .application_space-card:hover .application_space-path {
     color: var(--blue-blue-5001-f-75-cb, #1F75CB);
   }
 </style>
