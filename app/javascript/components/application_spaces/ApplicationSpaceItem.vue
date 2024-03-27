@@ -17,7 +17,7 @@
       </p>
     </div>
     <div class="my-2">
-      <img :src="coverImageUrl" class="w-[375px] xl:w-full object-cover rounded cursor-pointer hover:opacity-50" />
+      <img :src="coverImageUrl" class="w-[375px] xl:w-full h-[144px] object-cover rounded cursor-pointer hover:opacity-50" />
     </div>
     <div class="h-[36px]" v-if="!repo.description"></div>
     <el-popover
@@ -56,8 +56,8 @@
   })
 
   const coverImageUrl = computed(() => {
-    if (props.repo.cover_image) {
-      return props.repo.cover_image
+    if (props.repo.cover_image_url) {
+      return props.repo.cover_image_url
     } else {
       return '/images/default_cover_image.png'
     }
