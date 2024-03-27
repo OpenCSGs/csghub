@@ -105,7 +105,7 @@ const app = createApp({
     ProfileRepoList,
     RepoCards,
     RepoItem,
-    EkbLanding
+    EkbLanding,
     NewApplicationSpace,
     NewCode,
     CodeDetail
