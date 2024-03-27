@@ -160,6 +160,7 @@
 
   const syncSpaceLogs = () => {
     fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/logs`, {
+      openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
@@ -218,6 +219,7 @@
 
   const syncSpaceStatus = () => {
     fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/status`, {
+      openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
       },
