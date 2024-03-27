@@ -1,5 +1,6 @@
 <template>
   <div class="xl:px-[16px] sm:w-[100%] sm:mt-[36px]">
+    <!-- models -->
     <div>
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -21,6 +22,8 @@
       ></view-more>
       <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
     </div>
+
+    <!-- datasets -->
     <div class="mt-[32px]">
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -42,6 +45,8 @@
       ></view-more>
       <el-skeleton class="pr-6" v-if="datasetsLoading" :rows="2" animated />
     </div>
+
+    <!-- code repo -->
     <div class="mt-[32px]">
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,6 +68,8 @@
       ></view-more>
       <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
     </div>
+
+    <!-- spaces -->
     <div class="mt-[32px]">
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
