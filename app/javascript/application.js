@@ -1,5 +1,6 @@
 import "trix"
 import "@rails/actiontext"
+import "./packs/checkLogin.js"
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"
@@ -18,6 +19,7 @@ import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ModelDetail from "./components/models/ModelDetail.vue"
 import DatasetDetail from "./components/datasets/DatasetDetail.vue"
+import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
@@ -30,8 +32,11 @@ import NewDataset from "./components/datasets/NewDataset.vue"
 import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
+import NewApplicationSpace from "./components/application_spaces/NewApplicationSpace.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
+import NewCode from "./components/codes/NewCode.vue"
+import CodeDetail from "./components/codes/CodeDetail.vue"
 
 const app = createApp({
   components: {
@@ -39,6 +44,7 @@ const app = createApp({
     CommentList,
     DatasetDetail,
     ModelDetail,
+    ApplicationSpaceDetail,
     Profile,
     ProfileEdit,
     ProfileSettings,
@@ -50,12 +56,16 @@ const app = createApp({
     NewDataset,
     OrganizationDetail,
     OnPremiseFooter,
+    NewApplicationSpace,
     ProfileRepoList,
     OrganizationSettings,
-    RepoCards
+    RepoCards,
+    NewCode,
+    CodeDetail
   },
   provide:{
-    defaultTags: DefaultTags
+    defaultTags: DefaultTags,
+    csghubServer: csghubServer
   }
 }).use(ElementPlus, {
   locale: zhCn,

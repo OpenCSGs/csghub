@@ -4,6 +4,16 @@ zh:
   en: '英文'
   logout: '退出登录'
 
+  repo:
+    delSuccess: "删除成功"
+    delFailed: "删除失败"
+    updateSuccess: "更新成功"
+    updateFailed: "更新失败"
+    createSuccess: "创建成功"
+    createFileSuccess: "创建文件成功"
+    updateFileSuccess: "更新文件成功"
+    uploadFileSuccess: "上传文件成功"
+
   administrate:
     search:
       label: '搜索'
@@ -33,6 +43,8 @@ zh:
         name: "模型"
       dataset:
         name: "数据集"
+      application_space:
+        name: "应用空间"
 
     errors:
       messages:
@@ -67,6 +79,8 @@ zh:
         model:
           taken: "已存在，请重新命名"
         dataset:
+          taken: "已存在，请重新命名"
+        application_space:
           taken: "已存在，请重新命名"
 
   datetime:

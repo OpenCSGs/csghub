@@ -5,6 +5,8 @@ module Starhub
     include SharedRepoApis
     include ModelApis
     include DatasetApis
+    include ApplicationSpaceApis
+    include CodeApis
 
     def initialize
       @client = Starhub::Client.instance
@@ -45,7 +47,7 @@ module Starhub
       options[:current_user] = username
       res = @client.get("/user/#{namespace}/models", options)
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def get_org_models(namespace, username, options = {})
@@ -63,7 +65,7 @@ module Starhub
       options[:current_user] = username
       res = @client.get("/user/#{namespace}/datasets", options)
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def get_org_datasets(namespace, username, options = {})
@@ -71,6 +73,42 @@ module Starhub
       options[:page] ||= 1
       options[:current_user] = username
       res = @client.get("/organization/#{namespace}/datasets", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_user_application_spaces(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/spaces", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_user_codes(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_org_application_spaces(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/spaces", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_org_codes(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/codes", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
@@ -169,6 +207,15 @@ module Starhub
         role: role
       }
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
+    end
+
+    def get_jwt_token(username)
+      options = {
+        current_user: username
+      }
+      res = @client.post("/jwt/token", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
 
     def model_predict(namespace, name, user, input, version)
