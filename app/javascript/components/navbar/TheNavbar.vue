@@ -15,6 +15,7 @@
         <li class="px-5 mlg:!hidden"> <model></model> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <code-nav></code-nav> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <space></space> </li>
       </ul>
 
       <!-- mobile 导航栏 -->
@@ -27,6 +28,7 @@
             <el-dropdown-item class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <code-nav></code-nav> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <space></space> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -115,6 +117,7 @@
 <script>
 import Model from "./model.vue";
 import Dataset from "./dataset.vue";
+import Space from "./space.vue";
 import CodeNav from "./CodeNav.vue";
 
 export default {
@@ -137,7 +140,8 @@ export default {
   components: {
     Model,
     Dataset,
-    CodeNav,
+    Space,
+    CodeNav
   },
   methods: {
     showDialog() {

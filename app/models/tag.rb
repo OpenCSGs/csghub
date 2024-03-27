@@ -59,6 +59,7 @@ class Tag < ApplicationRecord
     # 'scientific_computing'
   ]
 
+  APPLICATION_SPACE_TAG_FIELDS = []
   CODE_TAG_FIELDS = []
 
   def as_json options = nil

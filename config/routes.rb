@@ -36,9 +36,11 @@ Rails.application.routes.draw do
     get '/users/:namespace/models', to: 'users#models'
     get '/users/:namespace/datasets', to: 'users#datasets'
     get '/users/:namespace/codes', to: 'users#codes'
+    get '/users/:namespace/spaces', to: 'users#spaces'
     get '/organizations/:namespace/models', to: 'organizations#models'
     get '/organizations/:namespace/datasets', to: 'organizations#datasets'
     get '/organizations/:namespace/codes', to: 'organizations#codes'
+    get '/organizations/:namespace/spaces', to: 'organizations#spaces'
 
     resources :models, only: [:index, :create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme'
@@ -133,6 +135,8 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/files/:branch(/*path)', to: 'codes#files', defaults: { path: nil }
     get '/codes/:namespace/(*code_name)/resolve/:branch/(*path)', to: 'codes#resolve', defaults: {format: 'txt'}
     get '/codes/:namespace/(*code_name)', to: 'codes#show', format: false, defaults: {format: 'html'}
+
+    get '/spaces', to: 'application_spaces#index'
 
     get '/application_spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file'
     get '/application_spaces/:namespace/(*application_space_name)/edit/:branch/(*path)', to: 'application_spaces#edit_file', format: false, defaults: {format: 'html'}

@@ -9,6 +9,8 @@ export default {
     reLogin: '重新登录'
   },
   application_spaces: {
+    title: "应用空间",
+    placeholder: "应用空间名字",
     name: "应用空间名称",
     nickname: "应用空间别名",
     namespaceName: "命名空间/应用空间名称",
@@ -281,6 +283,7 @@ export default {
     orgHomepage: "组织主页",
     model: "模型",
     dataset: "数据集",
+    space: "应用空间",
     code: "代码仓库",
     invite: {
       title: "邀请",
@@ -301,6 +304,7 @@ export default {
   navbar: {
     models: "模型",
     datasets: "数据集",
+    spaces: "应用空间",
     codes: "代码仓库",
     profile: "个人信息",
     editProfile: "账号设置",

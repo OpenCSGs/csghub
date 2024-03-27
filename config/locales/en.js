@@ -11,6 +11,8 @@ export default {
     reLogin: 'Sign Back In'
   },
   application_spaces: {
+    title: "Application Space",
+    placeholder: "Application Space Name",
     name: "ApplicationSpace Name",
     nickname: "ApplicationSpace Nickname",
     namespaceName: "Namespace/Name",
@@ -274,6 +276,7 @@ export default {
     orgTeam: "Team Members",
     model: "Model",
     dataset: "Dataset",
+    space: "Space",
     code: "Code",
     invite: {
       title: "Invite",
@@ -294,6 +297,7 @@ export default {
   navbar: {
     models: "Models",
     datasets: "Datasets",
+    spaces: "Spaces",
     codes: "Codes",
     profile: "Profile",
     editProfile: "Account Settings",

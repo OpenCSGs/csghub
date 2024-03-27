@@ -47,7 +47,7 @@ module Starhub
       options[:current_user] = username
       res = @client.get("/user/#{namespace}/models", options)
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def get_org_models(namespace, username, options = {})
@@ -65,7 +65,7 @@ module Starhub
       options[:current_user] = username
       res = @client.get("/user/#{namespace}/datasets", options)
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def get_org_datasets(namespace, username, options = {})
@@ -77,11 +77,29 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
+    def get_user_application_spaces(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/spaces", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
     def get_user_codes(namespace, username, options = {})
       options[:per] ||= 6
       options[:page] ||= 1
       options[:current_user] = username
       res = @client.get("/user/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_org_application_spaces(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/organization/#{namespace}/spaces", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
