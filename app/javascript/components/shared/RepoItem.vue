@@ -71,7 +71,7 @@
       taskTag = taskTag? taskTag["show_name"] : null
     }
 
-    return { path: path, visibility: visibility, taskTag: taskTag }
+    return { path, visibility, taskTag }
   })
 </script>
 
