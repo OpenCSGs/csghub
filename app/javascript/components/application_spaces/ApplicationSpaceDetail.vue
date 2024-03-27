@@ -124,6 +124,8 @@
   const spaceLogsDrawer = ref(false)
   const buildLogDiv = ref(null)
   const containerLogDiv = ref(null)
+  const buildLogLineNum = ref(0)
+  const containerLogLineNum = ref(0)
 
   const isBuildLogTab = ref(true)
   const drawerSize = ref("70%")
@@ -165,8 +167,14 @@
         if (response.ok) {
           console.log('SSE logs server connected')
           isLogsSSEConnected.value = true
-          if (buildLogDiv.value) { buildLogDiv.value.innerHTML = '' }
-          if (containerLogDiv.value) { containerLogDiv.value.innerHTML = '' }
+          if (buildLogDiv.value) {
+            buildLogDiv.value.innerHTML = ''
+            buildLogLineNum.value = 0
+          }
+          if (containerLogDiv.value) {
+            containerLogDiv.value.innerHTML = ''
+            containerLogLineNum.value = 0
+          }
           spaceLogsDrawer.value = true
         } else if (response.status === 401) {
           ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
@@ -187,9 +195,9 @@
       },
       onmessage(ev) {
         if (ev.event === 'Build') {
-          appendLog(buildLogDiv, ev.data)
+          appendLog(buildLogDiv, ev.data, buildLogLineNum)
         } else if (ev.event === 'Container') {
-          appendLog(containerLogDiv, ev.data)
+          appendLog(containerLogDiv, ev.data, containerLogLineNum)
         }
       },
       onerror(err) {
@@ -199,11 +207,12 @@
     })
   }
 
-  const appendLog = (refElem, data) => {
+  const appendLog = (refElem, data, refLineNum) => {
     const node = document.createElement("p")
-    node.innerHTML = data.replace(/\\r/g, "<br>")
+    node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
     if (refElem.value) {
       refElem.value.appendChild(node)
+      refLineNum.value = refLineNum.value + 1
     }
   }
 
@@ -238,8 +247,14 @@
         console.log(`SyncStatus: ${ev.data}`)
         if (appStatus.value !== ev.data) {
           if (ev.data === 'Building') {
-            if (buildLogDiv.value) { buildLogDiv.value.innerHTML = '' }
-            if (containerLogDiv.value) { containerLogDiv.value.innerHTML = '' }
+            if (buildLogDiv.value) {
+              buildLogDiv.value.innerHTML = ''
+              buildLogLineNum.value = 0
+            }
+            if (containerLogDiv.value) {
+              containerLogDiv.value.innerHTML = ''
+              containerLogLineNum.value = 0
+            }
           }
           appStatus.value = ev.data
         }
