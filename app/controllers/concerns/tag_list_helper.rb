@@ -22,6 +22,10 @@ module TagListHelper
       Tag::MODEL_TAG_FIELDS
     when 'datasets'
       Tag::DATASET_TAG_FIELDS
+    when 'application_spaces'
+      Tag::APPLICATION_SPACE_TAG_FIELDS
+    when 'codes'
+      Tag::CODE_TAG_FIELDS
     end
   end
 end

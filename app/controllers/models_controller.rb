@@ -8,7 +8,7 @@ class ModelsController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new_file, :upload_file, :edit_file]
+  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file]
   before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
   before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
 
@@ -87,7 +87,7 @@ class ModelsController < ApplicationController
 
     if action_name == 'blob' || action_name == 'edit_file'
       @model, @last_commit, @branches, @blob = Starhub.api.get_model_detail_blob_data_in_parallel(params[:namespace], params[:model_name], files_options)
-      update_blob_content
+      update_blob_content('model')
     else
       @model, @branches = Starhub.api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end

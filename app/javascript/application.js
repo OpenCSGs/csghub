@@ -1,5 +1,6 @@
 import "trix"
 import "@rails/actiontext"
+import "./packs/checkLogin.js"
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"
@@ -30,6 +31,7 @@ import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
 import CampaignCards from "./components/campaigns/CampaignCards.vue"
+import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
@@ -55,6 +57,9 @@ import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import RepoItem from "./components/shared/RepoItem.vue"
 import EkbLanding from "./components/ekb/EkbLanding.vue"
+import NewApplicationSpace from "./components/application_spaces/NewApplicationSpace.vue"
+import NewCode from "./components/codes/NewCode.vue"
+import CodeDetail from "./components/codes/CodeDetail.vue"
 
 const app = createApp({
   components: {
@@ -75,6 +80,7 @@ const app = createApp({
     LoginFooter,
     CampaignCard,
     CampaignCards,
+    ApplicationSpaceDetail,
     Profile,
     ProfileEdit,
     ProfileSettings,
@@ -100,9 +106,13 @@ const app = createApp({
     RepoCards,
     RepoItem,
     EkbLanding
+    NewApplicationSpace,
+    NewCode,
+    CodeDetail
   },
   provide:{
-    defaultTags: DefaultTags
+    defaultTags: DefaultTags,
+    csghubServer: csghubServer
   }
 }).use(ElementPlus, {
   locale: zhCn,

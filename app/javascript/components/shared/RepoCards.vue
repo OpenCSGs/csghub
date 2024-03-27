@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-[24px] max-w-[1280px] mb-[60px] m-auto mt-[32px]">
-    <div class="w-[30%] min-w-[360px] xl:px-[20px] mlg:hidden">
+    <div v-if="repoType !== 'application_space'" class="w-[30%] min-w-[360px] xl:px-[20px] mlg:hidden">
       <TagSidebar
         :taskTags="props.taskTags"
         :frameworkTags="props.frameworkTags"
@@ -11,8 +11,8 @@
         :type="repoType"
       />
     </div>
-    <div class="pr-[20px] mlg:px-[20px] xl:w-full">
-      <div class="flex xl:flex-col justify-between">
+    <div class="pr-[20px] mlg:px-[20px] w-full">
+      <div :class="`flex xl:flex-col justify-between ${repoType === 'application_space' ? 'xl:pl-4 md:pl-0' : ''}`">
         <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path opacity="0.12" d="M16.5 10.0327V5.46176C16.5 5.33063 16.4312 5.20911 16.3188 5.14164C16.1996 5.07018 16.0507 5.07075 15.9321 5.14313L11.5012 7.84833C10.5927 8.40303 10.1384 8.68038 9.65249 8.78865C9.22277 8.88441 8.77723 8.88441 8.34751 8.78865C7.86162 8.68038 7.40734 8.40303 6.49878 7.84833L2.06785 5.14313C1.9493 5.07075 1.80036 5.07018 1.68125 5.14164C1.5688 5.20911 1.5 5.33063 1.5 5.46176V10.0327C1.5 11.0237 1.5 11.5192 1.64219 11.9645C1.76802 12.3585 1.97396 12.7222 2.24708 13.0328C2.55572 13.3838 2.98062 13.6388 3.83042 14.1486L6.53042 15.7686C7.42832 16.3074 7.87727 16.5768 8.35653 16.682C8.78046 16.7751 9.21954 16.7751 9.64346 16.682C10.1227 16.5768 10.5717 16.3074 11.4696 15.7686L14.1696 14.1486C15.0194 13.6388 15.4443 13.3838 15.7529 13.0328C16.026 12.7222 16.232 12.3585 16.3578 11.9645C16.5 11.5192 16.5 11.0237 16.5 10.0327Z" fill="#AD4A3B"/>
@@ -44,7 +44,10 @@
           </el-select>
         </div>
       </div>
-      <div class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
+      <div v-if="repoType === 'application_space'" class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mb-4 mt-[16px]">
+        <application-space-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
+      </div>
+      <div v-else class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
         <repo-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
       </div>
       <div v-show="totalRepos > perPage">
@@ -66,6 +69,7 @@
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
+  import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
   import { useI18n } from 'vue-i18n'
 

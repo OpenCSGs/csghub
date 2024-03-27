@@ -7,7 +7,8 @@ class ProfileController < ApplicationController
 
     @models = Starhub.api.get_user_models(@user.name, current_user&.name)
     @datasets = Starhub.api.get_user_datasets(@user.name, current_user&.name)
-    @spaces = @user.spaces
+    @spaces = Starhub.api.get_user_application_spaces(@user.name, current_user&.name)
+    @codes = Starhub.api.get_user_codes(@user.name, current_user&.name)
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
   end

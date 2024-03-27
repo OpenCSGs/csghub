@@ -36,7 +36,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   def create
     dataset = current_user.created_datasets.build(dataset_params)
     if dataset.save
-      render json: { path: dataset.path, message: '数据集创建成功!' }, status: :created
+      render json: { path: dataset.path, message: I18n.t('repo.createSuccess') }, status: :created
     else
       render json: { message: dataset.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
@@ -47,17 +47,17 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     @dataset.desc = params[:desc] if params[:desc].present?
 
     if @dataset.save
-      render json: { message: '更新成功' }
+      render json: { message: I18n.t('repo.updateSuccess') }
     else
-      render json: { message: "更新失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.updateFailed') }, status: :bad_request
     end
   end
 
   def destroy
     if @dataset.destroy
-      render json: { message: '删除成功' }
+      render json: { message: I18n.t('repo.delSuccess') }
     else
-      render json: { message: "删除 #{params[:namespace]}/#{params[:dataset_name]} 失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
     end
   end
 
@@ -69,7 +69,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_create_file('dataset', options)
-    render json: { message: '创建文件成功' }
+    render json: { message: I18n.t('repo.createFileSuccess') }
   end
 
 
@@ -82,7 +82,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                                         sha: params[:sha]
                                                       })
     sync_update_file('dataset', options)
-    render json: { message: '更新文件成功' }
+    render json: { message: I18n.t('repo.updateFileSuccess') }
   end
 
   def update_readme_tags
@@ -96,7 +96,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     sha = JSON.parse(blob).dig("data", "sha")
     # 查找元数据部分的结束位置
     end_index = metadata_data.index('---', 3)
-  
+
     # 提取数据部分
     readme_content = metadata_data[end_index+4 .. -1] || ""
 
@@ -105,7 +105,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     # 重新生成元数据部分
     updated_metadata_part = YAML.dump(metadata_hash)
     updated_metadata_part += "---\n"  # 手动添加`---`标记
-  
+
     # 更新 README 内容
     updated_readme_content = updated_metadata_part + readme_content
     options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
@@ -132,7 +132,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
       username: current_user.name
     }
     sync_upload_file('dataset', options)
-    render json: { message: '上传文件成功' }
+    render json: { message: I18n.t('repo.uploadFileSuccess') }
   end
 
   def preview_parquet

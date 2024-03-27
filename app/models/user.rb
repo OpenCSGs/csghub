@@ -29,8 +29,14 @@ class User < ApplicationRecord
   after_save :sync_to_starhub_server
 
   has_many :datasets, as: :owner
+  has_many :application_spaces, as: :owner
   has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
   has_many :daily_paper
+
+  has_many :codes, as: :owner
+  has_many :created_codes, class_name: 'Code', foreign_key: :creator_id
+  has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
+
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
   def roles=(*roles)

@@ -57,6 +57,8 @@
         <profile-repo-list
           :model-list="models"
           :dataset-list="datasets"
+          :space-list="spaces"
+          :code-list="codes"
           :name="organization.name"
         />
       </div>
@@ -73,6 +75,8 @@
     members: Array,
     models: Object,
     datasets: Object,
+    spaces: Object,
+    codes: Object,
     admin: Boolean
   })
 
