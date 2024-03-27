@@ -8,7 +8,7 @@ class ApplicationSpacesController < ApplicationController
   layout 'new_application'
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file]
+  before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file]
   before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
   before_action :load_application_space_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
 
