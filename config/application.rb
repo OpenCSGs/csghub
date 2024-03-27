@@ -18,7 +18,7 @@ module OpenCSG
     # in config/environments, which are processed later.
     #
     config.i18n.available_locales = ['en', 'zh']
-    config.i18n.default_locale = 'zh'
+    config.i18n.default_locale = 'en'
     config.encoding = 'utf-8'
 
     config.time_zone = "Beijing"
