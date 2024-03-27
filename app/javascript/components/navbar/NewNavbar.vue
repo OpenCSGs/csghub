@@ -112,7 +112,7 @@
               <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
             <el-dropdown-item @click="showDialog" > {{ $t('navbar.contact') }} </el-dropdown-item>
-            <a :href="starcloudUrl">
+            <a :href="starcloudUrl" target="_blank">
               <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
             </a>
             <a href="/models/new">

@@ -4,7 +4,7 @@
       <div class="flex md:flex-col justify-between py-[24px] px-[20px] md:py-0">
         <div class="flex items-center font-medium text-[18px] md:mb-[16px]"><p>{{ $t('computing.price.gpu') }}</p></div>
         <div class="flex">
-          <a :href="starcloudUrl" class="bg-[#3250BD] mr-[16px] flex items-center justify-center py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer">
+          <a :href="starcloudUrl" target="_blank" class="bg-[#3250BD] mr-[16px] flex items-center justify-center py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer">
             <p class="text-[#FFFFFF] font-medium text-[16px]">
               {{ $t('navbar.source') }}
             </p>
