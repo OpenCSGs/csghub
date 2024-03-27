@@ -284,7 +284,7 @@ export default {
     "imagenText": "为创作者提供更好用的工具，实现创意和生产力的指数级放大",
     "starCode": "StarCode AI 智能编程助手",
     "starCodeText": "基于大模型技术的创新功能，帮助开发者提高工作效率",
-    "developer": "开发者",
+    "developer": "开源",
     "open": "开源CSGHub",
     "openText": "开源、可信的大模型资产管理平台",
     "llm_inference_open": "开源Inference",

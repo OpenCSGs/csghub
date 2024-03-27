@@ -16,8 +16,16 @@
         text-color="#475467"
         active-text-color="black"
       >
+        <!-- model -->
         <el-menu-item index="/models" style="border:none" @click="routerLink('/models')">{{ $t('navbar.models') }}</el-menu-item>
+
+        <!-- dataset -->
         <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')">{{ $t('navbar.datasets') }}</el-menu-item>
+
+        <!-- hardware -->
+        <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
+
+        <!-- product -->
         <el-sub-menu style="height: auto;" index="1" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.product') }}</template>
           <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarCloud')" index="StarCloud">
@@ -26,9 +34,6 @@
           <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarShip')" index="StarShip">
             <StarShip />
           </el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu style="height: auto;" index="2" popper-class="popper-submenu">
-          <template #title>{{ $t('navbar.solution') }}</template>
           <el-menu-item style="height: auto;" @click="routerLink('/ekb')" index="KnowledgeBase">
             <EKB />
           </el-menu-item>
@@ -45,27 +50,28 @@
             <AllSolution />
           </el-menu-item>
         </el-sub-menu>
+
+        <!-- open source -->
         <el-sub-menu style="height: auto;" index="3" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.developer') }}</template>
           <a :href="csgHubUrl" target="_blank"><el-menu-item style="height: auto;" index="3-1"><CSGHub /></el-menu-item></a>
           <a :href="llmInference" target="_blank"><el-menu-item style="height: auto;" index="3-2"><Inference /></el-menu-item></a>
           <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item style="height: auto;" index="3-3"><StarChain /></el-menu-item></a>
-          <a href="/spaces"><el-menu-item style="height: auto;" index="/spaces"><Space /></el-menu-item></a>
-          <a href="/docs" target="_blank"><el-menu-item style="height: auto;" index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
-        <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
-        <el-sub-menu style="height: auto;" index="4" popper-class="popper-submenu">
-          <template #title>{{ $t('navbar.enterprise') }}</template>
-          <a href="/about"><el-menu-item style="height: auto;" index="4-1"><About /></el-menu-item></a>
-          <a href="/partners"><el-menu-item style="height: auto;" index="4-2"><Partners /></el-menu-item></a>
-          <a href="/experts"><el-menu-item style="height: auto;" index="4-3"><Experts /></el-menu-item></a>
-        </el-sub-menu>
+
+        <!-- community -->
         <el-sub-menu style="height: auto;" index="5" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.community') }}</template>
-          <a href="/campaigns"><el-menu-item style="height: auto;" index="5-1"><Campaigns /></el-menu-item></a>
           <a href="/daily_papers"><el-menu-item style="height: auto;" index="5-2"><DailyPapers /></el-menu-item></a>
+          <a href="/campaigns"><el-menu-item style="height: auto;" index="5-1"><Campaigns /></el-menu-item></a>
+          <a href="/partners"><el-menu-item style="height: auto;" index="4-2"><Partners /></el-menu-item></a>
+          <a href="/experts"><el-menu-item style="height: auto;" index="4-3"><Experts /></el-menu-item></a>
+          <!-- <a href="/spaces"><el-menu-item style="height: auto;" index="/spaces"><Space /></el-menu-item></a> -->
+          <a href="/docs" target="_blank"><el-menu-item style="height: auto;" index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
+
+      <!-- i18n -->
       <el-dropdown class="pr-4 sm:px-[15px]" @command="handleLocaleChange">
         <span class="flex items-center text-base outline-none">
           <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" width="1.2em" height="1.2em" data-v-12008bb2=""><path fill="currentColor" d="m18.5 10l4.4 11h-2.155l-1.201-3h-4.09l-1.199 3h-2.154L16.5 10h2zM10 2v2h6v2h-1.968a18.222 18.222 0 0 1-3.62 6.301a14.864 14.864 0 0 0 2.336 1.707l-.751 1.878A17.015 17.015 0 0 1 9 13.725a16.676 16.676 0 0 1-6.201 3.548l-.536-1.929a14.7 14.7 0 0 0 5.327-3.042A18.078 18.078 0 0 1 4.767 8h2.24A16.032 16.032 0 0 0 9 10.877a16.165 16.165 0 0 0 2.91-4.876L2 6V4h6V2h2zm7.5 10.885L16.253 16h2.492L17.5 12.885z"></path></svg>
@@ -80,6 +86,8 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+
+      <!-- avatar dropdown -->
       <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
         <span v-if="JSON.parse(companyVerified.toLowerCase())" class="el-dropdown-link relative">
           <el-avatar :size="35" :src="avatar">
