@@ -267,7 +267,7 @@ export default {
   "navbar": {
     "allSolution":"全部解决方案",
     "models": "模型",
-    "datasets": "数据集",
+    "datasets": "数据",
     spaces: "空间",
     codes: "代码",
     "product": "产品",
