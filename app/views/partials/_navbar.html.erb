@@ -9,6 +9,7 @@
             user-name="<%= current_user.name %>"
             user-id="<%= current_user.login_identity %>"
             :can-create-daily-paper="<%= policy(DailyPaper).create? %>"
+            starcloud-url="<%= starcloud_url %>"
             is-logged-in="true"
     />
   <% else %>

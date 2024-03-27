@@ -112,7 +112,7 @@
               <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
             <el-dropdown-item @click="showDialog" > {{ $t('navbar.contact') }} </el-dropdown-item>
-            <a href="https://console.opencsg.com/">
+            <a :href="starcloudUrl">
               <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
             </a>
             <a href="/models/new">
@@ -177,7 +177,8 @@ export default {
     isLoggedIn: String,
     userName: String,
     userId: String,
-    canCreateDailyPaper: Boolean
+    canCreateDailyPaper: Boolean,
+    starcloudUrl: String
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
