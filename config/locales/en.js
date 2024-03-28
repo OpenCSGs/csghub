@@ -374,7 +374,7 @@ export default {
     select: "Select",
     selectFilePls: "Please select a file",
     fileTooLarge: "File size is too large",
-    fileTooLargeLimit:"Please ensure that the file size does not exceed the limit of",
+    fileTooLargeLimit:"Please ensure that the file size does not exceed the limit of ",
     inputPls: "Please enter",
     inputNickNamePlc: "Enter nickname",
     inputDescPlc: "Enter description",
