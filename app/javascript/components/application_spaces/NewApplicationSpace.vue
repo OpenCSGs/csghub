@@ -306,7 +306,7 @@
     if (file.size / 1024 <= 2000) {
       return true
     } else {
-      ElMessage({message: "文件过大", type: "warning"})
+      ElMessage({message: t('all.fileTooLarge') + ',' + t('all.fileTooLargeLimit') + '2000kb', type: "warning"})
       return false
     }
   }

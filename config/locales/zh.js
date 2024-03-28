@@ -379,6 +379,7 @@ export default {
     select: "选择",
     selectFilePls: "请选择文件",
     fileTooLarge: "文件过大",
+    fileTooLargeLimit:"请确保文件大小不超过",
     inputPls: "请输入",
     inputNickNamePlc: "请输入别名",
     inputDescPlc: "请输入简介",
