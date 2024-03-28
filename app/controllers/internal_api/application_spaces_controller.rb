@@ -44,7 +44,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
 
   def update
     if params[:private].present?
-      @code.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
+      @application_space.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
     end
 
     @application_space.nickname = params[:nickname] if params[:nickname].present?

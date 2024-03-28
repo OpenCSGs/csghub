@@ -44,7 +44,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def update
     if params[:private].present?
-      @code.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
+      @model.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
     end
 
     @model.nickname = params[:nickname] if params[:nickname].present?
