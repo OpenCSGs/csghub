@@ -78,8 +78,7 @@ export default {
   },
   "computing": {
     "banner": {
-      "service": "算力服务",
-      "headline": "适合您的算力租赁计划",
+      "headline": "适合您的算力使用规划",
       "desc": "我们认为 OpenCSG 的算力服务对所有的团队都是友好的，无论其规模大小。",
       "option1": "独占算力",
       "option2": "共享算力",
@@ -323,7 +322,7 @@ export default {
     "register": "登录/注册",
     loginRegister: "登录/注册",
     "login": "登录",
-    "source": "我的资源",
+    "source": "资源控制台",
   },
   "dailyPaper": {
     "paper": "论文中心",

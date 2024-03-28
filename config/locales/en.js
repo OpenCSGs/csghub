@@ -79,8 +79,7 @@ export default {
   },
   "computing": {
     "banner": {
-      "service": "Computing power service",
-      "headline": "The appropriate computing power leasing plan for you",
+      "headline": "Fit your computing power usage plan",
       "desc": "We believe that any team, regardless of size, may benefit from OpenCSG's computing power service.",
       "option1": "Exclusive computing power",
       "option2": "Shared computing power",
@@ -324,7 +323,7 @@ export default {
     "register": "Login",
     loginRegister: "Login/Registe",
     "login": "Login",
-    "source": "My Source",
+    "source": "Console",
   },
   "dailyPaper": {
     "paper": "Papers Center",
