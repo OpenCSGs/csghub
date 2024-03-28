@@ -56,6 +56,7 @@ import DailyPaperShow from "./components/daily_paper/Show.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import RepoItem from "./components/shared/RepoItem.vue"
+import ApplicationSpaceItem from "./components/application_spaces/ApplicationSpaceItem.vue"
 import EkbLanding from "./components/ekb/EkbLanding.vue"
 import NewApplicationSpace from "./components/application_spaces/NewApplicationSpace.vue"
 import NewCode from "./components/codes/NewCode.vue"
@@ -105,6 +106,7 @@ const app = createApp({
     ProfileRepoList,
     RepoCards,
     RepoItem,
+    ApplicationSpaceItem,
     EkbLanding,
     NewApplicationSpace,
     NewCode,

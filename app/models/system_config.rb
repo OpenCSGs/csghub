@@ -30,4 +30,8 @@ class SystemConfig < ApplicationRecord
   def hot_datasets=(value)
     self[:hot_datasets] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def hot_spaces=(value)
+    self[:hot_spaces] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end
