@@ -60,7 +60,7 @@
         <div class="flex flex-col gap-[6px]">
           <el-button @click="stopSpace"
                      class="w-[100px]"
-                     :disabled="!initialized"
+                     :disabled="!initialized || isSpaceStopped"
           >
             {{ $t('application_spaces.stop')}}
           </el-button>
