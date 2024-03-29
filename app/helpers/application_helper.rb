@@ -94,11 +94,11 @@ module ApplicationHelper
   end
 
   def default_meta_title
-    'OpenCSG-开放传神-传神社区-大模型社区'
+    'OpenCSG 打造中国本土化 Huggingface plus 开源社区_开放传神 OpenCSG 官网'
   end
 
   def default_meta_description
-    'OpenCSG 传神社区旨在打造一个开源的机器学习模型和数据集共享平台，为AI开发者提供灵活、易用的推理，训练，部署，体验服务，让大模型的应用更简单！'
+    'OpenCSG愿景： 让大模型赋能每一个人,大模型驱动全民，推动技术创新，OpenCSG——平台有各个领域的大模型，提供模型探索体验、推理、训练、部署和应用的一站式服务，共建模型开源社区，发现、学习、定制和分享心仪的模型。'
   end
 
   def meta_title
