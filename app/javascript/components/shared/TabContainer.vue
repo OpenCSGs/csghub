@@ -46,7 +46,7 @@ const props = defineProps({
 })
 
 const isApplicationSpace = computed(() => {
-  return props.repoType === 'application_space'
+  return props.repoType === 'space'
 })
 
 const activeName = ref(props.defaultTab)
