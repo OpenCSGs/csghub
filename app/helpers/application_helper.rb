@@ -94,7 +94,7 @@ module ApplicationHelper
   end
 
   def default_meta_title
-    'OpenCSG 传神社区'
+    'OpenCSG-开放传神-传神社区-大模型社区'
   end
 
   def default_meta_description
