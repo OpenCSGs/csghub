@@ -10,6 +10,10 @@ export default {
     expiredDesc: 'Login has expired. Click "Sign Back In" to log in again',
     reLogin: 'Sign Back In'
   },
+  spaces: {
+    title: "Application Space",
+    placeholder: "Application Space Name",
+  },
   application_spaces: {
     title: "Application Space",
     placeholder: "Application Space Name",

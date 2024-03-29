@@ -274,7 +274,7 @@
   }
 
   async function submitApplicationSpaceForm() {
-    const modelCreateEndpoint = `/internal_api/application_spaces`
+    const modelCreateEndpoint = `/internal_api/spaces`
     const formData = new FormData()
     const [ownerId, ownerType] = owner.value.split('_')
     formData.append('owner_id', ownerId)
@@ -299,7 +299,7 @@
     }
   }
   const toApplicationSpaceDetail = (path) => {
-    window.location.pathname = `/application_spaces/${path}`
+    window.location.pathname = `/spaces/${path}`
   }
 
   const handleBeforeUpload = (file) => {
