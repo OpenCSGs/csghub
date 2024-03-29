@@ -138,7 +138,7 @@
             <a href="/codes/new" v-if="canCreateDailyPaper">
               <el-dropdown-item > + {{ $t('navbar.newCode') }} </el-dropdown-item>
             </a>
-            <a href="/application_spaces/new" v-if="canCreateDailyPaper">
+            <a href="/spaces/new" v-if="canCreateDailyPaper">
               <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
