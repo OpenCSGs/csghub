@@ -299,7 +299,7 @@
     }
   }
   const toApplicationSpaceDetail = (path) => {
-    window.location.pathname = `/application_spaces/${path}`
+    window.location.pathname = `/spaces/${path}`
   }
 
   const handleBeforeUpload = (file) => {

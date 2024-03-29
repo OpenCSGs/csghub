@@ -89,7 +89,7 @@
             <a href="/codes/new">
               <el-dropdown-item> + {{ $t('navbar.newCode') }} </el-dropdown-item>
             </a>
-            <a href="/application_spaces/new">
+            <a href="/spaces/new">
               <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
