@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_12_024510) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_29_080846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -298,6 +298,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_024510) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
+    t.jsonb "ignore_model_tags", default: {}
+    t.jsonb "ignore_dataset_tags", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
