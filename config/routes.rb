@@ -43,7 +43,6 @@ Rails.application.routes.draw do
         post '/new-members', to: 'organizations#new_members'
       end
     end
-    resources :spaces, only: [:index, :update]
     resources :campaigns, only: [:index]
     resources :comments, only: [:create, :destroy, :index]
     resources :leads, only: [:create]
