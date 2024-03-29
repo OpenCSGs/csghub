@@ -565,7 +565,7 @@ export default {
       descriptionPlaceholder: 'Please enter description',
       coverImage: 'Cover Image',
       coverImageDesc1: 'Click to upload, or drag the file here',
-      coverImageDesc2: 'Support PNG, JPG format, aspect ratio 5:2',
+      coverImageDesc2: 'Support PNG, JPG format, aspect ratio 5:2, smaller than 2M',
       sdk: 'Select App Space SDK',
       sdkDesc: 'You can use Gradio as your space. In the future, Streamlit, Static, Docker, etc. will be opened to host applications',
       cloudResource: 'Cloud Resource',

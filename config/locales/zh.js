@@ -563,7 +563,7 @@ export default {
       descriptionPlaceholder: '请输入简介',
       coverImage: '封面图片',
       coverImageDesc1: '点击上传，或将文件拖到此处',
-      coverImageDesc2: '支持 PNG, JPG 格式，高宽比5:2',
+      coverImageDesc2: '支持 PNG, JPG 格式，高宽比5:2，小于2M',
       sdk: '选择应用空间SDK',
       sdkDesc: '你可以Gradio作为你的空间。后续将开放 Streamlit、 Static、 Docker 等来托管应用。',
       cloudResource: '空间云资源',
