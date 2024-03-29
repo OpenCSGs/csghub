@@ -48,8 +48,8 @@
         return `/models/${props.repo.path}`
       case 'dataset':
         return `/datasets/${props.repo.path}`
-      case 'application_space':
-        return `/application_spaces/${props.repo.path}`
+      case 'space':
+        return `/spaces/${props.repo.path}`
       case 'code':
         return `/codes/${props.repo.path}`
       default:

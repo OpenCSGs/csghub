@@ -16,7 +16,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
                                                   params[:page],
                                                   params[:per_page])
     api_response = JSON.parse(res_body)
-    render json: { application_spaces: api_response['data'], total: api_response['total'] }
+    render json: { spaces: api_response['data'], total: api_response['total'] }
   end
 
   def files

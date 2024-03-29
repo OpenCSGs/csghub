@@ -315,7 +315,7 @@ export default {
     "newModel": "New Model",
     "newDataset": "New Dataset",
     newCode: "New Code",
-    newApplicationSpace: "New Application Space",
+    newApplicationSpace: "New Space",
     "newOrg": "New Organization",
     newOrganization: "New Organization",
     "recommendation": "Paper Recommendation",
@@ -510,6 +510,10 @@ export default {
     expiredTitle: 'Sign Status Invalid',
     expiredDesc: 'Login has expired. Click "Sign Back In" to log in again',
     reLogin: 'Sign Back In'
+  },
+  spaces: {
+    title: "Application Space",
+    placeholder: "Application Space Name",
   },
   application_spaces: {
     title: "Application Space",

@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/application_spaces/${repo.path}`" class="border border-gray-200 rounded-xl p-4 w-[409px] xl:w-full">
+  <a :href="`/spaces/${repo.path}`" class="border border-gray-200 rounded-xl p-4 w-[409px] xl:w-full">
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
         <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]">{{ getComputed.path }}</h3>
