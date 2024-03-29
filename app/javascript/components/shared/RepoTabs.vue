@@ -180,7 +180,11 @@ onMounted(() => {
 })
 
 const repoTypeClass = computed(() => {
-  return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`;
+  if (props.repoType === 'space') {
+    return 'ApplicationSpace'
+  } else {
+    return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`;
+  }
 })
 
 const decodedContent = props.blob?.content || ''
