@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-[300px] md:px-5 md:flex-col-reverse">
+  <div class="flex md:px-5 md:flex-col-reverse h-[calc(100vh-381px)]">
     <div class="max-w-[60%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-[#EBEEF5] md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
       <ParquetViewer v-if="previewData.data" :previewData="previewData.data" />
