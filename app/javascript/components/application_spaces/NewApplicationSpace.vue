@@ -229,6 +229,7 @@
   const props = defineProps({
     licenses: Array,
     namespaces: Array,
+    isAdmin: Boolean
   })
 
   const { t } = useI18n()
@@ -257,11 +258,14 @@
     {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
   ])
   const spaceResource = ref('CPU basic · 2 vCPU · 16GB')
-  const disabledOptions = ref([
-    "NVIDIA T4 · 4 vCPU · 15 GB",
-    "NVIDIA A10G · 4 vCPU · 15 GB",
-    "NVIDIA A10G · 12 vCPU · 46 GB"
-  ])
+
+  const notAvailableOptions = computed(() => {
+    return props.isAdmin ?
+    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ] :
+    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ]
+  })
+
+  const disabledOptions = ref(notAvailableOptions)
 
   const createApplicationSpace = async () => {
     try {
