@@ -315,7 +315,7 @@ export default {
     "newModel": "New Model",
     "newDataset": "New Dataset",
     newCode: "New Code",
-    newApplicationSpace: "New Application Space",
+    newApplicationSpace: "New Space",
     "newOrg": "New Organization",
     newOrganization: "New Organization",
     "recommendation": "Paper Recommendation",
