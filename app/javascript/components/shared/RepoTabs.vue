@@ -6,20 +6,20 @@
                    :repoType="repoType"
     >
       <template #summary>
-        <InitializeGuide v-if="repoType === 'application_space' && appStatus === 'NoAppFile'"
+        <InitializeGuide v-if="repoType === 'space' && appStatus === 'NoAppFile'"
                          :http-clone-url="repoDetail.repository.http_clone_url"
                          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
                          :sdk="sdk"
         />
-        <ApplicationPage v-else-if="repoType === 'application_space' && appStatus === 'Running'"
+        <ApplicationPage v-else-if="repoType === 'space' && appStatus === 'Running'"
                          :appEndpoint="appEndpoint"
         />
-        <StoppedPage v-else-if="repoType === 'application_space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
+        <StoppedPage v-else-if="repoType === 'space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
                      :appStatus="appStatus"
                      :canWrite="canWrite"
                      :path="repoDetail.path"
         />
-        <BuildAndErrorPage v-else-if="repoType === 'application_space'"
+        <BuildAndErrorPage v-else-if="repoType === 'space'"
                            :appStatus="appStatus"
                            :canWrite="canWrite"
                            @showSpaceLogs="showSpaceLogs"
@@ -107,7 +107,7 @@
           :tags="tags"
           :private="repoDetail.private" />
         <application-space-settings
-          v-if="repoType === 'application_space'"
+          v-if="repoType === 'space'"
           :path="repoDetail.path"
           :application-space-nickname="repoDetail.nickname"
           :application-space-desc="repoDetail.description"

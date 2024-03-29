@@ -73,7 +73,7 @@ Rails.application.routes.draw do
     delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}
 
-    resources :application_spaces, only: [:index, :create]
+    resources :spaces, controller: 'application_spaces', only: [:index, :create]
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme'
     get '/spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files'
     post '/spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#create_file'
@@ -81,14 +81,6 @@ Rails.application.routes.draw do
     put '/spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#update_file'
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}
-
-    get '/application_spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme'
-    get '/application_spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files'
-    post '/application_spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#create_file'
-    post '/application_spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file'
-    put '/application_spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#update_file'
-    delete '/application_spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}
-    put '/application_spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}
 
     resources :tags, only: [] do
       collection do

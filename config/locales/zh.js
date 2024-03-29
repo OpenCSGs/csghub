@@ -8,6 +8,10 @@ export default {
     expiredDesc: '登录已失效，请点击重新登录',
     reLogin: '重新登录'
   },
+  spaces: {
+    title: "应用空间",
+    placeholder: "应用空间名字",
+  },
   application_spaces: {
     title: "应用空间",
     placeholder: "应用空间名字",
