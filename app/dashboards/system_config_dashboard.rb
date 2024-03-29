@@ -19,6 +19,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     hot_models: Field::JSONB,
     hot_datasets: Field::JSONB,
     hot_spaces: Field::JSONB,
+    ignore_model_tags: Field::JSONB,
+    ignore_dataset_tags: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -48,6 +50,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     hot_models
     hot_datasets
     hot_spaces
+    ignore_model_tags
+    ignore_dataset_tags
     created_at
     updated_at
   ].freeze
@@ -66,6 +70,8 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     hot_models
     hot_datasets
     hot_spaces
+    ignore_model_tags
+    ignore_dataset_tags
   ].freeze
 
   # COLLECTION_FILTERS

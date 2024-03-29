@@ -16,7 +16,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
                                                   params[:page],
                                                   params[:per_page])
     api_response = JSON.parse(res_body)
-    render json: { application_spaces: api_response['data'], total: api_response['total'] }
+    render json: { spaces: api_response['data'], total: api_response['total'] }
   end
 
   def files
@@ -43,10 +43,8 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
   end
 
   def update
-    if params[:private].to_s == 'true'
-      @application_space.visibility = 'private'
-    else
-      @application_space.visibility = 'public'
+    if params[:private].to_s.present?
+      @application_space.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
     end
 
     @application_space.nickname = params[:nickname] if params[:nickname].present?

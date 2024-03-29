@@ -78,8 +78,7 @@ export default {
   },
   "computing": {
     "banner": {
-      "service": "算力服务",
-      "headline": "适合您的算力租赁计划",
+      "headline": "适合您的算力使用规划",
       "desc": "我们认为 OpenCSG 的算力服务对所有的团队都是友好的，无论其规模大小。",
       "option1": "独占算力",
       "option2": "共享算力",
@@ -323,7 +322,7 @@ export default {
     "register": "登录/注册",
     loginRegister: "登录/注册",
     "login": "登录",
-    "source": "我的资源",
+    "source": "资源控制台",
   },
   "dailyPaper": {
     "paper": "论文中心",
@@ -510,6 +509,10 @@ export default {
     expiredDesc: '登录已失效，请点击重新登录',
     reLogin: '重新登录'
   },
+  spaces: {
+    title: "应用空间",
+    placeholder: "应用空间名字",
+  },
   application_spaces: {
     title: "应用空间",
     placeholder: "应用空间名字",
@@ -564,7 +567,7 @@ export default {
       descriptionPlaceholder: '请输入简介',
       coverImage: '封面图片',
       coverImageDesc1: '点击上传，或将文件拖到此处',
-      coverImageDesc2: '支持 PNG, JPG 格式，高宽比5:2',
+      coverImageDesc2: '支持 PNG, JPG 格式，高宽比5:2，小于2M',
       sdk: '选择应用空间SDK',
       sdkDesc: '你可以Gradio作为你的空间。后续将开放 Streamlit、 Static、 Docker 等来托管应用。',
       cloudResource: '空间云资源',

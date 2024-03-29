@@ -229,6 +229,7 @@
   const props = defineProps({
     licenses: Array,
     namespaces: Array,
+    isAdmin: Boolean
   })
 
   const { t } = useI18n()
@@ -257,11 +258,14 @@
     {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
   ])
   const spaceResource = ref('CPU basic · 2 vCPU · 16GB')
-  const disabledOptions = ref([
-    "NVIDIA T4 · 4 vCPU · 15 GB",
-    "NVIDIA A10G · 4 vCPU · 15 GB",
-    "NVIDIA A10G · 12 vCPU · 46 GB"
-  ])
+
+  const notAvailableOptions = computed(() => {
+    return props.isAdmin ?
+    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ] :
+    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ]
+  })
+
+  const disabledOptions = ref(notAvailableOptions)
 
   const createApplicationSpace = async () => {
     try {
@@ -274,7 +278,7 @@
   }
 
   async function submitApplicationSpaceForm() {
-    const modelCreateEndpoint = `/internal_api/application_spaces`
+    const modelCreateEndpoint = `/internal_api/spaces`
     const formData = new FormData()
     const [ownerId, ownerType] = owner.value.split('_')
     formData.append('owner_id', ownerId)
@@ -299,7 +303,7 @@
     }
   }
   const toApplicationSpaceDetail = (path) => {
-    window.location.pathname = `/application_spaces/${path}`
+    window.location.pathname = `/spaces/${path}`
   }
 
   const handleBeforeUpload = (file) => {
@@ -357,6 +361,9 @@
     @media screen and (max-width: 768px) {
       width: 100%;
     }
+  }
+  :deep(.hide .el-upload.el-upload--picture-card){
+    display: none;
   }
 </style>
 

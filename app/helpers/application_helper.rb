@@ -67,6 +67,12 @@ module ApplicationHelper
     general_configs['docs_url']
   end
 
+  def starcloud_url
+    system_config = SystemConfig.first
+    general_configs = (system_config.general_configs rescue {}) || {}
+    general_configs['starcloud_url']
+  end
+
   def code_repo_owner_url owner
     if owner.is_a?(User)
       '/profile/' + owner.login_identity
@@ -88,7 +94,7 @@ module ApplicationHelper
   end
 
   def default_meta_title
-    'OpenCSG 传神社区'
+    'OpenCSG-开放传神-传神社区-大模型社区'
   end
 
   def default_meta_description

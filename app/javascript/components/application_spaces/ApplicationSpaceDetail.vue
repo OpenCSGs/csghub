@@ -13,7 +13,7 @@
         :tags="tags"
         :owner-url="ownerUrl"
         :canWrite="canWrite"
-        repo-type="application_space"
+        repo-type="space"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
     </div>
@@ -34,7 +34,7 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
-      repo-type="application_space"
+      repo-type="space"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>

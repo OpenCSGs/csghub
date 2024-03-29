@@ -60,7 +60,7 @@
         <div class="flex flex-col gap-[6px]">
           <el-button @click="stopSpace"
                      class="w-[100px]"
-                     :disabled="!initialized"
+                     :disabled="!initialized || isSpaceStopped"
           >
             {{ $t('application_spaces.stop')}}
           </el-button>
@@ -397,7 +397,7 @@ export default {
     },
 
     async deleteApplicationSpace() {
-      const applicationSpaceDeleteEndpoint = "/internal_api/application_spaces/" + this.path
+      const applicationSpaceDeleteEndpoint = "/internal_api/spaces/" + this.path
       const option = {method: 'DELETE'}
       const response = await csrfFetch(applicationSpaceDeleteEndpoint, option)
 
@@ -408,7 +408,7 @@ export default {
       } else {
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})
         setTimeout(() => {
-          window.location.href = "/application_spaces"
+          window.location.href = "/spaces"
         }, 500)
         return response.json()
       }
@@ -461,7 +461,7 @@ export default {
     },
 
     async updateApplicationSpace(payload) {
-      const applicationSpaceUpdateEndpoint = "/internal_api/application_spaces/" + this.path
+      const applicationSpaceUpdateEndpoint = "/internal_api/spaces/" + this.path
       const options = {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},

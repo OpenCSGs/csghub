@@ -126,9 +126,9 @@
               <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
             <el-dropdown-item @click="showDialog" > {{ $t('navbar.contact') }} </el-dropdown-item>
-<!--            <a href="http://starcloud-stg.opencsg.com:8090/">-->
-<!--              <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>-->
-<!--            </a>-->
+            <a :href="starcloudUrl" target="_blank">
+              <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
+            </a>
             <a href="/models/new">
               <el-dropdown-item divided> + {{ $t('navbar.newModel') }} </el-dropdown-item>
             </a>
@@ -138,7 +138,7 @@
             <a href="/codes/new" v-if="canCreateDailyPaper">
               <el-dropdown-item > + {{ $t('navbar.newCode') }} </el-dropdown-item>
             </a>
-            <a href="/application_spaces/new" v-if="canCreateDailyPaper">
+            <a href="/spaces/new" v-if="canCreateDailyPaper">
               <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
@@ -197,7 +197,8 @@ export default {
     isLoggedIn: String,
     userName: String,
     userId: String,
-    canCreateDailyPaper: Boolean
+    canCreateDailyPaper: Boolean,
+    starcloudUrl: String
   },
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');

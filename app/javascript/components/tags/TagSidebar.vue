@@ -1,7 +1,7 @@
 <template>
   <div class="flex bg-[#fff] flex-col pr-[20px]">
     <div class="">
-      <span v-show="type !== 'code' && type !== 'application_space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+      <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Task"
             :class="activeNavItem === 'Task' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
@@ -285,7 +285,7 @@
   onMounted(() => {
     emitTagFromParams()
 
-    if (props.type === 'code' || props.type === 'application_space') {
+    if (props.type === 'code' || props.type === 'space') {
       activeNavItem.value = 'License'
       toggleTagType()
     }

@@ -19,6 +19,7 @@ class ApplicationSpacesController < ApplicationController
   def new
     @available_namespaces = current_user.available_namespaces
     get_license_list
+    @is_admin = current_user.admin?
   end
 
   def show
