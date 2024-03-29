@@ -362,5 +362,8 @@
       width: 100%;
     }
   }
+  :deep(.hide .el-upload.el-upload--picture-card){
+    display: none;
+  }
 </style>
 
