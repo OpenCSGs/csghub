@@ -1,10 +1,7 @@
-<div class="relative h-[850px] sm:h-[750px]">
+<div class="relative h-[1150px] sm:h-[750px]">
   <%= image_tag('new_organization_bg.png', class: "h-full w-full object-cover") %>
   <div class="sm:w-[95%] absolute top-[108px] sm:top-[67px] left-1/2 translate-x-[-50%]">
-    <new-organization
-      org-types="<%= Organization.org_types.to_a.to_json %>"
-      current-user-profile="/profile/<%= current_user.display_name %>"
-    >
+    <new-organization current-user-profile="/profile/<%= current_user.login_identity %>">
     </new-organization>
   </div>
 </div>

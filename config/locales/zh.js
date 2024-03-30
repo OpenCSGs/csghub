@@ -1,7 +1,8 @@
 export default {
   rule: {
     nameRule: "2-70个字母数字_.-的字符串，_.-不能并列出现",
-    nameSpaceRule: "2-20位字母数字以及 _ 构成的字符串",
+    notChangable: "设置后不可更改",
+    nameSpaceRule: "2-20位字母数字以及_-构成的字符串，_-不能并列出现",
   },
   user_sessions: {
     expiredTitle: '登录状态失效',
@@ -384,6 +385,8 @@ export default {
     selectFilePls: "请选择文件",
     fileTooLarge: "文件过大",
     inputPls: "请输入",
+    pleaseSelect: "请选择{value}",
+    pleaseInput: "请输入{value}",
     inputNickNamePlc: "请输入别名",
     inputDescPlc: "请输入简介",
     lfsTips: "在下载前请确认您安装了git-lfs  (https://git-lfs.com)",
