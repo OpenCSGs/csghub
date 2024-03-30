@@ -58,7 +58,8 @@ class CodesController < ApplicationController
         result = Starhub.api.download_code_resolve_file(params[:namespace],
                                                          params[:code_name],
                                                          @current_path,
-                                                         { ref: @current_branch })
+                                                         { ref: @current_branch,
+                                                           current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_code_file_content(params[:namespace],

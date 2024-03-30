@@ -58,7 +58,8 @@ class DatasetsController < ApplicationController
         result = Starhub.api.download_dataset_resolve_file(params[:namespace],
                                                             params[:dataset_name],
                                                             @current_path,
-                                                            { ref: @current_branch })
+                                                            { ref: @current_branch,
+                                                              current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_dataset_file_content(params[:namespace],

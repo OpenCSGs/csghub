@@ -58,7 +58,8 @@ class ModelsController < ApplicationController
         result = Starhub.api.download_model_resolve_file(params[:namespace],
                                                          params[:model_name],
                                                          @current_path,
-                                                         { ref: @current_branch })
+                                                         { ref: @current_branch,
+                                                           current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_model_file_content(params[:namespace],
