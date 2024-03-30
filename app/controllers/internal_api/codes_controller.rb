@@ -25,7 +25,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
   end
 
   def readme
-    readme = Starhub.api.get_code_file_content(params[:namespace], params[:code_name], 'README.md')
+    readme = Starhub.api.get_code_file_content(params[:namespace], params[:code_name], 'README.md', {current_user: current_user&.name})
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'code', readme_content
     render json: { readme: readme_content }
@@ -79,11 +79,11 @@ class InternalApi::CodesController < InternalApi::ApplicationController
 
   def update_file
     options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
+                                                              new_branch: 'main',
+                                                              username: current_user.name,
+                                                              email: current_user.email,
+                                                              content: Base64.encode64(params[:content])
+                                                            })
     sync_update_file('code', options)
     render json: { message: I18n.t('repo.updateFileSuccess') }
   end
