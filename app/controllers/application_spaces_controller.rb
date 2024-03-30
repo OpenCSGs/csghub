@@ -65,7 +65,8 @@ class ApplicationSpacesController < ApplicationController
         result = Starhub.api.get_application_space_file_content(params[:namespace],
                                                                 params[:application_space_name],
                                                                 @current_path,
-                                                                { ref: @current_branch })
+                                                                { ref: @current_branch,
+                                                                  current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end

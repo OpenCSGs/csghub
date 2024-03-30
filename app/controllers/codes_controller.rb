@@ -63,9 +63,10 @@ class CodesController < ApplicationController
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_code_file_content(params[:namespace],
-                                                    params[:code_name],
-                                                    @current_path,
-                                                    { ref: @current_branch })
+                                                   params[:code_name],
+                                                   @current_path,
+                                                   { ref: @current_branch,
+                                                     current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end

@@ -65,7 +65,8 @@ class ModelsController < ApplicationController
         result = Starhub.api.get_model_file_content(params[:namespace],
                                                     params[:model_name],
                                                     @current_path,
-                                                    { ref: @current_branch })
+                                                    { ref: @current_branch,
+                                                      current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end

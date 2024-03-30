@@ -63,9 +63,10 @@ class DatasetsController < ApplicationController
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_dataset_file_content(params[:namespace],
-                                                       params[:dataset_name],
-                                                       @current_path,
-                                                       { ref: @current_branch })
+                                                      params[:dataset_name],
+                                                      @current_path,
+                                                      { ref: @current_branch,
+                                                        current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end

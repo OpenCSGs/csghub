@@ -78,7 +78,7 @@ module Starhub
     end
 
     def get_repo_file_content(repo_type, namespace, repo_name, path, options = {})
-      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/raw/#{path}?ref=#{options[:ref]}")
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/raw/#{path}?ref=#{options[:ref]}&current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
