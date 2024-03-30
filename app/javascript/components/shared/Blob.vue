@@ -74,7 +74,7 @@
         </el-popover>
       </div>
     </div>
-    <div v-if="!lfs" class="border border-t-0 border-[#DCDFE6] rounded-b">
+    <div v-if="!lfs || isImage()" class="border border-t-0 border-[#DCDFE6] rounded-b">
       <div class="text-xs text-[#303133] px-4 py-2 flex items-center justify-between border-b border-[#DCDFE6]">
         <div class="flex items-center gap-4">
           <div class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded">{{ $t('shared.preview') }}</div>
@@ -182,8 +182,12 @@
     fileType.value = extension
   }
 
+  const isImage = () => {
+    return ['jpg', 'png', 'jpeg', 'gif', 'svg'].includes(fileType.value)
+  }
+
   const lfsContentRegex = () => {
-    if (props.lfs) {
+    if (props.lfs && !isImage()) {
       const versionRegex = /version\s+(\S+)/;
       const oidRegex = /sha256:(\S+)/;
       version.value = props.content.match(versionRegex)[1];
