@@ -68,7 +68,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def create_file
     options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
                                                         new_branch: 'main',
-                                                        current_user: current_user.name,
+                                                        username: current_user.name,
                                                         email: current_user.email,
                                                         content: Base64.encode64(params[:content])
                                                       })
@@ -101,7 +101,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     updated_readme_content = updated_metadata_part + readme_content
     options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
                                                         new_branch: 'main',
-                                                        current_user: current_user.name,
+                                                        username: current_user.name,
                                                         email: current_user.email,
                                                         content: Base64.encode64(updated_readme_content),
                                                         sha:sha
@@ -115,7 +115,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def update_file
     options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
                                                               new_branch: 'main',
-                                                              current_user: current_user.name,
+                                                              username: current_user.name,
                                                               email: current_user.email,
                                                               content: Base64.encode64(params[:content])
                                                             })
@@ -131,7 +131,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
       email: current_user.email,
       message: build_upload_commit_message,
-      current_user: current_user.name
+      username: current_user.name
     }
     sync_upload_file('model', options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
