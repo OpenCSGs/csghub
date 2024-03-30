@@ -290,6 +290,8 @@ export default {
     "openText": "开源、可信的大模型资产管理平台",
     "llm_inference_open": "开源Inference",
     "llm_inference_open_text": "高效部署 LLM 推理服务",
+    "llm_finetune":"开源Finetune (LLM 训练及微调框架）",
+    "llm_finetune_text":"开源Finetune (LLM 训练及微调框架）",
     "space": "应用空间",
     "spaceText": "大模型应用体验平台",
     "docs": "文档中心",
