@@ -80,7 +80,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     tags = params[:tags]
 
     # # 更新 README 元数据中的 tags
-    blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md')
+    blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
     content =JSON.parse(blob).dig("data", "content")
     metadata_data = Base64.decode64(content)
     metadata_hash = YAML.safe_load(Base64.decode64(content))

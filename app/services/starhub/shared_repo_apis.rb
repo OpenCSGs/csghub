@@ -27,14 +27,14 @@ module Starhub
         "/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{options[:current_user]}",
         "/#{repo_type}/#{namespace}/#{repo_name}/last_commit?ref=#{options[:ref]}",
         "/#{repo_type}/#{namespace}/#{repo_name}/branches",
-        "/#{repo_type}/#{namespace}/#{repo_name}/blob/#{options[:path]}?ref=#{options[:ref]}"
+        "/#{repo_type}/#{namespace}/#{repo_name}/blob/#{options[:path]}?ref=#{options[:ref]}&current_user=#{options[:current_user]}"
       ]
       @client.get_in_parallel(paths, options)
     end
 
     def get_blob_sha(repo_type, namespace, repo_name, path, options = {})
       options[:path] ||= '/'
-      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/blob/#{path}?ref=#{options[:ref]}")
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/blob/#{path}?ref=#{options[:ref]}&current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
       res.body
     end
