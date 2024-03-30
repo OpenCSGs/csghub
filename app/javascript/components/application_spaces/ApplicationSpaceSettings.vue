@@ -87,7 +87,7 @@
       <div class="flex flex-col gap-[6px]">
         <el-button @click="restartSpace"
                    class="w-[100px]"
-                   :disabled="!initialized"
+                   :disabled="notInitialized"
         >
           {{ $t('application_spaces.restart')}}
         </el-button>
@@ -279,6 +279,7 @@ export default {
       ],
       deployFailed: ['BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       initialized: ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
+      notInitialized: this.appStatus === 'NoAppFile',
       cookies: useCookies().cookies
     };
   },
