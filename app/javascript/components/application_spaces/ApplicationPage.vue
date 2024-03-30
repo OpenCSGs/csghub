@@ -4,7 +4,7 @@
       :src="endpointWithToken"
       id="application-space-iframe"
       frameborder="0"
-      class="w-full h-[70vh]"
+      class="w-full h-[100vh]"
     ></iframe>
   </div>
 </template>
