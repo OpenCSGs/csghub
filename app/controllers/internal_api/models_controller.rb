@@ -25,7 +25,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def readme
-    readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+    readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'model', readme_content
     render json: { readme: readme_content }
@@ -80,7 +80,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     tags = params[:tags]
 
     # # 更新 README 元数据中的 tags
-    blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md')
+    blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
     content =JSON.parse(blob).dig("data", "content")
     metadata_data = Base64.decode64(content)
     metadata_hash = YAML.safe_load(Base64.decode64(content))
@@ -114,11 +114,11 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def update_file
     options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
+                                                              new_branch: 'main',
+                                                              username: current_user.name,
+                                                              email: current_user.email,
+                                                              content: Base64.encode64(params[:content])
+                                                            })
     sync_update_file('model', options)
     render json: { message: I18n.t('repo.updateFileSuccess') }
   end

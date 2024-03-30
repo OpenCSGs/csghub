@@ -41,13 +41,15 @@ class ApplicationSpacesController < ApplicationController
                                                                params[:lfs_path],
                                                                { ref: @current_branch,
                                                                  lfs: true,
-                                                                 save_as: @current_path })
+                                                                 save_as: @current_path,
+                                                                 current_user: current_user&.name })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_application_space_file(params[:namespace],
                                                            params[:application_space_name],
                                                            @current_path,
-                                                           { ref: @current_branch })
+                                                           { ref: @current_branch,
+                                                             current_user: current_user&.name })
         send_data file, filename: @current_path
       end
     else
@@ -56,13 +58,15 @@ class ApplicationSpacesController < ApplicationController
         result = Starhub.api.download_application_space_resolve_file(params[:namespace],
                                                                      params[:application_space_name],
                                                                      @current_path,
-                                                                     { ref: @current_branch })
+                                                                     { ref: @current_branch,
+                                                                       current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_application_space_file_content(params[:namespace],
                                                                 params[:application_space_name],
                                                                 @current_path,
-                                                                { ref: @current_branch })
+                                                                { ref: @current_branch,
+                                                                  current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end
