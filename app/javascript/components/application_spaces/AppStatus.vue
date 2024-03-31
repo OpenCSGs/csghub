@@ -40,23 +40,23 @@
       case 'NoAppFile':
         return t('application_spaces.status.noAppfile')
       case 'Building':
-        return t('application_spaces.status.building') + spaceResourceDisplayName.value
+        return t('application_spaces.status.building')
       case 'Deploying':
-        return t('application_spaces.status.deploying') + spaceResourceDisplayName.value
+        return t('application_spaces.status.deploying')
       case 'Starup':
-        return t('application_spaces.status.startup') + spaceResourceDisplayName.value
+        return t('application_spaces.status.startup')
       case 'Running':
         return t('application_spaces.status.running') + spaceResourceDisplayName.value
       case 'Sleeping':
-        return t('application_spaces.status.sleeping') + spaceResourceDisplayName.value
+        return t('application_spaces.status.sleeping')
       case 'Stopped':
-        return t('application_spaces.status.stopped') + spaceResourceDisplayName.value
+        return t('application_spaces.status.stopped')
       case 'BuildingFailed':
-        return t('application_spaces.status.buildingFailed') + spaceResourceDisplayName.value
+        return t('application_spaces.status.buildingFailed')
       case 'DeployFailed':
-        return t('application_spaces.status.deployFailed') + spaceResourceDisplayName.value
+        return t('application_spaces.status.deployFailed')
       case 'RuntimeError':
-        return t('application_spaces.status.runtimeError') + spaceResourceDisplayName.value
+        return t('application_spaces.status.runtimeError')
       default:
         return '未知'
     }
