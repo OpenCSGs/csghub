@@ -14,10 +14,26 @@
   import SuccessStatus from './SuccessStatus.vue'
 
   const props = defineProps({
-    appStatus: String
+    appStatus: String,
+    spaceResource: String
   })
 
   const { t } = useI18n();
+
+  const spaceResourceDisplayName = computed(() => {
+    switch(props.spaceResource) {
+      case 'CPU basic · 2 vCPU · 16GB':
+        return ' (CPU)'
+      case 'NVIDIA T4 · 4 vCPU · 15 GB':
+        return ' (T4)'
+      case 'NVIDIA A10G · 4 vCPU · 15 GB':
+        return ' (A10)'
+      case 'NVIDIA A10G · 12 vCPU · 46 GB':
+        return ' (A10)'
+      default:
+        return ''
+    }
+  })
 
   const appStatusDisplayName = computed(() => {
     switch(props.appStatus) {
@@ -30,7 +46,7 @@
       case 'Starup':
         return t('application_spaces.status.startup')
       case 'Running':
-        return t('application_spaces.status.running')
+        return t('application_spaces.status.running') + spaceResourceDisplayName.value
       case 'Sleeping':
         return t('application_spaces.status.sleeping')
       case 'Stopped':

@@ -41,13 +41,15 @@ class CodesController < ApplicationController
                                                    params[:lfs_path],
                                                    { ref: @current_branch,
                                                      lfs: true,
-                                                     save_as: @current_path})
+                                                     save_as: @current_path,
+                                                     current_user: current_user&.name })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_code_file(params[:namespace],
                                                params[:code_name],
                                                @current_path,
-                                               { ref: @current_branch })
+                                               { ref: @current_branch,
+                                                 current_user: current_user&.name })
         send_data file, filename: @current_path
       end
     else
@@ -56,13 +58,15 @@ class CodesController < ApplicationController
         result = Starhub.api.download_code_resolve_file(params[:namespace],
                                                          params[:code_name],
                                                          @current_path,
-                                                         { ref: @current_branch })
+                                                         { ref: @current_branch,
+                                                           current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_code_file_content(params[:namespace],
-                                                    params[:code_name],
-                                                    @current_path,
-                                                    { ref: @current_branch })
+                                                   params[:code_name],
+                                                   @current_path,
+                                                   { ref: @current_branch,
+                                                     current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end

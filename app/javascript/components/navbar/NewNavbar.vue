@@ -23,10 +23,10 @@
         <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')">{{ $t('navbar.datasets') }}</el-menu-item>
 
         <!-- code -->
-        <el-menu-item v-if="canCreateDailyPaper" index="/codes" style="border:none" @click="routerLink('/codes')">{{ $t('navbar.codes') }}</el-menu-item>
+        <el-menu-item  index="/codes" style="border:none" @click="routerLink('/codes')">{{ $t('navbar.codes') }}</el-menu-item>
 
         <!-- application space -->
-        <el-menu-item v-if="canCreateDailyPaper" index="/spaces" style="border:none" @click="routerLink('/spaces')">{{ $t('navbar.spaces') }}</el-menu-item>
+        <el-menu-item  index="/spaces" style="border:none" @click="routerLink('/spaces')">{{ $t('navbar.spaces') }}</el-menu-item>
 
         <!-- hardware -->
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
@@ -62,6 +62,7 @@
           <template #title>{{ $t('navbar.developer') }}</template>
           <a :href="csgHubUrl" target="_blank"><el-menu-item style="height: auto;" index="3-1"><CSGHub /></el-menu-item></a>
           <a :href="llmInference" target="_blank"><el-menu-item style="height: auto;" index="3-2"><Inference /></el-menu-item></a>
+          <a :href="llmFinetune" target="_blank"><el-menu-item style="height: auto;" index="3-3"><LlmFinetune /></el-menu-item></a>
           <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item style="height: auto;" index="3-3"><StarChain /></el-menu-item></a>
         </el-sub-menu>
 
@@ -135,10 +136,10 @@
             <a href="/datasets/new">
               <el-dropdown-item> + {{ $t('navbar.newDataset') }} </el-dropdown-item>
             </a>
-            <a href="/codes/new" v-if="canCreateDailyPaper">
+            <a href="/codes/new">
               <el-dropdown-item > + {{ $t('navbar.newCode') }} </el-dropdown-item>
             </a>
-            <a href="/spaces/new" v-if="canCreateDailyPaper">
+            <a href="/spaces/new">
               <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
@@ -177,6 +178,7 @@ import StarCode from "./menuItem/StarCode.vue"
 import AllSolution from "./menuItem/AllSolution.vue"
 import CSGHub from "./menuItem/CSGHub.vue"
 import Inference from "./menuItem/Inference.vue"
+import LlmFinetune from "./menuItem/LlmFinetune.vue"
 import StarChain from "./menuItem/StarChain.vue"
 import Space from "./menuItem/Space.vue"
 import Doc from "./menuItem/Doc.vue"
@@ -205,6 +207,7 @@ export default {
     return {
       csgHubUrl:'https://github.com/OpenCSGs/CSGHub',
       llmInference: 'https://github.com/OpenCSGs/llm-inference',
+      llmFinetune: 'https://github.com/OpenCSGs/llm-finetune',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
       userProfile: `/profile/${this.userId}`
@@ -228,7 +231,8 @@ export default {
     Experts,
     Partners,
     Campaigns,
-    DailyPapers
+    DailyPapers,
+    LlmFinetune
   },
   methods: {
     routerLink(path){
