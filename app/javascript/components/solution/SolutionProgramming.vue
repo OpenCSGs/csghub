@@ -5,6 +5,11 @@
         <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">{{ $t('solution.programming.solution4') }}</div>
         <div class="text-[36px] leading-[44px] text-[#101828]">{{ $t('solution.programming.headline') }}</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] font-light">{{ $t('solution.programming.desc') }}</div>
+        <a href="https://portal.opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B" target="_blank"
+          class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
+        >
+          {{ $t("solution.programming.demo") }}
+        </a>
       </div>
       <div class="px-[32px] flex gap-[64px] md:flex-col">
         <div class="flex flex-col gap-[48px]">

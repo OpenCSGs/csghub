@@ -218,6 +218,7 @@ export default {
       "solution4": "Solution #4",
       "headline": "OpenCSG StarCode AI Intelligent Programming Assistant",
       "desc": "StarCode AI is a versatile intelligent programming assistant that helps developers improve their work efficiency through innovative features based on large model technology. It integrates the advantages of other auxiliary programming assistants and provides developers with more powerful features.",
+      "demo": "Quick Try",
       "part1": "Automatic code generation and completion",
       "part1-": "Supports automatic code generation based on natural language annotations, as well as generating subsequent code based on existing code, making the coding process faster and more accurate. OpenCSG StarCode AI further provides completion functionality for the current line or generating subsequent lines of code, helping developers easily complete programming tasks.",
       "part2": "Automatically generate unit tests",
