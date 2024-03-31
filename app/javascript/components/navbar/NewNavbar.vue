@@ -3,7 +3,8 @@
     <div class="flex">
       <div class="py-2 mr-[50px] xl:mr-[50px] sm:mr-[30px]">
         <a href="/">
-          <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px]" />
+          <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px] sm:hidden" />
+          <img src="/images/opencsg_mobile_logo.png" alt="OpenCSG Logo" class="hidden w-auto h-[40px] sm:block" />
         </a>
       </div>
     </div>
