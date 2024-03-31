@@ -200,6 +200,7 @@ export default {
       "solution3": "解决方案 #3",
       "headline": "OpenCSG Imagen AI 智能图像助手",
       "desc": "OpenCSG Imagen AI 智能图像助手是一款在 Stable Diffusion 2.1开源模型基础上研发的，致力于增强人类智能的视觉工具集，旨在为创作者提供更好用的工具，催化灵感的萌芽，并实现创意和生产力的指数级放大。OpenCSG Imagen AI 智能图像助手适应专业设计工作流程，提供多种功能。",
+      "demo": "快速体验",
       "part1": "文生图绘图模式",
       "part1-": "无需专业绘画技能，用户只需简单描述即可在几秒内生成高质量的画作。",
       "part2": "图生图绘图模式",
