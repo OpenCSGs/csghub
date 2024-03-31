@@ -2,6 +2,7 @@ module SessionsHelper
   def log_in user
     session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
+    cookies[:user_synced] = user.starhub_synced
     setup_jwt_token(user.name) if user.starhub_synced?
   end
 
@@ -27,6 +28,7 @@ module SessionsHelper
     cookies.delete :idToken, domain: current_cookie_domain
     cookies.delete :userinfos, domain: current_cookie_domain
     cookies.delete :login_identity
+    cookies.delete :user_synced
     cookies.delete :user_token
   end
 
