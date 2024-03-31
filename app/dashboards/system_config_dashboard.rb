@@ -18,6 +18,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     s3_configs: Field::JSONB,
     hot_models: Field::JSONB,
     hot_datasets: Field::JSONB,
+    hot_spaces: Field::JSONB,
     ignore_model_tags: Field::JSONB,
     ignore_dataset_tags: Field::JSONB,
     created_at: Field::DateTime,
@@ -48,6 +49,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     s3_configs
     hot_models
     hot_datasets
+    hot_spaces
     ignore_model_tags
     ignore_dataset_tags
     created_at
@@ -67,6 +69,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     s3_configs
     hot_models
     hot_datasets
+    hot_spaces
     ignore_model_tags
     ignore_dataset_tags
   ].freeze

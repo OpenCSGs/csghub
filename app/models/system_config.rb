@@ -31,6 +31,10 @@ class SystemConfig < ApplicationRecord
     self[:hot_datasets] = value.is_a?(String) ? JSON.parse(value) : value
   end
 
+  def hot_spaces=(value)
+    self[:hot_spaces] = value.is_a?(String) ? JSON.parse(value) : value
+  end
+
   def ignore_model_tags=(value)
     self[:ignore_model_tags] = value.is_a?(String) ? JSON.parse(value) : value
   end

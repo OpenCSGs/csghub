@@ -2,7 +2,7 @@
   <a :href="`/spaces/${repo.path}`" class="border border-gray-200 rounded-xl p-4 w-[409px] xl:w-full">
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
-        <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]">{{ getComputed.path }}</h3>
+        <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px] text-left">{{ getComputed.path }}</h3>
         <div class="flex gap-2">
           <span class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-[#344054] text-[12px]">{{ getComputed.visibility }}</span>
           <AppStatus :appStatus="repo.status || 'NoAppFile'" :spaceResource="repo.hardware" />

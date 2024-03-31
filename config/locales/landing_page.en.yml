@@ -9,6 +9,7 @@ en:
       trends_desc: 'Explore the Latest Community Open-Source Models and Datasets'
       models: 'Models'
       datasets: 'Datasets'
+      spaces: 'Spaces'
       load_more: 'Load More'
       view_more: 'Learn more'
       value_title_1: 'Enhance open source Large Language Models'

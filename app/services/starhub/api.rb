@@ -221,6 +221,12 @@ module Starhub
       res.body
     end
 
+    def spaces_by_paths list
+      res = @client.post("/list/spaces_by_path", {paths: list})
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def get_jwt_token(username)
       options = {
         current_user: username

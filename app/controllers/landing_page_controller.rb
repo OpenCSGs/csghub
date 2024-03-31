@@ -15,6 +15,7 @@ class LandingPageController < ApplicationController
     @partners = PARTNERS.sort_by {|partner| PinYin.abbr(partner['name'])}
     @hot_models = load_hot_models
     @hot_datasets = load_hot_datasets
+    @hot_spaces = load_hot_spaces
   end
 
   private
@@ -34,6 +35,16 @@ class LandingPageController < ApplicationController
     hot_datasets = system_config.hot_datasets rescue []
     return [] if hot_datasets.blank?
     res = Starhub.api.datasets_by_paths hot_datasets
+    JSON.parse(res)['data'] || []
+  rescue StarhubError
+    []
+  end
+
+  def load_hot_spaces
+    system_config = SystemConfig.first
+    hot_spaces = system_config.hot_spaces rescue []
+    return [] if hot_spaces.blank?
+    res = Starhub.api.spaces_by_paths hot_spaces
     JSON.parse(res)['data'] || []
   rescue StarhubError
     []

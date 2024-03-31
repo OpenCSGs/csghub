@@ -298,6 +298,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_29_080846) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
+    t.jsonb "hot_spaces", default: {}
     t.jsonb "ignore_model_tags", default: {}
     t.jsonb "ignore_dataset_tags", default: {}
   end
