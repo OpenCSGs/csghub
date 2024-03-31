@@ -74,7 +74,7 @@
                       v-model:current-page="currentPage"
                       :default-current-page=1
                       :total="totalRepos"
-                      :page-size="16"
+                      :page-size="perPage"
                       layout="prev, pager, next"
                       @update:current-page="reloadRepos"
                       class="my-[52px] flex justify-center"
@@ -84,7 +84,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, computed } from 'vue';
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
@@ -105,7 +105,6 @@
   const nameFilterInput = ref('')
   const sortSelection = ref('recently_update')
   const currentPage = ref(1)
-  const perPage = ref(16)
   const totalRepos = ref(0)
   const taskTag = ref('')
   const frameworkTag = ref('')
@@ -129,6 +128,14 @@
                           label: t('all.mostFavorite')
                         },
                       ]
+
+  const perPage = computed(() => {
+    if (props.repoType === 'space') {
+      return 9
+    } else {
+      return 16
+    }
+  })
 
   const resetTags = (task, framework, license) => {
     taskTag.value = task

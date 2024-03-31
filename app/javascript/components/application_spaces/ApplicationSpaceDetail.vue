@@ -9,6 +9,7 @@
         :desc="applicationSpace.data.description"
         :path="applicationSpace.data.path"
         :appStatus="appStatus"
+        :space-resource="applicationSpace.data.hardware"
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
