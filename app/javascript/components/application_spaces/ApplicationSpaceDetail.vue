@@ -176,7 +176,6 @@
             containerLogDiv.value.innerHTML = ''
             containerLogLineNum.value = 0
           }
-          spaceLogsDrawer.value = true
         } else if (response.status === 401) {
           ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
             'show-close': false,
