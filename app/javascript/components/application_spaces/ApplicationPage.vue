@@ -2,6 +2,7 @@
   <div class="py-[20px] overflow-scroll">
     <iframe
       :src="endpointWithToken"
+      allow="clipboard-write"
       id="application-space-iframe"
       frameborder="0"
       class="w-full h-[100vh]"
