@@ -23,10 +23,10 @@
         <el-menu-item index="/datasets" style="border:none" @click="routerLink('/datasets')">{{ $t('navbar.datasets') }}</el-menu-item>
 
         <!-- code -->
-        <el-menu-item v-if="canCreateDailyPaper" index="/codes" style="border:none" @click="routerLink('/codes')">{{ $t('navbar.codes') }}</el-menu-item>
+        <el-menu-item  index="/codes" style="border:none" @click="routerLink('/codes')">{{ $t('navbar.codes') }}</el-menu-item>
 
         <!-- application space -->
-        <el-menu-item v-if="canCreateDailyPaper" index="/spaces" style="border:none" @click="routerLink('/spaces')">{{ $t('navbar.spaces') }}</el-menu-item>
+        <el-menu-item  index="/spaces" style="border:none" @click="routerLink('/spaces')">{{ $t('navbar.spaces') }}</el-menu-item>
 
         <!-- hardware -->
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
@@ -135,10 +135,10 @@
             <a href="/datasets/new">
               <el-dropdown-item> + {{ $t('navbar.newDataset') }} </el-dropdown-item>
             </a>
-            <a href="/codes/new" v-if="canCreateDailyPaper">
+            <a href="/codes/new">
               <el-dropdown-item > + {{ $t('navbar.newCode') }} </el-dropdown-item>
             </a>
-            <a href="/spaces/new" v-if="canCreateDailyPaper">
+            <a href="/spaces/new">
               <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
             <a href="/organizations/new">
