@@ -14,7 +14,7 @@ class InternalApi::ApplicationController < ApplicationController
 
   private
 
-  def render_ssh_error(e)
+  def render_ssh_error e
     message = JSON.parse(e.message)["msg"]
     if message.include?("key,error:Invalid")
       render json: {message: I18n.t('ssh_key.invalid')}, status: 500
@@ -26,7 +26,7 @@ class InternalApi::ApplicationController < ApplicationController
     false
   end
 
-  def render_user_edit_error(e)
+  def render_user_edit_error e
     message = JSON.parse(e.message)["msg"]
     if message.include?("user,error")
       render json: {message: I18n.t('user_edit.email')}, status: 500
