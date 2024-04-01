@@ -3,8 +3,8 @@ class InternalApi::ApplicationController < ApplicationController
     log_error e.message, e.backtrace
     handled_ssh = render_ssh_error e
     handled_user_edit = render_user_edit_error e
-    render_git = handled_ssh || handled_user_edit
-    render json: {message: "Git服务器报错"}, status: 500 unless render_git
+    not_render_git = handled_ssh || handled_user_edit
+    render json: {message: "Git服务器报错"}, status: 500 unless not_render_git
   end
 
   rescue_from SensitiveContentError do |e|
