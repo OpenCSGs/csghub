@@ -2,3 +2,5 @@ en:
   ssh_key:
     invalid: Invalid ssh public key
     non_deploy: Key content has been used as non-deploy key
+  user_edit:
+    email: The email address is already in use. Please change it to another email address
