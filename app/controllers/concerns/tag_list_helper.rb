@@ -33,9 +33,9 @@ module TagListHelper
     system_config = SystemConfig.first
     case type
     when 'models'
-      (system_config.ignore_model_tags rescue []) || []
+      system_config&.ignore_model_tags.present? ? system_config.ignore_model_tags : []
     when 'datasets'
-      (system_config.ignore_dataset_tags rescue []) || []
+      system_config&.ignore_dataset_tags.present? ? system_config.ignore_dataset_tags : []
     when 'application_spaces'
       []
     when 'codes'
