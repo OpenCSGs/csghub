@@ -1,0 +1,4 @@
+en:
+  ssh_key:
+    invalid: Invalid ssh public key
+    non_deploy: Key content has been used as non-deploy key
