@@ -108,16 +108,22 @@ class ApplicationController < ActionController::Base
           return redirect_to errors_unauthorized_path
         end
       else
-        user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
-          u.roles = :personal_user
-          u.avatar = user_infos['avatar']
-          u.name = user_name
-          u.nickname = nickname if nickname.present?
-          u.phone = user_infos['phone']
-          u.email = user_infos['email']
-          u.email_verified = user_infos['emailVerified']
-          u.gender = user_infos['gender']
-          u.last_login_at = Time.now
+        begin
+          user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
+            u.roles = :personal_user
+            u.avatar = user_infos['avatar']
+            u.name = user_name
+            u.nickname = nickname if nickname.present?
+            u.phone = user_infos['phone']
+            u.email = user_infos['email']
+            u.email_verified = user_infos['emailVerified']
+            u.gender = user_infos['gender']
+            u.last_login_at = Time.now
+          end
+        rescue ActiveRecord::RecordInvalid => e
+          # 处理异常情况
+          flash[:alert] = "授权登录出错，请联系管理员处理：#{e.message}"
+          return redirect_to errors_unauthorized_path
         end
       end
     else
