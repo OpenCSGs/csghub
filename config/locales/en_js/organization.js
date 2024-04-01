@@ -10,6 +10,8 @@ export const organization = {
   orgTeam: "Team Members",
   model: "Model",
   dataset: "Dataset",
+  space: "Space",
+  code: "Code",
   invite: {
     title: "Invite",
     inviteNew: "Invite New Member",

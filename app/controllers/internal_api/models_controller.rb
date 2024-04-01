@@ -1,5 +1,5 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:index, :files, :readme, :predict]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -25,7 +25,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def readme
-    readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md')
+    readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'model', readme_content
     render json: { readme: readme_content }
@@ -36,34 +36,32 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   def create
     model = current_user.created_models.build(model_params)
     if model.save
-      render json: { path: model.path, message: '模型创建成功!' }, status: :created
+      render json: { path: model.path, message: I18n.t('repo.createSuccess') }, status: :created
     else
       render json: { message: model.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 
   def update
-    if params[:private].to_s == 'true'
-      @model.visibility = 'private'
-    else
-      @model.visibility = 'public'
+    if params[:private].to_s.present?
+      @model.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
     end
 
     @model.nickname = params[:nickname] if params[:nickname].present?
     @model.desc = params[:desc] if params[:desc].present?
 
     if @model.save
-      render json: { message: '更新成功' }
+      render json: { message: I18n.t('repo.updateSuccess') }
     else
-      render json: { message: "更新失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.updateFailed') }, status: :bad_request
     end
   end
 
   def destroy
     if @model.destroy
-      render json: { message: '删除成功' }
+      render json: { message: I18n.t('repo.delSuccess') }
     else
-      render json: { message: "删除 #{params[:namespace]}/#{params[:model_name]} 失败" }, status: :bad_request
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
     end
   end
 
@@ -75,19 +73,54 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                                         content: Base64.encode64(params[:content])
                                                       })
     sync_create_file('model', options)
-    render json: { message: '创建文件成功' }
+    render json: { message: I18n.t('repo.createFileSuccess') }
   end
 
+  def update_readme_tags
+    tags = params[:tags]
 
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
+    # # 更新 README 元数据中的 tags
+    blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
+    content =JSON.parse(blob).dig("data", "content")
+    metadata_data = Base64.decode64(content)
+    metadata_hash = YAML.safe_load(Base64.decode64(content))
+    sha = JSON.parse(blob).dig("data", "sha")
+    # 查找元数据部分的结束位置
+    end_index = metadata_data.index('---', 3)
+
+    # 提取数据部分
+    readme_content = metadata_data[end_index+4 .. -1] || ""
+
+    # 更新或添加 tags
+    metadata_hash['tags'] = tags
+    # 重新生成元数据部分
+    updated_metadata_part = YAML.dump(metadata_hash)
+    updated_metadata_part += "---\n"  # 手动添加`---`标记
+
+    # 更新 README 内容
+    updated_readme_content = updated_metadata_part + readme_content
+    options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
                                                         new_branch: 'main',
                                                         username: current_user.name,
                                                         email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
+                                                        content: Base64.encode64(updated_readme_content),
+                                                        sha:sha
                                                       })
     sync_update_file('model', options)
-    render json: { message: '更新文件成功' }
+    render json: { message: I18n.t('tags.update.success') }
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def update_file
+    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
+                                                              new_branch: 'main',
+                                                              username: current_user.name,
+                                                              email: current_user.email,
+                                                              content: Base64.encode64(params[:content])
+                                                            })
+    sync_update_file('model', options)
+    render json: { message: I18n.t('repo.updateFileSuccess') }
   end
 
   def upload_file
@@ -101,7 +134,12 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
       username: current_user.name
     }
     sync_upload_file('model', options)
-    render json: { message: '上传文件成功' }, status: 200
+    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
+  end
+
+  def predict
+    res = Starhub.api.model_predict(params[:namespace], params[:model_name], current_user&.name, params[:input], params[:current_branch])
+    render json: { message: I18n.t('models.predict_success'), result: JSON.parse(res)['data']['content'] }
   end
 
   private

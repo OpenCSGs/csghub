@@ -1,5 +1,5 @@
 class InternalApi::OrganizationsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:models, :datasets]
+  before_action :authenticate_user, except: [:models, :datasets, :codes, :spaces]
 
   def create
     new_org = Organization.new organization_params
@@ -83,6 +83,14 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
   def datasets
     render json: Starhub.api.get_org_datasets(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
+  def spaces
+    render json: Starhub.api.get_org_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
+  end
+
+  def codes
+    render json: Starhub.api.get_org_codes(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   private

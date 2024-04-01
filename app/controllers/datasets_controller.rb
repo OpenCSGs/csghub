@@ -41,13 +41,15 @@ class DatasetsController < ApplicationController
                                                       params[:lfs_path],
                                                       { ref: @current_branch,
                                                         lfs: true,
-                                                        save_as: @current_path })
+                                                        save_as: @current_path,
+                                                        current_user: current_user&.name })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
         file = Starhub.api.download_dataset_file(params[:namespace],
                                                   params[:dataset_name],
                                                   @current_path,
-                                                  { ref: @current_branch })
+                                                  { ref: @current_branch,
+                                                    current_user: current_user&.name })
         send_data file, filename: @current_path
       end
     else
@@ -56,13 +58,15 @@ class DatasetsController < ApplicationController
         result = Starhub.api.download_dataset_resolve_file(params[:namespace],
                                                             params[:dataset_name],
                                                             @current_path,
-                                                            { ref: @current_branch })
+                                                            { ref: @current_branch,
+                                                              current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
         result = Starhub.api.get_dataset_file_content(params[:namespace],
-                                                       params[:dataset_name],
-                                                       @current_path,
-                                                       { ref: @current_branch })
+                                                      params[:dataset_name],
+                                                      @current_path,
+                                                      { ref: @current_branch,
+                                                        current_user: current_user&.name })
         render plain: JSON.parse(result)['data']
       end
     end
@@ -87,12 +91,13 @@ class DatasetsController < ApplicationController
 
     if action_name == 'blob' || action_name == 'edit_file'
       @dataset, @last_commit, @branches, @blob = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
-      update_blob_content
+      update_blob_content('dataset')
     else
       @dataset, @branches = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
 
-    @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags']).to_json
+    @tags_list = Tag.where(scope: 'dataset', tag_type: 'task').as_json
+    @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags'], 'dataset').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_dataset) : false
   end
 end

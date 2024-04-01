@@ -1,16 +1,18 @@
 <template>
   <div class="relative">
     <el-tabs v-model="activeName">
-      <el-tab-pane :label="this.$t('all.summary')" name="summary">
+      <el-tab-pane :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
+                   name="summary"
+      >
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="this.$t('all.files')" name="files">
+      <el-tab-pane :label="$t('all.files')" name="files">
         <slot name="files"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="this.$t('all.community')" name="community" class="min-h-[300px]">
+      <el-tab-pane :label="$t('all.community')" name="community" class="min-h-[300px]">
         <slot name="community"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="settingsVisibility" :label="this.$t('all.settings')" name="settings" class="min-h-[300px]">
+      <el-tab-pane v-if="settingsVisibility" :label="$t('all.settings')" name="settings" class="min-h-[300px]">
         <slot name="settings"></slot>
       </el-tab-pane>
     </el-tabs>
@@ -35,11 +37,16 @@
 </style>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   defaultTab: String,
-  settingsVisibility: Boolean
+  settingsVisibility: Boolean,
+  repoType: String
+})
+
+const isApplicationSpace = computed(() => {
+  return props.repoType === 'space'
 })
 
 const activeName = ref(props.defaultTab)

@@ -8,6 +8,7 @@ export const models = {
   namespaceModelName: "命名空间/模型名称",
   modelNickName: "模型别名",
   modelDesc: "模型简介",
+  modelTag:"模型标签",
   newModel: {
     title: "新建模型仓库",
     titleDesc: "仓库包含所有的模型文件和修订的历史记录",
@@ -27,6 +28,7 @@ export const models = {
   edit: {
     tips: "将会显示在模型列表页面中，选填",
     tips2: "一段关于模型的介绍，选填",
+    tips3:"选择模型对应的分类标签，便于用户在筛选时更快的找到您的模型。",
     changeVisibility: "修改模型可见性",
     statusText: "当前模型目前是",
     status: "状态",
@@ -39,8 +41,9 @@ export const models = {
     publicVis: "任何人都可以看到此模型",
     confirmDel: "我已知晓,确认删除",
     privateInfo: "，仅创建者或者组织管理员可进行提交",
-    publicInfo: "， 任何互联网上的人都可以看到此数据集。",
+    publicInfo: "， 任何互联网上的人都可以看到此模型",
     needModelName: "请先提供模型别名",
     needModelDesc: "请先提供模型介绍",
+    needModelTag:'请先提供模型标签'
   },
 }

@@ -9,14 +9,14 @@ export const community = {
     cancel: "Cancel",
     updateSuccess: "Title update successfully!",
     warn: "Content cannot be empty",
-    addSuccess: "Add comment.js successfully",
+    addSuccess: "Add comment successfully",
   },
   MD: {
     edit: "Edit",
     preview: "Preview",
     desc: "Upload pictures, audio, video, or by dragging and dropping ",
     click: "Click here to upload",
-    default: "Leave a comment.js",
+    default: "Leave a comment",
   },
   newDiscussion: {
     new: "New topic",

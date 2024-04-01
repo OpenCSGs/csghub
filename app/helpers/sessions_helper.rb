@@ -1,6 +1,9 @@
 module SessionsHelper
   def log_in user
     session[:login_identity] = user.login_identity
+    cookies[:login_identity] = user.login_identity
+    cookies[:user_synced] = user.starhub_synced
+    setup_jwt_token(user.name) if user.starhub_synced?
   end
 
   def current_user
@@ -24,6 +27,9 @@ module SessionsHelper
     cookies.delete :oidcUuid, domain: current_cookie_domain
     cookies.delete :idToken, domain: current_cookie_domain
     cookies.delete :userinfos, domain: current_cookie_domain
+    cookies.delete :login_identity
+    cookies.delete :user_synced
+    cookies.delete :user_token
   end
 
   def is_on_premise?
@@ -34,5 +40,12 @@ module SessionsHelper
     on_premise = on_premise_from_env || feature_flags['on_premise']
 
     on_premise.to_s == 'true'
+  end
+
+  def setup_jwt_token username
+    res = Starhub.api.get_jwt_token(username)
+    token = JSON.parse(res)['data']
+    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
+    cookies['user_token'] = {value: token, domain: current_domain}
   end
 end

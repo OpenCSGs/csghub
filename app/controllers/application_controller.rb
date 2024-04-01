@@ -65,7 +65,13 @@ class ApplicationController < ActionController::Base
   end
 
   def set_default_locale
-    I18n.locale = params[:locale] || cookies[:locale] || I18n.default_locale
+    browser_language = request.env['HTTP_ACCEPT_LANGUAGE']
+    default_locale = if browser_language
+                        browser_language.scan(/^[a-z]{2}/)&.first == 'zh' ? 'zh' : 'en'
+                     else
+                        I18n.default_locale
+                     end
+    I18n.locale = params[:locale] || cookies[:locale] || default_locale
     cookies[:locale] = I18n.locale
   end
 
@@ -105,6 +111,7 @@ class ApplicationController < ActionController::Base
 
     # 确保如果新的用户uuid没有保存，那么我们登录老的用户
     helpers.log_in user.reload
+
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
   end
@@ -129,6 +136,10 @@ class ApplicationController < ActionController::Base
                "/models/#{params[:namespace]}/#{params[:model_name]}/resolve/main/"
              when 'dataset'
                "/datasets/#{params[:namespace]}/#{params[:dataset_name]}/resolve/main/"
+             when 'code'
+               "/codes/#{params[:namespace]}/#{params[:code_name]}/resolve/main/"
+             when 'application_space'
+               "/spaces/#{params[:namespace]}/#{params[:application_space_name]}/resolve/main/"
              end
 
     content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|

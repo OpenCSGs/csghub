@@ -8,6 +8,7 @@ export const datasets = {
   namespaceDatasetName: "Namespace/Dataset Name",
   datasetNickName: "Dataset Nickname",
   datasetDesc: "Dataset Description",
+  datasetTag: "Dataset Tags",
   newDataset: {
     title: "Create New Dataset Repository",
     titleDesc:
@@ -25,6 +26,7 @@ export const datasets = {
     tips: "After creating the model, you can use the web or Git to upload your files.",
     tips2:
       "Creating public datasets is currently not supported. Please contact the administrator for manual review if needed.",
+    tips3: "Choose classification labels corresponding to the dataset to facilitate users in quickly finding your model during filtering.",
     createDataset: "Create Dataset",
     createSuccess: "Dataset created successfully",
   },

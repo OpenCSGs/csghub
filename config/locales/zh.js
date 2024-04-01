@@ -11,6 +11,11 @@ import { gitToken } from './zh_js/gitToken';
 import { sshKey } from './zh_js/sshKey';
 import { shared } from './zh_js/shared';
 import { repo } from './zh_js/repo';
+import { application_spaces } from './zh_js/application_spaces';
+import { codes } from './zh_js/codes';
+import { widgets } from './zh_js/widgets';
+import { spaces } from './zh_js/spaces';
+import { user_sessions } from './zh_js/user_sessions';
 
 export default {
   rule,
@@ -25,5 +30,10 @@ export default {
   gitToken,
   sshKey,
   shared,
-  repo
+  repo,
+  application_spaces,
+  codes,
+  widgets,
+  spaces,
+  user_sessions
 };

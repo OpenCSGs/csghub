@@ -21,5 +21,7 @@ class OrganizationsController < ApplicationController
     @members = @organization.members
     @models = Starhub.api.get_org_models(@organization.name, current_user&.name)
     @datasets = Starhub.api.get_org_datasets(@organization.name, current_user&.name)
+    @spaces = Starhub.api.get_org_application_spaces(@organization.name, current_user&.name)
+    @codes = Starhub.api.get_org_codes(@organization.name, current_user&.name)
   end
 end

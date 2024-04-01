@@ -67,6 +67,45 @@
 
     <el-divider/>
 
+        <!-- 模型标签 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col"> 
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('models.modelTag')}}
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          {{ $t('models.edit.tips3')}}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]" ref="tagListContainer">
+        <p class="text-[#344054] text-[14px]">{{ $t('models.modelTag')}}</p>
+        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+          <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              <span v-for="tag in selectedTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
+                <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
+              </span>
+            </div>
+            <input class="w-full max-h-[36px] outline-none"
+                    v-model="tagInput"
+                    @input="showTagList" />
+          </div>
+          <div v-show="shouldShowTagList" class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <p v-for="tag in theTagList"
+                @click="selectTag(tag)"
+                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+            >
+              {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name}}
+            </p>
+          </div>
+          <el-button @click="updateTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
+        </div>
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -152,11 +191,17 @@ export default {
     modelNickname: String,
     modelDesc: String,
     default_branch: String,
-    private: Boolean
+    tagList: Object,
+    tags: Object,
+    private: Boolean,
   },
   components: {},
   data() {
     return {
+      theTagList:this.tagList,
+      selectedTags:[],
+      shouldShowTagList:false,
+      tagInput:'',
       visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       modelName: this.path.split('/')[1],
@@ -168,8 +213,27 @@ export default {
     };
   },
   mounted() {
+    // 监听全局点击事件
+    document.addEventListener('click', this.collapseTagList);
+
+    this.getSelectTags()
+  },
+  beforeDestroy() {
+    // 组件销毁前移除事件监听
+    document.removeEventListener('click', this.collapseTagList);
   },
   methods: {
+    collapseTagList(event) {
+      if (!this.$refs.tagListContainer.contains(event.target)) {
+        this.shouldShowTagList = false;
+      }
+    },
+    getSelectTags(){
+      this.selectedTags = [
+        ...this.tags.task_tags.map(tag => tag),
+        ...this.tags.other_tags.map(tag => tag)
+      ];
+    },
     clickDelete() {
       if (this.delDesc === this.modelPath) {
         this.deleteModel().catch((err) => {
@@ -179,6 +243,31 @@ export default {
           })
         })
       }
+    },
+    showTagList(e){
+      if(this.tagInput != ''){
+        const userTriggerTagList = this.tagList.filter(tag => {
+          return tag.zh_name.includes(this.tagInput) || tag.name.includes(this.tagInput)
+        })
+        if (userTriggerTagList.length > 0) {
+          this.theTagList = userTriggerTagList
+          this.shouldShowTagList = true
+        }
+      }else{
+        this.shouldShowTagList = false
+      }
+    },
+
+    selectTag(newTag){
+      console.log(newTag);
+      const findTag = this.selectedTags.find(tag => tag.name === newTag.name)
+      if (!findTag) {
+        this.selectedTags.push({name: newTag.name, zh_name: newTag.zh_name})
+      }
+    },
+
+    removeTag(tagName){
+      this.selectedTags = this.selectedTags.filter( item => item.name !== tagName )
     },
 
     async deleteModel() {
@@ -226,7 +315,40 @@ export default {
       const payload = {private: privateSelected}
       this.updateModel(payload)
     },
+    updateTags(){
+      if(this.selectedTags.length !== 0){
+        const newSelectedTags = this.selectedTags.map(tag => tag.name)
+        this.updateTagsAPI(newSelectedTags)
+      } else {
+        ElMessage({ message: this.$t('models.edit.needModelTag'), type: "warning" })
+      }
 
+    },
+    async updateTagsAPI(tags){
+      const tagsUpdateEndpoint = "/internal_api/models/" + this.path + "/update_readme_tags"
+      const bodyData = {
+        path: "README.md",
+        commit_title: '',
+        commit_desc: '',
+        sha: this.sha,
+        tags:tags
+      }
+      const options = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(bodyData)
+      }
+      const response = await csrfFetch(tagsUpdateEndpoint, options)
+      if (!response.ok) {
+        response.json().then((err) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then((data) => {
+          ElMessage({ message: data.message, type: "success" })
+        })
+      }
+    },
     updateNickname() {
       if (!!this.theModelNickname.trim()) {
         const payload = {nickname: this.theModelNickname}

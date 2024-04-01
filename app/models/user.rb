@@ -28,7 +28,12 @@ class User < ApplicationRecord
   after_save :sync_to_starhub_server
 
   has_many :datasets, as: :owner
+  has_many :application_spaces, as: :owner
   has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
+
+  has_many :codes, as: :owner
+  has_many :created_codes, class_name: 'Code', foreign_key: :creator_id
+  has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
@@ -139,6 +144,13 @@ class User < ApplicationRecord
       res = Starhub.api.create_user(name, nickname, email)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
+    end
+
+    if starhub_synced? && git_token.blank?
+      random_name = SecureRandom.uuid
+      res_body = Starhub.api.generate_git_token(name, random_name)
+      res_json = JSON.parse(res_body)
+      self.update_columns(git_token_name: res_json["data"]["name"], git_token: res_json["data"]["token"])
     end
   end
 

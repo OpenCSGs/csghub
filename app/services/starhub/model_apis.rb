@@ -24,7 +24,11 @@ module Starhub
       get_repo_files('models', namespace, model_name, options)
     end
 
-    def get_model_last_commit(namespace, model_name, options = {})
+    def get_model_blob(namespace, model_name, path, options = {})
+      get_blob_sha('models', namespace, model_name, path, options)
+    end
+
+    def get_model_last_commit(namespace, model_name, path, options = {})
       get_repo_last_commit('models', namespace, model_name, options)
     end
 
@@ -56,8 +60,8 @@ module Starhub
       download_repo_file('models', namespace, model_name, path, options)
     end
 
-    def download_model_resolve_file(namespace, dataset_name, path, options = {})
-      download_repo_resolve_file('models', namespace, dataset_name, path, options)
+    def download_model_resolve_file(namespace, model_name, path, options = {})
+      download_repo_resolve_file('models', namespace, model_name, path, options)
     end
 
     def create_model_file(namespace, model_name, path, options = {})

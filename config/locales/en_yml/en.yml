@@ -35,6 +35,15 @@ en:
   zh: 'Chinese'
   logout: 'Logout'
 
+  repo:
+    delFailed: "Delete Failed"
+    updateSuccess: "Update Success"
+    updateFailed: "Update Failed"
+    createSuccess: "Create Success"
+    createFileSuccess: "File Created"
+    updateFileSuccess: "File Updated"
+    uploadFileSuccess: "File Uploaded"
+
   activerecord:
     errors:
       messages:
