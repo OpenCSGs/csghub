@@ -1,6 +1,0 @@
-zh:
-  ssh_key:
-    invalid: SSH公钥无效
-    non_deploy: 密钥内容已被用作非部署密钥
-  user_edit:
-    email: email已经被使用，请更换其他email地址

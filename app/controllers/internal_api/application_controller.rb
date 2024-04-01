@@ -17,10 +17,10 @@ class InternalApi::ApplicationController < ApplicationController
   def render_ssh_error e
     message = JSON.parse(e.message)["msg"]
     if message.include?("key,error:Invalid")
-      render json: {message: I18n.t('ssh_key.invalid')}, status: 500
+      render json: {message: JSON.parse(e.message)["msg"]}, status: 500
       return true
     elsif message.include?("key,error")
-      render json: {message: I18n.t('ssh_key.non_deploy')}, status: 500
+      render json: {message: JSON.parse(e.message)["msg"]}, status: 500
       return true
     end
     false
@@ -29,7 +29,7 @@ class InternalApi::ApplicationController < ApplicationController
   def render_user_edit_error e
     message = JSON.parse(e.message)["msg"]
     if message.include?("user,error")
-      render json: {message: I18n.t('user_edit.email')}, status: 500
+      render json: {message: JSON.parse(e.message)["msg"]}, status: 500
       return true
     end
     false
