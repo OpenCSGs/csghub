@@ -142,6 +142,7 @@ class ApplicationController < ActionController::Base
                "/spaces/#{params[:namespace]}/#{params[:application_space_name]}/resolve/main/"
              end
 
+    # handle markdown format image
     content = content.gsub(/\!\[(.*?)\]\((.*?)\)/) do |match|
       alt_text = $1
       image_path = $2
@@ -149,6 +150,16 @@ class ApplicationController < ActionController::Base
         match
       else
         "![#{alt_text}](#{prefix}#{image_path})"
+      end
+    end
+
+    # handle img tag format image
+    content = content.gsub(/src=['"]{1}(.*?)['"]{1}/) do |match|
+      src = $1
+      if src.start_with?('http') || src.start_with?("/#{type}s/")
+        match
+      else
+        "src=#{prefix}#{src}"
       end
     end
   end
