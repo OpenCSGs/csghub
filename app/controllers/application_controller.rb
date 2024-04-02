@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
         user.phone = user_infos['phone'] if user.phone.blank?
         user.email = user_infos['email'] if user.email.blank?
         unless user.save
-          flash[:alert] = I18n.t('errors_page.historical_conflict')
+          flash[:alert] = I18n.t('errors_page.flash_alert.historical_conflict')
           log_error "用户登录历史数据问题", user.errors.messages
           return redirect_to errors_unauthorized_path
         end
@@ -122,7 +122,7 @@ class ApplicationController < ActionController::Base
           end
         rescue ActiveRecord::RecordInvalid => e
           # 处理异常情况
-          flash[:alert] = "#{I18n.t('errors_page.login_error')}：#{e.message}"
+          flash[:alert] = "#{I18n.t('errors_page.flash_alert.login_error')}：#{e.message}"
           return redirect_to errors_unauthorized_path
         end
       end
@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
       user.github_id = user_infos['github']
       user.gitlab_id = user_infos['gitlab']
       unless user.save
-        flash[:alert] = I18n.t('errors_page.login_error')
+        flash[:alert] = I18n.t('errors_page.flash_alert.login_error')
         log_error "授权登录出错", user.errors.messages
         return redirect_to errors_unauthorized_path
       end
