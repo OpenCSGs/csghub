@@ -28,7 +28,7 @@
   <body class="h-full bg-[#F2F3F5]">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
-        <%= render partial: 'partials/navbar' %>
+        <%= render partial: 'partials/navbar', locals: { class_name: '' } %>
         <%= yield.force_encoding(Encoding::UTF_8) %>
       </div>
       <%= render partial: 'partials/foot' %>
