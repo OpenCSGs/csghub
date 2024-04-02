@@ -538,7 +538,7 @@ export default {
     toggleStatusSuccess: 'Updated, please wait Space status change',
     gradioGuide: {
       notice: 'Get started with your grario app space!',
-      noticeDesc: 'The app space was created successfully, please follow the steps below to get started (or read our full documentation)',
+      noticeDesc: 'The space is created successfully! Space operation requires program files. Please refer to the following case to create the app.py file.',
       cloneTitle: 'Clone Application Space',
       createTitle: 'Create Gradio app.py file',
       submitTitle: 'Submit and Push',
