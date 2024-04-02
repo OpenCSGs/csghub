@@ -22,14 +22,14 @@ export const datasets = {
     privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
     tips: "创建数据集后，你可以使用网页或 Git 上传你的文件。",
     tips2: "暂不支持创建公开的数据集，如有需要可以联系管理员进行人工审核。",
-    tips3:" 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
+    tips3: " 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
     createDataset: "创建数据集",
     createSuccess: "数据集创建成功",
   },
   edit: {
     tips: "将会显示在数据集列表页面中，选填",
     tips2: "一段关于数据集的介绍，选填",
-    tips3:" 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
+    tips3: " 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
     changeVisibility: "修改数据集可见性",
     statusText: "当前数据集目前是",
     status: "状态",
@@ -45,6 +45,6 @@ export const datasets = {
     publicInfo: "， 任何互联网上的人都可以看到此数据集。",
     needDatasetName: "请先提供数据集别名",
     needDatasetDesc: "请先提供数据集介绍",
-    needDatasetTag:'请先提供模型标签'
+    needDatasetTag: '请先提供模型标签'
   },
 }
