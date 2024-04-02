@@ -13,7 +13,7 @@
       </svg>
       <div>
         <h3 class="text-[#475467] text-[14px] font-[500]">{{ $t('application_spaces.gradioGuide.notice') }}</h3>
-        <p class="text-[#475467] text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
+        <p class="text-[#A07731] text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
       </div>
     </div>
     <h3 class="my-[24px] text-[#475467] font-[500]">1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}</h3>
