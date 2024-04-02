@@ -21,7 +21,7 @@
       <el-input v-if="name.trim().length === 0"
                 class="max-w-[400px]"
                 v-model="inputName"
-                placeholder="this.$t('all.userName')">
+                :placeholder="this.$t('all.userName')">
       </el-input>
       <el-input v-else
                 class="max-w-[400px]"
