@@ -11,11 +11,11 @@ import { gitToken } from './en_js/gitToken';
 import { sshKey } from './en_js/sshKey';
 import { shared } from './en_js/shared';
 import { repo } from './en_js/repo';
-import { application_spaces } from './zh_js/application_spaces';
-import { codes } from './zh_js/codes';
-import { widgets } from './zh_js/widgets';
-import { spaces } from './zh_js/spaces';
-import { user_sessions } from './zh_js/user_sessions';
+import { application_spaces } from './en_js/application_spaces';
+import { codes } from './en_js/codes';
+import { widgets } from './en_js/widgets';
+import { spaces } from './en_js/spaces';
+import { user_sessions } from './en_js/user_sessions';
 
 export default {
   all,
