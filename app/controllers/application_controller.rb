@@ -103,21 +103,27 @@ class ApplicationController < ActionController::Base
         user.phone = user_infos['phone'] if user.phone.blank?
         user.email = user_infos['email'] if user.email.blank?
         unless user.save
-          flash[:alert] = "当前用户存在历史数据冲突，请联系管理员处理"
+          flash[:alert] = I18n.t('errors_page.flash_alert.historical_conflict')
           log_error "用户登录历史数据问题", user.errors.messages
           return redirect_to errors_unauthorized_path
         end
       else
-        user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
-          u.roles = :personal_user
-          u.avatar = user_infos['avatar']
-          u.name = user_name
-          u.nickname = nickname if nickname.present?
-          u.phone = user_infos['phone']
-          u.email = user_infos['email']
-          u.email_verified = user_infos['emailVerified']
-          u.gender = user_infos['gender']
-          u.last_login_at = Time.now
+        begin
+          user = User.find_or_create_by!(login_identity: user_infos['sub']) do |u|
+            u.roles = :personal_user
+            u.avatar = user_infos['avatar']
+            u.name = user_name
+            u.nickname = nickname if nickname.present?
+            u.phone = user_infos['phone']
+            u.email = user_infos['email']
+            u.email_verified = user_infos['emailVerified']
+            u.gender = user_infos['gender']
+            u.last_login_at = Time.now
+          end
+        rescue ActiveRecord::RecordInvalid => e
+          # 处理异常情况
+          flash[:alert] = "#{I18n.t('errors_page.flash_alert.login_error')}：#{e.message}"
+          return redirect_to errors_unauthorized_path
         end
       end
     else
@@ -129,7 +135,7 @@ class ApplicationController < ActionController::Base
       user.github_id = user_infos['github']
       user.gitlab_id = user_infos['gitlab']
       unless user.save
-        flash[:alert] = "授权登录出错，请联系管理员处理"
+        flash[:alert] = I18n.t('errors_page.flash_alert.login_error')
         log_error "授权登录出错", user.errors.messages
         return redirect_to errors_unauthorized_path
       end
