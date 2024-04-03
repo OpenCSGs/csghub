@@ -47,8 +47,7 @@ module SessionsHelper
     res = Starhub.api.get_jwt_token(username)
     token = JSON.parse(res)['data']['token']
     expire_time = JSON.parse(res)['data']['expire_at']
-    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
-    cookies['user_token'] = {value: token, domain: current_domain}
+    cookies['user_token'] = token
     cookies['token_expire_at'] = expire_time
   end
 end
