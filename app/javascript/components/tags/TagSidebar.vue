@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-[#fff] flex-col pr-[20px]">
+  <div class="flex bg-[#fff] flex-col pt-[32px] pb-[60px]">
     <div class="">
       <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Task"
@@ -29,7 +29,7 @@
       <div v-show="showTask">
         <el-input
           v-model="taskTagFilterInput"
-          class="!w-[80%] mt-[28px]"
+          class="mt-[28px]"
           size="large"
           :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
@@ -55,7 +55,7 @@
       <div v-show="showFramework">
         <el-input
           v-model="frameworkTagFilterInput"
-          class="!w-[80%] mt-[28px] mb-[16px]"
+          class="mt-[28px] mb-[16px]"
           size="large"
           :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
@@ -92,7 +92,7 @@
       <div v-show="showLicense">
         <el-input
           v-model="licenseTagFilterInput"
-          class="!w-[80%] mt-[28px] mb-[16px]"
+          class="mt-[28px] mb-[16px]"
           size="large"
           :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
