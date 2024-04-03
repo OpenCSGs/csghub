@@ -37,6 +37,15 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     render json: Starhub.api.get_user_codes(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
+  def jwt_token
+    res = Starhub.api.get_jwt_token(current_user.name)
+    token = JSON.parse(res)['data']['token']
+    expire_time = JSON.parse(res)['data']['expire_at']
+    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
+    cookies['user_token'] = {value: token, domain: current_domain}
+    cookies['token_expire_at'] = expire_time
+  end
+
   private
 
   def user_params
