@@ -18,7 +18,7 @@ export const codes = {
     private: "private",
     privateDesc: "Only you (the individual) or members of your organization can see and submit to this warehouse.",
     tips: "After creating your repository, you can upload your files using a web page or Git.",
-    createCode: "Create Code repository",
+    createCode: "Create",
     createSuccess: "Code repository created successfully",
   },
   edit: {

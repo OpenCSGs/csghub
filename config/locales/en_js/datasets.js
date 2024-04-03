@@ -33,6 +33,7 @@ export const datasets = {
   edit: {
     tips: "Will be displayed on the dataset list page, optional",
     tips2: "An introduction about the dataset, optional",
+    tips3: "Select the category label corresponding to the data set, so that users can find your data set faster when filtering." ,
     changeVisibility: "Change dataset visibility",
     statusText: "The current dataset is",
     status: "Status",
