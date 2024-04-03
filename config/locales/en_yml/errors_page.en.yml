@@ -6,3 +6,6 @@ en:
     unauthorized:
       title: 'Not authorized'
       desc: 'Please contact the administrator for authorization'
+    flash_alert:
+      historical_conflict: 'Current user has historical data conflict. Please contact the administrator to resolve'
+      login_error: 'Login error. Please contact the administrator to resolve'

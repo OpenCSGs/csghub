@@ -6,3 +6,6 @@ zh:
     unauthorized:
       title: '暂无权限'
       desc: '请联系管理员授权'
+    flash_alert:
+      historical_conflict: '当前用户存在历史数据冲突，请联系管理员处理'
+      login_error: '授权登录出错，请联系管理员处理'

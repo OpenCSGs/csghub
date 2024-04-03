@@ -62,9 +62,18 @@ zh:
               invalid: "不符合规范"
             phone:
               taken: "已被使用"
+        space:
+          blank: "字段不能为空"
+          taken: "不能创建重复的空间"
+        lead:
+          blank: "字段不能为空"
+          taken: "不能创建重复的线索"
+        daily_paper:
+          blank: "字段不能为空"
+          taken: "不能推荐重复的论文"
         ssh_key:
           blank: "字段不能为空"
-          taken: "不能创建重复"
+          taken: "不能创建重复 SSH Key"
         organization:
           invalid: '不符合规范'
           blank: "字段不能为空"
@@ -104,4 +113,3 @@ zh:
       words_connector: "，"
       two_words_connector: "，"
       last_word_connector: "，"
-
