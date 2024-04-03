@@ -14,8 +14,8 @@ export const models = {
     title: "Create a new model repository",
     titleDesc: "The repository contains all model files and revision history",
     owner: "Owner",
-    modelName: "Model name",
-    modelNickName: "Model alias",
+    modelName: "Model Name",
+    modelNickName: "Model Nickname",
     modelDesc: "Model Description",
     public: "Public",
     publicDesc:
