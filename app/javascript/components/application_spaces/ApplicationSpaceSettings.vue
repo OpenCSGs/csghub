@@ -242,6 +242,7 @@ import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import { useCookies } from "vue3-cookies"
+import refreshJWT from '../../packs/refreshJWT.js'
 
 export default {
   props: {
@@ -320,13 +321,7 @@ export default {
         return true
       } else {
         if (response.status === 401) {
-          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
-            'show-close': false,
-            confirmButtonText: t('user_sessions.reLogin'),
-            callback: () => {
-              window.location.href = "/logout"
-            },
-          })
+          refreshJWT()
         } else {
           response.json().then(data => {
             ElMessage({
@@ -352,13 +347,7 @@ export default {
         return true
       } else {
         if (response.status === 401) {
-          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
-            'show-close': false,
-            confirmButtonText: t('user_sessions.reLogin'),
-            callback: () => {
-              window.location.href = "/logout"
-            },
-          })
+          refreshJWT()
         } else {
           response.json().then(data => {
             ElMessage({
@@ -496,3 +485,4 @@ export default {
   }
 }
 </script>
+../../packs/refreshJWT.js
