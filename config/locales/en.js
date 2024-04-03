@@ -16,7 +16,7 @@ import { codes } from './en_js/codes';
 import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
-import { components } from './zh_js/components';
+import { components } from './en_js/components';
 
 export default {
   all,
