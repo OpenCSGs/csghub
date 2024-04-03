@@ -23,11 +23,11 @@ export const datasets = {
     private: "Private",
     privateDesc:
       "Only you (individual) or members of your organization can view and commit to this repository.",
-    tips: "After creating the model, you can use the web or Git to upload your files.",
+    tips: "After creating the dataset, you can use the web or Git to upload your files.",
     tips2:
       "Creating public datasets is currently not supported. Please contact the administrator for manual review if needed.",
     tips3: "Choose classification labels corresponding to the dataset to facilitate users in quickly finding your model during filtering.",
-    createDataset: "Create Dataset",
+    createDataset: "Create",
     createSuccess: "Dataset created successfully",
   },
   edit: {

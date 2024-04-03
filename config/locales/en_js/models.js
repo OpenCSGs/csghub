@@ -16,7 +16,7 @@ export const models = {
     owner: "Owner",
     modelName: "Model name",
     modelNickName: "Model alias",
-    modelDesc: "Model Profile",
+    modelDesc: "Model Description",
     public: "Public",
     publicDesc:
       "Anyone on the internet can see this model. Only you (personal model) or members of your organization can commit.",
@@ -24,7 +24,7 @@ export const models = {
     privateDesc:
       "Only you (personal model) or members of your organization can see and commit to this model.",
     tips: "Once your model is created, you can upload your files using the web interface or git.",
-    createModel: "Create Model",
+    createModel: "Create",
     createSuccess: "Model created successfully",
   },
   edit: {
