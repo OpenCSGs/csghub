@@ -287,4 +287,3 @@
     padding: 6px;
   }
 </style>
-../../packs/refreshJWT.js
