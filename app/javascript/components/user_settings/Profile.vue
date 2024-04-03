@@ -27,12 +27,12 @@
          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><g clip-path="url(#clip0_1405_18826)"><path d="M1.33337 7.99967C1.33337 11.3134 4.00004 14.6663 8.00004 14.6663C12 14.6663 14.6667 11.9997 14.6667 7.99967C14.6667 3.99967 12 1.33301 8.00004 1.33301C4.00004 1.33301 1.33337 4.66634 1.33337 4.66634M1.33337 4.66634V1.99967M1.33337 4.66634H3.66671M8.00004 5.33301V7.99967L10 9.33301" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_1405_18826"><rect width="16" height="16" fill="white"/></clipPath></defs></svg>
       {{ theLastLoginTime }}
     </div>
-    <div class="my-[16px]">
+    <!-- <div class="my-[16px]">
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
-        {{ $t('profile.interests')}}
+        {{ $t('profileinterests.')}}
       </div>
       <div class="text-[#909399]">{{ $t('all.noData')}}</div>
-    </div>
+    </div> -->
     <div class="my-[16px]">
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
         {{ $t('profile.organization')}}
