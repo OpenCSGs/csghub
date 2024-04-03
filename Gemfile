@@ -80,6 +80,8 @@ gem 'administrate-field-jsonb'
 
 gem "rdoc", ">= 6.6.3.1"
 
+gem 'aliyun-cloud_sms'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'rspec-rails'

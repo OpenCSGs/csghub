@@ -91,6 +91,9 @@ GEM
       rails (>= 4.2)
       railties (>= 5.2.2.1)
     aes_key_wrap (1.1.0)
+    aliyun-cloud_sms (0.2.3)
+      rest-client (>= 2.0)
+      uuid (>= 2.0)
     aliyun-sdk (0.8.0)
       nokogiri (~> 1.6)
       rest-client (~> 2.0)
@@ -242,6 +245,8 @@ GEM
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
+    macaddr (1.7.2)
+      systemu (~> 2.6.5)
     mail (2.8.1)
       mini_mime (>= 0.1.1)
       net-imap
@@ -402,6 +407,7 @@ GEM
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
+    systemu (2.6.5)
     tailwindcss-rails (2.0.32-arm64-darwin)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.32-x86_64-darwin)
@@ -414,6 +420,8 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri-query_params (0.7.2)
+    uuid (2.3.9)
+      macaddr (~> 1.0)
     validate_email (0.1.6)
       activemodel (>= 3.0)
       mail (>= 2.2.5)
@@ -451,6 +459,7 @@ DEPENDENCIES
   administrate-field-active_storage
   administrate-field-jsonb
   administrate_exportable
+  aliyun-cloud_sms
   aliyun-sdk
   authing_ruby
   aws-sdk-s3 (~> 1)
