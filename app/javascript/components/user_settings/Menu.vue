@@ -20,17 +20,17 @@
               {{ $t('profile.menu.profile')}}
           </a>
 
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/account')"
           >
             {{ $t('profile.menu.accountInformation')}}
-          </div>
+          </div> -->
 
-          <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/accessTokens')"
           >
             {{ $t('profile.menu.accessToken')}}
-          </div>
+          </div> -->
 
           <a v-if="hasEmail"
              href="/settings/git-token"
@@ -48,11 +48,11 @@
             {{ $t('profile.menu.sshKey')}}
           </a>
 
-          <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
                :class="menuClass('/settings/billing')"
           >
             {{ $t('profile.menu.billing')}}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
