@@ -485,4 +485,3 @@ export default {
   }
 }
 </script>
-../../packs/refreshJWT.js
