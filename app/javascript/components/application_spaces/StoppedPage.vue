@@ -101,4 +101,4 @@
       }
     }
   }
-</script>../../packs/refreshJWT.js
+</script>
