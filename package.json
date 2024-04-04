@@ -22,6 +22,7 @@
     "markdown-it": "^13.0.2",
     "markdown-it-anchor": "^8.6.7",
     "parse-md": "^3.0.3",
+    "pinia": "^2.1.7",
     "timeago.js": "^4.0.2",
     "tippy.js": "^6.3.7",
     "trix": "^2.0.7",
