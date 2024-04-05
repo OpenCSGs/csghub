@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col gap-[8px] flex-wrap mb-5 text-lg text-[#606266] font-semibold md:px-5">
+    <!-- dataset repo -->
     <div v-if="repoType === 'dataset'"
          class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center items-center md:w-full md:mb-1"
     >
@@ -10,15 +11,16 @@
       <span class="text-[#A8ABB2] text-[18px] font-semibold ml-1 mr-2">Dataset:</span>
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
-      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
+      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
     </div>
 
+    <!-- other repo -->
     <div v-else
          class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
     >
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
-      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
+      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
       <p v-if="canWrite" class="cursor-pointer" @click="showSpaceLogs">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="none">
@@ -52,11 +54,13 @@
   import HeaderTags from '../shared/HeaderTags.vue'
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
+
+  const repoDetailStore = useRepoDetailStore()
 
   const emit = defineEmits(['toggleSpaceLogsDrawer']);
 
   const props = defineProps({
-    private: Boolean,
     avatar: String,
     name: String,
     nickname: String,
