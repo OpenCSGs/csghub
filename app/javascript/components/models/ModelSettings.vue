@@ -69,7 +69,7 @@
 
         <!-- 模型标签 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col"> 
+      <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           {{ $t('models.modelTag')}}
         </div>
@@ -114,13 +114,13 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('models.edit.statusText')}}
-          <span class="text-black font-semibold">【{{ visibility=='Private' ? this.$t('all.private') : this.$t('all.public') }}】</span>
-          {{ $t('models.edit.status')}}。{{ visibility=='Private' ? this.$t('models.edit.privateVis') : this.$t('models.edit.publicVis')}}
+          <span class="text-black font-semibold">【{{ isPrivate ? this.$t('all.private') : this.$t('all.public') }}】</span>
+          {{ $t('models.edit.status')}}。{{ isPrivate ? this.$t('models.edit.privateVis') : this.$t('models.edit.publicVis')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <p class="text-[#344054] text-[14px]">{{ $t('models.edit.modelVisibility')}}</p>
-        <el-select v-model="visibility"
+        <el-select v-model="visibilityName"
                    @change="changeVisibility"
                    placeholder="Select"
                    size="large"
@@ -184,6 +184,8 @@
 import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import useRepoDetailStore from '../../stores/RepoDetailStore'
+import { mapState, mapWritableState, mapActions } from 'pinia'
 
 export default {
   props: {
@@ -193,16 +195,16 @@ export default {
     default_branch: String,
     tagList: Object,
     tags: Object,
-    private: Boolean,
+    private: Boolean
   },
-  components: {},
   data() {
     return {
       theTagList:this.tagList,
       selectedTags:[],
       shouldShowTagList:false,
       tagInput:'',
-      visibility: this.private ? 'Private' : 'Public',
+      isPrivate: this.private,
+      visibilityName: this.private ? 'Private' : 'Public',
       delDesc: '',
       modelName: this.path.split('/')[1],
       theModelNickname: this.modelNickname || "",
@@ -212,7 +214,30 @@ export default {
         {value: 'Public', label:  this.$t('all.public')}]
     };
   },
+  computed: {
+    watchIsPrivate() {
+      const repoDetailStore = useRepoDetailStore()
+      return repoDetailStore.isPrivate
+    }
+    // map过来的 store 属性是 computed，并不是一个 reactive 的属性可以直接使用
+    // 所以需要单独定义一个 isPrivate 的 reactive 属性，然后通过 store 的对应属性的变化的监听
+    // 来更新这个 reactive 属性
+    // ...mapState(useRepoDetailStore, ['isPrivate']),
+    // ...mapWritableState(useRepoDetailStore, ['privateVisibility'])
+   },
+  components: {},
+  created() {
+    this.$watch('watchIsPrivate', (newVal, oldVal) => {
+      console.log('Watched value changed:', newVal, oldVal)
+      this.isPrivate = newVal
+      this.visibilityName = newVal ? 'Private' : 'Public'
+    })
+  },
   mounted() {
+    // this.visibilityName = this.isPrivate ? 'Private' : 'Public'
+    console.log('in settings')
+    console.log(this.isPrivate)
+    console.log(this.visibilityName)
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
 
@@ -223,6 +248,7 @@ export default {
     document.removeEventListener('click', this.collapseTagList);
   },
   methods: {
+    ...mapActions(useRepoDetailStore, ['updateVisibility']),
     collapseTagList(event) {
       if (!this.$refs.tagListContainer.contains(event.target)) {
         this.shouldShowTagList = false;
@@ -289,12 +315,13 @@ export default {
     },
 
     changeVisibility(value) {
+      console.log(value)
       ElMessageBox({
         title: this.$t('models.edit.changeVisibility'),
         message: h('p', null, [
           h('span', null, this.$t('all.changeVis')),
-          h('span', null, this.visibility=='Private'? this.$t('all.private') : this.$t('all.public')),
-          h('span', null, this.visibility=='Private'? this.$t('models.edit.privateInfo') : this.$t('models.edit.publicInfo'))
+          h('span', null, value === 'Private' ? this.$t('all.private') : this.$t('all.public')),
+          h('span', null, value === 'Private' ? this.$t('models.edit.privateInfo') : this.$t('models.edit.publicInfo'))
         ]),
         showCancelButton: true,
         confirmButtonText: this.$t('all.confirm'),
@@ -302,7 +329,7 @@ export default {
       }).then(() => {
         this.changeVisibilityCall(value)
       }).catch(() => {
-        this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
+        // this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
           message: this.$t('all.changeCancel'),
@@ -311,8 +338,8 @@ export default {
     },
 
     changeVisibilityCall(value) {
-      const privateSelected = (value === 'Private') ? true : false
-      const payload = {private: privateSelected}
+      const isprivateSelected = (value === 'Private') ? true : false
+      const payload = {private: isprivateSelected}
       this.updateModel(payload)
     },
     updateTags(){
@@ -380,6 +407,7 @@ export default {
           ElMessage({ message: err.message, type: "warning" })
         })
       } else {
+        this.updateVisibility(payload.private)
         response.json().then((data) => {
           ElMessage({ message: data.message, type: "success" })
         })
