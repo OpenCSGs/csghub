@@ -1,6 +1,8 @@
 import "trix"
 import "@rails/actiontext"
-import "./packs/checkLogin.js"
+import refreshJWT from "./packs/refreshJWT.js"
+
+refreshJWT()
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"
@@ -13,7 +15,6 @@ import { useCookies } from "vue3-cookies"
 import { createI18n } from 'vue-i18n'
 import en from '../../config/locales/en.js'
 import zh from '../../config/locales/zh.js'
-
 
 import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
