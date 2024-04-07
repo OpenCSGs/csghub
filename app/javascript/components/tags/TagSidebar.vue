@@ -16,6 +16,15 @@
       >
       {{ $t('all.framework') }}
       </span>
+
+      <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+            data-type="Language"
+            :class="activeNavItem === 'Language' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            @click="changeActiveItem"
+      >
+      Language
+      </span>
+
       <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="License"
             :class="activeNavItem === 'License' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
@@ -89,6 +98,29 @@
         </div>
       </div>
 
+      <!-- language tags -->
+      <div v-show="showLanguage">
+        <el-input
+          v-model="LanguageTagFilterInput"
+          class="mt-[28px] mb-[16px]"
+          size="large"
+          :placeholder="$t('all.filterTags')"
+          :prefix-icon="Search"
+          @input = "filterLanguageTags"
+        />
+        <div class="flex gap-[8px] flex-wrap">
+          <span v-for="languageTag in theLanguageTags" 
+                    class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer flex items-center gap-[4px] border border-gray-200"
+                    :data-tag_name="languageTag.name"
+                    :style="setLanguageTagColor(languageTag.name)"
+                    @click="setActiveLanguageTag(languageTag.name)"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6C11 8.76142 8.76142 11 6 11M11 6C11 3.23858 8.76142 1 6 1M11 6C11 4.89543 8.76142 4 6 4C3.23858 4 1 4.89543 1 6M11 6C11 7.10457 8.76142 8 6 8C3.23858 8 1 7.10457 1 6M6 11C3.23858 11 1 8.76142 1 6M6 11C7.10457 11 8 8.76142 8 6C8 3.23858 7.10457 1 6 1M6 11C4.89543 11 4 8.76142 4 6C4 3.23858 4.89543 1 6 1M1 6C1 3.23858 3.23858 1 6 1" stroke="#3B7C0F" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {{ cookies.get('locale') === 'en' ? languageTag.name : languageTag.zh_name }}
+          </span>
+        </div>
+      </div>      
+
       <div v-show="showLicense">
         <el-input
           v-model="licenseTagFilterInput"
@@ -129,6 +161,7 @@
   const props = defineProps({
     taskTags: String,
     frameworkTags: String,
+    languageTags: String,
     licenseTags: String,
     type: String,
     selectedTag: String,
@@ -142,15 +175,19 @@
   const activeNavItem = ref('Task')
   const theTaskTags = ref(JSON.parse(props.taskTags))
   const theFrameworkTags = ref(JSON.parse(props.frameworkTags))
+  const theLanguageTags = ref(JSON.parse(props.languageTags))
   const theLicenseTags = ref(JSON.parse(props.licenseTags))
   const activeTaskTag = ref('')
   const activeFrameworkTag = ref('')
+  const activeLanguageTag = ref('')
   const activeLicenseTag = ref('')
   const taskTagFilterInput = ref('')
   const frameworkTagFilterInput = ref('')
+  const LanguageTagFilterInput = ref('')
   const licenseTagFilterInput = ref('')
   const showTask = ref(true)
   const showFramework = ref(false)
+  const showLanguage = ref(false)
   const showLicense = ref(false)
 
   const changeActiveItem = (e) => {
@@ -162,14 +199,22 @@
     if (activeNavItem.value === 'Task') {
       showTask.value = true
       showFramework.value = false
+      showLanguage.value = false
       showLicense.value = false
     } else if (activeNavItem.value === 'Framework') {
       showTask.value = false
       showFramework.value = true
+      showLanguage.value = false
+      showLicense.value = false
+    } else if (activeNavItem.value === 'Language') {
+      showTask.value = false
+      showFramework.value = false
+      showLanguage.value = true
       showLicense.value = false
     } else if (activeNavItem.value === 'License') {
       showTask.value = false
       showFramework.value = false
+      showLanguage.value = false
       showLicense.value = true
     }
   }
@@ -192,6 +237,15 @@
     emitTag()
   }
 
+  const setActiveLanguageTag = (tagName) => {
+    if (activeLanguageTag.value === tagName) {
+      activeLanguageTag.value = ''
+    } else {
+      activeLanguageTag.value = tagName
+    }    
+    emitTag()
+  }
+
   const setActiveLicenseTag = (e) => {
     if (activeLicenseTag.value === e.target.dataset.tag_name) {
       activeLicenseTag.value = ''
@@ -206,6 +260,14 @@
       return `color: white; background-color: ${tagFieldColor}`
     } else {
       return `color: ${tagFieldColor}; background-color: #d3d3d354`
+    }
+  }
+
+  const setLanguageTagColor = (tagName) => {
+    if (activeLanguageTag.value === tagName) {
+      return "color: white; background-color: #0DAF66"
+    } else {
+      return `color: #087443; background-color: #F6FEF9`
     }
   }
 
@@ -231,6 +293,13 @@
     theFrameworkTags.value = result
   }
 
+  const filterLanguageTags = (keywords) => {
+    const keywordsRegex = new RegExp(keywords, 'i');
+    const newTags = JSON.parse(props.languageTags)
+    const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
+    theLanguageTags.value = result
+  }
+
   const filterLicenseTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i');
     const newTags = JSON.parse(props.licenseTags)
@@ -239,7 +308,7 @@
   }
 
   const removeNotMatchedFrameworkTags = (tags, regex) => {
-    const matchedTags = tags.filter((tag) => regex.test(tag.zh_name))
+    const matchedTags = tags.filter((tag) => regex.test(tag.zh_name) || regex.test(tag.name))
     return matchedTags
   }
 
@@ -258,7 +327,7 @@
   }
 
   const emitTag = () => {
-    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLicenseTag.value)
+    emit('resetTags', activeTaskTag.value, activeFrameworkTag.value, activeLanguageTag.value, activeLicenseTag.value)
   }
 
   const setTagNameFromParams = () => {

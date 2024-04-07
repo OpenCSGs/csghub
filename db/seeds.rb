@@ -137,6 +137,15 @@ end
 end
 
 [
+  ['Chinese', '中文'],
+  ['English', '英文'],
+].each do |tag|
+  local_tag = Tag.find_by(name: tag[0], tag_type: 'language', tag_origin: 'system')
+  next if local_tag
+  Tag.create(tag_origin: 'system', tag_type: 'language', name: tag[0], zh_name: tag[1])
+end
+
+[
   ['apache-2.0', 'Apache-2.0', 1],
   ['mit', 'MIT', 2],
   ['lgpl', 'LGPL', 3],
