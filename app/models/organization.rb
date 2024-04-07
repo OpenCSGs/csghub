@@ -17,6 +17,8 @@ class Organization < ApplicationRecord
   has_many :codes, as: :owner
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
+  has_many :admin_users, -> { distinct.joins(:org_memberships).where({ org_memberships: {role: :admin} }) }, class_name: 'User', through: :org_memberships, source: :user
+
   after_save :sync_to_starhub_server
   before_save :detect_sensitive_content
 
@@ -42,7 +44,8 @@ class Organization < ApplicationRecord
       nickname: nickname,
       org_type: org_type,
       homepage: homepage,
-      verified: verified
+      verified: verified,
+      creator_id: creator_id,
     }
   end
 
@@ -53,6 +56,12 @@ class Organization < ApplicationRecord
 
   def starhub_synced?
     starhub_synced == true
+  end
+
+  def is_last_admin?(user)
+    return false if user.org_role(self) != 'admin' 
+
+    admin_users.count <= 1
   end
 
   private

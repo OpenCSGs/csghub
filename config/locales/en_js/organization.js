@@ -12,6 +12,18 @@ export const organization = {
   dataset: "Dataset",
   space: "Space",
   code: "Code",
+  orgMembers: "Organization members",
+  members: {
+    title: "Member List",
+    description: "Manage your organization members and their account permissions",
+    last_login_at: "Last Login Time",
+    role: "Role",
+    username: "Username",
+    editRole: "Edit Role",
+    confirm: "Confirm",
+    cancel: "Cancel",
+    deleteConfirmTitle: `Are you sure you want to remove user {username} from organization {orgName}`,
+  },
   invite: {
     title: "Invite",
     inviteNew: "Invite New Member",

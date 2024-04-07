@@ -12,10 +12,22 @@
         </div>
         <div class="p-[16px] text-[20px] leading-[30px] text-[#344054]">{{ $t('organization.orgSetting') }}</div>
         <div class="flex flex-col">
-          <a  class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-[#667085] leading-[24px] cursor-pointer"
-             :class="menuClass(`/organizations/${this.name}/settings`)"
+          <a
+            :href="`/organizations/${this.name}/edit`"
+            class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-[#667085] leading-[24px] cursor-pointer"
+            :class="menuClass(`/organizations/${this.name}/edit`)"
           >
           {{ $t('organization.orgInfo') }}
+          </a>
+        </div>
+        <!-- 组织成员 -->
+        <div class="flex flex-col">
+          <a
+            :href="`/organizations/${this.name}/members`"
+            class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-[#667085] leading-[24px] cursor-pointer"
+            :class="menuClass(`/organizations/${this.name}/members`)"
+          >
+          {{ $t('organization.orgMembers') }}
           </a>
         </div>
       </div>

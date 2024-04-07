@@ -30,7 +30,7 @@ import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
 import NewDataset from "./components/datasets/NewDataset.vue"
-import OrganizationSettings from "./components/organizations/OrganizationSettings.vue"
+import OrganizationLayout from "./components/organizations/OrganizationLayout.vue"
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 import NewApplicationSpace from "./components/application_spaces/NewApplicationSpace.vue"
@@ -59,7 +59,7 @@ const app = createApp({
     OnPremiseFooter,
     NewApplicationSpace,
     ProfileRepoList,
-    OrganizationSettings,
+    OrganizationLayout,
     RepoCards,
     NewCode,
     CodeDetail

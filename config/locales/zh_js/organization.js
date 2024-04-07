@@ -12,6 +12,18 @@ export const organization = {
   dataset: "数据集",
   space: "应用空间",
   code: "代码仓库",
+  orgMembers: "组织成员",
+  members: {
+    title: "成员列表",
+    description: "管理您的组织成员及其账户权限",
+    last_login_at: "上次登录时间",
+    role: "角色",
+    username: "用户名",
+    editRole: "编辑角色",
+    confirm: "确定",
+    cancel: "取消",
+    deleteConfirmTitle: `是否确定将用户 {username} 移出组织 {orgName}`,
+  },
   invite: {
     title: "邀请",
     inviteNew: "邀请新成员",
