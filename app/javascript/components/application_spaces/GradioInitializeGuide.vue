@@ -44,21 +44,21 @@
           使用我的 token
         </div>
         <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-          <pre class="overflow-scroll"><code v-html="highlightedHttpsCloneCode"></code></pre>
+          <markdown-viewer :content="httpsCloneCodeMarkdown"></markdown-viewer>
         </div>
       </div>
       <div v-else
           class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px] my-[16px]">
-        <pre class="overflow-scroll"><code v-html="highlightedSshCloneCode"></code></pre>
+        <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
       </div>
     </div>
     <h3 class="my-[24px] text-[#475467] font-[500]">2. {{ $t('application_spaces.gradioGuide.createTitle') }}</h3>
     <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-      <pre class="overflow-scroll"><code v-html="highlightedAppPyCode"></code></pre>
+      <markdown-viewer :content="appPyCodeMarkdown"></markdown-viewer>
     </div>
     <h3 class="my-[24px] text-[#475467] font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
     <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-      <pre class="overflow-scroll"><code v-html="highlightedPushCode"></code></pre>
+      <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
     </div>
     <p class="text-[#667085] text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
     <div class="text-[16px] text-[#667085] border border-[#D0D5DD] rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
@@ -78,10 +78,8 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import CodeViewer from '../shared/viewers/CodeViewer.vue';
-  import hljs from 'highlight.js';
-  import 'highlight.js/styles/atom-one-light.css';
+  import { ref, computed } from 'vue'
+  import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
 
   const props = defineProps({
     httpCloneUrl: String,
@@ -93,8 +91,14 @@
   const sshTab = ref()
   const httpsCloneCode = `git clone ${props.httpCloneUrl}`
   const sshCloneCode = `git clone ${props.sshCloneUrl}`
-  const highlightedHttpsCloneCode = hljs.highlight(httpsCloneCode, { language: 'bash', ignoreIllegals: true }).value
-  const highlightedSshCloneCode = hljs.highlight(sshCloneCode, { language: 'bash', ignoreIllegals: true }).value
+
+  const httpsCloneCodeMarkdown = computed(() => {
+    return '``` bash\n' + httpsCloneCode + '\n```'
+  })
+
+  const sshCloneCodeMarkdown = computed(() => {
+    return '``` bash\n' + sshCloneCode + '\n```'
+  })
 
   const appPyCode = `
   import gradio as gr
@@ -106,14 +110,19 @@
   iface.launch()
   `
 
-  const highlightedAppPyCode = hljs.highlight(appPyCode, { language: 'python', ignoreIllegals: true }).value
+  const appPyCodeMarkdown = computed(() => {
+    return '``` python' + appPyCode + '```'
+  })
 
   const pushCode = `
   $ git add app.py
   $ git commit -m "Add application file"
   $ git push
   `
-  const highlightedPushCode = hljs.highlight(pushCode, { language: 'bash', ignoreIllegals: true }).value
+
+  const pushCodeMarkdown = computed(() => {
+    return '``` bash' + pushCode + '```'
+  })
 
   const toggleActiveTab = (event) => {
     const currentTarget = event.target
