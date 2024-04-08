@@ -22,6 +22,16 @@
       <GGUF v-if="tag.name.toLowerCase() === 'gguf'" />
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
+    
+    <!-- <div v-if="languageTags.length" class="text-sm text-[#909399]">{{ $t('all.language') }}:</div>
+    <a v-for="tag in languageTags"
+       :href="`/${prefix}?tag=${tag.name}&tag_type=Task`"
+       :style="`color: ${tag.color}`"
+       class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#d3d3d354]"
+    >
+      {{ tag.zh_name || tag.name }}
+    </a> -->
+
     <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
     <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center border gap-1">
       {{ tag.name }}
@@ -50,6 +60,7 @@
   const props = defineProps({
     taskTags: Array,
     frameworkTags: Array,
+    // languageTags: Array,
     licenseTags: Array,
     otherTags: Array,
     prefix: {
