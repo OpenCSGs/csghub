@@ -36,6 +36,8 @@
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
       repo-type="space"
+      :user-name="userName"
+      :user-token="userToken"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>
@@ -112,7 +114,9 @@
     settingsVisibility: Boolean,
     tags: Object,
     ownerUrl: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    userName: String,
+    userToken: String
   })
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']

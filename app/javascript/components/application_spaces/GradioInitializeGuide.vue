@@ -36,15 +36,11 @@
       </p>
       <div v-if="isHttpsTab">
         <div class="my-[16px] flex items-center gap-[8px]">
-          <div class="h-[16px] w-[16px] flex p-[2px] justify-center items-center rounded-[4px] border border-[#3250BD] bg-[#3250BD]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M10 3L4.5 8.5L2 6" stroke="white" stroke-width="1.6666" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          {{ $t('application_spaces.gradioGuide.useToken') }}
+          <el-checkbox v-model="useToken" :label="$t('application_spaces.gradioGuide.useToken')" size="large" />
         </div>
         <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-          <markdown-viewer :content="httpsCloneCodeMarkdown"></markdown-viewer>
+          <markdown-viewer v-if="useToken" :content="httpsCloneCodeWithTokenMarkdown"></markdown-viewer>
+          <markdown-viewer v-else :content="httpsCloneCodeMarkdown"></markdown-viewer>
         </div>
       </div>
       <div v-else
@@ -84,20 +80,32 @@
   const props = defineProps({
     httpCloneUrl: String,
     sshCloneUrl: String,
+    userName: String,
+    userToken: String
   })
 
   const isHttpsTab = ref(true)
   const httpsTab = ref()
   const sshTab = ref()
-  const httpsCloneCode = `git clone ${props.httpCloneUrl}`
-  const sshCloneCode = `git clone ${props.sshCloneUrl}`
+  const useToken = ref(false)
+
+  const getMarkdownCode = (code, lang, multiline = false) => {
+    return `\`\`\`${lang}${multiline ? '' : '\n'}${code}${multiline ? '' : '\n'}\`\`\``
+  }
 
   const httpsCloneCodeMarkdown = computed(() => {
-    return '``` bash\n' + httpsCloneCode + '\n```'
+    const httpsCloneCode = `git clone ${props.httpCloneUrl}`
+    return getMarkdownCode(httpsCloneCode, 'bash')
+  })
+
+  const httpsCloneCodeWithTokenMarkdown = computed(() => {
+    const httpsCloneCodeWithToken = `git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
+    return getMarkdownCode(httpsCloneCodeWithToken, 'bash')
   })
 
   const sshCloneCodeMarkdown = computed(() => {
-    return '``` bash\n' + sshCloneCode + '\n```'
+    const sshCloneCode = `git clone ${props.sshCloneUrl}`
+    return getMarkdownCode(sshCloneCode, 'bash')
   })
 
   const appPyCode = `
@@ -111,7 +119,7 @@
   `
 
   const appPyCodeMarkdown = computed(() => {
-    return '``` python' + appPyCode + '```'
+    return getMarkdownCode(appPyCode, 'python', true)
   })
 
   const pushCode = `
@@ -121,7 +129,7 @@
   `
 
   const pushCodeMarkdown = computed(() => {
-    return '``` bash' + pushCode + '```'
+    return getMarkdownCode(pushCode, 'bash', true)
   })
 
   const toggleActiveTab = (event) => {
