@@ -28,7 +28,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def internal_group
     system_config = SystemConfig.first
-    mail_group = system_config.internal_mail_group rescue [ ]
-    mail_group || default_mail_group
+    mail_group = system_config.internal_mail_group rescue []
+    mail_group.presence || default_mail_group
   end
 end
