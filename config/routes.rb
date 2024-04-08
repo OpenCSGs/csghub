@@ -52,7 +52,11 @@ Rails.application.routes.draw do
         post 'refresh', to: 'git-tokens/refresh'
       end
     end
-    resources :users, only: [:index, :update]
+    resources :users, only: [:index, :update] do
+      collection do
+        put 'jwt_token', to: 'users/jwt_token'
+      end
+    end
     get '/users/:namespace/models', to: 'users#models'
     get '/users/:namespace/datasets', to: 'users#datasets'
     get '/users/:namespace/codes', to: 'users#codes'

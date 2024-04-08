@@ -33,6 +33,7 @@
   import { useCookies } from 'vue3-cookies'
   import { useI18n } from 'vue-i18n'
   import { ElMessage, ElMessageBox } from 'element-plus'
+  import refreshJWT from '../../packs/refreshJWT.js'
 
   const props = defineProps({
     path: String,
@@ -64,13 +65,7 @@
       ElMessage({message: t('application_spaces.errorPage.startSuccess'), type: "success"})
     } else {
       if (response.status === 401) {
-        ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
-          'show-close': false,
-          confirmButtonText: t('user_sessions.reLogin'),
-          callback: () => {
-            window.location.href = "/logout"
-          },
-        })
+        refreshJWT()
       } else {
         response.json().then(data => {
           ElMessage({
@@ -95,13 +90,7 @@
       ElMessage({message: t('application_spaces.errorPage.startSuccess'), type: "success"})
     } else {
       if (response.status === 401) {
-        ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
-          'show-close': false,
-          confirmButtonText: t('user_sessions.reLogin'),
-          callback: () => {
-            window.location.href = "/logout"
-          },
-        })
+        refreshJWT()
       } else {
         response.json().then(data => {
           ElMessage({
