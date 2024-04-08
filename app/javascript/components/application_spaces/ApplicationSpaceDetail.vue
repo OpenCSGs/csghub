@@ -98,6 +98,7 @@
   import { useCookies } from "vue3-cookies";
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useI18n } from 'vue-i18n'
+  import refreshJWT from '../../packs/refreshJWT.js'
 
   const props = defineProps({
     applicationSpace: Object,
@@ -182,13 +183,7 @@
             containerLogLineNum.value = 0
           }
         } else if (response.status === 401) {
-          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
-            'show-close': false,
-            confirmButtonText: t('user_sessions.reLogin'),
-            callback: () => {
-              window.location.href = "/logout"
-            },
-          })
+          refreshJWT()
         } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
           console.log('Logs Server Connection Error')
           console.log(response.status)
@@ -233,13 +228,7 @@
           isStatusSSEConnected.value = true
         }
         else if (response.status === 401) {
-          ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
-            'show-close': false,
-            confirmButtonText: t('user_sessions.reLogin'),
-            callback: () => {
-              window.location.href = "/logout"
-            },
-          })
+          refreshJWT()
         } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
           console.log('Status Server Connection Error')
           console.log(response.status)

@@ -1,0 +1,15 @@
+en:
+  tags:
+    field:
+      computer_vision: 'Computer Vision'
+      natural_language_processing: 'Natural Language Processing'
+      audio_processing: 'Audio Processing'
+      multimodal_technology: 'Multimodal Technology'
+      text_processing: 'Text Processing'
+      graphics: 'Graphics'
+      audio: 'Audio'
+      video: 'Video'
+      multimodal: 'Multimodal'
+      scientific_computing: 'Scientific Computing'
+    update:
+      success: 'README tags updated successfully'
