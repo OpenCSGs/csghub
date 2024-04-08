@@ -139,6 +139,14 @@ end
 [
   ['Chinese', '中文'],
   ['English', '英文'],
+  ['French', '法文'],
+  ['German', '德文'],
+  ['Spanish', '西班牙文'],
+  ['Japanese', '日文'],
+  ['Korean', '韩文'],
+  ['Russian', '俄文'],
+  ['Italian', '意大利文'],
+  ['Portuguese', '葡萄牙文'],
 ].each do |tag|
   local_tag = Tag.find_by(name: tag[0], tag_type: 'language', tag_origin: 'system')
   next if local_tag

@@ -98,6 +98,7 @@ class DatasetsController < ApplicationController
 
     @tags_list = Tag.where(scope: 'dataset', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags'], 'dataset').to_json
+    # debugger
     @settings_visibility = current_user ? current_user.can_manage?(@local_dataset) : false
   end
 end
