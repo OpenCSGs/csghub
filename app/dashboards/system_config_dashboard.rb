@@ -21,6 +21,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     hot_spaces: Field::JSONB,
     ignore_model_tags: Field::JSONB,
     ignore_dataset_tags: Field::JSONB,
+    internal_mail_group: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -52,6 +53,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     hot_spaces
     ignore_model_tags
     ignore_dataset_tags
+    internal_mail_group
     created_at
     updated_at
   ].freeze
@@ -72,6 +74,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     hot_spaces
     ignore_model_tags
     ignore_dataset_tags
+    internal_mail_group
   ].freeze
 
   # COLLECTION_FILTERS

@@ -42,4 +42,8 @@ class SystemConfig < ApplicationRecord
   def ignore_dataset_tags=(value)
     self[:ignore_dataset_tags] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def internal_mail_group=(value)
+    self[:internal_mail_group] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end

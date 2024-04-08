@@ -17,9 +17,18 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def internal_group
+  def default_mail_group
     [
-      'pingl@opencsg.com'
+      'pingl@opencsg.com',
+      'lorraineg@opencsg.com',
+      'echo.lv@opencsg.com',
+      'schen@opencsg.com'
     ]
+  end
+
+  def internal_group
+    system_config = SystemConfig.first
+    mail_group = system_config.internal_mail_group rescue [ ]
+    mail_group || default_mail_group
   end
 end
