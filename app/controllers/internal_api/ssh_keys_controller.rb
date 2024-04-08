@@ -1,29 +1,27 @@
 class InternalApi::SshKeysController < InternalApi::ApplicationController
   def create
-    @ssh_key = SshKey.new(create_params)
-    @ssh_key.user = current_user
-    if @ssh_key.save
-      render json: { message: '添加成功' }
-    else
-      render json: { message: @ssh_key.errors.full_messages.to_sentence }, status: :bad_request
-    end
+    sync_to_starhub_server
+    render json: { message: '添加成功' }
   end
 
   def destroy
-    @ssh_key = SshKey.find_by(id: params[:id])
-    return render json: { message: "SshKey not found" }, status: :not_found unless @ssh_key
-    return render json: { message: "Unauthorized" }, status: :unauthorized unless @ssh_key.user.id == @ssh_key.user_id
-
-    if @ssh_key.destroy
-      render json: {message: "SshKey destroyed"}
-    else
-      render json: {message: "Failed to destroy SshKey"}, status: :bad_request
-    end
+    delete_from_starhub_server
+    render json: {message: "SshKey destroyed"}
   end
 
   private
 
   def create_params
     params.permit(:name, :ssh_key)
+  end
+
+  def create_ssh_to_starhub_server
+    res = Starhub.api.create_ssh_key(current_user.name, params[:name], params[:ssh_key])
+    raise StarhubError, res.body unless res.success?
+  end
+
+  def delete_ssh_from_starhub_server
+    res = Starhub.api.delete_ssh_key(current_user.name, params[:name])
+    raise StarhubError, res.body unless res.success?
   end
 end

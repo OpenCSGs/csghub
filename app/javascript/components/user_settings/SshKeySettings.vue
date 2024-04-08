@@ -18,7 +18,7 @@
       </div>
       <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
                     :ssh-key-name="sshkey.name"
-                    :ssh-key="sshkey.ssh_key"
+                    :ssh-key="sshkey.content"
                     :ssh-key-id="sshkey.id"
                     :create-time="sshkey.created_at">
       </ssh-key-card>
@@ -94,6 +94,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.theSshKeys);
   },
 
   methods: {
