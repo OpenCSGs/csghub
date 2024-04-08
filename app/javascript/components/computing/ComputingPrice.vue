@@ -76,7 +76,7 @@ export default {
           number: '30',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.physical'),
-          price: '98000/' + this.$t('computing.price.unit')
+          price: '98,000/' + this.$t('computing.price.unit')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
@@ -87,7 +87,7 @@ export default {
           number: '30',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.physical'),
-          price: '218000/' + this.$t('computing.price.unit')
+          price: '218,000/' + this.$t('computing.price.unit')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
@@ -142,7 +142,7 @@ export default {
           number: '99',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.cloud'),
-          price: '12000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          price: '12,000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
@@ -153,7 +153,7 @@ export default {
           number: '199',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.cloud'),
-          price: '15000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          price: '15,000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
@@ -164,7 +164,7 @@ export default {
           number: '16',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.cloud'),
-          price: '48000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          price: '48,000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
@@ -175,7 +175,7 @@ export default {
           number: '32',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.cloud'),
-          price: '980000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          price: '98,000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
         },
         {
           logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
