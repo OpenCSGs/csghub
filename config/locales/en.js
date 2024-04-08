@@ -43,7 +43,8 @@ export default {
       dependencyNotes2: 'If necessary, you can also add a packages.txt file in the root directory of the repository to specify Debian dependencies.',
       dependencyNotes3: 'The Gradio package is preinstalled and its version is set in the sdk_version field of the README.md file.',
       docNotesTitle: 'About Docs',
-      docNotes1: 'Click here to view the full documentation for gradio Spaces'
+      docNotes1: 'Click here to view the full documentation for gradio Spaces',
+      useToken: 'Use my token'
     },
     errorPage: {
       log: 'Logs',

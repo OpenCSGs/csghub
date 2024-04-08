@@ -41,7 +41,7 @@
               <path d="M10 3L4.5 8.5L2 6" stroke="white" stroke-width="1.6666" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          使用我的 token
+          {{ $t('application_spaces.gradioGuide.useToken') }}
         </div>
         <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
           <markdown-viewer :content="httpsCloneCodeMarkdown"></markdown-viewer>
