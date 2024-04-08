@@ -75,7 +75,7 @@
           </div>
         </el-upload>
       </el-form-item>
-     
+
       <el-form-item>
         <el-button class="!text-center !h-[48px] !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]" @click="handleSubmit">{{ $t('all.saveSetting') }}</el-button>
       </el-form-item>
@@ -101,7 +101,7 @@ export default {
           { pattern: /^(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+$/, message: this.$t('rule.nameRule'), trigger: 'blur' },
         ],
         nickname: [
-          { required: true, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNickName')}), trigger: 'blur' },
+          { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNickName')}), trigger: 'blur' },
         ],
         logo_image: [
           { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgAvatar')}), trigger: 'blur' },
@@ -110,7 +110,7 @@ export default {
           { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgType')}), trigger: 'blur' },
         ],
         homepage: [
-          { required: true, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgHomepage')}), trigger: 'blur' }
+          { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgHomepage')}), trigger: 'blur' }
         ],
       },
     }
