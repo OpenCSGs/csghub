@@ -194,7 +194,7 @@ export default {
             });
             this.$emit("updateOrganization", {
               logo: this.dataForm.logo_url,
-              nickname: this.dataForm.name,
+              nickname: this.dataForm.nickname || this.dataForm.name,
               homepage: this.selectedProtocol + this.dataForm.homepage,
             })
           } else {
