@@ -35,13 +35,13 @@ const currentChange = (currentPage) => {
 </script>
 <style scoped>
 :deep(.btn-prev) {
-  border-radius: 8px 0 0 8px;
+  border-radius: 6px 0 0 6px;
   margin: 0 !important;
   background: #ffffff !important;
   border: 1px solid #d0d5dd;
 }
 :deep(.btn-next) {
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 6px 6px 0;
   margin: 0 !important;
   background: #ffffff !important;
   border: 1px solid #d0d5dd;
@@ -50,7 +50,11 @@ const currentChange = (currentPage) => {
   margin: 0 !important;
   background-color: #ffffff !important;
   border: 1px solid #d0d5dd;
+  border-right: none;
   color: #182230 !important;
+}
+:deep(.el-pager li:first-child) {
+  border-left: none;
 }
 :deep(.el-pager li.is-active) {
   background-color: #F9FAFB !important;
