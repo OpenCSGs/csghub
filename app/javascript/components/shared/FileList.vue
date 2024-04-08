@@ -66,7 +66,7 @@
     <div v-if="!loading" class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
       <div class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
-          <el-avatar :size="24" class="mr-2" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+          <el-avatar :size="24" class="mr-2" :src="lastCommitAvatar" />
           <a href="#" class="text-[#303133] hover:underline">{{ lastCommit.author_name }}</a>
         </div>
         <a href="#" class="mr-2 text-[#606266] truncate hover:underline">{{ lastCommit.message }}</a>
@@ -168,7 +168,7 @@
   const breadcrumb = ref([])
   const files = ref([])
   const lastCommit = ref({})
-
+  const lastCommitAvatar = ref('')
   const prefixPath = document.location.pathname.split('/')[1]
 
   const extractNameFromPath = (path) => {
@@ -235,6 +235,7 @@
       response.json().then((data) => {
         files.value = data.files
         lastCommit.value = data.last_commit
+        lastCommitAvatar.value =last_commit_user.avatar
       }).catch((error) => {
         ElMessage({
           message: t('all.loadError'),
