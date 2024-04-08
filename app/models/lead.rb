@@ -14,6 +14,8 @@ class Lead < ApplicationRecord
 
   validate :custom_required_fields_presence
 
+  after_create :send_lead_alert
+
   def custom_required_fields_presence
     return unless lead_form
 
@@ -22,6 +24,21 @@ class Lead < ApplicationRecord
 
     required_fields.each do |lead_field|
       errors.add(lead_field, "请填写完整表单") unless send(lead_field).present?
+    end
+  end
+
+  private
+
+  def send_lead_alert
+    case lead_type
+    when 'partners'
+      SystemNotificationMailer.with(lead_id: id).new_partner_alert.deliver_now
+    when 'experts'
+      SystemNotificationMailer.with(lead_id: id).new_expert_alert.deliver_now
+    when 'customer'
+      SystemNotificationMailer.with(lead_id: id).new_customer_alert.deliver_now
+    else
+      'do nothing'
     end
   end
 end
