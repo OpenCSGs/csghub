@@ -67,7 +67,7 @@
       <br />
       <div>
         <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.docNotesTitle') }} </h3>
-        <p>{{ $t('application_spaces.gradioGuide.docNotes1') }}</p>
+        <a href="https://portal.opencsg.com/docs/Space/space_intro" target="_blank">{{ $t('application_spaces.gradioGuide.docNotes1') }}</a>
       </div>
     </div>
   </div>
