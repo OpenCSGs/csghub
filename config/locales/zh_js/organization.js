@@ -22,6 +22,7 @@ export const organization = {
     editRole: "编辑角色",
     confirm: "确定",
     cancel: "取消",
+    deleteSuccess: "成员移除成功",
     deleteConfirmTitle: `是否确定将用户 {username} 移出组织 {orgName}`,
   },
   invite: {
