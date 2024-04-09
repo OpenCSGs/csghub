@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-130px)] md:min-h-0">
+  <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0">
     <div v-if="repoType !== 'space'" class="w-[30%] min-w-[360px] border-r border-[#DCDFE6] pr-6 xl:pl-[20px] mlg:hidden">
       <TagSidebar
         :taskTags="props.taskTags"
