@@ -1,0 +1,18 @@
+<h3> 新专家申请 </h3>
+<p>
+  <label>姓名: </label>
+  <span><%= @lead.name %></span>
+</p>
+<p>
+  <label>电话: </label>
+  <span><%= @lead.phone %></span>
+</p>
+<p>
+  <label>邮箱: </label>
+  <span><%= @lead.email %></span>
+</p>
+<p>
+  <label>擅长领域: </label>
+  <span><%= @lead.expertise %></span>
+</p>
+<p><%= link_to "线索详情", admin_lead_url(@lead) %></p>

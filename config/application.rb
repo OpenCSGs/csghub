@@ -21,6 +21,11 @@ module OpenCSG
     config.i18n.default_locale = 'en'
     config.encoding = 'utf-8'
 
+    config.action_mailer.default_url_options = {
+      host: ENV.fetch('ASSET_HOST', 'https://opencsg.com'),
+      locale: :zh
+    }
+
     config.time_zone = "Beijing"
     # config.eager_load_paths << Rails.root.join("extras")
 
