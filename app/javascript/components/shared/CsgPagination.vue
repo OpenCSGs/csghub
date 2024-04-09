@@ -24,8 +24,7 @@ const props = defineProps({
   currentPage: Number,
 });
 const emit = defineEmits(["currentChange"]);
-console.log(props.perPage);
-console.log(props.total);
+
 const theCurrentPage = ref(props.currentPage);
 const prevIcon = ref(Previous);
 const nextIcon = ref(Next);
