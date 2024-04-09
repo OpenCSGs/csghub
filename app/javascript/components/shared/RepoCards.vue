@@ -140,8 +140,6 @@
   }
   
   const reloadRepos = (childCurrent) => { 
-    console.log(childCurrent);
-    
     let url = `/internal_api/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per_page=${perPage.value}`
