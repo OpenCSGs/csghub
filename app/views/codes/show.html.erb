@@ -1,3 +1,13 @@
+<% content_for :meta_title do %>
+  <title><%= "#{default_meta_title} #{name_for_meta_title(@code)}" %></title>
+<% end %>
+
+<% content_for :meta_desc do %>
+  <meta name="description"
+        content="<%= "#{default_meta_description} #{desc_for_meta_description(@code)}" %>"
+  >
+<% end %>
+
 <div class="bg-white">
   <code-detail
     :tags="<%= @tags %>"
