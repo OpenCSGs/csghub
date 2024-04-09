@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-[8px] md:px-1 px-4 justify-center items-center">
-    <span class="block md:hidden">{{ $t('all.next')}}</span>
+    <span class="block not-italic md:hidden">{{ $t('all.next')}}</span>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"

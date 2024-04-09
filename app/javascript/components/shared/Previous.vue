@@ -15,7 +15,7 @@
         stroke-linejoin="round"
       />
     </svg>
-    <span class="block md:hidden">{{ $t('all.previous')}}</span>
+    <span class="block not-italic md:hidden">{{ $t('all.previous')}}</span>
   </div>
 </template>
 
