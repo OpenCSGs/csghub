@@ -50,8 +50,7 @@
           />
           <el-select v-model="sortSelection"
                      @change="filterChange"
-                     style="width: 200px;"
-                     class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
+                     class="w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
                      size="large"
           >
             <el-option
