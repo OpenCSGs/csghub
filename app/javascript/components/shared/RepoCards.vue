@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0">
+  <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-130px)] md:min-h-0">
     <div v-if="repoType !== 'space'" class="w-[30%] min-w-[360px] border-r border-[#DCDFE6] pr-6 xl:pl-[20px] mlg:hidden">
       <TagSidebar
         :taskTags="props.taskTags"
@@ -46,11 +46,12 @@
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change = "reloadRepos"
+            @change = "searchInput"
           />
           <el-select v-model="sortSelection"
                      @change="reloadRepos"
-                     class="w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
+                     style="width: 200px;"
+                     class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
                      size="large"
           >
             <el-option
@@ -134,7 +135,11 @@
     reloadRepos()
   }
 
-  const reloadRepos = (childCurrent) => {    
+  const searchInput = () =>{
+    reloadRepos()
+  }
+  
+  const reloadRepos = (childCurrent) => { 
     let url = `/internal_api/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per_page=${perPage.value}`
