@@ -23,6 +23,7 @@ export const organization = {
     confirm: "Confirm",
     cancel: "Cancel",
     deleteSuccess: "member removed",
+    editRoleSuccess: "member updated",
     deleteConfirmTitle: `Are you sure you want to remove user {username} from organization {orgName}`,
   },
   invite: {

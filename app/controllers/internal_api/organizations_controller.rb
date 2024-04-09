@@ -41,7 +41,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   rescue Pundit::NotAuthorizedError
     render json: {message: '更新未授权!'}, status: 401
   end
-  
+
   def new_members
     unless OrgMembership.roles.keys.include? params[:user_role]
       return render json: {message: '请提供角色信息'}, status: 400
@@ -67,7 +67,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
         elsif user_org_role == params[:user_role]
           next
         else
-          user.set_org_role(org, params[:user_role])          
+          user.set_org_role(org, params[:user_role])
           sync_update_membership(org, user, user_org_role)
         end
       end
@@ -130,9 +130,11 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
       return render json: {message: '不能修改组织最后一个管理员的权限！'}, status: 400
     end
 
+    old_role = @user.org_role @org
+
     Organization.transaction do
       @user.set_org_role(@org, params[:user_role])
-      sync_update_membership(@org, @user, params[:user_role])
+      sync_update_membership(@org, @user, params[:user_role], old_role)
     end
     render json: {message: '更新组织成员成功'}
   rescue => e
@@ -155,9 +157,9 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
     raise StarhubError, res.body unless res.success?
   end
 
-  def sync_update_membership(org, user, role)
-    sync_delete_membership(org, user, role)
-    sync_create_membership(org, user)
+  def sync_update_membership(org, user, new_role, old_role)
+    res = Starhub.api.update_membership(org.name, current_user.name, new_role, old_role, user.name)
+    raise StarhubError, res.body unless res.success?
   end
 
   def set_org
