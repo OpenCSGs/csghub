@@ -46,12 +46,11 @@
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change = "reloadRepos"
+            @change = "filterChange"
           />
           <el-select v-model="sortSelection"
-                     @change="reloadRepos"
-                     style="width: 200px;"
-                     class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
+                     @change="filterChange"
+                     class="w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
                      size="large"
           >
             <el-option
@@ -135,7 +134,11 @@
     reloadRepos()
   }
 
-  const reloadRepos = (childCurrent) => {    
+  const filterChange = () =>{
+    reloadRepos()
+  }
+  
+  const reloadRepos = (childCurrent) => { 
     let url = `/internal_api/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per_page=${perPage.value}`
