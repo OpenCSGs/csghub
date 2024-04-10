@@ -51,13 +51,13 @@
       if (lang && hljs.getLanguage(lang)) {
         try {
           const highlightedCode = hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
-          return `<pre class="group flex space-between"><code class="hl-code flex-1">${highlightedCode}</code>${copyButtonFragment}</pre>`
+          return `<pre class="group flex space-between w-full !overflow-hidden"><code class="hl-code !leading-6 !overflow-auto w-[calc(100%-24px)]">${highlightedCode}</code>${copyButtonFragment}</pre>`
         } catch (error) {
           console.error(error)
         }
       }
 
-      return `<pre class="group flex space-between"><code class="hl-code flex-1">${escapeHtml(str)}</code> ${copyButtonFragment} </pre>`
+      return `<pre class="group flex space-between w-full !overflow-hidden"><code class="hl-code !leading-6 !overflow-auto w-[calc(100%-24px)]">${escapeHtml(str)}</code> ${copyButtonFragment} </pre>`
     }
   }).use(markdownItAnchor, anchorOptions)
 
