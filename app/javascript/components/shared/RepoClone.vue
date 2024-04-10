@@ -25,7 +25,7 @@
             <div class="text-[#909399]"># {{ $t('all.lfsTips')}}</div>
             <markdown-viewer :content="httpsCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2')}}</div>
-            <markdown-viewer :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"></markdown-viewer>
+            <markdown-viewer :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"></markdown-viewer>
           </div>
         </el-tab-pane>
         <el-tab-pane label="SSH" name="ssh">
@@ -33,7 +33,7 @@
             <div class="text-[#909399]"># {{ $t('all.lfsTips')}}</div>
             <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2')}}</div>
-            <markdown-viewer :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"></markdown-viewer>
+            <markdown-viewer :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"></markdown-viewer>
           </div>
         </el-tab-pane>
       </el-tabs>
