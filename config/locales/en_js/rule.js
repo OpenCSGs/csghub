@@ -4,5 +4,5 @@ export const rule = {
   notChangable:
     "Can't be changed once been set",
   nameSpaceRule:
-    "String of 2-20 charaters, numbers and _",
+    "String of 2-20 charaters, numbers and _- (_-discontinuous)",
 }
