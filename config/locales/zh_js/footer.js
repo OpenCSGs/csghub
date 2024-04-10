@@ -4,7 +4,7 @@ export const footer = {
   "docs": "文档中心",
   "join": "加入我们",
   "contact": "联系我们",
-  "policy": "法律声明及隐私权政策",
+  "policy": "用户协议 & 隐私政策",
   "illegal": "违法和不良信息举报中心",
   "police": "京公网安备11011202004415号 ",
   "company": "公司介绍",

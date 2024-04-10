@@ -4,7 +4,7 @@ export const footer = {
   "docs": "Document",
   "join": "Join us",
   "contact": "Contact us",
-  "policy": "Legal statement and Privacy",
+  "policy": "User Agreement & Privacy Policy",
   "illegal": "Reporting center",
   "police": "Beijing public network security 11011202004415",
   "company": "Company Introduction",
