@@ -94,7 +94,7 @@ module ApplicationHelper
   end
 
   def default_meta_title
-    'OpenCSG 打造中国本土化 Huggingface plus 开源社区_开放传神 OpenCSG 官网'
+    'OpenCSG 打造中国本土化 Huggingface plus 开源社区 开放传神 OpenCSG  传神社区 官网'
   end
 
   def default_meta_description
