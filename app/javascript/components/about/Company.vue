@@ -33,7 +33,12 @@
                 :key="index"
                 :timestamp="activity.timestamp"
               >
-                {{ activity.content }}
+                <div v-for="content in activity.contentList" class="flex items-center">
+                  <div class="mr-[8px]">
+                    <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="2" fill="#475467"/></svg>
+                  </div>
+                  {{ content }}
+                </div>
               </el-timeline-item>
             </el-timeline>
             <div class="flex-col font-light text-[#475467] max-w-[552px] text-[20px] leading-[30px]">
@@ -57,23 +62,33 @@ const { t } = useI18n();
 
 const activities = [
   {
-    content: t('about.company.content1'),
+    contentList: [
+      t('about.company.content1'),
+    ],
     timestamp: t('about.company.timestamp1'),
   },
   {
-    content: t('about.company.content2'),
+    contentList: [t('about.company.content2')],
     timestamp: t('about.company.timestamp2'),
   },
   {
-    content: t('about.company.content3'),
+    contentList: [
+      t('about.company.content3-1'),
+      t('about.company.content3-2')
+    ],
     timestamp: t('about.company.timestamp3'),
   },
   {
-    content: t('about.company.content4'),
+    contentList: [
+      t('about.company.content4-1'),
+      t('about.company.content4-2')
+    ],
     timestamp: t('about.company.timestamp4'),
   },
   {
-    content: t('about.company.content5'),
+    contentList: [
+      t('about.company.content5'),
+    ],
     timestamp: t('about.company.timestamp5'),
   },
 ]
