@@ -10,7 +10,7 @@
       style="--el-border-radius-base: 8px"
       >
       <el-form-item :label="$t('organization.orgNameSpace')" prop="name">
-        <el-input v-model="dataForm.name" :placeholder="$t('rule.nameSpaceRule')">
+        <el-input v-model="dataForm.name" :placeholder="$t('rule.nameRule')">
           <template #prepend>{{getDomain()}}</template>
         </el-input>
         <div class="mt-[6px]">
@@ -104,7 +104,7 @@
         rules: {
           name: [
             { required: true, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNameSpace')}), trigger: 'blur' },
-            { pattern: /^(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+$/, message: this.$t('rule.nameRule'), trigger: 'blur' },
+            { pattern: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/, message: this.$t('rule.nameRule'), trigger: 'blur' },
           ],
           nickname: [
             { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNickName')}), trigger: 'blur' },
