@@ -197,7 +197,7 @@ export default {
           number: '199',
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.cloud'),
-          price: 'N/A'
+          price: '9,999/' + this.$t('computing.price.unit')
         }
       ]
     }
