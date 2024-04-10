@@ -5,10 +5,6 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
   def create
     new_org = Organization.new organization_params
-    if params[:logo].present?
-      image_url_code = AwsS3.instance.upload 'org-logo', params[:logo]
-      new_org.logo = image_url_code
-    end
     new_org.creator = current_user
     Organization.transaction do
       new_org.save!
@@ -26,11 +22,6 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
     # 更新组织的信息
     @org.assign_attributes(organization_params)
-
-    if params[:logo].present?
-      image_url_code = AwsS3.instance.upload 'org-logo', params[:logo]
-      @org.logo = image_url_code
-    end
 
     # 保存组织信息
     if @org.save
@@ -144,7 +135,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   private
 
   def organization_params
-    params.permit(:name, :nickname, :homepage, :org_type)
+    params.permit(:name, :nickname, :homepage, :org_type, :logo)
   end
 
   def sync_create_membership(org, user)

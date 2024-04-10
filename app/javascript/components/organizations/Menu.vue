@@ -5,7 +5,7 @@
           <el-avatar :size="60" :src="logo"> </el-avatar>
           <div class="ml-[10px]">
             <div :title="nickName" class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[24px] leading-[32px] font-semibold">
-                {{nickName}}
+                {{ nickName || name }}
             </div>
             <div class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-[#909399] leading-[24px]" :title="homepage">{{homepage}}</div>
           </div>

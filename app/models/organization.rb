@@ -40,6 +40,7 @@ class Organization < ApplicationRecord
   def as_json options={}
     {
       avatar: avatar_url,
+      logo: logo,
       name: name,
       nickname: nickname,
       org_type: org_type,

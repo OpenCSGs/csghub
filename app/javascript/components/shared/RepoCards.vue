@@ -46,10 +46,10 @@
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change = "reloadRepos"
+            @change = "filterChange"
           />
           <el-select v-model="sortSelection"
-                     @change="reloadRepos"
+                     @change="filterChange"
                      class="w-[200px] xl:w-[150px] xl:mr-[20px] sm:w-[120px] sm:mr-0"
                      size="large"
           >
@@ -68,17 +68,7 @@
       <div v-else class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
         <repo-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
       </div>
-      <div v-show="totalRepos > perPage">
-        <el-pagination background
-                      v-model:current-page="currentPage"
-                      :default-current-page=1
-                      :total="totalRepos"
-                      :page-size="perPage"
-                      layout="prev, pager, next"
-                      @update:current-page="reloadRepos"
-                      class="my-[52px] flex justify-center"
-        />
-      </div>
+      <CsgPagination :perPage="perPage" :currentPage="currentPage" @currentChange="reloadRepos" :total="totalRepos" />
     </div>
   </div>
 </template>
@@ -89,6 +79,7 @@
   import RepoItem from '../shared/RepoItem.vue'
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue';
+  import CsgPagination from './CsgPagination.vue';
   import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
@@ -143,9 +134,13 @@
     reloadRepos()
   }
 
-  const reloadRepos = () => {
+  const filterChange = () =>{
+    reloadRepos()
+  }
+  
+  const reloadRepos = (childCurrent) => { 
     let url = `/internal_api/${props.repoType}s`
-    url = url + `?page=${currentPage.value}`
+    url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per_page=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
