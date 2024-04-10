@@ -221,7 +221,7 @@
 </template>
 
 <script setup>
-  import {ref, computed} from 'vue'
+  import {ref, computed, inject} from 'vue'
   import {ElInput, ElMessage} from 'element-plus'
   import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
@@ -232,6 +232,7 @@
   })
 
   const { t } = useI18n()
+  const nameRule = inject('nameRule')
 
   const license = ref(props.licenses[0][0])
   const owner = ref(props.namespaces[0][0])
@@ -247,7 +248,7 @@
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
   const canCreateApplicationSpace = computed(() => {
-    return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(spaceName.value)
+    return nameRule.test(spaceName.value)
   })
 
   const spaceResources = ref([
