@@ -177,7 +177,9 @@ export default {
     createOrganization() {
       const params = Object.assign({}, this.dataForm)
       delete params.logo_image
-      params.homepage = this.selectedProtocol + params.homepage
+      if (params.homepage) {
+        params.homepage = this.selectedProtocol + params.homepage
+      }
       const orgCreateEndpoint = `/internal_api/organizations/${this.dataForm.name}`;
       const options = {
         method: 'PUT',
