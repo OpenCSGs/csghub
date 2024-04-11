@@ -5,7 +5,7 @@ class Organization < ApplicationRecord
   validates_uniqueness_of :name
   validates_length_of :nickname, maximum: 20
   validates_length_of :homepage, maximum: 100
-  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
+  validates :name, format: { with: NAME_RULE }
 
   validate :unique_name_by_user
 
