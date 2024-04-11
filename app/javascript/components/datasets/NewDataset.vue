@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
@@ -104,6 +104,8 @@
   })
 
   const { t } = useI18n();
+  const nameRule = inject('nameRule')
+
   const license = ref(props.licenses[0][0])
   const owner = ref(props.namespaces[0][0])
   const datasetName = ref('')
@@ -111,7 +113,7 @@
   const datasetDesc = ref('')
   const visibility = ref('private')
 
-  const canCreateDataset = computed(() => { return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(datasetName.value) })
+  const canCreateDataset = computed(() => { return nameRule.test(datasetName.value) })
 
   const createDataset = async () => {
     try {

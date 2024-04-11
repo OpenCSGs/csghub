@@ -10,7 +10,7 @@
       style="--el-border-radius-base: 8px"
       >
       <el-form-item :label="$t('organization.orgNameSpace')" prop="name">
-        <el-input v-model="dataForm.name" :placeholder="$t('rule.nameSpaceRule')">
+        <el-input v-model="dataForm.name" :placeholder="$t('rule.nameRule')">
           <template #prepend>{{getDomain()}}</template>
         </el-input>
         <div class="mt-[6px]">
@@ -90,35 +90,41 @@
 
 <script>
   import csrfFetch from "../../packs/csrfFetch.js"
+  import { inject } from 'vue'
+
   export default {
     props: {
       currentUserProfile: String,
     },
     data() {
       return {
+        nameRule: inject('nameRule'),
         showUpload: true,
         selectedProtocol: 'https://',
         csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         dataForm: {},
-        org_types: ['企业', '高校', '非营利组织', '社区组织'],
-        rules: {
-          name: [
-            { required: true, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNameSpace')}), trigger: 'blur' },
-            { pattern: /^(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+$/, message: this.$t('rule.nameRule'), trigger: 'blur' },
-          ],
-          nickname: [
-            { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNickName')}), trigger: 'blur' },
-          ],
-          logo_image: [
-            { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgAvatar')}), trigger: 'blur' },
-          ],
-          org_type: [
-            { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgType')}), trigger: 'blur' },
-          ],
-          homepage: [
-            { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgHomepage')}), trigger: 'blur' }
-          ],
-        },
+        org_types: ['企业', '高校', '非营利组织', '社区组织']
+      }
+    },
+    computed: {
+      rules() {
+        return { name: [
+                   { required: true, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNameSpace')}), trigger: 'blur' },
+                   { pattern: this.nameRule, message: this.$t('rule.nameRule'), trigger: 'blur' },
+                 ],
+                 nickname: [
+                   { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNickName')}), trigger: 'blur' },
+                 ],
+                 logo_image: [
+                   { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgAvatar')}), trigger: 'blur' },
+                 ],
+                 org_type: [
+                   { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgType')}), trigger: 'blur' },
+                 ],
+                 homepage: [
+                   { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgHomepage')}), trigger: 'blur' }
+                 ]
+               }
       }
     },
     methods: {
