@@ -8,8 +8,8 @@ module Starhub
     include ApplicationSpaceApis
     include CodeApis
 
-    def initialize
-      @client = Starhub::Client.instance
+    def initialize user_ip
+      @client = Starhub::Client.init_with user_ip
     end
 
     def create_user(name, nickname, email)
