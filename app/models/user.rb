@@ -97,7 +97,11 @@ class User < ApplicationRecord
   end
 
   def org_role org
-    org_memberships.find_by(organization: org)&.role
+    org_membership_by_org(org)&.role
+  end
+
+  def org_membership_by_org org
+    org_memberships.find_by(organization: org)
   end
 
   def can_manage? repository
@@ -117,7 +121,7 @@ class User < ApplicationRecord
   end
 
   def set_org_role org, role
-    membership = org_memberships.find_by(organization: org)
+    membership = org_membership_by_org(org)
     if membership
       membership.update(role: role)
     end
@@ -164,7 +168,8 @@ class User < ApplicationRecord
       nickname: nickname,
       email: email,
       phone: phone,
-      avatar: avatar_url
+      avatar: avatar_url,
+      last_login_at: last_login_at,
     }
   end
 

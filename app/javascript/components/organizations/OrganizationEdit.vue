@@ -124,7 +124,7 @@ export default {
       const organization = this.organization
       organization.logo_image = organization.avatar ? [{url: organization.avatar, name: organization.logo}] : []
       delete organization.avatar
-      this.showUpload = !organization.logo
+      this.showUpload = !organization.logo_image
       this.dataForm = organization
     },
     handleUploadSuccess(res) {
@@ -177,7 +177,9 @@ export default {
     createOrganization() {
       const params = Object.assign({}, this.dataForm)
       delete params.logo_image
-      params.homepage = this.selectedProtocol + params.homepage
+      if (params.homepage) {
+        params.homepage = this.selectedProtocol + params.homepage
+      }
       const orgCreateEndpoint = `/internal_api/organizations/${this.dataForm.name}`;
       const options = {
         method: 'PUT',
