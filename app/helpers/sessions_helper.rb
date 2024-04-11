@@ -45,7 +45,7 @@ module SessionsHelper
   end
 
   def setup_jwt_token username
-    res = Starhub.api.get_jwt_token(username)
+    res = csghub_api.get_jwt_token(username)
     token = JSON.parse(res)['data']['token']
     expire_time = JSON.parse(res)['data']['expire_at']
     current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'

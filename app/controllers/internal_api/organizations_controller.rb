@@ -32,7 +32,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   rescue Pundit::NotAuthorizedError
     render json: {message: '更新未授权!'}, status: 401
   end
-  
+
   def new_members
     unless OrgMembership.roles.keys.include? params[:user_role]
       return render json: {message: '请提供角色信息'}, status: 400
@@ -69,19 +69,19 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   end
 
   def models
-    render json: Starhub.api.get_org_models(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_org_models(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def datasets
-    render json: Starhub.api.get_org_datasets(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_org_datasets(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def spaces
-    render json: Starhub.api.get_org_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_org_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def codes
-    render json: Starhub.api.get_org_codes(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_org_codes(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   private
@@ -91,12 +91,12 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   end
 
   def sync_create_membership(org, user)
-    res = Starhub.api.create_membership(org.name, current_user.name, params[:user_role], user.name)
+    res = csghub_api.create_membership(org.name, current_user.name, params[:user_role], user.name)
     raise StarhubError, res.body unless res.success?
   end
 
   def sync_delete_membership(org, user, role)
-    res = Starhub.api.delete_membership(org.name, current_user.name, role, user.name)
+    res = csghub_api.delete_membership(org.name, current_user.name, role, user.name)
     raise StarhubError, res.body unless res.success?
   end
 

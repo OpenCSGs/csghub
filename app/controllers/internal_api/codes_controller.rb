@@ -7,25 +7,25 @@ class InternalApi::CodesController < InternalApi::ApplicationController
   include Api::RepoValidation
 
   def index
-    res_body = Starhub.api.get_codes(current_user&.name,
-                                     params[:search],
-                                     params[:sort],
-                                     params[:task_tag],
-                                     params[:framework_tag],
-                                     params[:license_tag],
-                                     params[:page],
-                                     params[:per_page])
+    res_body = csghub_api.get_codes(current_user&.name,
+                                              params[:search],
+                                              params[:sort],
+                                              params[:task_tag],
+                                              params[:framework_tag],
+                                              params[:license_tag],
+                                              params[:page],
+                                              params[:per_page])
     api_response = JSON.parse(res_body)
     render json: { codes: api_response['data'], total: api_response['total'] }
   end
 
   def files
-    last_commit, files = Starhub.api.get_code_detail_files_data_in_parallel(params[:namespace], params[:code_name], files_options)
+    last_commit, files = csghub_api.get_code_detail_files_data_in_parallel(params[:namespace], params[:code_name], files_options)
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
   end
 
   def readme
-    readme = Starhub.api.get_code_file_content(params[:namespace], params[:code_name], 'README.md', {current_user: current_user&.name})
+    readme = csghub_api.get_code_file_content(params[:namespace], params[:code_name], 'README.md', {current_user: current_user&.name})
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'code', readme_content
     render json: { readme: readme_content }
