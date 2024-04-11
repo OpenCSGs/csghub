@@ -87,9 +87,6 @@ import csrfFetch from "../../packs/csrfFetch.js"
 import { inject } from 'vue'
 
 export default {
-  setup() {
-    const nameRule = inject('nameRule');
-  },
   props: {
     organization: Object,
   },
