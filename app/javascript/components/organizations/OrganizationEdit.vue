@@ -124,7 +124,7 @@ export default {
       const organization = this.organization
       organization.logo_image = organization.avatar ? [{url: organization.avatar, name: organization.logo}] : []
       delete organization.avatar
-      this.showUpload = !organization.logo
+      this.showUpload = !organization.logo_image
       this.dataForm = organization
     },
     handleUploadSuccess(res) {
