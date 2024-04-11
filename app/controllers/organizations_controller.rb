@@ -24,4 +24,11 @@ class OrganizationsController < ApplicationController
     @spaces = Starhub.api.get_org_application_spaces(@organization.name, current_user&.name)
     @codes = Starhub.api.get_org_codes(@organization.name, current_user&.name)
   end
+
+  def members
+    @organization = Organization.find_by(name: params[:id])
+    authorize @organization
+    user_org_role = current_user && current_user.org_role(@organization)
+    @admin = user_org_role == 'admin'
+  end
 end
