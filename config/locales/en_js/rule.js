@@ -1,8 +1,4 @@
 export const rule = {
-  nameRule:
-    "String of 2-70 charaters, numbers and _.- (_.-discontinuous)",
-  notChangable:
-    "Can't be changed once been set",
-  nameSpaceRule:
-    "String of 2-20 charaters, numbers and _- (_-discontinuous)",
+  notChangable: "Can't be changed once been set",
+  nameRule: "A string of 2-64 alphanumeric characters, _.-, where _.- cannot appear side by side, must start with a letter, and end with a letter or number."
 }
