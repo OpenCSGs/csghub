@@ -59,16 +59,16 @@ class Organization < ApplicationRecord
   private
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
+    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
+    Starhub.api(creator.session_ip).image_secure_check('profilePhotoCheck', bucket_name, logo)
   end
 
   def sync_to_starhub_server
     if starhub_synced?
-      res = Starhub.api.update_organization(creator.name, name, nickname, homepage)
+      res = Starhub.api(creator.session_ip).update_organization(creator.name, name, nickname, homepage)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
+      res = Starhub.api(creator.session_ip).create_organization(creator.name, name, nickname, homepage)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end

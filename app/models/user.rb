@@ -134,21 +134,21 @@ class User < ApplicationRecord
     # user info missing 不同步
     return if name.blank? or email.blank?
 
-    Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
+    Starhub.api(session_ip).text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
+    Starhub.api(session_ip).image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
     if starhub_synced?
-      res = Starhub.api.update_user(name, nickname, email)
+      res = Starhub.api(session_ip).update_user(name, nickname, email)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api.create_user(name, nickname, email)
+      res = Starhub.api(session_ip).create_user(name, nickname, email)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
 
     if starhub_synced? && git_token.blank?
       random_name = SecureRandom.uuid
-      res_body = Starhub.api.generate_git_token(name, random_name)
+      res_body = Starhub.api(session_ip).generate_git_token(name, random_name)
       res_json = JSON.parse(res_body)
       self.update_columns(git_token_name: res_json["data"]["name"], git_token: res_json["data"]["token"])
     end

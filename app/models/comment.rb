@@ -28,6 +28,6 @@ class Comment < ApplicationRecord
   end
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('comment_detection', content)
+    Starhub.api(user.session_ip).text_secure_check('comment_detection', content)
   end
 end
