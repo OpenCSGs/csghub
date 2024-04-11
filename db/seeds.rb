@@ -137,20 +137,26 @@ end
 end
 
 [
-  ['Chinese', '中文'],
-  ['English', '英文'],
-  ['French', '法文'],
-  ['German', '德文'],
-  ['Spanish', '西班牙文'],
-  ['Japanese', '日文'],
-  ['Korean', '韩文'],
-  ['Russian', '俄文'],
-  ['Italian', '意大利文'],
-  ['Portuguese', '葡萄牙文'],
+  ['Chinese', '中文', 'zh'],
+  ['English', '英文', 'en'],
+  ['French', '法文', 'fr'],
+  ['German', '德文', 'de'],
+  ['Spanish', '西班牙文', 'es'],
+  ['Japanese', '日文', 'ja'],
+  ['Korean', '韩文', 'ko'],
+  ['Russian', '俄文', 'ru'],
+  ['Italian', '意大利文', 'it'],
+  ['Portuguese', '葡萄牙文', 'pt'],
+  ['Arabic', '阿拉伯文', 'ar'],
+  ['Hindi', '北印度文', 'hi'],
+  ['Turkish', '土耳其文', 'tr'],
+  ['Dutch', '荷兰语', 'nl'],
+  ['Polish', '波兰文', 'pl'],
+  ['Swedish', '瑞典文', 'sv'],
 ].each do |tag|
   local_tag = Tag.find_by(name: tag[0], tag_type: 'language', tag_origin: 'system')
   next if local_tag
-  Tag.create(tag_origin: 'system', tag_type: 'language', name: tag[0], zh_name: tag[1])
+  Tag.create(tag_origin: 'system', tag_type: 'language', name: tag[0], zh_name: tag[1], label: tag[2])
 end
 
 [

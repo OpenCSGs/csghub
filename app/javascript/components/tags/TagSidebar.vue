@@ -23,7 +23,7 @@
             :class="activeNavItem === 'Language' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
-      Language
+      Languages
       </span>
 
       <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
