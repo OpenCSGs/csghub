@@ -16,7 +16,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                         params[:page],
                                         params[:per_page])
     api_response = JSON.parse(res_body)
-    # debugger
     render json: { datasets: api_response['data'], total: api_response['total'] }
   end
 

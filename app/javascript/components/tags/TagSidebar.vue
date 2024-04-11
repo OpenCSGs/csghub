@@ -17,7 +17,7 @@
       {{ $t('all.framework') }}
       </span>
 
-      <span v-show="type == 'dataset'"
+      <span v-show="type == 'model'"
             class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Language"
             :class="activeNavItem === 'Language' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
