@@ -9,7 +9,7 @@
           <p class="text-base font-semibold">{{ $t('footer.about') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2">
             <p><a href="https://portal.opencsg.com/about">{{ $t('footer.company') }}</a></p>
-            <p><a href="https://opencsg.com/blog" target="_blank">{{ $t('footer.news') }}</a></p>
+            <p><a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a></p>
             <p><a href="https://portal.opencsg.com#joinUs">{{ $t('footer.join') }}</a></p>
           </div>
         </div>

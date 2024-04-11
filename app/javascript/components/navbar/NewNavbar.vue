@@ -6,7 +6,7 @@
           <img :src="logo" alt="OpenCSG Logo" class="w-[135px] sm:w-[90px] sm:hidden" />
           <img src="/images/opencsg_mobile_logo.png" alt="OpenCSG Logo" class="hidden w-auto h-[40px] sm:block" />
         </a>
-      </div>
+      </div>avout
     </div>
     <div class="flex items-center justify-end gap-4 w-full md:gap-0 xl:w-[30%]">
       <el-menu
