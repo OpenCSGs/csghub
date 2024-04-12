@@ -66,4 +66,5 @@ export const all = {
   lfsTips2: "如果您不想下载LFS文件的内容，请在环境变量中添加",
   pleaseSelect: "请选择{value}",
   pleaseInput: "请输入{value}",
+  language: "语言"
 }

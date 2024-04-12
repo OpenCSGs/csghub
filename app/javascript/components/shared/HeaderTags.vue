@@ -1,5 +1,6 @@
 <template>
   <div class="flex items-center flex-wrap gap-4 md:px-5 md:mb-[30px] md:flex-col md:items-start">
+    <!-- Task -->
     <div v-if="taskTags.length" class="text-sm text-[#909399]">{{ $t('all.tasks') }}:</div>
     <a v-for="tag in taskTags"
        :href="`/${prefix}?tag=${tag.name}&tag_type=Task`"
@@ -8,6 +9,7 @@
     >
       {{ tag.zh_name || tag.name }}
     </a>
+    <!-- Framework -->
     <div v-if="frameworkTags.length"  class="text-sm text-[#909399]">{{ $t('all.framework') }}:</div>
     <a
       v-for="tag in frameworkTags"
@@ -22,16 +24,17 @@
       <GGUF v-if="tag.name.toLowerCase() === 'gguf'" />
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
-    
-    <!-- <div v-if="languageTags.length" class="text-sm text-[#909399]">{{ $t('all.language') }}:</div>
+    <!-- Language -->
+    <div v-if="languageTags.length" class="flex items-center text-sm text-[#909399]">{{ $t('all.language') }}:</div>
     <a v-for="tag in languageTags"
-       :href="`/${prefix}?tag=${tag.name}&tag_type=Task`"
+       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
        :style="`color: ${tag.color}`"
-       class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#d3d3d354]"
+       class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
     >
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6C11 8.76142 8.76142 11 6 11M11 6C11 3.23858 8.76142 1 6 1M11 6C11 4.89543 8.76142 4 6 4C3.23858 4 1 4.89543 1 6M11 6C11 7.10457 8.76142 8 6 8C3.23858 8 1 7.10457 1 6M6 11C3.23858 11 1 8.76142 1 6M6 11C7.10457 11 8 8.76142 8 6C8 3.23858 7.10457 1 6 1M6 11C4.89543 11 4 8.76142 4 6C4 3.23858 4.89543 1 6 1M1 6C1 3.23858 3.23858 1 6 1" stroke="#3B7C0F" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       {{ tag.zh_name || tag.name }}
-    </a> -->
-
+    </a>
+    <!-- Other -->
     <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
     <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center border gap-1">
       {{ tag.name }}
@@ -56,11 +59,12 @@
   import PaddlePaddle from '../../components/tags/frameworks/PaddlePaddle.vue'
   import GGUF from '../../components/tags/frameworks/GGUF.vue'
   import Joblib from '../../components/tags/frameworks/Joblib.vue'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     taskTags: Array,
     frameworkTags: Array,
-    // languageTags: Array,
+    languageTags: Array,
     licenseTags: Array,
     otherTags: Array,
     prefix: {
@@ -68,4 +72,6 @@
       default: ''
     }
   })
+
+  const { t, locale } = useI18n()
 </script>

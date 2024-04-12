@@ -68,4 +68,5 @@ export const all = {
   lfsTips2: "If you do not want to download the content of LFS files, please add it to the environment variables.",
   pleaseSelect: "Please select {value}",
   pleaseInput: "Please input {value}",
+  language: "Language"
 }

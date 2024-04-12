@@ -155,7 +155,7 @@
     url = url + `&sort=${sortSelection.value}`
     url = url + `&task_tag=${taskTag.value}`
     url = url + `&framework_tag=${frameworkTag.value}`
-    url = url + `&language_tag=en`
+    url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
     loadRepos(url)
   }
