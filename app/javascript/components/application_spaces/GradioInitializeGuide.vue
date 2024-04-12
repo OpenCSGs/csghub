@@ -38,24 +38,18 @@
         <div class="my-[16px] flex items-center gap-[8px]">
           <el-checkbox v-model="useToken" :label="$t('application_spaces.gradioGuide.useToken')" size="large" />
         </div>
-        <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-          <markdown-viewer v-if="useToken" :content="httpsCloneCodeWithTokenMarkdown"></markdown-viewer>
-          <markdown-viewer v-else :content="httpsCloneCodeMarkdown"></markdown-viewer>
-        </div>
+        <markdown-viewer v-if="useToken" :content="httpsCloneCodeWithTokenMarkdown"></markdown-viewer>
+        <markdown-viewer v-else :content="httpsCloneCodeMarkdown"></markdown-viewer>
       </div>
       <div v-else
-          class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px] my-[16px]">
+          class="my-[16px]">
         <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
       </div>
     </div>
     <h3 class="my-[24px] text-[#475467] font-[500]">2. {{ $t('application_spaces.gradioGuide.createTitle') }}</h3>
-    <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-      <markdown-viewer :content="appPyCodeMarkdown"></markdown-viewer>
-    </div>
+    <markdown-viewer :content="appPyCodeMarkdown"></markdown-viewer>
     <h3 class="my-[24px] text-[#475467] font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
-    <div class="px-[16px] py-[8px] bg-[#F9FAFB] rounded-[8px]">
-      <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
-    </div>
+    <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
     <p class="text-[#667085] text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
     <div class="text-[16px] text-[#667085] border border-[#D0D5DD] rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
@@ -94,17 +88,17 @@
   }
 
   const httpsCloneCodeMarkdown = computed(() => {
-    const httpsCloneCode = `git clone ${props.httpCloneUrl}`
+    const httpsCloneCode = `  git clone ${props.httpCloneUrl}`
     return getMarkdownCode(httpsCloneCode, 'bash')
   })
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
-    const httpsCloneCodeWithToken = `git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
+    const httpsCloneCodeWithToken = `  git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
     return getMarkdownCode(httpsCloneCodeWithToken, 'bash')
   })
 
   const sshCloneCodeMarkdown = computed(() => {
-    const sshCloneCode = `git clone ${props.sshCloneUrl}`
+    const sshCloneCode = `  git clone ${props.sshCloneUrl}`
     return getMarkdownCode(sshCloneCode, 'bash')
   })
 
