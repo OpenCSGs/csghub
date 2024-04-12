@@ -38,6 +38,7 @@
 <script setup>
 import RepoHeader from '../shared/RepoHeader.vue';
 import RepoTabs from '../shared/RepoTabs.vue'
+import useRepoDetailStore from '../../stores/RepoDetailStore'
 
 const props = defineProps({
   dataset: Object,
@@ -57,6 +58,8 @@ const props = defineProps({
   ownerUrl: String,
   canWrite: Boolean
 })
+const repoDetailStore = useRepoDetailStore()
+repoDetailStore.initialize(props.dataset.data)
 </script>
 
 <style scoped>
