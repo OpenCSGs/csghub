@@ -25,7 +25,7 @@
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
     <!-- Language -->
-    <div v-if="languageTags.length" class="flex items-center text-sm text-[#909399]">{{ $t('all.language') }}:</div>
+    <div v-if="languageTags.length" class="flex items-center text-sm text-[#909399]">{{ $t('all.languages') }}:</div>
     <a v-for="tag in languageTags"
        :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
        :style="`color: ${tag.color}`"
