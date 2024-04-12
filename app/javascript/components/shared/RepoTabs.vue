@@ -114,7 +114,6 @@
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
           :cloudResource="repoDetail.hardware"
-          :private="repoDetail.private"
           @showSpaceLogs="showSpaceLogs" />
         <code-settings
           v-if="repoType === 'code'"

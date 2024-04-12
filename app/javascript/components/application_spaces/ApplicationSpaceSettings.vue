@@ -171,13 +171,13 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('application_spaces.edit.statusText')}}
-          <span class="text-black font-semibold">【{{ visibility=='Private' ? this.$t('all.private') : this.$t('all.public') }}】</span>
-          {{ $t('application_spaces.edit.status')}}。{{ visibility=='Private' ? this.$t('application_spaces.edit.privateVis') : this.$t('application_spaces.edit.publicVis')}}
+          <span class="text-black font-semibold">【{{ isPrivate ? this.$t('all.private') : this.$t('all.public') }}】</span>
+          {{ $t('application_spaces.edit.status')}}。{{ isPrivate ? this.$t('application_spaces.edit.privateVis') : this.$t('application_spaces.edit.publicVis')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <p class="text-[#344054] text-[14px]">{{ $t('application_spaces.edit.visibility')}}</p>
-        <el-select v-model="visibility"
+        <el-select v-model="visibilityName"
                    @change="changeVisibility"
                    placeholder="Select"
                    size="large"
@@ -243,6 +243,8 @@ import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import { useCookies } from "vue3-cookies"
 import refreshJWT from '../../packs/refreshJWT.js'
+import useRepoDetailStore from '../../stores/RepoDetailStore'
+import { mapState, mapActions } from 'pinia'
 
 export default {
   props: {
@@ -251,15 +253,13 @@ export default {
     applicationSpaceDesc: String,
     default_branch: String,
     appStatus: String,
-    cloudResource: String,
-    private: Boolean
+    cloudResource: String
   },
 
   components: {},
 
   data() {
     return {
-      visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       applicationSpacePath: this.path,
       theApplicationSpaceNickname: this.applicationSpaceNickname || "",
@@ -286,8 +286,12 @@ export default {
   },
 
   computed: {
+    ...mapState(useRepoDetailStore, ['isPrivate']),
     isSpaceStopped() {
       return this.appStatus === 'Stopped' ? true : false
+    },
+    visibilityName() {
+      return this.isPrivate ? 'Private' : 'Public'
     }
   },
 
@@ -296,6 +300,8 @@ export default {
   mounted() {},
 
   methods: {
+    ...mapActions(useRepoDetailStore, ['updateVisibility']),
+
     clickDelete() {
       if (this.delDesc === this.applicationSpacePath) {
         this.deleteApplicationSpace().catch((err) => {
@@ -409,8 +415,8 @@ export default {
         title: this.$t('application_spaces.edit.changeVisibility'),
         message: h('p', null, [
           h('span', null, this.$t('all.changeVis')),
-          h('span', null, this.visibility=='Private'? this.$t('all.private') : this.$t('all.public')),
-          h('span', null, this.visibility=='Private'? this.$t('application_spaces.edit.privateInfo') : this.$t('application_spaces.edit.publicInfo'))
+          h('span', null, value === 'Private'? this.$t('all.private') : this.$t('all.public')),
+          h('span', null, value === 'Private'? this.$t('application_spaces.edit.privateInfo') : this.$t('application_spaces.edit.publicInfo'))
         ]),
         showCancelButton: true,
         confirmButtonText: this.$t('all.confirm'),
@@ -418,7 +424,6 @@ export default {
       }).then(() => {
         this.changeVisibilityCall(value)
       }).catch(() => {
-        this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
           message: this.$t('all.changeCancel'),
@@ -427,8 +432,8 @@ export default {
     },
 
     changeVisibilityCall(value) {
-      const privateSelected = (value === 'Private') ? true : false
-      const payload = {private: privateSelected}
+      const isprivateSelected = (value === 'Private') ? true : false
+      const payload = {private: isprivateSelected}
       this.updateApplicationSpace(payload)
     },
 
@@ -463,6 +468,7 @@ export default {
           ElMessage({ message: err.message, type: "warning" })
         })
       } else {
+        this.updateVisibility(payload.private)
         response.json().then((data) => {
           ElMessage({ message: data.message, type: "success" })
         })
