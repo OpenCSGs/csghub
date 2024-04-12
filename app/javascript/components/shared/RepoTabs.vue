@@ -97,8 +97,7 @@
           :model-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :tag-list="tagList"
-          :tags="tags"
-          :private="repoDetail.private" />
+          :tags="tags" />
         <dataset-settings
           v-if="repoType === 'dataset'"
           :path="repoDetail.path"

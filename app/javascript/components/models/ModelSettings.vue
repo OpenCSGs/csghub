@@ -194,8 +194,7 @@ export default {
     modelDesc: String,
     default_branch: String,
     tagList: Object,
-    tags: Object,
-    private: Boolean
+    tags: Object
   },
   data() {
     return {
@@ -203,8 +202,6 @@ export default {
       selectedTags:[],
       shouldShowTagList:false,
       tagInput:'',
-      isPrivate: this.private,
-      visibilityName: this.private ? 'Private' : 'Public',
       delDesc: '',
       modelName: this.path.split('/')[1],
       theModelNickname: this.modelNickname || "",
@@ -215,32 +212,14 @@ export default {
     };
   },
   computed: {
-    watchIsPrivate() {
-      const repoDetailStore = useRepoDetailStore()
-      return repoDetailStore.isPrivate
+    ...mapState(useRepoDetailStore, ['isPrivate']),
+    visibilityName() {
+      return this.isPrivate ? 'Private' : 'Public'
     }
-    // map过来的 store 属性是 computed，并不是一个 reactive 的属性可以直接使用
-    // 所以需要单独定义一个 isPrivate 的 reactive 属性，然后通过 store 的对应属性的变化的监听
-    // 来更新这个 reactive 属性
-    // ...mapState(useRepoDetailStore, ['isPrivate']),
-    // ...mapWritableState(useRepoDetailStore, ['privateVisibility'])
-   },
-  components: {},
-  created() {
-    this.$watch('watchIsPrivate', (newVal, oldVal) => {
-      console.log('Watched value changed:', newVal, oldVal)
-      this.isPrivate = newVal
-      this.visibilityName = newVal ? 'Private' : 'Public'
-    })
   },
   mounted() {
-    // this.visibilityName = this.isPrivate ? 'Private' : 'Public'
-    console.log('in settings')
-    console.log(this.isPrivate)
-    console.log(this.visibilityName)
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
-
     this.getSelectTags()
   },
   beforeDestroy() {
@@ -329,7 +308,6 @@ export default {
       }).then(() => {
         this.changeVisibilityCall(value)
       }).catch(() => {
-        // this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
           message: this.$t('all.changeCancel'),
