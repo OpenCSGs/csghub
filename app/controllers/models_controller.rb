@@ -97,7 +97,11 @@ class ModelsController < ApplicationController
     end
 
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
-    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
+    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model')
+
+    @tags["other_tags"]
+    @tags.to_json
+    debugger
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
   end
 end

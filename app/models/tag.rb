@@ -35,6 +35,25 @@ class Tag < ApplicationRecord
     scientific_computing: {color: '#525852', zh_name: '科学计算', en_name: 'Scientific computing'}
   }.with_indifferent_access
 
+  LANGUAGE_TAG_LABEL = [
+    {name:'Chinese', label:'zh'},
+    {name:'English', label:'en'},
+    {name:'French', label:'fr'},
+    {name:'German', label:'de'},
+    {name:'Spanish', label:'es'},
+    {name:'Japanese', label:'ja'},
+    {name:'Korean', label:'ko'},
+    {name:'Russian', label:'ru'},
+    {name:'Italian', label:'it'},
+    {name:'Portuguese', label:'pt'},
+    {name:'Arabic', label:'ar'},
+    {name:'Hindi', label:'hi'},
+    {name:'Turkish', label:'tr'},
+    {name:'Dutch', label:'nl'},
+    {name:'Polish', label:'pl'},
+    {name:'Swedish', label:'sv'},
+  ]
+
   DEFAULT_TAGS = [
     {name: '语言模型', color: '#009933'},
     {name: '图片模型', color: '#ff9900'},
