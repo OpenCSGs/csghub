@@ -235,7 +235,7 @@
       response.json().then((data) => {
         files.value = data.files
         lastCommit.value = data.last_commit
-        lastCommitAvatar.value =last_commit_user.avatar
+        lastCommitAvatar.value = data.last_commit_user.avatar ? data.last_commit_user.avatar : ''
       }).catch((error) => {
         ElMessage({
           message: t('all.loadError'),
