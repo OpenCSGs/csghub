@@ -105,8 +105,7 @@
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :tag-list="tagList"
-          :tags="tags"
-          :private="repoDetail.private" />
+          :tags="tags" />
         <application-space-settings
           v-if="repoType === 'space'"
           :path="repoDetail.path"
@@ -122,8 +121,7 @@
           :path="repoDetail.path"
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
-          :private="repoDetail.private" />
+          :default_branch="repoDetail.default_branch" />
       </template>
     </tab-container>
   </div>
