@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
   validates_length_of :nickname, maximum: 20
   validates_length_of :email, maximum: 30
-  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
+  validates :name, format: { with: NAME_RULE }, allow_blank: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
 
   validate :unique_name_by_organization
@@ -95,7 +95,11 @@ class User < ApplicationRecord
   end
 
   def org_role org
-    org_memberships.find_by(organization: org)&.role
+    org_membership_by_org(org)&.role
+  end
+
+  def org_membership_by_org org
+    org_memberships.find_by(organization: org)
   end
 
   def can_manage? repository
@@ -115,7 +119,7 @@ class User < ApplicationRecord
   end
 
   def set_org_role org, role
-    membership = org_memberships.find_by(organization: org)
+    membership = org_membership_by_org(org)
     if membership
       membership.update(role: role)
     end
@@ -161,7 +165,8 @@ class User < ApplicationRecord
       nickname: nickname,
       email: email,
       phone: phone,
-      avatar: avatar_url
+      avatar: avatar_url,
+      last_login_at: last_login_at,
     }
   end
 

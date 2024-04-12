@@ -69,7 +69,8 @@ const app = createApp({
   },
   provide:{
     defaultTags: DefaultTags,
-    csghubServer: csghubServer
+    csghubServer: CsghubServer,
+    nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
   }
 }).use(ElementPlus, {
   locale: zhCn,
