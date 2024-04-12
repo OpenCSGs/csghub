@@ -8,8 +8,8 @@ module Starhub
     include ApplicationSpaceApis
     include CodeApis
 
-    def initialize
-      @client = Starhub::Client.instance
+    def initialize user_ip
+      @client = Starhub::Client.init_with user_ip
     end
 
     def create_user(name, nickname, email)
@@ -199,6 +199,15 @@ module Starhub
         user: user
       }
       @client.post("/organizations/#{org_name}/members", options)
+    end
+
+    def update_membership(org_name, op_user, new_role, old_role, username)
+      options = {
+        new_role: new_role,
+        old_role: old_role,
+        op_user: op_user
+      }
+      @client.put("/organizations/#{org_name}/members/#{username}", options)
     end
 
     def delete_membership(org_name, op_user, role, user)

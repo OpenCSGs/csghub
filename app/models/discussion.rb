@@ -29,6 +29,6 @@ class Discussion < ApplicationRecord
   end
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', title)
+    Starhub.api(user.session_ip).text_secure_check('nickname_detection', title)
   end
 end

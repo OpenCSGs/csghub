@@ -10,6 +10,8 @@
                          :http-clone-url="repoDetail.repository.http_clone_url"
                          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
                          :sdk="sdk"
+                         :user-name="userName"
+                         :user-token="userToken"
         />
         <ApplicationPage v-else-if="repoType === 'space' && appStatus === 'Running'"
                          :appEndpoint="appEndpoint"
@@ -171,7 +173,9 @@ const props = defineProps({
   repoType: String,
   appStatus: String,
   appEndpoint: String,
-  sdk: String
+  sdk: String,
+  userName: String,
+  userToken: String
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);

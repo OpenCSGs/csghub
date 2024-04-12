@@ -5,7 +5,7 @@ class Organization < ApplicationRecord
   validates_uniqueness_of :name
   validates_length_of :nickname, maximum: 20
   validates_length_of :homepage, maximum: 100
-  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }
+  validates :name, format: { with: NAME_RULE }
 
   validate :unique_name_by_user
 
@@ -16,6 +16,8 @@ class Organization < ApplicationRecord
   has_many :application_spaces, as: :owner
   has_many :codes, as: :owner
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
+
+  has_many :admin_users, -> { distinct.joins(:org_memberships).where({ org_memberships: {role: :admin} }) }, class_name: 'User', through: :org_memberships, source: :user
 
   after_save :sync_to_starhub_server
   before_save :detect_sensitive_content
@@ -38,11 +40,13 @@ class Organization < ApplicationRecord
   def as_json options={}
     {
       avatar: avatar_url,
+      logo: logo,
       name: name,
       nickname: nickname,
       org_type: org_type,
       homepage: homepage,
-      verified: verified
+      verified: verified,
+      creator_id: creator_id,
     }
   end
 
@@ -55,19 +59,25 @@ class Organization < ApplicationRecord
     starhub_synced == true
   end
 
+  def is_last_admin?(user)
+    return false if user.org_role(self) != 'admin' 
+
+    admin_users.count <= 1
+  end
+
   private
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, logo)
+    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', "#{name} #{nickname} #{homepage}")
+    Starhub.api(creator.session_ip).image_secure_check('profilePhotoCheck', bucket_name, logo)
   end
 
   def sync_to_starhub_server
     if starhub_synced?
-      res = Starhub.api.update_organization(creator.name, name, nickname, homepage)
+      res = Starhub.api(creator.session_ip).update_organization(creator.name, name, nickname, homepage)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api.create_organization(creator.name, name, nickname, homepage)
+      res = Starhub.api(creator.session_ip).create_organization(creator.name, name, nickname, homepage)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
