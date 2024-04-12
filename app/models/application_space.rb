@@ -21,18 +21,18 @@ class ApplicationSpace < ApplicationRecord
   private
 
   def sync_created_space_to_starhub_server
-    res = Starhub.api.create_application_space(creator.name, name, owner.name, nickname, desc,
-                                               { license: license,
-                                                 private: application_space_private?,
-                                                 cover_image_url: cover_image,
-                                                 hardware: cloud_resource,
-                                                 sdk: sdk
-                                               })
+    res = Starhub.api(creator.session_ip).create_application_space(creator.name, name, owner.name, nickname, desc,
+                                                                   { license: license,
+                                                                     private: application_space_private?,
+                                                                     cover_image_url: cover_image,
+                                                                     hardware: cloud_resource,
+                                                                     sdk: sdk
+                                                                   })
     raise StarhubError, res.body unless res.success?
   end
 
   def update_starhub_server_application_space
-    res = Starhub.api.update_application_space(creator.name,
+    res = Starhub.api(creator.session_ip).update_application_space(creator.name,
                                                name,
                                                owner.name,
                                                nickname,
@@ -42,11 +42,11 @@ class ApplicationSpace < ApplicationRecord
   end
 
   def delete_application_space_from_starhub_server
-    res = Starhub.api.delete_application_space(owner.name, name, {current_user: creator.name})
+    res = Starhub.api(creator.session_ip).delete_application_space(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', name)
+    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', name)
   end
 end

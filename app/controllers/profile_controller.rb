@@ -5,10 +5,10 @@ class ProfileController < ApplicationController
     @user ||= User.find_by(login_identity: params[:user_id])
     return redirect_to errors_not_found_path unless @user
 
-    @models = Starhub.api.get_user_models(@user.name, current_user&.name)
-    @datasets = Starhub.api.get_user_datasets(@user.name, current_user&.name)
-    @spaces = Starhub.api.get_user_application_spaces(@user.name, current_user&.name)
-    @codes = Starhub.api.get_user_codes(@user.name, current_user&.name)
+    @models = csghub_api.get_user_models(@user.name, current_user&.name)
+    @datasets = csghub_api.get_user_datasets(@user.name, current_user&.name)
+    @spaces = csghub_api.get_user_application_spaces(@user.name, current_user&.name)
+    @codes = csghub_api.get_user_codes(@user.name, current_user&.name)
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
   end
