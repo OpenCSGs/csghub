@@ -25,7 +25,7 @@
         <div class="max-w-[916px] md:w-full">
           <video style="width: 100%" controls autoplay muted>
             <source
-              src="https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/EKBAI.mp4"
+              src="https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/ekb-in-1-minute.mp4"
               type="video/mp4"
             />
           </video>
