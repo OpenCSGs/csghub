@@ -149,7 +149,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   end
 
   def sync_update_membership(org, user, new_role, old_role)
-    res = Starhub.api.update_membership(org.name, current_user.name, new_role, old_role, user.name)
+    res = csghub_api.update_membership(org.name, current_user.name, new_role, old_role, user.name)
     raise StarhubError, res.body unless res.success?
   end
 
