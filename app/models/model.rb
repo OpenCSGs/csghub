@@ -59,32 +59,32 @@ class Model < ApplicationRecord
   private
 
   def sync_created_model_to_starhub_server
-    res = Starhub.api.create_model(creator.name,
-                                   name,
-                                   owner.name,
-                                   nickname,
-                                   desc,
-                                   { license: license,
-                                     private: model_private? })
+    res = Starhub.api(creator.session_ip).create_model(creator.name,
+                                                       name,
+                                                       owner.name,
+                                                       nickname,
+                                                       desc,
+                                                       { license: license,
+                                                         private: model_private? })
     raise StarhubError, res.body unless res.success?
   end
 
   def delete_model_from_starhub_server
-    res = Starhub.api.delete_model(owner.name, name, {current_user: creator.name})
+    res = Starhub.api(creator.session_ip).delete_model(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 
   def update_starhub_server_model
-    res = Starhub.api.update_model(creator.name,
-                                   name,
-                                   owner.name,
-                                   nickname,
-                                   desc,
-                                   { private: model_private? })
+    res = Starhub.api(creator.session_ip).update_model(creator.name,
+                                                       name,
+                                                       owner.name,
+                                                       nickname,
+                                                       desc,
+                                                       { private: model_private? })
     raise StarhubError, res.body unless res.success?
   end
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', name)
+    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', name)
   end
 end

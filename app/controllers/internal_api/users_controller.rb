@@ -22,23 +22,23 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   end
 
   def models
-    render json: Starhub.api.get_user_models(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_user_models(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def datasets
-    render json: Starhub.api.get_user_datasets(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_user_datasets(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def spaces
-    render json: Starhub.api.get_user_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_user_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def codes
-    render json: Starhub.api.get_user_codes(params[:namespace], current_user&.name, { per: params[:per] })
+    render json: csghub_api.get_user_codes(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
   def jwt_token
-    res = Starhub.api.get_jwt_token(current_user.name)
+    res = csghub_api.get_jwt_token(current_user.name)
     token = JSON.parse(res)['data']['token']
     expire_time = JSON.parse(res)['data']['expire_at']
     cookies['user_token'] = token
