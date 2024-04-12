@@ -21,7 +21,8 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def files
     last_commit, files = csghub_api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
-    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
+    last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
+    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
   end
 
   def readme
