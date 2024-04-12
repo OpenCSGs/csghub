@@ -13,13 +13,9 @@ module TagListHelper
     end
     @task_tags = response.as_json
     @framework_tags = Tag.where(tag_type: 'framework').as_json
+    @language_tags = Tag.where(tag_type: 'language').as_json
     @license_tags = Tag.where(tag_type: 'license').order(weight: :asc).as_json
 
-    @language_tags = Tag.where(tag_type: 'language').as_json
-    Tag::LANGUAGE_TAG_LABEL.each do |language|
-      language_tag = @language_tags.find { |language_tag| language_tag[:name] == language[:name] }
-      language_tag[:label] = language[:label] if language_tag
-    end
     # debugger
   end
 

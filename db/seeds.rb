@@ -148,7 +148,7 @@ end
   ['Italian', '意大利文', 'it'],
   ['Portuguese', '葡萄牙文', 'pt'],
   ['Arabic', '阿拉伯文', 'ar'],
-  ['Hindi', '北印度文', 'hi'],
+  ['Hindi', '印度文', 'hi'],
   ['Turkish', '土耳其文', 'tr'],
   ['Dutch', '荷兰语', 'nl'],
   ['Polish', '波兰文', 'pl'],
