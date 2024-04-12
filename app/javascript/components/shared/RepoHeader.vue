@@ -63,7 +63,7 @@
   const props = defineProps({
     avatar: String,
     name: String,
-    nickname: String,
+    nickname: {type: String, default: ''},
     desc: String,
     path: String,
     license: String,
