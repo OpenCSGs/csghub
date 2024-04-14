@@ -26,7 +26,19 @@ class OrganizationPolicy < ApplicationPolicy
   def destroy?
     user.super_user?
   end
-  
+
+  def members?
+    user.org_role(record)
+  end
+
+  def update_member?
+    user.org_role(record) == 'admin'
+  end
+
+  def remove_member?
+    update_member?
+  end
+
   private
 
   class Scope < Scope
