@@ -146,7 +146,7 @@ import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import useRepoDetailStore from '../../stores/RepoDetailStore'
-import { mapState, mapActions } from 'pinia'
+import { mapState, mapWritableState, mapActions } from 'pinia'
 
 export default {
   props: {
@@ -169,8 +169,14 @@ export default {
   },
   computed: {
     ...mapState(useRepoDetailStore, ['isPrivate']),
-    visibilityName() {
-      return this.isPrivate ? 'Private' : 'Public'
+    ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    visibilityName: {
+      get() {
+        return !!this.privateVisibility ? 'Private' : 'Public'
+      },
+      set(newValue) {
+        this.privateVisibility = newValue === 'Private'
+      }
     }
   },
   mounted() {

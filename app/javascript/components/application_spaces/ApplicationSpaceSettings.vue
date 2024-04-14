@@ -244,7 +244,7 @@ import csrfFetch from "../../packs/csrfFetch"
 import { useCookies } from "vue3-cookies"
 import refreshJWT from '../../packs/refreshJWT.js'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
-import { mapState, mapActions } from 'pinia'
+import { mapState, mapWritableState, mapActions } from 'pinia'
 
 export default {
   props: {
@@ -287,12 +287,18 @@ export default {
 
   computed: {
     ...mapState(useRepoDetailStore, ['isPrivate']),
+    ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    visibilityName: {
+      get() {
+        return !!this.privateVisibility ? 'Private' : 'Public'
+      },
+      set(newValue) {
+        this.privateVisibility = newValue === 'Private'
+      }
+    },
     isSpaceStopped() {
       return this.appStatus === 'Stopped' ? true : false
     },
-    visibilityName() {
-      return this.isPrivate ? 'Private' : 'Public'
-    }
   },
 
   emits: ['showSpaceLogs'],

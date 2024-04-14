@@ -213,8 +213,14 @@ export default {
   },
   computed: {
     ...mapState(useRepoDetailStore, ['isPrivate']),
-    visibilityName() {
-      return this.isPrivate ? 'Private' : 'Public'
+    ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    visibilityName: {
+      get() {
+        return !!this.privateVisibility ? 'Private' : 'Public'
+      },
+      set(newValue) {
+        this.privateVisibility = newValue === 'Private'
+      }
     }
   },
   mounted() {
