@@ -7,25 +7,25 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   include Api::RepoValidation
 
   def index
-    res_body = Starhub.api.get_datasets(current_user&.name,
-                                        params[:search],
-                                        params[:sort],
-                                        params[:task_tag],
-                                        params[:framework_tag],
-                                        params[:license_tag],
-                                        params[:page],
-                                        params[:per_page])
+    res_body = csghub_api.get_datasets(current_user&.name,
+                                              params[:search],
+                                              params[:sort],
+                                              params[:task_tag],
+                                              params[:framework_tag],
+                                              params[:license_tag],
+                                              params[:page],
+                                              params[:per_page])
     api_response = JSON.parse(res_body)
     render json: { datasets: api_response['data'], total: api_response['total'] }
   end
 
   def files
-    last_commit, files = Starhub.api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+    last_commit, files = csghub_api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
   end
 
   def readme
-    readme = Starhub.api.get_dataset_file_content(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
+    readme = csghub_api.get_dataset_file_content(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'dataset', readme_content
     render json: { readme: readme_content }
@@ -89,7 +89,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     tags = params[:tags]
 
     # 更新 README 元数据中的 tags
-    blob =  Starhub.api.get_dataset_blob(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
+    blob =  csghub_api.get_dataset_blob(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
     content =JSON.parse(blob).dig("data", "content")
     metadata_data = Base64.decode64(content)
     metadata_hash = YAML.safe_load(Base64.decode64(content))
@@ -136,12 +136,12 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def preview_parquet
-    json_data = Starhub.api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path] })
+    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path] })
     parquet_file_path = JSON.parse(json_data)['data']
                             .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
                             .sort_by { |path| path.downcase }.first
     if parquet_file_path
-      preview_data = Starhub.api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path)
+      preview_data = csghub_api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path)
       render json: preview_data
     else
       render json: {}
