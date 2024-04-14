@@ -1,6 +1,8 @@
 <template>
   <GradioInitializeGuide :http-clone-url="httpCloneUrl"
-                         :ssh-clone-url="sshCloneUrl" />
+                         :ssh-clone-url="sshCloneUrl"
+                         :user-name="userName"
+                         :user-token="userToken" />
 </template>
 
 <script setup>
@@ -9,6 +11,8 @@
   const props = defineProps({
     httpCloneUrl: String,
     sshCloneUrl: String,
-    sdk: String
+    sdk: String,
+    userName: String,
+    userToken: String
   })
 </script>
