@@ -8,7 +8,7 @@ class SettingsController < ApplicationController
   end
 
   def ssh_keys
-    res = Starhub.api.get_ssh_key(current_user.name)
+    res = csghub_api.get_ssh_key(current_user.name)
     raise StarhubError, res.body unless res.success?
     @ssh_keys = JSON.parse(res.body)["data"]
   end
