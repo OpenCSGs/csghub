@@ -24,7 +24,7 @@ class LandingPageController < ApplicationController
     system_config = SystemConfig.first
     hot_models = system_config.hot_models rescue []
     return [] if hot_models.blank?
-    res = Starhub.api.models_by_paths hot_models
+    res = csghub_api.models_by_paths hot_models
     JSON.parse(res)['data'] || []
   rescue StarhubError
     []
@@ -34,7 +34,7 @@ class LandingPageController < ApplicationController
     system_config = SystemConfig.first
     hot_datasets = system_config.hot_datasets rescue []
     return [] if hot_datasets.blank?
-    res = Starhub.api.datasets_by_paths hot_datasets
+    res = csghub_api.datasets_by_paths hot_datasets
     JSON.parse(res)['data'] || []
   rescue StarhubError
     []
@@ -44,7 +44,7 @@ class LandingPageController < ApplicationController
     system_config = SystemConfig.first
     hot_spaces = system_config.hot_spaces rescue []
     return [] if hot_spaces.blank?
-    res = Starhub.api.spaces_by_paths hot_spaces
+    res = csghub_api.spaces_by_paths hot_spaces
     JSON.parse(res)['data'] || []
   rescue StarhubError
     []

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_08_070307) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_10_123737) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -349,6 +349,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_08_070307) do
     t.string "wechat_id"
     t.string "github_id"
     t.string "gitlab_id"
+    t.string "session_ip", default: ""
     t.index ["login_identity"], name: "index_users_on_login_identity", unique: true
   end
 
