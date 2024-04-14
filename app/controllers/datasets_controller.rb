@@ -36,7 +36,7 @@ class DatasetsController < ApplicationController
   def resolve
     if params[:download] == 'true'
       if params[:lfs] == 'true'
-        file_url = Starhub.api.download_dataset_file(params[:namespace],
+        file_url = csghub_api.download_dataset_file(params[:namespace],
                                                       params[:dataset_name],
                                                       params[:lfs_path],
                                                       { ref: @current_branch,
@@ -45,7 +45,7 @@ class DatasetsController < ApplicationController
                                                         current_user: current_user&.name })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
       else
-        file = Starhub.api.download_dataset_file(params[:namespace],
+        file = csghub_api.download_dataset_file(params[:namespace],
                                                   params[:dataset_name],
                                                   @current_path,
                                                   { ref: @current_branch,
@@ -55,14 +55,14 @@ class DatasetsController < ApplicationController
     else
       content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
       if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? params[:format]
-        result = Starhub.api.download_dataset_resolve_file(params[:namespace],
+        result = csghub_api.download_dataset_resolve_file(params[:namespace],
                                                             params[:dataset_name],
                                                             @current_path,
                                                             { ref: @current_branch,
                                                               current_user: current_user&.name })
         send_data result, type: content_type, disposition: 'inline'
       else
-        result = Starhub.api.get_dataset_file_content(params[:namespace],
+        result = csghub_api.get_dataset_file_content(params[:namespace],
                                                       params[:dataset_name],
                                                       @current_path,
                                                       { ref: @current_branch,
@@ -90,10 +90,10 @@ class DatasetsController < ApplicationController
     return if action_name == 'blob' && params[:download] == 'true'
 
     if action_name == 'blob' || action_name == 'edit_file'
-      @dataset, @last_commit, @branches, @blob = Starhub.api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+      @dataset, @last_commit, @branches, @blob = csghub_api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
       update_blob_content('dataset')
     else
-      @dataset, @branches = Starhub.api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
+      @dataset, @branches = csghub_api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
 
     @tags_list = Tag.where(scope: 'dataset', tag_type: 'task').as_json
