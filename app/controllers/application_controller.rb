@@ -163,4 +163,10 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def csghub_api
+    Starhub.api(request.remote_ip)
+  end
+
+  helper_method :csghub_api
 end
