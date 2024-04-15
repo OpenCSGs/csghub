@@ -22,7 +22,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="deleteDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyId)">
+        <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyName)">
           {{ $t('all.confirm') }}
         </el-button>
       </span>
@@ -70,12 +70,12 @@ export default {
   },
 
   methods: {
-    async confirmDeleteSshKey(theSshKeyId) {
+    async confirmDeleteSshKey(theSshKeyName) {
       this.deleteDialogVisible = false
 
       const option = { method: 'DELETE' }
 
-      const response = await csrfFetch(`/internal_api/ssh_keys/${theSshKeyId}`, option)
+      const response = await csrfFetch(`/internal_api/ssh_keys/${theSshKeyName}`, option)
 
       if (!response.ok) {
         return response.json().then((data) => {
