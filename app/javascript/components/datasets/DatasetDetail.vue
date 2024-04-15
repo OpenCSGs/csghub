@@ -36,31 +36,34 @@
 </template>
 
 <script setup>
-import RepoHeader from '../shared/RepoHeader.vue';
-import RepoTabs from '../shared/RepoTabs.vue'
+  import RepoHeader from '../shared/RepoHeader.vue';
+  import RepoTabs from '../shared/RepoTabs.vue'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
-const props = defineProps({
-  dataset: Object,
-  files: Object,
-  lastCommit: Object,
-  branches: Object,
-  localRepoId: String,
-  currentBranch: String,
-  currentPath: String,
-  defaultTab: String,
-  blob: Object,
-  actionName: String,
-  avatar: String,
-  settingsVisibility: Boolean,
-  tags: Object,
-  tagList: Object,
-  ownerUrl: String,
-  canWrite: Boolean
-})
+  const props = defineProps({
+    dataset: Object,
+    files: Object,
+    lastCommit: Object,
+    branches: Object,
+    localRepoId: String,
+    currentBranch: String,
+    currentPath: String,
+    defaultTab: String,
+    blob: Object,
+    actionName: String,
+    avatar: String,
+    settingsVisibility: Boolean,
+    tags: Object,
+    tagList: Object,
+    ownerUrl: String,
+    canWrite: Boolean
+  })
+  const repoDetailStore = useRepoDetailStore()
+  repoDetailStore.initialize(props.dataset.data)
 </script>
 
 <style scoped>
-body {
-  background: #fff !important;
-}
+  body {
+    background: #fff !important;
+  }
 </style>
