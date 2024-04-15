@@ -12,8 +12,8 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                         params[:sort],
                                         params[:task_tag],
                                         params[:framework_tag],
-                                        params[:license_tag],
                                         params[:language_tag],
+                                        params[:license_tag],
                                         params[:page],
                                         params[:per_page])
     api_response = JSON.parse(res_body)
