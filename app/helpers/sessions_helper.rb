@@ -4,6 +4,7 @@ module SessionsHelper
     cookies[:login_identity] = user.login_identity
     cookies[:user_synced] = user.starhub_synced
     setup_jwt_token(user.name) if user.starhub_synced?
+    user.update_column('session_ip', request.remote_ip)
   end
 
   def current_user
@@ -24,9 +25,9 @@ module SessionsHelper
 
   def logout
     session[:login_identity] = nil
-    cookies.delete :oidcUuid, domain: current_cookie_domain
-    cookies.delete :idToken, domain: current_cookie_domain
-    cookies.delete :userinfos, domain: current_cookie_domain
+    cookies.delete :oidcUuid
+    cookies.delete :idToken
+    cookies.delete :userinfos
     cookies.delete :login_identity
     cookies.delete :user_synced
     cookies.delete :user_token
@@ -44,11 +45,10 @@ module SessionsHelper
   end
 
   def setup_jwt_token username
-    res = Starhub.api.get_jwt_token(username)
+    res = csghub_api.get_jwt_token(username)
     token = JSON.parse(res)['data']['token']
     expire_time = JSON.parse(res)['data']['expire_at']
-    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
-    cookies['user_token'] = {value: token, domain: current_domain}
+    cookies['user_token'] = token
     cookies['token_expire_at'] = expire_time
   end
 end

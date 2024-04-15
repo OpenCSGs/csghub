@@ -10,7 +10,7 @@ class Code < ApplicationRecord
   after_update :update_starhub_server_code
   before_save :detect_sensitive_content
 
-  validates :name, format: { with: /\A(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+\Z/ }
+  validates :name, format: { with: NAME_RULE }
 
   validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }
 
@@ -34,32 +34,32 @@ class Code < ApplicationRecord
   private
 
   def sync_created_code_to_starhub_server
-    res = Starhub.api.create_code(creator.name,
-                                  name,
-                                  owner.name,
-                                  nickname,
-                                  desc,
-                                  { license: license,
-                                    private: code_private? })
+    res = Starhub.api(creator.session_ip).create_code(creator.name,
+                                                      name,
+                                                      owner.name,
+                                                      nickname,
+                                                      desc,
+                                                      { license: license,
+                                                        private: code_private? })
     raise StarhubError, res.body unless res.success?
   end
 
   def delete_code_from_starhub_server
-    res = Starhub.api.delete_code(owner.name, name, { current_user: owner.name })
+    res = Starhub.api(creator.session_ip).delete_code(owner.name, name, { current_user: owner.name })
     raise StarhubError, res.body unless res.success?
   end
 
   def update_starhub_server_code
-    res = Starhub.api.update_code(creator.name,
-                                   name,
-                                   owner.name,
-                                   nickname,
-                                   desc,
-                                   { private: code_private? })
+    res = Starhub.api(creator.session_ip).update_code(creator.name,
+                                                      name,
+                                                      owner.name,
+                                                      nickname,
+                                                      desc,
+                                                      { private: code_private? })
     raise StarhubError, res.body unless res.success?
   end
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', name)
+    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', name)
   end
 end

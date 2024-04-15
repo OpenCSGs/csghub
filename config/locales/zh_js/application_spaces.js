@@ -27,7 +27,8 @@ export const application_spaces = {
     dependencyNotes2: '如果需要，也可以在版本库根目录下添加 packages.txt 文件，指定 Debian 依赖项。',
     dependencyNotes3: 'Gradio 软件包已预装，其版本在 README.md 文件的 sdk_version 字段中设置。',
     docNotesTitle: '关于文档：',
-    docNotes1: '点击此处查看 gradio Spaces 的完整文档'
+    docNotes1: '点击此处查看 gradio Spaces 的完整文档',
+    useToken: '使用我的 token'
   },
   errorPage: {
     log: '日志',

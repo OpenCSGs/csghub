@@ -128,12 +128,13 @@
 </style>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
+  const nameRule = inject('nameRule')
 
   const props = defineProps({
     licenses: Array,
@@ -147,7 +148,7 @@
   const codeDesc = ref('')
   const visibility = ref('private')
 
-  const canCreateCode = computed(() => { return /^(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+$/.test(codeName.value) })
+  const canCreateCode = computed(() => { return nameRule.test(codeName.value) })
 
   const createCode = async () => {
     try {
