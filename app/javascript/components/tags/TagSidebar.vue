@@ -54,7 +54,7 @@
           :prefix-icon="Search"
           @input = "filterFrameworkTags"
         />
-        <div class="flex gap-[8px] flex-wrap grayscale">
+        <div class="flex gap-[8px] flex-wrap">
           <PyTorch v-show="frameworkTagExist('PyTorch')"
                  @setActiveFrameworkTag="setActiveFrameworkTag"
                  :activeTag="activeFrameworkTag" />

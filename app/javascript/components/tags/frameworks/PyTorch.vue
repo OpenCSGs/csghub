@@ -3,7 +3,7 @@
         :style="setTagColor()"
         @click="toggleActive"
   >
-    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+    <svg class="grayscale" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
       <mask id="mask0_3946_95937" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="0" width="10" height="12">
         <path d="M10.7925 0.1875H1.1438V11.8125H10.7925V0.1875Z" fill="white"/>
       </mask>
