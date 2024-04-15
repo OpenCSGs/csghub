@@ -4,7 +4,7 @@ export const footer = {
   "docs": "Document",
   "join": "Join us",
   "contact": "Contact us",
-  "policy": "Legal statement and Privacy",
+  "policy": "User Agreement & Privacy Policy",
   "illegal": "Reporting center",
   "police": "Beijing public network security 11011202004415",
   "company": "Company Introduction",
@@ -15,5 +15,7 @@ export const footer = {
   "cookies": "Cookies Policy",
   "publish": "©Copyright 2023 OpenCSG.com",
   "ICP": "Beijing ICPB 2023006263-1",
-  "wx": "WeChat Official Account"
+  "wx": "WeChat Official Account",
+  "follow":"Follow OpenCSG",
+  "followText":"Follow the OpenCSG official account to stay updated with real-time information."
 }
