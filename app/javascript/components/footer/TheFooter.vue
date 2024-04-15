@@ -41,7 +41,9 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><g clip-path="url(#clip0_9912_14616)"><path d="M1.16663 7.00008H12.8333M1.16663 7.00008C1.16663 10.2217 3.7783 12.8334 6.99996 12.8334M1.16663 7.00008C1.16663 3.77842 3.7783 1.16675 6.99996 1.16675M12.8333 7.00008C12.8333 10.2217 10.2216 12.8334 6.99996 12.8334M12.8333 7.00008C12.8333 3.77842 10.2216 1.16675 6.99996 1.16675M6.99996 1.16675C8.45904 2.76412 9.28823 4.8371 9.33329 7.00008C9.28823 9.16306 8.45904 11.236 6.99996 12.8334M6.99996 1.16675C5.54088 2.76412 4.71169 4.8371 4.66663 7.00008C4.71169 9.16306 5.54088 11.236 6.99996 12.8334" stroke="#475467" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_9912_14616"><rect width="14" height="14" fill="white"/></clipPath></defs></svg>
                 <span class="ml-1">{{ this.$i18n.locale === 'zh' ? '中文' : 'EN' }}</span>
                 <el-icon class="el-icon--right">
-                  <arrow-down />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M4.08337 8.74992L7.00004 11.6666L9.91671 8.74992M4.08337 5.24992L7.00004 2.33325L9.91671 5.24992" stroke="#475467" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </el-icon>
               </span>
               <template #dropdown>
