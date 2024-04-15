@@ -129,6 +129,13 @@ module Starhub
       @client.post("/user/#{username}/ssh_keys", options)
     end
 
+    def get_ssh_key(username)
+      options = {
+        username: username
+      }
+      @client.get("/user/#{username}/ssh_keys", options)
+    end
+
     def delete_ssh_key(username, key_name)
       options = {
         username: username,
