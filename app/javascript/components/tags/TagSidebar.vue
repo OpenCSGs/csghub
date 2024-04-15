@@ -54,7 +54,7 @@
           :prefix-icon="Search"
           @input = "filterFrameworkTags"
         />
-        <div class="flex gap-[8px] flex-wrap black-svg">
+        <div class="flex gap-[8px] flex-wrap grayscale">
           <PyTorch v-show="frameworkTagExist('PyTorch')"
                  @setActiveFrameworkTag="setActiveFrameworkTag"
                  :activeTag="activeFrameworkTag" />
@@ -293,8 +293,5 @@
   .active-type {
     box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
     border-radius: 6px;
-  }
-  .black-svg {
-    filter: grayscale(100%);
   }
 </style>
