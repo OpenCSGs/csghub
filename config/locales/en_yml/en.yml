@@ -36,6 +36,7 @@ en:
   logout: 'Logout'
 
   repo:
+    delSuccess: "Delete Success"
     delFailed: "Delete Failed"
     updateSuccess: "Update Success"
     updateFailed: "Update Failed"
