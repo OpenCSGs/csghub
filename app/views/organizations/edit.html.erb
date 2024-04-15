@@ -1,4 +1,7 @@
-<div class="bg-white border-t border-b border-[#EAECF0]">
-  <organization-settings :organization="<%= @organization.to_json %>">
+<div class="bg-white border-t border-[#EAECF0]">
+  <organization-settings
+    :organization="<%= @organization.to_json %>"
+    action="edit"
+  >
   </organization-settings>
 </div>

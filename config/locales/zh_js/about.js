@@ -3,31 +3,8 @@ export const about = {
     "headTitle": "让大模型赋能每个人",
     "headDesc": "大模型驱动全民，推动技术加速创新。",
   },
-  "feature": {
-    "Integration": "整合",
-    "IntegrationText": "通过运用自然语言实现混合云资源的整合利用，自然语言处理技术能够简化工作流程，降低IT基础设施成本同时提高团队之间的协作效率",
-    "Governance": "治理",
-    "GovernanceText": "使大模型更易于使用，为垂直行业定制解决方案，使得每个公司及个人都能够拥有自己的大模型",
-    "Empowerment": "赋能",
-    "EmpowermentText": "通过利用自然语言发挥大模型的潜力从而彻底改变软件开发的方式，赋能每个人设计、创建、实施、并快速集成软件产品到现有系统；"
-  },
-  "team": {
-    "Introduction": "团队介绍",
-    "Sam": "陈冉（Sam Chen）",
-    "Founder": "创始人 | CEO",
-    "WangWei": "王伟（Wei Wang）",
-    "CoFounderCTO": "联合创始人 | CTO",
-    "JiaQing": "张家庆（Jiaqing Zhang）",
-    "CoFounderCMO": "联合创始人 | CMO",
-  },
   "joinus": {
     "JoinUS": "加入我们",
-    "WorkPlace": "工作地点",
-    "JobResponsibilities": "岗位职责",
-    "JobRequirements": "岗位要求",
-    "Remuneration": "薪酬待遇",
-    "WaysToSubmitResume": "投递方式",
-    "WaysEmail": "投递地址",
   },
   "company": {
     "ContactUs": "联系我们",
@@ -46,8 +23,10 @@ export const about = {
     "timestamp5": "2024年3月",
     "content1": "在上海成立上海传之神科技有限公司，成立上海公司，且入驻上海徐汇模速空间",
     "content2": "OpenCSG 首次发布 StarNet（星展）大模型平台及“传神” 开放创新生态社区",
-    "content3": "OpenCSG 发布 StarNet（星展）Beta 版 加快形成新质生产力，同月，推出一个旨在解决大模型资产治理难题的开源项目",
-    "content4": "OpenCSG 在 GitLab 上推出开源大模型",
-    "content5": "OpenCSG 再次在 GitLab 上上线开源大模型推理项目",
+    "content3-1": "OpenCSG 发布 StarNet（星展）Beta 版，加快形成新质生产力",
+    "content3-2": "OpenCSG 推出开源、可信的大模型资产管理平台 CSGHub",
+    "content4-1": "OpenCSG 推出高效部署LLM推理服务的开源框架 llm-inference",
+    "content4-2": "OpenCSG 推出开源代码大模型 opencsg-starcoder, opencsg-codellama",
+    "content5": "OpenCSG 推出用于 LLM 训练及微调的开源框架 llm-finetune",
   }
 }

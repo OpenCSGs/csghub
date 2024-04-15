@@ -47,7 +47,8 @@ import OrganizationSettings from "./components/organizations/OrganizationSetting
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
-import About from "./components/about/About.vue"
+import Hero from "./components/about/Hero.vue"
+import Company from "./components/about/Company.vue"
 import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import ComputingPage from "./components/computing/ComputingPage.vue"
 import LandingPage from "./components/landing_page/LandingPage.vue"
@@ -96,7 +97,8 @@ const app = createApp({
     OrganizationDetail,
     SolutionPage,
     ProductPage,
-    About,
+    Hero,
+    Company,
     OnPremiseFooter,
     ComputingPage,
     LandingPage,
@@ -116,7 +118,8 @@ const app = createApp({
   },
   provide:{
     defaultTags: DefaultTags,
-    csghubServer: csghubServer
+    csghubServer: CsghubServer,
+    nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
   }
 }).use(ElementPlus, {
   locale: zhCn,
