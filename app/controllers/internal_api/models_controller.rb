@@ -21,12 +21,13 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def files
-    last_commit, files = Starhub.api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
-    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'] }
+    last_commit, files = csghub_api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
+    last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
+    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
   end
 
   def readme
-    readme = Starhub.api.get_model_file_content(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
+    readme = csghub_api.get_model_file_content(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
     readme_content = JSON.parse(readme)['data']
     readme_content = relative_path_to_resolve_path 'model', readme_content
     render json: { readme: readme_content }
@@ -81,7 +82,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     tags = params[:tags]
 
     # # 更新 README 元数据中的 tags
-    blob =  Starhub.api.get_model_blob(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
+    blob =  csghub_api.get_model_blob(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
     content =JSON.parse(blob).dig("data", "content")
     metadata_data = Base64.decode64(content)
     metadata_hash = YAML.safe_load(Base64.decode64(content))
@@ -139,7 +140,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def predict
-    res = Starhub.api.model_predict(params[:namespace], params[:model_name], current_user&.name, params[:input], params[:current_branch])
+    res = csghub_api.model_predict(params[:namespace], params[:model_name], current_user&.name, params[:input], params[:current_branch])
     render json: { message: I18n.t('models.predict_success'), result: JSON.parse(res)['data']['content'] }
   end
 
