@@ -133,5 +133,9 @@ module Starhub
     def upload_repo_file(repo_type, namespace, repo_name, options = {})
       @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file", options)
     end
+
+    def related_repos(repo_type, namespace, repo_name, options)
+      @client.get("/#{repo_type}/#{namespace}/#{repo_name}/relations", options)
+    end
   end
 end

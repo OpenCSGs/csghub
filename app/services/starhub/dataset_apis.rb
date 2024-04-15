@@ -74,5 +74,9 @@ module Starhub
     def upload_dataset_file(namespace, dataset_name, options = {})
       upload_repo_file('datasets', namespace, dataset_name, options)
     end
+
+    def related_repos(namespace, code_name, options = {})
+      related_repos('datasets', namespace, code_name, options)
+    end
   end
 end
