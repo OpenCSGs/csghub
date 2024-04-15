@@ -49,7 +49,6 @@ module Starhub
       url += "&language_tag=#{language_tag}" if language_tag.present?
       url += "&license_tag=#{license_tag}" if license_tag.present?
       res = @client.get(url)
-      # debugger
       raise StarhubError, res.body unless res.success?
       res.body
     end
