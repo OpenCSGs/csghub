@@ -30,6 +30,8 @@
       :can-write="canWrite"
       :tags="tags"
       :tag-list="tagList"
+      :userName="userName"
+      :userToken="userToken"
       repo-type="model"
     />
   </div>
@@ -55,7 +57,9 @@ const props = defineProps({
   settingsVisibility: Boolean,
   avatar: String,
   ownerUrl: String,
-  canWrite: Boolean
+  canWrite: Boolean,
+  userName: String,
+  userToken: String
 })
 </script>
 <style scoped>

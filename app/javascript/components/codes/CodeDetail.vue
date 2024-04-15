@@ -28,6 +28,8 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      :userName="userName"
+      :userToken="userToken"
       repo-type="code"
     />
   </div>
@@ -51,7 +53,9 @@ const props = defineProps({
   settingsVisibility: Boolean,
   avatar: String,
   ownerUrl: String,
-  canWrite: Boolean
+  canWrite: Boolean,
+  userName: String,
+  userToken: String
 })
 </script>
 

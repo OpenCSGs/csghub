@@ -22,8 +22,12 @@
       <el-tabs v-model="activeCloneType" class="border border-[#EBEEF5] mb-8 clone-tabs">
         <el-tab-pane label="HTTPS" name="https">
           <div class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all">
+            <div class="my-[4px]">
+              <el-checkbox v-model="useToken" :label="$t('application_spaces.gradioGuide.useToken')" size="large" />
+            </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips')}}</div>
-            <markdown-viewer :content="httpsCloneCodeMarkdown"></markdown-viewer>
+            <markdown-viewer v-if="useToken" :content="httpsCloneCodeWithTokenMarkdown"></markdown-viewer>
+            <markdown-viewer v-else :content="httpsCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2')}}</div>
             <markdown-viewer :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"></markdown-viewer>
           </div>
@@ -48,11 +52,14 @@ import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
 const props = defineProps({
   httpCloneUrl: String,
   sshCloneUrl: String,
-  repoType: String
+  repoType: String,
+  userName: String,
+  userToken: String
 })
 
 const activeCloneType = ref('https')
 const cloneRepositoryVisible = ref(false)
+const useToken = ref(false)
 
 const getMarkdownCode = (code, lang, multiline = false) => {
   return `\`\`\`${lang}${multiline ? '' : '\n'}${code}${multiline ? '' : '\n'}\`\`\``
@@ -63,8 +70,17 @@ const httpsCloneCode = `
   git clone ${props.httpCloneUrl}
 `
 
+const httpsCloneCodeWithToken = `
+  git lfs install
+  git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}
+`
+
 const httpsCloneCodeMarkdown = computed(() => {
   return getMarkdownCode(httpsCloneCode, 'bash', true)
+})
+
+const httpsCloneCodeWithTokenMarkdown = computed(() => {
+  return getMarkdownCode(httpsCloneCodeWithToken, 'bash', true)
 })
 
 const sshCloneCode = `
