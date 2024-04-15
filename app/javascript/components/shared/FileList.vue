@@ -168,7 +168,7 @@
   const breadcrumb = ref([])
   const files = ref([])
   const lastCommit = ref({})
-  const lastCommitAvatar = ref('')
+  const lastCommitAvatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
   const prefixPath = document.location.pathname.split('/')[1]
 
   const extractNameFromPath = (path) => {
@@ -235,7 +235,9 @@
       response.json().then((data) => {
         files.value = data.files
         lastCommit.value = data.last_commit
-        lastCommitAvatar.value = data.last_commit_user.avatar ? data.last_commit_user.avatar : ''
+        if (data.last_commit_user && data.last_commit_user.avatar) {
+          lastCommitAvatar.value = data.last_commit_user.avatar
+        }
       }).catch((error) => {
         ElMessage({
           message: t('all.loadError'),
