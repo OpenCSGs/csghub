@@ -11,6 +11,16 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
+      <a href="#">
+        <div 
+          class="flex gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+          :class="showCollect === false ? 'text-gray-400 border-gray-200': ''"
+          @click="showCollect = false"
+          >
+            收藏
+            <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">5</div>
+        </div>
+      </a>
     </div>
 
     <div v-else
@@ -52,6 +62,7 @@
   import HeaderTags from '../shared/HeaderTags.vue'
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
+  import { ref } from 'vue'
 
   const emit = defineEmits(['toggleSpaceLogsDrawer']);
 
@@ -70,6 +81,8 @@
     spaceResource: String,
     canWrite: Boolean
   });
+
+  const showCollect = ref(true)
 
   const copyName = () => {
     copyToClipboard(props.path)
