@@ -75,13 +75,13 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('codes.edit.statusText')}}
-          <span class="text-black font-semibold">【{{ visibility=='Private' ? this.$t('all.private') : this.$t('all.public') }}】</span>
-          {{ $t('codes.edit.status')}}。{{ visibility=='Private' ? this.$t('codes.edit.privateVis') : this.$t('codes.edit.publicVis')}}
+          <span class="text-black font-semibold">【{{ isPrivate ? this.$t('all.private') : this.$t('all.public') }}】</span>
+          {{ $t('codes.edit.status')}}。{{ isPrivate ? this.$t('codes.edit.privateVis') : this.$t('codes.edit.publicVis')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <p class="text-[#344054] text-[14px]">{{ $t('codes.edit.codeVisibility')}}</p>
-        <el-select v-model="visibility"
+        <el-select v-model="visibilityName"
                    @change="changeVisibility"
                    placeholder="Select"
                    size="large"
@@ -145,19 +145,19 @@
 import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import useRepoDetailStore from '../../stores/RepoDetailStore'
+import { mapState, mapWritableState, mapActions } from 'pinia'
 
 export default {
   props: {
     path: String,
     codeNickname: String,
     codeDesc: String,
-    default_branch: String,
-    private: Boolean
+    default_branch: String
   },
   components: {},
   data() {
     return {
-      visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       codeName: this.path.split('/')[1],
       theCodeNickname: this.codeNickname || "",
@@ -167,9 +167,22 @@ export default {
         {value: 'Public', label:  this.$t('all.public')}]
     };
   },
+  computed: {
+    ...mapState(useRepoDetailStore, ['isPrivate']),
+    ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    visibilityName: {
+      get() {
+        return !!this.privateVisibility ? 'Private' : 'Public'
+      },
+      set(newValue) {
+        this.privateVisibility = newValue === 'Private'
+      }
+    }
+  },
   mounted() {
   },
   methods: {
+    ...mapActions(useRepoDetailStore, ['updateVisibility']),
     clickDelete() {
       if (this.delDesc === this.codePath) {
         this.deleteCode().catch((err) => {
@@ -204,8 +217,8 @@ export default {
         title: this.$t('codes.edit.changeVisibility'),
         message: h('p', null, [
           h('span', null, this.$t('all.changeVis')),
-          h('span', null, this.visibility=='Private'? this.$t('all.private') : this.$t('all.public')),
-          h('span', null, this.visibility=='Private'? this.$t('codes.edit.privateInfo') : this.$t('codes.edit.publicInfo'))
+          h('span', null, value === 'Private'? this.$t('all.private') : this.$t('all.public')),
+          h('span', null, value === 'Private'? this.$t('codes.edit.privateInfo') : this.$t('codes.edit.publicInfo'))
         ]),
         showCancelButton: true,
         confirmButtonText: this.$t('all.confirm'),
@@ -213,7 +226,6 @@ export default {
       }).then(() => {
         this.changeVisibilityCall(value)
       }).catch(() => {
-        this.visibility = this.visibility === 'Private' ? 'Public' : 'Private'
         ElMessage({
           type: 'warning',
           message: this.$t('all.changeCancel'),
@@ -222,8 +234,8 @@ export default {
     },
 
     changeVisibilityCall(value) {
-      const privateSelected = (value === 'Private') ? true : false
-      const payload = {private: privateSelected}
+      const isprivateSelected = (value === 'Private') ? true : false
+      const payload = {private: isprivateSelected}
       this.updateCode(payload)
     },
 
@@ -258,6 +270,7 @@ export default {
           ElMessage({ message: err.message, type: "warning" })
         })
       } else {
+        this.updateVisibility(payload.private)
         response.json().then((data) => {
           ElMessage({ message: data.message, type: "success" })
         })
