@@ -1,5 +1,5 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :predict]
+  before_action :authenticate_user, except: [:index, :files, :readme, :predict, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -19,8 +19,14 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     render json: { models: api_response['data'], total: api_response['total'] }
   end
 
+  def related_repos
+    res_body = csghub_api.model_related_repos(params[:namespace], params[:model_name], files_options)
+    api_response = JSON.parse(res_body)
+    render json: { relations: api_response['data']}
+  end
+
   def files
-    last_commit, files = csghub_api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
+  last_commit, files = csghub_api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
     last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
   end

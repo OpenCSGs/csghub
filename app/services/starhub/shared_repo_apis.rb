@@ -135,7 +135,9 @@ module Starhub
     end
 
     def related_repos(repo_type, namespace, repo_name, options)
-      @client.get("/#{repo_type}/#{namespace}/#{repo_name}/relations", options)
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/relations", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
   end
 end
