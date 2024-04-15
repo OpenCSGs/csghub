@@ -54,7 +54,7 @@
           :prefix-icon="Search"
           @input = "filterFrameworkTags"
         />
-        <div class="flex gap-[8px] flex-wrap">
+        <div class="flex gap-[8px] flex-wrap black-svg">
           <PyTorch v-show="frameworkTagExist('PyTorch')"
                  @setActiveFrameworkTag="setActiveFrameworkTag"
                  :activeTag="activeFrameworkTag" />
@@ -282,6 +282,8 @@
     if (props.type === 'code' || props.type === 'space') {
       activeNavItem.value = 'License'
       toggleTagType()
+    }else{
+      activeNavItem.value = 'Task'
     }
   })
 
@@ -291,5 +293,8 @@
   .active-type {
     box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
     border-radius: 6px;
+  }
+  .black-svg {
+    filter: grayscale(100%);
   }
 </style>
