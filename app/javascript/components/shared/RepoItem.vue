@@ -1,6 +1,6 @@
 <template>
   <a :href="detailLink"
-     :class="`${repoType}-card focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md hover:active-${repoType}-card p-4 sm:w-full border border-gray-200 rounded-xl`">
+     :class="`${repoType}-card focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 sm:w-full border border-gray-200 rounded-xl`">
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div :class="`${repoType}-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap`">{{ getComputed.path }}</div>
     </div>
