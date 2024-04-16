@@ -31,6 +31,16 @@
                           :namespacePath="namespacePath"
                           :codes="relations['codes']"
       />
+
+      <DatasetRelationsCard v-if="relations['datasets'] && relations['datasets'].length !== 0"
+                            :namespacePath="namespacePath"
+                            :datasets="relations['datasets']"
+      />
+
+      <ModelRelationsCard v-if="relations['models'] && relations['models'].length !== 0"
+                          :namespacePath="namespacePath"
+                          :models="relations['models']"
+      />
     </div>
   </div>
 </template>
@@ -42,6 +52,8 @@
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
   import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
+  import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
+  import ModelRelationsCard from '../models/ModelRelationsCard.vue';
 
   const props = defineProps({
     namespacePath: String,
