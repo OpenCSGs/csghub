@@ -282,6 +282,8 @@
     if (props.type === 'code' || props.type === 'space') {
       activeNavItem.value = 'License'
       toggleTagType()
+    }else{
+      activeNavItem.value = 'Task'
     }
   })
 
