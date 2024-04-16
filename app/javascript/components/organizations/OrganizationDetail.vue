@@ -43,6 +43,7 @@
           <InviteMember :org-name="organization.name"
                         @resetMemberList="resetMemberList"
                         :admin="admin"
+                        class="my-[16px]"
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
