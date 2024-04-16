@@ -11,13 +11,12 @@
       </markdown-viewer>
     </div>
     <div class="w-[40%] sm:w-[100%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="p-4">
+      <div class="p-[16px]">
         <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 
       <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
-                      class="border-t border-[#EBEEF5] p-4"
                       :namespacePath="namespacePath"
                       :currentBranch="currentBranch"
       />
