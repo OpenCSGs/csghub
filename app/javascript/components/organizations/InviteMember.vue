@@ -42,7 +42,7 @@
                      v-model="userNameInput"
                      @input="showUserList" />
             </div>
-            <div v-show="shouldShowUserList" class="rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <div v-show="shouldShowUserList" class="md:max-h-[110px] max-h-[210px] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
               <p v-for="user in userList"
                  @click="selectUser(user)"
                  class="flex gap-[8px] items-center cursor-pointer p-[10px]"
