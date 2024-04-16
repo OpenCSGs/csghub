@@ -26,7 +26,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def files
-  last_commit, files = csghub_api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
+    last_commit, files = csghub_api.get_model_detail_files_data_in_parallel(params[:namespace], params[:model_name], files_options)
     last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
   end
