@@ -3,7 +3,7 @@
       :style="setTagColor()"
       @click="toggleActive"
   >
-    <svg class="grayscale" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+    <svg class="grayscale" :style="setSvgColor()" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="#ffffff">
       <g clip-path="url(#clip0_3946_96047)">
         <mask id="mask0_3946_96047" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="6" y="0" width="6" height="12">
           <path d="M11.2246 3.02222L6.22461 0.17778V11.8667L8.22461 10.7111V7.42222L9.73572 8.28889L9.7135 6.04445L8.22461 5.17778V3.86667L11.2246 5.62222V3.02222Z" fill="white"/>
@@ -49,6 +49,11 @@
   const setTagColor = () => {
     if (props.activeTag?.toLowerCase() === 'tensorflow') {
       return "color: white; background-color: #4D6AD6"
+    }
+  }
+  const setSvgColor = () => {
+    if (props.activeTag?.toLowerCase() === 'tensorflow') {
+      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }
   onMounted(() => {
