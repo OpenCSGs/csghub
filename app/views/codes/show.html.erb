@@ -24,5 +24,7 @@
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!current_user&.can_write?(@local_code) %>"
+    user-name="<%= current_user&.name %>"
+    user-token="<%= current_user&.git_token %>"
   ></code-detail>
 </div>
