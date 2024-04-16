@@ -26,6 +26,11 @@
                           :namespacePath="namespacePath"
                           :spaces="relations['spaces']"
       />
+
+      <CodeRelationsCard v-if="relations['codes'] && relations['codes'].length !== 0"
+                          :namespacePath="namespacePath"
+                          :codes="relations['codes']"
+      />
     </div>
   </div>
 </template>
@@ -35,7 +40,8 @@
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
-  import SpaceRelationsCard from '../../components/application_spaces/SpaceRelationsCard.vue'
+  import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
+  import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
 
   const props = defineProps({
     namespacePath: String,
