@@ -30,6 +30,8 @@
       :can-write="canWrite"
       :tags="tags"
       :tag-list="tagList"
+      :userName="userName"
+      :userToken="userToken"
       repo-type="dataset"
     />
   </div>
@@ -56,7 +58,9 @@
     tags: Object,
     tagList: Object,
     ownerUrl: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    userName: String,
+    userToken: String
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.dataset.data)

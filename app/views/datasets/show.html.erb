@@ -15,6 +15,8 @@
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!current_user&.can_write?(@local_dataset) %>"
+    user-name="<%= current_user&.name %>"
+    user-token="<%= current_user&.git_token %>"
   >
   </dataset-detail>
 </div>
