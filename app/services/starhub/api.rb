@@ -8,8 +8,8 @@ module Starhub
     include ApplicationSpaceApis
     include CodeApis
 
-    def initialize
-      @client = Starhub::Client.instance
+    def initialize user_ip
+      @client = Starhub::Client.init_with user_ip
     end
 
     def create_user(name, nickname, email)
@@ -127,6 +127,13 @@ module Starhub
         content: content
       }
       @client.post("/user/#{username}/ssh_keys", options)
+    end
+
+    def get_ssh_key(username)
+      options = {
+        username: username
+      }
+      @client.get("/user/#{username}/ssh_keys", options)
     end
 
     def delete_ssh_key(username, key_name)

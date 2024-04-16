@@ -3,10 +3,10 @@ class InternalApi::GitTokenController < InternalApi::ApplicationController
 
   def refresh
     if current_user.git_token_name.present? && current_user.git_token.present?
-      Starhub.api.delete_git_token(current_user.name, current_user.git_token_name)
+      csghub_api.delete_git_token(current_user.name, current_user.git_token_name)
     end
     random_name = SecureRandom.uuid
-    res_body = Starhub.api.generate_git_token(current_user.name, random_name)
+    res_body = csghub_api.generate_git_token(current_user.name, random_name)
     res_json = JSON.parse(res_body)
     current_user.git_token_name = res_json["data"]["name"]
     current_user.git_token = res_json["data"]["token"]
