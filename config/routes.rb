@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update] do
       collection do
         put 'jwt_token', to: 'users/jwt_token'
+        post 'sms', to: 'users/sms'
       end
     end
     get '/users/:namespace/models', to: 'users#models'
