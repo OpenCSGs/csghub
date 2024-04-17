@@ -69,7 +69,7 @@
 
     <!-- 数据集标签 -->
     <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col"> 
+      <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           {{ $t('datasets.datasetTag')}}
         </div>
@@ -114,13 +114,13 @@
         </div>
         <div class="max-w-[864px] text-[14px] text-[#475467] leading-[20px]">
           {{ $t('datasets.edit.statusText')}}
-          <span class="text-black font-medium">【{{ visibility=='Private' ? this.$t('all.private') : this.$t('all.public') }}】</span>
-          {{ $t('datasets.edit.status')}}。{{ visibility=='Private' ? this.$t('datasets.edit.privateVis') : this.$t('datasets.edit.publicVis')}}
+          <span class="text-black font-medium">【{{ isPrivate ? this.$t('all.private') : this.$t('all.public') }}】</span>
+          {{ $t('datasets.edit.status')}}。{{ isPrivate ? this.$t('datasets.edit.privateVis') : this.$t('datasets.edit.publicVis')}}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <p class="text-[14px] text-[#475467]">{{ $t('datasets.edit.datasetVisibility')}}</p>
-        <el-select v-model="visibility"
+        <el-select v-model="visibilityName"
                    @change="changeVisibility"
                    placeholder="Select"
                    size="large"
@@ -185,6 +185,8 @@
 import {h} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import useRepoDetailStore from '../../stores/RepoDetailStore'
+import { mapState, mapWritableState } from 'pinia'
 
 export default {
   props: {
@@ -193,8 +195,7 @@ export default {
     datasetDesc: String,
     default_branch: String,
     tagList: Object,
-    tags: Object,
-    private: Boolean
+    tags: Object
   },
   components: {},
   data() {
@@ -203,7 +204,6 @@ export default {
       selectedTags:[],
       shouldShowTagList:false,
       tagInput:'',
-      visibility: this.private ? 'Private' : 'Public',
       delDesc: '',
       datasetName: this.path.split('/')[1],
       theDatasetNickname: this.datasetNickname || "",
@@ -212,6 +212,18 @@ export default {
       options: [{value: 'Private', label: this.$t('all.private')},
         {value: 'Public', label: this.$t('all.public')}]
     };
+  },
+  computed: {
+    ...mapState(useRepoDetailStore, ['isPrivate']),
+    ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    visibilityName: {
+      get() {
+        return !!this.privateVisibility ? 'Private' : 'Public'
+      },
+      set(newValue) {
+        this.privateVisibility = newValue === 'Private'
+      }
+    }
   },
   mounted() {
       // 监听全局点击事件
@@ -294,8 +306,8 @@ export default {
         title: this.$t('datasets.edit.changeVisibility'),
         message: h('p', null, [
           h('span', null, this.$t('all.changeVis')),
-          h('span', null, this.visibility=='Private'? this.$t('all.private') : this.$t('all.public')),
-          h('span', null, this.visibility=='Private'? this.$t('datasets.edit.privateInfo') : this.$t('datasets.edit.publicInfo'))
+          h('span', null, value === 'Private'? this.$t('all.private') : this.$t('all.public')),
+          h('span', null, value === 'Private'? this.$t('datasets.edit.privateInfo') : this.$t('datasets.edit.publicInfo'))
         ]),
         showCancelButton: true,
         confirmButtonText: 'Confirm',
@@ -306,7 +318,6 @@ export default {
           message: this.$t('all.changeSuccess'),
         })
       }).catch(() => {
-        this.visibility = value === 'Public' ? 'Private' : 'Public'
         ElMessage({
           type: 'warning',
           message: this.$t('all.changeCancel'),

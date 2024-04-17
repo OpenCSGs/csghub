@@ -99,6 +99,7 @@
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useI18n } from 'vue-i18n'
   import refreshJWT from '../../packs/refreshJWT.js'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
     applicationSpace: Object,
@@ -119,6 +120,9 @@
     userName: String,
     userToken: String
   })
+
+  const repoDetailStore = useRepoDetailStore()
+  repoDetailStore.initialize(props.applicationSpace.data)
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 

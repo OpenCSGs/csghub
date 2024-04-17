@@ -23,7 +23,7 @@ export const all = {
   loadError: "Load Error",
   notSupportPreview:
     "Preview is not supported at the moment, please download via git clone",
-  changeVis: "Change visibility to",
+  changeVis: "Change visibility to ",
   enterPls: "Enter Please",
   sureDel: "Sure to Del",
   canNot: "Cannot",

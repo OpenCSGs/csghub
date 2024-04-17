@@ -1,6 +1,12 @@
 <template>
   <div class="relative">
-    <repo-clone :repo-type="repoType" :http-clone-url="repoDetail.repository.http_clone_url" :ssh-clone-url="repoDetail.repository.ssh_clone_url" />
+    <repo-clone
+      :repoType="repoType"
+      :httpCloneUrl="repoDetail.repository.http_clone_url"
+      :sshCloneUrl="repoDetail.repository.ssh_clone_url"
+      :userName="userName"
+      :userToken="userToken"
+    />
     <tab-container :default-tab="defaultTab"
                    :settingsVisibility="settingsVisibility"
                    :repoType="repoType"
@@ -97,8 +103,7 @@
           :model-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :tag-list="tagList"
-          :tags="tags"
-          :private="repoDetail.private" />
+          :tags="tags" />
         <dataset-settings
           v-if="repoType === 'dataset'"
           :path="repoDetail.path"
@@ -106,8 +111,7 @@
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :tag-list="tagList"
-          :tags="tags"
-          :private="repoDetail.private" />
+          :tags="tags" />
         <application-space-settings
           v-if="repoType === 'space'"
           :path="repoDetail.path"
@@ -116,15 +120,13 @@
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
           :cloudResource="repoDetail.hardware"
-          :private="repoDetail.private"
           @showSpaceLogs="showSpaceLogs" />
         <code-settings
           v-if="repoType === 'code'"
           :path="repoDetail.path"
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
-          :private="repoDetail.private" />
+          :default_branch="repoDetail.default_branch" />
       </template>
     </tab-container>
   </div>
