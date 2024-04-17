@@ -16,5 +16,11 @@ export const profile = {
     uploadAvatar: "Upload Avatar",
     removeAvatar: "Remove Avatar",
     updateSuccess: "Profile updated successfully",
+    updatePhone: "Update",
+    sendSms: "Send",
+    retrySendSms: "later retry again",
+    smsCode: 'SMS code',
+    smsSented: 'SMS sent',
+    smsNotMatch: 'SMS not match'
   },
 }

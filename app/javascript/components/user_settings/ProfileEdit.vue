@@ -23,13 +23,13 @@
       <el-input v-if="name.trim().length === 0"
                 class="max-w-[400px]"
                 v-model="inputName"
-                :placeholder="this.$t('all.userName')">
+                :placeholder="$t('all.userName')">
       </el-input>
       <el-input v-else
                 class="max-w-[400px]"
                 v-model="inputName"
                 disabled
-                :placeholder="this.$t('all.userName')">
+                :placeholder="$t('all.userName')">
       </el-input>
     </div>
 
@@ -38,7 +38,7 @@
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
       <el-input class="max-w-[400px]"
                 v-model="inputNickname"
-                :placeholder="this.$t('all.nickName')">
+                :placeholder="$t('all.nickName')">
       </el-input>
     </div>
 
@@ -52,11 +52,13 @@
                 v-model="inputPhone"
                 ref="phoneInputElement"
                 :disabled="!updatePhoneEnabled"
-                :placeholder="this.$t('all.phone')">
+                :placeholder="$t('all.phone')">
       </el-input>
       <div v-if="updatePhoneEnabled" class="flex gap-[13px] max-w-[400px] items-center mt-[16px]">
         <div class="flex items-center">
-          <p class="w-[88px] h-[40px] text-[#98A2B3] flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200">验证码</p>
+          <p class="w-[88px] h-[40px] text-[#98A2B3] flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200">
+            {{ $t('profile.edit.smsCode') }}
+          </p>
           <input class="w-[117px] px-[12px] py-[8px] h-[40px] rounded-r-md border bg-white"
                  v-model="inputSmsCode">
           </input>
@@ -64,20 +66,20 @@
         <button v-if="inCountDown"
                 class="rounded-md border border-gray-200 bg-gray-200 shadow-sm px-[14px] py-[8px] font-[500] text-[#98A2B3] text-[14px] leading-[20px]"
         >
-          {{ countdown }}s 后重试
+          {{ countdown }}s {{ $t('profile.edit.retrySendSms') }}
         </button>
         <button v-else
                 @click="sendSmsCode"
                 class="rounded-md border border-[#409EFF] bg-[#409EFF] shadow-sm px-[14px] py-[8px] font-[500] text-white text-[14px] leading-[20px]"
         >
-          发送
+          {{ $t('profile.edit.sendSms') }}
         </button>
       </div>
       <el-button v-else
                  class="ml-[12px]"
                  @click="enableUpdatePhone"
       >
-        更新
+        {{ $t('profile.edit.updatePhone') }}
       </el-button>
     </div>
 
@@ -87,7 +89,7 @@
       </div>
       <el-input class="max-w-[400px]"
                 v-model="inputEmail"
-                :placeholder="this.$t('all.email')">
+                :placeholder="$t('all.email')">
       </el-input>
     </div>
     <div @click="saveProfile" class="w-[111px] text-[14px] border border-[#DCDFE6] px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
@@ -97,9 +99,8 @@
 </template>
 <script>
 import csrfFetch from "../../packs/csrfFetch.js"
-import { useCookies } from "vue3-cookies";
-import { ElMessage } from "element-plus";
-const { cookies } = useCookies();
+import { ElMessage } from "element-plus"
+
 export default {
   props: {
     name: String,
@@ -157,7 +158,7 @@ export default {
         }, 1000)
 
         ElMessage({
-          message: "已发送",
+          message: this.$t('profile.edit.smsSented'),
           type: "success",
         })
       }
@@ -189,7 +190,7 @@ export default {
       }
       if (this.generatedSmscode !== this.inputSmsCode) {
         ElMessage({
-          message: "验证码不匹配",
+          message: this.$t('profile.edit.smsNotMatch'),
           type: "warning",
         });
 

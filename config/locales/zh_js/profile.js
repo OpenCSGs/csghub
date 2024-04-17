@@ -16,5 +16,11 @@ export const profile = {
     uploadAvatar: "上传头像",
     removeAvatar: "移除头像",
     updateSuccess: "profile已更新",
+    updatePhone: "更新",
+    sendSms: "发送",
+    retrySendSms: "后重试",
+    smsCode: '验证码',
+    smsSented: '验证码已发送',
+    smsNotMatch: '验证码不匹配'
   },
 }
