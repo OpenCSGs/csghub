@@ -7,7 +7,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   include Api::RepoValidation
 
   def index
-    res_body = Starhub.api.get_models(current_user&.name,
+    res_body = csghub_api.get_models(current_user&.name,
                                       params[:search],
                                       params[:sort],
                                       params[:task_tag],

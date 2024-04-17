@@ -7,7 +7,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   include Api::RepoValidation
 
   def index
-    res_body = Starhub.api.get_datasets(current_user&.name,
+    res_body = csghub_api.get_datasets(current_user&.name,
                                         params[:search],
                                         params[:sort],
                                         params[:task_tag],
