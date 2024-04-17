@@ -125,13 +125,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   end
 
   def upload_file
-    options = {
-      branch: 'main',
-      email: current_user.email,
-      message: build_upload_commit_message,
-      username: current_user.name
-    }
-    build_options options
+    build_upload_options
     sync_upload_file('model', options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
   end
@@ -155,7 +149,13 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 
-  def build_options options
+  def build_upload_options
+    options = {
+      branch: 'main',
+      email: current_user.email,
+      message: build_upload_commit_message,
+      username: current_user.name
+    }
     file_num = params[:file_num].to_i
     file_path_list = []
     file_list = []
