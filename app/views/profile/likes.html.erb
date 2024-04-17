@@ -1,0 +1,25 @@
+<div class="flex justify-center md:flex-col  my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+  <div class="md:mb-[24px] mr-[24px] bg-[#FAFAFA] sm:bg-white md:bg-white">
+    <profile name="<%= @user.name %>"
+             display-name="<%= @user.display_name %>"
+             phone="<%= @user.phone %>"
+             email="<%= @user.email %>"
+             avatar="<%= @user.avatar_url %>"
+             last-login-time="<%= @user.last_login_at %>"
+             login-identity="<%= @user.login_identity %>"
+             roles="<%= @user.roles.to_json %>"
+             orgs="<%= @user.organizations.to_json %>"
+             :is-logged-in="<%= @is_current_user_access %>"
+    ></profile>
+  </div>
+  <div class="grow py-[36px]">
+    <profile-repo-likes-list
+      :model-list="<%= JSON.parse(@models).to_json %>"
+      :dataset-list="<%= JSON.parse(@datasets).to_json %>"
+      :space-list="<%= JSON.parse(@spaces).to_json %>"
+      :code-list="<%= JSON.parse(@codes).to_json %>"
+      name="<%= @user.name %>"
+    >
+    </profile-repo-list>
+  </div>
+</div>

@@ -157,6 +157,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
+    get '/profile/likes/:user_id', to: 'profile#likes'
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'
     get    '/oidc/callback', to: 'sessions#oidc'
@@ -164,6 +165,7 @@ Rails.application.routes.draw do
     post   '/signup',   to: 'sessions#registration'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'
+    # get '/user/likes/:user_id', to: 'likes#index'
 
     # errors
     get '/errors/not-found', to: 'errors#not_found'
