@@ -12,7 +12,10 @@
                    :repoType="repoType"
     >
       <template #summary>
-        <InitializeGuide v-if="repoType === 'space' && appStatus === 'NoAppFile'"
+        <ApplicationPage v-if="repoType === 'space' && repoDetail.path === 'leaderboard/SuperClueRanking'"
+                         appEndpoint="https://www.superclueai.com/"
+        />
+        <InitializeGuide v-else-if="repoType === 'space' && appStatus === 'NoAppFile'"
                          :http-clone-url="repoDetail.repository.http_clone_url"
                          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
                          :sdk="sdk"
