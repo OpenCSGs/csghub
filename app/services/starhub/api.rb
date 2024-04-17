@@ -238,6 +238,18 @@ module Starhub
       res.body
     end
 
+    def get_user_likes(username, repotype, options = {})
+      @client.get("/user/#{username}/likes/#{repotype}?current_user=#{options[:current_user]}", options)
+    end
+
+    def add_user_likes(username, repoid, options = {})
+      @client.put("/user/#{username}/likes/#{repoid}", options)
+    end
+
+    def delete_user_likes(username, repoid, options = {})
+      @client.delete("/user/#{username}/likes/#{repoid}", options)
+    end
+
     # TODO: add more starhub api
 
     private
