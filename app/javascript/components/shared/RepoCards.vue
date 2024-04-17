@@ -64,7 +64,7 @@
         </div>
       </div>
       <div v-if="repoType === 'space'" class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mb-4 mt-[16px]">
-        <application-space-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
+        <ApplicationSpaceItem v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
       </div>
       <div v-else class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]">
         <repo-item v-for="repo in reposData" :repo="repo" :repo-type="repoType" />
@@ -138,8 +138,8 @@
   const filterChange = () =>{
     reloadRepos()
   }
-  
-  const reloadRepos = (childCurrent) => { 
+
+  const reloadRepos = (childCurrent) => {
     let url = `/internal_api/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per_page=${perPage.value}`
