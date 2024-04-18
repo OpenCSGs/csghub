@@ -14,17 +14,14 @@
             ref="uploadRef"
             class="upload-demo"
             drag
-            :multiple="false"
-            name="file_list"
+            multiple
+            :limit="5"
             :headers="{ 'X-CSRF-TOKEN': csrf_token }"
             :data="{ commit_title: commitTitle, commit_desc: commitDesc}"
             :auto-upload="false"
-            :action="`/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`"
             @change="handleFileChange"
             :on-remove="handleRemove"
-            :on-success="handleSuccess"
             :on-error="handleError"
-            :before-upload="handleBeforeUpload"
         >
           <el-icon>
             <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,28 +83,22 @@ const handleCommentInputChange = (value) => {
 }
 
 const submitUpload = () => {
+  checkBeforeUpload()
+  submitForm()
+}
+
+const checkBeforeUpload = () => {
   if (filesList.value.length === 0) {
     ElMessage({message: t('all.selectFilePls'), type: "warning"})
     return
   }
-  // console.log(filesList.value);
   for(let i = 0; i < filesList.value.length; i++) {
-      if (filesList.value[i].raw.size / 1024 > 5000) {
-        ElMessage({message: t('all.fileTooLarge'), type: "warning"})
-        return
-      }
+    if (filesList.value[i].raw.size / 1024 > 5000) {
+      ElMessage({message: t('all.fileTooLarge'), type: "warning"})
+      return
+    }
   }
-  
-  submitForm()
-  // uploadRef.value.submit(filesList.value)
 }
-
-// const handleBeforeUpload = (file) => {
-//   if (file.size / 1024 > 5000) {
-//     ElMessage({message: t('all.fileTooLarge'), type: "warning"})
-//     return false
-//   }
-// }
 
 const handleFileChange = (file) => {
   commitTitlePlaceholder.value = `Upload ${file.name}`
@@ -117,21 +108,9 @@ const handleRemove = (file, fileList) => {
   filesList.value = fileList.filter(item => item !== file)
 }
 
-const handleSuccess = (response, file, fileList) => {
-  ElMessage({message: t('all.upLoadSuccess'), type: "success"})
-  filesList.value = []
-  window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
-};
-
-const handleError = (err, file, fileList) => {
-  ElMessage({message: t('all.upLoadError'), type: "warning"})
-  filesList.value.splice(-1, 1)
-}
-
 const cancel = () => {
   window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
 }
-
 
 async function submitForm() {
     const uploadEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`
@@ -157,7 +136,7 @@ async function submitForm() {
     } else {
       ElMessage({message: t('all.upLoadSuccess'), type: "success"})
       filesList.value = []
-      window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
     }
   }
 </script>
