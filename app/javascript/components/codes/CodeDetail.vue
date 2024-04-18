@@ -28,6 +28,8 @@
       :actionName="actionName"
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
+      :userName="userName"
+      :userToken="userToken"
       repo-type="code"
     />
   </div>
@@ -52,7 +54,9 @@
     settingsVisibility: Boolean,
     avatar: String,
     ownerUrl: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    userName: String,
+    userToken: String
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.code.data)

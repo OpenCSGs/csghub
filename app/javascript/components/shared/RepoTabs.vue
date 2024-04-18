@@ -1,6 +1,12 @@
 <template>
   <div class="relative">
-    <repo-clone :repo-type="repoType" :http-clone-url="repoDetail.repository.http_clone_url" :ssh-clone-url="repoDetail.repository.ssh_clone_url" />
+    <repo-clone
+      :repoType="repoType"
+      :httpCloneUrl="repoDetail.repository.http_clone_url"
+      :sshCloneUrl="repoDetail.repository.ssh_clone_url"
+      :userName="userName"
+      :userToken="userToken"
+    />
     <tab-container :default-tab="defaultTab"
                    :settingsVisibility="settingsVisibility"
                    :repoType="repoType"
