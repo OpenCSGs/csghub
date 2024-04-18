@@ -11,16 +11,12 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
-      <a @click="addLike">
-        <div 
-          class="flex gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-          :class="showCollect === false ? 'text-gray-400 border-gray-200': ''"
-          @click="showCollect = false"
-          >
-            收藏
-            <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likes }}</div>
+        <div class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+             :class="showCollect === false ? 'text-gray-400 border-gray-200': ''"
+             @click="addLike">
+          收藏
+          <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likes }}</div>
         </div>
-      </a>
     </div>
 
     <div v-else
@@ -29,6 +25,12 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
+      <div class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+           :class="showCollect === false ? 'text-gray-400 border-gray-200': ''"
+           @click="addLike">
+        收藏
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likes }}</div>
+      </div>
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
       <p v-if="canWrite" class="cursor-pointer" @click="showSpaceLogs">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="none">
@@ -100,13 +102,19 @@
 
   const addLike = () => {
 
-    console.log(props.repoId);
-    const options = { method: 'PUT' }
-    res = csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
-    // url = `/internal_api/users/likes/${props.repoId}`
-    // const options = { method: 'PUT', headers: { Authorization: `Bearer ${cookies.get('user_token')}` } }
-    // res = fetch(url, options)
-    console.log(res);
+    if (showCollect.value == true) {
+      const options = { method: 'PUT' }
+      res = csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+      // url = `/internal_api/users/likes/${props.repoId}`
+      // const options = { method: 'PUT', headers: { Authorization: `Bearer ${cookies.get('user_token')}` } }
+      // res = fetch(url, options)
+      console.log(res);
+    } else {
+      const options = { method: 'DELETE' }
+      res = csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+      console.log(res);
+    }
+    showCollect.value = !showCollect.value;
   }
 
 </script>

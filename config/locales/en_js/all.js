@@ -69,5 +69,6 @@ export const all = {
   pleaseSelect: "Please select {value}",
   pleaseInput: "Please input {value}",
   previous:"previous",
-  next:"next"
+  next:"next",
+  deleteSuccess: "Successfully delete"
 }
