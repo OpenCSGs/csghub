@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     get '/users/:namespace/likes/datasets', to: 'users#likes_datasets'
     get '/users/:namespace/likes/codes', to: 'users#likes_codes'
     get '/users/:namespace/likes/spaces', to: 'users#likes_spaces'
+    put '/users/likes/:repo_id', to: 'users#add_like'
+    delete '/users/likes/:repo_id', to: 'users#delete_like'
     get '/organizations/:namespace/models', to: 'organizations#models'
     get '/organizations/:namespace/datasets', to: 'organizations#datasets'
     get '/organizations/:namespace/codes', to: 'organizations#codes'
@@ -169,7 +171,6 @@ Rails.application.routes.draw do
     post   '/signup',   to: 'sessions#registration'
     delete '/logout',  to: 'sessions#destroy'
     get    '/logout',  to: 'sessions#destroy'
-    # get '/user/likes/:user_id', to: 'likes#index'
 
     # errors
     get '/errors/not-found', to: 'errors#not_found'

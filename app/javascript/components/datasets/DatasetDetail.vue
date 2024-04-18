@@ -11,6 +11,8 @@
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
+        :repo-id="dataset.data.repository_id"
+        :likes="dataset.data.likes"
         repo-type="dataset"
       />
     </div>

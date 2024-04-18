@@ -7,18 +7,18 @@
         <path opacity="0.12" d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z" fill="#A8ABB2"/>
         <path d="M14 8.00016C14 9.10473 11.3137 10.0002 8 10.0002C4.68629 10.0002 2 9.10473 2 8.00016M14 3.3335C14 4.43807 11.3137 5.3335 8 5.3335C4.68629 5.3335 2 4.43807 2 3.3335M14 3.3335C14 2.22893 11.3137 1.3335 8 1.3335C4.68629 1.3335 2 2.22893 2 3.3335M14 3.3335V12.6668C14 13.7714 11.3137 14.6668 8 14.6668C4.68629 14.6668 2 13.7714 2 12.6668V3.3335" stroke="#A8ABB2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span class="text-[#A8ABB2] text-[18px] font-semibold ml-1 mr-2">Dataset:</span>
+      <span class="text-[#a1a8b9] text-[18px] font-semibold ml-1 mr-2">Dataset:</span>
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ private ? $t("all.private") :  $t("all.public") }}</div>
-      <a href="#">
+      <a @click="addLike">
         <div 
           class="flex gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
           :class="showCollect === false ? 'text-gray-400 border-gray-200': ''"
           @click="showCollect = false"
           >
             收藏
-            <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">5</div>
+            <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likes }}</div>
         </div>
       </a>
     </div>
@@ -63,6 +63,8 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import { ref } from 'vue'
+  import { useCookies } from "vue3-cookies";
+  import csrfFetch from "../../packs/csrfFetch"
 
   const emit = defineEmits(['toggleSpaceLogsDrawer']);
 
@@ -79,7 +81,9 @@
     repoType: String,
     appStatus: String,
     spaceResource: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    repoId: String,
+    likes: String
   });
 
   const showCollect = ref(true)
@@ -91,4 +95,18 @@
   const showSpaceLogs = () => {
     emit('toggleSpaceLogsDrawer')
   }
+
+  const { cookies } = useCookies();
+
+  const addLike = () => {
+
+    console.log(props.repoId);
+    const options = { method: 'PUT' }
+    res = csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    // url = `/internal_api/users/likes/${props.repoId}`
+    // const options = { method: 'PUT', headers: { Authorization: `Bearer ${cookies.get('user_token')}` } }
+    // res = fetch(url, options)
+    console.log(res);
+  }
+
 </script>

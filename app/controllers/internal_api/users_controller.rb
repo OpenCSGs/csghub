@@ -1,5 +1,5 @@
 class InternalApi::UsersController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:models, :datasets, :codes, :spaces]
+  before_action :authenticate_user, except: [:models, :datasets, :codes, :spaces, add_like]
 
   def index
     users = User.where("name ~* ?", params[:name])
@@ -51,6 +51,17 @@ class InternalApi::UsersController < InternalApi::ApplicationController
 
   def likes_codes
     render json: csghub_api.get_user_codes(current_user&.name, 'codes', { per: params[:per], current_user: current_user&.name})
+  end
+
+  def add_like
+    debugger
+    # res = csghub_api.add_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
+    # render json: { message: I18n.t('models.predict_success') }
+  end
+
+  def delete_like
+    res = csghub_api.delete_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
+    render json: { message: I18n.t('models.predict_success') }
   end
 
   def jwt_token

@@ -254,7 +254,7 @@ module Starhub
   end
 
     def add_user_likes(username, repoid, options = {})
-      @client.put("/user/#{username}/likes/#{repoid}", options)
+      @client.put("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
     end
 
     def delete_user_likes(username, repoid, options = {})
