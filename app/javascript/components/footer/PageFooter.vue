@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
-    <div class="pb-[18px] flex px-[80px] md:px-4 gap-x-[120px] sm:gap-x-[10px] mlg:pb-[30px] w-full justify-between items-center mlg:items-start">
+    <div class="max-w-[1280px] py-[18px] xl:px-[20px] flex w-full justify-between items-center mlg:items-start">
       <div class="flex gap-[40px]">
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
           <p class="text-base font-semibold">{{ $t('footer.about') }}</p>
@@ -29,7 +29,7 @@
         <img class="border border-[#EAECF0] px-[5px] py-[5px]" :src="footCode" height=60 width=60 alt="OpenCSG Logo"/>
       </div>
     </div>
-    <div class="py-4 pb-6 flex flex-col gap-[12px] px-[80px] md:px-4 md:px-4 justify-between items-center text-xs font-normal border-t w-full sm:text-[10px] sm:flex-col">
+    <div class="max-w-[1280px] py-4 xl:px-[20px] flex flex-col gap-[12px] md:px-4 md:px-4 justify-between items-center text-xs font-normal border-t w-full sm:text-[10px] sm:flex-col">
       <!-- footer -->
       <div class="sm:hidden w-full">
         <div class="flex justify-between w-full pr-10 relative mb-3">
