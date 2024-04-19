@@ -224,6 +224,7 @@ export default {
             name: this.inputName,
             nickname: this.inputNickname
           });
+          this.disableUpdatePhone()
           // 处理成功响应
         }
       } catch (error) {
