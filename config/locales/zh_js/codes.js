@@ -1,5 +1,7 @@
 export const codes = {
   title: "代码仓库",
+  codes:"代码",
+  tips:"创建代码库托管您的代码",
   placeholder: "代码仓库名字",
   downloadCode: "下载代码仓库",
   codeName: "代码仓库名称",
