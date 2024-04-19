@@ -55,9 +55,7 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   end
 
   def add_like
-    # debugger
     res = csghub_api.add_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
-    # debugger
     render json: { message: I18n.t('all.addSuccess') }
   end
 
