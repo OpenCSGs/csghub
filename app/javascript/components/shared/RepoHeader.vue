@@ -65,90 +65,90 @@
     :other-tags="tags.other_tags" :prefix="`${repoType}s/`" />
 </template>
 
-<script setup>
-import HeaderTags from '../shared/HeaderTags.vue'
-import AppStatus from '../application_spaces/AppStatus.vue'
-import { copyToClipboard } from '../../packs/clipboard'
-import { ref } from 'vue'
-import { useCookies } from "vue3-cookies";
-import csrfFetch from "../../packs/csrfFetch"
-import { onMounted } from 'vue';
+  <script setup>
+  import HeaderTags from '../shared/HeaderTags.vue'
+  import AppStatus from '../application_spaces/AppStatus.vue'
+  import { copyToClipboard } from '../../packs/clipboard'
+  import { ref } from 'vue'
+  import { useCookies } from "vue3-cookies";
+  import csrfFetch from "../../packs/csrfFetch"
+  import { onMounted } from 'vue';
 
-const props = defineProps({
-  private: Boolean,
-  avatar: String,
-  name: String,
-  nickname: String,
-  desc: String,
-  path: String,
-  license: String,
-  tags: Object,
-  ownerUrl: String,
-  repoType: String,
-  appStatus: String,
-  spaceResource: String,
-  canWrite: Boolean,
-  repoId: String,
-  likes: String,
-  hasLike: Boolean
-});
+  const props = defineProps({
+    private: Boolean,
+    avatar: String,
+    name: String,
+    nickname: String,
+    desc: String,
+    path: String,
+    license: String,
+    tags: Object,
+    ownerUrl: String,
+    repoType: String,
+    appStatus: String,
+    spaceResource: String,
+    canWrite: Boolean,
+    repoId: String,
+    likes: String,
+    hasLike: Boolean
+  });
 
-const emit = defineEmits(['toggleSpaceLogsDrawer']);
-const { cookies } = useCookies();
-const repoHasLike = ref(props.hasLike)
-let likesNumber = props.likes
-let showLikesNumber = ref('')
+  const emit = defineEmits(['toggleSpaceLogsDrawer']);
+  const { cookies } = useCookies();
+  const repoHasLike = ref(props.hasLike)
+  let likesNumber = props.likes
+  let showLikesNumber = ref('')
 
-const copyName = () => {
-  copyToClipboard(props.path)
-}
-
-const showSpaceLogs = () => {
-  emit('toggleSpaceLogsDrawer')
-}
-
-const show_likes = (number) => {
-  if (number > 9999) {
-    return '1w+';
-  } else if (number > 999) {
-    return '1k+';
-  } else {
-    return number.toString();
+  const copyName = () => {
+    copyToClipboard(props.path)
   }
-}
 
-const addLike = async () => {
-  if (repoHasLike.value == false) {
-    const options = { method: 'PUT' }
-    // url = `/internal_api/users/likes/${props.repoId}`
-    // const options = { method: 'PUT', headers: { Authorization: `Bearer ${cookies.get('user_token')}` } }
-    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
-    // const response = await fetch(url, options)
-    if (!response.ok) {
-      const data = response.json()
-      throw new Error(data.message)
+  const showSpaceLogs = () => {
+    emit('toggleSpaceLogsDrawer')
+  }
+
+  const show_likes = (number) => {
+    if (number > 9999) {
+      return '1w+';
+    } else if (number > 999) {
+      return '1k+';
     } else {
-      repoHasLike.value = true
-      likesNumber += 1
-      showLikesNumber.value = show_likes(likesNumber)
-      return response.json()
-    }
-  } else {
-    const options = { method: 'DELETE' }
-    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
-    if (!response.ok) {
-      const data = response.json()
-      throw new Error(data.message)
-    } else {
-      repoHasLike.value = false
-      likesNumber -= 1
-      showLikesNumber.value = show_likes(likesNumber)
-      return response.json()
+      return number.toString();
     }
   }
-}
 
-onMounted(() => {
-  showLikesNumber.value = show_likes(likesNumber)
-})
-</script>
+  const addLike = async () => {
+    if (repoHasLike.value == false) {
+      const options = { method: 'PUT' }
+      // url = `/internal_api/users/likes/${props.repoId}`
+      // const options = { method: 'PUT', headers: { Authorization: `Bearer ${cookies.get('user_token')}` } }
+      const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+      // const response = await fetch(url, options)
+      if (!response.ok) {
+        const data = response.json()
+        throw new Error(data.message)
+      } else {
+        repoHasLike.value = true
+        likesNumber += 1
+        showLikesNumber.value = show_likes(likesNumber)
+        return response.json()
+      }
+    } else {
+      const options = { method: 'DELETE' }
+      const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+      if (!response.ok) {
+        const data = response.json()
+        throw new Error(data.message)
+      } else {
+        repoHasLike.value = false
+        likesNumber -= 1
+        showLikesNumber.value = show_likes(likesNumber)
+        return response.json()
+      }
+    }
+  }
+
+  onMounted(() => {
+    showLikesNumber.value = show_likes(likesNumber)
+  })
+  </script>
