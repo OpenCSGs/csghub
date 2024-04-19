@@ -21,6 +21,7 @@ export const profile = {
     retrySendSms: "later retry again",
     smsCode: 'SMS code',
     smsSented: 'SMS sent',
-    smsNotMatch: 'SMS not match'
+    smsNotMatch: 'SMS not match',
+    phoneNotMatch: 'Phone and SMS not match'
   },
 }

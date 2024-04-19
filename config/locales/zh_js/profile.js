@@ -21,6 +21,7 @@ export const profile = {
     retrySendSms: "后重试",
     smsCode: '验证码',
     smsSented: '验证码已发送',
-    smsNotMatch: '验证码不匹配'
+    smsNotMatch: '验证码不匹配',
+    phoneNotMatch: '电话和验证码不匹配'
   },
 }

@@ -122,7 +122,8 @@ export default {
       updatePhoneEnabled: false,
       inCountDown: false,
       countdown: 30,
-      intervalId: null
+      intervalId: null,
+      phoneJustSendcode: ''
     };
   },
   mounted() {},
@@ -130,6 +131,7 @@ export default {
     async sendSmsCode() {
       const profileSmsEndpoint = `/internal_api/users/sms`;
       this.generatedSmscode = Math.floor(100000 + Math.random() * 900000).toString()
+      this.phoneJustSendcode = this.inputPhone
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -189,12 +191,18 @@ export default {
       if (file !== undefined) {
         formData.append("avatar", file);
       }
+      if (this.phoneJustSendcode !== this.inputPhone) {
+        ElMessage({
+          message: this.$t('profile.edit.smsNotMatch'),
+          type: "warning",
+        });
+        return
+      }
       if (this.generatedSmscode !== this.inputSmsCode) {
         ElMessage({
           message: this.$t('profile.edit.smsNotMatch'),
           type: "warning",
         });
-
         return
       }
       formData.append("name", this.inputName);
