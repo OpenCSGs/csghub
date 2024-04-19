@@ -2,14 +2,9 @@
   <% if is_on_premise? %>
     <on-premise-footer />
   <% else %>
-    <% if logged_in? %>
-      <login-footer emblem-logo="<%= asset_path('national_emblem.png') %>">
-      </login-footer>
-    <% else %>
-      <logout-footer foot-code="<%= asset_path('foot_code.png') %>"
-                      foot-logo="<%= asset_path('foot_logo.png') %>"
-                      emblem-logo="<%= asset_path('national_emblem.png') %>">
-      </logout-footer>
-    <% end %>
+    <logout-footer foot-code="<%= asset_path('foot_code.png') %>"
+                    foot-logo="<%= asset_path('foot_logo.png') %>"
+                    emblem-logo="<%= asset_path('national_emblem.png') %>">
+    </logout-footer>
   <% end %>
 </div>
