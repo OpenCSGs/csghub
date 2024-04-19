@@ -52,9 +52,11 @@
     </div>
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{ desc }}</div>
-  <header-tags :task-tags="tags.task_tags" 
-               :framework-tags="tags.framework_tags" :license-tags="tags.license_tags"
-               :other-tags="tags.other_tags" :prefix="`${repoType}s/`" />
+  <header-tags 
+    :task-tags="tags.task_tags"             
+    :framework-tags="tags.framework_tags" :license-tags="tags.license_tags"
+    :other-tags="tags.other_tags" :prefix="`${repoType}s/`" 
+  />
 </template>
 
 <script setup>
