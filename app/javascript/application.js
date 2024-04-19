@@ -17,7 +17,7 @@ import { createI18n } from 'vue-i18n'
 import en from '../../config/locales/en.js'
 import zh from '../../config/locales/zh.js'
 
-import Navbar from "./components/navbar/NewNavbar.vue"
+import Navbar from "./components/navbar/Navbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
 import SpaceCard from "./components/spaces/SpaceCard.vue"
 import SpaceCards from "./components/spaces/SpaceCards.vue"
