@@ -83,14 +83,8 @@ const handleCommentInputChange = (value) => {
 }
 
 const submitUpload = () => {
-  checkBeforeUpload()
-  submitForm()
-}
-
-const checkBeforeUpload = () => {
   if (filesList.value.length === 0) {
     ElMessage({message: t('all.selectFilePls'), type: "warning"})
-    return
   }
   for(let i = 0; i < filesList.value.length; i++) {
     if (filesList.value[i].raw.size / 1024 > 5000) {
@@ -98,6 +92,7 @@ const checkBeforeUpload = () => {
       return
     }
   }
+  submitForm()
 }
 
 const handleFileChange = (file) => {
