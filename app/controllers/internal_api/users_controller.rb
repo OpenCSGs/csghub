@@ -50,11 +50,14 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   end
 
   def likes_codes
+    debugger
     render json: csghub_api.get_user_codes(current_user&.name, 'codes', { per: params[:per], current_user: current_user&.name})
   end
 
   def add_like
+    # debugger
     res = csghub_api.add_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
+    # debugger
     render json: { message: I18n.t('all.addSuccess') }
   end
 

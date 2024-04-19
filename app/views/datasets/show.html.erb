@@ -15,6 +15,7 @@
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!current_user&.can_write?(@local_dataset) %>"
+    :has-like="<%= @has_like %>"
   >
   </dataset-detail>
 </div>

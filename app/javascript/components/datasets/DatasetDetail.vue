@@ -13,6 +13,7 @@
         :owner-url="ownerUrl"
         :repo-id="dataset.data.repository_id"
         :likes="dataset.data.likes"
+        :has-like="hasLike"
         repo-type="dataset"
       />
     </div>
@@ -57,7 +58,8 @@ const props = defineProps({
   tags: Object,
   tagList: Object,
   ownerUrl: String,
-  canWrite: Boolean
+  canWrite: Boolean,
+  hasLike: Boolean
 })
 </script>
 

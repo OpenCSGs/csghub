@@ -142,7 +142,7 @@
   const hasCodes = computed(() => props.codeList?.total > 0)
   const hasSpaces = computed(() => props.spaceList?.total > 0)
 
-  const moreModels = ref(props.modelList?.total > 0)
+  const moreModels = ref(props.modelList?.total > 6)
   const moreDatasets = ref(props.datasetList?.total > 6)
   const moreCodes = ref(props.codeList?.total > 6)
   const moreSpaces = ref(props.spaceList?.total > 6)
@@ -166,7 +166,6 @@
   }
 
   const fetchMoreModels = async () => {
-    // /internal_api/users/csghub-local2/models?per=1
     const url = `/internal_api/${prefixPath}/${props.name}/likes/models?per=${props.modelList.total}`
     await fetchData(url, models)
     moreModels.value = false

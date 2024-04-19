@@ -68,6 +68,5 @@ export const all = {
   pleaseInput: "请输入{value}",
   previous:"上一页",
   next:"下一页",
-  addSuccess: "添加成功",
   deleteSuccess: "删除成功"
 }

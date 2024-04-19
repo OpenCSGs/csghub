@@ -45,4 +45,12 @@ module LocalRepoValidation
       @local_application_space = @owner && @owner.application_spaces.find_by(name: params[:application_space_name])
     end
   end
+
+  def repo_has_like?(repo, repotype)
+    like_repos = JSON.parse(csghub_api.get_user_likes(current_user&.name, repotype, { current_user: current_user&.name}))["data"]
+    return false if like_repos.blank?
+    like_repo_id_list = like_repos.map { |like_repo| like_repo["repository_id"] }
+    repo_id = JSON.parse(repo)["data"]["repository_id"]
+    like_repo_id_list.include?(repo_id)
+  end
 end

@@ -95,7 +95,7 @@ class ApplicationSpacesController < ApplicationController
     else
       @application_space, @branches = csghub_api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     end
-
+    @has_like = repo_has_like?(@application_space, 'application_spaces')
     @tags = Tag.build_detail_tags(JSON.parse(@application_space)['data']['tags'], 'space').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_application_space) : false
   end

@@ -245,20 +245,22 @@ module Starhub
     end
 
     def get_user_codes(namespace, username, options = {})
-    options[:per] ||= 6
-    options[:page] ||= 1
-    options[:current_user] = username
-    res = @client.get("/user/#{namespace}/codes", options)
-    raise StarhubError, res.body unless res.success?
-    res.body.force_encoding('UTF-8')
-  end
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
 
     def add_user_likes(username, repoid, options = {})
-      @client.put("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
+      res = @client.put("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
+      raise StarhubError, res.body unless res.success?
     end
 
     def delete_user_likes(username, repoid, options = {})
-      @client.delete("/user/#{username}/likes/#{repoid}", options)
+      res = @client.delete("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
+      raise StarhubError, res.body unless res.success?
     end
 
     # TODO: add more starhub api

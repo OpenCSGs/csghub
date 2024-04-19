@@ -13,6 +13,7 @@
         :owner-url="ownerUrl"
         :repo-id="model.data.repository_id"
         :likes="model.data.likes"
+        :has-like="hasLike"
         repo-type="model"
       />
     </div>
@@ -57,7 +58,8 @@ const props = defineProps({
   settingsVisibility: Boolean,
   avatar: String,
   ownerUrl: String,
-  canWrite: Boolean
+  canWrite: Boolean,
+  hasLike: Boolean
 })
 </script>
 <style scoped>

@@ -11,6 +11,9 @@
         :tags="tags"
         :avatar="avatar"
         :owner-url="ownerUrl"
+        :repo-id="code.data.repository_id"
+        :likes="code.data.likes"
+        :has-like="hasLike"
         repo-type="code"
       />
     </div>
@@ -51,7 +54,8 @@ const props = defineProps({
   settingsVisibility: Boolean,
   avatar: String,
   ownerUrl: String,
-  canWrite: Boolean
+  canWrite: Boolean,
+  hasLike: Boolean
 })
 </script>
 

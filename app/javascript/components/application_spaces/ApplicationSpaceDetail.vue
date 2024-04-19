@@ -15,6 +15,9 @@
         :owner-url="ownerUrl"
         :canWrite="canWrite"
         repo-type="space"
+        :repo-id="applicationSpace.data.repository_id"
+        :likes="applicationSpace.data.likes"
+        :has-like="hasLike"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
     </div>
@@ -117,7 +120,8 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String
+    userToken: String,
+    hasLike: Boolean
   })
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
