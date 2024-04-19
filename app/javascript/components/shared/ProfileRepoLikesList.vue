@@ -10,7 +10,6 @@
     </a>
     <div class="mt-[32px] font-medium text-xl">{{ $t('profile.myCollect') }}</div>
 
-
     <!-- models -->
     <div class="mt-[32px]">
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
