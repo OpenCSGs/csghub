@@ -97,7 +97,7 @@
     emit('toggleSpaceLogsDrawer')
   }
 
-  const show_likes = (number) => {
+  const showLikes = (number) => {
     if (number > 9999) {
       return '1w+';
     } else if (number > 999) {
@@ -117,7 +117,7 @@
       } else {
         repoHasLike.value = true
         likesNumber += 1
-        showLikesNumber.value = show_likes(likesNumber)
+        showLikesNumber.value = showLikes(likesNumber)
         return response.json()
       }
     } else {
@@ -129,13 +129,13 @@
       } else {
         repoHasLike.value = false
         likesNumber -= 1
-        showLikesNumber.value = show_likes(likesNumber)
+        showLikesNumber.value = showLikes(likesNumber)
         return response.json()
       }
     }
   }
 
   onMounted(() => {
-    showLikesNumber.value = show_likes(likesNumber)
+    showLikesNumber.value = showLikes(likesNumber)
   })
 </script>
