@@ -13,7 +13,7 @@
         :default-active="activeIndex"
         mode="horizontal"
         :ellipsis="true"
-        class="w-full"
+        class="w-full el-menu-nav"
         text-color="#475467"
         active-text-color="black"
       >
@@ -253,6 +253,9 @@ export default {
 </script>
 
 <style>
+.el-menu-nav {
+  border: none !important;
+}
 .top-navbar-menu{
   .el-dropdown {
     color: #303133;
