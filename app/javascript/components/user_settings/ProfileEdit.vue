@@ -193,7 +193,7 @@ export default {
       }
       if (this.phoneJustSendcode !== this.inputPhone) {
         ElMessage({
-          message: this.$t('profile.edit.smsNotMatch'),
+          message: this.$t('profile.edit.phoneNotMatch'),
           type: "warning",
         });
         return
