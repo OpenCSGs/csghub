@@ -116,15 +116,13 @@ async function submitForm() {
     const uploadEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`
     const formData = new FormData()
 
-    let fileNum = 0
     filesList.value.forEach((file, index) => {
       formData.append(`file${index}`, file.raw);
-      fileNum += 1
     });
 
     formData.append('commit_title', commitTitle.value || '')
     formData.append('commit_desc', commitDesc.value || '')
-    formData.append('file_num', fileNum)
+    formData.append('file_num', filesList.value.length)
 
     const options = { method: 'POST', body: formData }
 
