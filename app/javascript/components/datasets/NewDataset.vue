@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, inject } from 'vue'
+  import { ref, computed, onMounted, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
@@ -151,6 +151,17 @@
   const toDatasetDetail = (path) => {
     window.location.pathname = `/datasets/${path}`
   }
+  onMounted(() => {
+    const params = new URLSearchParams(window.location.search)
+    if(params.get('orgName')){
+      console.log(props.namespaces);
+      const result = props.namespaces.find(item =>{
+        return item[1] === params.get('orgName');
+      })
+      console.log(result);
+      owner.value = result[0]
+    }
+  })
 </script>
 
 <style scoped>
