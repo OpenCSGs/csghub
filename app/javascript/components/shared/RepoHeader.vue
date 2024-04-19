@@ -57,7 +57,7 @@
                :other-tags="tags.other_tags" :prefix="`${repoType}s/`" />
 </template>
 
-  <script setup>
+<script setup>
   import HeaderTags from '../shared/HeaderTags.vue'
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
@@ -138,4 +138,4 @@
   onMounted(() => {
     showLikesNumber.value = show_likes(likesNumber)
   })
-  </script>
+</script>
