@@ -50,7 +50,6 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   end
 
   def likes_codes
-    debugger
     render json: csghub_api.get_user_codes(current_user&.name, 'codes', { per: params[:per], current_user: current_user&.name})
   end
 
