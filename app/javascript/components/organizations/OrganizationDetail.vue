@@ -26,7 +26,7 @@
             <div>
               <a :href="`/models/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F9F1F0]">
-                  <img src="/images/icons/models.svg">
+                  <SvgIcon :name="'models'" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('models.title') }}</div>
@@ -35,7 +35,7 @@
               </a>
               <a :href="`/datasets/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#E7EFF7]">
-                  <img src="/images/icons/datasets.svg">
+                  <SvgIcon :name="'datasets'" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('datasets.title') }}</div>
@@ -44,7 +44,7 @@
               </a>
               <a :href="`/spaces/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F5F2FB]">
-                  <img src="/images/icons/spaces.svg">
+                  <SvgIcon :name="'spaces'" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('spaces.space') }}</div>
@@ -53,7 +53,7 @@
               </a>
               <a  :href="`/codes/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F3F4F6]">
-                  <img src="/images/icons/codes.svg">
+                  <SvgIcon :name="'codes'" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('codes.codes') }}</div>
