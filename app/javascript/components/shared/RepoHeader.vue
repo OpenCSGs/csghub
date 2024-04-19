@@ -87,7 +87,7 @@
   });
 
   const emit = defineEmits(['toggleSpaceLogsDrawer']);
-  const repoHasLike = ref(props.hasLike)
+  let repoHasLike = ref(props.hasLike)
   let likesNumber = props.likes
   let showLikesNumber = ref('')
 
