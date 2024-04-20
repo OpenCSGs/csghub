@@ -238,7 +238,7 @@
   </div>
 </template>
 <script>
-import {h} from 'vue'
+import { h, inject } from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import { useCookies } from "vue3-cookies"
@@ -281,7 +281,8 @@ export default {
       deployFailed: ['BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       initialized: ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       notInitialized: this.appStatus === 'NoAppFile',
-      cookies: useCookies().cookies
+      cookies: useCookies().cookies,
+      csghubServer: inject('csghubServer')
     };
   },
 
