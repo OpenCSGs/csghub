@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { ElMessageBox } from 'element-plus'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
@@ -120,6 +120,8 @@
     userName: String,
     userToken: String
   })
+
+  const csghubServer = inject('csghubServer')
 
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.applicationSpace.data)
