@@ -137,7 +137,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def preview_parquet
-    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path] })
+    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path], current_user: current_user&.name })
     parquet_file_path = JSON.parse(json_data)['data']
                             .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
                             .sort_by { |path| path.downcase }.first
