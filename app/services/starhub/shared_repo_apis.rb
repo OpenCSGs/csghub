@@ -123,7 +123,7 @@ module Starhub
     end
 
     def create_repo_file(repo_type, namespace, repo_name, path, options = {})
-      @client.post("/#{repo_type}/#{namespace}/#{repo_name}/raw/#{path}", options)
+      @client.post("/#{repo_type}/#{namespace}/#{repo_name}/raw/#{path}?current_user=#{options[:username]}", options)
     end
 
     def update_repo_file(repo_type, username, repo_name, path, options = {})
