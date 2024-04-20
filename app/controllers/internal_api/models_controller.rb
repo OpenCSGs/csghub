@@ -8,14 +8,14 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
 
   def index
     res_body = csghub_api.get_models(current_user&.name,
-                                      params[:search],
-                                      params[:sort],
-                                      params[:task_tag],
-                                      params[:framework_tag],
-                                      params[:language_tag],
-                                      params[:license_tag],
-                                      params[:page],
-                                      params[:per_page])
+                                     params[:search],
+                                     params[:sort],
+                                     params[:task_tag],
+                                     params[:framework_tag],
+                                     params[:language_tag],
+                                     params[:license_tag],
+                                     params[:page],
+                                     params[:per_page])
     api_response = JSON.parse(res_body)
     render json: { models: api_response['data'], total: api_response['total'] }
   end
