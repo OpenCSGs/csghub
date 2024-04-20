@@ -120,8 +120,8 @@ const app = createApp({
     CodeDetail
   },
   provide:{
-    defaultTags: DefaultTags,
-    csghubServer: CsghubServer,
+    defaultTags: DEFAULT_TAGS,
+    csghubServer: CSGHUB_SERVER,
     nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
   }
 }).use(ElementPlus, {

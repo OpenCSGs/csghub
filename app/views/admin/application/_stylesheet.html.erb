@@ -7,10 +7,12 @@ but each page can define additional CSS sources
 by providing a `content_for(:stylesheet)` block.
 %>
 
-<%= stylesheet_link_tag "tailwind", "inter-font" %>
+<%= stylesheet_link_tag "tailwind" %>
 
 <% Administrate::Engine.stylesheets.each do |css_path| %>
   <%= stylesheet_link_tag css_path %>
 <% end %>
+
+<%= stylesheet_link_tag "actiontext" %>
 
 <%= yield :stylesheet %>

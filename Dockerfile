@@ -1,4 +1,4 @@
-FROM git-devops.opencsg.com:5050/product/community/open-portal/ruby-node-nopdf
+FROM git-devops.opencsg.com:5050/product/community/open-portal/ruby-node
 
 RUN mkdir /myapp
 WORKDIR /myapp
