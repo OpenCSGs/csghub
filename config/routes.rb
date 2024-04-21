@@ -37,6 +37,11 @@ Rails.application.routes.draw do
 
   # internal api
   namespace :internal_api do
+    resources :wechat, only: [] do
+      collection do
+        get '/signature-config', to: 'wechat#signature_config'
+      end
+    end
     resources :organizations, only: [:create, :update] do
       collection do
         post '/new-members', to: 'organizations#new_members'

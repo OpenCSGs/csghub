@@ -1,0 +1,1 @@
+class WechatError < StandardError; end
