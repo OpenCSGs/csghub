@@ -5,7 +5,7 @@ CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户�
 
 CSGHub致力于为用户带来针对大模型原生设计的、可私有化部署离线运行的资产管理平台。CSGHub提供类似私有化的Huggingface功能，以类似OpenStack Glance管理虚拟机镜像、Harbor管理容器镜像以及Sonatype Nexus管理制品的方式，实现对LLM资产的管理。
 
-您可以通过OpenCSG传神社区体验SaaS版功能：https://portal.opencsg.com/models <br>也可以参照[快速使用](#快速使用)部分的说明文档，快速启动本地服务来探索CSGHub的所有功能。
+您可以通过OpenCSG传神社区体验SaaS版功能：https://opencsg.com <br>也可以参照[快速使用](#快速使用)部分的说明文档，快速启动本地服务来探索CSGHub的所有功能。
 <kbd>
 <img src="/docs/images/project_intro.jpg" width='800'>
 </kdb>
@@ -90,13 +90,13 @@ docker compose -f all-in-one-CN.yml up -d
 ```
 
 部署完毕后，就可以在浏览器上通过`http://[IP Address]`访问到新部署的CSGHub实例；
-实例启动后，您可以使用初始管理员账号：admin001/admin001，详细用户文档可参看[使用文档](https://portal.opencsg.com/docs/)
+实例启动后，您可以使用初始管理员账号：admin001/admin001，详细用户文档可参看[使用文档](https://opencsg.com/docs/)
 
 **快速安装注意事项：**
 * `SERVER_DOMAIN` ([IP Address])为目标主机的IP地址或者域名，请不要使用`127.0.0.1`或者`localhost`。
-* 当前发布的容器为x86_64架构，已测试Linux/Windows和Mac环境，Mac Silicon架构环境需要开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
-* **请注意：快速安装仅适用于试用测试，不能支持服务级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动。
-* 任何情况下，如果您计划正式使用CSGHub，请务必参照[完整部署指南](/script/all_in_one/README.md)进行服务部署。
+* 当前发布的服务镜像仅支持x86_64架构，已测试Linux/Windows和Mac环境，Mac Silicon架构环境需要开启Docker Desktop的[Rosetta for x86/AMD64 emulation](https://docs.docker.com/desktop/settings/mac/#general)。
+* **请注意：快速安装仅适用于试用测试，不能支持服务级部署。** 使用该all-in-one脚本启动过的实例无法有效持久化用户数据。服务启动后，使用`docker compose up`命令重新加载服务会出现错误，此时可以选择使用`docker compose down -v`命令彻底清除实例再重新启动。请务必参照[完整一键部署指南](/script/all_in_one/README.md)进行服务部署。
+* **请注意：快速安装不包含space部署相关功能。** 从CSGHhub v0.4.0开始支持了space功能，由于space的构建部署需要Kubernetes以及其他相关环境和配置，请参考该[完整部署文档](/docs/full_deployment_cn.md)进行完全版功能部署。
 
 ### 详细技术文档
 - [开发环境搭建](/docs/setup.md)

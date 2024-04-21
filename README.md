@@ -93,16 +93,16 @@ curl -L https://opencsg-public-resource.oss-cn-beijing.aliyuncs.com/csghub/all-i
 docker compose -f all-in-one-CN.yml up -d
 ```
 
-After all, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
+Then, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
 inital admin account: admin001/admin001
-You can check our website for more user guide information: [User Guide](https://portal.opencsg.com/docs/) (Chinese version only for now*)
+You can check our website for more user guide information: [User Guide](https://opencsg.com/docs/) 
 
 **Note:**
 
 * `SERVER_DOMAIN` ([IP Address]) should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
 * Released container images are for the x86_64 architecture only and have been tested on Linux/Windows and Mac environments. For Mac Silicon user, it is necessary to enable the [Rosetta for x86/AMD64 emulation Feature](https://docs.docker.com/desktop/settings/mac/#general) in your Docker Desktop.
-* **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it.
-* For any other situation, you should always follow the [Step-by-Step Deployment Guide](/script/all_in_one/README.md) for regular service deployment.
+* **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Please always  follow the [Step-by-Step Deployment Guide](/script/all_in_one/README.md) for regular service deployment.
+* **WARNING: The quick start does not include space application's deployment.** Starting from CSGHhub v0.4.0, the space function is supported. Since it still requires addtional Kubernetes and other services, please refer [Full Deployment Guide](/docs/full_deployment_en.md).
 
 #### Tech docs in detail
 - [setup development env](/docs/setup_en.md)
