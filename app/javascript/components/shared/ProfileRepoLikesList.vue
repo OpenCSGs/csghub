@@ -141,7 +141,7 @@
   const hasCodes = computed(() => props.codeList?.total > 0)
   const hasSpaces = computed(() => props.spaceList?.total > 0)
 
-  const moreModels = ref(props.modelList?.total > 1)
+  const moreModels = ref(props.modelList?.total > 6)
   const moreDatasets = ref(props.datasetList?.total > 6)
   const moreCodes = ref(props.codeList?.total > 6)
   const moreSpaces = ref(props.spaceList?.total > 6)
