@@ -475,7 +475,7 @@ export default {
           ElMessage({ message: err.message, type: "warning" })
         })
       } else {
-        if (payload.private) {
+        if (payload.hasOwnProperty('private')) {
           this.updateVisibility(payload.private) 
         }
         response.json().then((data) => {
