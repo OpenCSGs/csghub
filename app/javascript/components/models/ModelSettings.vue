@@ -391,7 +391,9 @@ export default {
           ElMessage({ message: err.message, type: "warning" })
         })
       } else {
-        this.updateVisibility(payload.private)
+        if (payload.private) {
+          this.updateVisibility(payload.private)
+        }
         response.json().then((data) => {
           ElMessage({ message: data.message, type: "success" })
         })
