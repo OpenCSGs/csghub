@@ -2,7 +2,7 @@
   <el-dialog
     :title="$t('organization.members.editRole')"
     v-model="dialogVisible"
-    width="30%"
+    width="350"
     @close="handleClose"
   >
     <template #header="{ close }">
@@ -13,30 +13,36 @@
           <img src="/images/invite_bg.png" class="w-[200px] absolute top-0 left-0" />
         </div>
     </template>
-    <el-form
+    <div class="flex justify-center flex-col m-auto w-full relative">
+      <div class="text-[18px] leading-[28px] text-[#101828]">修改用户角色</div>
+      <div class="text-[14px] leading-[20px] text-[#475467] font-light mb-5">通过访问文档来了解不同角色的权限区别</div>
+      <el-form
       :model="formDataRaw"
-      label-width="100px"
       :rules="rules"
+      class="w-full"
       ref="form"
-    >
-      <el-form-item :label="$t('organization.members.role')" prop="role">
-        <div>{{ $t('organization.members.role') }}</div>
-        <el-select v-model="dataForm.role" :placeholder="this.$t('all.select')" >
-          <el-option
-            v-for="item in roleMappings"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <div class="flex justify-between">
-          <el-button type="primary" @click="submitForm('form')">{{ $t('organization.members.confirm') }}</el-button>
-          <el-button @click="handleClose">{{ $t('organization.members.cancel') }}</el-button>
-        </div>
-      </el-form-item>
-    </el-form>
+      >
+        <el-form-item prop="role">
+          <div>{{ $t('organization.members.role') }}</div>
+          <el-select v-model="dataForm.role" size="large" :placeholder="this.$t('all.select')" >
+            <el-option
+              v-for="item in roleMappings"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </div>
+    <template #footer>
+      <div class="dialog-footer flex justify-between">
+        <el-button class="flex-1 mr-3 text-gray-700" size="large" @click="handleClose">{{ $t('organization.members.cancel') }}</el-button>
+        <el-button class="flex-1" size="large" color="#3250BD" type="primary" @click="submitForm('form')">
+          {{ $t('organization.members.confirm') }}
+        </el-button>
+      </div>
+    </template>
   </el-dialog>
 
 </template>
