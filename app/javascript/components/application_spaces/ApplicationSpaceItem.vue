@@ -5,7 +5,7 @@
         <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px] text-left">{{ getComputed.path }}</h3>
         <div class="flex gap-2">
           <span class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-[#344054] text-[12px]">{{ getComputed.visibility }}</span>
-          <AppStatus :appStatus="repo.status || 'NoAppFile'" :spaceResource="repo.hardware" />
+          <AppStatus :appStatus="getComputed.appStatus || 'NoAppFile'" :spaceResource="repo.hardware" />
         </div>
       </div>
     </div>
@@ -68,6 +68,7 @@
   const getComputed = computed(() => {
     const displayName = props.repo.nickname !== undefined && props.repo.nickname.trim().length > 0 ? props.repo.nickname : props.repo.name
     const path = props.repo.path.split('/')[0] + '/' + displayName
+    const appStatus = props.repo.path === 'leaderboard/SuperClueRanking' ? 'Running' : props.repo.status
 
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
 
@@ -79,7 +80,7 @@
       taskTag = taskTag? taskTag["show_name"] : null
     }
 
-    return { path, visibility, taskTag }
+    return { path, visibility, taskTag, appStatus }
   })
 </script>
 
