@@ -19,7 +19,7 @@
           <el-popover placement="bottom-start" :width="300" trigger="click">
             <template #reference>
               <div v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
-                <SvgIcon :name="'create'"/>
+                <SvgIcon :name="'invite_org_member'"/>
                 {{ $t('organization.create') }}
               </div>
             </template>
