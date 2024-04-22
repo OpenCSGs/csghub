@@ -7,7 +7,7 @@ With CSGHub, users can perform operations on LLM assets, including uploading, do
 
 CSGHub is committed to bringing users an asset management platform that is natively designed for large models and can be deployed On-Premise for fully offline operation. CSGHub offers functionalities similar to a privatized Huggingface(on-premise Huggingface), managing LLM assets in a manner akin to how OpenStack Glance manages virtual machine images, Harbor manages container images, and Sonatype Nexus manages artifacts.
 
-You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://portal.opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
+You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 <kbd>
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
@@ -94,14 +94,14 @@ docker compose -f all-in-one-CN.yml up -d
 
 After all, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
 inital admin account: admin001/admin001
-You can check our website for more user guide information: [User Guide](https://portal.opencsg.com/docs/) (Chinese version only for now*)
+You can check our website for more user guide information: [User Guide](https://opencsg.com/docs/) 
 
 **Note:**
 
 * `SERVER_DOMAIN` ([IP Address]) should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
 * Released container images are for the x86_64 architecture only and have been tested on Linux/Windows and Mac environments. For Mac Silicon user, it is necessary to enable the [Rosetta for x86/AMD64 emulation Feature](https://docs.docker.com/desktop/settings/mac/#general) in your Docker Desktop.
-* **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it.
-* For any other situation, you should always follow the [Step-by-Step Deployment Guide](/script/all_in_one/README.md) for regular service deployment.
+* **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Please always  follow the [Step-by-Step Deployment Guide](/script/all_in_one/README.md) for regular service deployment.
+* **WARNING: The quick start does not include space application's deployment.** Starting from CSGHhub v0.4.0, the space function is supported. Since it still requires addtional Kubernetes and other services, please refer [Full Deployment Guide](/docs/full_deployment_en.md).
 
 #### Tech docs in detail
 - [setup development env](/docs/setup_en.md)

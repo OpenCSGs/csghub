@@ -10,7 +10,7 @@ class Dataset < ApplicationRecord
   before_save :detect_sensitive_content
   after_update :update_starhub_server_dataset
 
-  validates :name, format: { with: /\A(?=.{2,70}$)(?!.*[_]{2})(?!.*[-]{2})(?!.*[.]{2})[a-zA-Z0-9_.-]+\Z/ }
+  validates :name, format: { with: NAME_RULE }
 
   validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }
 
@@ -34,31 +34,31 @@ class Dataset < ApplicationRecord
   private
 
   def sync_created_dataset_to_starhub_server
-    res = Starhub.api.create_dataset(creator.name,
-                                     name,
-                                     owner.name,
-                                     nickname,
-                                     desc,
-                                     { license: license, private: dataset_private?  })
+    res = Starhub.api(creator.session_ip).create_dataset(creator.name,
+                                                         name,
+                                                         owner.name,
+                                                         nickname,
+                                                         desc,
+                                                         { license: license, private: dataset_private?  })
     raise StarhubError, res.body unless res.success?
   end
 
   def update_starhub_server_dataset
-    res = Starhub.api.update_dataset(creator.name,
-                                     name,
-                                     owner.name,
-                                     nickname,
-                                     desc,
-                                     { private: dataset_private? })
+    res = Starhub.api(creator.session_ip).update_dataset(creator.name,
+                                                         name,
+                                                         owner.name,
+                                                         nickname,
+                                                         desc,
+                                                         { private: dataset_private? })
     raise StarhubError, res.body unless res.success?
   end
 
   def delete_dataset_from_starhub_server
-    res = Starhub.api.delete_dataset(owner.name, name, {current_user: creator.name})
+    res = Starhub.api(creator.session_ip).delete_dataset(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 
   def detect_sensitive_content
-    Starhub.api.text_secure_check('nickname_detection', name)
+    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', name)
   end
 end

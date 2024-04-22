@@ -1,9 +1,9 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[4px] rounded-[4px] cursor-pointer"
+  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[6px] cursor-pointer"
         :style="setTagColor()"
         @click="toggleActive"
   >
-    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+    <svg class="grayscale" :style="setSvgColor()" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="#ffffff">
       <mask id="mask0_3946_95937" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="0" width="10" height="12">
         <path d="M10.7925 0.1875H1.1438V11.8125H10.7925V0.1875Z" fill="white"/>
       </mask>
@@ -27,7 +27,12 @@
   }
   const setTagColor = () => {
     if (props.activeTag?.toLowerCase() === 'pytorch') {
-      return "color: white; background-color: #4D6AD6"
+      return "color: white; background-color: #4D6AD6;"
+    }
+  }
+  const setSvgColor = () =>{
+    if (props.activeTag?.toLowerCase() === 'pytorch') {
+      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }
   onMounted(() => {

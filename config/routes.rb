@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     resources :system_api_keys
     resources :tags
     resources :organizations
-    resources :ssh_keys
     resources :error_logs
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
@@ -23,6 +22,11 @@ Rails.application.routes.draw do
     resources :organizations, only: [:create, :update] do
       collection do
         post '/new-members', to: 'organizations#new_members'
+      end
+      member do
+        get '/members', to: 'organizations#members'
+        delete '/members/:user_id', to: 'organizations#remove_member'
+        put '/members/:user_id', to: 'organizations#update_member'
       end
     end
     resources :comments, only: [:create, :destroy, :index]
@@ -114,8 +118,11 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :new]
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
-    resources :organizations, only: [:new, :show, :edit]
-
+    resources :organizations, only: [:new, :show, :edit] do
+      member do
+        get 'members'
+      end
+    end
     get '/models/:namespace/(*model_name)/:branch/new', to: 'models#new_file'
     get '/models/:namespace/(*model_name)/edit/:branch/(*path)', to: 'models#edit_file', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/:branch/upload', to: 'models#upload_file'

@@ -23,7 +23,7 @@ export const all = {
   loadError: "Load Error",
   notSupportPreview:
     "Preview is not supported at the moment, please download via git clone",
-  changeVis: "Change visibility to",
+  changeVis: "Change visibility to ",
   enterPls: "Enter Please",
   sureDel: "Sure to Del",
   canNot: "Cannot",
@@ -68,4 +68,6 @@ export const all = {
   lfsTips2: "If you do not want to download the content of LFS files, please add it to the environment variables.",
   pleaseSelect: "Please select {value}",
   pleaseInput: "Please input {value}",
+  previous:"previous",
+  next:"next"
 }

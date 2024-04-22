@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
   validates_length_of :nickname, maximum: 20
   validates_length_of :email, maximum: 30
-  validates :name, format: { with: /\A(?=.{2,20}$)(?!.*[_]{2})(?!.*[-]{2})[a-zA-Z0-9_-]+\Z/ }, allow_blank: true
+  validates :name, format: { with: NAME_RULE }, allow_blank: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
 
   validate :unique_name_by_organization
@@ -23,7 +23,6 @@ class User < ApplicationRecord
   has_many :models, as: :owner
   has_many :created_models, class_name: 'Model', foreign_key: :creator_id
   has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
-  has_many :ssh_keys, dependent: :destroy
 
   after_save :sync_to_starhub_server
 
@@ -95,7 +94,11 @@ class User < ApplicationRecord
   end
 
   def org_role org
-    org_memberships.find_by(organization: org)&.role
+    org_membership_by_org(org)&.role
+  end
+
+  def org_membership_by_org org
+    org_memberships.find_by(organization: org)
   end
 
   def can_manage? repository
@@ -115,7 +118,7 @@ class User < ApplicationRecord
   end
 
   def set_org_role org, role
-    membership = org_memberships.find_by(organization: org)
+    membership = org_membership_by_org(org)
     if membership
       membership.update(role: role)
     end
@@ -134,21 +137,21 @@ class User < ApplicationRecord
     # user info missing 不同步
     return if name.blank? or email.blank?
 
-    Starhub.api.text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
-    Starhub.api.image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
+    Starhub.api(session_ip).text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
+    Starhub.api(session_ip).image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
     if starhub_synced?
-      res = Starhub.api.update_user(name, nickname, email)
+      res = Starhub.api(session_ip).update_user(name, nickname, email)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api.create_user(name, nickname, email)
+      res = Starhub.api(session_ip).create_user(name, nickname, email)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
 
     if starhub_synced? && git_token.blank?
       random_name = SecureRandom.uuid
-      res_body = Starhub.api.generate_git_token(name, random_name)
+      res_body = Starhub.api(session_ip).generate_git_token(name, random_name)
       res_json = JSON.parse(res_body)
       self.update_columns(git_token_name: res_json["data"]["name"], git_token: res_json["data"]["token"])
     end
@@ -161,7 +164,8 @@ class User < ApplicationRecord
       nickname: nickname,
       email: email,
       phone: phone,
-      avatar: avatar_url
+      avatar: avatar_url,
+      last_login_at: last_login_at,
     }
   end
 

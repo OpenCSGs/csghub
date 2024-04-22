@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-  import { computed  } from 'vue';
+  import { computed, inject  } from 'vue';
   import { useCookies } from 'vue3-cookies'
   import { useI18n } from 'vue-i18n'
   import { ElMessage, ElMessageBox } from 'element-plus'
@@ -40,6 +40,8 @@
     appStatus: String,
     canWrite: Boolean
   })
+
+  const csghubServer = inject('csghubServer')
 
   const isStopped = computed(() => {
     return props.appStatus === 'Stopped' ? true : false

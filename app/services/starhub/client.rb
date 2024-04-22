@@ -4,6 +4,13 @@ module Starhub
 
     include Singleton
 
+    attr_accessor :user_ip
+
+    def self.init_with user_ip
+      instance.user_ip = user_ip
+      instance
+    end
+
     API_VERSION = '/api/v1'
 
     def get(path, params = {})
@@ -85,7 +92,8 @@ module Starhub
         url: base_url,
         headers: {
           'Content-Type' => 'application/json',
-          'Authorization' => "Bearer #{token}"
+          'Authorization' => "Bearer #{token}",
+          'X-Forwarded-For' => user_ip
       }) do |conn|
         conn.use Faraday::FollowRedirects::Middleware
         conn.adapter :typhoeus
@@ -98,9 +106,12 @@ module Starhub
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         url: base_url,
-        headers: { 'Authorization' => "Bearer #{token}" }
+        headers: {
+          'Authorization' => "Bearer #{token}",
+          'X-Forwarded-For' => user_ip
+        }
       ) do |conn|
-        conn.request :multipart
+        conn.request :multipart, flat_encode: true
       end
     end
   end

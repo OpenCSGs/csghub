@@ -2,6 +2,9 @@ import { useCookies } from "vue3-cookies";
 import { ElMessageBox } from "element-plus";
 import csrfFetch from "./csrfFetch";
 
+import { user_sessions as sessions_en } from "../../../config/locales/en_js/user_sessions.js"
+import { user_sessions as sessions_zh } from "../../../config/locales/zh_js/user_sessions.js"
+
 const refreshJWT = () => {
   const { cookies } = useCookies();
   const jwt = cookies.get('user_token');
@@ -9,11 +12,12 @@ const refreshJWT = () => {
   const loginIdentity = cookies.get('login_identity');
   const userSyncedStr = cookies.get('user_synced');
   const userSynced = !!userSyncedStr && userSyncedStr.toString() === 'true';
+  const sessionLocale = cookies.get('locale') === 'en' ? sessions_en : sessions_zh
 
   if(loginIdentity && userSynced && !jwt) {
-    ElMessageBox.alert(t('user_sessions.expiredDesc'), t('user_sessions.expiredTitle'), {
+    ElMessageBox.alert(sessionLocale.expiredDesc, sessionLocale.expiredTitle, {
       'show-close': false,
-      confirmButtonText: t('user_sessions.reLogin'),
+      confirmButtonText: sessionLocale.reLogin,
       callback: () => {
         window.location.href = "/logout"
       },

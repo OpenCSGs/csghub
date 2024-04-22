@@ -20,15 +20,15 @@
         s.parentNode.insertBefore(hm, s);
       })();
 
-      const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
-      const csghubServer = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
+      const DEFAULT_TAGS = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+      const CSGHUB_SERVER = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
     </script>
   </head>
 
-  <body class="h-full">
+  <body class="h-full bg-[#F2F3F5]">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
-        <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
+        <%= render partial: 'partials/navbar', locals: { class_name: '' } %>
         <%= yield.force_encoding(Encoding::UTF_8) %>
       </div>
       <%= render partial: 'partials/foot' %>

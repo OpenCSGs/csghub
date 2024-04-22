@@ -1,9 +1,9 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[4px] rounded-[4px] cursor-pointer"
+  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-[6px] cursor-pointer"
         :style="setTagColor()"
         @click="toggleActive"
   >
-    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="12" viewBox="0 0 21 12" fill="none">
+    <svg class="grayscale" :style="setSvgColor()" xmlns="http://www.w3.org/2000/svg" width="21" height="12" viewBox="0 0 21 12" fill="none">
       <g clip-path="url(#clip0_4087_108615)">
         <path d="M2.35109 6.00029L1.18701 7.99301H3.51517L4.67925 6.00029H2.35109Z" fill="#5E97F6" stroke="#DCE0DF" stroke-width="0.0460105" stroke-linejoin="round"/>
         <path d="M0.0229492 9.98524L1.18703 7.99299H3.51519L2.35111 9.98524H0.0229492Z" fill="#5E97F6" stroke="#DCE0DF" stroke-width="0.0460105" stroke-linejoin="round"/>
@@ -67,6 +67,11 @@
   const setTagColor = () => {
     if (props.activeTag?.toLowerCase() === 'jax') {
       return "color: white; background-color: #4D6AD6"
+    }
+  }
+  const setSvgColor = () => {
+    if (props.activeTag?.toLowerCase() === 'jax') {
+      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }
   onMounted(() => {

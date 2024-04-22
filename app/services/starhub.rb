@@ -1,5 +1,5 @@
 module Starhub
-  def self.api
-    @api ||= Starhub::Api.new
+  def self.api user_ip = ""
+    Starhub::Api.new user_ip
   end
 end

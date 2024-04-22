@@ -36,6 +36,8 @@
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
       repo-type="space"
+      :user-name="userName"
+      :user-token="userToken"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>
@@ -89,7 +91,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { ElMessageBox } from 'element-plus'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
@@ -97,6 +99,7 @@
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useI18n } from 'vue-i18n'
   import refreshJWT from '../../packs/refreshJWT.js'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
     applicationSpace: Object,
@@ -113,8 +116,15 @@
     settingsVisibility: Boolean,
     tags: Object,
     ownerUrl: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    userName: String,
+    userToken: String
   })
+
+  const csghubServer = inject('csghubServer')
+
+  const repoDetailStore = useRepoDetailStore()
+  repoDetailStore.initialize(props.applicationSpace.data)
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
