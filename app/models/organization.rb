@@ -60,7 +60,7 @@ class Organization < ApplicationRecord
   end
 
   def is_last_admin?(user)
-    return false if user.org_role(self) != 'admin' 
+    return false if user.org_role(self) != 'admin'
 
     admin_users.count <= 1
   end
@@ -74,10 +74,10 @@ class Organization < ApplicationRecord
 
   def sync_to_starhub_server
     if starhub_synced?
-      res = Starhub.api(creator.session_ip).update_organization(creator.name, name, nickname, homepage)
+      res = Starhub.api(creator.session_ip).update_organization(creator.name, name, nickname, homepage, creator.name)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api(creator.session_ip).create_organization(creator.name, name, nickname, homepage)
+      res = Starhub.api(creator.session_ip).create_organization(creator.name, name, nickname, homepage, creator.name)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
