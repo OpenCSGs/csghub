@@ -137,7 +137,7 @@ end
 end
 
 [
-  ['Chinese', '中文', 'zh'],
+  ['Chinese', '中文', 'cn'],
   ['English', '英文', 'en'],
   ['French', '法文', 'fr'],
   ['German', '德文', 'de'],
