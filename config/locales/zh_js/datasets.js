@@ -24,7 +24,7 @@ export const datasets = {
     tips2: "暂不支持创建公开的数据集，如有需要可以联系管理员进行人工审核。",
     tips3: " 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
     createDataset: "创建数据集",
-    createSuccess: "数据集创建成功",
+    createSuccess: "数据集创建成功"
   },
   edit: {
     tips: "将会显示在数据集列表页面中，选填",

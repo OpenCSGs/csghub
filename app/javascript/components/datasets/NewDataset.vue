@@ -13,7 +13,7 @@
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.owner') }}</p>
-          <el-select v-model="owner" :placeholder="this.$t('all.select')" size="large">
+          <el-select v-model="owner" :placeholder="$t('all.select')" size="large">
             <el-option
               v-for="item in namespaces"
               :key="item[0]"
@@ -28,18 +28,18 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetName') }}</p>
-          <el-input v-model="datasetName" :placeholder="this.$t('rule.nameRule')" input-style="width: 100%" />
+          <el-input v-model="datasetName" :placeholder="$t('rule.nameRule')" input-style="width: 100%" />
         </div>
       </div>
 
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetNickName') }}</p>
-          <el-input v-model="datasetNickName" :placeholder="this.$t('all.inputNickNamePlc')" />
+          <el-input v-model="datasetNickName" :placeholder="$t('all.inputNickNamePlc')" />
         </div>
         <div class="">
           <p class="text-[#303133] text-sm mb-2">License</p>
-          <el-select v-model="license" :placeholder="this.$t('all.select')" size="large">
+          <el-select v-model="license" :placeholder="$t('all.select')" size="large">
             <el-option
               v-for="item in licenses"
               :key="item[0]"

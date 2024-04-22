@@ -66,6 +66,7 @@ export const application_spaces = {
     notes: '创建应用空间后，你可以使用网页或 Git 上传你的文件。',
     create: '创建应用空间',
     createSuccess: "应用空间创建成功",
+    tip: "应用于应用空间路径，创建后不可更改" 
   },
   edit: {
     cloudResource: '空间云资源',
