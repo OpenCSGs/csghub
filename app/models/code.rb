@@ -45,7 +45,7 @@ class Code < ApplicationRecord
   end
 
   def delete_code_from_starhub_server
-    res = Starhub.api(creator.session_ip).delete_code(owner.name, name, { current_user: owner.name })
+    res = Starhub.api(creator.session_ip).delete_code(owner.name, name, { current_user: creator.name })
     raise StarhubError, res.body unless res.success?
   end
 
