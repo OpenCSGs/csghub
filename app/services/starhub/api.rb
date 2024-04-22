@@ -37,6 +37,7 @@ module Starhub
       res.body
     end
 
+    # Not used
     def delete_git_token(username, token_name)
       @client.delete("/user/#{username}/tokens/#{token_name}")
     end
@@ -120,48 +121,50 @@ module Starhub
       res.body
     end
 
-    def create_ssh_key(username, key_name, content)
+    def create_ssh_key(username, key_name, content, current_user)
       options = {
         username: username,
         name: key_name,
         content: content
       }
-      @client.post("/user/#{username}/ssh_keys", options)
+      @client.post("/user/#{username}/ssh_keys?current_user=#{current_user}", options)
     end
 
-    def get_ssh_key(username)
+    def get_ssh_key(username, current_user)
       options = {
-        username: username
+        username: username,
+        current_user: current_user
       }
       @client.get("/user/#{username}/ssh_keys", options)
     end
 
-    def delete_ssh_key(username, key_name)
+    def delete_ssh_key(username, key_name, current_user)
       options = {
         username: username,
-        name: key_name
+        name: key_name,
+        current_user: current_user
       }
       @client.delete("/user/#{username}/ssh_key/#{key_name}")
     end
 
-    def create_organization(username, org_name, org_full_name, desc)
+    def create_organization(username, org_name, org_full_name, desc, current_user)
       options = {
         username: username,
         name: org_name,
         full_name: org_full_name,
         description: desc
       }
-      @client.post("/organizations", options)
+      @client.post("/organizations?current_user=#{current_user}", options)
     end
 
-    def update_organization(username, org_name, org_full_name, desc)
+    def update_organization(username, org_name, org_full_name, desc, current_user)
       options = {
         current_user: username,
         name: org_name,
         full_name: org_full_name,
         description: desc
       }
-      @client.put("/organizations/#{org_name}", options)
+      @client.put("/organizations/#{org_name}?current_user=#{current_user}", options)
     end
 
     def text_secure_check(scenario, content)
@@ -205,7 +208,7 @@ module Starhub
         role: role,
         user: user
       }
-      @client.post("/organizations/#{org_name}/members", options)
+      @client.post("/organizations/#{org_name}/members?current_user=#{op_user}", options)
     end
 
     def update_membership(org_name, op_user, new_role, old_role, username)
@@ -214,13 +217,14 @@ module Starhub
         old_role: old_role,
         op_user: op_user
       }
-      @client.put("/organizations/#{org_name}/members/#{username}", options)
+      @client.put("/organizations/#{org_name}/members/#{username}?current_user=#{op_user}", options)
     end
 
     def delete_membership(org_name, op_user, role, user)
       options = {
         op_user: op_user,
-        role: role
+        role: role,
+        current_user: op_user
       }
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
@@ -258,7 +262,7 @@ module Starhub
         input: input,
         version: "" #暂时不支持制定 version
       }
-      res = @client.post("/models/#{namespace}/#{name}/predict", options)
+      res = @client.post("/models/#{namespace}/#{name}/predict?current_user=#{user}", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
