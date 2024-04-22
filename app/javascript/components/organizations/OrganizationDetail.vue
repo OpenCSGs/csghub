@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="py-[16px] bg-[#FAFCFF]">
-      <div class="max-w-[1280px] m-auto flex items-center justify-between py-[16px] xl:px-[16px]">
+      <div class="max-w-[1280px] m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
           <span v-if="organization.verified" class="relative">
             <img :src="organization.avatar" class="h-[60px] w-[60px] rounded-[50%]" />
@@ -15,10 +15,58 @@
             <p class="text-[16px]"> @{{ organization.name }} </p>
           </div>
         </div>
-        <a v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
+        <div class="flex gap-[10px]">
+          <el-popover placement="bottom-start" :width="300" trigger="click">
+            <template #reference>
+              <div v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
+                <SvgIcon name="invite_org_member"/>
+                {{ $t('organization.create') }}
+              </div>
+            </template>
+            <div>
+              <a :href="`/models/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+                <div class="px-2 py-2 bg-[#F9F1F0]">
+                  <SvgIcon name="models" />
+                </div>
+                <div class="text-[14px] leading-[20px] text-[#344054]">
+                  <div>{{ $t('models.title') }}</div>
+                  <div class="font-light">{{ $t('models.tips') }}</div>
+                </div>
+              </a>
+              <a :href="`/datasets/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+                <div class="px-2 py-2 bg-[#E7EFF7]">
+                  <SvgIcon name="datasets" />
+                </div>
+                <div class="text-[14px] leading-[20px] text-[#344054]">
+                  <div>{{ $t('datasets.title') }}</div>
+                  <div class="font-light">{{ $t('datasets.tips') }}</div>
+                </div>
+              </a>
+              <a :href="`/spaces/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+                <div class="px-2 py-2 bg-[#F5F2FB]">
+                  <SvgIcon name="spaces" />
+                </div>
+                <div class="text-[14px] leading-[20px] text-[#344054]">
+                  <div>{{ $t('spaces.title') }}</div>
+                  <div class="font-light">{{ $t('spaces.tips') }}</div>
+                </div>
+              </a>
+              <a  :href="`/codes/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+                <div class="px-2 py-2 bg-[#F3F4F6]">
+                  <SvgIcon name="codes" />
+                </div>
+                <div class="text-[14px] leading-[20px] text-[#344054]">
+                  <div>{{ $t('codes.title') }}</div>
+                  <div class="font-light">{{ $t('codes.tips')}}</div>
+                </div>
+              </a>
+            </div>
+          </el-popover>
+          <a v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.99984 12.9167H6.24984C5.08687 12.9167 4.50538 12.9167 4.03222 13.0602C2.96688 13.3834 2.1332 14.217 1.81004 15.2824C1.6665 15.7555 1.6665 16.337 1.6665 17.5M15.8332 17.5V12.5M13.3332 15H18.3332M12.0832 6.25C12.0832 8.32107 10.4042 10 8.33317 10C6.2621 10 4.58317 8.32107 4.58317 6.25C4.58317 4.17893 6.2621 2.5 8.33317 2.5C10.4042 2.5 12.0832 4.17893 12.0832 6.25Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
             {{ $t('organization.orgSetting') }}
           </a>
+        </div>
       </div>
     </div>
 
