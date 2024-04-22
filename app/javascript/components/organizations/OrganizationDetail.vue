@@ -19,14 +19,14 @@
           <el-popover placement="bottom-start" :width="300" trigger="click">
             <template #reference>
               <div v-if="admin" :href="`/organizations/${organization.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
-                <SvgIcon :name="'invite_org_member'"/>
+                <SvgIcon name="invite_org_member"/>
                 {{ $t('organization.create') }}
               </div>
             </template>
             <div>
               <a :href="`/models/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F9F1F0]">
-                  <SvgIcon :name="'models'" />
+                  <SvgIcon name="models" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('models.title') }}</div>
@@ -35,7 +35,7 @@
               </a>
               <a :href="`/datasets/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#E7EFF7]">
-                  <SvgIcon :name="'datasets'" />
+                  <SvgIcon name="datasets" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('datasets.title') }}</div>
@@ -44,7 +44,7 @@
               </a>
               <a :href="`/spaces/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F5F2FB]">
-                  <SvgIcon :name="'spaces'" />
+                  <SvgIcon name="spaces" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('spaces.title') }}</div>
@@ -53,7 +53,7 @@
               </a>
               <a  :href="`/codes/new?orgName=${organization.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F3F4F6]">
-                  <SvgIcon :name="'codes'" />
+                  <SvgIcon name="codes" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
                   <div>{{ $t('codes.title') }}</div>
