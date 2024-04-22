@@ -15,15 +15,13 @@
             class="upload-demo"
             drag
             multiple
+            :limit="5"
             :headers="{ 'X-CSRF-TOKEN': csrf_token }"
             :data="{ commit_title: commitTitle, commit_desc: commitDesc}"
             :auto-upload="false"
-            :action="`/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`"
-            :limit="1"
             @change="handleFileChange"
-            :on-success="handleSuccess"
+            :on-remove="handleRemove"
             :on-error="handleError"
-            :before-upload="handleBeforeUpload"
         >
           <el-icon>
             <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +49,7 @@
       <el-input v-model="commitTitle" :maxLength="200" show-word-limit clearable
                 :placeholder="commitTitlePlaceholder"></el-input>
     </div>
-    <CommunityMDTextarea desc="" :placeholder="this.$t('all.provideMoreDesc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
+    <CommunityMDTextarea desc="" :placeholder="$t('all.provideMoreDesc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
       <el-button type="primary" @click="submitUpload" :disabled="filesList.length === 0">{{ $t('all.uploadFile') }}</el-button>
       <el-button @click="cancel">{{ $t('all.cancel') }}</el-button>
@@ -63,6 +61,7 @@ import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
 import {ref} from 'vue'
 import {ElMessage} from "element-plus"
 import { useI18n } from 'vue-i18n'
+import csrfFetch from "../../packs/csrfFetch"
 
 const props = defineProps({
   repoName: String,
@@ -88,35 +87,50 @@ const submitUpload = () => {
     ElMessage({message: t('all.selectFilePls'), type: "warning"})
     return
   }
-  uploadRef.value.submit()
-}
-
-const handleBeforeUpload = (file) => {
-  if (file.size / 1024 <= 5000) {
-    return true
-  } else {
-    ElMessage({message: t('all.fileTooLarge'), type: "warning"})
-    return false
+  for(let i = 0; i < filesList.value.length; i++) {
+    if (filesList.value[i].raw.size / 1024 > 5000) {
+      ElMessage({message: t('all.fileTooLarge'), type: "warning"})
+      return
+    }
   }
+  submitForm()
 }
 
 const handleFileChange = (file) => {
   commitTitlePlaceholder.value = `Upload ${file.name}`
-  filesList.value.push(file.raw)
+  filesList.value.push(file)
 }
-
-const handleSuccess = (response, file, fileList) => {
-  ElMessage({message: t('all.upLoadSuccess'), type: "success"})
-  filesList.value = []
-  window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${file.name}`
-};
-
-const handleError = (err, file, fileList) => {
-  ElMessage({message: t('all.upLoadError'), type: "warning"})
-  filesList.value.splice(-1, 1)
+const handleRemove = (file, fileList) => {
+  filesList.value = fileList.filter(item => item !== file)
 }
 
 const cancel = () => {
   window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
 }
+
+async function submitForm() {
+    const uploadEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`
+    const formData = new FormData()
+
+    filesList.value.forEach((file, index) => {
+      formData.append(`file${index}`, file.raw);
+    });
+
+    formData.append('commit_title', commitTitle.value || '')
+    formData.append('commit_desc', commitDesc.value || '')
+    formData.append('file_num', filesList.value.length)
+
+    const options = { method: 'POST', body: formData }
+
+    const response = await csrfFetch(uploadEndpoint, options)
+    if (!response.ok) {
+      const data = await response.json()
+      ElMessage({message: t('all.upLoadError'), type: "warning"})
+      throw new Error(data.message)
+    } else {
+      ElMessage({message: t('all.upLoadSuccess'), type: "success"})
+      filesList.value = []
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+    }
+  }
 </script>

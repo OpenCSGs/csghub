@@ -33,14 +33,17 @@
       :can-write="canWrite"
       :tags="tags"
       :tag-list="tagList"
+      :userName="userName"
+      :userToken="userToken"
       repo-type="dataset"
     />
   </div>
 </template>
 
 <script setup>
-import RepoHeader from '../shared/RepoHeader.vue';
-import RepoTabs from '../shared/RepoTabs.vue'
+  import RepoHeader from '../shared/RepoHeader.vue';
+  import RepoTabs from '../shared/RepoTabs.vue'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
 const props = defineProps({
   dataset: Object,
@@ -59,12 +62,14 @@ const props = defineProps({
   tagList: Object,
   ownerUrl: String,
   canWrite: Boolean,
-  hasLike: Boolean
+  hasLike: Boolean,
+  userName: String,
+  userToken: String
 })
 </script>
 
 <style scoped>
-body {
-  background: #fff !important;
-}
+  body {
+    background: #fff !important;
+  }
 </style>

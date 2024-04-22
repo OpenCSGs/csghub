@@ -6,6 +6,7 @@ refreshJWT()
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"
+import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
@@ -40,6 +41,8 @@ import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 
+const pinia = createPinia()
+
 const app = createApp({
   components: {
     Navbar,
@@ -67,8 +70,8 @@ const app = createApp({
     CodeDetail
   },
   provide:{
-    defaultTags: DefaultTags,
-    csghubServer: CsghubServer,
+    defaultTags: DEFAULT_TAGS,
+    csghubServer: CSGHUB_SERVER,
     nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
   }
 }).use(ElementPlus, {
@@ -87,10 +90,10 @@ const i18n = createI18n({
   }
 });
 
-
 // register Element UI Icons
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 app.use(i18n)
+app.use(pinia)
 app.mount("#app")

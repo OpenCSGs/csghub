@@ -9,6 +9,9 @@ This script enables the one-click deployment of an all-in-one CSGHub instance, i
 * git-server
 * minio
 
+**Notice:**
+Starting from CSGHhub v0.4.0, the space function is supported. Since it requires addtional Kubernetes and services, the All-in-one deployment here `does not include the construction and deployment of space`.
+
 ### Prerequisites
 * Hardware
 

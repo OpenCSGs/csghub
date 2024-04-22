@@ -2,7 +2,6 @@
   <div class="w-full bg-[#FAFCFF] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-[#EBEEF5]">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
-        :private="model.data.private"
         :license="model.data.license"
         :name="model.data.name"
         :nickname="model.data.nickname"
@@ -33,14 +32,17 @@
       :can-write="canWrite"
       :tags="tags"
       :tag-list="tagList"
+      :userName="userName"
+      :userToken="userToken"
       repo-type="model"
     />
   </div>
 </template>
 
 <script setup>
-import RepoHeader from '../shared/RepoHeader.vue'
-import RepoTabs from '../shared/RepoTabs.vue'
+  import RepoHeader from '../shared/RepoHeader.vue'
+  import RepoTabs from '../shared/RepoTabs.vue'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
 const props = defineProps({
   localRepoId: String,
@@ -59,9 +61,12 @@ const props = defineProps({
   avatar: String,
   ownerUrl: String,
   canWrite: Boolean,
-  hasLike: Boolean
+  hasLike: Boolean,
+  userName: String,
+  userToken: String
 })
 </script>
+
 <style scoped>
   body {
     background: #fff !important;

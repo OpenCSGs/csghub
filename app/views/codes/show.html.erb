@@ -15,5 +15,7 @@
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!current_user&.can_write?(@local_code) %>"
     :has-like="<%= @has_like %>"
+    user-name="<%= current_user&.name %>"
+    user-token="<%= current_user&.git_token %>"
   ></code-detail>
 </div>
