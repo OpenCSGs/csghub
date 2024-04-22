@@ -129,16 +129,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def upload_file
-    file = params[:file]
-    options = {
-      branch: 'main',
-      file_path: file.original_filename,
-      file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
-      email: current_user.email,
-      message: build_upload_commit_message,
-      username: current_user.name
-    }
-    sync_upload_file('dataset', options)
+    sync_upload_file('dataset', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }
   end
 
