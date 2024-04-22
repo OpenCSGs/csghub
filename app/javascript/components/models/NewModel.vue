@@ -157,7 +157,6 @@
   const canCreateModel = computed(() => { return nameRule.test(modelName.value) })
 
   const createModel = async () => {
-    console.log(modelName.value);
     try {
       const res = await submitModelForm()
       ElMessage.success(t('models.newModel.createSuccess'))
