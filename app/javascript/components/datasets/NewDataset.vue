@@ -83,7 +83,7 @@
         <button
           class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
           @click="createDataset"
-          :disabled="!canCreateDataset"
+          :disabled="!canCreateDataset || hasCreateDataset"
         >
         {{ $t('datasets.newDataset.createDataset') }}
         </button>
@@ -112,6 +112,7 @@
   const datasetNickName = ref('')
   const datasetDesc = ref('')
   const visibility = ref('private')
+  const hasCreateDataset = ref(false)
 
   const canCreateDataset = computed(() => { return nameRule.test(datasetName.value) })
 
@@ -138,9 +139,11 @@
     formData.append('visibility', visibility.value)
 
     const options = { method: 'POST', body: formData }
+    hasCreateDataset.value = true
 
     const response = await csrfFetch(datasetCreateEndpoint, options)
     if (!response.ok) {
+      hasCreateDataset.value = false
       const data = await response.json()
       throw new Error(data.message)
     } else {

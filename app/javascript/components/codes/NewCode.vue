@@ -87,7 +87,7 @@
         <button
           class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
           @click="createCode"
-          :disabled="!canCreateCode"
+          :disabled="!canCreateCode || hasCreateCode"
         >
           {{ $t('codes.newCode.createCode') }}
         </button>
@@ -153,6 +153,7 @@
   const codeNickName = ref('')
   const codeDesc = ref('')
   const visibility = ref('private')
+  const hasCreateCode = ref(false)
 
   const canCreateCode = computed(() => { return nameRule.test(codeName.value) })
 
@@ -179,10 +180,12 @@
     formData.append('visibility', visibility.value)
 
     const options = { method: 'POST', body: formData }
+    hasCreateCode.value = true
 
     const response = await csrfFetch(codeCreateEndpoint, options)
     if (!response.ok) {
       const data = await response.json()
+      hasCreateCode.value = false
       throw new Error(data.message)
     } else {
       return response.json()

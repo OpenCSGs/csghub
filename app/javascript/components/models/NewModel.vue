@@ -87,7 +87,7 @@
         <button
           class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
           @click="createModel"
-          :disabled="!canCreateModel"
+          :disabled="!canCreateModel || hasCreateModel"
         >
           {{ $t('models.newModel.createModel') }}
         </button>
@@ -153,6 +153,7 @@
   const modelNickName = ref('')
   const modelDesc = ref('')
   const visibility = ref('private')
+  const hasCreateModel = ref(false)
 
   const canCreateModel = computed(() => { return nameRule.test(modelName.value) })
 
@@ -179,9 +180,11 @@
     formData.append('visibility', visibility.value)
 
     const options = { method: 'POST', body: formData }
+    hasCreateModel.value = true
 
     const response = await csrfFetch(modelCreateEndpoint, options)
     if (!response.ok) {
+      hasCreateModel.value = false
       const data = await response.json()
       throw new Error(data.message)
     } else {
