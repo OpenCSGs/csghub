@@ -31,6 +31,7 @@
     "vue-i18n": "^9.10.1",
     "vue-turbolinks": "^2.2.2",
     "vue3-cookies": "^1.0.6",
+    "weixin-js-sdk": "^1.6.5",
     "yarn": "^1.22.19"
   },
   "scripts": {
