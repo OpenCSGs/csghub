@@ -1,12 +1,14 @@
 export const codes = {
-  title: "Code Repository",
-  placeholder: "Code repository name",
-  downloadCode: "Download the code repository",
-  codeName: "Code repository name",
-  codeNameTips: "Apply to code repository path, cannot be changed after creation",
-  namespaceCodeName: "Namespace/Code repository name",
-  codeNickName: "Code repository alias",
-  codeDesc: "Introduction to the code repository",
+  title: "Codes",
+  tips:"Creating a code repository to host your code",
+  placeholder: "Codes name",
+  downloadCode: "Download Code",
+  codeName: "Code Name",
+  codeNameTips:
+    "Applied to the code path, cannot be changed after creation",
+  namespaceCodeName: "Namespace/Code Name",
+  codeNickName: "Code Nickname",
+  codeDesc: "Code Description",
   newCode: {
     title: "New Code Repository",
     titleDesc: "Repository contains all code files and revision history",

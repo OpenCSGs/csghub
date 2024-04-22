@@ -13,6 +13,7 @@ export const organization = {
   space: "Space",
   code: "Code",
   orgMembers: "Organization members",
+  create:"Create",
   members: {
     title: "Member List",
     description: "Manage your organization members and their account permissions",
