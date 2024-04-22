@@ -39,6 +39,8 @@ export const organization = {
     inputSpaceNamePls: "Please enter the organization namespace",
   },
   edit: {
+    role:"Modify User Role",
+    roleTips:"Learn about the differences in permissions for different roles by accessing the documentation",
     updateSuccess: "organization updated successfully",
   },
 }

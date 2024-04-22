@@ -14,8 +14,8 @@
       </div>
     </template>
     <div class="flex justify-center flex-col m-auto w-full relative">
-      <div class="text-[18px] leading-[28px] text-[#101828]">修改用户角色</div>
-      <div class="text-[14px] leading-[20px] text-[#475467] font-light mb-5">通过访问文档来了解不同角色的权限区别</div>
+      <div class="text-[18px] leading-[28px] text-[#101828]">{{ $t('organization.edit.role') }}</div>
+      <div class="text-[14px] leading-[20px] text-[#475467] font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
       <el-form
       :model="formDataRaw"
       :rules="rules"

@@ -39,6 +39,8 @@ export const organization = {
     inputSpaceNamePls: "请填写组织命名空间",
   },
   edit: {
+    role:"修改用户角色",
+    roleTips:"通过访问文档来了解不同角色的权限区别",
     updateSuccess: "organization已更新",
   },
 }

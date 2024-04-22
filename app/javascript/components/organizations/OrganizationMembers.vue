@@ -62,7 +62,7 @@
 
             <el-table-column v-if="admin" width="100" align="center" fixed="right">
               <template #default="scope">
-                <div class="flex gap-[4px] justify-end" >
+                <div class="flex gap-4 justify-end" >
                   <el-icon :size="16" class="cursor-pointer" @click="handleToRoleEdit(scope.row)" >
                     <Edit />
                   </el-icon>
