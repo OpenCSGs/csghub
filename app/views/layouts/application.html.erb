@@ -2,6 +2,7 @@
 <html class="h-full">
   <head>
     <title>OpenCSG</title>
+    <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8">
     <%= csrf_meta_tags %>
@@ -12,26 +13,18 @@
     <%= javascript_include_tag "application", defer: true %>
     <%= favicon_link_tag asset_path('favicon.png') %>
     <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?95555b86ed4a344b0aa4f20afeee20c1";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();
-
-      const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
-      const CsghubServer = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
+      const DEFAULT_TAGS = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+      const CSGHUB_SERVER = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
     </script>
   </head>
 
-  <body class="h-full bg-[#F2F3F5]">
+  <body class="h-full">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
-        <%= render partial: 'partials/navbar', locals: { class_name: '' } %>
+        <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
         <%= yield.force_encoding(Encoding::UTF_8) %>
       </div>
-      <%= render partial: 'partials/foot' %>
+      <%= render partial: 'partials/footer' %>
     </div>
   </body>
 </html>
