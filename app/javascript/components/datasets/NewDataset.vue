@@ -153,11 +153,9 @@
   }
   onMounted(() => {
     const params = new URLSearchParams(window.location.search)
-    if(params.get('orgName')){
-      const result = props.namespaces.find(item => item[1] === params.get('orgName'));
-      if (result) {
-        owner.value = result[0]
-      }
+    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
+    if (result) {
+      owner.value = result[0]
     }
   })
 </script>
