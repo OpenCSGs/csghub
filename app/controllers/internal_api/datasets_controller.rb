@@ -123,26 +123,17 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def upload_file
-    file = params[:file]
-    options = {
-      branch: 'main',
-      file_path: file.original_filename,
-      file: Multipart::Post::UploadIO.new(file.tempfile.path, file.content_type),
-      email: current_user.email,
-      message: build_upload_commit_message,
-      username: current_user.name
-    }
-    sync_upload_file('dataset', options)
+    sync_upload_file('dataset', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }
   end
 
   def preview_parquet
-    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path] })
+    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path], current_user: current_user&.name })
     parquet_file_path = JSON.parse(json_data)['data']
                             .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
                             .sort_by { |path| path.downcase }.first
     if parquet_file_path
-      preview_data = csghub_api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path)
+      preview_data = csghub_api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path, {current_user: current_user&.name})
       render json: preview_data
     else
       render json: {}
