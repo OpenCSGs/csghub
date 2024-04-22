@@ -141,7 +141,7 @@
   const hasCodes = computed(() => props.codeList?.total > 0)
   const hasSpaces = computed(() => props.spaceList?.total > 0)
 
-  const moreModels = ref(props.modelList?.total > 6)
+  const moreModels = ref(props.modelList?.total > 1)
   const moreDatasets = ref(props.datasetList?.total > 6)
   const moreCodes = ref(props.codeList?.total > 6)
   const moreSpaces = ref(props.spaceList?.total > 6)
@@ -171,19 +171,19 @@
   }
 
   const fetchMoreDatasets = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/datasets?per=${props.datasetList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/likes/datasets?per=${props.datasetList.total}`
     await fetchData(url, datasets)
     moreDatasets.value = false
   }
 
   const fetchMoreSpaces = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/spaces?per=${props.spaceList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/likes/spaces?per=${props.spaceList.total}`
     await fetchData(url, spaces)
     moreSpaces.value = false
   }
 
   const fetchMoreCodes = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/codes?per=${props.codeList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/likes/codes?per=${props.codeList.total}`
     await fetchData(url, codes)
     moreCodes.value = false
   }
