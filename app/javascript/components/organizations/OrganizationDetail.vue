@@ -47,7 +47,7 @@
                   <SvgIcon :name="'spaces'" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
-                  <div>{{ $t('spaces.space') }}</div>
+                  <div>{{ $t('spaces.title') }}</div>
                   <div class="font-light">{{ $t('spaces.tips') }}</div>
                 </div>
               </a>
@@ -56,7 +56,7 @@
                   <SvgIcon :name="'codes'" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-[#344054]">
-                  <div>{{ $t('codes.codes') }}</div>
+                  <div>{{ $t('codes.title') }}</div>
                   <div class="font-light">{{ $t('codes.tips')}}</div>
                 </div>
               </a>
