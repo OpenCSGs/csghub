@@ -10,6 +10,10 @@
 * git-server
 * minio
 
+**注意：**
+从CSGHhub v0.4.0开始支持了space功能，由于space的构建部署需要Kubernetes以及其他相关环境和配置，因此这里的一键部署功能`不包含space的构建和部署`
+
+
 ### 前置条件
 * 硬件
   

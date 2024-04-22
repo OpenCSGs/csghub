@@ -111,7 +111,7 @@ module Starhub
           'X-Forwarded-For' => user_ip
         }
       ) do |conn|
-        conn.request :multipart
+        conn.request :multipart, flat_encode: true
       end
     end
   end

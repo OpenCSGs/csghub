@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-[#FAFCFF] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
         :private="applicationSpace.data.private"
@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { ElMessageBox } from 'element-plus'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
@@ -99,6 +99,7 @@
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useI18n } from 'vue-i18n'
   import refreshJWT from '../../packs/refreshJWT.js'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
     applicationSpace: Object,
@@ -119,6 +120,11 @@
     userName: String,
     userToken: String
   })
+
+  const csghubServer = inject('csghubServer')
+
+  const repoDetailStore = useRepoDetailStore()
+  repoDetailStore.initialize(props.applicationSpace.data)
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 

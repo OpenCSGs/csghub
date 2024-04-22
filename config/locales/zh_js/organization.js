@@ -13,6 +13,7 @@ export const organization = {
   space: "应用空间",
   code: "代码仓库",
   orgMembers: "组织成员",
+  create:"创建",
   members: {
     title: "成员列表",
     description: "管理您的组织成员及其账户权限",

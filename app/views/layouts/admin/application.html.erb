@@ -27,8 +27,8 @@ By default, it renders:
   <%= csrf_meta_tags %>
   <%= csp_meta_tag if defined?(csp_meta_tag) %>
   <script>
-    const DefaultTags = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
-    const CsghubServer = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
+    const DEFAULT_TAGS = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+    const CSGHUB_SERVER = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
   </script>
 </head>
 <body>
