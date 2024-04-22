@@ -131,7 +131,7 @@ module Starhub
     end
 
     def upload_repo_file(repo_type, namespace, repo_name, options = {})
-      @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file", options)
+      @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file?current_user=#{options[:username]}", options)
     end
   end
 end
