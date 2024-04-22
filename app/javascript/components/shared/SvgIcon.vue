@@ -6,11 +6,11 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  name: String,
-  path: {
-    type: String,
-    default: "icons",
-  },
-});
+  const props = defineProps({
+    name: String,
+    path: {
+      type: String,
+      default: "icons",
+    },
+  });
 </script>
