@@ -24,15 +24,17 @@
       ref="form"
       >
         <el-form-item prop="role">
-          <div>{{ $t('organization.members.role') }}</div>
-          <el-select v-model="dataForm.role" size="large" :placeholder="this.$t('all.select')" >
-            <el-option
-              v-for="item in roleMappings"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
+          <div class="flex flex-col w-full">
+            <div>{{ $t('organization.members.role') }}</div>
+            <el-select v-model="dataForm.role" size="large" :placeholder="this.$t('all.select')" >
+              <el-option
+                v-for="item in roleMappings"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </div>
         </el-form-item>
       </el-form>
     </div>
