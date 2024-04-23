@@ -43,25 +43,27 @@
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
 
-const props = defineProps({
-  localRepoId: String,
-  defaultTab: String,
-  code: Object,
-  lastCommit: Object,
-  branches: Object,
-  tags: Object,
-  currentBranch: String,
-  currentPath: String,
-  blob: Object,
-  actionName: String,
-  settingsVisibility: Boolean,
-  avatar: String,
-  ownerUrl: String,
-  canWrite: Boolean,
-  hasLike: Boolean,
-  userName: String,
-  userToken: String
-})
+  const props = defineProps({
+    localRepoId: String,
+    defaultTab: String,
+    code: Object,
+    lastCommit: Object,
+    branches: Object,
+    tags: Object,
+    currentBranch: String,
+    currentPath: String,
+    blob: Object,
+    actionName: String,
+    settingsVisibility: Boolean,
+    avatar: String,
+    ownerUrl: String,
+    canWrite: Boolean,
+    hasLike: Boolean,
+    userName: String,
+    userToken: String
+  })
+  const repoDetailStore = useRepoDetailStore()
+  repoDetailStore.initialize(props.code.data)
 </script>
 
 <style scoped>

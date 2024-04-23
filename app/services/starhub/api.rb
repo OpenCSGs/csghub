@@ -250,6 +250,9 @@ module Starhub
     end
 
     def get_user_likes(username, repotype, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
       res = @client.get("/user/#{username}/likes/#{repotype}", options)
       raise StarhubError, res.body unless res.success?
       res.body
