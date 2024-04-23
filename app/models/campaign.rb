@@ -33,8 +33,6 @@ class Campaign < ApplicationRecord
                         :location,
                         :organizer,
                         :content,
-                        :desktop_banner,
-                        :mobile_banner,
                         :campaign_type
 
   scope :without_lead_form, -> { includes(:lead_form).where(lead_forms: { id: nil }) }
