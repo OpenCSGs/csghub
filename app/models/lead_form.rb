@@ -23,7 +23,8 @@ class LeadForm < ApplicationRecord
       'email_opt_out',
       'num_of_employees',
       'additional_notes',
-      'computing_demand'
+      'computing_demand',
+      'demand'
     ]
   end
 
