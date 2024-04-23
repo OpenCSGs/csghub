@@ -225,7 +225,7 @@
 </template>
 
 <script setup>
-  import {ref, computed, inject} from 'vue'
+  import {ref, computed, onMounted, inject} from 'vue'
   import {ElInput, ElMessage} from 'element-plus'
   import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
@@ -329,6 +329,13 @@
     coverImage.value = res.url
     imageUploaded.value = true
   }
+  onMounted(() => {
+    const params = new URLSearchParams(window.location.search)
+    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
+    if (result) {
+      owner.value = result[0]
+    }
+  })
 
 </script>
 
