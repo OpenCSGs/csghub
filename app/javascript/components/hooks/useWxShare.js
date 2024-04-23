@@ -1,19 +1,13 @@
 import useWxSDK from "./useWxSDK.js"
 
 const useWxShare = async(shareConfig) => {
-  const { initConfig, setShareInfo } = useWxSDK()
+  const { initConfig } = useWxSDK()
   const shareUrl = window.location.href.split("#")[0];
   const getSignatureUrl = `/internal_api/wechat/signature-config?page_url=${shareUrl}`
   const response = await fetch(getSignatureUrl)
   if (response.ok) {
     response.json().then((data) => {
-      initConfig(data).then(() => {
-        setShareInfo({
-          ...shareConfig,
-          imgUrl: 'https://opencsg.com/images/opencsg_mobile_logo.png',
-          link: shareUrl
-        })
-      })
+      initConfig(data, shareConfig)
     })
   } else {
     response.json().then((data) => {

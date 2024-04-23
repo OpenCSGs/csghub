@@ -70,7 +70,8 @@
   onMounted(() => {
     useWxShare({
       title: props.model.data.path,
-      desc: props.model.data.description
+      desc: props.model.data.description,
+      link: window.location.href
     })
   })
 </script>
