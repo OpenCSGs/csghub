@@ -44,7 +44,8 @@ module Starhub
     end
 
     def delete(path, options = {})
-      starhub_api_connection.delete(request_path(path)) do |req|
+      # 这个需要后续依赖后台的 API 进行重构
+      starhub_api_connection.delete(request_path(path), options) do |req|
         req.body = options.to_json
       end
     rescue Faraday::ConnectionFailed
