@@ -123,7 +123,7 @@ export default {
       inCountDown: false,
       countdown: 30,
       intervalId: null,
-      phoneJustSendcode: ''
+      phoneJustSendcode: this.phone
     };
   },
   mounted() {},
