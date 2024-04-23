@@ -2,7 +2,6 @@
   <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-[#EBEEF5]">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
-        :private="model.data.private"
         :license="model.data.license"
         :name="model.data.name"
         :nickname="model.data.nickname"

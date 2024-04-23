@@ -107,7 +107,6 @@
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import ViewMore from './ViewMore.vue'
   import { useI18n } from 'vue-i18n'
-  import { onMounted } from 'vue'
 
   const props = defineProps({
     modelList: Object,
@@ -205,8 +204,4 @@
       }
     })
   }
-
-  onMounted(() => {
-    console.log(props.modelList);
-  })
 </script>

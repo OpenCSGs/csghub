@@ -143,20 +143,20 @@
     }
   }
 
-  const fetchMorerepos = async (repoType) => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/${repoType}?per=${props.modelList.total}`
+  const fetchMorerepos = async () => {
+    const url = `/internal_api/${prefixPath}/${props.name}/likes/models?per=${props.modelList.total}`
     await fetchData(url, models)
     moreModels.value = false
   }
 
   const fetchMoreDatasets = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/${repoType}?per=${props.datasetList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/likes/datasets?per=${props.datasetList.total}`
     await fetchData(url, datasets)
     moreDatasets.value = false
   }
 
   const fetchMoreSpaces = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/${repoType}?per=${props.spaceList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/likes/spaces?per=${props.spaceList.total}`
     await fetchData(url, spaces)
     moreSpaces.value = false
   }
