@@ -30,7 +30,7 @@
           <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.codeName') }}</p>
           <el-input v-model="codeName" :placeholder="$t('rule.nameRule')" input-style="width: 100%" >
             <template #suffix>
-              <QuestInput :content="$t('codes.newCode.tip')" />
+              <InputTip :content="$t('codes.newCode.tip')" />
             </template>
           </el-input>
         </div>
@@ -136,7 +136,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
-  import QuestInput from '../shared/inputs/QuestInput.vue'
+  import InputTip from '../shared/inputs/InputTip.vue'
 
   const { t } = useI18n()
   const nameRule = inject('nameRule')

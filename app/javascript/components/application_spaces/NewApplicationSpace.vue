@@ -50,7 +50,7 @@
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.name') }}</p>
           <el-input v-model="spaceName" :placeholder="$t('application_spaces.new.namePlaceholder')" input-style="width: 100%" >
             <template #suffix>
-              <QuestInput :content="$t('application_spaces.new.tip')" />
+              <InputTip :content="$t('application_spaces.new.tip')" />
             </template>
           </el-input>
         </div>
@@ -229,7 +229,7 @@
   import {ElInput, ElMessage} from 'element-plus'
   import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
-  import QuestInput from '../shared/inputs/QuestInput.vue'
+  import InputTip from '../shared/inputs/InputTip.vue'
 
   const props = defineProps({
     licenses: Array,
