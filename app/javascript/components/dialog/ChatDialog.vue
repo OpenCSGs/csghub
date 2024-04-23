@@ -1,22 +1,27 @@
-、
 <template>
   <el-dialog
     v-model="dialogVisible"
-    width="80%"
+    width="98%"
+    top="10vh"
     :show-close="true"
     :close-on-click-modal="false"
     :before-close="handleClose"
-    class="max-w-[438px] w-[80%]"
+    :style="{ borderRadius: '10px' }"
+    class="max-w-[438px] md:w-full chatDialog"
   >
     <template #header="{ close }">
-      <div class="flex justify-between">
-        <div class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-[#EAECF0]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 21V15M16 18H22M12 15H8C6.13623 15 5.20435 15 4.46927 15.3045C3.48915 15.7105 2.71046 16.4892 2.30448 17.4693C2 18.2044 2 19.1362 2 21M15.5 3.29076C16.9659 3.88415 18 5.32131 18 7C18 8.67869 16.9659 10.1159 15.5 10.7092M13.5 7C13.5 9.20914 11.7091 11 9.5 11C7.29086 11 5.5 9.20914 5.5 7C5.5 4.79086 7.29086 3 9.5 3C11.7091 3 13.5 4.79086 13.5 7Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>1
-        <img src="/images/invite_bg.png" class="w-[200px] absolute top-0 left-0" />
+      <div class="flex gap-4 items-center pt-6">
+        <SvgIcon name="ekb_icon" />
+        <div class="flex flex-col">
+          <div class="text-[20px] leading-[30px] text-[#101828]">传奇兽</div>
+          <div class="text-[14px] leading-[20px] text-[#475467] font-light">更加智能的大语言模型知识助手</div>
+        </div>
       </div>
+      <div class="flex w-full my-6 bg-[#EAECF0] h-[1px]"></div>
     </template>
-    <div class="flex">iframe</div>
+    <div class="w-full h-full min-h-[600px] md:min-h-[400px]">
+      <iframe  v-if="chatSrc" :src="chatSrc" width="100%" class="min-h-[600px] md:min-h-[400px] rounded-[10px]" />
+    </div>
   </el-dialog>
 </template>
 
@@ -24,7 +29,8 @@
   import { ref, onMounted, inject, computed } from 'vue';
   import useChatDialogStore from '../../stores/ChatStore.js';
   const chatStore = useChatDialogStore();
-
+  const chatSrc = 'https://ekb.opencsg.com/chat?app_id=2dwvScahVOWtR9v4SfF3z0e5UWc&theme=light&lang=zh-CN'
+  
   const props = defineProps({
     isShow: String
   });
@@ -41,5 +47,14 @@
   const handleClose = () => {
     dialogVisible.value = false;
   };
-  console.log(props.dialog);
 </script>
+<style>
+.chatDialog {
+  .el-dialog__header {
+    padding: 0 !important;
+  }
+  .el-dialog__body {
+    padding: 0 !important;
+  }
+}
+</style>
