@@ -34,6 +34,7 @@
         <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
         <%= yield.force_encoding(Encoding::UTF_8) %>
         <%= render partial: 'partials/little_monster' %>
+        <chat-dialog />
       </div>
       <%= render partial: 'partials/footer' %>
     </div>
