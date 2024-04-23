@@ -25,11 +25,11 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
       </div>
-      <view-more
+      <!-- <view-more
         v-if="moreModels"
         target="models"
         @view-more-targets="viewMoreTargets"
-      ></view-more>
+      ></view-more> -->
       <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
     </div>
 
@@ -48,11 +48,11 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
       </div>
-      <view-more
+      <!-- <view-more
         v-if="moreDatasets"
         target="datasets"
         @view-more-targets="viewMoreTargets"
-      ></view-more>
+      ></view-more> -->
       <el-skeleton class="pr-6" v-if="datasetsLoading" :rows="2" animated />
     </div>
 
@@ -71,11 +71,11 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
       </div>
-      <view-more
+      <!-- <view-more
         v-if="moreCodes"
         target="codes"
         @view-more-targets="viewMoreTargets"
-      ></view-more>
+      ></view-more> -->
       <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
     </div>
 
@@ -101,11 +101,11 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
       </div>
-      <view-more
+      <!-- <view-more
         v-if="moreSpaces"
         target="spaces"
         @view-more-targets="viewMoreTargets"
-      ></view-more>
+      ></view-more> -->
       <el-skeleton class="pr-6" v-if="spacesLoading" :rows="2" animated />
     </div>
   </div>

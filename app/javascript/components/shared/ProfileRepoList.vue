@@ -153,25 +153,25 @@
   }
 
   const fetchMoreModels = async () => {
-    const url = `/internal_api/${props.name}/models?per=${props.modelList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/models?per=${props.modelList.total}`
     await fetchData(url, models)
     moreModels.value = false
   }
 
   const fetchMoreDatasets = async () => {
-    const url = `/internal_api/${props.name}/datasets?per=${props.datasetList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/datasets?per=${props.datasetList.total}`
     await fetchData(url, datasets)
     moreDatasets.value = false
   }
 
   const fetchMoreSpaces = async () => {
-    const url = `/internal_api/${props.name}/spaces?per=${props.spaceList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/spaces?per=${props.spaceList.total}`
     await fetchData(url, spaces)
     moreSpaces.value = false
   }
 
   const fetchMoreCodes = async () => {
-    const url = `/internal_api/${props.name}/codes?per=${props.codeList.total}`
+    const url = `/internal_api/${prefixPath}/${props.name}/codes?per=${props.codeList.total}`
     await fetchData(url, codes)
     moreCodes.value = false
   }
