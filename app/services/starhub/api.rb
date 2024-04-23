@@ -12,20 +12,22 @@ module Starhub
       @client = Starhub::Client.init_with user_ip
     end
 
-    def create_user(name, nickname, email)
+    def create_user(name, nickname, email, phone)
       options = {
         username: name,
         name: nickname,
-        email: email
+        email: email,
+        phone: phone
       }
       @client.post("/users", options)
     end
 
-    def update_user(name, nickname, email)
+    def update_user(name, nickname, email, phone)
       options = {
         username: name,
         name: nickname,
-        email: email
+        email: email,
+        phone: phone
       }
       @client.put("/users/#{name}", options)
     end
