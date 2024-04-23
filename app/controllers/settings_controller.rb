@@ -1,4 +1,6 @@
 class SettingsController < ApplicationController
+  layout 'repo_application'
+
   before_action :authenticate_user, except: :locale
 
   def profile

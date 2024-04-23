@@ -1,4 +1,6 @@
 class OrganizationsController < ApplicationController
+  layout 'repo_application'
+
   before_action :check_user_info_integrity
   before_action :authenticate_user, except: [:show]
 

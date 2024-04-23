@@ -1,4 +1,6 @@
 class ProfileController < ApplicationController
+  layout 'repo_application'
+
   before_action :check_user_info_integrity
 
   def index
