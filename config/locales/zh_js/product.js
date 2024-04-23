@@ -24,6 +24,7 @@ export const product = {
     "product2": "产品 #2",
     "headline": "OpenCSG StarShip 星舰平台",
     "desc": "StarShip 致力于为大模型应用开发团队提供一套完整的模型/数据管理及应用搭建平台，利用大模型技术打造软件工程2.0的新体验",
-    "demo": "产品演示"
+    "demo": "产品演示",
+    "trailApply": "申请试用"
   },
 }

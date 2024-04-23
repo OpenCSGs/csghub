@@ -24,6 +24,7 @@ export const product = {
     "product2": "Product #2",
     "headline": "OpenCSG StarShip",
     "desc": "StarShip is committed to providing a complete model/data management and application building platform for large model application development teams, utilizing large model technology to create a new experience in software engineering 2.0.",
-    "demo": "Product demonstration"
+    "demo": "Product demonstration",
+    "trailApply": "Apply for Trail"
   },
 }
