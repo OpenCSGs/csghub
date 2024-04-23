@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="border-t border-[#EBEEF5] p-[16px]">
     <h3 class="text-[16px] text-[#344054] font-[500] mb-[16px]">{{ $t('widgets.onlineDemo') }}</h3>
     <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('widgets.testInput') }}</p>
     <el-input

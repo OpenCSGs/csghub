@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict'
+    get '/models/:namespace/(*model_name)/related_repos', to: 'models#related_repos'
 
     resources :datasets, only: [:index, :create]
     get '/datasets/:namespace/(*dataset_name)/readme', to: 'datasets#readme'
@@ -92,6 +93,7 @@ Rails.application.routes.draw do
     put '/datasets/:namespace/(*dataset_name)/update_readme_tags', to: 'datasets#update_readme_tags'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
+    get '/datasets/:namespace/(*dataset_name)/related_repos', to: 'datasets#related_repos'
 
     resources :codes, only: [:index, :create]
     get '/codes/:namespace/(*code_name)/readme', to: 'codes#readme'
@@ -101,6 +103,7 @@ Rails.application.routes.draw do
     put '/codes/:namespace/(*code_name)/files/:branch', to: 'codes#update_file'
     delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}
+    get '/codes/:namespace/(*code_name)/related_repos', to: 'codes#related_repos'
 
     resources :spaces, controller: 'application_spaces', only: [:index, :create]
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme'
