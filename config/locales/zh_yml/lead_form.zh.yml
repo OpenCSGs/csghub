@@ -1,0 +1,15 @@
+zh:
+  lead_form:
+    name: '姓名'
+    phone: '电话'
+    company: '公司'
+    email: '邮箱'
+    demand: '需求'
+    title: '职位'
+    industry: '行业'
+    province: '省份'
+    email_opt_out: '不接受邮件'
+    num_of_employees: '员工数量'
+    computing_demand: '算力需求'
+    additional_notes: '备注'
+    submit: '提交'

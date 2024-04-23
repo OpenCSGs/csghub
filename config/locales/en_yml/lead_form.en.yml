@@ -1,0 +1,15 @@
+en:
+  lead_form:
+    name: 'Name'
+    phone: 'Phone'
+    company: 'Company'
+    email: 'Email'
+    demand: 'Demand'
+    title: 'Title'
+    industry: 'Industry'
+    province: 'Province'
+    email_opt_out: 'Email OptOut'
+    num_of_employees: 'Num of Employees'
+    computing_demand: 'Computing Demand'
+    additional_notes: 'Additional Notes'
+    submit: 'Submit'

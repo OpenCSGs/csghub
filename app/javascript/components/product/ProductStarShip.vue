@@ -10,8 +10,9 @@
             {{ $t('product.starShip.demo') }}
           </div>
           <VideoDialog ref="videoDialogRef" :videoSrc="videoSrc" />
+          <div @click="goApply" class="cursor-pointer py-[12px] px-[18px] text-[14px] leading-[20px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">{{ $t('product.starShip.trailApply') }}</div>
         </div>
-        <div class="w-[768px] mlg:w-full mt-[16px] rounded-[10px] border-[4px] border-[#101828]">
+        <div class="w-[768px] mlg:w-full mt-[16px] rounded-[10px]">
           <el-image src="/images/product/demo.png" :preview-src-list="['/images/product/demo.png']" />
         </div>
         <div class="flex md:flex-col md:gap-[16px] mt-[80px] text-left">
@@ -63,6 +64,9 @@ export default {
   computed: {},
   mounted() {},
   methods: {
+    goApply(){
+      window.open('https://opencsg.com/lead_forms/form/S3s2wpq1pjvT_Starship_Free_Trail', '_blank');
+    },
     openDialog() {
       this.$refs.videoDialogRef.openDialog();
     }

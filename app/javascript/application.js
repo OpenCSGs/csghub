@@ -17,12 +17,12 @@ import { createI18n } from 'vue-i18n'
 import en from '../../config/locales/en.js'
 import zh from '../../config/locales/zh.js'
 
-import Navbar from "./components/navbar/NewNavbar.vue"
+import Navbar from "./components/navbar/Navbar.vue"
 import SpaceIntro from "./components/spaces/SpaceIntro.vue"
 import SpaceCard from "./components/spaces/SpaceCard.vue"
 import SpaceCards from "./components/spaces/SpaceCards.vue"
-import LogoutFooter from "./components/footer/LogoutFooter.vue"
-import LoginFooter from "./components/footer/LoginFooter.vue"
+import PageFooter from "./components/footer/PageFooter.vue"
+import RepoFooter from "./components/footer/RepoFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCard from "./components/PartnerCard.vue"
@@ -84,8 +84,8 @@ const app = createApp({
     ModelDetail,
     PartnerCard,
     PartnerForm,
-    LogoutFooter,
-    LoginFooter,
+    PageFooter,
+    RepoFooter,
     CampaignCard,
     CampaignCards,
     ApplicationSpaceDetail,

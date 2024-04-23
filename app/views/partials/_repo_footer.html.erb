@@ -1,0 +1,8 @@
+<div class="bg-white mt-auto">
+  <% if is_on_premise? %>
+    <on-premise-footer />
+  <% else %>
+    <repo-footer emblem-logo="<%= asset_path('national_emblem.png') %>">
+    </repo-footer>
+  <% end %>
+</div>

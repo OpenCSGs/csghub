@@ -1,4 +1,6 @@
 class ApplicationSpacesController < ApplicationController
+  layout 'repo_application'
+
   include TagListHelper
   include LicenseListHelper
   include LocalRepoValidation
