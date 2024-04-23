@@ -30,7 +30,7 @@
       <% end %>
 
       <div class="w-full mt-[32px] sm:mt-0">
-        <%= submit_tag "提交表单", class: 'flex items-center justify-center w-[88px] h-[32px] bg-[#409EFF] font-[500] text-white rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-[#ccc]', disabled: @lead_form.inactive? %>
+        <%= submit_tag t('lead_form.submit'), class: 'flex items-center justify-center w-[88px] h-[32px] bg-[#409EFF] font-[500] text-white rounded cursor-pointer disabled:cursor-not-allowed disabled:bg-[#ccc]', disabled: @lead_form.inactive? %>
       </div>
     </div>
   <% end %>
