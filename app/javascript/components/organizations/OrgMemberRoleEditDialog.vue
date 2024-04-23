@@ -3,6 +3,7 @@
     :title="$t('organization.members.editRole')"
     v-model="dialogVisible"
     width="350"
+    :style="{ borderRadius: '10px' }"
     @close="handleClose"
   >
     <template #header="{ close }">
