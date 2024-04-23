@@ -10,7 +10,8 @@ const useWxShare = async(shareConfig) => {
       initConfig(data).then(() => {
         setShareInfo({
           ...shareConfig,
-          link: shareUrl,
+          imgUrl: 'https://opencsg.com/images/opencsg_mobile_logo.png',
+          link: shareUrl
         })
       })
     })
