@@ -1,14 +1,14 @@
 <template>
   <div class="InviteMember">
     <button v-if="admin" @click="dialogVisible = true" class="px-[12px] py-[8px] flex gap-[4px] items-center rounded-md border border-gray-300 text-[14px]">
-      <SvgIcon name="invite_org_btn" />
+      <SvgIcon name="invite_org_member" />
       <span>{{ $t('organization.invite.title') }}</span>
     </button>
     <el-dialog v-model="dialogVisible" top="10vh" :style="{ borderRadius: '10px' }" width="450" class="invite_dialog">
       <template #header="{ close }">
         <div class="flex justify-between">
           <div class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-[#EAECF0]">
-            <SvgIcon name="invite_org_icon" />
+            <SvgIcon name="invite_org_member" />
           </div>
           <img src="/images/invite_bg.png" class="w-[200px] absolute top-0 left-0" />
         </div>
