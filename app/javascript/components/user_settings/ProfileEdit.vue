@@ -172,6 +172,7 @@ export default {
     disableUpdatePhone() {
       this.updatePhoneEnabled = false
       this.inputSmsCode = ''
+      this.generatedSmscode = ''
       this.$refs.phoneInputElement.disabled = true
     },
     uploadImage() {
