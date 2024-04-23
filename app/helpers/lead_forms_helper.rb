@@ -15,27 +15,29 @@ module LeadFormsHelper
   def field_display_name(field)
     case field
     when 'name'
-      '姓名*'
+      "#{I18n.t('lead_form.name')}*"
     when 'phone'
-      '电话*'
+      "#{I18n.t('lead_form.phone')}*"
     when 'company'
-      '公司*'
+      "#{I18n.t('lead_form.company')}*"
     when 'email'
-      "邮箱#{custom_required?('email') ? '*' : ''}"
+      "#{I18n.t('lead_form.email')}#{custom_required?('email') ? '*' : ''}"
+    when 'demand'
+      "#{I18n.t('lead_form.demand')}#{custom_required?('demand') ? '*' : ''}"
     when 'title'
-      "职位#{custom_required?('title') ? '*' : ''}"
+      "#{I18n.t('lead_form.title')}#{custom_required?('title') ? '*' : ''}"
     when 'industry'
-      "行业#{custom_required?('industry') ? '*' : ''}"
+      "#{I18n.t('lead_form.industry')}#{custom_required?('industry') ? '*' : ''}"
     when 'province'
-      "省份#{custom_required?('province') ? '*' : ''}"
+      "#{I18n.t('lead_form.province')}#{custom_required?('province') ? '*' : ''}"
     when 'email_opt_out'
-      "不接受邮件#{custom_required?('email_opt_out') ? '*' : ''}"
+      "#{I18n.t('lead_form.email_opt_out')}#{custom_required?('email_opt_out') ? '*' : ''}"
     when 'num_of_employees'
-      "员工数量#{custom_required?('num_of_employees') ? '*' : ''}"
+      "#{I18n.t('lead_form.num_of_employees')}#{custom_required?('num_of_employees') ? '*' : ''}"
     when 'computing_demand'
-      "算力需求"
+      "#{I18n.t('lead_form.computing_demand')}"
     when 'additional_notes'
-      "备注#{custom_required?('additional_notes') ? '*' : ''}"
+      "#{I18n.t('lead_form.additional_notes')}#{custom_required?('additional_notes') ? '*' : ''}"
     end
   end
 end
