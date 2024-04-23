@@ -40,6 +40,8 @@
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import useWxShare from '../hooks/useWxShare'
+  import { onMounted } from 'vue';
 
   const props = defineProps({
     localRepoId: String,
@@ -64,6 +66,14 @@
 
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)
+
+  onMounted(() => {
+    useWxShare({
+      title: '这是标题',
+      desc: '这是描述',
+      imgUrl: 'https://opencsg.com/images/opencsg_mobile_logo.png',
+    })
+  })
 </script>
 
 <style scoped>
