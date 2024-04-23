@@ -52,24 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_012803) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "application_spaces", force: :cascade do |t|
-    t.string "name"
-    t.string "license"
-    t.string "visibility"
-    t.string "owner_type", null: false
-    t.string "cover_image"
-    t.string "sdk"
-    t.string "cloud_resource"
-    t.bigint "owner_id", null: false
-    t.bigint "creator_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "nickname"
-    t.text "desc"
-    t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
-    t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
-  end
-
   create_table "campaigns", force: :cascade do |t|
     t.string "name"
     t.string "uuid"
@@ -86,6 +68,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_012803) do
     t.boolean "recommended", default: false
     t.boolean "release", default: false
     t.index ["uuid"], name: "index_campaigns_on_uuid"
+  end
+
+  create_table "application_spaces", force: :cascade do |t|
+    t.string "name"
+    t.string "license"
+    t.string "visibility"
+    t.string "owner_type", null: false
+    t.string "cover_image"
+    t.string "sdk"
+    t.string "cloud_resource"
+    t.bigint "owner_id", null: false
+    t.bigint "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nickname"
+    t.text "desc"
+    t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
+    t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
   end
 
   create_table "codes", force: :cascade do |t|
@@ -299,10 +299,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_012803) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
-    t.jsonb "ldap_configs", default: {}
+    t.jsonb "hot_spaces", default: {}
     t.jsonb "ignore_model_tags", default: {}
     t.jsonb "ignore_dataset_tags", default: {}
-    t.jsonb "hot_spaces", default: {}
     t.jsonb "internal_mail_group", default: {}
   end
 
@@ -348,7 +347,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_012803) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
-    t.boolean "ldap_synced", default: false
     t.string "wechat_id"
     t.string "github_id"
     t.string "gitlab_id"
