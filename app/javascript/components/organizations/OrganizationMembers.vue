@@ -31,7 +31,7 @@
           >
             <el-table-column :label="$t('organization.members.username')" label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]">
               <template #default="scope">
-                <div class="flex gap-[12px] items-center">
+                <div class="flex gap-[12px] items-center pl-3">
                   <el-avatar :size="40" :src="scope.row.avatar"></el-avatar>
                   <div class="flex flex-col">
                     <div class="text-[14px] font-[400] leading-[20px] text-[#101828]" v-if="!!scope.row.nickname">
@@ -62,7 +62,7 @@
 
             <el-table-column v-if="admin" width="100" align="center" fixed="right">
               <template #default="scope">
-                <div class="flex gap-4 justify-end" >
+                <div class="flex gap-4 justify-end pr-4" >
                   <el-icon :size="16" class="cursor-pointer" @click="handleToRoleEdit(scope.row)" >
                     <Edit />
                   </el-icon>
