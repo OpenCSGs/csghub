@@ -136,6 +136,8 @@
   const moreCodes = ref(props.codeList?.total > 6)
   const moreSpaces = ref(props.spaceList?.total > 6)
 
+  const prefixPath = document.location.pathname.split('/')[1] === 'organizations' ? 'organizations' : 'users'
+
   const viewMoreTargets = (target) => {
     if (target === 'models') {
       modelsLoading.value = true
