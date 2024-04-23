@@ -1,6 +1,6 @@
 <template>
   <div class="flex bg-[#fff] flex-col pt-[32px] pb-[60px]">
-    <div class="">
+    <div class="flex">
       <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Task"
             :class="activeNavItem === 'Task' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
@@ -17,7 +17,8 @@
       {{ $t('all.framework') }}
       </span>
 
-      <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+      <span v-show="type === 'model' || type === 'dataset'"
+            class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
             data-type="Language"
             :class="activeNavItem === 'Language' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
@@ -107,8 +108,9 @@
                     :style="setLanguageTagColor(languageTag.label)"
                     @click="setActiveLanguageTag(languageTag.label)"
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6C11 8.76142 8.76142 11 6 11M11 6C11 3.23858 8.76142 1 6 1M11 6C11 4.89543 8.76142 4 6 4C3.23858 4 1 4.89543 1 6M11 6C11 7.10457 8.76142 8 6 8C3.23858 8 1 7.10457 1 6M6 11C3.23858 11 1 8.76142 1 6M6 11C7.10457 11 8 8.76142 8 6C8 3.23858 7.10457 1 6 1M6 11C4.89543 11 4 8.76142 4 6C4 3.23858 4.89543 1 6 1M1 6C1 3.23858 3.23858 1 6 1" stroke="#3B7C0F" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              {{ cookies.get('locale') === 'en' ? languageTag.name : languageTag.zh_name }}
+            <svg v-if="activeLanguageTag != languageTag.label" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6C11 8.76142 8.76142 11 6 11M11 6C11 3.23858 8.76142 1 6 1M11 6C11 4.89543 8.76142 4 6 4C3.23858 4 1 4.89543 1 6M11 6C11 7.10457 8.76142 8 6 8C3.23858 8 1 7.10457 1 6M6 11C3.23858 11 1 8.76142 1 6M6 11C7.10457 11 8 8.76142 8 6C8 3.23858 7.10457 1 6 1M6 11C4.89543 11 4 8.76142 4 6C4 3.23858 4.89543 1 6 1M1 6C1 3.23858 3.23858 1 6 1" stroke="#3B7C0F" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg v-if="activeLanguageTag == languageTag.label" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6C11 8.76142 8.76142 11 6 11M11 6C11 3.23858 8.76142 1 6 1M11 6C11 4.89543 8.76142 4 6 4C3.23858 4 1 4.89543 1 6M11 6C11 7.10457 8.76142 8 6 8C3.23858 8 1 7.10457 1 6M6 11C3.23858 11 1 8.76142 1 6M6 11C7.10457 11 8 8.76142 8 6C8 3.23858 7.10457 1 6 1M6 11C4.89543 11 4 8.76142 4 6C4 3.23858 4.89543 1 6 1M1 6C1 3.23858 3.23858 1 6 1" stroke="#FAFEF5" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            {{ cookies.get('locale') === 'en' ? languageTag.name : languageTag.zh_name }}
           </span>
         </div>
       </div>      
