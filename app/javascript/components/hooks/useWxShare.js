@@ -1,19 +1,24 @@
-import { useWxSDK } from "./useWxSDK.js"
+import useWxSDK from "./useWxSDK.js"
 
-export default useWxShare = (shareConfig) => {
+const useWxShare = async(shareConfig) => {
   const { initConfig, setShareInfo } = useWxSDK()
-
   const shareUrl = window.location.href.split("#")[0];
-
   const getSignatureUrl = `/internal_api/wechat/signature-config?page_url=${shareUrl}`
-  fetch(getSignatureUrl).then((config) => {
-    // 调用后端接口获取config相关信息
-    initConfig(config).then(() => {
-      // 注入wx.config成功后，设置微信分享相关
-      setShareInfo({
-        ...shareConfig,
-        link: shareUrl,
-      });
-    });
-  });
+  const response = await fetch(getSignatureUrl)
+  if (response.ok) {
+    response.json().then((data) => {
+      initConfig(data).then(() => {
+        setShareInfo({
+          ...shareConfig,
+          link: shareUrl,
+        })
+      })
+    })
+  } else {
+    response.json().then((data) => {
+      console.log('Wechat initialize error')
+    })
+  }
 }
+
+export default useWxShare

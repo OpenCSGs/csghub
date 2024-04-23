@@ -13,7 +13,7 @@ class Wechat
   def jsapi_ticket
     Rails.cache.fetch('wechat_jsapi_ticket', expires_in: 7200.seconds) do
       response = Faraday.get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{access_token}&type=jsapi")
-      JSON.parse(response.body)
+      JSON.parse(response.body)['ticket']
     end
   end
 

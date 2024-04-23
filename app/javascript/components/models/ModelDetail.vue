@@ -69,9 +69,9 @@
 
   onMounted(() => {
     useWxShare({
-      title: '这是标题',
-      desc: '这是描述',
-      imgUrl: 'https://opencsg.com/images/opencsg_mobile_logo.png',
+      title: props.model.data.path,
+      desc: props.model.data.description,
+      imgUrl: props.avatar,
     })
   })
 </script>
