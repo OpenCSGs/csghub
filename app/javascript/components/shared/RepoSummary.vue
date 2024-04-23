@@ -11,15 +11,34 @@
       </markdown-viewer>
     </div>
     <div class="w-[40%] sm:w-[100%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="p-4">
-        <div class="text-[#606266] text-base font-medium leading-[22px] pl-4 md:pl-0">{{ $t('all.downloadCount') }}</div>
-        <div class="text-[#303133] text-base font-semibold leading-6 mt-1 pl-4 md:pl-0">{{ downloadCount }}</div>
+      <div class="p-[16px]">
+        <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
+        <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 
       <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
-                      class="border-t border-[#EBEEF5] p-4"
                       :namespacePath="namespacePath"
                       :currentBranch="currentBranch"
+      />
+
+      <SpaceRelationsCard v-if="relations['spaces'] && relations['spaces'].length !== 0"
+                          :namespacePath="namespacePath"
+                          :spaces="relations['spaces']"
+      />
+
+      <CodeRelationsCard v-if="relations['codes'] && relations['codes'].length !== 0"
+                          :namespacePath="namespacePath"
+                          :codes="relations['codes']"
+      />
+
+      <DatasetRelationsCard v-if="relations['datasets'] && relations['datasets'].length !== 0"
+                            :namespacePath="namespacePath"
+                            :datasets="relations['datasets']"
+      />
+
+      <ModelRelationsCard v-if="relations['models'] && relations['models'].length !== 0"
+                          :namespacePath="namespacePath"
+                          :models="relations['models']"
       />
     </div>
   </div>
@@ -30,6 +49,10 @@
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
+  import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
+  import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
+  import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
+  import ModelRelationsCard from '../models/ModelRelationsCard.vue';
 
   const props = defineProps({
     namespacePath: String,
@@ -43,6 +66,7 @@
   const loading = ref(true)
   const readmeContent = ref('')
   const previewData = ref({})
+  const relations = ref({})
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
@@ -79,8 +103,26 @@
     })
   }
 
+  const fetchRepoRelations = async () => {
+    const url = `/internal_api/${props.repoType}s/${props.namespacePath}/related_repos`
+    fetch(url).then((response) => {
+      if (!response.ok) {
+        response.json().then((data) => {
+          console.error(data.message)
+        })
+      } else {
+        response.json().then((data) => {
+          relations.value = data.relations
+        })
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
+
   onMounted(() => {
     fetchData()
     fetchPreviewData()
+    fetchRepoRelations()
   })
 </script>
