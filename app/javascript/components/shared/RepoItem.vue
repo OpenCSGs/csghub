@@ -66,7 +66,7 @@
     const path = props.repo.path.split('/')[0] + '/' + displayName
 
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
-    const showDescription = props.cardType === 'index' ? true : props.repo.description && !!props.repo.description.trim()
+    const showDescription = props.cardType === 'index' || !!props.repo.description?.trim()
 
     let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
     if (locale.value === 'en') {
