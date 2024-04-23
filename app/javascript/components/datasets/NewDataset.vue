@@ -28,7 +28,11 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetName') }}</p>
-          <el-input v-model="datasetName" :placeholder="$t('rule.nameRule')" input-style="width: 100%" />
+          <el-input v-model="datasetName" :placeholder="$t('rule.nameRule')" input-style="width: 100%">
+          <template #suffix>            
+              <InputTip :content="$t('datasets.newDataset.tip')" />
+            </template>
+          </el-input>
         </div>
       </div>
 
@@ -97,6 +101,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
+  import InputTip from '../shared/inputs/InputTip.vue'
 
   const props = defineProps({
     licenses: Array,
