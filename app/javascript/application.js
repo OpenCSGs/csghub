@@ -39,6 +39,7 @@ import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
+import SvgIcon from "./components/shared/SvgIcon.vue"
 
 const pinia = createPinia()
 
@@ -92,6 +93,7 @@ const i18n = createI18n({
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+app.component('SvgIcon', SvgIcon)
 app.use(i18n)
 app.use(pinia)
 app.mount("#app")
