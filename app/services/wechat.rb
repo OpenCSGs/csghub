@@ -5,6 +5,7 @@ class Wechat
 
   def signature(page_url, sign_noncestr, sign_timestamp)
     jsapi_ticket_string = "jsapi_ticket=#{jsapi_ticket}&noncestr=#{sign_noncestr}&timestamp=#{sign_timestamp}&url=#{page_url}"
+    Rails.logger.info("========= signature ==========: #{jsapi_ticket_string}")
     Digest::SHA1.hexdigest(jsapi_ticket_string)
   end
 

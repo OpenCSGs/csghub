@@ -1,4 +1,4 @@
-import wx from 'weixin-js-sdk'
+// import wx from 'weixin-js-sdk'
 
 export default useWxSDK = () => {
   const initConfig = (configInfo) => {
