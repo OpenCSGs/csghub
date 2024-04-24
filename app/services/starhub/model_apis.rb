@@ -75,5 +75,9 @@ module Starhub
     def upload_model_file(namespace, model_name, options = {})
       upload_repo_file('models', namespace, model_name, options)
     end
+
+    def model_related_repos(namespace, model_name, options = {})
+      related_repos('models', namespace, model_name, options)
+    end
   end
 end

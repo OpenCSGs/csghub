@@ -1,5 +1,5 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet]
+  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -8,15 +8,21 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def index
     res_body = csghub_api.get_datasets(current_user&.name,
-                                              params[:search],
-                                              params[:sort],
-                                              params[:task_tag],
-                                              params[:framework_tag],
-                                              params[:license_tag],
-                                              params[:page],
-                                              params[:per_page])
+                                       params[:search],
+                                       params[:sort],
+                                       params[:task_tag],
+                                       params[:framework_tag],
+                                       params[:license_tag],
+                                       params[:page],
+                                       params[:per_page])
     api_response = JSON.parse(res_body)
     render json: { datasets: api_response['data'], total: api_response['total'] }
+  end
+
+  def related_repos
+    res_body = csghub_api.dataset_related_repos(params[:namespace], params[:dataset_name], files_options)
+    api_response = JSON.parse(res_body)
+    render json: { relations: api_response['data']}
   end
 
   def files
@@ -128,12 +134,12 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def preview_parquet
-    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path] })
+    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path], current_user: current_user&.name })
     parquet_file_path = JSON.parse(json_data)['data']
                             .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
                             .sort_by { |path| path.downcase }.first
     if parquet_file_path
-      preview_data = csghub_api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path)
+      preview_data = csghub_api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path, {current_user: current_user&.name})
       render json: preview_data
     else
       render json: {}
