@@ -70,7 +70,7 @@
   onMounted(() => {
     useWxShare({
       title: props.model.data.path,
-      desc: props.model.data.description,
+      desc: props.model.data.description.trim() || 'OpenCSG 打造中国本土化 Huggingface plus 开源社区 开放传神 OpenCSG  传神社区 官网 cc_model',
       link: window.location.href
     })
   })
