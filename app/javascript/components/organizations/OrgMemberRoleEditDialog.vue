@@ -2,32 +2,50 @@
   <el-dialog
     :title="$t('organization.members.editRole')"
     v-model="dialogVisible"
-    width="30%"
+    width="350"
+    :style="{ borderRadius: '10px' }"
     @close="handleClose"
   >
-    <el-form
-      :model="formDataRaw"
-      label-width="100px"
-      :rules="rules"
-      ref="form"
-    >
-      <el-form-item :label="$t('organization.members.role')" prop="role">
-        <el-select v-model="dataForm.role" :placeholder="this.$t('all.select')" >
-          <el-option
-            v-for="item in roleMappings"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <div class="flex justify-between">
-          <el-button type="primary" @click="submitForm('form')">{{ $t('organization.members.confirm') }}</el-button>
-          <el-button @click="handleClose">{{ $t('organization.members.cancel') }}</el-button>
+    <template #header="{ close }">
+      <div class="flex justify-between">
+        <div class="px-[12px] py-[12px] rounded-full bg-[#ACBDFF] border-[8px] border-[#CED8FF]">
+          <SvgIcon name="edit_org_member_role" />
         </div>
-      </el-form-item>
-    </el-form>
+        <img src="/images/invite_bg.png" class="w-[200px] absolute top-1 left-1" />
+      </div>
+    </template>
+    <div class="flex justify-center flex-col m-auto w-full relative">
+      <div class="text-[18px] leading-[28px] text-[#101828]">{{ $t('organization.edit.role') }}</div>
+      <div class="text-[14px] leading-[20px] text-[#475467] font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
+      <el-form
+      :model="formDataRaw"
+      :rules="rules"
+      class="w-full"
+      ref="form"
+      >
+        <el-form-item prop="role">
+          <div class="flex flex-col w-full">
+            <div>{{ $t('organization.members.role') }}</div>
+            <el-select v-model="dataForm.role" size="large" :placeholder="this.$t('all.select')" >
+              <el-option
+                v-for="item in roleMappings"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </div>
+        </el-form-item>
+      </el-form>
+    </div>
+    <template #footer>
+      <div class="dialog-footer flex justify-between">
+        <el-button class="flex-1 mr-3 text-gray-700" size="large" @click="handleClose">{{ $t('organization.members.cancel') }}</el-button>
+        <el-button class="flex-1" size="large" color="#3250BD" type="primary" @click="submitForm('form')">
+          {{ $t('organization.members.confirm') }}
+        </el-button>
+      </div>
+    </template>
   </el-dialog>
 
 </template>
