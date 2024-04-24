@@ -1,10 +1,32 @@
-export const about = {
+export const landingPage = {
   "hero": {
     "headTitle": "让大模型赋能每个人",
     "headDesc": "大模型驱动全民，推动技术加速创新。",
   },
+  banner: {
+    title: '让大模型 赋能 每一个人',
+    subtitle: '大模型驱动全民，推动技术加速创新。',
+    joinButton: '加入社区'
+  },
+  hotTrend: {
+    subtitle: '热门趋势',
+    title: '本周传神社区热门',
+    desc: '了解体验最新传神社区开源模型、应用空间、数据集',
+    models: '模型',
+    spaces: '空间',
+    datasets: '数据',
+    loadMore: '查看更多'
+  },
+  value: {
+    title1: '加强开源大模型的',
+    title2: '商业应用',
+    subtitle: 'OpenCSG 将帮助您找到最合适、最经济、和活跃的开源大模型'
+  },
   "joinus": {
     "JoinUS": "加入我们",
+    "join1": "加入我们",
+    "join2": "我们正在寻找优秀的人才",
+    "join3": "我们是一支分布在全国的分布式远程团队，打造中国版的 HuggingFace+优质社区，加入我们吧",
   },
   "company": {
     "ContactUs": "联系我们",

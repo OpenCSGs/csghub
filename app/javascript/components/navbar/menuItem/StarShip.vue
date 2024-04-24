@@ -18,7 +18,10 @@
       </svg>
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div class="text-[#101828]">{{ $t('navbar.starShip') }}</div>
+      <div class="text-[#101828] flex gap-[8px] items-center">
+        {{ $t('navbar.starShip') }}
+        <SvgIcon name="hot_fire" width="16" height="16" />
+      </div>
       <div
         class="text-[14px] text-[#475467] font-light leading-[20px] md:hidden"
       >
@@ -27,5 +30,3 @@
     </div>
   </div>
 </template>
-<style scoped>
-</style>

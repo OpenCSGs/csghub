@@ -13,9 +13,9 @@ class LandingPageController < ApplicationController
                 {url:'landing/new3.png',href:'https://blog.opencsg.com/news/10/',time:'2023/9/28',title:'“模速空间”创新生态社区揭幕仪式',text:'9月28日，上海“模速空间”创新生态社区暨人工智能大模型产业生态集聚区在揭牌，创始人&CEO陈冉代表OpenCSG上台揭幕，成为首批入驻上海市人工智能产业生态的企业之一...'}]
     @latest_spaces = Space.where(space_type: 'public_s').order(created_at: :desc).limit(3)
     @partners = PARTNERS.sort_by {|partner| PinYin.abbr(partner['name'])}
-    @hot_models = load_hot_models
-    @hot_datasets = load_hot_datasets
-    @hot_spaces = load_hot_spaces
+    @hot_models = load_hot_models.to_json
+    @hot_datasets = load_hot_datasets.to_json
+    @hot_spaces = load_hot_spaces.to_json
   end
 
   private

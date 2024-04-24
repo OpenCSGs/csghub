@@ -1,9 +1,15 @@
 <template>
   <div id="joinUs" class="flex flex-col py-[96px] md:py-[64px] text-left">
     <div class="max-w-[1280px] m-auto md:px-[16px] px-[32px]">
-      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">{{ $t('landing.join1') }}</div>
-      <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">{{ $t('landing.join2') }}</div>
-      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" >{{ $t('landing.join3') }}</div>
+      <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">
+        {{ $t('landingPage.joinus.join1') }}
+      </div>
+      <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">
+        {{ $t('landingPage.joinus.join2') }}
+      </div>
+      <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" >
+        {{ $t('landingPage.joinus.join3') }}
+      </div>
       <div class="grid grid-cols-2  gap-x-[64px] gap-y-[48px] mb-[64px] md:grid-cols-1 text-left">
         <a class="w-[578px] md:w-full flex flex-col pt-[24px] border-t border-t-[1px] border-[#EAECF0]"
          v-for="(item,index) in this.$i18n.locale === 'zh' ? data: data_en" :key="index" :href="hrefUrl">
@@ -36,7 +42,7 @@
 <script>
   export default {
     props: {},
-  
+
     data() {
       return {
         hrefUrl:"https://www.zhipin.com/gongsi/76f4b428e71d5d1d1HR43Nq9FVY~.html?ka=search_rcmd_company_name_76f4b428e71d5d1d1HR43Nq9FVY~_custompage",
@@ -54,9 +60,9 @@
                  {pointColor:"#EF6820",color:"#B93815",bgColor:"#FEF6EE",borderColor:"#F9DBAF",name: 'Sales Intern',tag:'Internet/Technology',desc:'We are looking for a sales intern who is smart, smart, skilled, with excellent background and fast learning speed to join our team.',remote: 'Xueyuan Road, Haidian District, Beijing',time: '4 days/week',isInternship:true}]
       };
     },
-  
+
     components: {},
-  
+
     mounted() {},
     methods: {
       getTagStyles(item) {
@@ -70,4 +76,3 @@
   };
   </script>
   <style scoped></style>
-  

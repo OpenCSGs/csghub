@@ -55,7 +55,9 @@ class Code < ApplicationRecord
                                                       owner.name,
                                                       nickname,
                                                       desc,
-                                                      { private: code_private? })
+                                                      { private: code_private?,
+                                                        current_user: creator&.name
+                                                      })
     raise StarhubError, res.body unless res.success?
   end
 
