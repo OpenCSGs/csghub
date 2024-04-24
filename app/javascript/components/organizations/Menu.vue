@@ -48,7 +48,7 @@ export default {
   methods: {
     menuClass(menuPath) {
       if (menuPath === window.location.pathname) {
-        return 'text-[#303133] font-semibold bg-[#FAFAFA]'
+        return 'text-[#303133] font-semibold bg-[#FAFAFA] rounded-[6px]'
       } else {
         return ''
       }
