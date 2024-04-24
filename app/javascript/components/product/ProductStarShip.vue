@@ -35,24 +35,24 @@ export default {
       data:[
         {
           id:"1",
-          title:"开启您的LLM大模型社区构建之旅",
-          title_en:"Embark on a journey to build your LLM big model community",
-          desc:"利用OpenCSG CaaS（Community as a Service），您可以快速、轻松地构建大模型社区。共同推动LLM应用的创新，立即开启您的LLM社区构建之旅！",
-          desc_en:"With OpenCSG CaaS (Community as a Service), you can quickly and easily build a large model community. Jointly promote innovation in LLM applications and start your journey of building your LLM community now!"
+          title:"自动生成代码",
+          title_en:"Automatically generate code",
+          desc:"使用 StarShip 可以根据用户写的 issue 自动生成代码，并创建出一个可以直接进入审查流程的 Merge Request",
+          desc_en:"Using StarShip, you can automatically generate code based on issues written by users and create a Merge Request that can directly enter the review process."
           },
         {
           id:"2",
-          title:"开放共建的AI生态",
-          title_en:"An open and collaborative AI ecosystem",
-          desc:"我们相信通过合作，可以共同推动LLM应用的发展和创新。使用100%核心开源的工具，您可根据自身需求定制和扩展平台功能。构建社区，共同打造一个繁荣的AI生态系统！",
-          desc_en:"We believe that through cooperation, we can jointly promote the development and innovation of LLM applications. By using 100% core open source tools, you can customize and expand platform features according to your own needs. Build a community and work together to create a prosperous AI ecosystem!"
+          title:"自动进行代码审查",
+          title_en:"Automate code reviews",
+          desc:"StarShip 可以帮助您做代码审查，只需简单配置，就可以自动给每一个提交的 Merge Request 进行代码审查",
+          desc_en:"StarShip can help you do code review. With simple configuration, it can automatically conduct code review for every Merge Request submitted."
         },
         {
           id:"3",
-          title:"生产级可用的LLM应用服务",
-          title_en:"Production level available LLM application services",
-          desc:"作为设计为生产级可用的工具，无论是部署到企业内部使用，还是通过社区分享给其他用户，都能得到稳定和可靠的服务。选择OpenCSG CaaS，让您的应用始终保持高效和可靠！",
-          desc_en:"As a tool designed for production level usability, stable and reliable services can be obtained whether deployed for internal use within the enterprise or shared with other users through the community. Choose OpenCSG CaaS to keep your application efficient and reliable at all times!"
+          title:"快速解答代码问题",
+          title_en:"Quick answers to code questions",
+          desc:"不论是 GitLab 的使用问题，还是项目代码的理解。都可以在 StarShip 中直接提问，帮您更快的解决问题",
+          desc_en:"Whether it's the use of GitLab or the understanding of project code. You can ask questions directly in StarShip to help you solve the problem faster"
         }
     ]
     };
