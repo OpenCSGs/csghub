@@ -304,6 +304,7 @@
       const data = await response.json()
       throw new Error(data.message)
     } else {
+      hasCreateApplicationSpace.value = false
       return response.json()
     }
   }

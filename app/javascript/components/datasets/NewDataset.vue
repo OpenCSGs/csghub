@@ -152,6 +152,7 @@
       const data = await response.json()
       throw new Error(data.message)
     } else {
+      hasCreateDataset.value = false
       return response.json()
     }
   }

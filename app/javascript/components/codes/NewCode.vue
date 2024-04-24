@@ -190,6 +190,7 @@
       hasCreateCode.value = false
       throw new Error(data.message)
     } else {
+      hasCreateCode.value = false
       return response.json()
     }
   }
