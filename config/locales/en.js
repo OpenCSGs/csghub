@@ -17,7 +17,6 @@ import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
-import { about } from './en_js/about';
 import { space } from './en_js/space';
 import { campaign } from './en_js/campaign';
 import { computing } from './en_js/computing';
@@ -52,7 +51,6 @@ export default {
   components,
 
   // portal
-  about,
   space,
   campaign,
   computing,
