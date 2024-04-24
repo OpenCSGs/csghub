@@ -2,13 +2,13 @@
   <div id="joinUs" class="flex flex-col py-[96px] md:py-[64px] text-left">
     <div class="max-w-[1280px] m-auto md:px-[16px] px-[32px]">
       <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">
-        {{ $t('landingPage.join1') }}
+        {{ $t('about.joinus.join1') }}
       </div>
       <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">
-        {{ $t('landingPage.join2') }}
+        {{ $t('about.joinus.join2') }}
       </div>
       <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px] md:mb-[48px]" >
-        {{ $t('landingPage.join3') }}
+        {{ $t('about.joinus.join3') }}
       </div>
       <div class="grid grid-cols-2  gap-x-[64px] gap-y-[48px] mb-[64px] md:grid-cols-1 text-left">
         <a class="w-[578px] md:w-full flex flex-col pt-[24px] border-t border-t-[1px] border-[#EAECF0]"
