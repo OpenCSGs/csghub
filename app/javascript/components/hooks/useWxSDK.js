@@ -1,4 +1,4 @@
-// import wx from 'weixin-js-sdk'
+import wx from 'weixin-js-sdk'
 
 export default useWxSDK = () => {
   const initConfig = (configInfo, shareInfo) => {
@@ -31,7 +31,6 @@ export default useWxSDK = () => {
           console.log('yes, cancel share moment')
         },
       })
-
       wx.onMenuShareAppMessage({
         title: shareInfo.title, // 分享标题
         desc: shareInfo.desc,
@@ -48,6 +47,7 @@ export default useWxSDK = () => {
         },
       })
     })
+
     wx.error(function(res){
       console.log(`WX config error: ${res}`)
     })
