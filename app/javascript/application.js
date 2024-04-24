@@ -48,6 +48,7 @@ import OrganizationSettings from "./components/organizations/OrganizationSetting
 import OrganizationDetail from "./components/organizations/OrganizationDetail.vue"
 import SolutionPage from "./components/solution/SolutionPage.vue"
 import ProductPage from "./components/product/ProductPage.vue"
+import ProductStarShip from "./components/product/ProductStarShip.vue"
 import Hero from "./components/about/Hero.vue"
 import Company from "./components/about/Company.vue"
 import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
@@ -101,6 +102,7 @@ const app = createApp({
     OrganizationDetail,
     SolutionPage,
     ProductPage,
+    ProductStarShip,
     Hero,
     Company,
     OnPremiseFooter,
