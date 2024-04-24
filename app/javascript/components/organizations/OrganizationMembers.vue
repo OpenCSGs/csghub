@@ -29,7 +29,7 @@
             v-loading="loading"
             style="width: 100%"
           >
-            <el-table-column :label="$t('organization.members.username')" label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]">
+            <el-table-column :label="$t('organization.members.username')" label-class-name="indent-[10px] text-[12px] font-[400] leading-[18px] text-[#475467]">
               <template #default="scope">
                 <div class="flex gap-[12px] items-center pl-3">
                   <el-avatar :size="40" :src="scope.row.avatar"></el-avatar>
