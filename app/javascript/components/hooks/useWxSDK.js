@@ -19,7 +19,7 @@ export default useWxSDK = () => {
     })
     wx.ready(() => {
       wx.onMenuShareTimeline({
-        title: `${shareInfo.title}: ${shareInfo.desc}`, // 分享标题
+        title: shareInfo.title, // 分享标题
         link: shareInfo.link, // 分享链接，可以不是当前页面，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'https://stg.opencsg.com/wechat_share_logo.png',
         success: function () {
