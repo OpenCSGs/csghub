@@ -31,7 +31,7 @@ export default {
   props: {},
   data() {
     return {
-      videoSrc:'https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starship.mp4',
+      videoSrc:'https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/opencsg-starship.mp4',
       data:[
         {
           id:"1",
