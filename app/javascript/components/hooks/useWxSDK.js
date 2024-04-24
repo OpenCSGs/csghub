@@ -3,7 +3,7 @@ import wx from 'weixin-js-sdk'
 export default useWxSDK = () => {
   const initConfig = (configInfo, shareInfo) => {
     wx.config({
-      debug: true,
+      debug: false,
       appId: configInfo.app_id,
       timestamp: configInfo.timestamp,
       nonceStr: configInfo.noncestr,
