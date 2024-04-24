@@ -17,7 +17,6 @@ import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
-import { about } from './en_js/about';
 import { space } from './en_js/space';
 import { campaign } from './en_js/campaign';
 import { computing } from './en_js/computing';
@@ -25,7 +24,7 @@ import { product } from './en_js/product';
 import { solution } from './en_js/solution';
 import { dailyPaper } from './en_js/dailyPaper';
 import { form } from './en_js/form';
-import { landing } from './en_js/landing';
+import { landingPage } from './en_js/landing_page';
 import { footer } from './en_js/footer';
 import { ekb } from './en_js/ekb';
 
@@ -52,7 +51,6 @@ export default {
   components,
 
   // portal
-  about,
   space,
   campaign,
   computing,
@@ -60,7 +58,7 @@ export default {
   solution,
   dailyPaper,
   form,
-  landing,
+  landingPage,
   footer,
   ekb
 };

@@ -17,7 +17,6 @@ import { widgets } from './zh_js/widgets';
 import { spaces } from './zh_js/spaces';
 import { user_sessions } from './zh_js/user_sessions';
 import { components } from './zh_js/components';
-import { about } from './zh_js/about';
 import { space } from './zh_js/space';
 import { campaign } from './zh_js/campaign';
 import { computing } from './zh_js/computing';
@@ -25,7 +24,7 @@ import { product } from './zh_js/product';
 import { solution } from './zh_js/solution';
 import { dailyPaper } from './zh_js/dailyPaper';
 import { form } from './zh_js/form';
-import { landing } from './zh_js/landing';
+import { landingPage } from './zh_js/landing_page';
 import { footer } from './zh_js/footer';
 import { ekb } from './zh_js/ekb';
 
@@ -52,7 +51,6 @@ export default {
   components,
 
   // portal
-  about,
   space,
   campaign,
   computing,
@@ -60,7 +58,7 @@ export default {
   solution,
   dailyPaper,
   form,
-  landing,
+  landingPage,
   footer,
   ekb
 };

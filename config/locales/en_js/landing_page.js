@@ -1,11 +1,33 @@
-export const about = {
+export const landingPage = {
   "hero": {
     "headTitle": "Empowering Everyone with Large Language Models",
     "headDesc": "Unleashing Innovation and Advancing Evolutionary AI for Human Society",
     "JoinC": "Join the Community"
   },
+  banner: {
+    title: 'Empowering Everyone with Large Language Models',
+    subtitle: 'Unleashing Innovation and Advancing Evolutionary AI for Human Society',
+    joinButton: 'Join Community'
+  },
+  hotTrend: {
+    subtitle: 'Hot Trends',
+    title: 'Trending on this week',
+    desc: 'Explore the Latest Community Open-Source Models and Datasets',
+    models: 'Models',
+    spaces: 'Spaces',
+    datasets: 'Datasets',
+    loadMore: 'Load More'
+  },
+  value: {
+    title1: 'Enhance open source Large Language Models',
+    title2: 'Business Applications',
+    subtitle: 'OpenCSG will assist you in discovering the most suitable, cost-effective, and curated open-source LLMs'
+  },
   "joinus": {
     "JoinUS": "JoinUS",
+    "join1": "Join us",
+    "join2": "We are looking for excellent talents",
+    "join3": "We are a distributed remote team distributed across the country to build a Chinese version of HuggingFace+ quality community. Join us"
   },
   "company": {
     "ContactUs": "Contact us",
