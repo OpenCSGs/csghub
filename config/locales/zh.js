@@ -25,7 +25,7 @@ import { product } from './zh_js/product';
 import { solution } from './zh_js/solution';
 import { dailyPaper } from './zh_js/dailyPaper';
 import { form } from './zh_js/form';
-import { landing_page } from './zh_js/landing_page';
+import { landingPage } from './zh_js/landing_page';
 import { footer } from './zh_js/footer';
 import { ekb } from './zh_js/ekb';
 
@@ -60,7 +60,7 @@ export default {
   solution,
   dailyPaper,
   form,
-  landing_page,
+  landingPage,
   footer,
   ekb
 };

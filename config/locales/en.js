@@ -25,7 +25,7 @@ import { product } from './en_js/product';
 import { solution } from './en_js/solution';
 import { dailyPaper } from './en_js/dailyPaper';
 import { form } from './en_js/form';
-import { landing_page } from './en_js/landing_page';
+import { landingPage } from './en_js/landing_page';
 import { footer } from './en_js/footer';
 import { ekb } from './en_js/ekb';
 
@@ -60,7 +60,7 @@ export default {
   solution,
   dailyPaper,
   form,
-  landing_page,
+  landingPage,
   footer,
   ekb
 };
