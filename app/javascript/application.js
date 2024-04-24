@@ -53,7 +53,7 @@ import Hero from "./components/about/Hero.vue"
 import Company from "./components/about/Company.vue"
 import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import ComputingPage from "./components/computing/ComputingPage.vue"
-import LandingPage from "./components/landing_page/LandingPage.vue"
+import About from "./components/landing_page/About.vue"
 import PrivacyPage from "./components/policy/PrivacyPage.vue"
 import DailyPaperNew from "./components/daily_paper/New.vue"
 import DailyPaperIndex from "./components/daily_paper/Index.vue"
@@ -107,7 +107,7 @@ const app = createApp({
     Company,
     OnPremiseFooter,
     ComputingPage,
-    LandingPage,
+    About,
     PrivacyPage,
     OrganizationSettings,
     DailyPaperNew,
