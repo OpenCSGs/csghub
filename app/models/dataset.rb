@@ -49,7 +49,9 @@ class Dataset < ApplicationRecord
                                                          owner.name,
                                                          nickname,
                                                          desc,
-                                                         { private: dataset_private? })
+                                                         { private: dataset_private?,
+                                                           current_user: creator&.name
+                                                         })
     raise StarhubError, res.body unless res.success?
   end
 
