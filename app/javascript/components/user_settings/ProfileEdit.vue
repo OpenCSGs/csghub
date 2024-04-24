@@ -1,28 +1,32 @@
 <template>
   <div class="flex flex-col gap-[24px] p-[16px]">
     <div class="font-semibold text-[20px] leading-[28px]">{{ $t('profile.edit.title') }}</div>
-    <el-avatar :size="120" :src="avatarUrl"> </el-avatar>
-    <div class="flex gap-[12px] fileInput">
-      <input ref="fileInput"
-             type="file"
-             class="hidden"
-             @change="previewImage"/>
-      <div @click="uploadImage" class="text-[14px] border border-[#DCDFE6] px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
-        {{ $t('profile.edit.uploadAvatar') }}
-      </div>
-      <div @click="removeImage" class="text-[14px] border border-[#DCDFE6] px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-[#606266] cursor-pointer bg-white">
-        {{ $t('profile.edit.removeAvatar') }}
-      </div>
-    </div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.userName') }}</div>
-      <p class="text-gray-500 text-[12px] italic">{{ $t('rule.nameRule') }}</p>
       <el-input class="max-w-[400px]"
                 v-model="inputName"
                 disabled
                 :placeholder="this.$t('all.userName')">
       </el-input>
+      <p class="text-gray-500 text-[12px] italic pt-1">{{ $t('rule.nameRule') }}</p>
     </div>
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
+      <el-avatar :size="120" :src="avatarUrl"> </el-avatar>
+      <div class="flex gap-[12px] fileInput">
+        <input ref="fileInput"
+              type="file"
+              class="hidden"
+              @change="previewImage"/>
+        <div @click="uploadImage" class="text-[14px] border border-[#DCDFE6] px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
+          {{ $t('profile.edit.uploadAvatar') }}
+        </div>
+        <div @click="removeImage" class="text-[14px] border border-[#DCDFE6] px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-[#606266] cursor-pointer bg-white">
+          {{ $t('profile.edit.removeAvatar') }}
+        </div>
+      </div>
+    </div>
+
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
       <el-input class="max-w-[400px]"
