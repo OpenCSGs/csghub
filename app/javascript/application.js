@@ -54,6 +54,7 @@ import Company from "./components/about/Company.vue"
 import OnPremiseFooter from "./components/footer/OnPremiseFooter.vue"
 import ComputingPage from "./components/computing/ComputingPage.vue"
 import About from "./components/landing_page/About.vue"
+import LandingPage from "./components/landing_page/LandingPage.vue"
 import PrivacyPage from "./components/policy/PrivacyPage.vue"
 import DailyPaperNew from "./components/daily_paper/New.vue"
 import DailyPaperIndex from "./components/daily_paper/Index.vue"
@@ -108,6 +109,7 @@ const app = createApp({
     OnPremiseFooter,
     ComputingPage,
     About,
+    LandingPage,
     PrivacyPage,
     OrganizationSettings,
     DailyPaperNew,
