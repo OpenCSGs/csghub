@@ -129,6 +129,9 @@
       width: 100%;
     }
   }
+  :deep(.el-input .el-input__wrapper) {
+    border-radius: 8px;
+  }
 </style>
 
 <script setup>
