@@ -80,7 +80,9 @@ class Model < ApplicationRecord
                                                        owner.name,
                                                        nickname,
                                                        desc,
-                                                       { private: model_private? })
+                                                       { private: model_private?,
+                                                         current_user: creator&.name
+                                                       })
     raise StarhubError, res.body unless res.success?
   end
 
