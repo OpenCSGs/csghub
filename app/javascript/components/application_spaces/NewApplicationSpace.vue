@@ -377,5 +377,8 @@
   :deep(.hide .el-upload.el-upload--picture-card){
     display: none;
   }
+  :deep(.el-input .el-input__wrapper) {
+  border-radius: 8px;
+  }
 </style>
 
