@@ -67,7 +67,6 @@
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)
-
 </script>
 
 <style scoped>
