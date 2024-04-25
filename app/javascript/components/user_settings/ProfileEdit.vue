@@ -34,20 +34,20 @@
       </el-input>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">主页</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.homepage') }}</div>
       <el-input class="max-w-[400px]"
-                v-model="inputNickname"
-                :placeholder="this.$t('all.nickName')">
+                v-model="inputHomepage"
+                :placeholder="this.$t('all.homepage')">
       </el-input>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">个人简介</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.bio') }}</div>
       <el-input class="max-w-[400px]"
-                v-model="inputNickname"
+                v-model="inputBio"
                 clearable
                 type="textarea"
                 :autosize="{minRows: 8, maxRows: 30}"
-                :placeholder="this.$t('all.nickName')">
+                :placeholder="this.$t('all.bio')">
       </el-input>
     </div>
     <div>
@@ -84,6 +84,8 @@ export default {
     avatar: String,
     phone: String,
     email: String,
+    homepage: String,
+    bio: String,
     displayName: String,
   },
   data() {
@@ -92,6 +94,8 @@ export default {
       inputNickname: this.nickname,
       inputPhone: this.phone,
       inputEmail: this.email,
+      inputHomepage: this.homepage,
+      inputBio: this.bio,
       avatarUrl: this.avatar,
     };
   },
@@ -117,6 +121,8 @@ export default {
       formData.append("name", this.inputName);
       formData.append("nickname", this.inputNickname);
       formData.append("email", this.inputEmail);
+      formData.append("homepage", this.inputHomepage);
+      formData.append("bio", this.inputbio);
       const options = {
         method: "PUT",
         body: formData,

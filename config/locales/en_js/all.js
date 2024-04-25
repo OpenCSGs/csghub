@@ -30,6 +30,8 @@ export const all = {
   role: "Role",
   userName: "Username",
   nickName: "Nickname",
+  homepage:"homepage",
+  bio:"bio",
   phone: "Phone Number",
   email: "Email",
   confirm: "Confirm",

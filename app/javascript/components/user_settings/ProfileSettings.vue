@@ -12,6 +12,8 @@
                  :avatar="avatar"
                  :phone="phone"
                  :email="email"
+                 :homepage="homepage"
+                 :bio="bio"
                  :displayName="displayName"
                  @updateUserInfo="updateUserInfo">
     </ProfileEdit>
@@ -27,6 +29,8 @@ export default {
     phone: String,
     avatar: String,
     email: String,
+    homepage: String,
+    bio: String,
     displayName: String,
   },
   components: {
