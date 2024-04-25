@@ -22,7 +22,7 @@ module LocalRepoValidation
       if local_repo.owner.instance_of? User
         return redirect_to errors_unauthorized_path if local_repo.owner != current_user
       else
-        return redirect_to errors_unauthorized_path unless current_user.org_role(local_repo.owner)
+        return redirect_to errors_unauthorized_path unless current_user&.org_role(local_repo.owner)
       end
     end
   end

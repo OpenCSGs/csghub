@@ -1,5 +1,5 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet]
+  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -18,6 +18,12 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
                                        params[:per_page])
     api_response = JSON.parse(res_body)
     render json: { datasets: api_response['data'], total: api_response['total'] }
+  end
+
+  def related_repos
+    res_body = csghub_api.dataset_related_repos(params[:namespace], params[:dataset_name], files_options)
+    api_response = JSON.parse(res_body)
+    render json: { relations: api_response['data']}
   end
 
   def files

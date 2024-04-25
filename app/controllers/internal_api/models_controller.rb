@@ -1,5 +1,5 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :predict]
+  before_action :authenticate_user, except: [:index, :files, :readme, :predict, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -18,6 +18,12 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
                                      params[:per_page])
     api_response = JSON.parse(res_body)
     render json: { models: api_response['data'], total: api_response['total'] }
+  end
+
+  def related_repos
+    res_body = csghub_api.model_related_repos(params[:namespace], params[:model_name], files_options)
+    api_response = JSON.parse(res_body)
+    render json: { relations: api_response['data']}
   end
 
   def files

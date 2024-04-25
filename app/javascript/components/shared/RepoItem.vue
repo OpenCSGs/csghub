@@ -4,7 +4,7 @@
     <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div :class="`${repoType}-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap`">{{ getComputed.path }}</div>
     </div>
-    <p class="h-[35px] w-[390px] overflow-hidden sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
+    <p v-if="getComputed.showDescription" class="h-[35px] w-[390px] overflow-hidden sm:w-auto leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden overflow-ellipsis line-clamp-2">
       {{ repo.description }}
     </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
@@ -37,7 +37,11 @@
 
   const props = defineProps({
     repo: Object,
-    repoType: String
+    repoType: String,
+    cardType: {
+      type: String,
+      default: 'index'
+    }
   })
 
   const { t, locale } = useI18n()
@@ -62,6 +66,7 @@
     const path = props.repo.path.split('/')[0] + '/' + displayName
 
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
+    const showDescription = props.cardType === 'index' || !!props.repo.description?.trim()
 
     let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
     if (locale.value === 'en') {
@@ -71,7 +76,7 @@
       taskTag = taskTag? taskTag["show_name"] : null
     }
 
-    return { path, visibility, taskTag }
+    return { path, visibility, taskTag, showDescription }
   })
 </script>
 
