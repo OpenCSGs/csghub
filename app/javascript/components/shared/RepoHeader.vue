@@ -55,18 +55,15 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { computed } from 'vue'
-
-  const repoDetailStore = useRepoDetailStore()
-
-  const emit = defineEmits(['toggleSpaceLogsDrawer']);
+  import { computed, onMounted } from 'vue'
+  import useWxShare from '../hooks/useWxShare'
 
   const props = defineProps({
     avatar: String,
     name: String,
     nickname: {type: String, default: ''},
-    desc: String,
-    path: String,
+    desc: {type: String, default: ''},
+    path: {type: String, default: ''},
     license: String,
     tags: Object,
     ownerUrl: String,
@@ -74,7 +71,10 @@
     appStatus: String,
     spaceResource: String,
     canWrite: Boolean
-  });
+  })
+
+  const repoDetailStore = useRepoDetailStore()
+  const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
   const theAppStatus = computed(() => {
     if (props.path === 'leaderboard/SuperClueRanking') {
@@ -82,6 +82,14 @@
     } else {
       return props.appStatus
     }
+  })
+
+  onMounted(() => {
+    useWxShare({
+      title: props.path,
+      desc: props.desc.trim() || 'OpenCSG 打造中国本土化 Huggingface plus 开源社区 开放传神 OpenCSG  传神社区 官网 cc_model',
+      link: window.location.href
+    })
   })
 
   const copyName = () => {

@@ -8,4 +8,9 @@ class InternalApi::ApplicationController < ApplicationController
     log_error e.message, e.backtrace
     render json: {message: "监测到敏感内容！！！"}, status: 500
   end
+
+  rescue_from WechatError do |e|
+    log_error e.message, e.backtrace
+    render json: {message: e.message}, status: 500
+  end
 end
