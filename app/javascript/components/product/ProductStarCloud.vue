@@ -2,7 +2,6 @@
   <div class="StarCloud pt-[96px] text-center w-full">
     <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col items-center md:px-[20px] mb-[64px] relative">
-        <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">{{ $t('product.starCloud.product1') }}</div>
         <div class="text-[36px] leading-[44px] text-[#101828]">{{ $t('product.starCloud.headline') }}</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] text-left font-light">{{ $t('product.starCloud.desc') }}</div>
         <div class="flex gap-[16px] mb-[16px] product">
