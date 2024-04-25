@@ -4,7 +4,6 @@ export const solution = {
     "solution": "OpenCSG 解决方案"
   },
   "knowledge": {
-    "solution1": "解决方案 #1",
     "headline": "OpenCSG EKB AI 智能企业知识库",
     "desc": "EKB AI 将文档结构化并转换为数字资产，实现信息数字化存储和管理，夯实企业资产的数字化转型基础。",
     "demoVideo": "产品演示",
@@ -12,7 +11,6 @@ export const solution = {
     "remarks": "暂不开放注册，请联系 {contact} 获取试用权限",
   },
   "starAIO": {
-    "solution2": "解决方案 #2",
     "headline": "OpenCSG StarAIO 大模型一体机",
     "desc": "为开发者们提供了优秀的开源工具和平台，助力企业定制私有化大模型。",
     "part1": "持续迭代、随意更换的底座大模型",
@@ -35,7 +33,6 @@ export const solution = {
     "subpart5-": "大模型一体机兼容国产化硬件，适配信创体系，为金融、政府、运营商等传统企业提供国产化的Al解决方案。通过与信创生态的全面适配，我们致力于推动行业的数字化转型，让国产CPU的算力与大模型的兼容性完美结合。"
   },
   "AIImg": {
-    "solution3": "解决方案 #3",
     "headline": "OpenCSG Imagen AI 智能图像助手",
     "desc": "OpenCSG Imagen AI 智能图像助手是一款在 Stable Diffusion 2.1开源模型基础上研发的，致力于增强人类智能的视觉工具集，旨在为创作者提供更好用的工具，催化灵感的萌芽，并实现创意和生产力的指数级放大。OpenCSG Imagen AI 智能图像助手适应专业设计工作流程，提供多种功能。",
     "demo": "快速体验",
@@ -53,7 +50,6 @@ export const solution = {
     "part6-": "OpenCSG Image AI 图像助手提高画面分辨率，获得更清晰、细节更丰富的图像"
   },
   "programming": {
-    "solution4": "解决方案 #4",
     "headline": "OpenCSG StarCode AI 智能编程助手",
     "desc": "StarCode AI 是一款全能的智能编程助手，通过基于大模型技术的创新功能，帮助开发者提高工作效率。它融合了其它辅助编程助手的优点，并为开发者提供更多强大的功能。",
     "demo": "快速体验",

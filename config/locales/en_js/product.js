@@ -5,7 +5,6 @@ export const product = {
     "solution": "OpenCSG Solutions"
   },
   "starCloud": {
-    "product1": "Product #1",
     "headline": "OpenCSG StarCloud",
     "desc": "StarCloud is a deep learning-based one-stop platform for Large Language Models development and service, offering complete dataset management, model training, evaluation, and inference services, as well as convenient publishing methods, a stable operating environment, and enterprise-level service security, with the goal of supporting generative AI applications in various industries and assisting customers in building high-precision and high-performance Large Language models.",
     "demoVideo": "Demonstration video",
@@ -21,7 +20,6 @@ export const product = {
     "part4-": "Enterprise level services: provide secure and trustworthy enterprise level services, combined with underlying content security functions, to ensure the review of inference content and sensitive word filtering. Algorithm data protection: adopt enterprise level multi tenant design to protect data and security privacy.",
   },
   "starShip": {
-    "product2": "Product #2",
     "headline": "OpenCSG StarShip",
     "desc": "StarShip is committed to providing a complete model/data management and application building platform for large model application development teams, utilizing large model technology to create a new experience in software engineering 2.0.",
     "demo": "Product demonstration",

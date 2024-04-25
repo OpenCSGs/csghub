@@ -3,8 +3,6 @@
     <div class="max-w-[1280px] m-auto">
       <div class="px-[32px] flex md:flex-col gap-[64px] mb-[64px]">
         <div class="flex flex-col items-start max-w-[380px]">
-          <div class="block mb-[24px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">
-            {{ $t('solution.starAIO.solution2') }}</div>
           <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] leading-[44px]">{{ $t('solution.starAIO.headline') }}</div>
           <div class="text-[#606266] text-[18px] leading-[28px] font-light">{{ $t('solution.starAIO.desc') }}</div>
         </div>

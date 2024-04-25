@@ -5,7 +5,6 @@ export const product = {
     "solution": "OpenCSG 解决方案"
   },
   "starCloud": {
-    "product1": "产品 #1",
     "headline": "OpenCSG StarCloud 星云平台",
     "desc": "StarCloud 是一个基于深度学习的一站式大模型开发及服务运行平台，提供完整的数据集管理、模型训练、评估和推理服务，特点包括便捷的发布方式、稳定的运行环境，以及企业级的服务安全，旨在支持各行业的生成式AI应用并帮助客户构建高精度、高性能的大模型。",
     "demoVideo": "演示视频",
@@ -21,7 +20,6 @@ export const product = {
     "part4-": "企业级服务：提供安全可信的企业级服务，结合底层内容安全功能，确保推理内容的审核与敏感词过滤。算法数据保护：采用企业级多租户设计，保护数据与安全隐私",
   },
   "starShip": {
-    "product2": "产品 #2",
     "headline": "OpenCSG StarShip 星舰平台",
     "desc": "StarShip 致力于为大模型应用开发团队提供一套完整的模型/数据管理及应用搭建平台，利用大模型技术打造软件工程2.0的新体验",
     "demo": "产品演示",
