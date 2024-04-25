@@ -258,15 +258,6 @@ module Starhub
       res.body
     end
 
-    def get_user_codes(namespace, username, options = {})
-      options[:per] ||= 6
-      options[:page] ||= 1
-      options[:current_user] = username
-      res = @client.get("/user/#{namespace}/codes", options)
-      raise StarhubError, res.body unless res.success?
-      res.body.force_encoding('UTF-8')
-    end
-
     def add_user_likes(username, repoid, options = {})
       res = @client.put("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
       raise StarhubError, res.body unless res.success?
