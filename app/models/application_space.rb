@@ -37,7 +37,9 @@ class ApplicationSpace < ApplicationRecord
                                                owner.name,
                                                nickname,
                                                desc,
-                                               { private: application_space_private? })
+                                               { private: application_space_private?,
+                                                 current_user: creator&.name
+                                               })
     raise StarhubError, res.body unless res.success?
   end
 
