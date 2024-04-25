@@ -98,7 +98,7 @@
   });
 
   let repoHasLike = ref(props.hasLike)
-  let likesNumber = props.likes
+  let likesNumber = props.likes ? props.likes : 0
   let showLikesNumber = ref('')
 
   const copyName = () => {

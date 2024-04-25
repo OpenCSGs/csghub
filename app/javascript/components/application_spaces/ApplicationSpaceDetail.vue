@@ -16,7 +16,7 @@
         :canWrite="canWrite"
         repo-type="space"
         :repo-id="applicationSpace.data.repository_id"
-        :likes="applicationSpace.data.likes"
+        :likes="applicationSpace.data.like_count"
         :has-like="hasLike"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />

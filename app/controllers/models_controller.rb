@@ -93,7 +93,7 @@ class ModelsController < ApplicationController
     else
       @model, @branches = csghub_api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     end
-    @has_like = repo_has_like?(@model, 'models')
+    @has_like = JSON.parse(@model)['data']['user_likes']
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
