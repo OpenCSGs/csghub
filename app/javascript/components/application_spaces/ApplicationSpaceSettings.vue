@@ -33,16 +33,17 @@
       <div class="flex flex-col gap-[6px]">
         <p class="text-[#344054] text-[14px]">{{ $t('application_spaces.edit.currentCloudResource')}}</p>
         <el-select v-model="theCloudResource"
-                    placeholder="选择"
-                    size="large"
-                    class="!w-[512px] sm:!w-full"
+                   placeholder="选择"
+                   size="large"
+                   class="!w-[512px] sm:!w-full"
+                   @change="updateApplicationSpaceCloudResource"
         >
           <el-option
             v-for="item in spaceResources"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-            :disabled="disabledOptions.includes(item.value)"/>
+            :key="item.name"
+            :label="item.name"
+            :value="item.resources"
+          />
         </el-select>
       </div>
     </div>
@@ -238,11 +239,12 @@
   </div>
 </template>
 <script>
-import { h, inject } from 'vue'
-import {ElMessage, ElMessageBox} from 'element-plus'
+import { h, inject, onMounted } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import { useCookies } from "vue3-cookies"
 import refreshJWT from '../../packs/refreshJWT.js'
+import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -267,17 +269,7 @@ export default {
       theCloudResource: this.cloudResource,
       options: [{value: 'Private', label: this.$t('all.private')},
                 {value: 'Public', label:  this.$t('all.public')}],
-      spaceResources:[
-        {label: "CPU basic · 2 vCPU · 16GB ·免费", value: "CPU basic · 2 vCPU · 16GB"},
-        {label: "NVIDIA T4 · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA T4 · 4 vCPU · 15 GB"},
-        {label: "NVIDIA A10G · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA A10G · 4 vCPU · 15 GB"},
-        {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
-      ],
-      disabledOptions: [
-        "NVIDIA T4 · 4 vCPU · 15 GB",
-        "NVIDIA A10G · 4 vCPU · 15 GB",
-        "NVIDIA A10G · 12 vCPU · 46 GB"
-      ],
+      spaceResources:[],
       deployFailed: ['BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       initialized: ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       notInitialized: this.appStatus === 'NoAppFile',
@@ -304,7 +296,9 @@ export default {
 
   emits: ['showSpaceLogs'],
 
-  mounted() {},
+  mounted() {
+    this.fetchSpaceResources()
+  },
 
   methods: {
     ...mapActions(useRepoDetailStore, ['updateVisibility']),
@@ -316,6 +310,21 @@ export default {
             message: err.message,
             type: "warning",
           })
+        })
+      }
+    },
+
+    async fetchSpaceResources() {
+      const options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/space_resources`, options)
+      if (!res.ok) {
+        ElMessage({message: t('application_spaces.new.failedFetchResources'), type: "warning"})
+      } else {
+        res.json().then((body) => {
+          this.spaceResources = body.data
         })
       }
     },
@@ -462,6 +471,11 @@ export default {
       }
     },
 
+    updateApplicationSpaceCloudResource() {
+      const payload = {cloud_resource: this.theCloudResource}
+      this.updateApplicationSpace(payload)
+    },
+
     async updateApplicationSpace(payload) {
       const applicationSpaceUpdateEndpoint = "/internal_api/spaces/" + this.path
       const options = {
@@ -476,7 +490,7 @@ export default {
         })
       } else {
         if (payload.hasOwnProperty('private')) {
-          this.updateVisibility(payload.private) 
+          this.updateVisibility(payload.private)
         }
         response.json().then((data) => {
           ElMessage({ message: data.message, type: "success" })
