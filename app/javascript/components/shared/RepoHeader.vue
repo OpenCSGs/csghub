@@ -56,6 +56,7 @@
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { computed, onMounted } from 'vue'
+  import useWxShare from '../hooks/useWxShare'
 
   const props = defineProps({
     avatar: String,

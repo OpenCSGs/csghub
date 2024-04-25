@@ -40,7 +40,6 @@
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import useWxShare from '../hooks/useWxShare'
 
   const props = defineProps({
     localRepoId: String,
