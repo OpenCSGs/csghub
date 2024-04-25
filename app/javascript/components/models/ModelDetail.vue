@@ -41,7 +41,6 @@
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useWxShare from '../hooks/useWxShare'
-  import { onMounted } from 'vue';
 
   const props = defineProps({
     localRepoId: String,
@@ -66,14 +65,6 @@
 
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)
-
-  onMounted(() => {
-    useWxShare({
-      title: props.model.data.path,
-      desc: props.model.data.description.trim() || 'OpenCSG 打造中国本土化 Huggingface plus 开源社区 开放传神 OpenCSG  传神社区 官网 cc_model',
-      link: window.location.href
-    })
-  })
 </script>
 
 <style scoped>
