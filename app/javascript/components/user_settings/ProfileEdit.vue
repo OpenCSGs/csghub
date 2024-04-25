@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[24px] p-[16px]">
+  <div class="flex flex-col gap-[24px] px-6 py-10 border-l">
     <div class="font-semibold text-[20px] leading-[28px]">{{ $t('profile.edit.title') }}</div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.userName') }}</div>
@@ -11,7 +11,7 @@
       <p class="text-gray-500 text-[12px] italic pt-1">{{ $t('rule.nameRule') }}</p>
     </div>
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">用户头像</div>
       <el-avatar :size="120" :src="avatarUrl"> </el-avatar>
       <div class="flex gap-[12px] fileInput">
         <input ref="fileInput"
@@ -26,11 +26,27 @@
         </div>
       </div>
     </div>
-
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
       <el-input class="max-w-[400px]"
                 v-model="inputNickname"
+                :placeholder="this.$t('all.nickName')">
+      </el-input>
+    </div>
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">主页</div>
+      <el-input class="max-w-[400px]"
+                v-model="inputNickname"
+                :placeholder="this.$t('all.nickName')">
+      </el-input>
+    </div>
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">个人简介</div>
+      <el-input class="max-w-[400px]"
+                v-model="inputNickname"
+                clearable
+                type="textarea"
+                :autosize="{minRows: 8, maxRows: 30}"
                 :placeholder="this.$t('all.nickName')">
       </el-input>
     </div>
