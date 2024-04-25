@@ -91,25 +91,25 @@
         <p class="mb-2 text-[#303133] font-medium">{{ $t('application_spaces.new.sdk') }}</p>
         <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.sdkDesc') }}</p>
         <div class="flex gap-[24px] mt-9 sm:flex-col">
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] p-[36px] cursor-pointer"
+          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'gradio' ? 'border-[#3250BD] text-[#344054]' : ''"
                @click="SDK = 'gradio'">
             <SvgIcon name="gradio"  />
             <p class="font-semibold text-[16px]">Gradio</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] p-[36px] cursor-pointer"
+          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'streamlit' ? 'border-[#3250BD] text-[#344054]': ''"
                @click="SDK = 'streamlit'">
             <SvgIcon name="streamlit"  />
             <p class="font-semibold text-[16px]">Streamlit</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] p-[36px] cursor-pointer"
+          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'docker' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
             <SvgIcon name="docker"  />
             <p class="font-semibold text-[16px]">Docker</p>
             <p class="text-[12px]">11 templates</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] p-[36px] cursor-pointer"
+          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'static' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
             <SvgIcon name="static"  />
             <p class="font-semibold text-[16px]">Static</p>
