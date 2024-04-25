@@ -1,14 +1,14 @@
 <template>
   <div class="InviteMember">
-    <button v-if="admin" @click="dialogVisible = true" class="px-[12px] py-[8px] my-[16px] flex gap-[4px] rounded-md border border-gray-300 text-[14px]">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9.99984 12.9167H6.24984C5.08687 12.9167 4.50538 12.9167 4.03222 13.0602C2.96688 13.3834 2.1332 14.217 1.81004 15.2824C1.6665 15.7555 1.6665 16.337 1.6665 17.5M15.8332 17.5V12.5M13.3332 15H18.3332M12.0832 6.25C12.0832 8.32107 10.4042 10 8.33317 10C6.2621 10 4.58317 8.32107 4.58317 6.25C4.58317 4.17893 6.2621 2.5 8.33317 2.5C10.4042 2.5 12.0832 4.17893 12.0832 6.25Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button v-if="admin" @click="dialogVisible = true" class="px-[12px] py-[8px] flex gap-[4px] items-center rounded-md border border-gray-300 text-[14px]">
+      <SvgIcon name="invite_org_member" />
       <span>{{ $t('organization.invite.title') }}</span>
     </button>
-    <el-dialog v-model="dialogVisible" :style="{ borderRadius: '10px' }" width="450" class="invite_dialog">
+    <el-dialog v-model="dialogVisible" top="10vh" :style="{ borderRadius: '10px' }" width="450" class="invite_dialog">
       <template #header="{ close }">
         <div class="flex justify-between">
           <div class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-[#EAECF0]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 21V15M16 18H22M12 15H8C6.13623 15 5.20435 15 4.46927 15.3045C3.48915 15.7105 2.71046 16.4892 2.30448 17.4693C2 18.2044 2 19.1362 2 21M15.5 3.29076C16.9659 3.88415 18 5.32131 18 7C18 8.67869 16.9659 10.1159 15.5 10.7092M13.5 7C13.5 9.20914 11.7091 11 9.5 11C7.29086 11 5.5 9.20914 5.5 7C5.5 4.79086 7.29086 3 9.5 3C11.7091 3 13.5 4.79086 13.5 7Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <SvgIcon name="invite_org_member" />
           </div>
           <img src="/images/invite_bg.png" class="w-[200px] absolute top-0 left-0" />
         </div>
@@ -42,7 +42,7 @@
                      v-model="userNameInput"
                      @input="showUserList" />
             </div>
-            <div v-show="shouldShowUserList" class="rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <div v-show="shouldShowUserList" class="md:max-h-[110px] max-h-[210px] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
               <p v-for="user in userList"
                  @click="selectUser(user)"
                  class="flex gap-[8px] items-center cursor-pointer p-[10px]"

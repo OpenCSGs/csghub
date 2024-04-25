@@ -101,7 +101,7 @@ module Starhub
       options[:name] = repo_name
       options[:nickname] = nickname
       options[:description] = desc
-      res = @client.put("/#{repo_type}/#{namespace}/#{repo_name}", options)
+      res = @client.put("/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{options[:current_user]}", options)
     end
 
     def get_repo_tags(repo_type, namespace, repo_name, options = {})
@@ -132,6 +132,12 @@ module Starhub
 
     def upload_repo_file(repo_type, namespace, repo_name, options = {})
       @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file?current_user=#{options[:username]}", options)
+    end
+
+    def related_repos(repo_type, namespace, repo_name, options)
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/relations", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
     end
   end
 end
