@@ -101,7 +101,7 @@ module Starhub
       options[:name] = repo_name
       options[:nickname] = nickname
       options[:description] = desc
-      res = @client.put("/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{options[:current_user]}", options)
+      @client.put("/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{options[:current_user]}", options)
     end
 
     def get_repo_tags(repo_type, namespace, repo_name, options = {})
