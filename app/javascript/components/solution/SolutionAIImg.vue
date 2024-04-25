@@ -2,7 +2,6 @@
   <div class="AIImg py-[96px] text-center w-full bg-white">
     <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col md:px-[20px] items-center mb-[32px]">
-        <div class="mb-[12px] border-[#3250BD] leading-[20px] text-[14px] text-[#223B99] border-[1.5px] rounded-[16px] py-[4px] px-[12px]">{{ $t('solution.AIImg.solution3') }}</div>
         <div class="text-[36px] leading-[44px] text-[#101828]">{{ $t('solution.AIImg.headline') }}</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] font-light">{{ $t('solution.AIImg.desc') }}</div>
         <a href="https://portal.opencsg.com/spaces/AIWizards/StableDiffusionSpace" target="_blank"

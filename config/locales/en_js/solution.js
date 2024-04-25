@@ -4,7 +4,6 @@ export const solution = {
     "solution": "OpenCSG Solution"
   },
   "knowledge": {
-    "solution1": "Solution #1",
     "headline": "OpenCSG EKB AI Intelligent Enterprise Knowledge Base",
     "desc": "EKB AI structures documents and transforms them into digital assets, achieving digital storage and management of information, and solidifying the foundation for digital transformation of enterprise assets.",
     "demoVideo": "Product demonstration",
@@ -12,7 +11,6 @@ export const solution = {
     "remarks": "Please {contact} to get trial access as registration is not yet available.",
   },
   "starAIO": {
-    "solution2": "Solution #2",
     "headline": "OpenCSG StarAIO",
     "desc": "Excellent open source tools and platforms are available for developers to help enterprises customize private Large Language Models.",
     "part1": "Continuously iterative, change-at-will base LLMs",
@@ -35,7 +33,6 @@ export const solution = {
     "subpart5-": "LLM AIO is compatible with localized hardware and adapted to the Information Technology Application Innovation system, providing localized Al solutions for traditional enterprises such as finance, government and operators. Through the comprehensive adaptation with the Information Technology Application Innovation ecosystem, we are committed to promoting the digital transformation of the industry, so that the computing power of the domestic CPU and the compatibility of the LLMs are perfectly combined."
   },
   "AIImg": {
-    "solution3": "Solution #3",
     "headline": "OpenCSG Imagen AI Intelligent Image Assistant",
     "desc": "OpenCSG Imagen AI Image Assistant is a visual toolset based on the Stable Diffusion 2.1 open source model, dedicated to augmenting human intelligence, aiming to provide creators with better tools and amplify creativity and productivity. OpenCSG Imagen AI Image Assistant adapts to professional design workflows, providing a wide range of features.",
     "demo": "Fast Try",
@@ -53,7 +50,6 @@ export const solution = {
     "part6-": "OpenCSG Image AI Image Assistant improves image resolution for clearer and more detailed images."
   },
   "programming": {
-    "solution4": "Solution #4",
     "headline": "OpenCSG StarCode AI Intelligent Programming Assistant",
     "desc": "StarCode AI is a versatile intelligent programming assistant that helps developers improve their work efficiency through innovative features based on large model technology. It integrates the advantages of other auxiliary programming assistants and provides developers with more powerful features.",
     "demo": "Fast Try",
