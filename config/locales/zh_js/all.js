@@ -28,6 +28,8 @@ export const all = {
   role: "角色",
   userName: "用户名",
   nickName: "用户昵称",
+  homepage:"主页",
+  bio:"个人简介",
   phone: "手机号码",
   email: "邮箱",
   confirm: "确认",
