@@ -11,6 +11,8 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     current_user.nickname = user_params[:nickname]
     current_user.email = user_params[:email]
     current_user.phone = user_params[:phone]
+    current_user.homepage = user_params[:homepage]
+    current_user.bio = user_params[:bio]
     if user_params[:avatar].present?
       avatar_url_code = AwsS3.instance.upload 'user-avatar', user_params[:avatar]
       current_user.avatar = avatar_url_code
@@ -60,6 +62,6 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   private
 
   def user_params
-    params.permit(:name, :nickname, :avatar, :email, :phone)
+    params.permit(:name, :nickname, :avatar, :email, :phone, :homepage, :bio)
   end
 end
