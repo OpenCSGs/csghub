@@ -106,6 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_24_070546) do
     t.datetime "updated_at", null: false
     t.string "nickname"
     t.text "desc"
+    t.string "origin"
     t.index ["creator_id"], name: "index_datasets_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_datasets_on_owner"
   end
@@ -152,6 +153,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_24_070546) do
     t.bigint "creator_id"
     t.string "nickname"
     t.text "desc"
+    t.string "origin"
     t.index ["creator_id"], name: "index_models_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_models_on_owner"
   end
