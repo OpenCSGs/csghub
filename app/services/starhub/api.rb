@@ -19,22 +19,23 @@ module Starhub
         email: email,
         phone: phone
       }
-      @client.post("/users", options)
+      @client.post("/users?current_user=#{name}", options)
     end
 
-    def update_user(name, nickname, email, phone)
+    def update_user(name, nickname, email, phone, login_identity)
       options = {
         username: name,
         name: nickname,
         email: email,
-        phone: phone
+        phone: phone,
+        casdoor_uid: login_identity
       }
-      @client.put("/users/#{name}", options)
+      @client.put("/users/#{name}?current_user=#{name}", options)
     end
 
     def generate_git_token(username, name, options = {})
       options[:name] = name
-      res = @client.post("/user/#{username}/tokens", options)
+      res = @client.post("/user/#{username}/tokens?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
@@ -253,7 +254,7 @@ module Starhub
       options = {
         current_user: username
       }
-      res = @client.post("/jwt/token", options)
+      res = @client.post("/jwt/token?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end
