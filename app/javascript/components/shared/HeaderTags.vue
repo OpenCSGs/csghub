@@ -1,7 +1,9 @@
 <template>
   <div class="flex items-center flex-wrap gap-4 md:px-5 md:mb-[30px] md:flex-col md:items-start">
+    <!-- Task -->
     <div v-if="taskTags.length" class="text-sm text-[#909399]">{{ $t('all.tasks') }}:</div>
     <tag-item v-for="tag in taskTags" :tag="tag" @handleTagClick="searchByTag" />
+    <!-- Framework -->
     <div v-if="frameworkTags.length"  class="text-sm text-[#909399]">{{ $t('all.framework') }}:</div>
     <a
       v-for="tag in frameworkTags"
@@ -16,6 +18,17 @@
       <GGUF v-if="tag.name.toLowerCase() === 'gguf'" />
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
+    <!-- Language -->
+    <div v-if="languageTags.length" class="flex items-center text-sm text-[#909399]">{{ $t('all.languages') }}:</div>
+    <a v-for="tag in languageTags"
+       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
+       :style="`color: ${tag.color}`"
+       class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
+    >
+      <SvgIcon name="language_tag" />
+      {{ tag.zh_name || tag.name }}
+    </a>
+    <!-- Other -->
     <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
     <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center border gap-1">
       {{ tag.name }}
@@ -40,11 +53,14 @@
   import PaddlePaddle from '../../components/tags/frameworks/PaddlePaddle.vue'
   import GGUF from '../../components/tags/frameworks/GGUF.vue'
   import Joblib from '../../components/tags/frameworks/Joblib.vue'
+  import { useI18n } from 'vue-i18n'
   import TagItem from '../tags/TagItem.vue'
+  import SvgIcon from './SvgIcon.vue'
 
   const props = defineProps({
     taskTags: Array,
     frameworkTags: Array,
+    languageTags: Array,
     licenseTags: Array,
     otherTags: Array,
     prefix: {
@@ -53,6 +69,8 @@
     }
   })
 
+  const { t, locale } = useI18n()
+  
   const searchByTag = (tag) => {
     window.location.href = `/${props.prefix}?tag=${tag.name}&tag_type=Task`
   }

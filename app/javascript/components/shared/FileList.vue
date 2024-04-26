@@ -203,28 +203,15 @@
   }
 
 
-  // 预览放行规则：非 LFS，文件大小不超过 10MB，后缀名为 rb、gitattributes、md、json、yaml、sh、py、js、ts、cpp、c、txt 或为空
+  // 预览放行规则：非 LFS，文件大小不超过 10MB
   const canPreview = (file) => {
-    const extension = getFileExtension(file)
-    const previewExtensions = ['rb', 'gitattributes', 'md', 'json', 'yaml', 'sh', 'py', 'js', 'ts', 'cpp', 'c', 'txt', 'png', 'jpg', 'jpeg', 'gif', 'svg']
-
-    const isExtensionIncluded = !extension || previewExtensions.includes(extension)
     const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
 
-    return (isExtensionIncluded && isFileSizeLessThan10MB) || file.lfs
+    return isFileSizeLessThan10MB || file.lfs
   }
 
   const canDownload = (file) => {
     return file.lfs || (file.size <= 10 * 1024 * 1024)
-  }
-
-  const getFileExtension = (file) => {
-    const fileName = file.path.split('/').pop()
-    const lastDotIndex = fileName.lastIndexOf('.')
-    if (lastDotIndex === -1) {
-      return ''
-    }
-    return fileName.substr(lastDotIndex + 1)
   }
 
   const beiJingTimeParser = (utcTimeStr) => {
