@@ -13,7 +13,7 @@
         :owner-url="ownerUrl"
         :repo-id="code.data.repository_id"
         :likes="code.data.likes"
-        :has-like="hasLike"
+        :has-like="code.data.user_likes"
         repo-type="code"
       />
     </div>

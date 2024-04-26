@@ -17,7 +17,7 @@
         repo-type="space"
         :repo-id="applicationSpace.data.repository_id"
         :likes="applicationSpace.data.like_count"
-        :has-like="hasLike"
+        :has-like="applicationSpace.data.user_likes"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
     </div>

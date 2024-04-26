@@ -13,7 +13,7 @@
         :owner-url="ownerUrl"
         :repo-id="dataset.data.repository_id"
         :likes="dataset.data.likes"
-        :has-like="hasLike"
+        :has-like="dataset.data.user_likes"
         repo-type="dataset"
       />
     </div>
