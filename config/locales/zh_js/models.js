@@ -25,6 +25,7 @@ export const models = {
     tips: "创建模型后，你可以使用网页或 Git 上传你的文件。",
     createModel: "创建模型",
     createSuccess: "模型创建成功",
+    tip: "应用于模型数据，创建后不可更改" 
   },
   edit: {
     tips: "将会显示在模型列表页面中，选填",

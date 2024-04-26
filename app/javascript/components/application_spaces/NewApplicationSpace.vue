@@ -48,7 +48,11 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.name') }}</p>
-          <el-input v-model="spaceName" :placeholder="$t('application_spaces.new.namePlaceholder')" input-style="width: 100%"/>
+          <el-input v-model="spaceName" :placeholder="$t('application_spaces.new.namePlaceholder')" input-style="width: 100%" >
+            <template #suffix>
+              <InputTip :content="$t('application_spaces.new.tip')" />
+            </template>
+          </el-input>
         </div>
       </div>
 
@@ -211,7 +215,7 @@
         <button
             class="bg-[#3250BD] w-[118px] ml-[10px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
             @click="createApplicationSpace"
-            :disabled="!canCreateApplicationSpace">
+            :disabled="!canCreateApplicationSpace || hasCreateApplicationSpace">
           {{ $t('application_spaces.new.create') }}
         </button>
       </div>
@@ -224,6 +228,7 @@
   import {ElInput, ElMessage} from 'element-plus'
   import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
+  import InputTip from '../shared/inputs/InputTip.vue'
   import jwtFetch from '../../packs/jwtFetch'
 
   const props = defineProps({
@@ -247,6 +252,7 @@
   const coverImage = ref('')
   const prefixPath = document.location.pathname.split('/')[1]
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+  const hasCreateApplicationSpace = ref(false)
 
 
   onMounted(() => {
@@ -307,12 +313,15 @@
     formData.append('cover_image', coverImage.value)
 
     const options = { method: 'POST', body: formData }
+    hasCreateApplicationSpace.value = true
 
     const response = await csrfFetch(modelCreateEndpoint, options)
     if (!response.ok) {
+      hasCreateApplicationSpace.value = false
       const data = await response.json()
       throw new Error(data.message)
     } else {
+      hasCreateApplicationSpace.value = false
       return response.json()
     }
   }
@@ -377,6 +386,9 @@
   }
   :deep(.hide .el-upload.el-upload--picture-card){
     display: none;
+  }
+  :deep(.el-input .el-input__wrapper) {
+    border-radius: 8px;
   }
 </style>
 

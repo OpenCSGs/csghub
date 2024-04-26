@@ -19,7 +19,7 @@
       <el-tabs v-model="activeCloneType" class="border border-[#EBEEF5] mb-8 clone-tabs">
         <el-tab-pane label="HTTPS" name="https">
           <div class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all">
-            <div class="my-[4px]">
+            <div class="my-[4px]" v-if="userName && userToken">
               <el-checkbox v-model="useToken" :label="$t('application_spaces.gradioGuide.useToken')" size="large" />
             </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips')}}</div>

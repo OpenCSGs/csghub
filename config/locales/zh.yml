@@ -43,6 +43,8 @@ zh:
         name: "模型"
       dataset:
         name: "数据集"
+      code:
+        name: "代码"
       application_space:
         name: "应用空间"
 
@@ -79,6 +81,8 @@ zh:
         model:
           taken: "已存在，请重新命名"
         dataset:
+          taken: "已存在，请重新命名"
+        code:
           taken: "已存在，请重新命名"
         application_space:
           taken: "已存在，请重新命名"
