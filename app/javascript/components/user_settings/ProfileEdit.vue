@@ -122,7 +122,7 @@ export default {
       formData.append("nickname", this.inputNickname);
       formData.append("email", this.inputEmail);
       formData.append("homepage", this.inputHomepage);
-      formData.append("bio", this.inputbio);
+      formData.append("bio", this.inputBio);
       const options = {
         method: "PUT",
         body: formData,
