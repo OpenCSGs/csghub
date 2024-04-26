@@ -14,4 +14,9 @@ class InternalApi::TagsController < InternalApi::ApplicationController
     response = Tag.where(tag_type: 'framework')
     render json: response.as_json
   end
+
+  def language_tags
+    response = Tag.where(tag_type: 'language')
+    render json: response.as_json
+  end
 end
