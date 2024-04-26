@@ -13,7 +13,7 @@
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.owner') }}</p>
-          <el-select v-model="owner" :placeholder="this.$t('all.select')" size="large">
+          <el-select v-model="owner" :placeholder="$t('all.select')" size="large">
             <el-option
               v-for="item in namespaces"
               :key="item[0]"
@@ -28,18 +28,22 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetName') }}</p>
-          <el-input v-model="datasetName" :placeholder="this.$t('rule.nameRule')" input-style="width: 100%" />
+          <el-input v-model="datasetName" :placeholder="$t('rule.nameRule')" input-style="width: 100%">
+          <template #suffix>            
+              <InputTip :content="$t('datasets.newDataset.tip')" />
+            </template>
+          </el-input>
         </div>
       </div>
 
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetNickName') }}</p>
-          <el-input v-model="datasetNickName" :placeholder="this.$t('all.inputNickNamePlc')" />
+          <el-input v-model="datasetNickName" :placeholder="$t('all.inputNickNamePlc')" />
         </div>
         <div class="">
           <p class="text-[#303133] text-sm mb-2">License</p>
-          <el-select v-model="license" :placeholder="this.$t('all.select')" size="large">
+          <el-select v-model="license" :placeholder="$t('all.select')" size="large">
             <el-option
               v-for="item in licenses"
               :key="item[0]"
@@ -83,7 +87,7 @@
         <button
           class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
           @click="createDataset"
-          :disabled="!canCreateDataset"
+          :disabled="!canCreateDataset || hasCreateDataset"
         >
         {{ $t('datasets.newDataset.createDataset') }}
         </button>
@@ -97,6 +101,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
+  import InputTip from '../shared/inputs/InputTip.vue'
 
   const props = defineProps({
     licenses: Array,
@@ -112,6 +117,7 @@
   const datasetNickName = ref('')
   const datasetDesc = ref('')
   const visibility = ref('private')
+  const hasCreateDataset = ref(false)
 
   const canCreateDataset = computed(() => { return nameRule.test(datasetName.value) })
 
@@ -138,12 +144,15 @@
     formData.append('visibility', visibility.value)
 
     const options = { method: 'POST', body: formData }
+    hasCreateDataset.value = true
 
     const response = await csrfFetch(datasetCreateEndpoint, options)
     if (!response.ok) {
+      hasCreateDataset.value = false
       const data = await response.json()
       throw new Error(data.message)
     } else {
+      hasCreateDataset.value = false
       return response.json()
     }
   }
@@ -194,5 +203,8 @@
     @media screen and (max-width: 768px) {
       width: 100%;
     }
+  }
+  :deep(.el-input .el-input__wrapper) {
+    border-radius: 8px;
   }
 </style>
