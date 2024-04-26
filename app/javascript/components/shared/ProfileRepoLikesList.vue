@@ -128,69 +128,67 @@
   const prefixPath = document.location.pathname.split('/')[1] === 'organizations' ? 'organizations' : 'users'
 
   const viewMoreTargets = (target) => {
-    if (target === 'models') {
-      modelsLoading.value = true
-      fetchMoreModels()
-    } else if (target === 'datasets') {
-      datasetsLoading.value = true
-      fetchMoreDatasets()
-    } else if (target === 'spaces') {
-      spacesLoading.value = true
-      fetchMoreSpaces()
-    } else if (target === 'codes') {
-      codeLoading.value = true
-      fetchMoreCodes()
+    const moreRepoUrl = getMoreReposUrl(target)
+    toggleRepoLoading(target)   
+    const response = fetchData(moreRepoUrl, target)  
+    response.then((data) => {   
+      refreshRepoList(target, data)
+      toggleRepoLoading(target) 
+    })
+  }
+
+  const toggleRepoLoading = (target) => {
+    if (target == 'models') {
+      modelsLoading.value = !modelsLoading.value
+      console.log(modelsLoading.value);
+    } else if (target == 'datasets') {
+      datasetsLoading.value = !datasetsLoading.value
+    } else if (target == 'codes') {
+      spacesLoading.value = !spacesLoading.value
+    } else if (target == 'spaces') {
+      codeLoading.value = !codeLoading.value
     }
   }
 
-  const fetchMorerepos = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/models?per=${props.modelList.total}`
-    await fetchData(url, models)
-    moreModels.value = false
+  const refreshRepoList = (target, data) => {
+    if (target == 'models') {
+      models.value = data
+    } else if (target == 'datasets') {
+      datasets.value = data
+    } else if (target == 'codes') {
+      codes.value = data
+    } else if (target == 'spaces') {
+      spaces.value = data
+    }
   }
 
-  const fetchMoreDatasets = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/datasets?per=${props.datasetList.total}`
-    await fetchData(url, datasets)
-    moreDatasets.value = false
+  const getMoreReposUrl = (target) => {
+    return `/internal_api/${prefixPath}/${props.name}/likes/${target}?per=${getRepoListTotal(target)}`
   }
 
-  const fetchMoreSpaces = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/spaces?per=${props.spaceList.total}`
-    await fetchData(url, spaces)
-    moreSpaces.value = false
+  const getRepoListTotal = (target) => {
+    if (target == 'models') {
+      return props.modelList.total
+    } else if (target == 'datasets') {
+      return props.datasetList.total
+    } else if (target == 'codes') {
+      return props.codeList.total
+    } else if (target == 'spaces') {
+      return props.spaceList.total
+    }
   }
 
-  const fetchMoreCodes = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/likes/codes?per=${props.codeList.total}`
-    await fetchData(url, codes)
-    moreCodes.value = false
-  }
-
-  const fetchData = async (url, targetRef) => {
-    fetch(url).then((response) => {
+  const fetchData = async (url, target) => {
+    return fetch(url).then((response) => {
       if (!response.ok) {
         ElMessage({
           message: t('all.loadError'),
           type: 'warning'
         })
-      } else {
-        response.json().then((data) => {
-          targetRef.value = data
-        })
-      }
+      } 
+      return response.json()
     }).catch((error) => {
       console.error(error)
-    }).finally(() => {
-      if (targetRef === models) {
-        modelsLoading.value = false
-      } else if (targetRef === datasets) {
-        datasetsLoading.value = false
-      } else if (targetRef === codes) {
-        codeLoading.value = false
-      } else if (targetRef === spaces) {
-        spacesLoading.value = false
-      }
     })
   }
 </script>
