@@ -21,12 +21,11 @@ module Starhub
       @client.post("/users?current_user=#{name}", options)
     end
 
-    def update_user(name, nickname, email, login_identity)
+    def update_user(name, nickname, email)
       options = {
         username: name,
         name: nickname,
-        email: email,
-        casdoor_uid: login_identity
+        email: email
       }
       @client.put("/users/#{name}?current_user=#{name}", options)
     end
