@@ -19,6 +19,7 @@ class TagDashboard < Administrate::BaseDashboard
     taggings: Field::HasMany,
     zh_name: Field::String,
     scope: Field::String,
+    label: Field::String,
     weight: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -37,6 +38,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_origin
     zh_name
     scope
+    label
     weight
     desc
   ].freeze
@@ -55,6 +57,7 @@ class TagDashboard < Administrate::BaseDashboard
     taggings
     zh_name
     scope
+    label
     weight
     created_at
     updated_at
@@ -70,6 +73,7 @@ class TagDashboard < Administrate::BaseDashboard
     tag_origin
     tag_type
     tag_field
+    label
     desc
     weight
   ].freeze
