@@ -30,6 +30,12 @@ export const application_spaces = {
     docNotes1: '点击此处查看 gradio Spaces 的完整文档',
     useToken: '使用我的 token'
   },
+  streamlitGuide: {
+    notice: '开始使用您的 streamlit 应用空间！',
+    createTitle: '创建 Streamlit app.py 文件',
+    dependencyNotes3: 'Streamlit 软件包已预装，其版本在 README.md 文件的 sdk_version 字段中设置。',
+    docNotes1: '点击此处查看 streamlit Spaces 的完整文档',
+  },
   errorPage: {
     log: '日志',
     build: '构建',

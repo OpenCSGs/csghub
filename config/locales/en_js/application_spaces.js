@@ -30,6 +30,12 @@ export const application_spaces = {
     docNotes1: 'Click here to view the full documentation for gradio Spaces',
     useToken: 'Use my token'
   },
+  streamlitGuide: {
+    notice: 'Get started with your streamlit app space!',
+    createTitle: 'Create Streamlit app.py file',
+    dependencyNotes3: 'The Streamlit package is preinstalled and its version is set in the sdk_version field of the README.md file.',
+    docNotes1: 'Click here to view the full documentation for streamlit Spaces',
+  },
   errorPage: {
     log: 'Logs',
     build: 'Build',
