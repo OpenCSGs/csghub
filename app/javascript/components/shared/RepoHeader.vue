@@ -14,10 +14,10 @@
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
       <div 
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="repoHasLike === true ? 'text-gray-400 border-gray-200' : ''" 
-        @click="addLike"
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        @click="clickLike"
       >
-        {{ repoHasLike === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ showLikesNumber }}</div>
       </div>    
     </div>
@@ -31,10 +31,10 @@
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
       <div 
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="repoHasLike === true ? 'text-gray-400 border-gray-200' : ''" 
-        @click="addLike"
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        @click="clickLike"
       >
-        {{ repoHasLike === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ showLikesNumber }}</div>
       </div>      
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
@@ -58,7 +58,7 @@
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{desc}}</div>
   <header-tags
-    :task-tags="tags.task_tags"
+    :task-tags="tags.task_tags" 
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"
     :other-tags="tags.other_tags"
@@ -92,14 +92,14 @@
     appStatus: String,
     spaceResource: String,
     canWrite: Boolean,
-    repoId: String,
-    likes: String,
+    repoId: Number,
+    totalLikes: Number,
     hasLike: Boolean
   });
 
-  let repoHasLike = ref(props.hasLike)
-  let likesNumber = props.likes ? props.likes : 0
-  let showLikesNumber = ref('')
+  const userLiked = ref(props.hasLike)
+  let likesNumber = props.totalLikes ? props.totalLikes : 0
+  const showLikesNumber = ref(false)
 
   const copyName = () => {
     copyToClipboard(props.path)
@@ -109,7 +109,7 @@
     emit('toggleSpaceLogsDrawer')
   }
 
-  const showLikes = (number) => {
+  const likesNumberDisplayName = (number) => {
     if (number > 9999) {
       return '1w+';
     } else if (number > 999) {
@@ -119,36 +119,40 @@
     }
   }
 
+  const clickLike = () => {
+    userLiked.value === true ? removeLike() : addLike()
+  }
+
   const addLike = async () => {
-    if (repoHasLike.value == false) {
-      const options = { method: 'PUT' }
-      const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
-      if (!response.ok) {
-        const data = response.json()
-        throw new Error(data.message)
-      } else {
-        repoHasLike.value = true
-        likesNumber += 1
-        showLikesNumber.value = showLikes(likesNumber)
-        return response.json()
-      }
+    const options = { method: 'PUT' }
+    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    if (!response.ok) {
+      const data = response.json()
+      throw new Error(data.message)
     } else {
-      const options = { method: 'DELETE' }
-      const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
-      if (!response.ok) {
-        const data = response.json()
-        throw new Error(data.message)
-      } else {
-        repoHasLike.value = false
-        likesNumber -= 1
-        showLikesNumber.value = showLikes(likesNumber)
-        return response.json()
-      }
+      userLiked.value = true
+      likesNumber += 1
+      showLikesNumber.value = likesNumberDisplayName(likesNumber)
+      return response.json()
+    }
+  }
+
+  const removeLike = async () => {
+    const options = { method: 'DELETE' }
+    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    if (!response.ok) {
+      const data = response.json()
+      throw new Error(data.message)
+    } else {
+      userLiked.value = false
+      likesNumber -= 1
+      showLikesNumber.value = likesNumberDisplayName(likesNumber)
+      return response.json()
     }
   }
 
   onMounted(() => {
-    showLikesNumber.value = showLikes(likesNumber)
+    showLikesNumber.value = likesNumberDisplayName(likesNumber)
   })
 </script>
 

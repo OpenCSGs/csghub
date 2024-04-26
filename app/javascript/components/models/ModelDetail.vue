@@ -10,9 +10,9 @@
         :tags="tags"
         :avatar="avatar"
         :owner-url="ownerUrl"
-        :repo-id="model.data.repository_id"
-        :likes="model.data.likes"
-        :has-like="model.data.user_likes"
+        :repoId="model.data.repository_id"
+        :totalLikes="model.data.likes"
+        :hasLike="model.data.user_likes"
         repo-type="model"
       />
     </div>
