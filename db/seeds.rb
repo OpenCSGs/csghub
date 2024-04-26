@@ -137,6 +137,29 @@ end
 end
 
 [
+  ['Chinese', '中文', 'cn'],
+  ['English', '英文', 'en'],
+  ['French', '法文', 'fr'],
+  ['German', '德文', 'de'],
+  ['Spanish', '西班牙文', 'es'],
+  ['Japanese', '日文', 'ja'],
+  ['Korean', '韩文', 'ko'],
+  ['Russian', '俄文', 'ru'],
+  ['Italian', '意大利文', 'it'],
+  ['Portuguese', '葡萄牙文', 'pt'],
+  ['Arabic', '阿拉伯文', 'ar'],
+  ['Hindi', '印度文', 'hi'],
+  ['Turkish', '土耳其文', 'tr'],
+  ['Dutch', '荷兰语', 'nl'],
+  ['Polish', '波兰文', 'pl'],
+  ['Swedish', '瑞典文', 'sv'],
+].each do |tag|
+  local_tag = Tag.find_by(name: tag[0], tag_type: 'language', tag_origin: 'system')
+  next if local_tag
+  Tag.create(tag_origin: 'system', tag_type: 'language', name: tag[0], zh_name: tag[1], label: tag[2])
+end
+
+[
   ['apache-2.0', 'Apache-2.0', 1],
   ['mit', 'MIT', 2],
   ['lgpl', 'LGPL', 3],
