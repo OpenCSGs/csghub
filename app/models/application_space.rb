@@ -10,6 +10,8 @@ class ApplicationSpace < ApplicationRecord
   after_save :update_starhub_server_application_space
   before_save :detect_sensitive_content
 
+  validates_presence_of :name, :sdk, :cloud_resource
+
   validates :name, format: { with: NAME_RULE }
 
   validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }

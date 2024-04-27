@@ -91,6 +91,10 @@ zh:
           taken: "已存在，请重新命名"
         application_space:
           taken: "已存在，请重新命名"
+          blank: "字段不能为空"
+          attributes:
+            cloud_resource:
+              blank: "资源字段不能为空"
 
   datetime:
     distance_in_words:
