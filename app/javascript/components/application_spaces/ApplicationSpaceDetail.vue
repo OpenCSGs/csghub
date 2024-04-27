@@ -39,6 +39,7 @@
       :user-name="userName"
       :user-token="userToken"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
+      :isAdmin="isAdmin"
     />
   </div>
   <div v-if="canWrite">
@@ -118,7 +119,8 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String
+    userToken: String,
+    isAdmin: Boolean
   })
 
   const csghubServer = inject('csghubServer')

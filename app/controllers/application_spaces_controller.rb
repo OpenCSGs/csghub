@@ -24,6 +24,7 @@ class ApplicationSpacesController < ApplicationController
 
   def show
     @default_tab = 'summary'
+    @is_admin = current_user.admin?
   end
 
   def files

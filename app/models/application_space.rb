@@ -7,8 +7,10 @@ class ApplicationSpace < ApplicationRecord
 
   after_create :sync_created_space_to_starhub_server
   after_destroy :delete_application_space_from_starhub_server
-  after_update :update_starhub_server_application_space
+  after_save :update_starhub_server_application_space
   before_save :detect_sensitive_content
+
+  validates_presence_of :name, :sdk, :cloud_resource
 
   validates :name, format: { with: NAME_RULE }
 
@@ -33,13 +35,14 @@ class ApplicationSpace < ApplicationRecord
 
   def update_starhub_server_application_space
     res = Starhub.api(creator.session_ip).update_application_space(creator.name,
-                                               name,
-                                               owner.name,
-                                               nickname,
-                                               desc,
-                                               { private: application_space_private?,
-                                                 current_user: creator&.name
-                                               })
+                                                                   name,
+                                                                   owner.name,
+                                                                   nickname,
+                                                                   desc,
+                                                                   { private: application_space_private?,
+                                                                     current_user: creator&.name,
+                                                                     hardware: cloud_resource
+                                                                   })
     raise StarhubError, res.body unless res.success?
   end
 

@@ -66,6 +66,7 @@ export const application_spaces = {
     notes: 'Once your space is created, you can upload your files using the web interface or git.',
     create: 'Create',
     createSuccess: "Application Space created successfully",
+    failedFetchResources: "Failed to fetch resources"
   },
   edit: {
     cloudResource: 'Cloud Resource',
