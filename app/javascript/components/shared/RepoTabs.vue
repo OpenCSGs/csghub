@@ -123,7 +123,8 @@
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
           :cloudResource="repoDetail.hardware"
-          @showSpaceLogs="showSpaceLogs" />
+          @showSpaceLogs="showSpaceLogs"
+          :isAdmin="isAdmin" />
         <code-settings
           v-if="repoType === 'code'"
           :path="repoDetail.path"
@@ -180,7 +181,8 @@ const props = defineProps({
   appEndpoint: String,
   sdk: String,
   userName: String,
-  userToken: String
+  userToken: String,
+  isAdmin: Boolean
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);

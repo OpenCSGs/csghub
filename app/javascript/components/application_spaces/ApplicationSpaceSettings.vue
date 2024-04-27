@@ -43,6 +43,7 @@
             :key="item.name"
             :label="item.name"
             :value="item.resources"
+            :disabled="disabledOptions.includes(item.name)"
           />
         </el-select>
       </div>
@@ -255,7 +256,8 @@ export default {
     applicationSpaceDesc: String,
     default_branch: String,
     appStatus: String,
-    cloudResource: String
+    cloudResource: String,
+    isAdmin: Boolean
   },
 
   components: {},
@@ -292,6 +294,14 @@ export default {
     isSpaceStopped() {
       return this.appStatus === 'Stopped' ? true : false
     },
+    disabledOptions() {
+      return this.isAdmin ?
+               [ "NVIDIA T4 · 4 vCPU · 16 GB",
+                 "NVIDIA A10G · 12 vCPU · 46 GB" ] :
+               [ "NVIDIA T4 · 4 vCPU · 16 GB",
+                 "NVIDIA A10G · 4 vCPU · 16 GB",
+                 "NVIDIA A10G · 12 vCPU · 46 GB" ]
+    }
   },
 
   emits: ['showSpaceLogs'],
