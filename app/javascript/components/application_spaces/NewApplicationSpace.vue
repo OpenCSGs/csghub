@@ -261,7 +261,7 @@
   })
 
   const canCreateApplicationSpace = computed(() => {
-    return nameRule.test(spaceName.value)
+    return nameRule.test(spaceName.value) && !!spaceResource.value
   })
 
   const spaceResources = ref([])
