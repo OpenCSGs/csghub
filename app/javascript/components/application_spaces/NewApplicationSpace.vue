@@ -183,6 +183,7 @@
                      :key="item.name"
                      :label="item.name"
                      :value="item.resources"
+                     :disabled="disabledOptions.includes(item.name)"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.cloudResourceDesc1') }}</p>
@@ -265,12 +266,14 @@
 
   const spaceResources = ref([])
   const spaceResource = ref('')
-  const notAvailableOptions = computed(() => {
+  const disabledOptions = computed(() => {
     return props.isAdmin ?
-    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ] :
-    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ]
+    [ "NVIDIA T4 · 4 vCPU · 16 GB",
+      "NVIDIA A10G · 12 vCPU · 46 GB" ] :
+    [ "NVIDIA T4 · 4 vCPU · 16 GB",
+      "NVIDIA A10G · 4 vCPU · 16 GB",
+      "NVIDIA A10G · 12 vCPU · 46 GB" ]
   })
-  const disabledOptions = ref(notAvailableOptions)
 
   const createApplicationSpace = async () => {
     try {
