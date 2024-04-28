@@ -96,7 +96,7 @@
 
   const { t } = useI18n();
   const nameFilterInput = ref('')
-  const sortSelection = ref('recently_update')
+  const sortSelection = ref('trending')
   const currentPage = ref(1)
   const totalRepos = ref(0)
   const taskTag = ref('')
@@ -106,12 +106,12 @@
   const reposData = ref(Array)
   const sortOptions = [
                         {
-                          value: 'recently_update',
-                          label: t('all.recentlyUpdate')
-                        },
-                        {
                           value: 'trending',
                           label: t('all.trending')
+                        },
+                        {
+                          value: 'recently_update',
+                          label: t('all.recentlyUpdate')
                         },
                         {
                           value: 'most_download',
