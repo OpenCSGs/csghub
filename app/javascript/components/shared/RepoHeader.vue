@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-[8px] flex-wrap mb-5 text-lg text-[#606266] font-semibold md:px-5">
     <!-- dataset repo -->
     <div v-if="repoType === 'dataset'"
-         class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center items-center md:w-full md:mb-1"
+         class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path opacity="0.12" d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z" fill="#A8ABB2"/>
@@ -18,7 +18,7 @@
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
-        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ showLikesNumber }}</div>
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
       </div>    
     </div>
 
@@ -35,7 +35,7 @@
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
-        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ showLikesNumber }}</div>
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
       </div>      
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
       <p v-if="canWrite" class="cursor-pointer" @click="showSpaceLogs">
@@ -73,7 +73,7 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { ref } from 'vue'
   import csrfFetch from "../../packs/csrfFetch"
-  import { onMounted } from 'vue';
+  import { computed } from 'vue';
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -93,13 +93,15 @@
     spaceResource: String,
     canWrite: Boolean,
     repoId: Number,
-    totalLikes: Number,
+    totalLikes: {
+      type: Number,
+      default: 0
+    },
     hasLike: Boolean
   });
 
   const userLiked = ref(props.hasLike)
-  let likesNumber = props.totalLikes ? props.totalLikes : 0
-  const showLikesNumber = ref(false)
+  const likesNumber = ref(props.totalLikes)
 
   const copyName = () => {
     copyToClipboard(props.path)
@@ -109,15 +111,16 @@
     emit('toggleSpaceLogsDrawer')
   }
 
-  const likesNumberDisplayName = (number) => {
-    if (number > 9999) {
+  const likesNumberDisplayName = computed(() => {
+    if (likesNumber.value > 9999) {
       return '1w+';
-    } else if (number > 999) {
+    } else if (likesNumber.value > 999) {
       return '1k+';
     } else {
-      return number.toString();
+      return likesNumber.value.toString();
     }
-  }
+  })
+
 
   const clickLike = () => {
     userLiked.value === true ? removeLike() : addLike()
@@ -135,9 +138,7 @@
     });
     } else {
       userLiked.value = true
-      likesNumber += 1
-      showLikesNumber.value = likesNumberDisplayName(likesNumber)
-      return response.json()
+      likesNumber.value += 1
     }
   }
 
@@ -153,14 +154,8 @@
     });
     } else {
       userLiked.value = false
-      likesNumber -= 1
-      showLikesNumber.value = likesNumberDisplayName(likesNumber)
-      return response.json()
+      likesNumber.value -= 1
     }
   }
-
-  onMounted(() => {
-    showLikesNumber.value = likesNumberDisplayName(likesNumber)
-  })
 </script>
 
