@@ -95,7 +95,6 @@
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import ViewMore from './ViewMore.vue'
   import { useI18n } from 'vue-i18n'
-  import SvgIcon from './SvgIcon.vue'
 
   const props = defineProps({
     modelList: Object,
