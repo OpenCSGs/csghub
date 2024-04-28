@@ -28,7 +28,11 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.codeName') }}</p>
-          <el-input v-model="codeName" :placeholder="$t('rule.nameRule')" input-style="width: 100%" />
+          <el-input v-model="codeName" :placeholder="$t('rule.nameRule')" input-style="width: 100%" >
+            <template #suffix>
+              <InputTip :content="$t('codes.newCode.tip')" />
+            </template>
+          </el-input>
         </div>
       </div>
 
@@ -81,7 +85,7 @@
         <button
           class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
           @click="createCode"
-          :disabled="!canCreateCode"
+          :disabled="!canCreateCode || hasCreateCode"
         >
           {{ $t('codes.newCode.createCode') }}
         </button>
@@ -125,6 +129,9 @@
       width: 100%;
     }
   }
+  :deep(.el-input .el-input__wrapper) {
+    border-radius: 8px;
+  }
 </style>
 
 <script setup>
@@ -132,6 +139,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
+  import InputTip from '../shared/inputs/InputTip.vue'
 
   const { t } = useI18n()
   const nameRule = inject('nameRule')
@@ -147,6 +155,7 @@
   const codeNickName = ref('')
   const codeDesc = ref('')
   const visibility = ref('private')
+  const hasCreateCode = ref(false)
 
   const canCreateCode = computed(() => { return nameRule.test(codeName.value) })
 
@@ -173,12 +182,15 @@
     formData.append('visibility', visibility.value)
 
     const options = { method: 'POST', body: formData }
+    hasCreateCode.value = true
 
     const response = await csrfFetch(codeCreateEndpoint, options)
     if (!response.ok) {
       const data = await response.json()
+      hasCreateCode.value = false
       throw new Error(data.message)
     } else {
+      hasCreateCode.value = false
       return response.json()
     }
   }

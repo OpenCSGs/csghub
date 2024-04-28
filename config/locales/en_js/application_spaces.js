@@ -72,6 +72,8 @@ export const application_spaces = {
     notes: 'Once your model is created, you can upload your files using the web interface or git.',
     create: 'Create Space',
     createSuccess: "Application Space created successfully",
+    tip: "This parameter applies to the application space path and cannot be changed after it is created",
+    failedFetchResources: "Failed to fetch resources"
   },
   edit: {
     cloudResource: 'Cloud Resource',

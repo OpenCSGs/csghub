@@ -97,6 +97,7 @@ Rails.application.routes.draw do
       collection do
         get 'task-tags', to: 'tags#task_tags'
         get 'framework-tags', to: 'tags#framework_tags'
+        get 'language-tags', to: 'tags#language_tags'
       end
     end
     # resources :discussions, only: :create
