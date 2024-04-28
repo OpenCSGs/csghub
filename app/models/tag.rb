@@ -67,12 +67,13 @@ class Tag < ApplicationRecord
     {
       name: name,
       zh_name: zh_name,
-      color: color
+      color: color,
+      label: label
     }
   end
 
   def self.build_detail_tags(tags, scope)
-    task_tags, framework_tags, license_tags, other_tags = [], [], [], []
+    task_tags, framework_tags, language_tags, license_tags, other_tags = [], [], [], [], []
     if tags
       tags.map do |tag|
         if !tag['built_in']
@@ -83,7 +84,7 @@ class Tag < ApplicationRecord
             local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: scope)
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
-              task_tags << tag.merge('color' => color, 'zh_name' => I18n.locale == :en ? local_tag.zh_name : local_tag.name)
+              task_tags << tag.merge('color' => color, 'zh_name' => I18n.locale == :en ? local_tag.name : local_tag.zh_name)
             else
               other_tags << tag
             end
@@ -96,13 +97,20 @@ class Tag < ApplicationRecord
             else
               other_tags << tag
             end
+          when 'language'
+            local_tag = Tag.find_by(tag_type: 'language', label: tag["name"])
+            if local_tag
+              language_tags << tag.merge("name" => local_tag.name, "zh_name" => I18n.locale == :en ? local_tag.name : local_tag.zh_name, "label" => local_tag.label)
+            else
+              other_tags << tag
+            end
           else
             other_tags << tag
           end
         end
       end
     end
-    { 'task_tags' => task_tags, 'framework_tags' => framework_tags, 'license_tags' => license_tags, 'other_tags' => other_tags }
+    { 'task_tags' => task_tags, 'language_tags' => language_tags,'framework_tags' => framework_tags, 'license_tags' => license_tags, 'other_tags' => other_tags }
   end
 
   private

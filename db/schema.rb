@@ -328,6 +328,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_25_131331) do
     t.text "desc"
     t.integer "weight"
     t.string "scope"
+    t.string "label"
   end
 
   create_table "users", force: :cascade do |t|

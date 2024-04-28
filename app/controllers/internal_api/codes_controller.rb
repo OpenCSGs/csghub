@@ -12,6 +12,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
                                     params[:sort],
                                     params[:task_tag],
                                     params[:framework_tag],
+                                    params[:language_tag],
                                     params[:license_tag],
                                     params[:page],
                                     params[:per_page])
