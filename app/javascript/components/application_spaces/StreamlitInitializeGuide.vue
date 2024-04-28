@@ -1,16 +1,7 @@
 <template>
   <div class="sm:px-[20px]">
     <div class="flex gap-[8px] mt-[32px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <g clip-path="url(#clip0_8790_36855)">
-          <path d="M6.24984 9.99984L8.74984 12.4998L13.7498 7.49984M18.3332 9.99984C18.3332 14.6022 14.6022 18.3332 9.99984 18.3332C5.39746 18.3332 1.6665 14.6022 1.6665 9.99984C1.6665 5.39746 5.39746 1.6665 9.99984 1.6665C14.6022 1.6665 18.3332 5.39746 18.3332 9.99984Z" stroke="#079455" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <defs>
-          <clipPath id="clip0_8790_36855">
-            <rect width="20" height="20" fill="white"/>
-          </clipPath>
-        </defs>
-      </svg>
+      <SvgIcon name="spaces"/>
       <div>
         <h3 class="text-[#475467] text-[14px] font-[500]">{{ $t('application_spaces.streamlitGuide.notice') }}</h3>
         <p class="text-[#A07731] text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
@@ -70,6 +61,7 @@
 <script setup>
   import { ref, computed } from 'vue'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
+  import SvgIcon from '../shared/SvgIcon.vue'
 
   const props = defineProps({
     httpCloneUrl: String,
