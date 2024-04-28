@@ -3,7 +3,7 @@
      :class="`${repoType}-card  hover:active-${repoType}-card `"
      class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 sm:w-full border border-gray-200 rounded-xl"
   >
-    <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
+    <div class="flex items-center mb-[5px] w-[399px] lg:w-[370px] mlg:w-auto">
       <div :class="`${repoType}-path`"
            class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap"
       >
@@ -12,7 +12,7 @@
     </div>
 
     <p v-if="getComputed.showDescription"
-       class="w-[390px] sm:w-auto h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2">
+       class="w-[390px] lg:w-[370px] mlg:w-auto h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2">
       {{ repo.description }}
     </p>
 
@@ -24,28 +24,18 @@
       </span>
 
       <span v-if="getComputed.taskTag">
-        <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
-          <path d="M0.5 0V8" stroke="#DCDFE6"/>
-        </svg>
+        <SvgIcon name="vertical_divider" />
       </span>
 
       <div class="overflow-hidden text-ellipsis whitespace-nowrap">
         {{$t('all.lastTime')}}：{{ repo.updated_at.substring(0, 10) }}
       </div>
 
-      <span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
-          <path d="M0.5 0V8" stroke="#DCDFE6"/>
-        </svg>
-      </span>
+      <span> <SvgIcon name="vertical_divider" /> </span>
 
       <span class="whitespace-nowrap">{{ getComputed.visibility }}</span>
 
-      <span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
-          <path d="M0.5 0V8" stroke="#DCDFE6"/>
-        </svg>
-      </span>
+      <span> <SvgIcon name="vertical_divider" /> </span>
 
       <span class="whitespace-nowrap">{{$t('all.downloadCount')}}：{{ repo.downloads }}</span>
     </div>
