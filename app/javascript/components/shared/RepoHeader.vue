@@ -127,8 +127,12 @@
     const options = { method: 'PUT' }
     const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
     if (!response.ok) {
-      const data = response.json()
-      throw new Error(data.message)
+    response.json().then((data) => {
+      ElMessage({
+        type: 'warning',
+        message: data,
+      });
+    });
     } else {
       userLiked.value = true
       likesNumber += 1
@@ -141,8 +145,12 @@
     const options = { method: 'DELETE' }
     const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
     if (!response.ok) {
-      const data = response.json()
-      throw new Error(data.message)
+    response.json().then((data) => {
+      ElMessage({
+        type: 'warning',
+        message: data,
+      });
+    });
     } else {
       userLiked.value = false
       likesNumber -= 1

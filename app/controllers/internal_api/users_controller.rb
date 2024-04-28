@@ -49,7 +49,7 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   end
 
   def delete_like
-    sghub_api.delete_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
+    csghub_api.delete_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
     render json: { message: I18n.t('repo.delSuccess') }
   end
 
