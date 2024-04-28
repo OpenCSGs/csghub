@@ -85,7 +85,7 @@
         </svg>
         <span>{{ $t('organization.space') }}</span>
       </h3>
-      <div v-if="hasSpaces" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
+      <div v-if="hasSpaces" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
         <application-space-item v-for="repo in spaces.data" :repo="repo" repo-type="space" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
