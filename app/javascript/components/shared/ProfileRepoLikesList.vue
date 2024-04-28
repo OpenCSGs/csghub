@@ -1,7 +1,7 @@
 <template>
   <div class="xl:px-[16px] sm:w-[100%] sm:mt-[36px]">
     <a :href="`/profile/${name}`"
-      class="flex items-center w-[150px] mr-[10px] pl-[18px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
+       class="flex items-center w-[150px] mr-[10px] pl-[18px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
       <SvgIcon class="mr-[4px]" name="arrow" />
       {{ $t('profile.return') }}
     </a>
@@ -14,7 +14,7 @@
         <span>{{ $t('organization.model') }}</span>
       </h3>
       <div v-if="hasModels" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
-        <repo-item v-for="model in models.data" :repo="model" repo-type="model"></repo-item>
+        <RepoItem v-for="model in models.data" :repo="model" repo-type="model"></RepoItem>
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
@@ -22,7 +22,7 @@
       <view-more
         v-if="moreModels"
         target="models"
-        @view-more-targets="viewMoreTargets"
+        @viewMoreTargets="viewMoreTargets"
       ></view-more>
       <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
     </div>
@@ -34,7 +34,7 @@
         <span>{{ $t('organization.dataset') }}</span>
       </h3>
       <div v-if="hasDatasets" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
-        <repo-item v-for="dataset in datasets.data" :repo="dataset" repo-type="dataset"></repo-item>
+        <RepoItem v-for="dataset in datasets.data" :repo="dataset" repo-type="dataset"></RepoItem>
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
@@ -42,7 +42,7 @@
       <view-more
         v-if="moreDatasets"
         target="datasets"
-        @view-more-targets="viewMoreTargets"
+        @viewMoreTargets="viewMoreTargets"
       ></view-more>
       <el-skeleton class="pr-6" v-if="datasetsLoading" :rows="2" animated />
     </div>
@@ -54,7 +54,7 @@
         <span>{{ $t('organization.code') }}</span>
       </h3>
       <div v-if="hasCodes" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
-        <repo-item v-for="code in codes.data" :repo="code" repo-type="code"></repo-item>
+        <RepoItem v-for="code in codes.data" :repo="code" repo-type="code"></RepoItem>
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
@@ -62,7 +62,7 @@
       <view-more
         v-if="moreCodes"
         target="codes"
-        @view-more-targets="viewMoreTargets"
+        @viewMoreTargets="viewMoreTargets"
       ></view-more>
       <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
     </div>
@@ -74,7 +74,7 @@
         <span>{{ $t('organization.space') }}</span>
       </h3>
       <div v-if="hasSpaces" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
-        <application-space-item v-for="repo in spaces.data" :repo="repo" repo-type="space" />
+        <ApplicationSpaceItem v-for="repo in spaces.data" :repo="repo" repo-type="space" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t('all.noData') }}
@@ -82,7 +82,7 @@
       <view-more
         v-if="moreSpaces"
         target="spaces"
-        @view-more-targets="viewMoreTargets"
+        @viewMoreTargets="viewMoreTargets"
       ></view-more>
       <el-skeleton class="pr-6" v-if="spacesLoading" :rows="2" animated />
     </div>
@@ -140,7 +140,6 @@
   const toggleRepoLoading = (target) => {
     if (target == 'models') {
       modelsLoading.value = !modelsLoading.value
-      console.log(modelsLoading.value);
     } else if (target == 'datasets') {
       datasetsLoading.value = !datasetsLoading.value
     } else if (target == 'codes') {

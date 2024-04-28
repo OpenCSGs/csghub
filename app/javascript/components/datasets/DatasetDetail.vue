@@ -62,7 +62,6 @@
     tagList: Object,
     ownerUrl: String,
     canWrite: Boolean,
-    hasLike: Boolean,
     userName: String,
     userToken: String
   })

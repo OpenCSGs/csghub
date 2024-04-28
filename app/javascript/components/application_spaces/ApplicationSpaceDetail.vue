@@ -121,8 +121,7 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String,
-    hasLike: Boolean
+    userToken: String
   })
 
   const csghubServer = inject('csghubServer')
