@@ -28,6 +28,8 @@ export const all = {
   role: "角色",
   userName: "用户名",
   nickName: "用户昵称",
+  homepage:"主页",
+  bio:"个人简介",
   phone: "手机号码",
   email: "邮箱",
   confirm: "确认",
@@ -66,6 +68,7 @@ export const all = {
   lfsTips2: "如果您不想下载LFS文件的内容，请在环境变量中添加",
   pleaseSelect: "请选择{value}",
   pleaseInput: "请输入{value}",
+  languages: "语言",
   previous:"上一页",
   next:"下一页",
   deleteSuccess: "删除成功"

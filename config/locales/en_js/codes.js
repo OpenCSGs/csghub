@@ -26,5 +26,6 @@ export const codes = {
     tips: "After creating the code, you can use the web or Git to upload your files.",
     createCode: "Create Code",
     createSuccess: "Code Repository created successfully",
+    tip: "Applies to the code base path and cannot be changed after creation" 
   },
 }

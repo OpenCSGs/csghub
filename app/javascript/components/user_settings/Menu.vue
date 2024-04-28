@@ -1,20 +1,20 @@
 <template>
-    <div>
-      <div class="w-[294px] border rounded-[8px] bg-[#FAFAFA] border-[#DCDFE6] mx-[24px]">
-        <div class="flex p-[16px] border-b border-[#DCDFE6]">
+    <div class="pt-6">
+      <div class="w-[294px] rounded-[8px] mx-[24px]">
+        <div class="flex p-[16px]">
           <el-avatar :size="60" :src="avatar"> </el-avatar>
           <div class="ml-[10px]">
-            <div class="text-[24px] leading-[32px] font-semibold">
+            <div class="text-[18px] leading-[28px] font-semibold">
               <a :href="'/profile/' + displayName">
                 {{displayName}}
               </a>
             </div>
-            <div class="text-[16px] text-[#909399] leading-[24px]">@{{name}}</div>
+            <div class="text-[16px] text-[#909399] leading-[24px] font-light">@{{name}}</div>
           </div>
         </div>
         <div class="flex flex-col">
           <a href="/settings/profile"
-             class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+             class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/profile')"
           >
               {{ $t('profile.menu.profile')}}
@@ -34,7 +34,7 @@
 
           <a v-if="hasEmail"
              href="/settings/git-token"
-             class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+             class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/git-token')"
           >
             {{ $t('profile.menu.gitToken')}}
@@ -42,7 +42,7 @@
 
           <a v-if="hasEmail"
              href="/settings/ssh-keys"
-             class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] cursor-pointer"
+             class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/ssh-keys')"
           >
             {{ $t('profile.menu.sshKey')}}

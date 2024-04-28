@@ -61,6 +61,7 @@
     :task-tags="tags.task_tags" 
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"
+    :language-tags="tags.language_tags"
     :other-tags="tags.other_tags"
     :prefix="`${repoType}s/`"
   />

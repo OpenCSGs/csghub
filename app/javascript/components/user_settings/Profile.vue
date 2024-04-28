@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[400px] pl-[80px] pr-[20px] md:px-0 sm:px-0 sm:w-full py-[36px]">
     <div>
-      <el-avatar :size="120" :src="avatar"> </el-avatar>
+      <el-avatar :size="160" :src="avatar"> </el-avatar>
     </div>
     <div class="text-[24px] leading-[32px] font-semibold">{{ displayName }}</div>
     <div class="text-[16px] text-[#909399] max-w-[max-content] leading-[24px] mb-[16px]">@{{name}}</div>
@@ -34,11 +34,11 @@
       </div>
       <div class="text-[#909399]">{{ $t('all.noData')}}</div>
     </div> -->
-    <div class="my-[16px]">
+    <div class="my-[16px] mt-[36px]">
       <div class="text-[20px] leading-[32px] font-semibold mb-[8px]">
         {{ $t('profile.organization')}}
       </div>
-      <div v-if="userOrgs != {}" class="flex gap-[10px] flex-wrap">
+      <div v-if="userOrgs != {}" class="flex gap-[10px] flex-wrap mt-[16px]">
         <p v-for="org in userOrgs">
           <a :href="`/organizations/${org.name}`">
             <img :src="org.avatar" class="rounded-[50%] h-[40px] w-[40px]" />

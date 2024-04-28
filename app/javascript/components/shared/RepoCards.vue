@@ -4,6 +4,7 @@
       <TagSidebar
         :taskTags="props.taskTags"
         :frameworkTags="props.frameworkTags"
+        :languageTags="props.languageTags"
         :licenseTags="props.licenseTags"
         :selectedTag="props.selectedTag"
         :selectedTagType="props.selectedTagType"
@@ -86,6 +87,7 @@
   const props = defineProps({
     taskTags: String,
     frameworkTags: String,
+    languageTags: String,
     licenseTags: String,
     selectedTag: String,
     selectedTagType: String,
@@ -99,6 +101,7 @@
   const totalRepos = ref(0)
   const taskTag = ref('')
   const frameworkTag = ref('')
+  const languageTag = ref('')
   const licenseTag = ref('')
   const reposData = ref(Array)
   const sortOptions = [
@@ -128,9 +131,10 @@
     }
   })
 
-  const resetTags = (task, framework, license) => {
+  const resetTags = (task, framework, language, license) => {
     taskTag.value = task
     frameworkTag.value = framework
+    languageTag.value = language
     licenseTag.value = license
     reloadRepos()
   }
@@ -147,6 +151,7 @@
     url = url + `&sort=${sortSelection.value}`
     url = url + `&task_tag=${taskTag.value}`
     url = url + `&framework_tag=${frameworkTag.value}`
+    url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
     loadRepos(url)
   }

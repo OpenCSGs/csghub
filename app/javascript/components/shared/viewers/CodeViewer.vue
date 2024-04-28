@@ -46,12 +46,14 @@
         return 'cpp';
       case 'c':
         return 'c';
-      default:
-        return 'ini';
     }
   }
 
-  highlightContent.value = hljs.highlight(props.content, { language: detectLanguage() }).value
+  if (detectLanguage()) {
+    highlightContent.value = hljs.highlight(props.content, { language: detectLanguage() }).value
+  } else {
+    highlightContent.value = hljs.highlightAuto(props.content).value
+  }
 </script>
 
 <style scoped>
