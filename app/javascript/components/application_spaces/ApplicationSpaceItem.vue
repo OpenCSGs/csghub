@@ -29,13 +29,13 @@
       v-else
     >
       <template #reference>
-        <p class="max-w-[402px] xl:max-w-full h-[36px] text-[#606266] text-sm overflow-hidden overflow-ellipsis line-clamp-2">
+        <p class="max-w-[402px] xl:max-w-full h-[36px] text-[#606266] text-sm overflow-hidden text-ellipsis line-clamp-2">
           {{ repo.description }}
         </p>
       </template>
     </el-popover>
     <div v-if="getComputed.taskTag" class="flex gap-2 my-2 overflow-x-auto no-scrollbar">
-      <span class="max-w-[80px] xl:max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">{{ getComputed.taskTag }}</span>
+      <span class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">{{ getComputed.taskTag }}</span>
       <span>
         <svg xmlns="http://www.w3.org/2000/svg" width="1" height="8" viewBox="0 0 1 8" fill="none">
           <path d="M0.5 0V8" stroke="#DCDFE6"/>
