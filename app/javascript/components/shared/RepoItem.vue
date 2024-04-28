@@ -1,10 +1,10 @@
 <template>
   <a :href="detailLink"
      :class="`${repoType}-card focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md hover:active-${repoType}-card p-4 sm:w-full border border-gray-200 rounded-xl`">
-    <div class="flex items-center mb-[5px]">
+    <div class="flex items-center mb-[5px] w-[399px] sm:w-auto">
       <div :class="`${repoType}-path text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap`">{{ getComputed.path }}</div>
     </div>
-    <p v-if="getComputed.showDescription" class="h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2">
+    <p v-if="getComputed.showDescription" class="w-[390px] h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2">
       {{ repo.description }}
     </p>
     <div class="flex items-center gap-[8px] text-xs text-[#909399]">
