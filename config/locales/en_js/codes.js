@@ -42,5 +42,18 @@ export const codes = {
     publicInfo: "Anyone on the Internet can see this code.",
     needCodeName: "Please provide code alias first",
     needCodelDesc: "Please provide code introduction first",
+    codeName: "Code Name",
+    codeNickName: "Code Nickname",
+    codeDesc: "Code Description",
+    public: "Public",
+    publicDesc:
+      "Anyone on the internet can see this repository. Only you (individual) or members of your organization can commit.",
+    private: "Private",
+    privateDesc:
+      "Only you (individual) or members of your organization can view and commit to this repository.",
+    tips: "After creating the code, you can use the web or Git to upload your files.",
+    createCode: "Create Code",
+    createSuccess: "Code Repository created successfully",
+    tip: "Applies to the code base path and cannot be changed after creation" 
   },
 }

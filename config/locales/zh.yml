@@ -1,0 +1,111 @@
+zh:
+  hello: "Hello world"
+  zh: '中文'
+  en: '英文'
+  logout: '退出登录'
+
+  repo:
+    delSuccess: "删除成功"
+    delFailed: "删除失败"
+    updateSuccess: "更新成功"
+    updateFailed: "更新失败"
+    createSuccess: "创建成功"
+    createFileSuccess: "创建文件成功"
+    updateFileSuccess: "更新文件成功"
+    uploadFileSuccess: "上传文件成功"
+
+  administrate:
+    search:
+      label: '搜索'
+    controller:
+      update:
+        success: '更新成功'
+    actions:
+      show_resource: '%{name}'
+      edit_resource: 'Edit %{name}'
+
+  activerecord:
+    attributes:
+      tag:
+        name: "Tag名称"
+      user:
+        nickname: '昵称'
+        email: '邮箱'
+        phone: '电话'
+      discussion:
+        title: '标题'
+      organization:
+        name: '名称'
+        nickname: '别名'
+        homepage: '主页地址'
+        org_type: '组织类别'
+      model:
+        name: "模型"
+      dataset:
+        name: "数据集"
+      code:
+        name: "代码"
+      application_space:
+        name: "应用空间"
+
+    errors:
+      messages:
+        record_invalid: '字段不符合规范'
+      models:
+        tag:
+          too_long: "长度超出限制"
+          taken: "已被使用"
+        user:
+          too_long: "长度超出限制"
+          taken: "已被使用"
+          invalid: "不符合规范"
+          attributes:
+            email:
+              invalid: "不符合规范"
+            phone:
+              taken: "已被使用"
+        ssh_key:
+          blank: "字段不能为空"
+          taken: "不能创建重复"
+        organization:
+          invalid: '不符合规范'
+          blank: "字段不能为空"
+          taken: "已存在，请重新命名"
+          attributes:
+            nickname:
+              too_long: "长度超出限制"
+            homepage:
+              too_long: "长度超出限制"
+        discussion:
+          too_long: "长度超出限制"
+        model:
+          taken: "已存在，请重新命名"
+        dataset:
+          taken: "已存在，请重新命名"
+        code:
+          taken: "已存在，请重新命名"
+        application_space:
+          taken: "已存在，请重新命名"
+
+  datetime:
+    distance_in_words:
+      about_x_hours: 大约%{count}小时
+      about_x_months: 大约%{count}个月
+      about_x_years: 大约%{count}年
+      almost_x_years: 接近%{count}年
+      half_a_minute: 半分钟
+      less_than_x_seconds: 不到%{count}秒
+      less_than_x_minutes: 不到%{count}分钟
+      over_x_years: "%{count}年多"
+      x_seconds: "%{count}秒"
+      x_minutes: "%{count}分钟"
+      x_days: "%{count}天"
+      x_months: "%{count}个月"
+      x_years: "%{count}年"
+
+  support:
+    array:
+      words_connector: "，"
+      two_words_connector: "，"
+      last_word_connector: "，"
+
