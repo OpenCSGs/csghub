@@ -170,7 +170,6 @@
   import {ElInput, ElMessage} from 'element-plus'
   import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
-  import SvgIcon from '../shared/SvgIcon.vue'
   import InputTip from '../shared/inputs/InputTip.vue'
   import jwtFetch from '../../packs/jwtFetch'
 
