@@ -30,13 +30,3 @@
     handleOpen
   })
 </script>
-<style>
-.chatDialog {
-  .el-dialog__header {
-    padding: 0 !important;
-  }
-  .el-dialog__body {
-    padding: 0 !important;
-  }
-}
-</style>
