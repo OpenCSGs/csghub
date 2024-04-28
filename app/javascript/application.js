@@ -66,7 +66,7 @@ import NewApplicationSpace from "./components/application_spaces/NewApplicationS
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
-import ChatDialog from "./components/dialog/ChatDialog.vue"
+import LittleMonster from "./components/dialog/LittleMonster.vue"
 
 const pinia = createPinia()
 
@@ -120,7 +120,7 @@ const app = createApp({
     NewApplicationSpace,
     NewCode,
     CodeDetail,
-    ChatDialog
+    LittleMonster
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
