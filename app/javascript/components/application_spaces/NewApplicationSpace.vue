@@ -183,12 +183,12 @@
       <div class="mb-9 text-sm w-full">
         <p class="mb-2 text-[#303133]">{{ $t('application_spaces.new.cloudResource') }}</p>
         <el-select v-model="spaceResource" placeholder="选择" size="large" style="width: 100%;">
-          <el-option
-              v-for="item in spaceResources"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="disabledOptions.includes(item.value)"/>
+          <el-option v-for="item in spaceResources"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item.resources"
+                     :disabled="disabledOptions.includes(item.name)"
+          />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.cloudResourceDesc1') }}</p>
         <p class="text-[#475467] font-light">{{ $t('application_spaces.new.cloudResourceDesc2') }}</p>
@@ -238,6 +238,7 @@
     isAdmin: Boolean
   })
 
+  const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const nameRule = inject('nameRule')
 
@@ -255,25 +256,30 @@
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const hasCreateApplicationSpace = ref(false)
 
+
+  onMounted(() => {
+    const params = new URLSearchParams(window.location.search)
+    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
+    if (result) {
+      owner.value = result[0]
+    }
+    fetchSpaceResources()
+  })
+
   const canCreateApplicationSpace = computed(() => {
-    return nameRule.test(spaceName.value)
+    return nameRule.test(spaceName.value) && !!spaceResource.value
   })
 
-  const spaceResources = ref([
-    {label: "CPU basic · 2 vCPU · 16GB ·免费", value: "CPU basic · 2 vCPU · 16GB"},
-    {label: "NVIDIA T4 · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA T4 · 4 vCPU · 15 GB"},
-    {label: "NVIDIA A10G · 4 vCPU · 15 GB ·即将推出", value: "NVIDIA A10G · 4 vCPU · 15 GB"},
-    {label: "NVIDIA A10G · 12 vCPU · 46 GB ·即将推出", value: "NVIDIA A10G · 12 vCPU · 46 GB"}
-  ])
-  const spaceResource = ref('CPU basic · 2 vCPU · 16GB')
-
-  const notAvailableOptions = computed(() => {
+  const spaceResources = ref([])
+  const spaceResource = ref('')
+  const disabledOptions = computed(() => {
     return props.isAdmin ?
-    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ] :
-    [ "NVIDIA T4 · 4 vCPU · 15 GB", "NVIDIA A10G · 4 vCPU · 15 GB", "NVIDIA A10G · 12 vCPU · 46 GB" ]
+    [ "NVIDIA T4 · 4 vCPU · 16 GB",
+      "NVIDIA A10G · 12 vCPU · 46 GB" ] :
+    [ "NVIDIA T4 · 4 vCPU · 16 GB",
+      "NVIDIA A10G · 4 vCPU · 16 GB",
+      "NVIDIA A10G · 12 vCPU · 46 GB" ]
   })
-
-  const disabledOptions = ref(notAvailableOptions)
 
   const createApplicationSpace = async () => {
     try {
@@ -282,6 +288,21 @@
       toApplicationSpaceDetail(res.path)
     } catch (err) {
       ElMessage.warning(err.message)
+    }
+  }
+
+  const fetchSpaceResources = async() => {
+    const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    const res = await jwtFetch(`${csghubServer}/api/v1/space_resources`, options)
+    if (!res.ok) {
+      ElMessage({message: t('application_spaces.new.failedFetchResources'), type: "warning"})
+    } else {
+      res.json().then((body) => {
+        spaceResources.value = body.data
+      })
     }
   }
 
@@ -335,14 +356,6 @@
     coverImage.value = res.url
     imageUploaded.value = true
   }
-  onMounted(() => {
-    const params = new URLSearchParams(window.location.search)
-    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
-    if (result) {
-      owner.value = result[0]
-    }
-  })
-
 </script>
 
 <style scoped>
