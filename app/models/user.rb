@@ -25,6 +25,7 @@ class User < ApplicationRecord
   has_many :created_models, class_name: 'Model', foreign_key: :creator_id
   has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
 
+  before_update :prevent_name_change, if: -> { name_changed? && name_was.present? }
   after_save :sync_to_starhub_server
 
   has_many :datasets, as: :owner
@@ -184,5 +185,10 @@ class User < ApplicationRecord
 
   def unique_name_by_organization
     errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
+  end
+
+  def prevent_name_change
+    errors.add(:name, :name_cannot_be_changed)
+    throw(:abort)
   end
 end
