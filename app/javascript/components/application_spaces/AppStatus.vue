@@ -20,18 +20,33 @@
 
   const { t } = useI18n();
 
-  const spaceResourceDisplayName = computed(() => {
+  const spaceResourceDisplayNameWithString = () => {
     switch(props.spaceResource) {
-      case 'CPU basic · 2 vCPU · 16GB':
+      case 'CPU basic · 2 vCPU · 16 GB':
         return ' (CPU)'
-      case 'NVIDIA T4 · 4 vCPU · 15 GB':
-        return ' (T4)'
-      case 'NVIDIA A10G · 4 vCPU · 15 GB':
-        return ' (A10)'
+      case 'NVIDIA T4 · 4 vCPU · 16 GB':
+        return ' (GPU)'
+      case 'NVIDIA A10G · 4 vCPU · 16 GB':
+        return ' (GPU)'
       case 'NVIDIA A10G · 12 vCPU · 46 GB':
-        return ' (A10)'
+        return ' (GPU)'
       default:
         return ''
+    }
+  }
+
+  const spaceResourceDisplayName = computed(() => {
+    try {
+      const resource = JSON.parse(props.spaceResource)
+      if (resource && resource['nvidia.com/gpu']) {
+        return ' (GPU)'
+      } else if (resource && resource['cpu']) {
+        return ' (CPU)'
+      } else {
+        return ''
+      }
+    } catch (e) {
+      return spaceResourceDisplayNameWithString()
     }
   })
 
