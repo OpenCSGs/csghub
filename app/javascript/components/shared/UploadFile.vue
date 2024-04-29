@@ -29,7 +29,7 @@
             </svg>
           </el-icon>
           <div class="el-upload__text py-[16px] px-[24px]">
-            {{ $t('shared.dragOr') }} <em>{{ $t('all.clickUpload') }}</em>
+            {{ $t('shared.dragOr') }} <em>{{ $t('all.clickUpload') }}</em>（{{ $t('shared.onlyFiveFiles') }}）
           </div>
           <template #tip>
             <div class="el-upload__tip">
