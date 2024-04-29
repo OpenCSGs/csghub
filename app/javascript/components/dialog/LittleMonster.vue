@@ -12,7 +12,6 @@
 </template>
 <script setup>
   import { ref, onMounted, inject, computed } from 'vue';
-  import useChatDialogStore from '../../stores/ChatStore.js';
   import ChatDialog from './ChatDialog.vue'
   const chatRef =ref(null)
 
