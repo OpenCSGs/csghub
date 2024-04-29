@@ -13,7 +13,15 @@
     ></profile>
   </div>
   <div class="grow px-[20px] py-[36px] md:px-0 sm:py-0">
-    <collection name="<%= @user.name %>"></collection>
+    <div class="sm:w-[100%] sm:mt-[36px] mb-[36px]">
+      <a href="/profile/<%= @user.name %>"
+        class="flex items-center w-[150px] mr-[10px] pl-[18px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
+        <%= I18n.t('profile.return') %>
+      </a>
+      <div class="mt-[32px] font-medium text-xl">
+        <%= I18n.t('profile.my_collect') %>
+      </div>
+    </div>
     <profile-repo-list
       :model-list="<%= JSON.parse(@models).to_json %>"
       :dataset-list="<%= JSON.parse(@datasets).to_json %>"

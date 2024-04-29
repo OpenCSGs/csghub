@@ -40,7 +40,6 @@ import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
-import Collection from "./components/shared/Collection.vue"
 
 const pinia = createPinia()
 
@@ -67,8 +66,7 @@ const app = createApp({
     OrganizationSettings,
     RepoCards,
     NewCode,
-    CodeDetail,
-    Collection
+    CodeDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
