@@ -131,6 +131,7 @@ class ApplicationController < ActionController::Base
       user.login_identity = user_infos['sub']
       user.nickname = user_infos['displayName']
       user.avatar = user_infos['avatar']
+      user.roles = :personal_user
       user.wechat_id = user_infos['wechat']
       user.github_id = user_infos['github']
       user.gitlab_id = user_infos['gitlab']
