@@ -17,5 +17,5 @@ export const shared = {
   preview: "Preview",
   edit: "Edit",
   likes: "Likes",
-  hasLikes: "Collected"
+  hasLikes: "Liked"
 }
