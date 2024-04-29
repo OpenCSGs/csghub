@@ -1,5 +1,5 @@
 <template>
-  <div class="xl:px-[16px] sm:w-[100%] sm:mt-[36px]">
+  <div class="sm:w-[100%] sm:mt-[36px]">
     <a :href="`/profile/${name}`"
        class="flex items-center w-[150px] mr-[10px] pl-[18px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
       <SvgIcon class="mr-[4px]" name="arrow" />
@@ -17,7 +17,7 @@
           {{ $t('organization.model') }}
         </span>
       </h3>
-      <div v-if="hasModels" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
+      <div v-if="hasModels" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
         <RepoItem v-for="model in models.data" :repo="model" repo-type="model" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
@@ -37,7 +37,7 @@
         <SvgIcon name="datasets" />
         <span>{{ $t('organization.dataset') }}</span>
       </h3>
-      <div v-if="hasDatasets" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
+      <div v-if="hasDatasets" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
         <RepoItem v-for="dataset in datasets.data" :repo="dataset" repo-type="dataset" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
@@ -57,7 +57,7 @@
         <SvgIcon name="codes" />
         <span>{{ $t('organization.code') }}</span>
       </h3>
-      <div v-if="hasCodes" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
+      <div v-if="hasCodes" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
         <RepoItem v-for="code in codes.data" :repo="code" repo-type="code" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
@@ -77,7 +77,7 @@
         <SvgIcon name="spaces" />
         <span>{{ $t('organization.space') }}</span>
       </h3>
-      <div v-if="hasSpaces" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mr-6 mt-[16px]">
+      <div v-if="hasSpaces" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
         <ApplicationSpaceItem v-for="repo in spaces.data" :repo="repo" repo-type="space" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
