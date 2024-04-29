@@ -42,6 +42,8 @@
         return ' (GPU)'
       } else if (resource && resource['cpu']) {
         return ' (CPU)'
+      } else {
+        return ''
       }
     } catch (e) {
       return spaceResourceDisplayNameWithString()
