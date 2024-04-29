@@ -21,6 +21,7 @@ export const ekb = {
   "moreDataTitle4": "One-Click Deployment of Q&A Chatbots",
   "moreDataDesc4": "By utilizing intelligent AI documentation and data analysis capabilities, we help you achieve more efficient workflows while reducing labor costs.",
   "adv": "Our Advantages",
+  "openCSGBot":"OpenCSG",
   "advTitle": "More Intelligent Large Language Model Knowledge Assistant",
   "advText": "Help you solve diverse product usage needs for individuals and teams, support various secure and convenient deployment methods, and possess powerful data analysis capabilities",
   "advDataTitle": "Comprehensive Enterprise Knowledge Management Platform",
