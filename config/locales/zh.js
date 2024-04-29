@@ -27,6 +27,7 @@ import { form } from './zh_js/form';
 import { landingPage } from './zh_js/landing_page';
 import { footer } from './zh_js/footer';
 import { ekb } from './zh_js/ekb';
+import { partner } from './zh_js/partner';
 
 export default {
   // csghub
@@ -60,5 +61,6 @@ export default {
   form,
   landingPage,
   footer,
-  ekb
+  ekb,
+  partner
 };
