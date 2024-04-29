@@ -122,7 +122,6 @@
     }
   })
 
-
   const clickLike = () => {
     userLiked.value === true ? removeLike() : addLike()
   }
