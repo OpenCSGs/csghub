@@ -3,7 +3,13 @@
     <div class="font-semibold text-[20px] leading-[28px]">{{ $t('profile.edit.title') }}</div>
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.userName') }}</div>
-      <el-input class="max-w-[600px]"
+      <el-input v-if="name.trim().length === 0"
+                class="max-w-[600px]"
+                v-model="inputName"
+                :placeholder="$t('all.userName')">
+      </el-input>
+      <el-input v-else
+                class="max-w-[600px]"
                 v-model="inputName"
                 disabled
                 :placeholder="$t('all.userName')">
