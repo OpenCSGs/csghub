@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     get '/users/:namespace/datasets', to: 'users#datasets'
     get '/users/:namespace/codes', to: 'users#codes'
     get '/users/:namespace/spaces', to: 'users#spaces'
+    get '/users/:namespace/likes/:repo_type', to: 'users#likes_repo'
+    put '/users/likes/:repo_id', to: 'users#add_like'
+    delete '/users/likes/:repo_id', to: 'users#delete_like'
     get '/organizations/:namespace/models', to: 'organizations#models'
     get '/organizations/:namespace/datasets', to: 'organizations#datasets'
     get '/organizations/:namespace/codes', to: 'organizations#codes'
@@ -160,6 +163,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
+    get '/profile/likes/:user_id', to: 'profile#likes'
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'
     get    '/oidc/callback', to: 'sessions#oidc'

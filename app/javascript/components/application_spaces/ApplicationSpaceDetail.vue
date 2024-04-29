@@ -15,6 +15,9 @@
         :owner-url="ownerUrl"
         :canWrite="canWrite"
         repo-type="space"
+        :repoId="applicationSpace.data.repository_id"
+        :totalLikes="applicationSpace.data.like_count"
+        :hasLike="applicationSpace.data.user_likes"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
     </div>
