@@ -62,6 +62,8 @@ en:
               invalid: "Does not conform to the specification"
             phone:
               taken: "Already in use"
+            name:
+              name_cannot_be_changed: "name can't be changed"
         ssh_key:
           blank: "Field cannot be empty"
           taken: "Duplicates cannot be created"

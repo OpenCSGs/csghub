@@ -62,6 +62,8 @@ zh:
               invalid: "不符合规范"
             phone:
               taken: "已被使用"
+            name:
+              name_cannot_be_changed: "不能更改已有的名字"
         space:
           blank: "字段不能为空"
           taken: "不能创建重复的空间"
