@@ -1,7 +1,6 @@
 export const shared = {
   commitToMain: "直接提交到 main 分支",
   dragOr: "拖拽文件到这里或者",
-  onlyOneFile: "只支持单个文件",
   uploadFile5Mb: "支持 5M 以内大小的文件上传",
   lfs1: "此文件存储在 ",
   lfs2: "Git LFS",
