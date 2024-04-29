@@ -22,11 +22,11 @@
 
   const spaceResourceDisplayNameWithString = () => {
     switch(props.spaceResource) {
-      case 'CPU basic · 2 vCPU · 16GB':
+      case 'CPU basic · 2 vCPU · 16 GB':
         return ' (CPU)'
-      case 'NVIDIA T4 · 4 vCPU · 15 GB':
+      case 'NVIDIA T4 · 4 vCPU · 16 GB':
         return ' (GPU)'
-      case 'NVIDIA A10G · 4 vCPU · 15 GB':
+      case 'NVIDIA A10G · 4 vCPU · 16 GB':
         return ' (GPU)'
       case 'NVIDIA A10G · 12 vCPU · 46 GB':
         return ' (GPU)'
