@@ -21,6 +21,7 @@ export const ekb = {
   "moreDataTitle4": "问答机器人一键部署",
   "moreDataDesc4": "支持用户快速设置智能客服、聊天机器人等，提升服务效率。",
   "adv": "我们的优势",
+  "openCSGBot":"传奇兽",
   "advTitle": "更加智能的大语言模型知识助手",
   "advText": "帮助您解决个人及团队多样的产品使用需求，支持多种安全便捷的部署方式以及具备强大的数据分析能力",
   "advDataTitle": "大模型知识管理基座",

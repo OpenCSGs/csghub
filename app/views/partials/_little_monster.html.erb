@@ -1,13 +1,2 @@
-<div class="fixed bottom-[50px] right-[30px]">
-  <el-popover
-    placement="top-start"
-    :width='204'
-    trigger="hover"
-  >
-    <h3 class="text-center mb-[3px]"> 联系小助手了解更多 </h3>
-    <%= image_tag('little_assistant.jpg', width: '180', height: '180') %>
-    <template #reference>
-      <%= image_tag('monster.gif', class: "w-[120px] sm:w-[60px]") %>
-    </template>
-  </el-popover>
-</div>
+<little-monster monster-gif="<%= asset_path('monster.gif') %>">
+</little-monster>
