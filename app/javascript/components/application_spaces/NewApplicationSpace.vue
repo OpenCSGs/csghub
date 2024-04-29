@@ -98,24 +98,24 @@
           <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'gradio' ? 'border-[#3250BD] text-[#344054]' : ''"
                @click="SDK = 'gradio'">
-            <SvgIcon name="gradio"  />
+            <SvgIcon name="space_gradio"  />
             <p class="font-semibold text-[16px]">Gradio</p>
           </div>
           <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'streamlit' ? 'border-[#3250BD] text-[#344054]': ''"
                @click="SDK = 'streamlit'">
-            <SvgIcon name="streamlit"  />
+            <SvgIcon name="space_streamlit"  />
             <p class="font-semibold text-[16px]">Streamlit</p>
           </div>
           <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'docker' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
-            <SvgIcon name="docker"  />
+            <SvgIcon name="space_docker"  />
             <p class="font-semibold text-[16px]">Docker</p>
             <p class="text-[12px]">11 templates</p>
           </div>
           <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'static' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
-            <SvgIcon name="static"  />
+            <SvgIcon name="space_static"  />
             <p class="font-semibold text-[16px]">Static</p>
             <p class="text-[12px]">3 templates</p>
           </div>

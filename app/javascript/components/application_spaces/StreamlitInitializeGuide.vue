@@ -3,25 +3,33 @@
     <div class="flex gap-[8px] mt-[32px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs">
       <SvgIcon name="spaces"/>
       <div>
-        <h3 class="text-[#475467] text-[14px] font-[500]">{{ $t('application_spaces.streamlitGuide.notice') }}</h3>
-        <p class="text-[#A07731] text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
+        <h3 class="text-[#475467] text-[14px] font-[500]">
+          {{ $t('application_spaces.streamlitGuide.notice') }}
+        </h3>
+        <p class="text-[#A07731] text-[14px]">
+          {{ $t('application_spaces.gradioGuide.noticeDesc') }}
+        </p>
       </div>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}</h3>
+    <h3 class="my-[24px] text-[#475467] font-[500]">
+      1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}
+    </h3>
     <div>
       <p class="">
         <span class="px-[12px] py-[8px] cursor-pointer"
               :class="isHttpsTab ? 'active-tab' : ''"
               data-value="https"
               ref="httpsTab"
-              @click="toggleActiveTab">
+              @click="toggleActiveTab"
+        >
               HTTPS
         </span>
         <span class="px-[12px] py-[8px] cursor-pointer"
               data-value="ssh"
               :class="isHttpsTab ? '' : 'active-tab'"
               ref="sshTab"
-              @click="toggleActiveTab">
+              @click="toggleActiveTab"
+        >
               SSH
         </span>
       </p>
@@ -29,19 +37,24 @@
         <div class="my-[16px] flex items-center gap-[8px]">
           <el-checkbox v-model="useToken" :label="$t('application_spaces.gradioGuide.useToken')" size="large" />
         </div>
-        <markdown-viewer v-if="useToken" :content="httpsCloneCodeWithTokenMarkdown"></markdown-viewer>
-        <markdown-viewer v-else :content="httpsCloneCodeMarkdown"></markdown-viewer>
+        <MarkdownViewer v-if="useToken" :content="httpsCloneCodeWithTokenMarkdown"></MarkdownViewer>
+        <MarkdownViewer v-else :content="httpsCloneCodeMarkdown"></MarkdownViewer>
       </div>
-      <div v-else
-          class="my-[16px]">
-        <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
+      <div v-else class="my-[16px]">
+        <MarkdownViewer :content="sshCloneCodeMarkdown"></MarkdownViewer>
       </div>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">2. {{ $t('application_spaces.streamlitGuide.createTitle') }}</h3>
-    <markdown-viewer :content="appPyCodeMarkdown"></markdown-viewer>
-    <h3 class="my-[24px] text-[#475467] font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
-    <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
-    <p class="text-[#667085] text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
+    <h3 class="my-[24px] text-[#475467] font-[500]">
+      2. {{ $t('application_spaces.streamlitGuide.createTitle') }}
+    </h3>
+    <MarkdownViewer :content="appPyCodeMarkdown"></MarkdownViewer>
+    <h3 class="my-[24px] text-[#475467] font-[500]">
+      3. {{ $t('application_spaces.gradioGuide.submitTitle') }}
+    </h3>
+    <MarkdownViewer :content="pushCodeMarkdown"></MarkdownViewer>
+    <p class="text-[#667085] text-[16px] font-[400] my-[24px]">
+      {{ $t('application_spaces.gradioGuide.successNotes') }}
+    </p>
     <div class="text-[16px] text-[#667085] border border-[#D0D5DD] rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
         <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
@@ -52,7 +65,9 @@
       <br />
       <div>
         <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.docNotesTitle') }} </h3>
-        <a href="https://portal.opencsg.com/docs/Space/space_intro" target="_blank">{{ $t('application_spaces.streamlitGuide.docNotes1') }}</a>
+        <a href="https://portal.opencsg.com/docs/Space/space_intro" target="_blank">
+          {{ $t('application_spaces.streamlitGuide.docNotes1') }}
+        </a>
       </div>
     </div>
   </div>
@@ -61,7 +76,6 @@
 <script setup>
   import { ref, computed } from 'vue'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
-  import SvgIcon from '../shared/SvgIcon.vue'
 
   const props = defineProps({
     httpCloneUrl: String,
