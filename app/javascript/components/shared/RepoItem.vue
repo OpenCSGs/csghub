@@ -12,7 +12,7 @@
     </div>
 
     <p v-if="getComputed.showDescription"
-       class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
+      class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
       {{ repo.description }}
     </p>
 
