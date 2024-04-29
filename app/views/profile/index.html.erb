@@ -1,5 +1,5 @@
-<div class="flex justify-center md:flex-col rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
-  <div class="md:mb-[24px] border-r md:border-r-0 mr-[24px] sm:bg-white md:bg-white">
+<div class="flex justify-center lg:flex-col rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+  <div class="md:mb-[24px] border-r md:border-r-0 sm:bg-white md:bg-white">
     <profile name="<%= @user.name %>"
              display-name="<%= @user.display_name %>"
              phone="<%= @user.phone %>"
@@ -12,7 +12,7 @@
              :is-logged-in="<%= @is_current_user_access %>"
     ></profile>
   </div>
-  <div class="grow pr-4 py-[36px]">
+  <div class="grow px-[20px] py-[36px] md:px-0 sm:py-0">
     <profile-repo-list
       :model-list="<%= JSON.parse(@models).to_json %>"
       :dataset-list="<%= JSON.parse(@datasets).to_json %>"

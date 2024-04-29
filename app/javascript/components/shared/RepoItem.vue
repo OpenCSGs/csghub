@@ -1,9 +1,9 @@
 <template>
   <a :href="detailLink"
      :class="`${repoType}-card  hover:active-${repoType}-card `"
-     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 sm:w-full border border-gray-200 rounded-xl"
+     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-xl"
   >
-    <div class="flex items-center mb-[5px] w-[399px] lg:w-[370px] mlg:w-auto">
+    <div class="flex items-center mb-[5px] w-[399px] lg:w-[370px] mlg:w-full">
       <div :class="`${repoType}-path`"
            class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap"
       >
@@ -12,7 +12,7 @@
     </div>
 
     <p v-if="getComputed.showDescription"
-       class="w-[390px] lg:w-[370px] mlg:w-auto h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2">
+      class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
       {{ repo.description }}
     </p>
 
