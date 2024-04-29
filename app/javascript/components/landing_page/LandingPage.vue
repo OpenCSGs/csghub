@@ -24,8 +24,8 @@
     </div>
 
     <!-- 社区热门趋势 -->
-    <div class="bg-[#F9FAFB] flex flex-col justify-center py-[96px] md:py-[64px] text-center">
-      <div class="max-w-[1280px] m-auto md:px-[16px]">
+    <div class="bg-[#F9FAFB] flex flex-col mlg:px-[20px] justify-center py-[96px] md:py-[64px] text-center">
+      <div class="max-w-[1280px] m-auto">
         <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">
           {{ $t('landingPage.hotTrend.subtitle') }}
         </div>
@@ -36,7 +36,7 @@
           {{ $t('landingPage.hotTrend.desc') }}
         </div>
       </div>
-      <div class="max-w-[1340px] xl:w-[440px] sm:w-full sm:px-[16px] m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]">
+      <div class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]">
         <!-- 热门模型 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
