@@ -36,6 +36,7 @@ import OrganizationDetail from "./components/organizations/OrganizationDetail.vu
 import OnPremiseFooter from "./components/OnPremiseFooter.vue"
 import NewApplicationSpace from "./components/application_spaces/NewApplicationSpace.vue"
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
+import ProfileRepoLikesList from "./components/shared/ProfileRepoLikesList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
@@ -63,6 +64,7 @@ const app = createApp({
     OnPremiseFooter,
     NewApplicationSpace,
     ProfileRepoList,
+    ProfileRepoLikesList,
     OrganizationSettings,
     RepoCards,
     NewCode,

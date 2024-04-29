@@ -41,6 +41,7 @@ en:
     updateSuccess: "Update Success"
     updateFailed: "Update Failed"
     createSuccess: "Create Success"
+    addSuccess: "Add Success"
     createFileSuccess: "File Created"
     updateFileSuccess: "File Updated"
     uploadFileSuccess: "File Uploaded"

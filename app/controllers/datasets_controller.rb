@@ -93,7 +93,6 @@ class DatasetsController < ApplicationController
     else
       @dataset, @branches = csghub_api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     end
-
     @tags_list = Tag.where(scope: 'dataset', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags'], 'dataset').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_dataset) : false
