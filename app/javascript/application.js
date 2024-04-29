@@ -68,7 +68,6 @@ import NewApplicationSpace from "./components/application_spaces/NewApplicationS
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
-import LittleMonster from "./components/dialog/LittleMonster.vue"
 
 const pinia = createPinia()
 
@@ -123,8 +122,7 @@ const app = createApp({
     EkbLanding,
     NewApplicationSpace,
     NewCode,
-    CodeDetail,
-    LittleMonster
+    CodeDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
