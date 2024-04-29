@@ -25,7 +25,7 @@ import PageFooter from "./components/footer/PageFooter.vue"
 import RepoFooter from "./components/footer/RepoFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ExpertCard from "./components/ExpertCard.vue"
-import PartnerCard from "./components/PartnerCard.vue"
+import PartnerCards from "./components/partners/PartnerCards.vue"
 import DatasetCard from "./components/DatasetCard.vue"
 import ModelDetail from "./components/models/ModelDetail.vue"
 import DatasetDetail from "./components/datasets/DatasetDetail.vue"
@@ -84,7 +84,7 @@ const app = createApp({
     ExpertForm,
     ModelCard,
     ModelDetail,
-    PartnerCard,
+    PartnerCards,
     PartnerForm,
     PageFooter,
     RepoFooter,
