@@ -1,5 +1,5 @@
 <template>
-  <div v-if="dialogVisible" class="h-[75vh] fixed flex flex-col justify-between top-2 right-0 mt-2 min-w-[438px] bg-white p-6 md:p-1 rounded-md shadow-md md:min-w-[300px] md:w-full sm:max-w-[375px]  z-20 border border-[[#EAECF0]]">
+  <div v-show="dialogVisible" class="h-[75vh] fixed flex flex-col justify-between top-2 right-0 mt-2 min-w-[438px] bg-white p-6 md:p-1 rounded-md shadow-md md:min-w-[300px] md:w-full sm:max-w-[375px]  z-20 border border-[[#EAECF0]]">
     <div class="flex gap-4 items-center border-b pb-6 mb-6 border-[#EAECF0] relative">
       <SvgIcon name="ekb_icon" />
       <div class="flex flex-col">
