@@ -340,7 +340,7 @@ export default {
     },
 
     async stopSpace() {
-      stopUrl = `${csghubServer}/api/v1/spaces/${this.path}/stop`
+      stopUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/stop`
       const response = await fetch(stopUrl, {
         method: "POST",
         headers: {
@@ -366,7 +366,7 @@ export default {
     },
 
     async restartSpace() {
-      restartUrl = `${csghubServer}/api/v1/spaces/${this.path}/run`
+      restartUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/run`
       const response = await fetch(restartUrl, {
         method: "POST",
         headers: {
@@ -394,9 +394,9 @@ export default {
     async toggleSpaceStatus() {
       let toggleUrl = ''
       if (this.appStatus === 'Stopped') {
-        toggleUrl = `${csghubServer}/api/v1/spaces/${this.path}/run`
+        toggleUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/run`
       } else {
-        toggleUrl = `${csghubServer}/api/v1/spaces/${this.path}/stop`
+        toggleUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/stop`
       }
       const response = await fetch(toggleUrl, {
         method: "POST",
