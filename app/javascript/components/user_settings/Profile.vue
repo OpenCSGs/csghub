@@ -10,13 +10,13 @@
       @{{name}}
     </div>
     <div v-if="isLoggedIn" class="flex xl:flex-col md:flex-row gap-3">
-      <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
+      <a href="/settings/profile" class="px-[12px] py-[5px] lg:w-[200px] md:w-auto text-center border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
         {{ $t('profile.editProfile')}}
       </a>
       <a href="/settings/profile" class="px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080] hidden">
         {{ $t('profile.settings')}}
       </a>
-      <a :href="`/profile/likes/${ name }`" class="mr-[10px] px-[12px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
+      <a :href="`/profile/likes/${ name }`" class="mr-[10px] px-[12px] py-[5px] lg:w-[200px] md:w-auto text-center border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
         {{ $t('profile.myCollect')}}
       </a>
     </div>
