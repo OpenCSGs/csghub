@@ -250,7 +250,6 @@
   const SDK = ref('gradio')
   const images = ref([])
   const coverImage = ref('')
-  const prefixPath = document.location.pathname.split('/')[1]
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const hasCreateApplicationSpace = ref(false)
 
