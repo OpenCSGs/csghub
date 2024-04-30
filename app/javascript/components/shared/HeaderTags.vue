@@ -30,7 +30,7 @@
     </a>
     <!-- Other -->
     <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
-    <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded cursor-pointer flex items-center border gap-1">
+    <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
       {{ tag.name }}
     </div>
     <div v-if="licenseTags.length" class="text-sm text-[#909399]">License:</div>
