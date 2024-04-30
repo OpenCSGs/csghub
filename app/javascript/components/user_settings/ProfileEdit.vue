@@ -264,14 +264,11 @@ export default {
             message: this.$t('profile.edit.updateSuccess'),
             type: "success",
           });
-          this.$emit("updateUserInfo", {
-            avatar: file && URL.createObjectURL(file),
-            name: this.inputName,
-            nickname: this.inputNickname
-          });
           this.disableUpdatePhone()
           // 处理成功响应
-          window.location.reload()
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
         }
       } catch (error) {
         console.error(error);
