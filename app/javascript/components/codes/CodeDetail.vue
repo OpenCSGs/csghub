@@ -11,6 +11,9 @@
         :tags="tags"
         :avatar="avatar"
         :owner-url="ownerUrl"
+        :repoId="code.data.repository_id"
+        :totalLikes="code.data.likes"
+        :hasLike="code.data.user_likes"
         repo-type="code"
       />
     </div>

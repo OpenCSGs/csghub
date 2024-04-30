@@ -72,5 +72,6 @@ export const all = {
   pleaseInput: "Please input {value}",
   languages: "Languages",
   previous:"previous",
-  next:"next"
+  next:"next",
+  deleteSuccess: "Successfully delete"
 }
