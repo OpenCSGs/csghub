@@ -1,5 +1,6 @@
 export const profile = {
   editProfile: "Edit Profile",
+  myCollect: "My Favorite",
   settings: "Settings",
   interests: "Interests",
   organization: "Organization",

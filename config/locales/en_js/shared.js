@@ -16,4 +16,6 @@ export const shared = {
   lfs11: "More info",
   preview: "Preview",
   edit: "Edit",
+  likes: "Likes",
+  hasLikes: "Liked"
 }

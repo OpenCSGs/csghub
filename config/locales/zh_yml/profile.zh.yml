@@ -4,3 +4,5 @@ zh:
       no_data: '暂无数据'
       spaces: '应用空间'
       view_all: '查看全部'
+    return: '返回个人主页'
+    my_collect: '我的收藏'
