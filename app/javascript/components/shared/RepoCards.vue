@@ -161,7 +161,7 @@
   onMounted(() => {
     if (!props.selectedTag) {
       const url = `/internal_api/${props.repoType}s?page=${currentPage.value}&per_page=${perPage.value}`
-      loadRepos(url)
+      reloadRepos()
     }
   })
 </script>
