@@ -12,14 +12,16 @@
         />
       </el-tab-pane>
       <el-tab-pane :label="$t('shared.preview')" class="p-4" name="preview">
-        <div v-html="previewDiff"></div>
+        <MarkdownViewer v-if="isMarkdown" :content="codeContent"></MarkdownViewer>
+        <div v-html="previewDiff" v-else></div>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import MarkdownViewer from './viewers/MarkdownViewer.vue'
 import { Codemirror } from 'vue-codemirror'
 import { createPatch } from 'diff'
 import { parse, html } from 'diff2html'
@@ -34,6 +36,10 @@ const codeContent = defineModel()
 
 const previewDiff = ref('')
 const activeName = ref('edit')
+
+const isMarkdown = computed(() => {
+  return props.fileName?.endsWith('.md')
+})
 
 const preview = () => {
   const diffString = createPatch(props.fileName || 'untitled file', props.originalCodeContent, codeContent.value)
@@ -56,7 +62,7 @@ const preview = () => {
 }
 
 const changeTab = (tabName) => {
-  if (tabName === 'preview') {
+  if (tabName === 'preview' && !isMarkdown.value) {
     preview()
   }
 }
