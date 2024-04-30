@@ -12,12 +12,13 @@ module Starhub
       @client = Starhub::Client.init_with user_ip
     end
 
-    def create_user(name, nickname, email, phone)
+    def create_user(name, nickname, email, phone, login_identity)
       options = {
         username: name,
         name: nickname,
         email: email,
-        phone: phone
+        phone: phone,
+        casdoor_uid: login_identity
       }
       @client.post("/users?current_user=#{name}", options)
     end
