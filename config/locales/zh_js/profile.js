@@ -1,5 +1,6 @@
 export const profile = {
   editProfile: "编辑个人信息",
+  myCollect: "我的收藏",
   settings: "设置",
   interests: "兴趣",
   organization: "组织机构",

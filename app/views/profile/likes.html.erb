@@ -1,0 +1,34 @@
+<div class="flex justify-center lg:flex-col rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
+  <div class="md:mb-[24px] border-r md:border-r-0 sm:bg-white md:bg-white">
+    <profile name="<%= @user.name %>"
+             display-name="<%= @user.display_name %>"
+             phone="<%= @user.phone %>"
+             email="<%= @user.email %>"
+             avatar="<%= @user.avatar_url %>"
+             last-login-time="<%= @user.last_login_at %>"
+             login-identity="<%= @user.login_identity %>"
+             roles="<%= @user.roles.to_json %>"
+             orgs="<%= @user.organizations.to_json %>"
+             :is-logged-in="<%= @is_current_user_access %>"
+    ></profile>
+  </div>
+  <div class="grow px-[20px] py-[36px] md:px-0 sm:py-0">
+    <div class="sm:w-[100%] sm:mt-[36px] mb-[36px]">
+      <a href="/profile/<%= @user.name %>"
+        class="flex items-center w-[150px] mr-[10px] pl-[18px] py-[5px] border border-[#DCDFE6] rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-[#EAECF0] hover:text-[#808080]">
+        <%= I18n.t('profile.return') %>
+      </a>
+      <div class="mt-[32px] font-medium text-xl">
+        <%= I18n.t('profile.my_collect') %>
+      </div>
+    </div>
+    <profile-repo-list
+      :model-list="<%= JSON.parse(@models).to_json %>"
+      :dataset-list="<%= JSON.parse(@datasets).to_json %>"
+      :space-list="<%= JSON.parse(@spaces).to_json %>"
+      :code-list="<%= JSON.parse(@codes).to_json %>"
+      name="<%= @user.name %>"
+    ></profile-repo-list>
+  </div>
+</div>
+
