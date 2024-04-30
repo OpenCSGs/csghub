@@ -271,6 +271,7 @@ export default {
           });
           this.disableUpdatePhone()
           // 处理成功响应
+          window.location.reload()
         }
       } catch (error) {
         console.error(error);
