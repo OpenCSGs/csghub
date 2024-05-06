@@ -13,7 +13,7 @@
       </el-tab-pane>
       <el-tab-pane :label="$t('shared.preview')" class="p-4" name="preview">
         <MarkdownViewer v-if="isMarkdown" :content="codeContent"></MarkdownViewer>
-        <div v-html="previewDiff" v-else></div>
+        <div v-else v-html="previewDiff"></div>
       </el-tab-pane>
     </el-tabs>
   </div>
