@@ -364,6 +364,7 @@ export default {
     },
 
     handleRemoveImage() {
+      this.uploadCoverImageUrl = ''
       this.imageUploaded = false
     },
 
