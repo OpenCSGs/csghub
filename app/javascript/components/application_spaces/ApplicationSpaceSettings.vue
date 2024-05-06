@@ -196,6 +196,45 @@
 
     <el-divider/>
 
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('application_spaces.edit.replaceCoverImage')}}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px] w-[400px] sm:w-[98%]">
+        <el-upload
+          :class="`${!imageUploaded ? 'h-auto' : 'hide'}`"
+          :limit="1"
+          v-model:file-list="images"
+          list-type="picture-card"
+          :headers="{ 'X-CSRF-TOKEN': csrfToken }"
+          accept="image/png, image/jpeg, image/gif, image/svg+xml"
+          :data="{namespace: 'application_space'}"
+          action="/internal_api/upload"
+          :before-upload="handleBeforeUpload"
+          :on-remove="handleRemoveImage"
+          :on-success="handleUploadSuccess"
+        >
+          <div class="flex flex-col items-center">
+            <el-icon>
+              <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M6.66663 12.3333L9.99996 9M9.99996 9L13.3333 12.3333M9.99996 9V16.5M16.6666 12.9524C17.6845 12.1117 18.3333 10.8399 18.3333 9.41667C18.3333 6.88536 16.2813 4.83333 13.75 4.83333C13.5679 4.83333 13.3975 4.73833 13.3051 4.58145C12.2183 2.73736 10.212 1.5 7.91663 1.5C4.46485 1.5 1.66663 4.29822 1.66663 7.75C1.66663 9.47175 2.36283 11.0309 3.48908 12.1613"
+                    stroke="#475467" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </el-icon>
+            <div class="el-upload__text">
+              <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
+              <div class="font-light text-[12px]">{{ $t('application_spaces.new.coverImageDesc2') }}</div>
+            </div>
+          </div>
+        </el-upload>
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
@@ -247,6 +286,7 @@ import refreshJWT from '../../packs/refreshJWT.js'
 import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState, mapActions } from 'pinia'
+import { useI18n } from 'vue-i18n'
 
 export default {
   props: {
@@ -274,7 +314,11 @@ export default {
       initialized: ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       notInitialized: this.appStatus === 'NoAppFile',
       cookies: useCookies().cookies,
-      csghubServer: inject('csghubServer')
+      csghubServer: inject('csghubServer'),
+      images: [],
+      imageUploaded: false,
+      csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      t: useI18n()
     };
   },
 
@@ -302,6 +346,23 @@ export default {
 
   methods: {
     ...mapActions(useRepoDetailStore, ['updateVisibility']),
+
+    handleBeforeUpload(file) {
+      if (file.size / 1024 <= 2000) {
+        return true
+      } else {
+        ElMessage({message: this.t('all.fileTooLarge'), type: "warning"})
+        return false
+      }
+    },
+
+    handleRemoveImage() {
+      this.imageUploaded = false
+    },
+
+    handleUploadSuccess(res) {
+      this.imageUploaded = true
+    },
 
     clickDelete() {
       if (this.delDesc === this.applicationSpacePath) {
@@ -514,3 +575,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  :deep(.hide .el-upload.el-upload--picture-card){
+    display: none;
+  }
+</style>
