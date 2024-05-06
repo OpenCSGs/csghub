@@ -5,8 +5,8 @@
           :loginIdentity="loginIdentity"
           :email="email"
           :displayName="profileDisplayName"
-          :avatar="profileAvatar">
-    </Menu>
+          :avatar="profileAvatar"
+    ></Menu>
     <ProfileEdit class="grow"
                  :name="name"
                  :nickname="nickname"
@@ -16,8 +16,7 @@
                  :homepage="homepage"
                  :bio="bio"
                  :displayName="displayName"
-                 @updateUserInfo="updateUserInfo">
-    </ProfileEdit>
+    ></ProfileEdit>
   </div>
 </template>
 <script>
@@ -45,15 +44,6 @@ export default {
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
     };
-  },
-  mounted() { },
-  methods: {
-    updateUserInfo(data) {
-      const { nickname, name, avatar } = data;
-      this.profileName = name || this.name;
-      this.profileDisplayName = nickname || this.displayName;
-      this.profileAvatar = avatar || this.avatar;
-    },
-  },
+  }
 };
 </script>

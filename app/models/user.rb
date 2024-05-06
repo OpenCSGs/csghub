@@ -147,7 +147,7 @@ class User < ApplicationRecord
       res = Starhub.api(session_ip).update_user(name, nickname, email, phone, login_identity)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api(session_ip).create_user(name, nickname, email, phone)
+      res = Starhub.api(session_ip).create_user(name, nickname, email, phone, login_identity)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
