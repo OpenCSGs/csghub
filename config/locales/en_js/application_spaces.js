@@ -93,6 +93,7 @@ export const application_spaces = {
     publicInfo: ", visible to anyone on the internet.",
     needName: "Please provide name first",
     needDesc: "Please provide description first",
+    replaceCoverImage: "Replace the cover image"
   },
   download: "Download Space",
   downloadSpace: "Download space data",

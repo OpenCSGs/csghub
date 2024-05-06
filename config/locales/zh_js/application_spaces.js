@@ -92,6 +92,7 @@ export const application_spaces = {
     publicInfo: "， 任何互联网上的人都可以看到此应用空间。",
     needName: "请先提供应用空间别名",
     needDesc: "请先提供应用空间介绍",
+    replaceCoverImage: "更新封面图片"
   },
   download: "下载应用空间",
   downloadSpace: "下载应用空间数据",
