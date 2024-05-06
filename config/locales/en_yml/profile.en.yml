@@ -4,3 +4,5 @@ en:
       no_data: 'No data available'
       spaces: 'Spaces'
       view_all: 'View all'
+    return: 'Return to profile'
+    my_collect: 'My Favorite'

@@ -10,6 +10,9 @@
         :tags="tags"
         :avatar="avatar"
         :owner-url="ownerUrl"
+        :repoId="model.data.repository_id"
+        :totalLikes="model.data.likes"
+        :hasLike="model.data.user_likes"
         repo-type="model"
       />
     </div>
@@ -61,7 +64,6 @@
     userName: String,
     userToken: String
   })
-
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)
 </script>

@@ -40,6 +40,22 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     render json: csghub_api.get_user_codes(params[:namespace], current_user&.name, { per: params[:per] })
   end
 
+  def likes_repo
+    render json: csghub_api.get_user_likes(current_user&.name,
+                                           params[:repo_type],
+                                           { per: params[:per], current_user: current_user&.name })
+  end
+
+  def add_like
+    csghub_api.add_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
+    render json: { message: I18n.t('repo.addSuccess') }
+  end
+
+  def delete_like
+    csghub_api.delete_user_likes(current_user&.name, params[:repo_id], {current_user: current_user&.name})
+    render json: { message: I18n.t('repo.delSuccess') }
+  end
+
   def jwt_token
     res = csghub_api.get_jwt_token(current_user.name)
     token = JSON.parse(res)['data']['token']
