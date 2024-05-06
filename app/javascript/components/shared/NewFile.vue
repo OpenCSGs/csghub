@@ -11,9 +11,10 @@
                 @input="handleFileNameChange"
                 class="w-full h-[40px] text-[#606266]" />
     </div>
-    <code-editor
+    <CodeEditor
       v-model="codeContent"
       originalCodeContent=""
+      :fileName="fileName"
     />
     <el-radio-group v-model="new_branch" class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0">
       <el-radio label="main" size="large">{{ $t('shared.commitToMain') }}</el-radio>
