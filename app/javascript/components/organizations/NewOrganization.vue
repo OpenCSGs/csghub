@@ -82,7 +82,13 @@
 
 
       <el-form-item>
-        <el-button class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]" @click="handleSubmit">{{ $t('organization.newOrganization.createOrg') }}</el-button>
+        <el-button
+          class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]"
+          @click="handleSubmit"
+          :disabled="submitting"
+        >
+          {{ $t('organization.newOrganization.createOrg') }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -103,7 +109,8 @@
         selectedProtocol: 'https://',
         csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         dataForm: {},
-        org_types: ['企业', '高校', '非营利组织', '社区组织']
+        org_types: ['企业', '高校', '非营利组织', '社区组织'],
+        submitting: false
       }
     },
     computed: {
@@ -114,9 +121,6 @@
                  ],
                  nickname: [
                    { required: false, message: this.$t('all.pleaseInput', {value: this.$t('organization.orgNickName')}), trigger: 'blur' },
-                 ],
-                 logo_image: [
-                   { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgAvatar')}), trigger: 'blur' },
                  ],
                  org_type: [
                    { required: true, message: this.$t('all.pleaseSelect', {value: this.$t('organization.orgType')}), trigger: 'blur' },
@@ -175,6 +179,7 @@
         })
       },
       createOrganization() {
+        this.submitting = true
         const params = Object.assign({}, this.dataForm)
         delete params.logo_image
         if (params.homepage) {
@@ -212,6 +217,9 @@
               message: err.message,
               type: 'warning'
             });
+          })
+          .finally(() => {
+            this.submitting = false
           })
       }
     }
