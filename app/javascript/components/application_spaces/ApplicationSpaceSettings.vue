@@ -204,7 +204,7 @@
       </div>
       <div class="flex flex-col gap-[6px] w-[400px] sm:w-[98%]">
         <el-upload
-          :class="`${!imageUploaded ? 'h-auto' : 'hide'}`"
+          :class="`${hideImageUploadElement ? 'hide' : 'h-auto' }`"
           :limit="1"
           v-model:file-list="images"
           list-type="picture-card"
@@ -295,7 +295,8 @@ export default {
     applicationSpaceDesc: String,
     default_branch: String,
     appStatus: String,
-    cloudResource: String
+    cloudResource: String,
+    coverImage: String
   },
 
   components: {},
@@ -315,7 +316,7 @@ export default {
       notInitialized: this.appStatus === 'NoAppFile',
       cookies: useCookies().cookies,
       csghubServer: inject('csghubServer'),
-      images: [],
+      images: [{name: 'default', url: (this.coverImage || "/images/default_cover_image.png")}],
       imageUploaded: false,
       csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       t: useI18n()
@@ -325,6 +326,9 @@ export default {
   computed: {
     ...mapState(useRepoDetailStore, ['isPrivate']),
     ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    hideImageUploadElement() {
+      return (this.imageUploaded || this.images.length !== 0)
+    },
     visibilityName: {
       get() {
         return !!this.privateVisibility ? 'Private' : 'Public'
