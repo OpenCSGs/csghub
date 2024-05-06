@@ -196,6 +196,7 @@
 
     <el-divider/>
 
+    <!-- cover image -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -230,6 +231,7 @@
             </div>
           </div>
         </el-upload>
+        <el-button @click="updateApplicationSpaceCoverImage" class="w-[100px]">{{ $t('all.update')}}</el-button>
       </div>
     </div>
 
@@ -317,6 +319,7 @@ export default {
       cookies: useCookies().cookies,
       csghubServer: inject('csghubServer'),
       images: [{name: 'default', url: (this.coverImage || "/images/default_cover_image.png")}],
+      uploadCoverImageUrl: '/images/default_cover_image.png',
       imageUploaded: false,
       csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       t: useI18n()
@@ -365,6 +368,7 @@ export default {
     },
 
     handleUploadSuccess(res) {
+      this.uploadCoverImageUrl = res.url
       this.imageUploaded = true
     },
 
@@ -538,6 +542,11 @@ export default {
 
     updateApplicationSpaceCloudResource() {
       const payload = {cloud_resource: this.theCloudResource}
+      this.updateApplicationSpace(payload)
+    },
+
+    updateApplicationSpaceCoverImage() {
+      const payload = {cover_image: this.uploadCoverImageUrl}
       this.updateApplicationSpace(payload)
     },
 
