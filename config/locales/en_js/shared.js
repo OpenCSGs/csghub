@@ -1,8 +1,8 @@
 export const shared = {
   commitToMain: "Commit directly to the main branch",
   dragOr: "Drag and drop files here or",
-  onlyOneFile: "Only support one file",
   uploadFile5Mb: "Support uploading files up to 5MB in size",
+  onlyFiveFiles: "Supports up to 5 files",
   lfs1: "This file is stored with",
   lfs2: "Git LFS",
   lfs3: ". It's too big to display, but you can still",
@@ -16,4 +16,6 @@ export const shared = {
   lfs11: "More info",
   preview: "Preview",
   edit: "Edit",
+  likes: "Likes",
+  hasLikes: "Liked"
 }

@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-[8px] flex-wrap mb-5 text-lg text-[#606266] font-semibold md:px-5">
     <!-- dataset repo -->
     <div v-if="repoType === 'dataset'"
-         class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center items-center md:w-full md:mb-1"
+         class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path opacity="0.12" d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z" fill="#A8ABB2"/>
@@ -12,6 +12,14 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
+      <div 
+        class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        @click="clickLike"
+      >
+        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
+      </div>    
     </div>
 
     <!-- other repo -->
@@ -21,6 +29,14 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
+      <div 
+        class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        @click="clickLike"
+      >
+        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
+      </div>      
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
       <p v-if="canWrite" class="cursor-pointer" @click="showSpaceLogs">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="none">
@@ -42,7 +58,7 @@
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{desc}}</div>
   <header-tags
-    :task-tags="tags.task_tags"
+    :task-tags="tags.task_tags" 
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"
     :language-tags="tags.language_tags"
@@ -56,6 +72,9 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import { ref } from 'vue'
+  import csrfFetch from "../../packs/csrfFetch"
+  import { computed } from 'vue';
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -73,8 +92,17 @@
     repoType: String,
     appStatus: String,
     spaceResource: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    repoId: Number,
+    totalLikes: {
+      type: Number,
+      default: 0
+    },
+    hasLike: Boolean
   });
+
+  const userLiked = ref(props.hasLike)
+  const likesNumber = ref(props.totalLikes)
 
   const copyName = () => {
     copyToClipboard(props.path)
@@ -82,5 +110,51 @@
 
   const showSpaceLogs = () => {
     emit('toggleSpaceLogsDrawer')
+  }
+
+  const likesNumberDisplayName = computed(() => {
+    if (likesNumber.value > 9999) {
+      return '1w+';
+    } else if (likesNumber.value > 999) {
+      return '1k+';
+    } else {
+      return likesNumber.value.toString();
+    }
+  })
+
+  const clickLike = () => {
+    userLiked.value === true ? removeLike() : addLike()
+  }
+
+  const addLike = async () => {
+    const options = { method: 'PUT' }
+    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    if (!response.ok) {
+      response.json().then((data) => {
+        ElMessage({
+          type: 'warning',
+          message: data,
+        });
+      });
+    } else {
+      userLiked.value = true
+      likesNumber.value += 1
+    }
+  }
+
+  const removeLike = async () => {
+    const options = { method: 'DELETE' }
+    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    if (!response.ok) {
+      response.json().then((data) => {
+        ElMessage({
+          type: 'warning',
+          message: data,
+        });
+      });
+    } else {
+      userLiked.value = false
+      likesNumber.value -= 1
+    }
   }
 </script>

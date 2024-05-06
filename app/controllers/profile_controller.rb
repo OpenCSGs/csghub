@@ -12,4 +12,16 @@ class ProfileController < ApplicationController
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
   end
+
+  def likes
+    @user ||= User.find_by(name: params[:user_id])
+    return redirect_to errors_not_found_path unless @user
+
+    @models = csghub_api.get_user_likes(@user.name, 'models')
+    @datasets = csghub_api.get_user_likes(@user.name, 'datasets')
+    @spaces = csghub_api.get_user_likes(@user.name, 'spaces')
+    @codes = csghub_api.get_user_likes(@user.name, 'codes')
+    @organizations = @user.organizations
+    @is_current_user_access = current_user.present? && (current_user == @user)
+  end
 end

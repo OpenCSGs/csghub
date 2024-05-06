@@ -10,6 +10,7 @@ zh:
     updateSuccess: "更新成功"
     updateFailed: "更新失败"
     createSuccess: "创建成功"
+    addSuccess: "添加成功"
     createFileSuccess: "创建文件成功"
     updateFileSuccess: "更新文件成功"
     uploadFileSuccess: "上传文件成功"
