@@ -1,22 +1,20 @@
 <template>
   <div>
     <ComputingBanner />
+    <ComputingPartner :partners="partners" />
     <ComputingPrice :starcloud-url="starcloudUrl" />
     <ComputingProblem />
   </div>
 </template>
-<script>
-import ComputingBanner from "./ComputingBanner.vue"
-import ComputingPrice from "./ComputingPrice.vue"
-import ComputingProblem from "./ComputingProblem.vue"
-export default {
-  props: {
-    starcloudUrl: String
-  },
-  components: {
-    ComputingBanner,
-    ComputingPrice,
-    ComputingProblem
-  },
-}
+
+<script setup>
+  import ComputingBanner from "./ComputingBanner.vue"
+  import ComputingPrice from "./ComputingPrice.vue"
+  import ComputingProblem from "./ComputingProblem.vue"
+  import ComputingPartner from "./ComputingPartner.vue"
+
+  const props = defineProps({
+    starcloudUrl: String,
+    partners: Array
+  })
 </script>
