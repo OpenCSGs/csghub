@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[20px] mt-[60px] p-[24px] bg-[#F9FAFB]">
+    <div class="grid grid-cols-3 xl:grid-cols-2 mlg:grid-cols-1 gap-[20px] mt-[60px] p-[24px] bg-[#F9FAFB] rounded-[16px]">
     <!-- <div class="flex justify-between"> -->
       <div class="flex flex-col items-center justify-center gap-[20px] px-[36px] py-[24px]">
         <img src="/images/computing/partners/strategy.png" alt="strategy" width="100" height="100" />
