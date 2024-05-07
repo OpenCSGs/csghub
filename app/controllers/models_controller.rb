@@ -8,7 +8,7 @@ class ModelsController < ApplicationController
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file]
   before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
-  before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file]
+  before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings]
 
   def index
     get_tag_list('models')
@@ -24,6 +24,16 @@ class ModelsController < ApplicationController
   end
 
   def files
+    render :show
+  end
+
+  def community
+    @default_tab = 'community'
+    render :show
+  end
+
+  def settings
+    @default_tab = 'settings'
     render :show
   end
 

@@ -2,9 +2,11 @@ module LocalRepoValidation
   extend ActiveSupport::Concern
 
   included do
-    before_action only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :resolve] do
+    before_action only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :resolve, :community, :settings] do
       local_repo_validation
     end
+
+    before_action :validate_settings, only: [:settings]
   end
 
   private
@@ -43,6 +45,15 @@ module LocalRepoValidation
       @local_code = @owner && @owner.codes.find_by(name: params[:code_name])
     when 'application_spaces'
       @local_application_space = @owner && @owner.application_spaces.find_by(name: params[:application_space_name])
+    end
+  end
+
+  def validate_settings
+    type = controller_name
+    local_repo = get_local_repo(type)
+
+    unless current_user.can_manage?(local_repo)
+      return redirect_to errors_unauthorized_path
     end
   end
 end
