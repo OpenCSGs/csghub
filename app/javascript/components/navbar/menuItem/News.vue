@@ -15,6 +15,3 @@
 </template>
 <style scoped>
 </style>
-<script>
-  import SvgIcon from '../../shared/SvgIcon.vue'
-</script>
