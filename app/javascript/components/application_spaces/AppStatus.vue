@@ -38,10 +38,10 @@
   const spaceResourceDisplayName = computed(() => {
     try {
       const resource = JSON.parse(props.spaceResource)
-      if (resource && resource['nvidia.com/gpu']) {
-        return ' (GPU)'
+      if (resource && resource['gpu']) {
+        return `(GPU ${resource['gpu']["type"]})`
       } else if (resource && resource['cpu']) {
-        return ' (CPU)'
+        return `(CPU ${resource['cpu']["type"]})`
       } else {
         return ''
       }
