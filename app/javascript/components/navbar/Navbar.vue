@@ -75,7 +75,7 @@
           <a href="/partners"><el-menu-item style="height: auto;" index="4-2"><Partners /></el-menu-item></a>
           <a href="/experts"><el-menu-item style="height: auto;" index="4-3"><Experts /></el-menu-item></a>
           <!-- <a href="/spaces"><el-menu-item style="height: auto;" index="/spaces"><Space /></el-menu-item></a> -->
-          <a href="/news" target="_blank"><el-menu-item style="height: auto;" index="4-4"><News /></el-menu-item></a>
+          <a href="https://blog.opencsg.com/" target="_blank"><el-menu-item style="height: auto;" index="4-4"><News /></el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item style="height: auto;" index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
