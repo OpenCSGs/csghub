@@ -75,6 +75,7 @@
           <a href="/partners"><el-menu-item style="height: auto;" index="4-2"><Partners /></el-menu-item></a>
           <a href="/experts"><el-menu-item style="height: auto;" index="4-3"><Experts /></el-menu-item></a>
           <!-- <a href="/spaces"><el-menu-item style="height: auto;" index="/spaces"><Space /></el-menu-item></a> -->
+          <a href="https://blog.opencsg.com/" target="_blank"><el-menu-item style="height: auto;" index="4-4"><News /></el-menu-item></a>
           <a href="/docs" target="_blank"><el-menu-item style="height: auto;" index="/docs"><Doc /></el-menu-item></a>
         </el-sub-menu>
       </el-menu>
@@ -169,7 +170,7 @@
 </template>
 
 <script>
-import ContactUs from "../form/ContactUs.vue";
+import ContactUs from "../form/ContactUs.vue"
 import StarCloud from "./menuItem/StarCloud.vue"
 import StarShip from "./menuItem/StarShip.vue"
 import EKB from "./menuItem/EKB.vue"
@@ -183,6 +184,7 @@ import LlmFinetune from "./menuItem/LlmFinetune.vue"
 import StarChain from "./menuItem/StarChain.vue"
 import Space from "./menuItem/Space.vue"
 import Doc from "./menuItem/Doc.vue"
+import News from "./menuItem/News.vue"
 import About from "./menuItem/About.vue"
 import Partners from "./menuItem/Partners.vue"
 import Experts from "./menuItem/Experts.vue"
@@ -228,6 +230,7 @@ export default {
     StarChain,
     Space,
     Doc,
+    News,
     About,
     Experts,
     Partners,

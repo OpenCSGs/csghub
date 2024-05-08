@@ -29,6 +29,8 @@ export const navbar = {
   "llm_finetune_text":"Framework of training LLMs",
   "space": "Space",
   "spaceText": "Large model application experience platform",
+  "news": "News",
+  "newsText": "Share the latest news and articles",
   "docs": "Documents",
   "docsText": "Product Description and Frequently Asked Questions of Chuanshen Community",
   "computer": "Compute",

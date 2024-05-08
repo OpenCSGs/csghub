@@ -29,6 +29,8 @@ export const navbar = {
   "llm_finetune_text":"LLM 训练及微调框架",
   "space": "应用空间",
   "spaceText": "大模型应用体验平台",
+  "news": "新闻动态",
+  "newsText": "分享最新最热的资讯和文章",
   "docs": "文档中心",
   "docsText": "传神社区产品说明及常见问题解答",
   "computer": "算力",
