@@ -29,7 +29,7 @@
                 cols="10"
                 @input="handleInput"
                 v-model="theDesc"
-                class="w-full text-[#606266] mb-[10px] p-[8px] border border-gray-300 shadow-xs rounded-md focus:border-blue-300"
+                class="w-full text-[#606266] mb-[10px] p-[8px] border border-gray-300 shadow-xs rounded-md focus:outline-none focus:ring-0.5 focus:border-blue-300"
                 :placeholder="placeholder==='留下评论' ? $t('community.MD.default'): placeholder"
       ></textarea>
       <div class="flex items-center gap-[8px] text-[#909399] text-[14px] leading-[22px]">
