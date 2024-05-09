@@ -7,5 +7,5 @@ export const sshKey = {
   contentWarning: "Please enter the SSH Key Content",
   sureDelKey:
     "Are you sure you want to delete this key from your account? This action cannot be undone.",
-  delKeyName: "Delete Key 'key name'",
+  delKeyName: "Delete Key {value}",
 }
