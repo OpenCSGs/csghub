@@ -233,7 +233,7 @@
       ElMessage({message: t('application_spaces.new.failedFetchResources'), type: "warning"})
     } else {
       res.json().then((body) => {
-        spaceResource.value = body.data[0]?.name || ""
+        spaceResource.value = body.data[0]?.resources || ""
         spaceResources.value = body.data
       })
     }
