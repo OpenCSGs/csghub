@@ -22,8 +22,8 @@
 
   onMounted(() => {
     useWxShare({
-      title: 'OpenCSG 打造中国本土化 Huggingface plus',
-      desc: '让大模型赋能每一个人,大模型驱动全民，推动技术创新，OpenCSG——平台有各个领域的大模型，提供模型探索体验、推理、训练、部署和应用的一站式服务，共建模型开源社区，发现、学习、定制和分享心仪的模型。',
+      title: 'OpenCSG 算力服务',
+      desc: '近百家可信智算合作伙伴，OpenCSG为您提供高性价比的算力服务',
       link: window.location.href
     })
   })
