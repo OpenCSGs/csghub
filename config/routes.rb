@@ -176,6 +176,8 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/blob/:branch/(*path)', to: 'models#blob', format: false, defaults: {format: 'html'}
     get '/models/:namespace/(*model_name)/files/:branch(/*path)', to: 'models#files', defaults: { path: nil }
     get '/models/:namespace/(*model_name)/resolve/:branch/(*path)', to: 'models#resolve', defaults: {format: 'txt'}
+    get '/models/:namespace/(*model_name)/community', to: 'models#community'
+    get '/models/:namespace/(*model_name)/settings', to: 'models#settings'
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file'
@@ -184,6 +186,8 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/blob/:branch/(*path)', to: 'datasets#blob', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/files/:branch(/*path)', to: 'datasets#files', defaults: { path: nil }
     get '/datasets/:namespace/(*dataset_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}
+    get '/datasets/:namespace/(*dataset_name)/community', to: 'datasets#community'
+    get '/datasets/:namespace/(*dataset_name)/settings', to: 'datasets#settings'
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}
 
     get '/codes/:namespace/(*code_name)/:branch/new', to: 'codes#new_file'
@@ -192,6 +196,8 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/blob/:branch/(*path)', to: 'codes#blob', format: false, defaults: {format: 'html'}
     get '/codes/:namespace/(*code_name)/files/:branch(/*path)', to: 'codes#files', defaults: { path: nil }
     get '/codes/:namespace/(*code_name)/resolve/:branch/(*path)', to: 'codes#resolve', defaults: {format: 'txt'}
+    get '/codes/:namespace/(*code_name)/community', to: 'codes#community'
+    get '/codes/:namespace/(*code_name)/settings', to: 'codes#settings'
     get '/codes/:namespace/(*code_name)', to: 'codes#show', format: false, defaults: {format: 'html'}
 
     get '/spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file'
@@ -200,6 +206,8 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/blob/:branch/(*path)', to: 'application_spaces#blob', format: false, defaults: {format: 'html'}
     get '/spaces/:namespace/(*application_space_name)/files/:branch(/*path)', to: 'application_spaces#files', defaults: { path: nil }
     get '/spaces/:namespace/(*application_space_name)/resolve/:branch/(*path)', to: 'application_spaces#resolve', defaults: {format: 'txt'}
+    get '/spaces/:namespace/(*application_space_name)/community', to: 'application_spaces#community'
+    get '/spaces/:namespace/(*application_space_name)/settings', to: 'application_spaces#settings'
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}
 
     get '/profile/:user_id', to: 'profile#index'
