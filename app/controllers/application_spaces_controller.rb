@@ -39,6 +39,7 @@ class ApplicationSpacesController < ApplicationController
   end
 
   def blob
+    @default_tab = 'files'
     render :show
   end
 
