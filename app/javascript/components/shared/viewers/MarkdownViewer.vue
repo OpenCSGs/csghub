@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { computed, onMounted } from 'vue';
   import MarkdownIt from 'markdown-it';
   import markdownItAnchor from 'markdown-it-anchor'
   import parseMD from 'parse-md'
@@ -22,15 +22,15 @@
 
   const defaultText = t('all.defaultText')
 
-  const markdownContent = ref('')
-
-  try {
-    const { _metadata, content } = parseMD(props.content)
-    markdownContent.value = props.setDefaultText ? (content.trim() || defaultText) : content
-  } catch (error) {
-    console.error(error)
-    markdownContent.value = props.content
-  }
+  const markdownContent = computed(() => {
+    try {
+      const { _metadata, content } = parseMD(props.content)
+      return props.setDefaultText ? (content.trim() || defaultText) : content
+    } catch (error) {
+      console.error(error)
+      return props.content
+    }
+  })
 
   const anchorOptions = {
     tabIndex: false,
@@ -87,5 +87,9 @@
 <style scoped>
   .markdown-body :deep(img) {
     max-width: 100% !important;
+  }
+
+  .markdown-body :deep(li) {
+    list-style: disc;
   }
 </style>
