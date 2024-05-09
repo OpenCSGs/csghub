@@ -52,6 +52,51 @@ img, video {
   filter: invert(37%) sepia(96%) saturate(699%) hue-rotate(175deg) brightness(89%) contrast(92%);
 }
 /*
+  Overwite tributejs css
+*/
+
+.tribute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  overflow: auto;
+  display: block;
+  z-index: 999999;
+  width: 200px;
+}
+.tribute-container ul {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #efefef;
+}
+.tribute-container li {
+  padding: 5px 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tribute-container li img {
+  height: 20px;
+  width: auto;
+}
+.tribute-container li.highlight {
+  background: #ddd;
+}
+.tribute-container li span {
+  font-weight: bold;
+}
+.tribute-container li.no-match {
+  cursor: default;
+}
+.tribute-container .menu-highlighted {
+  font-weight: bold;
+}
+
+/*
   Define tailwindcss group class
 */
 
