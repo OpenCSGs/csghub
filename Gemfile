@@ -82,6 +82,8 @@ gem "rdoc", ">= 6.6.3.1"
 
 gem 'aliyun-cloud_sms'
 
+gem 'delayed_job_active_record'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'rspec-rails'
