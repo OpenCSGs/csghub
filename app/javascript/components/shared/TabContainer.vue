@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" :beforeLeave="handleTabLeave" @tabClick="handleTabClick">
       <el-tab-pane :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
                    name="summary"
       >
@@ -50,4 +50,17 @@ const isApplicationSpace = computed(() => {
 })
 
 const activeName = ref(props.defaultTab)
+
+const emit = defineEmits(['tabChange']);
+
+const handleTabLeave = (tab) => {
+  emit('tabChange', tab)
+  return false
+}
+
+const handleTabClick = (tab) => {
+  if (tab.paneName === activeName.value) {
+    emit('tabChange', tab.paneName)
+  }
+}
 </script>

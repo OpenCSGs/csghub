@@ -10,6 +10,7 @@
     <tab-container :default-tab="defaultTab"
                    :settingsVisibility="settingsVisibility"
                    :repoType="repoType"
+                   @tabChange="tabChange"
     >
       <template #summary>
         <InitializeGuide v-if="repoType === 'space' && appStatus === 'NoAppFile'"
@@ -197,5 +198,24 @@ const decodedContent = props.blob?.content || ''
 
 const showSpaceLogs = () => {
   emit('toggleSpaceLogsDrawer')
+}
+
+const tabChange = (tab) => {
+  switch (tab) {
+    case 'summary':
+      location.href = `/${props.repoType}s/${props.repoDetail.path}`
+      break
+    case 'files':
+      location.href = `/${props.repoType}s/${props.repoDetail.path}/files/main`
+      break
+    case 'community':
+      location.href = `/${props.repoType}s/${props.repoDetail.path}/community`
+      break
+    case 'settings':
+      location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+      break
+    default:
+      break
+  }
 }
 </script>
