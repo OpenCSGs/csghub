@@ -47,8 +47,11 @@
           </svg>
           {{ $t('all.historyCommits') }}: 4 commits
         </a>
-        <el-dropdown split-button v-if="canWrite">
-          + {{ $t('all.addFile') }}
+        <el-dropdown v-if="canWrite">
+          <el-button type="default">
+            + {{ $t('all.addFile') }}
+            <el-icon class="el-icon--right pl-1"><arrow-down /></el-icon>
+          </el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <a :href="`/${prefixPath}/${namespacePath}/main/new`">
