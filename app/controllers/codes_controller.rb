@@ -83,14 +83,17 @@ class CodesController < ApplicationController
   end
 
   def upload_file
+    @default_tab = 'files'
     render :show
   end
 
   def new_file
+    @default_tab = 'files'
     render :show
   end
 
   def edit_file
+    @default_tab = 'files'
     render :show
   end
 
