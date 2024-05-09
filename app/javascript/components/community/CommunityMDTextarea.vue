@@ -24,7 +24,6 @@
       @drop="handleDrop"
     >
       <textarea id="user-comment-input"
-                name="w3review"
                 rows="4"
                 cols="10"
                 @input="handleInput"
