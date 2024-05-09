@@ -24,6 +24,7 @@ class ModelsController < ApplicationController
   end
 
   def files
+    @default_tab = 'files'
     render :show
   end
 
