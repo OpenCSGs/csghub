@@ -23,7 +23,7 @@
       @dragover.prevent
       @drop="handleDrop"
     >
-      <textarea id="user-comment-input"
+      <textarea ref="commentTextareaRef"
                 rows="4"
                 cols="10"
                 @input="handleInput"
@@ -70,6 +70,7 @@
   const activeTab = ref('Edit')
   const theDesc = ref(props.desc)
   const userList = ref([])
+  const commentTextareaRef = ref(null)
 
   const emit = defineEmits(['inputChange'])
 
@@ -85,7 +86,7 @@
         return '<img src="'+item.original.avatar+'">' + item.original.key;
       }
     });
-    tribute.attach(document.getElementById('user-comment-input'))
+    tribute.attach(commentTextareaRef.value)
   })
 
   const getTributeUsers = (text, cb) => {
