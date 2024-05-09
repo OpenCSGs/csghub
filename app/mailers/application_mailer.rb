@@ -31,4 +31,8 @@ class ApplicationMailer < ActionMailer::Base
     mail_group = system_config.internal_mail_group rescue []
     mail_group.presence || default_mail_group
   end
+
+  def asset_host
+    Rails.configuration.action_mailer.default_url_options[:host]
+  end
 end

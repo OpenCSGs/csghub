@@ -7,6 +7,7 @@ class Comment < ApplicationRecord
   validates :content, presence: true
 
   before_save :detect_sensitive_content
+  after_save :send_email_to_users_in_comments
 
   def as_json options={}
     {
@@ -29,5 +30,13 @@ class Comment < ApplicationRecord
 
   def detect_sensitive_content
     Starhub.api(user.session_ip).text_secure_check('comment_detection', content)
+  end
+
+  def send_email_to_users_in_comments
+      content.scan(/`@(\w+)`/).flatten.each do |username|
+      user = User.find_by(name: username)
+      next if user&.email.blank?
+      SystemNotificationMailer.with(comment_id: id, user_email: user.email).delay.new_comment_alert
+    end
   end
 end
