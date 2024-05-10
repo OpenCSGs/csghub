@@ -46,8 +46,6 @@ Rails.application.routes.draw do
     get '/users/:namespace/codes', to: 'users#codes'
     get '/users/:namespace/spaces', to: 'users#spaces'
     get '/users/:namespace/likes/:repo_type', to: 'users#likes_repo'
-    put '/users/likes/:repo_id', to: 'users#add_like'
-    delete '/users/likes/:repo_id', to: 'users#delete_like'
     get '/organizations/:namespace/models', to: 'organizations#models'
     get '/organizations/:namespace/datasets', to: 'organizations#datasets'
     get '/organizations/:namespace/codes', to: 'organizations#codes'
