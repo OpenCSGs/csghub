@@ -220,12 +220,18 @@
           <div class="flex flex-col items-center">
             <SvgIcon name="el_upload" width="20" height="18" />
             <div class="el-upload__text">
-              <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
-              <div class="font-light text-[12px]">{{ $t('application_spaces.new.coverImageDesc2') }}</div>
+              <div>
+                {{ $t('application_spaces.new.coverImageDesc1') }}
+              </div>
+              <div class="font-light text-[12px]">
+                {{ $t('application_spaces.new.coverImageDesc2') }}
+              </div>
             </div>
           </div>
         </el-upload>
-        <el-button @click="updateApplicationSpaceCoverImage" class="w-[100px]">{{ $t('all.update')}}</el-button>
+        <el-button @click="updateApplicationSpaceCoverImage" class="w-[100px]">
+          {{ $t('all.update')}}
+        </el-button>
       </div>
     </div>
 
