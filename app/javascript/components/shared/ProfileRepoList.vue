@@ -194,7 +194,6 @@
         })
       } else {
         response.json().then((data) => {
-          console.log(data);
           targetRef.value = data
         })
       }
