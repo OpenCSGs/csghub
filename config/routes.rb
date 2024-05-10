@@ -48,8 +48,8 @@ Rails.application.routes.draw do
       end
       member do
         get '/members', to: 'organizations#members'
-        delete '/members/:user_id', to: 'organizations#remove_member'
-        put '/members/:user_id', to: 'organizations#update_member'
+        delete '/members/:user_id', to: 'organizations#remove_member', user_id: /[^\/]+/
+        put '/members/:user_id', to: 'organizations#update_member', user_id: /[^\/]+/
       end
     end
     resources :campaigns, only: [:index]
