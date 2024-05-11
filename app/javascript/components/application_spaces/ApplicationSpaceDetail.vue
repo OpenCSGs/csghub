@@ -94,8 +94,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
-  import { ElMessageBox } from 'element-plus'
+  import { ref, onMounted, inject, computed } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
@@ -134,7 +133,13 @@
   const { t } = useI18n();
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
-  const appEndpoint = ref(`https://${props.applicationSpace.data.endpoint}`)
+  const appEndpoint = computed(() => {
+    if(ENABLE_HTTPS === true) {
+      return `https://${props.applicationSpace.data.endpoint}`
+    } else {
+      return `http://${props.applicationSpace.data.endpoint}`
+    }
+  })
 
   const spaceLogsDrawer = ref(false)
   const buildLogDiv = ref(null)
