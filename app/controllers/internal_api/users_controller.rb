@@ -2,7 +2,7 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   before_action :authenticate_user, except: [:models, :datasets, :codes, :spaces]
 
   def index
-    users = User.where("name ~* ?", params[:name])
+    users = User.where("name ~* ?", params[:name]).limit(10)
     render json: {users: users.as_json}
   end
 
