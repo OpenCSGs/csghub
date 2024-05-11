@@ -23,28 +23,6 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     end
   end
 
-  def models
-    render json: csghub_api.get_user_models(params[:namespace], current_user&.name, { per: params[:per] })
-  end
-
-  def datasets
-    render json: csghub_api.get_user_datasets(params[:namespace], current_user&.name, { per: params[:per] })
-  end
-
-  def spaces
-    render json: csghub_api.get_user_application_spaces(params[:namespace], current_user&.name, { per: params[:per] })
-  end
-
-  def codes
-    render json: csghub_api.get_user_codes(params[:namespace], current_user&.name, { per: params[:per] })
-  end
-
-  def likes_repo
-    render json: csghub_api.get_user_likes(current_user&.name,
-                                           params[:repo_type],
-                                           { per: params[:per], current_user: current_user&.name })
-  end
-
   def jwt_token
     res = csghub_api.get_jwt_token(current_user.name)
     token = JSON.parse(res)['data']['token']

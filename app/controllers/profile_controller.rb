@@ -11,6 +11,7 @@ class ProfileController < ApplicationController
     @codes = csghub_api.get_user_codes(@user.name, current_user&.name)
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
+    @likesStatus = false
   end
 
   def likes
@@ -23,5 +24,6 @@ class ProfileController < ApplicationController
     @codes = csghub_api.get_user_likes(@user.name, 'codes')
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
+    @likesStatus = true
   end
 end

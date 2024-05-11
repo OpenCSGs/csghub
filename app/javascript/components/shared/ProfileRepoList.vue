@@ -115,7 +115,8 @@
     datasetList: Object,
     spaceList: Object,
     codeList: Object,
-    name: String
+    name: String,
+    likesStatus: Boolean
   })
 
   const { t } = useI18n();
@@ -158,25 +159,30 @@
   }
 
   const fetchMoreModels = async () => {
-    const url = `${csghubServer}/api/v1/user/${props.name}/models`
+    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/models` : 
+    `${csghubServer}/api/v1/user/${props.name}/likes/models`
     await fetchData(url, models, props.modelList.total)
     moreModels.value = false
+
   }
 
   const fetchMoreDatasets = async () => {
-    const url = `${csghubServer}/api/v1/user/${props.name}/datasets`
+    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/datasets` : 
+    `${csghubServer}/api/v1/user/${props.name}/likes/datasets`
     await fetchData(url, datasets, props.datasetList.total)
     moreDatasets.value = false
   }
 
   const fetchMoreSpaces = async () => {
-    const url = `${csghubServer}/api/v1/user/${props.name}/spaces`
+    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/spaces` : 
+    `${csghubServer}/api/v1/user/${props.name}/likes/spaces`
     await fetchData(url, spaces, props.spaceList.total)
     moreSpaces.value = false
   }
 
   const fetchMoreCodes = async () => {
-    const url = `${csghubServer}/api/v1/user/${props.name}/codes`
+    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/codes` : 
+    `${csghubServer}/api/v1/user/${props.name}/likes/codes`
     await fetchData(url, codes, props.codeList.total)
     moreCodes.value = false
   }
