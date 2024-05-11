@@ -33,10 +33,13 @@ class Comment < ApplicationRecord
   end
 
   def send_email_to_users_in_comments
-      content.scan(/`@(\w+)`/).flatten.each do |username|
-      user = User.find_by(name: username)
+    usernames = content.scan(/`@(\w+)`/).flatten.uniq
+    users = User.where(name: usernames)
+    users.each do |user|
       next if user&.email.blank?
       SystemNotificationMailer.with(comment_id: id, user_email: user.email).delay.new_comment_alert
     end
+  rescue
+    Rails.logger.error("======== Error ========: Send user comments alert failed")
   end
 end
