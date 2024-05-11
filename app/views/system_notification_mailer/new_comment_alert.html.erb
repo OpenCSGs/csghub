@@ -1,7 +1,7 @@
-<h3> 您收到新的话题评论，内容如下： </h3>
+<h3> 您收到新的话题评论，内容如下： <%= I18n.t('mailer.new_comment_alert_title') %> </h3>
 <p><%= link_to I18n.t('mailer.related_repo'), @repo_url %></p>
 
-<p><%= I18n.t('mailer.diss_topic')%>： <%= @comment.commentable.title %></p>
+<p><%= I18n.t('mailer.discussion_topic')%>： <%= @comment.commentable.title %></p>
 <p>
   <%= @comment.content %>
 </p>
