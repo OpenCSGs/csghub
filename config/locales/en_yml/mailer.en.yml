@@ -1,0 +1,4 @@
+en:
+  mailer:
+    new_comment: 'You got new comments!'
+    related_repo: 'Related Repo'

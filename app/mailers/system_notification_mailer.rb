@@ -26,7 +26,7 @@ class SystemNotificationMailer < ApplicationMailer
     repo_name = @comment.commentable.discussionable.name
     @repo_url = "#{asset_host}/#{repo_type}s/#{repo_namespace}/#{repo_name}"
     mail(to: user_email,
-    subject: "您有新的评论！(You Got New Comments)")
+    subject: I18n.t('mailer.new_comment'))
   end
 
   private
