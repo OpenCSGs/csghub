@@ -1,6 +1,8 @@
 en:
   experts:
+    community_experts: 'Community expert'
     index:
+      bg_title: 'Meet the experts behind OpenCSG'
       title: "OpenCSG invites you to join our community as an expert. Let's come together to embrace and co-create within the open-source ecosystem, empowering users with technical support, expert advice, solution design guidance, and more."
       apply_button: 'Join as a Community Expert'
     apply:
