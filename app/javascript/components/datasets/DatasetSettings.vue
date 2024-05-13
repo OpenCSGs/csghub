@@ -221,9 +221,10 @@
   </div>
 </template>
 <script>
-import {h} from 'vue'
-import {ElMessage, ElMessageBox} from 'element-plus'
+import { h, inject } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState } from 'pinia'
 
@@ -240,6 +241,7 @@ export default {
   components: {},
   data() {
     return {
+      csghubServer: inject('csghubServer'),
       theTagList:this.tagList,
       theIndustryTagsList:this.industryTagsList,
       selectedTags:[],
@@ -448,7 +450,7 @@ export default {
     },
     
     async updateIndustryTagsAPI(tags){
-      const tagsIndustryUpdateEndpoint = "/internal_api/datasets/" + this.path + "/tags/industry"
+      // const tagsIndustryUpdateEndpoint = "/internal_api/datasets/" + this.path + "/tags/industry"
       const industryBodyData = {
         tags:tags
       }
@@ -457,7 +459,7 @@ export default {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(industryBodyData)
       }
-      const response = await csrfFetch(tagsIndustryUpdateEndpoint, industryOptions)
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/dataset/${this.path}/tags/industry`, industryOptions)
       if (!response.ok) {
         response.json().then((err) => {
           ElMessage({ message: err.message, type: "warning" })
