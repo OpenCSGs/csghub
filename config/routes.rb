@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file'
     put '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#update_file'
     put '/datasets/:namespace/(*dataset_name)/update_readme_tags', to: 'datasets#update_readme_tags'
+    post '/datasets/:namespace/(*dataset_name)/tags/industry', to: 'datasets#update_industry_tags'
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}
     get '/datasets/:namespace/(*dataset_name)/related_repos', to: 'datasets#related_repos'

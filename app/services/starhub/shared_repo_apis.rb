@@ -112,7 +112,6 @@ module Starhub
     end
 
     def update_repo_industry_tag(repo_type, namespace, repo_name, options = {})
-      debugger
       @client.post("/#{repo_type}/#{namespace}/#{repo_name}/tags/industry", options)
     end
 

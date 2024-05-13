@@ -71,14 +71,14 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('datasets.datasetTag')}}
+          {{ $t('datasets.datasetTag') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('datasets.edit.tips3')}}
+          {{ $t('datasets.edit.tips3') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]" ref="tagListContainer">
-        <p class="text-[#344054] text-[14px]">{{ $t('models.modelTag')}}</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('datasets.datasetTag')}}</p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
           <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
             <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
@@ -100,6 +100,45 @@
             </p>
           </div>
           <el-button @click="updateTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
+        </div>
+      </div>
+    </div>
+
+    <el-divider/>
+
+    <!-- 行业标签 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('datasets.datasetIndustryTag') }}
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          {{ $t('datasets.edit.tips3') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]" ref="IndustryTagListContainer">
+        <p class="text-[#344054] text-[14px]">{{ $t('datasets.datasetIndustryTag')}}</p>
+        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+          <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              <span v-for="tag in selectedIndustryTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
+                <el-icon><Close @click="removeIndustryTag(tag.name)" /></el-icon>
+              </span>
+            </div>
+            <input class="w-full max-h-[36px] outline-none"
+                    v-model="industryTagInput"
+                    @input="showIndustryTagList" />
+          </div>
+          <div v-show="shouldShowIndustryTagList" class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <p v-for="tag in theIndustryTagsList"
+                @click="selectIndustryTag(tag)"
+                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+            >
+              {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name}}
+            </p>
+          </div>
+          <el-button @click="updateIndustryTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
         </div>
       </div>
     </div>
@@ -195,15 +234,20 @@ export default {
     datasetDesc: String,
     default_branch: String,
     tagList: Object,
+    industryTagsList: Object,
     tags: Object
   },
   components: {},
   data() {
     return {
       theTagList:this.tagList,
+      theIndustryTagsList:this.industryTagsList,
       selectedTags:[],
+      selectedIndustryTags:[],
       shouldShowTagList:false,
+      shouldShowIndustryTagList:false,
       tagInput:'',
+      industryTagInput:'',
       delDesc: '',
       datasetName: this.path.split('/')[1],
       theDatasetNickname: this.datasetNickname || "",
@@ -230,6 +274,7 @@ export default {
     document.addEventListener('click', this.collapseTagList);
 
     this.getSelectTags()
+    console.log(this.theIndustryTagsList);
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
@@ -239,6 +284,9 @@ export default {
     collapseTagList(event) {
       if (!this.$refs.tagListContainer.contains(event.target)) {
         this.shouldShowTagList = false;
+      }
+      if (!this.$refs.IndustryTagListContainer.contains(event.target)) {
+        this.shouldShowIndustryTagList = false;
       }
     },
     getSelectTags(){
@@ -257,6 +305,7 @@ export default {
         })
       }
     },
+
     showTagList(e){
       if(this.tagInput != ''){
         const userTriggerTagList = this.tagList.filter(tag => {
@@ -271,6 +320,21 @@ export default {
       }
     },
 
+    showIndustryTagList(e){
+      if(this.industryTagInput != ''){
+        const userTriggerIndustryTagList = this.industryTagsList.filter(tag => {
+          console.log(tag);
+          return tag.name.includes(this.industryTagInput) || tag.show_name.includes(this.industryTagInput)
+        })
+        if (userTriggerIndustryTagList.length > 0) {
+          this.theIndustryTagsList = userTriggerIndustryTagList
+          this.shouldShowIndustryTagList = true
+        }
+      }else{
+        this.shouldShowIndustryTagList = false
+      }
+    },
+
     selectTag(newTag){
       console.log(newTag);
       const findTag = this.selectedTags.find(tag => tag.name === newTag.name)
@@ -279,8 +343,20 @@ export default {
       }
     },
 
+    selectIndustryTag(newTag){
+      console.log(newTag);
+      const findIndustryTag = this.selectedIndustryTags.find(tag => tag.name === newTag.name)
+      if (!findIndustryTag) {
+        this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.zh_name})
+      }
+    },
+
     removeTag(tagName){
       this.selectedTags = this.selectedTags.filter( item => item.name !== tagName )
+    },
+
+    removeIndustryTag(tagName){
+      this.selectedIndustryTags = this.selectedIndustryTags.filter( item => item.name !== tagName )
     },
 
     async deleteDataset() {
@@ -335,6 +411,16 @@ export default {
 
     },
 
+    updateIndustryTags(){
+      if(true){
+        const newSelectedIndustryTags = this.selectedIndustryTags.map(tag => tag.name)
+        this.updateIndustryTagsAPI(newSelectedIndustryTags)
+      } else {
+        ElMessage({ message: this.$t('datasets.edit.needDatasetTag'), type: "warning" })
+      }
+    },
+    
+
     async updateTagsAPI(tags){
       const tagsUpdateEndpoint = "/internal_api/datasets/" + this.path + "/update_readme_tags"
       const bodyData = {
@@ -350,6 +436,28 @@ export default {
         body: JSON.stringify(bodyData)
       }
       const response = await csrfFetch(tagsUpdateEndpoint, options)
+      if (!response.ok) {
+        response.json().then((err) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then((data) => {
+          ElMessage({ message: data.message, type: "success" })
+        })
+      }
+    },
+    
+    async updateIndustryTagsAPI(tags){
+      const tagsIndustryUpdateEndpoint = "/internal_api/datasets/" + this.path + "/tags/industry"
+      const industryBodyData = {
+        tags:tags
+      }
+      const industryOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(industryBodyData)
+      }
+      const response = await csrfFetch(tagsIndustryUpdateEndpoint, industryOptions)
       if (!response.ok) {
         response.json().then((err) => {
           ElMessage({ message: err.message, type: "warning" })
