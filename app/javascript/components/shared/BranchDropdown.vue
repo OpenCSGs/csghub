@@ -2,9 +2,9 @@
   <div>
     <el-dropdown>
       <el-button type="default">
-        <SvgIcon name="branch" class="mr-1 el-icon--right" />
+        <SvgIcon name="branch" class="mr-1" />
         {{ currentBranch }}
-        <el-icon class="ml-1"><arrow-down /></el-icon>
+        <el-icon class="ml-1 el-icon--right"><arrow-down /></el-icon>
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
