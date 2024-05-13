@@ -1,12 +1,13 @@
 <template>
   <div class="w-[640px] m-auto flex flex-col items-center md:w-full md:p-5">
     <div>
-      <SvgIcon width="36" height="36" name="spaces"  />
+      <SvgIcon name="spaces" width="36" height="36" />
     </div>
     <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('application_spaces.new.title') }}</h3>
     <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('application_spaces.new.subTitle1') }}</p>
     <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('application_spaces.new.subTitle2') }}</p>
     <div class="mt-9">
+      <!-- name -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.owner') }}</p>
@@ -32,6 +33,7 @@
         </div>
       </div>
 
+      <!-- nickname & license -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.nickname') }}</p>
@@ -49,6 +51,7 @@
         </div>
       </div>
 
+      <!-- desc -->
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.description') }}</p>
@@ -194,7 +197,6 @@
   const SDK = ref('gradio')
   const images = ref([])
   const coverImage = ref('')
-  const prefixPath = document.location.pathname.split('/')[1]
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const hasCreateApplicationSpace = ref(false)
 
