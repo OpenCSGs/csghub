@@ -33,6 +33,7 @@
       :can-write="canWrite"
       :tags="tags"
       :tag-list="tagList"
+      :industry-tags-list="industryTagsList"
       :userName="userName"
       :userToken="userToken"
       repo-type="dataset"
@@ -60,6 +61,7 @@
     settingsVisibility: Boolean,
     tags: Object,
     tagList: Object,
+    industryTagsList: Object,
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,

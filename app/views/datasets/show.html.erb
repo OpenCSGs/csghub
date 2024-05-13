@@ -1,5 +1,6 @@
 <div class="bg-white">
   <dataset-detail
+    :industry-tags-list="<%= @industry_tags_list.to_json %>"
     :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
     local-repo-id="<%= @local_dataset.id %>"
