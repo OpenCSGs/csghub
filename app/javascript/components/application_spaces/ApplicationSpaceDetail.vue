@@ -134,7 +134,7 @@
   const { cookies } = useCookies();
   const appStatus = ref(props.applicationSpace.data.status)
   const appEndpoint = computed(() => {
-    if(ENABLE_HTTPS === true) {
+    if(ENABLE_HTTPS === 'true') {
       return `https://${props.applicationSpace.data.endpoint}`
     } else {
       return `http://${props.applicationSpace.data.endpoint}`
