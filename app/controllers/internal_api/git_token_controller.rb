@@ -3,14 +3,18 @@ class InternalApi::GitTokenController < InternalApi::ApplicationController
 
   def refresh
     if current_user.git_token_name.present? && current_user.git_token.present?
-      csghub_api.delete_git_token(current_user.name, current_user.git_token_name)
+      csghub_api.delete_git_token(current_user.name, current_user.git_token_name, current_user.name)
     end
     random_name = SecureRandom.uuid
     res_body = csghub_api.generate_git_token(current_user.name, random_name)
     res_json = JSON.parse(res_body)
-    current_user.git_token_name = res_json["data"]["name"]
-    current_user.git_token = res_json["data"]["token"]
-    if current_user.save
+
+    token_name = res_json.fetch("data", {}).fetch("name", "")
+    token = res_json.fetch("data", {}).fetch("token", "")
+
+    if token.present? && token_name.present?
+      current_user.update_columns(git_token_name: token_name,
+                                  git_token: token)
       render json: { token: current_user.git_token, message: '刷新 Git Token 成功' }
     else
       render json: { message: '刷新 Git Token 失败' }, status: :bad_request
