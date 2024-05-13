@@ -84,6 +84,12 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
+    def get_repo_industry_tag()
+      res = @client.get("/tags")
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_repo(repo_type, username, repo_name, namespace, nickname, desc, options = {})
       options[:username] = username
       options[:name] = repo_name
@@ -103,6 +109,11 @@ module Starhub
       options[:nickname] = nickname
       options[:description] = desc
       @client.put("/#{repo_type}/#{namespace}/#{repo_name}?current_user=#{options[:current_user]}", options)
+    end
+
+    def update_repo_industry_tag(repo_type, namespace, repo_name, options = {})
+      debugger
+      @client.post("/#{repo_type}/#{namespace}/#{repo_name}/tags/industry", options)
     end
 
     def get_repo_tags(repo_type, namespace, repo_name, options = {})
