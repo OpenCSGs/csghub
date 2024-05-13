@@ -8,6 +8,7 @@ export const datasets = {
   datasetNickName: "数据集别名",
   datasetDesc: "数据集简介",
   datasetTag: "数据集标签",
+  datasetIndustryTag: "数据集行业标签",
   tips:"轻松的托管数据集",
   newDataset: {
     title: "新建数据集仓库",
