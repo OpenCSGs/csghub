@@ -1,0 +1,7 @@
+en:
+  mailer:
+    new_comment: 'You got new comments!'
+    related_repo: 'Related Repo'
+    discussion_topic: 'Discussion Topic'
+    new_comment_alert_title: 'You got a new comment:'
+    comment_content: 'Comment:'

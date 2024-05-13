@@ -142,6 +142,11 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    delayed_job (4.1.11)
+      activesupport (>= 3.0, < 8.0)
+    delayed_job_active_record (4.1.8)
+      activerecord (>= 3.0, < 8.0)
+      delayed_job (>= 3.0, < 5)
     diff-lcs (1.5.0)
     docile (1.4.0)
     domain_name (0.6.20231109)
@@ -467,6 +472,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  delayed_job_active_record
   dotenv-rails
   factory_bot_rails
   faraday

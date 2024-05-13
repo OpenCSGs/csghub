@@ -1,0 +1,9 @@
+<h3> <%= I18n.t('mailer.new_comment_alert_title') %> </h3>
+
+<h4><%= I18n.t('mailer.discussion_topic')%>：</h4>
+<p><%= @comment.commentable.title %></p>
+
+<h4><%= I18n.t('mailer.comment_content')%>：</h4>
+<p> <%= @comment.content %> </p>
+
+<p><%= link_to I18n.t('mailer.related_repo'), @repo_url %></p>
