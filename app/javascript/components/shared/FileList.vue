@@ -1,24 +1,10 @@
 <template>
   <div class="min-h-[300px] py-8 md:px-5">
     <div class="flex items-center justify-between">
-      <div class="flex items-center flex-wrap">
-        <div class="mr-4">
-          <el-dropdown split-button>
-            <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="8.75" cy="2.25" r="1.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="3.25" cy="9.5" r="1.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3.25 4L3.25 7.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="3.25" cy="2.25" r="1.75" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3.25 7.75V7.75C3.25 6.64543 4.14543 5.75 5.25 5.75H7C7.9665 5.75 8.75 4.9665 8.75 4V4" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            {{ currentBranch }}
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item v-for="branch in branches" :key="branch.name" @click="$emit('change-branch', branch.name)">{{ branch.name }}</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
+      <div class="flex items-center flex-wrap gap-4">
+        <BranchDropdown @changeBranch="$emit('changeBranch', $event)"
+                        :current-branch="currentBranch"
+                        :branches="branches" />
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>
             <a :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`">{{ namespacePath.split('/')[1] }}</a>
@@ -160,6 +146,7 @@
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
   import { useI18n } from 'vue-i18n'
+  import BranchDropdown from './BranchDropdown.vue';
 
   const props = defineProps({
     branches: Object,
@@ -177,6 +164,8 @@
   const lastCommit = ref({})
   const lastCommitAvatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
   const prefixPath = document.location.pathname.split('/')[1]
+
+  const emit = defineEmits(['changeBranch'])
 
   const extractNameFromPath = (path) => {
     const parts = path.split('/')
