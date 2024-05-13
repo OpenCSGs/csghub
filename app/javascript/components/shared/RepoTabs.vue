@@ -121,6 +121,7 @@
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
           :cloudResource="repoDetail.hardware"
+          :coverImage="repoDetail.cover_image_url"
           @showSpaceLogs="showSpaceLogs" />
         <code-settings
           v-if="repoType === 'code'"
