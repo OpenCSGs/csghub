@@ -197,6 +197,47 @@
 
     <el-divider/>
 
+    <!-- cover image -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('application_spaces.edit.replaceCoverImage')}}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px] w-[400px] sm:w-[98%]">
+        <el-upload
+          :class="`${hideImageUploadElement ? 'hide' : 'h-auto' }`"
+          :limit="1"
+          v-model:file-list="images"
+          list-type="picture-card"
+          :headers="{ 'X-CSRF-TOKEN': csrfToken }"
+          accept="image/png, image/jpeg, image/gif, image/svg+xml"
+          :data="{namespace: 'application_space'}"
+          action="/internal_api/upload"
+          :before-upload="handleBeforeUpload"
+          :on-remove="handleRemoveImage"
+          :on-success="handleUploadSuccess"
+        >
+          <div class="flex flex-col items-center">
+            <SvgIcon name="el_upload" width="20" height="18" />
+            <div class="el-upload__text">
+              <div>
+                {{ $t('application_spaces.new.coverImageDesc1') }}
+              </div>
+              <div class="font-light text-[12px]">
+                {{ $t('application_spaces.new.coverImageDesc2') }}
+              </div>
+            </div>
+          </div>
+        </el-upload>
+        <el-button @click="updateApplicationSpaceCoverImage" class="w-[100px]">
+          {{ $t('all.update')}}
+        </el-button>
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
@@ -248,6 +289,7 @@ import refreshJWT from '../../packs/refreshJWT.js'
 import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState, mapActions } from 'pinia'
+import { useI18n } from 'vue-i18n'
 
 export default {
   props: {
@@ -257,7 +299,8 @@ export default {
     default_branch: String,
     appStatus: String,
     cloudResource: String,
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    coverImage: String
   },
 
   components: {},
@@ -276,13 +319,21 @@ export default {
       initialized: ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError'].includes(this.appStatus),
       notInitialized: this.appStatus === 'NoAppFile',
       cookies: useCookies().cookies,
-      csghubServer: inject('csghubServer')
+      csghubServer: inject('csghubServer'),
+      images: [{name: 'default', url: (this.coverImage || "/images/default_cover_image.png")}],
+      uploadCoverImageUrl: '/images/default_cover_image.png',
+      imageUploaded: false,
+      csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      t: useI18n()
     };
   },
 
   computed: {
     ...mapState(useRepoDetailStore, ['isPrivate']),
     ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+    hideImageUploadElement() {
+      return (this.imageUploaded || this.images.length !== 0)
+    },
     visibilityName: {
       get() {
         return !!this.privateVisibility ? 'Private' : 'Public'
@@ -312,6 +363,25 @@ export default {
 
   methods: {
     ...mapActions(useRepoDetailStore, ['updateVisibility']),
+
+    handleBeforeUpload(file) {
+      if (file.size / 1024 <= 2000) {
+        return true
+      } else {
+        ElMessage({message: this.t('all.fileTooLarge'), type: "warning"})
+        return false
+      }
+    },
+
+    handleRemoveImage() {
+      this.uploadCoverImageUrl = ''
+      this.imageUploaded = false
+    },
+
+    handleUploadSuccess(res) {
+      this.uploadCoverImageUrl = res.url
+      this.imageUploaded = true
+    },
 
     clickDelete() {
       if (this.delDesc === this.applicationSpacePath) {
@@ -486,6 +556,11 @@ export default {
       this.updateApplicationSpace(payload)
     },
 
+    updateApplicationSpaceCoverImage() {
+      const payload = {cover_image: this.uploadCoverImageUrl}
+      this.updateApplicationSpace(payload)
+    },
+
     async updateApplicationSpace(payload) {
       const applicationSpaceUpdateEndpoint = "/internal_api/spaces/" + this.path
       const options = {
@@ -524,3 +599,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  :deep(.hide .el-upload.el-upload--picture-card){
+    display: none;
+  }
+</style>

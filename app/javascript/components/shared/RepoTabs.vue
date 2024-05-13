@@ -125,6 +125,7 @@
           :appStatus="appStatus"
           :cloudResource="repoDetail.hardware"
           @showSpaceLogs="showSpaceLogs"
+          :coverImage="repoDetail.cover_image_url"
           :isAdmin="isAdmin" />
         <code-settings
           v-if="repoType === 'code'"

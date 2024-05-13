@@ -52,6 +52,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     @application_space.nickname = params[:nickname] if params[:nickname].present?
     @application_space.desc = params[:desc] if params[:desc].present?
     @application_space.cloud_resource = params[:cloud_resource] if params[:cloud_resource].present?
+    @application_space.cover_image = params[:cover_image] if params[:cover_image].present?
 
     if @application_space.save
       render json: { message: I18n.t('repo.updateSuccess') }

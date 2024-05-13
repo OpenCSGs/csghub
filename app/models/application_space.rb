@@ -41,7 +41,8 @@ class ApplicationSpace < ApplicationRecord
                                                                    desc,
                                                                    { private: application_space_private?,
                                                                      current_user: creator&.name,
-                                                                     hardware: cloud_resource
+                                                                     hardware: cloud_resource,
+                                                                     cover_image_url: cover_image
                                                                    })
     raise StarhubError, res.body unless res.success?
   end
