@@ -36,6 +36,10 @@ module Starhub
       get_repo_branches('datasets', namespace, dataset_name, options)
     end
 
+    def get_dataset_industry_tag()
+      get_repo_industry_tag()
+    end
+
     def get_dataset_file_content(namespace, dataset_name, path, options = {}) get_repo_file_content('datasets', namespace, dataset_name, path, options)
     end
 
@@ -73,6 +77,10 @@ module Starhub
 
     def upload_dataset_file(namespace, dataset_name, options = {})
       upload_repo_file('datasets', namespace, dataset_name, options)
+    end
+
+    def update_dataset_industry_tags(namespace, dataset_name, options = {})
+      update_repo_industry_tag('datasets', namespace, dataset_name, options)
     end
 
     def dataset_related_repos(namespace, dataset_name, options = {})
