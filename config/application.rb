@@ -20,6 +20,7 @@ module OpenCSG
     config.i18n.available_locales = ['en', 'zh']
     config.i18n.default_locale = 'zh'
     config.encoding = 'utf-8'
+    config.hosts << /.*/
 
     config.time_zone = "Beijing"
     # config.eager_load_paths << Rails.root.join("extras")
