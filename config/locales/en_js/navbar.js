@@ -46,7 +46,7 @@ export const navbar = {
   "campaignText": "Aggregate top industry and domain conferences and offline events",
   "dailyPaper": "Papers Center",
   "dailyPaperText": "Gather the latest research results and share cutting-edge academic papers",
-  "profile": "Your Profile",
+  "profile": "Profile",
   editProfile: "Account Settings",
   "setting": "Settings",
   "contact": "Contact Us",
