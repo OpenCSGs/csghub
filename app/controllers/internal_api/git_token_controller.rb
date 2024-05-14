@@ -9,8 +9,8 @@ class InternalApi::GitTokenController < InternalApi::ApplicationController
     res_body = csghub_api.generate_git_token(current_user.name, random_name)
     res_json = JSON.parse(res_body)
 
-    token_name = res_json.fetch("data", {}).fetch("name", "")
-    token = res_json.fetch("data", {}).fetch("token", "")
+    token_name = res_json.dig("data", "name")
+    token = res_json.dig("data", "token")
 
     if token.present? && token_name.present?
       current_user.update_columns(git_token_name: token_name,
