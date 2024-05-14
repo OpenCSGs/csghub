@@ -2,7 +2,7 @@
   <div class="min-h-[300px] py-8 md:px-5">
     <div class="flex items-center justify-between">
       <div class="flex items-center flex-wrap gap-4">
-        <BranchDropdown @changeBranch="changeBranch($event)"
+        <BranchDropdown @changeBranch="changeBranch"
                         :current-branch="currentBranch"
                         :branches="branches" />
         <el-breadcrumb separator="/">
