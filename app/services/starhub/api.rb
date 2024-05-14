@@ -41,9 +41,8 @@ module Starhub
       res.body
     end
 
-    # Not used
-    def delete_git_token(username, token_name)
-      @client.delete("/user/#{username}/tokens/#{token_name}")
+    def delete_git_token(username, token_name, current_user)
+      @client.delete("/user/#{username}/tokens/#{token_name}?current_user=#{current_user}")
     end
 
     def get_user_models(namespace, username, options = {})
