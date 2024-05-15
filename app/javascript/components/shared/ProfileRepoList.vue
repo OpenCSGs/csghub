@@ -116,7 +116,7 @@
     spaceList: Object,
     codeList: Object,
     name: String,
-    likesStatus: Boolean
+    initiator: String
   })
 
   const { t } = useI18n();
@@ -158,31 +158,35 @@
     }
   }
 
+  const reposUrl = (type) => {
+    if (props.initiator === 'profile') {
+      return `${csghubServer}/api/v1/user/${props.name}/${type}`
+    } else {
+      return `${csghubServer}/api/v1/user/${props.name}/likes/${type}`
+    }
+  }
+
   const fetchMoreModels = async () => {
-    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/models` : 
-    `${csghubServer}/api/v1/user/${props.name}/likes/models`
+    const url = reposUrl("models")
+    console.log(url);
     await fetchData(url, models, props.modelList.total)
     moreModels.value = false
-
   }
 
   const fetchMoreDatasets = async () => {
-    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/datasets` : 
-    `${csghubServer}/api/v1/user/${props.name}/likes/datasets`
+    const url = reposUrl("datasets")
     await fetchData(url, datasets, props.datasetList.total)
     moreDatasets.value = false
   }
 
   const fetchMoreSpaces = async () => {
-    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/spaces` : 
-    `${csghubServer}/api/v1/user/${props.name}/likes/spaces`
+    const url = reposUrl("spaces")
     await fetchData(url, spaces, props.spaceList.total)
     moreSpaces.value = false
   }
 
   const fetchMoreCodes = async () => {
-    const url = props.likesStatus === false ? `${csghubServer}/api/v1/user/${props.name}/codes` : 
-    `${csghubServer}/api/v1/user/${props.name}/likes/codes`
+    const url = reposUrl("codes")
     await fetchData(url, codes, props.codeList.total)
     moreCodes.value = false
   }
