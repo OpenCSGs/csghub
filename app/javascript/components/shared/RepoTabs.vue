@@ -86,6 +86,14 @@
           :namespace-path="repoDetail.path"
         />
       </template>
+      <template #files v-if="actionName === 'commits'">
+        <RepoCommits
+          :branches="branches"
+          :current-branch="currentBranch"
+          :namespace-path="repoDetail.path"
+          :repo-type="repoType"
+        />
+      </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
         <repo-files
           :branches="branches"
@@ -149,6 +157,7 @@ import RepoClone from '../shared/RepoClone.vue'
 import TabContainer from '../shared/TabContainer.vue'
 import RepoSummary from '../shared/RepoSummary.vue'
 import RepoFiles from '../shared/RepoFiles.vue'
+import RepoCommits from '../shared/RepoCommits.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import ModelSettings from '../models/ModelSettings.vue'
 import DatasetSettings from '../datasets/DatasetSettings.vue'

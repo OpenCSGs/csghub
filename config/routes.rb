@@ -178,6 +178,7 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/resolve/:branch/(*path)', to: 'models#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/community', to: 'models#community', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/settings', to: 'models#settings', namespace: /[^\/]+/
+    get '/models/:namespace/(*model_name)/commits', to: 'models#commits', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
@@ -188,6 +189,7 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/resolve/:branch/(*path)', to: 'datasets#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/community', to: 'datasets#community', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/settings', to: 'datasets#settings', namespace: /[^\/]+/
+    get '/datasets/:namespace/(*dataset_name)/commits', to: 'datasets#commits', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/codes/:namespace/(*code_name)/:branch/new', to: 'codes#new_file', namespace: /[^\/]+/
@@ -198,6 +200,7 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/resolve/:branch/(*path)', to: 'codes#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/community', to: 'codes#community', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/settings', to: 'codes#settings', namespace: /[^\/]+/
+    get '/codes/:namespace/(*code_name)/commits', to: 'codes#commits', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)', to: 'codes#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file', namespace: /[^\/]+/
@@ -208,6 +211,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/resolve/:branch/(*path)', to: 'application_spaces#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/community', to: 'application_spaces#community', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/settings', to: 'application_spaces#settings', namespace: /[^\/]+/
+    get '/spaces/:namespace/(*application_space_name)/commits', to: 'application_spaces#commits', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/profile/:user_id', to: 'profile#index', user_id: /[^\/]+/

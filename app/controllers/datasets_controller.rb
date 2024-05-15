@@ -10,7 +10,7 @@ class DatasetsController < ApplicationController
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new_file, :upload_file, :edit_file]
   before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
-  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings]
+  before_action :load_dataset_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings, :commits]
 
   def index
     get_tag_list('datasets')
@@ -95,6 +95,11 @@ class DatasetsController < ApplicationController
   end
 
   def edit_file
+    @default_tab = 'files'
+    render :show
+  end
+
+  def commits
     @default_tab = 'files'
     render :show
   end
