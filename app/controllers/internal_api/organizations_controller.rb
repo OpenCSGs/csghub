@@ -117,6 +117,10 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
   def update_member
     authorize @org
 
+    unless OrgMembership.roles.keys.include? params[:user_role]
+      return render json: {message: '请提供角色信息'}, status: 400
+    end
+
     if @org.is_last_admin?(@user) && params[:user_role] != 'admin'
       return render json: {message: '不能修改组织最后一个管理员的权限！'}, status: 400
     end
