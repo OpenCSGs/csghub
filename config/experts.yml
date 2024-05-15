@@ -64,9 +64,27 @@
   tags: SRE培训专家,AIOps培训专家
   desc: SRE和AIOps人工智能运维领域资深专家，具备超过 15 年 服务管理以及稳定性运维咨询领域工作和讲师经历。作为大中华区 SRE 讲师第一人，
   avatar: 'experts/liu_feng.png'
-- name: 苏勇
+- name: 裴吉
   type: 专家
-  title: 大模型行业应用专家
-  tags: 人工智能专家,数字孪生专家,数据治理顾问
-  desc: 连续创业者，专注AGI、LLM、多模态、Vision AI及大数据领域，在多个行业有丰富的AI、大数据及数字孪生技术落地经验，曾设计开发多个千万级大型高并发AI相关项目。拥有丰富的通用大模型及垂类大模型训练及落地经验。同时具备丰富的产品设计能力。拥有Cisco CCIE、redhat RHCA、Oracle OCP等多个国际认证。前IterCast在线教育创始人，产品及公司获得过多次投资。
-  avatar: 'experts/su_yong.jpg'
+  title: OpenCSG 技术专家
+  tags: 人工智能算法专家
+  desc: 师承于全局优化领域顶级专家Panos Pardalos，发表过数篇SCI顶级期刊论文以及十几篇AI专利。从业经验8年，曾担任平安集团首席信息官办公室担任集团高级信息分析师，兼平安集团科技发展委员会高级算法工程师，主导过平安科技舆情系统，平安健康智能票据理赔系统，平安医保大数据风控系统。曾担任小米Ai-LAB 高级算法工程师，参与过小米su7智能制造项目，参与早期小爱同学语言模型训练工作。曾担任星环科技高级算法工程师，主导过星环sophon-FL联邦学习系统并在机器之心以及蚂蚁隐语secretflow社区上分享。
+  avatar: 'experts/pei_ji.png'
+- name: 刘巍锋
+  type: 专家
+  title: OpenCSG 技术专家
+  tags: 云原生专家
+  desc: 10多年软件技术从业经验，先后担任HP中国资深软件研发，极狐GitLab系统架构师，D2IQ(前Mesosphere) SA等，在高并发系统，容器编排和云原生应用，DevOps，SRE运维和服务交付方面有丰富的理论和实践经验，在和某国有大型通信集团的合作中获得高度认可。
+  avatar: 'experts/wei_feng.png'
+- name: 刘勇
+  type: 专家
+  title: OpenCSG 技术专家
+  tags: 人工智能应用开发专家
+  desc: 20年软件研发经验，先后在多家国内外知名企业和互联网公司担任资深研发工程师和研发主管。擅长企业级软件产品，DevOps工具的研发，也有研发互联网产品的丰富经验。技术管理能力优秀，具有多年的技术团队管理经验，带队成功完成过多个重点国家项目，以及部门和公司的重要产品。精通 python、golang 以及 java 语言技术栈，根据不同场景和需求以及团队进行技术选型，以期达到最佳的投入产出比。擅长业务软件分析与架构设计，有带领技术团队高效敏捷交付产品和服务的经验和能力。
+  avatar: 'experts/liu_yong.png'
+- name: 陈浩
+  type: 专家
+  title: OpenCSG 技术专家
+  tags: 人工智能应用产品专家
+  desc: 连续创业者，有10年图形产品研发经验，8年AI产品管理经验。曾担任医疗、能源及自动驾驶等多个领域的产品线负责人，对AI产品的开发及落地有丰富经验，在多个行业有成功的AI产品落地实践。
+  avatar: 'experts/chen_hao.png'
