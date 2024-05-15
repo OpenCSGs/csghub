@@ -125,6 +125,9 @@
             <a :href="userProfile">
               <el-dropdown-item> {{ $t('navbar.profile') }} </el-dropdown-item>
             </a>
+            <a :href="`/profile/likes/${ this.userName }`">
+              <el-dropdown-item> {{ $t('profile.myCollect')}} </el-dropdown-item>
+            </a>
             <a href="/settings/profile">
               <el-dropdown-item> {{ $t('navbar.setting') }} </el-dropdown-item>
             </a>
