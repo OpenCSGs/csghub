@@ -59,7 +59,7 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
           next
         else
           user.set_org_role(org, params[:user_role])
-          sync_update_membership(org, user, user_org_role)
+          sync_update_membership(org, user, params[:user_role], user_org_role)
         end
       end
     end
