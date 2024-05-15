@@ -168,7 +168,6 @@
 
   const fetchMoreModels = async () => {
     const url = reposUrl("models")
-    console.log(url);
     await fetchData(url, models, props.modelList.total)
     moreModels.value = false
   }
