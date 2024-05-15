@@ -35,15 +35,15 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
 
   def new_members
     unless OrgMembership.roles.keys.include? params[:user_role]
-      return render json: {message: '请提供角色信息'}, status: 400
+      return render json: {message: I18n.t('organizaitons.provide_role')}, status: 400
     end
 
     user_names = params[:user_names].split(',').map(&:strip)
-    return render json: {message: '请提供成员信息'}, status: 400 unless user_names.present?
+    return render json: {message: I18n.t('organizations.provide_username')}, status: 400 unless user_names.present?
 
     org = Organization.find_by(name: params[:org_name])
-    return render json: {message: '未找到组织'}, status: 404 unless org
-    return render json: {message: '未授权，请联系管理员'} if current_user.org_role(org) != 'admin'
+    return render json: {message: I18n.t('organizations.not_found')}, status: 404 unless org
+    return render json: {message: I18n.t('organizations.not_authorized')} if current_user.org_role(org) != 'admin'
 
     Organization.transaction do
       user_names.each do |user_name|
@@ -63,9 +63,9 @@ class InternalApi::OrganizationsController < InternalApi::ApplicationController
         end
       end
     end
-    render json: {message: '添加组织成员成功'}
+    render json: {message: I18n.t('organizations.add_member_success')}
   rescue => e
-    render json: {message: "添加组织成员失败, #{e.message}"}, status: 400
+    render json: {message: "#{I18n.t('organizations.add_member_failed')}, #{e.message}"}, status: 400
   end
 
   def models
