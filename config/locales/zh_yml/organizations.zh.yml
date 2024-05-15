@@ -1,0 +1,8 @@
+zh:
+  organizaitons:
+    provide_role: '请提供角色信息'
+    provide_username: '请提供成员信息'
+    org_not_found: '未找到组织'
+    not_authorized: '未授权，请联系管理员'
+    add_member_success: '添加组织成员成功'
+    add_member_failed: '添加组织成员失败'
