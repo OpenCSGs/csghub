@@ -73,5 +73,7 @@ export const all = {
   languages: "Languages",
   previous:"previous",
   next:"next",
-  deleteSuccess: "Successfully delete"
+  deleteSuccess: "Successfully delete",
+  commits: "commit history",
+  fetchError: "Failed to fetch data",
 }
