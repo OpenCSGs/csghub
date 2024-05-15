@@ -43,17 +43,17 @@ In order to help users to quickly understand the features and usage of CSGHub, w
 
 ### ROADMAP
 - **Asset Management**
-  - [√] Built-in Code Repo: Built-in Code Repo management function to associate the code of model, dataset, Space space application.
+  - [x] Built-in Code Repo: Built-in Code Repo management function to associate the code of model, dataset, Space space application.
   - [ ] Multi-source data synchronization: Support configure and enable remote repository, automatic data synchronization, support OpenCSG community, Huggingface and other remote sources。
 - **AI Enhancement**
   - [ ] One-Click Fine-Tuning: Support integration with OpenCSG llm-finetune tool to start model fine-tuning training with one click.
-  - [√] One-Click Reasoning: Support integration with OpenCSG llm-inference tool to start model reasoning service with one click.
+  - [x] One-Click Reasoning: Support integration with OpenCSG llm-inference tool to start model reasoning service with one click.
 - **LLM App and Enterprise Features**
-  - [√] App Space: Support hosting Gradio/Streamlit applications and publishing them to App Space.
-  - [√] Fine-grained Permission Control: Fine-grained permission and access control settings for enterprise architecture.
+  - [x] App Space: Support hosting Gradio/Streamlit applications and publishing them to App Space.
+  - [x] Fine-grained Permission Control: Fine-grained permission and access control settings for enterprise architecture.
 - **Security Compliance**
   - [ ] GitServer Adapter: Generic GitServer adapter to support multiple major Git repository types through Adaptor mode.
-  - [√] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
+  - [x] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
 
 The detailed roadmap is designed as follows: [full roadmap](/docs/roadmap_en.md)
 
