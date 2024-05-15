@@ -20,11 +20,11 @@
           1 {{ $t('all.contributors') }}
         </div>
         <a :href="`/${prefixPath}/${namespacePath}/commits`"
-           class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px]">
+           class="ml-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px]">
           <SvgIcon name="commits" class="mr-2" />
           {{ $t('all.commits') }}
         </a>
-        <el-dropdown v-if="canWrite">
+        <el-dropdown v-if="canWrite" class="ml-4">
           <el-button type="default">
             + {{ $t('all.addFile') }}
             <el-icon class="el-icon--right pl-1"><arrow-down /></el-icon>
