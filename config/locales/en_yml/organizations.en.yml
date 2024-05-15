@@ -1,0 +1,8 @@
+en:
+  organizaitons:
+    provide_role: 'Please provide user role'
+    provide_username: 'Please provide username'
+    org_not_found: 'Org not found'
+    not_authorized: 'Not Authorized'
+    add_member_success: 'Add member success'
+    add_member_failed: 'Add member failed'
