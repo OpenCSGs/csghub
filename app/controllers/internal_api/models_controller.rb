@@ -117,6 +117,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     sync_update_file('model', options)
     render json: { message: I18n.t('tags.update.success') }
   rescue StandardError => e
+    log_error e.message, e.backtrace
     render json: { error: e.message }, status: :unprocessable_entity
   end
 

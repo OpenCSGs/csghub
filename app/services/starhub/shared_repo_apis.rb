@@ -36,7 +36,7 @@ module Starhub
       options[:path] ||= '/'
       res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/blob/#{path}?ref=#{options[:ref]}&current_user=#{options[:current_user]}")
       raise StarhubError, res.body unless res.success?
-      res.body
+      res.body.force_encoding('UTF-8')
     end
 
     def get_repos(repo_type, current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page = 1, per = 16)
