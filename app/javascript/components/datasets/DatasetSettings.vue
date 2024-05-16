@@ -234,8 +234,8 @@ export default {
     datasetNickname: String,
     datasetDesc: String,
     default_branch: String,
+    userName: String,
     tagList: Object,
-    industryTagsList: Object,
     tags: Object
   },
   components: {},
@@ -243,6 +243,7 @@ export default {
     return {
       csghubServer: inject('csghubServer'),
       theTagList:this.tagList,
+      industryTagsList: [],
       theIndustryTagsList:this.industryTagsList,
       selectedTags:[],
       selectedIndustryTags:[],
@@ -276,13 +277,29 @@ export default {
     document.addEventListener('click', this.collapseTagList);
 
     this.getSelectTags()
-    console.log(this.theIndustryTagsList);
+    this.getIndustryTags()
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
     document.removeEventListener('click', this.collapseTagList);
   },
   methods: {
+    async getIndustryTags() {
+      const getIndustryOptions = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+      }
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/tags`, getIndustryOptions)
+      if (!response.ok) {
+        response.json().then(({ err }) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then(({ data }) => {
+          this.industryTagsList = data.filter(item => item.category === 'industry' && item.scope === 'dataset');
+        })
+      }
+    },
     collapseTagList(event) {
       if (!this.$refs.tagListContainer.contains(event.target)) {
         this.shouldShowTagList = false;
@@ -414,7 +431,7 @@ export default {
     },
 
     updateIndustryTags(){
-      if(true){
+      if(this.selectedIndustryTags !==0){
         const newSelectedIndustryTags = this.selectedIndustryTags.map(tag => tag.name)
         this.updateIndustryTagsAPI(newSelectedIndustryTags)
       } else {
@@ -451,15 +468,15 @@ export default {
     
     async updateIndustryTagsAPI(tags){
       // const tagsIndustryUpdateEndpoint = "/internal_api/datasets/" + this.path + "/tags/industry"
-      const industryBodyData = {
-        tags:tags
-      }
+      // const industryBodyData = {
+      //   tags:tags
+      // }
       const industryOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(industryBodyData)
+        body: JSON.stringify(tags)
       }
-      const response = await jwtFetch(`${this.csghubServer}/api/v1/dataset/${this.path}/tags/industry`, industryOptions)
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/dataset/${this.path}/tags/industry?current_user=${this.userName}`, industryOptions)
       if (!response.ok) {
         response.json().then((err) => {
           ElMessage({ message: err.message, type: "warning" })
