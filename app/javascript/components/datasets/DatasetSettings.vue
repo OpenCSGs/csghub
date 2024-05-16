@@ -313,6 +313,9 @@ export default {
         ...this.tags.task_tags.map(tag => tag),
         ...this.tags.other_tags.map(tag => tag)
       ];
+      this.selectedIndustryTags = [
+        ...this.tags.other_tags.filter(tag => tag.category === 'industry');
+      ]
     },
     clickDelete() {
       if (this.delDesc === this.datasetPath) {
