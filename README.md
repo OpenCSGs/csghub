@@ -117,7 +117,7 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
 If you meet any problem during usage, you can contact with us by any following way:
 1. initiate an issue in github
 2. join our WeChat group by scaning wechat helper qrcode
-3. join our offical discord channel: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
+3. join our official discord channel: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
 4. join our slack workspace:[OpenCSG Slack Channel](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 <div style="display:inline-block">
 <img src="/docs/images/wechat-assistant-new.png" width='200'>
