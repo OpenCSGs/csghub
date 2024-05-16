@@ -114,7 +114,6 @@
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :tag-list="tagList"
-          :industry-tags-list="industryTagsList"
           :tags="tags" />
         <application-space-settings
           v-if="repoType === 'space'"
@@ -173,7 +172,6 @@ const props = defineProps({
   blob: Object,
   tags: Object,
   tagList: String,
-  industryTagsList: String,
   actionName: String,
   settingsVisibility: Boolean,
   canWrite: Boolean,

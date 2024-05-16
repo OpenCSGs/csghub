@@ -93,16 +93,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     render json: { message: I18n.t('repo.updateFileSuccess') }
   end
 
-  def update_industry_tags
-    options = {
-      namespace: params[:namespace],
-      dataset_name: params[:dataset_name],
-      tags: params[:tags]
-    }
-
-    sync_update_dataset_tags('dataset_industry', options)
-  end
-
   def update_readme_tags
     tags = params[:tags]
 
