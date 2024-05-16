@@ -223,6 +223,7 @@
 import {h, inject} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -338,7 +339,6 @@ export default {
     showIndustryTagList(e){
       if(this.industryTagInput != ''){
         const userTriggerIndustryTagList = this.industryTagsList.filter(tag => {
-          console.log(tag);
           return tag.name.includes(this.industryTagInput) || tag.show_name.includes(this.industryTagInput)
         })
         if (userTriggerIndustryTagList.length > 0) {
@@ -351,7 +351,6 @@ export default {
     },
 
     selectTag(newTag){
-      console.log(newTag);
       const findTag = this.selectedTags.find(tag => tag.name === newTag.name)
       if (!findTag) {
         this.selectedTags.push({name: newTag.name, zh_name: newTag.zh_name})
@@ -359,7 +358,6 @@ export default {
     },
 
     selectIndustryTag(newTag){
-      console.log(newTag);
       const findIndustryTag = this.selectedIndustryTags.find(tag => tag.name === newTag.name)
       if (!findIndustryTag) {
         this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.zh_name})
@@ -393,7 +391,6 @@ export default {
     },
 
     changeVisibility(value) {
-      console.log(value)
       ElMessageBox({
         title: this.$t('models.edit.changeVisibility'),
         message: h('p', null, [
@@ -469,14 +466,14 @@ export default {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(tags)
       }
-      const response = await jwtFetch(`${this.csghubServer}/api/v1/model/${this.path}/tags/industry?current_user=${this.userName}`, industryOptions)
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/models/${this.path}/tags/industry?current_user=${this.userName}`, industryOptions)
       if (!response.ok) {
         response.json().then((err) => {
           ElMessage({ message: err.message, type: "warning" })
         })
       } else {
         response.json().then((data) => {
-          ElMessage({ message: data.message, type: "success" })
+          ElMessage({ message: this.$t('all.addSuccess'), type: "success" })
         })
       }
     },
