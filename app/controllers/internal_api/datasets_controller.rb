@@ -99,8 +99,8 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     # 更新 README 元数据中的 tags
     blob =  csghub_api.get_dataset_blob(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
     content =JSON.parse(blob).dig("data", "content")
-    metadata_data = Base64.decode64(content)
-    metadata_hash = YAML.safe_load(Base64.decode64(content))
+    metadata_data = Base64.decode64(content).force_encoding('UTF-8')
+    metadata_hash = YAML.safe_load(metadata_data)
     sha = JSON.parse(blob).dig("data", "sha")
     # 查找元数据部分的结束位置
     end_index = metadata_data.index('---', 3)
