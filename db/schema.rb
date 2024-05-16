@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_09_151316) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_16_083355) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,22 +52,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_09_151316) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "campaigns", force: :cascade do |t|
-    t.string "name"
-    t.string "uuid"
-    t.string "location"
-    t.datetime "start_date"
-    t.datetime "end_date"
+  create_table "admin_photos", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "organizer"
-    t.string "organizer_website"
-    t.integer "pageviews", default: 0
-    t.integer "campaign_type"
-    t.integer "status", default: 0
-    t.boolean "recommended", default: false
-    t.boolean "release", default: false
-    t.index ["uuid"], name: "index_campaigns_on_uuid"
+    t.index ["user_id"], name: "index_admin_photos_on_user_id"
   end
 
   create_table "application_spaces", force: :cascade do |t|
@@ -86,6 +77,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_09_151316) do
     t.text "desc"
     t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name"
+    t.string "uuid"
+    t.string "location"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "organizer"
+    t.string "organizer_website"
+    t.integer "pageviews", default: 0
+    t.integer "campaign_type"
+    t.integer "status", default: 0
+    t.boolean "recommended", default: false
+    t.boolean "release", default: false
+    t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 
   create_table "codes", force: :cascade do |t|
@@ -316,9 +325,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_09_151316) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
-    t.jsonb "hot_spaces", default: {}
+    t.jsonb "ldap_configs", default: {}
     t.jsonb "ignore_model_tags", default: {}
     t.jsonb "ignore_dataset_tags", default: {}
+    t.jsonb "hot_spaces", default: {}
     t.jsonb "internal_mail_group", default: {}
   end
 
@@ -365,6 +375,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_09_151316) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
+    t.boolean "ldap_synced", default: false
     t.string "wechat_id"
     t.string "github_id"
     t.string "gitlab_id"
@@ -376,6 +387,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_09_151316) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "admin_photos", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "datasets", "users", column: "creator_id"
   add_foreign_key "lead_forms", "campaigns"
