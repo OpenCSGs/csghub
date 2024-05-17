@@ -64,7 +64,8 @@
           <a :href="csgHubUrl" target="_blank"><el-menu-item style="height: auto;" index="3-1"><CSGHub /></el-menu-item></a>
           <a :href="llmInference" target="_blank"><el-menu-item style="height: auto;" index="3-2"><Inference /></el-menu-item></a>
           <a :href="llmFinetune" target="_blank"><el-menu-item style="height: auto;" index="3-3"><LlmFinetune /></el-menu-item></a>
-          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item style="height: auto;" index="3-3"><StarChain /></el-menu-item></a>
+          <a :href="OpenSourceStarCloudUrl" target="_blank"><el-menu-item style="height: auto;" index="3-4"><OpenSourceStarCloud /></el-menu-item></a>
+          <a :href="starChainUrl" target="_blank" v-if="isLoggedInBoolean"><el-menu-item style="height: auto;" index="3-5"><StarChain /></el-menu-item></a>
         </el-sub-menu>
 
         <!-- community -->
@@ -181,6 +182,7 @@ import AllSolution from "./menuItem/AllSolution.vue"
 import CSGHub from "./menuItem/CSGHub.vue"
 import Inference from "./menuItem/Inference.vue"
 import LlmFinetune from "./menuItem/LlmFinetune.vue"
+import OpenSourceStarCloud from "./menuItem/OpenSourceStarCloud.vue"
 import StarChain from "./menuItem/StarChain.vue"
 import Space from "./menuItem/Space.vue"
 import Doc from "./menuItem/Doc.vue"
@@ -211,6 +213,7 @@ export default {
       csgHubUrl:'https://github.com/OpenCSGs/CSGHub',
       llmInference: 'https://github.com/OpenCSGs/llm-inference',
       llmFinetune: 'https://github.com/OpenCSGs/llm-finetune',
+      OpenSourceStarCloudUrl:'https://github.com/OpenCSGs/llm-scheduler-ui',
       activeIndex: classParam ?  classParam : window.location.pathname,
       isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
       userProfile: `/profile/${this.userId}`
@@ -219,6 +222,7 @@ export default {
   components: {
     ContactUs,
     StarCloud,
+    OpenSourceStarCloud,
     StarShip,
     EKB,
     StarAIO,
