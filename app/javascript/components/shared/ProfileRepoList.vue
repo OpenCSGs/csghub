@@ -159,10 +159,12 @@
   }
 
   const reposUrl = (type) => {
-    if (props.initiator === 'profile') {
+    switch (props.initiator) {
+      case "likes":
+    return `${csghubServer}/api/v1/user/${props.name}/likes/${type}`
+      case "profile":
+    default:
       return `${csghubServer}/api/v1/user/${props.name}/${type}`
-    } else {
-      return `${csghubServer}/api/v1/user/${props.name}/likes/${type}`
     }
   }
 
@@ -195,7 +197,7 @@
     params.append('per', total);
     params.append('page', 1);
 
-    jwtFetch(`${url}?${params}`, { method: 'GET' }).then((response) => {
+    jwtFetch(`${url}?${params}`).then((response) => {
       if (!response.ok) {
         ElMessage({
           message: t('all.loadError'),
