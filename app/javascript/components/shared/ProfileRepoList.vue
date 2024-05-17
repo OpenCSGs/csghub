@@ -161,10 +161,10 @@
   const reposUrl = (type) => {
     switch (props.initiator) {
       case "likes":
-    return `${csghubServer}/api/v1/user/${props.name}/likes/${type}`
+        return `${csghubServer}/api/v1/user/${props.name}/likes/${type}`
       case "profile":
-    default:
-      return `${csghubServer}/api/v1/user/${props.name}/${type}`
+      default:
+        return `${csghubServer}/api/v1/user/${props.name}/${type}`
     }
   }
 
