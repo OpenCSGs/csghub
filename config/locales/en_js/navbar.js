@@ -5,6 +5,8 @@ export const navbar = {
   spaces: "Spaces",
   codes: "Codes",
   "product": "Products",
+  "openSourceStarCloud":"llm-scheduler",
+  "openSourceStarCloudText":"An open source LLM scheduler engine",
   "starCloud": "StarCloud",
   "starCloudText": "One stop large-scale model development and service operation platform, including computing resource scheduling and algorithm training inference services",
   "starShip": "StarShip",

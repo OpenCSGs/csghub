@@ -5,6 +5,8 @@ export const navbar = {
   spaces: "空间",
   codes: "代码",
   "product": "产品",
+  "openSourceStarCloud":"开源StarCloud",
+  "openSourceStarCloudText":"开源LLM调度平台",
   "starCloud": "StarCloud 星云平台",
   "starCloudText": "一站式大模型开发及服务运行平台，包括算力资源调度及算法训练推理服务",
   "starShip": "StarShip 星舰平台",
