@@ -95,6 +95,9 @@
             <a href="/spaces/new">
               <el-dropdown-item> + {{ $t('navbar.newApplicationSpace') }} </el-dropdown-item>
             </a>
+            <a href="/collections/new">
+              <el-dropdown-item> + {{ $t('navbar.newCollection') }} </el-dropdown-item>
+            </a>
             <a href="/organizations/new">
               <el-dropdown-item divided> {{ $t('navbar.newOrganization') }} </el-dropdown-item>
             </a>

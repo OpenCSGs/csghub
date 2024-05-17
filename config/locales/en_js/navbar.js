@@ -13,4 +13,5 @@ export const navbar = {
   logout: "Logout",
   loginRegister: "Login/Registe",
   login: "Login",
+  newCollection: "New Collection"
 }
