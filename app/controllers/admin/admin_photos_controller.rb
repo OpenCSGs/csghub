@@ -9,6 +9,13 @@ module Admin
     # end
 
     def create
+      admin_photo = AdminPhoto.new
+      admin_photo.title = params['admin_photo']['title']
+      bucket_code = AwsS3.instance.upload 'admin-photo', params['admin_photo']['image']
+      admin_photo.url = AwsS3.instance.download bucket_code
+      admin_photo.user = current_user
+      admin_photo.save
+      redirect_to admin_admin_photo_path(admin_photo)
     end
 
     # Override this method to specify custom lookup behavior.

@@ -36,7 +36,12 @@ and renders all form fields for a resource's editable attributes.
   <% page.attributes(controller.action_name).each do |attribute| -%>
     <div class="field-unit field-unit--<%= attribute.html_class %> field-unit--<%= requireness(attribute) %>">
       <% if attribute.name == 'url' %>
-        <%= f.file_field(:image) %>
+        <div class="field-unit__label">
+          <label for="admin_photo_image">图片</label>
+        </div>
+        <div class="field-unit__field">
+          <%= f.file_field(:image) %>
+        </div>
       <% else %>
         <%= render_field attribute, f: f %>
       <% end %>
