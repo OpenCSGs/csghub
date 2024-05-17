@@ -234,7 +234,6 @@ export default {
     datasetNickname: String,
     datasetDesc: String,
     default_branch: String,
-    userName: String,
     tagList: Object,
     tags: Object
   },
@@ -472,7 +471,7 @@ export default {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(tags)
       }
-      const response = await jwtFetch(`${this.csghubServer}/api/v1/datasets/${this.path}/tags/industry?current_user=${this.userName}`, industryOptions)
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/datasets/${this.path}/tags/industry`, industryOptions)
       if (!response.ok) {
         response.json().then((err) => {
           ElMessage({ message: err.message, type: "warning" })

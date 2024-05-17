@@ -100,7 +100,6 @@
         <model-settings
           v-if="repoType === 'model'"
           :path="repoDetail.path"
-          :user-name="userName"
           :model-nickname="repoDetail.nickname"
           :model-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
@@ -109,7 +108,6 @@
         <dataset-settings
           v-if="repoType === 'dataset'"
           :path="repoDetail.path"
-          :user-name="userName"
           :dataset-nickname="repoDetail.nickname"
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"

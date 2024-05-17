@@ -232,7 +232,6 @@ export default {
     path: String,
     modelNickname: String,
     modelDesc: String,
-    userName: String,
     default_branch: String,
     tagList: Object,
     tags: Object
@@ -469,7 +468,7 @@ export default {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(tags)
       }
-      const response = await jwtFetch(`${this.csghubServer}/api/v1/models/${this.path}/tags/industry?current_user=${this.userName}`, industryOptions)
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/models/${this.path}/tags/industry`, industryOptions)
       if (!response.ok) {
         response.json().then((err) => {
           ElMessage({ message: err.message, type: "warning" })
