@@ -45,7 +45,6 @@ class AdminPhotoDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     title
     url
-    user
   ].freeze
 
   # COLLECTION_FILTERS
