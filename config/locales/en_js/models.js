@@ -10,6 +10,7 @@ export const models = {
   modelNickName: "Model alias",
   modelDesc: "Model Profile",
   modelTag: "Model Tags",
+  modelIndustryTag: "Industry tags",
   tips:" Creating and Uploading Model Files",
   newModel: {
     title: "Create a new model repository",
