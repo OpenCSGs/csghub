@@ -134,6 +134,11 @@ Rails.application.routes.draw do
     resources :discussions, only: [:create, :index, :update]
     resources :upload, only: [:create]
     resources :daily_papers, only: [:create]
+    resources :system_config, only: [] do
+      collection do
+        get 'latest-news', to: 'system_config#latest_news'
+      end
+    end
   end
 
   # lead form
