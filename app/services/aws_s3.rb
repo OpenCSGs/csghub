@@ -21,6 +21,8 @@ class AwsS3
                    "comment/#{random_file_name}"
                  when 'application-space-cover-image'
                    "space/#{random_file_name}"
+                 when 'admin-photo'
+                   "admin-photo/#{random_file_name}"
                  else
                    random_file_name
                  end

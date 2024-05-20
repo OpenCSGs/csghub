@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
     resources :daily_papers, except: [:new, :create]
+    resources :admin_photos
 
     root to: "spaces#index"
   end
