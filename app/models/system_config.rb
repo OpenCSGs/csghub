@@ -46,4 +46,8 @@ class SystemConfig < ApplicationRecord
   def internal_mail_group=(value)
     self[:internal_mail_group] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def latest_news=(value)
+    self[:latest_news] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end

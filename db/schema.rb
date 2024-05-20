@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_16_083355) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_19_150557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -329,6 +329,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_083355) do
     t.jsonb "ignore_model_tags", default: {}
     t.jsonb "ignore_dataset_tags", default: {}
     t.jsonb "internal_mail_group", default: {}
+    t.jsonb "latest_news", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
