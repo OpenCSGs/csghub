@@ -48,7 +48,7 @@
           </div>
           <VideoDialog ref="videoDialogRef" :videoSrc="videoSrc" />
         </div>
-        <SvgIcon name="cloud_guide" />
+        <SvgIcon class="absolute top-[30%] right-0 w-[20%] lg:hidden" name="cloud_guide" />
       </div>
     </div>
   </div>
