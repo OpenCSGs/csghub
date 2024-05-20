@@ -38,7 +38,10 @@
           </a>
         </div>
       </div>
-      <a href="https://blog.opencsg.com/" class="inline md:block px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer">
+      <a href="https://blog.opencsg.com/"
+         target="_blank"
+         class="inline md:block px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer"
+      >
         {{ $t('landingPage.blog.view_more') }}
       </a>
     </div>
