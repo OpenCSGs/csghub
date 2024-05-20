@@ -51,5 +51,23 @@ export const landingPage = {
     "content4-1": "Release an open source framework llm-inference, for efficient deployment of LLM inference services",
     "content4-2": "Release open source large code model, opencsg-starcoder and opencsg-codellama",
     "content5": "Release an open source framework llm-finetune, for LLM training and finetuning",
+  },
+  feature: {
+    subtitle: 'Our Values',
+    title: 'Why Choose OpenCSG',
+    desc: 'Our shared values serve as the bond that unites us, guiding us as a team as we move forward together.',
+    item_1_title: 'Integration',
+    item_1_desc: 'By leveraging natural language for integrating and utilizing hybrid cloud resources, natural language processing technology can streamline workflows, reduce IT infrastructure costs, and enhance collaboration efficiency among teams.',
+    item_2_title: 'Governance',
+    item_2_desc: 'Making Large Language Models more user-friendly, customizing solutions for vertical industries, enabling every company and individual to have their own LLMs',
+    item_3_title: 'Empowerment',
+    item_3_desc: 'Harnessing the full potential of LLMs through natural language, fundamentally transforming the approach to software development, empowering individuals to design, create, implement, and swiftly integrate software products into existing systems."'
+  },
+  blog: {
+    subtitle: 'Corporate Blog',
+    title: 'Latest News',
+    desc: 'Get the Latest Updates from OpenCSG',
+    load_more: 'Load More',
+    view_more: 'Learn more'
   }
 }

@@ -50,5 +50,23 @@ export const landingPage = {
     "content4-1": "OpenCSG 推出高效部署LLM推理服务的开源框架 llm-inference",
     "content4-2": "OpenCSG 推出开源代码大模型 opencsg-starcoder, opencsg-codellama",
     "content5": "OpenCSG 推出用于 LLM 训练及微调的开源框架 llm-finetune",
+  },
+  feature: {
+    subtitle: '我们的价值',
+    title: '为什么选择 OpenCSG',
+    desc: '我们的共同价值观是我们团结的纽带，引领我们作为一个团队共同前进。',
+    item_1_title: '整合',
+    item_1_desc: '通过运用自然语言实现混合云资源的整合利用，自然语言处理技术能够简化工作流程，降低IT基础设施成本同时提高团队之间的协作效率',
+    item_2_title: '治理',
+    item_2_desc: '使大模型更易于使用，为垂直行业定制解决方案，使得每个公司及个人都能够拥有自己的大模型',
+    item_3_title: '赋能',
+    item_3_desc: '通过利用自然语言发挥大模型的潜力从而彻底改变软件开发的方式，赋能每个人设计、创建、实施、并快速集成软件产品到现有系统'
+  },
+  blog: {
+    subtitle: '公司博客',
+    title: '开放传神最新动态',
+    desc: '获取开放传神公司最新动态',
+    load_more: '加载更多',
+    view_more: '了解更多'
   }
 }
