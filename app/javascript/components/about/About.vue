@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <Hero />
-    <Feature />
-    <LatestNews />
-    <JoinUs />
-    <Company />
-  </div>
+  <Hero />
+  <Feature />
+  <LatestNews />
+  <JoinUs />
+  <Company />
 </template>
 
 <script setup>
