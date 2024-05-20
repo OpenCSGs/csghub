@@ -27,10 +27,7 @@ import SvgIcon from '../shared/SvgIcon.vue';
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionName') }}</p>
-          <el-input v-model="modelName" :placeholder="$t('rule.nameRule')" style="width: 312px">
-            <template #prefix>     
-              <InputTip :content="$t('collections.newCollection.tip')" />
-            </template>
+          <el-input v-model="collectionName" :placeholder="$t('rule.collectionNameRule')" style="width: 312px">
             <template #suffix>            
               <InputTip :content="$t('collections.newCollection.tip')" />
             </template>
@@ -40,18 +37,21 @@ import SvgIcon from '../shared/SvgIcon.vue';
 
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionName') }}</p>
-          <el-input v-model="modelNickName" :placeholder="$t('all.inputNickNamePlc')" style="width: 312px"/>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionNickName') }}</p>
+          <el-input v-model="collectionNickName" :placeholder="$t('all.inputNickNamePlc')" style="width: 312px"/>
         </div>
         <div class="">
           <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.selectTheme') }}</p>
-          <el-select v-model="license" :placeholder="$t('all.select')" style="width: 312px">
+          <el-select v-model="colorName" :placeholder="$t('all.select')" style="width: 312px">
             <el-option
-              v-for="item in licenses"
+              v-for="item in colorNameList"
               :key="item[0]"
               :label="item[1]"
               :value="item[0]"
             />
+            <template #prefix>     
+              <SvgIcon name="blue" />
+            </template>
           </el-select>
         </div>
       </div>
@@ -59,7 +59,7 @@ import SvgIcon from '../shared/SvgIcon.vue';
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionDesc') }}</p>
-          <el-input v-model="modelDesc"
+          <el-input v-model="collectionDesc"
                     :rows="6"
                     type="textarea"
                     :placeholder="this.$t('all.inputDescPlc')" />
@@ -82,8 +82,8 @@ import SvgIcon from '../shared/SvgIcon.vue';
       <div class="flex justify-end">
         <button
           class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
-          @click="createModel"
-          :disabled="!canCreateModel || hasCreateModel"
+          @click="createCollection"
+          :disabled="!canCreateCollection || hasCreateCollection"
         >
           {{ $t('collections.newCollection.createCollection') }}
         </button>
@@ -135,4 +135,27 @@ import SvgIcon from '../shared/SvgIcon.vue';
 
 <script setup>
   import InputTip from '../shared/inputs/InputTip.vue'
+  import { ref, computed, onMounted, inject } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  
+  const props = defineProps({
+    namespaces: Array,
+  })
+
+  const { t } = useI18n();
+  const nameRule = inject('nameRule')
+
+  const owner = ref(props.namespaces[0][0])
+  const collectionName = ref('')
+  const collectionNickName = ref('')
+  const collectionDesc = ref('')
+  const visibility = ref('private')
+  const hasCreateCollection = ref(false)
+  const colorNameList = ref([
+    ["blue", "蓝色"],
+    ["red", "红色"]
+  ])
+  const colorName = ref(colorNameList.value[0][0])
+
+  const canCreateCollection = computed(() => { return nameRule.test(collectionName.value) })
 </script>
