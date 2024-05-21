@@ -15,14 +15,14 @@
             @click="openDialog"
             class="cursor-pointer py-[12px] px-[18px] flex text-[14px] leading-[20px] text-[#344054] gap-[6px] border border-[#D0D5DD] rounded-[8px]"
           >
-            <SvgIcon name="cloud_video" />
+            <SvgIcon name="starcloud_video" />
             {{ $t("product.starCloud.demoVideo") }}
           </div>
           <VideoDialog ref="videoDialogRef" :videoSrc="videoSrc" />
         </div>
         <SvgIcon
           class="absolute top-[30%] right-0 w-[20%] lg:hidden"
-          name="cloud_guide"
+          name="starcloud_demo"
         />
       </div>
     </div>
@@ -39,7 +39,7 @@
             <div
               class="px-[12px] py-[12px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]"
             >
-              <SvgIcon name="cloud_info_icon1" />
+              <SvgIcon name="starcloud_intro_model" />
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
@@ -54,7 +54,7 @@
             <div
               class="px-[12px] py-[12px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]"
             >
-              <SvgIcon name="cloud_info_icon2" />
+              <SvgIcon name="starcloud_intro_process" />
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
@@ -69,7 +69,7 @@
             <div
               class="px-[12px] py-[12px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]"
             >
-              <SvgIcon name="cloud_info_icon3" />
+              <SvgIcon name="starcloud_intro_running" />
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
@@ -84,7 +84,7 @@
             <div
               class="px-[12px] py-[12px] rounded-[40px] bg-[#ACBDFF] border-[8px] border-[#CED8FF]"
             >
-              <SvgIcon name="cloud_info_icon4" />
+              <SvgIcon name="starcloud_intro_safety" />
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
