@@ -35,65 +35,65 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
-import { format } from "timeago.js";
-import { UserFilled } from "@element-plus/icons-vue";
-import jwtFetch from "../../packs/jwtFetch";
-import { copyToClipboard } from "../../packs/clipboard";
-import { ElMessage } from "element-plus";
-import { parse, html } from "diff2html";
-import MarkdownViewer from "./viewers/MarkdownViewer.vue";
-import "../../styles/codediff.css";
+  import { ref, onMounted } from "vue";
+  import { useI18n } from "vue-i18n";
+  import { format } from "timeago.js";
+  import { UserFilled } from "@element-plus/icons-vue";
+  import jwtFetch from "../../packs/jwtFetch";
+  import { copyToClipboard } from "../../packs/clipboard";
+  import { ElMessage } from "element-plus";
+  import { parse, html } from "diff2html";
+  import MarkdownViewer from "./viewers/MarkdownViewer.vue";
+  import "../../styles/codediff.css";
 
-const { t } = useI18n();
-const commit = ref({});
-const diffContent = ref("");
+  const { t } = useI18n();
+  const commit = ref({});
+  const diffContent = ref("");
 
-const props = defineProps({
-  namespacePath: String,
-  repoType: String,
-  commitId: String
-});
-
-const beiJingTimeParser = (utcTimeStr) => {
-  utcTime = new Date(utcTimeStr);
-  return utcTime.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
-};
-
-const copyCommitId = (commitId) => {
-  copyToClipboard(commitId);
-};
-
-const fetchCommit = async () => {
-  const url = `${CSGHUB_SERVER}/api/v1/${props.repoType}s/${props.namespacePath}/commit/${props.commitId}`;
-  const res = await jwtFetch(url);
-  if (!res.ok) {
-    ElMessage({ message: t("all.fetchError"), type: "warning" });
-  } else {
-    res.json().then(({ data }) => {
-      commit.value = data;
-      diffContent.value = getDiffContent();
-    });
-  }
-};
-
-const getDiffContent = () => {
-  if (!commit.value) return;
-  return html(parse(atob(commit.value.diff)), {
-    drawFileList: true,
-    fileListToggle: false,
-    fileListStartVisible: false,
-    fileContentToggle: false,
-    matching: "lines",
-    outputFormat: "side-by-side",
-    synchronisedScroll: true,
-    highlight: true,
-    renderNothingWhenEmpty: false
+  const props = defineProps({
+    namespacePath: String,
+    repoType: String,
+    commitId: String
   });
-};
 
-onMounted(() => {
-  fetchCommit();
-});
+  const beiJingTimeParser = (utcTimeStr) => {
+    utcTime = new Date(utcTimeStr);
+    return utcTime.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
+  };
+
+  const copyCommitId = (commitId) => {
+    copyToClipboard(commitId);
+  };
+
+  const fetchCommit = async () => {
+    const url = `${CSGHUB_SERVER}/api/v1/${props.repoType}s/${props.namespacePath}/commit/${props.commitId}`;
+    const res = await jwtFetch(url);
+    if (!res.ok) {
+      ElMessage({ message: t("all.fetchError"), type: "warning" });
+    } else {
+      res.json().then(({ data }) => {
+        commit.value = data;
+        diffContent.value = getDiffContent();
+      });
+    }
+  };
+
+  const getDiffContent = () => {
+    if (!commit.value) return;
+    return html(parse(atob(commit.value.diff)), {
+      drawFileList: true,
+      fileListToggle: false,
+      fileListStartVisible: false,
+      fileContentToggle: false,
+      matching: "lines",
+      outputFormat: "side-by-side",
+      synchronisedScroll: true,
+      highlight: true,
+      renderNothingWhenEmpty: false
+    });
+  };
+
+  onMounted(() => {
+    fetchCommit();
+  });
 </script>
