@@ -44,6 +44,7 @@ import { copyToClipboard } from "../../packs/clipboard";
 import { ElMessage } from "element-plus";
 import { parse, html } from "diff2html";
 import MarkdownViewer from "./viewers/MarkdownViewer.vue";
+import "../../styles/codediff.css";
 
 const { t } = useI18n();
 const commit = ref({});

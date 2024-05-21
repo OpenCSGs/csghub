@@ -12,6 +12,5 @@
  *
  *= require actiontext
  *= require markdown
- *= require codediff
  *= require_self
  */

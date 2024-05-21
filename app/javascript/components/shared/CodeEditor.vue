@@ -25,6 +25,7 @@ import MarkdownViewer from './viewers/MarkdownViewer.vue'
 import { Codemirror } from 'vue-codemirror'
 import { createPatch } from 'diff'
 import { parse, html } from 'diff2html'
+import "../../styles/codediff.css"
 
 const props = defineProps({
   originalCodeContent: String,
