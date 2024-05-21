@@ -8,7 +8,7 @@ export const profile = {
     profile: "Profile",
     accountInformation: "Account Information",
     accessToken: "Access Token",
-    gitToken: "Git Token",
+    gitToken: "Access Token",
     sshKey: "SSH Keys",
     billing: "Billing",
   },

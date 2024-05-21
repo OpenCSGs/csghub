@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     resources :settings, only: [] do
       collection do
         get 'profile'
-        get 'git-token'
+        get 'access-token'
         get 'ssh-keys'
         get 'locale'
       end

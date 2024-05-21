@@ -14,7 +14,7 @@
           <p class="text-[#606266] text-[14px]">{{ $t('gitToken.desc') }}</p>
         </div>
         <div class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
-          <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">git token</h3>
+          <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">access token</h3>
           <div class="flex items-center">
             <el-input
                 v-model="theGitToken"

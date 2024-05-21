@@ -1,9 +1,10 @@
 export const gitToken = {
-  title: "User Git Token",
-  desc: "Git Token is used to authorize you to perform Git-related operations",
-  refresh: "Refresh Git Token",
+  title: "User Access Token",
+  desc: "Access Token is used to authorize you to perform Git-related operations",
+  refresh: "Refresh Access Token",
   refreshWarning:
-    "After refreshing, the existing Git Token will become invalid. Are you sure you want to continue?",
+    "After refreshing, the existing Access Token will become invalid. Are you sure you want to continue?",
   confirm: "Continue",
   cancelInfo: "Operation cancelled",
+  success: "Successfully refreshed Access Token"
 }
