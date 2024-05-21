@@ -50,4 +50,8 @@ class SystemConfig < ApplicationRecord
   def latest_news=(value)
     self[:latest_news] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def computing_partners=(value)
+    self[:computing_partners] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end

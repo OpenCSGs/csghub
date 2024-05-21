@@ -23,6 +23,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     ignore_dataset_tags: Field::JSONB,
     internal_mail_group: Field::JSONB,
     latest_news: Field::JSONB,
+    computing_partners: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -56,6 +57,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     ignore_dataset_tags
     internal_mail_group
     latest_news
+    computing_partners
     created_at
     updated_at
   ].freeze
@@ -78,6 +80,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     ignore_dataset_tags
     internal_mail_group
     latest_news
+    computing_partners
   ].freeze
 
   # COLLECTION_FILTERS

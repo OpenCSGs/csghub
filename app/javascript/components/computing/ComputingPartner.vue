@@ -9,7 +9,7 @@
       <div v-for="partner in partners"
            class="group flex flex-col gap-[8px] items-center justify-center hover:bg-[#F9FAFB] px-[36px] py-[24px]"
       >
-        <img :src="`/images/${partner.logo}`"
+        <img :src="partner.logo"
              :alt="partner.name"
              class="w-auto h-[44px]" />
         <p class="group-hover:opacity-100 text-[#344054] text-[16px] leading-[24px] opacity-0">{{ partner.level }}</p>
