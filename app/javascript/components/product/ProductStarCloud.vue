@@ -20,10 +20,7 @@
           </div>
           <VideoDialog ref="videoDialogRef" :videoSrc="videoSrc" />
         </div>
-        <SvgIcon
-          class="absolute top-[30%] right-0 w-[20%] lg:hidden"
-          name="starcloud_demo"
-        />
+        <SvgIcon class="absolute top-[30%] right-0 w-[20%] lg:hidden" name="starcloud_demo" />
       </div>
     </div>
   </div>
@@ -115,8 +112,7 @@ export default {
   props: {},
   data() {
     return {
-      videoSrc:
-        "https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starcloud.mp4",
+      videoSrc: "https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starcloud.mp4",
     };
   },
 
@@ -126,9 +122,6 @@ export default {
   computed: {},
   mounted() {},
   methods: {
-    goDemo() {
-      window.open("https://starcloud-stg.opencsg.com/ ", "_blank");
-    },
     openDialog() {
       this.$refs.videoDialogRef.openDialog();
     },
