@@ -28,6 +28,11 @@
       <SvgIcon name="language_tag" />
       {{ tag.zh_name || tag.name }}
     </a>
+    <!-- industryTags -->
+    <div v-if="industryTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
+    <div v-for="tag in industryTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
+      {{ tag.zh_name || tag.name }}
+    </div>
     <!-- Other -->
     <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
     <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
@@ -62,6 +67,7 @@
     frameworkTags: Array,
     languageTags: Array,
     licenseTags: Array,
+    industryTags: Array,
     otherTags: Array,
     prefix: {
       type: String,

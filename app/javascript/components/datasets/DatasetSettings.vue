@@ -122,7 +122,7 @@
           <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
             <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
               <span v-for="tag in selectedIndustryTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
-                {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
+                {{ this.$i18n.locale === 'zh'? (tag.show_name || tag.name) : tag.name }}
                 <el-icon><Close @click="removeIndustryTag(tag.name)" /></el-icon>
               </span>
             </div>
@@ -135,7 +135,7 @@
                 @click="selectIndustryTag(tag)"
                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
             >
-              {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name}}
+              {{ this.$i18n.locale === 'zh'? (tag.show_name || tag.name) : tag.name}}
             </p>
           </div>
           <el-button @click="updateIndustryTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
@@ -313,6 +313,7 @@ export default {
         ...this.tags.other_tags.map(tag => tag)
       ];
       this.selectedIndustryTags = [
+        ...this.tags.industry_tags.map(tag => tag),
         ...this.tags.other_tags.filter(tag => tag.category === 'industry')
       ]
     },
@@ -347,6 +348,7 @@ export default {
           return tag.name.includes(this.industryTagInput) || tag.show_name.includes(this.industryTagInput)
         })
         if (userTriggerIndustryTagList.length > 0) {
+          console.log(userTriggerIndustryTagList);
           this.theIndustryTagsList = userTriggerIndustryTagList
           this.shouldShowIndustryTagList = true
         }
