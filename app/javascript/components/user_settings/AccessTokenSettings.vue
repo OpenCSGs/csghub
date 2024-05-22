@@ -92,7 +92,7 @@ export default {
     },
 
     async refreshAccessToken() {
-      const refreshTokenEndpoint = "/internal_api/git_token/refresh"
+      const refreshTokenEndpoint = "/internal_api/access_token/refresh"
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
