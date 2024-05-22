@@ -16,5 +16,6 @@
     :can-write="<%= !!current_user&.can_write?(@local_code) %>"
     user-name="<%= current_user&.name %>"
     user-token="<%= current_user&.git_token %>"
+    commit-id="<%= @commit_id %>"
   ></code-detail>
 </div>
