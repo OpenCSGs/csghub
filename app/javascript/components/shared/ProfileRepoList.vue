@@ -102,18 +102,21 @@
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue'
+  import { computed, ref, inject } from 'vue'
   import RepoItem from './RepoItem.vue'
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import ViewMore from './ViewMore.vue'
   import { useI18n } from 'vue-i18n'
+  import jwtFetch from '../../packs/jwtFetch'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     modelList: Object,
     datasetList: Object,
     spaceList: Object,
     codeList: Object,
-    name: String
+    name: String,
+    initiator: String
   })
 
   const { t } = useI18n();
@@ -137,6 +140,7 @@
   const moreSpaces = ref(props.spaceList?.total > 6)
 
   const prefixPath = document.location.pathname.split('/')[1] === 'organizations' ? 'organizations' : 'users'
+  const csghubServer = inject('csghubServer')
 
   const viewMoreTargets = (target) => {
     if (target === 'models') {
@@ -154,32 +158,46 @@
     }
   }
 
+  const reposUrl = (type) => {
+    switch (props.initiator) {
+      case "likes":
+        return `${csghubServer}/api/v1/user/${props.name}/likes/${type}`
+      case "profile":
+      default:
+        return `${csghubServer}/api/v1/user/${props.name}/${type}`
+    }
+  }
+
   const fetchMoreModels = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/models?per=${props.modelList.total}`
-    await fetchData(url, models)
+    const url = reposUrl("models")
+    await fetchData(url, models, props.modelList.total)
     moreModels.value = false
   }
 
   const fetchMoreDatasets = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/datasets?per=${props.datasetList.total}`
-    await fetchData(url, datasets)
+    const url = reposUrl("datasets")
+    await fetchData(url, datasets, props.datasetList.total)
     moreDatasets.value = false
   }
 
   const fetchMoreSpaces = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/spaces?per=${props.spaceList.total}`
-    await fetchData(url, spaces)
+    const url = reposUrl("spaces")
+    await fetchData(url, spaces, props.spaceList.total)
     moreSpaces.value = false
   }
 
   const fetchMoreCodes = async () => {
-    const url = `/internal_api/${prefixPath}/${props.name}/codes?per=${props.codeList.total}`
-    await fetchData(url, codes)
+    const url = reposUrl("codes")
+    await fetchData(url, codes, props.codeList.total)
     moreCodes.value = false
   }
 
-  const fetchData = async (url, targetRef) => {
-    fetch(url).then((response) => {
+  const fetchData = async (url, targetRef, total) => {
+    const params = new URLSearchParams();
+    params.append('per', total);
+    params.append('page', 1);
+
+    jwtFetch(`${url}?${params}`).then((response) => {
       if (!response.ok) {
         ElMessage({
           message: t('all.loadError'),

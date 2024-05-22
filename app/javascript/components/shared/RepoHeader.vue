@@ -72,10 +72,10 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { computed, onMounted } from 'vue'
+  import { computed, onMounted, ref, inject } from 'vue'
   import useWxShare from '../hooks/useWxShare'
-  import { ref } from 'vue'
-  import csrfFetch from "../../packs/csrfFetch"
+  import jwtFetch from '../../packs/jwtFetch'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     avatar: String,
@@ -119,6 +119,7 @@
 
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
+  const csghubServer = inject('csghubServer')
 
   const copyName = () => {
     copyToClipboard(props.path)
@@ -144,7 +145,7 @@
 
   const addLike = async () => {
     const options = { method: 'PUT' }
-    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`, options)
     if (!response.ok) {
       response.json().then((data) => {
         ElMessage({
@@ -160,7 +161,7 @@
 
   const removeLike = async () => {
     const options = { method: 'DELETE' }
-    const response = await csrfFetch(`/internal_api/users/likes/${props.repoId}`, options)
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`, options)
     if (!response.ok) {
       response.json().then((data) => {
         ElMessage({
