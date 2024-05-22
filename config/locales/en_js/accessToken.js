@@ -1,4 +1,4 @@
-export const gitToken = {
+export const accessToken = {
   title: "User Access Token",
   desc: "Access Token is used to authorize you to perform Git-related operations",
   refresh: "Refresh Access Token",
