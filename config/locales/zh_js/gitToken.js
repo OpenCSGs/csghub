@@ -4,6 +4,5 @@ export const gitToken = {
   refresh: "刷新 Access Token",
   refreshWarning: "刷新之后现有的 Access Token 将会失效，确认继续吗?",
   confirm: "继续刷新",
-  cancelInfo: "操作已取消",
-  success: "刷新 Access Token 成功"
+  cancelInfo: "操作已取消"
 }

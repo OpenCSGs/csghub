@@ -5,6 +5,5 @@ export const gitToken = {
   refreshWarning:
     "After refreshing, the existing Access Token will become invalid. Are you sure you want to continue?",
   confirm: "Continue",
-  cancelInfo: "Operation cancelled",
-  success: "Successfully refreshed Access Token"
+  cancelInfo: "Operation cancelled"
 }
