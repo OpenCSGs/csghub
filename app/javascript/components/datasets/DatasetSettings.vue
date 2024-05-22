@@ -348,7 +348,6 @@ export default {
           return tag.name.includes(this.industryTagInput) || tag.show_name.includes(this.industryTagInput)
         })
         if (userTriggerIndustryTagList.length > 0) {
-          console.log(userTriggerIndustryTagList);
           this.theIndustryTagsList = userTriggerIndustryTagList
           this.shouldShowIndustryTagList = true
         }
