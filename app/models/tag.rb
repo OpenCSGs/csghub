@@ -1,10 +1,10 @@
 class Tag < ApplicationRecord
   validates_presence_of :tag_origin, :tag_type, :name
   validates_uniqueness_of :name, scope: [:scope, :tag_field]
-  validates_length_of :name, maximum: 30
+  validates_length_of :name, maximum: 100
 
   enum :tag_origin, user_created: 'user_created', system: 'system'
-  enum :tag_type, task: 'task', framework: 'framework', language: 'language', license: 'license'
+  enum :tag_type, task: 'task', framework: 'framework', language: 'language', license: 'license', industry: 'industry'
   enum :tag_field,
        computer_vision: 'computer_vision',
        natural_language_processing: 'natural_language_processing',
