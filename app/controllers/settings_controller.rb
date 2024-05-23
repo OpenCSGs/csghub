@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
   def profile
   end
 
-  def git_token
+  def access_token
   end
 
   def ssh_keys
