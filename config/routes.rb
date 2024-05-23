@@ -31,9 +31,9 @@ Rails.application.routes.draw do
     end
     resources :comments, only: [:create, :destroy, :index]
     resources :ssh_keys, only: [:create, :destroy]
-    resources :git_token, only: [] do
+    resources :access_token, only: [] do
       collection do
-        post 'refresh', to: 'git-tokens/refresh'
+        post 'refresh', to: 'access-tokens/refresh'
       end
     end
     resources :users, only: [:index, :update] do
@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     resources :settings, only: [] do
       collection do
         get 'profile'
-        get 'git-token'
+        get 'access-token'
         get 'ssh-keys'
         get 'locale'
       end
