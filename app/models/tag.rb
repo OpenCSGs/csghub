@@ -82,7 +82,7 @@ class Tag < ApplicationRecord
             local_tag = Tag.find_by(tag_type: 'task', tag_field: tag['group'], name: tag['name'], scope: scope)
             if local_tag
               color = Tag::TAG_FIELD_COLOR_MAPPINGS[tag['group']][:color]
-              task_tags << tag.merge('color' => color, 'zh_name' => I18n.locale == :en ? local_tag.name : local_tag.zh_name)
+              task_tags << tag.merge('color' => color, 'zh_name' => local_tag.zh_name)
             else
               other_tags << tag
             end
@@ -98,7 +98,7 @@ class Tag < ApplicationRecord
           when 'language'
             local_tag = Tag.find_by(tag_type: 'language', label: tag["name"])
             if local_tag
-              language_tags << tag.merge("name" => local_tag.name, "zh_name" => I18n.locale == :en ? local_tag.name : local_tag.zh_name, "label" => local_tag.label)
+              language_tags << tag.merge("name" => local_tag.name, "zh_name" => local_tag.zh_name, "label" => local_tag.label)
             else
               other_tags << tag
             end

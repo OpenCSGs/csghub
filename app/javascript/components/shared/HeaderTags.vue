@@ -26,7 +26,7 @@
        class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
     >
       <SvgIcon name="language_tag" />
-      {{ tag.zh_name || tag.name }}
+      {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
     </a>
     <!-- industryTags -->
     <div v-if="industryTags.length" class="text-sm text-[#909399]">{{ $t('all.industry') }}:</div>
