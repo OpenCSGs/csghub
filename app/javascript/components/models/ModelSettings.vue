@@ -311,8 +311,7 @@ export default {
         ...this.tags.other_tags.map(tag => tag)
       ];
       this.selectedIndustryTags = [
-        ...this.tags.industry_tags.map(tag => tag),
-        ...this.tags.other_tags.filter(tag => tag.category === 'industry')
+        ...this.tags.industry_tags.map(tag => tag)
       ]
     },
     clickDelete() {
