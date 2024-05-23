@@ -105,7 +105,7 @@ class Tag < ApplicationRecord
           when 'industry'
             local_tag = Tag.find_by(tag_type: 'industry', name: tag['name'])
             if local_tag
-              industry_tags << tag.merge("name" => local_tag.name, "zh_name" => I18n.locale == :en ? local_tag.name : local_tag.zh_name)
+              industry_tags << tag.merge("name" => local_tag.name, "zh_name" => local_tag.zh_name)
             else
               other_tags << tag
             end

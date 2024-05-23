@@ -430,7 +430,7 @@ export default {
     },
 
     updateIndustryTags(){
-      if(this.selectedIndustryTags !==0){
+      if(this.selectedIndustryTags.length !==0){
         const newSelectedIndustryTags = this.selectedIndustryTags.map(tag => tag.name)
         this.updateIndustryTagsAPI(newSelectedIndustryTags)
       } else {
