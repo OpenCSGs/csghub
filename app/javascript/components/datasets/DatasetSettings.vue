@@ -135,7 +135,7 @@
                 @click="selectIndustryTag(tag)"
                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
             >
-              {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name}}
+              {{ this.$i18n.locale === 'zh'? (tag.show_name || tag.name) : tag.name}}
             </p>
           </div>
           <el-button @click="updateIndustryTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
