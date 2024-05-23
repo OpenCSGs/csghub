@@ -29,7 +29,7 @@
       {{ tag.zh_name || tag.name }}
     </a>
     <!-- industryTags -->
-    <div v-if="industryTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
+    <div v-if="industryTags.length" class="text-sm text-[#909399]">{{ $t('all.industry') }}:</div>
     <div v-for="tag in industryTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
       {{ tag.zh_name || tag.name }}
     </div>
