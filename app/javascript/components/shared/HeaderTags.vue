@@ -31,7 +31,7 @@
     <!-- industryTags -->
     <div v-if="industryTags.length" class="text-sm text-[#909399]">{{ $t('all.industry') }}:</div>
     <div v-for="tag in industryTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
-      {{ tag.zh_name || tag.name }}
+      {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
     </div>
     <!-- Other -->
     <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
