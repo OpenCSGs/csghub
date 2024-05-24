@@ -13,7 +13,7 @@ export const footer = {
   "pr": "Media Collaboration",
   "ir": "Investment Relationship",
   "cookies": "Cookies Policy",
-  "publish": "©Copyright 2023 OpenCSG.com",
+  "publish": "©Copyright 2024 OpenCSG.com",
   "ICP": "Beijing ICPB 2023006263-1",
   "wx": "WeChat Official Account",
   "follow":"Follow OpenCSG",
