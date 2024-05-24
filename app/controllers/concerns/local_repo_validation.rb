@@ -16,13 +16,15 @@ module LocalRepoValidation
     type = controller_name
     local_repo = get_local_repo(type)
 
-    if local_repo
-      if local_repo.send("#{type.singularize}_private?")
-        if local_repo.owner.instance_of? User
-          return redirect_to errors_unauthorized_path if local_repo.owner != current_user
-        else
-          return redirect_to errors_unauthorized_path unless current_user&.org_role(local_repo.owner)
-        end
+    unless local_repo
+      return redirect_to errors_not_found_path
+    end
+
+    if local_repo.send("#{type.singularize}_private?")
+      if local_repo.owner.instance_of? User
+        return redirect_to errors_unauthorized_path if local_repo.owner != current_user
+      else
+        return redirect_to errors_unauthorized_path unless current_user&.org_role(local_repo.owner)
       end
     end
   end
