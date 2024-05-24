@@ -16,17 +16,35 @@ module LocalRepoValidation
     type = controller_name
     local_repo = get_local_repo(type)
 
-    unless local_repo
-      return redirect_to errors_not_found_path
-    end
-
-    if local_repo.send("#{type.singularize}_private?")
-      if local_repo.owner.instance_of? User
-        return redirect_to errors_unauthorized_path if local_repo.owner != current_user
+    if local_repo
+      if local_repo.send("#{type.singularize}_private?")
+        if local_repo.owner.instance_of? User
+          return redirect_to errors_unauthorized_path if local_repo.owner != current_user
+        else
+          return redirect_to errors_unauthorized_path unless current_user&.org_role(local_repo.owner)
+        end
+      end
+    else
+      server_repo = JSON.parse(get_server_repo(type))
+      if server_repo['msg'] == 'OK'
+        server_repo_info = server_repo['data']
+        repo_visibility = if server_repo_info['private'].to_s == 'true'
+                            'private'
+                          else
+                            'public'
+                          end
+        creator_id = if @owner.class.name == 'User' || current_user.nil?
+                       @owner.id
+                     else
+                       current_user.id
+                     end
+        create_local_repo(type, repo_visibility, creator_id)
       else
-        return redirect_to errors_unauthorized_path unless current_user&.org_role(local_repo.owner)
+        return redirect_to errors_not_found_path
       end
     end
+  rescue StarhubError
+    return redirect_to errors_not_found_path
   end
 
   def get_owner_info
@@ -35,7 +53,7 @@ module LocalRepoValidation
     @avatar_url = @owner.avatar_url
   end
 
- def create_local_repo(type, visibility, creator_id)
+  def create_local_repo(type, visibility, creator_id)
     repo_attributes = {
       owner_id: @owner.id,
       owner_type: @owner.class.name,
