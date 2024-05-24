@@ -89,7 +89,7 @@
 <script setup>
   import dayjs from "dayjs";
   import { ref } from 'vue'
-  import jwtFetch from "../../packs/jwtFetch"
+  import trackPageEvent from "../../packs/trackPageEvent"
   const props = defineProps({
     canCreateDailyPaper: Boolean,
     dailyPapers: String,
@@ -102,34 +102,12 @@
     page: Number(props.page) || 1,
   })
   const handleSearch = () => {
-    loadPage()
+    trackPageEvent({"id": "page_paper","m": "PageClick"})
     window.location.href=`/daily_papers?keywords=${searchForm.value.keywords}&page=${searchForm.value.page}`
   }
   const visitDetail = (uuid) => {
     window.location.href=`/daily_papers/${uuid}`
   };
-  async function loadPage(){
-    const options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:JSON.stringify([{
-            "c_id": "",
-            "c_ip": "",
-            "ext": "",
-            "id": "page_paper",
-            "m": "PageClick",
-            "v": "1"
-          }])
-    }
-    const res = await jwtFetch(`${CSGHUB_SERVER}api/v1/events`, options)
-    if (!res.ok) {
-      console.log('jwt报错：',res)
-    } else {
-      res.json().then((body) => {
-        console.log('jwt成功：',res)
-      })
-    }
-  }
 </script>
 
 <style scoped>

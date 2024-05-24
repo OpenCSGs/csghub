@@ -69,7 +69,7 @@
   import TagSidebar from '../tags/TagSidebar.vue';
   import CsgPagination from './CsgPagination.vue';
   import { useI18n } from 'vue-i18n'
-  import jwtFetch from "../../packs/jwtFetch"
+  import trackPageEvent from "../../packs/trackPageEvent"
 
   const props = defineProps({
     taskTags: String,
@@ -143,30 +143,6 @@
     loadRepos(url)
   }
 
-  async function loadPage(){
-    console.log('props.repoType===',props.repoType)
-    const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify([{
-          "c_id": "",
-          "c_ip": "",
-          "ext": "",
-          "id": `page_${props.repoType}`,
-          "m": "PageClick",
-          "v": "1"
-        }])
-      }
-      const res = await jwtFetch(`${CSGHUB_SERVER}api/v1/events`, options)
-      if (!res.ok) {
-        console.log('jwt报错：',res)
-      } else {
-        res.json().then((body) => {
-          console.log('jwt成功：',res)
-        })
-      }
-  }
-
   async function loadRepos(url) {
     const response = await fetch(url);
 
@@ -182,7 +158,7 @@
         totalRepos.value = data['total']
       })
       if(['model','dataset','code','space'].includes(props.repoType)){
-        loadPage()
+        trackPageEvent({"id": `page_${props.repoType}`,"m": "PageClick"})
       }
       
     }
