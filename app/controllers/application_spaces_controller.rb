@@ -16,6 +16,7 @@ class ApplicationSpacesController < ApplicationController
 
   def new
     @available_namespaces = current_user.available_namespaces
+    @is_admin = current_user.roles.include?(:admin) || current_user.roles.include?(:super_user)
     get_license_list
   end
 

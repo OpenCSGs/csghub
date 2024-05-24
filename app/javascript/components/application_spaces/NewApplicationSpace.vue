@@ -111,6 +111,14 @@
             <p class="font-semibold text-[16px]">Streamlit</p>
           </div>
           <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+               :class="SDK === 'nginx' ? 'border-[#3250BD] text-[#344054]': ''"
+               @click="SDK = 'nginx'">
+            <SvgIcon name="space_nginx" 
+                     width="24"
+                     height="24" />
+            <p class="font-semibold text-[16px]">Nginx</p>
+          </div>
+          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
                :class="SDK === 'docker' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
             <SvgIcon name="space_docker"  />
             <p class="font-semibold text-[16px]">Docker</p>
@@ -179,6 +187,7 @@
   const props = defineProps({
     licenses: Array,
     namespaces: Array,
+    isAdmin: Boolean
   })
 
   const csghubServer = inject('csghubServer')
@@ -206,6 +215,8 @@
       owner.value = result[0]
     }
     fetchSpaceResources()
+    console.log(this.isAdmin);
+    console.log(props.isAdmin);
   })
 
   const canCreateApplicationSpace = computed(() => {
