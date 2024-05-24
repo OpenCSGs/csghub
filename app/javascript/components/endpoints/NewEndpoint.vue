@@ -21,10 +21,11 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t("endpoints.new.modelId") }}</p>
-          <el-input
+          <el-autocomplete
+            clearable
             v-model="modelId"
+            :fetch-suggestions="fetchModels"
             :placeholder="$t('endpoints.new.modelIdTip')"
-            input-style="width: 100%"
           />
         </div>
       </div>
@@ -215,6 +216,20 @@
       res.json().then((body) => {
         endpointFramework.value = body.data[0]?.id || "";
         endpointFrameworks.value = body.data;
+      });
+    }
+  };
+
+  const fetchModels = async (query, cb) => {
+    const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`);
+    if (!res.ok) {
+      ElMessage({ message: t("all.fetchError"), type: "warning" });
+    } else {
+      res.json().then((body) => {
+        const paths = body.data.map((model) => {
+          return { key: model.path, value: model.path };
+        });
+        cb(paths);
       });
     }
   };
