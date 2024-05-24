@@ -163,7 +163,6 @@
   import csrfFetch from "../../packs/csrfFetch.js";
   import jwtFetch from "../../packs/jwtFetch";
   import { useI18n } from "vue-i18n";
-  import { watch } from "vue";
 
   const { t } = useI18n();
   const csghubServer = inject("csghubServer");
@@ -182,7 +181,12 @@
   const maxReplica = ref("5");
 
   const canCreateEndpoint = computed(() => {
-    return nameRule.test(endpointName.value) && modelId.value !== "";
+    const modelIdRegex = /^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+    return (
+      nameRule.test(endpointName.value) &&
+      modelIdRegex.test(modelId.value) &&
+      maxReplica.value >= minReplica.value
+    );
   });
 
   const fetchResources = async () => {
@@ -208,17 +212,20 @@
       method: "GET",
       headers: { "Content-Type": "application/json" }
     };
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`,
-      options
-    );
-    if (!res.ok) {
-      ElMessage({ message: t("all.fetchError"), type: "warning" });
-    } else {
-      res.json().then((body) => {
-        endpointFramework.value = body.data[0]?.id || "";
-        endpointFrameworks.value = body.data;
-      });
+
+    try {
+      const res = await jwtFetch(
+        `${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`,
+        options
+      );
+      if (res.ok) {
+        res.json().then((body) => {
+          endpointFramework.value = body.data[0]?.id || "";
+          endpointFrameworks.value = body.data;
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -228,7 +235,7 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        const paths = body.data.map((model) => {
+        const paths = body.data?.map((model) => {
           return { key: model.path, value: model.path };
         });
         cb(paths);
