@@ -23,8 +23,8 @@
           <div class="w-80 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.power') }}</div>
           <div class="w-24 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.config') }}</div>
           <div class="w-20 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.inventory') }}</div>
-          <div class="w-24 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.service') }}</div>
-          <div class="w-48 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.type') }}</div>
+          <div class="w-28 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.service') }}</div>
+          <div class="w-44 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.type') }}</div>
           <div class="w-40 py-[12px] px-[24px] responsive-div">{{ $t('computing.price.price') }}</div>
         </div>
         <div v-for="specification in specificationsList"
@@ -45,10 +45,10 @@
           <div class="w-20 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.number }}
           </div>
-          <div class="w-24 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+          <div class="w-28 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.status }}
           </div>
-          <div class="w-48 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
+          <div class="w-44 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
             {{ specification.type }}
           </div>
           <div class="w-40 py-[12px] px-[24px] whitespace-pre-wrap responsive-div">
@@ -88,6 +88,17 @@ export default {
           status: this.$t('computing.price.available'),
           type: this.$t('computing.price.physical'),
           price: '218,000/' + this.$t('computing.price.unit')
+        },
+        {
+          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+          brand: this.$t('computing.price.NVIDIA'),
+          specification: 'A100 / 80GB SXM',
+          power: 'FP32 19.2 TFLOPS, FP16 77.97 TFLOPS',
+          config: this.$t('computing.price.8ka'),
+          number: '16',
+          status: this.$t('computing.price.partnerAvailable'),
+          type: this.$t('computing.price.physical'),
+          price: '50,000/' + this.$t('computing.price.unit')+ '/' + this.$t('computing.price.month')
         },
         {
           logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
