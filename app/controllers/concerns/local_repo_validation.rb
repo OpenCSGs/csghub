@@ -54,42 +54,31 @@ module LocalRepoValidation
   end
 
   def create_local_repo(type, visibility, creator_id)
+    repo_attributes = {
+      owner_id: @owner.id,
+      owner_type: @owner.class.name,
+      license: 'apache-2.0',
+      visibility: visibility,
+      creator_id: creator_id,
+      skip_create_callback: true
+    }
+
     case type
     when 'models'
-      @local_model = Model.new(owner_id: @owner.id,
-                               owner_type: @owner.class.name,
-                               name: params['model_name'],
-                               license: 'apache-2.0',
-                               visibility: visibility,
-                               creator_id: creator_id)
-      @local_model.skip_create_callback = true
+      repo_attributes[:name] = params['model_name']
+      @local_model = Model.new(repo_attributes)
       @local_model.save
     when 'datasets'
-      @local_dataset = Dataset.new(owner_id: @owner.id,
-                                   owner_type: @owner.class.name,
-                                   name: params['dataset_name'],
-                                   license: 'apache-2.0',
-                                   visibility: visibility,
-                                   creator_id: creator_id)
-      @local_dataset.skip_create_callback = true
+      repo_attributes[:name] = params['dataset_name']
+      @local_dataset = Dataset.new(repo_attributes)
       @local_dataset.save
     when 'codes'
-      @local_code = Code.new(owner_id: @owner.id,
-                             owner_type: @owner.class.name,
-                             name: params['code_name'],
-                             license: 'apache-2.0',
-                             visibility: visibility,
-                             creator_id: creator_id)
-      @local_code.skip_create_callback = true
+      repo_attributes[:name] = params['code_name']
+      @local_code = Code.new(repo_attributes)
       @local_code.save
     when 'application_spaces'
-      @local_application_space = ApplicationSpace.new(owner_id: @owner.id,
-                                                      owner_type: @owner.class.name,
-                                                      name: params['application_space_name'],
-                                                      license: 'apache-2.0',
-                                                      visibility: visibility,
-                                                      creator_id: creator_id)
-      @local_application_space.skip_create_callback = true
+      repo_attributes[:name] = params['application_space_name']
+      @local_application_space = ApplicationSpace.new(repo_attributes)
       @local_application_space.save
     end
   end
