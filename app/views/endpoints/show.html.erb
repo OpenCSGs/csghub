@@ -1,0 +1,16 @@
+<div class="bg-white">
+  <endpoint-detail
+    local-repo-id="<%= @local_endpoint.id %>"
+    :application-space="<%= @endpoint %>"
+    current-path="<%= @current_path || '' %>"
+    default-tab="<%= @default_tab || 'summary' %>"
+    :action-name="'<%= action_name %>'"
+    :settings-visibility="<%= @settings_visibility %>"
+    :owner-url="'<%= @owner_url %>'"
+    avatar="<%= @avatar_url %>"
+    :can-write="<%= !!current_user&.can_write?(@local_endpoint) %>"
+    user-name="<%= current_user&.name %>"
+    user-token="<%= current_user&.git_token %>"
+  >
+  </endpoint-detail>
+</div>
