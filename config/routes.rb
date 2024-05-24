@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :error_logs
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
+    resources :codes, except: [:new, :create]
 
     root to: "users#index"
   end
