@@ -17,6 +17,7 @@ import { widgets } from './zh_js/widgets';
 import { spaces } from './zh_js/spaces';
 import { user_sessions } from './zh_js/user_sessions';
 import { components } from './zh_js/components';
+import { endpoints } from './zh_js/endpoints';
 
 export default {
   all,
@@ -37,5 +38,6 @@ export default {
   sshKey,
   shared,
   repo,
-  components
+  components,
+  endpoints
 };

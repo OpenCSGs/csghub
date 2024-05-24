@@ -7,6 +7,7 @@ module Starhub
     include DatasetApis
     include ApplicationSpaceApis
     include CodeApis
+    include EndpointApis
 
     def initialize user_ip
       @client = Starhub::Client.init_with user_ip

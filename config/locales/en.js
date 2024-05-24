@@ -17,6 +17,7 @@ import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
+import { endpoints } from './en_js/endpoints';
 
 export default {
   all,
@@ -37,5 +38,6 @@ export default {
   sshKey,
   shared,
   repo,
-  components
+  components,
+  endpoints
 };
