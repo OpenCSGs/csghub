@@ -2,7 +2,18 @@ module LocalRepoValidation
   extend ActiveSupport::Concern
 
   included do
-    before_action only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :resolve, :community, :settings, :commits, :commit] do
+    before_action only: [:show,
+                         :files,
+                         :blob,
+                         :new_file,
+                         :upload_file,
+                         :edit_file,
+                         :resolve,
+                         :community,
+                         :settings,
+                         :commits,
+                         :commit,
+                         :logs] do
       local_repo_validation
     end
 
@@ -45,6 +56,8 @@ module LocalRepoValidation
       @local_code = @owner && @owner.codes.find_by(name: params[:code_name])
     when 'application_spaces'
       @local_application_space = @owner && @owner.application_spaces.find_by(name: params[:application_space_name])
+    when 'endpoints'
+      @local_endpoint = @owner && @owner.endpoints.find_by(name: params[:endpoint_name])
     end
   end
 
