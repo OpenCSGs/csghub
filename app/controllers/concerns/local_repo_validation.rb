@@ -27,7 +27,7 @@ module LocalRepoValidation
     else
       server_repo = JSON.parse(get_server_repo(type))
       if server_repo['msg'] == 'OK'
-        server_repo_info = JSON.parse(server_repo)['data']
+        server_repo_info = server_repo['data']
         creator_id = if @owner.class.name == 'User' || current_user.nil?
                        @owner.id
                      else
