@@ -28,12 +28,17 @@ module LocalRepoValidation
       server_repo = JSON.parse(get_server_repo(type))
       if server_repo['msg'] == 'OK'
         server_repo_info = server_repo['data']
+        repo_visibility = if server_repo_info['private'].to_s == 'true'
+                            'private'
+                          else
+                            'public'
+                          end
         creator_id = if @owner.class.name == 'User' || current_user.nil?
                        @owner.id
                      else
                        current_user.id
                      end
-        create_local_repo(type, server_repo_info['private'], creator_id)
+        create_local_repo(type, repo_visibility, creator_id)
       else
         return redirect_to errors_not_found_path
       end
@@ -55,28 +60,28 @@ module LocalRepoValidation
                      owner_type: @owner.class.name,
                      name: params['model_name'],
                      license: 'apache-2.0',
-                     visibility: visibility.to_s,
+                     visibility: visibility,
                      creator_id: creator_id)
     when 'datasets'
       @local_dataset = Dataset.create!(owner_id: @owner.id,
                        owner_type: @owner.class.name,
                        name: params['dataset_name'],
                        license: 'apache-2.0',
-                       visibility: visibility.to_s,
+                       visibility: visibility,
                        creator_id: creator_id)
     when 'codes'
       @local_code = Code.create!(owner_id: @owner.id,
                     owner_type: @owner.class.name,
                     name: params['code_name'],
                     license: 'apache-2.0',
-                    visibility: visibility.to_s,
+                    visibility: visibility,
                     creator_id: creator_id)
     when 'application_spaces'
       @local_application_space = ApplicationSpace.create!(owner_id: @owner.id,
                                  owner_type: @owner.class.name,
                                  name: params['application_space_name'],
                                  license: 'apache-2.0',
-                                 visibility: visibility.to_s,
+                                 visibility: visibility,
                                  creator_id: creator_id)
     end
   end
