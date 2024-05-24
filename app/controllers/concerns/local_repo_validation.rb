@@ -2,18 +2,20 @@ module LocalRepoValidation
   extend ActiveSupport::Concern
 
   included do
-    before_action only: [:show,
-                         :files,
-                         :blob,
-                         :new_file,
-                         :upload_file,
-                         :edit_file,
-                         :resolve,
-                         :community,
-                         :settings,
-                         :commits,
-                         :commit,
-                         :logs] do
+    before_action only: [
+      :show,
+      :files,
+      :blob,
+      :new_file,
+      :upload_file,
+      :edit_file,
+      :resolve,
+      :community,
+      :settings,
+      :commits,
+      :commit,
+      :logs
+    ] do
       local_repo_validation
     end
 
