@@ -362,7 +362,7 @@ export default {
     selectIndustryTag(newTag){
       const findIndustryTag = this.selectedIndustryTags.find(tag => tag.name === newTag.name)
       if (!findIndustryTag) {
-        this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.zh_name})
+        this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.show_name})
       }
     },
 
