@@ -1,17 +1,15 @@
 class Mirror < ApplicationRecord
-  belongs_to :owner, polymorphic: true
-  belongs_to :creator, class_name: 'User', foreign_key: :creator_id
-  belongs_to :model
-  belongs_to :dataset
-  belongs_to :code
-  belongs_to :space
+  belongs_to :user
+  belongs_to :mirrorable, polymorphic: true
 
-  after_create :sync_created_mirror_to_starhub_server
+  validates_presence_of :source_url, :mirror_source_id, :username, :access_token, :mirrorable_type, :mirrorable_id
 
-  validates :name, format: { with: NAME_RULE }
+  enum :mirrorable_type, Model: 'Model', Dataset: 'Dataset', Code: 'Code', Space: 'Space'
 
-  validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }
 
+  # scope :without_lead_form, -> { includes(:mirror).where(mirrors: { id: nil }) }
+
+  # after_create :sync_created_mirror_to_starhub_server
   def path
     "#{owner.name}/#{name}"
   end

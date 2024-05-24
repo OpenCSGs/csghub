@@ -9,9 +9,12 @@ class MirrorDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    repo: Field::Polymorphic,
     source_url: Field::String,
     mirror_source_id: Field::String,
+    username: Field::String,
+    access_token: Field::String,
+    mirrorable_type: Field::Select.with_options(searchable: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
+    mirrorable_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -25,6 +28,10 @@ class MirrorDashboard < Administrate::BaseDashboard
     id
     source_url
     mirror_source_id
+    username
+    access_token
+    mirrorable_type
+    mirrorable_id
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -33,6 +40,10 @@ class MirrorDashboard < Administrate::BaseDashboard
     id
     source_url
     mirror_source_id
+    username
+    access_token
+    mirrorable_type
+    mirrorable_id
     created_at
     updated_at
   ].freeze
@@ -43,6 +54,10 @@ class MirrorDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     source_url
     mirror_source_id
+    username
+    access_token
+    mirrorable_type
+    mirrorable_id
   ].freeze
 
   # COLLECTION_FILTERS

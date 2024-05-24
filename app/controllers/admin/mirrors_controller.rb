@@ -7,7 +7,38 @@ module Admin
     #   super
     #   send_foo_updated_email(requested_resource)
     # end
-
+    def create
+        if mirror_params[:source_url].blank? ||
+          mirror_params[:mirror_source_id].blank? ||
+          mirror_params[:username].blank? ||
+          mirror_params[:access_token].blank? ||
+          mirror_params[:mirrorable_type].blank? ||
+          mirror_params[:mirrorable_id].blank?
+          redirect_to new_admin_mirror_path, alert: "Mirror params cannot be blank."
+          return
+        end
+        mirrorable = mirror_params[:mirrorable_type].classify.constantize.find_by(id: mirror_params[:mirrorable_id])
+        # if !mirrorable
+        #   redirect_to new_admin_mirror_path, alert: "mirrorable not found."
+        #   return
+        # end
+        # if Mirror.find_by(mirrorable_id: mirror_params[:mirrorable_id])
+        #   redirect_to new_admin_mirror_path, alert: "A mirror already exists for the specified mirrorable."
+        #   return
+        # end
+        # mirror = mirrorable.build_mirror(mirror_params)
+        begin
+          mirror = mirrorable.build_mirror(mirror_params)
+          mirror.user = current_user
+          if mirror.save
+            redirect_to admin_mirrors_path, notice: "Mirror was successfully created."
+          else
+            redirect_to new_admin_mirror_path, alert: "Mirror was not created."
+          end
+        rescue Exception => e
+          redirect_to new_admin_mirror_path, alert: e.to_s
+        end
+    end
     # Override this method to specify custom lookup behavior.
     # This will be used to set the resource for the `show`, `edit`, and `update`
     # actions.
@@ -20,9 +51,6 @@ module Admin
 
     # Override this if you have certain roles that require a subset
     # this will be used to set the records shown on the `index` action.
-    def scoped_resource
-      super.order(updated_at: :desc)
-    end
 
     # Override `resource_params` if you want to transform the submitted
     # data before it's persisted. For example, the following would turn all
@@ -37,5 +65,11 @@ module Admin
 
     # See https://administrate-demo.herokuapp.com/customizing_controller_actions
     # for more information
+
+    private
+
+    def mirror_params
+      params.require(:mirror).permit(:source_url, :mirror_source_id, :username, :access_token, :mirrorable_type, :mirrorable_id)
+    end
   end
 end
