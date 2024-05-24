@@ -39,7 +39,7 @@ import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
-import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
+import AccessTokenSettings from "./components/user_settings/AccessTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
@@ -92,7 +92,7 @@ const app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-    GitTokenSettings,
+    AccessTokenSettings,
     SshKeySettings,
     NewOrganization,
     NewModel,

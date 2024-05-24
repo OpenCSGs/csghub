@@ -7,7 +7,7 @@ import { navbar } from './en_js/navbar';
 import { all } from './en_js/all';
 import { community } from './en_js/community';
 import { profile } from './en_js/profile';
-import { gitToken } from './en_js/gitToken';
+import { accessToken } from './en_js/accessToken';
 import { sshKey } from './en_js/sshKey';
 import { shared } from './en_js/shared';
 import { repo } from './en_js/repo';
@@ -45,7 +45,7 @@ export default {
   navbar,
   community,
   profile,
-  gitToken,
+  accessToken,
   sshKey,
   shared,
   repo,
