@@ -10,7 +10,7 @@ class MirrorDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     source_url: Field::String,
-    mirror_source_id: Field::String,
+    mirror_source_id: Field::Number,
     username: Field::String,
     access_token: Field::String,
     mirrorable_type: Field::Select.with_options(searchable: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),

@@ -257,6 +257,15 @@ module Starhub
       res.body
     end
 
+    def create_mirror(repotype, namespace, name, options = {})
+      debugger
+      # options[:source_url] = source_url
+      # options[:mirror_source_id] = mirror_source_id
+      # options[:username] = username
+      # options[:access_token] = access_token
+      @client.post("/#{repotype}s/#{namespace}/#{name}/mirror?current_user=#{namespace}", options)
+    end
+
     # TODO: add more starhub api
 
     private
