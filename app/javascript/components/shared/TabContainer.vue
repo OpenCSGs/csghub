@@ -6,7 +6,8 @@
       >
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="$t('all.files')" name="files">
+      <el-tab-pane v-if="isApplicationSpace ? settingsVisibility : true"
+                   :label="$t('all.files')" name="files">
         <slot name="files"></slot>
       </el-tab-pane>
       <el-tab-pane :label="$t('all.community')" name="community" class="min-h-[300px]">
