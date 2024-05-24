@@ -145,17 +145,17 @@
 
   async function loadPage(){
     console.log('props.repoType===',props.repoType)
-  const options = {
+    const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body:JSON.stringify([{
-    "c_id": "",
-    "c_ip": "",
-    "ext": "",
-    "id": `page_${props.repoType}`,
-    "m": "PageClick",
-    "v": "1"
-  }])
+          "c_id": "",
+          "c_ip": "",
+          "ext": "",
+          "id": `page_${props.repoType}`,
+          "m": "PageClick",
+          "v": "1"
+        }])
       }
       const res = await jwtFetch(`${CSGHUB_SERVER}api/v1/events`, options)
       if (!res.ok) {
