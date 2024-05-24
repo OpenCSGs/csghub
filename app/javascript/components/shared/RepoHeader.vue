@@ -12,14 +12,26 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
-      <div 
+      <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
-      </div>    
+      </div>
+    </div>
+
+    <!-- endpoint -->
+    <div v-else-if="repoType === 'endpoint'"
+         class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
+    >
+      <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
+      <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
+      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">
+        {{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}
+      </div>
+      <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
     </div>
 
     <!-- other repo -->
@@ -29,14 +41,14 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
-      <div 
+      <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
-      </div>      
+      </div>
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
       <p v-if="canWrite" class="cursor-pointer" @click="showSpaceLogs">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="none">
@@ -58,7 +70,7 @@
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{desc}}</div>
   <header-tags
-    :task-tags="tags.task_tags" 
+    :task-tags="tags.task_tags"
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"
     :language-tags="tags.language_tags"
