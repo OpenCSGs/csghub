@@ -33,6 +33,13 @@
                            :canWrite="canWrite"
                            @showSpaceLogs="showSpaceLogs"
         />
+        <EndpointPage v-else-if="repoType === 'endpoint'"
+                      :appEndpoint="appEndpoint"
+                      :modelId="modelId"
+                      :private="private"
+                      :appInstanceNumber="appInstanceNumber"
+                      :hardware="hardware"
+        />
         <repo-summary v-else
                       :repo-type="repoType"
                       :namespace-path="repoDetail.path"
@@ -197,7 +204,11 @@ const props = defineProps({
   sdk: String,
   userName: String,
   userToken: String,
-  commitId: String
+  commitId: String,
+  hardware: String,
+  modelId: String,
+  private: String,
+  appInstanceNumber: String
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);
