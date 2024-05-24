@@ -215,8 +215,6 @@
       owner.value = result[0]
     }
     fetchSpaceResources()
-    console.log(this.isAdmin);
-    console.log(props.isAdmin);
   })
 
   const canCreateApplicationSpace = computed(() => {
