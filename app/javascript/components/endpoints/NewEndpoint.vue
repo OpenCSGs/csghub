@@ -158,19 +158,19 @@
 </style>
 
 <script setup>
-  import { ref, computed, onMounted, inject } from "vue";
+  import { ref, computed, onMounted, inject, watch } from "vue";
   import { ElInput, ElMessage } from "element-plus";
   import csrfFetch from "../../packs/csrfFetch.js";
   import jwtFetch from "../../packs/jwtFetch";
   import { useI18n } from "vue-i18n";
+  import { watch } from "vue";
 
   const { t } = useI18n();
   const csghubServer = inject("csghubServer");
   const nameRule = inject("nameRule");
 
   const endpointName = ref("");
-  const modelId = ref("www2/eee8");
-  const endpointDesc = ref("");
+  const modelId = ref("");
   const visibility = ref("private");
   const hasCreateEndpoint = ref(false);
   const endpointResources = ref([]);
@@ -182,7 +182,7 @@
   const maxReplica = ref("5");
 
   const canCreateEndpoint = computed(() => {
-    return nameRule.test(endpointName.value);
+    return nameRule.test(endpointName.value) && modelId.value !== "";
   });
 
   const fetchResources = async () => {
@@ -202,6 +202,8 @@
   };
 
   const fetchFrameworks = async () => {
+    if (!modelId.value) return;
+
     const options = {
       method: "GET",
       headers: { "Content-Type": "application/json" }
@@ -268,9 +270,13 @@
       return response.json();
     }
   }
+
   const toEndpointDetail = (path) => {
     window.location.pathname = `/endpoints/${path}`;
   };
+
+  watch(modelId, fetchFrameworks);
+
   onMounted(() => {
     fetchResources();
     fetchFrameworks();
