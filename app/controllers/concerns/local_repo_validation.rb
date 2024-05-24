@@ -56,33 +56,41 @@ module LocalRepoValidation
   def create_local_repo(type, visibility, creator_id)
     case type
     when 'models'
-      @local_model = Model.create!(owner_id: @owner.id,
-                     owner_type: @owner.class.name,
-                     name: params['model_name'],
-                     license: 'apache-2.0',
-                     visibility: visibility,
-                     creator_id: creator_id)
+      @local_model = Model.new(owner_id: @owner.id,
+                               owner_type: @owner.class.name,
+                               name: params['model_name'],
+                               license: 'apache-2.0',
+                               visibility: visibility,
+                               creator_id: creator_id)
+      @local_model.skip_create_callback = true
+      @local_model.save
     when 'datasets'
-      @local_dataset = Dataset.create!(owner_id: @owner.id,
-                       owner_type: @owner.class.name,
-                       name: params['dataset_name'],
-                       license: 'apache-2.0',
-                       visibility: visibility,
-                       creator_id: creator_id)
+      @local_dataset = Dataset.new(owner_id: @owner.id,
+                                   owner_type: @owner.class.name,
+                                   name: params['dataset_name'],
+                                   license: 'apache-2.0',
+                                   visibility: visibility,
+                                   creator_id: creator_id)
+      @local_dataset.skip_create_callback = true
+      @local_dataset.save
     when 'codes'
-      @local_code = Code.create!(owner_id: @owner.id,
-                    owner_type: @owner.class.name,
-                    name: params['code_name'],
-                    license: 'apache-2.0',
-                    visibility: visibility,
-                    creator_id: creator_id)
+      @local_code = Code.new(owner_id: @owner.id,
+                             owner_type: @owner.class.name,
+                             name: params['code_name'],
+                             license: 'apache-2.0',
+                             visibility: visibility,
+                             creator_id: creator_id)
+      @local_code.skip_create_callback = true
+      @local_code.save
     when 'application_spaces'
-      @local_application_space = ApplicationSpace.create!(owner_id: @owner.id,
-                                 owner_type: @owner.class.name,
-                                 name: params['application_space_name'],
-                                 license: 'apache-2.0',
-                                 visibility: visibility,
-                                 creator_id: creator_id)
+      @local_application_space = ApplicationSpace.new(owner_id: @owner.id,
+                                                      owner_type: @owner.class.name,
+                                                      name: params['application_space_name'],
+                                                      license: 'apache-2.0',
+                                                      visibility: visibility,
+                                                      creator_id: creator_id)
+      @local_application_space.skip_create_callback = true
+      @local_application_space.save
     end
   end
 
