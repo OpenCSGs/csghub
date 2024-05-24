@@ -1,4 +1,6 @@
 class ApplicationSpace < ApplicationRecord
+  attr_accessor :skip_create_callback
+
   enum :visibility, { application_space_public: 'public', application_space_private: 'private' }, default: :space_private
 
   belongs_to :owner, polymorphic: true
@@ -10,10 +12,10 @@ class ApplicationSpace < ApplicationRecord
   after_save :update_starhub_server_application_space
   before_save :detect_sensitive_content
 
+  skip_callback :create, :after, :sync_created_space_to_starhub_server, if: :skip_create_callback
+
   validates_presence_of :name, :sdk, :cloud_resource
-
   validates :name, format: { with: NAME_RULE }
-
   validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }
 
   def path
