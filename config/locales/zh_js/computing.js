@@ -20,6 +20,7 @@ export const computing = {
     "price": "价格",
     "available": "可供",
     "unavailable": "暂无",
+    "partnerAvailable": "合作伙伴提供",
     "physical": "物理机",
     "cloud": "裸金属/云主机",
     "4ka": "4卡",
