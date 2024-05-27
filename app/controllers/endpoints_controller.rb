@@ -22,7 +22,12 @@ class EndpointsController < ApplicationController
   private
 
   def load_endpoint_detail
-    @endpoint = csghub_api.get_endpoint_detail(params[:namespace], params[:endpoint_name])
+    @endpoint = csghub_api.get_endpoint_detail(params[:namespace],
+                                               params[:model_name],
+                                               params[:endpoint_id],
+                                               {
+                                                 current_user: current_user&.name
+                                               })
     @settings_visibility = current_user ? current_user.can_manage?(@local_endpoint) : false
   end
 end
