@@ -12,12 +12,13 @@ class Mirror < ApplicationRecord
 
   def sync_created_mirror_to_starhub_server
     res = Starhub.api(user.session_ip).create_mirror(mirrorable_type.downcase,
-                                    user.name,
+                                    mirrorable.owner.name,
                                     mirrorable.name,
                                     { source_url: source_url,
-                                    mirror_source_id: mirror_source_id,
-                                    password: access_token,
-                                    username: user.name })
+                                      mirror_source_id: mirror_source_id,
+                                      password: access_token,
+                                      username: username,
+                                      current_user: user.name })
 
     raise StarhubError, res.body unless res.success?
   end

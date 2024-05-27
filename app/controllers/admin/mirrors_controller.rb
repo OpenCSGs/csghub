@@ -7,33 +7,21 @@ module Admin
     #   super
     #   send_foo_updated_email(requested_resource)
     # end
+
     def create
-      if mirror_params[:source_url].blank? ||
-        mirror_params[:mirror_source_id].blank? ||
-        mirror_params[:mirrorable_type].blank? ||
-        mirror_params[:mirrorable_id].blank?
-        return redirect_to new_admin_mirror_path, alert: "Mirror params cannot be blank."
-      end
       mirrorable = mirror_params[:mirrorable_type].classify.constantize.find_by(id: mirror_params[:mirrorable_id])
-      # if !mirrorable
-      #   redirect_to new_admin_mirror_path, alert: "mirrorable not found."
-      #   return
-      # end
-      # if Mirror.find_by(mirrorable_id: mirror_params[:mirrorable_id])
-      #   redirect_to new_admin_mirror_path, alert: "A mirror already exists for the specified mirrorable."
-      #   return
-      # end
-      # mirror = mirrorable.build_mirror(mirror_params)
       mirror = mirrorable.build_mirror(mirror_params)
-      mirror.user = current_user
+      mirror.user = mirrorable.creator
+
       if mirror.save
         redirect_to admin_mirrors_path, notice: "Mirror was successfully created."
       else
         redirect_to new_admin_mirror_path, alert: "Mirror was not created."
       end
       rescue Exception => e
-        redirect_to new_admin_mirror_path, alert: e.to_s
+      redirect_to new_admin_mirror_path, alert: e.to_s
     end
+
     # Override this method to specify custom lookup behavior.
     # This will be used to set the resource for the `show`, `edit`, and `update`
     # actions.
