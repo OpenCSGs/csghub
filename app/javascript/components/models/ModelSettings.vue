@@ -433,7 +433,7 @@ export default {
         const newSelectedIndustryTags = this.selectedIndustryTags.map(tag => tag.name)
         this.updateIndustryTagsAPI(newSelectedIndustryTags)
       } else {
-        ElMessage({ message: this.$t('datasets.edit.needDatasetTag'), type: "warning" })
+        ElMessage({ message: this.$t('models.edit.needModelTag'), type: "warning" })
       }
     },
 
