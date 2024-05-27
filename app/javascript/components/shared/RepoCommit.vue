@@ -94,7 +94,15 @@
   };
 
   const b64ToUtf8 = (str) => {
-    return decodeURIComponent(escape(atob(str)));
+    const binaryString = atob(str);
+    const bytes = new Uint8Array(binaryString.length);
+
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const decoder = new TextDecoder("utf-8");
+    return decoder.decode(bytes);
   };
 
   onMounted(() => {
