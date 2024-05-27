@@ -12,6 +12,7 @@ class InternalApi::DiscussionsController < InternalApi::ApplicationController
     discussionable = find_discussionable
     discussion = discussionable.discussions.build(discussion_params)
     discussion.user = current_user
+
     if discussion.save
       render json: discussion.as_json, status: :created
     else

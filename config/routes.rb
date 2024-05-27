@@ -100,7 +100,6 @@ Rails.application.routes.draw do
     # resources :discussions, only: :create
     resources :discussions, only: [:create, :index, :update]
     resources :upload, only: [:create]
-    resources :mirror, only: [:create]
   end
 
   # application
