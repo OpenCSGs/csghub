@@ -102,8 +102,19 @@
           <p class="font-medium text-[20px] text-[#101828] mb-[8px]">{{ $t('computing.problem.problem') }}</p>
           <p class="font-light text-[18px] text-[#475467] md:mb-[24px]">{{ $t('computing.problem.problem-') }}</p>
         </div>
-        <a href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82" class="flex justify-center items-center bg-[#3250BD] w-[110px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">{{ $t('computing.problem.contact') }}</p></a>
+        <div  @click="toNextPage('https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82','connect_compute')" class="flex justify-center items-center bg-[#3250BD] w-[110px] py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer"><p class="text-[#FFFFFF] font-medium text-[16px]">{{ $t('computing.problem.contact') }}</p></div>
       </div>
     </div>
   </div>
 </template>
+<script>
+import trackPageEvent from "../../packs/trackPageEvent"
+export default {
+  methods:{
+    toNextPage(url,id){
+      trackPageEvent({"id": id,"m": 'Connect'})
+      window.location.href=url
+    }
+  }
+}
+</script>

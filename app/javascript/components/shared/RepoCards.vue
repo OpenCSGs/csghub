@@ -141,6 +141,17 @@
     url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
     loadRepos(url)
+    if(childCurrent){
+      addEvent(`page_${props.repoType}`,'PageClick')
+    }else {
+      addEvent(`filter_${props.repoType}`,'Filter')
+    }
+  }
+
+  function addEvent(id,m){
+    if(['model','dataset','code','space'].includes(props.repoType)){
+      trackPageEvent({"id": id,"m": m})
+    }
   }
 
   async function loadRepos(url) {
@@ -157,9 +168,6 @@
         reposData.value = data[`${props.repoType}s`]
         totalRepos.value = data['total']
       })
-      if(['model','dataset','code','space'].includes(props.repoType)){
-        trackPageEvent({"id": `page_${props.repoType}`,"m": "PageClick"})
-      }
       
     }
   }

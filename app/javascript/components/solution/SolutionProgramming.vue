@@ -4,11 +4,11 @@
       <div class="flex flex-col md:px-[20px] items-center mb-[64px]">
         <div class="text-[36px] leading-[44px] text-[#101828]">{{ $t('solution.programming.headline') }}</div>
         <div class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] font-light">{{ $t('solution.programming.desc') }}</div>
-        <a href="https://portal.opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B" target="_blank"
+        <div @click="toDemoPage"
           class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
         >
           {{ $t("solution.programming.demo") }}
-        </a>
+      </div>
       </div>
       <div class="px-[32px] flex gap-[64px] md:flex-col">
         <div class="flex flex-col gap-[48px]">
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import trackPageEvent from "../../packs/trackPageEvent"
 export default {
   props: {},
 
@@ -67,6 +68,13 @@ export default {
   },
 
   components: {},
+
+  methods: {
+    toDemoPage(){
+      trackPageEvent({"id": 'demo_codegen',"m": 'ProductDemo'})
+      window.open('https://portal.opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B')
+    }
+  },
 
   mounted() {},
 };

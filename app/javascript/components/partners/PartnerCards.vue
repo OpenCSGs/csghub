@@ -8,11 +8,11 @@
         <div class="max-w-[480px] self-stretch text-[#475467] text-[20px] font-light leading-[30px] mt-8 lg:text-[18px] lg:leading-[28px]">
           {{ $t('partner.desc') }}
         </div>
-        <a href="/partners/apply"
-           class="inline-block px-[22px] py-4 mt-12 text-center text-[#FFF] text-[18px] font-medium rounded-[8px] bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] md:w-full md:px-[18px] md:py-[12px] md:mt-8"
+        <div @click="toActionPage"
+           class="cursor-pointer inline-block px-[22px] py-4 mt-12 text-center text-[#FFF] text-[18px] font-medium rounded-[8px] bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] md:w-full md:px-[18px] md:py-[12px] md:mt-8"
         >
           {{ $t('partner.action') }}
-        </a>
+      </div>
       </div>
       <img src="/images/partners/PartnerCards.png" alt="Partners" class="w-[760px] h-auto mr-[-120px] lg:w-[560px] md:hidden"/>
       <img src="/images/partners/PartnerCards-mobile.png" alt="Partners" class="w-full h-auto hidden md:block mt-16"/>
@@ -47,8 +47,17 @@
     </div>
   </div>
 </template>
-<script setup>
-  const props = defineProps({
+<script>
+import trackPageEvent from "../../packs/trackPageEvent"
+export default {
+  props: {
     partners: Array
-  })
+  },
+  methods:{
+    toActionPage(){
+      trackPageEvent({"id": 'connect_partner',"m": 'Connect'})
+      window.location.href='/partners/apply'
+    }
+  } 
+}
 </script>

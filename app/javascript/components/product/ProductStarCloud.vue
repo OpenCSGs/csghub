@@ -108,6 +108,7 @@
 
 <script>
 import VideoDialog from "../dialog/VideoDialog.vue";
+import trackPageEvent from "../../packs/trackPageEvent"
 export default {
   props: {},
   data() {
@@ -123,6 +124,7 @@ export default {
   mounted() {},
   methods: {
     openDialog() {
+      trackPageEvent({"id": 'demo_video_starcloud',"m": 'ProductDemo'})
       this.$refs.videoDialogRef.openDialog();
     },
   },

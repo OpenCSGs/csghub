@@ -76,7 +76,7 @@
                 layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
-                @update:current-page="handleSearch"
+                @update:current-page="handleSearch('PageClick')"
               />
             </div>
           </div>
@@ -101,8 +101,10 @@
     keywords: props.keywords,
     page: Number(props.page) || 1,
   })
-  const handleSearch = () => {
-    trackPageEvent({"id": "page_paper","m": "PageClick"})
+  const handleSearch = (type) => {
+    if(type=='PageClick'){
+      trackPageEvent({"id": "page_paper","m": "PageClick"})
+    }
     window.location.href=`/daily_papers?keywords=${searchForm.value.keywords}&page=${searchForm.value.page}`
   }
   const visitDetail = (uuid) => {

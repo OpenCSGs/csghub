@@ -26,6 +26,7 @@
 </template>
 <script>
 import VideoDialog from "../dialog/VideoDialog.vue"
+import trackPageEvent from "../../packs/trackPageEvent"
 export default {
   props: {},
   data() {
@@ -67,6 +68,7 @@ export default {
       window.open('https://opencsg.com/lead_forms/form/S3s2wpq1pjvT_Starship_Free_Trail', '_blank');
     },
     openDialog() {
+      trackPageEvent({"id": 'demo_video_starship',"m": 'ProductDemo'})
       this.$refs.videoDialogRef.openDialog();
     }
   }
