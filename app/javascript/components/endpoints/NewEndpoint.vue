@@ -164,12 +164,14 @@
   import jwtFetch from "../../packs/jwtFetch";
   import { useI18n } from "vue-i18n";
 
+  const searchParams = new URLSearchParams(window.location.search);
+
   const { t } = useI18n();
   const csghubServer = inject("csghubServer");
   const nameRule = inject("nameRule");
 
   const endpointName = ref("");
-  const modelId = ref("");
+  const modelId = ref(searchParams.get("model_id") || "");
   const visibility = ref("private");
   const hasCreateEndpoint = ref(false);
   const endpointResources = ref([]);

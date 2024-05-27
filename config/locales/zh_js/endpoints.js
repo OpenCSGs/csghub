@@ -17,5 +17,6 @@ export const endpoints = {
     privateDesc: "只有你（个人）或你所在组织的成员可以访问这个实例。",
     createEndpoint: "新建实例",
     createSuccess: "实例创建成功",
+    dedicated: "专属实例"
   }
 }

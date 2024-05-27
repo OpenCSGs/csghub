@@ -6,6 +6,7 @@
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
       :userName="userName"
       :userToken="userToken"
+      :namespacePath="repoDetail.path"
     />
     <tab-container :default-tab="defaultTab"
                    :settingsVisibility="settingsVisibility"

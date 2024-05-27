@@ -17,5 +17,6 @@ export const endpoints = {
     privateDesc: "Only you (personal) or members of your organization can see this endpoint.",
     createEndpoint: "Create Endpoint",
     createSuccess: "Endpoint created successfully",
+    dedicated: "Dedicated endpoint"
   }
 }
