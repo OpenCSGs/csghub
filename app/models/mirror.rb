@@ -6,24 +6,18 @@ class Mirror < ApplicationRecord
 
   enum :mirrorable_type, Model: 'Model', Dataset: 'Dataset', Code: 'Code', Space: 'Space'
 
-
-  # scope :without_lead_form, -> { includes(:mirror).where(mirrors: { id: nil }) }
-
-  # after_create :sync_created_mirror_to_starhub_server
-  def path
-    "#{owner.name}/#{name}"
-  end
+  after_create :sync_created_mirror_to_starhub_server
 
   private
 
   def sync_created_mirror_to_starhub_server
-    res = Starhub.api.create_mirror(mirrorable_type.downcase,
+    res = Starhub.api(user.session_ip).create_mirror(mirrorable_type.downcase,
                                     user.name,
                                     mirrorable.name,
                                     { source_url: source_url,
                                     mirror_source_id: mirror_source_id,
-                                    push_access_token: access_token,
-                                    push_username: user.name })
+                                    password: access_token,
+                                    username: user.name })
 
     raise StarhubError, res.body unless res.success?
   end
