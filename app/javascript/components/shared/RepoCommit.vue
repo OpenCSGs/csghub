@@ -80,7 +80,7 @@
 
   const getDiffContent = () => {
     if (!commit.value) return;
-    return html(parse(atob(commit.value.diff)), {
+    return html(parse(b64ToUtf8(commit.value.diff)), {
       drawFileList: true,
       fileListToggle: false,
       fileListStartVisible: false,
@@ -91,6 +91,10 @@
       highlight: true,
       renderNothingWhenEmpty: false
     });
+  };
+
+  const b64ToUtf8 = (str) => {
+    return decodeURIComponent(escape(atob(str)));
   };
 
   onMounted(() => {
