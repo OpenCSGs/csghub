@@ -110,10 +110,11 @@
             <SvgIcon name="space_streamlit"  />
             <p class="font-semibold text-[16px]">Streamlit</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
-               :class="SDK === 'nginx' ? 'border-[#3250BD] text-[#344054]': ''"
-               v-if="isAdmin"
-               @click="SDK = 'nginx'">
+          <div 
+            v-if="isAdmin"
+            class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+            :class="SDK === 'nginx' ? 'border-[#3250BD] text-[#344054]': ''"
+            @click="SDK = 'nginx'">
             <SvgIcon name="space_nginx" 
                      width="24"
                      height="24" />
