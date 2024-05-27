@@ -10,6 +10,7 @@
     <tab-container :default-tab="defaultTab"
                    :settingsVisibility="settingsVisibility"
                    :repoType="repoType"
+                   :sdk="sdk"
                    @tabChange="tabChange"
     >
       <template #summary>

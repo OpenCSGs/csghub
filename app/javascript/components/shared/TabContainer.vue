@@ -6,7 +6,7 @@
       >
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="isApplicationSpace ? settingsVisibility : true"
+      <el-tab-pane v-if="isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true"
                    :label="$t('all.files')" name="files">
         <slot name="files"></slot>
       </el-tab-pane>
@@ -43,7 +43,8 @@ import { ref, computed } from 'vue'
 const props = defineProps({
   defaultTab: String,
   settingsVisibility: Boolean,
-  repoType: String
+  repoType: String,
+  sdk: String
 })
 
 const isApplicationSpace = computed(() => {
