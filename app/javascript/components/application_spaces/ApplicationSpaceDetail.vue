@@ -41,6 +41,7 @@
       repo-type="space"
       :user-name="userName"
       :user-token="userToken"
+      :commitId="commitId"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       :isAdmin="isAdmin"
     />
@@ -122,7 +123,8 @@
     canWrite: Boolean,
     userName: String,
     userToken: String,
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    commitId: String
   })
 
   const csghubServer = inject('csghubServer')
