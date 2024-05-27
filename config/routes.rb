@@ -89,6 +89,8 @@ Rails.application.routes.draw do
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
+    get '/endpoints/:namespace/(*model_name)/run/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
