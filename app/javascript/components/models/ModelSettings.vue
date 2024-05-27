@@ -135,7 +135,7 @@
                 @click="selectIndustryTag(tag)"
                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
             >
-              {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name}}
+              {{ this.$i18n.locale === 'zh'? (tag.show_name || tag.name) : tag.name}}
             </p>
           </div>
           <el-button @click="updateIndustryTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
@@ -311,7 +311,7 @@ export default {
         ...this.tags.other_tags.map(tag => tag)
       ];
       this.selectedIndustryTags = [
-        ...this.tags.other_tags.filter(tag => tag.category === 'industry')
+        ...this.tags.industry_tags.map(tag => tag)
       ]
     },
     clickDelete() {
@@ -362,7 +362,7 @@ export default {
     selectIndustryTag(newTag){
       const findIndustryTag = this.selectedIndustryTags.find(tag => tag.name === newTag.name)
       if (!findIndustryTag) {
-        this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.zh_name})
+        this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.show_name})
       }
     },
 
@@ -429,7 +429,7 @@ export default {
     },
 
     updateIndustryTags(){
-      if(this.selectedIndustryTags !==0){
+      if(this.selectedIndustryTags.length !==0){
         const newSelectedIndustryTags = this.selectedIndustryTags.map(tag => tag.name)
         this.updateIndustryTagsAPI(newSelectedIndustryTags)
       } else {
