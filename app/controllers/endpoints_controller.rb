@@ -5,6 +5,9 @@ class EndpointsController < ApplicationController
   before_action :authenticate_user
   before_action :load_endpoint_detail
 
+  def new
+  end
+
   def show
     @default_tab = 'summary'
   end

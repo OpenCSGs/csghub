@@ -89,6 +89,8 @@ Rails.application.routes.draw do
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
+    resources :endpoints, only: [:index, :create]
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -118,6 +120,7 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :new]
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
+    resources :endpoints, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
         get 'members'
