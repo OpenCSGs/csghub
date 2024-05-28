@@ -240,7 +240,7 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        endpointResource.value = body.data[0]?.name || "";
+        endpointResource.value = body.data[0]?.resources || "";
         endpointResources.value = body.data;
       });
     }
