@@ -1,4 +1,5 @@
 export const endpoints = {
+  summary: 'Summary',
   new: {
     title: "Create a new endpoint",
     desc: "Deploy your model to an endpoint",

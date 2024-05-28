@@ -39,7 +39,7 @@
                       :appEndpoint="appEndpoint"
                       :modelId="modelId"
                       :private="private"
-                      :appInstanceNumber="appInstanceNumber"
+                      :endpointReplica="endpointReplica"
                       :hardware="hardware"
         />
         <repo-summary v-else

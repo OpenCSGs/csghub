@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" :beforeLeave="handleTabLeave" @tabClick="handleTabClick">
       <!-- repo/endpoint summary -->
       <el-tab-pane
-        :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
+        :label="summaryLabel"
         name="summary"
       >
         <slot name="summary"></slot>
@@ -52,11 +52,24 @@
 
 <script setup>
   import { ref, computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     defaultTab: String,
     settingsVisibility: Boolean,
     repoType: String
+  })
+
+  const summaryLabel = computed(() => {
+    if (props.repoType === 'space') {
+      return t('application_spaces.app')
+    } else if (props.repoType === 'endpoint') {
+      return t('endpoints.summary')
+    } else {
+      return t('all.summary')
+    }
   })
 
   const isApplicationSpace = computed(() => {
