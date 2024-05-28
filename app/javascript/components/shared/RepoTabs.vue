@@ -117,6 +117,16 @@
           :repo-type="repoType"
         />
       </template>
+      <template
+        #logs
+        v-if="repoType === 'endpoint' && actionName === 'logs'"
+      >
+        <EndpointLogs
+          :instances="repoDetail.instances"
+          :modelId="repoDetail.model_id"
+          :deployId="repoDetail.deploy_id"
+        />
+      </template>
       <template #community>
         <community-page :type="repoTypeClass" :localModelId="localRepoId" ></community-page>
       </template>
@@ -185,6 +195,7 @@ import ApplicationPage from '../application_spaces/ApplicationPage.vue'
 import StoppedPage from '../application_spaces/StoppedPage.vue'
 import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
 import EndpointPage from '../endpoints/EndpointPage.vue'
+import EndpointLogs from '../endpoints/EndpointLogs.vue'
 import { computed, onMounted } from 'vue'
 
 const props = defineProps({
@@ -227,6 +238,16 @@ const repoTypeClass = computed(() => {
   }
 })
 
+const repoNamespace = computed(() => {
+  if (!!props.repoDetail.path) {
+    return props.repoDetail.path.split('/')[0]
+  } else if(!!props.repoDetail.model_id) {
+    return props.repoDetail.model_id.split('/')[0]
+  } else {
+    return ''
+  }
+})
+
 const decodedContent = props.blob?.content || ''
 
 const showSpaceLogs = () => {
@@ -246,6 +267,9 @@ const tabChange = (tab) => {
       break
     case 'settings':
       location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+      break
+    case 'logs':
+      location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
       break
     default:
       break

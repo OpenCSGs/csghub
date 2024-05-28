@@ -35,6 +35,7 @@
         name="logs"
         class="min-h-[300px]"
       >
+        <slot name="logs"></slot>
       </el-tab-pane>
 
       <!-- repo settings -->
@@ -70,10 +71,6 @@
     } else {
       return t('all.summary')
     }
-  })
-
-  const isApplicationSpace = computed(() => {
-    return props.repoType === 'space'
   })
 
   const activeName = ref(props.defaultTab)
