@@ -25,8 +25,9 @@ class EndpointsController < ApplicationController
   private
 
   def load_endpoint_detail
+    model_name = @local_endpoint.model_path.split('/')[1]
     @endpoint = csghub_api.get_endpoint_detail(params[:namespace],
-                                               params[:model_name],
+                                               model_name,
                                                params[:endpoint_id],
                                                {
                                                  current_user: current_user&.name
