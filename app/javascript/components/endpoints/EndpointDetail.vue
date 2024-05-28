@@ -76,8 +76,8 @@
 
   const isStatusSSEConnected = ref(false)
 
-  const syncSpaceStatus = () => {
-    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.endpoint.data.path}/status`, {
+  const syncEndpointStatus = () => {
+    fetchEventSource(`${csghubServer}/api/v1/models/${props.endpoint.data.model_id}/run/${props.endpoint.data.deploy_id}/status`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -101,22 +101,7 @@
       onmessage(ev) {
         console.log(`SyncStatus: ${ev.data}`)
         if (appStatus.value !== ev.data) {
-          if (ev.data === 'Building') {
-            if (buildLogDiv.value) {
-              buildLogDiv.value.innerHTML = ''
-              buildLogLineNum.value = 0
-            }
-            if (containerLogDiv.value) {
-              containerLogDiv.value.innerHTML = ''
-              containerLogLineNum.value = 0
-            }
-          }
           appStatus.value = ev.data
-        }
-
-        // 启动日志
-        if (isLogsSSEConnected.value === false) {
-          syncSpaceLogs()
         }
       },
       onerror(err) {
@@ -129,7 +114,7 @@
   onMounted(() => {
     console.log(`Endpoint 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
-      syncSpaceStatus()
+      syncEndpointStatus()
     }
   })
 </script>
