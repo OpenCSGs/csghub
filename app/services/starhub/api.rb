@@ -257,6 +257,11 @@ module Starhub
       res.body
     end
 
+    def get_repo_mirror(repo_type, namespace, repo_name, options = {})
+      debugger
+      @client.get("/#{repo_type}/#{namespace}/#{repo_name}/mirror?current_user=#{options[:current_user]}", options)
+    end
+
     # TODO: add more starhub api
 
     private

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
     resources :codes, except: [:new, :create]
+    get '/:repotype/:namespace/(*repo_name)/mirrors', to: 'mirrors#asyn'
 
     root to: "users#index"
   end
