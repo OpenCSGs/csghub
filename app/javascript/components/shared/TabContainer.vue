@@ -19,6 +19,35 @@
   </div>
 </template>
 
+<script setup>
+  import { ref, computed } from 'vue'
+
+  const props = defineProps({
+    defaultTab: String,
+    settingsVisibility: Boolean,
+    repoType: String
+  })
+
+  const isApplicationSpace = computed(() => {
+    return props.repoType === 'space'
+  })
+
+  const activeName = ref(props.defaultTab)
+
+  const emit = defineEmits(['tabChange']);
+
+  const handleTabLeave = (tab) => {
+    emit('tabChange', tab)
+    return false
+  }
+
+  const handleTabClick = (tab) => {
+    if (tab.paneName === activeName.value) {
+      emit('tabChange', tab.paneName)
+    }
+  }
+</script>
+
 <style>
   .el-tabs__header {
     margin-bottom: 0;
@@ -35,32 +64,3 @@
     }
   }
 </style>
-
-<script setup>
-import { ref, computed } from 'vue'
-
-const props = defineProps({
-  defaultTab: String,
-  settingsVisibility: Boolean,
-  repoType: String
-})
-
-const isApplicationSpace = computed(() => {
-  return props.repoType === 'space'
-})
-
-const activeName = ref(props.defaultTab)
-
-const emit = defineEmits(['tabChange']);
-
-const handleTabLeave = (tab) => {
-  emit('tabChange', tab)
-  return false
-}
-
-const handleTabClick = (tab) => {
-  if (tab.paneName === activeName.value) {
-    emit('tabChange', tab.paneName)
-  }
-}
-</script>
