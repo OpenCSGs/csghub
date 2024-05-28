@@ -5,6 +5,7 @@ export const all = {
   summary: "Summary",
   files: "Files",
   community: "Community",
+  logs: "logs",
   settings: "Settings",
   tasks: "Tasks",
   framework: "Framework",
