@@ -19,6 +19,7 @@ export const endpoints = {
     resourceTip1: "You can switch to different cloud resources at any time.",
     resourceTip2: "After switching to paid resources, you will be charged based on the length of use.",
     framework: "Framework",
+    cluster: "Region",
     public: "Public",
     publicDesc: "Anyone on the internet can see this endpoint.",
     private: "Private",
