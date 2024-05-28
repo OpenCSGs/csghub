@@ -261,6 +261,10 @@ module Starhub
       @client.post("/#{repotype}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
     end
 
+    def delete_mirror(repotype, namespace, name, options = {})
+      @client.delete("/#{repotype}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
+    end
+
     # TODO: add more starhub api
 
     private
