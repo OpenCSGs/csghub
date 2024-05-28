@@ -34,13 +34,23 @@
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
           <div class="flex-1">
             <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.minReplica") }}</p>
-            <el-select v-model="minReplica" placeholder="选择" size="large" style="width: 100%">
+            <el-select
+              v-model="minReplica"
+              :placeholder="$t('all.select')"
+              size="large"
+              style="width: 100%"
+            >
               <el-option v-for="item in replicaRanges" :key="item" :label="item" :value="item" />
             </el-select>
           </div>
           <div class="flex-1">
             <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.maxReplica") }}</p>
-            <el-select v-model="maxReplica" placeholder="选择" size="large" style="width: 100%">
+            <el-select
+              v-model="maxReplica"
+              :placeholder="$t('all.select')"
+              size="large"
+              style="width: 100%"
+            >
               <el-option v-for="item in replicaRanges" :key="item" :label="item" :value="item" />
             </el-select>
           </div>
@@ -49,7 +59,12 @@
 
       <div class="mb-9 text-sm w-full">
         <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.resource") }}</p>
-        <el-select v-model="endpointResource" placeholder="选择" size="large" style="width: 100%">
+        <el-select
+          v-model="endpointResource"
+          :placeholder="$t('all.select')"
+          size="large"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in endpointResources"
             :key="item.name"
@@ -67,12 +82,34 @@
 
       <div class="mb-9 text-sm w-full">
         <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.framework") }}</p>
-        <el-select v-model="endpointFramework" placeholder="选择" size="large" style="width: 100%">
+        <el-select
+          v-model="endpointFramework"
+          :placeholder="$t('all.select')"
+          size="large"
+          style="width: 100%"
+        >
           <el-option
             v-for="item in endpointFrameworks"
             :key="item.id"
             :label="item.frame_name"
             :value="item.id"
+          />
+        </el-select>
+      </div>
+
+      <div class="mb-9 text-sm w-full">
+        <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.cluster") }}</p>
+        <el-select
+          v-model="endpointCluster"
+          :placeholder="$t('all.select')"
+          size="large"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in endpointClusters"
+            :key="item.cluster_id"
+            :label="item.region"
+            :value="item.cluster_id"
           />
         </el-select>
       </div>
@@ -178,6 +215,8 @@
   const endpointResource = ref("");
   const endpointFrameworks = ref([]);
   const endpointFramework = ref("");
+  const endpointClusters = ref([]);
+  const endpointCluster = ref("");
   const replicaRanges = ["1", "2", "3", "4", "5"];
   const minReplica = ref("1");
   const maxReplica = ref("5");
@@ -231,6 +270,22 @@
     }
   };
 
+  const fetchClusters = async () => {
+    const options = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    };
+    const res = await jwtFetch(`${csghubServer}/api/v1/cluster`, options);
+    if (!res.ok) {
+      ElMessage({ message: t("all.fetchError"), type: "warning" });
+    } else {
+      res.json().then((body) => {
+        endpointCluster.value = body.data[0]?.cluster_id || "";
+        endpointClusters.value = body.data;
+      });
+    }
+  };
+
   const fetchModels = async (query, cb) => {
     const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`);
     if (!res.ok) {
@@ -264,6 +319,7 @@
     formData.append("max_replica", maxReplica.value);
     formData.append("cloud_resource", endpointResource.value);
     formData.append("framework_id", endpointFramework.value);
+    formData.append("cluster_id", endpointCluster.value);
     formData.append("visibility", visibility.value);
 
     const options = { method: "POST", body: formData };
@@ -289,5 +345,6 @@
   onMounted(() => {
     fetchResources();
     fetchFrameworks();
+    fetchClusters();
   });
 </script>

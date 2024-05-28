@@ -7,6 +7,8 @@ module Starhub
       options[:max_replica] = endpoint.max_replica
       options[:runtime_framework_id] = endpoint.framework_id
       options[:secure_level] = endpoint.endpoint_private? ? 2 : 1
+      options[:cluster_id] = endpoint.cluster_id
+
       @client.post("/models/#{endpoint.model_path}/run?current_user=#{endpoint.owner.name}", options)
     end
   end
