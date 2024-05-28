@@ -106,6 +106,45 @@
 
     <el-divider/>
 
+    <!-- 行业标签 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('models.modelIndustryTag') }}
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          {{ $t('models.edit.tips3') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]" ref="IndustryTagListContainer">
+        <p class="text-[#344054] text-[14px]">{{ $t('models.modelIndustryTag')}}</p>
+        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+          <div class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            <div class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              <span v-for="tag in selectedIndustryTags" class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
+                <el-icon><Close @click="removeIndustryTag(tag.name)" /></el-icon>
+              </span>
+            </div>
+            <input class="w-full max-h-[36px] outline-none"
+                    v-model="industryTagInput"
+                    @input="showIndustryTagList" />
+          </div>
+          <div v-show="shouldShowIndustryTagList" class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            <p v-for="tag in theIndustryTagsList"
+                @click="selectIndustryTag(tag)"
+                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+            >
+              {{ this.$i18n.locale === 'zh'? (tag.show_name || tag.name) : tag.name}}
+            </p>
+          </div>
+          <el-button @click="updateIndustryTags" class="w-[100px]">{{ $t('all.update') }}</el-button>
+        </div>
+      </div>
+    </div>
+
+    <el-divider/>
+
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -181,9 +220,10 @@
   </div>
 </template>
 <script>
-import {h} from 'vue'
+import {h, inject} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -198,10 +238,16 @@ export default {
   },
   data() {
     return {
+      csghubServer: inject('csghubServer'),
       theTagList:this.tagList,
+      industryTagsList:[],
+      theIndustryTagsList:this.industryTagsList,
       selectedTags:[],
+      selectedIndustryTags:[],
       shouldShowTagList:false,
+      shouldShowIndustryTagList:false,
       tagInput:'',
+      industryTagInput:'',
       delDesc: '',
       modelName: this.path.split('/')[1],
       theModelNickname: this.modelNickname || "",
@@ -227,6 +273,7 @@ export default {
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
     this.getSelectTags()
+    this.getIndustryTags()
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
@@ -234,9 +281,28 @@ export default {
   },
   methods: {
     ...mapActions(useRepoDetailStore, ['updateVisibility']),
+    async getIndustryTags() {
+      const getIndustryOptions = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+      }
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/tags`, getIndustryOptions)
+      if (!response.ok) {
+        response.json().then(({ err }) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then(({ data }) => {
+          this.industryTagsList = data.filter(item => item.category === 'industry' && item.scope === 'model');
+        })
+      }
+    },
     collapseTagList(event) {
       if (!this.$refs.tagListContainer.contains(event.target)) {
         this.shouldShowTagList = false;
+      }
+      if (!this.$refs.IndustryTagListContainer.contains(event.target)) {
+        this.shouldShowIndustryTagList = false;
       }
     },
     getSelectTags(){
@@ -244,6 +310,9 @@ export default {
         ...this.tags.task_tags.map(tag => tag),
         ...this.tags.other_tags.map(tag => tag)
       ];
+      this.selectedIndustryTags = [
+        ...this.tags.industry_tags.map(tag => tag)
+      ]
     },
     clickDelete() {
       if (this.delDesc === this.modelPath) {
@@ -269,16 +338,40 @@ export default {
       }
     },
 
+    showIndustryTagList(e){
+      if(this.industryTagInput != ''){
+        const userTriggerIndustryTagList = this.industryTagsList.filter(tag => {
+          return tag.name.includes(this.industryTagInput) || tag.show_name.includes(this.industryTagInput)
+        })
+        if (userTriggerIndustryTagList.length > 0) {
+          this.theIndustryTagsList = userTriggerIndustryTagList
+          this.shouldShowIndustryTagList = true
+        }
+      }else{
+        this.shouldShowIndustryTagList = false
+      }
+    },
+
     selectTag(newTag){
-      console.log(newTag);
       const findTag = this.selectedTags.find(tag => tag.name === newTag.name)
       if (!findTag) {
         this.selectedTags.push({name: newTag.name, zh_name: newTag.zh_name})
       }
     },
 
+    selectIndustryTag(newTag){
+      const findIndustryTag = this.selectedIndustryTags.find(tag => tag.name === newTag.name)
+      if (!findIndustryTag) {
+        this.selectedIndustryTags.push({name: newTag.name, zh_name: newTag.show_name})
+      }
+    },
+
     removeTag(tagName){
       this.selectedTags = this.selectedTags.filter( item => item.name !== tagName )
+    },
+
+    removeIndustryTag(tagName){
+      this.selectedIndustryTags = this.selectedIndustryTags.filter( item => item.name !== tagName )
     },
 
     async deleteModel() {
@@ -300,7 +393,6 @@ export default {
     },
 
     changeVisibility(value) {
-      console.log(value)
       ElMessageBox({
         title: this.$t('models.edit.changeVisibility'),
         message: h('p', null, [
@@ -335,6 +427,16 @@ export default {
       }
 
     },
+
+    updateIndustryTags(){
+      if(this.selectedIndustryTags.length !==0){
+        const newSelectedIndustryTags = this.selectedIndustryTags.map(tag => tag.name)
+        this.updateIndustryTagsAPI(newSelectedIndustryTags)
+      } else {
+        ElMessage({ message: this.$t('models.edit.needModelTag'), type: "warning" })
+      }
+    },
+
     async updateTagsAPI(tags){
       const tagsUpdateEndpoint = "/internal_api/models/" + this.path + "/update_readme_tags"
       const bodyData = {
@@ -360,6 +462,24 @@ export default {
         })
       }
     },
+    async updateIndustryTagsAPI(tags){
+      const industryOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(tags)
+      }
+      const response = await jwtFetch(`${this.csghubServer}/api/v1/models/${this.path}/tags/industry`, industryOptions)
+      if (!response.ok) {
+        response.json().then((err) => {
+          ElMessage({ message: err.message, type: "warning" })
+        })
+      } else {
+        response.json().then((data) => {
+          ElMessage({ message: this.$t('all.addSuccess'), type: "success" })
+        })
+      }
+    },
+
     updateNickname() {
       if (!!this.theModelNickname.trim()) {
         const payload = {nickname: this.theModelNickname}
