@@ -53,8 +53,7 @@
 
   const props = defineProps({
     repo: Object,
-    repoType: String,
-    isAdmin: Boolean
+    repoType: String
   })
 
   const coverImageUrl = computed(() => {
