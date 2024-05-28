@@ -70,6 +70,7 @@
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{desc}}</div>
   <header-tags
+    v-if="repoType === 'model' || repoType === 'dataset'"
     :task-tags="tags.task_tags"
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"

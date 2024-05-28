@@ -1,6 +1,7 @@
 <template>
   <div class="grid grid-cols-2">
     <div>
+      Test man
     </div>
     <div>
     </div>

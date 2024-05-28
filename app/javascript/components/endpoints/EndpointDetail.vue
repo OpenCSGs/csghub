@@ -18,7 +18,6 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :blob="blob.data"
       :repo-detail="endpoint.data"
       :appStatus="appStatus"
       :appEndpoint="appEndpoint"
@@ -31,7 +30,7 @@
       :hardware="endpoint.data.hardware"
       :modelId="endpoint.data.model_id"
       :private="endpoint.data.private"
-      :appInstanceNumber="applicationSpace.data.number"
+      :endpointReplica="endpoint.data.actual_replica"
     />
   </div>
 </template>
@@ -128,6 +127,7 @@
   }
 
   onMounted(() => {
+    console.log(endpoint)
     console.log(`Endpoint 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
       syncSpaceStatus()

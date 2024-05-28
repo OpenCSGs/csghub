@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <repo-clone
+      v-if="repoType !== 'endpoint'"
       :repoType="repoType"
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
@@ -106,7 +107,7 @@
           :commitId="commitId"
         />
       </template>
-      <template #files v-if="actionName === 'show' || actionName === 'files'">
+      <template #files v-if="(actionName === 'show' || actionName === 'files') && repoType !== 'endpoint'">
         <repo-files
           :branches="branches"
           :current-branch="currentBranch"
@@ -183,6 +184,7 @@ import InitializeGuide from '../application_spaces/InitializeGuide.vue'
 import ApplicationPage from '../application_spaces/ApplicationPage.vue'
 import StoppedPage from '../application_spaces/StoppedPage.vue'
 import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
+import EndpointPage from '../endpoints/EndpointPage.vue'
 import { computed, onMounted } from 'vue'
 
 const props = defineProps({
@@ -208,8 +210,8 @@ const props = defineProps({
   commitId: String,
   hardware: String,
   modelId: String,
-  private: String,
-  appInstanceNumber: String
+  private: Boolean,
+  endpointReplica: Number
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);
