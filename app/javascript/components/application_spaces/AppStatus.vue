@@ -53,6 +53,7 @@
   const appStatusDisplayName = computed(() => {
     switch(props.appStatus) {
       case 'NoAppFile':
+      case 'NoNGINXConf':
         return t('application_spaces.status.noAppfile')
       case 'Building':
         return t('application_spaces.status.building')
@@ -86,6 +87,7 @@
       case 'Running':
         return 'success'
       case 'NoAppFile':
+      case 'NoNGINXConf':
       case 'Sleeping':
       case 'Stopped':
         return 'warning'
