@@ -257,12 +257,12 @@ module Starhub
       res.body
     end
 
-    def create_mirror(repotype, namespace, name, options = {})
-      @client.post("/#{repotype}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
+    def create_mirror(repo_type, namespace, name, options = {})
+      @client.post("/#{repo_type}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
     end
 
-    def delete_mirror(repotype, namespace, name, options = {})
-      @client.delete("/#{repotype}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
+    def delete_mirror(repo_type, namespace, name, options = {})
+      @client.delete("/#{repo_type}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
     end
 
     # TODO: add more starhub api

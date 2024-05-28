@@ -28,7 +28,7 @@ class Mirror < ApplicationRecord
     res = Starhub.api(user.session_ip).delete_mirror(mirrorable_type.downcase,
                                                      mirrorable.owner.name,
                                                      mirrorable.name,
-                                                     {current_user: creator.name})
+                                                     { current_user: user.name })
     raise StarhubError, res.body unless res.success?
   end
 end
