@@ -1,4 +1,5 @@
 export const endpoints = {
+  title: "专属实例",
   new: {
     title: "新建专属实例",
     desc: "将模型部署到专属实例",

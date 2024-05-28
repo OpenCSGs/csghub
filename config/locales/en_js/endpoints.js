@@ -1,4 +1,5 @@
 export const endpoints = {
+  title: "Inference Endpoint",
   new: {
     title: "Create a new endpoint",
     desc: "Deploy your model to an endpoint",
