@@ -1,19 +1,28 @@
 <template>
   <div class="relative">
     <el-tabs v-model="activeName" :beforeLeave="handleTabLeave" @tabClick="handleTabClick">
-      <el-tab-pane :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
-                   name="summary"
+      <el-tab-pane
+        :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
+        name="summary"
       >
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true"
-                   :label="$t('all.files')" name="files">
+      <el-tab-pane
+        v-if="isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true"
+        :label="$t('all.files')"
+        name="files"
+      >
         <slot name="files"></slot>
       </el-tab-pane>
       <el-tab-pane :label="$t('all.community')" name="community" class="min-h-[300px]">
         <slot name="community"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="settingsVisibility" :label="$t('all.settings')" name="settings" class="min-h-[300px]">
+      <el-tab-pane
+        v-if="settingsVisibility"
+        :label="$t('all.settings')"
+        name="settings"
+        class="min-h-[300px]"
+      >
         <slot name="settings"></slot>
       </el-tab-pane>
     </el-tabs>
@@ -38,31 +47,31 @@
 </style>
 
 <script setup>
-import { ref, computed } from 'vue'
+  import { ref, computed } from "vue";
 
-const props = defineProps({
-  defaultTab: String,
-  settingsVisibility: Boolean,
-  repoType: String,
-  sdk: String
-})
+  const props = defineProps({
+    defaultTab: String,
+    settingsVisibility: Boolean,
+    repoType: String,
+    sdk: String,
+  });
 
-const isApplicationSpace = computed(() => {
-  return props.repoType === 'space'
-})
+  const isApplicationSpace = computed(() => {
+    return props.repoType === "space";
+  });
 
-const activeName = ref(props.defaultTab)
+  const activeName = ref(props.defaultTab);
 
-const emit = defineEmits(['tabChange']);
+  const emit = defineEmits(["tabChange"]);
 
-const handleTabLeave = (tab) => {
-  emit('tabChange', tab)
-  return false
-}
+  const handleTabLeave = (tab) => {
+    emit("tabChange", tab);
+    return false;
+  };
 
-const handleTabClick = (tab) => {
-  if (tab.paneName === activeName.value) {
-    emit('tabChange', tab.paneName)
-  }
-}
+  const handleTabClick = (tab) => {
+    if (tab.paneName === activeName.value) {
+      emit("tabChange", tab.paneName);
+    }
+  };
 </script>
