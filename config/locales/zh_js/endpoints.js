@@ -11,6 +11,7 @@ export const endpoints = {
     resourceTip1: "您可以随时在实例设置中切换到不同的实例云资源。",
     resourceTip2: "切换到付费资源后，将根据使用时长向您收取费用。",
     framework: "运行时框架",
+    cluster: "区域",
     public: "公开",
     publicDesc: "任何互联网上的人都可以访问这个实例。",
     private: "私有",
