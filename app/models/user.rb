@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :codes, as: :owner
   has_many :created_codes, class_name: 'Code', foreign_key: :creator_id
   has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
+  has_many :created_endpoints, class_name: 'Endpoint', foreign_key: :creator_id
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
