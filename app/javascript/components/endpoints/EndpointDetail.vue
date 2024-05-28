@@ -77,7 +77,7 @@
   const isStatusSSEConnected = ref(false)
 
   const syncSpaceStatus = () => {
-    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/status`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.endpoint.data.path}/status`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -127,7 +127,6 @@
   }
 
   onMounted(() => {
-    console.log(endpoint)
     console.log(`Endpoint 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
       syncSpaceStatus()
