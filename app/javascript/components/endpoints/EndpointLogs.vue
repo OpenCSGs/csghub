@@ -1,6 +1,11 @@
 <template>
   <div class="my-[16px]">
-    <el-select v-model="currentInstance" placeholder="Select" style="width: 240px">
+    <el-select
+      v-model="currentInstance"
+      placeholder="Select"
+      style="width: 240px"
+      @change="refreshInstanceLogs"
+    >
       <el-option
         v-for="instance in instances"
         :key="instance.name"
@@ -42,11 +47,11 @@
     }
   })
 
-  const currentInstance = ref(defaultInstance)
+  const currentInstance = ref(defaultInstance.value)
   const isLogsSSEConnected = ref(false)
 
-  const syncInstanceLogs = () => {
-    fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${currentInstance.value}`, {
+  const syncInstanceLogs = (instanceName) => {
+    fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${instanceName}`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -91,9 +96,13 @@
     }
   }
 
+  const refreshInstanceLogs = (value) => {
+    syncInstanceLogs(value)
+  }
+
   onMounted(() => {
-    if (isLogsSSEConnected.value === false && currentInstance !== '') {
-      syncInstanceLogs()
+    if (isLogsSSEConnected.value === false && currentInstance.value !== '') {
+      syncInstanceLogs(currentInstance.value)
     }
   })
 </script>
