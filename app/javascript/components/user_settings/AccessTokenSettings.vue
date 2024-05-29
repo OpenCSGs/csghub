@@ -42,6 +42,7 @@
 import Menu from "./Menu.vue";
 import { ElMessage, ElMessageBox } from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import { copyToClipboard } from '../../packs/clipboard'
 
 export default {
   props: {
