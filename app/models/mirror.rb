@@ -12,23 +12,20 @@ class Mirror < ApplicationRecord
   private
 
   def sync_created_mirror_to_starhub_server
-    res = Starhub.api(user.session_ip).create_mirror(mirrorable_type.downcase,
-                                                     mirrorable.owner.name,
-                                                     mirrorable.name,
-                                                     { source_url: source_url,
-                                                     mirror_source_id: mirror_source_id,
-                                                     password: access_token,
-                                                     username: username,
-                                                     current_user: user.name })
-
-    raise StarhubError, res.body unless res.success?
+    Starhub.api(user.session_ip).create_mirror(mirrorable_type.downcase,
+                                               mirrorable.owner.name,
+                                               mirrorable.name,
+                                               { source_url: source_url,
+                                               mirror_source_id: mirror_source_id,
+                                               password: access_token,
+                                               username: username,
+                                               current_user: user.name })
   end
 
   def delete_mirror_from_starhub_server
-    res = Starhub.api(user.session_ip).delete_mirror(mirrorable_type.downcase,
-                                                     mirrorable.owner.name,
-                                                     mirrorable.name,
-                                                     { current_user: user.name })
-    raise StarhubError, res.body unless res.success?
+    Starhub.api(user.session_ip).delete_mirror(mirrorable_type.downcase,
+                                              mirrorable.owner.name,
+                                              mirrorable.name,
+                                              { current_user: user.name })
   end
 end
