@@ -31,6 +31,8 @@
       :modelId="endpoint.data.model_id"
       :private="endpoint.data.private"
       :endpointReplica="endpoint.data.actual_replica"
+      :endpointName="endpoint.data.deploy_name"
+      :endpointId="endpoint.data.deploy_id"
     />
   </div>
 </template>

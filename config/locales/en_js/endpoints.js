@@ -30,5 +30,18 @@ export const endpoints = {
     createEndpoint: "Create Endpoint",
     createSuccess: "Endpoint created successfully",
     dedicated: "Dedicated endpoint"
+  },
+  settings: {
+    stop: "Stop",
+    restart: "Restart",
+    restartEndpoint: "Restart Endpoint",
+    stopEndpoint: "Stop Endpoint",
+    delete: "Delete",
+    deleteEndpoint: "Delete Endpoint",
+    delTips: "This operation",
+    delTips2: "Undo, this will permanently delete",
+    delTips3: "the endpoint and all its files.",
+    confirmDel: "I understand and confirm deletion",
+    namespaceName: "Endpoint Name/ID",
   }
 }

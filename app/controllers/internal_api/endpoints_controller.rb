@@ -12,6 +12,14 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
     end
   end
 
+  def destroy
+    if @endpoint.destroy
+      render json: { message: I18n.t('repo.delSuccess') }
+    else
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
+    end
+  end
+
   private
 
   def endpoint_params

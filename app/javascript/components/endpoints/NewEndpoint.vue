@@ -201,6 +201,10 @@
   import jwtFetch from "../../packs/jwtFetch";
   import { useI18n } from "vue-i18n";
 
+  const props = defineProps({
+    namespace: String,
+  })
+
   const searchParams = new URLSearchParams(window.location.search);
 
   const { t } = useI18n();
@@ -337,7 +341,8 @@
   }
 
   const toEndpointDetail = (path) => {
-    window.location.pathname = `/endpoints/${path}`;
+    // window.location.pathname = `/endpoints/${path}`;
+    location.href = `/profile/${props.namespace}`
   };
 
   watch(modelId, fetchFrameworks);

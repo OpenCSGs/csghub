@@ -30,5 +30,18 @@ export const endpoints = {
     createEndpoint: "新建实例",
     createSuccess: "实例创建成功",
     dedicated: "专属实例"
+  },
+  settings: {
+    stop: "暂停",
+    restart: "重启",
+    restartEndpoint: "重启专属实例",
+    stopEndpoint: "暂停专属实例",
+    delete: "删除",
+    deleteEndpoint: "删除专属实例",
+    delTips: "此操作",
+    delTips2: "撤销，这将永久删除",
+    delTips3: "专属实例。",
+    confirmDel: "我已知晓,确认删除",
+    namespaceName: "专属实例名称/ID",
   }
 }
