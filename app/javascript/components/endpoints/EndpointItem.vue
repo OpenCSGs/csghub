@@ -18,12 +18,12 @@
       </div>
     </div>
     <div class="text-sm leading-snug text-[#606266] mb-3">
-      <div>模型：{{ endpoint.model_id }}</div>
-      <div>资源类型：{{ endpoint.hardware?.gpu ? "GPU" : "CPU" }}</div>
+      <div>{{ t("models.title") }}: {{ endpoint.model_id }}</div>
+      <div>{{ t("endpoints.resourceType") }}: {{ endpoint.hardware?.gpu ? "GPU" : "CPU" }}</div>
     </div>
     <div class="text-sm leading-snug text-[#606266] flex justify-between">
-      <div>更新时间：{{ endpoint.updated_at.substring(0, 10) }}</div>
-      <div>弹性副本：{{ endpoint.max_replica }}</div>
+      <div>{{ t("all.lastTime") }}: {{ endpoint.updated_at.substring(0, 10) }}</div>
+      <div>{{ t("endpoints.replica") }}: {{ endpoint.max_replica }}</div>
     </div>
   </a>
 </template>

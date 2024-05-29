@@ -1,5 +1,7 @@
 export const endpoints = {
   title: "Inference Endpoint",
+  resourceType: 'Resource Type',
+  replica: "Replica",
   new: {
     title: "Create a new endpoint",
     desc: "Deploy your model to an endpoint",
