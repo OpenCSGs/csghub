@@ -1,4 +1,12 @@
 export const endpoints = {
+  summary: 'Summary',
+  detail: {
+    endpointUrl: 'Inference Endpoint URL',
+    modelId: 'Model ID',
+    parameters: 'Parameters',
+    currentEndpointReplica: 'Endpoint Replica',
+    cloudResource: 'Cloud Resource'
+  },
   new: {
     title: "Create a new endpoint",
     desc: "Deploy your model to an endpoint",

@@ -1,4 +1,12 @@
 export const endpoints = {
+  summary: '概览',
+  detail: {
+    endpointUrl: '专属实例 URL',
+    modelId: '模型 ID',
+    parameters: '参数项',
+    currentEndpointReplica: '当前弹性实例',
+    cloudResource: '资源'
+  },
   new: {
     title: "新建专属实例",
     desc: "将模型部署到专属实例",

@@ -21,6 +21,7 @@ import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ModelDetail from "./components/models/ModelDetail.vue"
 import DatasetDetail from "./components/datasets/DatasetDetail.vue"
+import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
 import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
@@ -68,7 +69,8 @@ const app = createApp({
     RepoCards,
     NewCode,
     CodeDetail,
-    NewEndpoint
+    NewEndpoint,
+    EndpointDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

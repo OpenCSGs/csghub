@@ -20,20 +20,21 @@ class User < ApplicationRecord
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
   has_many :comments, dependent: :destroy
-  has_many :models, as: :owner
-  has_many :created_models, class_name: 'Model', foreign_key: :creator_id
   has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
 
-  after_save :sync_to_starhub_server
-
+  has_many :models, as: :owner
   has_many :datasets, as: :owner
-  has_many :application_spaces, as: :owner
-  has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
-
   has_many :codes, as: :owner
+  has_many :application_spaces, as: :owner
+  has_many :endpoints, as: :owner
+
+  has_many :created_models, class_name: 'Model', foreign_key: :creator_id
+  has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
   has_many :created_codes, class_name: 'Code', foreign_key: :creator_id
   has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
   has_many :created_endpoints, class_name: 'Endpoint', foreign_key: :creator_id
+
+  after_save :sync_to_starhub_server
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
