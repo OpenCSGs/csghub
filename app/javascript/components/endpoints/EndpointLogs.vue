@@ -8,20 +8,31 @@
         :value="instance.name"
       />
     </el-select>
-    <div class="h-[80vh] border mt-[8px]">
-
+    <div
+      class="h-[80vh] border mt-[8px] overflow-scroll p-[8px]"
+      ref="instanceLogDiv"
+    >
     </div>
   </div>
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted, inject } from 'vue'
+  import refreshJWT from '../../packs/refreshJWT.js'
+  import { fetchEventSource } from '@microsoft/fetch-event-source';
+  import { useCookies } from "vue3-cookies";
 
   const props = defineProps({
     instances: Array,
     modelId: String,
     deployId: Number
   })
+
+  const csghubServer = inject('csghubServer')
+  const { cookies } = useCookies()
+
+  const instanceLogDiv = ref(null)
+  const instanceLogLineNum = ref(0)
 
   const defaultInstance = computed(() => {
     if (props.instances.length !== 0) {
@@ -32,4 +43,57 @@
   })
 
   const currentInstance = ref(defaultInstance)
+  const isLogsSSEConnected = ref(false)
+
+  const syncInstanceLogs = () => {
+    fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${currentInstance.value}`, {
+      openWhenHidden: true,
+      headers: {
+        Authorization: `Bearer ${cookies.get('user_token')}`,
+      },
+      async onopen(response) {
+        if (response.ok) {
+          console.log('SSE logs server connected')
+          isLogsSSEConnected.value = true
+          if (instanceLogDiv.value) {
+            instanceLogDiv.value.innerHTML = ''
+            instanceLogLineNum.value = 0
+          }
+        } else if (response.status === 401) {
+          refreshJWT()
+        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+          console.log('Logs Server Connection Error')
+          console.log(response.status)
+          console.log(response.body)
+        } else {
+          console.log('Logs Server Unknow Error')
+          console.log(response.body)
+        }
+      },
+      onmessage(ev) {
+        if (ev.event === 'Container') {
+          appendLog(instanceLogDiv, ev.data, instanceLogLineNum)
+        }
+      },
+      onerror(err) {
+        console.log('Logs Server Error:')
+        console.log(err)
+      }
+    })
+  }
+
+  const appendLog = (refElem, data, refLineNum) => {
+    const node = document.createElement("p")
+    node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
+    if (refElem.value) {
+      refElem.value.appendChild(node)
+      refLineNum.value = refLineNum.value + 1
+    }
+  }
+
+  onMounted(() => {
+    if (isLogsSSEConnected.value === false && currentInstance !== '') {
+      syncInstanceLogs()
+    }
+  })
 </script>
