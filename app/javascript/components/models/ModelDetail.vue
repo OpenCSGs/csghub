@@ -34,6 +34,7 @@
       :tag-list="tagList"
       :userName="userName"
       :userToken="userToken"
+      :commitId="commitId"
       repo-type="model"
     />
   </div>
@@ -62,7 +63,8 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String
+    userToken: String,
+    commitId: String
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)

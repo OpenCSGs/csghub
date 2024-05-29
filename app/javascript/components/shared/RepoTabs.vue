@@ -89,9 +89,16 @@
       <template #files v-if="actionName === 'commits'">
         <RepoCommits
           :branches="branches"
-          :current-branch="currentBranch"
-          :namespace-path="repoDetail.path"
-          :repo-type="repoType"
+          :currentBranch="currentBranch"
+          :namespacePath="repoDetail.path"
+          :repoType="repoType"
+        />
+      </template>
+      <template #files v-if="actionName === 'commit'">
+        <RepoCommit
+          :namespacePath="repoDetail.path"
+          :repoType="repoType"
+          :commitId="commitId"
         />
       </template>
       <template #files v-if="actionName === 'show' || actionName === 'files'">
@@ -158,6 +165,7 @@ import TabContainer from '../shared/TabContainer.vue'
 import RepoSummary from '../shared/RepoSummary.vue'
 import RepoFiles from '../shared/RepoFiles.vue'
 import RepoCommits from '../shared/RepoCommits.vue'
+import RepoCommit from '../shared/RepoCommit.vue'
 import CommunityPage from '../community/CommunityPage.vue'
 import ModelSettings from '../models/ModelSettings.vue'
 import DatasetSettings from '../datasets/DatasetSettings.vue'
@@ -193,7 +201,8 @@ const props = defineProps({
   sdk: String,
   userName: String,
   userToken: String,
-  isAdmin: Boolean
+  isAdmin: Boolean,
+  commitId: String
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);

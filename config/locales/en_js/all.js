@@ -8,6 +8,7 @@ export const all = {
   settings: "Settings",
   tasks: "Tasks",
   framework: "Framework",
+  industry:"Industry",
   others: "Others",
   contributors: "Contributors",
   historyCommits: "History commits",

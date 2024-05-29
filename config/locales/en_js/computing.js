@@ -20,6 +20,7 @@ export const computing = {
     "price": "Price",
     "available": "Available",
     "unavailable": "Unavailable",
+    "partnerAvailable": "Provided by partners",
     "physical": "Physical machine",
     "cloud": "Bare metal/Cloud host",
     "4ka": "4 cards",

@@ -13,7 +13,7 @@ export const footer = {
   "pr": "媒体合作",
   "ir": "投资关系",
   "cookies": "Cookies政策",
-  "publish": "©2023 OpenCSG.com版权所有",
+  "publish": "©2024 OpenCSG.com版权所有",
   "ICP": "京ICP备2023006263号-1",
   "wx": "微信公众号",
   "follow":"关注OpenCSG",
