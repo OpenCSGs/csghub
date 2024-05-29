@@ -254,10 +254,18 @@ const showSpaceLogs = () => {
   emit('toggleSpaceLogsDrawer')
 }
 
+const summaryUrl = () => {
+  if (props.repoType === 'endpoint') {
+    return `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}`
+  } else {
+    return `/${props.repoType}s/${props.repoDetail.path}`
+  }
+}
+
 const tabChange = (tab) => {
   switch (tab) {
     case 'summary':
-      location.href = `/${props.repoType}s/${props.repoDetail.path}`
+      location.href = summaryUrl()
       break
     case 'files':
       location.href = `/${props.repoType}s/${props.repoDetail.path}/files/main`
