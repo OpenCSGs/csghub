@@ -112,14 +112,14 @@
   </div>
 </template>
 <script>
-import trackPageEvent from "../../packs/trackPageEvent"
+  import trackPageEvent from "../../packs/trackPageEvent"
 
-export default {
-  methods:{
-    toNextPage(url,id){
-      trackPageEvent({"id": id,"m": 'Connect'})
-      window.location.href=url
+  export default {
+    methods:{
+      toNextPage(url,id){
+        trackPageEvent({"id": id,"m": 'Connect'})
+        window.location.href=url
+      }
     }
   }
-}
 </script>

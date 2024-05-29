@@ -62,156 +62,156 @@
   </div>
 </template>
 <script>
-import trackPageEvent from "../../packs/trackPageEvent"
+  import trackPageEvent from "../../packs/trackPageEvent"
 
-export default {
-  props: {
-    starcloudUrl: String
-  },
-  data() {
-    return {
-      specificationsList: [
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'RTX4090 / 24GB PCIe',
-          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
-          config: this.$t('computing.price.4ka'),
-          number: '30',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.physical'),
-          price: '98,000/' + this.$t('computing.price.unit')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'RTX4090 / 24GB PCIe',
-          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '30',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.physical'),
-          price: '218,000/' + this.$t('computing.price.unit')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'A800 / 80GB NVLink',
-          power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '16',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.physical'),
-          price: this.$t('computing.price.console')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'A800 / 80GB NVLink',
-          power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '32',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.physical'),
-          price: this.$t('computing.price.console')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'L20 / 48GB PCIe',
-          power: 'FP32 59.8 TFLOPS, FP16 119.5 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '0',
-          status: this.$t('computing.price.unavailable'),
-          type: this.$t('computing.price.physical'),
-          price: this.$t('computing.price.waiting')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'H20 / 96GB NVLink',
-          power: 'FP32 44 TFLOPS, FP16 148 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '0',
-          status: this.$t('computing.price.unavailable'),
-          type: this.$t('computing.price.physical'),
-          price: this.$t('computing.price.waiting')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'RTX4090 / 24GB PCIe',
-          power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '99',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.cloud'),
-          price: '12,000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'V100 / 32GB NVLink',
-          power: 'FP32 15.7 TFLOPS,  FP16 125 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '199',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.cloud'),
-          price: '15,000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'A800 / 80GB NVLink',
-          power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '16',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.cloud'),
-          price: '48,000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
-        },
-        {
-          logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.NVIDIA'),
-          specification: 'H800 / 80GB NVLink',
-          power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '32',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.cloud'),
-          price: '98,000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
-        },
-        {
-          logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.Huawei'),
-          specification: '910B / 64GB PCIe',
-          power: 'INT8 640 TOPS, FP16 320 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '32',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.cloud'),
-          price: 'N/A'
-        },
-        {
-          logo: ['/images/computing/enflame.png','w-[40px] h-[40px]'],
-          brand: this.$t('computing.price.Enflame'),
-          specification: 'i20 / 16GB PCIe',
-          power: 'INT8 256 TOPS, FP16 128 TFLOPS',
-          config: this.$t('computing.price.8ka'),
-          number: '199',
-          status: this.$t('computing.price.available'),
-          type: this.$t('computing.price.cloud'),
-          price: '9,999/' + this.$t('computing.price.unit')
-        }
-      ]
-    }
-  },
-  methods:{
-    toNextPage(url,id){
-      trackPageEvent({"id": id,"m": 'Connect'})
-      window.location.href=url
+  export default {
+    props: {
+      starcloudUrl: String
+    },
+    data() {
+      return {
+        specificationsList: [
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'RTX4090 / 24GB PCIe',
+            power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+            config: this.$t('computing.price.4ka'),
+            number: '30',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.physical'),
+            price: '98,000/' + this.$t('computing.price.unit')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'RTX4090 / 24GB PCIe',
+            power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '30',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.physical'),
+            price: '218,000/' + this.$t('computing.price.unit')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'A800 / 80GB NVLink',
+            power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '16',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.physical'),
+            price: this.$t('computing.price.console')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'A800 / 80GB NVLink',
+            power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '32',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.physical'),
+            price: this.$t('computing.price.console')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'L20 / 48GB PCIe',
+            power: 'FP32 59.8 TFLOPS, FP16 119.5 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '0',
+            status: this.$t('computing.price.unavailable'),
+            type: this.$t('computing.price.physical'),
+            price: this.$t('computing.price.waiting')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'H20 / 96GB NVLink',
+            power: 'FP32 44 TFLOPS, FP16 148 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '0',
+            status: this.$t('computing.price.unavailable'),
+            type: this.$t('computing.price.physical'),
+            price: this.$t('computing.price.waiting')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'RTX4090 / 24GB PCIe',
+            power: 'FP32 82.6 TFLOPS, FP16 165.2 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '99',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.cloud'),
+            price: '12,000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'V100 / 32GB NVLink',
+            power: 'FP32 15.7 TFLOPS,  FP16 125 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '199',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.cloud'),
+            price: '15,000/' + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'A800 / 80GB NVLink',
+            power: 'FP32 19.49 TFLOPS, FP16 77.97 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '16',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.cloud'),
+            price: '48,000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          },
+          {
+            logo: ['/images/computing/nvidia.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.NVIDIA'),
+            specification: 'H800 / 80GB NVLink',
+            power: 'FP32 29.65 TFLOPS, FP16 118.6 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '32',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.cloud'),
+            price: '98,000/'  + this.$t('computing.price.unit') + '/' + this.$t('computing.price.month')
+          },
+          {
+            logo: ['/images/computing/ascend.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.Huawei'),
+            specification: '910B / 64GB PCIe',
+            power: 'INT8 640 TOPS, FP16 320 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '32',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.cloud'),
+            price: 'N/A'
+          },
+          {
+            logo: ['/images/computing/enflame.png','w-[40px] h-[40px]'],
+            brand: this.$t('computing.price.Enflame'),
+            specification: 'i20 / 16GB PCIe',
+            power: 'INT8 256 TOPS, FP16 128 TFLOPS',
+            config: this.$t('computing.price.8ka'),
+            number: '199',
+            status: this.$t('computing.price.available'),
+            type: this.$t('computing.price.cloud'),
+            price: '9,999/' + this.$t('computing.price.unit')
+          }
+        ]
+      }
+    },
+    methods:{
+      toNextPage(url,id){
+        trackPageEvent({"id": id,"m": 'Connect'})
+        window.location.href=url
+      }
     }
   }
-}
 </script>
 
