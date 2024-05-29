@@ -91,38 +91,39 @@
 </template>
 
 <script>
-import trackPageEvent from "../../packs/trackPageEvent"
-export default {
-  props: {},
+  import trackPageEvent from "../../packs/trackPageEvent"
 
-  data() {
-    return {
-      currentIndex: 0,
-      translateValue: 0,
-      srcList:['/images/solution/ImagenAI2.png','/images/solution/ImagenAI5.png','/images/solution/ImagenAI6.png','/images/solution/ImagenAI1.png','/images/solution/ImagenAI3.png','/images/solution/ImagenAI4.png']
-    };
-  },
+  export default {
+    props: {},
 
-  components: {},
+    data() {
+      return {
+        currentIndex: 0,
+        translateValue: 0,
+        srcList:['/images/solution/ImagenAI2.png','/images/solution/ImagenAI5.png','/images/solution/ImagenAI6.png','/images/solution/ImagenAI1.png','/images/solution/ImagenAI3.png','/images/solution/ImagenAI4.png']
+      };
+    },
 
-  methods: {
-    nextSlide() {
-      if (this.currentIndex < this.srcList.length - 1) {
-        this.currentIndex++;
-        this.translateValue -= 392;
-      }
+    components: {},
+
+    methods: {
+      nextSlide() {
+        if (this.currentIndex < this.srcList.length - 1) {
+          this.currentIndex++;
+          this.translateValue -= 392;
+        }
+      },
+      prevSlide() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.translateValue += 392;
+        }
+      },
+      toDemoPage(){
+        trackPageEvent({"id": 'demo_imggen',"m": 'ProductDemo'})
+        window.open('https://portal.opencsg.com/spaces/AIWizards/StableDiffusionSpace')
+      },
     },
-    prevSlide() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
-        this.translateValue += 392;
-      }
-    },
-    toDemoPage(){
-      trackPageEvent({"id": 'demo_imggen',"m": 'ProductDemo'})
-      window.open('https://portal.opencsg.com/spaces/AIWizards/StableDiffusionSpace')
-    },
-  },
-  mounted() {},
-};
+    mounted() {},
+  };
 </script>

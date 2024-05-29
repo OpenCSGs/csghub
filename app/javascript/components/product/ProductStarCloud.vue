@@ -107,26 +107,27 @@
 </template>
 
 <script>
-import VideoDialog from "../dialog/VideoDialog.vue";
-import trackPageEvent from "../../packs/trackPageEvent"
-export default {
-  props: {},
-  data() {
-    return {
-      videoSrc: "https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starcloud.mp4",
-    };
-  },
+  import VideoDialog from "../dialog/VideoDialog.vue";
+  import trackPageEvent from "../../packs/trackPageEvent"
 
-  components: {
-    VideoDialog,
-  },
-  computed: {},
-  mounted() {},
-  methods: {
-    openDialog() {
-      trackPageEvent({"id": 'demo_video_starcloud',"m": 'ProductDemo'})
-      this.$refs.videoDialogRef.openDialog();
+  export default {
+    props: {},
+    data() {
+      return {
+        videoSrc: "https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starcloud.mp4",
+      };
     },
-  },
-};
+
+    components: {
+      VideoDialog,
+    },
+    computed: {},
+    mounted() {},
+    methods: {
+      openDialog() {
+        trackPageEvent({"id": 'demo_video_starcloud',"m": 'ProductDemo'})
+        this.$refs.videoDialogRef.openDialog();
+      },
+    },
+  };
 </script>

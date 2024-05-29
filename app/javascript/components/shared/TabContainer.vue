@@ -37,35 +37,35 @@
 </style>
 
 <script setup>
-import { ref, computed } from 'vue'
-import trackPageEvent from "../../packs/trackPageEvent"
+  import { ref, computed } from 'vue'
+  import trackPageEvent from "../../packs/trackPageEvent"
 
-const props = defineProps({
-  defaultTab: String,
-  settingsVisibility: Boolean,
-  repoType: String
-})
-const nameMap = ref({'summary':'card','files':'file','community':'comments'})
+  const props = defineProps({
+    defaultTab: String,
+    settingsVisibility: Boolean,
+    repoType: String
+  })
+  const nameMap = ref({'summary':'card','files':'file','community':'comments'})
 
-const isApplicationSpace = computed(() => {
-  return props.repoType === 'space'
-})
+  const isApplicationSpace = computed(() => {
+    return props.repoType === 'space'
+  })
 
-const activeName = ref(props.defaultTab)
+  const activeName = ref(props.defaultTab)
 
-const emit = defineEmits(['tabChange']);
+  const emit = defineEmits(['tabChange']);
 
-const handleTabLeave = (tab) => {
-  emit('tabChange', tab)
-  return false
-}
-
-const handleTabClick = (tab) => {
-  if(['model','dataset','code','space'].includes(props.repoType)&&nameMap.value[tab.paneName]){
-    trackPageEvent({"id": `${props.repoType}-${nameMap.value[tab.paneName]}`,"m": props.repoType})
+  const handleTabLeave = (tab) => {
+    emit('tabChange', tab)
+    return false
   }
-  if (tab.paneName === activeName.value) {
-    emit('tabChange', tab.paneName)
+
+  const handleTabClick = (tab) => {
+    if(['model','dataset','code','space'].includes(props.repoType)&&nameMap.value[tab.paneName]){
+      trackPageEvent({"id": `${props.repoType}-${nameMap.value[tab.paneName]}`,"m": props.repoType})
+    }
+    if (tab.paneName === activeName.value) {
+      emit('tabChange', tab.paneName)
+    }
   }
-}
 </script>

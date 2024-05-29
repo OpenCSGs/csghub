@@ -59,25 +59,26 @@
 </template>
 
 <script>
-import trackPageEvent from "../../packs/trackPageEvent"
-export default {
-  props: {},
+  import trackPageEvent from "../../packs/trackPageEvent"
 
-  data() {
-    return {};
-  },
+  export default {
+    props: {},
 
-  components: {},
+    data() {
+      return {};
+    },
 
-  methods: {
-    toDemoPage(){
-      trackPageEvent({"id": 'demo_codegen',"m": 'ProductDemo'})
-      window.open('https://portal.opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B')
-    }
-  },
+    components: {},
 
-  mounted() {},
-};
+    methods: {
+      toDemoPage(){
+        trackPageEvent({"id": 'demo_codegen',"m": 'ProductDemo'})
+        window.open('https://portal.opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B')
+      }
+    },
+
+    mounted() {},
+  };
 </script>
 <style scoped>
   .codeOptimizationBg{
