@@ -1,4 +1,6 @@
 class Code < ApplicationRecord
+  attr_accessor :skip_create_callback
+
   enum :visibility, { code_public: 'public', code_private: 'private' }, default: :code_private
 
   belongs_to :owner, polymorphic: true
@@ -9,6 +11,8 @@ class Code < ApplicationRecord
   after_destroy :delete_code_from_starhub_server
   after_update :update_starhub_server_code
   before_save :detect_sensitive_content
+
+  skip_callback :create, :after, :sync_created_code_to_starhub_server, if: :skip_create_callback
 
   validates :name, format: { with: NAME_RULE }
 

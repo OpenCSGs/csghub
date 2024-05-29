@@ -1,4 +1,6 @@
 class Dataset < ApplicationRecord
+  attr_accessor :skip_create_callback
+
   enum :visibility, { dataset_public: 'public', dataset_private: 'private' }, default: :dataset_private
 
   belongs_to :owner, polymorphic: true
@@ -9,6 +11,8 @@ class Dataset < ApplicationRecord
   after_destroy :delete_dataset_from_starhub_server
   before_save :detect_sensitive_content
   after_update :update_starhub_server_dataset
+
+  skip_callback :create, :after, :sync_created_dataset_to_starhub_server, if: :skip_create_callback
 
   validates :name, format: { with: NAME_RULE }
 

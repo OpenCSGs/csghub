@@ -7,6 +7,7 @@ export const all = {
   settings: "设置",
   tasks: "任务",
   framework: "框架",
+  industry:"行业",
   others: "其他",
   contributors: "贡献者",
   historyCommits: "历史提交",

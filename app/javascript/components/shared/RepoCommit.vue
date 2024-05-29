@@ -80,7 +80,7 @@
 
   const getDiffContent = () => {
     if (!commit.value) return;
-    return html(parse(atob(commit.value.diff)), {
+    return html(parse(b64ToUtf8(commit.value.diff)), {
       drawFileList: true,
       fileListToggle: false,
       fileListStartVisible: false,
@@ -91,6 +91,18 @@
       highlight: true,
       renderNothingWhenEmpty: false
     });
+  };
+
+  const b64ToUtf8 = (str) => {
+    const binaryString = atob(str);
+    const bytes = new Uint8Array(binaryString.length);
+
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const decoder = new TextDecoder("utf-8");
+    return decoder.decode(bytes);
   };
 
   onMounted(() => {
