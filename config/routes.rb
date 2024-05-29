@@ -11,10 +11,14 @@ Rails.application.routes.draw do
     resources :tags
     resources :organizations
     resources :error_logs
-    resources :models, except: [:new, :create]
+    resources :models, except: [:new, :create] do
+      collection do
+        get '/:model_id/sync', to: 'models#sync'
+      end
+    end
     resources :datasets, except: [:new, :create]
     resources :codes, except: [:new, :create]
-    get '/:repotype/:namespace/(*repo_name)/mirrors', to: 'mirrors#asyn'
+    # get '/:repotype/:namespace/(*repo_name)/mirrors', to: 'mirrors#asyn'
 
     root to: "users#index"
   end

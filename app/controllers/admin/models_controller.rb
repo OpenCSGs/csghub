@@ -24,6 +24,19 @@ module Admin
       super.order(updated_at: :desc)
     end
 
+    def sync
+      model = Model.find_by(id: get_mirror_params[:model_id])
+      Starhub.api.get_repo_mirror("models",
+                                  model.owner.name,
+                                  model.name,
+                                  { current_user: model.creator.name })
+      flash[:notice] = "Synchronize successfully."
+      return redirect_back(fallback_location: root_path)
+      rescue Exception => e
+      flash[:notice] = e
+      redirect_back(fallback_location: root_path)
+    end
+
     # Override `resource_params` if you want to transform the submitted
     # data before it's persisted. For example, the following would turn all
     # empty values into nil values. It uses other APIs such as `resource_class`
@@ -37,5 +50,11 @@ module Admin
 
     # See https://administrate-demo.herokuapp.com/customizing_controller_actions
     # for more information
+
+    private
+
+    def get_mirror_params
+      params.permit(:model_id)
+    end
   end
 end
