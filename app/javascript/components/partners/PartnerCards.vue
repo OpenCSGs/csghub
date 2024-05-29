@@ -48,16 +48,17 @@
   </div>
 </template>
 <script>
-import trackPageEvent from "../../packs/trackPageEvent"
-export default {
-  props: {
-    partners: Array
-  },
-  methods:{
-    toActionPage(){
-      trackPageEvent({"id": 'connect_partner',"m": 'Connect'})
-      window.location.href='/partners/apply'
-    }
-  } 
-}
+  import trackPageEvent from "../../packs/trackPageEvent"
+
+  export default {
+    props: {
+      partners: Array
+    },
+    methods:{
+      toActionPage(){
+        trackPageEvent({"id": 'connect_partner',"m": 'Connect'})
+        window.location.href='/partners/apply'
+      }
+    } 
+  }
 </script>
