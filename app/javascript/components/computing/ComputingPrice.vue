@@ -9,7 +9,9 @@
               {{ $t('navbar.source') }}
             </p>
           </a>
-          <div @click="toNextPage('https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82','connect_compute')" class="bg-[#3250BD] flex items-center justify-cente py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer">
+          <div 
+            @click="toNextPage('https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82','connect_compute')" 
+            class="bg-[#3250BD] flex items-center justify-cente py-[10px] px-[12px] md:mb-[16px] rounded-[8px] cursor-pointer">
             <p class="text-[#FFFFFF] font-medium text-[16px]">
               {{ $t('computing.price.consult') }}
             </p>
@@ -61,6 +63,7 @@
 </template>
 <script>
 import trackPageEvent from "../../packs/trackPageEvent"
+
 export default {
   props: {
     starcloudUrl: String

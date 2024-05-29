@@ -12,6 +12,14 @@ module Starhub
       @client = Starhub::Client.init_with user_ip
     end
 
+    def visit_url(url)
+      options = [{
+        "v": "1",
+        "id": 'url_visit',"m": 'URLVisit'
+      }]
+      @client.post("/events", options)
+    end
+
     def create_user(name, nickname, email, phone, login_identity)
       options = {
         username: name,

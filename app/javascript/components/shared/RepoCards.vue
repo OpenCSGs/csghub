@@ -143,7 +143,7 @@
     loadRepos(url)
     if(childCurrent){
       addEvent(`page_${props.repoType}`,'PageClick')
-    }else {
+    }else if(nameFilterInput.value||taskTag.value||frameworkTag.value||languageTag.value||licenseTag.value){
       addEvent(`filter_${props.repoType}`,'Filter')
     }
   }
