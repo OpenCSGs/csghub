@@ -111,6 +111,7 @@
     </div>
   </div>
 </template>
+
 <script>
   import trackPageEvent from "../../packs/trackPageEvent"
 
