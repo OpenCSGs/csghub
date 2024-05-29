@@ -1,4 +1,7 @@
 export const endpoints = {
+  title: "专属实例",
+  resourceType: '资源类型',
+  replica: "弹性副本",
   summary: '概览',
   detail: {
     endpointUrl: '专属实例 URL',

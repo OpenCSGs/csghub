@@ -96,6 +96,15 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
+    def get_user_endpoints(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/run/model", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
     def get_org_application_spaces(namespace, username, options = {})
       options[:per] ||= 6
       options[:page] ||= 1
