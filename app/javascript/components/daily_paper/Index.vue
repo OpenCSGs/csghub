@@ -90,6 +90,7 @@
   import dayjs from "dayjs";
   import { ref } from 'vue'
   import trackPageEvent from "../../packs/trackPageEvent"
+  
   const props = defineProps({
     canCreateDailyPaper: Boolean,
     dailyPapers: String,
