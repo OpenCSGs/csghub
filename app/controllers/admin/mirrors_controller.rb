@@ -9,6 +9,7 @@ module Admin
     # end
 
     def create
+      mirror_params[:mirror_source_id] = mirror_params[:mirror_source_id].to_i
       mirrorable = mirror_params[:mirrorable_type].classify.constantize.find_by(id: mirror_params[:mirrorable_id])
       mirror = mirrorable.build_mirror(mirror_params)
       mirror.user = mirrorable.creator

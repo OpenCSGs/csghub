@@ -267,6 +267,12 @@ module Starhub
       raise StarhubError, res.body unless res.success?
     end
 
+    def get_mirror_sources
+      res = @client.get("/mirror/sources", options = {})
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     # TODO: add more starhub api
 
     private
