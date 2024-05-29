@@ -16,10 +16,16 @@ Rails.application.routes.draw do
         get '/:model_id/sync', to: 'models#sync'
       end
     end
-    resources :datasets, except: [:new, :create]
-    resources :codes, except: [:new, :create]
-    # get '/:repotype/:namespace/(*repo_name)/mirrors', to: 'mirrors#asyn'
-
+    resources :datasets, except: [:new, :create] do
+      collection do
+        get '/:dataset_id/sync', to: 'datasets#sync'
+      end
+    end
+    resources :codes, except: [:new, :create] do
+      collection do
+        get '/:code_id/sync', to: 'codes#sync'
+      end
+    end
     root to: "users#index"
   end
 

@@ -25,8 +25,8 @@ as well as a link to its edit page.
 
   <div>
     <%= link_to(
-      t("administrate.actions.asyn_resource", name: page.page_title),
-      "/datasets/#{page.resource.owner.name}/#{page.resource.name}/mirror?current_user=#{current_user.name}",
+      t("administrate.actions.sync_resource", name: page.page_title),
+      "/admin/datasets/#{page.resource.id}/sync",
       class: "button") %>
 
     <%= link_to(
