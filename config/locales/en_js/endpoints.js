@@ -2,6 +2,14 @@ export const endpoints = {
   title: "Inference Endpoint",
   resourceType: 'Resource Type',
   replica: "Replica",
+  summary: 'Summary',
+  detail: {
+    endpointUrl: 'Inference Endpoint URL',
+    modelId: 'Model ID',
+    parameters: 'Parameters',
+    currentEndpointReplica: 'Endpoint Replica',
+    cloudResource: 'Cloud Resource'
+  },
   new: {
     title: "Create a new endpoint",
     desc: "Deploy your model to an endpoint",
@@ -14,6 +22,7 @@ export const endpoints = {
     resourceTip1: "You can switch to different cloud resources at any time.",
     resourceTip2: "After switching to paid resources, you will be charged based on the length of use.",
     framework: "Framework",
+    cluster: "Region",
     public: "Public",
     publicDesc: "Anyone on the internet can see this endpoint.",
     private: "Private",

@@ -4,6 +4,7 @@ export const all = {
   summary: "介绍",
   files: "文件",
   community: "讨论",
+  logs: "日志",
   settings: "设置",
   tasks: "任务",
   framework: "框架",

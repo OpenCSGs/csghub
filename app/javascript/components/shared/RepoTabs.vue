@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <repo-clone
+      v-if="repoType !== 'endpoint'"
       :repoType="repoType"
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
@@ -33,6 +34,13 @@
                            :appStatus="appStatus"
                            :canWrite="canWrite"
                            @showSpaceLogs="showSpaceLogs"
+        />
+        <EndpointPage v-else-if="repoType === 'endpoint'"
+                      :appEndpoint="appEndpoint"
+                      :modelId="modelId"
+                      :private="private"
+                      :endpointReplica="endpointReplica"
+                      :hardware="hardware"
         />
         <repo-summary v-else
                       :repo-type="repoType"
@@ -99,7 +107,7 @@
           :commitId="commitId"
         />
       </template>
-      <template #files v-if="actionName === 'show' || actionName === 'files'">
+      <template #files v-if="(actionName === 'show' || actionName === 'files') && repoType !== 'endpoint'">
         <repo-files
           :branches="branches"
           :current-branch="currentBranch"
@@ -107,6 +115,16 @@
           :namespace-path="repoDetail.path"
           :can-write="canWrite"
           :repo-type="repoType"
+        />
+      </template>
+      <template
+        #logs
+        v-if="repoType === 'endpoint' && actionName === 'logs'"
+      >
+        <EndpointLogs
+          :instances="repoDetail.instances"
+          :modelId="repoDetail.model_id"
+          :deployId="repoDetail.deploy_id"
         />
       </template>
       <template #community>
@@ -176,6 +194,8 @@ import InitializeGuide from '../application_spaces/InitializeGuide.vue'
 import ApplicationPage from '../application_spaces/ApplicationPage.vue'
 import StoppedPage from '../application_spaces/StoppedPage.vue'
 import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
+import EndpointPage from '../endpoints/EndpointPage.vue'
+import EndpointLogs from '../endpoints/EndpointLogs.vue'
 import { computed, onMounted } from 'vue'
 
 const props = defineProps({
@@ -198,7 +218,11 @@ const props = defineProps({
   sdk: String,
   userName: String,
   userToken: String,
-  commitId: String
+  commitId: String,
+  hardware: String,
+  modelId: String,
+  private: Boolean,
+  endpointReplica: Number
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);
@@ -214,16 +238,34 @@ const repoTypeClass = computed(() => {
   }
 })
 
+const repoNamespace = computed(() => {
+  if (!!props.repoDetail.path) {
+    return props.repoDetail.path.split('/')[0]
+  } else if(!!props.repoDetail.model_id) {
+    return props.repoDetail.model_id.split('/')[0]
+  } else {
+    return ''
+  }
+})
+
 const decodedContent = props.blob?.content || ''
 
 const showSpaceLogs = () => {
   emit('toggleSpaceLogsDrawer')
 }
 
+const summaryUrl = () => {
+  if (props.repoType === 'endpoint') {
+    return `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}`
+  } else {
+    return `/${props.repoType}s/${props.repoDetail.path}`
+  }
+}
+
 const tabChange = (tab) => {
   switch (tab) {
     case 'summary':
-      location.href = `/${props.repoType}s/${props.repoDetail.path}`
+      location.href = summaryUrl()
       break
     case 'files':
       location.href = `/${props.repoType}s/${props.repoDetail.path}/files/main`
@@ -233,6 +275,9 @@ const tabChange = (tab) => {
       break
     case 'settings':
       location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+      break
+    case 'logs':
+      location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
       break
     default:
       break

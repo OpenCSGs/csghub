@@ -2,6 +2,14 @@ export const endpoints = {
   title: "专属实例",
   resourceType: '资源类型',
   replica: "弹性副本",
+  summary: '概览',
+  detail: {
+    endpointUrl: '专属实例 URL',
+    modelId: '模型 ID',
+    parameters: '参数项',
+    currentEndpointReplica: '当前弹性实例',
+    cloudResource: '资源'
+  },
   new: {
     title: "新建专属实例",
     desc: "将模型部署到专属实例",
@@ -14,6 +22,7 @@ export const endpoints = {
     resourceTip1: "您可以随时在实例设置中切换到不同的实例云资源。",
     resourceTip2: "切换到付费资源后，将根据使用时长向您收取费用。",
     framework: "运行时框架",
+    cluster: "区域",
     public: "公开",
     publicDesc: "任何互联网上的人都可以访问这个实例。",
     private: "私有",

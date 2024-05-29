@@ -15,6 +15,6 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
   private
 
   def endpoint_params
-    params.permit(:name, :model_path, :min_replica, :max_replica, :cloud_resource, :framework_id, :visibility).merge(owner: current_user)
+    params.permit(:name, :model_path, :min_replica, :max_replica, :cloud_resource, :framework_id, :cluster_id, :visibility).merge(owner: current_user)
   end
 end
