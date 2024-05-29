@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="`/endpoints/${endpoint.deploy_name}`"
+    :href="`/endpoints/${namespace}/${endpoint.deploy_name}/${endpoint.deploy_id}`"
     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 w-full"
   >
     <div class="flex justify-between items-center mb-2">
@@ -33,7 +33,8 @@
   import AppStatus from "../application_spaces/AppStatus.vue";
 
   const props = defineProps({
-    endpoint: Object
+    endpoint: Object,
+    namespace: String
   });
 
   const { t } = useI18n();

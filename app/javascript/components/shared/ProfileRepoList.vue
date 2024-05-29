@@ -177,7 +177,7 @@
         <span>{{ $t("endpoints.title") }}</span>
       </h3>
       <div v-if="hasEndpoints" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <EndpointItem v-for="endpoint in endpoints.data" :endpoint="endpoint" />
+        <EndpointItem v-for="endpoint in endpoints.data" :endpoint="endpoint" :namespace="name" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t("all.noData") }}
