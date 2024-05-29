@@ -163,6 +163,13 @@
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch" />
+        <EndpointSettings
+          v-if="repoType === 'endpoint'"
+          :endpointName="endpointName"
+          :endpointId="endpointId"
+          :appStatus="appStatus"
+          :modelId="modelId"
+        />
       </template>
     </tab-container>
   </div>
@@ -186,6 +193,7 @@ import ModelSettings from '../models/ModelSettings.vue'
 import DatasetSettings from '../datasets/DatasetSettings.vue'
 import ApplicationSpaceSettings from '../application_spaces/ApplicationSpaceSettings.vue'
 import CodeSettings from '../codes/CodeSettings.vue'
+import EndpointSettings from '../endpoints/EndpointSettings.vue'
 import UploadFile from '../shared/UploadFile.vue'
 import NewFile from '../shared/NewFile.vue'
 import Blob from '../shared/Blob.vue'
@@ -222,7 +230,9 @@ const props = defineProps({
   hardware: String,
   modelId: String,
   private: Boolean,
-  endpointReplica: Number
+  endpointReplica: Number,
+  endpointName: String,
+  endpointId: String
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);
@@ -274,7 +284,7 @@ const tabChange = (tab) => {
       location.href = `/${props.repoType}s/${props.repoDetail.path}/community`
       break
     case 'settings':
-      location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+      location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/settings`
       break
     case 'logs':
       location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
