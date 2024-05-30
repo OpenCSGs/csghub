@@ -120,7 +120,7 @@ module LocalRepoValidation
     when 'application_spaces'
       @local_application_space = @owner && @owner.application_spaces.find_by(name: params[:application_space_name])
     when 'endpoints'
-      @local_endpoint = @owner && @owner.endpoints.find_by(name: params[:endpoint_name])
+      @local_endpoint = current_user && current_user.endpoints.find_by(name: params[:endpoint_name])
     end
   end
 
