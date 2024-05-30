@@ -26,6 +26,8 @@ Rails.application.routes.draw do
         get '/:code_id/sync', to: 'codes#sync'
       end
     end
+    resources :mirrors
+
     root to: "users#index"
   end
 
