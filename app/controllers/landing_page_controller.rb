@@ -16,10 +16,15 @@ class LandingPageController < ApplicationController
     @hot_models = load_hot_models.to_json
     @hot_datasets = load_hot_datasets.to_json
     @hot_spaces = load_hot_spaces.to_json
+    @customers = customers.to_json
   end
 
   private
 
+  def customers
+    system_config = SystemConfig.first
+    (system_config.customers rescue []) || []
+  end
   def load_hot_models
     system_config = SystemConfig.first
     hot_models = system_config.hot_models rescue []

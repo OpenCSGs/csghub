@@ -331,6 +331,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_21_091826) do
     t.jsonb "internal_mail_group", default: {}
     t.jsonb "latest_news", default: {}
     t.jsonb "computing_partners", default: {}
+    t.jsonb "customers", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|

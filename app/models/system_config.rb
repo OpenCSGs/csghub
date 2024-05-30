@@ -54,4 +54,8 @@ class SystemConfig < ApplicationRecord
   def computing_partners=(value)
     self[:computing_partners] = value.is_a?(String) ? JSON.parse(value) : value
   end
+
+  def customers=(value)
+    self[:customers] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 end

@@ -117,6 +117,19 @@
 
     <ProductStarShip />
 
+    <div v-if="customers.length" class="bg-[#F9FAFB] py-[96px]">
+      <p class="text-4xl mb-[32px] tracking-[-0.72px] text-center">我们的客户</p>
+      <div class="flex flex-wrap justify-center items-center max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
+      <div v-for="item in customers"
+           class="group flex flex-col gap-[8px] items-center justify-center px-[36px] py-[24px]"
+        >
+          <img :src="item.logo"
+              :alt="item.name"
+              class="w-auto h-[44px]" />
+        </div>
+    </div>
+    </div>
+    
     <div class="max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
       <img src="images/landing/container.png" alt="" class="w-full md:hidden" />
       <img src="images/landing/phone_container.png" alt="" class="w-full hidden md:block" />
@@ -152,10 +165,12 @@
     isLoggedIn: Boolean,
     hotModels: Object,
     hotDatasets: Object,
-    hotSpaces: Object
+    hotSpaces: Object,
+    customers: Array
   })
 
   onMounted(() => {
+    console.log('customers===',props.customers)
     useWxShare({
       title: 'OpenCSG 打造中国本土化 Huggingface plus',
       desc: '让大模型赋能每一个人,大模型驱动全民，推动技术创新，OpenCSG——平台有各个领域的大模型，提供模型探索体验、推理、训练、部署和应用的一站式服务，共建模型开源社区，发现、学习、定制和分享心仪的模型。',
