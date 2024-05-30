@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <repo-clone
+    <RepoClone
       v-if="repoType !== 'endpoint'"
       :repoType="repoType"
       :httpCloneUrl="repoDetail.repository.http_clone_url"
