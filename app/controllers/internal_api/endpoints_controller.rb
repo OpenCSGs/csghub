@@ -6,7 +6,7 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
   def create
     endpoint = current_user.created_endpoints.build(endpoint_params)
     if endpoint.save
-      render json: { message: I18n.t('repo.createSuccess') }, status: :created
+      render json: { endpoint_id: endpoint.endpoint_id, message: I18n.t('repo.createSuccess') }, status: :created
     else
       render json: { message: endpoint.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end

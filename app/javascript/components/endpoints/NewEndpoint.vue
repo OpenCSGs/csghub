@@ -308,7 +308,7 @@
     try {
       const res = await submitEndpointForm();
       ElMessage.success(t("endpoints.new.createSuccess"));
-      toEndpointDetail(res.path);
+      toEndpointDetail(res.endpoint_id);
     } catch (err) {
       ElMessage.warning(err.message);
     }
@@ -340,9 +340,8 @@
     }
   }
 
-  const toEndpointDetail = (path) => {
-    // window.location.pathname = `/endpoints/${path}`;
-    location.href = `/profile/${props.namespace}`
+  const toEndpointDetail = (endpointId) => {
+    window.location.pathname = `/endpoints/${props.namespace}/${endpointName.value}/${endpointId}`;
   };
 
   watch(modelId, fetchFrameworks);
