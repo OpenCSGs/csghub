@@ -6,14 +6,16 @@ const trackPageEvent = async (params) => {
   const options = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${jwtToken}`
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify([{
       "v": "1",
       ...params
     }])
   };
+  if(jwtToken){
+    options.headers = {'Authorization': `Bearer ${jwtToken}`, ...options.headers };
+  }
   try {
     const res = await fetch(`${CSGHUB_SERVER}/api/v1/events`, options);
     if (!res.ok) {
