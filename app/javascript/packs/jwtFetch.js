@@ -1,9 +1,9 @@
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 
-const jwtFetch = (url, options = {}) => {
+const jwtFetch = (url, options = {}, forceLogin = false) => {
   const jwtToken = cookies.get('user_token')
-  if (!jwtToken) {
+  if (forceLogin && !jwtToken) {
     window.location.href = "/login"
   }
   options.headers = { "Authorization": `Bearer ${jwtToken}`, ...options.headers };
