@@ -33,6 +33,7 @@
       :endpointReplica="endpoint.data.actual_replica"
       :endpointName="endpoint.data.deploy_name"
       :endpointId="endpoint.data.deploy_id"
+      :userName="userName"
     />
   </div>
 </template>
@@ -55,7 +56,8 @@
     settingsVisibility: Boolean,
     tags: Object,
     ownerUrl: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    userName: String
   })
 
   const csghubServer = inject('csghubServer')
