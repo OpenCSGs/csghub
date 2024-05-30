@@ -15,7 +15,7 @@ const trackPageEvent = async (params) => {
     }])
   };
   try {
-    const res = await fetch(`${CSGHUB_SERVER}api/v1/events`, options);
+    const res = await fetch(`${CSGHUB_SERVER}/api/v1/events`, options);
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     } else {
