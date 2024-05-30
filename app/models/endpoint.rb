@@ -16,6 +16,7 @@ class Endpoint < ApplicationRecord
   def sync_created_endpoint_to_starhub_server
     res = Starhub.api(creator.session_ip).create_endpoint(self)
     raise StarhubError, res.body unless res.success?
+    self.update_column('endpoint_id', JSON.parse(res.body)['data']['deploy_id'])
   end
 
   def detect_sensitive_content
