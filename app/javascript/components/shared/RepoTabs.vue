@@ -252,7 +252,7 @@ const repoNamespace = computed(() => {
   if (!!props.repoDetail.path) {
     return props.repoDetail.path.split('/')[0]
   } else if(!!props.repoDetail.model_id) {
-    return props.repoDetail.model_id.split('/')[0]
+    return props.userName
   } else {
     return ''
   }

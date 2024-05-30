@@ -40,7 +40,7 @@
   const instanceLogLineNum = ref(0)
 
   const defaultInstance = computed(() => {
-    if (props.instances.length !== 0) {
+    if (props.instances && props.instances.length !== 0) {
       return props.instances[0].name
     } else {
       return ''

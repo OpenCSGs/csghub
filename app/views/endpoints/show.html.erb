@@ -8,6 +8,7 @@
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!current_user&.can_write?(@local_endpoint) %>"
+    user-name="<%= params[:namespace] %>"
   >
   </endpoint-detail>
 </div>
