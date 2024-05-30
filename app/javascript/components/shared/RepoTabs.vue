@@ -284,7 +284,11 @@ const tabChange = (tab) => {
       location.href = `/${props.repoType}s/${props.repoDetail.path}/community`
       break
     case 'settings':
-      location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/settings`
+      if (props.repoType === 'endpoint') {
+        location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/settings` 
+      } else {
+        location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+      }
       break
     case 'logs':
       location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
