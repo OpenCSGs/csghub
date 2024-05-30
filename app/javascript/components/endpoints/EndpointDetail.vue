@@ -61,7 +61,6 @@
   })
 
   const csghubServer = inject('csghubServer')
-  const enableHttps = inject('enableHttps')
 
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.endpoint.data)
@@ -71,7 +70,7 @@
   const { cookies } = useCookies();
   const appStatus = ref(props.endpoint.data.status)
   const appEndpoint = computed(() => {
-    if(enableHttps === 'true') {
+    if(ENABLE_HTTPS === 'true') {
       return `https://${props.endpoint.data.endpoint}`
     } else {
       return `http://${props.endpoint.data.endpoint}`
