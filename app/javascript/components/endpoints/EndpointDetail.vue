@@ -103,8 +103,9 @@
       },
       onmessage(ev) {
         console.log(`SyncStatus: ${ev.data}`)
-        if (appStatus.value !== ev.data) {
-          appStatus.value = ev.data
+        const parsedData = JSON.parse(ev.data)
+        if (appStatus.value !== parsedData.status) {
+          appStatus.value = parsedData.status
         }
       },
       onerror(err) {
