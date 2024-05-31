@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
-    <DeployDropdown v-if="repoType === 'model'" :modelId="namespacePath" />
+    <DeployDropdown v-if="repoType === 'model' && admin" :modelId="namespacePath" />
     <div
       class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
       @click="cloneRepositoryVisible = true"
@@ -68,7 +68,8 @@
     repoType: String,
     userName: String,
     userToken: String,
-    namespacePath: String
+    namespacePath: String,
+    admin: Boolean,
   });
 
   const activeCloneType = ref("https");
