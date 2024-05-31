@@ -85,13 +85,15 @@
   import { ElMessage } from "element-plus"
   import refreshJWT from "../../packs/refreshJWT.js"
   import jwtFetch from "../../packs/jwtFetch"
+  import csrfFetch from "../../packs/csrfFetch"
   import { useI18n } from "vue-i18n"
 
   const props = defineProps({
     endpointId: Number,
     endpointName: String,
     appStatus: String,
-    modelId: String
+    modelId: String,
+    userName: String
   })
 
   const { t } = useI18n()
@@ -125,7 +127,7 @@
     const response = await jwtFetch(stopUrl, { method: "PUT" })
 
     if (response.ok) {
-      ElMessage({ message: this.$t("application_spaces.toggleStatusSuccess"), type: "success" })
+      ElMessage({ message: t("application_spaces.toggleStatusSuccess"), type: "success" })
       return true
     } else {
       if (response.status === 401) {
@@ -142,7 +144,7 @@
   }
 
   const deleteEndpoint = async () => {
-    const endpointDeleteEndpoint = `/internal_api/endpoints/${props.endpointName}/${props.endpointId}`
+    const endpointDeleteEndpoint = `/internal_api/endpoints/${props.userName}/${props.endpointName}/${props.endpointId}`
     const option = { method: "DELETE" }
     const response = await csrfFetch(endpointDeleteEndpoint, option)
 
@@ -151,16 +153,16 @@
         throw new Error(data.message)
       })
     } else {
-      ElMessage({ message: this.$t("all.delSuccess"), type: "success" })
+      ElMessage({ message: t("all.delSuccess"), type: "success" })
       setTimeout(() => {
-        window.location.href = "/endpoints"
+        window.location.href = `/profile/${props.userName}`
       }, 500)
       return response.json()
     }
   }
 
   const handleMouseOver = () => {
-    if (delDesc !== "") {
+    if (delDesc.value !== "") {
       document.getElementById("confirmDelete").classList.replace("bg-[#D92D20]", "bg-[#B42318]")
     }
   }
@@ -170,7 +172,7 @@
   }
 
   const clickDelete = () => {
-    if (delDesc === `${props.endpointName}/${props.endpointId}`) {
+    if (delDesc.value === `${props.endpointName}/${props.endpointId}`) {
       deleteEndpoint().catch((err) => {
         ElMessage({
           message: err.message,

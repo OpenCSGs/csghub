@@ -90,6 +90,7 @@ Rails.application.routes.draw do
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     resources :endpoints, only: [:create]
+    delete '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     resources :tags, only: [] do
       collection do
