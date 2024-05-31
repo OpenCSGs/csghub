@@ -8,6 +8,7 @@
       :userName="userName"
       :userToken="userToken"
       :namespacePath="repoDetail.path"
+      :admin="admin"
     />
     <tab-container :default-tab="defaultTab"
                    :settingsVisibility="settingsVisibility"
@@ -232,7 +233,8 @@ const props = defineProps({
   private: Boolean,
   endpointReplica: Number,
   endpointName: String,
-  endpointId: String
+  endpointId: String,
+  admin: Boolean
 })
 
 const emit = defineEmits(['toggleSpaceLogsDrawer']);
