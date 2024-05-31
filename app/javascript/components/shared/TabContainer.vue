@@ -1,18 +1,37 @@
 <template>
   <div class="relative">
-    <el-tabs v-model="activeName" :beforeLeave="handleTabLeave" @tabClick="handleTabClick">
-      <el-tab-pane :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
-                   name="summary"
+    <el-tabs
+      v-model="activeName"
+      :beforeLeave="handleTabLeave"
+      @tabClick="handleTabClick"
+    >
+      <el-tab-pane
+        :label="
+          isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')
+        "
+        name="summary"
       >
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="$t('all.files')" name="files">
+      <el-tab-pane
+        :label="$t('all.files')"
+        name="files"
+      >
         <slot name="files"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="$t('all.community')" name="community" class="min-h-[300px]">
+      <el-tab-pane
+        :label="$t('all.community')"
+        name="community"
+        class="min-h-[300px]"
+      >
         <slot name="community"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="settingsVisibility" :label="$t('all.settings')" name="settings" class="min-h-[300px]">
+      <el-tab-pane
+        v-if="settingsVisibility"
+        :label="$t('all.settings')"
+        name="settings"
+        class="min-h-[300px]"
+      >
         <slot name="settings"></slot>
       </el-tab-pane>
     </el-tabs>
@@ -38,14 +57,14 @@
 
 <script setup>
   import { ref, computed } from 'vue'
-  import trackPageEvent from "../../packs/trackPageEvent"
+  import trackPageEvent from '../../packs/trackPageEvent'
 
   const props = defineProps({
     defaultTab: String,
     settingsVisibility: Boolean,
     repoType: String
   })
-  const nameMap = ref({'summary':'card','files':'file','community':'comments'})
+  const nameMap = ref({ summary: 'card', files: 'file', community: 'comments' })
 
   const isApplicationSpace = computed(() => {
     return props.repoType === 'space'
@@ -53,7 +72,7 @@
 
   const activeName = ref(props.defaultTab)
 
-  const emit = defineEmits(['tabChange']);
+  const emit = defineEmits(['tabChange'])
 
   const handleTabLeave = (tab) => {
     emit('tabChange', tab)
@@ -61,8 +80,14 @@
   }
 
   const handleTabClick = (tab) => {
-    if(['model','dataset','code','space'].includes(props.repoType)&&nameMap.value[tab.paneName]){
-      trackPageEvent({"id": `${props.repoType}-${nameMap.value[tab.paneName]}`,"m": props.repoType})
+    if (
+      ['model', 'dataset', 'code', 'space'].includes(props.repoType) &&
+      nameMap.value[tab.paneName]
+    ) {
+      trackPageEvent({
+        id: `${props.repoType}-${nameMap.value[tab.paneName]}`,
+        m: props.repoType
+      })
     }
     if (tab.paneName === activeName.value) {
       emit('tabChange', tab.paneName)

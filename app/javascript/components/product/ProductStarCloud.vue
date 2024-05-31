@@ -3,12 +3,12 @@
     <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col items-center md:px-[20px] mb-[64px] relative">
         <div class="text-[36px] leading-[44px] text-[#101828]">
-          {{ $t("product.starCloud.headline") }}
+          {{ $t('product.starCloud.headline') }}
         </div>
         <div
           class="my-[20px] max-w-[768px] text-[20px] text-[#606266] leading-[30px] text-left font-light"
         >
-          {{ $t("product.starCloud.desc") }}
+          {{ $t('product.starCloud.desc') }}
         </div>
         <div class="flex gap-[16px] mb-[16px] product">
           <div
@@ -16,11 +16,17 @@
             class="cursor-pointer py-[12px] px-[18px] flex text-[14px] leading-[20px] text-[#344054] gap-[6px] border border-[#D0D5DD] rounded-[8px]"
           >
             <SvgIcon name="starcloud_video" />
-            {{ $t("product.starCloud.demoVideo") }}
+            {{ $t('product.starCloud.demoVideo') }}
           </div>
-          <VideoDialog ref="videoDialogRef" :videoSrc="videoSrc" />
+          <VideoDialog
+            ref="videoDialogRef"
+            :videoSrc="videoSrc"
+          />
         </div>
-        <SvgIcon class="absolute top-[30%] right-0 w-[20%] lg:hidden" name="starcloud_demo" />
+        <SvgIcon
+          class="absolute top-[30%] right-0 w-[20%] lg:hidden"
+          name="starcloud_demo"
+        />
       </div>
     </div>
   </div>
@@ -40,10 +46,10 @@
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
-                {{ $t("product.starCloud.part1") }}
+                {{ $t('product.starCloud.part1') }}
               </div>
               <div class="text-[16px] leading-[24px] font-light text-[#475467]">
-                {{ $t("product.starCloud.part1-") }}
+                {{ $t('product.starCloud.part1-') }}
               </div>
             </div>
           </div>
@@ -55,10 +61,10 @@
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
-                {{ $t("product.starCloud.part2") }}
+                {{ $t('product.starCloud.part2') }}
               </div>
               <div class="text-[16px] leading-[24px] font-light text-[#475467]">
-                {{ $t("product.starCloud.part2-") }}
+                {{ $t('product.starCloud.part2-') }}
               </div>
             </div>
           </div>
@@ -70,10 +76,10 @@
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
-                {{ $t("product.starCloud.part3") }}
+                {{ $t('product.starCloud.part3') }}
               </div>
               <div class="text-[16px] leading-[24px] font-light text-[#475467]">
-                {{ $t("product.starCloud.part3-") }}
+                {{ $t('product.starCloud.part3-') }}
               </div>
             </div>
           </div>
@@ -85,10 +91,10 @@
             </div>
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
-                {{ $t("product.starCloud.part4") }}
+                {{ $t('product.starCloud.part4') }}
               </div>
               <div class="text-[16px] leading-[24px] font-light text-[#475467]">
-                {{ $t("product.starCloud.part4-") }}
+                {{ $t('product.starCloud.part4-') }}
               </div>
             </div>
           </div>
@@ -107,27 +113,28 @@
 </template>
 
 <script>
-  import VideoDialog from "../dialog/VideoDialog.vue";
-  import trackPageEvent from "../../packs/trackPageEvent"
+  import VideoDialog from '../dialog/VideoDialog.vue'
+  import trackPageEvent from '../../packs/trackPageEvent'
 
   export default {
     props: {},
     data() {
       return {
-        videoSrc: "https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starcloud.mp4",
-      };
+        videoSrc:
+          'https://opencsg-public-resource.oss-accelerate.aliyuncs.com/video/starcloud.mp4'
+      }
     },
 
     components: {
-      VideoDialog,
+      VideoDialog
     },
     computed: {},
     mounted() {},
     methods: {
       openDialog() {
-        trackPageEvent({"id": 'demo_video_starcloud',"m": 'ProductDemo'})
-        this.$refs.videoDialogRef.openDialog();
-      },
-    },
-  };
+        trackPageEvent({ id: 'demo_video_starcloud', m: 'ProductDemo' })
+        this.$refs.videoDialogRef.openDialog()
+      }
+    }
+  }
 </script>
