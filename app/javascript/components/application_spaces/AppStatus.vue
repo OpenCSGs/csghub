@@ -1,8 +1,20 @@
 <template>
-  <BuildStatus v-if="statusType === 'build'" :statusName="appStatusDisplayName" />
-  <SuccessStatus v-if="statusType === 'success'" :statusName="appStatusDisplayName" />
-  <WarningStatus v-if="statusType === 'warning'" :statusName="appStatusDisplayName" />
-  <ErrorStatus v-if="statusType === 'error'" :statusName="appStatusDisplayName" />
+  <BuildStatus
+    v-if="statusType === 'build'"
+    :statusName="appStatusDisplayName"
+  />
+  <SuccessStatus
+    v-if="statusType === 'success'"
+    :statusName="appStatusDisplayName"
+  />
+  <WarningStatus
+    v-if="statusType === 'warning'"
+    :statusName="appStatusDisplayName"
+  />
+  <ErrorStatus
+    v-if="statusType === 'error'"
+    :statusName="appStatusDisplayName"
+  />
 </template>
 
 <script setup>
@@ -18,10 +30,10 @@
     spaceResource: String
   })
 
-  const { t } = useI18n();
+  const { t } = useI18n()
 
   const spaceResourceDisplayNameWithString = () => {
-    switch(props.spaceResource) {
+    switch (props.spaceResource) {
       case 'CPU basic · 2 vCPU · 16 GB':
         return ' (CPU)'
       case 'NVIDIA T4 · 4 vCPU · 16 GB':
@@ -39,9 +51,9 @@
     try {
       const resource = JSON.parse(props.spaceResource)
       if (resource && resource['gpu']) {
-        return `(GPU ${resource['gpu']["type"]})`
+        return `(GPU ${resource['gpu']['type']})`
       } else if (resource && resource['cpu']) {
-        return `(CPU ${resource['cpu']["type"]})`
+        return `(CPU ${resource['cpu']['type']})`
       } else {
         return ''
       }
@@ -51,8 +63,9 @@
   })
 
   const appStatusDisplayName = computed(() => {
-    switch(props.appStatus) {
+    switch (props.appStatus) {
       case 'NoAppFile':
+      case 'NoNGINXConf':
         return t('application_spaces.status.noAppfile')
       case 'Building':
         return t('application_spaces.status.building')
@@ -78,7 +91,7 @@
   })
 
   const statusType = computed(() => {
-    switch(props.appStatus) {
+    switch (props.appStatus) {
       case 'Building':
       case 'Deploying':
       case 'Starup':
@@ -86,6 +99,7 @@
       case 'Running':
         return 'success'
       case 'NoAppFile':
+      case 'NoNGINXConf':
       case 'Sleeping':
       case 'Stopped':
         return 'warning'
