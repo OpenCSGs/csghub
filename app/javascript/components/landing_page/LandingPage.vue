@@ -173,11 +173,6 @@
     </div>
 
     <div class="max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
-      <!-- <img
-        src="images/landing/container.png"
-        alt=""
-        class="w-full md:hidden"
-      /> -->
       <img
         src="images/landing/phone_container.png"
         alt=""
