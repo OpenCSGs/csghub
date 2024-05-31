@@ -3,6 +3,7 @@ const { cookies } = useCookies();
 
 const jwtFetch = (url, options = {}) => {
   const jwtToken = cookies.get('user_token')
+  options.headers = options.headers || {}
   if (jwtToken) {
     options.headers = { "Authorization": `Bearer ${jwtToken}`, ...options.headers };
   }
