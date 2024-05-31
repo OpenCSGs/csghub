@@ -26,7 +26,7 @@ module Admin
 
     def sync
       model = Model.find_by(id: get_mirror_params[:model_id])
-      Starhub.api.get_repo_mirror("models",
+      Starhub.api.sync_repo_mirror("models",
                                   model.owner.name,
                                   model.name,
                                   { current_user: model.creator.name })
