@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-130px)] md:min-h-0"
-  >
+  <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0">
     <div
       v-if="repoType !== 'space'"
       class="w-[30%] min-w-[360px] border-r border-[#DCDFE6] pr-6 xl:pl-[20px] mlg:hidden"
@@ -19,9 +17,7 @@
     </div>
     <div class="pr-[20px] pt-[32px] mlg:px-[20px] w-full">
       <div
-        :class="`flex xl:flex-col justify-between ${
-          repoType === 'space' ? 'xl:pl-4 md:pl-0' : ''
-        }`"
+        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-4 md:pl-0' : ''}`"
       >
         <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
           <SvgIcon
@@ -84,7 +80,7 @@
         v-if="repoType === 'space'"
         class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mb-4 mt-[16px]"
       >
-        <ApplicationSpaceItem
+        <application-space-item
           v-for="repo in reposData"
           :repo="repo"
           :repo-type="repoType"

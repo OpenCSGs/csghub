@@ -24,6 +24,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     internal_mail_group: Field::JSONB,
     latest_news: Field::JSONB,
     computing_partners: Field::JSONB,
+    customers: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -58,6 +59,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     internal_mail_group
     latest_news
     computing_partners
+    customers
     created_at
     updated_at
   ].freeze
@@ -81,6 +83,7 @@ class SystemConfigDashboard < Administrate::BaseDashboard
     internal_mail_group
     latest_news
     computing_partners
+    customers
   ].freeze
 
   # COLLECTION_FILTERS

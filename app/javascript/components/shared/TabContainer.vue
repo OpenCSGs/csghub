@@ -6,14 +6,13 @@
       @tabClick="handleTabClick"
     >
       <el-tab-pane
-        :label="
-          isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')
-        "
+        :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
         name="summary"
       >
         <slot name="summary"></slot>
       </el-tab-pane>
       <el-tab-pane
+        v-if="isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true"
         :label="$t('all.files')"
         name="files"
       >
@@ -62,10 +61,10 @@
   const props = defineProps({
     defaultTab: String,
     settingsVisibility: Boolean,
-    repoType: String
+    repoType: String,
+    sdk: String
   })
   const nameMap = ref({ summary: 'card', files: 'file', community: 'comments' })
-
   const isApplicationSpace = computed(() => {
     return props.repoType === 'space'
   })
