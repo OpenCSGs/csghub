@@ -123,7 +123,7 @@
   })
 
   const stopEndpoint = async () => {
-    stopUrl = `${csghubServer}/api/v1/models/${props.modelId}/stop/${props.endpointId}`
+    stopUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}/stop`
     const response = await jwtFetch(stopUrl, { method: "PUT" })
 
     if (response.ok) {
@@ -158,6 +158,27 @@
         window.location.href = `/profile/${props.userName}`
       }, 500)
       return response.json()
+    }
+  }
+
+  const restartEndpoint = async () => {
+    startUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}/start`
+    const response = await jwtFetch(startUrl, { method: "PUT" })
+
+    if (response.ok) {
+      ElMessage({ message: t("application_spaces.toggleStatusSuccess"), type: "success" })
+      return true
+    } else {
+      if (response.status === 401) {
+        refreshJWT()
+      } else {
+        response.json().then((data) => {
+          ElMessage({
+            message: data.msg,
+            type: "warning"
+          })
+        })
+      }
     }
   }
 
