@@ -13,11 +13,11 @@
           </span>
           <!-- underline svg -->
           <SvgIcon
-            name="underline"
+            name="landing_page_hero_purpleline"
             class="absolute bottom-0 left-[40%] md:hidden"
           />
           <SvgIcon
-            name="underline_bottom"
+            name="landing_page_hero_purpleline_mobile"
             class="absolute bottom-0 left-[37%] hidden md:block"
           />
         </div>
@@ -63,7 +63,11 @@
         <!-- 热门模型 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
-            <SvgIcon name="models_icon" />
+            <SvgIcon
+              name="models"
+              width="18"
+              height="18"
+            />
             <span>
               {{ $t('landingPage.hotTrend.models') }}
             </span>
@@ -87,7 +91,11 @@
         <!-- 热门空间 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
-            <SvgIcon name="spaces_icon" />
+            <SvgIcon
+              name="spaces"
+              width="18"
+              height="18"
+            />
             <span>
               {{ $t('landingPage.hotTrend.spaces') }}
             </span>
@@ -110,7 +118,11 @@
         <!-- 热门数据集 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
-            <SvgIcon name="datasets_icon" />
+            <SvgIcon
+              name="datasets"
+              width="18"
+              height="18"
+            />
             <span>
               {{ $t('landingPage.hotTrend.datasets') }}
             </span>
