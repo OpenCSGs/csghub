@@ -2,7 +2,7 @@
   <a
     :href="`/spaces/${repo.path}`"
     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 w-full mlg:w-full"
-    :class="`width ? w-[${width}px] : ''`"
+    :class="itemWidthClass"
   >
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
@@ -91,6 +91,10 @@
     repo: Object,
     repoType: String,
     width: String
+  })
+
+  const itemWidthClass = computed(() => {
+    return props.width ? `w-[${props.width}px]` : ''
   })
 
   const coverImageUrl = computed(() => {
