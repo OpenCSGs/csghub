@@ -25,6 +25,7 @@ class LandingPageController < ApplicationController
     system_config = SystemConfig.first
     (system_config.customers rescue []) || []
   end
+  
   def load_hot_models
     system_config = SystemConfig.first
     hot_models = system_config.hot_models rescue []
