@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/spaces/${repo.path}`" class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 w-full">
+  <a :href="`/spaces/${repo.path}`" class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 w-full" :class="`width ? w-[${width}px] : ''`">
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
         <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]">{{ getComputed.path }}</h3>
@@ -53,6 +53,7 @@
   const props = defineProps({
     repo: Object,
     repoType: String,
+    width: String
   })
 
   const coverImageUrl = computed(() => {
