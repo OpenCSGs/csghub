@@ -170,6 +170,7 @@
           :endpointId="endpointId"
           :appStatus="appStatus"
           :modelId="modelId"
+          :userName="userName"
         />
       </template>
     </tab-container>

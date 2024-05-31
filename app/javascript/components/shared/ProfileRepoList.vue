@@ -151,6 +151,9 @@
     } else if (target === "codes") {
       codeLoading.value = true
       fetchMoreCodes()
+    } else if (target === "endpoints") {
+      endpointsLoading.value = true
+      fetchMoreEndpoints()
     }
   }
 
@@ -160,7 +163,11 @@
         return `${csghubServer}/api/v1/${prefixPath}/${props.name}/likes/${type}`
       case "profile":
       default:
-        return `${csghubServer}/api/v1/${prefixPath}/${props.name}/${type}`
+        if (type === "endpoints") {
+          return `${csghubServer}/api/v1/${prefixPath}/${props.name}/run/model`
+        } else {
+          return `${csghubServer}/api/v1/${prefixPath}/${props.name}/${type}`
+        }
     }
   }
 

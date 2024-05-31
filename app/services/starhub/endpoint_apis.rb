@@ -17,5 +17,9 @@ module Starhub
 
       @client.post("/models/#{endpoint.model_path}/run?current_user=#{endpoint.owner.name}", options)
     end
+
+    def delete_endpoint(endpoint, options = {})
+      @client.delete("/models/#{endpoint.model_path}/run/#{endpoint.endpoint_id}?current_user=#{endpoint.owner.name}", options)
+    end
   end
 end
