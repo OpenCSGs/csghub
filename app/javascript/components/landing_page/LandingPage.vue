@@ -1,54 +1,82 @@
 <template>
   <div class="flex flex-col justify-center bg-white">
     <!-- banner -->
-    <div class="text-center w-full bg-top bg-no-repeat bg-[url('images/landing/BackgroundPattern.png')] py-[96px] md:px-[16px]">
+    <div
+      class="text-center w-full bg-top bg-no-repeat bg-[url('images/landing/BackgroundPattern.png')] py-[96px] md:px-[16px]"
+    >
       <div class="sm:w-full max-w-[1280px] m-auto">
-        <div class="relative mb-[24px] tracking-[-1.2px] md:tracking-[-0.72px] m-auto text-[60px] md:text-[36px] md:leading-[44px] text-[#101828] leading-[72px]">
+        <div
+          class="relative mb-[24px] tracking-[-1.2px] md:tracking-[-0.72px] m-auto text-[60px] md:text-[36px] md:leading-[44px] text-[#101828] leading-[72px]"
+        >
           <span class="relative z-10 font-medium md:font-normal">
             {{ $t('landingPage.banner.title') }}
           </span>
           <!-- underline svg -->
-          <svg class="absolute bottom-0 left-[40%] md:hidden" xmlns="http://www.w3.org/2000/svg" width="264" height="24" viewBox="0 0 264 24" fill="none"><path d="M8 8H195.741L61.8999 16H256" stroke="#ACBDFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg class="absolute bottom-0 left-[37%] hidden md:block" xmlns="http://www.w3.org/2000/svg" width="98" height="20" viewBox="0 0 98 20" fill="none"><path d="M6 6H71.1038L24.6911 14H92" stroke="#ACBDFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <SvgIcon
+            name="landing_page_hero_purpleline"
+            class="absolute bottom-0 left-[40%] md:hidden"
+          />
+          <SvgIcon
+            name="landing_page_hero_purpleline_mobile"
+            class="absolute bottom-0 left-[37%] hidden md:block"
+          />
         </div>
-        <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]">
+        <div
+          class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]"
+        >
           {{ $t('landingPage.banner.subtitle') }}
         </div>
-        <a v-if="!isLoggedIn"
-           href="/login"
-           class="md:block md:mx-[20px] px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer"
+        <a
+          v-if="!isLoggedIn"
+          href="/login"
+          class="md:block md:mx-[20px] px-[22px] py-[16px] rounded-[8px] text-[#FFF] bg-[#32508D] border border-[32508D] cursor-pointer"
         >
-           {{ $t('landingPage.banner.joinButton') }}
+          {{ $t('landingPage.banner.joinButton') }}
         </a>
       </div>
     </div>
 
     <!-- 社区热门趋势 -->
-    <div class="bg-[#F9FAFB] flex flex-col mlg:px-[20px] justify-center py-[96px] md:py-[64px] text-center">
+    <div
+      class="bg-[#F9FAFB] flex flex-col mlg:px-[20px] justify-center py-[96px] md:py-[64px] text-center"
+    >
       <div class="max-w-[1280px] m-auto">
-        <div class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]">
+        <div
+          class="text-[16px] leading-[24px] md:text-[14px] md:leading-[20px] text-[#223B99] mb-[8px]"
+        >
           {{ $t('landingPage.hotTrend.subtitle') }}
         </div>
-        <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]">
+        <div
+          class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px] text-[#101828] mb-[20px]"
+        >
           {{ $t('landingPage.hotTrend.title') }}
         </div>
-        <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px]" >
+        <div
+          class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] text-[#475467] mb-[64px]"
+        >
           {{ $t('landingPage.hotTrend.desc') }}
         </div>
       </div>
-      <div class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]">
+      <div
+        class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]"
+      >
         <!-- 热门模型 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path opacity="0.12" d="M16.5 10.0327V5.46176C16.5 5.33063 16.4312 5.20911 16.3188 5.14164C16.1996 5.07018 16.0507 5.07075 15.9321 5.14313L11.5012 7.84833C10.5927 8.40303 10.1384 8.68038 9.65249 8.78865C9.22277 8.88441 8.77723 8.88441 8.34751 8.78865C7.86162 8.68038 7.40734 8.40303 6.49878 7.84833L2.06785 5.14313C1.9493 5.07075 1.80036 5.07018 1.68125 5.14164C1.5688 5.20911 1.5 5.33063 1.5 5.46176V10.0327C1.5 11.0237 1.5 11.5192 1.64219 11.9645C1.76802 12.3585 1.97396 12.7222 2.24708 13.0328C2.55572 13.3838 2.98062 13.6388 3.83042 14.1486L6.53042 15.7686C7.42832 16.3074 7.87727 16.5768 8.35653 16.682C8.78046 16.7751 9.21954 16.7751 9.64346 16.682C10.1227 16.5768 10.5717 16.3074 11.4696 15.7686L14.1696 14.1486C15.0194 13.6388 15.4443 13.3838 15.7529 13.0328C16.026 12.7222 16.232 12.3585 16.3578 11.9645C16.5 11.5192 16.5 11.0237 16.5 10.0327Z" fill="#AD4A3B"/>
-              <path d="M9 9.375L15.75 5.25M9 9.375L2.25 5.25M9 9.375V16.875M1.5 7.96771V10.0323C1.5 11.0233 1.5 11.5188 1.64219 11.9641C1.76802 12.3581 1.97396 12.7218 2.24708 13.0324C2.55572 13.3834 2.98062 13.6384 3.83042 14.1483L6.53042 15.7683C7.42832 16.307 7.87727 16.5764 8.35653 16.6816C8.78046 16.7747 9.21954 16.7747 9.64346 16.6816C10.1227 16.5764 10.5717 16.307 11.4696 15.7683L14.1696 14.1483C15.0194 13.6384 15.4443 13.3834 15.7529 13.0324C16.026 12.7218 16.232 12.3581 16.3578 11.9641C16.5 11.5188 16.5 11.0233 16.5 10.0323V7.96771C16.5 6.97669 16.5 6.48117 16.3578 6.03593C16.232 5.64192 16.026 5.27818 15.7529 4.96757C15.4443 4.61657 15.0194 4.36163 14.1696 3.85175L11.4696 2.23175C10.5717 1.69301 10.1227 1.42364 9.64346 1.31839C9.21954 1.2253 8.78046 1.2253 8.35653 1.31839C7.87727 1.42364 7.42832 1.69301 6.53042 2.23175L3.83042 3.85175C2.98062 4.36163 2.55572 4.61657 2.24708 4.96757C1.97396 5.27818 1.76802 5.64192 1.64219 6.03593C1.5 6.48117 1.5 6.97669 1.5 7.96771Z" stroke="#AD4A3B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <SvgIcon
+              name="models"
+              width="18"
+              height="18"
+            />
             <span>
               {{ $t('landingPage.hotTrend.models') }}
             </span>
           </p>
-          <RepoItem v-for="model in hotModels" :repo="model" repo-type="model" />
+          <RepoItem
+            v-for="model in hotModels"
+            :repo="model"
+            repo-type="model"
+          />
           <div class="w-full relative flex items-center">
             <div class="flex-grow border border-[#EAECF0]"></div>
             <span class="text-[14px] text-[#475467] px-3 text-gray-500">
@@ -63,22 +91,19 @@
         <!-- 热门空间 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g opacity="0.12">
-              <path d="M1.5 4.5C1.5 3.56812 1.5 3.10218 1.65224 2.73463C1.85523 2.24458 2.24458 1.85523 2.73463 1.65224C3.10218 1.5 3.56812 1.5 4.5 1.5C5.43188 1.5 5.89782 1.5 6.26537 1.65224C6.75542 1.85523 7.14477 2.24458 7.34776 2.73463C7.5 3.10218 7.5 3.56812 7.5 4.5C7.5 5.43188 7.5 5.89782 7.34776 6.26537C7.14477 6.75542 6.75542 7.14477 6.26537 7.34776C5.89782 7.5 5.43188 7.5 4.5 7.5C3.56812 7.5 3.10218 7.5 2.73463 7.34776C2.24458 7.14477 1.85523 6.75542 1.65224 6.26537C1.5 5.89782 1.5 5.43188 1.5 4.5Z" fill="#7A5AF8"/>
-              <path d="M1.5 13.5C1.5 12.5681 1.5 12.1022 1.65224 11.7346C1.85523 11.2446 2.24458 10.8552 2.73463 10.6522C3.10218 10.5 3.56812 10.5 4.5 10.5C5.43188 10.5 5.89782 10.5 6.26537 10.6522C6.75542 10.8552 7.14477 11.2446 7.34776 11.7346C7.5 12.1022 7.5 12.5681 7.5 13.5C7.5 14.4319 7.5 14.8978 7.34776 15.2654C7.14477 15.7554 6.75542 16.1448 6.26537 16.3478C5.89782 16.5 5.43188 16.5 4.5 16.5C3.56812 16.5 3.10218 16.5 2.73463 16.3478C2.24458 16.1448 1.85523 15.7554 1.65224 15.2654C1.5 14.8978 1.5 14.4319 1.5 13.5Z" fill="#7A5AF8"/>
-              <path d="M10.5 13.5C10.5 12.5681 10.5 12.1022 10.6522 11.7346C10.8552 11.2446 11.2446 10.8552 11.7346 10.6522C12.1022 10.5 12.5681 10.5 13.5 10.5C14.4319 10.5 14.8978 10.5 15.2654 10.6522C15.7554 10.8552 16.1448 11.2446 16.3478 11.7346C16.5 12.1022 16.5 12.5681 16.5 13.5C16.5 14.4319 16.5 14.8978 16.3478 15.2654C16.1448 15.7554 15.7554 16.1448 15.2654 16.3478C14.8978 16.5 14.4319 16.5 13.5 16.5C12.5681 16.5 12.1022 16.5 11.7346 16.3478C11.2446 16.1448 10.8552 15.7554 10.6522 15.2654C10.5 14.8978 10.5 14.4319 10.5 13.5Z" fill="#7A5AF8"/>
-              </g>
-              <path d="M1.5 4.5C1.5 3.56812 1.5 3.10218 1.65224 2.73463C1.85523 2.24458 2.24458 1.85523 2.73463 1.65224C3.10218 1.5 3.56812 1.5 4.5 1.5V1.5C5.43188 1.5 5.89782 1.5 6.26537 1.65224C6.75542 1.85523 7.14477 2.24458 7.34776 2.73463C7.5 3.10218 7.5 3.56812 7.5 4.5V4.5C7.5 5.43188 7.5 5.89782 7.34776 6.26537C7.14477 6.75542 6.75542 7.14477 6.26537 7.34776C5.89782 7.5 5.43188 7.5 4.5 7.5V7.5C3.56812 7.5 3.10218 7.5 2.73463 7.34776C2.24458 7.14477 1.85523 6.75542 1.65224 6.26537C1.5 5.89782 1.5 5.43188 1.5 4.5V4.5Z" stroke="#7A5AF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.5 4.5C10.5 3.56812 10.5 3.10218 10.6522 2.73463C10.8552 2.24458 11.2446 1.85523 11.7346 1.65224C12.1022 1.5 12.5681 1.5 13.5 1.5V1.5C14.4319 1.5 14.8978 1.5 15.2654 1.65224C15.7554 1.85523 16.1448 2.24458 16.3478 2.73463C16.5 3.10218 16.5 3.56812 16.5 4.5V4.5C16.5 5.43188 16.5 5.89782 16.3478 6.26537C16.1448 6.75542 15.7554 7.14477 15.2654 7.34776C14.8978 7.5 14.4319 7.5 13.5 7.5V7.5C12.5681 7.5 12.1022 7.5 11.7346 7.34776C11.2446 7.14477 10.8552 6.75542 10.6522 6.26537C10.5 5.89782 10.5 5.43188 10.5 4.5V4.5Z" stroke="#7A5AF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M1.5 13.5C1.5 12.5681 1.5 12.1022 1.65224 11.7346C1.85523 11.2446 2.24458 10.8552 2.73463 10.6522C3.10218 10.5 3.56812 10.5 4.5 10.5V10.5C5.43188 10.5 5.89782 10.5 6.26537 10.6522C6.75542 10.8552 7.14477 11.2446 7.34776 11.7346C7.5 12.1022 7.5 12.5681 7.5 13.5V13.5C7.5 14.4319 7.5 14.8978 7.34776 15.2654C7.14477 15.7554 6.75542 16.1448 6.26537 16.3478C5.89782 16.5 5.43188 16.5 4.5 16.5V16.5C3.56812 16.5 3.10218 16.5 2.73463 16.3478C2.24458 16.1448 1.85523 15.7554 1.65224 15.2654C1.5 14.8978 1.5 14.4319 1.5 13.5V13.5Z" stroke="#7A5AF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.5 13.5C10.5 12.5681 10.5 12.1022 10.6522 11.7346C10.8552 11.2446 11.2446 10.8552 11.7346 10.6522C12.1022 10.5 12.5681 10.5 13.5 10.5V10.5C14.4319 10.5 14.8978 10.5 15.2654 10.6522C15.7554 10.8552 16.1448 11.2446 16.3478 11.7346C16.5 12.1022 16.5 12.5681 16.5 13.5V13.5C16.5 14.4319 16.5 14.8978 16.3478 15.2654C16.1448 15.7554 15.7554 16.1448 15.2654 16.3478C14.8978 16.5 14.4319 16.5 13.5 16.5V16.5C12.5681 16.5 12.1022 16.5 11.7346 16.3478C11.2446 16.1448 10.8552 15.7554 10.6522 15.2654C10.5 14.8978 10.5 14.4319 10.5 13.5V13.5Z" stroke="#7A5AF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <SvgIcon
+              name="spaces"
+              width="18"
+              height="18"
+            />
             <span>
               {{ $t('landingPage.hotTrend.spaces') }}
             </span>
           </p>
-          <ApplicationSpaceItem v-for="space in hotSpaces" :repo="space" />
+          <ApplicationSpaceItem
+            v-for="space in hotSpaces"
+            :repo="space"
+          />
           <div class="w-full relative flex items-center">
             <div class="flex-grow border border-[#EAECF0]"></div>
             <span class="text-[14px] text-[#475467] px-3 text-gray-500">
@@ -93,20 +118,25 @@
         <!-- 热门数据集 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path opacity="0.12" d="M9 16.5C12.7279 16.5 15.75 15.4926 15.75 14.25V3.75C15.75 3.75 15.375 6 9 6C2.625 6 2.25 3.75 2.25 3.75V14.25C2.25 15.4926 5.27208 16.5 9 16.5Z" fill="#1F75CB"/>
-              <path d="M15.75 9C15.75 10.2426 12.7279 11.25 9 11.25C5.27208 11.25 2.25 10.2426 2.25 9M15.75 3.75C15.75 4.99264 12.7279 6 9 6C5.27208 6 2.25 4.99264 2.25 3.75M15.75 3.75C15.75 2.50736 12.7279 1.5 9 1.5C5.27208 1.5 2.25 2.50736 2.25 3.75M15.75 3.75V14.25C15.75 15.4926 12.7279 16.5 9 16.5C5.27208 16.5 2.25 15.4926 2.25 14.25V3.75" stroke="#1F75CB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <SvgIcon
+              name="datasets"
+              width="18"
+              height="18"
+            />
             <span>
               {{ $t('landingPage.hotTrend.datasets') }}
             </span>
           </p>
-          <RepoItem v-for="dataset in hotDatasets" :repo="dataset" repo-type="dataset" />
+          <RepoItem
+            v-for="dataset in hotDatasets"
+            :repo="dataset"
+            repo-type="dataset"
+          />
           <div class="w-full relative flex items-center">
             <div class="flex-grow border border-[#EAECF0]"></div>
             <span class="text-[14px] text-[#475467] px-3 text-gray-500">
               <a href="/datasets">
-                 {{ $t('landingPage.hotTrend.loadMore') }}
+                {{ $t('landingPage.hotTrend.loadMore') }}
               </a>
             </span>
             <div class="flex-grow border border-[#EAECF0]"></div>
@@ -117,24 +147,64 @@
 
     <ProductStarShip />
 
-    <div class="max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
-      <img src="images/landing/container.png" alt="" class="w-full md:hidden" />
-      <img src="images/landing/phone_container.png" alt="" class="w-full hidden md:block" />
+    <div
+      v-if="customers.length"
+      class="bg-[#F9FAFB] py-[96px]"
+    >
+      <p
+        class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center"
+      >
+        我们的客户
+      </p>
+      <div
+        class="flex flex-wrap justify-center items-center max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]"
+      >
+        <div
+          v-for="item in customers"
+          class="group flex flex-col gap-[8px] items-center justify-center px-[36px] py-[24px]"
+        >
+          <img
+            :src="item.logo"
+            :alt="item.name"
+            class="w-auto h-[44px]"
+          />
+        </div>
+      </div>
     </div>
-    <div class="flex flex-col justify-center py-[96px] sm:pb-[50px] h-screen sm:h-auto pl-20 md:px-[16px]">
-      <div class="flex justify-center items-center md:flex-col md:gap-[48px] sm:w-full max-w-[1280px] m-auto ">
+
+    <div class="max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
+      <img
+        src="images/landing/phone_container.png"
+        alt=""
+        class="w-full hidden md:block"
+      />
+    </div>
+    <div
+      class="flex flex-col justify-center py-[96px] sm:pb-[50px] h-screen sm:h-auto pl-20 md:px-[16px]"
+    >
+      <div
+        class="flex justify-center items-center md:flex-col md:gap-[48px] sm:w-full max-w-[1280px] m-auto"
+      >
         <div class="md:text-center">
-          <div class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]">
+          <div
+            class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]"
+          >
             {{ $t('landingPage.value.title1') }}
             <br />
             {{ $t('landingPage.value.title2') }}
           </div>
-          <div class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]">
+          <div
+            class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]"
+          >
             {{ $t('landingPage.value.subtitle') }}
           </div>
         </div>
         <div>
-          <img src="images/landing/frame.png" alt="" class="w-full max-h-[600px]" />
+          <img
+            src="images/landing/frame.png"
+            alt=""
+            class="w-full max-h-[600px]"
+          />
         </div>
       </div>
     </div>
@@ -144,7 +214,7 @@
 <script setup>
   import ProductStarShip from '../product/ProductStarShip.vue'
   import RepoItem from '../shared/RepoItem.vue'
-  import ApplicationSpaceItem from  '../application_spaces/ApplicationSpaceItem.vue'
+  import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import useWxShare from '../hooks/useWxShare'
   import { onMounted } from 'vue'
 
@@ -152,7 +222,8 @@
     isLoggedIn: Boolean,
     hotModels: Object,
     hotDatasets: Object,
-    hotSpaces: Object
+    hotSpaces: Object,
+    customers: Array
   })
 
   onMounted(() => {
