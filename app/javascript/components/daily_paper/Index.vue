@@ -5,14 +5,22 @@
         <div class="text-[#223B99] text-[16px] font-[500] leading-[24px]">
           {{ $t('dailyPaper.paper') }}
         </div>
-        <div class="mt-[12px] text-[48px] font-[500] leading-[60px] tracking-[-0.96px]">
+        <div
+          class="mt-[12px] text-[48px] font-[500] leading-[60px] tracking-[-0.96px]"
+        >
           {{ $t('dailyPaper.eachpaper') }}
         </div>
         <div class="mt-[24px] text-[20px] font-[300] leading-[30px]">
           {{ $t('dailyPaper.arxiv') }}
         </div>
-        <div class="mt-[24px]" v-if="canCreateDailyPaper">
-          <a href="/daily_papers/new" class="inline-block text-center px-[18px] py-[12px] text-[16px] text-white bg-[#3250BD] rounded-[8px] border-[1px] border-[#3250BD]">
+        <div
+          class="mt-[24px]"
+          v-if="canCreateDailyPaper"
+        >
+          <a
+            href="/daily_papers/new"
+            class="inline-block text-center px-[18px] py-[12px] text-[16px] text-white bg-[#3250BD] rounded-[8px] border-[1px] border-[#3250BD]"
+          >
             {{ $t('dailyPaper.newpaper') }}
           </a>
         </div>
@@ -20,7 +28,7 @@
           <div class="flex justify-center mb-[64px]">
             <div class="w-[280px] md:w-full">
               <el-input
-                style="width: 100%;"
+                style="width: 100%"
                 size="large"
                 v-model="searchForm.keywords"
                 :placeholder="$t('dailyPaper.placeholder')"
@@ -29,40 +37,75 @@
                 @keyup.enter="handleSearch"
               >
                 <template #prefix>
-                  <el-icon @click="handleSearch" class="el-input__icon"><search /></el-icon>
+                  <el-icon
+                    @click="handleSearch"
+                    class="el-input__icon"
+                    ><search
+                  /></el-icon>
                 </template>
               </el-input>
             </div>
           </div>
           <div class="flex flex-col">
-            <div class="flex gap-x-[32px] gap-y-[48px] flex-wrap justify-between border-b border-[#EAECF0] pb-[64px]">
-              <div class="w-[405px] md:w-full" :key="item.daily_paper.uuid" v-for="item in JSON.parse(dailyPapers)">
-                <div class="flex w-full flex-col cursor-pointer" @click="visitDetail(item.daily_paper.uuid)">
-                  <img :src="item.daily_paper.cover_url" alt="" class="h-[240px] object-contain">
-                  <div class="flex justify-between gap-[16px] mt-[20px] items-start">
-                    <div class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828]">
+            <div
+              class="flex gap-x-[32px] gap-y-[48px] flex-wrap justify-between border-b border-[#EAECF0] pb-[64px]"
+            >
+              <div
+                class="w-[405px] md:w-full"
+                :key="item.daily_paper.uuid"
+                v-for="item in JSON.parse(dailyPapers)"
+              >
+                <div
+                  class="flex w-full flex-col cursor-pointer"
+                  @click="visitDetail(item.daily_paper.uuid)"
+                >
+                  <img
+                    :src="item.daily_paper.cover_url"
+                    alt=""
+                    class="h-[240px] object-contain"
+                  />
+                  <div
+                    class="flex justify-between gap-[16px] mt-[20px] items-start"
+                  >
+                    <div
+                      class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828]"
+                    >
                       {{ item.daily_paper.title }}
                     </div>
                     <div class="w-[24px]">
                       <el-icon :size="24"><TopRight /></el-icon>
                     </div>
                   </div>
-                  <div class="mt-[8px] text-[16px] font-[300] leading-[24px] text-left line-clamp line-clamp-2 md:line-clamp-3 text-[#475467]">
+                  <div
+                    class="mt-[8px] text-[16px] font-[300] leading-[24px] text-left line-clamp line-clamp-2 md:line-clamp-3 text-[#475467]"
+                  >
                     {{ item.daily_paper.recommendation }}
                   </div>
                   <a :href="item.recommender_url">
                     <div class="flex mt-[24px] gap-[12px] items-center">
-                      <img :src="item.daily_paper.recommender_avatar_url" alt="" class="h-[40px] w-[40px] rounded-full">
+                      <img
+                        :src="item.daily_paper.recommender_avatar_url"
+                        alt=""
+                        class="h-[40px] w-[40px] rounded-full"
+                      />
                       <div class="flex flex-col justify-between items-start">
-                        <div class="text-[14px] font-[500] leading-[20px] text-[#101828]">
+                        <div
+                          class="text-[14px] font-[500] leading-[20px] text-[#101828]"
+                        >
                           {{ item.daily_paper.recommender_name }}
                         </div>
-                        <div class="text-[14px] font-[300] leading-[24px] text-[#475467]">
-                          {{ dayjs(item.daily_paper.published_at).format("YYYY-MM-DD") }}
+                        <div
+                          class="text-[14px] font-[300] leading-[24px] text-[#475467]"
+                        >
+                          {{
+                            dayjs(item.daily_paper.published_at).format(
+                              'YYYY-MM-DD'
+                            )
+                          }}
                         </div>
                       </div>
                     </div>
-                </a>
+                  </a>
                 </div>
               </div>
             </div>
@@ -76,7 +119,7 @@
                 layout="prev, pager, next"
                 :total="Number(totalCount)"
                 @current-page="handleSearch"
-                @update:current-page="handleSearch"
+                @update:current-page="handleSearch('PageClick')"
               />
             </div>
           </div>
@@ -87,25 +130,30 @@
 </template>
 
 <script setup>
-  import dayjs from "dayjs";
+  import dayjs from 'dayjs'
   import { ref } from 'vue'
+  import trackPageEvent from '../../packs/trackPageEvent'
+
   const props = defineProps({
     canCreateDailyPaper: Boolean,
     dailyPapers: String,
     keywords: String,
     page: String,
-    totalCount: String,
+    totalCount: String
   })
   const searchForm = ref({
     keywords: props.keywords,
-    page: Number(props.page) || 1,
+    page: Number(props.page) || 1
   })
-  const handleSearch = () => {
-    window.location.href=`/daily_papers?keywords=${searchForm.value.keywords}&page=${searchForm.value.page}`
+  const handleSearch = (type) => {
+    if (type == 'PageClick') {
+      trackPageEvent({ id: 'page_paper', m: 'PageClick' })
+    }
+    window.location.href = `/daily_papers?keywords=${searchForm.value.keywords}&page=${searchForm.value.page}`
   }
   const visitDetail = (uuid) => {
-    window.location.href=`/daily_papers/${uuid}`
-  };
+    window.location.href = `/daily_papers/${uuid}`
+  }
 </script>
 
 <style scoped>
@@ -124,7 +172,7 @@
   :deep(.el-upload--picture-card) {
     border: 0px;
   }
-  :deep(.hide .el-upload.el-upload--picture-card){
+  :deep(.hide .el-upload.el-upload--picture-card) {
     display: none;
   }
 </style>

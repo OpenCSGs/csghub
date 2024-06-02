@@ -114,6 +114,7 @@
   import TagSidebar from '../tags/TagSidebar.vue'
   import CsgPagination from './CsgPagination.vue'
   import { useI18n } from 'vue-i18n'
+  import trackPageEvent from '../../packs/trackPageEvent'
 
   const props = defineProps({
     taskTags: String,
@@ -185,6 +186,23 @@
     url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
     loadRepos(url)
+    if (childCurrent) {
+      addEvent(`page_${props.repoType}`, 'PageClick')
+    } else if (
+      nameFilterInput.value ||
+      taskTag.value ||
+      frameworkTag.value ||
+      languageTag.value ||
+      licenseTag.value
+    ) {
+      addEvent(`filter_${props.repoType}`, 'Filter')
+    }
+  }
+
+  function addEvent(id, m) {
+    if (['model', 'dataset', 'code', 'space'].includes(props.repoType)) {
+      trackPageEvent({ id: id, m: m })
+    }
   }
 
   async function loadRepos(url) {

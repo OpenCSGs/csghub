@@ -56,6 +56,7 @@
 
 <script setup>
   import { ref, computed } from 'vue'
+  import trackPageEvent from '../../packs/trackPageEvent'
 
   const props = defineProps({
     defaultTab: String,
@@ -63,7 +64,7 @@
     repoType: String,
     sdk: String
   })
-
+  const nameMap = ref({ summary: 'card', files: 'file', community: 'comments' })
   const isApplicationSpace = computed(() => {
     return props.repoType === 'space'
   })
@@ -78,6 +79,15 @@
   }
 
   const handleTabClick = (tab) => {
+    if (
+      ['model', 'dataset', 'code', 'space'].includes(props.repoType) &&
+      nameMap.value[tab.paneName]
+    ) {
+      trackPageEvent({
+        id: `${props.repoType}-${nameMap.value[tab.paneName]}`,
+        m: props.repoType
+      })
+    }
     if (tab.paneName === activeName.value) {
       emit('tabChange', tab.paneName)
     }
