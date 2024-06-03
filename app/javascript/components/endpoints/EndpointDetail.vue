@@ -105,7 +105,7 @@
         console.log(ev)
         const eventResponse = JSON.parse(ev.data)
         console.log(`SyncStatus: ${eventResponse.status}`)
-        console.log(`SyncStatus: ${eventResponse.details[0].name}`)
+        console.log(`SyncStatus: ${eventResponse.details && eventResponse.details[0].name}`)
         if (appStatus.value !== eventResponse.status) {
           appStatus.value = eventResponse.status
         }

@@ -304,12 +304,6 @@
     }
   })
 
-  const decodedContent = props.blob?.content || ''
-
-  const showSpaceLogs = () => {
-    emit('toggleSpaceLogsDrawer')
-  }
-
   const summaryUrl = () => {
     if (props.repoType === 'endpoint') {
       return `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}`
