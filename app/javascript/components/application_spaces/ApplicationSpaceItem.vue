@@ -60,10 +60,9 @@
       v-if="getComputed.taskTag"
       class="flex gap-2 my-2 overflow-x-auto no-scrollbar"
     >
-      <span
-        class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
-        >{{ getComputed.taskTag }}</span
-      >
+      <span class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+        {{ getComputed.taskTag }}
+      </span>
       <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +117,6 @@
     } else {
       taskTag = taskTag ? taskTag['show_name'] : null
     }
-
     return { path, visibility, taskTag }
   })
 </script>

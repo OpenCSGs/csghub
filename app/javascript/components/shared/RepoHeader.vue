@@ -146,7 +146,7 @@
 
   const addLike = async () => {
     const options = { method: 'PUT' }
-    const response = await jwtFetch(`${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`, options)
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`, options, true)
     if (!response.ok) {
       response.json().then((data) => {
         ElMessage({

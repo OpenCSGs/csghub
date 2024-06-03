@@ -1,6 +1,10 @@
 <template>
   <div class="relative">
-    <el-tabs v-model="activeName" :beforeLeave="handleTabLeave" @tabClick="handleTabClick">
+    <el-tabs
+      v-model="activeName"
+      :beforeLeave="handleTabLeave"
+      @tabClick="handleTabClick"
+    >
       <!-- repo/endpoint summary -->
       <el-tab-pane
         :label="summaryLabel"
@@ -11,7 +15,7 @@
 
       <!-- repo files -->
       <el-tab-pane
-        v-if="repoType !== 'endpoint'"
+        v-if="(repoType !== 'endpoint') || (isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true)"
         :label="$t('all.files')"
         name="files"
       >
