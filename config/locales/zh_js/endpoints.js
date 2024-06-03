@@ -8,7 +8,8 @@ export const endpoints = {
     modelId: '模型 ID',
     parameters: '参数项',
     currentEndpointReplica: '当前弹性实例',
-    cloudResource: '资源'
+    cloudResource: '资源',
+    endpointStatus: '实例状态'
   },
   new: {
     title: "新建专属实例",

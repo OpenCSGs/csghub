@@ -8,7 +8,8 @@ export const endpoints = {
     modelId: 'Model ID',
     parameters: 'Parameters',
     currentEndpointReplica: 'Endpoint Replica',
-    cloudResource: 'Cloud Resource'
+    cloudResource: 'Cloud Resource',
+    endpointStatus: 'Endpoint Status'
   },
   new: {
     title: "Create a new endpoint",

@@ -34,6 +34,7 @@
       :endpointName="endpoint.data.deploy_name"
       :endpointId="endpoint.data.deploy_id"
       :userName="userName"
+      :replicaList="replicaList"
     />
   </div>
 </template>
@@ -79,6 +80,8 @@
 
   const isStatusSSEConnected = ref(false)
 
+  const replicaList = ref([])
+
   const syncEndpointStatus = () => {
     fetchEventSource(`${csghubServer}/api/v1/models/${props.endpoint.data.model_id}/run/${props.endpoint.data.deploy_id}/status`, {
       openWhenHidden: true,
@@ -108,6 +111,9 @@
         console.log(`SyncStatus: ${eventResponse.details && eventResponse.details[0].name}`)
         if (appStatus.value !== eventResponse.status) {
           appStatus.value = eventResponse.status
+        }
+        if (eventResponse.details) {
+          replicaList.value = eventResponse.details
         }
       },
       onerror(err) {
