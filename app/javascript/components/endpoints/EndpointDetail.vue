@@ -102,10 +102,12 @@
         }
       },
       onmessage(ev) {
-        console.log(`SyncStatus: ${ev.data}`)
-        const parsedData = JSON.parse(ev.data)
-        if (appStatus.value !== parsedData.status) {
-          appStatus.value = parsedData.status
+        console.log(ev)
+        const eventResponse = JSON.parse(ev.data)
+        console.log(`SyncStatus: ${eventResponse.status}`)
+        console.log(`SyncStatus: ${eventResponse.details[0].name}`)
+        if (appStatus.value !== eventResponse.status) {
+          appStatus.value = eventResponse.status
         }
       },
       onerror(err) {
