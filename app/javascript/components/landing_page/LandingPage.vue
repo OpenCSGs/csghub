@@ -171,14 +171,6 @@
         </div>
       </div>
     </div>
-
-    <div class="max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
-      <img
-        src="images/landing/phone_container.png"
-        alt=""
-        class="w-full hidden md:block"
-      />
-    </div>
     <div
       class="flex flex-col justify-center py-[96px] sm:pb-[50px] h-screen sm:h-auto pl-20 md:px-[16px]"
     >
