@@ -49,6 +49,7 @@
           :private="private"
           :endpointReplica="endpointReplica"
           :hardware="hardware"
+          :replicaList="replicaList"
         />
         <repo-summary
           v-else
@@ -273,7 +274,8 @@
     endpointReplica: Number,
     endpointName: String,
     endpointId: String,
-    admin: Boolean
+    admin: Boolean,
+    replicaList: Array
   })
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])

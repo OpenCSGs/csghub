@@ -39,6 +39,18 @@
         {{ hardware }}
       </p>
     </div>
+
+    <div v-if="replicaList?.length" class="flex flex-col gap-[8px] focus:outline focus:outline-4 focus:outline-[#EAECF0] p-4 mlg:w-full border border-gray-200 rounded-xl">
+      <p class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap">
+        {{ $t('endpoints.detail.endpointStatus') }}
+      </p>
+      <p class="w-[420px] lg:w-[370px] mlg:w-full leading-[18px] text-[#909399] text-xs text-left">
+        <p v-for="(replica, index) in replicaList" :key="index">
+          <span class="text-[#303133] font-medium mr-2">{{ replica.name }}:</span>
+          <span class="text-[#909399] font-medium">{{ replica.status }}</span>
+        </p>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -48,6 +60,7 @@
     hardware: String,
     modelId: String,
     private: String,
+    replicaList: Array,
     endpointReplica: {
       type: Number,
       default: 0
