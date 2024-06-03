@@ -154,7 +154,7 @@
       <p
         class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center"
       >
-        我们的客户
+      {{ $t('landingPage.customers.title') }}
       </p>
       <div
         class="flex flex-wrap justify-center items-center max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]"

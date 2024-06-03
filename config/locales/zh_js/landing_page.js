@@ -68,5 +68,8 @@ export const landingPage = {
     desc: '获取开放传神公司最新动态',
     load_more: '加载更多',
     view_more: '了解更多'
+  },
+  customers:{
+    title:'我们的客户'
   }
 }
