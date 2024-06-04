@@ -154,7 +154,7 @@
       <p
         class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center"
       >
-        我们的客户
+      {{ $t('landingPage.customers.title') }}
       </p>
       <div
         class="flex flex-wrap justify-center items-center max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]"
@@ -170,14 +170,6 @@
           />
         </div>
       </div>
-    </div>
-
-    <div class="max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]">
-      <img
-        src="images/landing/phone_container.png"
-        alt=""
-        class="w-full hidden md:block"
-      />
     </div>
     <div
       class="flex flex-col justify-center py-[96px] sm:pb-[50px] h-screen sm:h-auto pl-20 md:px-[16px]"

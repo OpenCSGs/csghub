@@ -69,5 +69,8 @@ export const landingPage = {
     desc: 'Get the Latest Updates from OpenCSG',
     load_more: 'Load More',
     view_more: 'Learn more'
+  },
+  customers:{
+    title:'Our customers'
   }
 }
