@@ -28,7 +28,7 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
   end
 
   def valid_model_path
-    owner = User.find_by(name: params[:model_path].split('/').first)
+    owner = User.find_by(name: params[:model_path].split('/').first) || Organization.find_by(name: params[:model_path].split('/').first)
     return render json: { message: "Owner not found" }, status: :not_found unless owner
 
     model = Model.find_by(name: params[:model_path].split('/').last, owner: owner)
