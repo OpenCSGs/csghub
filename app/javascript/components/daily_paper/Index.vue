@@ -65,10 +65,10 @@
                     class="h-[240px] object-contain"
                   />
                   <div
-                    class="flex justify-between gap-[16px] mt-[20px] items-start"
+                    class="flex justify-between gap-[16px] mt-[20px] items-start w-[405px]"
                   >
                     <div
-                      class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828]"
+                      class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828] h-[64px]"
                     >
                       {{ item.daily_paper.title }}
                     </div>
@@ -97,11 +97,7 @@
                         <div
                           class="text-[14px] font-[300] leading-[24px] text-[#475467]"
                         >
-                          {{
-                            dayjs(item.daily_paper.published_at).format(
-                              'YYYY-MM-DD'
-                            )
-                          }}
+                          {{ dayjs(item.daily_paper.created_at).format("YYYY.M.D HH:mm") }}
                         </div>
                       </div>
                     </div>
