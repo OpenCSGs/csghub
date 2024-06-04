@@ -65,7 +65,7 @@
                     class="h-[240px] object-contain"
                   />
                   <div
-                    class="flex justify-between gap-[16px] mt-[20px] items-start w-[405px]"
+                    class="flex justify-between gap-[16px] mt-[20px] items-start"
                   >
                     <div
                       class="text-[24px] font-[500] leading-[32px] text-left line-clamp line-clamp-2 text-[#101828] h-[64px]"
