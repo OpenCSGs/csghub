@@ -1,0 +1,10 @@
+class CollectionsController < ApplicationController
+  before_action :check_user_info_integrity
+
+  def index
+  end
+
+  def new
+    @available_namespaces = current_user.available_namespaces
+  end
+end

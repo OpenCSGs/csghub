@@ -13,4 +13,5 @@ export const navbar = {
   logout: "退出登录",
   loginRegister: "登录/注册",
   login: "登录",
+  newCollection: "新建合集"
 }
