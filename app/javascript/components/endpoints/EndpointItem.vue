@@ -11,19 +11,19 @@
         <div class="flex gap-2">
           <span
             class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-[#344054] text-[12px]"
-            >{{ endpoint.private ? t("all.private") : t("all.public") }}
+            >{{ endpoint.private ? $t("all.private") : $t("all.public") }}
           </span>
           <AppStatus :appStatus="endpoint.status" :spaceResource="endpoint.hardware" />
         </div>
       </div>
     </div>
     <div class="text-sm leading-snug text-[#606266] mb-3">
-      <div>{{ t("models.title") }}: {{ endpoint.model_id }}</div>
-      <div>{{ t("endpoints.resourceType") }}: {{ endpoint.hardware?.gpu ? "GPU" : "CPU" }}</div>
+      <div>{{ $t("models.title") }}: {{ endpoint.model_id }}</div>
+      <div>{{ $t("endpoints.resourceType") }}: {{ endpoint.hardware?.gpu ? "GPU" : "CPU" }}</div>
     </div>
     <div class="text-sm leading-snug text-[#606266] flex justify-between">
-      <div>{{ t("all.lastTime") }}: {{ endpoint.updated_at.substring(0, 10) }}</div>
-      <div>{{ t("endpoints.replica") }}: {{ endpoint.max_replica }}</div>
+      <div>{{ $t("all.lastTime") }}: {{ endpoint.updated_at.substring(0, 10) }}</div>
+      <div>{{ $t("endpoints.replica") }}: {{ endpoint.max_replica }}</div>
     </div>
   </a>
 </template>
@@ -36,6 +36,4 @@
     endpoint: Object,
     namespace: String
   });
-
-  const { t } = useI18n();
 </script>
