@@ -34,6 +34,6 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
     model = Model.find_by(name: params[:model_path].split('/').last, owner: owner)
     return render json: { message: "Model not found" }, status: :not_found unless model
 
-    return render json: { message: "Unauthorized" }, status: :unauthorized unless model.model_public? || owner == current_user
+    return render json: { message: "Unauthorized" }, status: :unauthorized unless model.model_public? || current_user.can_read?(model)
   end
 end
