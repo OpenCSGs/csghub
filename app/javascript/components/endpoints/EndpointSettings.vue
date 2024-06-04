@@ -51,9 +51,9 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t("all.enterPls") }}
-          <span class="text-black font-medium break-words">{{
-            `${endpointName}/${endpointId}`
-          }}</span>
+          <span class="text-black font-medium break-words">
+            {{ `${endpointName}/${endpointId}` }}
+          </span>
           {{ $t("all.sureDel") }}
         </div>
       </div>
@@ -80,6 +80,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
   import { ref, computed, inject } from "vue"
   import { ElMessage } from "element-plus"
@@ -128,7 +129,6 @@
 
     if (response.ok) {
       ElMessage({ message: t("application_spaces.toggleStatusSuccess"), type: "success" })
-      return true
     } else {
       if (response.status === 401) {
         refreshJWT()
@@ -167,7 +167,6 @@
 
     if (response.ok) {
       ElMessage({ message: t("application_spaces.toggleStatusSuccess"), type: "success" })
-      return true
     } else {
       if (response.status === 401) {
         refreshJWT()

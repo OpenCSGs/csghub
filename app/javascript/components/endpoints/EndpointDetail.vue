@@ -11,8 +11,6 @@
         :owner-url="ownerUrl"
         repo-type="endpoint"
         :repoId="endpoint.data.repository_id"
-        :totalLikes="endpoint.data.like_count"
-        :hasLike="endpoint.data.user_likes"
       />
     </div>
   </div>
@@ -68,7 +66,7 @@
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
-  const { cookies } = useCookies();
+  const { cookies } = useCookies()
   const appStatus = ref(props.endpoint.data.status)
   const appEndpoint = computed(() => {
     if(ENABLE_HTTPS === 'true') {
