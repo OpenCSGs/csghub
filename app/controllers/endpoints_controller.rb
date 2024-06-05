@@ -1,4 +1,6 @@
 class EndpointsController < ApplicationController
+  layout 'repo_application'
+
   include LocalRepoValidation
 
   before_action :authenticate_user
