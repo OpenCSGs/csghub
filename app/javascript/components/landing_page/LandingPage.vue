@@ -241,6 +241,7 @@
     })
   })
 </script>
+
 <style scoped>
   @keyframes marqueeScroll {
     0% {
