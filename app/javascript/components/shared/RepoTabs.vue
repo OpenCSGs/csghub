@@ -17,6 +17,7 @@
       :sdk="sdk"
       @tabChange="tabChange"
     >
+      <!-- summary -->
       <template #summary>
         <InitializeGuide
           v-if="repoType === 'space' && appStatus === 'NoAppFile'"
@@ -61,6 +62,8 @@
           :inference-status="repoDetail.status"
         />
       </template>
+
+      <!-- files -->
       <template
         #files
         v-if="actionName === 'blob'"
@@ -148,6 +151,8 @@
           :repo-type="repoType"
         />
       </template>
+
+      <!-- logs -->
       <template
         #logs
         v-if="repoType === 'endpoint' && actionName === 'logs'"
@@ -158,12 +163,16 @@
           :deployId="repoDetail.deploy_id"
         />
       </template>
+
+      <!-- community -->
       <template #community>
         <community-page
           :type="repoTypeClass"
           :localModelId="localRepoId"
         ></community-page>
       </template>
+
+      <!-- settings -->
       <template
         v-if="settingsVisibility"
         #settings
