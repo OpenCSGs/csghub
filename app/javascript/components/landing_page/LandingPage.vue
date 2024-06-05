@@ -251,27 +251,6 @@
       transform: translate(-100%, 0);
     }
   }
-
-  @keyframes marqueeScroll_d {
-    0% {
-      transform: translate(-100%, 0);
-    }
-
-    100% {
-      transform: translate(0, 0);
-    }
-  }
-
-  @keyframes blink-caret {
-    from,
-    to {
-      border-color: transparent;
-    }
-
-    50% {
-      border-color: #000000;
-    }
-  }
   .swiper_box {
     mask-image: linear-gradient(
       var(--mask-direction, to right),
