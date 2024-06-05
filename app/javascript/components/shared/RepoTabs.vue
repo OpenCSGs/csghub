@@ -140,7 +140,7 @@
       </template>
       <template
         #files
-        v-if="(actionName === 'show' || actionName === 'files') && repoType !== 'endpoint'"
+        v-if="actionName === 'show' || actionName === 'files'"
       >
         <repo-files
           :branches="branches"

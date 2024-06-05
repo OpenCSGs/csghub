@@ -15,7 +15,7 @@
 
       <!-- repo files -->
       <el-tab-pane
-        v-if="(repoType !== 'endpoint') || (isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true)"
+        v-if="showFiles"
         :label="$t('all.files')"
         name="files"
       >
@@ -64,7 +64,8 @@
   const props = defineProps({
     defaultTab: String,
     settingsVisibility: Boolean,
-    repoType: String
+    repoType: String,
+    sdk: String
   })
 
   const summaryLabel = computed(() => {
@@ -74,6 +75,18 @@
       return t('endpoints.summary')
     } else {
       return t('all.summary')
+    }
+  })
+
+  const showFiles = computed(() => {
+    if (props.repoType === 'endpoint') {
+      return false
+    } else if (props.repoType === 'space') {
+      if (props.sdk === 'nginx') {
+        return props.settingsVisibility
+      }
+    } else {
+      return true
     }
   })
 
