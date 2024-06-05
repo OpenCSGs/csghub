@@ -75,7 +75,7 @@
               <el-input v-model="dataForm.collectionDesc"
                         :rows="6"
                         type="textarea"
-                        :placeholder="this.$t('all.inputDescPlc')" />
+                        :placeholder="$t('all.inputDescPlc')" />
             </el-form-item>
           </div>
         </div>
@@ -155,33 +155,64 @@
   import InputTip from '../shared/inputs/InputTip.vue'
   import { ref, computed, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import csrfFetch from "../../packs/csrfFetch";
+  import {ElMessage} from "element-plus";
   
   const props = defineProps({
     namespaces: Array,
   })
 
   const { t } = useI18n();
-  const nameRule = inject('nameRule')
-
+  const dataFormRef = ref()
   const owner = ref(props.namespaces[0][0])
-  const collectionName = ref('')
-  const collectionNickName = ref('')
-  const collectionDesc = ref('')
   const visibility = ref('private')
   const hasCreateCollection = ref(false)
   const colorNameList = ref([
     ["blue", "蓝色"],
     ["red", "红色"]
   ])
-  const dataForm = ref({visibility: 'private'})
+  const dataForm = ref({
+    visibility: 'private',
+    colorName: colorNameList.value[0][0]
+  })
   const rules = ref({
     title: [
       { required: true, message: t('collections.newCollection.validation1'), trigger: 'blur' },
-      { min: 2, max: 70, message: t('collections.newCollection.validation1'), trigger: 'blur' },
-      { pattern: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/, message: t('collections.newCollection.validation1'), trigger: "blur" }
+      { min: 2, max: 70, message: t('collections.newCollection.validation2'), trigger: 'blur' },
+      { pattern: /^(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/, message: t('collections.newCollection.validation3'), trigger: "blur" }
     ]})
 
   const createCollection = () => {
     console.log(dataForm.value)
+    console.log(dataFormRef.value)
+    if (!dataForm.value) return
+    dataFormRef.value.validate((valid) => {
+      if (valid) { submitCollectionForm() }
+    })
+  }
+
+  async function submitCollectionForm() {
+    const collectionCreateEndpoint = `/internal_api/collections`
+    const [ownerId, ownerType] = owner.value.split('_')
+
+    const options = { method: 'POST', body: dataForm.value }
+    hasCreateCollection.value = true
+
+    const response = await csrfFetch(collectionCreateEndpoint, options)
+    if (!response.ok) {
+      hasCreateCollection.value = false
+      const data = await response.json()
+      ElMessage.warning(err.message)
+      throw new Error(data.message)
+    } else {
+      hasCreateCollection.value = false
+      ElMessage.success(t('collections.newCollection.createSuccess'))
+      toCollectionDetail(res.path)
+      return response.json()
+    }
+  }
+
+  const toCollectionDetail = (path) => {
+    window.location.pathname = `/collections/${path}`
   }
 </script>
