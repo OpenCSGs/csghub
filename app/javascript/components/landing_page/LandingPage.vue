@@ -283,8 +283,8 @@
   }
   .swiperProduce {
     display: flex;
-    animation: marqueeScroll 50s linear infinite forwards;
-    animation-duration: 50s;
+    animation: marqueeScroll 80s linear infinite forwards;
+    animation-duration: 80s;
     animation-timing-function: linear;
     animation-delay: 0s;
     animation-iteration-count: infinite;
