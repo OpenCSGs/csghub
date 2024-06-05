@@ -34,6 +34,7 @@ import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
 import CampaignCards from "./components/campaigns/CampaignCards.vue"
+import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
 import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
@@ -66,6 +67,7 @@ import NewApplicationSpace from "./components/application_spaces/NewApplicationS
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
+import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 
 const pinia = createPinia()
 
@@ -118,7 +120,9 @@ const app = createApp({
     EkbLanding,
     NewApplicationSpace,
     NewCode,
-    CodeDetail
+    CodeDetail,
+    NewEndpoint,
+    EndpointDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

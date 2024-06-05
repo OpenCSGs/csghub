@@ -28,6 +28,7 @@ import { landingPage } from './zh_js/landing_page';
 import { footer } from './zh_js/footer';
 import { ekb } from './zh_js/ekb';
 import { partner } from './zh_js/partner';
+import { endpoints } from './zh_js/endpoints';
 
 export default {
   // csghub
@@ -50,7 +51,7 @@ export default {
   shared,
   repo,
   components,
-
+  endpoints,
   // portal
   space,
   campaign,

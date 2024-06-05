@@ -84,6 +84,7 @@
           v-for="repo in reposData"
           :repo="repo"
           :repo-type="repoType"
+          width="409"
         />
       </div>
       <div

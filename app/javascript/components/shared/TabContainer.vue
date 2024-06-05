@@ -5,26 +5,44 @@
       :beforeLeave="handleTabLeave"
       @tabClick="handleTabClick"
     >
+      <!-- repo/endpoint summary -->
       <el-tab-pane
-        :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
+        :label="summaryLabel"
         name="summary"
       >
         <slot name="summary"></slot>
       </el-tab-pane>
+
+      <!-- repo files -->
       <el-tab-pane
-        v-if="isApplicationSpace && sdk === 'nginx' ? settingsVisibility : true"
+        v-if="showFiles"
         :label="$t('all.files')"
         name="files"
       >
         <slot name="files"></slot>
       </el-tab-pane>
+
+      <!-- repo community -->
       <el-tab-pane
+        v-if="repoType !== 'endpoint'"
         :label="$t('all.community')"
         name="community"
         class="min-h-[300px]"
       >
         <slot name="community"></slot>
       </el-tab-pane>
+
+      <!-- endpoint logs -->
+      <el-tab-pane
+        v-if="repoType === 'endpoint'"
+        :label="$t('all.logs')"
+        name="logs"
+        class="min-h-[300px]"
+      >
+        <slot name="logs"></slot>
+      </el-tab-pane>
+
+      <!-- repo settings -->
       <el-tab-pane
         v-if="settingsVisibility"
         :label="$t('all.settings')"
@@ -37,26 +55,13 @@
   </div>
 </template>
 
-<style>
-  .el-tabs__header {
-    margin-bottom: 0;
-    z-index: 0;
-  }
-
-  .el-tabs__nav-wrap:after {
-    height: 1px;
-  }
-
-  .el-tabs__nav-scroll {
-    @media screen and (max-width: 768px) {
-      padding-left: 20px;
-    }
-  }
-</style>
-
 <script setup>
   import { ref, computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import trackPageEvent from '../../packs/trackPageEvent'
+
+  const { t } = useI18n()
+  const nameMap = ref({ summary: 'card', files: 'file', community: 'comments' })
 
   const props = defineProps({
     defaultTab: String,
@@ -64,14 +69,32 @@
     repoType: String,
     sdk: String
   })
-  const nameMap = ref({ summary: 'card', files: 'file', community: 'comments' })
-  const isApplicationSpace = computed(() => {
-    return props.repoType === 'space'
+
+  const summaryLabel = computed(() => {
+    if (props.repoType === 'space') {
+      return t('application_spaces.app')
+    } else if (props.repoType === 'endpoint') {
+      return t('endpoints.summary')
+    } else {
+      return t('all.summary')
+    }
+  })
+
+  const showFiles = computed(() => {
+    if (props.repoType === 'endpoint') {
+      return false
+    } else if (props.repoType === 'space') {
+      if (props.sdk === 'nginx') {
+        return props.settingsVisibility
+      }
+    } else {
+      return true
+    }
   })
 
   const activeName = ref(props.defaultTab)
 
-  const emit = defineEmits(['tabChange'])
+  const emit = defineEmits(['tabChange']);
 
   const handleTabLeave = (tab) => {
     emit('tabChange', tab)
@@ -93,3 +116,20 @@
     }
   }
 </script>
+
+<style>
+  .el-tabs__header {
+    margin-bottom: 0;
+    z-index: 0;
+  }
+
+  .el-tabs__nav-wrap:after {
+    height: 1px;
+  }
+
+  .el-tabs__nav-scroll {
+    @media screen and (max-width: 768px) {
+      padding-left: 20px;
+    }
+  }
+</style>
