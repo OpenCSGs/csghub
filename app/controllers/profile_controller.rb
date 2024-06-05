@@ -9,6 +9,7 @@ class ProfileController < ApplicationController
     @datasets = csghub_api.get_user_datasets(@user.name, current_user&.name)
     @spaces = csghub_api.get_user_application_spaces(@user.name, current_user&.name)
     @codes = csghub_api.get_user_codes(@user.name, current_user&.name)
+    @endpoints = csghub_api.get_user_endpoints(@user.name, current_user&.name)
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
     @initiator = "profile"
