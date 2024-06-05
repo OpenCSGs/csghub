@@ -116,6 +116,9 @@ Rails.application.routes.draw do
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
+    resources :endpoints, only: [:create]
+    delete '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -164,6 +167,7 @@ Rails.application.routes.draw do
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
     resources :daily_papers, only: [:index, :new, :create, :show], param: :uuid
+    resources :endpoints, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
         get 'members'
@@ -180,6 +184,10 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/commits', to: 'models#commits', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/commit/:commit_id', to: 'models#commit', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
