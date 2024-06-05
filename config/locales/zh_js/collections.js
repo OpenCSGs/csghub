@@ -14,6 +14,9 @@ export const collections = {
     privateDesc: "只有你（个人）或你所在组织的成员可以看到这个合集",
     createCollection: "创建合集",
     createSuccess: "合集创建成功",
-    tip: "应用于合集，创建后不可更改" 
+    tip: "应用于合集，创建后不可更改",
+    validation1: "请输入合集名称",
+    validation2: "合集名称长度不符合要求",
+    validation3: "输入内容格式不正确",
   },
 }
