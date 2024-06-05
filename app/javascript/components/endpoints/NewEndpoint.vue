@@ -226,7 +226,7 @@
   const maxReplica = ref("5");
 
   const canCreateEndpoint = computed(() => {
-    const modelIdRegex = /^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+    const modelIdRegex = /^[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+$/;
     return (
       nameRule.test(endpointName.value) &&
       modelIdRegex.test(modelId.value) &&

@@ -1,5 +1,6 @@
 class InternalApi::EndpointsController < InternalApi::ApplicationController
   before_action :authenticate_user
+  before_action :valid_model_path, only: [:create]
 
   include Api::RepoValidation
 
@@ -24,5 +25,15 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
 
   def endpoint_params
     params.permit(:name, :model_path, :min_replica, :max_replica, :cloud_resource, :framework_id, :cluster_id, :visibility).merge(owner: current_user)
+  end
+
+  def valid_model_path
+    owner = User.find_by(name: params[:model_path].split('/').first) || Organization.find_by(name: params[:model_path].split('/').first)
+    return render json: { message: "Owner not found" }, status: :not_found unless owner
+
+    model = Model.find_by(name: params[:model_path].split('/').last, owner: owner)
+    return render json: { message: "Model not found" }, status: :not_found unless model
+
+    return render json: { message: "Unauthorized" }, status: :unauthorized unless model.model_public? || current_user.can_read?(model)
   end
 end
