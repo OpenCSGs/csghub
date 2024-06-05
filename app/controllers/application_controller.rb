@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
-  before_action :set_default_locale, :check_user_login
+  before_action :set_default_locale, :check_user_login, :call_event_api
+
+  def call_event_api
+    csghub_api.visit_url(request.fullpath)
+  end
 
   rescue_from StarhubError do |e|
     log_error e.message, e.backtrace
@@ -97,7 +101,13 @@ class ApplicationController < ActionController::Base
       nickname = user_infos['displayName']
       if user
         user.login_identity = user_infos['sub']
-        user.name = user_name if user.name.blank?
+        if user.name.blank?
+          if user_name.match(/^\d+$/)
+            user.name = nil
+          else
+            user.name = user_name
+          end
+        end
         user.nickname = nickname if user.nickname.blank? && nickname.present?
         user.avatar = user_infos['avatar'] if user.avatar.blank?
         user.phone = user_infos['phone'] if user.phone.blank?

@@ -6,7 +6,10 @@ const jwtFetch = (url, options = {}, forceLogin = false) => {
   if (forceLogin && !jwtToken) {
     window.location.href = "/login"
   }
-  options.headers = { "Authorization": `Bearer ${jwtToken}`, ...options.headers };
+  options.headers = options.headers || {}
+  if (jwtToken) {
+    options.headers = { "Authorization": `Bearer ${jwtToken}`, ...options.headers };
+  }
   return fetch(url, options)
 };
 
