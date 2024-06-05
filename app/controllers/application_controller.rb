@@ -101,7 +101,13 @@ class ApplicationController < ActionController::Base
       nickname = user_infos['displayName']
       if user
         user.login_identity = user_infos['sub']
-        user.name = user_name if user.name.blank?
+        if user.name.blank?
+          if user_name.match(/^\d+$/)
+            user.name = nil
+          else
+            user.name = user_name
+          end
+        end
         user.nickname = nickname if user.nickname.blank? && nickname.present?
         user.avatar = user_infos['avatar'] if user.avatar.blank?
         user.phone = user_infos['phone'] if user.phone.blank?
