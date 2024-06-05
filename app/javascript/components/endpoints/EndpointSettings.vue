@@ -128,7 +128,7 @@
     const response = await jwtFetch(stopUrl, { method: "PUT" })
 
     if (response.ok) {
-      ElMessage({ message: t("application_spaces.toggleStatusSuccess"), type: "success" })
+      ElMessage({ message: t("endpoints.settings.toggleStatusSuccess"), type: "success" })
     } else {
       if (response.status === 401) {
         refreshJWT()
@@ -166,7 +166,7 @@
     const response = await jwtFetch(startUrl, { method: "PUT" })
 
     if (response.ok) {
-      ElMessage({ message: t("application_spaces.toggleStatusSuccess"), type: "success" })
+      ElMessage({ message: t("endpoints.settings.toggleStatusSuccess"), type: "success" })
     } else {
       if (response.status === 401) {
         refreshJWT()

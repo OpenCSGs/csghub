@@ -44,5 +44,6 @@ export const endpoints = {
     delTips3: "the endpoint and all its files.",
     confirmDel: "I understand and confirm deletion",
     namespaceName: "Endpoint Name/ID",
+    toggleStatusSuccess: 'Updated, please wait Endpoint status change'
   }
 }

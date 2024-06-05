@@ -44,5 +44,6 @@ export const endpoints = {
     delTips3: "专属实例。",
     confirmDel: "我已知晓,确认删除",
     namespaceName: "专属实例名称/ID",
+    toggleStatusSuccess: '更新成功，请等待实例状态切换'
   }
 }
