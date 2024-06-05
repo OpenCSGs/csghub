@@ -154,20 +154,36 @@
       <p
         class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center"
       >
-      {{ $t('landingPage.customers.title') }}
+        {{ $t('landingPage.customers.title') }}
       </p>
       <div
-        class="flex flex-wrap justify-center items-center max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]"
+        class="swiper_box overflow-hidden flex items-center justify-start max-w-[1280px] m-auto md:px-[32px] md:pt-[64px]"
       >
-        <div
-          v-for="item in customers"
-          class="group flex flex-col gap-[8px] items-center justify-center px-[36px] py-[24px]"
-        >
-          <img
-            :src="item.logo"
-            :alt="item.name"
-            class="w-auto h-[44px]"
-          />
+        <div class="swiperProduce">
+          <div
+            v-for="item in customers"
+            :key="item"
+            class="mr-[36px] px-[36px] py-[24px]"
+          >
+            <img
+              :src="item.logo"
+              :alt="item.name"
+              class="w-auto h-[88px]"
+            />
+          </div>
+        </div>
+        <div class="swiperProduce">
+          <div
+            v-for="item in customers"
+            :key="item"
+            class="mr-[36px] px-[36px] py-[24px]"
+          >
+            <img
+              :src="item.logo"
+              :alt="item.name"
+              class="w-auto h-[88px]"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -217,7 +233,6 @@
     hotSpaces: Object,
     customers: Array
   })
-
   onMounted(() => {
     useWxShare({
       title: 'OpenCSG 打造中国本土化 Huggingface plus',
@@ -226,3 +241,36 @@
     })
   })
 </script>
+
+<style scoped>
+  @keyframes marqueeScroll {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    100% {
+      transform: translate(-100%, 0);
+    }
+  }
+  .swiper_box {
+    mask-image: linear-gradient(
+      var(--mask-direction, to right),
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+    );
+  }
+  .swiperProduce {
+    display: flex;
+    animation: marqueeScroll 80s linear infinite forwards;
+    animation-duration: 80s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    animation-name: marqueeScroll;
+  }
+</style>
