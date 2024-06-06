@@ -1,9 +1,9 @@
 <template>
   <div
-    class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
+    class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center cursor-pointer border gap-1"
     @click="viewMore"
   >
-    +{{ num }}{{ $t('all.more') }}
+    + {{ num }} {{ $t('all.more') }}
   </div>
 </template>
 
