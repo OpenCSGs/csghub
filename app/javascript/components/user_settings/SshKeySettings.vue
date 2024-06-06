@@ -59,6 +59,8 @@ import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
 import {ElMessage} from "element-plus"
 import csrfFetch from "../../packs/csrfFetch.js"
+import { inject } from 'vue'
+import jwtFetch from '../../packs/jwtFetch'
 
 export default {
   props: {
@@ -75,6 +77,7 @@ export default {
 
   data() {
     return {
+      csghubServer: inject('csghubServer'),
       centerDialogVisible: false,
       sshKeyWarningDialogVisible: false,
       profileName: this.name,
@@ -136,22 +139,17 @@ export default {
     },
 
     async createTheSshKey() {
-      const SshKeyCreateEndpoint = "/internal_api/ssh_keys"
-
-      const jsonData = {
-        name: this.theSshKeyName,
-        ssh_key: this.formData.theSshKey,
-      }
-
-      const option = {
+      const sshKeyOptions = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonData)
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ 
+          username: this.profileName,
+          name: this.theSshKeyName,
+          content: this.formData.theSshKey
+        })
       }
-
-      const response = await csrfFetch(SshKeyCreateEndpoint, option)
+      const SshKeyCreateEndpoint = `${this.csghubServer}/api/v1/user/${this.profileName}/ssh_keys`
+      const response = await jwtFetch(SshKeyCreateEndpoint, sshKeyOptions)
 
       if (!response.ok) {
         return response.json().then((data) => {
