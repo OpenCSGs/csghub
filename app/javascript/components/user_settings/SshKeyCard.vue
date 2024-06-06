@@ -80,7 +80,7 @@ export default {
       if (!response.ok) {
         return response.json().then((data) => {
           ElMessage({
-            message: data.message,
+            message: data.msg,
             type: 'warning'
           })
         })

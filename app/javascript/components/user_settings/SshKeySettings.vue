@@ -153,8 +153,7 @@ export default {
 
       if (!response.ok) {
         return response.json().then((data) => {
-          console.log(data)
-          throw new Error(data.message)
+          throw new Error(data.msg)
         })
       } else {
         setTimeout(() => {
