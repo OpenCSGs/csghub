@@ -16,6 +16,17 @@ as well as a link to its edit page.
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
 %>
 
+<% 
+begin
+  data = JSON.parse(Starhub.api.get_repo_mirror("models", 
+                                                  page.resource.owner.name, 
+                                                  page.resource.name, 
+                                                  { current_user: page.resource.creator.name }))['data']
+rescue
+  data = nil
+end
+%>
+
 <% content_for(:title) { t("administrate.actions.show_resource", name: page.page_title) } %>
 
 <header class="main-content__header">
@@ -24,10 +35,14 @@ as well as a link to its edit page.
   </h1>
 
   <div>
-    <%= link_to(
-      t("administrate.actions.sync_resource", name: page.page_title),
-      "/admin/models/#{page.resource.id}/sync",
-      class: "button") %>
+    <% debugger %>
+
+    <% if data && page.resource.respond_to?(:origin) && !page.resource.origin.nil? %>
+      <%= link_to(
+        t("administrate.actions.sync_resource", name: page.page_title),
+        "/admin/models/#{page.resource.id}/sync",
+        class: "button") %>
+    <% end %>
 
     <%= link_to(
       t("administrate.actions.edit_resource", name: page.page_title),
@@ -58,17 +73,6 @@ as well as a link to its edit page.
       <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
           ><%= render_field attribute, page: page %></dd>
     <% end %>
-
-    <% 
-    begin
-      data = JSON.parse(Starhub.api.get_repo_mirror("models", 
-                                                      page.resource.owner.name, 
-                                                      page.resource.name, 
-                                                      { current_user: page.resource.creator.name }))['data']
-    rescue
-      data = nil
-    end 
-    %>
 
     <% if data %>
       <dt class="attribute-label">

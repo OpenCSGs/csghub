@@ -12,14 +12,26 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
-      <div 
+      <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
-      </div>    
+      </div>
+    </div>
+
+    <!-- endpoint -->
+    <div v-else-if="repoType === 'endpoint'"
+         class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
+    >
+      <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
+      <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
+      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">
+        {{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}
+      </div>
+      <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
     </div>
 
     <!-- other repo -->
@@ -29,14 +41,14 @@
       <el-avatar :size="24" :src="avatar" class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
       <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">{{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}</div>
-      <div 
+      <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''" 
+        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">{{ likesNumberDisplayName }}</div>
-      </div>      
+      </div>
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
       <p v-if="canWrite" class="cursor-pointer" @click="showSpaceLogs">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="none">
@@ -51,14 +63,17 @@
       </a>
       <div>/</div>
       <a class="text-[#303133] max-w-full break-words hover:text-[#223B99]" href="#">
-        {{ path.split('/')[1] }}
+        {{ repoType === 'endpoint' ? name : path.split('/')[1] }}
       </a>
       <div class="cursor-pointer" @click="copyName"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.7779 5.3335V5.3335C11.9162 5.3335 12.4854 5.3335 12.9395 5.50441C13.6582 5.77492 14.2254 6.34212 14.4959 7.06083C14.6668 7.51495 14.6668 8.08409 14.6668 9.22239V10.4002C14.6668 11.8936 14.6668 12.6404 14.3762 13.2108C14.1205 13.7126 13.7126 14.1205 13.2108 14.3762C12.6404 14.6668 11.8936 14.6668 10.4002 14.6668H9.22239C8.08409 14.6668 7.51495 14.6668 7.06083 14.4959C6.34212 14.2254 5.77492 13.6582 5.50441 12.9395C5.3335 12.4854 5.3335 11.9162 5.3335 10.7779V10.7779M5.60016 10.6668H6.40016C7.89364 10.6668 8.64037 10.6668 9.2108 10.3762C9.71257 10.1205 10.1205 9.71257 10.3762 9.2108C10.6668 8.64037 10.6668 7.89364 10.6668 6.40016V5.60016C10.6668 4.10669 10.6668 3.35995 10.3762 2.78952C10.1205 2.28776 9.71257 1.87981 9.2108 1.62415C8.64037 1.3335 7.89364 1.3335 6.40016 1.3335H5.60016C4.10669 1.3335 3.35995 1.3335 2.78952 1.62415C2.28776 1.87981 1.87981 2.28776 1.62415 2.78952C1.3335 3.35995 1.3335 4.10669 1.3335 5.60016V6.40016C1.3335 7.89364 1.3335 8.64037 1.62415 9.2108C1.87981 9.71257 2.28776 10.1205 2.78952 10.3762C3.35995 10.6668 4.10669 10.6668 5.60016 10.6668Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     </div>
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{desc}}</div>
+
+  <!-- repo tags -->
   <header-tags
-    :task-tags="tags.task_tags" 
+    v-if="repoType === 'model' || repoType === 'dataset'"
+    :task-tags="tags.task_tags"
     :framework-tags="tags.framework_tags"
     :license-tags="tags.license_tags"
     :language-tags="tags.language_tags"
@@ -131,7 +146,7 @@
 
   const addLike = async () => {
     const options = { method: 'PUT' }
-    const response = await jwtFetch(`${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`, options)
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`, options, true)
     if (!response.ok) {
       response.json().then((data) => {
         ElMessage({

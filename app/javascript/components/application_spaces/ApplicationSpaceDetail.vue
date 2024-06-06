@@ -271,7 +271,7 @@
         }
 
         // 启动日志
-        if (isLogsSSEConnected.value === false) {
+        if (isLogsSSEConnected.value === false && props.canWrite) {
           syncSpaceLogs()
         }
       },
