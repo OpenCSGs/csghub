@@ -44,6 +44,23 @@ export const endpoints = {
     delTips3: "专属实例。",
     confirmDel: "我已知晓,确认删除",
     namespaceName: "专属实例名称/ID",
-    toggleStatusSuccess: '更新成功，请等待实例状态切换'
+    toggleStatusSuccess: '更新成功，请等待实例状态切换',
+    statusText: "当前实例目前是",
+    status: "状态",
+    changeVisibility: "修改实例可见性",
+    visibility: "实例可见性",
+    privateVis: "只有创建者或组织成员可见",
+    publicVis: "任何人都可以看到此实例",
+    privateInfo: "，仅创建者或者组织管理员可进行修改",
+    publicInfo: "， 任何互联网上的人都可以看到此实例。",
+    resource: "资源配置",
+    resourceTip: "您可以随时在实例设置中切换到不同的实例云资源。切换到付费资源后，将根据使用时长向您收取费用。",
+    currentCloudResource: '当前云资源',
+    framework: "运行时框架",
+    currentFramework: '当前运行时框架',
+    maxReplica: "最大弹性副本",
+    minReplica: "最小弹性副本",
+    currentMaxReplica: "当前最大弹性副本",
+    currentMinReplica: "当前最小弹性副本"
   }
 }

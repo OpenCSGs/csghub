@@ -6,13 +6,17 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t("endpoints.settings.stopEndpoint") }}
+          {{ $t('endpoints.settings.stopEndpoint') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <div class="flex flex-col gap-[6px]">
-          <el-button @click="stopEndpoint" class="w-[100px]" :disabled="!initialized || isStopped">
-            {{ $t("endpoints.settings.stop") }}
+          <el-button
+            @click="stopEndpoint"
+            class="w-[100px]"
+            :disabled="!initialized || isStopped"
+          >
+            {{ $t('endpoints.settings.stop') }}
           </el-button>
         </div>
       </div>
@@ -24,13 +28,183 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t("endpoints.settings.restartEndpoint") }}
+          {{ $t('endpoints.settings.restartEndpoint') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <el-button @click="restartEndpoint" class="w-[100px]" :disabled="notInitialized">
-          {{ $t("endpoints.settings.restart") }}
+        <el-button
+          @click="restartEndpoint"
+          class="w-[100px]"
+          :disabled="notInitialized"
+        >
+          {{ $t('endpoints.settings.restart') }}
         </el-button>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- cloud resource -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.resource') }}
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          {{ $t('endpoints.settings.resourceTip') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('endpoints.settings.currentCloudResource') }}
+        </p>
+        <el-select
+          v-model="currentResource"
+          placeholder="选择"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+          @change="updateCloudResource"
+        >
+          <el-option
+            v-for="item in cloudResources"
+            :key="item.name"
+            :label="item.name"
+            :value="item.resources"
+          />
+        </el-select>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- framework -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.framework') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('endpoints.settings.currentFramework') }}
+        </p>
+        <el-select
+          v-model="currentFrameworkId"
+          placeholder="选择"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+          @change="updateFramework"
+        >
+          <el-option
+            v-for="item in frameworks"
+            :key="item.id"
+            :label="item.frame_name"
+            :value="item.id"
+          />
+        </el-select>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- max replica -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.maxReplica') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('endpoints.settings.currentMaxReplica') }}
+        </p>
+        <el-select
+          v-model="currentMaxReplica"
+          placeholder="选择"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+          @change="updateMaxReplica"
+        >
+          <el-option
+            v-for="item in replicaRanges"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- min replica -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.minReplica') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('endpoints.settings.currentMinReplica') }}
+        </p>
+        <el-select
+          v-model="currentMinReplica"
+          placeholder="选择"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+          @change="updateMinReplica"
+        >
+          <el-option
+            v-for="item in replicaRanges"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </el-select>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- 修改可见性 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.changeVisibility') }}
+        </div>
+        <div class="text-[14px] text-[#475467] leading-[20px]">
+          {{ $t('endpoints.settings.statusText') }}
+          <span class="text-black font-semibold"
+            >【{{
+              repoDetailStore.isPrivate ? t('all.private') : t('all.public')
+            }}】</span
+          >
+          {{ $t('endpoints.settings.status') }}。{{
+            repoDetailStore.isPrivate
+              ? t('endpoints.settings.privateVis')
+              : t('endpoints.settings.publicVis')
+          }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('endpoints.settings.visibility') }}
+        </p>
+        <el-select
+          v-model="visibilityName"
+          @change="changeVisibility"
+          placeholder="Select"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        >
+          <el-option
+            v-for="item in visibilityOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </div>
     </div>
 
@@ -40,26 +214,35 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t("endpoints.settings.deleteEndpoint") }}
+          {{ $t('endpoints.settings.deleteEndpoint') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t("endpoints.settings.delTips") }}
-          <span class="text-black font-medium">{{ $t("all.canNot") }}</span>
-          {{ $t("endpoints.settings.delTips2") }}
-          <span class="text-black font-medium break-words">{{ endpointName }}</span>
-          {{ $t("endpoints.settings.delTips3") }}
+          {{ $t('endpoints.settings.delTips') }}
+          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          {{ $t('endpoints.settings.delTips2') }}
+          <span class="text-black font-medium break-words">{{
+            endpointName
+          }}</span>
+          {{ $t('endpoints.settings.delTips3') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t("all.enterPls") }}
+          {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">
             {{ `${endpointName}/${endpointId}` }}
           </span>
-          {{ $t("all.sureDel") }}
+          {{ $t('all.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">{{ $t("endpoints.settings.namespaceName") }}</p>
-        <el-input v-model="delDesc" clearable size="large" class="!w-[512px] sm:!w-full" />
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('endpoints.settings.namespaceName') }}
+        </p>
+        <el-input
+          v-model="delDesc"
+          clearable
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        />
         <div class="flex">
           <div
             id="confirmDelete"
@@ -73,7 +256,7 @@
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave"
           >
-            {{ $t("endpoints.settings.confirmDel") }}
+            {{ $t('endpoints.settings.confirmDel') }}
           </div>
         </div>
       </div>
@@ -82,53 +265,78 @@
 </template>
 
 <script setup>
-  import { ref, computed, inject } from "vue"
-  import { ElMessage } from "element-plus"
-  import refreshJWT from "../../packs/refreshJWT.js"
-  import jwtFetch from "../../packs/jwtFetch"
-  import csrfFetch from "../../packs/csrfFetch"
-  import { useI18n } from "vue-i18n"
+  import { h, ref, computed, inject, onMounted } from 'vue'
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  import refreshJWT from '../../packs/refreshJWT.js'
+  import jwtFetch from '../../packs/jwtFetch'
+  import csrfFetch from '../../packs/csrfFetch'
+  import { useI18n } from 'vue-i18n'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
     endpointId: Number,
     endpointName: String,
     appStatus: String,
     modelId: String,
-    userName: String
+    userName: String,
+    cloudResource: String,
+    framework: String,
+    maxReplica: Number,
+    minReplica: Number
   })
 
   const { t } = useI18n()
-  const csghubServer = inject("csghubServer")
-  const delDesc = ref("")
+  const csghubServer = inject('csghubServer')
+  const delDesc = ref('')
+  const currentResource = ref(props.cloudResource)
+  const cloudResources = ref([])
+  const currentFrameworkId = ref('')
+
+  const frameworks = ref([])
+  const replicaRanges = ['1', '2', '3', '4', '5']
+  const currentMaxReplica = ref(props.maxReplica)
+  const currentMinReplica = ref(props.minReplica)
+  const repoDetailStore = useRepoDetailStore()
+  const visibilityOptions = ref([
+    { value: 'Private', label: t('all.private') },
+    { value: 'Public', label: t('all.public') }
+  ])
+
+  const visibilityName = computed(() => {
+    return !!repoDetailStore.privateVisibility ? 'Private' : 'Public'
+  })
 
   const initialized = computed(() => {
     return [
-      "Building",
-      "Deploying",
-      "Startup",
-      "Running",
-      "Stopped",
-      "Sleeping",
-      "BuildingFailed",
-      "DeployFailed",
-      "RuntimeError"
+      'Building',
+      'Deploying',
+      'Startup',
+      'Running',
+      'Stopped',
+      'Sleeping',
+      'BuildingFailed',
+      'DeployFailed',
+      'RuntimeError'
     ].includes(props.appStatus)
   })
 
   const notInitialized = computed(() => {
-    return ["NoAppFile"].includes(props.appStatus)
+    return ['NoAppFile'].includes(props.appStatus)
   })
 
   const isStopped = computed(() => {
-    return ["Stopped"].includes(props.appStatus)
+    return ['Stopped'].includes(props.appStatus)
   })
 
   const stopEndpoint = async () => {
     stopUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}/stop`
-    const response = await jwtFetch(stopUrl, { method: "PUT" })
+    const response = await jwtFetch(stopUrl, { method: 'PUT' })
 
     if (response.ok) {
-      ElMessage({ message: t("endpoints.settings.toggleStatusSuccess"), type: "success" })
+      ElMessage({
+        message: t('endpoints.settings.toggleStatusSuccess'),
+        type: 'success'
+      })
     } else {
       if (response.status === 401) {
         refreshJWT()
@@ -136,16 +344,144 @@
         response.json().then((data) => {
           ElMessage({
             message: data.msg,
-            type: "warning"
+            type: 'warning'
           })
         })
       }
     }
   }
 
+  const changeVisibility = (value) => {
+    ElMessageBox({
+      title: t('endpoints.settings.changeVisibility'),
+      message: h('p', null, [
+        h('span', null, t('all.changeVis')),
+        h(
+          'span',
+          null,
+          value === 'Private' ? t('all.private') : t('all.public')
+        ),
+        h(
+          'span',
+          null,
+          value === 'Private'
+            ? t('endpoints.settings.privateInfo')
+            : t('endpoints.settings.publicInfo')
+        )
+      ]),
+      showCancelButton: true,
+      confirmButtonText: t('all.confirm'),
+      cancelButtonText: t('all.cancel')
+    })
+      .then(() => {
+        changeVisibilityCall(value)
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'warning',
+          message: t('all.changeCancel')
+        })
+      })
+  }
+
+  const changeVisibilityCall = (value) => {
+    const isprivateSelected = value === 'Private' ? true : false
+    const payload = { private: isprivateSelected }
+    updateEndpoint(payload)
+  }
+
+  const fetchResources = async () => {
+    const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/space_resources`,
+      options
+    )
+    if (!res.ok) {
+      ElMessage({
+        message: t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      res.json().then((body) => {
+        cloudResources.value = body.data
+      })
+    }
+  }
+
+  const updateCloudResource = (value) => {
+    const payload = { cloud_resource: value }
+    updateEndpoint(payload)
+  }
+
+  const fetchFrameworks = async () => {
+    const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/models/${props.modelId}/runtime_framework`,
+      options
+    )
+    if (!res.ok) {
+      ElMessage({
+        message: t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      res.json().then((body) => {
+        frameworks.value = body.data
+        const currentFramework = body.data.find((framework) => {
+          return framework.frame_name === props.framework
+        })
+        currentFrameworkId.value = currentFramework.id
+      })
+    }
+  }
+
+  const updateFramework = (value) => {
+    const payload = { framework_id: value }
+    updateEndpoint(payload)
+  }
+
+  const updateMaxReplica = (value) => {
+    const payload = { max_replica: value }
+    updateEndpoint(payload)
+  }
+
+  const updateMinReplica = (value) => {
+    const payload = { min_replica: value }
+    updateEndpoint(payload)
+  }
+
+  const updateEndpoint = async (payload) => {
+    const endpointUpdateEndpoint = `/internal_api/endpoints/${props.userName}/${props.endpointName}/${props.endpointId}`
+    const option = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }
+    const response = await csrfFetch(endpointUpdateEndpoint, option)
+
+    if (!response.ok) {
+      response.json().then((err) => {
+        ElMessage({ message: err.message, type: 'warning' })
+      })
+    } else {
+      if (payload.hasOwnProperty('private')) {
+        repoDetailStore.updateVisibility(payload.private)
+      }
+      response.json().then((data) => {
+        ElMessage({ message: data.message, type: 'success' })
+      })
+    }
+  }
+
   const deleteEndpoint = async () => {
     const endpointDeleteEndpoint = `/internal_api/endpoints/${props.userName}/${props.endpointName}/${props.endpointId}`
-    const option = { method: "DELETE" }
+    const option = { method: 'DELETE' }
     const response = await csrfFetch(endpointDeleteEndpoint, option)
 
     if (!response.ok) {
@@ -153,7 +489,7 @@
         throw new Error(data.message)
       })
     } else {
-      ElMessage({ message: t("all.delSuccess"), type: "success" })
+      ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
         window.location.href = `/profile/${props.userName}`
       }, 500)
@@ -163,10 +499,13 @@
 
   const restartEndpoint = async () => {
     startUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}/start`
-    const response = await jwtFetch(startUrl, { method: "PUT" })
+    const response = await jwtFetch(startUrl, { method: 'PUT' })
 
     if (response.ok) {
-      ElMessage({ message: t("endpoints.settings.toggleStatusSuccess"), type: "success" })
+      ElMessage({
+        message: t('endpoints.settings.toggleStatusSuccess'),
+        type: 'success'
+      })
     } else {
       if (response.status === 401) {
         refreshJWT()
@@ -174,7 +513,7 @@
         response.json().then((data) => {
           ElMessage({
             message: data.msg,
-            type: "warning"
+            type: 'warning'
           })
         })
       }
@@ -182,13 +521,17 @@
   }
 
   const handleMouseOver = () => {
-    if (delDesc.value !== "") {
-      document.getElementById("confirmDelete").classList.replace("bg-[#D92D20]", "bg-[#B42318]")
+    if (delDesc.value !== '') {
+      document
+        .getElementById('confirmDelete')
+        .classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
     }
   }
 
   const handleMouseLeave = () => {
-    document.getElementById("confirmDelete").classList.replace("bg-[#B42318]", "bg-[#D92D20]")
+    document
+      .getElementById('confirmDelete')
+      .classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
   }
 
   const clickDelete = () => {
@@ -196,9 +539,14 @@
       deleteEndpoint().catch((err) => {
         ElMessage({
           message: err.message,
-          type: "warning"
+          type: 'warning'
         })
       })
     }
   }
+
+  onMounted(() => {
+    fetchResources()
+    fetchFrameworks()
+  })
 </script>
