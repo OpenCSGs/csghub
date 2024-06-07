@@ -13,6 +13,9 @@ export const collections = {
     privateDesc: "Only you (the individual) or members of your organization can see this collection", 
     createCollection: "Create Collection", 
     createSuccess: "Collection created successfully", 
-    tip: "Applies to collection, cannot be changed after creation"
+    tip: "Applies to collection, cannot be changed after creation",
+    validation1: "Please enter the collection name",
+    validation2: "The length of the collection name does not meet the requirements",
+    validation3: "The input content format is incorrect",
   },
 }

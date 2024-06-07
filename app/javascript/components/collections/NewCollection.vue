@@ -1,5 +1,3 @@
-
-import SvgIcon from '../shared/SvgIcon.vue';
 <template>
   <div class="w-[640px] m-auto flex flex-col items-center md:w-full md:p-5">
     <div>
@@ -8,86 +6,106 @@ import SvgIcon from '../shared/SvgIcon.vue';
     <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('collections.newCollection.title') }}</h3>
     <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('collections.newCollection.titleDesc') }}</p>
     <div class="mt-9">
-      <!-- 合集名称选择 -->
-      <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
-        <div>
-          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
-          <el-select v-model="owner" :placeholder="$t('all.select')" style="width: 312px">
-            <el-option
-              v-for="item in namespaces"
-              :key="item[0]"
-              :label="item[1]"
-              :value="item[0]"
-            />
-          </el-select>
+      <el-form
+        ref="dataFormRef"
+        :model="dataForm"
+        :rules="rules"
+        label-position="top"
+        class="mt-[48px] text-left">
+        <!--第一排-->
+        <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
+          <div>
+            <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
+            <el-form-item prop="owner">
+              <el-select v-model="dataForm.owner" :placeholder="$t('all.select')" style="width: 312px">
+                <el-option
+                  v-for="item in namespaces"
+                  :key="item[0]"
+                  :label="item[1]"
+                  :value="item[0]"
+                />
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="md:hidden">
+            <p class="h-8"></p>
+            <p class="text-[#909399] text-xl font-light">/</p>
+          </div>
+          <div class="flex-1">
+            <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionName') }}</p>
+            <el-form-item prop="title">
+              <el-input v-model="dataForm.title" :placeholder="$t('rule.collectionNameRule')" style="width: 312px">
+                <template #suffix>
+                  <InputTip :content="$t('collections.newCollection.tip')" />
+                </template>
+              </el-input>
+            </el-form-item>
+          </div>
         </div>
-        <div class="md:hidden">
-          <p class="h-8"></p>
-          <p class="text-[#909399] text-xl font-light">/</p>
+        <!--第二排-->
+        <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
+          <div class="flex-1">
+            <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionNickName') }}</p>
+            <el-form-item prop="collectionNickName">
+              <el-input v-model="dataForm.collectionNickName" :placeholder="$t('all.inputNickNamePlc')" style="width: 312px"/>
+            </el-form-item>
+          </div>
+          <div class="">
+            <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.selectTheme') }}</p>
+            <el-form-item prop="colorName">
+              <el-select v-model="dataForm.colorName" :placeholder="$t('all.select')" style="width: 312px">
+                <el-option
+                  v-for="item in colorNameList"
+                  :key="item[0]"
+                  :label="item[1]"
+                  :value="item[0]"
+                />
+                <template #prefix>
+                  <SvgIcon name="blue" />
+                </template>
+              </el-select>
+            </el-form-item>
+          </div>
         </div>
-        <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionName') }}</p>
-          <el-input v-model="collectionName" :placeholder="$t('rule.collectionNameRule')" style="width: 312px">
-            <template #suffix>            
-              <InputTip :content="$t('collections.newCollection.tip')" />
-            </template>
-          </el-input>
-        </div> 
-      </div>
-
-      <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
-        <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionNickName') }}</p>
-          <el-input v-model="collectionNickName" :placeholder="$t('all.inputNickNamePlc')" style="width: 312px"/>
+        <!--第三排-->
+        <div class="w-full flex sm:flex-col mb-9">
+          <div class="flex-1">
+            <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionDesc') }}</p>
+            <el-form-item prop="collectionDesc">
+              <el-input v-model="dataForm.collectionDesc"
+                        :rows="6"
+                        type="textarea"
+                        :placeholder="$t('all.inputDescPlc')" />
+            </el-form-item>
+          </div>
         </div>
-        <div class="">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.selectTheme') }}</p>
-          <el-select v-model="colorName" :placeholder="$t('all.select')" style="width: 312px">
-            <el-option
-              v-for="item in colorNameList"
-              :key="item[0]"
-              :label="item[1]"
-              :value="item[0]"
-            />
-            <template #prefix>     
-              <SvgIcon name="blue" />
-            </template>
-          </el-select>
+        <hr class="mb-9" />
+        <!--第四排-->
+        <div class="mb-9">
+          <el-form-item prop="visibility">
+            <el-radio-group v-model="dataForm.visibility" class="!block">
+              <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
+                {{ $t('collections.newCollection.public') }}
+                <p class="whitespace-normal text-[#475467] font-light">{{ $t('collections.newCollection.publicDesc') }}</p>
+              </el-radio>
+              <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
+                {{ $t('collections.newCollection.private') }}
+                <p class="whitespace-normal text-[#475467] font-light">{{ $t('collections.newCollection.privateDesc') }}</p>
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
         </div>
-      </div>
-
-      <div class="w-full flex sm:flex-col mb-9">
-        <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.collectionDesc') }}</p>
-          <el-input v-model="collectionDesc"
-                    :rows="6"
-                    type="textarea"
-                    :placeholder="this.$t('all.inputDescPlc')" />
+      </el-form>
+      <div class="flex justify-end w-full">
+        <el-form-item>
+            <button
+                class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
+                @click="createCollection"
+            >
+              {{ $t('collections.newCollection.createCollection') }}
+            </button>
+        </el-form-item>
         </div>
-      </div>
-
-      <hr class="mb-9" />
-      <div class="mb-9">
-        <el-radio-group v-model="visibility" class="!block">
-          <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
-            {{ $t('collections.newCollection.public') }}
-            <p class="whitespace-normal text-[#475467] font-light">{{ $t('collections.newCollection.publicDesc') }}</p>
-          </el-radio>
-          <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
-            {{ $t('collections.newCollection.private') }}
-            <p class="whitespace-normal text-[#475467] font-light">{{ $t('collections.newCollection.privateDesc') }}</p>
-          </el-radio>
-        </el-radio-group>
-      </div>
-      <div class="flex justify-end">
-        <button
-          class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
-          @click="createCollection"
-          :disabled="!canCreateCollection || hasCreateCollection"
-        >
-          {{ $t('collections.newCollection.createCollection') }}
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -135,27 +153,66 @@ import SvgIcon from '../shared/SvgIcon.vue';
 
 <script setup>
   import InputTip from '../shared/inputs/InputTip.vue'
-  import { ref, computed, onMounted, inject } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import csrfFetch from "../../packs/csrfFetch";
+  import {ElMessage} from "element-plus";
   
   const props = defineProps({
     namespaces: Array,
   })
 
   const { t } = useI18n();
-  const nameRule = inject('nameRule')
-
+  const dataFormRef = ref()
   const owner = ref(props.namespaces[0][0])
-  const collectionName = ref('')
-  const collectionNickName = ref('')
-  const collectionDesc = ref('')
   const visibility = ref('private')
   const hasCreateCollection = ref(false)
   const colorNameList = ref([
     ["blue", "蓝色"],
     ["red", "红色"]
   ])
-  const colorName = ref(colorNameList.value[0][0])
+  const dataForm = ref({
+    visibility: 'private',
+    colorName: colorNameList.value[0][0]
+  })
+  const rules = ref({
+    title: [
+      { required: true, message: t('collections.newCollection.validation1'), trigger: 'blur' },
+      { min: 2, max: 70, message: t('collections.newCollection.validation2'), trigger: 'blur' },
+      { pattern: /^(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/, message: t('collections.newCollection.validation3'), trigger: "blur" }
+    ]})
 
-  const canCreateCollection = computed(() => { return nameRule.test(collectionName.value) })
+  const createCollection = () => {
+    console.log(dataForm.value)
+    console.log(dataFormRef.value)
+    if (!dataForm.value) return
+    dataFormRef.value.validate((valid) => {
+      if (valid) { submitCollectionForm() }
+    })
+  }
+
+  async function submitCollectionForm() {
+    const collectionCreateEndpoint = `/internal_api/collections`
+    const [ownerId, ownerType] = owner.value.split('_')
+
+    const options = { method: 'POST', body: dataForm.value }
+    hasCreateCollection.value = true
+
+    const response = await csrfFetch(collectionCreateEndpoint, options)
+    if (!response.ok) {
+      hasCreateCollection.value = false
+      const data = await response.json()
+      ElMessage.warning(err.message)
+      throw new Error(data.message)
+    } else {
+      hasCreateCollection.value = false
+      ElMessage.success(t('collections.newCollection.createSuccess'))
+      toCollectionDetail(res.path)
+      return response.json()
+    }
+  }
+
+  const toCollectionDetail = (path) => {
+    window.location.pathname = `/collections/${path}`
+  }
 </script>
