@@ -30,7 +30,6 @@ Rails.application.routes.draw do
       end
     end
     resources :comments, only: [:create, :destroy, :index]
-    resources :ssh_keys, only: [:create, :destroy]
     resources :access_token, only: [] do
       collection do
         post 'refresh', to: 'access-tokens/refresh'
