@@ -13,6 +13,23 @@ class InternalApi::EndpointsController < InternalApi::ApplicationController
     end
   end
 
+  def update
+    if params[:private].to_s.present?
+      @endpoint.visibility = params[:private].to_s == 'true' ? 'private' : 'public'
+    end
+
+    @endpoint.cloud_resource = params[:cloud_resource] if params[:cloud_resource].present?
+    @endpoint.min_replica = params[:min_replica] if params[:min_replica].present?
+    @endpoint.max_replica = params[:max_replica] if params[:max_replica].present?
+    @endpoint.framework_id = params[:framework_id] if params[:framework_id].present?
+
+    if @endpoint.save
+      render json: { message: I18n.t('repo.updateSuccess') }
+    else
+      render json: { message: I18n.t('repo.updateFailed') }, status: :bad_request
+    end
+  end
+
   def destroy
     if @endpoint.destroy
       render json: { message: I18n.t('repo.delSuccess') }
