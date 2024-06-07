@@ -8,12 +8,12 @@
       {{ $t('all.tasks') }}:
     </div>
     <tag-item
-      v-for="tag in taskTags.theTags"
+      v-for="tag in theTaskTags.theTags"
       :tag="tag"
       @handleTagClick="searchByTag"
     />
     <MoreTags
-      v-if="taskTags.moreTags"
+      v-if="theTaskTags.moreTags"
       :num="taskTags.length - 3"
       target="task"
       @view-more-targets="viewMoreTargets"
@@ -26,7 +26,7 @@
       {{ $t('all.framework') }}:
     </div>
     <a
-      v-for="tag in frameworkTags.theTags"
+      v-for="tag in theFrameworkTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
@@ -39,7 +39,7 @@
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
     <MoreTags
-      v-if="frameworkTags.moreTags"
+      v-if="theFrameworkTags.moreTags"
       :num="frameworkTags.length - 3"
       target="framework"
       @view-more-targets="viewMoreTargets"
@@ -52,7 +52,7 @@
       {{ $t('all.languages') }}:
     </div>
     <a
-      v-for="tag in languageTags.theTags"
+      v-for="tag in theLanguageTags.theTags"
       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
       :style="`color: ${tag.color}`"
       class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
@@ -61,7 +61,7 @@
       {{ this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name }}
     </a>
     <MoreTags
-      v-if="languageTags.moreTags"
+      v-if="theLanguageTags.moreTags"
       :num="languageTags.length - 3"
       target="language"
       @view-more-targets="viewMoreTargets"
@@ -74,13 +74,13 @@
       {{ $t('all.industry') }}:
     </div>
     <div
-      v-for="tag in industryTags.theTags"
+      v-for="tag in theIndustryTags.theTags"
       class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
       {{ this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name }}
     </div>
     <MoreTags
-      v-if="industryTags.moreTags"
+      v-if="theIndustryTags.moreTags"
       :num="industryTags.length - 3"
       target="industry"
       @view-more-targets="viewMoreTargets"
@@ -93,13 +93,13 @@
       {{ $t('all.others') }}:
     </div>
     <div
-      v-for="tag in otherTags.theTags"
+      v-for="tag in theOtherTags.theTags"
       class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
       {{ tag.name }}
     </div>
     <MoreTags
-      v-if="otherTags.moreTags"
+      v-if="theOtherTags.moreTags"
       :num="otherTags.length - 3"
       target="other"
       @view-more-targets="viewMoreTargets"
@@ -112,7 +112,7 @@
       License:
     </div>
     <a
-      v-for="tag in licenseTags.theTags"
+      v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
       class="text-sm text-[#303133] px-[8px] py-[3px] rounded cursor-pointer flex items-center border gap-1"
     >
@@ -120,7 +120,7 @@
       {{ tag.zh_name }}
     </a>
     <MoreTags
-      v-if="licenseTags.moreTags"
+      v-if="theLicenseTags.moreTags"
       :num="licenseTags.length - 3"
       target="license"
       @view-more-targets="viewMoreTargets"
@@ -156,14 +156,6 @@
   })
 
   const { t, locale } = useI18n()
-
-  const taskTags = createTagRefs('task')
-  const frameworkTags = createTagRefs('framework')
-  const languageTags = createTagRefs('language')
-  const licenseTags = createTagRefs('license')
-  const industryTags = createTagRefs('industry')
-  const otherTags = createTagRefs('other')
-
   //先定义一个生产参数的方法
   const createTagRefs = (tagType) => {
     const moreTags = ref(props[`${tagType}Tags`]?.length > 3)
@@ -171,20 +163,27 @@
     return { moreTags, theTags }
   }
 
+  const theTaskTags = ref(createTagRefs('task'))
+  const theFrameworkTags = ref(createTagRefs('framework'))
+  const theLanguageTags = ref(createTagRefs('language'))
+  const theLicenseTags = ref(createTagRefs('license'))
+  const theIndustryTags = ref(createTagRefs('industry'))
+  const theOtherTags = ref(createTagRefs('other'))
+
   const tagGroups = {
-    task: taskTags,
-    framework: frameworkTags,
-    language: languageTags,
-    license: licenseTags,
-    industry: industryTags,
-    other: otherTags
+    task: theTaskTags,
+    framework: theFrameworkTags,
+    language: theLanguageTags,
+    license: theLicenseTags,
+    industry: theIndustryTags,
+    other: theOtherTags
   }
 
   const viewMoreTargets = (target) => {
     const tagRef = tagGroups[target]
     if (tagRef) {
-      tagRef.theTags.value = props[`${target}Tags`]
-      tagRef.moreTags.value = false
+      tagRef.value.theTags = props[`${target}Tags`]
+      tagRef.value.moreTags = false
     }
   }
 
