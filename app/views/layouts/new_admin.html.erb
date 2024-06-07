@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html class="h-full">
+  <head>
+    <title>OpenCSG</title>
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "application.assets" %>
+    <%= javascript_include_tag "application", defer: true %>
+    <%= favicon_link_tag asset_path('favicon.png') %>
+    <script>
+      const DEFAULT_TAGS = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
+      const CSGHUB_SERVER = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
+      const ENABLE_HTTPS = '<%= ENV.fetch('ENABLE_HTTPS', false) %>'
+    </script>
+  </head>
+
+  <body class="h-full">
+    <div id="app" class="min-h-full flex flex-col">
+      <div class="grow">
+        <%= yield.force_encoding(Encoding::UTF_8) %>
+      </div>
+    </div>
+  </body>
+</html>

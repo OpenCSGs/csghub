@@ -108,6 +108,8 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "models#index"
 
+    resources :new_admin, only: :index
+
     resources :settings, only: [] do
       collection do
         get 'profile'
