@@ -100,6 +100,8 @@ module Api::RepoValidation
       @code = owner && owner.codes.find_by(name: params[:code_name])
     when 'application_spaces'
       @application_space = owner && owner.application_spaces.find_by(name: params[:application_space_name])
+    when 'endpoints'
+      @endpoint = owner && owner.endpoints.find_by(name: params[:endpoint_name])
     end
   end
 end

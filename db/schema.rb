@@ -121,6 +121,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_06_012046) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "endpoints", force: :cascade do |t|
+    t.string "name"
+    t.string "cloud_resource"
+    t.integer "max_replica"
+    t.integer "min_replica"
+    t.integer "framework_id"
+    t.string "visibility"
+    t.bigint "creator_id"
+    t.string "model_path"
+    t.string "owner_type", null: false
+    t.bigint "owner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "cluster_id"
+    t.integer "endpoint_id"
+    t.index ["owner_type", "owner_id"], name: "index_endpoints_on_owner"
+  end
+
   create_table "error_logs", force: :cascade do |t|
     t.string "request"
     t.text "payload"
