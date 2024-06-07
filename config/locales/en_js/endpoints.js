@@ -44,6 +44,22 @@ export const endpoints = {
     delTips3: "the endpoint and all its files.",
     confirmDel: "I understand and confirm deletion",
     namespaceName: "Endpoint Name/ID",
-    toggleStatusSuccess: 'Updated, please wait Endpoint status change'
+    toggleStatusSuccess: 'Updated, please wait Endpoint status change',
+    statusText: "The current Endpoint is now",
+    status: "Status",
+    changeVisibility: "Change Endpoint visibility",
+    visibility: "Endpoint visibility",
+    privateVis: "Only creator or members of your organization can see",
+    publicVis: "Anyone can see this endpoint",
+    privateInfo: ", only the creator or organization admin can update",
+    publicInfo: ", visible to anyone on the internet.",
+    resource: "Resource configuration",
+    resourceTip: "You can switch to different cloud resources at any time. After switching to paid resources, you will be charged based on the length of use.",
+    framework: "Framework",
+    currentFramework: 'Current Framework',
+    maxReplica: "Maximum number of replicas",
+    minReplica: "Minimum number of replicas",
+    currentMaxReplica: "Current maximum number of replicas",
+    currentMinReplica: "Current minimum number of replicas",
   }
 }
