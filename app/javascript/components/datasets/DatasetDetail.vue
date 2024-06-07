@@ -36,6 +36,7 @@
       :userName="userName"
       :userToken="userToken"
       repo-type="dataset"
+      :commitId="commitId"
     />
   </div>
 </template>
@@ -63,7 +64,8 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String
+    userToken: String,
+    commitId: String
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.dataset.data)

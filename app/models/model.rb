@@ -1,4 +1,6 @@
 class Model < ApplicationRecord
+  attr_accessor :skip_create_callback
+
   DEFAULT_LICENSES = {
     'apache-2.0' => 'Apache-2.0',
     'mit' => 'MIT',
@@ -34,6 +36,8 @@ class Model < ApplicationRecord
   after_destroy :delete_model_from_starhub_server
   after_update :update_starhub_server_model
   before_save :detect_sensitive_content
+
+  skip_callback :create, :after, :sync_created_model_to_starhub_server, if: :skip_create_callback
 
   validates :name, format: { with: NAME_RULE }
 

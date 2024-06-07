@@ -31,9 +31,9 @@ Rails.application.routes.draw do
     end
     resources :comments, only: [:create, :destroy, :index]
     resources :ssh_keys, only: [:create, :destroy]
-    resources :git_token, only: [] do
+    resources :access_token, only: [] do
       collection do
-        post 'refresh', to: 'git-tokens/refresh'
+        post 'refresh', to: 'access-tokens/refresh'
       end
     end
     resources :users, only: [:index, :update] do
@@ -41,13 +41,6 @@ Rails.application.routes.draw do
         put 'jwt_token', to: 'users/jwt_token'
       end
     end
-    get '/users/:namespace/models', to: 'users#models', namespace: /[^\/]+/
-    get '/users/:namespace/datasets', to: 'users#datasets', namespace: /[^\/]+/
-    get '/users/:namespace/codes', to: 'users#codes', namespace: /[^\/]+/
-    get '/users/:namespace/spaces', to: 'users#spaces', namespace: /[^\/]+/
-    get '/users/:namespace/likes/:repo_type', to: 'users#likes_repo', namespace: /[^\/]+/
-    put '/users/likes/:repo_id', to: 'users#add_like'
-    delete '/users/likes/:repo_id', to: 'users#delete_like'
     get '/organizations/:namespace/models', to: 'organizations#models', namespace: /[^\/]+/
     get '/organizations/:namespace/datasets', to: 'organizations#datasets', namespace: /[^\/]+/
     get '/organizations/:namespace/codes', to: 'organizations#codes', namespace: /[^\/]+/
@@ -96,6 +89,9 @@ Rails.application.routes.draw do
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
+    resources :endpoints, only: [:create]
+    delete '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+
     resources :tags, only: [] do
       collection do
         get 'task-tags', to: 'tags#task_tags'
@@ -115,7 +111,7 @@ Rails.application.routes.draw do
     resources :settings, only: [] do
       collection do
         get 'profile'
-        get 'git-token'
+        get 'access-token'
         get 'ssh-keys'
         get 'locale'
       end
@@ -126,6 +122,7 @@ Rails.application.routes.draw do
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
     resources :collections, only: [:index, :new]
+    resources :endpoints, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
         get 'members'
@@ -140,7 +137,12 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/community', to: 'models#community', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/settings', to: 'models#settings', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/commits', to: 'models#commits', namespace: /[^\/]+/
+    get '/models/:namespace/(*model_name)/commit/:commit_id', to: 'models#commit', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
@@ -151,6 +153,7 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/community', to: 'datasets#community', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/settings', to: 'datasets#settings', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/commits', to: 'datasets#commits', namespace: /[^\/]+/
+    get '/datasets/:namespace/(*dataset_name)/commit/:commit_id', to: 'datasets#commit', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)', to: 'datasets#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/codes/:namespace/(*code_name)/:branch/new', to: 'codes#new_file', namespace: /[^\/]+/
@@ -162,6 +165,7 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/community', to: 'codes#community', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/settings', to: 'codes#settings', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/commits', to: 'codes#commits', namespace: /[^\/]+/
+    get '/codes/:namespace/(*code_name)/commit/:commit_id', to: 'codes#commit', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)', to: 'codes#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/spaces/:namespace/(*application_space_name)/:branch/new', to: 'application_spaces#new_file', namespace: /[^\/]+/
@@ -173,6 +177,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/community', to: 'application_spaces#community', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/settings', to: 'application_spaces#settings', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commits', to: 'application_spaces#commits', namespace: /[^\/]+/
+    get '/spaces/:namespace/(*application_space_name)/commit/:commit_id', to: 'application_spaces#commit', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/profile/:user_id', to: 'profile#index', user_id: /[^\/]+/

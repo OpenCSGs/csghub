@@ -4,9 +4,11 @@ export const all = {
   summary: "介绍",
   files: "文件",
   community: "讨论",
+  logs: "日志",
   settings: "设置",
   tasks: "任务",
   framework: "框架",
+  industry:"行业",
   others: "其他",
   contributors: "贡献者",
   historyCommits: "历史提交",
@@ -74,4 +76,5 @@ export const all = {
   deleteSuccess: "删除成功",
   commits: "提交历史",
   fetchError: "获取数据失败",
+  deploy: "部署"
 }

@@ -1,23 +1,110 @@
 <template>
   <div class="relative">
-    <el-tabs v-model="activeName" :beforeLeave="handleTabLeave" @tabClick="handleTabClick">
-      <el-tab-pane :label="isApplicationSpace ? $t('application_spaces.app') : $t('all.summary')"
-                   name="summary"
+    <el-tabs
+      v-model="activeName"
+      :beforeLeave="handleTabLeave"
+      @tabClick="handleTabClick"
+    >
+      <!-- repo/endpoint summary -->
+      <el-tab-pane
+        :label="summaryLabel"
+        name="summary"
       >
         <slot name="summary"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="$t('all.files')" name="files">
+
+      <!-- repo files -->
+      <el-tab-pane
+        v-if="showFiles"
+        :label="$t('all.files')"
+        name="files"
+      >
         <slot name="files"></slot>
       </el-tab-pane>
-      <el-tab-pane :label="$t('all.community')" name="community" class="min-h-[300px]">
+
+      <!-- repo community -->
+      <el-tab-pane
+        v-if="repoType !== 'endpoint'"
+        :label="$t('all.community')"
+        name="community"
+        class="min-h-[300px]"
+      >
         <slot name="community"></slot>
       </el-tab-pane>
-      <el-tab-pane v-if="settingsVisibility" :label="$t('all.settings')" name="settings" class="min-h-[300px]">
+
+      <!-- endpoint logs -->
+      <el-tab-pane
+        v-if="repoType === 'endpoint'"
+        :label="$t('all.logs')"
+        name="logs"
+        class="min-h-[300px]"
+      >
+        <slot name="logs"></slot>
+      </el-tab-pane>
+
+      <!-- repo settings -->
+      <el-tab-pane
+        v-if="settingsVisibility"
+        :label="$t('all.settings')"
+        name="settings"
+        class="min-h-[300px]"
+      >
         <slot name="settings"></slot>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
+
+<script setup>
+  import { ref, computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
+
+  const props = defineProps({
+    defaultTab: String,
+    settingsVisibility: Boolean,
+    repoType: String,
+    sdk: String
+  })
+
+  const summaryLabel = computed(() => {
+    if (props.repoType === 'space') {
+      return t('application_spaces.app')
+    } else if (props.repoType === 'endpoint') {
+      return t('endpoints.summary')
+    } else {
+      return t('all.summary')
+    }
+  })
+
+  const showFiles = computed(() => {
+    if (props.repoType === 'endpoint') {
+      return false
+    } else if (props.repoType === 'space') {
+      if (props.sdk === 'nginx') {
+        return props.settingsVisibility
+      }
+    } else {
+      return true
+    }
+  })
+
+  const activeName = ref(props.defaultTab)
+
+  const emit = defineEmits(['tabChange']);
+
+  const handleTabLeave = (tab) => {
+    emit('tabChange', tab)
+    return false
+  }
+
+  const handleTabClick = (tab) => {
+    if (tab.paneName === activeName.value) {
+      emit('tabChange', tab.paneName)
+    }
+  }
+</script>
 
 <style>
   .el-tabs__header {
@@ -35,32 +122,3 @@
     }
   }
 </style>
-
-<script setup>
-import { ref, computed } from 'vue'
-
-const props = defineProps({
-  defaultTab: String,
-  settingsVisibility: Boolean,
-  repoType: String
-})
-
-const isApplicationSpace = computed(() => {
-  return props.repoType === 'space'
-})
-
-const activeName = ref(props.defaultTab)
-
-const emit = defineEmits(['tabChange']);
-
-const handleTabLeave = (tab) => {
-  emit('tabChange', tab)
-  return false
-}
-
-const handleTabClick = (tab) => {
-  if (tab.paneName === activeName.value) {
-    emit('tabChange', tab.paneName)
-  }
-}
-</script>

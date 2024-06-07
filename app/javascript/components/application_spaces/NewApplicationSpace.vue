@@ -1,22 +1,37 @@
 <template>
   <div class="w-[640px] m-auto flex flex-col items-center md:w-full md:p-5">
     <div>
-      <SvgIcon name="spaces" width="36" height="36" />
+      <SvgIcon
+        name="spaces"
+        width="36"
+        height="36"
+      />
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('application_spaces.new.title') }}</h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('application_spaces.new.subTitle1') }}</p>
-    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('application_spaces.new.subTitle2') }}</p>
+    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">
+      {{ $t('application_spaces.new.title') }}
+    </h3>
+    <p class="text-[#606266] text-base font-medium md:text-center">
+      {{ $t('application_spaces.new.subTitle1') }}
+    </p>
+    <p class="text-[#606266] text-base font-medium md:text-center">
+      {{ $t('application_spaces.new.subTitle2') }}
+    </p>
     <div class="mt-9">
       <!-- name -->
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div>
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.owner') }}</p>
-          <el-select v-model="owner" placeholder="选择" size="large">
+          <el-select
+            v-model="owner"
+            placeholder="选择"
+            size="large"
+          >
             <el-option
-                v-for="item in namespaces"
-                :key="item[0]"
-                :label="item[1]"
-                :value="item[0]"/>
+              v-for="item in namespaces"
+              :key="item[0]"
+              :label="item[1]"
+              :value="item[0]"
+            />
           </el-select>
         </div>
         <div class="md:hidden">
@@ -25,7 +40,11 @@
         </div>
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.name') }}</p>
-          <el-input v-model="spaceName" :placeholder="$t('application_spaces.new.namePlaceholder')" input-style="width: 100%" >
+          <el-input
+            v-model="spaceName"
+            :placeholder="$t('application_spaces.new.namePlaceholder')"
+            input-style="width: 100%"
+          >
             <template #suffix>
               <InputTip :content="$t('application_spaces.new.tip')" />
             </template>
@@ -37,16 +56,24 @@
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.nickname') }}</p>
-          <el-input v-model="spaceNickName" :placeholder="$t('application_spaces.new.nicknamePlaceholder')"/>
+          <el-input
+            v-model="spaceNickName"
+            :placeholder="$t('application_spaces.new.nicknamePlaceholder')"
+          />
         </div>
         <div>
           <p class="text-[#303133] text-sm mb-2">License</p>
-          <el-select v-model="license" placeholder="选择" size="large">
+          <el-select
+            v-model="license"
+            placeholder="选择"
+            size="large"
+          >
             <el-option
-                v-for="item in licenses"
-                :key="item[0]"
-                :label="item[1]"
-                :value="item[0]"/>
+              v-for="item in licenses"
+              :key="item[0]"
+              :label="item[1]"
+              :value="item[0]"
+            />
           </el-select>
         </div>
       </div>
@@ -55,7 +82,12 @@
       <div class="w-full flex sm:flex-col mb-9">
         <div class="flex-1">
           <p class="text-[#303133] text-sm mb-2">{{ $t('application_spaces.new.description') }}</p>
-          <el-input v-model="spaceDesc" :rows="6" type="textarea" :placeholder="$t('application_spaces.new.descriptionPlaceholder')"/>
+          <el-input
+            v-model="spaceDesc"
+            :rows="6"
+            type="textarea"
+            :placeholder="$t('application_spaces.new.descriptionPlaceholder')"
+          />
         </div>
       </div>
 
@@ -69,56 +101,74 @@
             list-type="picture-card"
             :headers="{ 'X-CSRF-TOKEN': csrf_token }"
             accept="image/png, image/jpeg, image/gif, image/svg+xml"
-            :data="{namespace: 'application_space'}"
+            :data="{ namespace: 'application_space' }"
             action="/internal_api/upload"
             :before-upload="handleBeforeUpload"
             :on-remove="handleRemoveImage"
             :on-success="handleUploadSuccess"
           >
             <div class="flex flex-col items-center">
-              <el-icon>
-                <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                      d="M6.66663 12.3333L9.99996 9M9.99996 9L13.3333 12.3333M9.99996 9V16.5M16.6666 12.9524C17.6845 12.1117 18.3333 10.8399 18.3333 9.41667C18.3333 6.88536 16.2813 4.83333 13.75 4.83333C13.5679 4.83333 13.3975 4.73833 13.3051 4.58145C12.2183 2.73736 10.212 1.5 7.91663 1.5C4.46485 1.5 1.66663 4.29822 1.66663 7.75C1.66663 9.47175 2.36283 11.0309 3.48908 12.1613"
-                      stroke="#475467" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </el-icon>
+              <SvgIcon name="space_upload" />
               <div class="el-upload__text">
                 <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
-                <div class="font-light text-[12px]">{{ $t('application_spaces.new.coverImageDesc2') }}</div>
+                <div class="font-light text-[12px]">
+                  {{ $t('application_spaces.new.coverImageDesc2') }}
+                </div>
               </div>
             </div>
           </el-upload>
         </div>
       </div>
 
-      <hr class="mb-9"/>
+      <hr class="mb-9" />
 
       <div class="mb-9 text-sm w-full">
         <p class="mb-2 text-[#303133] font-medium">{{ $t('application_spaces.new.sdk') }}</p>
         <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.sdkDesc') }}</p>
         <div class="flex gap-[24px] mt-9 sm:flex-col">
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
-               :class="SDK === 'gradio' ? 'border-[#3250BD] text-[#344054]' : ''"
-               @click="SDK = 'gradio'">
-            <SvgIcon name="space_gradio"  />
+          <div
+            class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+            :class="SDK === 'gradio' ? 'border-[#3250BD] text-[#344054]' : ''"
+            @click="SDK = 'gradio'"
+          >
+            <SvgIcon name="space_gradio" />
             <p class="font-semibold text-[16px]">Gradio</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
-               :class="SDK === 'streamlit' ? 'border-[#3250BD] text-[#344054]': ''"
-               @click="SDK = 'streamlit'">
-            <SvgIcon name="space_streamlit"  />
+          <div
+            class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+            :class="SDK === 'streamlit' ? 'border-[#3250BD] text-[#344054]' : ''"
+            @click="SDK = 'streamlit'"
+          >
+            <SvgIcon name="space_streamlit" />
             <p class="font-semibold text-[16px]">Streamlit</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
-               :class="SDK === 'docker' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
-            <SvgIcon name="space_docker"  />
+          <div
+            v-if="isAdmin"
+            class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+            :class="SDK === 'nginx' ? 'border-[#3250BD] text-[#344054]' : ''"
+            @click="SDK = 'nginx'"
+          >
+            <SvgIcon
+              name="space_nginx"
+              width="24"
+              height="24"
+            />
+            <p class="font-semibold text-[16px]">Nginx</p>
+          </div>
+          <div
+            v-if="!isAdmin"
+            class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+            :class="SDK === 'docker' ? 'border-[#3250BD] text-[#344054]' : 'text-[#D0D5DD]'"
+          >
+            <SvgIcon name="space_docker" />
             <p class="font-semibold text-[16px]">Docker</p>
             <p class="text-[12px]">11 templates</p>
           </div>
-          <div class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
-               :class="SDK === 'static' ? 'border-[#3250BD] text-[#344054]': 'text-[#D0D5DD]'">
-            <SvgIcon name="space_static"  />
+          <div
+            class="flex items-center justify-center flex-col border-[2px] rounded-[8px] w-[142px] h-[120px] cursor-pointer"
+            :class="SDK === 'static' ? 'border-[#3250BD] text-[#344054]' : 'text-[#D0D5DD]'"
+          >
+            <SvgIcon name="space_static" />
             <p class="font-semibold text-[16px]">Static</p>
             <p class="text-[12px]">3 templates</p>
           </div>
@@ -127,40 +177,68 @@
 
       <div class="mb-9 text-sm w-full">
         <p class="mb-2 text-[#303133]">{{ $t('application_spaces.new.cloudResource') }}</p>
-        <el-select v-model="spaceResource" placeholder="选择" size="large" style="width: 100%;">
-          <el-option v-for="item in spaceResources"
-                     :key="item.name"
-                     :label="item.name"
-                     :value="item.resources"
+        <el-select
+          v-model="spaceResource"
+          placeholder="选择"
+          size="large"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in spaceResources"
+            :key="item.name"
+            :label="item.name"
+            :value="item.resources"
           />
         </el-select>
-        <p class="text-[#475467] mt-2 font-light">{{ $t('application_spaces.new.cloudResourceDesc1') }}</p>
-        <p class="text-[#475467] font-light">{{ $t('application_spaces.new.cloudResourceDesc2') }}</p>
+        <p class="text-[#475467] mt-2 font-light">
+          {{ $t('application_spaces.new.cloudResourceDesc1') }}
+        </p>
+        <p class="text-[#475467] font-light">
+          {{ $t('application_spaces.new.cloudResourceDesc2') }}
+        </p>
       </div>
 
-      <hr class="mb-9"/>
+      <hr class="mb-9" />
 
       <div class="mb-9">
-        <el-radio-group v-model="visibility" class="!block">
-          <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
+        <el-radio-group
+          v-model="visibility"
+          class="!block"
+        >
+          <el-radio
+            class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4"
+            label="public"
+            size="large"
+            border
+          >
             {{ $t('application_spaces.new.public') }}
-            <p class="whitespace-normal text-[#475467] font-light">{{ $t('application_spaces.new.publicDesc') }}</p>
+            <p class="whitespace-normal text-[#475467] font-light">
+              {{ $t('application_spaces.new.publicDesc') }}
+            </p>
           </el-radio>
-          <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
+          <el-radio
+            class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4"
+            label="private"
+            size="large"
+            border
+          >
             {{ $t('application_spaces.new.private') }}
-            <p class="whitespace-normal text-[#475467] font-light">{{ $t('application_spaces.new.privateDesc') }}</p>
+            <p class="whitespace-normal text-[#475467] font-light">
+              {{ $t('application_spaces.new.privateDesc') }}
+            </p>
           </el-radio>
         </el-radio-group>
       </div>
-      <hr class="mb-9"/>
+      <hr class="mb-9" />
       <p class="mb-9 rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
         {{ $t('application_spaces.new.notes') }}
       </p>
       <div class="flex justify-end">
         <button
-            class="bg-[#3250BD] w-[118px] ml-[10px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
-            @click="createApplicationSpace"
-            :disabled="!canCreateApplicationSpace || hasCreateApplicationSpace">
+          class="bg-[#3250BD] w-[118px] ml-[10px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
+          @click="createApplicationSpace"
+          :disabled="!canCreateApplicationSpace || hasCreateApplicationSpace"
+        >
           {{ $t('application_spaces.new.create') }}
         </button>
       </div>
@@ -169,8 +247,8 @@
 </template>
 
 <script setup>
-  import {ref, computed, onMounted, inject} from 'vue'
-  import {ElInput, ElMessage} from 'element-plus'
+  import { ref, computed, onMounted, inject } from 'vue'
+  import { ElInput, ElMessage } from 'element-plus'
   import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
   import InputTip from '../shared/inputs/InputTip.vue'
@@ -179,6 +257,7 @@
   const props = defineProps({
     licenses: Array,
     namespaces: Array,
+    isAdmin: Boolean
   })
 
   const csghubServer = inject('csghubServer')
@@ -198,10 +277,9 @@
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const hasCreateApplicationSpace = ref(false)
 
-
   onMounted(() => {
     const params = new URLSearchParams(window.location.search)
-    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
+    const result = props.namespaces.find((item) => item[1] === params.get('orgName'))
     if (result) {
       owner.value = result[0]
     }
@@ -225,17 +303,17 @@
     }
   }
 
-  const fetchSpaceResources = async() => {
+  const fetchSpaceResources = async () => {
     const options = {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(`${csghubServer}/api/v1/space_resources`, options)
     if (!res.ok) {
-      ElMessage({message: t('application_spaces.new.failedFetchResources'), type: "warning"})
+      ElMessage({ message: t('application_spaces.new.failedFetchResources'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        spaceResource.value = body.data[0]?.resources || ""
+        spaceResource.value = body.data[0]?.resources || ''
         spaceResources.value = body.data
       })
     }
@@ -277,13 +355,13 @@
     if (file.size / 1024 <= 2000) {
       return true
     } else {
-      ElMessage({message: "文件过大", type: "warning"})
+      ElMessage({ message: '文件过大', type: 'warning' })
       return false
     }
   }
 
   const handleRemoveImage = () => {
-    coverImage.value = ""
+    coverImage.value = ''
     imageUploaded.value = false
   }
 
@@ -311,13 +389,13 @@
     font-weight: 400;
   }
 
-  :deep(.el-radio.is-bordered.is-checked ) {
-    border: 2px solid #3250BD;
+  :deep(.el-radio.is-bordered.is-checked) {
+    border: 2px solid #3250bd;
   }
 
   :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250BD;
-    border-color: #3250BD;
+    background: #3250bd;
+    border-color: #3250bd;
   }
 
   :deep(.el-select) {
@@ -328,11 +406,10 @@
       width: 100%;
     }
   }
-  :deep(.hide .el-upload.el-upload--picture-card){
+  :deep(.hide .el-upload.el-upload--picture-card) {
     display: none;
   }
   :deep(.el-input .el-input__wrapper) {
     border-radius: 8px;
   }
 </style>
-

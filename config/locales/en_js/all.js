@@ -5,9 +5,11 @@ export const all = {
   summary: "Summary",
   files: "Files",
   community: "Community",
+  logs: "logs",
   settings: "Settings",
   tasks: "Tasks",
   framework: "Framework",
+  industry:"Industry",
   others: "Others",
   contributors: "Contributors",
   historyCommits: "History commits",
@@ -76,4 +78,5 @@ export const all = {
   deleteSuccess: "Successfully delete",
   commits: "commit history",
   fetchError: "Failed to fetch data",
+  deploy: "Deploy"
 }

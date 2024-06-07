@@ -1,4 +1,4 @@
-class InternalApi::GitTokenController < InternalApi::ApplicationController
+class InternalApi::AccessTokenController < InternalApi::ApplicationController
   before_action :authenticate_user
 
   def refresh

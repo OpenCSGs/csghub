@@ -18,7 +18,9 @@
       :dataset-list="<%= JSON.parse(@datasets).to_json %>"
       :space-list="<%= JSON.parse(@spaces).to_json %>"
       :code-list="<%= JSON.parse(@codes).to_json %>"
+      :endpoint-list="<%= JSON.parse(@endpoints).to_json %>"
       name="<%= @user.name %>"
+      initiator="<%= @initiator %>"
     >
     </profile-repo-list>
   </div>

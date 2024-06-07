@@ -1,4 +1,6 @@
 class ApplicationSpace < ApplicationRecord
+  attr_accessor :skip_create_callback
+
   enum :visibility, { application_space_public: 'public', application_space_private: 'private' }, default: :space_private
 
   belongs_to :owner, polymorphic: true
@@ -9,6 +11,8 @@ class ApplicationSpace < ApplicationRecord
   after_destroy :delete_application_space_from_starhub_server
   after_save :update_starhub_server_application_space
   before_save :detect_sensitive_content
+
+  skip_callback :create, :after, :sync_created_space_to_starhub_server, if: :skip_create_callback
 
   validates :name, format: { with: NAME_RULE }
 

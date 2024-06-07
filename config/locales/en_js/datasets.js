@@ -9,6 +9,7 @@ export const datasets = {
   datasetNickName: "Dataset Nickname",
   datasetDesc: "Dataset Description",
   datasetTag: "Dataset Tags",
+  datasetIndustryTag: "Industry tags",
   tips:"Easy Dataset Hosting",
   newDataset: {
     title: "Create New Dataset Repository",
@@ -51,5 +52,6 @@ export const datasets = {
     publicInfo: ", anyone on the internet can view this dataset.",
     needDatasetName: "Please provide a dataset alias first.",
     needDatasetDesc: "Please provide a dataset description first.",
+    needDatasetTag: 'Please provide a dataset tag first'
   },
 }

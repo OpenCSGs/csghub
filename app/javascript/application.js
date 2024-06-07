@@ -21,12 +21,13 @@ import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import ModelDetail from "./components/models/ModelDetail.vue"
 import DatasetDetail from "./components/datasets/DatasetDetail.vue"
+import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
 import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
-import GitTokenSettings from "./components/user_settings/GitTokenSettings.vue"
+import AccessTokenSettings from "./components/user_settings/AccessTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
@@ -40,7 +41,11 @@ import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
+<<<<<<< HEAD
 import NewCollection from "./components/Collections/NewCollection.vue"
+=======
+import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
+>>>>>>> csghub-main
 
 const pinia = createPinia()
 
@@ -54,7 +59,7 @@ const app = createApp({
     Profile,
     ProfileEdit,
     ProfileSettings,
-    GitTokenSettings,
+    AccessTokenSettings,
     SshKeySettings,
     NewOrganization,
     NewModel,
@@ -68,7 +73,9 @@ const app = createApp({
     RepoCards,
     NewCode,
     CodeDetail,
-    NewCollection
+    NewCollection,
+    NewEndpoint,
+    EndpointDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

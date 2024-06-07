@@ -7,7 +7,7 @@
                         :branches="branches" />
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>
-            <a :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`">
+            <a :href="`/${repoType}s/${namespacePath}/files/${currentBranch}`">
               {{ namespacePath.split('/')[1] }}
             </a>
           </el-breadcrumb-item>
@@ -24,11 +24,11 @@
            :key="commit.id"
            class="py-4 border-b border-[#DCDFE6] last-of-type:border-none text-[#344054]">
         <div class="mb-2 flex items-center">
-          <div class="truncate" :title="commit.message">
+          <a :href="`/${repoType}s/${namespacePath}/commit/${commit.id}`" class="truncate" :title="commit.message">
             {{ commit.message }}
-          </div>
+          </a>
           <el-button-group class="ml-2 min-w-[107px]">
-            <el-button href="#" type="default" size="small">
+            <el-button :href="`/${repoType}s/${namespacePath}/commit/${commit.id}`" type="default" size="small">
               {{ commit.id.slice(0, 7) }}
             </el-button>
             <el-button type="default" size="small" @click="copyCommitId(commit.id)">
@@ -63,6 +63,7 @@
   import { copyToClipboard } from '../../packs/clipboard'
   import CsgPagination from './CsgPagination.vue'
   import BranchDropdown from './BranchDropdown.vue'
+  import { ElMessage } from 'element-plus'
 
   const { t } = useI18n()
   const commits = ref([])

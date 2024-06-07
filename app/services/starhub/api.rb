@@ -7,6 +7,7 @@ module Starhub
     include DatasetApis
     include ApplicationSpaceApis
     include CodeApis
+    include EndpointApis
 
     def initialize user_ip
       @client = Starhub::Client.init_with user_ip
@@ -91,6 +92,15 @@ module Starhub
       options[:page] ||= 1
       options[:current_user] = username
       res = @client.get("/user/#{namespace}/codes", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
+    def get_user_endpoints(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/run/model", options)
       raise StarhubError, res.body unless res.success?
       res.body.force_encoding('UTF-8')
     end
@@ -255,16 +265,6 @@ module Starhub
       res = @client.get("/user/#{username}/likes/#{repotype}", options)
       raise StarhubError, res.body unless res.success?
       res.body
-    end
-
-    def add_user_likes(username, repoid, options = {})
-      res = @client.put("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
-      raise StarhubError, res.body unless res.success?
-    end
-
-    def delete_user_likes(username, repoid, options = {})
-      res = @client.delete("/user/#{username}/likes/#{repoid}?current_user=#{options[:current_user]}", options)
-      raise StarhubError, res.body unless res.success?
     end
 
     # TODO: add more starhub api

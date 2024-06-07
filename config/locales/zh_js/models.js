@@ -9,6 +9,7 @@ export const models = {
   modelNickName: "模型别名",
   modelDesc: "模型简介",
   modelTag: "模型标签",
+  modelIndustryTag: "模型行业标签",
   tips:"创建并上传模型文件",
   newModel: {
     title: "新建模型仓库",

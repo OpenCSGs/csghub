@@ -49,8 +49,8 @@
           <el-avatar :size="24" class="mr-2" :src="lastCommitAvatar" />
           <a href="#" class="text-[#303133] hover:underline">{{ lastCommit.author_name }}</a>
         </div>
-        <a href="#" class="mr-2 text-[#606266] truncate hover:underline">{{ lastCommit.message }}</a>
-        <a href="#" class="rounded border border-[#DCDFE6] text-xs text-[#606266] px-3 py-[2px] hover:underline">
+        <a :href="`/${prefixPath}/${namespacePath}/commit/${lastCommit.id}`" class="mr-2 text-[#606266] truncate hover:underline">{{ lastCommit.message }}</a>
+        <a :href="`/${prefixPath}/${namespacePath}/commit/${lastCommit.id}`" class="rounded border border-[#DCDFE6] text-xs text-[#606266] px-3 py-[2px] hover:underline">
           {{ lastCommit.id && lastCommit.id.substring(0, 7) }}
         </a>
       </div>

@@ -10,14 +10,14 @@
     <div class="grow py-[24px]">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
-          <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">{{ $t('gitToken.title') }}</h3>
-          <p class="text-[#606266] text-[14px]">{{ $t('gitToken.desc') }}</p>
+          <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">{{ $t('accessToken.title') }}</h3>
+          <p class="text-[#606266] text-[14px]">{{ $t('accessToken.desc') }}</p>
         </div>
         <div class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
-          <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">git token</h3>
+          <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">access token</h3>
           <div class="flex items-center">
             <el-input
-                v-model="theGitToken"
+                v-model="theAccessToken"
                 type="password"
                 show-password
                 onfocus="this.blur()"
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="my-[16px]">
-          <el-button type="default" @click="confirmRefreshGitToken" class="h-[30px] mb-[16px]">{{ $t('gitToken.refresh') }}</el-button>
+          <el-button type="default" @click="confirmRefreshAccessToken" class="h-[30px] mb-[16px]">{{ $t('accessToken.refresh') }}</el-button>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
     name: String,
     displayName: String,
     avatar: String,
-    gitToken: String,
+    accessToken: String,
     email: String
   },
   components: {
@@ -57,42 +57,42 @@ export default {
   },
   data() {
     return {
-      theGitToken: this.gitToken,
+      theAccessToken: this.accessToken,
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
-      gitTokenName: ''
+      accessTokenName: ''
     };
   },
   mounted() {
-    // 如果 gitToken 为空，那么刷新获取 token
-    if (!this.theGitToken.trim()) {
-      this.refreshGitToken()
+    // 如果 accessToken 为空，那么刷新获取 token
+    if (!this.theAccessToken.trim()) {
+      this.refreshAccessToken()
     }
   },
   methods: {
     copyToken() {
-      copyToClipboard(this.theGitToken)
+      copyToClipboard(this.theAccessToken)
     },
 
-    confirmRefreshGitToken() {
+    confirmRefreshAccessToken() {
       ElMessageBox.confirm(
-        this.$t('gitToken.refreshWarning'),
+        this.$t('accessToken.refreshWarning'),
         'Warning',
         {
-          confirmButtonText: this.$t('gitToken.confirm'),
+          confirmButtonText: this.$t('accessToken.confirm'),
           cancelButtonText:  this.$t('all.cancel'),
           type: 'warning',
         }
       ).then(() => {
-        this.refreshGitToken()
+        this.refreshAccessToken()
       }).catch(() => {
-        ElMessage({message: this.$t('gitToken.cancelInfo'), type: "info"})
+        ElMessage({message: this.$t('accessToken.cancelInfo'), type: "info"})
       })
     },
 
-    async refreshGitToken() {
-      const refreshTokenEndpoint = "/internal_api/git_token/refresh"
+    async refreshAccessToken() {
+      const refreshTokenEndpoint = "/internal_api/access_token/refresh"
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
@@ -106,10 +106,10 @@ export default {
       } else {
         response.json().then((data) => {
           // 仅在刷新操作的时候提醒，首次自动生成不提醒
-          if (this.theGitToken) {
+          if (this.theAccessToken) {
             ElMessage({ message: data.message, type: "success" })
           }
-          this.theGitToken = data.token
+          this.theAccessToken = data.token
         })
       }
     }

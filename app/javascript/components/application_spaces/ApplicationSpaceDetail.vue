@@ -41,6 +41,7 @@
       repo-type="space"
       :user-name="userName"
       :user-token="userToken"
+      :commitId="commitId"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>
@@ -120,7 +121,8 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String
+    userToken: String,
+    commitId: String
   })
 
   const csghubServer = inject('csghubServer')
@@ -269,7 +271,7 @@
         }
 
         // 启动日志
-        if (isLogsSSEConnected.value === false) {
+        if (isLogsSSEConnected.value === false && props.canWrite) {
           syncSpaceLogs()
         }
       },

@@ -33,9 +33,9 @@
           </div> -->
 
           <a v-if="hasEmail"
-             href="/settings/git-token"
+             href="/settings/access-token"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/git-token')"
+             :class="menuClass('/settings/access-token')"
           >
             {{ $t('profile.menu.gitToken')}}
           </a>

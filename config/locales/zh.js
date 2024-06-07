@@ -7,7 +7,7 @@ import { navbar } from './zh_js/navbar';
 import { all } from './zh_js/all';
 import { community } from './zh_js/community';
 import { profile } from './zh_js/profile';
-import { gitToken } from './zh_js/gitToken';
+import { accessToken } from './zh_js/accessToken';
 import { sshKey } from './zh_js/sshKey';
 import { shared } from './zh_js/shared';
 import { repo } from './zh_js/repo';
@@ -17,6 +17,8 @@ import { widgets } from './zh_js/widgets';
 import { spaces } from './zh_js/spaces';
 import { user_sessions } from './zh_js/user_sessions';
 import { collections } from './zh_js/collections';
+import { components } from './zh_js/components';
+import { endpoints } from './zh_js/endpoints';
 
 export default {
   all,
@@ -33,9 +35,11 @@ export default {
   navbar,
   community,
   profile,
-  gitToken,
+  accessToken,
   sshKey,
   shared,
   repo,
-  collections
+  collections,
+  components,
+  endpoints
 };
