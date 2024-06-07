@@ -89,7 +89,7 @@
           {{ $t('endpoints.settings.currentFramework') }}
         </p>
         <el-select
-          v-model="currentFramework"
+          v-model="currentFrameworkId"
           placeholder="选择"
           size="large"
           class="!w-[512px] sm:!w-full"
@@ -290,7 +290,7 @@
   const delDesc = ref('')
   const currentResource = ref(props.cloudResource)
   const cloudResources = ref([])
-  const currentFramework = ref()
+  const currentFrameworkId = ref('')
 
   const frameworks = ref([])
   const replicaRanges = ['1', '2', '3', '4', '5']
@@ -433,9 +433,10 @@
     } else {
       res.json().then((body) => {
         frameworks.value = body.data
-        currentFramework.value = body.data.find((framework) => {
+        const currentFramework = body.data.find((framework) => {
           return framework.frame_name === props.framework
         })
+        currentFrameworkId.value = currentFramework.id
       })
     }
   }
