@@ -2,3 +2,12 @@
   user-name="<%= current_user.name %>"
   user-roles="<%= current_user.roles.join(',') %>"
 ></admin-navbar>
+
+<div class="max-w-[1280px] m-auto flex gap-[30px] mt-[10px]">
+  <admin-menu
+  ></admin-menu>
+
+  <div>
+    <RouterView />
+  </div>
+</div>

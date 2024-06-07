@@ -43,6 +43,7 @@ import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
+import AdminMenu from "./components/new_admin/AdminMenu.vue"
 
 const pinia = createPinia()
 
@@ -72,7 +73,8 @@ const app = createApp({
     CodeDetail,
     NewEndpoint,
     EndpointDetail,
-    AdminNavbar
+    AdminNavbar,
+    AdminMenu
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
