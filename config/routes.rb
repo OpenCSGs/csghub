@@ -56,7 +56,6 @@ Rails.application.routes.draw do
     resources :campaigns, only: [:index]
     resources :comments, only: [:create, :destroy, :index]
     resources :leads, only: [:create]
-    resources :ssh_keys, only: [:create, :destroy]
     resources :access_token, only: [] do
       collection do
         post 'refresh', to: 'access-tokens/refresh'

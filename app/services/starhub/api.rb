@@ -142,30 +142,12 @@ module Starhub
       res.body
     end
 
-    def create_ssh_key(username, key_name, content, current_user)
-      options = {
-        username: username,
-        name: key_name,
-        content: content
-      }
-      @client.post("/user/#{username}/ssh_keys?current_user=#{current_user}", options)
-    end
-
     def get_ssh_key(username, current_user)
       options = {
         username: username,
         current_user: current_user
       }
       @client.get("/user/#{username}/ssh_keys", options)
-    end
-
-    def delete_ssh_key(username, key_name, current_user)
-      options = {
-        username: username,
-        name: key_name,
-        current_user: current_user
-      }
-      @client.delete("/user/#{username}/ssh_key/#{key_name}")
     end
 
     def create_organization(username, org_name, org_full_name, desc, current_user)
