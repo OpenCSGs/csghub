@@ -17,7 +17,6 @@
            class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]">{{ $t('sshKey.noKeyTips') }}
       </div>
       <ssh-key-card v-for="sshkey in JSON.parse(theSshKeys)"
-                    :profile-name="profileName"
                     :ssh-key-name="sshkey.name"
                     :ssh-key="sshkey.content"
                     :ssh-key-id="sshkey.id"
@@ -59,8 +58,7 @@
 import Menu from "./Menu.vue"
 import SshKeyCard from "./SshKeyCard.vue"
 import {ElMessage} from "element-plus"
-import { inject } from 'vue'
-import jwtFetch from '../../packs/jwtFetch'
+import csrfFetch from "../../packs/csrfFetch.js"
 
 export default {
   props: {
@@ -77,7 +75,6 @@ export default {
 
   data() {
     return {
-      csghubServer: inject('csghubServer'),
       centerDialogVisible: false,
       sshKeyWarningDialogVisible: false,
       profileName: this.name,
@@ -139,21 +136,27 @@ export default {
     },
 
     async createTheSshKey() {
-      const options = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ 
-          username: this.profileName,
-          name: this.theSshKeyName,
-          content: this.formData.theSshKey
-        })
+      const SshKeyCreateEndpoint = "/internal_api/ssh_keys"
+
+      const jsonData = {
+        name: this.theSshKeyName,
+        ssh_key: this.formData.theSshKey,
       }
-      const SshKeyCreateEndpoint = `${this.csghubServer}/api/v1/user/${this.profileName}/ssh_keys`
-      const response = await jwtFetch(SshKeyCreateEndpoint, options)
+
+      const option = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonData)
+      }
+
+      const response = await csrfFetch(SshKeyCreateEndpoint, option)
 
       if (!response.ok) {
         return response.json().then((data) => {
-          throw new Error(data.msg)
+          console.log(data)
+          throw new Error(data.message)
         })
       } else {
         setTimeout(() => {

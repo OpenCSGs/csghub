@@ -32,12 +32,10 @@
 
 <script>
 import {ElMessage} from "element-plus"
-import { inject } from 'vue'
-import jwtFetch from '../../packs/jwtFetch'
+import csrfFetch from "../../packs/csrfFetch.js"
 
 export default {
   props: {
-    profileName: String,
     sshKeyName: String,
     sshKey: String,
     createTime: String,
@@ -46,7 +44,6 @@ export default {
 
   data() {
     return {
-      csghubServer: inject('csghubServer'),
       deleteDialogVisible: false,
       theSshKeyName: this.sshKeyName,
       theSshKey: this.sshKey,
@@ -75,12 +72,15 @@ export default {
   methods: {
     async confirmDeleteSshKey(theSshKeyName) {
       this.deleteDialogVisible = false
-      const response = await jwtFetch(`${this.csghubServer}/api/v1/user/${this.profileName}/ssh_key/${this.theSshKeyName}`, { method: 'DELETE' })      
+
+      const option = { method: 'DELETE' }
+
+      const response = await csrfFetch(`/internal_api/ssh_keys/${theSshKeyName}`, option)
 
       if (!response.ok) {
         return response.json().then((data) => {
           ElMessage({
-            message: data.msg,
+            message: data.message,
             type: 'warning'
           })
         })
