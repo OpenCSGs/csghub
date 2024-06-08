@@ -221,6 +221,10 @@
           :appStatus="appStatus"
           :modelId="modelId"
           :userName="userName"
+          :cloudResource="repoDetail.hardware"
+          :framework="repoDetail.runtime_framework"
+          :maxReplica="repoDetail.max_replica"
+          :minReplica="repoDetail.min_replica"
         />
       </template>
     </tab-container>
