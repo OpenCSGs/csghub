@@ -1,32 +1,12 @@
 <template>
   <div class="flex items-center flex-wrap gap-4 md:px-5 md:mb-[30px] md:flex-col md:items-start">
     <!-- Task -->
-    <div
-      v-if="taskTags.length"
-      class="text-sm text-[#909399]"
-    >
-      {{ $t('all.tasks') }}:
-    </div>
-    <tag-item
-      v-for="tag in theTaskTags.theTags"
-      :tag="tag"
-      @handleTagClick="searchByTag"
-    />
-    <MoreTags
-      v-if="theTaskTags.moreTags"
-      :num="taskTags.length - 3"
-      target="task"
-      @view-more-targets="viewMoreTargets"
-    />
+    <div v-if="taskTags.length" class="text-sm text-[#909399]">{{ $t('all.tasks') }}:</div>
+    <tag-item v-for="tag in taskTags" :tag="tag" @handleTagClick="searchByTag" />
     <!-- Framework -->
-    <div
-      v-if="frameworkTags.length"
-      class="text-sm text-[#909399]"
-    >
-      {{ $t('all.framework') }}:
-    </div>
+    <div v-if="frameworkTags.length"  class="text-sm text-[#909399]">{{ $t('all.framework') }}:</div>
     <a
-      v-for="tag in theFrameworkTags.theTags"
+      v-for="tag in frameworkTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
@@ -38,98 +18,38 @@
       <GGUF v-if="tag.name.toLowerCase() === 'gguf'" />
       <Joblib v-if="tag.name.toLowerCase() === 'joblib'" />
     </a>
-    <MoreTags
-      v-if="theFrameworkTags.moreTags"
-      :num="frameworkTags.length - 3"
-      target="framework"
-      @view-more-targets="viewMoreTargets"
-    />
     <!-- Language -->
-    <div
-      v-if="languageTags.length"
-      class="flex items-center text-sm text-[#909399]"
-    >
-      {{ $t('all.languages') }}:
-    </div>
-    <a
-      v-for="tag in theLanguageTags.theTags"
-      :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
-      :style="`color: ${tag.color}`"
-      class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
+    <div v-if="languageTags.length" class="flex items-center text-sm text-[#909399]">{{ $t('all.languages') }}:</div>
+    <a v-for="tag in languageTags"
+       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
+       :style="`color: ${tag.color}`"
+       class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
     >
       <SvgIcon name="language_tag" />
-      {{ this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name }}
+      {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
     </a>
-    <MoreTags
-      v-if="theLanguageTags.moreTags"
-      :num="languageTags.length - 3"
-      target="language"
-      @view-more-targets="viewMoreTargets"
-    />
     <!-- industryTags -->
-    <div
-      v-if="industryTags.length"
-      class="text-sm text-[#909399]"
-    >
-      {{ $t('all.industry') }}:
+    <div v-if="industryTags.length" class="text-sm text-[#909399]">{{ $t('all.industry') }}:</div>
+    <div v-for="tag in industryTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
+      {{ this.$i18n.locale === 'zh'? (tag.zh_name || tag.name) : tag.name }}
     </div>
-    <div
-      v-for="tag in theIndustryTags.theTags"
-      class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
-    >
-      {{ this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name }}
-    </div>
-    <MoreTags
-      v-if="theIndustryTags.moreTags"
-      :num="industryTags.length - 3"
-      target="industry"
-      @view-more-targets="viewMoreTargets"
-    />
     <!-- Other -->
-    <div
-      v-if="otherTags.length"
-      class="text-sm text-[#909399]"
-    >
-      {{ $t('all.others') }}:
-    </div>
-    <div
-      v-for="tag in theOtherTags.theTags"
-      class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
-    >
+    <div v-if="otherTags.length" class="text-sm text-[#909399]">{{ $t('all.others') }}:</div>
+    <div v-for="tag in otherTags" class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1">
       {{ tag.name }}
     </div>
-    <MoreTags
-      v-if="theOtherTags.moreTags"
-      :num="otherTags.length - 3"
-      target="other"
-      @view-more-targets="viewMoreTargets"
-    />
-    <!-- License -->
-    <div
-      v-if="licenseTags.length"
-      class="text-sm text-[#909399]"
+    <div v-if="licenseTags.length" class="text-sm text-[#909399]">License:</div>
+    <a v-for="tag in licenseTags"
+       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
+       class="text-sm text-[#303133] px-[8px] py-[3px] rounded cursor-pointer flex items-center border gap-1"
     >
-      License:
-    </div>
-    <a
-      v-for="tag in theLicenseTags.theTags"
-      :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-sm text-[#303133] px-[8px] py-[3px] rounded cursor-pointer flex items-center border gap-1"
-    >
-      <SvgIcon name="repo_header_license_icon" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"> <path d="M6 2.99995V11M6 2.99995H4.28328C4.17763 2.99995 4.12481 2.99995 4.07307 3.00719C4.02712 3.01362 3.98186 3.02431 3.93789 3.0391C3.88837 3.05576 3.84112 3.07939 3.74663 3.12664L3 3.49995M6 2.99995H7.71672C7.82237 2.99995 7.87519 2.99995 7.92693 3.00719C7.97288 3.01362 8.01814 3.02431 8.06211 3.0391C8.11163 3.05576 8.15888 3.07939 8.25337 3.12664L9 3.49995M6 2.99995V1M6 11H8.5M6 11H3.5M1 3.99995H1.71672C1.82237 3.99995 1.87519 3.99995 1.92693 3.9927C1.97288 3.98627 2.01814 3.97559 2.06211 3.96079C2.11163 3.94413 2.15888 3.92051 2.25337 3.87326L3 3.49995M11 3.99995H10.2833C10.1776 3.99995 10.1248 3.99995 10.0731 3.9927C10.0271 3.98627 9.98186 3.97559 9.93789 3.96079C9.88837 3.94413 9.84112 3.92051 9.74663 3.87326L9 3.49995M3 3.49995L1.93102 7.06321C1.80356 7.48809 1.73982 7.70054 1.76796 7.87165C1.80739 8.11139 1.9605 8.31718 2.1788 8.42383C2.33461 8.49995 2.55641 8.49995 3 8.49995V8.49995C3.44359 8.49995 3.66539 8.49995 3.8212 8.42383C4.0395 8.31718 4.19261 8.11139 4.23204 7.87165C4.26018 7.70054 4.19644 7.48809 4.06898 7.06321L3 3.49995ZM9 3.49995L7.93102 7.06321C7.80356 7.48809 7.73982 7.70054 7.76796 7.87165C7.80739 8.11139 7.9605 8.31718 8.1788 8.42383C8.33461 8.49995 8.55641 8.49995 9 8.49995V8.49995V8.49995C9.44359 8.49995 9.66539 8.49995 9.8212 8.42383C10.0395 8.31718 10.1926 8.11139 10.232 7.87165C10.2602 7.70054 10.1964 7.48809 10.069 7.06321L9 3.49995Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/> </svg>
       {{ tag.zh_name }}
     </a>
-    <MoreTags
-      v-if="theLicenseTags.moreTags"
-      :num="licenseTags.length - 3"
-      target="license"
-      @view-more-targets="viewMoreTargets"
-    />
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
   import PyTorch from '../../components/tags/frameworks/PyTorch.vue'
   import TensorFlow from '../../components/tags/frameworks/TensorFlow.vue'
   import Safetensors from '../../components/tags/frameworks/Safetensors.vue'
@@ -140,7 +60,7 @@
   import Joblib from '../../components/tags/frameworks/Joblib.vue'
   import { useI18n } from 'vue-i18n'
   import TagItem from '../tags/TagItem.vue'
-  import MoreTags from './MoreTags.vue'
+  import SvgIcon from './SvgIcon.vue'
 
   const props = defineProps({
     taskTags: Array,
@@ -156,37 +76,7 @@
   })
 
   const { t, locale } = useI18n()
-  //先定义一个生产参数的方法
-  const createTagRefs = (tagType) => {
-    const moreTags = ref(props[`${tagType}Tags`]?.length > 3)
-    const theTags = ref(props[`${tagType}Tags`]?.slice(0, 3))
-    return { moreTags, theTags }
-  }
-
-  const theTaskTags = ref(createTagRefs('task'))
-  const theFrameworkTags = ref(createTagRefs('framework'))
-  const theLanguageTags = ref(createTagRefs('language'))
-  const theLicenseTags = ref(createTagRefs('license'))
-  const theIndustryTags = ref(createTagRefs('industry'))
-  const theOtherTags = ref(createTagRefs('other'))
-
-  const tagGroups = {
-    task: theTaskTags,
-    framework: theFrameworkTags,
-    language: theLanguageTags,
-    license: theLicenseTags,
-    industry: theIndustryTags,
-    other: theOtherTags
-  }
-
-  const viewMoreTargets = (target) => {
-    const tagRef = tagGroups[target]
-    if (tagRef) {
-      tagRef.value.theTags = props[`${target}Tags`]
-      tagRef.value.moreTags = false
-    }
-  }
-
+  
   const searchByTag = (tag) => {
     window.location.href = `/${props.prefix}?tag=${tag.name}&tag_type=Task`
   }

@@ -78,6 +78,5 @@ export const all = {
   deleteSuccess: "Successfully delete",
   commits: "commit history",
   fetchError: "Failed to fetch data",
-  deploy: "Deploy",
-  more:"More"
+  deploy: "Deploy"
 }
