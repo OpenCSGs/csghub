@@ -76,6 +76,5 @@ export const all = {
   deleteSuccess: "删除成功",
   commits: "提交历史",
   fetchError: "获取数据失败",
-  deploy: "部署",
-  more:"更多"
+  deploy: "部署"
 }
