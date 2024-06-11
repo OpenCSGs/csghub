@@ -52,8 +52,7 @@
   })
 
   const emailGroups = ref([
-    {value: 'all', label: '所有用户'},
-    {value: 'hiveer', label: 'hiveer'}
+    {value: 'all', label: '所有用户'}
   ])
 
   const rules = {
