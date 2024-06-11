@@ -11,6 +11,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import { createWebHistory, createRouter } from 'vue-router'
 
 import { useCookies } from "vue3-cookies"
 import { createI18n } from 'vue-i18n'
@@ -43,6 +44,12 @@ import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 
+// Admin pages
+import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
+import AdminMenu from "./components/new_admin/AdminMenu.vue"
+import AdminDashboard from "./components/new_admin/AdminDashboard.vue"
+import AdminEmailSending from "./components/new_admin/AdminEmailSending.vue"
+
 const pinia = createPinia()
 
 const app = createApp({
@@ -70,11 +77,14 @@ const app = createApp({
     NewCode,
     CodeDetail,
     NewEndpoint,
-    EndpointDetail
+    EndpointDetail,
+    AdminNavbar,
+    AdminMenu
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
     csghubServer: CSGHUB_SERVER,
+    onPremise: ON_PREMISE,
     nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
   }
 }).use(ElementPlus, {
@@ -97,7 +107,19 @@ const i18n = createI18n({
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+
+const routes = [
+  { path: '/new_admin/', component: AdminDashboard },
+  { path: '/new_admin/email_sending', component: AdminEmailSending },
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
+
 app.component('SvgIcon', SvgIcon)
 app.use(i18n)
 app.use(pinia)
+app.use(router)
 app.mount("#app")
