@@ -152,6 +152,9 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "landing_page#index"
 
+    # New Admin Pannel routes
+    get '/new_admin/(*path)', to: 'new_admin#index'
+
     resources :settings, only: [] do
       collection do
         get 'profile'

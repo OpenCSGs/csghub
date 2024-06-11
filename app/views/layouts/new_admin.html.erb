@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html class="h-full">
   <head>
-    <%= meta_title.html_safe %>
-    <meta name="baidu-site-verification" content="codeva-TWeMAGl7xU" />
+    <title>OpenCSG</title>
+    <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8">
-    <meta name="keywords" content="开源大模型、算力平台、Huggingface、开源社区、开源社区、数据集、开源代码、算力租赁、英伟达的算力、A800、H800、新质生产力">
-    <%= meta_desc.html_safe %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font" %>
@@ -15,14 +13,6 @@
     <%= javascript_include_tag "application", defer: true %>
     <%= favicon_link_tag asset_path('favicon.png') %>
     <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?eaab0b4f3a7575ccde35ded2b54d7726";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();
-
       const DEFAULT_TAGS = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
       const CSGHUB_SERVER = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
       const ENABLE_HTTPS = '<%= ENV.fetch('ENABLE_HTTPS', false) %>'
@@ -33,11 +23,8 @@
   <body class="h-full">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
-        <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
         <%= yield.force_encoding(Encoding::UTF_8) %>
-        <%= render partial: 'partials/little_monster' %>
       </div>
-      <%= render partial: 'partials/footer' %>
     </div>
   </body>
 </html>
