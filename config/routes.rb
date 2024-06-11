@@ -108,7 +108,7 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "models#index"
 
-    get '/new_admin/*path', to: 'new_admin#index', as: :new_admin_root
+    get '/new_admin/(*path)', to: 'new_admin#index'
 
     resources :settings, only: [] do
       collection do

@@ -84,6 +84,7 @@ const app = createApp({
   provide:{
     defaultTags: DEFAULT_TAGS,
     csghubServer: CSGHUB_SERVER,
+    onPremise: ON_PREMISE,
     nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
   }
 }).use(ElementPlus, {
