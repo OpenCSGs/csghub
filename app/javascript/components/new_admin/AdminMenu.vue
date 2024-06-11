@@ -10,7 +10,7 @@
     </RouterLink>
 
     <RouterLink
-      v-if="!onPremise"
+      v-if="onPremise === 'false'"
       to="/new_admin/email_sending"
       class="underline"
     >
