@@ -11,6 +11,11 @@ const trackPageEvent = async (params) => {
     body: JSON.stringify([
       {
         v: '1',
+        ext: navigator.userAgent
+          ? JSON.stringify({
+              userAgent: navigator.userAgent
+            })
+          : '{}',
         ...params
       }
     ])
