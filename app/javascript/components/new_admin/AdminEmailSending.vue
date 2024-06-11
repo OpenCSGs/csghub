@@ -33,7 +33,7 @@
       </el-form-item>
 
       <el-form-item class="my-[40px]">
-        <el-button>
+        <el-button @click="sendGroupMail">
           发送
         </el-button>
       </el-form-item>
@@ -43,6 +43,8 @@
 
 <script setup>
   import { ref } from 'vue'
+  import csrfFetch from "../../packs/csrfFetch.js"
+  import { ElMessage } from 'element-plus';
 
   const dataFormRef= ref(null)
 
@@ -58,5 +60,29 @@
   const rules = {
     group: [{required: true, message: '请选择邮件组'}],
     template: [{required: true, message: '请提供邮件模版'}]
+  }
+
+  const sendGroupMail = async() => {
+    const params = Object.assign({}, dataForm.value)
+    const groupMailerEndpoint = `/internal_api/admin/group_mail`
+    const options = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(params)
+        }
+    const response = await csrfFetch(groupMailerEndpoint, options)
+    if (response.ok) {
+      ElMessage({
+        message: '邮件发送成功！',
+        type: 'success'
+      })
+    } else {
+      response.json().then(error => {
+        ElMessage({
+          message: error.message,
+          type: 'error'
+        })
+      })
+    }
   }
 </script>
