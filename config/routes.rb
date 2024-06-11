@@ -38,6 +38,10 @@ Rails.application.routes.draw do
 
   # internal api
   namespace :internal_api do
+    namespace :admin do
+      post '/group_mail', to: 'email_sending#group_mail'
+    end
+
     resources :wechat, only: [] do
       collection do
         get '/signature-config', to: 'wechat#signature_config'
