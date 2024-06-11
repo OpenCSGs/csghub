@@ -64,10 +64,6 @@ module Starhub
       download_repo_resolve_file('models', namespace, model_name, path, options)
     end
 
-    def create_model_file(namespace, model_name, path, options = {})
-      create_repo_file('models', namespace, model_name, path, options)
-    end
-
     def update_model_file(namespace, model_name, path, options = {})
       update_repo_file('models', namespace, model_name, path, options)
     end
