@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-  import { inject } from 'vue';
+  import { ref, inject } from 'vue';
 
-  const onPremise = inject('onPremise')
+  const onPremise = inject('onPremise', ref(true))
 </script>
