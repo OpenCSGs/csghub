@@ -86,6 +86,8 @@
     } else if (props.repoType === 'space') {
       if (props.sdk === 'nginx') {
         return props.settingsVisibility
+      } else {
+        return true
       }
     } else {
       return true
