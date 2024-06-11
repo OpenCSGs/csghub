@@ -141,8 +141,10 @@
     await fetchData(spacesUrl, spaces, defaultTotal)
     const codesUrl = reposUrl("codes")
     await fetchData(codesUrl, codes, defaultTotal)
-    const endpointsUrl = reposUrl("endpoints")
-    await fetchData(endpointsUrl, endpoints, defaultTotal)
+    if(props.initiator=='profile'){
+      const endpointsUrl = reposUrl("endpoints")
+      await fetchData(endpointsUrl, endpoints, defaultTotal)      
+    }
   }
 
   const viewMoreTargets = (target) => {
