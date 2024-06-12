@@ -4,14 +4,8 @@ class SystemNotificationMailer < ApplicationMailer
   before_action :set_lead, except: [:new_comment_alert, :group_mail]
 
   def group_mail
-    @mail_group_name = params[:mail_group]
     @mail_template = params[:mail_template]
-    mail_group = if @mail_group_name == 'all'
-                   User.pluck(:email)
-                 else
-                   []
-                 end
-    mail(to: mail_group, subject: "CSGHub")
+    mail(to: params[:email], subject: "CSGHub")
   end
 
   def new_partner_alert
