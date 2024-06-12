@@ -26,7 +26,7 @@
       const DEFAULT_TAGS = '<%= Tag::DEFAULT_TAGS.to_json.html_safe %>'
       const CSGHUB_SERVER = '<%= ENV.fetch('STARHUB_BASE_URL', '') %>'
       const ENABLE_HTTPS = '<%= ENV.fetch('ENABLE_HTTPS', false) %>'
-      const ON_PREMISE = '<%= ENV.fetch('ON_PREMISE', true) %>'
+      const ON_PREMISE = '<%= ENV.fetch('ON_PREMISE', false) %>'
     </script>
   </head>
 
