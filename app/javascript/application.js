@@ -68,6 +68,7 @@ import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
+import CsghubPage from "./components/csghub/CsghubPage.vue"
 
 const pinia = createPinia()
 
@@ -122,7 +123,8 @@ const app = createApp({
     NewCode,
     CodeDetail,
     NewEndpoint,
-    EndpointDetail
+    EndpointDetail,
+    CsghubPage
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

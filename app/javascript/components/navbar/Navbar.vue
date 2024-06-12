@@ -35,8 +35,8 @@
         <!-- product -->
         <el-sub-menu style="height: auto;" index="1" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.product') }}</template>
-          <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarCloud')" index="StarCloud">
-            <StarCloud />
+          <el-menu-item style="height: auto;" @click="handleNavigation('/csghub')" index="CsgHub">
+            <ProductCsgHub />
           </el-menu-item>
           <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarShip')" index="StarShip">
             <StarShip />
@@ -176,6 +176,7 @@
 <script>
 import ContactUs from "../form/ContactUs.vue"
 import StarCloud from "./menuItem/StarCloud.vue"
+import ProductCsgHub from "./menuItem/ProductCsgHub.vue"
 import StarShip from "./menuItem/StarShip.vue"
 import EKB from "./menuItem/EKB.vue"
 import StarAIO from "./menuItem/StarAIO.vue"
@@ -225,7 +226,6 @@ export default {
   components: {
     ContactUs,
     StarCloud,
-    OpenSourceStarCloud,
     StarShip,
     EKB,
     StarAIO,
@@ -243,7 +243,8 @@ export default {
     Partners,
     Campaigns,
     DailyPapers,
-    LlmFinetune
+    LlmFinetune,
+    ProductCsgHub
   },
   methods: {
     routerLink(path){

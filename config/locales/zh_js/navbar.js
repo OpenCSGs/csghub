@@ -9,6 +9,8 @@ export const navbar = {
   "openSourceStarCloudText":"开源算力调度平台",
   "starCloud": "StarCloud 星云平台",
   "starCloudText": "一站式大模型开发及服务运行平台，包括算力资源调度及算法训练推理服务",
+  "csgHub": "CSGHub 大模型资产管理平台",
+  "csgHubText": "一个开源开放的、针对大模型原生设计的资产管理平台",
   "starShip": "StarShip 星舰平台",
   "starShipText": "为大模型应用开发团队提供一套完整的模型/数据管理及应用搭建平台",
   "starChain":"StarChain 星链平台",
