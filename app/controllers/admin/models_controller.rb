@@ -1,5 +1,6 @@
 module Admin
   class ModelsController < Admin::ApplicationController
+    before_action :get_repo_mirror, only: [:show]
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
@@ -25,11 +26,11 @@ module Admin
     end
 
     def sync
-      model = Model.find_by(id: get_mirror_params[:model_id])
+      model = get_model params[:model_id]
       Starhub.api.sync_repo_mirror("models",
-                                  model.owner.name,
-                                  model.name,
-                                  { current_user: model.creator.name })
+                                   model.owner.name,
+                                   model.name,
+                                   { current_user: model.creator.name })
       flash[:notice] = "Synchronize successfully."
       return redirect_back(fallback_location: root_path)
       rescue Exception => e
@@ -53,8 +54,29 @@ module Admin
 
     private
 
-    def get_mirror_params
-      params.permit(:model_id)
+    def get_repo_mirror
+      model = get_model params[:id]
+      begin
+        data = JSON.parse(Starhub.api.get_repo_mirror("models",
+                                                      model.owner.name,
+                                                      model.name,
+                                                      { current_user: model.creator.name }))['data']
+      rescue
+        data = nil
+      end
+      @last_updated_at = data ? DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") : nil
+      @last_message = data ? data["last_message"] : nil
+      @show_updated = data ? true : false
+      @show_sync = data && !model.origin.nil? && data["status"] != 'finished' ? true : false
+      debugger
+    end
+
+    def get_model(model_id)
+      model = Model.find_by(id: model_id)
+      if model == nil
+        return redirect_back(fallback_location: root_path)
+      end
+      model
     end
   end
 end

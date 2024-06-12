@@ -1,5 +1,6 @@
 module Admin
   class DatasetsController < Admin::ApplicationController
+    before_action :get_repo_mirror, only: [:show]
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
@@ -25,11 +26,11 @@ module Admin
     end
 
     def sync
-      dataset = Dataset.find_by(id: get_mirror_params[:dataset_id])
-      Starhub.api.get_repo_mirror("datasets",
-                                  dataset.owner.name,
-                                  dataset.name,
-                                  { current_user: dataset.creator.name })
+      dataset = get_dataset params[:dataset_id]
+      Starhub.api.sync_repo_mirror("datasets",
+                                   dataset.owner.name,
+                                   dataset.name,
+                                   { current_user: dataset.creator.name })
       flash[:notice] = "Synchronize successfully."
       return redirect_back(fallback_location: root_path)
       rescue Exception => e
@@ -53,8 +54,27 @@ module Admin
 
     private
 
-    def get_mirror_params
-      params.permit(:dataset_id)
+    def get_repo_mirror
+      dataset = get_dataset params[:id]
+      begin
+        data = JSON.parse(Starhub.api.get_repo_mirror("datasets",
+                                                      dataset.owner.name,
+                                                      dataset.name,
+                                                      { current_user: dataset.creator.name }))['data']
+      rescue
+        data = nil
+      end
+      @last_updated_at = data ? DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") : nil
+      @last_message = data ? data["last_message"] : nil
+      @show_updated = data ? true : false
+      @show_sync = data && !dataset.origin.nil? && data["status"] != 'finished' ? true : false
+    end
+
+    def get_dataset(dataset_id)
+      dataset = Dataset.find_by(id: dataset_id)
+      if dataset == nil
+        return redirect_back(fallback_location: root_path)
+      end
     end
   end
 end

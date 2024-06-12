@@ -24,10 +24,12 @@ as well as a link to its edit page.
   </h1>
 
   <div>
-    <%= link_to(
-      t("administrate.actions.sync_resource", name: page.page_title),
-      "/admin/datasets/#{page.resource.id}/sync",
-      class: "button") %>
+    <% if @show %>
+      <%= link_to(
+        t("administrate.actions.sync_resource", name: page.page_title),
+        "/admin/datasets/#{page.resource.id}/sync",
+        class: "button") %>
+    <% end %>
 
     <%= link_to(
       t("administrate.actions.edit_resource", name: page.page_title),
@@ -58,5 +60,22 @@ as well as a link to its edit page.
       <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
           ><%= render_field attribute, page: page %></dd>
     <% end %>
+
+    <% if @show_updated %>
+      <dt class="attribute-label">
+        last updated at
+      </dt>
+      <dd class="attribute-data attribute-data--string">
+        <%= @last_updated_at %>
+      </dd>
+
+      <dt class="attribute-label">
+        last message
+      </dt>
+      <dd class="attribute-data attribute-data--string">
+        <%= @last_message %>
+      </dd>
+    <% end %>
+  </dl>
   </dl>
 </section>

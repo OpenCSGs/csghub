@@ -16,17 +16,6 @@ as well as a link to its edit page.
 [1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
 %>
 
-<% 
-begin
-  data = JSON.parse(Starhub.api.get_repo_mirror("models", 
-                                                  page.resource.owner.name, 
-                                                  page.resource.name, 
-                                                  { current_user: page.resource.creator.name }))['data']
-rescue
-  data = nil
-end
-%>
-
 <% content_for(:title) { t("administrate.actions.show_resource", name: page.page_title) } %>
 
 <header class="main-content__header">
@@ -35,8 +24,7 @@ end
   </h1>
 
   <div>
-
-    <% if data && page.resource.respond_to?(:origin) && !page.resource.origin.nil? && data.status != 'running' %>
+    <% if @show %>
       <%= link_to(
         t("administrate.actions.sync_resource", name: page.page_title),
         "/admin/models/#{page.resource.id}/sync",
@@ -73,19 +61,19 @@ end
           ><%= render_field attribute, page: page %></dd>
     <% end %>
 
-    <% if data %>
+    <% if @show_updated %>
       <dt class="attribute-label">
         last updated at
       </dt>
       <dd class="attribute-data attribute-data--string">
-        <%= DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") %>
+        <%= @last_updated_at %>
       </dd>
 
       <dt class="attribute-label">
         last message
       </dt>
       <dd class="attribute-data attribute-data--string">
-        <%= data["last_message"] %>
+        <%= @last_message %>
       </dd>
     <% end %>
   </dl>
