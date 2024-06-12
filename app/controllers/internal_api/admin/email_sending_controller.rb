@@ -1,7 +1,7 @@
 class InternalApi::Admin::EmailSendingController < InternalApi::ApplicationController
   def group_mail
     if params[:group] == 'all'
-      User.pluck(:email).reject! { |item| item.nil? || item.empty? }.each do |email|
+      User.pluck(:email).compact_blank.each do |email|
         mail_address = Mail::Address.new(email)
         is_mail_address_valid = mail_address.domain && mail_address.address == email
         if is_mail_address_valid
