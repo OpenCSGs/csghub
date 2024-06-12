@@ -134,17 +134,20 @@
   const getData = async () =>{
     let defaultTotal = 6 
     const modelsUrl = reposUrl("models")
-    await fetchData(modelsUrl, models, defaultTotal)
     const datasetsUrl = reposUrl("datasets")
-    await fetchData(datasetsUrl, datasets, defaultTotal)
     const spacesUrl = reposUrl("spaces")
-    await fetchData(spacesUrl, spaces, defaultTotal)
     const codesUrl = reposUrl("codes")
-    await fetchData(codesUrl, codes, defaultTotal)
+    let promises = [
+        fetchData(modelsUrl, models, defaultTotal),
+        fetchData(datasetsUrl, datasets, defaultTotal),
+        fetchData(spacesUrl, spaces, defaultTotal),
+        fetchData(codesUrl, codes, defaultTotal)
+    ];
     if(props.initiator=='profile'){
-      const endpointsUrl = reposUrl("endpoints")
-      await fetchData(endpointsUrl, endpoints, defaultTotal)      
+        const endpointsUrl = reposUrl("endpoints")
+        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal));
     }
+    await Promise.all(promises);
   }
 
   const viewMoreTargets = (target) => {
