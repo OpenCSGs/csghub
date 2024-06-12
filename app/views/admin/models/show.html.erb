@@ -35,9 +35,8 @@ end
   </h1>
 
   <div>
-    <% debugger %>
 
-    <% if data && page.resource.respond_to?(:origin) && !page.resource.origin.nil? %>
+    <% if data && page.resource.respond_to?(:origin) && !page.resource.origin.nil? && data.status != 'running' %>
       <%= link_to(
         t("administrate.actions.sync_resource", name: page.page_title),
         "/admin/models/#{page.resource.id}/sync",
