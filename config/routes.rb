@@ -80,7 +80,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files', namespace: /[^\/]+/
     post '/spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#create_file', namespace: /[^\/]+/
-    post '/spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file', namespace: /[^\/]+/namespace: /[^\/]+/
+    post '/spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file', namespace: /[^\/]+/
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
