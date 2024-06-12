@@ -251,8 +251,6 @@
   };
 
   const fetchFrameworks = async () => {
-    if (!modelId.value) return;
-
     const options = {
       method: "GET",
       headers: { "Content-Type": "application/json" }
