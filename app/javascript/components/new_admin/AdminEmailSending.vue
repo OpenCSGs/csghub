@@ -10,7 +10,11 @@
       label-position="top"
     >
       <!-- 邮件 group 选择 -->
-      <el-form-item :label="$t('admin.emailSending.mailGroupSelect')" class="w-[260px]" prop="group">
+      <el-form-item
+        :label="$t('admin.emailSending.mailGroupSelect')"
+        class="w-[260px]"
+        prop="group"
+      >
         <el-select
           v-model="dataForm.group"
           placeholder="Select"
@@ -25,13 +29,17 @@
       </el-form-item>
 
       <!-- 邮件模版输入 -->
-      <el-form-item :label="$t('admin.emailSending.mailTemplateInput')" prop="template">
+      <el-form-item
+        :label="$t('admin.emailSending.mailTemplateInput')"
+        prop="template"
+      >
         <el-input
           v-model="dataForm.template"
           :rows="20"
           type="textarea"
           placeholder="Provide email template here"
-        > </el-input>
+        >
+        </el-input>
       </el-form-item>
 
       <el-form-item class="my-[40px]">
@@ -45,11 +53,11 @@
 
 <script setup>
   import { ref } from 'vue'
-  import csrfFetch from "../../packs/csrfFetch.js"
-  import { ElMessage } from 'element-plus';
+  import csrfFetch from '../../packs/csrfFetch.js'
+  import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
 
-  const dataFormRef= ref(null)
+  const dataFormRef = ref(null)
 
   const { t } = useI18n()
 
@@ -59,22 +67,24 @@
   })
 
   const emailGroups = ref([
-    {value: 'all', label: t('admin.emailSending.allUsers')}
+    { value: 'all', label: t('admin.emailSending.allUsers') }
   ])
 
   const rules = {
-    group: [{required: true, message: t('admin.emailSending.groupMissing')}],
-    template: [{required: true, message: t('admin.emailSending.templateMissing')}]
+    group: [{ required: true, message: t('admin.emailSending.groupMissing') }],
+    template: [
+      { required: true, message: t('admin.emailSending.templateMissing') }
+    ]
   }
 
-  const sendGroupMail = async() => {
+  const sendGroupMail = async () => {
     const params = Object.assign({}, dataForm.value)
     const groupMailerEndpoint = `/internal_api/admin/group_mail`
     const options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(params)
-        }
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    }
     const response = await csrfFetch(groupMailerEndpoint, options)
     if (response.ok) {
       ElMessage({
@@ -82,7 +92,7 @@
         type: 'success'
       })
     } else {
-      response.json().then(error => {
+      response.json().then((error) => {
         ElMessage({
           message: error.message,
           type: 'error'
