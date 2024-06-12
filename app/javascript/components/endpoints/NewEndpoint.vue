@@ -260,7 +260,7 @@
 
     try {
       const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/runtime_framework`,
+        `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
         options
       );
       if (res.ok) {
