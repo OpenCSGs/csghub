@@ -6,7 +6,7 @@
       to="/new_admin/"
       class="underline"
     >
-      Go to Home
+      {{ $t('admin.dashboard.title') }}
     </RouterLink>
 
     <RouterLink
