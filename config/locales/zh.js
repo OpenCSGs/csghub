@@ -29,6 +29,7 @@ import { footer } from './zh_js/footer';
 import { ekb } from './zh_js/ekb';
 import { partner } from './zh_js/partner';
 import { endpoints } from './zh_js/endpoints';
+import { admin } from './zh_js/admin';
 
 export default {
   // csghub
@@ -52,6 +53,7 @@ export default {
   repo,
   components,
   endpoints,
+  admin,
   // portal
   space,
   campaign,

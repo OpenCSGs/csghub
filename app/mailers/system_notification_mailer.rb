@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class SystemNotificationMailer < ApplicationMailer
-  before_action :set_lead, except: :new_comment_alert
+  before_action :set_lead, except: [:new_comment_alert, :group_mail]
+
+  def group_mail
+    @mail_template = params[:mail_template]
+    mail(to: params[:email], subject: "CSGHub")
+  end
 
   def new_partner_alert
     mail(to: internal_group,
