@@ -260,7 +260,7 @@
 
     try {
       const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`,
+        `${csghubServer}/api/v1/models/runtime_framework`,
         options
       );
       if (res.ok) {
@@ -343,8 +343,6 @@
   const toEndpointDetail = (endpointId) => {
     window.location.pathname = `/endpoints/${props.namespace}/${endpointName.value}/${endpointId}`;
   };
-
-  watch(modelId, fetchFrameworks);
 
   onMounted(() => {
     fetchResources();
