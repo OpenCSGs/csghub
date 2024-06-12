@@ -132,12 +132,12 @@
   })
 
   const getData = async () =>{
-    let defaultTotal = 6 
+    const defaultTotal = 6 
     const modelsUrl = reposUrl("models")
     const datasetsUrl = reposUrl("datasets")
     const spacesUrl = reposUrl("spaces")
     const codesUrl = reposUrl("codes")
-    let promises = [
+    const promises = [
         fetchData(modelsUrl, models, defaultTotal),
         fetchData(datasetsUrl, datasets, defaultTotal),
         fetchData(spacesUrl, spaces, defaultTotal),
