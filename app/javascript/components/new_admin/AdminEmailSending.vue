@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="text-[20x] font-[500] mb-[20px]">后台邮件发送</h3>
+    <h3 class="text-[20x] font-[500] mb-[20px]">
+      {{ $t('admin.emailSending.title') }}
+    </h3>
     <el-form
       ref="dataFormRef"
       :model="dataForm"
@@ -8,7 +10,7 @@
       label-position="top"
     >
       <!-- 邮件 group 选择 -->
-      <el-form-item label="邮件 Group 选择" class="w-[260px]" prop="group">
+      <el-form-item :label="$t('admin.emailSending.mailGroupSelect')" class="w-[260px]" prop="group">
         <el-select
           v-model="dataForm.group"
           placeholder="Select"
@@ -23,7 +25,7 @@
       </el-form-item>
 
       <!-- 邮件模版输入 -->
-      <el-form-item label="邮件模版输入" prop="template">
+      <el-form-item :label="$t('admin.emailSending.mailTemplateInput')" prop="template">
         <el-input
           v-model="dataForm.template"
           :rows="20"
@@ -34,7 +36,7 @@
 
       <el-form-item class="my-[40px]">
         <el-button @click="sendGroupMail">
-          发送
+          {{ $t('admin.emailSending.send') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -45,8 +47,11 @@
   import { ref } from 'vue'
   import csrfFetch from "../../packs/csrfFetch.js"
   import { ElMessage } from 'element-plus';
+  import { useI18n } from 'vue-i18n'
 
   const dataFormRef= ref(null)
+
+  const { t } = useI18n()
 
   const dataForm = ref({
     group: 'all',
@@ -54,12 +59,12 @@
   })
 
   const emailGroups = ref([
-    {value: 'all', label: '所有用户'}
+    {value: 'all', label: t('admin.emailSending.allUsers')}
   ])
 
   const rules = {
-    group: [{required: true, message: '请选择邮件组'}],
-    template: [{required: true, message: '请提供邮件模版'}]
+    group: [{required: true, message: t('admin.emailSending.groupMissing')}],
+    template: [{required: true, message: t('admin.emailSending.templateMissing')}]
   }
 
   const sendGroupMail = async() => {
@@ -73,7 +78,7 @@
     const response = await csrfFetch(groupMailerEndpoint, options)
     if (response.ok) {
       ElMessage({
-        message: '邮件发送成功！',
+        message: t('admin.emailSending.sendSuccess'),
         type: 'success'
       })
     } else {
