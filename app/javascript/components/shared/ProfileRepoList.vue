@@ -12,7 +12,7 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t("all.noData") }}
       </div>
-      <view-more v-if="moreModels" target="models" @view-more-targets="viewMoreTargets"></view-more>
+      <view-more v-if="models.more" target="models" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
     </div>
 
@@ -29,7 +29,7 @@
         {{ $t("all.noData") }}
       </div>
       <view-more
-        v-if="moreDatasets"
+        v-if="datasets.more"
         target="datasets"
         @view-more-targets="viewMoreTargets"
       ></view-more>
@@ -48,7 +48,7 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t("all.noData") }}
       </div>
-      <view-more v-if="moreCodes" target="codes" @view-more-targets="viewMoreTargets"></view-more>
+      <view-more v-if="codes.more" target="codes" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
     </div>
 
@@ -64,7 +64,7 @@
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
         {{ $t("all.noData") }}
       </div>
-      <view-more v-if="moreSpaces" target="spaces" @view-more-targets="viewMoreTargets"></view-more>
+      <view-more v-if="spaces.more" target="spaces" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="spacesLoading" :rows="2" animated />
     </div>
 
@@ -81,7 +81,7 @@
         {{ $t("all.noData") }}
       </div>
       <view-more
-        v-if="moreEndpoints"
+        v-if="endpoints.more"
         target="endpoints"
         @view-more-targets="viewMoreTargets"
       ></view-more>
@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-  import { computed, ref, inject } from "vue"
+  import { computed, ref, onMounted, inject } from "vue"
   import RepoItem from "./RepoItem.vue"
   import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
   import EndpointItem from "../endpoints/EndpointItem.vue"
@@ -101,42 +101,54 @@
   import { ElMessage } from "element-plus"
 
   const props = defineProps({
-    modelList: Object,
-    datasetList: Object,
-    spaceList: Object,
-    codeList: Object,
-    endpointList: Object,
     name: String,
     initiator: String
   })
 
   const { t } = useI18n()
-  const models = ref(props.modelList)
-  const datasets = ref(props.datasetList)
-  const codes = ref(props.codeList)
-  const spaces = ref(props.spaceList)
-  const endpoints = ref(props.endpointList)
+  const models = ref([])
+  const datasets = ref([])
+  const codes = ref([])
+  const spaces = ref([])
+  const endpoints = ref([])
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
   const codeLoading = ref(false)
   const spacesLoading = ref(false)
   const endpointsLoading = ref(false)
 
-  const hasModels = computed(() => props.modelList?.total > 0)
-  const hasDatasets = computed(() => props.datasetList?.total > 0)
-  const hasCodes = computed(() => props.codeList?.total > 0)
-  const hasSpaces = computed(() => props.spaceList?.total > 0)
-  const hasEndpoints = computed(() => props.endpointList?.total > 0)
-
-  const moreModels = ref(props.modelList?.total > 6)
-  const moreDatasets = ref(props.datasetList?.total > 6)
-  const moreCodes = ref(props.codeList?.total > 6)
-  const moreSpaces = ref(props.spaceList?.total > 6)
-  const moreEndpoints = ref(props.endpointList?.total > 6)
+  const hasModels = computed(() => models.value?.total > 0)
+  const hasDatasets = computed(() => datasets.value?.total > 0)
+  const hasCodes = computed(() => codes.value?.total > 0)
+  const hasSpaces = computed(() => spaces.value?.total > 0)
+  const hasEndpoints = computed(() => endpoints.value?.total > 0)
 
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
   const csghubServer = inject("csghubServer")
+
+  onMounted(() => {
+    getData()
+  })
+
+  const getData = async () =>{
+    const defaultTotal = 6 
+    const modelsUrl = reposUrl("models")
+    const datasetsUrl = reposUrl("datasets")
+    const spacesUrl = reposUrl("spaces")
+    const codesUrl = reposUrl("codes")
+    const promises = [
+        fetchData(modelsUrl, models, defaultTotal),
+        fetchData(datasetsUrl, datasets, defaultTotal),
+        fetchData(spacesUrl, spaces, defaultTotal),
+        fetchData(codesUrl, codes, defaultTotal)
+    ];
+    if(props.initiator=='profile'){
+        const endpointsUrl = reposUrl("endpoints")
+        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal));
+    }
+    await Promise.all(promises);
+  }
 
   const viewMoreTargets = (target) => {
     if (target === "models") {
@@ -173,32 +185,27 @@
 
   const fetchMoreModels = async () => {
     const url = reposUrl("models")
-    await fetchData(url, models, props.modelList.total)
-    moreModels.value = false
+    await fetchData(url, models, models.value.total)
   }
 
   const fetchMoreDatasets = async () => {
     const url = reposUrl("datasets")
-    await fetchData(url, datasets, props.datasetList.total)
-    moreDatasets.value = false
+    await fetchData(url, datasets, datasets.value.total)
   }
 
   const fetchMoreSpaces = async () => {
     const url = reposUrl("spaces")
-    await fetchData(url, spaces, props.spaceList.total)
-    moreSpaces.value = false
+    await fetchData(url, spaces, spaces.value.total)
   }
 
   const fetchMoreCodes = async () => {
     const url = reposUrl("codes")
-    await fetchData(url, codes, props.codeList.total)
-    moreCodes.value = false
+    await fetchData(url, codes, codes.value.total)
   }
 
   const fetchMoreEndpoints = async () => {
     const url = reposUrl("endpoints")
-    await fetchData(url, endpoints, props.endpointList.total)
-    moreEndpoints.value = false
+    await fetchData(url, endpoints, endpoints.value.total)
   }
 
   const fetchData = async (url, targetRef, total) => {
@@ -216,6 +223,11 @@
         } else {
           response.json().then((data) => {
             targetRef.value = data
+            if(targetRef.value?.total > 6 && total === 6){
+              targetRef.value.more = true
+            }else if(total > 6){
+              targetRef.value.more = false
+            }
           })
         }
       })
