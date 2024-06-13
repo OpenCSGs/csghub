@@ -73,17 +73,6 @@ class InternalApi::CodesController < InternalApi::ApplicationController
     end
   end
 
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content])
-                                                            })
-    sync_update_file('code', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
   def upload_file
     sync_upload_file('code', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
