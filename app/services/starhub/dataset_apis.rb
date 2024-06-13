@@ -63,10 +63,6 @@ module Starhub
       download_repo_resolve_file('datasets', namespace, dataset_name, path, options)
     end
 
-    def create_dataset_file(namespace, dataset_name, path, options = {})
-      create_repo_file('datasets', namespace, dataset_name, path, options)
-    end
-
     def update_dataset_file(namespace, dataset_name, path, options = {})
       update_repo_file('datasets', namespace, dataset_name, path, options)
     end

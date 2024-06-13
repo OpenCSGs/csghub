@@ -60,10 +60,6 @@ module Starhub
       download_repo_resolve_file('spaces', namespace, application_space_name, path, options)
     end
 
-    def create_application_space_file(namespace, application_space_name, path, options = {})
-      create_repo_file('spaces', namespace, application_space_name, path, options)
-    end
-
     def update_application_space_file(namespace, application_space_name, path, options = {})
       update_repo_file('spaces', namespace, application_space_name, path, options)
     end
