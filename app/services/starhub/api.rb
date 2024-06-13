@@ -16,7 +16,9 @@ module Starhub
     def visit_url(url)
       options = [{
         "v": "1",
-        "id": 'url_visit',"m": 'URLVisit'
+        "id": 'url_visit',
+        "m": 'URLVisit',
+        'ext': url
       }]
       @client.post("/events", options)
     end
