@@ -73,17 +73,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
   end
 
-  def create_file
-    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
-    sync_create_file('model', options)
-    render json: { message: I18n.t('repo.createFileSuccess') }
-  end
-
   def update_readme_tags
     tags = params[:tags]
 
