@@ -267,6 +267,17 @@ module Starhub
       res.body
     end
 
+    def get_repo_mirror(repo_type, namespace, repo_name, options = {})
+      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/mirror", options)
+      res.body
+    end
+
+    def sync_repo_mirror(repo_type, namespace, repo_name, options = {})
+      res = @client.post("/#{repo_type}/#{namespace}/#{repo_name}/mirror/sync?current_user=#{options[:current_user]}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_mirror(repo_type, namespace, name, options = {})
       res = @client.post("/#{repo_type}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
       raise StarhubError, res.body unless res.success?

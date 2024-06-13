@@ -1,5 +1,5 @@
 module Admin
-  class ModelsController < Admin::ApplicationController
+  class CodesController < Admin::ApplicationController
     before_action :get_repo_mirror, only: [:show]
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
@@ -26,14 +26,14 @@ module Admin
     end
 
     def sync
-      model = Model.find_by(id: params[:model_id])
-      if model == nil
+      code = Code.find_by(id: params[:code_id])
+      if code == nil
         return redirect_back(fallback_location: root_path)
       end
-      Starhub.api.sync_repo_mirror("models",
-                                   model.owner.name,
-                                   model.name,
-                                   { current_user: model.creator.name })
+      Starhub.api.sync_repo_mirror("codes",
+                                  code.owner.name,
+                                  code.name,
+                                  { current_user: code.creator.name })
       flash[:notice] = "Synchronize successfully."
       return redirect_back(fallback_location: root_path)
     rescue Exception => e
@@ -58,18 +58,18 @@ module Admin
     private
 
     def get_repo_mirror
-      model = Model.find_by(id: params[:id])
-      if model == nil
+      code = Code.find_by(id: params[:id])
+      if code == nil
         return redirect_back(fallback_location: root_path)
       end
-      data = JSON.parse(Starhub.api.get_repo_mirror("models",
-                                                    model.owner.name,
-                                                    model.name,
-                                                    { current_user: model.creator.name }))['data']
+      data = JSON.parse(Starhub.api.get_repo_mirror("codes",
+                                                    code.owner.name,
+                                                    code.name,
+                                                    { current_user: code.creator.name }))['data']
       @last_updated_at = data ? DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") : nil
       @last_message = data ? data["last_message"] : nil
       @show_updated = data ? true : false
-      @show_sync = data && !model.origin.nil? && data["status"] != 'finished' ? true : false
+      @show_sync = data && !code.origin.nil? && data["status"] != 'finished' ? true : false
     end
   end
 end
