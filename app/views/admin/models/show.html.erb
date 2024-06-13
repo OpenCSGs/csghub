@@ -24,7 +24,7 @@ as well as a link to its edit page.
   </h1>
 
   <div>
-    <% if @show %>
+    <% if @show_sync %>
       <%= link_to(
         t("administrate.actions.sync_resource", name: page.page_title),
         "/admin/models/#{page.resource.id}/sync",
