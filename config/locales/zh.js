@@ -18,6 +18,7 @@ import { spaces } from './zh_js/spaces';
 import { user_sessions } from './zh_js/user_sessions';
 import { components } from './zh_js/components';
 import { endpoints } from './zh_js/endpoints';
+import { admin } from './zh_js/admin';
 
 export default {
   all,
@@ -39,5 +40,6 @@ export default {
   shared,
   repo,
   components,
-  endpoints
+  endpoints,
+  admin
 };

@@ -23,10 +23,8 @@
   <body class="h-full">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
-        <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
         <%= yield.force_encoding(Encoding::UTF_8) %>
       </div>
-      <%= render partial: 'partials/footer' %>
     </div>
   </body>
 </html>
