@@ -26,14 +26,17 @@ module Admin
     end
 
     def sync
-      code = get_code params[:code_id]
+      code = Code.find_by(id: params[:code_id])
+      if code == nil
+        return redirect_back(fallback_location: root_path)
+      end
       Starhub.api.sync_repo_mirror("codes",
                                   code.owner.name,
                                   code.name,
                                   { current_user: code.creator.name })
       flash[:notice] = "Synchronize successfully."
       return redirect_back(fallback_location: root_path)
-      rescue Exception => e
+    rescue Exception => e
       flash[:notice] = e
       redirect_back(fallback_location: root_path)
     end
@@ -55,28 +58,18 @@ module Admin
     private
 
     def get_repo_mirror
-      code = get_code params[:id]
-      begin
-        data = JSON.parse(Starhub.api.get_repo_mirror("codes",
-                                                      code.owner.name,
-                                                      code.name,
-                                                      { current_user: code.creator.name }))['data']
-      rescue
-        data = nil
+      code = Code.find_by(id: params[:id])
+      if code == nil
+        return redirect_back(fallback_location: root_path)
       end
+      data = JSON.parse(Starhub.api.get_repo_mirror("codes",
+                                                    code.owner.name,
+                                                    code.name,
+                                                    { current_user: code.creator.name }))['data']
       @last_updated_at = data ? DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") : nil
       @last_message = data ? data["last_message"] : nil
       @show_updated = data ? true : false
       @show_sync = data && !code.origin.nil? && data["status"] != 'finished' ? true : false
-      debugger
-    end
-
-    def get_code(code_id)
-      code = Code.find_by(id: code_id)
-      if code == nil
-        return redirect_back(fallback_location: root_path)
-      end
-      code
     end
   end
 end

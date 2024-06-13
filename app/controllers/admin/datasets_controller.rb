@@ -26,14 +26,17 @@ module Admin
     end
 
     def sync
-      dataset = get_dataset params[:dataset_id]
+      dataset = Dataset.find_by(id: params[:dataset_id])
+      if dataset == nil
+        return redirect_back(fallback_location: root_path)
+      end
       Starhub.api.sync_repo_mirror("datasets",
                                    dataset.owner.name,
                                    dataset.name,
                                    { current_user: dataset.creator.name })
       flash[:notice] = "Synchronize successfully."
       return redirect_back(fallback_location: root_path)
-      rescue Exception => e
+    rescue Exception => e
       flash[:notice] = e
       redirect_back(fallback_location: root_path)
     end
@@ -55,26 +58,18 @@ module Admin
     private
 
     def get_repo_mirror
-      dataset = get_dataset params[:id]
-      begin
-        data = JSON.parse(Starhub.api.get_repo_mirror("datasets",
-                                                      dataset.owner.name,
-                                                      dataset.name,
-                                                      { current_user: dataset.creator.name }))['data']
-      rescue
-        data = nil
+      dataset = Dataset.find_by(id: params[:id])
+      if dataset == nil
+        return redirect_back(fallback_location: root_path)
       end
+      data = JSON.parse(Starhub.api.get_repo_mirror("datasets",
+                                                    dataset.owner.name,
+                                                    dataset.name,
+                                                    { current_user: dataset.creator.name }))['data']
       @last_updated_at = data ? DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") : nil
       @last_message = data ? data["last_message"] : nil
       @show_updated = data ? true : false
       @show_sync = data && !dataset.origin.nil? && data["status"] != 'finished' ? true : false
-    end
-
-    def get_dataset(dataset_id)
-      dataset = Dataset.find_by(id: dataset_id)
-      if dataset == nil
-        return redirect_back(fallback_location: root_path)
-      end
     end
   end
 end

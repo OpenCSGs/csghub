@@ -269,7 +269,6 @@ module Starhub
 
     def get_repo_mirror(repo_type, namespace, repo_name, options = {})
       res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/mirror", options)
-      raise StarhubError, res.body unless res.success?
       res.body
     end
 
