@@ -69,6 +69,8 @@ import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
+import StarShipPage from "./components/star_ship/StarShipPage.vue"
+
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -131,7 +133,8 @@ const app = createApp({
     NewEndpoint,
     EndpointDetail,
     AdminNavbar,
-    AdminMenu
+    AdminMenu,
+    StarShipPage
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
