@@ -12,7 +12,7 @@
       </div>
     </div>
     <div
-      class="flex flex-warp mb-[100px] items-center relative lg:flex-col gap-2 px-8 md:px-0 lg:gap-1"
+      class="flex mb-[100px] items-center relative lg:flex-col gap-2 px-8 md:px-0 lg:gap-1"
       v-for="(item, index) in data"
       :key="item.id"
       :class="index % 2 == '1' ? 'flex-row-reverse' : ''"
@@ -27,7 +27,7 @@
           <div class="text-[30px] text-[#101828] leading-[38px] mb-4">
             {{ $t('starShip.section.' + item.title) }}
           </div>
-          <div class="text-[18px] text-[##75467] leading-[28px] font-light mb-8">
+          <div class="text-[18px] text-[#475467] leading-[28px] font-light mb-8">
             {{ $t('starShip.section.' + item.desc) }}
           </div>
         </div>

@@ -22,7 +22,7 @@
             <div class="text-[20px] text-[#101828] leading-[30px]">
               {{ $t('starShip.value.' + item.title) }}
             </div>
-            <div class="text-[16px] text-[##75467] leading-[24px] font-light">
+            <div class="text-[16px] text-[#475467] leading-[24px] font-light">
               {{ $t('starShip.value.' + item.desc) }}
             </div>
           </div>
