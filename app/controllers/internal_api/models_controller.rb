@@ -121,17 +121,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content])
-                                                            })
-    sync_update_file('model', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
   def upload_file
     sync_upload_file('model', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200

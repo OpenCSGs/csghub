@@ -69,30 +69,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     end
   end
 
-  def create_file
-    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
-    sync_create_file('dataset', options)
-    render json: { message: I18n.t('repo.createFileSuccess') }
-  end
-
-
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content]),
-                                                              sha: params[:sha]
-                                                            })
-    sync_update_file('dataset', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
   def update_readme_tags
     tags = params[:tags]
 

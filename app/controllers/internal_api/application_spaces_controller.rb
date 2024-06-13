@@ -69,29 +69,6 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     end
   end
 
-  def create_file
-    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
-    sync_create_file('application_space', options)
-    render json: { message: I18n.t('repo.createFileSuccess') }
-  end
-
-
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content])
-                                                            })
-    sync_update_file('application_space', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
   def upload_file
     sync_upload_file('application_space', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
