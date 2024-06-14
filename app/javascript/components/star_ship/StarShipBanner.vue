@@ -24,6 +24,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
   const goApply = () => {
     window.open('https://opencsg.com/lead_forms/form/S3s2wpq1pjvT_Starship_Free_Trail', '_blank')
