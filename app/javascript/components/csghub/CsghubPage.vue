@@ -2,15 +2,14 @@
   <div>
     <CsghubBanner />
     <CsghubIntroduce />
-    <!-- <CsghubFeature />
-    <CsghubPlan /> -->
+    <CsghubPrice />
   </div>
 </template>
 
 <script>
 import CsghubBanner from "./CsghubBanner.vue";
 import CsghubIntroduce from "./CsghubIntroduce.vue";
-// import CsghubFeature from "./CsghubFeature.vue";
+import CsghubPrice from "./CsghubPrice.vue";
 // import CsghubPlan from "./CsghubPlan.vue";
 
 export default {
@@ -26,7 +25,7 @@ export default {
   components: {
     CsghubBanner,
     CsghubIntroduce,
-    // CsghubFeature,
+    CsghubPrice,
     // CsghubPlan
   },
 
