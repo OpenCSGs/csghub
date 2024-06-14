@@ -33,7 +33,7 @@
 <style scoped>
   .star_ship_banner {
     mask-image: linear-gradient(
-      var(--mask-direction, to right),
+      var(--mask-direction, to bottom),
       transparent,
       #000 5%,
       #000 95%,
