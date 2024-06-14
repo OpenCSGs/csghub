@@ -11,6 +11,7 @@
     <div class="flex items-center justify-center mb-[73px]">
       <div
         class="cursor-pointer md:w-full py-4 px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
+        @click="goApply"
       >
         {{ $t('product.starShip.trailApply') }}
       </div>
@@ -23,6 +24,11 @@
     </div>
   </div>
 </template>
+<script setup>
+  const goApply = () => {
+    window.open('https://opencsg.com/lead_forms/form/S3s2wpq1pjvT_Starship_Free_Trail', '_blank')
+  }
+</script>
 <style scoped>
   .star_ship_banner {
     mask-image: linear-gradient(
