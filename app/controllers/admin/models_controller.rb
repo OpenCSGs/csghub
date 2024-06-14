@@ -69,7 +69,7 @@ module Admin
       @last_updated_at = data ? DateTime.parse(data["last_updated_at"]).strftime("%Y-%m-%d %H:%M:%S %z") : nil
       @last_message = data ? data["last_message"] : nil
       @show_updated = data ? true : false
-      @show_sync = data && !model.origin.nil? && data["status"] != 'finished' ? true : false
+      @show_sync = data && data["status"] != 'finished' ? true : false
     end
   end
 end
