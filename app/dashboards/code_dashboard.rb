@@ -13,7 +13,6 @@ class CodeDashboard < Administrate::BaseDashboard
     name: Field::String,
     owner: Field::Polymorphic,
     visibility: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
-    origin: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -38,7 +37,6 @@ class CodeDashboard < Administrate::BaseDashboard
     owner
     creator
     visibility
-    origin
     created_at
     updated_at
   ].freeze
@@ -48,7 +46,6 @@ class CodeDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     visibility
-    origin
   ].freeze
 
   # COLLECTION_FILTERS
