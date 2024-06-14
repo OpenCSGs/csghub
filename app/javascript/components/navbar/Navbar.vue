@@ -38,7 +38,7 @@
           <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarCloud')" index="StarCloud">
             <StarCloud />
           </el-menu-item>
-          <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarShip')" index="StarShip">
+          <el-menu-item style="height: auto;" @click="routerLink('/star_ship')" index="StarShip">
             <StarShip />
           </el-menu-item>
           <el-menu-item style="height: auto;" @click="routerLink('/ekb')" index="KnowledgeBase">
