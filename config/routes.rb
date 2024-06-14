@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'health', to: 'landing_page#health_check'
+
   # admin
   namespace :admin do
     resources :system_configs
