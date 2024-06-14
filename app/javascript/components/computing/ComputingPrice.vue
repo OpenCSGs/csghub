@@ -20,7 +20,7 @@
           <div
             @click="
               toNextPage(
-                'https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82',
+                'https://opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82',
                 'connect_compute'
               )
             "
