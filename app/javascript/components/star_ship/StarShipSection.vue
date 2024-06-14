@@ -13,7 +13,7 @@
     </div>
     <div
       class="flex mb-[100px] items-center relative lg:flex-col gap-16 px-8 md:px-0 lg:gap-1"
-      v-for="(item, index) in data"
+      v-for="(item, index) in sectionData"
       :key="item.id"
       :class="index % 2 == '1' ? 'flex-row-reverse' : ''"
     >
@@ -65,7 +65,7 @@
 
 <script setup>
   import { ref } from 'vue'
-  const data = ref([
+  const sectionData = ref([
     {
       id: 1,
       icon: 'star_ship_code_snippet',
