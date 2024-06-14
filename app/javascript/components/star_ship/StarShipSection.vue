@@ -50,13 +50,7 @@
         <img
           src="images/star_ship/line_pattern.png"
           class="lg:hidden w-[300px] absolute"
-          :class="
-            index == 0
-              ? '-right-[96px] -bottom-[96px]'
-              : index % 2 == '1'
-              ? '-left-[96px] -bottom-[96px]'
-              : '-right-[96px] -top-[96px]'
-          "
+          :class="index % 2 == '1' ? '-left-[96px] -bottom-[96px]' : '-right-[96px] -bottom-[96px]'"
         />
       </div>
     </div>
