@@ -102,4 +102,11 @@ export const csghub = {
     "console": "联系销售",
     "recommend": "推荐",
   },
+  "serve": {
+    "recommend": "在线体验",
+    "headline": "线上 SaaS 快速体验",
+    "desc": "在OpenCSG大模型社区与百万用户共同成长",
+    "doc": "文档中心",
+    "register": "注册使用",
+  }
 }

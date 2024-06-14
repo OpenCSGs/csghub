@@ -1,5 +1,5 @@
 <template>
-  <div class="StarAIO py-[96px] w-full">
+  <div class="StarAIO py-[96px] w-full max-w-[1280px] m-auto">
     <div class="max-w-[1280px] m-auto">
       <div class="max-w-[1280px] m-auto">
       <div class="flex flex-col items-center md:px-[20px] mb-[64px] relative">
@@ -139,9 +139,7 @@
             </a>
           </div>
         </div>
-        
-
-
+  
         <div class="flex flex-col border rounded-[16px]">
           <div class="flex justify-between p-[32px] pb-[16px] border-b">
             <div class="w-[277px]">

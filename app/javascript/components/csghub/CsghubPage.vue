@@ -3,6 +3,7 @@
     <CsghubBanner />
     <CsghubIntroduce />
     <CsghubPrice />
+    <CsghubServe />
   </div>
 </template>
 
@@ -10,7 +11,7 @@
 import CsghubBanner from "./CsghubBanner.vue";
 import CsghubIntroduce from "./CsghubIntroduce.vue";
 import CsghubPrice from "./CsghubPrice.vue";
-// import CsghubPlan from "./CsghubPlan.vue";
+import CsghubServe from "./CsghubServe.vue";
 
 export default {
   props: {},
@@ -26,7 +27,7 @@ export default {
     CsghubBanner,
     CsghubIntroduce,
     CsghubPrice,
-    // CsghubPlan
+    CsghubServe
   },
 
   mounted() {
