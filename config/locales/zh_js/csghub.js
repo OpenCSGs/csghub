@@ -93,7 +93,7 @@ export const csghub = {
     "made": "定制能力",
     "made-p1": "企业级细粒度权限控制",
     "made-p2": "界面定制，8000/人天",
-    "technology": "定制能力",
+    "technology": "技术支持",
     "technology-p1": "OpenCSG 官方工单系统，7x24在线服务",
     "technology-p2": "专家支持服务（远程+现场），8000/人天",
     "capacity": "资源容量",
@@ -101,12 +101,14 @@ export const csghub = {
     "free": "免费使用",
     "console": "联系销售",
     "recommend": "推荐",
+    "month": "月付",
+    "year": "年付"
   },
   "serve": {
     "recommend": "在线体验",
     "headline": "线上 SaaS 快速体验",
     "desc": "在OpenCSG大模型社区与百万用户共同成长",
     "doc": "文档中心",
-    "register": "注册使用",
+    "register": "注册使用"
   }
 }

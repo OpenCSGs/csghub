@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[96px] text-center w-full banner bg-white">
+  <div class="py-[96px] md:py-[64px] text-center w-full banner bg-white md:bg-[#F9FAFB]">
     <div class="flex flex-col items-center max-w-[1280px] m-auto">
       <div class="mb-[24px] max-w-[1216px] m-auto text-[72px] md:text-[48px] md:leading-[60px] text-[#101828] leading-[90px]">
         {{ $t('csghub.banner.headline1') }}<br/>{{ $t('csghub.banner.headline2') }}
