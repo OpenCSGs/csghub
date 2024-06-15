@@ -7,7 +7,7 @@
       <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px]">
         {{ $t('csghub.banner.solution1') }}<br/>{{ $t('csghub.banner.solution2') }}
       </div>
-      <a href="https://ekb.opencsg.com/" target="_blank"
+      <a href="#" target="_blank"
         class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
       >
         {{ $t("csghub.banner.join") }}
@@ -39,7 +39,7 @@ export default {
   .banner{
     background-image: url('../images/CsghubBackgroundPattern.png');
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: 100%;
     background-position: top
   }
 </style>

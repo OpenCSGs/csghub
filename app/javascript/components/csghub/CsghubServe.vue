@@ -12,12 +12,12 @@
           {{ $t('csghub.serve.desc') }}
         </div>
         <div class="flex gap-[12px]">
-          <a href="https://ekb.opencsg.com/" target="_blank"
+          <a href="#" target="_blank"
             class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] border rounded-[8px]"
           >
             {{ $t("csghub.serve.doc") }}
           </a>
-          <a href="https://ekb.opencsg.com/" target="_blank"
+          <a href="#" target="_blank"
             class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
           >
             {{ $t("csghub.serve.register") }}

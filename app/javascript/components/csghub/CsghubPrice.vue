@@ -132,7 +132,7 @@
             </div>
           </div>
           <div class="p-[32px] border-t">
-            <a href="https://ekb.opencsg.com/" target="_blank"
+            <a href="#" target="_blank"
              class="flex cursosr-pointer w-[528px] justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
             >
               {{ $t("csghub.price.free") }}
@@ -267,7 +267,7 @@
             </div>
           </div>
           <div class="p-[32px] border-t">
-            <a href="https://ekb.opencsg.com/" target="_blank"
+            <a href="#" target="_blank"
              class="flex cursosr-pointer w-[528px] justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
             >
             {{ $t("csghub.price.console") }}

@@ -59,7 +59,7 @@
           </div>
         </div>
         <div
-          class="grow bg-[#F2F4F7] max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
+          class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
         >
           <el-image
             src="/images/product/system.png"
@@ -72,7 +72,7 @@
         class="pl-[32px] lg:px-[32px] flex items-center justify-center lg:flex-col gap-[64px] mb-[64px]"
       >
         <div
-          class="grow bg-[#F2F4F7] max-w-[730px] max-h-[620px] lg:rounded-[24px] pl-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
+          class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pl-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
         >
           <el-image
             src="/images/product/platform.png"
@@ -124,38 +124,30 @@
             <SvgIcon name="csghub_platform" />
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
-                {{ $t('csghub.product.part1') }}
+                {{ $t('csghub.product.part3') }}
               </div>
               <div class="text-[16px] leading-[24px] font-light text-[#475467]">
-                {{ $t('csghub.product.part1-') }}
+                {{ $t('csghub.product.part3-') }}
               </div>
             </div>
             <div class="flex flex-col gap-[16px] px-[16px]">
               <div class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part1-p1') }}</p>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part3-p1') }}</p>
               </div>
               <div class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part1-p2') }}</p>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part3-p2') }}</p>
               </div>
               <div class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part1-p3') }}</p>
-              </div>
-              <div class="flex items-center">
-                <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part1-p4') }}</p>
-              </div>
-              <div class="flex items-center">
-                <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part1-p5') }}</p>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part3-p3') }}</p>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="grow bg-[#F2F4F7] max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
+          class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
         >
           <el-image
             src="/images/product/sync.png"
@@ -168,7 +160,7 @@
         class="pl-[32px] lg:px-[32px] flex items-center justify-center lg:flex-col gap-[64px] mb-[64px]"
       >
         <div
-          class="grow bg-[#F2F4F7] max-w-[730px] max-h-[620px] lg:rounded-[24px] pl-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
+          class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pl-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
         >
           <el-image
             src="/images/product/safe.png"
@@ -182,28 +174,32 @@
             <SvgIcon name="csghub_safe" />
             <div>
               <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
-                {{ $t('csghub.product.part2') }}
+                {{ $t('csghub.product.part4') }}
               </div>
               <div class="text-[16px] leading-[24px] font-light text-[#475467]">
-                {{ $t('csghub.product.part2-') }}
+                {{ $t('csghub.product.part4-') }}
               </div>
             </div>
             <div class="flex flex-col gap-[16px] px-[16px]">
               <div class="flex items-center">   
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part2-p1') }}</p>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part4-p1') }}</p>
               </div>
               <div class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part2-p2') }}</p>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part4-p2') }}</p>
               </div>
               <div class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part2-p3') }}</p>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part4-p3') }}</p>
               </div>
               <div class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part2-p4') }}</p>
+                <p class="ml-[12px] font-light text-[d18px] text-[#475467]">{{ $t('csghub.product.part4-p4') }}</p>
+              </div>
+              <div class="flex items-center">
+                <SvgIcon name="csghub_hook" width="23" height="23"/>
+                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ $t('csghub.product.part4-p5') }}</p>
               </div>
             </div>
           </div>
@@ -218,7 +214,7 @@
         <div class="flex flex-col items-start max-w-[380px]">
           <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] leading-[44px]">{{ $t('csghub.product.feature-h') }}</div>
           <div class="text-[#667085] mb-[20px] text-[18px] leading-[28px] font-light">{{ $t('csghub.product.feature-p') }}</div>
-          <a href="https://ekb.opencsg.com/" target="_blank"
+          <a href="#" target="_blank"
              class="cursosr-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
           >
             {{ $t("csghub.product.feature-button") }}
