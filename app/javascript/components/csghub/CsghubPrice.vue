@@ -158,7 +158,7 @@
               <div class="flex items-center">
                 <p class="text-[24px]">{{ $t('csghub.price.company') }}</p>
                 <div
-                  class="flex items-center justify-center w-[48px] h-[24px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
+                  class="flex items-center justify-center w-auto px-[12px] h-[24px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
                   {{ $t('csghub.price.recommend') }}
                 </div>
               </div>

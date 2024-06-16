@@ -3,7 +3,7 @@
     <div class="flex lg:flex-col justify-between max-w-[1280px] m-auto px-[32px]">
       <div class="flex flex-col">
         <div
-          class="flex items-center justify-center w-[80px] mb-[12px] h-[28px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
+          class="flex items-center justify-center will-change-contents w-[130px] mb-[12px] h-[28px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
           {{ $t('csghub.serve.recommend') }}
         </div>
         <div class="font-medium text-[36px] mb-[20px]">
