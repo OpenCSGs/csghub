@@ -66,8 +66,7 @@
       </div>
     </div>
   </div>
-
-  <div class="StarAIO py-[96px] md:py-[64px] w-full bg-[#F9FAFB]">
+  <div class="py-[96px] md:py-[64px] w-full bg-[#F9FAFB]">
     <div class="max-w-[1280px] m-auto">
       <div class="px-[32px] flex md:flex-col gap-[64px] mb-[64px] md:mb-0">
         <div class="flex flex-col items-start max-w-[380px]">

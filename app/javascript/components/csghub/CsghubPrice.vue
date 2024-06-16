@@ -1,37 +1,38 @@
 <template>
-  <div class="StarAIO py-[96px] md:py-[64px] w-full max-w-[1280px] m-auto">
+  <div class="py-[96px] md:py-[64px] w-full max-w-[1280px] m-auto">
     <div class="max-w-[1280px] m-auto">
-      <div class="max-w-[1280px] m-auto md:px-[20px]">
-      <div class="flex flex-col items-center mb-[64px] relative">
-        <div class="text-[16px] text-[#223B99] mb-[20px]">
-          {{ $t('csghub.price.introduce') }}
-        </div>
-        <div class="text-[36px] leading-[44px] text-[#101828]">
-          {{ $t('csghub.price.headline') }}
-        </div>
-        <div
-          class="my-[20px] text-center text-[20px] text-[#606266] leading-[30px] font-light mb-[32px]"
-        >
-          {{ $t('csghub.price.desc') }}
-        </div>
-        <div class="hidden md:flex p-[6px] text-[16px] mb-[32px] bg-[#F9FAFB] w-[343px] h-[56px] rounded-[12px] border border-[#EAECF0]">
-          <div class="flex justify-center items-center w-[163px] h-[44px] rounded-[6px] text-[#344054] bg-white shadow">
-            {{ $t('csghub.price.month') }}
+      <div class="max-w-[1280px] m-auto  md:px-[20px]">
+        <div class="flex flex-col items-center mb-[64px] relative">
+          <div class="text-[16px] text-[#223B99] mb-[20px]">
+            {{ $t('csghub.price.introduce') }}
           </div>
-          <div class="flex justify-center items-center w-[163px] h-[44px] rounded-[6px] text-[#667085]">
-            {{ $t('csghub.price.year') }}
+          <div class="text-[36px] leading-[44px] text-[#101828]">
+            {{ $t('csghub.price.headline') }}
+          </div>
+          <div class="my-[20px] text-center text-[20px] text-[#606266] leading-[30px] font-light mb-[32px]">
+            {{ $t('csghub.price.desc') }}
+          </div>
+          <div
+            class="hidden md:flex p-[6px] text-[16px] mb-[32px] bg-[#F9FAFB] w-[343px] h-[56px] rounded-[12px] border border-[#EAECF0]">
+            <div
+              class="flex justify-center items-center w-[163px] h-[44px] rounded-[6px] text-[#344054] bg-white shadow">
+              {{ $t('csghub.price.month') }}
+            </div>
+            <div class="flex justify-center items-center w-[163px] h-[44px] rounded-[6px] text-[#667085]">
+              {{ $t('csghub.price.year') }}
+            </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="grid grid-cols-2 gap-[32px] mb-[64px] md:grid-cols-1 px-[20px]">
         <div class="flex flex-col border rounded-[16px]">
           <div class="flex justify-between lg:flex-col p-[32px] pb-[16px] border-b">
+            <div class="hidden text-[60px] md:block">Free</div>
             <div>
               <p class="text-[24px]">{{ $t('csghub.price.community') }}</p>
               <p class="font-light text-[16px] text-[#475467]">{{ $t('csghub.price.community-p1') }}</p>
             </div>
-            <div class="text-[60px]">Free</div>
+            <div class="text-[60px] md:hidden">Free</div>
           </div>
           <div class="flex flex-col gap-[24px] p-[32px]">
             <div class="flex flex-col">
@@ -141,25 +142,29 @@
           </div>
           <div class="p-[32px] border-t">
             <a href="#" target="_blank"
-             class="flex cursosr-pointer p-[24px] w-auto justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
-            >
+              class="flex cursosr-pointer p-[24px] w-auto justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
               {{ $t("csghub.price.free") }}
             </a>
           </div>
         </div>
-  
+
         <div class="flex flex-col border rounded-[16px]">
           <div class="flex justify-between lg:flex-col p-[32px] pb-[16px] border-b">
             <div class="w-[277px]">
+              <div class="hidden items-end text-[60px] md:flex">
+                ¥1999
+                <p class="mb-[20px] font-light text-[16px] text-[#475467]">{{ $t('csghub.price.unit') }}</p>
+              </div>
               <div class="flex items-center">
                 <p class="text-[24px]">{{ $t('csghub.price.company') }}</p>
-                <div class="flex items-center justify-center w-[48px] h-[24px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
+                <div
+                  class="flex items-center justify-center w-[48px] h-[24px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
                   {{ $t('csghub.price.recommend') }}
                 </div>
               </div>
               <p class="font-light text-[16px] text-[#475467]">{{ $t('csghub.price.company-desc') }}</p>
             </div>
-            <div class="flex items-end text-[60px]">
+            <div class="flex items-end text-[60px] md:hidden">
               ¥1999
               <p class="mb-[20px] font-light text-[16px] text-[#475467]">{{ $t('csghub.price.unit') }}</p>
             </div>
@@ -276,9 +281,8 @@
           </div>
           <div class="p-[32px] border-t">
             <a href="#" target="_blank"
-             class="flex cursosr-pointer p-[24px] w-auto justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
-            >
-            {{ $t("csghub.price.console") }}
+              class="flex cursosr-pointer p-[24px] w-auto justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
+              {{ $t("csghub.price.console") }}
             </a>
           </div>
         </div>
@@ -286,65 +290,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import SvgIcon from '../shared/SvgIcon.vue';
-
-export default {
-  props: {},
-
-  data() {
-    return {
-      cardVersion:[ {
-          id: "1",
-          title: "社区版",
-          enTitle: "Light",
-          details: [
-            "DSK-Mac-Studio-M2Max",
-            "DSK-Mac-Studio-M2Ultra",
-            "Tower-Mac-Pro-M2Ultra",
-            "Rack-Mac-Pro-M2Ultra",
-            "Tower-NV-4090（2 cards）",
-            "Rack-NV-4090 (2 cards/4 cards/8 cards)"
-          ],
-          details_en: [
-            "DSK-Mac-Studio-M2Max",
-            "DSK-Mac-Studio-M2Ultra",
-            "Tower-Mac-Pro-M2Ultra",
-            "Rack-Mac-Pro-M2Ultra",
-            "Tower-NV-4090（2 cards）",
-            "Rack-NV-4090（2 cards/4 cards/8 cards）"
-          ]
-        },
-        {
-          id: "2",
-          title: "标准版",
-          enTitle: "Standard",
-          details: [
-            "Rack-NV-A6000",
-            "Rack-NV-V100",
-            "Rack-NV-A800",
-            "Rack-NV-H800",
-            "Rack-NV-H20 (Coming soon)",
-            "Rack-NV-L20 ( Coming soon)"
-          ],
-          details_en: [
-            "DSK-Mac-Studio-M2Max",
-            "DSK-Mac-Studio-M2Ultra",
-            "Tower-Mac-Pro-M2Ultra",
-            "Rack-Mac-Pro-M2Ultra",
-            "Tower-NV-4090（2 cards）",
-            "Rack-NV-4090（2 cards/4 cards/8 cards）"
-          ]
-        }]
-    };
-  },
-
-  components: {},
-
-  mounted() {},
-};
-</script>
-<style scoped>
-
-</style>

@@ -19,7 +19,7 @@ export default {
   data() {
     const classParam = new URLSearchParams(window.location.search).get('class');
     return {
-      scrollToClass: classParam ?  classParam : ''
+      scrollToClass: classParam ? classParam : ''
     };
   },
 
