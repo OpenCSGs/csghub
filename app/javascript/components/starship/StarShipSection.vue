@@ -19,11 +19,11 @@
     >
       <div class="flex flex-col w-1/2 lg:w-full items-start text-left md:mb-[0px] mb-16 md:px-8">
         <div
-          class="px-[12px] py-[12px] rounded-[40px] bg-[#ACBDFF] mb-6 border-[8px] border-[#CED8FF]"
+          class="px-[8px] py-[8px] rounded-[40px] bg-[#ACBDFF] mb-6 border-[8px] border-[#CED8FF]"
         >
           <SvgIcon :name="item.icon" />
         </div>
-        <div class="flex flex-col gap-[8px]">
+        <div class="flex flex-col">
           <div class="text-[30px] text-[#101828] leading-[38px] mb-4">
             {{ $t('starShip.section.' + item.title) }}
           </div>
