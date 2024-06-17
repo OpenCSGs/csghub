@@ -38,7 +38,12 @@
             :key="index"
           >
             <SvgIcon name="check_circle" />
+            <span :class="detail =='secDetails2' ? 'hidden' : ''">
             {{ $t('starShip.section.' + detail) }}
+            </span>
+            <span :class="detail =='secDetails2' ? '' : 'hidden'">
+              SWEBench Resolved 23.67%（🔗 <a href="https://www.swebench.com/" class="text-[#4D6AD6] underline">swebench.com</a>）
+            </span>
           </div>
         </div>
       </div>
