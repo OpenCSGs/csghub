@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'health', to: 'landing_page#health_check'
+
   # admin
   namespace :admin do
     resources :system_configs
@@ -38,6 +40,10 @@ Rails.application.routes.draw do
 
   # internal api
   namespace :internal_api do
+    namespace :admin do
+      post '/group_mail', to: 'email_sending#group_mail'
+    end
+
     resources :wechat, only: [] do
       collection do
         get '/signature-config', to: 'wechat#signature_config'
@@ -151,6 +157,9 @@ Rails.application.routes.draw do
   # application
   scope "(:locale)", :locale => /en|zh/ do
     root "landing_page#index"
+
+    # New Admin Pannel routes
+    get '/new_admin/(*path)', to: 'new_admin#index'
 
     resources :settings, only: [] do
       collection do

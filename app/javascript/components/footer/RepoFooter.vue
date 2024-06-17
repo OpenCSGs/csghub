@@ -1,10 +1,10 @@
 <template>
   <div class="py-4 flex gap-[37px] justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] xl:flex-col bg-white sm:hidden">
     <div class="flex items-center gap-[16px] text-[14px] text-[#475467] cursor-pointer xl:mr-0 sm:flex-col sm:gap-[4px] sm:mr-0">
-      <a href="https://portal.opencsg.com/about">{{ $t('footer.company') }}</a>
+      <a href="https://opencsg.com/about">{{ $t('footer.company') }}</a>
       <a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a>
-      <a href="https://portal.opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a>
-      <a href="https://portal.opencsg.com#joinUs">{{ $t('footer.join') }}</a>
+      <a href="https://opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a>
+      <a href="https://opencsg.com#joinUs">{{ $t('footer.join') }}</a>
       <a @click="showDialog" target="_blank">{{ $t('footer.contact') }}</a>
       <a href="/policy" target="_blank">{{ $t('footer.policy') }}</a>
     </div>
@@ -108,10 +108,10 @@
       <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
         <p class="text-base font-semibold">{{ $t('footer.about') }}</p>
         <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2">
-          <p><a href="https://portal.opencsg.com/about">{{ $t('footer.company') }}</a></p>
+          <p><a href="https://opencsg.com/about">{{ $t('footer.company') }}</a></p>
           <p><a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a></p>
-          <p><a href="https://portal.opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a></p>
-          <p><a href="https://portal.opencsg.com#joinUs">{{ $t('footer.join') }}</a></p>
+          <p><a href="https://opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a></p>
+          <p><a href="https://opencsg.com#joinUs">{{ $t('footer.join') }}</a></p>
         </div>
       </div>
       <div class="flex gap-x-[100px] mt-[5px] mlg:mt-0">

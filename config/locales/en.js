@@ -30,6 +30,7 @@ import { ekb } from './en_js/ekb';
 import { partner } from './en_js/partner';
 import { endpoints } from './en_js/endpoints';
 import { csghub } from './en_js/csghub';
+import { admin } from './en_js/admin';
 
 export default {
   // csghub
@@ -53,6 +54,7 @@ export default {
   repo,
   components,
   endpoints,
+  admin,
   // portal
   space,
   campaign,
