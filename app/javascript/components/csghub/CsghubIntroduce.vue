@@ -21,19 +21,10 @@
       <div
         v-for="item in cardVersion" 
         :key="item.id"
-        class="pl-[32px] md:px-0 flex items-center justify-center lg:flex-col gap-[64px] mb-[64px]"
+        class="pl-[32px] md:px-0 flex items-center justify-center lg:flex-col gap-[96px] mb-[64px] md:flex-direction"
+        :class="item.index == 'r' ? 'flex-row-reverse' : ''"
       >
         <div
-          v-if="item.place == 'r'"
-          class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 mlg:w-full mlg:px-[32px]"
-        >
-          <el-image
-            :src="item.img"
-            :preview-src-list="[item.img]"
-          />
-        </div>
-        <div
-          :class="item.place == 'l' ? 'mr-[96px]': 'ml-[96px]'"
           class="gap-[32px] py-[32px] lg:w-auto lg:grid-cols-1 items-start md:mx-0"
         >
           <div class="flex flex-col items-start gap-[20px] md:px-[24px]">
@@ -46,7 +37,7 @@
                 {{ item.enTitle }}
               </div>
             </div>
-            <div class="flex flex-col gap-[16px] px-[16px]">
+            <div class="flex flex-col gap-[16px] px-[16px] md:px-0">
               <div v-for="part in item.details" class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23"/>
                 <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ part }}</p>
@@ -55,7 +46,6 @@
           </div>
         </div>
         <div
-          v-if="item.place == 'l'"
           class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 lg:w-full lg:px-0"
         >
           <el-image
@@ -134,7 +124,7 @@
       ],
       svgName: "csghub_system",
       img: "/images/product/system.png",
-      place: "l"
+      index: "l"
     },
     {
       id: "2",
@@ -148,7 +138,7 @@
       ],
       svgName: "csghub_platform",
       img: "/images/product/platform.png",
-      place: "r"
+      index: "r"
     },
     {
       id: "3",
@@ -161,7 +151,7 @@
       ],
       svgName: "csghub_sync",
       img: "/images/product/sync.png",
-      place: "l"
+      index: "l"
     },
     {
       id: "4",
@@ -176,27 +166,33 @@
       ],
       svgName: "csghub_safe",
       img: "/images/product/safe.png",
-      place: "r"
+      index: "r"
     }
   ]);
 
-  const updatePlace = () => {
-      if (window.innerWidth < 1024) {
-        cardVersion.value.forEach(card => {
-          card.place = "l";
-        });
+  // 使用resize事件监听窗口大小的变化
+  window.addEventListener('resize', () => {
+    updateImg();
+  });
 
+  const updateImg = () => {
+      if (window.innerWidth < 1024) {
         cardVersion.value[0].img = "/images/product/system-md.png"
         cardVersion.value[1].img = "/images/product/platform-md.png"
         cardVersion.value[2].img = "/images/product/sync-md.png"
       }
+      if (window.innerWidth >= 1024) {
+        cardVersion.value[0].img = "/images/product/system.png"
+        cardVersion.value[1].img = "/images/product/platform.png"
+        cardVersion.value[2].img = "/images/product/sync.png"
+      }
     };
 
   onMounted(() => {
-    updatePlace();
+    updateImg();
   });
 
   watch(() => window.innerWidth, () => {
-    updatePlace();
+    updateImg();
   });
 </script>

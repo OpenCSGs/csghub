@@ -1,7 +1,7 @@
 <template>
   <div class="py-[96px] md:py-[64px] w-full max-w-[1280px] m-auto">
     <div class="max-w-[1280px] m-auto">
-      <div class="max-w-[1280px] m-auto  md:px-[20px]">
+      <div class="max-w-[1280px] m-auto md:px-[20px]">
         <div class="flex flex-col items-center mb-[64px] relative">
           <div class="text-[16px] text-[#223B99] mb-[20px]">
             {{ $t('csghub.price.introduce') }}
@@ -128,7 +128,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex flex-col mb-[80px] md:mb-0">
+            <div class="flex flex-col mb-[80px] xl:mb-[110px] md:mb-0">
               <p class="mb-[16px]">{{ $t('csghub.price.portal') }}</p>
               <div class="flex flex-col gap-[16px] font-light text-[16px] text-[#475467]">
                 <div class="flex items-start gap-[32px]">
