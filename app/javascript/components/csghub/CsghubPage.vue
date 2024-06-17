@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full overflow-hidden">
     <CsghubBanner />
     <CsghubIntroduce />
     <CsghubPrice />

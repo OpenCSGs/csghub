@@ -2,12 +2,11 @@ export const csghub = {
   "banner": {
     "headline1": "Open source ", 
     "headline2": "Asset management platform for large model native design", 
-    "solution1": "Creates a safe, efficient and trusted environment for users that enables them to", 
-    "solution2": "Better management and use of large model core asset Data", 
+    "solution": "Create a secure, efficient and trusted environment for users to better manage and use large model core asset data", 
     "join": "Join the community"
   },
   "product": {
-    "introduce": "Introduce ",
+    "introduce": "Introduce",
     "headline": "Intelligent Data and AI Management Platform",
     "desc1": "A comprehensive solution to help you efficiently manage assets, develop AI applications, synchronize multi-source data, and secure data",
     "desc2": "Safety compliance. Explore our capabilities, discover more possibilities and drive your AI project to success",
