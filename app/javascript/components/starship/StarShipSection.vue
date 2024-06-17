@@ -14,7 +14,7 @@
       </div>
     </div>
     <div
-      class="flex mb-[100px] items-center relative lg:flex-col gap-16 px-8 md:px-0 lg:gap-1"
+      class="flex mb-[100px] md:mb-12 items-center relative lg:flex-col gap-16 px-8 md:px-0 lg:gap-10"
       v-for="(item, index) in sectionData"
       :key="item.id"
       :class="index % 2 == '1' ? 'flex-row-reverse' : ''"
