@@ -148,27 +148,27 @@
       <div class="flex items-center max-w-[1280px] m-auto md:flex-col md:gap-12">
         <div class="flex flex-col gap-8 w-1/2 md:w-full items-start text-[#475467]">
           <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px]">
-            云上算力资源
+            {{ $t('landingPage.cloud.title') }}
           </div>
           <div class="text-[20px] leading-[30px] md:hidden font-light">
-            传神社区为您提供多种算力服务
+            {{ $t('landingPage.cloud.desc') }}
           </div>
           <div class="flex flex-col gap-5 px-4">
             <div class="flex gap-3 text-[18px] leading-[28px] font-light">
-              <SvgIcon name="landing_check" />一键打开Notebook，快速体验
+              <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content1') }}
             </div>
             <div class="flex gap-3 text-[18px] leading-[28px] font-light">
-              <SvgIcon name="landing_check" />Demo应用托管，CPU资源长期免费
+              <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content2') }}
             </div>
             <div class="flex gap-3 text-[18px] leading-[28px] font-light">
-              <SvgIcon name="landing_check" />丰富的算力资源，为您量身打造租赁计划
+              <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content3') }}
             </div>
           </div>
           <div class="flex items-center justify-center text-center md:w-full">
             <div
               class="cursor-pointer md:w-full py-3 px-[18px] text-[16px] leading-[24px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
             >
-              查看详情
+              {{ $t('landingPage.cloud.details') }}
             </div>
           </div>
         </div>
@@ -185,12 +185,12 @@
     <div class="w-full bg-[#F9FAFB] pt-24">
       <div class="max-w-[1280px] px-5 m-auto text-center pb-24 md:pb-16">
         <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] mb-5 md:mb-4">
-          OpenCSG 产品地图
+          {{ $t('landingPage.map.title') }}
         </div>
         <div
           class="max-w-[760px] m-auto text-[20px] leading-[30px] md:text-[18px] text-[#475467] font-light mb-16 md:mb-12"
         >
-          我们致力于大模型生态社区建设，汇集人工智能行业上下游企业链，共同为大模型在垂直行业的应用提供平台产品和解决方案
+          {{ $t('landingPage.map.desc') }}
         </div>
       </div>
       <div class="bg-[#FFFFFF] px-4">
@@ -201,41 +201,44 @@
             <div
               class="min-w-[264px] items-center flex text-center rounded-l-lg md:rounded-bl-none md:rounded-t-lg p-6 bg-[#4D6AD6] text-[#FFFFFF] text-[24px] leading-[32px] md:text-[20px] md:leading-[30px]"
             >
-              OpenCSG 解决方案
+              {{ $t('landingPage.map.contentTitle') }}
             </div>
             <div
               class="rounded-r-lg md:rounded-tr-none md:rounded-b-lg p-4 bg-[#F0F3FF] flex gap-4 md:flex-col"
             >
               <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
                 <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
-                  StarEKB<br />智能知识库助手
+                  StarEKB<br />
+                  {{ $t('landingPage.map.content_sec_title') }}
                 </div>
                 <div class="text-[16px] leading-[24px] font-light">
-                  多模型支持；私有化部署；企业个性化知识库
+                  {{ $t('landingPage.map.content_sec_desc') }}
                 </div>
               </div>
               <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
                 <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
-                  StarAIO<br />大模型一体机
+                  StarAIO<br />{{ $t('landingPage.map.content_sec2_title') }}
                 </div>
                 <div class="text-[16px] leading-[24px] font-light">
-                  集成 OpenCSG 软件产品和开元大模型的一体化解决方案
+                  {{ $t('landingPage.map.content_sec2_desc') }}
                 </div>
               </div>
               <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
                 <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
-                  StarImagen<br />智能图像助手
+                  StarImagen<br />
+                  {{ $t('landingPage.map.content_sec3_title') }}
                 </div>
                 <div class="text-[16px] leading-[24px] font-light">
-                  视觉创意解决方案，包括文生图、图生图、作品风格迁移等
+                  {{ $t('landingPage.map.content_sec3_desc') }}
                 </div>
               </div>
               <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
                 <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
-                  StarCode<br />智能编程助手
+                  StarCode<br />
+                  {{ $t('landingPage.map.content_sec4_title') }}
                 </div>
                 <div class="text-[16px] leading-[24px] font-light">
-                  提供代码生成、代码不全、生成单元测试、领域知识问答等能力
+                  {{ $t('landingPage.map.content_sec4_desc') }}
                 </div>
               </div>
             </div>
@@ -244,7 +247,7 @@
             <div
               class="min-w-[264px] items-center flex text-center rounded-l-lg md:rounded-bl-none md:rounded-t-lg p-6 bg-[#4D6AD6] text-[#FFFFFF] text-[24px] leading-[32px] md:text-[20px] md:leading-[30px]"
             >
-              StarNet 产品家族
+              {{ $t('landingPage.map.content2Title') }}
             </div>
             <div
               class="grow text-center rounded-r-lg md:rounded-tr-none md:rounded-b-lg p-4 bg-[#F0F3FF] flex flex-col gap-4"
@@ -252,12 +255,12 @@
               <div
                 class="p-4 rounded-lg text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] bg-[#FFF]"
               >
-                StarShip 大模型应用开发平台
+                {{ $t('landingPage.map.content2_sec_title') }}
               </div>
               <div
                 class="p-4 rounded-lg text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] bg-[#FFF]"
               >
-                CSGHub 大模型资产管理平台
+                {{ $t('landingPage.map.content2_sec2_title') }}
               </div>
             </div>
           </div>
