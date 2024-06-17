@@ -21,9 +21,7 @@
             class="absolute bottom-0 left-[37%] hidden md:block"
           />
         </div>
-        <div
-          class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]"
-        >
+        <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]">
           {{ $t('landingPage.banner.subtitle') }}
         </div>
         <a
@@ -57,9 +55,7 @@
           {{ $t('landingPage.hotTrend.desc') }}
         </div>
       </div>
-      <div
-        class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]"
-      >
+      <div class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]">
         <!-- 热门模型 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
@@ -147,13 +143,49 @@
 
     <ProductStarShip />
 
+    <!-- 云上算力资源 -->
+    <div class="w-full px-5">
+      <div class="flex items-center max-w-[1280px] m-auto md:flex-col md:gap-12">
+        <div class="flex flex-col gap-8 w-1/2 md:w-full items-start">
+          <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px]">
+            云上算力资源
+          </div>
+          <div class="text-[20px] leading-[30px] md:hidden font-light">
+            传神社区为您提供多种算力服务
+          </div>
+          <div class="flex flex-col gap-5 px-4">
+            <div class="flex gap-3 text-[18px] leading-[28px] font-light">
+              <SvgIcon name="landing_check" />一键打开Notebook，快速体验
+            </div>
+            <div class="flex gap-3 text-[18px] leading-[28px] font-light">
+              <SvgIcon name="landing_check" />Demo应用托管，CPU资源长期免费
+            </div>
+            <div class="flex gap-3 text-[18px] leading-[28px] font-light">
+              <SvgIcon name="landing_check" />丰富的算力资源，为您量身打造租赁计划
+            </div>
+          </div>
+          <div class="flex items-center justify-center text-center md:w-full">
+            <div
+              class="cursor-pointer md:w-full py-3 px-[18px] text-[16px] leading-[24px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
+            >
+              查看详情
+            </div>
+          </div>
+        </div>
+        <div class="w-1/2 md:w-full">
+          <img
+            src="images/landing/Image.png"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
     <div
       v-if="customers.length"
       class="bg-[#F9FAFB] py-[96px]"
     >
-      <p
-        class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center"
-      >
+      <p class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center">
         {{ $t('landingPage.customers.title') }}
       </p>
       <div
@@ -194,16 +226,12 @@
         class="flex justify-center items-center md:flex-col md:gap-[48px] sm:w-full max-w-[1280px] m-auto"
       >
         <div class="md:text-center">
-          <div
-            class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]"
-          >
+          <div class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]">
             {{ $t('landingPage.value.title1') }}
             <br />
             {{ $t('landingPage.value.title2') }}
           </div>
-          <div
-            class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]"
-          >
+          <div class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]">
             {{ $t('landingPage.value.subtitle') }}
           </div>
         </div>
