@@ -146,7 +146,7 @@
     <!-- 云上算力资源 -->
     <div class="w-full px-5">
       <div class="flex items-center max-w-[1280px] m-auto md:flex-col md:gap-12">
-        <div class="flex flex-col gap-8 w-1/2 md:w-full items-start">
+        <div class="flex flex-col gap-8 w-1/2 md:w-full items-start text-[#475467]">
           <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px]">
             云上算力资源
           </div>
@@ -177,6 +177,90 @@
             src="images/landing/Image.png"
             class="w-full"
           />
+        </div>
+      </div>
+    </div>
+
+    <!-- 产品地图 -->
+    <div class="w-full bg-[#F9FAFB] pt-24">
+      <div class="max-w-[1280px] px-5 m-auto text-center pb-24 md:pb-16">
+        <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] mb-5 md:mb-4">
+          OpenCSG 产品地图
+        </div>
+        <div
+          class="max-w-[760px] m-auto text-[20px] leading-[30px] md:text-[18px] text-[#475467] font-light mb-16 md:mb-12"
+        >
+          我们致力于大模型生态社区建设，汇集人工智能行业上下游企业链，共同为大模型在垂直行业的应用提供平台产品和解决方案
+        </div>
+      </div>
+      <div class="bg-[#FFFFFF] px-4">
+        <div
+          class="flex flex-col relative bottom-24 md:bottom-16 gap-4 items-center m-auto max-w-[1280px]"
+        >
+          <div class="flex w-full md:flex-col">
+            <div
+              class="min-w-[264px] items-center flex text-center rounded-l-lg md:rounded-bl-none md:rounded-t-lg p-6 bg-[#4D6AD6] text-[#FFFFFF] text-[24px] leading-[32px] md:text-[20px] md:leading-[30px]"
+            >
+              OpenCSG 解决方案
+            </div>
+            <div
+              class="rounded-r-lg md:rounded-tr-none md:rounded-b-lg p-4 bg-[#F0F3FF] flex gap-4 md:flex-col"
+            >
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarEKB<br />智能知识库助手
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  多模型支持；私有化部署；企业个性化知识库
+                </div>
+              </div>
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarAIO<br />大模型一体机
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  集成 OpenCSG 软件产品和开元大模型的一体化解决方案
+                </div>
+              </div>
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarImagen<br />智能图像助手
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  视觉创意解决方案，包括文生图、图生图、作品风格迁移等
+                </div>
+              </div>
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarCode<br />智能编程助手
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  提供代码生成、代码不全、生成单元测试、领域知识问答等能力
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex w-full md:flex-col">
+            <div
+              class="min-w-[264px] items-center flex text-center rounded-l-lg md:rounded-bl-none md:rounded-t-lg p-6 bg-[#4D6AD6] text-[#FFFFFF] text-[24px] leading-[32px] md:text-[20px] md:leading-[30px]"
+            >
+              StarNet 产品家族
+            </div>
+            <div
+              class="grow text-center rounded-r-lg md:rounded-tr-none md:rounded-b-lg p-4 bg-[#F0F3FF] flex flex-col gap-4"
+            >
+              <div
+                class="p-4 rounded-lg text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] bg-[#FFF]"
+              >
+                StarShip 大模型应用开发平台
+              </div>
+              <div
+                class="p-4 rounded-lg text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] bg-[#FFF]"
+              >
+                CSGHub 大模型资产管理平台
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
