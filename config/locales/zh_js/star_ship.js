@@ -18,7 +18,7 @@ export const starShip = {
     sec2Details2: '自动审阅代码变更内容，辅助审核者快速理解',
     sec2Details3: '全面评估，给出评估分和评估意见',
     sec2Details4: '动态可配置的代码审查项：语法错误、代码规范、接口问题等',
-    sec3Title: '代码回答',
+    sec3Title: '代码问答',
     sec3Desc:
       '代码问答功能提供基于代码仓库的多轮对话智能问答，帮助用户快速深入了解代码并提高编码效率。',
     sec3Details: '提供基于代码仓库的多轮对话智能问答功能',
