@@ -30,6 +30,8 @@ import { ekb } from './en_js/ekb';
 import { partner } from './en_js/partner';
 import { endpoints } from './en_js/endpoints';
 import { admin } from './en_js/admin';
+import { starShip } from './en_js/star_ship';
+
 
 export default {
   // csghub
@@ -65,5 +67,6 @@ export default {
   landingPage,
   footer,
   ekb,
-  partner
+  partner,
+  starShip
 };
