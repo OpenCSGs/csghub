@@ -4,10 +4,10 @@
       <div class="text-[16px] leading-[24px] text-[#223B99] mb-3">
         {{ $t('starShip.use') }}
       </div>
-      <div class="text-[36px] leading-[44px] mb-6">
+      <div class="text-[36px] leading-[44px] mb-6 md:text-[30px] md:leading-[38px]">
         {{ $t('starShip.section.title') }}
       </div>
-      <div class="text-[20px] text-[#475467] max-w-[768px] m-auto leading-[30px] font-light mb-24">
+      <div class="text-[20px] text-[#475467] max-w-[768px] m-auto leading-[30px] md:text-[18px] md:leading-[28px] font-light mb-24">
         {{ $t('starShip.section.desc') }}
       </div>
     </div>
@@ -24,14 +24,14 @@
           <SvgIcon :name="item.icon" />
         </div>
         <div class="flex flex-col">
-          <div class="text-[30px] text-[#101828] leading-[38px] mb-4">
+          <div class="text-[30px] text-[#101828] leading-[38px] md:text-[24px] md:leading-[32px] mb-4">
             {{ $t('starShip.section.' + item.title) }}
           </div>
-          <div class="text-[18px] text-[#475467] leading-[28px] font-light mb-8">
+          <div class="text-[18px] text-[#475467] leading-[28px] md:text-[16px] md:leading-[24px] font-light mb-8">
             {{ $t('starShip.section.' + item.desc) }}
           </div>
         </div>
-        <div class="flex flex-col gap-5 text-[#475467] text-[18px] leading-[28px] font-light">
+        <div class="flex flex-col gap-5 text-[#475467] text-[18px] leading-[28px] md:text-[16px] md:leading-[24px] font-light">
           <div
             class="flex gap-3 items-start"
             v-for="(detail, index) in item.details"
