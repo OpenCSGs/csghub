@@ -2,10 +2,10 @@
   <div class="py-[96px] px-[32px] md:py-[64px] text-center w-full banner bg-white m-auto max-w-[1280px]">
     <div class="flex flex-col items-center">
       <div
-        class="mb-[24px] max-w-[1216px] m-auto text-[72px] md:text-[48px] md:leading-[60px] text-[#101828] leading-[90px]">
+        class="mb-[24px] max-w-[1216px] m-auto text-[72px] md:text-[36px] md:leading-[60px] text-[#101828] leading-[90px]">
         {{ $t('csghub.banner.headline1') }}<br />{{ $t('csghub.banner.headline2') }}
       </div>
-      <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px]">
+      <div class="text-[18px] font-light text-[#475467] leading-[30px] mb-[48px]">
         {{ $t('csghub.banner.solution') }}
       </div>
       <a href="#" target="_blank"
