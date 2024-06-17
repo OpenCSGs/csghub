@@ -35,7 +35,7 @@
         <!-- product -->
         <el-sub-menu style="height: auto;" index="1" popper-class="popper-submenu">
           <template #title>{{ $t('navbar.product') }}</template>
-          <el-menu-item style="height: auto;" @click="handleNavigation('/csghub')" index="CsgHub">
+          <el-menu-item style="height: auto;" @click="routerLink('/csghub')" index="CsgHub">
             <ProductCsgHub />
           </el-menu-item>
           <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarShip')" index="StarShip">

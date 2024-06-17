@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="w-[560px] lg:w-auto lg:h-auto h-[236px]">
-        <el-image src="/images/product/serve.png" :preview-src-list="['/images/product/serve.png']" />
+        <el-image src="/images/csghub/serve.png" :preview-src-list="['/images/csghub/serve.png']" />
       </div>
     </div>
   </div>
