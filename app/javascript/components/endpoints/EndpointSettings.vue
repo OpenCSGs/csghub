@@ -64,6 +64,7 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateCloudResource"
+          :disabled="!isStopped"
         >
           <el-option
             v-for="item in cloudResources"
@@ -94,6 +95,7 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateFramework"
+          :disabled="!isStopped"
         >
           <el-option
             v-for="item in frameworks"
@@ -124,6 +126,7 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateMaxReplica"
+          :disabled="!isStopped"
         >
           <el-option
             v-for="item in replicaRanges"
@@ -154,6 +157,7 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateMinReplica"
+          :disabled="!isStopped"
         >
           <el-option
             v-for="item in replicaRanges"
@@ -197,6 +201,7 @@
           placeholder="Select"
           size="large"
           class="!w-[512px] sm:!w-full"
+          :disabled="!isStopped"
         >
           <el-option
             v-for="item in visibilityOptions"
