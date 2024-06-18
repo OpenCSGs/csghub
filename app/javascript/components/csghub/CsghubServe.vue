@@ -6,10 +6,10 @@
           class="flex items-center justify-center will-change-contents w-[130px] mb-[12px] h-[28px] ml-[8px] border border-[#99AFFF] rounded-[16px] text-[14px] text-[#223B99] bg-[#CED8FF]">
           {{ $t('csghub.serve.recommend') }}
         </div>
-        <div class="font-medium text-[36px] md:text-[30px] mb-[20px]">
+        <div class="font-medium leading-[44px] md:leading-[38px] text-[36px] md:text-[30px] mb-[20px]">
           {{ $t('csghub.serve.headline') }}
         </div>
-        <div class="font-light text-[20px] md:text-[18px] text-[#475467] mb-[32px]">
+        <div class="font-light leading-[30px] md:leading-[28px] text-[20px] md:text-[18px] text-[#475467] mb-[32px]">
           {{ $t('csghub.serve.desc') }}
         </div>
         <div class="flex md:flex-col gap-[12px]">

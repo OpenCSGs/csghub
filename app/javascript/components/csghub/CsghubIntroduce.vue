@@ -5,10 +5,10 @@
         <div class="text-[16px] text-[#223B99] mb-[20px]">
           {{ $t('csghub.product.introduce') }}
         </div>
-        <div class="text-[36px] md:text-[30px] leading-[44px] text-[#101828]">
+        <div class="text-[36px] md:text-[30px] leading-[44px] md:leading-[38px] text-[#101828]">
           {{ $t('csghub.product.headline') }}
         </div>
-        <div class="my-[20px] text-center text-[20px] md:text-[18px] text-[#606266] leading-[30px] font-light">
+        <div class="my-[20px] text-center text-[20px] md:text-[18px] text-[#606266] leading-[30px] md:leading-[28px] font-light">
           {{ $t('csghub.product.desc') }}
         </div>
       </div>
@@ -48,7 +48,7 @@
     <div class="max-w-[1280px] m-auto">
       <div class="px-[32px] flex md:flex-col gap-[64px] md:gap-[48px] mb-[64px] md:mb-0">
         <div class="flex flex-col items-start max-w-[380px]">
-          <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] md:text-[30px] leading-[44px]">{{
+          <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] md:text-[30px] leading-[44px] md:leading-[38px]">{{
             $t('csghub.product.feature-h') }}</div>
           <div class="text-[#667085] mb-[20px] text-[18px] leading-[28px] font-light">{{ $t('csghub.product.feature-p')
             }}</div>
