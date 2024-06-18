@@ -70,6 +70,8 @@ import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import CsghubPage from "./components/csghub/CsghubPage.vue"
+import StarShipPage from "./components/starship/StarShipPage.vue"
+
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -133,7 +135,8 @@ const app = createApp({
     EndpointDetail,
     CsghubPage,
     AdminNavbar,
-    AdminMenu
+    AdminMenu,
+    StarShipPage
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

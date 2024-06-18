@@ -243,6 +243,7 @@ Rails.application.routes.draw do
     get '/ekb', to: 'ekb#index'
     get '/product', to: 'product#index'
     get '/csghub', to: 'csghub#index'
+    get '/starship', to: 'starship#index'
     get '/profile/likes/:user_id', to: 'profile#likes', user_id: /[^\/]+/
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'

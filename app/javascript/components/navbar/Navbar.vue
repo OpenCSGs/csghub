@@ -38,7 +38,7 @@
           <el-menu-item style="height: auto;" @click="routerLink('/csghub')" index="CsgHub">
             <ProductCsgHub />
           </el-menu-item>
-          <el-menu-item style="height: auto;" @click="handleNavigation('/product','StarShip')" index="StarShip">
+          <el-menu-item style="height: auto;" @click="routerLink('/starship')" index="StarShip">
             <StarShip />
           </el-menu-item>
           <el-menu-item style="height: auto;" @click="routerLink('/ekb')" index="KnowledgeBase">
