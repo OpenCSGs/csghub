@@ -29,6 +29,7 @@ import { footer } from './zh_js/footer';
 import { ekb } from './zh_js/ekb';
 import { partner } from './zh_js/partner';
 import { endpoints } from './zh_js/endpoints';
+import { csghub } from './zh_js/csghub';
 import { admin } from './zh_js/admin';
 import { starShip } from './zh_js/star_ship';
 
@@ -67,5 +68,6 @@ export default {
   footer,
   ekb,
   partner,
+  csghub,
   starShip
 };

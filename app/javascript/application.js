@@ -69,6 +69,7 @@ import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
+import CsghubPage from "./components/csghub/CsghubPage.vue"
 import StarShipPage from "./components/starship/StarShipPage.vue"
 
 
@@ -132,6 +133,7 @@ const app = createApp({
     CodeDetail,
     NewEndpoint,
     EndpointDetail,
+    CsghubPage,
     AdminNavbar,
     AdminMenu,
     StarShipPage
