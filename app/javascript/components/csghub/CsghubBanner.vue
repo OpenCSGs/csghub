@@ -8,7 +8,7 @@
       <div class="text-[18px] font-light text-[#475467] leading-[30px] mb-[48px]">
         {{ $t('csghub.banner.solution') }}
       </div>
-      <a href="#" target="_blank"
+      <a href="/login"
         class="cursor-pointer mb-[48px] md:w-full inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
         {{ $t("csghub.banner.join") }}
       </a>

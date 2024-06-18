@@ -131,7 +131,7 @@
             </div>
           </div>
           <div class="p-[32px] border-t">
-            <a href="#" target="_blank"
+            <a href="https://github.com/OpenCSGs/CSGHub" target="_blank"
               class="flex cursosr-pointer p-[24px] w-auto justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
               {{ $t("csghub.price.free") }}
             </a>

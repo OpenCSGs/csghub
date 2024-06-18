@@ -20,13 +20,13 @@
         class="pl-[32px] md:px-0 flex items-center justify-center lg:flex-col gap-[96px] md:gap-[48px] mb-[64px] md:flex-direction"
         :class="index % 2 == '1' ? 'flex-row-reverse' : ''">
         <div class="gap-[32px] py-[32px] md:py-0 lg:w-auto lg:grid-cols-1 items-start md:mx-0">
-          <div class="flex flex-col items-start gap-[20px] md:px-[24px]">
+          <div class="flex flex-col items-start gap-[20px] md:px-[24px]"> 
             <SvgIcon :name="item.svgName" />
             <div>
-              <div class="text-[30px] md:text-[24px] leading-[30px] text-[#101828] mb-[8px]">
+              <div class="text-[30px] md:text-[24px] leading-[38px] md:leading-[32px] text-[#101828] mb-4">
                 {{ item.title }}
               </div>
-              <div class="text-[18px] md:text-[16px] leading-[24px] font-light text-[#475467]">
+              <div class="text-[18px] md:text-[16px] leading-[28px]  md:leading-[24px] font-light text-[#475467]">
                 {{ item.enTitle }}
               </div>
             </div>
@@ -52,7 +52,7 @@
             $t('csghub.product.feature-h') }}</div>
           <div class="text-[#667085] mb-[20px] text-[18px] leading-[28px] font-light">{{ $t('csghub.product.feature-p')
             }}</div>
-          <a href="#" target="_blank"
+          <a href="https://opencsg.com/lead_forms/form/S3s2wpq1pjvT_Starship_Free_Trail" target="_blank"
             class="cursosr-pointer  inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
             {{ $t("csghub.product.feature-button") }}
           </a>
