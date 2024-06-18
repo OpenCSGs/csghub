@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <div class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 lg:w-full lg:px-0">
+        <div class="grow max-w-[730px] max-h-[620px] lg:rounded-[24px] pr-0 xl:mt-[20px] lg:mt-0 lg:w-full lg:px-0 overflow-hidden">
           <el-image :src="item.img" :preview-src-list="[item.img]" />
         </div>
       </div>
@@ -52,7 +52,7 @@
             $t('csghub.product.feature-h') }}</div>
           <div class="text-[#667085] mb-[20px] text-[18px] leading-[28px] font-light">{{ $t('csghub.product.feature-p')
             }}</div>
-          <a href="https://opencsg.com/lead_forms/form/LhkJ4U4Kj9UD_CSGHub_Free_Trail" target="_blank"
+          <a href="https://opencsg.com/lead_forms/form/LhkJ4U4Kj9UD_CSGHub_%E5%92%A8%E8%AF%A2" target="_blank"
             class="cursosr-pointer  inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
             {{ $t("csghub.product.feature-button") }}
           </a>
@@ -175,7 +175,7 @@
       cardVersion.value[2].img = "/images/csghub/sync-md.png"
     }
     if (window.innerWidth >= 1024) {
-      cardVersion.value[0].img = "/images/csghub/system.png"
+      cardVersion.value[0].img = "/images/csghub/system-md.png"
       cardVersion.value[1].img = "/images/csghub/platform.png"
       cardVersion.value[2].img = "/images/csghub/sync.png"
     }

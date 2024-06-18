@@ -270,7 +270,7 @@
             </div>
           </div>
           <div class="p-[32px] border-t">
-            <a href="https://opencsg.com/lead_forms/form/LhkJ4U4Kj9UD_CSGHub_Free_Trail" target="_blank"
+            <a href="https://opencsg.com/lead_forms/form/LhkJ4U4Kj9UD_CSGHub_%E5%92%A8%E8%AF%A2" target="_blank"
               class="flex cursosr-pointer p-[24px] w-auto justify-center items-center text-center h-[48px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
               {{ $t("csghub.price.console") }}
             </a>
