@@ -164,13 +164,13 @@
               <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content3') }}
             </div>
           </div>
-          <div class="flex items-center justify-center text-center md:w-full">
+          <a  href="/computing" class="flex items-center justify-center text-center md:w-full">
             <div
               class="cursor-pointer md:w-full py-3 px-[18px] text-[16px] leading-[24px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
             >
               {{ $t('landingPage.cloud.details') }}
             </div>
-          </div>
+          </a>
         </div>
         <div class="w-1/2 md:w-full">
           <img
