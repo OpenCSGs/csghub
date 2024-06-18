@@ -52,7 +52,7 @@
             $t('csghub.product.feature-h') }}</div>
           <div class="text-[#667085] mb-[20px] text-[18px] leading-[28px] font-light">{{ $t('csghub.product.feature-p')
             }}</div>
-          <a href="https://opencsg.com/lead_forms/form/S3s2wpq1pjvT_Starship_Free_Trail" target="_blank"
+          <a href="https://opencsg.com/lead_forms/form/LhkJ4U4Kj9UD_CSGHub_Free_Trail" target="_blank"
             class="cursosr-pointer  inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
             {{ $t("csghub.product.feature-button") }}
           </a>
