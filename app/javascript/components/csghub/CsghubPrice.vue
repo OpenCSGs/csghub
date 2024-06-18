@@ -2,7 +2,7 @@
   <div class="py-[96px] md:py-[64px] w-full max-w-[1280px] m-auto">
     <div class="max-w-[1280px] m-auto">
       <div class="max-w-[1280px] m-auto md:px-[20px]">
-        <div class="flex flex-col items-center mb-[64px] relative">
+        <div class="flex flex-col items-center mb-[64px] md:mb-[48px] relative">
           <div class="text-[16px] text-[#223B99] mb-[20px]">
             {{ $t('csghub.price.introduce') }}
           </div>
@@ -11,16 +11,6 @@
           </div>
           <div class="my-[20px] text-center text-[20px] md:text-[20px] text-[#606266] leading-[30px] font-light mb-[32px]">
             {{ $t('csghub.price.desc') }}
-          </div>
-          <div
-            class="hidden md:flex p-[6px] text-[16px] mb-[32px] bg-[#F9FAFB] w-[343px] h-[56px] rounded-[12px] border border-[#EAECF0]">
-            <div
-              class="flex justify-center items-center w-[163px] h-[44px] rounded-[6px] text-[#344054] bg-white shadow">
-              {{ $t('csghub.price.month') }}
-            </div>
-            <div class="flex justify-center items-center w-[163px] h-[44px] rounded-[6px] text-[#667085]">
-              {{ $t('csghub.price.year') }}
-            </div>
           </div>
         </div>
       </div>
