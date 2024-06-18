@@ -9,7 +9,7 @@
           <div class="text-[36px] leading-[44px] text-[#101828]">
             {{ $t('csghub.price.headline') }}
           </div>
-          <div class="my-[20px] text-center text-[20px] text-[#606266] leading-[30px] font-light mb-[32px]">
+          <div class="my-[20px] text-center text-[20px] md:text-[20px] text-[#606266] leading-[30px] font-light mb-[32px]">
             {{ $t('csghub.price.desc') }}
           </div>
           <div

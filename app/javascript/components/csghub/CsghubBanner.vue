@@ -9,7 +9,7 @@
         {{ $t('csghub.banner.solution') }}
       </div>
       <a href="#" target="_blank"
-        class="cursor-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
+        class="cursor-pointer mb-[48px] md:w-full inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
         {{ $t("csghub.banner.join") }}
       </a>
       <div class="w-[768px] mlg:w-full mt-[16px] rounded-[10px]">

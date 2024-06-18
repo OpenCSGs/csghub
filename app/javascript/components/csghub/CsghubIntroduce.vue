@@ -1,39 +1,39 @@
 <template>
-  <div class="pt-[96px] md:py-[64px] text-center w-full">
+  <div class="pt-[96px] text-center w-full">
     <div class="max-w-[1280px] m-auto">
-      <div class="flex flex-col items-center md:px-[20px] mb-[64px] relative">
+      <div class="flex flex-col items-center md:px-[20px] mb-[64px] md:mb-[48px] relative">
         <div class="text-[16px] text-[#223B99] mb-[20px]">
           {{ $t('csghub.product.introduce') }}
         </div>
-        <div class="text-[36px] leading-[44px] text-[#101828]">
+        <div class="text-[36px] md:text-[30px] leading-[44px] text-[#101828]">
           {{ $t('csghub.product.headline') }}
         </div>
-        <div class="my-[20px] text-center text-[20px] text-[#606266] leading-[30px] font-light">
-          {{ $t('csghub.product.desc1') }}<br />{{ $t('csghub.product.desc2') }}
+        <div class="my-[20px] text-center text-[20px] md:text-[18px] text-[#606266] leading-[30px] font-light">
+          {{ $t('csghub.product.desc') }}
         </div>
       </div>
     </div>
   </div>
-  <div class="w-full bg-white pb-[48px]">
+  <div class="w-full bg-white pb-[48px] md:pb-0">
     <div class="max-w-[1280px] m-auto">
       <div v-for="(item, index) in cardVersion" :key="item.id"
-        class="pl-[32px] md:px-0 flex items-center justify-center lg:flex-col gap-[96px] mb-[64px] md:flex-direction"
+        class="pl-[32px] md:px-0 flex items-center justify-center lg:flex-col gap-[96px] md:gap-[48px] mb-[64px] md:flex-direction"
         :class="index % 2 == '1' ? 'flex-row-reverse' : ''">
-        <div class="gap-[32px] py-[32px] lg:w-auto lg:grid-cols-1 items-start md:mx-0">
+        <div class="gap-[32px] py-[32px] md:py-0 lg:w-auto lg:grid-cols-1 items-start md:mx-0">
           <div class="flex flex-col items-start gap-[20px] md:px-[24px]">
             <SvgIcon :name="item.svgName" />
             <div>
-              <div class="text-[20px] leading-[30px] text-[#101828] mb-[8px]">
+              <div class="text-[30px] md:text-[24px] leading-[30px] text-[#101828] mb-[8px]">
                 {{ item.title }}
               </div>
-              <div class="text-[16px] leading-[24px] font-light text-[#475467]">
+              <div class="text-[18px] md:text-[16px] leading-[24px] font-light text-[#475467]">
                 {{ item.enTitle }}
               </div>
             </div>
             <div class="flex flex-col gap-[16px] px-[16px] md:px-0">
               <div v-for="part in item.details" class="flex items-center">
                 <SvgIcon name="csghub_hook" width="23" height="23" />
-                <p class="ml-[12px] font-light text-[18px] text-[#475467]">{{ part }}</p>
+                <p class="ml-[12px] font-light text-[18px] md:text-[16px] text-[#475467]">{{ part }}</p>
               </div>
             </div>
           </div>
@@ -46,18 +46,18 @@
   </div>
   <div class="py-[96px] md:py-[64px] w-full bg-[#F9FAFB]">
     <div class="max-w-[1280px] m-auto">
-      <div class="px-[32px] flex md:flex-col gap-[64px] mb-[64px] md:mb-0">
+      <div class="px-[32px] flex md:flex-col gap-[64px] md:gap-[48px] mb-[64px] md:mb-0">
         <div class="flex flex-col items-start max-w-[380px]">
-          <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] leading-[44px]">{{
+          <div class="max-w-[301px] mb-[20px] text-[#101828] text-[36px] md:text-[30px] leading-[44px]">{{
             $t('csghub.product.feature-h') }}</div>
           <div class="text-[#667085] mb-[20px] text-[18px] leading-[28px] font-light">{{ $t('csghub.product.feature-p')
             }}</div>
           <a href="#" target="_blank"
-            class="cursosr-pointer mb-[48px] inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
+            class="cursosr-pointer  inline-block py-[16px] px-[22px] text-[18px] leading-[28px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]">
             {{ $t("csghub.product.feature-button") }}
           </a>
         </div>
-        <div class="grid grid-cols-2 gap-[32px] md:grid-cols-1">
+        <div class="grid grid-cols-2 gap-[32px] md:gap-[16px] md:grid-cols-1">
           <div v-for="item in cardFeature" :key="item.id"
             class="flex flex-col items-start gap-[32px] px-[24px] py-[24px]">
             <SvgIcon :name="item.svgName" />

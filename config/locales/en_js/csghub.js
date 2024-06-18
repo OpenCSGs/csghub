@@ -8,8 +8,7 @@ export const csghub = {
   "product": {
     "introduce": "Introduce",
     "headline": "Intelligent Data and AI Management Platform",
-    "desc1": "A comprehensive solution to help you efficiently manage assets, develop AI applications, synchronize multi-source data, and secure data",
-    "desc2": "Safety compliance. Explore our capabilities, discover more possibilities and drive your AI project to success",
+    "desc": "Provide comprehensive solutions to help you efficiently manage your assets, develop AI applications, synchronize data from multiple sources, and ensure data security compliance",
     "part1": "Comprehensive Asset Management System ",
     "part1-": "Efficiently manage assets such as model libraries, data sets, and code. Supports large files, provides Web side online editing function, and can preview data sets. Make your data management more organized and efficient through asset metadata management",
     "part1-p1": "Model base, data set, code and other asset management",
