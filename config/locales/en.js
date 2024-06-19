@@ -18,6 +18,7 @@ import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
 import { endpoints } from './en_js/endpoints';
+import { finetunes } from './en_js/finetunes';
 import { admin } from './en_js/admin';
 
 export default {
@@ -41,5 +42,6 @@ export default {
   repo,
   components,
   endpoints,
-  admin
+  admin,
+  finetunes
 };
