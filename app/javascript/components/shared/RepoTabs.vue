@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <RepoClone
-      v-if="repoType !== 'endpoint'"
+      v-if="repoType !== 'endpoint'&&repoType !== 'finetune'"
       :repoType="repoType"
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
@@ -52,6 +52,7 @@
           :hardware="hardware"
           :replicaList="replicaList"
         />
+        <div v-else-if="repoType === 'finetune'">finetune</div>
         <repo-summary
           v-else
           :repo-type="repoType"
@@ -155,7 +156,7 @@
       <!-- logs -->
       <template
         #logs
-        v-if="repoType === 'endpoint' && actionName === 'logs'"
+        v-if="(repoType === 'endpoint'||repoType === 'finetune') && actionName === 'logs'"
       >
         <EndpointLogs
           :instances="repoDetail.instances"
@@ -224,6 +225,18 @@
           :maxReplica="repoDetail.max_replica"
           :minReplica="repoDetail.min_replica"
         />
+        <FinetuneSettings
+          v-if="repoType === 'finetune'"
+          :endpointName="endpointName"
+          :endpointId="endpointId"
+          :appStatus="appStatus"
+          :modelId="modelId"
+          :userName="userName"
+          :cloudResource="repoDetail.hardware"
+          :framework="repoDetail.runtime_framework"
+          :maxReplica="repoDetail.max_replica"
+          :minReplica="repoDetail.min_replica"
+        />
       </template>
     </tab-container>
   </div>
@@ -258,6 +271,7 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import FinetuneSettings from '../finetune/FinetuneSettings.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({

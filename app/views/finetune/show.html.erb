@@ -1,0 +1,14 @@
+<div class="bg-white">
+  <finetune-detail
+    :finetune="<%= @finetune %>"
+    current-path="<%= @current_path || '' %>"
+    default-tab="<%= @default_tab || 'summary' %>"
+    :action-name="'<%= action_name %>'"
+    :settings-visibility="<%= @settings_visibility %>"
+    :owner-url="'<%= @owner_url %>'"
+    avatar="<%= @avatar_url %>"
+    :can-write="<%= !!current_user&.can_write?(@local_finetune) %>"
+    user-name="<%= params[:namespace] %>"
+  >
+  </finetune-detail>
+</div>

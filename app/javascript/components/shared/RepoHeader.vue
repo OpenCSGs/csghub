@@ -34,6 +34,18 @@
       <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
     </div>
 
+    <!-- finetune -->
+    <div v-else-if="repoType === 'finetune'"
+         class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
+    >
+    <SvgIcon name="finetune_create" width="16" height="16" class="flex-shrink-0" />
+      <span class="max-w-full break-words">{{ nickname.trim() === ''? name : nickname }}</span>
+      <div class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">
+        {{ repoDetailStore.isPrivate ? $t("all.private") :  $t("all.public") }}
+      </div>
+      <AppStatus v-if="appStatus" :appStatus="appStatus" :spaceResource="spaceResource" />
+    </div>
+
     <!-- other repo -->
     <div v-else
          class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"

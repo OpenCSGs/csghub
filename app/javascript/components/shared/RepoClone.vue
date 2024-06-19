@@ -2,6 +2,14 @@
   <div class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
     <DeployDropdown v-if="repoType === 'model' && admin" :modelId="namespacePath" />
     <div
+      class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      v-if="repoType === 'model'"
+      @click="toFinetunePage"
+    >
+      <SvgIcon name="finetune_create" class="mr-1" />
+      <div class="text-sm">{{ $t('finetune.title') }}</div>
+    </div>
+    <div
       class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
@@ -139,4 +147,8 @@
         return "";
     }
   });
+
+  function toFinetunePage(){
+    window.location.href = `/finetune/new?model_id=${props.namespacePath}`
+  }
 </script>
