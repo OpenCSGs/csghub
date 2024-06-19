@@ -44,6 +44,7 @@ export const all = {
   changeCancel: "Operation canceled",
   addSuccess: "Added successfully",
   delSuccess: "Del successfully",
+  updateSuccess: "Update successfully",
   lastTime: "Last Updated",
   downloadCount: "Download",
   public: "Public",

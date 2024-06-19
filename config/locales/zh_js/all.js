@@ -42,6 +42,7 @@ export const all = {
   changeCancel: "操作取消",
   addSuccess: "添加成功",
   delSuccess: "删除成功",
+  updateSuccess: "更新成功",
   lastTime: "更新时间",
   downloadCount: "下载热度",
   public: "公开",
