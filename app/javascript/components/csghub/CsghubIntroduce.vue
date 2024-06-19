@@ -145,7 +145,7 @@
     },
     {
       id: "2",
-      title: t('csghub.product.feature-h1'),
+      title: t('csghub.product.feature-h2'),
       enTitle: t('csghub.product.feature-p2'),
       svgName: "csghub_feature_2",
     },
