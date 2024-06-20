@@ -106,7 +106,7 @@
       toDemoPage() {
         trackPageEvent({ id: 'demo_codegen', m: 'ProductDemo' })
         window.open(
-          'https://portal.opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B'
+          'https://opencsg.com/spaces/OpenCSG/OpenCSG-DeepSeek-Code-1.3B'
         )
       }
     },

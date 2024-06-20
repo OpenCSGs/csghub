@@ -13,7 +13,7 @@
         <div class="font-light text-[20px] text-[#475467]">
           {{ $t('computing.problem.desc2') }}
           <a
-            href="https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82"
+            href="https://opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82"
             class="underline cursor-pointer"
             >{{ $t('computing.problem.pre-sales') }}</a
           >。
@@ -209,7 +209,7 @@
         <div
           @click="
             toNextPage(
-              'https://portal.opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82',
+              'https://opencsg.com/lead_forms/form/5P4op4FQHwh5_%E7%AE%97%E5%8A%9B%E9%9C%80%E6%B1%82',
               'connect_compute'
             )
           "

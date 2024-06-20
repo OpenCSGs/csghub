@@ -69,55 +69,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     end
   end
 
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content]),
-                                                              sha: params[:sha]
-                                                            })
-    sync_update_file('dataset', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
-  def update_readme_tags
-    tags = params[:tags]
-
-    # 更新 README 元数据中的 tags
-    blob =  csghub_api.get_dataset_blob(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
-    content =JSON.parse(blob).dig("data", "content")
-    metadata_data = Base64.decode64(content).force_encoding('UTF-8')
-    metadata_hash = YAML.safe_load(metadata_data)
-    sha = JSON.parse(blob).dig("data", "sha")
-    # 查找元数据部分的结束位置
-    end_index = metadata_data.index('---', 3)
-
-    # 提取数据部分
-    readme_content = metadata_data[end_index+4 .. -1] || ""
-
-    # 更新或添加 tags
-    metadata_hash['tags'] = tags
-    # 重新生成元数据部分
-    updated_metadata_part = YAML.dump(metadata_hash)
-    updated_metadata_part += "---\n"  # 手动添加`---`标记
-
-    # 更新 README 内容
-    updated_readme_content = updated_metadata_part + readme_content
-    options = update_file_params.slice(:branch).merge({ message: build_update_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(updated_readme_content),
-                                                        sha:sha
-                                                      })
-    sync_update_file('dataset', options)
-    render json: { message: I18n.t('tags.update.success') }
-  rescue StandardError => e
-    log_error e.message, e.backtrace
-    render json: { error: e.message }, status: :unprocessable_entity
-  end
-
   def upload_file
     sync_upload_file('dataset', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }

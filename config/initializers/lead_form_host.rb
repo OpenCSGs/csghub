@@ -1,5 +1,5 @@
 LEAD_FORM_HOST = if Rails.env.production?
-                   'https://portal.opencsg.com'
+                   'https://opencsg.com'
                  elsif Rails.env.staging?
                    'https://portal-stg.opencsg.com'
                  else

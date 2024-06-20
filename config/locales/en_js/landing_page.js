@@ -72,5 +72,29 @@ export const landingPage = {
   },
   customers:{
     title:'Our customers'
+  },
+  cloud: {
+    title: 'Cloud Computing Resources',
+    desc: 'Transcendence Community provides you with a variety of computing power services',
+    details:"View Details",
+    content1: 'One-click to open Notebook, experience quickly',
+    content2: 'Demo application hosting, CPU resources are free for a long time',
+    content3: 'Rich computing power resources, tailor-made rental plans for you'
+  },
+  map:{
+    title: "OpenCSG Product Map",
+    desc: "We are committed to the construction of the large model ecological community, gathering the upstream and downstream enterprise chains of the artificial intelligence industry, and jointly providing platform products and solutions for the application of large models in vertical industries.",
+    contentTitle: "OpenCSG Solutions",
+    content_sec_title: "Intelligent Knowledge Base Assistant",
+    content_sec_desc: "Support for multiple models; private deployment; enterprise personalized knowledge base",
+    content_sec2_title: "Large Model All-in-One Machine",
+    content_sec2_desc: "Integrated solution combining OpenCSG software products and open-source large models",
+    content_sec3_title: "Intelligent Image Assistant",
+    content_sec3_desc: "Visual creative solutions, including text-to-image, image generation, style transfer, etc.",
+    content_sec4_title: "Intelligent Programming Assistant",
+    content_sec4_desc: "Provide capabilities such as code generation, code completion, generating unit tests, domain knowledge Q&A, etc.",
+    content2Title: "StarNet Product Family",
+    content2_sec_title: "StarShip Large Model Application Development Platform",
+    content2_sec2_title: "CSGHub Large Model Asset Management Platform"
   }
 }

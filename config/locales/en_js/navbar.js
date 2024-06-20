@@ -9,6 +9,8 @@ export const navbar = {
   "openSourceStarCloudText":"Open source computing resources scheduling platform",
   "starCloud": "StarCloud",
   "starCloudText": "One stop large-scale model development and service operation platform, including computing resource scheduling and algorithm training inference services",
+  "csgHub": "CSGHub",
+  "csgHubText": "An asset management platform for large model native design",
   "starShip": "StarShip",
   "starShipText": "Provide a complete model/data management and application building platform for the large model application development team",
   "starChain":"StarChain",

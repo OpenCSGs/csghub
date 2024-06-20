@@ -94,10 +94,6 @@
           </div>
         </div>
         <profile-repo-list
-          :model-list="models"
-          :dataset-list="datasets"
-          :space-list="spaces"
-          :code-list="codes"
           :name="organization.name"
         />
       </div>

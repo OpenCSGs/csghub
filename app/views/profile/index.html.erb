@@ -14,11 +14,6 @@
   </div>
   <div class="grow px-[20px] py-[36px] md:px-0 sm:py-0">
     <profile-repo-list
-      :model-list="<%= JSON.parse(@models).to_json %>"
-      :dataset-list="<%= JSON.parse(@datasets).to_json %>"
-      :space-list="<%= JSON.parse(@spaces).to_json %>"
-      :code-list="<%= JSON.parse(@codes).to_json %>"
-      :endpoint-list="<%= JSON.parse(@endpoints).to_json %>"
       name="<%= @user.name %>"
       initiator="<%= @initiator %>"
     >
