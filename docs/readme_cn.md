@@ -112,7 +112,7 @@ docker compose -f all-in-one-CN.yml up -d
 1. 在github 发起issue
 2. 扫描下方左侧微信二维码，添加微信小助手回复"开源"或者"open source"入群，加入我们的微信讨论群
 3. 加入我们的Discord频道: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
-4. 假如我们的Slack频道: [OpenCSG Slack Channel](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
+4. 加入我们的Slack频道: [OpenCSG Slack Channel](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 <div style="display:inline-block">
 <img src="/docs/images/wechat-assistant-new.png" width='200'>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
