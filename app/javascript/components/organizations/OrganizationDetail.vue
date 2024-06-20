@@ -86,7 +86,7 @@
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
               <a v-for="user in membersList" :href="`/profile/${user.name}`">
-                <el-tooltip placement="top" effect="light">
+                <el-tooltip placement="bottom" effect="light">
                   <div class="flex flex-col items-center">
                     <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
                   </div>
