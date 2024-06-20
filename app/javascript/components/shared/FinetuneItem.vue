@@ -31,7 +31,6 @@
 
 <script setup>
   import { computed } from 'vue'
-  import { useI18n } from 'vue-i18n'
   import AppStatus from '../application_spaces/AppStatus.vue'
 
   const props = defineProps({
@@ -42,8 +41,6 @@
       default: 'index'
     }
   })
-
-  const { t, locale } = useI18n()
 
   const detailLink = computed(() => {
     switch (props.repoType) {
@@ -60,13 +57,3 @@
     }
   })
 </script>
-
-<style scoped>
-  .dataset-card:hover .dataset-path {
-    color: var(--blue-blue-5001-f-75-cb, #1f75cb);
-  }
-
-  .model-card:hover .model-path {
-    color: var(--theme-dark-red-t-red-500-ad-4-a-3-b, #ad4a3b);
-  }
-</style>
