@@ -86,10 +86,14 @@
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
             <a v-for="user in membersList" :href="`/profile/${user.login_identity}`">
-              <div class="flex flex-col items-center">
-                <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
-                <span class="text-[#A8ABB2] text-[12px]">{{ user.role }}</span>
-              </div>
+              <el-tooltip placement="bottom" effect="light">
+                <div class="flex flex-col items-center">
+                  <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
+                </div>
+                <template #content>
+                  <span class="text-[12px] py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
+                </template>
+              </el-tooltip>
             </a>
           </div>
         </div>
