@@ -100,7 +100,6 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/readme', to: 'codes#readme', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/files', to: 'codes#files', namespace: /[^\/]+/
     post '/codes/:namespace/(*code_name)/files/:branch/upload_file', to: 'codes#upload_file', namespace: /[^\/]+/
-    put '/codes/:namespace/(*code_name)/files/:branch', to: 'codes#update_file', namespace: /[^\/]+/
     delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/related_repos', to: 'codes#related_repos', namespace: /[^\/]+/
@@ -109,7 +108,6 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files', namespace: /[^\/]+/
     post '/spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file', namespace: /[^\/]+/
-    put '/spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#update_file', namespace: /[^\/]+/
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
