@@ -91,9 +91,9 @@
                     <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
                   </div>
                   <template #content>
-                    <span class="text-[12px] py-[8px] px-[12px]">{{ user.nickname }}（{{ user.role }}）</span>
+                    <span class="text-[12px] py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
                   </template>
-                </el-tooltip> 
+                </el-tooltip>
               </a>
           </div>
         </div>
