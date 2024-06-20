@@ -81,9 +81,7 @@ const app = createApp({
     NewEndpoint,
     EndpointDetail,
     AdminNavbar,
-    AdminMenu,
-    AdminUserList,
-    AdminUserDetail,
+    AdminMenu
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

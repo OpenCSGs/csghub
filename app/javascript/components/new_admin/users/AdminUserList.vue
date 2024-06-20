@@ -61,6 +61,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import { Search } from '@element-plus/icons-vue'
+  import { ElMessage } from 'element-plus'
 
   const users = ref([])
   const page = ref(1)
@@ -78,6 +79,8 @@
       const data = await response.json()
       users.value = data.users
       total.value = data.total_count
+    } else {
+      ElMessage.error('Failed to fetch users')
     }
   }
 

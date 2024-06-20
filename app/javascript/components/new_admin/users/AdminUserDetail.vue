@@ -36,6 +36,7 @@
   import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
   import dayjs from "dayjs"
+  import { ElMessage } from 'element-plus'
 
   const route = useRoute()
 
@@ -46,6 +47,8 @@
     if (response.ok) {
       const data = await response.json()
       user.value = data
+    } else {
+      ElMessage.error('Failed to fetch user')
     }
   }
 

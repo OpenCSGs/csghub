@@ -24,7 +24,8 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
   end
 
   def find_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    return render json: { message: "User not found" }, status: :not_found unless @user
   end
 
   def search_columns
