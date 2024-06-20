@@ -60,10 +60,6 @@ module Starhub
       download_repo_resolve_file('codes', namespace, code_name, path, options)
     end
 
-    def create_code_file(namespace, code_name, path, options = {})
-      create_repo_file('codes', namespace, code_name, path, options)
-    end
-
     def update_code_file(namespace, code_name, path, options = {})
       update_repo_file('codes', namespace, code_name, path, options)
     end
