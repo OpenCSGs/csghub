@@ -49,6 +49,8 @@ import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
 import AdminMenu from "./components/new_admin/AdminMenu.vue"
 import AdminDashboard from "./components/new_admin/AdminDashboard.vue"
 import AdminEmailSending from "./components/new_admin/AdminEmailSending.vue"
+import AdminUserList from "./components/new_admin/users/AdminUserList.vue"
+import AdminUserDetail from "./components/new_admin/users/AdminUserDetail.vue"
 
 const pinia = createPinia()
 
@@ -79,7 +81,9 @@ const app = createApp({
     NewEndpoint,
     EndpointDetail,
     AdminNavbar,
-    AdminMenu
+    AdminMenu,
+    AdminUserList,
+    AdminUserDetail,
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
@@ -111,6 +115,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 const routes = [
   { path: '/new_admin/', component: AdminDashboard },
   { path: '/new_admin/email_sending', component: AdminEmailSending },
+  { path: '/new_admin/users', component: AdminUserList },
+  { path: '/new_admin/users/:id', component: AdminUserDetail },
 ]
 
 const router = createRouter({

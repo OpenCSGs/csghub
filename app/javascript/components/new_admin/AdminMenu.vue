@@ -10,6 +10,13 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/users"
+      class="underline"
+    >
+      Users
+    </RouterLink>
+
+    <RouterLink
       v-if="!onPremise"
       to="/new_admin/email_sending"
       class="underline"
