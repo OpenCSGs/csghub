@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'health', to: 'landing_page#health_check'
+
   # admin
   namespace :admin do
     resources :system_configs
@@ -81,7 +83,10 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/files', to: 'models#files', namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/files/:branch', to: 'models#create_file', namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file', namespace: /[^\/]+/
+<<<<<<< HEAD
     put '/models/:namespace/(*model_name)/update_readme_tags', to: 'models#update_readme_tags', namespace: /[^\/]+/
+=======
+>>>>>>> main
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict', namespace: /[^\/]+/
@@ -93,7 +98,10 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/preview', to: 'datasets#preview_parquet', namespace: /[^\/]+/
     post '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#create_file', namespace: /[^\/]+/
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file', namespace: /[^\/]+/
+<<<<<<< HEAD
     put '/datasets/:namespace/(*dataset_name)/update_readme_tags', to: 'datasets#update_readme_tags', namespace: /[^\/]+/
+=======
+>>>>>>> main
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/related_repos', to: 'datasets#related_repos', namespace: /[^\/]+/
@@ -236,6 +244,8 @@ Rails.application.routes.draw do
     get '/solution', to: 'solution#index'
     get '/ekb', to: 'ekb#index'
     get '/product', to: 'product#index'
+    get '/csghub', to: 'csghub#index'
+    get '/starship', to: 'starship#index'
     get '/profile/likes/:user_id', to: 'profile#likes', user_id: /[^\/]+/
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'

@@ -1,4 +1,10 @@
 class LandingPageController < ApplicationController
+  skip_before_action :call_event_api, only: :health_check
+
+  def health_check
+    head :no_content
+  end
+
   def index
     @partersData = [{name:'AWS',num:'20',url:'partners/aws.png'},
                     {name:'Datawhale',num:'20',url:'partners/aws.png'},
@@ -25,7 +31,7 @@ class LandingPageController < ApplicationController
     system_config = SystemConfig.first
     (system_config.customers rescue []) || []
   end
-  
+
   def load_hot_models
     system_config = SystemConfig.first
     hot_models = system_config.hot_models rescue []

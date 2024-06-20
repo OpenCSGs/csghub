@@ -71,5 +71,29 @@ export const landingPage = {
   },
   customers:{
     title:'我们的客户'
+  },
+  cloud:{
+    title:'云上算力资源',
+    desc:'传神社区为您提供多种算力服务',
+    details:"查看详情",
+    content1:'一键打开Notebook，快速体验',
+    content2:'Demo应用托管，CPU资源长期免费',
+    content3:'丰富的算力资源，为您量身打造租赁计划'
+  },
+  map:{
+    title:'OpenCSG 产品地图',
+    desc:'我们致力于大模型生态社区建设，汇集人工智能行业上下游企业链，共同为大模型在垂直行业的应用提供平台产品和解决方案',
+    contentTitle:'OpenCSG 解决方案',
+    content_sec_title:'智能知识库助手',
+    content_sec_desc:'多模型支持；私有化部署；企业个性化知识库',
+    content_sec2_title:'大模型一体机',
+    content_sec2_desc:'集成 OpenCSG 软件产品和开元大模型的一体化解决方案',
+    content_sec3_title:'智能图像助手',
+    content_sec3_desc:'视觉创意解决方案，包括文生图、图生图、作品风格迁移等',
+    content_sec4_title:'智能编程助手',
+    content_sec4_desc:'提供代码生成、代码不全、生成单元测试、领域知识问答等能力',
+    content2Title:'StarNet 产品家族',
+    content2_sec_title:'StarShip 大模型应用开发平台',
+    content2_sec2_title:'CSGHub 大模型资产管理平台',
   }
 }

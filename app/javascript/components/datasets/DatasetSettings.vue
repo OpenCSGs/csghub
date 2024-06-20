@@ -227,6 +227,9 @@ import csrfFetch from "../../packs/csrfFetch"
 import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState } from 'pinia'
+import parseMD from 'parse-md'
+import yaml from 'js-yaml'
+import { atob_utf8, btoa_utf8 } from '../../packs/utils'
 
 export default {
   props: {
@@ -255,6 +258,8 @@ export default {
       theDatasetNickname: this.datasetNickname || "",
       theDatasetDesc: this.datasetDesc || "",
       datasetPath: this.path,
+      readmeContent: '',
+      readmeSha: '',
       options: [{value: 'Private', label: this.$t('all.private')},
         {value: 'Public', label: this.$t('all.public')}]
     };
@@ -277,6 +282,7 @@ export default {
 
     this.getSelectTags()
     this.getIndustryTags()
+    this.fetchReadme()
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
@@ -422,7 +428,7 @@ export default {
     updateTags(){
       if(this.selectedTags.length !== 0){
         const newSelectedTags = this.selectedTags.map(tag => tag.name)
-        this.updateTagsAPI(newSelectedTags)
+        this.updateTagsInReadme(newSelectedTags)
       } else {
         ElMessage({ message: this.$t('datasets.edit.needDatasetTag'), type: "warning" })
       }
@@ -438,29 +444,58 @@ export default {
       }
     },
     
-
-    async updateTagsAPI(tags){
-      const tagsUpdateEndpoint = "/internal_api/datasets/" + this.path + "/update_readme_tags"
-      const bodyData = {
-        path: "README.md",
-        commit_title: '',
-        commit_desc: '',
-        sha: this.sha,
-        tags:tags
-      }
+    async fetchReadme() {
+      const url = `${this.csghubServer}/api/v1/datasets/${this.path}/blob/README.md`
       const options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }
+      await jwtFetch(url, options).then((response) => {
+        response
+          .json()
+          .then(({ data }) => {
+            this.readmeContent = atob_utf8(data.content)
+            this.readmeSha = data.sha
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      })
+    },
+    async updateTagsInReadme(newTags) {
+      if (this.readmeContent) {
+        const { metadata, content } = parseMD(this.readmeContent)
+        const newMetadata = {
+          ...metadata,
+          tags: newTags
+        }
+        const newMetadataString = yaml.dump(newMetadata)
+        const newContent = `---\n${newMetadataString}\n---\n\n${content}`
+        this.updateReadme(newContent)
+      }
+    },
+    async updateReadme(newContent) {
+      const updateReadmeEndpoint = `${this.csghubServer}/api/v1/datasets/${this.path}/raw/README.md`
+      const bodyData = {
+        content: btoa_utf8(newContent),
+        message: 'Update README.md',
+        branch: 'main',
+        new_branch: 'main',
+        sha: this.readmeSha
+      }
+      const option = {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(bodyData)
       }
-      const response = await csrfFetch(tagsUpdateEndpoint, options)
-      if (!response.ok) {
-        response.json().then((err) => {
-          ElMessage({ message: err.message, type: "warning" })
-        })
+      const response = await jwtFetch(updateReadmeEndpoint, option)
+      if (response.ok) {
+        ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
       } else {
         response.json().then((data) => {
-          ElMessage({ message: data.message, type: "success" })
+          ElMessage({ message: data.msg, type: 'warning' })
         })
       }
     },

@@ -307,7 +307,7 @@
       toDemoPage() {
         trackPageEvent({ id: 'demo_imggen', m: 'ProductDemo' })
         window.open(
-          'https://portal.opencsg.com/spaces/AIWizards/StableDiffusionSpace'
+          'https://opencsg.com/spaces/AIWizards/StableDiffusionSpace'
         )
       }
     },

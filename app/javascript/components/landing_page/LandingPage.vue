@@ -21,9 +21,7 @@
             class="absolute bottom-0 left-[37%] hidden md:block"
           />
         </div>
-        <div
-          class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]"
-        >
+        <div class="text-[20px] font-light text-[#475467] leading-[30px] mb-[48px] md:mb-[32px]">
           {{ $t('landingPage.banner.subtitle') }}
         </div>
         <a
@@ -57,9 +55,7 @@
           {{ $t('landingPage.hotTrend.desc') }}
         </div>
       </div>
-      <div
-        class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]"
-      >
+      <div class="max-w-[1340px] xl:w-full m-auto flex xl:flex-col xl:gap-[64px] gap-[32px]">
         <!-- 热门模型 -->
         <div class="flex flex-col gap-[16px] items-center">
           <p class="flex items-center gap-[4px] mb-[12px]">
@@ -147,13 +143,136 @@
 
     <ProductStarShip />
 
+    <!-- 云上算力资源 -->
+    <div class="w-full px-5">
+      <div class="flex items-center max-w-[1280px] m-auto md:flex-col md:gap-12">
+        <div class="flex flex-col gap-8 w-1/2 md:w-full items-start text-[#475467]">
+          <div class="text-[48px] leading-[60px] md:text-[30px] md:leading-[38px]">
+            {{ $t('landingPage.cloud.title') }}
+          </div>
+          <div class="text-[20px] leading-[30px] md:hidden font-light">
+            {{ $t('landingPage.cloud.desc') }}
+          </div>
+          <div class="flex flex-col gap-5 px-4">
+            <div class="flex gap-3 text-[18px] leading-[28px] font-light">
+              <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content1') }}
+            </div>
+            <div class="flex gap-3 text-[18px] leading-[28px] font-light">
+              <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content2') }}
+            </div>
+            <div class="flex gap-3 text-[18px] leading-[28px] font-light">
+              <SvgIcon name="landing_check" />{{ $t('landingPage.cloud.content3') }}
+            </div>
+          </div>
+          <a  href="/computing" class="flex items-center justify-center text-center md:w-full">
+            <div
+              class="cursor-pointer md:w-full py-3 px-[18px] text-[16px] leading-[24px] text-[#FFF] bg-[#3250BD] border border-[#3250BD] rounded-[8px]"
+            >
+              {{ $t('landingPage.cloud.details') }}
+            </div>
+          </a>
+        </div>
+        <div class="w-1/2 md:w-full">
+          <img
+            src="images/landing/Image.png"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- 产品地图 -->
+    <div class="w-full bg-[#F9FAFB] pt-24">
+      <div class="max-w-[1280px] px-5 m-auto text-center pb-24 md:pb-16">
+        <div class="text-[36px] leading-[44px] md:text-[30px] md:leading-[38px] mb-5 md:mb-4">
+          {{ $t('landingPage.map.title') }}
+        </div>
+        <div
+          class="max-w-[760px] m-auto text-[20px] leading-[30px] md:text-[18px] text-[#475467] font-light mb-16 md:mb-12"
+        >
+          {{ $t('landingPage.map.desc') }}
+        </div>
+      </div>
+      <div class="bg-[#FFFFFF] px-4">
+        <div
+          class="flex flex-col relative bottom-24 md:bottom-16 gap-4 items-center m-auto max-w-[1280px]"
+        >
+          <div class="flex w-full md:flex-col">
+            <div
+              class="min-w-[264px] items-center flex text-center rounded-l-lg md:rounded-bl-none md:rounded-t-lg p-6 bg-[#4D6AD6] text-[#FFFFFF] text-[24px] leading-[32px] md:text-[20px] md:leading-[30px]"
+            >
+              {{ $t('landingPage.map.contentTitle') }}
+            </div>
+            <div
+              class="rounded-r-lg md:rounded-tr-none md:rounded-b-lg p-4 bg-[#F0F3FF] flex gap-4 md:flex-col"
+            >
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarEKB<br />
+                  {{ $t('landingPage.map.content_sec_title') }}
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  {{ $t('landingPage.map.content_sec_desc') }}
+                </div>
+              </div>
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarAIO<br />{{ $t('landingPage.map.content_sec2_title') }}
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  {{ $t('landingPage.map.content_sec2_desc') }}
+                </div>
+              </div>
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarImagen<br />
+                  {{ $t('landingPage.map.content_sec3_title') }}
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  {{ $t('landingPage.map.content_sec3_desc') }}
+                </div>
+              </div>
+              <div class="p-2 flex flex-col gap-2 bg-[#FFF] rounded-lg">
+                <div class="text-[20px] leading-[30px] md:text-[18px] md:leading-[28px]">
+                  StarCode<br />
+                  {{ $t('landingPage.map.content_sec4_title') }}
+                </div>
+                <div class="text-[16px] leading-[24px] font-light">
+                  {{ $t('landingPage.map.content_sec4_desc') }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex w-full md:flex-col">
+            <div
+              class="min-w-[264px] items-center flex text-center rounded-l-lg md:rounded-bl-none md:rounded-t-lg p-6 bg-[#4D6AD6] text-[#FFFFFF] text-[24px] leading-[32px] md:text-[20px] md:leading-[30px]"
+            >
+              {{ $t('landingPage.map.content2Title') }}
+            </div>
+            <div
+              class="grow text-center rounded-r-lg md:rounded-tr-none md:rounded-b-lg p-4 bg-[#F0F3FF] flex flex-col gap-4"
+            >
+              <div
+                class="p-4 rounded-lg text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] bg-[#FFF]"
+              >
+                {{ $t('landingPage.map.content2_sec_title') }}
+              </div>
+              <div
+                class="p-4 rounded-lg text-[20px] leading-[30px] md:text-[18px] md:leading-[28px] bg-[#FFF]"
+              >
+                {{ $t('landingPage.map.content2_sec2_title') }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div
       v-if="customers.length"
       class="bg-[#F9FAFB] py-[96px]"
     >
-      <p
-        class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center"
-      >
+      <p class="text-4xl mb-[32px] tracking-[-0.72px] text-[#101828] text-center">
         {{ $t('landingPage.customers.title') }}
       </p>
       <div
@@ -194,16 +313,12 @@
         class="flex justify-center items-center md:flex-col md:gap-[48px] sm:w-full max-w-[1280px] m-auto"
       >
         <div class="md:text-center">
-          <div
-            class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]"
-          >
+          <div class="text-[64px] md:text-[30px] md:leading-[38px] text-[#303133]">
             {{ $t('landingPage.value.title1') }}
             <br />
             {{ $t('landingPage.value.title2') }}
           </div>
-          <div
-            class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]"
-          >
+          <div class="text-[20px] leading-[28px] md:text-[18px] md:font-light text-[#606266]">
             {{ $t('landingPage.value.subtitle') }}
           </div>
         </div>
