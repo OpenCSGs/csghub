@@ -1,3 +1,3 @@
 export const finetune = {
-  title: "finetune"
+  title: "Finetune Instance"
 }
