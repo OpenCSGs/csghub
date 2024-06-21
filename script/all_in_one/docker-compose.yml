@@ -31,7 +31,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   csghub_portal:
-    image: opencsg/csghub-portal:latest
+    image: opencsg/csghub-portal:v0.6.0
     restart: always
     command: >
       bash -c "bundle exec rails assets:precompile
@@ -63,7 +63,7 @@ services:
       - postgres
 
   csghub_server:
-    image: opencsg/csghub-server:latest
+    image: opencsg/csghub-server:v0.6.0
     depends_on:
       - postgres
       - gitea
@@ -88,6 +88,10 @@ services:
       STARHUB_SERVER_S3_ENDPOINT: minio:9000 # used to generate download links for lfs files
       STARHUB_SERVER_S3_BUCKET: opencsg-server-lfs
       STARHUB_SERVER_S3_REGION: cn-beijing
+      STARHUB_SERVER_MIRRORSERVER_TYPE: gitea
+      STARHUB_SERVER_MIRRORSERVER_HOST: http://${SERVER_DOMAIN}/gitserver
+      STARHUB_SERVER_MIRRORSERVER_USERNAME: root
+      STARHUB_SERVER_MIRRORSERVER_PASSWORD: password123
     ports:
       - "8080:8080"
     restart: always
