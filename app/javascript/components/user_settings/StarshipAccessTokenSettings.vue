@@ -10,6 +10,8 @@
       :avatar="avatar"
     >
     </Menu>
+
+    <!-- API Key list -->
     <div class="grow py-[24px]">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
@@ -25,12 +27,60 @@
           tokenValue="b"
         />
       </div>
+
+      <button
+        @click="centerDialogVisible = true"
+        class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]"
+      >
+        {{ $t('accessToken.starshipAddToken') }}
+      </button>
     </div>
+
+    <!-- new key dialog -->
+    <el-dialog
+      v-model="centerDialogVisible"
+      :title="$t('accessToken.starshipAddToken')"
+      width="30%"
+      class="dialogWidth"
+      style="border-radius: 0.5rem"
+      left
+    >
+      <el-form
+        ref="accessTokenFormRef"
+        :model="formData"
+        :rules="formRules"
+        label-position="top"
+      >
+        <el-form-item
+          :label="$t('accessToken.starshipAccessTokenName')"
+          prop="accessTokenName"
+        >
+          <el-input
+            v-model="formData.accessTokenName"
+            placeholder="input the name"
+            maxlength="20"
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">Cancel</el-button>
+          <el-button
+            type="primary"
+            @click="submitAccessToken"
+          >
+            {{ $t('all.add') }}
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
+  import { ref } from 'vue'
   import Menu from './Menu.vue'
+  import { useI18n } from 'vue-i18n'
   import StarshipAccessTokenCard from './StarshipAccessTokenCard.vue'
 
   const props = defineProps({
@@ -40,4 +90,13 @@
     accessToken: String,
     email: String
   })
+
+  const { t } = useI18n()
+
+  const centerDialogVisible = ref(false)
+
+  const formData = ref({})
+  const formRules = {
+    accessTokenName: [{ required: true, message: t('accessToken.starshipNameMissing') }]
+  }
 </script>

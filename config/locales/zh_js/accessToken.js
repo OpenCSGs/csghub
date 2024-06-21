@@ -8,5 +8,9 @@ export const accessToken = {
 
   starshipTitle: "Starship API Keys",
   starshipDesc: "API key for accessing Starship",
-  starshipRefresh: "刷新"
+  starshipRefresh: "刷新",
+  starshipAddToken: "新建 API Key",
+  starshipAccessTokenName: "Starship API Key Name",
+  starshipAccessTokenValue: "Starship API Key Value",
+  starshipNameMissing: "API Key name 缺失"
 }
