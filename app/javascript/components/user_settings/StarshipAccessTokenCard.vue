@@ -2,9 +2,16 @@
   <div
     class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px] flex flex-col gap-[8px]"
   >
-    <h3 class="text-[#303133] text-[16px] font-[500]">
-      {{ tokenName }}
-    </h3>
+    <div class="flex justify-between">
+      <h3 class="text-[#303133] text-[16px] font-[500]">
+        {{ tokenName }}
+      </h3>
+      <el-button
+        type="info"
+        @click="confirmRefreshAccessToken"
+        >{{ $t('accessToken.starshipRefresh') }}</el-button
+      >
+    </div>
     <div class="flex items-center">
       <el-input
         v-model="theTokenValue"
@@ -19,13 +26,6 @@
         <SvgIcon name="copy" />
       </div>
     </div>
-    <el-button
-      type="info"
-      @click="confirmRefreshAccessToken"
-      round
-      class="w-[100px]"
-      >{{ $t('accessToken.starshipRefresh') }}</el-button
-    >
   </div>
 </template>
 
@@ -46,7 +46,7 @@
   const theTokenValue = ref(props.tokenValue)
 
   const copyToken = () => {
-    copyToClipboard(theTokenValue)
+    copyToClipboard(theTokenValue.value)
   }
 
   const confirmRefreshAccessToken = () => {

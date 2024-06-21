@@ -117,7 +117,10 @@
       method: 'GET'
     })
     if (response.ok) {
-      response.json().then((result) => (userTokens.value = result.data))
+      response.json().then((result) => {
+        userTokens.value = result.data
+        centerDialogVisible.value = false
+      })
     } else {
       ElMessage({
         message: 'Failed to load user Starship tokens',
@@ -130,21 +133,21 @@
     if (!accessTokenFormRef) return
     accessTokenFormRef.value.validate(async(valid) => {
       if (valid) {
-        const userTokenCreateEndpoint = `${csghubServer}/api/v1/token/starship/${props.name}`
+        const userTokenCreateEndpoint = `${csghubServer}/api/v1/token/starship/${formData.value.accessTokenName}`
         const options = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.accessTokenName
-          })
+          body: JSON.stringify({})
         }
         const response = await jwtFetch(userTokenCreateEndpoint, options)
         if (response.ok) {
           fetchUserStarshipTokens()
         } else {
-          ElMessage({
-            message: 'Failed to create user Starship Token',
-            type: 'warning'
+          response.json().then((error) => {
+            ElMessage({
+              message: error.message,
+              type: 'warning'
+            })
           })
         }
       } else {
