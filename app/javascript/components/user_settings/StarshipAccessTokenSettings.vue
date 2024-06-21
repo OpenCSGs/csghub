@@ -145,7 +145,7 @@
         } else {
           response.json().then((error) => {
             ElMessage({
-              message: error.message,
+              message: error.msg,
               type: 'warning'
             })
           })

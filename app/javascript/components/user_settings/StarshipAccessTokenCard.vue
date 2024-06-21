@@ -30,11 +30,12 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, inject } from 'vue'
   import SvgIcon from '../shared/SvgIcon.vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { copyToClipboard } from '../../packs/clipboard'
+  import jwtFetch from '../../packs/jwtFetch'
 
   const props = defineProps({
     tokenName: String,
@@ -42,6 +43,7 @@
   })
 
   const { t } = useI18n()
+  const csghubServer = inject('csghubServer')
 
   const theTokenValue = ref(props.tokenValue)
 
@@ -65,24 +67,23 @@
   }
 
   const refreshAccessToken = async() => {
-    const refreshTokenEndpoint = '/internal_api/access_token/refresh'
+    const refreshTokenEndpoint = `${csghubServer}/api/v1/token/starship/${props.tokenName}`
     const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
     }
-    const response = await csrfFetch(refreshTokenEndpoint, options)
+    const response = await jwtFetch(refreshTokenEndpoint, options)
 
     if (!response.ok) {
       response.json().then((err) => {
-        ElMessage({ message: err.message, type: 'warning' })
+        ElMessage({ message: err.msg, type: 'warning' })
       })
     } else {
-      response.json().then((data) => {
+      response.json().then((result) => {
         // 仅在刷新操作的时候提醒，首次自动生成不提醒
-        if (this.theAccessToken) {
-          ElMessage({ message: data.message, type: 'success' })
-        }
-        this.theAccessToken = data.token
+        ElMessage({ message: result.msg, type: 'success' })
+        theTokenValue.value = result.data.token
       })
     }
   }
