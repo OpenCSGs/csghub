@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   namespace :internal_api do
     namespace :admin do
       post '/group_mail', to: 'email_sending#group_mail'
+      resources :users, only: [:index, :show]
     end
 
     resources :wechat, only: [] do
@@ -49,6 +50,7 @@ Rails.application.routes.draw do
         get '/signature-config', to: 'wechat#signature_config'
       end
     end
+
     resources :organizations, only: [:create, :update] do
       collection do
         post '/new-members', to: 'organizations#new_members'

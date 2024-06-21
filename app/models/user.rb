@@ -182,7 +182,9 @@ class User < ApplicationRecord
       email: email,
       phone: phone,
       avatar: avatar_url,
+      role: roles,
       last_login_at: last_login_at,
+      created_at: created_at
     }
   end
 
