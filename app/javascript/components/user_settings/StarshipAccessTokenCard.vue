@@ -31,7 +31,8 @@
 
 <script setup>
   import { ref } from 'vue'
-  import SvgIcon from '../shared/SvgIcon.vue';
+  import SvgIcon from '../shared/SvgIcon.vue'
+  import { useI18n } from 'vue-i18n'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { copyToClipboard } from '../../packs/clipboard'
 
@@ -40,6 +41,8 @@
     tokenValue: String
   })
 
+  const { t } = useI18n()
+
   const theTokenValue = ref(props.tokenValue)
 
   const copyToken = () => {
@@ -47,15 +50,15 @@
   }
 
   const confirmRefreshAccessToken = () => {
-    ElMessageBox.confirm(this.$t('accessToken.refreshWarning'), 'Warning', {
-      confirmButtonText: this.$t('accessToken.confirm'),
-      cancelButtonText: this.$t('all.cancel'),
+    ElMessageBox.confirm(t('accessToken.refreshWarning'), 'Warning', {
+      confirmButtonText: t('accessToken.confirm'),
+      cancelButtonText: t('all.cancel'),
       type: 'warning'
     }).then(() => {
       refreshAccessToken()
     }).catch(() => {
       ElMessage({
-        message: this.$t('accessToken.cancelInfo'),
+        message: t('accessToken.cancelInfo'),
         type: 'info'
       })
     })
