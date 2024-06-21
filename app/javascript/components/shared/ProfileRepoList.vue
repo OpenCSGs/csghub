@@ -87,12 +87,29 @@
       ></view-more>
       <el-skeleton class="pr-6" v-if="endpointsLoading" :rows="2" animated />
     </div>
+
+    <!-- finetunes -->
+    <div>
+      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+        <SvgIcon name="finetune" width="18" height="18" />
+        <span>{{ $t("finetunes.title") }}</span>
+      </h3>
+      <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+        <FinetuneItem v-for="finetune in finetunes.data" :repo="finetune" repo-type="finetune" />
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+        {{ $t("all.noData") }}
+      </div>
+      <view-more v-if="finetunes.more" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
+      <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
+    </div>
   </div>
 </template>
 
 <script setup>
   import { computed, ref, onMounted, inject } from "vue"
   import RepoItem from "./RepoItem.vue"
+  import FinetuneItem from "./FinetuneItem.vue"
   import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
   import EndpointItem from "../endpoints/EndpointItem.vue"
   import ViewMore from "./ViewMore.vue"
@@ -111,17 +128,20 @@
   const codes = ref([])
   const spaces = ref([])
   const endpoints = ref([])
+  const finetunes = ref([])
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
   const codeLoading = ref(false)
   const spacesLoading = ref(false)
   const endpointsLoading = ref(false)
+  const finetunesLoading = ref(false)
 
   const hasModels = computed(() => models.value?.total > 0)
   const hasDatasets = computed(() => datasets.value?.total > 0)
   const hasCodes = computed(() => codes.value?.total > 0)
   const hasSpaces = computed(() => spaces.value?.total > 0)
   const hasEndpoints = computed(() => endpoints.value?.total > 0)
+  const hasFinetune = computed(() => finetunes.value?.total > 0)
 
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
@@ -146,6 +166,9 @@
     if(props.initiator=='profile'){
         const endpointsUrl = reposUrl("endpoints")
         promises.push(fetchData(endpointsUrl, endpoints, defaultTotal));
+        const finetunesUrl = reposUrl("finetunes")
+        promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
+        
     }
     await Promise.all(promises);
   }
@@ -177,6 +200,8 @@
       default:
         if (type === "endpoints") {
           return `${csghubServer}/api/v1/${prefixPath}/${props.name}/run/model`
+        } else if (type === "finetunes") {
+          return `${csghubServer}/api/v1/${prefixPath}/${props.name}/finetune/instances`
         } else {
           return `${csghubServer}/api/v1/${prefixPath}/${props.name}/${type}`
         }
