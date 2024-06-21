@@ -121,9 +121,11 @@
         centerDialogVisible.value = false
       })
     } else {
-      ElMessage({
-        message: 'Failed to load user Starship tokens',
-        type: 'warning'
+      response.json().then((error) => {
+        ElMessage({
+          message: error.msg,
+          type: 'warning'
+        })
       })
     }
   }
