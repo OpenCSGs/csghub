@@ -19,6 +19,8 @@ import { user_sessions } from './zh_js/user_sessions';
 import { components } from './zh_js/components';
 import { endpoints } from './zh_js/endpoints';
 import { admin } from './zh_js/admin';
+import { starShip } from './zh_js/star_ship';
+import { finetune } from './zh_js/finetune';
 
 export default {
   all,
@@ -41,5 +43,7 @@ export default {
   repo,
   components,
   endpoints,
-  admin
+  admin,
+  starShip,
+  finetune
 };

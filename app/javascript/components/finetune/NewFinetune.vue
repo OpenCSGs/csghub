@@ -165,7 +165,7 @@
 
     try {
       const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
+        `${csghubServer}/api/v1/models/runtime_framework?deploy_type=2`,
         options
       )
       if (res.ok) {

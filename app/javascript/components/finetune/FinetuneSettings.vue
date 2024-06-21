@@ -2,68 +2,57 @@
   <div
     class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
-    <!-- 暂停 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetunes.settings.stopFinetune') }}
+          区域
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          建议选择靠近您的地域，可降低访问时延；
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          创建成功后不支持切换地域。
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <div class="flex flex-col gap-[6px]">
-          <el-button
-            @click="stopFinetune"
-            class="w-[100px]"
-            :disabled="!initialized || isStopped"
-          >
-            {{ $t('finetunes.settings.stop') }}
-          </el-button>
-        </div>
-      </div>
-    </div>
-
-    <el-divider />
-
-    <!-- 重启 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetunes.settings.restartFinetune') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-[6px]">
-        <el-button
-          @click="restartFinetune"
-          class="w-[100px]"
-          :disabled="notInitialized"
+        <p class="text-[#344054] text-[14px]">实例区域</p>
+        <el-select
+          v-model="currentCid"
+          placeholder="选择"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+          disabled
         >
-          {{ $t('finetunes.settings.restart') }}
-        </el-button>
+          <el-option
+            v-for="item in finetuneClusters"
+            :key="item.cluster_id"
+            :label="item.region"
+            :value="item.cluster_id"
+          />
+        </el-select>
       </div>
     </div>
-
     <el-divider />
-
-    <!-- cloud resource -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetunes.settings.resource') }}
+          空间云资源
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('finetunes.settings.resourceTip') }}
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          可切换到不同的微调实例云资源。
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          切换到付费资源后，将根据使用时长向您收取费用。
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
-          {{ $t('finetunes.settings.currentCloudResource') }}
-        </p>
+        <p class="text-[#344054] text-[14px]">当前云资源</p>
         <el-select
           v-model="currentResource"
           placeholder="选择"
           size="large"
           class="!w-[512px] sm:!w-full"
-          @change="updateCloudResource"
+          disabled
         >
           <el-option
             v-for="item in cloudResources"
@@ -74,53 +63,97 @@
         </el-select>
       </div>
     </div>
-
     <el-divider />
-
-    <!-- framework -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetunes.settings.framework') }}
+          运行状态
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          切换运行或暂停微调实例
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
-          {{ $t('finetunes.settings.currentFramework') }}
-        </p>
-        <el-select
-          v-model="currentFrameworkId"
-          placeholder="选择"
-          size="large"
-          class="!w-[512px] sm:!w-full"
-          @change="updateFramework"
-        >
-          <el-option
-            v-for="item in frameworks"
-            :key="item.id"
-            :label="item.frame_name"
-            :value="item.id"
+        <div>
+          <el-switch
+            v-model="statusVal"
+            class="mr-2"
+            style="
+              --el-switch-on-color: #3250bd;
+              --el-switch-off-color: #f2f4f7;
+            "
+            @change="changeStatus"
           />
-        </el-select>
+          <span>{{ statusVal ? '运行中' : '已停止' }}</span>
+        </div>
       </div>
     </div>
-
+    <el-divider />
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          英文名称
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          应用于应用空间路径，创建后不可更改
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-input
+          :value="props.finetuneName"
+          disabled
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        />
+        <div class="flex items-center">
+          <el-input
+            :value="`portal.opencsg.com/${props.modelId}`"
+            disabled
+            size="large"
+            class="!w-[50%] sm:!w-full"
+          />
+          <el-input
+            :value="props.finetuneName"
+            disabled
+            size="large"
+            class="!w-[50%] sm:!w-full"
+          />
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          中文名称
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          将会显示在实例列表页面中，选填
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-input
+          v-model="cnName"
+          clearable
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        />
+      </div>
+    </div>
     <el-divider />
 
     <!-- 删除 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetunes.settings.deleteFinetune') }}
+          删除
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('finetunes.settings.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
-          {{ $t('finetunes.settings.delTips2') }}
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          此操作无法撤销.这将永久删除
           <span class="text-black font-medium break-words">{{
-            finetuneName
+            props.modelId
           }}</span>
-          {{ $t('finetunes.settings.delTips3') }}
+          模型微调。
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('all.enterPls') }}
@@ -131,9 +164,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">
-          {{ $t('finetunes.settings.namespaceName') }}
-        </p>
+        <p class="text-[#344054] text-[14px]">微调实例名称</p>
         <el-input
           v-model="delDesc"
           clearable
@@ -153,7 +184,7 @@
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave"
           >
-            {{ $t('finetunes.settings.confirmDel') }}
+            {{ $t('endpoints.settings.confirmDel') }}
           </div>
         </div>
       </div>
@@ -171,37 +202,30 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
+    finetune: Object,
     finetuneId: Number,
     finetuneName: String,
     appStatus: String,
     modelId: String,
     userName: String,
     cloudResource: String,
-    framework: String,
-    maxReplica: Number,
-    minReplica: Number
+    framework: String
   })
 
+  const statusVal = ref(props.appStatus=='Running')
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
   const delDesc = ref('')
   const currentResource = ref(props.cloudResource)
   const cloudResources = ref([])
   const currentFrameworkId = ref('')
+  const cnName = ref('')
+  const currentCid = ref(props.finetune.cluster_id)
+
+  const finetuneClusters = ref([])
 
   const frameworks = ref([])
-  const replicaRanges = ['1', '2', '3', '4', '5']
-  const currentMaxReplica = ref(props.maxReplica)
-  const currentMinReplica = ref(props.minReplica)
   const repoDetailStore = useRepoDetailStore()
-  const visibilityOptions = ref([
-    { value: 'Private', label: t('all.private') },
-    { value: 'Public', label: t('all.public') }
-  ])
-
-  const visibilityName = computed(() => {
-    return !!repoDetailStore.privateVisibility ? 'Private' : 'Public'
-  })
 
   const initialized = computed(() => {
     return [
@@ -224,6 +248,30 @@
   const isStopped = computed(() => {
     return ['Stopped'].includes(props.appStatus)
   })
+
+  async function changeStatus() {
+    const options = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${
+        props.finetuneId
+      }/${statusVal.value ? 'start' : 'stop'}`,
+      options
+    )
+    if (!res.ok) {
+      ElMessage({
+        message: t('all.fetchError'),
+        type: 'warning'
+      })
+      statusVal.value = !statusVal.value
+    } else {
+      res.json().then((body) => {
+        console.log('testApi suc===', body)
+      })
+    }
+  }
 
   const stopFinetune = async () => {
     stopUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.finetuneId}/stop`
@@ -248,6 +296,20 @@
     }
   }
 
+  const fetchClusters = async () => {
+    const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(`${csghubServer}/api/v1/cluster`, options)
+    if (!res.ok) {
+      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    } else {
+      res.json().then((body) => {
+        finetuneClusters.value = body.data
+      })
+    }
+  }
 
   const fetchResources = async () => {
     const options = {
@@ -281,7 +343,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
+      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=2`,
       options
     )
     if (!res.ok) {
@@ -302,16 +364,6 @@
 
   const updateFramework = (value) => {
     const payload = { framework_id: value }
-    updateFinetune(payload)
-  }
-
-  const updateMaxReplica = (value) => {
-    const payload = { max_replica: value }
-    updateFinetune(payload)
-  }
-
-  const updateMinReplica = (value) => {
-    const payload = { min_replica: value }
     updateFinetune(payload)
   }
 
@@ -339,20 +391,26 @@
   }
 
   const deleteFinetune = async () => {
-    const finetuneDeleteFinetune = `/internal_api/finetunes/${props.userName}/${props.finetuneName}/${props.finetuneId}`
-    const option = { method: 'DELETE' }
-    const response = await csrfFetch(finetuneDeleteFinetune, option)
-
-    if (!response.ok) {
-      return response.json().then((data) => {
-        throw new Error(data.message)
+    const options = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${props.finetuneId}`,
+      options
+    )
+    if (!res.ok) {
+      ElMessage({
+        message: t('all.fetchError'),
+        type: 'warning'
       })
     } else {
-      ElMessage({ message: t('all.delSuccess'), type: 'success' })
-      setTimeout(() => {
-        window.location.href = `/profile/${props.userName}`
-      }, 500)
-      return response.json()
+      res.json().then((body) => {
+        ElMessage({ message: t('all.delSuccess'), type: 'success' })
+        setTimeout(() => {
+          window.location.href = `/profile/${props.userName}`
+        }, 500)
+      })
     }
   }
 
@@ -407,5 +465,6 @@
   onMounted(() => {
     fetchResources()
     fetchFrameworks()
+    fetchClusters()
   })
 </script>
