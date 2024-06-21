@@ -40,8 +40,9 @@
 </template>
 <script>
 import Menu from "./Menu.vue";
+import { inject } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import csrfFetch from "../../packs/csrfFetch"
+import jwtFetch from '../../packs/jwtFetch'
 import { copyToClipboard } from "../../packs/clipboard"
 
 export default {
@@ -49,7 +50,6 @@ export default {
     name: String,
     displayName: String,
     avatar: String,
-    accessToken: String,
     email: String
   },
   components: {
@@ -57,22 +57,69 @@ export default {
   },
   data() {
     return {
-      theAccessToken: this.accessToken,
+      theAccessToken: '',
+      theTokenName:'',
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
-      accessTokenName: ''
+      accessTokenName: '',
+      csghubServer: inject('csghubServer'),
+
     };
   },
   mounted() {
-    // 如果 accessToken 为空，那么刷新获取 token
-    if (!this.theAccessToken.trim()) {
-      this.refreshAccessToken()
-    }
+    this.fetchGetToken()
   },
   methods: {
     copyToken() {
       copyToClipboard(this.theAccessToken)
+    },
+    generateUUID(){
+      let dt = new Date().getTime();
+      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+      return uuid;
+    },
+    async fetchGetToken() {
+      const options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/user/${this.name}/tokens`, options)
+      if (!res.ok) {
+        ElMessage({message: 'failed', type: "warning"})
+      } else {
+        res.json().then((body) => {
+          if(body.data && Array.isArray(body.data) && body.data.length > 0){
+            this.theAccessToken = body.data[0].token
+            this.theTokenName = body.data[0].token_name
+          }else{
+            // 如果 accessToken 为空，那么创建 token
+            const randomUUID = this.generateUUID();
+            const token ={name:randomUUID}
+            this.fetchCreateToken(token)
+          }
+        })
+      }
+    },
+
+    async fetchCreateToken(token) {
+      const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(token)
+      }
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.name}`, options)
+      if (!res.ok) {
+        ElMessage({message: 'failed', type: "warning"})
+      } else {
+        res.json().then((body) => {
+          this.theAccessToken = body.data.token
+        })
+      }
     },
 
     confirmRefreshAccessToken() {
@@ -92,26 +139,19 @@ export default {
     },
 
     async refreshAccessToken() {
-      const refreshTokenEndpoint = "/internal_api/access_token/refresh"
       const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
       }
-      const response = await csrfFetch(refreshTokenEndpoint, options)
-
-      if (!response.ok) {
-        response.json().then(err => {
-          ElMessage({ message: err.message, type: 'warning' })
-        })
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.theTokenName}`, options)
+      if (!res.ok) {
+        ElMessage({message: 'failed', type: "warning"})
       } else {
-        response.json().then((data) => {
-          // 仅在刷新操作的时候提醒，首次自动生成不提醒
-          if (this.theAccessToken) {
-            ElMessage({ message: data.message, type: "success" })
-          }
-          this.theAccessToken = data.token
+        res.json().then((body) => {
+          this.theAccessToken = body.data.token
         })
       }
+
     }
   }
 }
