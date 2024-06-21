@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       collection do
         get 'profile'
         get 'access-token'
+        get 'starship-access-token'
         get 'ssh-keys'
         get 'locale'
       end
