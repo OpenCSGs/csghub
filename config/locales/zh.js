@@ -20,6 +20,8 @@ import { components } from './zh_js/components';
 import { endpoints } from './zh_js/endpoints';
 import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
+import { starShip } from './zh_js/star_ship';
+import { finetune } from './zh_js/finetune';
 
 export default {
   all,

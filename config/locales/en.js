@@ -20,6 +20,9 @@ import { components } from './en_js/components';
 import { endpoints } from './en_js/endpoints';
 import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
+import { starShip } from './en_js/star_ship';
+import { finetune } from './en_js/finetune';
+
 
 export default {
   all,
