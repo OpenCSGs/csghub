@@ -40,6 +40,13 @@
             {{ $t('profile.menu.gitToken')}}
           </a>
 
+          <a href="/settings/starship-access-token"
+             class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+             :class="menuClass('/settings/starship-access-token')"
+          >
+            {{ $t('profile.menu.starshipAccessToken')}}
+          </a>
+
           <a v-if="hasEmail"
              href="/settings/ssh-keys"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
