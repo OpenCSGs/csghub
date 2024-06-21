@@ -81,9 +81,8 @@
       })
     } else {
       response.json().then((result) => {
-        // 仅在刷新操作的时候提醒，首次自动生成不提醒
-        ElMessage({ message: result.msg, type: 'success' })
         theTokenValue.value = result.data.token
+        ElMessage({ message: result.msg, type: 'success' })
       })
     }
   }
