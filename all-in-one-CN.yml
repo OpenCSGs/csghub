@@ -30,7 +30,7 @@ services:
       interval: 5s
 
   csghub_portal:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_portal:latest
+    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_portal:v0.6.0
     restart: always
     command: >
       bash -c "bundle exec rails assets:precompile
@@ -62,7 +62,7 @@ services:
       - postgres
 
   csghub_server:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_server:v0.6.0
     depends_on:
       - postgres
       - gitea

@@ -30,7 +30,7 @@ services:
       interval: 5s
 
   csghub_portal:
-    image: opencsg/csghub-portal:latest
+    image: opencsg/csghub-portal:v0.6.0
     restart: always
     command: >
       bash -c "bundle exec rails assets:precompile
@@ -62,7 +62,7 @@ services:
       - postgres
 
   csghub_server:
-    image: opencsg/csghub-server:latest
+    image: opencsg/csghub-server:v0.6.0
     depends_on:
       - postgres
       - gitea
@@ -166,4 +166,6 @@ networks:
 
 volumes:
   minio_data:
+    driver: local
+  pgdata:
     driver: local
