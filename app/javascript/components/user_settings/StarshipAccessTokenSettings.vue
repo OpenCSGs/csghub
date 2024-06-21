@@ -58,7 +58,6 @@
         >
           <el-input
             v-model="formData.accessTokenName"
-            placeholder="input the name"
             maxlength="20"
           />
         </el-form-item>

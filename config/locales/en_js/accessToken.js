@@ -8,7 +8,7 @@ export const accessToken = {
   cancelInfo: "Operation cancelled",
 
   starshipTitle: "Starship API Keys",
-  starshipDesc: "API key for accessing Starship",
+  starshipDesc: "Starship API Key is used for authorizing the accessing for Starship service",
   starshipRefresh: "Refresh",
   starshipAddToken: "Create API Key",
   starshipAccessTokenName: "Starship API Key Name",

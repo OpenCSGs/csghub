@@ -7,7 +7,7 @@ export const accessToken = {
   cancelInfo: "操作已取消",
 
   starshipTitle: "Starship API Keys",
-  starshipDesc: "API key for accessing Starship",
+  starshipDesc: "Starship API Key 用于授权您对 Starship 服务的访问",
   starshipRefresh: "刷新",
   starshipAddToken: "新建 API Key",
   starshipAccessTokenName: "Starship API Key Name",
