@@ -68,7 +68,7 @@ export default {
     };
   },
   mounted() {
-    this.fetchGetToken()
+    this.fetchUserTokens()
   },
   methods: {
     copyToken() {
@@ -83,7 +83,7 @@ export default {
       });
       return uuid;
     },
-    async fetchGetToken() {
+    async fetchUserTokens() {
       const options = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -100,13 +100,13 @@ export default {
             // 如果 accessToken 为空，那么创建 token
             const randomUUID = this.generateUUID();
             const token ={name:randomUUID}
-            this.fetchCreateToken(token)
+            this.createUserToken(token)
           }
         })
       }
     },
 
-    async fetchCreateToken(token) {
+    async createUserToken(token) {
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -145,7 +145,7 @@ export default {
       }
       const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.theTokenName}`, options)
       if (!res.ok) {
-        ElMessage({message: 'failed', type: "warning"})
+        ElMessage({message: res.msg, type: "warning"})
       } else {
         res.json().then((body) => {
           this.theAccessToken = body.data.token
