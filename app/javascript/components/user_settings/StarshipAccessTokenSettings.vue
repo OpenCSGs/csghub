@@ -4,10 +4,10 @@
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
-      :name="profileName"
+      :name="name"
       :email="email"
-      :displayName="profileDisplayName"
-      :avatar="profileAvatar"
+      :displayName="displayName"
+      :avatar="avatar"
     >
     </Menu>
     <div class="grow py-[24px]">
@@ -29,40 +29,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import Menu from './Menu.vue'
-  import { ElMessage } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch'
   import StarshipAccessTokenCard from './StarshipAccessTokenCard.vue'
 
-  export default {
-    props: {
-      name: String,
-      displayName: String,
-      avatar: String,
-      accessToken: String,
-      email: String
-    },
-    components: {
-      Menu,
-      StarshipAccessTokenCard
-    },
-    data() {
-      return {
-        theAccessToken: this.accessToken,
-        profileName: this.name,
-        profileDisplayName: this.displayName,
-        profileAvatar: this.avatar,
-        accessTokenName: ''
-      }
-    },
-    mounted() {
-      // 如果 accessToken 为空，那么刷新获取 token
-      if (!this.theAccessToken.trim()) {
-        this.refreshAccessToken()
-      }
-    },
-    methods: {
-    }
-  }
+  const props = defineProps({
+    name: String,
+    displayName: String,
+    avatar: String,
+    accessToken: String,
+    email: String
+  })
 </script>
