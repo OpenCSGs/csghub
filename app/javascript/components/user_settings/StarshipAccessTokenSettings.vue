@@ -23,8 +23,9 @@
           </p>
         </div>
         <StarshipAccessTokenCard
-          tokenName="a"
-          tokenValue="b"
+          v-for="token in userTokens"
+          :tokenName="token.token_name"
+          :tokenValue="token.token"
         />
       </div>
 
@@ -40,7 +41,7 @@
     <el-dialog
       v-model="centerDialogVisible"
       :title="$t('accessToken.starshipAddToken')"
-      width="30%"
+      width="35%"
       class="dialogWidth"
       style="border-radius: 0.5rem"
       left
@@ -78,25 +79,77 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import Menu from './Menu.vue'
   import { useI18n } from 'vue-i18n'
   import StarshipAccessTokenCard from './StarshipAccessTokenCard.vue'
+  import jwtFetch from '../../packs/jwtFetch'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     name: String,
     displayName: String,
     avatar: String,
-    accessToken: String,
     email: String
   })
 
   const { t } = useI18n()
+  const csghubServer = inject('csghubServer')
 
+  const accessTokenFormRef = ref(null)
   const centerDialogVisible = ref(false)
+  const userTokens = ref([])
 
   const formData = ref({})
   const formRules = {
-    accessTokenName: [{ required: true, message: t('accessToken.starshipNameMissing') }]
+    accessTokenName: [
+      { required: true, message: t('accessToken.starshipNameMissing') }
+    ]
+  }
+
+  onMounted(() => {
+    fetchUserStarshipTokens()
+  })
+
+  const fetchUserStarshipTokens = async () => {
+    const userStarshipTokensEndpoint = `${csghubServer}/api/v1/user/${props.name}/tokens?app=starship`
+    const response = await jwtFetch(userStarshipTokensEndpoint, {
+      method: 'GET'
+    })
+    if (response.ok) {
+      response.json().then((result) => (userTokens.value = result.data))
+    } else {
+      ElMessage({
+        message: 'Failed to load user Starship tokens',
+        type: 'warning'
+      })
+    }
+  }
+
+  const submitAccessToken = async() => {
+    if (!accessTokenFormRef) return
+    accessTokenFormRef.value.validate(async(valid) => {
+      if (valid) {
+        const userTokenCreateEndpoint = `${csghubServer}/api/v1/token/starship/${props.name}`
+        const options = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.accessTokenName
+          })
+        }
+        const response = await jwtFetch(userTokenCreateEndpoint, options)
+        if (response.ok) {
+          fetchUserStarshipTokens()
+        } else {
+          ElMessage({
+            message: 'Failed to create user Starship Token',
+            type: 'warning'
+          })
+        }
+      } else {
+        console.log('error submit!')
+      }
+    })
   }
 </script>
