@@ -43,17 +43,6 @@
   })
 
   const detailLink = computed(() => {
-    switch (props.repoType) {
-      case 'model':
-        return `/models/${props.repo.path}`
-      case 'dataset':
-        return `/datasets/${props.repo.path}`
-      case 'space':
-        return `/spaces/${props.repo.path}`
-      case 'code':
-        return `/codes/${props.repo.path}`
-      default:
-        return ''
-    }
+    return `/finetune/${props.repo.model_id}/${props.repo.deploy_name}/${props.repo.deploy_id}`
   })
 </script>
