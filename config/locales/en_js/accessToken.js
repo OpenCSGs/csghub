@@ -5,5 +5,9 @@ export const accessToken = {
   refreshWarning:
     "After refreshing, the existing Access Token will become invalid. Are you sure you want to continue?",
   confirm: "Continue",
-  cancelInfo: "Operation cancelled"
+  cancelInfo: "Operation cancelled",
+
+  starshipTitle: "Starship API Keys",
+  starshipDesc: "API key for accessing Starship",
+  starshipRefresh: "Refresh"
 }

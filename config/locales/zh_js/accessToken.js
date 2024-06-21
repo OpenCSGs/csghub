@@ -5,4 +5,8 @@ export const accessToken = {
   refreshWarning: "刷新之后现有的 Access Token 将会失效，确认继续吗?",
   confirm: "继续刷新",
   cancelInfo: "操作已取消",
+
+  starshipTitle: "Starship API Keys",
+  starshipDesc: "API key for accessing Starship",
+  starshipRefresh: "刷新"
 }
