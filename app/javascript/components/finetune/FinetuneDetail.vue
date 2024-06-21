@@ -22,7 +22,7 @@
       style="border-radius: 8px !important"
       class="absolute top-0 right-0 z-10 cursor-pointer text-[#fff]"
       @click="toNotebookPage"
-      >启动 Notebook</el-button
+      >{{ $t('finetune.detail.notebook') }}</el-button
     >
     <el-tabs
       v-model="activeName"
@@ -30,7 +30,7 @@
       @tab-click="handleClick"
     >
       <el-tab-pane
-        label="概览"
+        :label="$t('finetune.detail.tab1')"
         name="page"
       >
         <div v-if="finetune.endpoint" class="pt-[24px]">
@@ -44,7 +44,7 @@
           </iframe>
         </div>
       </el-tab-pane>
-      <el-tab-pane
+      <!-- <el-tab-pane
         label="日志"
         name="log"
       >
@@ -74,9 +74,9 @@
             >
           </div>
         </div>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane
-        label="设置"
+      :label="$t('finetune.detail.tab2')"
         name="setting"
       >
         <FinetuneSettings
@@ -88,6 +88,7 @@
           :userName="'test'"
           :cloudResource="finetune.hardware"
           :framework="finetune.runtime_framework"
+          :clusterId="finetune.cluster_id"
         />
       </el-tab-pane>
     </el-tabs>

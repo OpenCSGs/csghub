@@ -7,36 +7,36 @@
         height="32"
       />
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">新建微调实例</h3>
+    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('finetune.new.title') }}</h3>
     <p class="text-[#606266] text-base font-medium md:text-center">
-      在专属算力实例上部署您的模型
+      {{ $t('finetune.new.desc') }}
     </p>
     <div class="mt-9 w-full">
       <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">实例名称</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('finetune.new.name') }}</p>
           <el-input
             v-model="finetuneName"
-            placeholder="请输入实例名称"
+            :placeholder="$t('finetune.new.nameTip')"
             input-style="width: 100%"
           />
         </div>
         <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">模型ID</p>
+          <p class="text-[#303133] text-sm mb-2">{{ $t('finetune.new.modelId') }}</p>
           <el-autocomplete
             clearable
             v-model="modelId"
             :fetch-suggestions="fetchModels"
-            placeholder="请输入模型ID"
+            :placeholder="$t('finetune.new.modelIdTip')"
           />
         </div>
       </div>
 
       <div class="mb-9 text-sm w-full">
-        <p class="mb-2 text-[#303133]">区域</p>
+        <p class="mb-2 text-[#303133]">{{ $t('finetune.new.cluster') }}</p>
         <el-select
           v-model="finetuneCluster"
-          placeholder="请选择区域"
+          :placeholder="$t('finetune.new.clusterTip')"
           size="large"
           style="width: 100%"
         >
@@ -48,16 +48,16 @@
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
-          建议选择最靠近您客户的地域，可降低访问时延；
+          {{ $t('finetune.new.clusterDec1') }}
         </p>
-        <p class="text-[#475467] font-light">创建成功后不支持切换地域。</p>
+        <p class="text-[#475467] font-light">{{ $t('finetune.new.clusterDec2') }}</p>
       </div>
 
       <div class="mb-9 text-sm w-full">
-        <p class="mb-2 text-[#303133]">资源配置</p>
+        <p class="mb-2 text-[#303133]">{{ $t('finetune.new.resource') }}</p>
         <el-select
           v-model="finetuneResource"
-          placeholder="请选择资源配置"
+          :placeholder="$t('finetune.new.resourceTip')"
           size="large"
           style="width: 100%"
         >
@@ -69,10 +69,10 @@
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
-          您可以随时在空间设置中切换到不同的空间云资源
+          {{ $t('finetune.new.resourceDec1') }}
         </p>
         <p class="text-[#475467] font-light">
-          切换到付费资源后，将根据使用时长想您收取费用
+          {{ $t('finetune.new.resourceDec2') }}
         </p>
       </div>
 
@@ -99,7 +99,7 @@
           :disabled="!canCreate || hasCreateFinetune"
           @click="createFinetune"
         >
-          创建实例
+        {{ $t('endpoints.new.createFinetune') }}
         </button>
       </div>
     </div>

@@ -5,20 +5,22 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          区域
+          {{ $t('finetune.detail.settings.region') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          建议选择靠近您的地域，可降低访问时延；
+          {{ $t('finetune.detail.settings.regionTip1') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          创建成功后不支持切换地域。
+          {{ $t('finetune.detail.settings.regionTip2') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">实例区域</p>
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('finetune.detail.settings.regionTip3') }}
+        </p>
         <el-select
           v-model="currentCid"
-          placeholder="选择"
+          :placeholder="$t('all.select')"
           size="large"
           class="!w-[512px] sm:!w-full"
           disabled
@@ -36,20 +38,22 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          空间云资源
+          {{ $t('finetune.detail.settings.resources') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          可切换到不同的微调实例云资源。
+          {{ $t('finetune.detail.settings.resourcesTip1') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          切换到付费资源后，将根据使用时长向您收取费用。
+          {{ $t('finetune.detail.settings.resourcesTip2') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">当前云资源</p>
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('finetune.detail.settings.resourcesTip3') }}
+        </p>
         <el-select
           v-model="currentResource"
-          placeholder="选择"
+          :placeholder="$t('all.select')"
           size="large"
           class="!w-[512px] sm:!w-full"
           disabled
@@ -67,10 +71,10 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          运行状态
+          {{ $t('finetune.detail.settings.status') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          切换运行或暂停微调实例
+          {{ $t('finetune.detail.settings.statusTip1') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -84,7 +88,11 @@
             "
             @change="changeStatus"
           />
-          <span>{{ statusVal ? '运行中' : '已停止' }}</span>
+          <span>{{
+            statusVal
+              ? $t('finetune.detail.settings.statusVal1')
+              : $t('finetune.detail.settings.statusVal2')
+          }}</span>
         </div>
       </div>
     </div>
@@ -92,10 +100,10 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          英文名称
+          {{ $t('finetune.detail.settings.enName') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          应用于应用空间路径，创建后不可更改
+          {{ $t('finetune.detail.settings.enNameTip1') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -125,10 +133,10 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          中文名称
+          {{ $t('finetune.detail.settings.cnName') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          将会显示在实例列表页面中，选填
+          {{ $t('finetune.detail.settings.cnNameTip1') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -146,14 +154,14 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          删除
+          {{ $t('finetune.detail.settings.delete') }}
         </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          此操作无法撤销.这将永久删除
+          {{ $t('finetune.detail.settings.deleteTip1') }}
           <span class="text-black font-medium break-words">{{
             props.modelId
           }}</span>
-          模型微调。
+          {{ $t('finetune.detail.settings.deleteTip2') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('all.enterPls') }}
@@ -164,7 +172,9 @@
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">微调实例名称</p>
+        <p class="text-[#344054] text-[14px]">
+          {{ $t('finetune.detail.settings.finetuneName') }}
+        </p>
         <el-input
           v-model="delDesc"
           clearable
@@ -193,7 +203,7 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, inject, onMounted } from 'vue'
+  import { ref, computed, inject, onMounted, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import jwtFetch from '../../packs/jwtFetch'
@@ -209,10 +219,11 @@
     modelId: String,
     userName: String,
     cloudResource: String,
-    framework: String
+    framework: String,
+    clusterId: String
   })
 
-  const statusVal = ref(props.appStatus=='Running')
+  const statusVal = ref(props.appStatus == 'Running')
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
   const delDesc = ref('')
@@ -227,6 +238,24 @@
   const frameworks = ref([])
   const repoDetailStore = useRepoDetailStore()
 
+  watch(
+    () => props.appStatus,
+    (newVal, oldVal) => {
+      statusVal.value = newVal == 'Running'
+    }
+  )
+  watch(
+    () => props.cloudResource,
+    (newVal, oldVal) => {
+      currentResource.value = newVal
+    }
+  )
+  watch(
+    () => props.clusterId,
+    (newVal, oldVal) => {
+      currentCid.value = newVal
+    }
+  )
   const initialized = computed(() => {
     return [
       'Building',
@@ -357,7 +386,7 @@
         const currentFramework = body.data.find((framework) => {
           return framework.frame_name === props.framework
         })
-        currentFrameworkId.value = currentFramework.id
+        currentFrameworkId.value = currentFramework?.id || ''
       })
     }
   }
