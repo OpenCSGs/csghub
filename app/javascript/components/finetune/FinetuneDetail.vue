@@ -4,12 +4,11 @@
   >
     <div class="mx-auto max-w-[1280px]">
       <repo-header
-        :private="finetune.private"
         :name="finetune.deploy_name"
-        :path="finetune.model_id"
+        :path="`${namespace}/${name}`"
         :appStatus="appStatus"
         :space-resource="finetune.hardware"
-        :space-name="finetuneResource"
+        :resource-name="finetuneResource"
         repo-type="finetune"
         :repoId="finetune.repository_id"
       />
@@ -96,7 +95,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, inject, computed, onBeforeMount} from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
@@ -106,7 +105,6 @@
   import jwtFetch from '../../packs/jwtFetch.js'
 
   const props = defineProps({
-    settingsVisibility: Boolean,
     namespace: String,
     name: String,
     userName: String,
@@ -269,7 +267,7 @@
     )
   }
 
-  onMounted(() => {
+  onBeforeMount(() => {
     getDetail()
   })
 </script>
