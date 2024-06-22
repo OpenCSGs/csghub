@@ -43,37 +43,6 @@
           </iframe>
         </div>
       </el-tab-pane>
-      <!-- <el-tab-pane
-        label="日志"
-        name="log"
-      >
-        <div class="flex justify-between items-center mt-[24px] mb-[31px]">
-          <div>
-            <el-switch
-              v-model="startEvent"
-              class="mr-2"
-              style="
-                --el-switch-on-color: #3250bd;
-                --el-switch-off-color: #f2f4f7;
-              "
-            />
-            <span class="text-[#344054]">轮询5秒刷新</span>
-          </div>
-          <div>
-            <el-button
-              type="primary"
-              class="mr-[22px]"
-              text
-              >下载日志</el-button
-            >
-            <el-button
-              type="primary"
-              text
-              >刷新</el-button
-            >
-          </div>
-        </div>
-      </el-tab-pane> -->
       <el-tab-pane
       :label="$t('finetune.detail.tab2')"
         name="setting"

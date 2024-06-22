@@ -93,16 +93,6 @@
       <span class="max-w-full break-words">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
-      <div
-        class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
-        @click="clickLike"
-      >
-        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
-        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">
-          {{ likesNumberDisplayName }}
-        </div>
-      </div>
       <AppStatus
         v-if="appStatus"
         :appStatus="appStatus"
