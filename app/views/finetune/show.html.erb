@@ -1,11 +1,11 @@
 <div class="bg-white">
   <finetune-detail
     :owner-url="'<%= @owner_url %>'"
-    user-name="<%= params[:namespace] %>"
-    namespace = "<%= params[:namespace] %>"
-    name = "<%= params[:name] %>"
-    finetune-name = "<%= params[:finetune_name] %>"
-    finetune-id = "<%= params[:finetune_id] %>"
+    user-name="<%= current_user.name %>"
+    namespace = "<%= @namespace %>"
+    name = "<%= @name %>"
+    finetune-name = "<%= @finetune_name %>"
+    finetune-id = "<%= @finetune_id %>"
   >
   </finetune-detail>
 </div>
