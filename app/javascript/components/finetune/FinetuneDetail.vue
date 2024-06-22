@@ -53,7 +53,7 @@
           :finetuneName="finetune.deploy_name"
           :appStatus="finetune.status"
           :modelId="finetune.model_id"
-          :userName="'test'"
+          :userName="userName"
           :cloudResource="finetune.hardware"
           :framework="finetune.runtime_framework"
           :clusterId="finetune.cluster_id"
@@ -81,9 +81,6 @@
     finetuneId: Number
   })
 
-  const searchParams = new URLSearchParams(window.location.search)
-  const modelId = ref(searchParams.get('model_id') || '')
-
   const finetune = ref({})
 
   const activeName = ref('page')
@@ -109,7 +106,7 @@
     }
     try {
       const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/${modelId.value}/run/${props.finetuneId}?current_user=${props.userName}`,
+        `${csghubServer}/api/v1/models/${props.namespace}/${props.name}/run/${props.finetuneId}`,
         options
       )
       if (res.ok) {
