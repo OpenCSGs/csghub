@@ -213,14 +213,7 @@
         class="flex-shrink-0"
       />
       <span class="md:ml-0 text-[#344054] font-normal hover:text-[#344054]">
-        {{ path.split('/')[0] }}
-      </span>
-      <div>/</div>
-      <span
-        class="text-[#344054] font-normal max-w-full break-words hover:text-[#344054]"
-        href="#"
-      >
-        {{ repoType === 'endpoint' ? name : path.split('/')[1] }}
+        {{ path }}
       </span>
       <SvgIcon
         name="finetune_cpu_icon"
@@ -228,7 +221,7 @@
         height="16"
         class="flex-shrink-0 ml-6 md:ml-0"
       />
-      <span class="text-[#344054] font-normal">{{ spaceName }}</span>
+      <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{ desc }}</div>
@@ -278,7 +271,9 @@
       type: Number,
       default: 0
     },
-    hasLike: Boolean
+    hasLike: Boolean,
+    resourceName: String
+
   });
 
   const userLiked = ref(props.hasLike)
