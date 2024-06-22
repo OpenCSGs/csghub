@@ -225,18 +225,6 @@
           :maxReplica="repoDetail.max_replica"
           :minReplica="repoDetail.min_replica"
         />
-        <FinetuneSettings
-          v-if="repoType === 'finetune'"
-          :endpointName="endpointName"
-          :endpointId="endpointId"
-          :appStatus="appStatus"
-          :modelId="modelId"
-          :userName="userName"
-          :cloudResource="repoDetail.hardware"
-          :framework="repoDetail.runtime_framework"
-          :maxReplica="repoDetail.max_replica"
-          :minReplica="repoDetail.min_replica"
-        />
       </template>
     </tab-container>
   </div>
@@ -271,7 +259,6 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
-  import FinetuneSettings from '../finetune/FinetuneSettings.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({
