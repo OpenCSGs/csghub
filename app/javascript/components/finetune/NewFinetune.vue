@@ -95,11 +95,11 @@
 
       <div class="flex justify-end">
         <button
-          class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
+          class="bg-[#3250BD] px-[14px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
           :disabled="!canCreate || hasCreateFinetune"
           @click="createFinetune"
         >
-        {{ $t('endpoints.new.createFinetune') }}
+        {{ $t('finetune.new.createFinetune') }}
         </button>
       </div>
     </div>

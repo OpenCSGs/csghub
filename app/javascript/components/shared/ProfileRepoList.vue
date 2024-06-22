@@ -92,7 +92,7 @@
     <div>
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <SvgIcon name="finetune" width="18" height="18" />
-        <span>{{ $t("finetunes.title") }}</span>
+        <span>{{ $t("finetune.title") }}</span>
       </h3>
       <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
         <FinetuneItem v-for="finetune in finetunes.data" :repo="finetune" repo-type="finetune" />
