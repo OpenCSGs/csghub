@@ -16,7 +16,7 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0 relative">
     <el-button
-      v-show="activeName == 'page' && finetune.proxy_endpoint"
+      v-show="activeName == 'page' && finetune.endpoint"
       color="#3250BD"
       style="border-radius: 8px !important"
       class="absolute top-0 right-0 z-10 cursor-pointer text-[#fff]"
@@ -34,7 +34,7 @@
       >
         <div v-if="finetune.endpoint" class="pt-[24px]">
           <iframe
-            :src="`https://${finetune.endpoint}?jwt=${jwtToken}`"
+            :src="`https://${finetune.proxy_endpoint}?jwt=${jwtToken}`"
             width="100%"
             height="700"
             frameborder="0"
@@ -96,7 +96,7 @@
   const csghubServer = inject('csghubServer')
 
   function toNotebookPage() {
-    window.open(`https://${finetune.value.proxy_endpoint}?jwt=${jwtToken}`)
+    window.open(`https://${finetune.value.endpoint}?jwt=${jwtToken}`)
   }
 
   async function getDetail() {
