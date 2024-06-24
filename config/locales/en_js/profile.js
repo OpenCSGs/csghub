@@ -8,6 +8,7 @@ export const profile = {
     profile: "Profile",
     accountInformation: "Account Information",
     accessToken: "Access Token",
+    starshipAccessToken: "Starship API Key",
     gitToken: "Access Token",
     sshKey: "SSH Keys",
     billing: "Billing",
