@@ -34,11 +34,6 @@ Rails.application.routes.draw do
       end
     end
     resources :comments, only: [:create, :destroy, :index]
-    resources :access_token, only: [] do
-      collection do
-        post 'refresh', to: 'access-tokens/refresh'
-      end
-    end
     resources :users, only: [:index, :update] do
       collection do
         put 'jwt_token', to: 'users/jwt_token'
