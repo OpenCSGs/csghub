@@ -4,7 +4,7 @@ class InternalApi::CodesController < InternalApi::ApplicationController
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
-  include Api::RepoValidation
+  # include Api::RepoValidation
 
   def index
     res_body = csghub_api.get_codes(current_user&.name,

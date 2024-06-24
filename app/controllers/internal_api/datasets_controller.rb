@@ -4,7 +4,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
-  include Api::RepoValidation
+  # include Api::RepoValidation
 
   def index
     res_body = csghub_api.get_datasets(current_user&.name,
