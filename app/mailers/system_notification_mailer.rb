@@ -5,7 +5,7 @@ class SystemNotificationMailer < ApplicationMailer
 
   def group_mail
     @mail_template = params[:mail_template]
-    mail(to: params[:email], subject: "CSGHub")
+    mail(to: params[:email], subject: "OpenCSG 开放传神")
   end
 
   def new_partner_alert
