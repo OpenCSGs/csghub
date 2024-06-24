@@ -22,8 +22,8 @@ module Starhub
     def update_endpoint(endpoint, options = {})
       options[:deploy_name] = endpoint.name
       options[:cluster_id] = endpoint.cluster_id
-      options[:hardware] = endpoint.cloud_resource.to_i
-      options[:resource_id] = endpoint.cloud_resource
+      options[:hardware] = endpoint.cloud_resource
+      options[:resource_id] = endpoint.cloud_resource.to_i
       options[:min_replica] = endpoint.min_replica
       options[:max_replica] = endpoint.max_replica
       options[:runtime_framework_id] = endpoint.framework_id
