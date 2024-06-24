@@ -13,7 +13,7 @@ You can try the free SaaS version of CSGHub through the OpenCSG Community offici
 </kdb>
 ### UPDATES
 - [2024.02.15] v0.2 Plan: Built-in code Repo; automatic conversion for datasets, complete dataset preview function. *
-- [2024.01.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as blew.
+- [2024.01.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as below.
 
 ### CORE FUNCTIONS
 In the ear of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. CSGHub is an open-source project designed to address these issues.
@@ -37,7 +37,7 @@ Our R&D team has been focusing on AI + DevOps for a long time, and we hope to so
 
 ### DEMO VIDEO
 In order to help users to quickly understand the features and usage of CSGHub, we have recorded a demo video. You can watch this video to get a quick understanding of the main features and operation procedures of this program.
-- CSGHub Demo video is as blew，you can also check it at [YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) or [Bilibili](https://www.bilibili.com/video/BV1wk4y1X7G7/)
+- CSGHub Demo video is as below，you can also check it at [YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) or [Bilibili](https://www.bilibili.com/video/BV1wk4y1X7G7/)
 <video width="658" height="432" src="https://github-production-user-asset-6210df.s3.amazonaws.com/3232817/296556812-205d07f2-de9d-4a7f-b3f5-83514a71453e.mp4"></video>
 
 ### ROADMAP
@@ -76,7 +76,7 @@ curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o
 docker compose -f all-in-one.yml up -d
 ```
 
-if you are in China or you meet dockerhub network connection issue, you can try our aliyun docker registry alternative version with blew:
+if you are in China or you meet dockerhub network connection issue, you can try our aliyun docker registry alternative version with below:
 ```shell
 # please replace [IP Address] with your own LAN/WLAN ip address
 export SERVER_DOMAIN=[IP Address]
