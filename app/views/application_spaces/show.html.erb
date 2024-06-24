@@ -1,7 +1,7 @@
 <div class="bg-white">
   <application-space-detail
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_application_space.id %>"
+    local-repo-id="<%= @local_application_space&.id %>"
     :application-space="<%= @application_space %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"

@@ -4,7 +4,7 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
-  # include Api::RepoValidation
+  include Api::RepoValidation
 
   def index
     res_body = csghub_api.get_models(current_user&.name,

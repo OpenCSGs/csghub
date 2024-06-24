@@ -2,7 +2,7 @@
   <dataset-detail
     :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_dataset.id %>"
+    local-repo-id="<%= @local_dataset&.id %>"
     :dataset="<%= @dataset %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"

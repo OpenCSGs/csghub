@@ -1,7 +1,7 @@
 <div class="bg-white">
   <code-detail
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_code.id %>"
+    local-repo-id="<%= @local_code&.id %>"
     :code="<%= @code %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"
