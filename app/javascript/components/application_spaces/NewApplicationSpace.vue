@@ -187,7 +187,7 @@
             v-for="item in spaceResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">

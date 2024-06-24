@@ -42,7 +42,7 @@
             v-for="item in spaceResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
           />
         </el-select>
       </div>
