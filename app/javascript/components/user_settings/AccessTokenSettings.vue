@@ -84,23 +84,20 @@ export default {
       return uuid;
     },
     async fetchUserTokens() {
-      const options = {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      }
-      const res = await jwtFetch(`${this.csghubServer}/api/v1/user/${this.name}/tokens`, options)
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/user/${this.name}/tokens?app=git`)
       if (!res.ok) {
-        ElMessage({message: 'failed', type: "warning"})
+        res.json().then(error => {
+          ElMessage({message: error.msg, type: "warning"})
+        })
       } else {
-        res.json().then((body) => {
-          if(body.data && Array.isArray(body.data) && body.data.length > 0){
+        res.json().then(body => {
+          if (body.data) {
             this.theAccessToken = body.data[0].token
             this.theTokenName = body.data[0].token_name
-          }else{
+          } else {
             // 如果 accessToken 为空，那么创建 token
-            const randomUUID = this.generateUUID();
-            const token ={name:randomUUID}
-            this.createUserToken(token)
+            const randomUUID = this.generateUUID()
+            this.createUserToken(randomUUID)
           }
         })
       }
@@ -110,11 +107,15 @@ export default {
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(token)
+        body: JSON.stringify({
+          name: token
+        })
       }
       const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.name}`, options)
       if (!res.ok) {
-        ElMessage({message: 'failed', type: "warning"})
+        res.json().then(error => {
+          ElMessage({message: error.msg, type: "warning"})
+        })
       } else {
         res.json().then((body) => {
           this.theAccessToken = body.data.token
@@ -145,13 +146,14 @@ export default {
       }
       const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.theTokenName}`, options)
       if (!res.ok) {
-        ElMessage({message: res.msg, type: "warning"})
+        res.json().then(error => {
+          ElMessage({message: error.msg, type: "warning"})
+        })
       } else {
         res.json().then((body) => {
           this.theAccessToken = body.data.token
         })
       }
-
     }
   }
 }
