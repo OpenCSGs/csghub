@@ -32,8 +32,9 @@
         :label="$t('finetune.detail.tab1')"
         name="page"
       >
-        <div v-if="finetune.endpoint" class="pt-[24px]">
+        <div class="pt-[24px]">
           <iframe
+            v-if="finetune.endpoint"
             :src="`https://${finetune.proxy_endpoint}?jwt=${jwtToken}`"
             width="100%"
             height="700"
@@ -41,10 +42,30 @@
             allowfullscreen
           >
           </iframe>
+          <div
+            v-else
+            class="flex items-center justify-start border border-[#D0D5DD] p-[16px] rounded-xl shadow-sm"
+          >
+            <div class="border border-[#D0D5DD] p-[10px] rounded-lg">
+              <SvgIcon
+                name="finetune_tip"
+                width="20"
+                height="20"
+              />
+            </div>
+            <div class="ml-[16px]">
+              <p class="text-[#344054] text-sm font-medium mb-[4px]">
+                微调实例尚未处于运行状态
+              </p>
+              <p class="text-[#475467] text-sm font-light">
+                请等待部署成功或前往设置页面启用运行状态后，再尝试访问微调界面。
+              </p>
+            </div>
+          </div>
         </div>
       </el-tab-pane>
       <el-tab-pane
-      :label="$t('finetune.detail.tab2')"
+        :label="$t('finetune.detail.tab2')"
         name="setting"
       >
         <FinetuneSettings
@@ -64,7 +85,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, computed, onBeforeMount} from 'vue'
+  import { ref, inject, computed, onBeforeMount } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
