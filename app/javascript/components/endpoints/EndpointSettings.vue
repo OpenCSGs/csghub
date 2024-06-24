@@ -70,7 +70,7 @@
             v-for="item in cloudResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
           />
         </el-select>
       </div>
