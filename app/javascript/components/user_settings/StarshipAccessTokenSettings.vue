@@ -24,6 +24,7 @@
         </div>
         <StarshipAccessTokenCard
           v-for="token in userTokens"
+          :key="token.token_name"
           :tokenName="token.token_name"
           :tokenValue="token.token"
         />
