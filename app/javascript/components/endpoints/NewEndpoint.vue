@@ -244,7 +244,7 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        endpointResource.value = body.data[0]?.resources || "";
+        endpointResource.value = body.data[0]?.id || "";
         endpointResources.value = body.data;
       });
     }

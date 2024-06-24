@@ -290,10 +290,12 @@
     minReplica: Number
   })
 
+  const initResource = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
+
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
   const delDesc = ref('')
-  const currentResource = ref(props.cloudResource)
+  const currentResource = ref(initResource)
   const cloudResources = ref([])
   const currentFrameworkId = ref('')
 
