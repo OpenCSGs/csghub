@@ -97,11 +97,12 @@
   git clone https://${currentUser.value}:${accessToken.value}@${props.httpCloneUrl.replace( "https://", "")}
   `)
 
-  watch(accessToken, async (newAccessToken, oldAccessToken) => {
-    httpsCloneCodeWithToken.value = `
-    git lfs install
-    git clone https://${currentUser.value}:${newAccessToken}@${props.httpCloneUrl.replace( "https://", "")}
-    `
+  watch(accessToken, async (newAccessToken) => {
+    httpsCloneCodeWithToken.value =
+  `
+  git lfs install
+  git clone https://${currentUser.value}:${newAccessToken}@${props.httpCloneUrl.replace( "https://", "")}
+`
   })
 
   const httpsCloneCodeMarkdown = computed(() => {
