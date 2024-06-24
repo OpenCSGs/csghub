@@ -65,7 +65,7 @@
             v-for="item in finetuneResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
@@ -151,7 +151,7 @@
       ElMessage({ message: t('all.fetchError'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        finetuneResource.value = body.data[0]?.resources || ''
+        finetuneResource.value = body.data[0]?.id || ''
         finetuneResources.value = body.data
       })
     }
@@ -227,7 +227,7 @@
       body: JSON.stringify({
         cluster_id: finetuneCluster.value,
         deploy_name: finetuneName.value,
-        hardware: finetuneResource.value,
+        resource_id: finetuneResource.value,
         runtime_framework_id: finetuneFramework.value,
         secure_level: 2
       })
