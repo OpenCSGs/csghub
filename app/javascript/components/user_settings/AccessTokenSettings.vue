@@ -44,6 +44,7 @@ import { inject } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import jwtFetch from '../../packs/jwtFetch'
 import { copyToClipboard } from "../../packs/clipboard"
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   props: {
@@ -74,15 +75,7 @@ export default {
     copyToken() {
       copyToClipboard(this.theAccessToken)
     },
-    generateUUID(){
-      let dt = new Date().getTime();
-      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-      });
-      return uuid;
-    },
+
     async fetchUserTokens() {
       const res = await jwtFetch(`${this.csghubServer}/api/v1/user/${this.name}/tokens?app=git`)
       if (!res.ok) {
@@ -95,8 +88,7 @@ export default {
             this.theAccessToken = body.data[0].token
             this.theTokenName = body.data[0].token_name
           } else {
-            // 如果 accessToken 为空，那么创建 token
-            const randomUUID = this.generateUUID()
+            const randomUUID = uuidv4()
             this.createUserToken(randomUUID)
           }
         })
