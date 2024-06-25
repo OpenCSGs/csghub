@@ -7,25 +7,11 @@
       v-if="repoType === 'dataset'"
       class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
+      <SvgIcon
+        name="repoheader_dataset"
         width="16"
         height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-      >
-        <path
-          opacity="0.12"
-          d="M8 14.6668C11.3137 14.6668 14 13.7714 14 12.6668V3.3335C14 3.3335 13.6667 5.3335 8 5.3335C2.33333 5.3335 2 3.3335 2 3.3335V12.6668C2 13.7714 4.68629 14.6668 8 14.6668Z"
-          fill="#A8ABB2"
-        />
-        <path
-          d="M14 8.00016C14 9.10473 11.3137 10.0002 8 10.0002C4.68629 10.0002 2 9.10473 2 8.00016M14 3.3335C14 4.43807 11.3137 5.3335 8 5.3335C4.68629 5.3335 2 4.43807 2 3.3335M14 3.3335C14 2.22893 11.3137 1.3335 8 1.3335C4.68629 1.3335 2 2.22893 2 3.3335M14 3.3335V12.6668C14 13.7714 11.3137 14.6668 8 14.6668C4.68629 14.6668 2 13.7714 2 12.6668V3.3335"
-          stroke="#A8ABB2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      />
       <span class="text-[#A8ABB2] text-[18px] font-semibold ml-1 mr-2"
         >Dataset:</span
       >
@@ -138,20 +124,11 @@
         class="cursor-pointer"
         @click="showSpaceLogs"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
+        <SvgIcon
+          name="repoheader_search_file"
           width="16"
           height="16"
-          viewBox="0 0 12 12"
-          fill="none"
-        >
-          <path
-            d="M7 5.5H4M5 7.5H4M8 3.5H4M10 5.25V3.4C10 2.55992 10 2.13988 9.83651 1.81901C9.6927 1.53677 9.46323 1.3073 9.18099 1.16349C8.86012 1 8.44008 1 7.6 1H4.4C3.55992 1 3.13988 1 2.81901 1.16349C2.53677 1.3073 2.3073 1.53677 2.16349 1.81901C2 2.13988 2 2.55992 2 3.4V8.6C2 9.44008 2 9.86012 2.16349 10.181C2.3073 10.4632 2.53677 10.6927 2.81901 10.8365C3.13988 11 3.55992 11 4.4 11H5.75M11 11L10.25 10.25M10.75 9C10.75 9.9665 9.9665 10.75 9 10.75C8.0335 10.75 7.25 9.9665 7.25 9C7.25 8.0335 8.0335 7.25 9 7.25C9.9665 7.25 10.75 8.0335 10.75 9Z"
-            stroke="#475467"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        />
       </p>
     </div>
 
@@ -176,20 +153,11 @@
         class="cursor-pointer"
         @click="copyName"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
+        <SvgIcon
+          name="repoheader_comm"
           width="16"
           height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-        >
-          <path
-            d="M10.7779 5.3335V5.3335C11.9162 5.3335 12.4854 5.3335 12.9395 5.50441C13.6582 5.77492 14.2254 6.34212 14.4959 7.06083C14.6668 7.51495 14.6668 8.08409 14.6668 9.22239V10.4002C14.6668 11.8936 14.6668 12.6404 14.3762 13.2108C14.1205 13.7126 13.7126 14.1205 13.2108 14.3762C12.6404 14.6668 11.8936 14.6668 10.4002 14.6668H9.22239C8.08409 14.6668 7.51495 14.6668 7.06083 14.4959C6.34212 14.2254 5.77492 13.6582 5.50441 12.9395C5.3335 12.4854 5.3335 11.9162 5.3335 10.7779V10.7779M5.60016 10.6668H6.40016C7.89364 10.6668 8.64037 10.6668 9.2108 10.3762C9.71257 10.1205 10.1205 9.71257 10.3762 9.2108C10.6668 8.64037 10.6668 7.89364 10.6668 6.40016V5.60016C10.6668 4.10669 10.6668 3.35995 10.3762 2.78952C10.1205 2.28776 9.71257 1.87981 9.2108 1.62415C8.64037 1.3335 7.89364 1.3335 6.40016 1.3335H5.60016C4.10669 1.3335 3.35995 1.3335 2.78952 1.62415C2.28776 1.87981 1.87981 2.28776 1.62415 2.78952C1.3335 3.35995 1.3335 4.10669 1.3335 5.60016V6.40016C1.3335 7.89364 1.3335 8.64037 1.62415 9.2108C1.87981 9.71257 2.28776 10.1205 2.78952 10.3762C3.35995 10.6668 4.10669 10.6668 5.60016 10.6668Z"
-            stroke="#606266"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        />
       </div>
     </div>
     <div
@@ -241,12 +209,12 @@
 
   const repoDetailStore = useRepoDetailStore()
 
-  const emit = defineEmits(['toggleSpaceLogsDrawer']);
+  const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
   const props = defineProps({
     avatar: String,
     name: String,
-    nickname: {type: String, default: ''},
+    nickname: { type: String, default: '' },
     desc: String,
     path: String,
     license: String,
@@ -263,8 +231,7 @@
     },
     hasLike: Boolean,
     resourceName: String
-
-  });
+  })
 
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
