@@ -52,10 +52,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
-            <div
-              class="my-[4px]"
-              v-if="userName && userToken"
-            >
+            <div class="my-[4px]" v-if="currentUser">
               <el-checkbox
                 v-model="useToken"
                 :label="$t('application_spaces.gradioGuide.useToken')"
@@ -98,10 +95,14 @@
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue'
-  import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
-  import DeployDropdown from './DeployDropdown.vue'
-  import SvgIcon from './SvgIcon.vue'
+  import { computed, ref, inject, onMounted, watch } from "vue";
+  import MarkdownViewer from "../shared/viewers/MarkdownViewer.vue";
+  import DeployDropdown from "./DeployDropdown.vue";
+  import SvgIcon from "./SvgIcon.vue";
+  import { useCookies } from "vue3-cookies";
+  import jwtFetch from "../../packs/jwtFetch";
+
+  const { cookies } = useCookies();
 
   const props = defineProps({
     httpCloneUrl: String,
@@ -113,9 +114,12 @@
     admin: Boolean
   })
 
-  const activeCloneType = ref('https')
-  const cloneRepositoryVisible = ref(false)
-  const useToken = ref(false)
+  const csghubServer = inject('csghubServer')
+  const activeCloneType = ref("https");
+  const cloneRepositoryVisible = ref(false);
+  const useToken = ref(false);
+  const currentUser = ref(cookies.get('current_user'))
+  const accessToken = ref('')
 
   const getMarkdownCode = (code, lang, multiline = false) => {
     return `\`\`\`${lang}${multiline ? '' : '\n'}${code}${
@@ -128,20 +132,26 @@
   git clone ${props.httpCloneUrl}
 `
 
-  const httpsCloneCodeWithToken = `
+  const httpsCloneCodeWithToken = ref(`
   git lfs install
-  git clone https://${props.userName}:${
-    props.userToken
-  }@${props.httpCloneUrl.replace('https://', '')}
+  git clone https://${currentUser.value}:${accessToken.value}@${props.httpCloneUrl.replace( "https://", "")}
+  `)
+
+  watch(accessToken, async (newAccessToken) => {
+    httpsCloneCodeWithToken.value =
+  `
+  git lfs install
+  git clone https://${currentUser.value}:${newAccessToken}@${props.httpCloneUrl.replace( "https://", "")}
 `
+  })
 
   const httpsCloneCodeMarkdown = computed(() => {
     return getMarkdownCode(httpsCloneCode, 'bash', true)
   })
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
-    return getMarkdownCode(httpsCloneCodeWithToken, 'bash', true)
-  })
+    return getMarkdownCode(httpsCloneCodeWithToken.value, "bash", true);
+  });
 
   const sshCloneCode = `
   git lfs install
@@ -185,4 +195,23 @@
   function toFinetunePage() {
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
   }
+
+  const fetchUserToken = async() => {
+    const res = await jwtFetch(`${csghubServer}/api/v1/user/${currentUser}/tokens?app=git`)
+    if (!res.ok) {
+      res.json().then(error => {
+        ElMessage({message: error.msg, type: "warning"})
+      })
+    } else {
+      res.json().then(body => {
+        if (body.data) {
+          accessToken.value = body.data[0].token
+        }
+      })
+    }
+  }
+
+  onMounted(() => {
+    fetchUserToken()
+  })
 </script>
