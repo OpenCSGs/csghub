@@ -69,7 +69,7 @@
             v-for="item in endpointResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
@@ -244,7 +244,7 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        endpointResource.value = body.data[0]?.resources || "";
+        endpointResource.value = body.data[0]?.id || "";
         endpointResources.value = body.data;
       });
     }
