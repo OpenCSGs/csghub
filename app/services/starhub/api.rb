@@ -35,7 +35,7 @@ module Starhub
       @client.post("/users?current_user=#{name}", options)
     end
 
-    def update_user(name, nickname, phone, email, login_identity)
+    def update_user(name, nickname, email, phone, login_identity)
       options = {
         username: name,
         name: nickname,
