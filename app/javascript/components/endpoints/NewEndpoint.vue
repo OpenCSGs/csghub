@@ -289,7 +289,7 @@
   };
 
   const fetchModels = async (query, cb) => {
-    const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`);
+    const res = await jwtFetch(`${csghubServer}/api/v1/runtime_framework/models?search=${query}`);
     if (!res.ok) {
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
@@ -341,6 +341,17 @@
   const toEndpointDetail = (endpointId) => {
     window.location.pathname = `/endpoints/${props.namespace}/${endpointName.value}/${endpointId}`;
   };
+
+  const updateRuntimeFramework = async () => {
+    const res = await jwtFetch(`${csghubServer}/api/v1/models/${modelId.value}/runtime_framework?current_user=csghub-local&deploy_type=1`);
+    if (!res.ok) {
+      ElMessage({ message: t("all.fetchError"), type: "warning" });
+    }
+  }
+
+  watch(modelId, () => {
+    updateRuntimeFramework();
+  });
 
   onMounted(() => {
     fetchResources();
