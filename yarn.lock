@@ -2093,11 +2093,6 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-uuid@^10.0.0:
-  version "10.0.0"
-  resolved "https://mirrors.huaweicloud.com/repository/npm/uuid/-/uuid-10.0.0.tgz#5a95aa454e6e002725c79055fd42aaba30ca6294"
-  integrity sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==
-
 vite-node@0.34.6:
   version "0.34.6"
   resolved "https://mirrors.huaweicloud.com/repository/npm/vite-node/-/vite-node-0.34.6.tgz#34d19795de1498562bf21541a58edcd106328a17"
