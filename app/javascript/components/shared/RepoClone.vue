@@ -151,7 +151,7 @@
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
     return getMarkdownCode(httpsCloneCodeWithToken.value, "bash", true);
-  });
+  })
 
   const sshCloneCode = `
   git lfs install

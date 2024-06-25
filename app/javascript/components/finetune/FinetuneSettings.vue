@@ -278,7 +278,7 @@
     return ['Stopped'].includes(props.appStatus)
   })
 
-  async function changeStatus() {
+  const changeStatus = async () => {
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' }
@@ -302,28 +302,6 @@
     }
   }
 
-  const stopFinetune = async () => {
-    stopUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.finetuneId}/stop`
-    const response = await jwtFetch(stopUrl, { method: 'PUT' })
-
-    if (response.ok) {
-      ElMessage({
-        message: t('finetunes.settings.toggleStatusSuccess'),
-        type: 'success'
-      })
-    } else {
-      if (response.status === 401) {
-        refreshJWT()
-      } else {
-        response.json().then((data) => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
-        })
-      }
-    }
-  }
 
   const fetchClusters = async () => {
     const options = {
@@ -361,11 +339,6 @@
     }
   }
 
-  const updateCloudResource = (value) => {
-    const payload = { cloud_resource: value }
-    updateFinetune(payload)
-  }
-
   const fetchFrameworks = async () => {
     const options = {
       method: 'GET',
@@ -391,34 +364,6 @@
     }
   }
 
-  const updateFramework = (value) => {
-    const payload = { framework_id: value }
-    updateFinetune(payload)
-  }
-
-  const updateFinetune = async (payload) => {
-    const finetuneUpdateFinetune = `/internal_api/finetunes/${props.userName}/${props.finetuneName}/${props.finetuneId}`
-    const option = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }
-    const response = await csrfFetch(finetuneUpdateFinetune, option)
-
-    if (!response.ok) {
-      response.json().then((err) => {
-        ElMessage({ message: err.message, type: 'warning' })
-      })
-    } else {
-      if (payload.hasOwnProperty('private')) {
-        repoDetailStore.updateVisibility(payload.private)
-      }
-      response.json().then((data) => {
-        ElMessage({ message: data.message, type: 'success' })
-      })
-    }
-  }
-
   const deleteFinetune = async () => {
     const options = {
       method: 'DELETE',
@@ -440,29 +385,6 @@
           window.location.href = `/profile/${props.userName}`
         }, 500)
       })
-    }
-  }
-
-  const restartFinetune = async () => {
-    startUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.finetuneId}/start`
-    const response = await jwtFetch(startUrl, { method: 'PUT' })
-
-    if (response.ok) {
-      ElMessage({
-        message: t('finetunes.settings.toggleStatusSuccess'),
-        type: 'success'
-      })
-    } else {
-      if (response.status === 401) {
-        refreshJWT()
-      } else {
-        response.json().then((data) => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
-        })
-      }
     }
   }
 
