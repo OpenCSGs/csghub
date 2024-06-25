@@ -204,7 +204,7 @@
           :application-space-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
-          :cloudResource="repoDetail.hardware"
+          :cloudResource="repoDetail.sku || repoDetail.hardware"
           @showSpaceLogs="showSpaceLogs"
           :coverImage="repoDetail.cover_image_url"
           :isAdmin="isAdmin" />
@@ -221,7 +221,7 @@
           :appStatus="appStatus"
           :modelId="modelId"
           :userName="userName"
-          :cloudResource="repoDetail.hardware"
+          :cloudResource="repoDetail.sku || repoDetail.hardware"
           :framework="repoDetail.runtime_framework"
           :maxReplica="repoDetail.max_replica"
           :minReplica="repoDetail.min_replica"
