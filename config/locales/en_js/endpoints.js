@@ -28,7 +28,7 @@ export const endpoints = {
     publicDesc: "Anyone on the internet can see this endpoint.",
     private: "Private",
     privateDesc: "Only you (personal) or members of your organization can see this endpoint.",
-    createEndpoint: "Create Endpoint",
+    createEndpoint: "Create",
     createSuccess: "Endpoint created successfully",
     dedicated: "Dedicated endpoint"
   },
