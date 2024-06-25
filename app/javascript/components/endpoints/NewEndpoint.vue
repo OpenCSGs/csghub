@@ -346,6 +346,11 @@
     const res = await jwtFetch(`${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`);
     if (!res.ok) {
       ElMessage({ message: t("all.fetchError"), type: "warning" });
+    } else {
+      res.json().then((body) => {
+        endpointFramework.value = body.data[0]?.id || "";
+        endpointFrameworks.value = body.data;
+      });
     }
   }
 
