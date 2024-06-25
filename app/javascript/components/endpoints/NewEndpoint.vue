@@ -343,7 +343,7 @@
   };
 
   const updateRuntimeFramework = async () => {
-    const res = await jwtFetch(`${csghubServer}/api/v1/models/${modelId.value}/runtime_framework?current_user=csghub-local&deploy_type=1`);
+    const res = await jwtFetch(`${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`);
     if (!res.ok) {
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     }
