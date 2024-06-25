@@ -13,5 +13,4 @@ class FinetuneController < ApplicationController
     @finetune_id = params[:finetune_id]
   end
 
-  private
 end
