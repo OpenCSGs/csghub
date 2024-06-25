@@ -26,7 +26,6 @@
     <el-tabs
       v-model="activeName"
       class="demo-tabs"
-      @tab-click="handleClick"
     >
       <el-tab-pane
         :label="$t('finetune.detail.tab1')"
@@ -139,12 +138,6 @@
 
   const isStatusSSEConnected = ref(false)
 
-  const replicaList = ref([])
-
-  const handleClick = (tab, event) => {
-    console.log(tab, event)
-  }
-
   const csghubServer = inject('csghubServer')
 
   const toNotebookPage = () => {
@@ -241,9 +234,6 @@
           )
           if (appStatus.value !== eventResponse.status) {
             appStatus.value = eventResponse.status
-          }
-          if (eventResponse.details) {
-            replicaList.value = eventResponse.details
           }
         },
         onerror(err) {
