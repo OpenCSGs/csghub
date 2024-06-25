@@ -19,7 +19,8 @@ module Starhub
         name: nickname,
         email: email,
         phone: phone,
-        casdoor_uid: login_identity
+        uuid: login_identity,
+        reg_provider: ENV.fetch('REG_PROVIDER', 'default')
       }
       @client.post("/users?current_user=#{name}", options)
     end
@@ -30,7 +31,8 @@ module Starhub
         name: nickname,
         email: email,
         phone: phone,
-        casdoor_uid: login_identity
+        uuid: login_identity,
+        reg_provider: ENV.fetch('REG_PROVIDER', 'default')
       }
       @client.put("/users/#{name}?current_user=#{name}", options)
     end
