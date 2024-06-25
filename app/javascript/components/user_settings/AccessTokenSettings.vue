@@ -40,16 +40,17 @@
 </template>
 <script>
 import Menu from "./Menu.vue";
+import { inject } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import csrfFetch from "../../packs/csrfFetch"
-import { copyToClipboard } from '../../packs/clipboard'
+import jwtFetch from '../../packs/jwtFetch'
+import { copyToClipboard } from "../../packs/clipboard"
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   props: {
     name: String,
     displayName: String,
     avatar: String,
-    accessToken: String,
     email: String
   },
   components: {
@@ -57,22 +58,61 @@ export default {
   },
   data() {
     return {
-      theAccessToken: this.accessToken,
+      theAccessToken: '',
+      theTokenName:'',
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
-      accessTokenName: ''
+      accessTokenName: '',
+      csghubServer: inject('csghubServer'),
+
     };
   },
   mounted() {
-    // 如果 accessToken 为空，那么刷新获取 token
-    if (!this.theAccessToken.trim()) {
-      this.refreshAccessToken()
-    }
+    this.fetchUserTokens()
   },
   methods: {
     copyToken() {
       copyToClipboard(this.theAccessToken)
+    },
+
+    async fetchUserTokens() {
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/user/${this.name}/tokens?app=git`)
+      if (!res.ok) {
+        res.json().then(error => {
+          ElMessage({message: error.msg, type: "warning"})
+        })
+      } else {
+        res.json().then(body => {
+          if (body.data) {
+            this.theAccessToken = body.data[0].token
+            this.theTokenName = body.data[0].token_name
+          } else {
+            const randomUUID = uuidv4()
+            this.createUserToken(randomUUID)
+          }
+        })
+      }
+    },
+
+    async createUserToken(token) {
+      const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: token
+        })
+      }
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.name}`, options)
+      if (!res.ok) {
+        res.json().then(error => {
+          ElMessage({message: error.msg, type: "warning"})
+        })
+      } else {
+        res.json().then((body) => {
+          this.theAccessToken = body.data.token
+        })
+      }
     },
 
     confirmRefreshAccessToken() {
@@ -92,24 +132,18 @@ export default {
     },
 
     async refreshAccessToken() {
-      const refreshTokenEndpoint = "/internal_api/access_token/refresh"
       const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
       }
-      const response = await csrfFetch(refreshTokenEndpoint, options)
-
-      if (!response.ok) {
-        response.json().then(err => {
-          ElMessage({ message: err.message, type: 'warning' })
+      const res = await jwtFetch(`${this.csghubServer}/api/v1/token/git/${this.theTokenName}`, options)
+      if (!res.ok) {
+        res.json().then(error => {
+          ElMessage({message: error.msg, type: "warning"})
         })
       } else {
-        response.json().then((data) => {
-          // 仅在刷新操作的时候提醒，首次自动生成不提醒
-          if (this.theAccessToken) {
-            ElMessage({ message: data.message, type: "success" })
-          }
-          this.theAccessToken = data.token
+        res.json().then((body) => {
+          this.theAccessToken = body.data.token
         })
       }
     }
