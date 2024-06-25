@@ -19,6 +19,7 @@ import { user_sessions } from './zh_js/user_sessions';
 import { components } from './zh_js/components';
 import { endpoints } from './zh_js/endpoints';
 import { admin } from './zh_js/admin';
+import { billing } from './zh_js/billing';
 
 export default {
   all,
@@ -41,5 +42,6 @@ export default {
   repo,
   components,
   endpoints,
-  admin
+  admin,
+  billing
 };

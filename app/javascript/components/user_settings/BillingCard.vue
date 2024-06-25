@@ -1,7 +1,9 @@
 <template>
   <div class="p-[12px] rounded-[8px] mt-[16px]">
     <div class="flex justify-between items-center mb-8">
-      <div class="text-[30px] leading-[38px]">费用账单</div>
+      <div class="text-[30px] leading-[38px]">
+        {{ $t('billing.title') }}
+      </div>
       <el-date-picker
         v-model="value2"
         @change="dateChange"
@@ -17,7 +19,7 @@
           <div class="bg-[#3250BD] p-3 rounded-lg">
             <SvgIcon name="billing_wallet" />
           </div>
-          账户可用额度
+          {{ $t('billing.balance') }}
         </div>
         <div>¥ 242.00</div>
       </div>
@@ -25,9 +27,9 @@
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
         <SvgIcon name="spaces" />
-        应用空间
+        {{ $t('spaces.title') }}
       </div>
-      <div class="text-[14px] leading-[20px] text-[#475467]">总计：¥ 120.00</div>
+      <div class="text-[14px] leading-[20px] text-[#475467]">{{ $t('billing.total') }}：¥ 120.00</div>
     </div>
     <div class="w-full">
       <el-table
@@ -38,7 +40,7 @@
         style="width: 100%"
       >
         <el-table-column
-          :label="$t('organization.members.instance_name实例id')"
+          :label="$t('billing.instanceID')"
           label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -55,7 +57,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.created_at创建时间')"
+          :label="$t('billing.createTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -65,7 +67,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.role使用时长')"
+          :label="$t('billing.usageTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -75,7 +77,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.consumption费用')"
+          :label="$t('billing.cost')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -85,7 +87,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.status状态')"
+          :label="$t('billing.status')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -101,7 +103,7 @@
           fixed="right"
         >
           <template #default="scope">
-            <div class="flex gap-4 justify-end pr-4">明细</div>
+            <div class="flex gap-4 justify-end pr-4">{{ $t('billing.details') }}</div>
           </template>
         </el-table-column>
       </el-table>
@@ -117,9 +119,9 @@
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
         <SvgIcon name="spaces" />
-        推理实例
+        {{ $t('billing.inference') }}
       </div>
-      <div class="text-[14px] leading-[20px] text-[#475467]">总计：¥ 120.00</div>
+      <div class="text-[14px] leading-[20px] text-[#475467]">{{ $t('billing.total') }}：¥ 120.00</div>
     </div>
     <div class="w-full">
       <el-table
@@ -130,7 +132,7 @@
         style="width: 100%"
       >
         <el-table-column
-          :label="$t('organization.members.username实例id')"
+          :label="$t('billing.instanceID')"
           label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -147,7 +149,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.last_login_at创建时间')"
+          :label="$t('billing.createTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -157,7 +159,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.role使用时长')"
+          :label="$t('billing.usageTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -167,7 +169,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.role费用')"
+          :label="$t('billing.cost')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
@@ -177,12 +179,12 @@
           </template>
         </el-table-column>
         <el-table-column
-          :label="$t('organization.members.role状态')"
+          :label="$t('billing.status')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
-              {{ scope.row.role }}
+              {{ scope.row.status }}
             </div>
           </template>
         </el-table-column>
@@ -193,7 +195,7 @@
           fixed="right"
         >
           <template #default="scope">
-            <div class="flex gap-4 justify-end pr-4">明细</div>
+            <div class="flex gap-4 justify-end pr-4">{{ $t('billing.details') }}</div>
           </template>
         </el-table-column>
       </el-table>
@@ -216,8 +218,8 @@
   import CsgPagination from '../shared/CsgPagination.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
-  import dayjs from "dayjs";
-  import { useCookies } from "vue3-cookies";
+  import dayjs from 'dayjs'
+  import { useCookies } from 'vue3-cookies'
 
   const props = defineProps({
     name: String,
@@ -232,17 +234,17 @@
   const currentPage = ref(1)
   const perPage = ref(10)
   const spaceBillings = ref([])
-  const { cookies } = useCookies();
+  const { cookies } = useCookies()
 
-  const loginIdentity = cookies.get('login_identity');
-  
+  const loginIdentity = cookies.get('login_identity')
+
   onMounted(() => {
     fetchBalance()
     fetchBillings()
   })
 
   const dateChange = (e) => {
-    console.log(e);
+    console.log(e)
     formatDate(e)
   }
 
@@ -258,10 +260,10 @@
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/balance`
     const res = await jwtFetch(url)
     if (!res.ok) {
-      ElMessage({message: res.msg, type: "warning"})
+      ElMessage({ message: res.msg, type: 'warning' })
     } else {
       res.json().then(({ data }) => {
-        console.log(data);
+        console.log(data)
         // commits.value = data.commits
         // totalCommits.value = data.total
       })
@@ -270,15 +272,15 @@
 
   const fetchBillings = async (params = new URLSearchParams()) => {
     params.append('per', perPage.value)
-    params.append('start_date','2024-06-01')
-    params.append('end_date','2024-06-25')
+    params.append('start_date', '2024-06-01')
+    params.append('end_date', '2024-06-25')
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
     const res = await jwtFetch(url)
     if (!res.ok) {
-      ElMessage({message: res.msg, type: "warning"})
+      ElMessage({ message: res.msg, type: 'warning' })
     } else {
       res.json().then(({ data }) => {
-        console.log(data);
+        console.log(data)
         // commits.value = data.commits
         // totalCommits.value = data.total
       })
@@ -287,7 +289,7 @@
 
   const formatDate = (date) => {
     if (!date) return '-'
-    console.log(dayjs(date).format('YYYY-MM-DD'));
+    console.log(dayjs(date).format('YYYY-MM-DD'))
     return dayjs(date).format('YYYY-MM-DD')
   }
   // const confirmRefreshAccessToken = () => {
