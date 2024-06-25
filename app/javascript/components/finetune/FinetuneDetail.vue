@@ -110,17 +110,48 @@
   const finetuneResources = ref([])
   const finetuneResource = ref('')
 
+  const repoDetailStore = useRepoDetailStore()
+  repoDetailStore.initialize(finetune.value)
+
+  const allStatus = [
+    'Building',
+    'Deploying',
+    'Startup',
+    'Running',
+    'Stopped',
+    'Sleeping',
+    'BuildingFailed',
+    'DeployFailed',
+    'RuntimeError'
+  ]
+
+  const { cookies } = useCookies()
+  const jwtToken = cookies.get('user_token')
+  const appStatus = ref('')
+  const appfinetune = computed(() => {
+    const finetuneUrl = finetune.value.finetune || ''
+    if (ENABLE_HTTPS === 'true') {
+      return `https://${finetuneUrl}`
+    } else {
+      return `http://${finetuneUrl}`
+    }
+  })
+
+  const isStatusSSEConnected = ref(false)
+
+  const replicaList = ref([])
+
   const handleClick = (tab, event) => {
     console.log(tab, event)
   }
 
   const csghubServer = inject('csghubServer')
 
-  function toNotebookPage() {
+  const toNotebookPage = () => {
     window.open(`https://${finetune.value.endpoint}?jwt=${jwtToken}`)
   }
 
-  async function getDetail() {
+  const getDetail = async () => {
     const options = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -171,37 +202,6 @@
       })
     }
   }
-
-  const repoDetailStore = useRepoDetailStore()
-  repoDetailStore.initialize(finetune.value)
-
-  const allStatus = [
-    'Building',
-    'Deploying',
-    'Startup',
-    'Running',
-    'Stopped',
-    'Sleeping',
-    'BuildingFailed',
-    'DeployFailed',
-    'RuntimeError'
-  ]
-
-  const { cookies } = useCookies()
-  const jwtToken = cookies.get('user_token')
-  const appStatus = ref('')
-  const appfinetune = computed(() => {
-    const finetuneUrl = finetune.value.finetune || ''
-    if (ENABLE_HTTPS === 'true') {
-      return `https://${finetuneUrl}`
-    } else {
-      return `http://${finetuneUrl}`
-    }
-  })
-
-  const isStatusSSEConnected = ref(false)
-
-  const replicaList = ref([])
 
   const syncfinetuneStatus = () => {
     fetchEventSource(

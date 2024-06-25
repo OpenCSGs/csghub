@@ -211,14 +211,14 @@
 
   const createFinetune = async () => {
     try {
-      const res = await submitEndpointForm()
+      const res = await submitFinetuneForm()
       ElMessage.success(t('endpoints.new.createSuccess'))
     } catch (err) {
       ElMessage.warning(err.message)
     }
   }
 
-  async function submitEndpointForm() {
+  const submitFinetuneForm = async () => {
     hasCreateFinetune.value = true
 
     const options = {
