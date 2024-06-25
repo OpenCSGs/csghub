@@ -2,7 +2,6 @@ module SessionsHelper
   def log_in user
     session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
-    cookies[:current_user] = user.name
     cookies[:user_synced] = user.starhub_synced
     setup_jwt_token(user.name) if user.starhub_synced?
     user.update_column('session_ip', request.remote_ip)
