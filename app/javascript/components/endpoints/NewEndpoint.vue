@@ -230,6 +230,7 @@
     return (
       nameRule.test(endpointName.value) &&
       modelIdRegex.test(modelId.value) &&
+      endpointFramework.value &&
       maxReplica.value >= minReplica.value
     );
   });
@@ -324,7 +325,7 @@
     const res = await jwtFetch(`${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`);
     if (!res.ok) {
       endpointFramework.value = ""
-      endpointFrameworks.value = ""
+      endpointFrameworks.value = []
     } else {
       res.json().then((body) => {
         endpointFramework.value = body.data == null ? "" : body.data[0].id;
