@@ -23,6 +23,8 @@ export const finetune = {
     notebook: '启动 Notebook',
     tab1: '概览',
     tab2: '设置',
+    noDataTip1:'微调实例尚未处于运行状态',
+    noDataTip2:'请等待部署成功或前往设置页面启用运行状态后，再尝试访问微调界面。',
     settings: {
       region: '区域',
       regionTip1: '建议选择靠近您的地域，可降低访问时延；',

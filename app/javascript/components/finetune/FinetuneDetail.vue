@@ -55,10 +55,10 @@
             </div>
             <div class="ml-[16px]">
               <p class="text-[#344054] text-sm font-medium mb-[4px]">
-                微调实例尚未处于运行状态
+                {{ $t('finetune.detail.noDataTip1') }}
               </p>
               <p class="text-[#475467] text-sm font-light">
-                请等待部署成功或前往设置页面启用运行状态后，再尝试访问微调界面。
+                {{ $t('finetune.detail.noDataTip2') }}
               </p>
             </div>
           </div>
