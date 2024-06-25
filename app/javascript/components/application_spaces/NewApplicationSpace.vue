@@ -187,7 +187,7 @@
             v-for="item in spaceResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
             :disabled="disabledOptions.includes(item.name)"
           />
         </el-select>
@@ -323,7 +323,7 @@
       ElMessage({ message: t('application_spaces.new.failedFetchResources'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        spaceResource.value = body.data[0]?.resources || ''
+        spaceResource.value = body.data[0]?.id || ''
         spaceResources.value = body.data
       })
     }

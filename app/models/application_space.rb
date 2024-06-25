@@ -30,6 +30,7 @@ class ApplicationSpace < ApplicationRecord
                                                                      private: application_space_private?,
                                                                      cover_image_url: cover_image,
                                                                      hardware: cloud_resource,
+                                                                     resource_id: cloud_resource.to_i,
                                                                      sdk: sdk
                                                                    })
     raise StarhubError, res.body unless res.success?
@@ -44,6 +45,7 @@ class ApplicationSpace < ApplicationRecord
                                                                    { private: application_space_private?,
                                                                      current_user: creator&.name,
                                                                      hardware: cloud_resource,
+                                                                     resource_id: cloud_resource.to_i,
                                                                      cover_image_url: cover_image
                                                                    })
     raise StarhubError, res.body unless res.success?

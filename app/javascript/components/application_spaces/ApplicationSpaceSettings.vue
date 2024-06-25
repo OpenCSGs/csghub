@@ -42,7 +42,7 @@
             v-for="item in spaceResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
             :disabled="disabledOptions.includes(item.name)"
           />
         </el-select>
@@ -281,7 +281,7 @@
   </div>
 </template>
 <script>
-import { h, inject, onMounted } from 'vue'
+import { h, inject } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import { useCookies } from "vue3-cookies"
@@ -311,7 +311,7 @@ export default {
       applicationSpacePath: this.path,
       theApplicationSpaceNickname: this.applicationSpaceNickname || "",
       theApplicationSpaceDesc: this.applicationSpaceDesc || "",
-      theCloudResource: this.cloudResource,
+      theCloudResource: /^\d+$/.test(this.cloudResource) ? Number(this.cloudResource) : this.cloudResource,
       options: [{value: 'Private', label: this.$t('all.private')},
                 {value: 'Public', label:  this.$t('all.public')}],
       spaceResources:[],

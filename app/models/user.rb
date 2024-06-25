@@ -157,10 +157,10 @@ class User < ApplicationRecord
     Starhub.api(session_ip).image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
     if starhub_synced?
-      res = Starhub.api(session_ip).update_user(name, nickname, email, phone, login_identity)
+      res = Starhub.api(session_ip).update_user(name, nickname, phone, email, login_identity)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api(session_ip).create_user(name, nickname, email, phone, login_identity)
+      res = Starhub.api(session_ip).create_user(name, nickname, phone, email, login_identity)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
