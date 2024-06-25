@@ -118,7 +118,7 @@
         <el-radio-group v-model="visibility" class="!block">
           <el-radio
             class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4"
-            label="public"
+            value="public"
             size="large"
             border
           >
@@ -129,7 +129,7 @@
           </el-radio>
           <el-radio
             class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4"
-            label="private"
+            value="private"
             size="large"
             border
           >
@@ -348,7 +348,7 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        endpointFramework.value = body.data[0]?.id || "";
+        endpointFramework.value = body.data == null ? "" : body.data[0].id;
         endpointFrameworks.value = body.data;
       });
     }
