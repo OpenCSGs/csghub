@@ -258,7 +258,7 @@
 
   onMounted(() => {
     fetchBalance()
-    fetchBillings()
+    // fetchBillings()
   })
 
   const dateChange = (e) => {
@@ -268,6 +268,7 @@
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString)
     console.log(lastDayOfMonth)
     endDate.value = lastDayOfMonth
+    fetchBillings()
   }
 
   const getLastDayOfMonthFromDateString = (dateString) => {
@@ -276,7 +277,9 @@
     const month = parseInt(parts[1], 10) - 1 // 月份在 Date 对象中是从 0 到 11 表示的
 
     const lastDay = getLastDayOfMonth(year, month)
-    return `${year}-${month + 1}-${lastDay}`
+    const formattedMonth = (month + 1).toString().padStart(2, '0')
+
+    return `${year}-${formattedMonth}-${lastDay}`
   }
 
   const getLastDayOfMonth = (year, month) => {
@@ -287,7 +290,7 @@
 
   const loadMoreBillings = (page) => {
     currentPage.value = page
-    fetchBillings(params)
+    fetchBillings()
   }
 
   const fetchBalance = async (params = new URLSearchParams()) => {
@@ -306,15 +309,12 @@
   }
 
   const fetchBillings = async (params = new URLSearchParams()) => {
+    console.log('fetchBillings')
     params.append('scene', scene.value)
     params.append('per', perPage.value)
     params.append('page', currentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
-    if(startDate.value ==''){
-      ElMessage({ message: '选择日期', type: 'warning' })
-      return
-    }
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
     const res = await jwtFetch(url)
     if (!res.ok) {
