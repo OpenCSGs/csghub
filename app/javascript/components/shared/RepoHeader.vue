@@ -71,7 +71,7 @@
       class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
     >
       <SvgIcon
-        name="finetune_create"
+        name="model_finetune_create"
         width="16"
         height="16"
         class="flex-shrink-0"
@@ -125,7 +125,7 @@
         @click="showSpaceLogs"
       >
         <SvgIcon
-          name="repoheader_search_file"
+          name="instance_logs"
           width="16"
           height="16"
         />
@@ -154,7 +154,7 @@
         @click="copyName"
       >
         <SvgIcon
-          name="repoheader_comm"
+          name="copy"
           width="16"
           height="16"
         />

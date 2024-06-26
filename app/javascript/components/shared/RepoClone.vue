@@ -12,7 +12,7 @@
       @click="toFinetunePage"
     >
       <SvgIcon
-        name="finetune_create"
+        name="model_finetune_create"
         class="mr-1"
       />
       <div class="text-sm">{{ $t('finetune.title') }}</div>

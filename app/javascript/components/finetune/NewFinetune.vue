@@ -2,7 +2,7 @@
   <div class="w-[640px] m-auto flex flex-col items-center md:w-full md:p-5">
     <div>
       <SvgIcon
-        name="finetune_create_logo"
+        name="finetune_create"
         width="32"
         height="32"
       />

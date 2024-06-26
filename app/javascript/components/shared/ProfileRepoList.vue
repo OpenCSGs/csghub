@@ -91,7 +91,7 @@
     <!-- finetunes -->
     <div>
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
-        <SvgIcon name="finetune" width="18" height="18" />
+        <SvgIcon name="profile_finetune" width="18" height="18" />
         <span>{{ $t("finetune.title") }}</span>
       </h3>
       <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
