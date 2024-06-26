@@ -92,12 +92,4 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   def dataset_params
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :license)
   end
-
-  def create_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def update_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
-  end
 end

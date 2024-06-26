@@ -6,7 +6,7 @@ module Api::RepoValidation
       validate_manage(controller_name)
     end
 
-    before_action only: [:create_file, :update_file, :upload_file] do
+    before_action only: [:upload_file] do
       validate_write(controller_name)
     end
 
