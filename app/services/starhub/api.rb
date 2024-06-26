@@ -255,6 +255,20 @@ module Starhub
       res.body
     end
 
+    def get_sync_repos(username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/mirror/repos", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def create_sync_settings(username, options = {})
+      options[:current_user] = username
+      @client.post("/sync/client_setting", options)
+    end
+
     # TODO: add more starhub api
 
     private

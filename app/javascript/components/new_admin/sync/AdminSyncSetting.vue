@@ -54,13 +54,15 @@
       <el-table-column
         prop="repo_type"
         label="Type"
+        width="100"
       ></el-table-column>
+      <el-table-column label="Progress">
+        <template #default="scope">
+          <el-progress :percentage="scope.row.progress" />
+        </template>
+      </el-table-column>
       <el-table-column
-        prop="progress"
-        label="Progress"
-      ></el-table-column>
-      <el-table-column
-        prop="status"
+        prop="sync_status"
         label="Status"
       ></el-table-column>
     </el-table>
@@ -77,9 +79,9 @@
 </template>
 
 <script setup>
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
-  import jwtFetch from '../../../packs/jwtFetch'
+  import csrfFetch from '../../../packs/csrfFetch'
 
   const form = ref({
     token: '',
@@ -94,8 +96,6 @@
   const per = ref(10)
   const total = ref(0)
 
-  const csghubServer = inject('csghubServer')
-
   const onSubmit = () => {
     if (form.value.token === '') {
       ElMessage({
@@ -108,16 +108,14 @@
   }
 
   const createSyncSetting = async () => {
-    const response = await jwtFetch(
-      `${csghubServer}/api/v1/sync/client_setting`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form.value)
-      }
-    )
+    const createEndpoint = '/internal_api/admin/sync_settings'
+    const response = await csrfFetch(createEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form.value)
+    })
     if (response.ok) {
       ElMessage({
         message: 'Sync Setting created successfully',
@@ -131,10 +129,9 @@
   }
 
   const fetchMirrors = async (current) => {
-    const response = await jwtFetch(
-      `${csghubServer}/api/v1/mirror/repos?page=${current || page.value}&per=${
-        per.value
-      }`,
+    const mirrorsEndpoint = '/internal_api/admin/sync_settings/sync_repos'
+    const response = await csrfFetch(
+      `${mirrorsEndpoint}?page=${current || page.value}&per=${per.value}`,
       {
         method: 'GET',
         headers: {
