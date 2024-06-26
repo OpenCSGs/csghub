@@ -2,6 +2,7 @@
   <div
     class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
+  <!-- 区域 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -35,6 +36,8 @@
       </div>
     </div>
     <el-divider />
+
+    <!-- 空间云资源 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -68,6 +71,8 @@
       </div>
     </div>
     <el-divider />
+
+    <!-- 暂停 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -86,8 +91,9 @@
         </div>
       </div>
     </div>
-
     <el-divider />
+
+    <!-- 重启 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -104,8 +110,9 @@
         </el-button>
       </div>
     </div>
-
     <el-divider />
+
+    <!-- 英文名称&中文名称 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
