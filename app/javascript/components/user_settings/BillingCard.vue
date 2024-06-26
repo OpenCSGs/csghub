@@ -287,12 +287,6 @@
 
   const loadMoreBillings = (page) => {
     currentPage.value = page
-    const params = new URLSearchParams()
-    params.append('scene', scene.value)
-    params.append('per', perPage.value)
-    params.append('page', currentPage.value)
-    params.append('start_date', startDate.value)
-    params.append('end_date', endDate.value)
     fetchBillings(params)
   }
 
@@ -312,9 +306,15 @@
   }
 
   const fetchBillings = async (params = new URLSearchParams()) => {
+    params.append('scene', scene.value)
     params.append('per', perPage.value)
-    params.append('start_date', '2024-06-01')
-    params.append('end_date', '2024-06-25')
+    params.append('page', currentPage.value)
+    params.append('start_date', startDate.value)
+    params.append('end_date', endDate.value)
+    if(startDate.value ==''){
+      ElMessage({ message: '选择日期', type: 'warning' })
+      return
+    }
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
     const res = await jwtFetch(url)
     if (!res.ok) {
