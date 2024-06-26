@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   # internal api
   namespace :internal_api do
     namespace :admin do
-      resources :users, only: [:index, :show]
+      resources :users, only: [:index, :show] do
+      collection do
+        put 'recharge/:id/:value', to: 'users#recharge'
+      end
+    end
     end
 
     resources :organizations, only: [:create, :update] do

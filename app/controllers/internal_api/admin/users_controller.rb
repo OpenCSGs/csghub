@@ -1,5 +1,5 @@
 class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationController
-  before_action :find_user, only: [:show]
+  before_action :find_user, only: [:show, :recharge]
 
   def index
     if params[:keyword].present?
@@ -17,6 +17,10 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
     render json: @user.to_json
   end
 
+  def recharge
+    render json: Starhub::api.user_recharge(@user.login_identity, current_user.login_identity, current_user.name, params[:value].to_i)
+  end
+
   private
 
   def user_params
@@ -29,6 +33,6 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
   end
 
   def search_columns
-    %w[name email phone nickname]
+    %w[name email phone nickname login_identity]
   end
 end
