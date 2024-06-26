@@ -14,7 +14,10 @@
       />
     </div>
   </div>
-  <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0 relative">
+  <div
+    class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0 relative"
+    v-loading="dataLoading"
+  >
     <el-button
       v-show="activeName == 'page' && finetune.endpoint"
       color="#3250BD"
@@ -71,7 +74,7 @@
           :finetune="finetune"
           :finetuneId="finetune.deploy_id"
           :finetuneName="finetune.deploy_name"
-          :appStatus="finetune.status"
+          :appStatus="appStatus"
           :modelId="finetune.model_id"
           :userName="userName"
           :cloudResource="finetune.hardware"
@@ -84,7 +87,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, computed, onBeforeMount } from 'vue'
+  import { ref, inject, onBeforeMount } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
@@ -104,7 +107,7 @@
   const finetune = ref({})
 
   const activeName = ref('page')
-  const startEvent = ref(false)
+  const dataLoading = ref(true)
 
   const finetuneResources = ref([])
   const finetuneResource = ref('')
@@ -127,14 +130,6 @@
   const { cookies } = useCookies()
   const jwtToken = cookies.get('user_token')
   const appStatus = ref('')
-  const appfinetune = computed(() => {
-    const finetuneUrl = finetune.value.finetune || ''
-    if (ENABLE_HTTPS === 'true') {
-      return `https://${finetuneUrl}`
-    } else {
-      return `http://${finetuneUrl}`
-    }
-  })
 
   const isStatusSSEConnected = ref(false)
 
@@ -144,7 +139,10 @@
     window.open(`https://${finetune.value.endpoint}?jwt=${jwtToken}`)
   }
 
-  const getDetail = async () => {
+  const getDetail = async (type) => {
+    if (type != 'reload') {
+      dataLoading.value = true
+    }
     const options = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -171,6 +169,8 @@
       }
     } catch (err) {
       console.log(err)
+    } finally {
+      dataLoading.value = false
     }
   }
 
@@ -234,6 +234,9 @@
           )
           if (appStatus.value !== eventResponse.status) {
             appStatus.value = eventResponse.status
+            if (appStatus.value == 'Running') {
+              getDetail('reload')
+            }
           }
         },
         onerror(err) {
