@@ -71,31 +71,40 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetune.detail.settings.status') }}
-        </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          {{ $t('finetune.detail.settings.statusTip1') }}
+          {{ $t('endpoints.settings.stopEndpoint') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <div>
-          <el-switch
-            v-model="statusVal"
-            class="mr-2"
-            style="
-              --el-switch-on-color: #3250bd;
-              --el-switch-off-color: #f2f4f7;
-            "
-            @change="changeStatus"
-          />
-          <span>{{
-            statusVal
-              ? $t('finetune.detail.settings.statusVal1')
-              : $t('finetune.detail.settings.statusVal2')
-          }}</span>
+        <div class="flex flex-col gap-[6px]">
+          <el-button
+            @click="changeStatus('stop')"
+            class="w-[100px]"
+            :disabled="!initialized || isStopped"
+          >
+            {{ $t('endpoints.settings.stop') }}
+          </el-button>
         </div>
       </div>
     </div>
+
+    <el-divider />
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.restartEndpoint') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-button
+          @click="changeStatus('start')"
+          class="w-[100px]"
+          :disabled="notInitialized"
+        >
+          {{ $t('endpoints.settings.restart') }}
+        </el-button>
+      </div>
+    </div>
+
     <el-divider />
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -205,11 +214,8 @@
 <script setup>
   import { ref, computed, inject, onMounted, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import refreshJWT from '../../packs/refreshJWT.js'
   import jwtFetch from '../../packs/jwtFetch'
-  import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
-  import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
     finetune: Object,
@@ -236,7 +242,6 @@
   const finetuneClusters = ref([])
 
   const frameworks = ref([])
-  const repoDetailStore = useRepoDetailStore()
 
   watch(
     () => props.appStatus,
@@ -271,22 +276,20 @@
   })
 
   const notInitialized = computed(() => {
-    return ['NoAppFile'].includes(props.appStatus)
+    return ['NoAppFile', 'Running'].includes(props.appStatus)
   })
 
   const isStopped = computed(() => {
     return ['Stopped'].includes(props.appStatus)
   })
 
-  const changeStatus = async () => {
+  const changeStatus = async (type) => {
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${
-        props.finetuneId
-      }/${statusVal.value ? 'start' : 'stop'}`,
+      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${props.finetuneId}/${type}`,
       options
     )
     if (!res.ok) {
@@ -294,14 +297,15 @@
         message: t('all.fetchError'),
         type: 'warning'
       })
-      statusVal.value = !statusVal.value
     } else {
       res.json().then((body) => {
-        console.log('testApi suc===', body)
+        ElMessage({
+          message: t('all.updateSuccess'),
+          type: 'success'
+        })
       })
     }
   }
-
 
   const fetchClusters = async () => {
     const options = {
