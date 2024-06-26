@@ -217,7 +217,7 @@
           :perPage="perPage"
           :currentPage="currentPage"
           @currentChange="loadMoreBillings"
-          :total="totalCommits"
+          :total="totalBillings"
         />
       </div>
     </div>
@@ -247,26 +247,50 @@
   const currentPage = ref(1)
   const perPage = ref(10)
   const balance = ref(0)
+  const totalBillings = ref(0)
   const spaceBillings = ref([])
   const { cookies } = useCookies()
+  const startDate = ref('')
+  const endDate = ref('')
 
   const loginIdentity = cookies.get('login_identity')
 
   onMounted(() => {
-    // fetchBalance()
-    // fetchBillings()
+    fetchBalance()
+    fetchBillings()
   })
 
   const dateChange = (e) => {
     console.log(e)
-    formatDate(e)
+    const dateString = formatDate(e)
+    startDate.value = dateString
+    const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString)
+    console.log(lastDayOfMonth)
+    endDate.value = lastDayOfMonth
+  }
+
+  const getLastDayOfMonthFromDateString = (dateString) => {
+    const parts = dateString.split('-')
+    const year = parseInt(parts[0], 10)
+    const month = parseInt(parts[1], 10) - 1 // 月份在 Date 对象中是从 0 到 11 表示的
+
+    const lastDay = getLastDayOfMonth(year, month)
+    return `${year}-${month + 1}-${lastDay}`
+  }
+
+  const getLastDayOfMonth = (year, month) => {
+    const nextMonthFirstDay = new Date(year, month + 1, 1)
+    const lastDay = new Date(nextMonthFirstDay - 86400000).getDate() // 获取月底的日期
+    return lastDay
   }
 
   const loadMoreBillings = (page) => {
     currentPage.value = page
     const params = new URLSearchParams()
-    params.append('ref', props.currentBranch)
+    params.append('per', perPage.value)
     params.append('page', currentPage.value)
+    params.append('start_date', startDate.value)
+    params.append('end_date', endDate.value)
     fetchBillings(params)
   }
 
@@ -274,12 +298,13 @@
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/balance`
     const res = await jwtFetch(url)
     if (!res.ok) {
-      ElMessage({ message: res.msg, type: 'warning' })
+      res.json().then(({ msg }) => {
+        ElMessage({ message: msg, type: 'warning' })
+      })
     } else {
       res.json().then(({ data }) => {
         console.log(data)
-        // commits.value = data.commits
-        // totalCommits.value = data.total
+        balance.value = data.balance
       })
     }
   }
@@ -291,12 +316,14 @@
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
     const res = await jwtFetch(url)
     if (!res.ok) {
-      ElMessage({ message: res.msg, type: 'warning' })
+      res.json().then(({ msg }) => {
+        ElMessage({ message: msg, type: 'warning' })
+      })
     } else {
       res.json().then(({ data }) => {
         console.log(data)
-        // commits.value = data.commits
-        // totalCommits.value = data.total
+        spaceBillings.value = data.data
+        totalBillings.value = data.total
       })
     }
   }
@@ -323,7 +350,7 @@
 </script>
 <style scoped lang="less">
   :deep(.billing-table) {
-    .el-table__empty-block{
+    .el-table__empty-block {
       border-left: 1px solid #eaecf0;
       border-right: 1px solid #eaecf0;
     }
