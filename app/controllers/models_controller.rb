@@ -7,8 +7,8 @@ class ModelsController < ApplicationController
 
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
-  before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings, :commits, :commit]
+  before_action :load_branch_and_path, except: [:index, :new]
+  before_action :load_model_detail, except: [:index, :new, :resolve]
 
   def index
     get_tag_list('models')
