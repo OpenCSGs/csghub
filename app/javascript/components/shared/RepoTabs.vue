@@ -14,7 +14,9 @@
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
       :repoType="repoType"
+      :localRepoId="localRepoId"
       :sdk="sdk"
+
       @tabChange="tabChange"
     >
       <!-- summary -->
