@@ -8,7 +8,8 @@
         v-model="value2"
         @change="dateChange"
         type="month"
-        placeholder="Pick a month"
+        placeholder="Pick"
+        style="width: 120px"
       />
     </div>
     <div class="flex flex-col gap-6 mb-8">
@@ -21,7 +22,7 @@
           </div>
           {{ $t('billing.balance') }}
         </div>
-        <div>¥ 242.00</div>
+        <div class="text-[36px] leading-[44px]">¥ {{ balance }}</div>
       </div>
     </div>
     <div class="flex justify-between mb-4">
@@ -29,13 +30,19 @@
         <SvgIcon name="spaces" />
         {{ $t('spaces.title') }}
       </div>
-      <div class="text-[14px] leading-[20px] text-[#475467]">{{ $t('billing.total') }}：¥ 120.00</div>
+      <div class="text-[14px] leading-[20px] text-[#475467]">
+        {{ $t('billing.total') }}：¥ 120.00
+      </div>
     </div>
-    <div class="w-full">
+    <div class="w-full mb-[37px]">
       <el-table
+        class="billing-table"
+        header-row-class-name="billing-table-header-row"
+        header-cell-class-name="billing-table-header-cell"
+        row-class-name="billing-table-row"
+        cell-class-name="billing-table-row-cell"
         :data="spaceBillings"
         stripe
-        border
         v-loading="loading"
         style="width: 100%"
       >
@@ -61,7 +68,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ formatDate(scope.row.created_at) }}
             </div>
           </template>
@@ -71,7 +78,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.role }}
             </div>
           </template>
@@ -81,7 +88,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.consumption }}
             </div>
           </template>
@@ -91,7 +98,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.status }}
             </div>
           </template>
@@ -121,13 +128,19 @@
         <SvgIcon name="spaces" />
         {{ $t('billing.inference') }}
       </div>
-      <div class="text-[14px] leading-[20px] text-[#475467]">{{ $t('billing.total') }}：¥ 120.00</div>
+      <div class="text-[14px] leading-[20px] text-[#475467]">
+        {{ $t('billing.total') }}：¥ 120.00
+      </div>
     </div>
     <div class="w-full">
       <el-table
+        class="billing-table"
+        header-row-class-name="billing-table-header-row"
+        header-cell-class-name="billing-table-header-cell"
+        row-class-name="billing-table-row"
+        cell-class-name="billing-table-row-cell"
         :data="spaceBillings"
         stripe
-        border
         v-loading="loading"
         style="width: 100%"
       >
@@ -153,7 +166,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ formatDate(scope.row.last_login_at) }}
             </div>
           </template>
@@ -163,7 +176,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.role }}
             </div>
           </template>
@@ -173,7 +186,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.role }}
             </div>
           </template>
@@ -183,7 +196,7 @@
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.status }}
             </div>
           </template>
@@ -233,14 +246,15 @@
   const value2 = ref('')
   const currentPage = ref(1)
   const perPage = ref(10)
+  const balance = ref(0)
   const spaceBillings = ref([])
   const { cookies } = useCookies()
 
   const loginIdentity = cookies.get('login_identity')
 
   onMounted(() => {
-    fetchBalance()
-    fetchBillings()
+    // fetchBalance()
+    // fetchBillings()
   })
 
   const dateChange = (e) => {
@@ -307,3 +321,48 @@
   //   })
   // }
 </script>
+<style scoped lang="less">
+  :deep(.billing-table) {
+    .el-table__empty-block{
+      border-left: 1px solid #eaecf0;
+      border-right: 1px solid #eaecf0;
+    }
+    .billing-table-header-row {
+      .billing-table-header-cell {
+        padding: 12px 24px;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--gray-600);
+        .cell {
+          line-height: 18px;
+        }
+        &:not(:first-child):not(:last-child) {
+          border-top: 1px solid #eaecf0;
+        }
+        &:nth-child(1) {
+          border: 1px solid #eaecf0;
+          border-right: none;
+          border-radius: 12px 0 0 0;
+        }
+        &:nth-last-child(1) {
+          border: 1px solid #eaecf0;
+          border-left: none;
+          border-radius: 0 12px 0 0;
+        }
+      }
+    }
+    .billing-table-row {
+      .billing-table-row-cell {
+        &:nth-child(1) {
+          border-left: 1px solid #eaecf0;
+        }
+        &:nth-last-child(1) {
+          border-right: 1px solid #eaecf0;
+        }
+        .cell {
+          line-height: 40px;
+        }
+      }
+    }
+  }
+</style>
