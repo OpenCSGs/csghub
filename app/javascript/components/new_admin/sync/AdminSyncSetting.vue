@@ -141,7 +141,8 @@
     )
     if (response.ok) {
       const { data } = await response.json()
-      mirrors.value = data
+      mirrors.value = data.data
+      total.value = data.total
     } else {
       response.json().then((err) => {
         ElMessage({ message: err.msg, type: 'warning' })
