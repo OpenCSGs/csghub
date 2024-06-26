@@ -175,7 +175,7 @@
       cardVersion.value[2].img = "/images/csghub/sync-md.png"
     }
     if (window.innerWidth >= 1024) {
-      cardVersion.value[0].img = "/images/csghub/system-md.png"
+      cardVersion.value[0].img = "/images/csghub/system.png"
       cardVersion.value[1].img = "/images/csghub/platform.png"
       cardVersion.value[2].img = "/images/csghub/sync.png"
     }
