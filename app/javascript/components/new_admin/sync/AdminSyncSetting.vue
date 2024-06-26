@@ -72,7 +72,7 @@
       :page-size="per"
       layout="prev, pager, next"
       :total="total"
-      @current-change="fetchMirrors"
+      @current-change="fetchSyncRecords"
       class="my-[52px] flex justify-center"
     />
   </div>
@@ -128,7 +128,7 @@
     }
   }
 
-  const fetchMirrors = async (current) => {
+  const fetchSyncRecords = async (current) => {
     const mirrorsEndpoint = '/internal_api/admin/sync_settings/sync_repos'
     const response = await csrfFetch(
       `${mirrorsEndpoint}?page=${current || page.value}&per=${per.value}`,
@@ -151,6 +151,6 @@
   }
 
   onMounted(() => {
-    fetchMirrors()
+    fetchSyncRecords()
   })
 </script>
