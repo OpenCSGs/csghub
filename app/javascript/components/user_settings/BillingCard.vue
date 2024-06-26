@@ -287,11 +287,11 @@
   const loadMoreBillings = (page) => {
     currentPage.value = page
     const params = new URLSearchParams()
+    params.append('scene', 10)
     params.append('per', perPage.value)
     params.append('page', currentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
-    params.append('scene', '10')
     fetchBillings(params)
   }
 
