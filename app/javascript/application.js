@@ -72,6 +72,8 @@ import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import CsghubPage from "./components/csghub/CsghubPage.vue"
 import StarShipPage from "./components/starship/StarShipPage.vue"
+import NewFinetune from "./components/finetune/NewFinetune.vue"
+import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
 
 
 // Admin pages
@@ -140,6 +142,8 @@ const app = createApp({
     AdminNavbar,
     AdminMenu,
     StarShipPage,
+    NewFinetune,
+    finetuneDetail,
     StarshipAccessTokenSettings
   },
   provide:{
