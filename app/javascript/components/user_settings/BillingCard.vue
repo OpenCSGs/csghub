@@ -246,6 +246,7 @@
   const value2 = ref('')
   const currentPage = ref(1)
   const perPage = ref(10)
+  const scene = ref(10)
   const balance = ref(0)
   const totalBillings = ref(0)
   const spaceBillings = ref([])
