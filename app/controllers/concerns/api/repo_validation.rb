@@ -19,17 +19,10 @@ module Api::RepoValidation
 
   private
 
-  def validate_repo(type)
-    repo = get_repo(type)
-    unless repo
-      return render json: { message: "未找到对应仓库" }, status: 404
-    end
-  end
-
   def validate_manage(type)
     repo = get_repo(type)
 
-    unless current_user.can_manage?(repo)
+    unless repo && current_user.can_manage?(repo)
       render_unauthorized('无权限')
       return
     end
@@ -38,7 +31,7 @@ module Api::RepoValidation
   def validate_write(type)
     repo = get_repo(type)
 
-    unless current_user.can_write?(repo)
+    unless repo && current_user.can_write?(repo)
       render_unauthorized('无权限')
       return
     end
@@ -60,9 +53,7 @@ module Api::RepoValidation
   def validate_authorization(type)
     local_repo = get_repo(type)
 
-    return unless local_repo
-
-    return render_unauthorized('无权限') unless valid_authorization?(local_repo, type)
+    return render_unauthorized('无权限') unless local_repo && valid_authorization?(local_repo, type)
   end
 
   def valid_authorization?(repo, type)
