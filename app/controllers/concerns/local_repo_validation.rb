@@ -37,10 +37,14 @@ module LocalRepoValidation
           return redirect_to errors_unauthorized_path unless current_user&.org_role(local_repo.owner)
         end
       end
-    elsif @owner
+    else
+      # 如果 @owner 不存在则不创建本地 repo
+      return unless @owner
       server_repo = JSON.parse(get_server_repo(type))
+      server_repo_info = server_repo['data']
+      # 多源同步的情况，不创建本地 repo
+      return if server_repo_info['source'] != 'local'
       if server_repo['msg'] == 'OK'
-        server_repo_info = server_repo['data']
         repo_visibility = if server_repo_info['private'].to_s == 'true'
                             'private'
                           else
