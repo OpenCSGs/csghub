@@ -1,5 +1,6 @@
 <template>
   <div class="p-[12px] rounded-[8px] mt-[16px]">
+    <!-- billing title -->
     <div class="flex justify-between items-center mb-8">
       <div class="text-[30px] leading-[38px]">
         {{ $t('billing.title') }}
@@ -12,6 +13,8 @@
         style="width: 120px"
       />
     </div>
+
+    <!-- balance -->
     <div class="flex flex-col gap-6 mb-8">
       <div
         class="flex flex-col w-[320px] rounded-lg p-6 border border-[#EAECF0] gap-6 text-[16px] leading-[24px]"
@@ -25,6 +28,8 @@
         <div class="text-[36px] leading-[44px]">¥ {{ balance }}</div>
       </div>
     </div>
+
+    <!-- space billing -->
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
         <SvgIcon name="spaces" />
@@ -46,6 +51,7 @@
         v-loading="loading"
         style="width: 100%"
       >
+        <!-- instance ID -->
         <el-table-column
           :label="$t('billing.instanceID')"
           label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
@@ -63,6 +69,7 @@
             </div>
           </template>
         </el-table-column>
+        <!-- creation time -->
         <el-table-column
           :label="$t('billing.createTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
@@ -73,6 +80,7 @@
             </div>
           </template>
         </el-table-column>
+        <!-- usage duration -->
         <el-table-column
           :label="$t('billing.usageTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
@@ -83,6 +91,7 @@
             </div>
           </template>
         </el-table-column>
+        <!-- cost -->
         <el-table-column
           :label="$t('billing.cost')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
@@ -93,6 +102,7 @@
             </div>
           </template>
         </el-table-column>
+        <!-- status -->
         <el-table-column
           :label="$t('billing.status')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
@@ -103,13 +113,14 @@
             </div>
           </template>
         </el-table-column>
+        <!-- admin show detail -->
         <el-table-column
           v-if="admin"
           width="100"
           align="center"
           fixed="right"
         >
-          <template #default="scope">
+          <template #default>
             <div class="flex gap-4 justify-end pr-4">{{ $t('billing.details') }}</div>
           </template>
         </el-table-column>
@@ -123,6 +134,8 @@
         />
       </div>
     </div>
+
+    <!-- inference instances -->
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
         <SvgIcon name="spaces" />
