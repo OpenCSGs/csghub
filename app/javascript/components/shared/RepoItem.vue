@@ -9,7 +9,13 @@
       >
         {{ getComputed.path }}
       </div>
-      <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
+      <el-tooltip
+        effect="light"
+        :content="$t('repo.source.tooltip')"
+        placement="top"
+      >
+        <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
+      </el-tooltip>
     </div>
 
     <p v-if="getComputed.showDescription"

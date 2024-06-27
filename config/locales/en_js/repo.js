@@ -11,5 +11,6 @@ export const repo = {
     all: "All sources",
     opencsg: "OpenCSG",
     local: "Local",
+    tooltip: "OpenCSG Remote Resources",
   }
 }
