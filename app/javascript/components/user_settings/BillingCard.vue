@@ -138,7 +138,7 @@
     <!-- inference instances -->
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
-        <SvgIcon name="spaces" />
+        <SvgIcon name="inference_instances" />
         {{ $t('billing.inference') }}
       </div>
       <div class="text-[14px] leading-[20px] text-[#475467]">
