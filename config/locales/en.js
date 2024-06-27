@@ -22,7 +22,6 @@ import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
 import { new_admin } from './en_js/new_admin';
 
-
 export default {
   all,
   rule,
