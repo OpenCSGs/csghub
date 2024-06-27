@@ -6,7 +6,7 @@
         {{ $t('billing.title') }}
       </div>
       <el-date-picker
-        v-model="value2"
+        v-model="selectedMonth"
         @change="dateChange"
         type="month"
         placeholder="Pick"
@@ -36,7 +36,7 @@
         {{ $t('spaces.title') }}
       </div>
       <div class="text-[14px] leading-[20px] text-[#475467]">
-        {{ $t('billing.total') }}：¥ 120.00
+        {{ $t('billing.total') }}：¥ {{ spaceTotalPrice }}
       </div>
     </div>
     <div class="w-full mb-[37px]">
@@ -130,7 +130,7 @@
           :perPage="perPage"
           :currentPage="currentPage"
           @currentChange="loadMoreBillings"
-          :total="totalCommits"
+          :total="spaceTotalBillings"
         />
       </div>
     </div>
@@ -142,7 +142,7 @@
         {{ $t('billing.inference') }}
       </div>
       <div class="text-[14px] leading-[20px] text-[#475467]">
-        {{ $t('billing.total') }}：¥ 120.00
+        {{ $t('billing.total') }}：¥ {{ inferenceTotalPrice }}
       </div>
     </div>
     <div class="w-full">
@@ -152,7 +152,7 @@
         header-cell-class-name="billing-table-header-cell"
         row-class-name="billing-table-row"
         cell-class-name="billing-table-row-cell"
-        :data="spaceBillings"
+        :data="inferenceBillings"
         stripe
         v-loading="loading"
         style="width: 100%"
@@ -230,7 +230,7 @@
           :perPage="perPage"
           :currentPage="currentPage"
           @currentChange="loadMoreBillings"
-          :total="totalBillings"
+          :total="inferenceTotalBillings"
         />
       </div>
     </div>
@@ -240,29 +240,25 @@
 <script setup>
   import { ref, inject, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import Menu from './Menu.vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import dayjs from 'dayjs'
   import { useCookies } from 'vue3-cookies'
 
-  const props = defineProps({
-    name: String,
-    displayName: String,
-    avatar: String,
-    email: String
-  })
-
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
-  const value2 = ref('')
+  const selectedMonth = ref('')
   const currentPage = ref(1)
   const perPage = ref(10)
-  const scene = ref(10)
   const balance = ref(0)
-  const totalBillings = ref(0)
   const spaceBillings = ref([])
+  const spaceTotalBillings = ref(0)
+  const inferenceBillings = ref([])
+  const inferenceTotalBillings = ref(0)
+  const spaceTotalPrice = ref(0)
+  const inferenceTotalPrice = ref(0)
+
   const { cookies } = useCookies()
   const startDate = ref('')
   const endDate = ref('')
@@ -321,25 +317,51 @@
     }
   }
 
-  const fetchBillings = async (params = new URLSearchParams()) => {
-    console.log('fetchBillings')
-    params.append('scene', scene.value)
+  const fetchBillings = async () => {
+    await fetchInference()
+    await fetchSpace()
+  }
+  const fetchInference = async () => {
+    const params = new URLSearchParams()
     params.append('per', perPage.value)
     params.append('page', currentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
+    params.append('scene', 10)
+
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
     const res = await jwtFetch(url)
+
     if (!res.ok) {
-      res.json().then(({ msg }) => {
-        ElMessage({ message: msg, type: 'warning' })
-      })
+      const { msg } = await res.json()
+      ElMessage({ message: msg, type: 'warning' })
     } else {
-      res.json().then(({ data }) => {
-        console.log(data)
-        spaceBillings.value = data.data
-        totalBillings.value = data.total
-      })
+      const { data } = await res.json()
+      console.log('Data for scene 10:', data)
+      inferenceBillings.value = data.data
+      inferenceTotalBillings.value = data.total
+    }
+  }
+
+  const fetchSpace = async () => {
+    const params = new URLSearchParams()
+    params.append('per', perPage.value)
+    params.append('page', currentPage.value)
+    params.append('start_date', startDate.value)
+    params.append('end_date', endDate.value)
+    params.append('scene', 11)
+
+    const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
+    const res = await jwtFetch(url)
+
+    if (!res.ok) {
+      const { msg } = await res.json()
+      ElMessage({ message: msg, type: 'warning' })
+    } else {
+      const { data } = await res.json()
+      console.log('Data for scene 11:', data)
+      spaceBillings.value = data.data
+      spaceTotalBillings.value = data.total
     }
   }
 
@@ -348,20 +370,7 @@
     console.log(dayjs(date).format('YYYY-MM-DD'))
     return dayjs(date).format('YYYY-MM-DD')
   }
-  // const confirmRefreshAccessToken = () => {
-  //   ElMessageBox.confirm(t('accessToken.refreshWarning'), 'Warning', {
-  //     confirmButtonText: t('accessToken.confirm'),
-  //     cancelButtonText: t('all.cancel'),
-  //     type: 'warning'
-  //   }).then(() => {
-  //     refreshAccessToken()
-  //   }).catch(() => {
-  //     ElMessage({
-  //       message: t('accessToken.cancelInfo'),
-  //       type: 'info'
-  //     })
-  //   })
-  // }
+
 </script>
 <style scoped lang="less">
   :deep(.billing-table) {
