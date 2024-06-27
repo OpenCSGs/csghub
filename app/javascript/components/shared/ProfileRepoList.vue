@@ -165,7 +165,7 @@
     ];
     if(props.initiator=='profile'){
         const endpointsUrl = reposUrl("endpoints")
-        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal));
+        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal,'endpoints'));
         const finetunesUrl = reposUrl("finetunes")
         promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
         
@@ -230,13 +230,16 @@
 
   const fetchMoreEndpoints = async () => {
     const url = reposUrl("endpoints")
-    await fetchData(url, endpoints, endpoints.value.total)
+    await fetchData(url, endpoints, endpoints.value.total,'endpoints')
   }
 
-  const fetchData = async (url, targetRef, total) => {
+  const fetchData = async (url, targetRef, total,type) => {
     const params = new URLSearchParams()
     params.append("per", total)
     params.append("page", 1)
+    if(type=='endpoints'){
+      params.append("deploy_type", 1)
+    }
 
     jwtFetch(`${url}?${params}`)
       .then((response) => {
