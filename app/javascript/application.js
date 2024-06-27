@@ -45,6 +45,9 @@ import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
+import NewFinetune from "./components/finetune/NewFinetune.vue"
+import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -84,8 +87,10 @@ const app = createApp({
     EndpointDetail,
     AdminNavbar,
     AdminMenu,
-    StarshipAccessTokenSettings,
-    BillingSettings
+    BillingSettings,
+    NewFinetune,
+    finetuneDetail,
+    StarshipAccessTokenSettings
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

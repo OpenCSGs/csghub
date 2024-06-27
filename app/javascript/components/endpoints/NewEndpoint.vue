@@ -69,7 +69,7 @@
             v-for="item in endpointResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
@@ -118,7 +118,7 @@
         <el-radio-group v-model="visibility" class="!block">
           <el-radio
             class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4"
-            label="public"
+            value="public"
             size="large"
             border
           >
@@ -129,7 +129,7 @@
           </el-radio>
           <el-radio
             class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4"
-            label="private"
+            value="private"
             size="large"
             border
           >
@@ -230,6 +230,7 @@
     return (
       nameRule.test(endpointName.value) &&
       modelIdRegex.test(modelId.value) &&
+      endpointFramework.value &&
       maxReplica.value >= minReplica.value
     );
   });
@@ -244,31 +245,9 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        endpointResource.value = body.data[0]?.resources || "";
+        endpointResource.value = body.data[0]?.id || "";
         endpointResources.value = body.data;
       });
-    }
-  };
-
-  const fetchFrameworks = async () => {
-    const options = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    };
-
-    try {
-      const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
-        options
-      );
-      if (res.ok) {
-        res.json().then((body) => {
-          endpointFramework.value = body.data[0]?.id || "";
-          endpointFrameworks.value = body.data;
-        });
-      }
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -289,7 +268,7 @@
   };
 
   const fetchModels = async (query, cb) => {
-    const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`);
+    const res = await jwtFetch(`${csghubServer}/api/v1/runtime_framework/models?search=${query}`);
     if (!res.ok) {
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
@@ -342,9 +321,26 @@
     window.location.pathname = `/endpoints/${props.namespace}/${endpointName.value}/${endpointId}`;
   };
 
+  const updateRuntimeFramework = async () => {
+    const res = await jwtFetch(`${csghubServer}/api/v1/models/${modelId.value}/runtime_framework`);
+    if (!res.ok) {
+      endpointFramework.value = ""
+      endpointFrameworks.value = []
+    } else {
+      res.json().then((body) => {
+        endpointFramework.value = body.data == null ? "" : body.data[0].id;
+        endpointFrameworks.value = body.data;
+      })
+    }
+  }
+
+  watch(modelId, () => {
+    updateRuntimeFramework();
+  });
+
   onMounted(() => {
     fetchResources();
-    fetchFrameworks();
+    updateRuntimeFramework();
     fetchClusters();
   });
 </script>

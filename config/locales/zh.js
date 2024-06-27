@@ -18,6 +18,7 @@ import { spaces } from './zh_js/spaces';
 import { user_sessions } from './zh_js/user_sessions';
 import { components } from './zh_js/components';
 import { endpoints } from './zh_js/endpoints';
+import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
 import { billing } from './zh_js/billing';
 
@@ -43,5 +44,6 @@ export default {
   components,
   endpoints,
   admin,
-  billing
+  billing,
+  finetune
 };

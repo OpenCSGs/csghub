@@ -13,20 +13,26 @@ module Starhub
       @client = Starhub::Client.init_with user_ip
     end
 
-    def create_user(name, nickname, email)
+    def create_user(name, nickname, phone, email, login_identity)
       options = {
         username: name,
         name: nickname,
-        email: email
+        email: email,
+        phone: phone,
+        uuid: login_identity,
+        reg_provider: ENV.fetch('REG_PROVIDER', 'default')
       }
       @client.post("/users?current_user=#{name}", options)
     end
 
-    def update_user(name, nickname, email)
+    def update_user(name, nickname, phone, email, login_identity)
       options = {
         username: name,
         name: nickname,
-        email: email
+        email: email,
+        phone: phone,
+        uuid: login_identity,
+        reg_provider: ENV.fetch('REG_PROVIDER', 'default')
       }
       @client.put("/users/#{name}?current_user=#{name}", options)
     end

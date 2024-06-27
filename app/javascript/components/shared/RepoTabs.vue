@@ -32,7 +32,10 @@
           :appEndpoint="appEndpoint"
         />
         <StoppedPage
-          v-else-if="repoType === 'space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
+          v-else-if="
+            repoType === 'space' &&
+            (appStatus === 'Stopped' || appStatus === 'Sleeping')
+          "
           :appStatus="appStatus"
           :canWrite="canWrite"
           :path="repoDetail.path"
@@ -202,7 +205,7 @@
           :application-space-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
-          :cloudResource="repoDetail.hardware"
+          :cloudResource="repoDetail.sku || repoDetail.hardware"
           :coverImage="repoDetail.cover_image_url"
           @showSpaceLogs="showSpaceLogs"
         />
@@ -211,7 +214,8 @@
           :path="repoDetail.path"
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch" />
+          :default_branch="repoDetail.default_branch"
+        />
         <EndpointSettings
           v-if="repoType === 'endpoint'"
           :endpointName="endpointName"
@@ -219,7 +223,7 @@
           :appStatus="appStatus"
           :modelId="modelId"
           :userName="userName"
-          :cloudResource="repoDetail.hardware"
+          :cloudResource="repoDetail.sku || repoDetail.hardware"
           :framework="repoDetail.runtime_framework"
           :maxReplica="repoDetail.max_replica"
           :minReplica="repoDetail.min_replica"
@@ -299,7 +303,9 @@
     if (props.repoType === 'space') {
       return 'ApplicationSpace'
     } else {
-      return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`
+      return `${props.repoType.charAt(0).toUpperCase()}${props.repoType
+        .slice(1)
+        .toLowerCase()}`
     }
   })
 
@@ -312,7 +318,7 @@
   const repoNamespace = computed(() => {
     if (!!props.repoDetail.path) {
       return props.repoDetail.path.split('/')[0]
-    } else if(!!props.repoDetail.model_id) {
+    } else if (!!props.repoDetail.model_id) {
       return props.userName
     } else {
       return ''
