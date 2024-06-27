@@ -139,8 +139,10 @@
     })
     if (response.ok) {
       const { data } = await response.json()
-      form.value = data
-      submitKey.value = 'admin.syncSetting.update'
+      if (data) {
+        form.value = data
+        submitKey.value = 'admin.syncSetting.update'
+      }
     }
   }
 
