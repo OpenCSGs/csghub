@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
   import dayjs from "dayjs"
   import { ElMessage } from 'element-plus'
