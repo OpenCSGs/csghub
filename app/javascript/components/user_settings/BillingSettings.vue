@@ -20,11 +20,11 @@
 <script setup>
   import Menu from './Menu.vue'
   import BillingCard from './BillingCard.vue'
+
   const props = defineProps({
     name: String,
     displayName: String,
     avatar: String,
     email: String
   })
-
 </script>
