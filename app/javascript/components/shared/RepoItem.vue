@@ -46,7 +46,6 @@
 <script setup>
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
-import SvgIcon from './SvgIcon.vue';
 
   const props = defineProps({
     repo: Object,
