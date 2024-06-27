@@ -61,7 +61,7 @@
               <div class="flex flex-col">
                 <div
                   class="text-[14px] font-[300] leading-[20px] text-[#475467]"
-                  v-if="!!scope.row.name"
+                  v-if="!!scope.row.instance_name"
                 >
                   @{{ scope.row.instance_name }}
                 </div>
@@ -87,7 +87,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ scope.row.role }}
+              {{ scope.row.value }}
             </div>
           </template>
         </el-table-column>
@@ -166,9 +166,9 @@
               <div class="flex flex-col">
                 <div
                   class="text-[14px] font-[300] leading-[20px] text-[#475467]"
-                  v-if="!!scope.row.name"
+                  v-if="!!scope.row.instance_name"
                 >
-                  @{{ scope.row.name }}
+                  @{{ scope.row.instance_name }}
                 </div>
               </div>
             </div>
@@ -180,7 +180,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ formatDate(scope.row.last_login_at) }}
+              {{ formatDate(scope.row.created_at) }}
             </div>
           </template>
         </el-table-column>
@@ -190,7 +190,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ scope.row.role }}
+              {{ scope.row.value }}
             </div>
           </template>
         </el-table-column>
@@ -200,7 +200,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ scope.row.role }}
+              {{ scope.row.consumption }}
             </div>
           </template>
         </el-table-column>
@@ -267,7 +267,6 @@
 
   onMounted(() => {
     fetchBalance()
-    // fetchBillings()
   })
 
   const dateChange = (e) => {
