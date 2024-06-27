@@ -40,6 +40,14 @@
       </div>
     </div>
     <BillingTable :billings="spaceBillings"/>
+    <div class="mt-[12px] mb-[16px] flex justify-center">
+      <CsgPagination
+        :perPage="perPage"
+        :currentPage="spaceCurrentPage"
+        @currentChange="fetchSpace"
+        :total="spaceTotalBillings"
+      />
+    </div>
 
     <!-- inference instances -->
     <div class="flex justify-between mb-4">
@@ -52,13 +60,21 @@
       </div>
     </div>
     <BillingTable :billings="inferenceBillings"/>
+    <div class="mt-[12px] mb-[16px] flex justify-center">
+      <CsgPagination
+        :perPage="perPage"
+        :currentPage="inferenceCurrentPage"
+        @currentChange="fetchInference"
+        :total="inferenceTotalBillings"
+      />
+    </div>
 </template>
 
 <script setup>
   import { ref, inject, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
   import CsgPagination from '../shared/CsgPagination.vue'
-  import { ElMessage, ElMessageBox } from 'element-plus'
+  import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import dayjs from 'dayjs'
   import { useCookies } from 'vue3-cookies'
@@ -67,8 +83,11 @@
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
   const selectedMonth = ref('')
-  const currentPage = ref(1)
   const perPage = ref(10)
+
+  const spaceCurrentPage = ref(1)
+  const inferenceCurrentPage = ref(1)
+
   const balance = ref(0)
   const spaceBillings = ref([])
   const spaceTotalBillings = ref(0)
@@ -78,14 +97,32 @@
   const inferenceTotalPrice = ref(0)
 
   const { cookies } = useCookies()
-  const startDate = ref('')
-  const endDate = ref('')
+  const startDate = ref(getFirstDayOfMonth)
+  const endDate = ref(getCurrentDate)
 
   const loginIdentity = cookies.get('login_identity')
 
   onMounted(() => {
     fetchBalance()
+    fetchBillings()
   })
+
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始，所以需要+1，并使用padStart来确保总是两位数
+    const day = String(now.getDate()).padStart(2, '0'); // 使用padStart来确保总是两位数
+    return `${year}-${month}-${day}`;
+  }
+
+  const getFirstDayOfMonth = () => {
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1); // 设置日期为1来获取这个月的第一天
+    const year = firstDay.getFullYear();
+    const month = String(firstDay.getMonth() + 1).padStart(2, '0');
+    const day = String(firstDay.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   const dateChange = (e) => {
     console.log(e)
@@ -114,11 +151,6 @@
     return lastDay
   }
 
-  const loadMoreBillings = (page) => {
-    currentPage.value = page
-    fetchBillings()
-  }
-
   // 获取用户的余额
   const fetchBalance = async (params = new URLSearchParams()) => {
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/balance`
@@ -139,10 +171,15 @@
     await fetchInference()
     await fetchSpace()
   }
+
+  // scene = 10：model inference endpoint
+  // scene = 11：space
+  // scene = 12: model finetune
+  // scene = 20：starship-ide
   const fetchInference = async () => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', currentPage.value)
+    params.append('page', inferenceCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 10)
@@ -161,10 +198,14 @@
     }
   }
 
+  // scene = 10：model inference endpoint
+  // scene = 11：space
+  // scene = 12: model finetune
+  // scene = 20：starship-ide
   const fetchSpace = async () => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', currentPage.value)
+    params.append('page', spaceCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 11)
@@ -188,8 +229,8 @@
     console.log(dayjs(date).format('YYYY-MM-DD'))
     return dayjs(date).format('YYYY-MM-DD')
   }
-
 </script>
+
 <style scoped lang="less">
   :deep(.billing-table) {
     .el-table__empty-block {

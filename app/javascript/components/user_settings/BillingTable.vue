@@ -90,15 +90,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <div class="mt-[12px] mb-[16px] flex justify-center">
-      <CsgPagination
-        :perPage="perPage"
-        :currentPage="currentPage"
-        @currentChange="loadMoreBillings"
-        :total="spaceTotalBillings"
-      />
-    </div>
   </div>
 </template>
 
