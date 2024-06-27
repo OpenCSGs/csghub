@@ -14,6 +14,7 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
                                                  params[:framework_tag],
                                                  params[:language_tag],
                                                  params[:license_tag],
+                                                 params[:source],
                                                  params[:page],
                                                  params[:per_page])
     api_response = JSON.parse(res_body)

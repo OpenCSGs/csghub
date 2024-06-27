@@ -6,5 +6,10 @@ export const repo = {
     desc: "Provide more description",
     update: "Update file",
     cancel: "Cancel",
+  },
+  source: {
+    all: "All sources",
+    opencsg: "OpenCSG",
+    local: "Local",
   }
 }
