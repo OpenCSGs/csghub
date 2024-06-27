@@ -19,6 +19,7 @@ import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
 import { endpoints } from './en_js/endpoints';
 import { admin } from './en_js/admin';
+import { new_admin } from './en_js/new_admin';
 
 export default {
   all,
@@ -41,5 +42,6 @@ export default {
   repo,
   components,
   endpoints,
-  admin
+  admin,
+  new_admin
 };

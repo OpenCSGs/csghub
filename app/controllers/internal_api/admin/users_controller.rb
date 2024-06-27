@@ -18,7 +18,7 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
   end
 
   def recharge
-    render json: Starhub::api.user_recharge(@user.login_identity, current_user.login_identity, current_user.name, params[:value].to_i)
+    render json: csghub_api.user_recharge(@user.login_identity, current_user.login_identity, current_user.name, params[:value].to_i)
   end
 
   private

@@ -28,27 +28,32 @@
           <p>{{ dayjs(user.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
         </li>
         <li class="flex justify-between mb-4">
-          <label class="flex-none">Credit</label>
-          <div @click="refreshDialogVisible = true" class="border px-[16px] rounded-lg border-amber-50 bg-orange-500 cursor-pointer">充值</div>
-          <p>{{ credit }}</p>
+          <label>Credit</label>
+          <div class="flex items-center">
+            <div @click="refreshDialogVisible = true"
+              class="border px-[16px] rounded-lg border-amber-50 bg-orange-500 cursor-pointer">{{
+            $t('new_admin.user.recharge') }}</div>
+            <p class="ml-3">{{ credit }}</p>
+          </div>
         </li>
       </ul>
     </el-card>
-    <el-dialog v-model="refreshDialogVisible" title="充值" width="30%" class="dialogWidth"
-                 style="border-radius: 0.5rem;" left>
-          <div class="mb-[16px]">
-            <p class="text-[#303133] text-[14px] mb-[8px]">充值金额 <span class="text-red-400">*</span></p>
-            <el-input v-model="value" placeholder="充值金额" maxlength="20"/>
-          </div>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="refreshDialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="fetchRecharge">
-              {{ $t('all.add') }}
-            </el-button>
+    <el-dialog v-model="refreshDialogVisible" :title="$t('new_admin.user.recharge')" width="20%" class="dialogWidth"
+      style="border-radius: 0.5rem;" left>
+      <div class="mb-[16px]">
+        <p class="text-[#303133] text-[14px] mb-[8px]">{{ $t('new_admin.user.inputTitle') }} <span
+            class="text-red-400">*</span></p>
+        <el-input v-model="value" type="number" :placeholder="$t('new_admin.user.inputPlaceholder')" maxlength="20" />
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="refreshDialogVisible = false">{{ $t('new_admin.user.cancel') }}</el-button>
+          <el-button type="primary" @click="fetchRecharge">
+            {{ $t('new_admin.user.confirm') }}
+          </el-button>
         </span>
-        </template>
-      </el-dialog>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -66,7 +71,6 @@
   const credit = ref(0)
   const refreshDialogVisible = ref(false)
   const value = ref(0)
-
 
   const fetchUser = async () => {
     const response = await fetch(`/internal_api/admin/users/${route.params.id}`)
@@ -94,17 +98,14 @@
   }
 
   const fetchRecharge = async () => {
-    const options = {
-      method: 'PUT'
-    }
-    const response = await csrfFetch(`/internal_api/admin/users/recharge/${route.params.id}/${value.value}`, options)
+    const response = await csrfFetch(`/internal_api/admin/users/recharge/${route.params.id}/${value.value}`, { method: 'PUT' })
     if (response.ok) {
       const res = await response.json()
       credit.value = res.data.balance
       refreshDialogVisible.value = false
-      ElMessage.success('successful')
+      ElMessage.success('Be recharged successfully')
     } else {
-      ElMessage.error('Failed to fetch credit')
+      ElMessage.error('Failed to recharge')
     }
   }
 
