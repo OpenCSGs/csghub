@@ -212,6 +212,7 @@
     } else {
       res.json().then(body => {
         ElMessage({message: 'Sync repo success', type: "success"})
+        location.reload()
       })
     }
   }
