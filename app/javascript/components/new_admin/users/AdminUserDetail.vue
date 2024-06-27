@@ -33,7 +33,7 @@
             <div @click="refreshDialogVisible = true"
               class="border px-[16px] rounded-lg border-amber-50 bg-orange-500 cursor-pointer">{{
             $t('new_admin.user.recharge') }}</div>
-            <p class="ml-3">{{ credit }}</p>
+            <p class="ml-3">{{ credit }} 元</p>
           </div>
         </li>
       </ul>
@@ -62,11 +62,9 @@
   import { useRoute } from 'vue-router'
   import dayjs from "dayjs"
   import { ElMessage } from 'element-plus'
-  import jwtFetch from '../../../packs/jwtFetch'
   import csrfFetch from '../../../packs/csrfFetch'
 
   const route = useRoute()
-  const csghubServer = inject('csghubServer')
   const user = ref({})
   const credit = ref(0)
   const refreshDialogVisible = ref(false)
@@ -84,11 +82,7 @@
   }
 
   const fetchCredit = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const response = await jwtFetch(`${csghubServer}/api/v1/accounting/credit/${user.value.login_identity}/balance`, options)
+    const response = await csrfFetch(`/internal_api/admin/users/balance/${route.params.id}`, { method: 'GET' })
     if (response.ok) {
       const res = await response.json()
       credit.value = res.data.balance
