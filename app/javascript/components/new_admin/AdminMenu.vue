@@ -17,6 +17,14 @@
     </RouterLink>
 
     <RouterLink
+      v-if="onPremise"
+      to="/new_admin/sync"
+      class="underline"
+    >
+      Sync Setting
+    </RouterLink>
+
+    <RouterLink
       v-if="!onPremise"
       to="/new_admin/email_sending"
       class="underline"
