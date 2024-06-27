@@ -4,7 +4,7 @@
       <a href="https://opencsg.com/about">{{ $t('footer.company') }}</a>
       <a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a>
       <a href="https://opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a>
-      <a href="https://www.zhipin.com/gongsi/76f4b428e71d5d1d1HR43Nq9FVY\~.html?ka=search_rcmd_company_name_76f4b428e71d5d1d1HR43Nq9FVY\~\_custompage" target="_blank">{{ $t('footer.join') }}</a>
+      <a href="https://www.zhipin.com/gongsi/76f4b428e71d5d1d1HR43Nq9FVY~.html?ka=search_rcmd_company_name_76f4b428e71d5d1d1HR43Nq9FVY~_custompage" target="_blank">{{ $t('footer.join') }}</a>
       <a @click="showDialog" target="_blank">{{ $t('footer.contact') }}</a>
       <a href="/policy" target="_blank">{{ $t('footer.policy') }}</a>
     </div>
