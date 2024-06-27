@@ -8,6 +8,7 @@ export const admin = {
     concurrent: 'Concurrent Task',
     bandwidth: 'Bandwidth Limit (MB)',
     submit: 'Submit',
+    update: 'Update',
     mirrors: 'Sync Queue',
   }
 }

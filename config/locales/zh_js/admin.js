@@ -8,6 +8,7 @@ export const admin = {
     concurrent: '并发任务',
     bandwidth: '带宽上限 (MB)',
     submit: '提交',
+    update: '更新',
     mirrors: '同步队列',
   }
 }

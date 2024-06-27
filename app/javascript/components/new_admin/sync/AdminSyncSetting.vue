@@ -34,7 +34,7 @@
         <el-button
           type="primary"
           @click="onSubmit"
-          >{{ $t('admin.syncSetting.submit') }}</el-button
+          >{{ $t(submitKey) }}</el-button
         >
       </el-form-item>
     </el-form>
@@ -95,6 +95,7 @@
   const page = ref(1)
   const per = ref(10)
   const total = ref(0)
+  const submitKey = ref('admin.syncSetting.submit')
 
   const onSubmit = () => {
     if (form.value.token === '') {
@@ -139,6 +140,7 @@
     if (response.ok) {
       const { data } = await response.json()
       form.value = data
+      submitKey.value = 'admin.syncSetting.update'
     }
   }
 
