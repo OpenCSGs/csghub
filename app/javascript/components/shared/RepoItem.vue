@@ -3,12 +3,13 @@
      :class="`${repoType}-card  hover:active-${repoType}-card `"
      class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-xl"
   >
-    <div class="flex items-center mb-[5px] w-[399px] lg:w-[370px] mlg:w-full">
+    <div class="flex items-center justify-between mb-[5px] w-[399px] lg:w-[370px] mlg:w-full">
       <div :class="`${repoType}-path`"
            class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap"
       >
         {{ getComputed.path }}
       </div>
+      <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
     </div>
 
     <p v-if="getComputed.showDescription"
@@ -45,6 +46,7 @@
 <script setup>
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
+import SvgIcon from './SvgIcon.vue';
 
   const props = defineProps({
     repo: Object,
@@ -70,6 +72,14 @@
       default:
         return ''
     }
+  })
+
+  const sourceIcon = computed(() => {
+    if (props.repo.source !== 'opencsg') return ''
+    
+    return props.repo.sync_status === 'completed' 
+      ? 'repo_opencsg_completed' 
+      : 'repo_opencsg_sync'
   })
 
   const getComputed = computed(() => {
