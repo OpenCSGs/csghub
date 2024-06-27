@@ -21,14 +21,15 @@
             <div class="flex flex-col">
               <div
                 class="text-[14px] font-[300] leading-[20px] text-[#475467]"
-                v-if="!!scope.row.name"
+                v-if="!!scope.row.instance_name"
               >
-                @{{ scope.row.instance_name }}
+                #{{ scope.row.instance_name }}
               </div>
             </div>
           </div>
         </template>
       </el-table-column>
+
       <!-- creation time -->
       <el-table-column
         :label="$t('billing.createTime')"
@@ -40,6 +41,7 @@
           </div>
         </template>
       </el-table-column>
+
       <!-- usage duration -->
       <el-table-column
         :label="$t('billing.usageTime')"
@@ -47,10 +49,11 @@
       >
         <template #default="scope">
           <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-            {{ scope.row.role }}
+            {{ scope.row.value }}
           </div>
         </template>
       </el-table-column>
+
       <!-- cost -->
       <el-table-column
         :label="$t('billing.cost')"
@@ -62,6 +65,7 @@
           </div>
         </template>
       </el-table-column>
+
       <!-- status -->
       <el-table-column
         :label="$t('billing.status')"
@@ -73,6 +77,7 @@
           </div>
         </template>
       </el-table-column>
+
       <!-- admin show detail -->
       <el-table-column
         v-if="admin"
@@ -85,12 +90,13 @@
         </template>
       </el-table-column>
     </el-table>
+
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
         :currentPage="currentPage"
         @currentChange="loadMoreBillings"
-        :total="totalCommits"
+        :total="spaceTotalBillings"
       />
     </div>
   </div>
