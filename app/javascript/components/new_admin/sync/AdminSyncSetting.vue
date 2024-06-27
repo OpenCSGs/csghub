@@ -41,10 +41,10 @@
 
     <hr class="my-8" />
 
-    <h3 class="mb-5">{{ $t('admin.syncSetting.mirrors') }}</h3>
+    <h3 class="mb-5">{{ $t('admin.syncSetting.queues') }}</h3>
 
     <el-table
-      :data="mirrors"
+      :data="queues"
       style="width: 100%"
     >
       <el-table-column
@@ -91,7 +91,7 @@
 
   const concurrentCounts = [1, 2, 3]
   const bandwidthCounts = [50, 100, 150, 200]
-  const mirrors = ref([])
+  const queues = ref([])
   const page = ref(1)
   const per = ref(10)
   const total = ref(0)
@@ -147,9 +147,9 @@
   }
 
   const fetchSyncRecords = async (current) => {
-    const mirrorsEndpoint = '/internal_api/admin/sync_settings/sync_repos'
+    const queuesEndpoint = '/internal_api/admin/sync_settings/sync_repos'
     const response = await csrfFetch(
-      `${mirrorsEndpoint}?page=${current || page.value}&per=${per.value}`,
+      `${queuesEndpoint}?page=${current || page.value}&per=${per.value}`,
       {
         method: 'GET',
         headers: {
@@ -159,7 +159,7 @@
     )
     if (response.ok) {
       const { data } = await response.json()
-      mirrors.value = data.data
+      queues.value = data.data
       total.value = data.total
     } else {
       response.json().then((err) => {

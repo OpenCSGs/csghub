@@ -9,6 +9,6 @@ export const admin = {
     bandwidth: 'Bandwidth Limit (MB)',
     submit: 'Submit',
     update: 'Update',
-    mirrors: 'Sync Queue',
+    queues: 'Sync Queue',
   }
 }
