@@ -63,7 +63,7 @@
                   class="text-[14px] font-[300] leading-[20px] text-[#475467]"
                   v-if="!!scope.row.instance_name"
                 >
-                  @{{ scope.row.instance_name }}
+                  #{{ scope.row.instance_name }}
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@
                   class="text-[14px] font-[300] leading-[20px] text-[#475467]"
                   v-if="!!scope.row.instance_name"
                 >
-                  @{{ scope.row.instance_name }}
+                  #{{ scope.row.instance_name }}
                 </div>
               </div>
             </div>
