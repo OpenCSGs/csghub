@@ -128,6 +128,20 @@
     }
   }
 
+  const fetchSyncSettings = async () => {
+    const settingsEndpoint = '/internal_api/admin/sync_settings'
+    const response = await csrfFetch(settingsEndpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    if (response.ok) {
+      const { data } = await response.json()
+      form.value = data
+    }
+  }
+
   const fetchSyncRecords = async (current) => {
     const mirrorsEndpoint = '/internal_api/admin/sync_settings/sync_repos'
     const response = await csrfFetch(
@@ -151,6 +165,7 @@
   }
 
   onMounted(() => {
+    fetchSyncSettings()
     fetchSyncRecords()
   })
 </script>

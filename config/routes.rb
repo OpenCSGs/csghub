@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   namespace :internal_api do
     namespace :admin do
       resources :users, only: [:index, :show]
-      resources :sync_settings, only: [:create] do
+      resources :sync_settings, only: [:index, :create] do
         collection do
           get :sync_repos
         end

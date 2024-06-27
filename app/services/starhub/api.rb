@@ -264,6 +264,13 @@ module Starhub
       res.body
     end
 
+    def get_sync_settings(username, options = {})
+      options[:current_user] = username
+      res = @client.get("/sync/client_setting", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def create_sync_settings(username, options = {})
       options[:current_user] = username
       @client.post("/sync/client_setting", options)
