@@ -301,6 +301,7 @@
     fetchBillings()
   }
 
+  // 获取用户的余额
   const fetchBalance = async (params = new URLSearchParams()) => {
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/balance`
     const res = await jwtFetch(url)
