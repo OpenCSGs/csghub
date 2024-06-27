@@ -66,7 +66,8 @@
     settingsVisibility: Boolean,
     repoType: String,
     sdk: String,
-    localRepoId: String
+    localRepoId: String,
+    repo: Object
   })
 
   const summaryLabel = computed(() => {
@@ -89,7 +90,11 @@
         return true
       }
     } else {
-      return true
+      if (props.repo.source === 'opencsg' && ['pending', 'failed'].includes(props.repo.sync_status)) {
+        return false
+      } else {
+        return true
+      }
     }
   })
 

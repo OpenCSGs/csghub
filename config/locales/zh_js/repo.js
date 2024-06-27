@@ -6,5 +6,9 @@ export const repo = {
     desc: "提供更多描述",
     update: "更新文件",
     cancel: "取消",
+  },
+  sync: {
+    syncButton: "同步",
+    syncing: "同步中",
   }
 }

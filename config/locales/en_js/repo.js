@@ -6,5 +6,9 @@ export const repo = {
     desc: "Provide more description",
     update: "Update file",
     cancel: "Cancel",
+  },
+  sync: {
+    syncButton: "Sync",
+    syncing: "Syncing",
   }
 }
