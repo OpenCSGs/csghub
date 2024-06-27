@@ -255,45 +255,6 @@ module Starhub
       res.body
     end
 
-    def get_repo_mirror(repo_type, namespace, repo_name, options = {})
-      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/mirror", options)
-      res.body
-    end
-
-    def sync_repo_mirror(repo_type, namespace, repo_name, options = {})
-      res = @client.post("/#{repo_type}/#{namespace}/#{repo_name}/mirror/sync?current_user=#{options[:current_user]}", options)
-    end
-
-    def get_sync_repos(username, options = {})
-      options[:per] ||= 6
-      options[:page] ||= 1
-      options[:current_user] = username
-      res = @client.get("/mirror/repos", options)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
-    def create_mirror(repo_type, namespace, name, options = {})
-      res = @client.post("/#{repo_type}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
-      raise StarhubError, res.body unless res.success?
-    end
-
-    def delete_mirror(repo_type, namespace, name, options = {})
-      res = @client.delete("/#{repo_type}s/#{namespace}/#{name}/mirror?current_user=#{options[:current_user]}", options)
-      raise StarhubError, res.body unless res.success?
-    end
-
-    def get_mirror_sources
-      res = @client.get("/mirror/sources", options = {})
-    end
-
-    def get_sync_settings(username, options = {})
-      options[:current_user] = username
-      res = @client.get("/sync/client_setting", options)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
     def get_user_balance(user_uuid, username, options = {})
       res = @client.get("/accounting/credit/#{user_uuid}/balance?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
