@@ -10,5 +10,6 @@ export const billing = {
   details: 'Details',
   total: 'Total',
   refresh: 'Refresh',
-  instanceBilling:'Instance Billing'
+  instanceBilling: 'Instance Billing',
+  billing: 'Billing'
 }
