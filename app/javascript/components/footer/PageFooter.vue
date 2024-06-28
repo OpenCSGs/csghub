@@ -8,7 +8,7 @@
             <p><a href="https://opencsg.com/about">{{ $t('footer.company') }}</a></p>
             <p><a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a></p>
             <p><a href="https://opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a></p>
-            <p><a href="https://opencsg.com#joinUs">{{ $t('footer.join') }}</a></p>
+            <p><a href="https://www.zhipin.com/gongsi/76f4b428e71d5d1d1HR43Nq9FVY~.html?ka=search_rcmd_company_name_76f4b428e71d5d1d1HR43Nq9FVY~_custompage" target="_blank">{{ $t('footer.join') }}</a></p>
           </div>
         </div>
         <div class="flex gap-x-[100px] mlg:mt-0">
