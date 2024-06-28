@@ -82,7 +82,7 @@
   import { ref, inject, onMounted, computed } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { getCurrentDate, getFirstDayOfMonth, formatDate } from '../../packs/datetimeUtils'
+  import { getCurrentTime, getFirstDayOfTime, formatDate } from '../../packs/datetimeUtils'
 
   const props = defineProps({
     type: String,
@@ -99,8 +99,8 @@
   const totalPrice = ref(0)
   const billings = ref([])
   const selectedMonth = ref('')
-  const startDate = ref(getFirstDayOfMonth())
-  const endDate = ref(getCurrentDate())
+  const startTime = ref(getFirstDayOfTime())
+  const endTime = ref(getCurrentTime())
   const scene = computed(() => {
     let tempScene = 10
     switch (props.type) {
@@ -156,8 +156,8 @@
     const params = new URLSearchParams()
     params.append('per', perPage.value)
     params.append('page', currentPage.value)
-    params.append('start_date', startDate.value)
-    params.append('end_date', endDate.value)
+    params.append('start_time', startTime.value)
+    params.append('end_time', endTime.value)
     params.append('scene', scene.value)
     params.append('instance_name ', props.instanceName)
 
