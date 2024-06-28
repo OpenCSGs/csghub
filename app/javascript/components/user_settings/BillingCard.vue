@@ -39,7 +39,7 @@
         {{ $t('billing.total') }}：¥ {{ spaceTotalPrice }}
       </div>
     </div>
-    <BillingTable :billings="spaceBillings"/>
+    <BillingTable :billings="spaceBillings" type="space"/>
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
@@ -59,7 +59,7 @@
         {{ $t('billing.total') }}：¥ {{ inferenceTotalPrice }}
       </div>
     </div>
-    <BillingTable :billings="inferenceBillings"/>
+    <BillingTable :billings="inferenceBillings" type="inference"/>
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
