@@ -10,7 +10,7 @@ export const getCurrentDate = () => {
 
 export const getCurrentTime = () => {
   const currentDate = getCurrentDate(); // 获取当前日期
-  return `${currentDate}-23:59:59`;
+  return `${currentDate} 23:59:59`;
 }
 
 export const getFirstDayOfMonth = () => {
@@ -24,7 +24,7 @@ export const getFirstDayOfMonth = () => {
 
 export const getFirstDayOfTime = () => {
   const firstDayOfMonth = getFirstDayOfMonth(); // 获取当前月份的第一天
-  return `${firstDayOfMonth}-00:00:00`;
+  return `${firstDayOfMonth} 00:00:00`;
 }
 
 export const formatDate = (date=(new Date), format='YYYY-MM-DD') => {
