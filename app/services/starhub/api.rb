@@ -262,7 +262,7 @@ module Starhub
     end
 
     def user_recharge(user_uuid, op_uid, current_user, value, options = {})
-      options[:op_uid] = 1001
+      options[:op_uid] = op_uid
       options[:value] = value
       res = @client.put("/accounting/credit/#{user_uuid}/recharge?current_user=#{current_user}", options)
       raise StarhubError, res.body unless res.success?
