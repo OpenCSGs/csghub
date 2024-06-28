@@ -41,7 +41,6 @@ class ApplicationSpacesController < ApplicationController
 
   def billing
     @default_tab = 'billing'
-
     render :show
   end
 
