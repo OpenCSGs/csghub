@@ -102,11 +102,6 @@
     ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
 
-  // 显示同步按钮
-  const pendingRemoteRepo = computed(() => {
-    return props.repo.source === 'opencsg' && props.repo.sync_status === 'pending'
-  })
-
   // 同步按钮禁用
   const syncInprogress = computed(() => {
     return props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
