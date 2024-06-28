@@ -180,10 +180,10 @@
         v-if="settingsVisibility"
         #billing
       >
-        <BillingsDetails
+        <BillingDetail
           :type="repoType"
           :instanceName="repoDetail.svc_name"
-        ></BillingsDetails>
+        ></BillingDetail>
       </template>
 
       <!-- settings -->
@@ -273,7 +273,7 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
-  import BillingsDetails from './BillingsDetails.vue'
+  import BillingDetail from './BillingDetail.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({

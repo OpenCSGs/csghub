@@ -6,7 +6,7 @@
         <div>总记：￥0.01</div>
         <el-date-picker
           v-model="selectedMonth"
-          @change="dateChange"
+          @change=""
           type="month"
           placeholder="Pick"
           style="width: 120px"
@@ -76,22 +76,23 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, inject, onMounted, computed } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
   import { formatDate } from '../../packs/datetimeUtils'
+
+  const props = defineProps({
+    type: String,
+    instanceName: String
+  })
+
   const { cookies } = useCookies()
   const csghubServer = inject('csghubServer')
   const loginIdentity = cookies.get('login_identity')
-  const props = defineProps({
-    type: String,
-    instanceName:String
-  })
 
   const perPage = ref(10)
   const currentPage = ref(1)
   const totalBillings = ref(0)
-
   const billings = ref([])
   const selectedMonth = ref('')
   const startDate = ref('')
@@ -117,12 +118,7 @@
     return tempScene
   })
 
-  onMounted(() => {
-    fetchDetails()
-  })
-
   const dateChange = (e) => {
-    console.log(e)
     const dateString = formatDate(e)
     startDate.value = dateString
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString)
@@ -174,7 +170,12 @@
       totalBillings.value = data.total
     }
   }
+
+  onMounted(() => {
+    fetchDetails()
+  })
 </script>
+
 <style scoped lang="less">
   :deep(.billing-table) {
     .el-table__empty-block {
