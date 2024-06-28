@@ -8,7 +8,7 @@
       @click="handleSyncRepo"
     >
       <SvgIcon name="sync" class="mr-2" />
-      {{ syncInprogress ? $t("repo.sync.syncing") : $t("repo.sync.syncButton") }}
+      {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
     <DeployDropdown v-if="repoType === 'model' && admin && !pendingRemoteRepo" :modelId="namespacePath" />
     <div

@@ -7,8 +7,12 @@ export const repo = {
     update: "Update file",
     cancel: "Cancel",
   },
-  sync: {
+  source: {
     syncButton: "Sync",
     syncing: "Syncing",
+    all: "All sources",
+    opencsg: "OpenCSG",
+    local: "Local",
+    tooltip: "OpenCSG Remote Resources",
   }
 }

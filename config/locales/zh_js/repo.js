@@ -7,8 +7,12 @@ export const repo = {
     update: "更新文件",
     cancel: "取消",
   },
-  sync: {
+  source: {
     syncButton: "同步",
     syncing: "同步中",
+    all: "显示所有源",
+    opencsg: "OpenCSG",
+    local: "本地",
+    tooltip: "OpenCSG 远端资源",
   }
 }

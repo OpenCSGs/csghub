@@ -12,8 +12,8 @@ module Starhub
       get_repo_detail_blob_data_in_parallel('codes', namespace, code_name, options)
     end
 
-    def get_codes(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page = 1, per = 16)
-      get_repos('codes', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page, per)
+    def get_codes(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page = 1, per = 16)
+      get_repos('codes', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page, per)
     end
 
     def get_code_detail(namespace, code_name, options = {})
