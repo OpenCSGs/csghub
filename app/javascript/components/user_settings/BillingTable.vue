@@ -89,8 +89,8 @@
         align="center"
         fixed="right"
       >
-        <template #default>
-          <a :href="detailLink" class="flex gap-4 justify-end pr-4">{{ $t('billing.details') }}</a>
+        <template #default="scope">
+          <a :href="detailLink(scope.row)" class="flex gap-4 justify-end pr-4">{{ $t('billing.details') }}</a>
         </template>
       </el-table-column>
     </el-table>
@@ -99,21 +99,20 @@
 
 <script setup>
   import { formatDate } from '../../packs/datetimeUtils'
-  import { computed } from 'vue'
 
   const props = defineProps({
     billings: Array,
-    type:String
+    type: String
   })
 
-  const detailLink = computed(() => {
+  const detailLink = (billing) => {
     switch (props.type) {
       case 'space':
-        return `/spaces/${props.billings[0].repo_path}/billing`
+        return `/spaces/${billing.repo_path}/billing`
       case 'inference':
-        return `/endpoints/${props.billings[0].repo_path}/${props.billings[0].deploy_id}/billing`
+        return `/endpoints/${billing.repo_path}/${billing.deploy_id}/billing`
       default:
         return ''
     }
-  })
+  }
 </script>
