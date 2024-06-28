@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :set_default_locale, :check_user_login, :call_event_api
 
   def call_event_api
-    csghub_api.visit_url(request.fullpath)
+    csghub_api.visit_url(request.fullpath, request.user_agent)
   end
 
   rescue_from StarhubError do |e|
