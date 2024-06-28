@@ -41,7 +41,6 @@ class ApplicationSpacesController < ApplicationController
 
   def billing
     @default_tab = 'billing'
-    @instance_name = params[:instance_name]
 
     render :show
   end
