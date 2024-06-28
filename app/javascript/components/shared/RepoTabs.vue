@@ -178,8 +178,14 @@
       </template>
 
       <!-- settings -->
-      <template #billing>
-        <BillingsDetails :type="repoType" :instanceName="repoDetail.svc_name"></BillingsDetails>
+      <template
+        v-if="settingsVisibility"
+        #billing
+      >
+        <BillingsDetails
+          :type="repoType"
+          :instanceName="repoDetail.svc_name"
+        ></BillingsDetails>
       </template>
 
       <!-- settings -->
