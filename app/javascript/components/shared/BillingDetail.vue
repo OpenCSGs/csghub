@@ -6,12 +6,15 @@
         <div>{{ $t('billing.total') }}：￥{{ Math.abs(totalPrice) }}</div>
         <el-date-picker
           v-model="selectedMonth"
-          @change=""
+          @change="dateChange"
           type="month"
           placeholder="Pick"
           style="width: 120px"
         />
-        <div class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer">
+        <div
+          class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer"
+          @click="fetchDetails"
+        >
           <SvgIcon name="refresh" />{{ $t('billing.refresh') }}
         </div>
       </div>
@@ -123,11 +126,11 @@
   })
 
   const dateChange = (e) => {
-    const dateString = formatDate(e)
-    startDate.value = dateString
-    const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString)
+    const dateString = formatDate(e) + ' 00:00:00'
+    startTime.value = dateString
+    const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString) + ' 23:59:59'
     console.log(lastDayOfMonth)
-    endDate.value = lastDayOfMonth
+    endTime.value = lastDayOfMonth
     fetchDetails()
   }
 
