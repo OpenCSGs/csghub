@@ -30,13 +30,13 @@
         <li class="flex justify-between mb-4">
           <label>Credit</label>
           <div class="flex items-center">
+            <p class="mr-3">{{ credit }} 元</p>
             <div 
               @click="refreshDialogVisible = true"
               class="border px-[16px] rounded-lg border-amber-50 bg-orange-500 cursor-pointer"
             >
               {{ $t('new_admin.user.recharge') }}
             </div>
-            <p class="ml-3">{{ credit }} 元</p>
           </div>
         </li>
       </ul>
