@@ -109,9 +109,9 @@
   const detailLink = computed(() => {
     switch (props.type) {
       case 'space':
-        return `/spaces/${props.billings.repo_path}`
+        return `/spaces/${props.billings[0].repo_path}/billing`
       case 'inference':
-        return `/endpoints/${props.billings.repo_path}/${props.billings.deploy_id}`
+        return `/endpoints/${props.billings[0].repo_path}/${props.billings[0].deploy_id}/billing`
       default:
         return ''
     }
