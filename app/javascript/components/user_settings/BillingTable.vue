@@ -61,7 +61,7 @@
       >
         <template #default="scope">
           <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-            {{ scope.row.value }}
+            {{ Math.abs(scope.row.value) }}
           </div>
         </template>
       </el-table-column>
