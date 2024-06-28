@@ -9,13 +9,22 @@
       >
         {{ getComputed.path }}
       </div>
-      <el-tooltip
-        effect="light"
-        :content="$t('repo.source.tooltip')"
-        placement="top"
-      >
-        <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
-      </el-tooltip>
+      <div class="flex gap-1">
+        <el-tooltip
+          effect="light"
+          :content="$t('repo.source.needSync')"
+          placement="top"
+        >
+          <SvgIcon v-if="!!needSyncIcon" :name="needSyncIcon" />
+        </el-tooltip>
+        <el-tooltip
+          effect="light"
+          :content="$t('repo.source.tooltip')"
+          placement="top"
+        >
+          <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
+        </el-tooltip>
+      </div>
     </div>
 
     <p v-if="getComputed.showDescription"
@@ -85,6 +94,15 @@
     return props.repo.sync_status === 'completed' 
       ? 'repo_opencsg_completed' 
       : 'repo_opencsg_sync'
+  })
+
+  const needSyncIcon = computed(() => {
+    if (props.repo.source !== 'opencsg') return ''
+
+    return props.repo.sync_status !== 'completed'
+      && !!props.repo.repository.http_clone_url
+      ? 'repo_opencsg_need_sync'
+      : ''
   })
 
   const getComputed = computed(() => {

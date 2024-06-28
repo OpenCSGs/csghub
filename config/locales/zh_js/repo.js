@@ -12,5 +12,6 @@ export const repo = {
     opencsg: "OpenCSG",
     local: "本地",
     tooltip: "OpenCSG 远端资源",
+    needSync: "远端有待同步版本",
   }
 }
