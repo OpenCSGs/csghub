@@ -52,9 +52,24 @@
           </span>
         </h3>
         <div class="xl:mt-[16px]">
+          <el-select
+            v-if="onPremise"
+            v-model="sourceSelection"
+            @change="filterChange"
+            style="width: 150px"
+            class="mr-4 sm:!w-[120px]"
+            size="large"
+          >
+            <el-option
+              v-for="item in sourceOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
+            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-272px)]"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
@@ -63,8 +78,8 @@
           <el-select
             v-model="sortSelection"
             @change="filterChange"
-            style="width: 200px"
-            class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
+            style="width: 150px"
+            class="xl:mr-[20px] sm:!w-[120px] sm:mr-0"
             size="large"
           >
             <el-option
@@ -107,7 +122,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { onMounted, ref, computed } from 'vue'
+  import { onMounted, ref, computed, inject } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
@@ -126,9 +141,12 @@
     repoType: String
   })
 
+  const onPremise = inject('onPremise', ref(true))
+
   const { t } = useI18n()
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
+  const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
   const taskTag = ref('')
@@ -152,6 +170,21 @@
     {
       value: 'most_favorite',
       label: t('all.mostFavorite')
+    }
+  ]
+
+  const sourceOptions = [
+    {
+      value: 'all',
+      label: t('repo.source.all')
+    },
+    {
+      value: 'opencsg',
+      label: t('repo.source.opencsg')
+    },
+    {
+      value: 'local',
+      label: t('repo.source.local')
     }
   ]
 
@@ -185,6 +218,7 @@
     url = url + `&framework_tag=${frameworkTag.value}`
     url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
+    url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }
 

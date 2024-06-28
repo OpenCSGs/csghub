@@ -12,8 +12,8 @@ module Starhub
       get_repo_detail_blob_data_in_parallel('models', namespace, model_name, options)
     end
 
-    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page = 1, per = 16)
-      get_repos('models', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page, per)
+    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page = 1, per = 16)
+      get_repos('models', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page, per)
     end
 
     def get_model_detail(namespace, model_name, options = {})
