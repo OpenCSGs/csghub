@@ -20,6 +20,7 @@ import { components } from './en_js/components';
 import { endpoints } from './en_js/endpoints';
 import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
+import { new_admin } from './en_js/new_admin';
 import { billing } from './en_js/billing';
 
 
@@ -45,6 +46,7 @@ export default {
   components,
   endpoints,
   admin,
+  new_admin,
   billing,
   finetune
 };
