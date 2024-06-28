@@ -19,7 +19,7 @@ module Starhub
         "id": 'url_visit',
         "m": 'URLVisit',
         'ext': {
-          url:url,
+          url: url,
           userAgent: ua
         }.to_json
       }]
