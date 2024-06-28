@@ -47,14 +47,14 @@
           </template>
         </el-table-column>
 
-        <!-- time -->
+        <!-- usage time -->
         <el-table-column
-          :label="$t('billing.value')"
+          :label="$t('billing.usageTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ formatDate(scope.row.value) }}
+              {{ formatDate(scope.row.consumption) }}
             </div>
           </template>
         </el-table-column>
@@ -66,7 +66,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ scope.row.consumption }}
+              {{ scope.row.value }}
             </div>
           </template>
         </el-table-column>
@@ -79,7 +79,7 @@
   import { ref, inject, onMounted, computed } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { formatDate } from '../../packs/datetimeUtils'
+  import { getCurrentDate, getFirstDayOfMonth, formatDate } from '../../packs/datetimeUtils'
 
   const props = defineProps({
     type: String,
@@ -95,8 +95,8 @@
   const totalBillings = ref(0)
   const billings = ref([])
   const selectedMonth = ref('')
-  const startDate = ref('')
-  const endDate = ref('')
+  const startDate = ref(getFirstDayOfMonth())
+  const endDate = ref(getCurrentDate())
   const scene = computed(() => {
     let tempScene = 10
     switch (props.type) {
