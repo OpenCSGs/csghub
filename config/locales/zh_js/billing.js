@@ -4,8 +4,8 @@ export const billing = {
   inference:"推理实例",
   instanceID:"实例id",
   createTime:"创建时间",
-  usageTime:"使用时长",
-  cost:"费用",
+  usageTime:"使用时长(小时)",
+  cost:"费用(元)",
   status:"状态",
   details:"明细",
   total:"总计"

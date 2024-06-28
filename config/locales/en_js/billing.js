@@ -4,8 +4,8 @@ export const billing = {
   inference: "Inference Instances",
   instanceID: "Instance ID",
   createTime: "Creation Time",
-  usageTime: "Usage Duration",
-  cost: "Cost",
+  usageTime: "Usage Duration(h)",
+  cost: "Cost(yuan)",
   status: "Status",
   details: "Details",
   total:"Total"

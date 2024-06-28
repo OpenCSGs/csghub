@@ -49,7 +49,7 @@
       >
         <template #default="scope">
           <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-            {{ scope.row.value }}
+            {{ scope.row.consumption }}
           </div>
         </template>
       </el-table-column>
@@ -61,7 +61,7 @@
       >
         <template #default="scope">
           <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-            {{ scope.row.consumption }}
+            {{ scope.row.value }}
           </div>
         </template>
       </el-table-column>
