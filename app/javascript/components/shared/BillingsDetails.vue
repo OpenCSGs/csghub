@@ -76,12 +76,10 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
-  import dayjs from 'dayjs'
+  import { ref, onMounted, computed } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { getCurrentDate, getFirstDayOfMonth, formatDate } from '../../packs/datetimeUtils'
-  const { t } = useI18n()
+  import { formatDate } from '../../packs/datetimeUtils'
   const { cookies } = useCookies()
   const csghubServer = inject('csghubServer')
   const loginIdentity = cookies.get('login_identity')
@@ -98,26 +96,28 @@
   const selectedMonth = ref('')
   const startDate = ref('')
   const endDate = ref('')
-  const scene = ref(10)
-
-  onMounted(() => {
-    console.log(props.type)
+  const scene = computed(() => {
+    let tempScene = 10
     switch (props.type) {
       case 'inference':
-        scene.value = 10
+        tempScene = 10
         break
       case 'space':
-        scene.value = 11
+        tempScene = 11
         break
       case 'finetune':
-        scene.value = 12
+        tempScene = 12
         break
       case 'starship':
-        scene.value = 20
+        tempScene = 20
         break
       default:
-        console.error('Unknown type:', type)
+        tempScene = 10
     }
+    return tempScene
+  })
+
+  onMounted(() => {
     fetchDetails()
   })
 

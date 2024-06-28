@@ -177,7 +177,7 @@
 
       <!-- settings -->
       <template #billing>
-        <BillingsDetails :type="repoType" :instanceName="instanceName"></BillingsDetails>
+        <BillingsDetails :type="repoType" :instanceName="repoDetail.svc_name"></BillingsDetails>
       </template>
 
       <!-- settings -->
