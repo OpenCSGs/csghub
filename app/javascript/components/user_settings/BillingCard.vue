@@ -80,6 +80,7 @@
   import dayjs from 'dayjs'
   import { useCookies } from 'vue3-cookies'
   import { getCurrentDate, getFirstDayOfMonth } from '../../packs/datetimeUtils'
+  import BillingTable from './BillingTable.vue'
 
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
