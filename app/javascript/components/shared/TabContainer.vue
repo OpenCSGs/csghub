@@ -66,7 +66,8 @@
     settingsVisibility: Boolean,
     repoType: String,
     sdk: String,
-    localRepoId: String
+    localRepoId: String,
+    repo: Object
   })
 
   const summaryLabel = computed(() => {
@@ -89,7 +90,12 @@
         return true
       }
     } else {
-      return true
+      // 用 clone url 判断
+      if (props.repo.source === 'opencsg' && !props.repo.repository.http_clone_url) {
+        return false
+      } else {
+        return true
+      }
     }
   })
 

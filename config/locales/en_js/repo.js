@@ -8,6 +8,8 @@ export const repo = {
     cancel: "Cancel",
   },
   source: {
+    syncButton: "Sync",
+    syncing: "Syncing",
     all: "All sources",
     opencsg: "OpenCSG",
     local: "Local",

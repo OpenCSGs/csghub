@@ -9,6 +9,7 @@
       :userToken="userToken"
       :namespacePath="repoDetail.path"
       :admin="admin"
+      :repo="repoDetail"
     />
     <tab-container
       :default-tab="defaultTab"
@@ -16,6 +17,7 @@
       :repoType="repoType"
       :localRepoId="localRepoId"
       :sdk="sdk"
+      :repo="repoDetail"
 
       @tabChange="tabChange"
     >

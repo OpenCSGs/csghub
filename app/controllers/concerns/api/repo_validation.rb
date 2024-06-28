@@ -53,7 +53,9 @@ module Api::RepoValidation
   def validate_authorization(type)
     local_repo = get_repo(type)
 
-    return render_unauthorized('无权限') unless local_repo && valid_authorization?(local_repo, type)
+    if local_repo
+      return render_unauthorized('无权限') unless valid_authorization?(local_repo, type)
+    end
   end
 
   def valid_authorization?(repo, type)

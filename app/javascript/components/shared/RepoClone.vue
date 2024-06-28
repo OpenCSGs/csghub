@@ -1,7 +1,18 @@
 <template>
-  <div class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
-    <DeployDropdown v-if="repoType === 'model' && admin" :modelId="namespacePath" />
+  <div class="flex items-center gap-4 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
+    <el-button
+      v-if="showSyncButton"
+      type="default"
+      class="!rounded-lg"
+      :disabled="syncInprogress"
+      @click="handleSyncRepo"
+    >
+      <SvgIcon name="sync" class="mr-2" />
+      {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
+    </el-button>
+    <DeployDropdown v-if="repoType === 'model' && admin && !!httpCloneUrl" :modelId="namespacePath" />
     <div
+      v-if="!!httpCloneUrl"
       class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
@@ -63,6 +74,7 @@
   import SvgIcon from "./SvgIcon.vue";
   import { useCookies } from "vue3-cookies";
   import jwtFetch from "../../packs/jwtFetch";
+  import { ElMessage } from "element-plus";
 
   const { cookies } = useCookies();
 
@@ -74,6 +86,7 @@
     userToken: String,
     namespacePath: String,
     admin: Boolean,
+    repo: Object,
   });
 
   const csghubServer = inject('csghubServer')
@@ -82,6 +95,17 @@
   const useToken = ref(false);
   const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
+
+  const showSyncButton = computed(() =>
+    props.admin &&
+    props.repo.source === 'opencsg' &&
+    ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
+  )
+
+  // 同步按钮禁用
+  const syncInprogress = computed(() => {
+    return props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
+  })
 
   const getMarkdownCode = (code, lang, multiline = false) => {
     return `\`\`\`${lang}${multiline ? "" : "\n"}${code}${multiline ? "" : "\n"}\`\`\``;
@@ -163,6 +187,27 @@
         if (body.data) {
           accessToken.value = body.data[0].token
         }
+      })
+    }
+  }
+
+  const handleSyncRepo =  async () => {
+    const syncUrl = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/mirror_from_saas`
+    const res = await jwtFetch(syncUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (!res.ok) {
+      res.json().then(error => {
+        ElMessage({message: error.msg, type: "warning"})
+      })
+    } else {
+      res.json().then(body => {
+        ElMessage({message: 'Sync repo success', type: "success"})
+        location.reload()
       })
     }
   }

@@ -8,6 +8,8 @@ export const repo = {
     cancel: "取消",
   },
   source: {
+    syncButton: "同步",
+    syncing: "同步中",
     all: "显示所有源",
     opencsg: "OpenCSG",
     local: "本地",
