@@ -13,12 +13,15 @@ module Starhub
       @client = Starhub::Client.init_with user_ip
     end
 
-    def visit_url(url)
+    def visit_url(url, ua)
       options = [{
         "v": "1",
         "id": 'url_visit',
         "m": 'URLVisit',
-        'ext': url
+        'ext': {
+          url: url,
+          userAgent: ua
+        }.to_json
       }]
       @client.post("/events", options)
     end
