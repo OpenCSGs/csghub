@@ -21,6 +21,7 @@ import { endpoints } from './zh_js/endpoints';
 import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
 import { new_admin } from './zh_js/new_admin';
+import { billing } from './zh_js/billing';
 
 export default {
   all,
@@ -45,5 +46,6 @@ export default {
   endpoints,
   admin,
   new_admin,
+  billing,
   finetune
 };

@@ -111,6 +111,7 @@ Rails.application.routes.draw do
         get 'access-token'
         get 'starship-access-token'
         get 'ssh-keys'
+        get 'billing'
         get 'locale'
       end
     end

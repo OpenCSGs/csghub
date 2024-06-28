@@ -21,6 +21,8 @@ import { endpoints } from './en_js/endpoints';
 import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
 import { new_admin } from './en_js/new_admin';
+import { billing } from './en_js/billing';
+
 
 export default {
   all,
@@ -45,5 +47,6 @@ export default {
   endpoints,
   admin,
   new_admin,
+  billing,
   finetune
 };
