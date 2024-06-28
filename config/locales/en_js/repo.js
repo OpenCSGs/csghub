@@ -12,5 +12,6 @@ export const repo = {
     opencsg: "OpenCSG",
     local: "Local",
     tooltip: "OpenCSG Remote Resources",
+    needSync: "Remote has pending sync versions",
   }
 }
