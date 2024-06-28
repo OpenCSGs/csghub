@@ -44,7 +44,7 @@
 
        <!-- billing -->
        <el-tab-pane
-        :label="'计费'"
+        :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"
       >
