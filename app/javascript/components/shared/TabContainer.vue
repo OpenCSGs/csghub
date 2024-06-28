@@ -42,6 +42,15 @@
         <slot name="logs"></slot>
       </el-tab-pane>
 
+       <!-- billing -->
+       <el-tab-pane
+        :label="'计费'"
+        name="billing"
+        class="min-h-[300px]"
+      >
+        <slot name="billing"></slot>
+      </el-tab-pane>
+
       <!-- repo settings -->
       <el-tab-pane
         v-if="settingsVisibility"
