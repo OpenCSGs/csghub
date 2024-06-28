@@ -107,7 +107,7 @@
       case 'space':
         return `/spaces/${props.billings.repo_path}`
       case 'inference':
-        return `/endpoints/${props.billings.repo_path}`
+        return `/endpoints/${props.billings.repo_path}/${props.billings.deploy_id}`
       default:
         return ''
     }
