@@ -77,9 +77,8 @@
   import CsgPagination from '../shared/CsgPagination.vue'
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
-  import dayjs from 'dayjs'
   import { useCookies } from 'vue3-cookies'
-  import { getCurrentDate, getFirstDayOfMonth } from '../../packs/datetimeUtils'
+  import { getCurrentDate, getFirstDayOfMonth, formatDate } from '../../packs/datetimeUtils'
   import BillingTable from './BillingTable.vue'
 
   const { t } = useI18n()
@@ -203,12 +202,6 @@
       spaceBillings.value = data.data
       spaceTotalBillings.value = data.total
     }
-  }
-
-  const formatDate = (date) => {
-    if (!date) return '-'
-    console.log(dayjs(date).format('YYYY-MM-DD'))
-    return dayjs(date).format('YYYY-MM-DD')
   }
 
   onMounted(() => {

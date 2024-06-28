@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export const getCurrentDate = () => {
   const now = new Date();
   const year = now.getFullYear();
@@ -13,4 +15,8 @@ export const getFirstDayOfMonth = () => {
   const month = String(firstDay.getMonth() + 1).padStart(2, '0');
   const day = String(firstDay.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+export const formatDate = (date=(new Date), format='YYYY-MM-DD') => {
+  return dayjs(date).format(format)
 }

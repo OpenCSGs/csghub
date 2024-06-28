@@ -94,6 +94,8 @@
 </template>
 
 <script setup>
+  import { formatDate } from '../../packs/datetimeUtils'
+
   const props = defineProps({
     billings: Array
   })
