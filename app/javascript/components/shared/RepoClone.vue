@@ -18,7 +18,7 @@
     />
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
-      v-if="repoType === 'model'"
+      v-if="repoType === 'model' && !!httpCloneUrl"
       @click="toFinetunePage"
     >
       <SvgIcon
