@@ -1,9 +1,9 @@
 <template>
   <div class="w-full mt-8 rounded-t-lg pt-9 xl:px-10 md:px-0 md:h-auto border border-[#EBEEF5]">
     <div class="flex justify-between px-6 mb-5">
-      <div class="text-[18px] leading-[28px]">实例计费</div>
+      <div class="text-[18px] leading-[28px]">{{ $t('billing.instanceBilling') }}</div>
       <div class="flex gap-3 items-center">
-        <div>总记：￥0.01</div>
+        <div>{{ $t('billing.total') }}：￥0.01</div>
         <el-date-picker
           v-model="selectedMonth"
           @change=""
@@ -12,7 +12,7 @@
           style="width: 120px"
         />
         <div class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer">
-          <SvgIcon name="refresh" />刷新
+          <SvgIcon name="refresh" />{{ $t('billing.refresh') }}
         </div>
       </div>
     </div>

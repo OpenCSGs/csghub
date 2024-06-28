@@ -8,5 +8,7 @@ export const billing = {
   cost:"费用(元)",
   status:"状态",
   details:"明细",
-  total:"总计"
+  total:"总计",
+  refresh:"刷新",
+  instanceBilling:'实例计费'
 }
