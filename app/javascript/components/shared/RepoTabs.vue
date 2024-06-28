@@ -178,6 +178,11 @@
       </template>
 
       <!-- settings -->
+      <template #billing>
+        <BillingsDetails :type="repoType" :instanceName="instanceName"></BillingsDetails>
+      </template>
+
+      <!-- settings -->
       <template
         v-if="settingsVisibility"
         #settings
@@ -264,6 +269,7 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import BillingsDetails from './BillingsDetails.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({
@@ -355,6 +361,9 @@
         break
       case 'logs':
         location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
+        break
+      case 'billing':
+       location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
         break
       default:
         break

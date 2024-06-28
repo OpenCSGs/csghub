@@ -42,6 +42,7 @@
       :user-name="userName"
       :user-token="userToken"
       :commitId="commitId"
+      :instanceName="instanceName"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
     />
   </div>
@@ -122,7 +123,8 @@
     canWrite: Boolean,
     userName: String,
     userToken: String,
-    commitId: String
+    commitId: String,
+    instanceName:String
   })
 
   const csghubServer = inject('csghubServer')
