@@ -13,7 +13,7 @@ module Starhub
       @client = Starhub::Client.init_with user_ip
     end
 
-    def visit_url(url,ua)
+    def visit_url(url, ua)
       options = [{
         "v": "1",
         "id": 'url_visit',
