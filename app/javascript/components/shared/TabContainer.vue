@@ -44,6 +44,7 @@
 
        <!-- billing -->
        <el-tab-pane
+        v-if="settingsVisibility"
         :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"
