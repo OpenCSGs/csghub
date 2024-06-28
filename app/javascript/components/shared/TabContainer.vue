@@ -90,7 +90,8 @@
         return true
       }
     } else {
-      if (props.repo.source === 'opencsg' && ['pending', 'failed'].includes(props.repo.sync_status)) {
+      // 用 clone url 判断
+      if (props.repo.source === 'opencsg' && !props.repo.repository.http_clone_url) {
         return false
       } else {
         return true

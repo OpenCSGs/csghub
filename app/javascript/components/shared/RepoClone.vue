@@ -10,9 +10,9 @@
       <SvgIcon name="sync" class="mr-2" />
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
-    <DeployDropdown v-if="repoType === 'model' && admin && !pendingRemoteRepo" :modelId="namespacePath" />
+    <DeployDropdown v-if="repoType === 'model' && admin && !!httpCloneUrl" :modelId="namespacePath" />
     <div
-      v-if="!pendingRemoteRepo"
+      v-if="!!httpCloneUrl"
       class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
@@ -102,12 +102,12 @@
     ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
 
-  // 状态1，不显示下载 clone 按钮
+  // 显示同步按钮
   const pendingRemoteRepo = computed(() => {
     return props.repo.source === 'opencsg' && props.repo.sync_status === 'pending'
   })
 
-  // 状态2，同步按钮禁用
+  // 同步按钮禁用
   const syncInprogress = computed(() => {
     return props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
   })
