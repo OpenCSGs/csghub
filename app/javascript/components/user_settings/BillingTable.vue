@@ -110,7 +110,7 @@
       case 'space':
         return `/spaces/${billing.repo_path}/billing`
       case 'inference':
-        return `/endpoints/${billing.repo_path}/${billing.deploy_id}/billing`
+        return `/endpoints/${billing.deploy_user}/${billing.deploy_name}/${billing.deploy_id}/billing`
       default:
         return ''
     }
