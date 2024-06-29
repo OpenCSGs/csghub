@@ -162,7 +162,7 @@
     params.append('start_time', startTime.value)
     params.append('end_time', endTime.value)
     params.append('scene', scene.value)
-    params.append('instance_name ', props.instanceName)
+    params.append('instance_name', props.instanceName)
 
     const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/statements?${params.toString()}`
     const res = await jwtFetch(url)
