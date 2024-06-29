@@ -136,6 +136,7 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/billing', to: 'endpoints#billing', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
