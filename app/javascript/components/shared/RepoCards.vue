@@ -57,7 +57,7 @@
             v-model="sourceSelection"
             @change="filterChange"
             style="width: 150px"
-            class="mr-4 sm:!w-[120px]"
+            class="mr-4 sm:!w-[122px] sm:mr-1"
             size="large"
           >
             <el-option
@@ -69,7 +69,7 @@
           </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-272px)]"
+            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
@@ -79,7 +79,7 @@
             v-model="sortSelection"
             @change="filterChange"
             style="width: 150px"
-            class="xl:mr-[20px] sm:!w-[120px] sm:mr-0"
+            class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
             size="large"
           >
             <el-option
