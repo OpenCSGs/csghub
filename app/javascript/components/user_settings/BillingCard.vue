@@ -41,6 +41,7 @@
     </div>
     <BillingTable
       :billings="spaceBillings"
+      :selectedMonth="selectedMonth"
       type="space"
     />
     <div class="mt-[12px] mb-[16px] flex justify-center">
@@ -64,6 +65,7 @@
     </div>
     <BillingTable
       :billings="inferenceBillings"
+      :selectedMonth="selectedMonth"
       type="inference"
     />
     <div class="mt-[12px] mb-[16px] flex justify-center">

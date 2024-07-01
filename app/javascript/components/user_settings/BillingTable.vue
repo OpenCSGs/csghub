@@ -107,15 +107,16 @@
 
   const props = defineProps({
     billings: Array,
+    selectedMonth: String,
     type: String
   })
 
   const detailLink = (billing) => {
     switch (props.type) {
       case 'space':
-        return `/spaces/${billing.repo_path}/billing`
+        return `/spaces/${billing.repo_path}/billing?time=${props.selectedMonth}`
       case 'inference':
-        return `/endpoints/${billing.deploy_user}/${billing.deploy_name}/${billing.deploy_id}/billing`
+        return `/endpoints/${billing.deploy_user}/${billing.deploy_name}/${billing.deploy_id}/billing?time=${props.selectedMonth}`
       default:
         return ''
     }

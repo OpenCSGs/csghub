@@ -34,7 +34,7 @@
         <!-- instance ID -->
         <el-table-column
           :label="$t('billing.instanceID')"
-          label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
+          label-class-name="indent-3 text-[12px] justify-center font-[400] leading-[18px] text-[#475467]"
           align="center"
         >
           <template #default="scope">
@@ -180,6 +180,12 @@
   }
 
   onMounted(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(searchParams.entries())
+    if (params && params.time) {
+      selectedMonth.value = params.time
+      dateChange(params.time)
+    }
     fetchDetails()
   })
 </script>
