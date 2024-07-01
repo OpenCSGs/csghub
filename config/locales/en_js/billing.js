@@ -11,5 +11,7 @@ export const billing = {
   total: 'Total',
   refresh: 'Refresh',
   instanceBilling: 'Instance Billing',
-  billing: 'Billing'
+  billing: 'Billing',
+  Running: 'Running',
+  Stopped: 'Stopped'
 }

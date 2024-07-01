@@ -11,5 +11,7 @@ export const billing = {
   total: '总计',
   refresh: '刷新',
   instanceBilling: '实例计费',
-  billing: '计费'
+  billing: '计费',
+  Running: '使用中',
+  Stopped: '已注销'
 }

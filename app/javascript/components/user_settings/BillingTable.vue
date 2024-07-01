@@ -77,8 +77,8 @@
         align="center"
       >
         <template #default="scope">
-          <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-            {{ scope.row.status }}
+          <div class="flex justify-center text-[12px] font-[400] leading-[18px] text-[#475467]">
+            <BillingStatus :status="scope.row.status"/>
           </div>
         </template>
       </el-table-column>
@@ -90,7 +90,11 @@
         fixed="right"
       >
         <template #default="scope">
-          <a :href="detailLink(scope.row)" class="flex gap-4 justify-end pr-4">{{ $t('billing.details') }}</a>
+          <a
+            :href="detailLink(scope.row)"
+            class="flex gap-4 justify-end pr-4 text-[#223B99]"
+            >{{ $t('billing.details') }}</a
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -99,6 +103,7 @@
 
 <script setup>
   import { formatDate } from '../../packs/datetimeUtils'
+  import BillingStatus from './BillingStatus.vue'
 
   const props = defineProps({
     billings: Array,
