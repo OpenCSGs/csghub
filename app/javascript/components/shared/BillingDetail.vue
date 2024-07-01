@@ -3,7 +3,7 @@
     <div class="flex justify-between px-6 mb-5">
       <div class="text-[18px] leading-[28px]">{{ $t('billing.instanceBilling') }}</div>
       <div class="flex gap-3 items-center">
-        <div>{{ $t('billing.total') }}：￥{{ Math.abs(totalPrice.toFixed(4)) }}</div>
+        <div>{{ $t('billing.total') }}：￥{{ Math.abs(totalPrice) }}</div>
         <el-date-picker
           v-model="selectedMonth"
           @change="dateChange"
@@ -73,7 +73,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ Math.abs(scope.row.value.toFixed(4)) }}
+              {{ Math.abs(scope.row.value) }}
             </div>
           </template>
         </el-table-column>

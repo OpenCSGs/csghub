@@ -194,7 +194,7 @@
       console.log('Data for scene 10:', data)
       inferenceBillings.value = data.data
       inferenceTotalBillings.value = data.total
-      inferenceTotalPrice.value = Math.abs(data.total_value.toFixed(4))
+      inferenceTotalPrice.value = Math.abs(data.total_value)
     }
   }
 
@@ -221,7 +221,7 @@
       console.log('Data for scene 11:', data)
       spaceBillings.value = data.data
       spaceTotalBillings.value = data.total
-      spaceTotalPrice.value = Math.abs(data.total_value.toFixed(4))
+      spaceTotalPrice.value = Math.abs(data.total_value)
     }
   }
 
