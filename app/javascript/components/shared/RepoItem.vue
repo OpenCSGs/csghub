@@ -3,7 +3,7 @@
      :class="`${repoType}-card  hover:active-${repoType}-card `"
      class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-xl"
   >
-    <div class="flex items-center justify-between mb-[5px] w-[399px] lg:w-[370px] mlg:w-full">
+    <div class="flex items-center justify-between mb-[5px] w-[399px] lg:w-full">
       <div :class="`${repoType}-path`"
            class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap"
       >
