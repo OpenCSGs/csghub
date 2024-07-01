@@ -39,7 +39,10 @@
         {{ $t('billing.total') }}：¥ {{ spaceTotalPrice }}
       </div>
     </div>
-    <BillingTable :billings="spaceBillings" type="space"/>
+    <BillingTable
+      :billings="spaceBillings"
+      type="space"
+    />
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
@@ -59,7 +62,10 @@
         {{ $t('billing.total') }}：¥ {{ inferenceTotalPrice }}
       </div>
     </div>
-    <BillingTable :billings="inferenceBillings" type="inference"/>
+    <BillingTable
+      :billings="inferenceBillings"
+      type="inference"
+    />
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
@@ -224,6 +230,9 @@
         font-size: 12px;
         font-weight: 400;
         color: var(--gray-600);
+        @media (max-width: 768px) {
+          padding: 1px 2px;
+        }
         .cell {
           line-height: 18px;
         }
