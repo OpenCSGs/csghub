@@ -89,7 +89,7 @@
 
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
-  const selectedMonth = ref('')
+  const selectedMonth = ref(getFirstDayOfMonth())
   const perPage = ref(10)
 
   const spaceCurrentPage = ref(1)

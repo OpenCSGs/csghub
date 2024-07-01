@@ -101,7 +101,7 @@
   const totalBillings = ref(0)
   const totalPrice = ref(0)
   const billings = ref([])
-  const selectedMonth = ref('')
+  const selectedMonth = ref(getFirstDayOfTime())
   const startTime = ref(getFirstDayOfTime())
   const endTime = ref(getCurrentTime())
   const scene = computed(() => {
