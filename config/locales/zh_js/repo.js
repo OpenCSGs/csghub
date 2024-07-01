@@ -13,7 +13,8 @@ export const repo = {
     all: "显示所有源",
     opencsg: "OpenCSG",
     local: "本地",
-    tooltip: "OpenCSG 远端资源",
+    remoteResource: "OpenCSG 远端资源",
+    syncCompleted: "本地版本与远端源版本一致",
     needSync: "远端有待同步版本",
   }
 }

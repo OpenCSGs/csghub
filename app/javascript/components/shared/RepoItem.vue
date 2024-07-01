@@ -19,7 +19,7 @@
         </el-tooltip>
         <el-tooltip
           effect="light"
-          :content="$t('repo.source.tooltip')"
+          :content="syncTooltip"
           placement="top"
         >
           <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
@@ -103,6 +103,14 @@
       && !!props.repo.repository.http_clone_url
       ? 'repo_opencsg_need_sync'
       : ''
+  })
+
+  const syncTooltip = computed(() => {
+    if (props.repo.source !== 'opencsg') return ''
+
+    return props.repo.sync_status === 'completed'
+      ? t('repo.source.syncCompleted')
+      : t('repo.source.remoteResource')
   })
 
   const getComputed = computed(() => {

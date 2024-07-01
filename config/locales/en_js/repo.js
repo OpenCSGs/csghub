@@ -13,7 +13,8 @@ export const repo = {
     all: "All sources",
     opencsg: "OpenCSG",
     local: "Local",
-    tooltip: "OpenCSG Remote Resources",
+    remoteResource: "OpenCSG Remote Resource",
+    syncCompleted: "Local version matches remote source version",
     needSync: "Remote has pending sync versions",
   }
 }
