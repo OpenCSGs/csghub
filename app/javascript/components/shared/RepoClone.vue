@@ -3,12 +3,12 @@
     class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
   >
     <DeployDropdown
-      v-if="repoType === 'model' && enableEndpoint"
+      v-if="repoType === 'model' && admin && enableEndpoint"
       :modelId="namespacePath"
     />
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
-      v-if="repoType === 'model' && enableFinetune"
+      v-if="repoType === 'model' && admin && enableFinetune"
       @click="toFinetunePage"
     >
       <SvgIcon
