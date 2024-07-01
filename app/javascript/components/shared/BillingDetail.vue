@@ -9,6 +9,7 @@
           @change="dateChange"
           type="month"
           placeholder="Pick"
+          :disabled-date="disabledDate"
           style="width: 120px"
         />
         <div
@@ -124,6 +125,16 @@
     }
     return tempScene
   })
+
+  const disabledDate = (date) => {
+    if (date) {
+      const current = new Date()
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const compareDate = new Date(year, month, 1)
+      return compareDate > current
+    }
+  }
 
   const dateChange = (e) => {
     const dateString = formatDate(e) + ' 00:00:00'
