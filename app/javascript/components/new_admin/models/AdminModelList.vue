@@ -55,7 +55,7 @@
         :page-size="per"
         layout="prev, pager, next"
         :total="total"
-        @current-change="fetchUsers"
+        @current-change="fetchModels"
         class="my-[52px] flex justify-center"
       />
     </el-card>

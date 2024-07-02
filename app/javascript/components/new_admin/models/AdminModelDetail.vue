@@ -3,7 +3,7 @@
     <el-card>
       <template #header>
         <div class="card-header">
-          <span>User Detail</span>
+          <span>Model Detail</span>
         </div>
       </template>
       <ul class="max-w-[480px]">
@@ -43,7 +43,7 @@
   const model = ref({})
   const user = ref({})
 
-  const fetchUser = async () => {
+  const fetchModel = async () => {
     const response = await fetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`)
     if (response.ok) {
       const res_json = await response.json()
@@ -56,6 +56,6 @@
   }
 
   onMounted(() => {
-    fetchUser()
+    fetchModel()
   })
 </script>
