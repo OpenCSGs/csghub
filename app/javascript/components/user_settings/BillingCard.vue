@@ -10,6 +10,7 @@
         @change="dateChange"
         type="month"
         placeholder="Pick"
+        :disabled-date="disabledDate"
         style="width: 120px"
       />
     </div>
@@ -39,7 +40,11 @@
         {{ $t('billing.total') }}：¥ {{ spaceTotalPrice }}
       </div>
     </div>
-    <BillingTable :billings="spaceBillings"/>
+    <BillingTable
+      :billings="spaceBillings"
+      :selectedMonth="selectedMonth"
+      type="space"
+    />
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
@@ -59,7 +64,11 @@
         {{ $t('billing.total') }}：¥ {{ inferenceTotalPrice }}
       </div>
     </div>
-    <BillingTable :billings="inferenceBillings"/>
+    <BillingTable
+      :billings="inferenceBillings"
+      :selectedMonth="selectedMonth"
+      type="inference"
+    />
     <div class="mt-[12px] mb-[16px] flex justify-center">
       <CsgPagination
         :perPage="perPage"
@@ -83,7 +92,7 @@
 
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
-  const selectedMonth = ref('')
+  const selectedMonth = ref(getFirstDayOfMonth())
   const perPage = ref(10)
 
   const spaceCurrentPage = ref(1)
@@ -103,6 +112,10 @@
 
   const startDate = ref(getFirstDayOfMonth())
   const endDate = ref(getCurrentDate())
+
+  const disabledDate = (date) => {
+    return isFutureDate(date)
+  }
 
   const dateChange = (e) => {
     console.log(e)
@@ -175,7 +188,7 @@
       console.log('Data for scene 10:', data)
       inferenceBillings.value = data.data
       inferenceTotalBillings.value = data.total
-      inferenceTotalPrice.value = data.total_value
+      inferenceTotalPrice.value = Math.abs(data.total_value)
     }
   }
 
@@ -202,7 +215,7 @@
       console.log('Data for scene 11:', data)
       spaceBillings.value = data.data
       spaceTotalBillings.value = data.total
-      spaceTotalPrice.value = data.total_value
+      spaceTotalPrice.value = Math.abs(data.total_value)
     }
   }
 
@@ -224,6 +237,9 @@
         font-size: 12px;
         font-weight: 400;
         color: var(--gray-600);
+        @media (max-width: 768px) {
+          padding: 1px 2px;
+        }
         .cell {
           line-height: 18px;
         }

@@ -8,6 +8,11 @@ export const getCurrentDate = () => {
   return `${year}-${month}-${day}`;
 }
 
+export const getCurrentTime = () => {
+  const currentDate = getCurrentDate(); // 获取当前日期
+  return `${currentDate} 23:59:59`;
+}
+
 export const getFirstDayOfMonth = () => {
   const now = new Date();
   const firstDay = new Date(now.getFullYear(), now.getMonth(), 1); // 设置日期为1来获取这个月的第一天
@@ -17,6 +22,21 @@ export const getFirstDayOfMonth = () => {
   return `${year}-${month}-${day}`;
 }
 
+export const getFirstDayOfTime = () => {
+  const firstDayOfMonth = getFirstDayOfMonth(); // 获取当前月份的第一天
+  return `${firstDayOfMonth} 00:00:00`;
+}
+
 export const formatDate = (date=(new Date), format='YYYY-MM-DD') => {
   return dayjs(date).format(format)
+}
+
+export const isFutureDate = (date) => {
+  if (date) {
+    const current = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    const compareDate = new Date(year, month, 1)
+    return compareDate > current
+  }
 }

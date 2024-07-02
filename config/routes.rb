@@ -140,6 +140,7 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/billing', to: 'endpoints#billing', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
@@ -177,6 +178,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/resolve/:branch/(*path)', to: 'application_spaces#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/community', to: 'application_spaces#community', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/settings', to: 'application_spaces#settings', namespace: /[^\/]+/
+    get '/spaces/:namespace/(*application_space_name)/billing', to: 'application_spaces#billing', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commits', to: 'application_spaces#commits', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commit/:commit_id', to: 'application_spaces#commit', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/

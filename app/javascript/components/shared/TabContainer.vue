@@ -42,6 +42,16 @@
         <slot name="logs"></slot>
       </el-tab-pane>
 
+       <!-- billing -->
+       <el-tab-pane
+        v-if="settingsVisibility"
+        :label="$t('billing.billing')"
+        name="billing"
+        class="min-h-[300px]"
+      >
+        <slot name="billing"></slot>
+      </el-tab-pane>
+
       <!-- repo settings -->
       <el-tab-pane
         v-if="settingsVisibility"

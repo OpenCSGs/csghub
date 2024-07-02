@@ -11,6 +11,7 @@ module LocalRepoValidation
       :edit_file,
       :resolve,
       :community,
+      :billing,
       :settings,
       :commits,
       :commit,
