@@ -27,7 +27,7 @@
           scoped-slot="default"
         >
           <template #default="scope">
-            {{ models[scope.$index].path.split("/")[0] }}
+            {{ models[scope.$index].path.split('/')[0] }}
           </template>
         </el-table-column>
         <el-table-column
@@ -49,7 +49,6 @@
           </template>
         </el-table-column>
       </el-table>
-
       <el-pagination
         v-model:current-page="page"
         :page-size="per"
@@ -76,12 +75,14 @@
 
   const fetchModels = async (current) => {
     const response = await fetch(
-      `${csghubServer}/api/v1/models?&sort=trending&page=${current || page.value}&per=${per.value}&search=${keyword.value}`
+      `${csghubServer}/api/v1/models?&sort=trending&page=${
+        current || page.value
+      }&per=${per.value}&search=${keyword.value}`
     )
     if (response.ok) {
       const res_json = await response.json()
       models.value = res_json.data
-      total.value = res_json.total_count
+      total.value = res_json.total
     } else {
       ElMessage.error('Failed to fetch models')
     }
