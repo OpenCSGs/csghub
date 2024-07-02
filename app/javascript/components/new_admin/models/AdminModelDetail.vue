@@ -9,23 +9,23 @@
       <ul class="max-w-[480px]">
         <li class="flex justify-between mb-4">
           <label>Name</label>
-          <p>{{ user.name }}</p>
+          <p>{{ model.name }}</p>
         </li>
         <li class="flex justify-between mb-4">
-          <label>Nickname</label>
-          <p>{{ user.nickname }}</p>
+          <label>Owner</label>
+          <p>{{ route.params.namespace }}</p>
         </li>
         <li class="flex justify-between mb-4">
-          <label>Phone</label>
-          <p>{{ user.phone }}</p>
+          <label>Creator</label>
+          <p>{{ user.username }}</p>
         </li>
         <li class="flex justify-between mb-4">
-          <label>Role</label>
-          <p>{{ user.role }}</p>
+          <label>Visibility</label>
+          <p>{{ model.private == false ? 'public' : 'private' }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Created At</label>
-          <p>{{ dayjs(user.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
+          <p>{{ dayjs(model.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
         </li>
       </ul>
     </el-card>
@@ -33,22 +33,25 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { useRoute } from 'vue-router'
   import dayjs from "dayjs"
   import { ElMessage } from 'element-plus'
 
   const route = useRoute()
-
+  const csghubServer = inject('csghubServer')
+  const model = ref({})
   const user = ref({})
 
   const fetchUser = async () => {
-    const response = await fetch(`/internal_api/admin/users/${route.params.id}`)
+    const response = await fetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`)
     if (response.ok) {
-      const data = await response.json()
-      user.value = data
+      const res_json = await response.json()
+      model.value = res_json.data
+      user.value = model.value.user
+      delete model.value.user
     } else {
-      ElMessage.error('Failed to fetch user')
+      ElMessage.error('Failed to fetch model')
     }
   }
 

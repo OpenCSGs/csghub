@@ -3,13 +3,13 @@
     <el-card>
       <template #header>
         <div class="flex items-center justify-between mb-[20px]">
-          <h3 class="text-[20x] font-[500]">Users</h3>
+          <h3 class="text-[20x] font-[500]">Models</h3>
           <el-input
             v-model="keyword"
             style="width: 240px"
-            placeholder="Name, Email, Phone"
+            placeholder="Name, Owner"
             :prefix-icon="Search"
-            @input="searchUsers"
+            @input="searchModels"
           />
         </div>
       </template>
@@ -42,7 +42,7 @@
           <template #default="scope">
             <el-button
               size="small"
-              @click="showDetail(scope.row)"
+              @click="showDetail(models[scope.$index].path)"
             >
               详情
             </el-button>
@@ -74,31 +74,29 @@
   const keyword = ref('')
   const csghubServer = inject('csghubServer')
 
-  const fetchUsers = async (current) => {
+  const fetchModels = async (current) => {
     const response = await fetch(
       `${csghubServer}/api/v1/models?&sort=trending&page=${current || page.value}&per=${per.value}&search=${keyword.value}`
     )
-    console.log(response);
     if (response.ok) {
-      const data = await response.json()
-      console.log(data.data);
-      models.value = data.data
-      total.value = data.total_count
+      const res_json = await response.json()
+      models.value = res_json.data
+      total.value = res_json.total_count
     } else {
-      ElMessage.error('Failed to fetch users')
+      ElMessage.error('Failed to fetch models')
     }
   }
 
-  const searchUsers = () => {
+  const searchModels = () => {
     page.value = 1
-    fetchUsers()
+    fetchModels()
   }
 
-  const showDetail = (row) => {
-    window.location.href = `/new_admin/users/${row.id}`
+  const showDetail = (path) => {
+    window.location.href = `/new_admin/models/${path}`
   }
 
   onMounted(() => {
-    fetchUsers()
+    fetchModels()
   })
 </script>

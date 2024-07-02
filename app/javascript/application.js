@@ -125,7 +125,7 @@ const routes = [
   { path: '/new_admin/users', component: AdminUserList },
   { path: '/new_admin/users/:id', component: AdminUserDetail },
   { path: '/new_admin/models', component: AdminModelList },
-  { path: '/new_admin/models/:id', component: AdminModelDetail },
+  { path: '/new_admin/models/:namespace/:name', component: AdminModelDetail },
 ]
 
 const router = createRouter({
