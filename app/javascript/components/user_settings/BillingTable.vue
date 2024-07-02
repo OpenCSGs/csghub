@@ -78,7 +78,7 @@
       >
         <template #default="scope">
           <div class="flex justify-center text-[12px] font-[400] leading-[18px] text-[#475467]">
-            <BillingStatus :status="scope.row.status"/>
+            <BillingStatus :status="scope.row.status" />
           </div>
         </template>
       </el-table-column>
@@ -117,6 +117,8 @@
         return `/spaces/${billing.repo_path}/billing?time=${props.selectedMonth}`
       case 'inference':
         return `/endpoints/${billing.deploy_user}/${billing.deploy_name}/${billing.deploy_id}/billing?time=${props.selectedMonth}`
+      case 'finetune':
+        return `/finetune/${billing.repo_path}/${billing.deploy_name}/${billing.deploy_id}/billing?time=${props.selectedMonth}`
       default:
         return ''
     }

@@ -13,4 +13,9 @@ class FinetuneController < ApplicationController
     @finetune_id = params[:finetune_id]
   end
 
+  def billing
+    @default_tab = 'billing'
+    render :show
+  end
+
 end
