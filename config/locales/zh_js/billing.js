@@ -2,6 +2,7 @@ export const billing = {
   title: '费用账单',
   balance: '账户可用额度',
   inference: '推理实例',
+  finetune: '微调实例',
   instanceID: '实例id',
   createTime: '创建时间',
   usageTime: '使用时长(小时)',
