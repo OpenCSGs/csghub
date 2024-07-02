@@ -140,7 +140,7 @@
   const inferenceBillings = ref([])
   const inferenceTotalBillings = ref(0)
   const inferenceTotalPrice = ref(0)
-  
+
   const finetuneBillings = ref([])
   const finetuneTotalBillings = ref(0)
   const finetuneTotalPrice = ref(0)
