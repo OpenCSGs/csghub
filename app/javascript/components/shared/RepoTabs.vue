@@ -9,6 +9,8 @@
       :userToken="userToken"
       :namespacePath="repoDetail.path"
       :admin="admin"
+      :enableEndpoint="repoDetail.enable_inference"
+      :enableFinetune="repoDetail.enable_finetune"
     />
     <tab-container
       :default-tab="defaultTab"
