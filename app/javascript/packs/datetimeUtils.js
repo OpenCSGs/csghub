@@ -30,3 +30,13 @@ export const getFirstDayOfTime = () => {
 export const formatDate = (date=(new Date), format='YYYY-MM-DD') => {
   return dayjs(date).format(format)
 }
+
+export const isFutureDate = (date) => {
+  if (date) {
+    const current = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    const compareDate = new Date(year, month, 1)
+    return compareDate > current
+  }
+}

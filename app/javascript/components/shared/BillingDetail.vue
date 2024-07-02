@@ -86,7 +86,12 @@
   import { ref, inject, onMounted, computed } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { getCurrentTime, getFirstDayOfTime, formatDate } from '../../packs/datetimeUtils'
+  import {
+    getCurrentTime,
+    getFirstDayOfTime,
+    formatDate,
+    isFutureDate
+  } from '../../packs/datetimeUtils'
 
   const props = defineProps({
     type: String,
@@ -127,13 +132,7 @@
   })
 
   const disabledDate = (date) => {
-    if (date) {
-      const current = new Date()
-      const year = date.getFullYear()
-      const month = date.getMonth()
-      const compareDate = new Date(year, month, 1)
-      return compareDate > current
-    }
+    return isFutureDate(date)
   }
 
   const dateChange = (e) => {
@@ -192,10 +191,9 @@
 
   onMounted(() => {
     const searchParams = new URLSearchParams(window.location.search)
-    const params = Object.fromEntries(searchParams.entries())
-    if (params && params.time) {
-      selectedMonth.value = params.time
-      dateChange(params.time)
+    if (searchParams.get('time')) {
+      selectedMonth.value = searchParams.get('time')
+      dateChange(selectedMonth.value)
     }
     fetchDetails()
   })

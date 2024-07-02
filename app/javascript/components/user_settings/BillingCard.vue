@@ -114,13 +114,7 @@
   const endDate = ref(getCurrentDate())
 
   const disabledDate = (date) => {
-    if (date) {
-      const current = new Date()
-      const year = date.getFullYear()
-      const month = date.getMonth()
-      const compareDate = new Date(year, month, 1)
-      return compareDate > current
-    }
+    return isFutureDate(date)
   }
 
   const dateChange = (e) => {
