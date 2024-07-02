@@ -87,7 +87,7 @@
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { getCurrentDate, getFirstDayOfMonth, formatDate } from '../../packs/datetimeUtils'
+  import { getCurrentDate, getFirstDayOfMonth, formatDate, isFutureDate } from '../../packs/datetimeUtils'
   import BillingTable from './BillingTable.vue'
 
   const { t } = useI18n()
