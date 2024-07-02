@@ -135,7 +135,7 @@
                 </clipPath>
               </defs>
             </svg>
-            <p><a href="https://12377.cn/" target="_blank">{{ $t('footer.illegal') }}</a></p>
+            <p><a href="https://www.12377.cn/" target="_blank">{{ $t('footer.illegal') }}</a></p>
           </div>
           <div class="flex gap-x-1.5 mb-[5px]">
             <img :src="emblemLogo" class="h-4 w-4" alt="OpenCSG Logo"/>
@@ -232,7 +232,7 @@
                 </clipPath>
               </defs>
             </svg>
-            <p><a href="https://12377.cn/" class="text-[12px]" target="_blank">{{ $t('footer.illegal') }}</a></p>
+            <p><a href="https://www.12377.cn/" class="text-[12px]" target="_blank">{{ $t('footer.illegal') }}</a></p>
           </div>
           <div class="flex gap-2">
             <div class="flex gap-x-1.5 mb-[5px]">
