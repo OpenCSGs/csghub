@@ -27,6 +27,8 @@
     <el-tabs
       v-model="activeName"
       class="demo-tabs"
+      :beforeLeave="handleTabLeave"
+      @tabClick="tabChange"
     >
       <el-tab-pane
         :label="$t('finetune.detail.tab1')"
@@ -109,7 +111,8 @@
     name: String,
     userName: String,
     finetuneName: String,
-    finetuneId: Number
+    finetuneId: Number,
+    path: String
   })
 
   const finetune = ref({})
@@ -142,6 +145,22 @@
   const isStatusSSEConnected = ref(false)
 
   const csghubServer = inject('csghubServer')
+
+  const handleTabLeave = (tab) => {
+    tabChange(tab)
+    return false
+  }
+
+  const tabChange = (tab) => {
+    switch (tab.paneName) {
+      case 'page':
+        location.href = `/finetune/${props.namespace}/${props.name}/${props.finetuneName}/${props.finetuneId}`
+        break
+      default:
+        location.href = `/finetune/${props.namespace}/${props.name}/${props.finetuneName}/${props.finetuneId}/${tab.paneName}`
+        break
+    }
+  }
 
   const toNotebookPage = () => {
     window.open(`https://${finetune.value.endpoint}?jwt=${jwtToken}`)
@@ -242,6 +261,10 @@
   }
 
   onBeforeMount(() => {
+    console.log(props)
+    if (props.path) {
+      activeName.value = props.path
+    }
     getDetail()
   })
 </script>
