@@ -26,7 +26,7 @@
           </div>
           {{ $t('billing.balance') }}
         </div>
-        <div class="text-[36px] leading-[44px]">¥ {{ balance }}</div>
+        <div class="text-[36px] leading-[44px] overflow-hidden text-ellipsis whitespace-nowrap" :title="balance">¥ {{ balance }}</div>
       </div>
     </div>
 
@@ -57,7 +57,11 @@
     <!-- inference instances -->
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
-        <SvgIcon name="inference_instances" />
+        <SvgIcon
+          name="endpoint"
+          width="18"
+          height="18"
+        />
         {{ $t('billing.inference') }}
       </div>
       <div class="text-[14px] leading-[20px] text-[#475467]">
@@ -105,6 +109,34 @@
         :total="finetuneTotalBillings"
       />
     </div>
+
+    <!-- starship -->
+    <div class="flex justify-between mb-4">
+      <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
+        <SvgIcon
+          name="profile_finetune"
+          width="18"
+          height="18"
+        />
+        {{ $t('billing.finetune') }}
+      </div>
+      <div class="text-[14px] leading-[20px] text-[#475467]">
+        {{ $t('billing.total') }}：¥ {{ starshipTotalPrice }}
+      </div>
+    </div>
+    <BillingTable
+      :billings="starshipBillings"
+      :selectedMonth="selectedMonth"
+      type="starship"
+    />
+    <div class="mt-[12px] mb-[16px] flex justify-center">
+      <CsgPagination
+        :perPage="perPage"
+        :currentPage="starshipCurrentPage"
+        @currentChange="fetchStarship"
+        :total="starshipTotalBillings"
+      />
+    </div>
   </div>
 </template>
 
@@ -131,6 +163,7 @@
   const spaceCurrentPage = ref(1)
   const inferenceCurrentPage = ref(1)
   const finetuneCurrentPage = ref(1)
+  const starshipCurrentPage = ref(1)
 
   const balance = ref(0)
   const spaceBillings = ref([])
@@ -144,6 +177,10 @@
   const finetuneBillings = ref([])
   const finetuneTotalBillings = ref(0)
   const finetuneTotalPrice = ref(0)
+
+  const starshipBillings = ref([])
+  const starshipTotalBillings = ref(0)
+  const starshipTotalPrice = ref(0)
 
   const { cookies } = useCookies()
 
@@ -199,6 +236,8 @@
   const fetchBillings = async () => {
     await fetchInference()
     await fetchSpace()
+    await fetchFinetune()
+    await fetchStarship()
   }
 
   // scene = 10：model inference endpoint
@@ -260,7 +299,7 @@
   const fetchFinetune = async () => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', inferenceCurrentPage.value)
+    params.append('page', finetuneCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 12)
@@ -276,6 +315,32 @@
       finetuneBillings.value = data.data
       finetuneTotalBillings.value = data.total
       finetuneTotalPrice.value = Math.abs(data.total_value)
+    }
+  }
+
+  // scene = 10：model inference endpoint
+  // scene = 11：space
+  // scene = 12: model finetune
+  // scene = 20：starship-ide
+  const fetchStarship = async () => {
+    const params = new URLSearchParams()
+    params.append('per', perPage.value)
+    params.append('page', starshipCurrentPage.value)
+    params.append('start_date', startDate.value)
+    params.append('end_date', endDate.value)
+    params.append('scene', 20)
+
+    const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
+    const res = await jwtFetch(url)
+
+    if (!res.ok) {
+      const { msg } = await res.json()
+      ElMessage({ message: msg, type: 'warning' })
+    } else {
+      const { data } = await res.json()
+      starshipBillings.value = data.data
+      starshipTotalBillings.value = data.total
+      starshipTotalPrice.value = Math.abs(data.total_value)
     }
   }
 
