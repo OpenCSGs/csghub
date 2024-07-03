@@ -107,7 +107,7 @@
       accessToken.value = result.data.token
       ElMessage({ message: result.msg, type: 'success' })
     } catch (error) {
-      ElMessage({ message: 'Failed to refresh token', type: 'error' })
+      ElMessage({ message: error.message, type: 'error' })
     }
   }
 
@@ -143,7 +143,7 @@
         tokenName.value = body.data[0].token_name
       }
     } catch (error) {
-      ElMessage({ message: 'Failed to fetch user token', type: 'error' })
+      ElMessage({ message: error.message, type: 'error' })
     }
   }
 
@@ -168,7 +168,7 @@
 
       fetchUserToken()
     } catch (error) {
-      ElMessage({ message: 'Failed to create user token', type: 'error' })
+      ElMessage({ message: error.message, type: 'error' })
     }
   }
 
