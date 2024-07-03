@@ -114,7 +114,7 @@
     <div class="flex justify-between mb-4">
       <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
         <SvgIcon
-          name="profile_finetune"
+          name="billing_starship"
           width="18"
           height="18"
         />
