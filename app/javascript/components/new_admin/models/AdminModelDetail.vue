@@ -17,7 +17,7 @@
         </li>
         <li class="flex justify-between mb-4">
           <label>Creator</label>
-          <p>{{ user.username }}</p>
+          <p>{{ model.user?.username||'' }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Visibility</label>
@@ -41,15 +41,12 @@
   const route = useRoute()
   const csghubServer = inject('csghubServer')
   const model = ref({})
-  const user = ref({})
 
   const fetchModel = async () => {
     const response = await fetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`)
     if (response.ok) {
       const res_json = await response.json()
       model.value = res_json.data
-      user.value = model.value.user
-      delete model.value.user
     } else {
       ElMessage.error('Failed to fetch model')
     }
