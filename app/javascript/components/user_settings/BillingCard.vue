@@ -118,7 +118,7 @@
           width="18"
           height="18"
         />
-        {{ $t('billing.finetune') }}
+        Starship
       </div>
       <div class="text-[14px] leading-[20px] text-[#475467]">
         {{ $t('billing.total') }}：¥ {{ starshipTotalPrice }}
