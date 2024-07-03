@@ -139,7 +139,6 @@
     const dateString = formatDate(e) + ' 00:00:00'
     startTime.value = dateString
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString) + ' 23:59:59'
-    console.log(lastDayOfMonth)
     endTime.value = lastDayOfMonth
     fetchDetails()
   }

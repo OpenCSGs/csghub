@@ -2,6 +2,7 @@ export const billing = {
   title: 'Billing',
   balance: 'Account Balance',
   inference: 'Inference Instances',
+  finetune: 'Finetune Instance',
   instanceID: 'Instance ID',
   createTime: 'Creation Time',
   usageTime: 'Usage Duration(h)',

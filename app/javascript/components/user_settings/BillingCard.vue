@@ -77,6 +77,34 @@
         :total="inferenceTotalBillings"
       />
     </div>
+
+    <!-- finetune -->
+    <div class="flex justify-between mb-4">
+      <div class="flex gap-2 text-[20px] leading-[30px] text-[#344054]">
+        <SvgIcon
+          name="profile_finetune"
+          width="18"
+          height="18"
+        />
+        {{ $t('billing.finetune') }}
+      </div>
+      <div class="text-[14px] leading-[20px] text-[#475467]">
+        {{ $t('billing.total') }}：¥ {{ finetuneTotalPrice }}
+      </div>
+    </div>
+    <BillingTable
+      :billings="finetuneBillings"
+      :selectedMonth="selectedMonth"
+      type="finetune"
+    />
+    <div class="mt-[12px] mb-[16px] flex justify-center">
+      <CsgPagination
+        :perPage="perPage"
+        :currentPage="finetuneCurrentPage"
+        @currentChange="fetchFinetune"
+        :total="finetuneTotalBillings"
+      />
+    </div>
   </div>
 </template>
 
@@ -87,7 +115,12 @@
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { getCurrentDate, getFirstDayOfMonth, formatDate, isFutureDate } from '../../packs/datetimeUtils'
+  import {
+    getCurrentDate,
+    getFirstDayOfMonth,
+    formatDate,
+    isFutureDate
+  } from '../../packs/datetimeUtils'
   import BillingTable from './BillingTable.vue'
 
   const { t } = useI18n()
@@ -97,14 +130,20 @@
 
   const spaceCurrentPage = ref(1)
   const inferenceCurrentPage = ref(1)
+  const finetuneCurrentPage = ref(1)
 
   const balance = ref(0)
   const spaceBillings = ref([])
   const spaceTotalBillings = ref(0)
+  const spaceTotalPrice = ref(0)
+
   const inferenceBillings = ref([])
   const inferenceTotalBillings = ref(0)
-  const spaceTotalPrice = ref(0)
   const inferenceTotalPrice = ref(0)
+
+  const finetuneBillings = ref([])
+  const finetuneTotalBillings = ref(0)
+  const finetuneTotalPrice = ref(0)
 
   const { cookies } = useCookies()
 
@@ -118,11 +157,9 @@
   }
 
   const dateChange = (e) => {
-    console.log(e)
     const dateString = formatDate(e)
     startDate.value = dateString
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString)
-    console.log(lastDayOfMonth)
     endDate.value = lastDayOfMonth
     fetchBillings()
   }
@@ -154,7 +191,6 @@
       })
     } else {
       res.json().then(({ data }) => {
-        console.log(data)
         balance.value = data.balance
       })
     }
@@ -185,7 +221,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data for scene 10:', data)
       inferenceBillings.value = data.data
       inferenceTotalBillings.value = data.total
       inferenceTotalPrice.value = Math.abs(data.total_value)
@@ -212,10 +247,35 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data for scene 11:', data)
       spaceBillings.value = data.data
       spaceTotalBillings.value = data.total
       spaceTotalPrice.value = Math.abs(data.total_value)
+    }
+  }
+
+  // scene = 10：model inference endpoint
+  // scene = 11：space
+  // scene = 12: model finetune
+  // scene = 20：starship-ide
+  const fetchFinetune = async () => {
+    const params = new URLSearchParams()
+    params.append('per', perPage.value)
+    params.append('page', inferenceCurrentPage.value)
+    params.append('start_date', startDate.value)
+    params.append('end_date', endDate.value)
+    params.append('scene', 12)
+
+    const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/bills?${params.toString()}`
+    const res = await jwtFetch(url)
+
+    if (!res.ok) {
+      const { msg } = await res.json()
+      ElMessage({ message: msg, type: 'warning' })
+    } else {
+      const { data } = await res.json()
+      finetuneBillings.value = data.data
+      finetuneTotalBillings.value = data.total
+      finetuneTotalPrice.value = Math.abs(data.total_value)
     }
   }
 
