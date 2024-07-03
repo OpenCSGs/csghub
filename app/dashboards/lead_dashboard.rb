@@ -39,7 +39,7 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_medium: Field::String,
     utm_source: Field::String,
     position: Field::String,
-    origin: Field::Select.with_options(include_blank: false, collection: -> { Lead.human_enum_options(:origin) }),
+    origin: Field::Select.with_options(include_blank: true, collection: -> { Lead.human_enum_options(:origin) }),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
