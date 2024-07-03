@@ -1,6 +1,12 @@
 class InternalApi::Admin::SyncSettingsController < InternalApi::Admin::ApplicationController
+  DEFAULT_SYNC_TOKEN = '8d1cbcd3cdd843ec800171a0f51961e6'.freeze
+
   def index
-    render json: csghub_api.get_sync_settings(current_user.name)
+    response = csghub_api.get_sync_settings(current_user.name)
+    data = JSON.parse(response)['data']
+    data['is_default'] = (data['token'] == DEFAULT_SYNC_TOKEN)
+
+    render json: { data: data }
   end
 
   def create

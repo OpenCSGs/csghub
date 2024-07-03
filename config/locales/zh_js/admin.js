@@ -10,5 +10,6 @@ export const admin = {
     submit: '提交',
     update: '更新',
     queues: '同步队列',
+    defaultTokenAlert: '当前使用的是系统默认的多源同步 token，仅支持查看不支持同步。如果需要同步功能，请到传神社区注册申请。'
   }
 }
