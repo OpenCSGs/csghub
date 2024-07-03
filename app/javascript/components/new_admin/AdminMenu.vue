@@ -17,6 +17,13 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/models"
+      class="underline"
+    >
+      Models
+    </RouterLink>
+
+    <RouterLink
       to="/new_admin/codes"
       class="underline"
     >

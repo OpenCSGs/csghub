@@ -57,6 +57,8 @@ import AdminUserList from "./components/new_admin/users/AdminUserList.vue"
 import AdminUserDetail from "./components/new_admin/users/AdminUserDetail.vue"
 import AdminCodeList from "./components/new_admin/codes/AdminCodeList.vue"
 import AdminCodeDetail from "./components/new_admin/codes/AdminCodeDetail.vue"
+import AdminModelList from "./components/new_admin/models/AdminModelList.vue"
+import AdminModelDetail from "./components/new_admin/models/AdminModelDetail.vue"
 
 const pinia = createPinia()
 
@@ -126,6 +128,8 @@ const routes = [
   { path: '/new_admin/users/:id', component: AdminUserDetail },
   { path: '/new_admin/codes', component: AdminCodeList },
   { path: '/new_admin/codes/:namespace/:name', component: AdminCodeDetail },
+  { path: '/new_admin/models', component: AdminModelList },
+  { path: '/new_admin/models/:namespace/:name', component: AdminModelDetail },
 ]
 
 const router = createRouter({
