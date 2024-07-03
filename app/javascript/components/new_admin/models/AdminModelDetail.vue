@@ -17,7 +17,7 @@
         </li>
         <li class="flex justify-between mb-4">
           <label>Creator</label>
-          <p>{{ model.user?.username||'' }}</p>
+          <p>{{ model.user?.username || '' }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Visibility</label>
@@ -35,7 +35,7 @@
 <script setup>
   import { ref, onMounted, inject } from 'vue'
   import { useRoute } from 'vue-router'
-  import dayjs from "dayjs"
+  import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
 
   const route = useRoute()
@@ -43,7 +43,9 @@
   const model = ref({})
 
   const fetchModel = async () => {
-    const response = await fetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`)
+    const response = await fetch(
+      `${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`
+    )
     if (response.ok) {
       const res_json = await response.json()
       model.value = res_json.data
