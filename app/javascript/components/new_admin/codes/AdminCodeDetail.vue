@@ -17,7 +17,7 @@
         </li>
         <li class="flex justify-between mb-4">
           <label>Creator</label>
-          <p>{{ user.username }}</p>
+          <p>{{ code.user?.username || '' }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Visibility</label>
@@ -41,15 +41,12 @@
   const route = useRoute()
   const csghubServer = inject('csghubServer')
   const code = ref({})
-  const user = ref({})
 
   const fetchcode = async () => {
     const response = await fetch(`${csghubServer}/api/v1/codes/${route.params.namespace}/${route.params.name}`)
     if (response.ok) {
       const res_json = await response.json()
       code.value = res_json.data
-      user.value = code.value.user
-      delete code.value.user
     } else {
       ElMessage.error('Failed to fetch code')
     }
