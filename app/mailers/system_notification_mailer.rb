@@ -5,22 +5,23 @@ class SystemNotificationMailer < ApplicationMailer
 
   def group_mail
     @mail_template = params[:mail_template]
-    mail(to: params[:email], subject: "OpenCSG 开放传神")
+    mail(to: params[:email],
+         subject: "#{subject_prefix} 开放传神")
   end
 
   def new_partner_alert
     mail(to: internal_group,
-    subject: "#{subject_prefix}: 合作伙伴申请")
+         subject: "#{subject_prefix}: 合作伙伴申请")
   end
 
   def new_expert_alert
     mail(to: internal_group,
-    subject: "#{subject_prefix}: 专家申请")
+         subject: "#{subject_prefix}: 专家申请")
   end
 
   def new_customer_alert
     mail(to: internal_group,
-    subject: "#{subject_prefix}: 新客户申请")
+         subject: "#{subject_prefix}: 新客户申请")
   end
 
   def new_comment_alert
@@ -31,7 +32,7 @@ class SystemNotificationMailer < ApplicationMailer
     repo_name = @comment.commentable.discussionable.name
     @repo_url = "#{asset_host}/#{repo_type}s/#{repo_namespace}/#{repo_name}"
     mail(to: user_email,
-    subject: I18n.t('mailer.new_comment'))
+         subject: I18n.t('mailer.new_comment'))
   end
 
   private
