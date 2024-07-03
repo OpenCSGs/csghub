@@ -157,11 +157,9 @@
   }
 
   const dateChange = (e) => {
-    console.log(e)
     const dateString = formatDate(e)
     startDate.value = dateString
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString)
-    console.log(lastDayOfMonth)
     endDate.value = lastDayOfMonth
     fetchBillings()
   }
@@ -193,7 +191,6 @@
       })
     } else {
       res.json().then(({ data }) => {
-        console.log(data)
         balance.value = data.balance
       })
     }
@@ -224,7 +221,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data for scene 10:', data)
       inferenceBillings.value = data.data
       inferenceTotalBillings.value = data.total
       inferenceTotalPrice.value = Math.abs(data.total_value)
@@ -251,7 +247,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data for scene 11:', data)
       spaceBillings.value = data.data
       spaceTotalBillings.value = data.total
       spaceTotalPrice.value = Math.abs(data.total_value)
@@ -278,7 +273,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data for scene 10:', data)
       finetuneBillings.value = data.data
       finetuneTotalBillings.value = data.total
       finetuneTotalPrice.value = Math.abs(data.total_value)
