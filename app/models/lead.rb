@@ -6,9 +6,19 @@ class Lead < ApplicationRecord
     completed: 'completed'
   }
 
+  enum origin: {
+    exhibition: 'exhibition',
+    public_number: 'public_number',
+    video_number: 'video_number',
+    zhihu: 'zhihu',
+    baidu: 'baidu',
+    friends: 'friends',
+    other: 'other'
+  }
+
   belongs_to :lead_form, primary_key: :uuid, foreign_key: :lead_form_uuid, optional: true
 
-  validates_presence_of :company, :phone, :name
+  validates_presence_of :company, :phone, :name, :position
 
   validates_uniqueness_of :phone, scope: :lead_type
 

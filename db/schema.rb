@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_03_022314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,24 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.index ["user_id"], name: "index_admin_photos_on_user_id"
   end
 
-  create_table "campaigns", force: :cascade do |t|
-    t.string "name"
-    t.string "uuid"
-    t.string "location"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "organizer"
-    t.string "organizer_website"
-    t.integer "pageviews", default: 0
-    t.integer "campaign_type"
-    t.integer "status", default: 0
-    t.boolean "recommended", default: false
-    t.boolean "release", default: false
-    t.index ["uuid"], name: "index_campaigns_on_uuid"
-  end
-
   create_table "application_spaces", force: :cascade do |t|
     t.string "name"
     t.string "license"
@@ -95,6 +77,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.text "desc"
     t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name"
+    t.string "uuid"
+    t.string "location"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "organizer"
+    t.string "organizer_website"
+    t.integer "pageviews", default: 0
+    t.integer "campaign_type"
+    t.integer "status", default: 0
+    t.boolean "recommended", default: false
+    t.boolean "release", default: false
+    t.index ["uuid"], name: "index_campaigns_on_uuid"
   end
 
   create_table "codes", force: :cascade do |t|
@@ -148,8 +148,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.bigint "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "desc"
     t.string "nickname"
-    t.text "desc"
     t.string "origin"
     t.index ["creator_id"], name: "index_datasets_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_datasets_on_owner"
@@ -258,6 +258,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.string "company_site"
     t.text "computing_demand"
     t.text "demand", default: ""
+    t.string "position"
+    t.string "origin"
   end
 
   create_table "models", force: :cascade do |t|
@@ -270,7 +272,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.datetime "updated_at", null: false
     t.bigint "creator_id"
     t.string "nickname"
-    t.text "desc"
+    t.string "desc"
     t.string "origin"
     t.index ["creator_id"], name: "index_models_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_models_on_owner"
@@ -343,6 +345,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
+    t.jsonb "ldap_configs", default: {}
     t.jsonb "hot_spaces", default: {}
     t.jsonb "ignore_model_tags", default: {}
     t.jsonb "ignore_dataset_tags", default: {}
@@ -372,7 +375,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.string "zh_name"
     t.text "desc"
     t.integer "weight"
-    t.string "scope"
+    t.string "scope", limit: 255
     t.string "label"
   end
 
@@ -395,9 +398,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
-    t.string "wechat_id"
-    t.string "github_id"
-    t.string "gitlab_id"
+    t.boolean "ldap_synced", default: false
     t.string "session_ip", default: ""
     t.string "homepage"
     t.text "bio"
@@ -414,6 +415,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
   add_foreign_key "ssh_keys", "users"
-  add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end

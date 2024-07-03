@@ -15,3 +15,11 @@ zh:
         lead_statuses:
           processing: 处理中
           completed: 已完成
+        origins:
+          exhibition: 展会
+          public_number: 公众号
+          video_number: 视频号
+          zhihu: 知乎
+          baidu: 百度
+          friends: 朋友介绍
+          other: 其他

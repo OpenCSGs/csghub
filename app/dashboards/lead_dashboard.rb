@@ -38,6 +38,8 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_keyword: Field::String,
     utm_medium: Field::String,
     utm_source: Field::String,
+    position: Field::String,
+    origin: Field::Select.with_options(include_blank: false, collection: -> { Lead.human_enum_options(:origin) }),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -69,6 +71,7 @@ class LeadDashboard < Administrate::BaseDashboard
     channel
     company
     company_site
+    position
     email
     email_opt_out
     expertise
@@ -94,6 +97,7 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_keyword
     utm_medium
     utm_source
+    origin
     created_at
     updated_at
   ].freeze
@@ -107,6 +111,7 @@ class LeadDashboard < Administrate::BaseDashboard
     channel
     company
     company_site
+    position
     email
     email_opt_out
     expertise
@@ -130,6 +135,7 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_keyword
     utm_medium
     utm_source
+    origin
   ].freeze
 
   # COLLECTION_FILTERS
