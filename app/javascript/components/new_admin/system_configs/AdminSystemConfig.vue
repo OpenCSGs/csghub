@@ -10,15 +10,15 @@
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">Feature Flags</h3>
     <el-form-item>
-      <el-input
+      <textarea
+        ref="featureFlagsRef"
+        class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.feature_flags)"
-        type="textarea"
-        rows="7"
-        style="width: 580px"
-      ></el-input>
+        rows="5"
+      ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="">Update</el-button>
+      <el-button type="info" size="small" @click="updateFeatureFlags">Update</el-button>
     </el-form-item>
   </div>
 
@@ -28,15 +28,15 @@
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">General Configs</h3>
     <el-form-item>
-      <el-input
+      <textarea
+        ref="generalConfigsRef"
+        class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.general_configs)"
-        type="textarea"
-        rows="7"
-        style="width: 580px"
-      ></el-input>
+        rows="5"
+      ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="">Update</el-button>
+      <el-button type="info" size="small" @click="updateGeneralConfigs">Update</el-button>
     </el-form-item>
   </div>
 
@@ -46,15 +46,15 @@
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">S3 Configs</h3>
     <el-form-item>
-      <el-input
+      <textarea
+        ref="s3ConfigsRef"
+        class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.s3_configs)"
-        type="textarea"
-        rows="7"
-        style="width: 580px"
-      ></el-input>
+        rows="5"
+      ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="">Update</el-button>
+      <el-button type="info" size="small" @click="updateS3Configs">Update</el-button>
     </el-form-item>
   </div>
 </template>
@@ -62,6 +62,7 @@
 <script setup>
   import csrfFetch from '../../../packs/csrfFetch';
   import { ref, onMounted } from 'vue'
+  import { ElMessage } from 'element-plus';
 
   const systemConfigs = ref({
     feature_flags: {},
@@ -71,6 +72,24 @@
     s3_configs: {},
     starhub_configs: {},
   })
+
+  const featureFlagsRef = ref()
+  const updateFeatureFlags = () => {
+    systemConfigs.value.feature_flags = JSON.parse(featureFlagsRef.value.value)
+    updateSystemConfig(systemConfigs.value)
+  }
+
+  const generalConfigsRef = ref(null)
+  const updateGeneralConfigs = () => {
+    systemConfigs.value.general_configs = JSON.parse(generalConfigsRef.value.value)
+    updateSystemConfig(systemConfigs.value)
+  }
+
+  const s3ConfigsRef = ref(null)
+  const updateS3Configs = () => {
+    systemConfigs.value.s3_configs = JSON.parse(s3ConfigsRef.value.value)
+    updateSystemConfig(systemConfigs.value)
+  }
 
   const stringifyObject = (obj) => {
     return JSON.stringify(obj).replace(/,/g, ',\n').replace('{', '{\n').replace('}', '\n}')
@@ -88,6 +107,28 @@
       systemConfigs.value.starhub_configs = body.system_configs.starhub_configs || {}
     } else {
       console.log('Failed to fetch system config')
+    }
+  }
+
+  const updateSystemConfig = async (payload) => {
+    const options = {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    }
+    const res = await csrfFetch('/internal_api/admin/system_config/1', options)
+    if (res.ok) {
+      ElMessage({
+        message: '更新成功！',
+        type: 'success'
+      })
+    } else {
+      res.json().then(error => {
+        ElMessage({
+          message: error.msg,
+          type: 'success'
+        })
+      })
     }
   }
 
