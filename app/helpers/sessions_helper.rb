@@ -31,7 +31,7 @@ module SessionsHelper
     cookies.delete :userinfos, domain: current_cookie_domain
     cookies.delete :login_identity
     cookies.delete :user_synced
-    cookies.delete :user_token
+    cookies.delete :user_token, domain: current_cookie_domain
     cookies.delete :token_expire_at
   end
 
