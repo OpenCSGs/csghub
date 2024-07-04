@@ -2,7 +2,7 @@
   <div>
     <h3 class="mb-5">{{ $t('admin.syncSetting.title') }}</h3>
     <el-alert
-      v-if="form.is_default"
+      v-if="form.default"
       :title="$t('admin.syncSetting.defaultTokenAlert')"
       type="warning"
       show-icon
