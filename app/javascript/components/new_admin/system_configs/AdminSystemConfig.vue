@@ -65,6 +65,7 @@
   import { ElMessage } from 'element-plus';
 
   const systemConfigs = ref({
+    application_env: '',
     feature_flags: {},
     general_configs: {},
     license_configs: {},
