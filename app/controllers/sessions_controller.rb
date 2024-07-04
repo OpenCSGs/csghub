@@ -111,7 +111,6 @@ class SessionsController < ApplicationController
 
   def destroy
     helpers.logout
-    cookies.delete(:user_token)
     redirect_to root_path
   end
 end
