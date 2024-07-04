@@ -50,7 +50,7 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        v-code:current-page="page"
+        v-model:current-page="page"
         :page-size="per"
         layout="prev, pager, next"
         :total="total"
