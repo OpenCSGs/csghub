@@ -5,11 +5,11 @@
         <div class="flex items-center justify-between mb-[20px]">
           <h3 class="text-[20x] font-[500]">codes</h3>
           <el-input
-            v-code="keyword"
+            v-model="keyword"
             style="width: 240px"
             placeholder="Name, Owner"
             :prefix-icon="Search"
-            @input="searchcodes"
+            @input="searchCodes"
           />
         </div>
       </template>
@@ -54,7 +54,7 @@
         :page-size="per"
         layout="prev, pager, next"
         :total="total"
-        @current-change="fetchcodes"
+        @current-change="fetchCodes"
         class="my-[52px] flex justify-center"
       />
     </el-card>
@@ -73,7 +73,7 @@
   const keyword = ref('')
   const csghubServer = inject('csghubServer')
 
-  const fetchcodes = async (current) => {
+  const fetchCodes = async (current) => {
     const response = await fetch(
       `${csghubServer}/api/v1/codes?&sort=trending&page=${
         current || page.value
@@ -88,9 +88,9 @@
     }
   }
 
-  const searchcodes = () => {
+  const searchCodes = () => {
     page.value = 1
-    fetchcodes()
+    fetchCodes()
   }
 
   const showDetail = (path) => {
@@ -98,6 +98,6 @@
   }
 
   onMounted(() => {
-    fetchcodes()
+    fetchCodes()
   })
 </script>

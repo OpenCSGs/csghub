@@ -42,7 +42,7 @@
   const csghubServer = inject('csghubServer')
   const code = ref({})
 
-  const fetchcode = async () => {
+  const fetchCode = async () => {
     const response = await fetch(`${csghubServer}/api/v1/codes/${route.params.namespace}/${route.params.name}`)
     if (response.ok) {
       const res_json = await response.json()
@@ -53,6 +53,6 @@
   }
 
   onMounted(() => {
-    fetchcode()
+    fetchCode()
   })
 </script>
