@@ -10,6 +10,13 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/system_config"
+      class="underline"
+    >
+      System Config
+    </RouterLink>
+
+    <RouterLink
       to="/new_admin/users"
       class="underline"
     >
