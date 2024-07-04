@@ -91,20 +91,15 @@
     updateSystemConfig(systemConfigs.value)
   }
 
-  const stringifyObject = (obj) => {
-    return JSON.stringify(obj).replace(/,/g, ',\n').replace('{', '{\n').replace('}', '\n}')
-  }
+  const stringifyObject = (obj) => JSON.stringify(obj, null, 2)
 
   const fetchSystemConfig = async () => {
     const res = await csrfFetch('/internal_api/admin/system_config')
     if (res.ok) {
       body = await res.json()
-      systemConfigs.value.feature_flags = body.system_configs.feature_flags || {}
-      systemConfigs.value.general_configs = body.system_configs.general_configs || {}
-      systemConfigs.value.license_configs = body.system_configs.license_configs || {}
-      systemConfigs.value.oidc_configs = body.system_configs.oidc_configs || {}
-      systemConfigs.value.s3_configs = body.system_configs.s3_configs || {}
-      systemConfigs.value.starhub_configs = body.system_configs.starhub_configs || {}
+      Object.keys(systemConfigs.value).forEach(key => {
+        systemConfigs.value[key] = body.system_configs[key] || {}
+      })
     } else {
       console.log('Failed to fetch system config')
     }
