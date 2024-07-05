@@ -17,6 +17,13 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/models"
+      class="underline"
+    >
+      Models
+    </RouterLink>
+
+    <RouterLink
       v-if="onPremise"
       to="/new_admin/sync"
       class="underline"

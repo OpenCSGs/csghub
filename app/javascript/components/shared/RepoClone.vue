@@ -13,12 +13,12 @@
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
     <DeployDropdown
-      v-if="repoType === 'model' && admin && !!httpCloneUrl"
+      v-if="repoType === 'model' && admin && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
-      v-if="repoType === 'model' && !!httpCloneUrl"
+      v-if="repoType === 'model' && admin && enableFinetune && !!httpCloneUrl"
       @click="toFinetunePage"
     >
       <SvgIcon
@@ -63,7 +63,10 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
-            <div class="my-[4px]" v-if="currentUser">
+            <div
+              class="my-[4px]"
+              v-if="currentUser"
+            >
               <el-checkbox
                 v-model="useToken"
                 :label="$t('application_spaces.gradioGuide.useToken')"
@@ -106,15 +109,14 @@
 </template>
 
 <script setup>
-  import { computed, ref, inject, onMounted, watch } from "vue";
-  import MarkdownViewer from "../shared/viewers/MarkdownViewer.vue";
-  import DeployDropdown from "./DeployDropdown.vue";
-  import SvgIcon from "./SvgIcon.vue";
-  import { useCookies } from "vue3-cookies";
-  import jwtFetch from "../../packs/jwtFetch";
-  import { ElMessage } from "element-plus";
+  import { computed, ref, inject, onMounted, watch } from 'vue'
+  import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
+  import DeployDropdown from './DeployDropdown.vue'
+  import SvgIcon from './SvgIcon.vue'
+  import { useCookies } from 'vue3-cookies'
+  import jwtFetch from '../../packs/jwtFetch'
 
-  const { cookies } = useCookies();
+  const { cookies } = useCookies()
 
   const props = defineProps({
     httpCloneUrl: String,
@@ -125,12 +127,14 @@
     namespacePath: String,
     admin: Boolean,
     repo: Object,
-  });
+    enableEndpoint: Boolean,
+    enableFinetune: Boolean
+  })
 
   const csghubServer = inject('csghubServer')
-  const activeCloneType = ref("https");
-  const cloneRepositoryVisible = ref(false);
-  const useToken = ref(false);
+  const activeCloneType = ref('https')
+  const cloneRepositoryVisible = ref(false)
+  const useToken = ref(false)
   const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
 
@@ -158,14 +162,17 @@
 
   const httpsCloneCodeWithToken = ref(`
   git lfs install
-  git clone https://${currentUser.value}:${accessToken.value}@${props.httpCloneUrl.replace( "https://", "")}
+  git clone https://${currentUser.value}:${
+    accessToken.value
+  }@${props.httpCloneUrl.replace('https://', '')}
   `)
 
   watch(accessToken, async (newAccessToken) => {
-    httpsCloneCodeWithToken.value =
-  `
+    httpsCloneCodeWithToken.value = `
   git lfs install
-  git clone https://${currentUser.value}:${newAccessToken}@${props.httpCloneUrl.replace( "https://", "")}
+  git clone https://${
+    currentUser.value
+  }:${newAccessToken}@${props.httpCloneUrl.replace('https://', '')}
 `
   })
 
@@ -174,7 +181,7 @@
   })
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
-    return getMarkdownCode(httpsCloneCodeWithToken.value, "bash", true);
+    return getMarkdownCode(httpsCloneCodeWithToken.value, 'bash', true)
   })
 
   const sshCloneCode = `
@@ -223,13 +230,15 @@
   const fetchUserToken = async() => {
     if (!props.currentUser) return
 
-    const res = await jwtFetch(`${csghubServer}/api/v1/user/${currentUser}/tokens?app=git`)
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/user/${currentUser}/tokens?app=git`
+    )
     if (!res.ok) {
-      res.json().then(error => {
-        ElMessage({message: error.msg, type: "warning"})
+      res.json().then((error) => {
+        ElMessage({ message: error.msg, type: 'warning' })
       })
     } else {
-      res.json().then(body => {
+      res.json().then((body) => {
         if (body.data) {
           accessToken.value = body.data[0].token
         }

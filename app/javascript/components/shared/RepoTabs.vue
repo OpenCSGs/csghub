@@ -10,6 +10,8 @@
       :namespacePath="repoDetail.path"
       :admin="admin"
       :repo="repoDetail"
+      :enableEndpoint="repoDetail.enable_inference"
+      :enableFinetune="repoDetail.enable_finetune"
     />
     <tab-container
       :default-tab="defaultTab"

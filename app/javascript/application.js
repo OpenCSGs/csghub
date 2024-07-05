@@ -56,6 +56,8 @@ import AdminEmailSending from "./components/new_admin/AdminEmailSending.vue"
 import AdminUserList from "./components/new_admin/users/AdminUserList.vue"
 import AdminUserDetail from "./components/new_admin/users/AdminUserDetail.vue"
 import AdminSyncSetting from "./components/new_admin/sync/AdminSyncSetting.vue"
+import AdminModelList from "./components/new_admin/models/AdminModelList.vue"
+import AdminModelDetail from "./components/new_admin/models/AdminModelDetail.vue"
 
 const pinia = createPinia()
 
@@ -124,6 +126,8 @@ const routes = [
   { path: '/new_admin/users', component: AdminUserList },
   { path: '/new_admin/users/:id', component: AdminUserDetail },
   { path: '/new_admin/sync', component: AdminSyncSetting },
+  { path: '/new_admin/models', component: AdminModelList },
+  { path: '/new_admin/models/:namespace/:name', component: AdminModelDetail },
 ]
 
 const router = createRouter({
