@@ -3,6 +3,13 @@
 @import "tailwindcss/utilities";
 
 /*
+  Global css
+*/
+.nowrap {
+  white-space: nowrap;
+}
+
+/*
   Overwrite plugin css like ElementUI here
 */
 
@@ -116,6 +123,6 @@ img, video {
   }
 
   .system-config-obj-box {
-    @apply w-[580px] border border-gray-300 p-[10px] rounded-[8px] text-gray-500 focus:border-blue-300 focus:outline-none;
+    @apply w-full border border-gray-300 p-[10px] rounded-[8px] text-gray-500 focus:border-blue-300 focus:outline-none overflow-auto nowrap;
   }
 }
