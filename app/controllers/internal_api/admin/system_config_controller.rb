@@ -6,7 +6,6 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
 
   def update
     @system_config = SystemConfig.first
-    debugger
     if @system_config.update(system_config_params)
       render json: {msg: '配置已更新'}
     else
