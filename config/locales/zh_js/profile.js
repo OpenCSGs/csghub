@@ -9,6 +9,7 @@ export const profile = {
     accountInformation: "账户信息",
     accessToken: "Access Token",
     starshipAccessToken: "Starship API Key",
+    syncAccessToken: "多源同步 Token",
     gitToken: "Access Token",
     sshKey: "SSH Keys",
     billing: "账单",
