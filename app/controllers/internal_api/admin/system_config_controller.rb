@@ -6,15 +6,21 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
 
   def update
     @system_config = SystemConfig.first
-    # 这里必须使用 permit!，因为传递过来的参数结构包含两个同样的 key，
-    # params.permit(:feature_flags) 还不能工作，待研究
-    system_config_params = params.permit!.slice(:feature_flags,
-                                                :general_configs,
-                                                :s3_configs)
+    debugger
     if @system_config.update(system_config_params)
       render json: {msg: '配置已更新'}
     else
       render json: {msg: '配置更新失败'}, status: 400
     end
+  end
+
+  private
+
+  def system_config_params
+    params.require(:system_config).permit(feature_flags: {},
+                                          general_configs: {},
+                                          s3_configs: {},
+                                          oidc_configs_c: {},
+                                          starhub_configs: {})
   end
 end
