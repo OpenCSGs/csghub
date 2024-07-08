@@ -1,5 +1,5 @@
 class InternalApi::Admin::EmailSendingController < InternalApi::ApplicationController
-  def group_mail
+  def create
     if params[:group] == 'all'
       User.pluck(:email).compact_blank.each do |email|
         mail_address = Mail::Address.new(email)

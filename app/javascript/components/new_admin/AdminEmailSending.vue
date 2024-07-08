@@ -79,7 +79,7 @@
 
   const sendGroupMail = async () => {
     const params = Object.assign({}, dataForm.value)
-    const groupMailerEndpoint = `/internal_api/admin/group_mail`
+    const groupMailerEndpoint = `/internal_api/admin/email_sending`
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
