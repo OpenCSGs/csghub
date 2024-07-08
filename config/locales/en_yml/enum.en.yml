@@ -15,7 +15,7 @@ en:
         lead_statuses:
           processing: 'Being processed'
           completed: 'Completed'
-        origins:
+        user_channels:
           exhibition: 'Exhibition'
           public_number: 'Public number'
           video_number: 'Video number'

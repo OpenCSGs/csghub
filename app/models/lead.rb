@@ -6,7 +6,7 @@ class Lead < ApplicationRecord
     completed: 'completed'
   }
 
-  enum origin: {
+  enum user_channel: {
     exhibition: 'exhibition',
     public_number: 'public_number',
     video_number: 'video_number',
@@ -18,7 +18,7 @@ class Lead < ApplicationRecord
 
   belongs_to :lead_form, primary_key: :uuid, foreign_key: :lead_form_uuid, optional: true
 
-  validates_presence_of :company, :phone, :name, :position
+  validates_presence_of :company, :phone, :name, :email
 
   validates_uniqueness_of :phone, scope: :lead_type
 
