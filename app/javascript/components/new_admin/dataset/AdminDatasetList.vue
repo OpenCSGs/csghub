@@ -72,7 +72,6 @@
       }&per=${per.value}&search=${keyword.value}`
     )
     if (response.ok) {
-      console.log('res===', response)
       const res_json = await response.json()
       datasets.value = res_json.data
       total.value = res_json.total
