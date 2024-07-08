@@ -26,7 +26,7 @@
       <div class="my-2 rounded-lg mlg:w-full mlg:hidden text- text-sm font-regular">
         <div class="font-medium text-[#344054] text-[16px] leading-[24px]">{{ $t('footer.follow') }}</div>
         <div class="text-[#344054] max-w-[242px] text-[14px] leading-[22px]">{{ $t('footer.followText') }}</div>
-        <img class="border border-[#EAECF0] px-[5px] py-[5px]" :src="footCode" height=60 width=60 alt="OpenCSG Logo"/>
+        <img class="border border-[#EAECF0] px-[5px] py-[5px]" :src="footCode" height=70 width=70 alt="OpenCSG Logo"/>
       </div>
     </div>
     <div class="max-w-[1280px] py-4 xl:px-[20px] flex flex-col gap-[12px] md:px-4 md:px-4 justify-between items-center text-xs font-normal border-t w-full sm:text-[10px] sm:flex-col">
