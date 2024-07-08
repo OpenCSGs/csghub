@@ -24,6 +24,13 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/datasets"
+      class="underline"
+    >
+      Datasets
+    </RouterLink>
+
+    <RouterLink
       v-if="!onPremise"
       to="/new_admin/email_sending"
       class="underline"
