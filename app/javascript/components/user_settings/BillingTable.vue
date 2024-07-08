@@ -72,6 +72,7 @@
 
       <!-- status -->
       <el-table-column
+        v-if="type !== 'starship'"
         :label="$t('billing.status')"
         label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         align="center"
@@ -85,6 +86,7 @@
 
       <!-- admin show detail -->
       <el-table-column
+        v-if="type !== 'starship'"
         width="100"
         align="center"
         fixed="right"
