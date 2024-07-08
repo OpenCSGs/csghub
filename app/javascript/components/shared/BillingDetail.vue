@@ -79,6 +79,14 @@
         </el-table-column>
       </el-table>
     </div>
+    <div class="mt-[12px] mb-[16px] flex justify-center">
+      <CsgPagination
+        :perPage="perPage"
+        :currentPage="currentPage"
+        @currentChange="fetchDetails"
+        :total="totalBillings"
+      />
+    </div>
   </div>
 </template>
 
@@ -92,6 +100,7 @@
     formatDate,
     isFutureDate
   } from '../../packs/datetimeUtils'
+  import CsgPagination from '../shared/CsgPagination.vue'
 
   const props = defineProps({
     type: String,
