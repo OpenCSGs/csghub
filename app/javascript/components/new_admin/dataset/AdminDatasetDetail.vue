@@ -42,7 +42,7 @@
   const csghubServer = inject('csghubServer')
   const dataset = ref({})
 
-  const fetchModel = async () => {
+  const fetchData = async () => {
     const response = await fetch(
       `${csghubServer}/api/v1/datasets/${route.params.namespace}/${route.params.name}`
     )
@@ -50,11 +50,11 @@
       const res_json = await response.json()
       dataset.value = res_json.data
     } else {
-      ElMessage.error('Failed to fetch dataset')
+      ElMessage.error(response.msg || 'Failed to fetch dataset')
     }
   }
 
   onMounted(() => {
-    fetchModel()
+    fetchData()
   })
 </script>
