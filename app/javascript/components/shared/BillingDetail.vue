@@ -190,7 +190,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data:', data)
       billings.value = data.data
       totalBillings.value = data.total
       totalPrice.value = data.total_value
