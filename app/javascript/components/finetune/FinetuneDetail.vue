@@ -71,6 +71,7 @@
         name="billing"
       >
         <BillingDetail
+         v-if="finetune.svc_name"
           type="finetune"
           :instanceName="finetune.svc_name"
         ></BillingDetail>
