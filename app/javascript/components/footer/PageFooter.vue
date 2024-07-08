@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-center items-center flex-col text-[#303133] bg-white">
+  <div class="flex justify-center items-center flex-col text-[#344054] bg-white">
     <div class="max-w-[1280px] py-[18px] xl:px-[20px] flex w-full justify-between items-center mlg:items-start">
       <div class="flex gap-[40px]">
         <div class="flex flex-none items-start flex-col gap-y-4 mr-[20px]">
-          <p class="text-base font-semibold">{{ $t('footer.about') }}</p>
+          <p class="text-base font-medium">{{ $t('footer.about') }}</p>
           <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2">
             <p><a href="https://opencsg.com/about">{{ $t('footer.company') }}</a></p>
             <p><a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a></p>
@@ -13,7 +13,7 @@
         </div>
         <div class="flex gap-x-[100px] mlg:mt-0">
           <div class="flex flex-none items-start flex-col gap-y-4">
-            <p class="text-base font-semibold">{{ $t('footer.contact') }}</p>
+            <p class="text-base font-medium">{{ $t('footer.contact') }}</p>
             <div class="flex text-sm sm:text-[12px] font-normal items-start flex-col gap-y-2 ">
               <p>{{ $t('footer.partner') }}:<br :class="this.$i18n.locale ==='zh' ? 'hidden' : 'hidden md:block'"/> partner@opencsg.com</p>
               <p>{{ $t('footer.resume') }}:<br :class="this.$i18n.locale ==='zh' ? 'hidden' : 'hidden md:block'"/> hr@opencsg.com</p>
@@ -23,8 +23,8 @@
           </div>
         </div>
       </div>
-      <div class="my-2 rounded-lg mlg:w-full mlg:hidden text- text-sm font-medium">
-        <div class="font-semibold text-[#344054] text-[16px] leading-[24px]">{{ $t('footer.follow') }}</div>
+      <div class="my-2 rounded-lg mlg:w-full mlg:hidden text- text-sm font-regular">
+        <div class="font-medium text-[#344054] text-[16px] leading-[24px]">{{ $t('footer.follow') }}</div>
         <div class="text-[#344054] max-w-[242px] text-[14px] leading-[22px]">{{ $t('footer.followText') }}</div>
         <img class="border border-[#EAECF0] px-[5px] py-[5px]" :src="footCode" height=60 width=60 alt="OpenCSG Logo"/>
       </div>
