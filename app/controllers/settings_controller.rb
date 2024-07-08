@@ -12,6 +12,9 @@ class SettingsController < ApplicationController
 
   def billing
   end
+  
+  def sync_access_token
+  end
 
   def ssh_keys
     res = csghub_api.get_ssh_key(current_user.name, current_user.name)

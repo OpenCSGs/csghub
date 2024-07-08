@@ -17,7 +17,21 @@
     </RouterLink>
 
     <RouterLink
-      v-if="!onPremise"
+      to="/new_admin/models"
+      class="underline"
+    >
+      Models
+    </RouterLink>
+
+    <RouterLink
+      to="/new_admin/codes"
+      class="underline"
+    >
+      Codes
+    </RouterLink>
+
+    <RouterLink
+      v-if="onPremise === 'false'"
       to="/new_admin/email_sending"
       class="underline"
     >

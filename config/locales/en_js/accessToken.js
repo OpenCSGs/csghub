@@ -13,5 +13,11 @@ export const accessToken = {
   starshipAddToken: "Create API Key",
   starshipAccessTokenName: "Starship API Key Name",
   starshipAccessTokenValue: "Starship API Key Value",
-  starshipNameMissing: "API Key name required"
+  starshipNameMissing: "API Key name required",
+
+  syncTitle: "Multi-Sync Token",
+  syncDesc: "Multi-Sync Token is used for authorizing the accessing for Multi-Sync service",
+  syncRefresh: "Refresh Token",
+  syncRefreshWarning: "After refreshing, the existing Token will become invalid. Are you sure you want to continue?",
+  syncAddToken: "Create Token"
 }

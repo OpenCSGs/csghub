@@ -110,6 +110,7 @@ Rails.application.routes.draw do
         get 'profile'
         get 'access-token'
         get 'starship-access-token'
+        get 'sync-access-token'
         get 'ssh-keys'
         get 'billing'
         get 'locale'
