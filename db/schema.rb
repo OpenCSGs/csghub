@@ -61,24 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.index ["user_id"], name: "index_admin_photos_on_user_id"
   end
 
-  create_table "application_spaces", force: :cascade do |t|
-    t.string "name"
-    t.string "license"
-    t.string "visibility"
-    t.string "owner_type", null: false
-    t.string "cover_image"
-    t.string "sdk"
-    t.string "cloud_resource"
-    t.bigint "owner_id", null: false
-    t.bigint "creator_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "nickname"
-    t.text "desc"
-    t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
-    t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
-  end
-
   create_table "campaigns", force: :cascade do |t|
     t.string "name"
     t.string "uuid"
@@ -95,6 +77,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.boolean "recommended", default: false
     t.boolean "release", default: false
     t.index ["uuid"], name: "index_campaigns_on_uuid"
+  end
+
+  create_table "application_spaces", force: :cascade do |t|
+    t.string "name"
+    t.string "license"
+    t.string "visibility"
+    t.string "owner_type", null: false
+    t.string "cover_image"
+    t.string "sdk"
+    t.string "cloud_resource"
+    t.bigint "owner_id", null: false
+    t.bigint "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nickname"
+    t.text "desc"
+    t.index ["creator_id"], name: "index_application_spaces_on_creator_id"
+    t.index ["owner_type", "owner_id"], name: "index_application_spaces_on_owner"
   end
 
   create_table "codes", force: :cascade do |t|
@@ -148,7 +148,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.bigint "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "desc"
     t.string "nickname"
     t.string "origin"
     t.index ["creator_id"], name: "index_datasets_on_creator_id"
@@ -271,7 +270,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.datetime "updated_at", null: false
     t.bigint "creator_id"
     t.string "nickname"
-    t.string "desc"
+    t.text "desc"
     t.string "origin"
     t.index ["creator_id"], name: "index_models_on_creator_id"
     t.index ["owner_type", "owner_id"], name: "index_models_on_owner"
@@ -344,7 +343,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.jsonb "s3_configs"
     t.jsonb "hot_models", default: {}
     t.jsonb "hot_datasets", default: {}
-    t.jsonb "ldap_configs", default: {}
     t.jsonb "hot_spaces", default: {}
     t.jsonb "ignore_model_tags", default: {}
     t.jsonb "ignore_dataset_tags", default: {}
@@ -374,7 +372,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.string "zh_name"
     t.text "desc"
     t.integer "weight"
-    t.string "scope", limit: 255
+    t.string "scope"
     t.string "label"
   end
 
@@ -397,7 +395,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.boolean "starhub_synced", default: false
     t.string "git_token_name"
     t.string "password_hash"
-    t.boolean "ldap_synced", default: false
+    t.string "wechat_id"
+    t.string "github_id"
+    t.string "gitlab_id"
     t.string "session_ip", default: ""
     t.string "homepage"
     t.text "bio"
@@ -414,5 +414,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
   add_foreign_key "org_memberships", "organizations"
   add_foreign_key "org_memberships", "users"
   add_foreign_key "ssh_keys", "users"
+  add_foreign_key "taggings", "spaces"
   add_foreign_key "taggings", "tags"
 end
