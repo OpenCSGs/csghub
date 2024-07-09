@@ -3,7 +3,7 @@
     <div class="flex justify-between px-6 mb-5">
       <div class="text-[18px] leading-[28px]">{{ $t('billing.instanceBilling') }}</div>
       <div class="flex gap-3 items-center">
-        <div>{{ $t('billing.total') }}：￥0.01</div>
+        <div>{{ $t('billing.total') }}：￥{{ Math.abs(totalPrice) }}</div>
         <el-date-picker
           v-model="selectedMonth"
           @change=""
@@ -66,7 +66,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ scope.row.value }}
+              {{ Math.abs(scope.row.value) }}
             </div>
           </template>
         </el-table-column>
@@ -93,6 +93,7 @@
   const perPage = ref(10)
   const currentPage = ref(1)
   const totalBillings = ref(0)
+  const totalPrice = ref(0)
   const billings = ref([])
   const selectedMonth = ref('')
   const startDate = ref(getFirstDayOfMonth())
@@ -168,6 +169,7 @@
       console.log('Data:', data)
       billings.value = data.data
       totalBillings.value = data.total
+      totalPrice.value = data.total_value
     }
   }
 
