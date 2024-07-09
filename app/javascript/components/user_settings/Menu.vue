@@ -55,11 +55,14 @@
             {{ $t('profile.menu.sshKey')}}
           </a>
 
-          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
-               :class="menuClass('/settings/billing')"
-          >
-            {{ $t('profile.menu.billing')}}
-          </div> -->
+        <a 
+          v-if="hasEmail"
+          href="/settings/billing"
+          class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+          :class="menuClass('/settings/billing')"
+        >
+          {{ $t('profile.menu.billing') }}
+        </a>
         </div>
       </div>
     </div>

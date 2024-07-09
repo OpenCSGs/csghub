@@ -43,6 +43,7 @@ import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
 import AccessTokenSettings from "./components/user_settings/AccessTokenSettings.vue"
 import StarshipAccessTokenSettings from "./components/user_settings/StarshipAccessTokenSettings.vue"
+import BillingSettings from "./components/user_settings/BillingSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
@@ -146,6 +147,7 @@ const app = createApp({
     AdminNavbar,
     AdminMenu,
     StarShipPage,
+    BillingSettings,
     NewFinetune,
     finetuneDetail,
     StarshipAccessTokenSettings

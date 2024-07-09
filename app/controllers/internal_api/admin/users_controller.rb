@@ -1,5 +1,5 @@
 class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationController
-  before_action :find_user, only: [:show]
+  before_action :find_user, only: [:show, :balance, :recharge]
 
   def index
     if params[:keyword].present?
@@ -15,6 +15,14 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
 
   def show
     render json: @user.to_json
+  end
+
+  def balance
+    render json: csghub_api.get_user_balance(@user.login_identity, @user.name)
+  end
+
+  def recharge
+    render json: csghub_api.user_recharge(@user.login_identity, current_user.id, current_user.name, params[:value].to_i)
   end
 
   private

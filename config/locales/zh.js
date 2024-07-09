@@ -33,6 +33,8 @@ import { csghub } from './zh_js/csghub';
 import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
 import { starShip } from './zh_js/star_ship';
+import { new_admin } from './zh_js/new_admin';
+import { billing } from './zh_js/billing';
 
 export default {
   // csghub
@@ -71,5 +73,7 @@ export default {
   partner,
   csghub,
   starShip,
+  new_admin,
+  billing,
   finetune
 };

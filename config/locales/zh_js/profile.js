@@ -11,7 +11,7 @@ export const profile = {
     starshipAccessToken: "Starship API Key",
     gitToken: "Access Token",
     sshKey: "SSH Keys",
-    billing: "账单",
+    billing: "费用账单",
   },
   edit: {
     title: "个人资料设置",
