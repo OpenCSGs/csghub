@@ -10,6 +10,9 @@ class SettingsController < ApplicationController
   def starship_access_token
   end
 
+  def billing
+  end
+  
   def sync_access_token
   end
 

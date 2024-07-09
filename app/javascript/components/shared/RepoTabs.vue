@@ -34,10 +34,7 @@
           :appEndpoint="appEndpoint"
         />
         <StoppedPage
-          v-else-if="
-            repoType === 'space' &&
-            (appStatus === 'Stopped' || appStatus === 'Sleeping')
-          "
+          v-else-if="repoType === 'space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
           :appStatus="appStatus"
           :canWrite="canWrite"
           :path="repoDetail.path"
@@ -179,6 +176,17 @@
 
       <!-- settings -->
       <template
+        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
+        #billing
+      >
+        <BillingDetail
+          :type="repoType"
+          :instanceName="repoDetail.svc_name"
+        ></BillingDetail>
+      </template>
+
+      <!-- settings -->
+      <template
         v-if="settingsVisibility"
         #settings
       >
@@ -264,6 +272,7 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import BillingDetail from './BillingDetail.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({
@@ -305,9 +314,7 @@
     if (props.repoType === 'space') {
       return 'ApplicationSpace'
     } else {
-      return `${props.repoType.charAt(0).toUpperCase()}${props.repoType
-        .slice(1)
-        .toLowerCase()}`
+      return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`
     }
   })
 
@@ -355,6 +362,13 @@
         break
       case 'logs':
         location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
+        break
+      case 'billing':
+      if (props.repoType === 'endpoint') {
+          location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
+      }else{
+        location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
+      }
         break
       default:
         break
