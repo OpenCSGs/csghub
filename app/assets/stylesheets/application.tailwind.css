@@ -3,6 +3,10 @@
 @import "tailwindcss/utilities";
 
 /*
+  Global css
+*/
+
+/*
   Overwrite plugin css like ElementUI here
 */
 
@@ -113,5 +117,9 @@ img, video {
     background: var(--fill-color-light, #F5F7FA);
     /* Shadows/shadow-sm */
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+
+  .system-config-obj-box {
+    @apply w-full border border-gray-300 p-[10px] rounded-[8px] text-gray-500 focus:border-blue-300 focus:outline-none overflow-auto whitespace-nowrap;
   }
 }

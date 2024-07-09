@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   namespace :internal_api do
     namespace :admin do
       resources :users, only: [:index, :show]
+      resources :system_config, only: [:index, :update]
     end
 
     resources :organizations, only: [:create, :update] do
