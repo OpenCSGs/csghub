@@ -1,7 +1,9 @@
 class InternalApi::Admin::EmailGroupsController < InternalApi::ApplicationController
   def index
-    @email_groups = EmailGroup.all
-    render json: { email_groups: @email_groups}
+    offset = params[:per_page].to_i * (params[:page].to_i - 1)
+    total_email_groups = EmailGroup.count
+    @email_groups = EmailGroup.order('created_at').limit(params[:per_page]).offset(offset)
+    render json: { total: total_email_groups, email_groups: @email_groups}
   end
 
   def create

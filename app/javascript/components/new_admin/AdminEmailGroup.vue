@@ -48,6 +48,14 @@
       label="Created At"
     />
   </el-table>
+  <el-pagination
+    v-model:current-page="currentPage"
+    :page-size="per"
+    layout="prev, pager, next"
+    :total="total"
+    @current-change="refreshEmailGroups"
+    class="my-[52px] flex justify-center"
+  />
 </template>
 
 <script setup>
@@ -62,6 +70,9 @@
   })
 
   const emailGroups = ref([])
+  const currentPage = ref(1)
+  const per = ref(4)
+  const total = ref(0)
 
   const createEmailGroup = () => {
     const file = dataForm.value.emailList[0].raw
@@ -98,10 +109,10 @@
   }
 
   const refreshEmailGroups = async() => {
-    const response = await csrfFetch('/internal_api/admin/email_groups', { method: 'GET' })
+    const response = await csrfFetch(`/internal_api/admin/email_groups?per_page=${per.value}&page=${currentPage.value}`, { method: 'GET' })
     if (response.ok) {
       response.json().then(data => {
-        console.log(data)
+        total.value = data.total
         emailGroups.value = data.email_groups
       })
     } else {
