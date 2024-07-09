@@ -139,7 +139,6 @@
     const dateString = formatDate(e) + ' 00:00:00'
     startTime.value = dateString
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString) + ' 23:59:59'
-    console.log(lastDayOfMonth)
     endTime.value = lastDayOfMonth
     fetchDetails()
   }
@@ -182,7 +181,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log('Data:', data)
       billings.value = data.data
       totalBillings.value = data.total
       totalPrice.value = data.total_value

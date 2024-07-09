@@ -261,7 +261,6 @@
   }
 
   onBeforeMount(() => {
-    console.log(props)
     if (props.path) {
       activeName.value = props.path
     }
