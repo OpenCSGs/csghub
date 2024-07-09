@@ -9,7 +9,6 @@
       <el-input v-model="dataForm.name" />
     </el-form-item>
     <el-form-item label="Upload Email List (Only CSV supported)">
-      <!-- <input type="file" @change="processCSVFile" /> -->
       <el-upload
         v-model:file-list="dataForm.emailList"
         class="upload-demo w-[600px]"
@@ -76,12 +75,19 @@
 
   const createEmailGroup = () => {
     const file = dataForm.value.emailList[0].raw
-    Papa.parse(file, {
-      preview: 0,
-      complete: (results, file) => {
-        postEmailGroup(results.data.join(','))
-      }
-    })
+    try {
+      Papa.parse(file, {
+        preview: 0,
+        complete: (results, file) => {
+          postEmailGroup(results.data.join(','))
+        }
+      })
+    } catch (error) {
+      ElMessage({
+        message: "File parse error",
+        type: 'error'
+      })
+    }
   }
 
   const postEmailGroup = async(emailListStr) => {
