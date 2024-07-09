@@ -105,6 +105,7 @@
         message: 'Email group created successfully!',
         type: 'success'
       })
+      dataForm.value = {}
       refreshEmailGroups()
     } else {
       ElMessage({
