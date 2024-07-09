@@ -81,23 +81,11 @@
   })
 
   const showFiles = computed(() => {
-    if (props.repoType === 'endpoint') {
-      return false
-    } else if (props.repoType === 'space') {
-      if (props.sdk === 'nginx') {
-        return props.settingsVisibility
-      } else {
-        return true
-      }
-    } else {
-      // 用 clone url 判断
-      if (props.repo.source === 'opencsg' && !props.repo.repository.http_clone_url) {
-        return false
-      } else {
-        return true
-      }
-    }
-  })
+    if (props.repoType === 'endpoint') return false
+    if (props.repoType === 'space' && props.sdk === 'nginx') return props.settingsVisibility
+
+    return true
+  });
 
   const activeName = ref(props.defaultTab)
 

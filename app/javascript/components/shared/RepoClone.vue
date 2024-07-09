@@ -115,6 +115,7 @@
   import SvgIcon from './SvgIcon.vue'
   import { useCookies } from 'vue3-cookies'
   import jwtFetch from '../../packs/jwtFetch'
+  import { ElMessage } from "element-plus"
 
   const { cookies } = useCookies()
 
@@ -262,7 +263,9 @@
     } else {
       res.json().then(body => {
         ElMessage({message: 'Sync repo success', type: "success"})
-        location.reload()
+        setTimeout(() => {
+          location.reload()
+        }, 2000)
       })
     }
   }
