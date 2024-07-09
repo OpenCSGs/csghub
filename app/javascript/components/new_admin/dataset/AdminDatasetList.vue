@@ -60,7 +60,7 @@
 
   const datasets = ref([])
   const page = ref(1)
-  const per = ref(2)
+  const per = ref(10)
   const total = ref(0)
   const keyword = ref('')
   const csghubServer = inject('csghubServer')
