@@ -15,6 +15,7 @@
         :auto-upload="false"
         drag
         :limit="1"
+        accept='text/csv'
       >
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
         <div class="el-upload__text">
