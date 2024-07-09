@@ -53,7 +53,7 @@
         </h3>
         <div class="xl:mt-[16px]">
           <el-select
-            v-if="onPremise"
+            v-if="onPremise === 'true'"
             v-model="sourceSelection"
             @change="filterChange"
             style="width: 150px"
@@ -141,7 +141,7 @@
     repoType: String
   })
 
-  const onPremise = inject('onPremise', ref(true))
+  const onPremise = inject('onPremise', 'true')
 
   const { t } = useI18n()
   const nameFilterInput = ref('')
