@@ -26,6 +26,7 @@ Rails.application.routes.draw do
           get 'balance/:id', to: 'users#balance'
         end
       end
+      resources :system_config, only: [:index, :update]
     end
 
     resources :organizations, only: [:create, :update] do
