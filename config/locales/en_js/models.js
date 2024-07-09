@@ -4,7 +4,7 @@ export const models = {
   downloadModel: "Download model data",
   download: "Download Model",
   modelName: "Model name",
-  datasetNameTips:
+  modelNameTips:
     "Applied to the model path, cannot be changed after creation",
   namespaceModelName: "Name space/Model name",
   modelNickName: "Model alias",
@@ -31,6 +31,7 @@ export const models = {
     createSuccess: "Model created successfully",
     tip: "Applies to model data and cannot be changed after creation",
     createFail: "Model creation failed",
+    modelEnName: "Model name",
   },
   edit: {
     tips: "Will be displayed on the model list page, optional",

@@ -4,7 +4,7 @@ export const models = {
   downloadModel: "下载模型数据",
   download: "下载模型",
   modelName: "模型名称",
-  datasetNameTips: "应用于模型路径，创建后不可更改",
+  modelNameTips: "应用于模型路径，创建后不可更改",
   namespaceModelName: "命名空间/模型名称",
   modelNickName: "模型别名",
   modelDesc: "模型简介",
@@ -29,6 +29,7 @@ export const models = {
     createSuccess: "模型创建成功",
     tip: "应用于模型数据，创建后不可更改",
     createFail: "模型创建失败",
+    modelEnName: "模型英文名",
   },
   edit: {
     tips: "将会显示在模型列表页面中，选填",

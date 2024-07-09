@@ -10,12 +10,12 @@
         ref="dataFormRef"
         :model="dataForm"
         :rules="rules"
-        class="w-full flex flex-col gap-3"
+        class="w-full flex flex-col gap-[14px]"
         label-position="top"
       >
-        <div class="w-full flex md:flex-col gap-2 items-center">
-          <el-form-item :label="t('models.newModel.owner')" prop="owner" class="md:w-full">
-            <el-select v-model="dataForm.owner" :placeholder="t('all.select')" size="large">
+        <div class="w-full flex md:flex-col gap-[16px] items-center">
+          <el-form-item :label="t('models.newModel.owner')" prop="owner" class="w-full">
+            <el-select v-model="dataForm.owner" :placeholder="t('all.select')" size="large" style="width: 100%;">
               <el-option
                 v-for="item in namespaces"
                 :key="item[0]"
@@ -24,23 +24,31 @@
               />
             </el-select>
           </el-form-item>
-          <div class="md:hidden">
-            <p class="text-[#909399] mt-[5px] text-xl font-light">/</p>
-          </div>
-          <el-form-item class="w-[380px] md:w-full" :label="t('models.newModel.modelName')" prop="name">
-            <el-input v-model="dataForm.name" :placeholder="t('rule.nameRule')" input-style="width: 100%" >
+          <el-form-item class="w-full" :label="t('models.newModel.modelName')" prop="name">
+            <el-input v-model="dataForm.name" :placeholder="t('all.pleaseInput', { value: t('models.newModel.modelEnName') })" input-style="width: 100%" >
               <template #suffix>            
-                <InputTip :content="t('models.newModel.tip')" />
+                <el-tooltip class="item" effect="dark" raw-content :content="`
+                <p>${t('models.modelNameTips')}</p>
+                <ul style='margin-left: 18px; list-style: disc; margin-top: 12px;'>
+                  <li>${t('rule.lengthLimit', {min: 2, max: 64})}</li>
+                  <li>${t('rule.startWithLetter')}</li>
+                  <li>${t('rule.endWithLetterOrNumber')}</li>
+                  <li>${t('rule.onlyLetterNumberAndSpecialStr')}</li>
+                  <li>${t('rule.specialStrNotTogether')}</li>
+                </ul>
+                `" placement="top">
+                  <el-icon class="cursor-pointer hover:text-[var(--Brand-300)]"><Warning /></el-icon>
+                </el-tooltip>
               </template>
             </el-input>
           </el-form-item>
         </div>
-        <div class="w-full flex md:flex-col gap-2 items-center justify-between">
-          <el-form-item class="w-[380px] md:w-full" :label="t('models.newModel.modelNickName')" prop="nickname">
+        <div class="w-full flex md:flex-col gap-[16px] items-center justify-between">
+          <el-form-item class="w-full" :label="t('models.newModel.modelNickName')" prop="nickname">
             <el-input v-model="dataForm.nickname" :placeholder="t('all.inputNickNamePlc')" />
           </el-form-item>
-          <el-form-item label="License" prop="license" class="md:w-full">
-            <el-select v-model="dataForm.license" :placeholder="t('all.select')" size="large">
+          <el-form-item label="License" prop="license" class="w-full">
+            <el-select v-model="dataForm.license" :placeholder="t('all.select')" size="large" style="width: 100%;">
               <el-option
                 v-for="item in licenses"
                 :key="item[0]"
@@ -57,10 +65,9 @@
             type="textarea"
             :placeholder="t('all.inputDescPlc')" />
         </el-form-item>
-        <el-divider class="!mt-0 !mb-[18px]"/>
         <el-form-item class="w-full">
           <el-radio-group v-model="dataForm.visibility" class="!block">
-            <el-radio class="w-full !border-2 mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
+            <el-radio class="w-full !border-2 mr-0 mb-[32px] !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
               {{ t('models.newModel.public') }}
               <p class="whitespace-normal text-[#475467] font-light">{{ t('models.newModel.publicDesc') }}</p>
             </el-radio>
@@ -70,8 +77,7 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-divider class="!mt-0 !mb-[18px]"/>
-        <p class="mb-9 rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
+        <p class="mb-[18px] rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
           {{ t('models.newModel.tips') }}
         </p>
         <div class="flex justify-end">
@@ -133,6 +139,17 @@ const rules = ref({
   ],
   name: [
     { required: true, message: t('all.pleaseInput', { value: t('models.newModel.modelName') }), trigger: 'blur' },
+    // limit 2-64 length
+    { min: 2, max: 64, message: t('rule.lengthLimit', { min: 2, max: 64 }), trigger: 'blur' },
+    // 以字母开头
+    { pattern: /^[a-zA-Z]/, message: t('rule.startWithLetter'), trigger: 'blur' },
+    // 以数字或字母结尾
+    { pattern: /[a-zA-Z0-9]$/, message: t('rule.endWithLetterOrNumber'), trigger: 'blur' },
+    // 只能包含字母、数字与-_.
+    { pattern: /^[a-zA-Z0-9-_\.]+$/, message: t('rule.onlyLetterNumberAndSpecialStr'), trigger: 'blur' },
+    // 特殊字符不能并列出现
+    { pattern: /^(?!.*[-_.]{2,}).*$/, message: t('rule.specialStrNotTogether'), trigger: 'blur' },
+    // 保险起见最后一步还是加上最终的正则吧
     { pattern: nameRule, message: t('rule.nameRule'), trigger: 'blur' },
   ],
   license: [
