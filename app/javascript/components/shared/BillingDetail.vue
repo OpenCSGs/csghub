@@ -3,7 +3,6 @@
     <div class="flex justify-between px-6 mb-5">
       <div class="text-[18px] leading-[28px]">{{ $t('billing.instanceBilling') }}</div>
       <div class="flex gap-3 items-center">
-        <div>{{ $t('billing.total') }}：￥{{ Math.abs(totalPrice) }}</div>
         <el-date-picker
           v-model="selectedMonth"
           @change="dateChange"
@@ -43,9 +42,9 @@
               <div class="flex flex-col">
                 <div
                   class="text-[14px] font-[300] leading-[20px] text-[#475467]"
-                  v-if="!!scope.row.instance_name"
+                  v-if="!!scope.row.customer_id"
                 >
-                  #{{ scope.row.instance_name }}
+                  #{{ scope.row.customer_id }}
                 </div>
               </div>
             </div>
@@ -60,20 +59,7 @@
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ scope.row.consumption }}
-            </div>
-          </template>
-        </el-table-column>
-
-        <!-- cost -->
-        <el-table-column
-          :label="$t('billing.cost')"
-          label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
-          align="center"
-        >
-          <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-              {{ Math.abs(scope.row.value) }}
+              {{ scope.row.value }}
             </div>
           </template>
         </el-table-column>
@@ -114,7 +100,6 @@
   const perPage = ref(10)
   const currentPage = ref(1)
   const totalBillings = ref(0)
-  const totalPrice = ref(0)
   const billings = ref([])
   const selectedMonth = ref(getFirstDayOfTime())
   const startTime = ref(getFirstDayOfTime())
@@ -182,7 +167,7 @@
     params.append('scene', scene.value)
     params.append('instance_name', props.instanceName)
 
-    const url = `${csghubServer}/api/v1/accounting/credit/${loginIdentity}/statements?${params.toString()}`
+    const url = `${csghubServer}/api/v1/accounting/metering/${loginIdentity}/statements?${params.toString()}`
     const res = await jwtFetch(url)
 
     if (!res.ok) {
@@ -192,7 +177,6 @@
       const { data } = await res.json()
       billings.value = data.data
       totalBillings.value = data.total
-      totalPrice.value = data.total_value
     }
   }
 
