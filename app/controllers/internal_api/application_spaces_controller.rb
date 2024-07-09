@@ -1,5 +1,5 @@
 class InternalApi::ApplicationSpacesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:files, :readme]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper

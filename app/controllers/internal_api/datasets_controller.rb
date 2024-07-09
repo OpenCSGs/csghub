@@ -1,5 +1,5 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme, :preview_parquet, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
