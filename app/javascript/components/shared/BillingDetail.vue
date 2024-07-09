@@ -32,6 +32,7 @@
         <el-table-column
           :label="$t('billing.instanceID')"
           label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
+          align="center"
         >
           <template #default="scope">
             <div class="flex gap-[12px] items-center pl-3">
@@ -51,6 +52,7 @@
         <el-table-column
           :label="$t('billing.usageTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+          align="center"
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
@@ -63,6 +65,7 @@
         <el-table-column
           :label="$t('billing.cost')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+          align="center"
         >
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
