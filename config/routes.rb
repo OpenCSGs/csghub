@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     namespace :admin do
       post '/group_mail', to: 'email_sending#group_mail'
       resources :users, only: [:index, :show]
+      resources :system_config, only: [:index, :update]
     end
 
     resources :wechat, only: [] do
