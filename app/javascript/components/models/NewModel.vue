@@ -24,7 +24,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item class="w-full" :label="t('models.newModel.modelName')" prop="name">
+          <el-form-item class="w-full" :label="t('models.newModel.modelEnName')" prop="name">
             <el-input v-model="dataForm.name" :placeholder="t('all.pleaseInput', { value: t('models.newModel.modelEnName') })" input-style="width: 100%" >
               <template #suffix>            
                 <el-tooltip class="item" effect="dark" raw-content :content="`
@@ -45,7 +45,7 @@
         </div>
         <div class="w-full flex md:flex-col gap-[16px] items-center justify-between">
           <el-form-item class="w-full" :label="t('models.newModel.modelNickName')" prop="nickname">
-            <el-input v-model="dataForm.nickname" :placeholder="t('all.inputNickNamePlc')" />
+            <el-input v-model="dataForm.nickname" :placeholder="t('all.pleaseInput', { value: t('models.newModel.modelNickName') })" />
           </el-form-item>
           <el-form-item label="License" prop="license" class="w-full">
             <el-select v-model="dataForm.license" :placeholder="t('all.select')" size="large" style="width: 100%;">
@@ -63,7 +63,7 @@
             v-model="dataForm.desc"
             :rows="6"
             type="textarea"
-            :placeholder="t('all.inputDescPlc')" />
+            :placeholder="t('all.pleaseInput', { value: t('models.newModel.modelDesc') })" />
         </el-form-item>
         <el-form-item class="w-full">
           <el-radio-group v-model="dataForm.visibility" class="!block">
