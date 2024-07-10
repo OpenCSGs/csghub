@@ -19,7 +19,7 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
     params.require(:system_config).permit(feature_flags: {},
                                           general_configs: {},
                                           s3_configs: {},
-                                          oidc_configs_c: {},
+                                          oidc_configs: {},
                                           starhub_configs: {})
   end
 end
