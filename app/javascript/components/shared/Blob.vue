@@ -327,10 +327,6 @@
     }
   }
 
-  // updateBreadcrumb()
-  // detectFileType()
-  // lfsContentRegex()
-
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
 
   function formatBytes(bytes) {
