@@ -211,6 +211,7 @@
 
     fetch(url).then((response) => {
       response.json().then((data) => {
+        console.log(data)
         files.value = data.files
         lastCommit.value = data.last_commit
         if (data.last_commit_user && data.last_commit_user.avatar) {

@@ -113,7 +113,7 @@ class DatasetsController < ApplicationController
   def load_dataset_detail
     return if action_name == 'blob' && params[:download] == 'true'
 
-    if action_name == 'blob' || action_name == 'edit_file'
+    if action_name == 'edit_file'
       @dataset, @last_commit, @branches, @blob = csghub_api.get_dataset_detail_blob_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
       update_blob_content('dataset')
     else
