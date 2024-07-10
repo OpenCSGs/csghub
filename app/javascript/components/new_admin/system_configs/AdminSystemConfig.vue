@@ -18,7 +18,12 @@
       ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="updateFeatureFlags">Update</el-button>
+      <el-button
+        type="info"
+        size="small"
+        @click="updateFeatureFlags"
+        >Update</el-button
+      >
     </el-form-item>
   </div>
 
@@ -36,7 +41,12 @@
       ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="updateGeneralConfigs">Update</el-button>
+      <el-button
+        type="info"
+        size="small"
+        @click="updateGeneralConfigs"
+        >Update</el-button
+      >
     </el-form-item>
   </div>
 
@@ -54,7 +64,12 @@
       ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="updateS3Configs">Update</el-button>
+      <el-button
+        type="info"
+        size="small"
+        @click="updateS3Configs"
+        >Update</el-button
+      >
     </el-form-item>
   </div>
 
@@ -68,11 +83,16 @@
         ref="oidcConfigsRef"
         class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.oidc_configs)"
-        rows="5"idc
+        rows="5"
       ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="updateOidcConfigs">Update</el-button>
+      <el-button
+        type="info"
+        size="small"
+        @click="updateOidcConfigs"
+        >Update</el-button
+      >
     </el-form-item>
   </div>
 
@@ -86,20 +106,24 @@
         ref="starhubConfigsRef"
         class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.starhub_configs)"
-        rows="5"idc
+        rows="5"
       ></textarea>
     </el-form-item>
     <el-form-item>
-      <el-button type="info" size="small" @click="updateStarhubConfigs">Update</el-button>
+      <el-button
+        type="info"
+        size="small"
+        @click="updateStarhubConfigs"
+        >Update</el-button
+      >
     </el-form-item>
   </div>
-
 </template>
 
 <script setup>
-  import csrfFetch from '../../../packs/csrfFetch';
+  import csrfFetch from '../../../packs/csrfFetch'
   import { ref, onMounted } from 'vue'
-  import { ElMessage } from 'element-plus';
+  import { ElMessage } from 'element-plus'
 
   const systemConfigs = ref({
     application_env: '',
@@ -108,7 +132,7 @@
     license_configs: {},
     oidc_configs: {},
     s3_configs: {},
-    starhub_configs: {},
+    starhub_configs: {}
   })
 
   const featureFlagsRef = ref()
@@ -119,7 +143,9 @@
 
   const generalConfigsRef = ref(null)
   const updateGeneralConfigs = () => {
-    systemConfigs.value.general_configs = JSON.parse(generalConfigsRef.value.value)
+    systemConfigs.value.general_configs = JSON.parse(
+      generalConfigsRef.value.value
+    )
     updateSystemConfig(systemConfigs.value)
   }
 
@@ -137,7 +163,9 @@
 
   const starhubConfigsRef = ref(null)
   const updateStarhubConfigs = () => {
-    systemConfigs.value.starhub_configs = JSON.parse(starhubConfigsRef.value.value)
+    systemConfigs.value.starhub_configs = JSON.parse(
+      starhubConfigsRef.value.value
+    )
     updateSystemConfig(systemConfigs.value)
   }
 
@@ -147,7 +175,7 @@
     const res = await csrfFetch('/internal_api/admin/system_config')
     if (res.ok) {
       body = await res.json()
-      Object.keys(systemConfigs.value).forEach(key => {
+      Object.keys(systemConfigs.value).forEach((key) => {
         systemConfigs.value[key] = body.system_configs[key] || {}
       })
     } else {
@@ -158,7 +186,7 @@
   const updateSystemConfig = async (payload) => {
     const options = {
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
     const res = await csrfFetch('/internal_api/admin/system_config/1', options)
@@ -168,7 +196,7 @@
         type: 'success'
       })
     } else {
-      res.json().then(error => {
+      res.json().then((error) => {
         ElMessage({
           message: error.msg,
           type: 'success'
