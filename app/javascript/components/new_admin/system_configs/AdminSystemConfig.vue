@@ -68,7 +68,7 @@
         ref="oidcConfigsRef"
         class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.oidc_configs)"
-        rows="5"idc
+        rows="5"
       ></textarea>
     </el-form-item>
     <el-form-item>
@@ -86,7 +86,7 @@
         ref="starhubConfigsRef"
         class="system-config-obj-box"
         :value="stringifyObject(systemConfigs.starhub_configs)"
-        rows="5"idc
+        rows="5"
       ></textarea>
     </el-form-item>
     <el-form-item>
