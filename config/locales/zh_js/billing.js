@@ -5,7 +5,7 @@ export const billing = {
   finetune: '微调实例',
   instanceID: '实例id',
   createTime: '创建时间',
-  usageTime: '使用时长(小时)',
+  usageTime: '使用时长(分)',
   cost: '费用(元)',
   status: '状态',
   details: '明细',
