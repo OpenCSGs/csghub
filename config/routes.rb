@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       post '/email_sending', to: 'email_sending#create'
       resources :email_groups, only: [:index, :create]
       resources :users, only: [:index, :show]
+      resources :system_config, only: [:index, :update]
     end
 
     resources :wechat, only: [] do
@@ -154,6 +155,7 @@ Rails.application.routes.draw do
         get 'profile'
         get 'access-token'
         get 'starship-access-token'
+        get 'sync-access-token'
         get 'ssh-keys'
         get 'locale'
       end
