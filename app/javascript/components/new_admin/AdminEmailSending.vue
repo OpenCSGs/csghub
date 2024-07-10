@@ -15,17 +15,11 @@
         class="w-[260px]"
         prop="group"
       >
-        <el-select
+        <el-autocomplete
+          clearable
           v-model="dataForm.group"
-          placeholder="Select"
-          size="large"
-        >
-          <el-option
-            v-for="item in emailGroups"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
+          :fetch-suggestions="fetchEmailGroups"
+        />
       </el-form-item>
 
       <!-- 邮件模版输入 -->
@@ -52,7 +46,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -100,4 +94,22 @@
       })
     }
   }
+
+  const fetchEmailGroups = async (query, cb) => {
+    const res = await csrfFetch(`/internal_api/admin/email_groups?query=${query}`, { method: 'GET' })
+
+    if (!res.ok) {
+      console.log('Failed to fetch email groups')
+    } else {
+      res.json().then((data) => {
+        const groups = data.email_groups?.map((group) => {
+          return { key: group.name, value: group.name }
+        })
+        cb(groups)
+      })
+    }
+  }
+
+  onMounted(() => {
+  })
 </script>

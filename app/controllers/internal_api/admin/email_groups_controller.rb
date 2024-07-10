@@ -2,7 +2,11 @@ class InternalApi::Admin::EmailGroupsController < InternalApi::ApplicationContro
   def index
     offset = params[:per_page].to_i * (params[:page].to_i - 1)
     total_email_groups = EmailGroup.count
+    # when per_page and page not present, return all
     @email_groups = EmailGroup.order('created_at').limit(params[:per_page]).offset(offset)
+    if params[:query].present?
+      @email_groups = @email_groups.where("name ~* ?", params[:query])
+    end
     render json: { total: total_email_groups, email_groups: @email_groups}
   end
 
