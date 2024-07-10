@@ -58,6 +58,23 @@
       </div>
 
       <div class="mb-9 text-sm w-full">
+        <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.cluster") }}</p>
+        <el-select
+          v-model="endpointCluster"
+          :placeholder="$t('all.select')"
+          size="large"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in endpointClusters"
+            :key="item.cluster_id"
+            :label="item.region"
+            :value="item.cluster_id"
+          />
+        </el-select>
+      </div>
+
+      <div class="mb-9 text-sm w-full">
         <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.resource") }}</p>
         <el-select
           v-model="endpointResource"
@@ -93,23 +110,6 @@
             :key="item.id"
             :label="item.frame_name"
             :value="item.id"
-          />
-        </el-select>
-      </div>
-
-      <div class="mb-9 text-sm w-full">
-        <p class="mb-2 text-[#303133]">{{ $t("endpoints.new.cluster") }}</p>
-        <el-select
-          v-model="endpointCluster"
-          :placeholder="$t('all.select')"
-          size="large"
-          style="width: 100%"
-        >
-          <el-option
-            v-for="item in endpointClusters"
-            :key="item.cluster_id"
-            :label="item.region"
-            :value="item.cluster_id"
           />
         </el-select>
       </div>
