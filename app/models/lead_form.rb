@@ -17,6 +17,7 @@ class LeadForm < ApplicationRecord
       'phone',
       'company',
       'email',
+      'user_channel',
       'title',
       'industry',
       'province',
