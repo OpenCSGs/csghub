@@ -188,6 +188,7 @@
             :key="item.name"
             :label="item.name"
             :value="item.id"
+            :disabled="!item.is_available"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
