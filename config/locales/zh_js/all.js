@@ -69,6 +69,7 @@ export const all = {
   inputDescPlc: "请输入简介",
   lfsTips: "在下载前请确认您安装了git-lfs  (https://git-lfs.com)",
   lfsTips2: "如果您不想下载LFS文件的内容，请在环境变量中添加",
+  cmdTittle: "命令行下载",
   pleaseSelect: "请选择{value}",
   pleaseInput: "请输入{value}",
   languages: "语言",

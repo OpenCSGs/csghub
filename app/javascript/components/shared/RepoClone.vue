@@ -92,6 +92,19 @@
             ></markdown-viewer>
           </div>
         </el-tab-pane>
+        <el-tab-pane
+          :label="$t('all.cmdTittle')"
+          name="shell"
+        >
+          <div
+            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+          >
+            <div class="text-[#909399]"># {{ $t(downloadButtonKey) }}</div>
+            <markdown-viewer
+              :content="cmdCloneCodeMarkdown"
+            ></markdown-viewer>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </el-dialog>
   </div>
@@ -168,6 +181,15 @@
 
   const sshCloneCodeMarkdown = computed(() => {
     return getMarkdownCode(sshCloneCode, 'bash', true)
+  })
+
+  const cmdCloneCode = ref(`
+  from opencsg import snapshot_download
+  ${props.repoType}_dir = snapshot_download('${props.namespacePath}')
+  `)
+
+  const cmdCloneCodeMarkdown = computed(() => {
+    return getMarkdownCode(cmdCloneCode.value, 'bash', true)
   })
 
   const downloadButtonKey = computed(() => {
