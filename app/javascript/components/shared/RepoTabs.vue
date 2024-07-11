@@ -174,7 +174,7 @@
         ></community-page>
       </template>
 
-      <!-- settings -->
+      <!-- billing -->
       <template
         v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
         #billing
