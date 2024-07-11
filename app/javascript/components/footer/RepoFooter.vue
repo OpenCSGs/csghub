@@ -1,6 +1,6 @@
 <template>
   <div class="py-4 flex gap-[37px] justify-center items-center text-xs font-normal border-t w-full sm:text-[10px] xl:flex-col bg-white sm:hidden">
-    <div class="flex items-center gap-[16px] text-[14px] text-[#475467] cursor-pointer xl:mr-0 sm:flex-col sm:gap-[4px] sm:mr-0">
+    <div class="flex items-center gap-[16px] text-[14px] text-[#344054] cursor-pointer xl:mr-0 sm:flex-col sm:gap-[4px] sm:mr-0">
       <a href="https://opencsg.com/about">{{ $t('footer.company') }}</a>
       <a href="https://blog.opencsg.com/" target="_blank">{{ $t('footer.news') }}</a>
       <a href="https://opencsg.com/docs" target="_blank">{{ $t('footer.docs') }}</a>
@@ -8,7 +8,7 @@
       <a @click="showDialog" target="_blank">{{ $t('footer.contact') }}</a>
       <a href="/policy" target="_blank">{{ $t('footer.policy') }}</a>
     </div>
-    <div class="flex items-center sm:flex-col lg:mt-[4px] lg:ml-[8px] lg:mr-[37px]">
+    <div class="flex items-center text-[14px] text-[#344054] cursor-pointer sm:flex-col lg:mt-[4px] lg:ml-[8px] lg:mr-[37px]">
       <div class="flex gap-x-1.5 mx-[5px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
           <g clip-path="url(#clip0_9_14638)">

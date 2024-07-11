@@ -38,6 +38,7 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_keyword: Field::String,
     utm_medium: Field::String,
     utm_source: Field::String,
+    user_channel: Field::Select.with_options(include_blank: true, collection: -> { Lead.human_enum_options(:user_channel) }),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -94,6 +95,7 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_keyword
     utm_medium
     utm_source
+    user_channel
     created_at
     updated_at
   ].freeze
@@ -130,6 +132,7 @@ class LeadDashboard < Administrate::BaseDashboard
     utm_keyword
     utm_medium
     utm_source
+    user_channel
   ].freeze
 
   # COLLECTION_FILTERS

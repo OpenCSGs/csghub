@@ -265,6 +265,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_084430) do
     t.string "company_site"
     t.text "computing_demand"
     t.text "demand", default: ""
+    t.string "user_channel"
   end
 
   create_table "models", force: :cascade do |t|
