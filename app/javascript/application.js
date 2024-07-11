@@ -44,6 +44,7 @@ import NewOrganization from "./components/organizations/NewOrganization.vue"
 import AccessTokenSettings from "./components/user_settings/AccessTokenSettings.vue"
 import StarshipAccessTokenSettings from "./components/user_settings/StarshipAccessTokenSettings.vue"
 import BillingSettings from "./components/user_settings/BillingSettings.vue"
+import SyncAccessTokenSettings from "./components/user_settings/SyncAccessTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
@@ -88,6 +89,7 @@ import AdminCodeList from "./components/new_admin/codes/AdminCodeList.vue"
 import AdminCodeDetail from "./components/new_admin/codes/AdminCodeDetail.vue"
 import AdminModelList from "./components/new_admin/models/AdminModelList.vue"
 import AdminModelDetail from "./components/new_admin/models/AdminModelDetail.vue"
+import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystemConfig.vue"
 
 const pinia = createPinia()
 
@@ -150,7 +152,8 @@ const app = createApp({
     BillingSettings,
     NewFinetune,
     finetuneDetail,
-    StarshipAccessTokenSettings
+    StarshipAccessTokenSettings,
+    SyncAccessTokenSettings
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
@@ -188,6 +191,7 @@ const routes = [
   { path: '/new_admin/codes/:namespace/:name', component: AdminCodeDetail },
   { path: '/new_admin/models', component: AdminModelList },
   { path: '/new_admin/models/:namespace/:name', component: AdminModelDetail },
+  { path: '/new_admin/system_config', component: AdminSystemConfig },
 ]
 
 const router = createRouter({
