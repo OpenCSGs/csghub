@@ -262,7 +262,7 @@
   import BranchDropdown from './BranchDropdown.vue'
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
-  import { atob_utf8 } from '../../packs/utils'
+  import resolveContent from '../../packs/resolveContent'
 
   const props = defineProps({
     branches: Object,
@@ -341,7 +341,7 @@
   }
 
   const updateFileData = (data) => {
-    content.value = atob_utf8(data.content)
+    content.value = resolveContent(prefixPath, data.content, props.namespacePath)
     lastCommit.value = data.commit
     size.value = data.size
     lfs.value = data.lfs
