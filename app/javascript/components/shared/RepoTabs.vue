@@ -101,8 +101,6 @@
           :current-path="currentPath"
           :repo-name="repoDetail.name"
           :namespace-path="repoDetail.path"
-          :originalCodeContent="decodedContent"
-          :sha="blob.sha"
         />
       </template>
       <template

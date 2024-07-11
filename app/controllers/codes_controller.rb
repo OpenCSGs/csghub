@@ -113,12 +113,7 @@ class CodesController < ApplicationController
   def load_code_detail
     return if action_name == 'blob' && params[:download] == 'true'
 
-    if action_name == 'edit_file'
-      @code, @last_commit, @branches, @blob = csghub_api.get_code_detail_blob_data_in_parallel(params[:namespace], params[:code_name], files_options)
-      update_blob_content('code')
-    else
-      @code, @branches = csghub_api.get_code_detail_data_in_parallel(params[:namespace], params[:code_name], files_options)
-    end
+    @code, @branches = csghub_api.get_code_detail_data_in_parallel(params[:namespace], params[:code_name], files_options)
     @tags = Tag.build_detail_tags(JSON.parse(@code)['data']['tags'], 'code').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_code) : false
   end
