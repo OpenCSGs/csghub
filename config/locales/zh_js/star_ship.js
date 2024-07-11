@@ -1,6 +1,6 @@
 export const starShip = {
   title: '基于大模型的企业智能数字员工平台',
-  desc: '基于软件研发流程Copilot，可独立完成复杂任务帮助整个软件研发的过程中提升效率和节省人力成本',
+  desc: 'StarShip 由一系列能够独立完成复杂任务的 Copilot 组成，致力于提升软件研发流程各环节的效率，降低人力成本',
   use: '使用场景',
   section: {
     title: '基于软件研发流程的Copilot',
