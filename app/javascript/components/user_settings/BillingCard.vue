@@ -249,10 +249,10 @@
   // scene = 11：space
   // scene = 12: model finetune
   // scene = 20：starship-ide
-  const fetchInference = async () => {
+  const fetchInference = async (childCurrent) => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', inferenceCurrentPage.value)
+    params.append('page', childCurrent ? childCurrent : inferenceCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 10)
@@ -275,10 +275,10 @@
   // scene = 11：space
   // scene = 12: model finetune
   // scene = 20：starship-ide
-  const fetchSpace = async () => {
+  const fetchSpace = async (childCurrent) => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', spaceCurrentPage.value)
+    params.append('page', childCurrent ? childCurrent : spaceCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 11)
@@ -301,10 +301,10 @@
   // scene = 11：space
   // scene = 12: model finetune
   // scene = 20：starship-ide
-  const fetchFinetune = async () => {
+  const fetchFinetune = async (childCurrent) => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', finetuneCurrentPage.value)
+    params.append('page', childCurrent ? childCurrent : finetuneCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 12)
@@ -330,7 +330,7 @@
   const fetchStarship = async () => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', starshipCurrentPage.value)
+    params.append('page', childCurrent ? childCurrent : starshipCurrentPage.value)
     params.append('start_date', startDate.value)
     params.append('end_date', endDate.value)
     params.append('scene', 20)
