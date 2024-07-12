@@ -79,6 +79,19 @@
             </div>
           </template>
         </el-table-column>
+
+        <!-- created_at -->
+        <el-table-column
+          :label="$t('billing.createTime')"
+          label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+          align="center"
+        >
+          <template #default="scope">
+            <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
+              {{ formatDateTime(scope.row.created_at) }}
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <div class="mt-[12px] mb-[16px] flex justify-center">
@@ -100,6 +113,7 @@
     getCurrentTime,
     getFirstDayOfTime,
     formatDate,
+    formatDateTime,
     isFutureDate
   } from '../../packs/datetimeUtils'
   import CsgPagination from '../shared/CsgPagination.vue'
@@ -176,7 +190,7 @@
   // scene = 12: model finetune
   // scene = 20：starship-ide
   const fetchDetails = async (childCurrent) => {
-    if(childCurrent){
+    if (childCurrent) {
       currentPage.value = childCurrent
     }
     const params = new URLSearchParams()
