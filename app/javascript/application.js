@@ -47,6 +47,7 @@ import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+import CollectionIndex from "./components/collections/CollectionIndex.vue"
 
 
 // Admin pages
@@ -95,7 +96,8 @@ const app = createApp({
     NewFinetune,
     finetuneDetail,
     StarshipAccessTokenSettings,
-    SyncAccessTokenSettings
+    SyncAccessTokenSettings,
+    CollectionIndex
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
