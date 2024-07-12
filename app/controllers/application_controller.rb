@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
+
   before_action :set_default_locale, :check_user_login
 
   rescue_from StarhubError do |e|
