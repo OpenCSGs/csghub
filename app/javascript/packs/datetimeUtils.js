@@ -31,6 +31,10 @@ export const formatDate = (date=(new Date), format='YYYY-MM-DD') => {
   return dayjs(date).format(format)
 }
 
+export const formatDateTime = (date = new Date(), format = 'YYYY-MM-DD HH:mm:ss') => {
+  return dayjs(date).format(format);
+}
+
 export const isFutureDate = (date) => {
   if (date) {
     const current = new Date()
