@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_08_084430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -175,6 +175,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_063323) do
     t.string "title", null: false
     t.bigint "discussionable_id", null: false
     t.string "discussionable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "email_groups", force: :cascade do |t|
+    t.string "name"
+    t.text "email_list"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

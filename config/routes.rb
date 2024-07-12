@@ -41,7 +41,8 @@ Rails.application.routes.draw do
   # internal api
   namespace :internal_api do
     namespace :admin do
-      post '/group_mail', to: 'email_sending#group_mail'
+      resources :email_sending, only: [:create]
+      resources :email_groups, only: [:index, :create]
       resources :users, only: [:index, :show]
       resources :system_config, only: [:index, :update]
     end

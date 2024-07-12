@@ -1719,6 +1719,11 @@ p-limit@^4.0.0:
   dependencies:
     yocto-queue "^1.0.0"
 
+papaparse@^5.4.1:
+  version "5.4.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/papaparse/-/papaparse-5.4.1.tgz#f45c0f871853578bd3a30f92d96fdcfb6ebea127"
+  integrity sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==
+
 parse-md@^3.0.3:
   version "3.0.3"
   resolved "https://mirrors.huaweicloud.com/repository/npm/parse-md/-/parse-md-3.0.3.tgz#aede95c45b5eaa82088d2c26a833d156b8be6bb1"

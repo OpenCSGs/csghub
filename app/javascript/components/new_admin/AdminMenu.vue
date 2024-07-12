@@ -44,6 +44,14 @@
     >
       Email Sending
     </RouterLink>
+
+    <RouterLink
+      v-if="onPremise === 'false'"
+      to="/new_admin/email_group"
+      class="underline"
+    >
+      Email Group
+    </RouterLink>
   </div>
 </template>
 
