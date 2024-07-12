@@ -16,7 +16,7 @@
         />
         <div
           class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer"
-          @click="fetchDetails"
+          @click="fetchDetails()"
         >
           <SvgIcon name="refresh" />{{ $t('billing.refresh') }}
         </div>
@@ -176,9 +176,12 @@
   // scene = 12: model finetune
   // scene = 20：starship-ide
   const fetchDetails = async (childCurrent) => {
+    if(childCurrent){
+      currentPage.value = childCurrent
+    }
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', childCurrent ? childCurrent : currentPage.value)
+    params.append('page', currentPage.value)
     params.append('start_time', startTime.value)
     params.append('end_time', endTime.value)
     params.append('scene', scene.value)
