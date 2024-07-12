@@ -23,6 +23,7 @@ export const all = {
   uploadFile: "上传文件",
   loadError: "加载数据报错",
   notSupportPreview: "暂不支持预览，请通过 git clone 下载",
+  syncNotSupportPreview: "暂不支持预览",
   changeVis: "修改可见性为",
   enterPls: "请输入",
   sureDel: "以确认删除",

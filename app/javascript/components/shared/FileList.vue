@@ -89,7 +89,7 @@
           :width="270"
           trigger="hover"
           effect="dark"
-          :content="this.$t('all.notSupportPreview')"
+          :content="!!lastCommit ? $t('all.notSupportPreview') : $t('all.syncNotSupportPreview')"
         >
           <template #reference>
             <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
