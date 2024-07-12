@@ -22,7 +22,7 @@
           :content="syncTooltip"
           placement="top"
         >
-          <SvgIcon v-if="!!sourceIcon" :name="sourceIcon" />
+          <SvgIcon v-if="!!sourceIcon && !needSyncIcon" :name="sourceIcon" />
         </el-tooltip>
       </div>
     </div>
