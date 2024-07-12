@@ -158,10 +158,10 @@
   // scene = 11：space
   // scene = 12: model finetune
   // scene = 20：starship-ide
-  const fetchDetails = async () => {
+  const fetchDetails = async (childCurrent) => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
-    params.append('page', currentPage.value)
+    params.append('page', childCurrent ? childCurrent : currentPage.value)
     params.append('start_time', startTime.value)
     params.append('end_time', endTime.value)
     params.append('scene', scene.value)
