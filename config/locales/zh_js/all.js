@@ -78,5 +78,6 @@ export const all = {
   commits: "提交历史",
   fetchError: "获取数据失败",
   deploy: "部署",
-  more:"更多"
+  more:"更多",
+  baseModel:"基座模型"
 }
