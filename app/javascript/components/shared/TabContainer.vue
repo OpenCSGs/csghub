@@ -44,7 +44,7 @@
 
        <!-- billing -->
        <el-tab-pane
-        v-if="settingsVisibility"
+        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
         :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"

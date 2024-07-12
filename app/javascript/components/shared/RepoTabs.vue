@@ -176,7 +176,7 @@
 
       <!-- billing -->
       <template
-        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
+        v-if="settingsVisibility"
         #billing
       >
         <BillingDetail
@@ -308,7 +308,9 @@
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
-  onMounted(() => {})
+  onMounted(() => {
+    console.log(props.repoDetail);
+  })
 
   const repoTypeClass = computed(() => {
     if (props.repoType === 'space') {
