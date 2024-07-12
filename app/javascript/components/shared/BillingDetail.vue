@@ -16,7 +16,7 @@
         />
         <div
           class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer"
-          @click="fetchDetails()"
+          @click="fetchDetails(1)"
         >
           <SvgIcon name="refresh" />{{ $t('billing.refresh') }}
         </div>
