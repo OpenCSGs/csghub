@@ -12,10 +12,6 @@ module Starhub
       get_repo_detail_blob_data_in_parallel('datasets', namespace, dataset_name, options)
     end
 
-    def get_datasets(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page = 1, per = 16)
-      get_repos('datasets', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page, per)
-    end
-
     def get_dataset_detail(namespace, dataset_name, options = {})
       get_repo_detail('datasets', namespace, dataset_name, options)
     end

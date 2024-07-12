@@ -130,6 +130,7 @@
   import TagSidebar from '../tags/TagSidebar.vue'
   import CsgPagination from './CsgPagination.vue'
   import { useI18n } from 'vue-i18n'
+  import jwtFetch from '../../packs/jwtFetch'
 
   const props = defineProps({
     taskTags: String,
@@ -142,7 +143,7 @@
   })
 
   const onPremise = inject('onPremise', 'true')
-
+  const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
@@ -209,9 +210,9 @@
   }
 
   const reloadRepos = (childCurrent) => {
-    let url = `/internal_api/${props.repoType}s`
+    let url = `${csghubServer}/api/v1/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
-    url = url + `&per_page=${perPage.value}`
+    url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
     url = url + `&task_tag=${taskTag.value}`
@@ -223,17 +224,16 @@
   }
 
   async function loadRepos(url) {
-    const response = await fetch(url)
-
+    const response = await jwtFetch(url)
     if (!response.ok) {
       ElMessage({
         message: '加载模型数据报错',
         type: 'warning'
       })
     } else {
-      response.json().then((data) => {
-        reposData.value = data[`${props.repoType}s`]
-        totalRepos.value = data['total']
+      response.json().then((res_json) => {
+        reposData.value = res_json.data
+        totalRepos.value = res_json.total
       })
     }
   }

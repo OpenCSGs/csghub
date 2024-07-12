@@ -10,6 +10,13 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/system_config"
+      class="underline"
+    >
+      System Config
+    </RouterLink>
+
+    <RouterLink
       to="/new_admin/users"
       class="underline"
     >
@@ -24,6 +31,14 @@
     </RouterLink>
 
     <RouterLink
+      v-if="!onPremise"
+      to="/new_admin/codes"
+      class="underline"
+    >
+      Codes
+    </RouterLink>
+
+    <RouterLink
       v-if="onPremise"
       to="/new_admin/sync"
       class="underline"
@@ -32,7 +47,7 @@
     </RouterLink>
 
     <RouterLink
-      v-if="!onPremise"
+      v-if="onPremise === 'false'"
       to="/new_admin/email_sending"
       class="underline"
     >

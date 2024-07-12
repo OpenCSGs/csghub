@@ -1,25 +1,10 @@
 class InternalApi::CodesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def index
-    res_body = csghub_api.get_codes(current_user&.name,
-                                    params[:search],
-                                    params[:sort],
-                                    params[:task_tag],
-                                    params[:framework_tag],
-                                    params[:language_tag],
-                                    params[:license_tag],
-                                    params[:source],
-                                    params[:page],
-                                    params[:per_page])
-    api_response = JSON.parse(res_body)
-    render json: { codes: api_response['data'], total: api_response['total'] }
-  end
 
   def related_repos
     res_body = csghub_api.code_related_repos(params[:namespace], params[:code_name], files_options)

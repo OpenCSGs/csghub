@@ -12,10 +12,6 @@ module Starhub
       get_repo_detail_blob_data_in_parallel('spaces', namespace, application_space_name, options)
     end
 
-    def get_application_spaces(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page = 1, per = 16)
-      get_repos('spaces', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, source, page, per)
-    end
-
     def get_application_space_detail(namespace, application_space_name, options = {})
       get_repo_detail('spaces', namespace, application_space_name, options)
     end
