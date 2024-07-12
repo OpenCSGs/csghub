@@ -308,9 +308,7 @@
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
-  onMounted(() => {
-    console.log(props.repoDetail);
-  })
+  onMounted(() => {})
 
   const repoTypeClass = computed(() => {
     if (props.repoType === 'space') {
@@ -366,11 +364,11 @@
         location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
         break
       case 'billing':
-      if (props.repoType === 'endpoint') {
+        if (props.repoType === 'endpoint') {
           location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
-      }else{
-        location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
-      }
+        } else {
+          location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
+        }
         break
       default:
         break
