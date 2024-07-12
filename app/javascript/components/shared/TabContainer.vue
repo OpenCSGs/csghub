@@ -42,9 +42,9 @@
         <slot name="logs"></slot>
       </el-tab-pane>
 
-       <!-- billing -->
-       <el-tab-pane
-        v-if="settingsVisibility"
+      <!-- billing -->
+      <el-tab-pane
+        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
         :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"
@@ -106,7 +106,7 @@
 
   const activeName = ref(props.defaultTab)
 
-  const emit = defineEmits(['tabChange']);
+  const emit = defineEmits(['tabChange'])
 
   const handleTabLeave = (tab) => {
     emit('tabChange', tab)

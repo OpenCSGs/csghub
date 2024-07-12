@@ -21,15 +21,17 @@
     >
       <!-- summary -->
       <template #summary>
-        <ApplicationPage v-if="repoType === 'space' && repoDetail.path === 'leaderboard/SuperClueRanking'"
-                         appEndpoint="https://www.superclueai.com/"
+        <ApplicationPage
+          v-if="repoType === 'space' && repoDetail.path === 'leaderboard/SuperClueRanking'"
+          appEndpoint="https://www.superclueai.com/"
         />
-        <InitializeGuide v-else-if="repoType === 'space' && appStatus === 'NoAppFile'"
-                         :http-clone-url="repoDetail.repository.http_clone_url"
-                         :ssh-clone-url="repoDetail.repository.ssh_clone_url"
-                         :sdk="sdk"
-                         :user-name="userName"
-                         :user-token="userToken"
+        <InitializeGuide
+          v-else-if="repoType === 'space' && appStatus === 'NoAppFile'"
+          :http-clone-url="repoDetail.repository.http_clone_url"
+          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
+          :sdk="sdk"
+          :user-name="userName"
+          :user-token="userToken"
         />
         <ApplicationPage
           v-else-if="repoType === 'space' && appStatus === 'Running'"
@@ -178,7 +180,7 @@
 
       <!-- settings -->
       <template
-        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
+        v-if="settingsVisibility"
         #billing
       >
         <BillingDetail
@@ -220,7 +222,8 @@
           :cloudResource="repoDetail.sku || repoDetail.hardware"
           @showSpaceLogs="showSpaceLogs"
           :coverImage="repoDetail.cover_image_url"
-          :isAdmin="isAdmin" />
+          :isAdmin="isAdmin"
+        />
         <code-settings
           v-if="repoType === 'code'"
           :path="repoDetail.path"
@@ -366,11 +369,11 @@
         location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
         break
       case 'billing':
-      if (props.repoType === 'endpoint') {
+        if (props.repoType === 'endpoint') {
           location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
-      }else{
-        location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
-      }
+        } else {
+          location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
+        }
         break
       default:
         break
