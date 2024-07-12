@@ -94,7 +94,7 @@
         </el-tab-pane>
         <el-tab-pane
           :label="$t('all.cmdTittle')"
-          name="shell"
+          name="cmd"
         >
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
