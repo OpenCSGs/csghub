@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_08_084430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -179,6 +179,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "email_groups", force: :cascade do |t|
+    t.string "name"
+    t.text "email_list"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "endpoints", force: :cascade do |t|
     t.string "name"
     t.string "cloud_resource"
@@ -258,6 +265,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_29_035923) do
     t.string "company_site"
     t.text "computing_demand"
     t.text "demand", default: ""
+    t.string "user_channel"
   end
 
   create_table "models", force: :cascade do |t|

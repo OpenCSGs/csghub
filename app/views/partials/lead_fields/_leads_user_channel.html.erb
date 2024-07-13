@@ -1,0 +1,19 @@
+<div class="w-[320px] lg:w-full">
+  <%= render partial: "partials/lead_fields/leads_label", locals: {field: t('lead_form.user_channel')} %>
+  <%= select_tag "user_channel", 
+      options_for_select(
+        [
+          [""],
+          [t('lead_form.user_channels.exhibition'), "exhibition"],
+          [t('lead_form.user_channels.public_number'), "public_number"],
+          [t('lead_form.user_channels.video_number'), "video_number"],
+          [t('lead_form.user_channels.zhihu'), "zhihu"],
+          [t('lead_form.user_channels.baidu'), "baidu"],
+          [t('lead_form.user_channels.friends'), "friends"],
+          [t('lead_form.user_channels.other'), "other"]
+        ], 
+        selected: @lead.user_channel
+      ), 
+      class: "w-full h-[40px] bg-white rounded border-[1px] border-[#DCDFE6] hover:border-[#409EFF] outline-none px-[10px]"
+%>
+</div>
