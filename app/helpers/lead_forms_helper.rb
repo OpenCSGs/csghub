@@ -21,7 +21,7 @@ module LeadFormsHelper
     when 'company'
       "#{I18n.t('lead_form.company')}*"
     when 'email'
-      "#{I18n.t('lead_form.email')}#{custom_required?('email') ? '*' : ''}"
+      "#{I18n.t('lead_form.email')}*"
     when 'demand'
       "#{I18n.t('lead_form.demand')}#{custom_required?('demand') ? '*' : ''}"
     when 'title'

@@ -17,6 +17,7 @@ class LeadForm < ApplicationRecord
       'phone',
       'company',
       'email',
+      'user_channel',
       'title',
       'industry',
       'province',
@@ -32,7 +33,8 @@ class LeadForm < ApplicationRecord
     [
       'name',
       'phone',
-      'company'
+      'company',
+      'email'
     ]
   end
 

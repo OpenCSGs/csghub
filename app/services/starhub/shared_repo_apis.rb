@@ -39,20 +39,6 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
-    def get_repos(repo_type, current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page = 1, per = 16)
-      url = "/#{repo_type}?per=#{per}&page=#{page}"
-      url += "&current_user=#{current_user}" if current_user.present?
-      url += "&search=#{keyword}" if keyword.present?
-      url += "&sort=#{sort_by}" if sort_by.present?
-      url += "&task_tag=#{task_tag}" if task_tag.present?
-      url += "&framework_tag=#{framework_tag}" if framework_tag.present?
-      url += "&language_tag=#{language_tag}" if language_tag.present?
-      url += "&license_tag=#{license_tag}" if license_tag.present?
-      res = @client.get(url)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
     def get_repo_detail(repo_type, namespace, repo_name, options = {})
       res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}", options)
       raise StarhubError, res.body unless res.success?

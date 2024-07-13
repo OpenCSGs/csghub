@@ -1,24 +1,10 @@
 class InternalApi::ApplicationSpacesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:files, :readme]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def index
-    res_body = csghub_api.get_application_spaces(current_user&.name,
-                                                 params[:search],
-                                                 params[:sort],
-                                                 params[:task_tag],
-                                                 params[:framework_tag],
-                                                 params[:language_tag],
-                                                 params[:license_tag],
-                                                 params[:page],
-                                                 params[:per_page])
-    api_response = JSON.parse(res_body)
-    render json: { spaces: api_response['data'], total: api_response['total'] }
-  end
 
   def files
     last_commit, files = csghub_api.get_application_space_detail_files_data_in_parallel(params[:namespace], params[:application_space_name], files_options)

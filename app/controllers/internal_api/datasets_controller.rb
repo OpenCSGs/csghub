@@ -1,24 +1,10 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :preview_parquet, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme, :preview_parquet, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def index
-    res_body = csghub_api.get_datasets(current_user&.name,
-                                       params[:search],
-                                       params[:sort],
-                                       params[:task_tag],
-                                       params[:framework_tag],
-                                       params[:language_tag],
-                                       params[:license_tag],
-                                       params[:page],
-                                       params[:per_page])
-    api_response = JSON.parse(res_body)
-    render json: { datasets: api_response['data'], total: api_response['total'] }
-  end
 
   def related_repos
     res_body = csghub_api.dataset_related_repos(params[:namespace], params[:dataset_name], files_options)
