@@ -229,10 +229,10 @@
   }
 
   const fetchUserToken = async() => {
-    if (!props.currentUser) return
+    if (!currentUser.value) return
 
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${currentUser}/tokens?app=git`
+      `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
     )
     if (!res.ok) {
       res.json().then((error) => {
