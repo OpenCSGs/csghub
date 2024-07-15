@@ -24,7 +24,7 @@ module Starhub
       get_blob_sha('models', namespace, model_name, path, options)
     end
 
-    def get_model_last_commit(namespace, model_name, path, options = {})
+    def get_model_last_commit(namespace, model_name, options = {})
       get_repo_last_commit('models', namespace, model_name, options)
     end
 
