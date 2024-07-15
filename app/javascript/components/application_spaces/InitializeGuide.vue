@@ -19,7 +19,7 @@
   import StreamlitInitializeGuide from './StreamlitInitializeGuide.vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { onMounted } from 'vue'
+  import { onMounted, inject } from 'vue'
 
   const props = defineProps({
     httpCloneUrl: String,
@@ -28,6 +28,7 @@
     userName: String
   })
 
+  const csghubServer = inject('csghubServer')
   const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
   const { cookies } = useCookies()
@@ -50,6 +51,8 @@
   }
 
   onMounted(() => {
-    fetchUserToken()
+    if (currentUser.value) {
+      fetchUserToken()
+    }
   })
 </script>
