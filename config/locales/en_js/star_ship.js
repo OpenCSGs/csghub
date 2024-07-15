@@ -1,6 +1,6 @@
 export const starShip = {
   title: 'Enterprise Intelligent Digital Employee Platform Based on Large Models',
-  desc: 'Based on the Copilot software development process, it independently completes complex tasks to enhance efficiency and save labor costs throughout the software development process.',
+  desc: 'StarShip consists of a series of Copilots capable of independently completing complex tasks. It is dedicated to enhancing the efficiency of various stages in the software development process and reducing labor costs.',
   use: 'Usage Scenarios',
   section: {
     title: 'Copilot Based on Software Development Process',
