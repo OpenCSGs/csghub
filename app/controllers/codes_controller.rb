@@ -6,9 +6,10 @@ class CodesController < ApplicationController
   include BlobContentHelper
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new_file, :upload_file, :edit_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
-  before_action :load_code_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings, :commits, :commit]
+  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
+  before_action :load_branch_and_path, except: [:index, :new]
+  before_action :load_code_detail, except: [:index, :new, :resolve]
+
 
   def index
     get_tag_list('codes')
@@ -120,6 +121,6 @@ class CodesController < ApplicationController
       @code, @branches = csghub_api.get_code_detail_data_in_parallel(params[:namespace], params[:code_name], files_options)
     end
     @tags = Tag.build_detail_tags(JSON.parse(@code)['data']['tags'], 'code').to_json
-    @settings_visibility = current_user ? current_user.can_manage?(@local_code) : false
+    @settings_visibility = (current_user && @local_code) ? current_user.can_manage?(@local_code) : false
   end
 end

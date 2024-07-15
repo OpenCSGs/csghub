@@ -1,5 +1,5 @@
 <template>
-  <div class="mr-4">
+  <div>
     <el-dropdown>
       <el-button type="default" class="!rounded-lg">
         {{ t("all.deploy") }}

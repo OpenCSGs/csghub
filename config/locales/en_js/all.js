@@ -25,6 +25,7 @@ export const all = {
   loadError: "Load Error",
   notSupportPreview:
     "Preview is not supported at the moment, please download via git clone",
+  syncNotSupportPreview: "Preview is not supported at the moment",
   changeVis: "Change visibility to ",
   enterPls: "Enter Please",
   sureDel: "Sure to Del",
