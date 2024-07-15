@@ -1,7 +1,7 @@
 <template>
   <a
     :href="`/spaces/${repo.path}`"
-    class=" w-[409px] xl:w-full focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 mlg:!w-full"
+    class="w-[409px] xl:w-full focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 mlg:!w-full"
   >
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
