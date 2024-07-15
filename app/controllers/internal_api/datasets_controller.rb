@@ -14,7 +14,7 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def files
     files = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], files_options)
-    last_commit = csghub_api.get_dataset_last_commit(params[:namespace], params[:dataset_name], nil, { current_user: current_user&.name }) rescue nil
+    last_commit = csghub_api.get_dataset_last_commit(params[:namespace], params[:dataset_name], { current_user: current_user&.name }) rescue nil
 
     if last_commit
       last_commit_user = User.find_by(name: JSON.parse(last_commit)['data']['committer_name'])
