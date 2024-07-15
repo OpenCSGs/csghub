@@ -15,6 +15,28 @@
         <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
+    <div class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]">
+      <div class="flex">
+        <SvgIcon name="license" />
+        <p class="ml-[8px] text-[16px] leading-[24px] text-[#344054]">License</p>
+      </div>
+      <div class="flex gap-[8px]">
+        <div class="flex gap-[4px] px-[8px] py-[4px] border rounded-[16px]">
+          <SvgIcon name="license2" width="15" height="15" />
+          <p class="text-[14px] leading-[20px] text-[#667085]">License: CC-BY-4.0</p>
+        </div>
+        <div class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center">
+          <SvgIcon name="arrow2" />
+        </div>
+      </div>
+      <div 
+        class="text-[16px] leading-[24px] text-[#344054]"
+        :class="moreLicenseDesc == false ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
+      >
+        CC-BY-4.0 许可协议允许他人自由分享（复制、分发和传播）和改编（修改、转换和构建）的作品，前提是必须给予原作者适当的署名。
+      </div>
+      <div v-if="moreLicenseDesc === false" class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer" @click="moreLicenseDesc = true">展开更多</div>
+    </div>
 
       <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
                       :namespacePath="namespacePath"
@@ -67,6 +89,7 @@
   const readmeContent = ref('')
   const previewData = ref({})
   const relations = ref({})
+  const moreLicenseDesc = ref(false)
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
