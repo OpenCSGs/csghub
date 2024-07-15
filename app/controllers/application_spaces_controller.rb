@@ -6,7 +6,7 @@ class ApplicationSpacesController < ApplicationController
   include BlobContentHelper
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
+  before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
   before_action :load_application_space_detail, except: [:index, :new, :resolve]
 
@@ -36,6 +36,11 @@ class ApplicationSpacesController < ApplicationController
 
   def settings
     @default_tab = 'settings'
+    render :show
+  end
+
+  def billing
+    @default_tab = 'billing'
     render :show
   end
 
