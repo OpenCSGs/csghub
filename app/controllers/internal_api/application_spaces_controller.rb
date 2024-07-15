@@ -65,12 +65,4 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
   def create_params
     params.permit(:name, :nickname, :desc, :sdk, :cloud_resource, :owner_id, :owner_type, :visibility, :license, :cover_image)
   end
-
-  def create_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def update_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
-  end
 end
