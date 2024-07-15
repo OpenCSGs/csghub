@@ -39,35 +39,13 @@
         <!-- Todo 暂时先隐藏 -->
         <a
           href="#"
-          class="mx-4 flex items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] md:hidden hidden"
+          class="ml-4 items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] hidden"
         >
-          <svg
+          <SvgIcon
+            name="commits"
             class="mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-          >
-            <g clip-path="url(#clip0_3745_32637)">
-              <path
-                d="M7.00033 4.6665V6.99984L8.75033 8.1665M7.00033 12.8332C3.77866 12.8332 1.16699 10.2215 1.16699 6.99984C1.16699 3.77818 3.77866 1.1665 7.00033 1.1665C10.222 1.1665 12.8337 3.77818 12.8337 6.99984C12.8337 10.2215 10.222 12.8332 7.00033 12.8332Z"
-                stroke="#606266"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_3745_32637">
-                <rect
-                  width="14"
-                  height="14"
-                  fill="white"
-                />
-              </clipPath>
-            </defs>
-          </svg>
-          history: 4 commits
+          />
+          {{ $t('all.commits') }}
         </a>
       </div>
     </div>
@@ -133,20 +111,7 @@
             v-if="canWrite && !isImage()"
             class="flex items-center gap-1"
           >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 10.5H2M8 2C7.875 2.875 8.625 3.625 9.5 3.5M3.5 8L3.57005 7.71979C3.73008 7.07967 3.8101 6.7596 3.93877 6.4612C4.05301 6.19627 4.19557 5.94448 4.36397 5.71022C4.55366 5.44635 4.78694 5.21307 5.25351 4.74651L8.25006 1.74999C8.66428 1.33578 9.33585 1.33579 9.75005 1.75001V1.75001C10.1642 2.16422 10.1642 2.83577 9.75003 3.24997L6.75349 6.24651C6.28693 6.71307 6.05364 6.94636 5.78978 7.13604C5.55553 7.30443 5.30374 7.44699 5.03881 7.56123C4.74041 7.6899 4.42035 7.76991 3.78023 7.92994L3.5 8Z"
-                stroke="#606266"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <SvgIcon name="edit" />
             <a
               :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`"
               >{{ $t('shared.edit') }}</a
@@ -213,25 +178,12 @@
           <p class="text-[12px] font-light">{{ formatBytes(size) }}</p>
         </div>
         <div class="flex items-center mt-[4px] mr-[4px]">
-          <svg
+          <SvgIcon
+            name="file"
             class="mr-1.5"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            focusable="false"
-            role="img"
-            width="1em"
-            height="1em"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 32 32"
-          >
-            <path
-              d="M25.7 9.3l-7-7A.908.908 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.908.908 0 0 0-.3-.7zM18 4.4l5.6 5.6H18zM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6z"
-              fill="currentColor"
-            ></path>
-          </svg>
+          />
           <a
-            :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${path}`"
+            :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${currentPath}`"
             target="_blank"
             class="underline text-[12px]"
             >{{ $t('shared.lfs9') }}</a
@@ -269,8 +221,7 @@
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
-    canWrite: Boolean,
-    path: String
+    canWrite: Boolean
   })
 
   const csghubServer = inject('csghubServer')
@@ -341,7 +292,11 @@
   }
 
   const updateFileData = (data) => {
-    content.value = resolveContent(prefixPath, data.content, props.namespacePath)
+    content.value = resolveContent(
+      prefixPath,
+      data.content,
+      props.namespacePath
+    )
     lastCommit.value = data.commit
     size.value = data.size
     lfs.value = data.lfs
