@@ -28,10 +28,11 @@
     userName: String
   })
 
+  const { cookies } = useCookies()
   const csghubServer = inject('csghubServer')
+
   const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
-  const { cookies } = useCookies()
 
   const fetchUserToken = async () => {
     const res = await jwtFetch(
