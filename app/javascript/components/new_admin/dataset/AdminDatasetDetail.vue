@@ -46,11 +46,12 @@
     const response = await fetch(
       `${csghubServer}/api/v1/datasets/${route.params.namespace}/${route.params.name}`
     )
+    const result = await response.json()
+
     if (response.ok) {
-      const res_json = await response.json()
-      dataset.value = res_json.data
+      dataset.value = result.data
     } else {
-      ElMessage.error(response.msg || 'Failed to fetch dataset')
+      ElMessage.error(result.msg || 'Failed to fetch dataset')
     }
   }
 
