@@ -124,7 +124,6 @@
     sshCloneUrl: String,
     repoType: String,
     userName: String,
-    userToken: String,
     namespacePath: String,
     admin: Boolean,
     repo: Object,

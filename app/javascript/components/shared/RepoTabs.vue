@@ -6,7 +6,6 @@
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
       :userName="userName"
-      :userToken="userToken"
       :namespacePath="repoDetail.path"
       :admin="admin"
       :repo="repoDetail"
@@ -31,7 +30,6 @@
           :ssh-clone-url="repoDetail.repository.ssh_clone_url"
           :sdk="sdk"
           :user-name="userName"
-          :user-token="userToken"
         />
         <ApplicationPage
           v-else-if="repoType === 'space' && appStatus === 'Running'"
@@ -298,7 +296,6 @@
     appEndpoint: String,
     sdk: String,
     userName: String,
-    userToken: String,
     commitId: String,
     hardware: String,
     modelId: String,
