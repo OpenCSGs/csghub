@@ -8,9 +8,9 @@ class ModelsController < ApplicationController
   include BlobContentHelper
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
-  before_action :load_model_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings, :commits, :commit]
+  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
+  before_action :load_branch_and_path, except: [:index, :new]
+  before_action :load_model_detail, except: [:index, :new, :resolve]
 
   def index
     get_tag_list('models')
@@ -123,6 +123,6 @@ class ModelsController < ApplicationController
     end
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
-    @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
+    @settings_visibility = (current_user && @local_model) ? current_user.can_manage?(@local_model) : false
   end
 end

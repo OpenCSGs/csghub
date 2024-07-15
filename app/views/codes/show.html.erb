@@ -11,7 +11,7 @@
 <div class="bg-white">
   <code-detail
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_code.id %>"
+    local-repo-id="<%= @local_code&.id %>"
     :code="<%= @code %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"
@@ -23,7 +23,7 @@
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
-    :can-write="<%= !!current_user&.can_write?(@local_code) %>"
+    :can-write="<%= !!(@local_code && current_user&.can_write?(@local_code)) %>"
     user-name="<%= current_user&.name %>"
     user-token="<%= current_user&.git_token %>"
     commit-id="<%= @commit_id %>"

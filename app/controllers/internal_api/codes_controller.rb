@@ -69,12 +69,4 @@ class InternalApi::CodesController < InternalApi::ApplicationController
   def code_params
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
   end
-
-  def create_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def update_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
-  end
 end

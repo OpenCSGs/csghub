@@ -74,10 +74,14 @@ module ApplicationHelper
   end
 
   def code_repo_owner_url owner
-    if owner.is_a?(User)
-      '/profile/' + owner.login_identity
+    if owner
+      if owner.is_a?(User)
+        '/profile/' + owner.login_identity
+      else
+        '/organizations/' + owner.name
+      end
     else
-      '/organizations/' + owner.name
+      '#'
     end
   end
 

@@ -6,5 +6,15 @@ export const repo = {
     desc: "提供更多描述",
     update: "更新文件",
     cancel: "取消",
+  },
+  source: {
+    syncButton: "同步",
+    syncing: "同步中",
+    all: "显示所有源",
+    opencsg: "OpenCSG",
+    local: "本地",
+    remoteResource: "OpenCSG 远端资源",
+    syncCompleted: "本地版本与远端源版本一致",
+    needSync: "远端有待同步版本",
   }
 }
