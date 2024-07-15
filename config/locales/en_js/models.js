@@ -4,7 +4,7 @@ export const models = {
   downloadModel: "Download model data",
   download: "Download Model",
   modelName: "Model name",
-  datasetNameTips:
+  modelNameTips:
     "Applied to the model path, cannot be changed after creation",
   namespaceModelName: "Name space/Model name",
   modelNickName: "Model alias",
@@ -18,6 +18,7 @@ export const models = {
     owner: "Owner",
     modelName: "Model name",
     modelNickName: "Model alias",
+    license: "License",
     modelDesc: "Model Profile",
     public: "Public",
     publicDesc:
@@ -28,7 +29,9 @@ export const models = {
     tips: "Once your model is created, you can upload your files using the web interface or git.",
     createModel: "Create Model",
     createSuccess: "Model created successfully",
-    tip: "Applies to model data and cannot be changed after creation" 
+    tip: "Applies to model data and cannot be changed after creation",
+    createFail: "Model creation failed",
+    modelEnName: "Model name",
   },
   edit: {
     tips: "Will be displayed on the model list page, optional",
