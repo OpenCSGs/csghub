@@ -19,7 +19,7 @@
   import StreamlitInitializeGuide from './StreamlitInitializeGuide.vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
-  import { onMounted, inject } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
 
   const props = defineProps({
     httpCloneUrl: String,
