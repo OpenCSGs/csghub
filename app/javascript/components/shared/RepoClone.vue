@@ -52,8 +52,12 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+              <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+              Use <p class="underline">access token</p> as git password/credential
+            </div>
             <div
-              class="my-[4px]"
+              class="mb-[4px]"
               v-if="currentUser"
             >
               <el-checkbox
@@ -84,6 +88,10 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
+              <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+              <p class="underline">Add your SSH public key</p> to clone private repos
+            </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
             <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
