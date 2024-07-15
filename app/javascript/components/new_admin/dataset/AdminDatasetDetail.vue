@@ -21,7 +21,7 @@
         </li>
         <li class="flex justify-between mb-4">
           <label>Visibility</label>
-          <p>{{ dataset.private == false ? 'public' : 'private' }}</p>
+          <p>{{ dataset.private === false ? 'public' : 'private' }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Created At</label>

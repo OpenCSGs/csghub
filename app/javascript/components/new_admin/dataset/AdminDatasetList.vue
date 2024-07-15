@@ -28,7 +28,7 @@
       </el-table-column>
       <el-table-column label="Visibility">
         <template #default="scope">
-          {{ scope.row.private == false ? 'public' : 'private' }}
+          {{ scope.row.private === false ? 'public' : 'private' }}
         </template>
       </el-table-column>
       <el-table-column label="Operations">
@@ -44,6 +44,7 @@
     </el-table>
 
     <el-pagination
+      v-model:current-page="page"
       :page-size="per"
       layout="prev, pager, next"
       :total="total"
@@ -65,18 +66,16 @@
   const keyword = ref('')
   const csghubServer = inject('csghubServer')
 
-  const fetchDatasets = async (current) => {
+  const fetchDatasets = async () => {
     const response = await fetch(
-      `${csghubServer}/api/v1/datasets?&sort=trending&page=${
-        current || page.value
-      }&per=${per.value}&search=${keyword.value}`
+      `${csghubServer}/api/v1/datasets?&sort=trending&page=${page.value}&per=${per.value}&search=${keyword.value}`
     )
+    const result = await response.json()
     if (response.ok) {
-      const res_json = await response.json()
-      datasets.value = res_json.data
-      total.value = res_json.total
+      datasets.value = result.data
+      total.value = result.total
     } else {
-      ElMessage.error(response.msg || 'Failed to fetch dataset')
+      ElMessage.error(result.msg || 'Failed to fetch dataset')
     }
   }
 
