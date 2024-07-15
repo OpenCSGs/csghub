@@ -26,7 +26,6 @@
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!current_user&.can_write?(@local_model) %>"
     user-name="<%= current_user&.name %>"
-    user-token="<%= current_user&.git_token %>"
     commit-id="<%= @commit_id %>"
     :admin="<%= current_user&.admin? %>"
   ></model-detail>

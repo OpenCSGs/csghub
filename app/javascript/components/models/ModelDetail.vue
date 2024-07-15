@@ -33,7 +33,6 @@
       :tags="tags"
       :tag-list="tagList"
       :userName="userName"
-      :userToken="userToken"
       :commitId="commitId"
       repo-type="model"
       :admin="admin"
@@ -64,7 +63,6 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String,
     commitId: String,
     admin: Boolean
   })
