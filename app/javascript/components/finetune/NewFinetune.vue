@@ -39,6 +39,7 @@
           :placeholder="$t('finetune.new.clusterTip')"
           size="large"
           style="width: 100%"
+          @change="fetchResources"
         >
           <el-option
             v-for="item in finetuneClusters"
@@ -66,6 +67,7 @@
             :key="item.name"
             :label="item.name"
             :value="item.id"
+            :disabled="!item.is_available"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
@@ -144,7 +146,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources`,
+      `${csghubServer}/api/v1/space_resources?cluster_id=${finetuneCluster.value}`,
       options
     )
     if (!res.ok) {
@@ -191,6 +193,7 @@
       res.json().then((body) => {
         finetuneCluster.value = body.data[0]?.cluster_id || ''
         finetuneClusters.value = body.data
+        fetchResources()
       })
     }
   }
@@ -251,7 +254,6 @@
   }
 
   onMounted(() => {
-    fetchResources()
     fetchFrameworks()
     fetchClusters()
   })
