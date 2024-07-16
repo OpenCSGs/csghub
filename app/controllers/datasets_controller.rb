@@ -111,8 +111,6 @@ class DatasetsController < ApplicationController
   private
 
   def load_dataset_detail
-    return if action_name == 'blob' && params[:download] == 'true'
-
     @dataset, @branches = csghub_api.get_dataset_detail_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
     @tags_list = Tag.where(scope: 'dataset', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@dataset)['data']['tags'], 'dataset').to_json

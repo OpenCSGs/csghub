@@ -111,8 +111,6 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    return if action_name == 'blob' && params[:download] == 'true'
-
     @model, @branches = csghub_api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
