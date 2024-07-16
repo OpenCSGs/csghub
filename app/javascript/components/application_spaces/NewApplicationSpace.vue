@@ -183,6 +183,7 @@
           size="large"
           style="width: 100%"
         >
+          <!-- :disabled="!item.is_available" -->
           <el-option
             v-for="item in spaceResources"
             :key="item.name"
