@@ -117,14 +117,7 @@ class ApplicationSpacesController < ApplicationController
   private
 
   def load_application_space_detail
-    return if action_name == 'blob' && params[:download] == 'true'
-
-    if action_name == 'blob' || action_name == 'edit_file'
-      @application_space, @last_commit, @branches, @blob = csghub_api.get_application_space_detail_blob_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
-      update_blob_content('application_space')
-    else
-      @application_space, @branches = csghub_api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
-    end
+    @application_space, @branches = csghub_api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     @tags = Tag.build_detail_tags(JSON.parse(@application_space)['data']['tags'], 'space').to_json
     @settings_visibility = (current_user && @local_application_space) ? current_user.can_manage?(@local_application_space) : false
   end
