@@ -9,13 +9,12 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
-  validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
-  validates_length_of :nickname, maximum: 20
-  validates_length_of :email, maximum: 30
-  validates :name, format: { with: NAME_RULE }, allow_blank: true
-  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
-
-  validate :unique_name_by_organization
+  # validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
+  # validates_length_of :nickname, maximum: 20
+  # validates_length_of :email, maximum: 30
+  # validates :name, format: { with: NAME_RULE }, allow_blank: true
+  # validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, allow_blank: true
+  # validate :unique_name_by_organization
 
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
@@ -34,7 +33,7 @@ class User < ApplicationRecord
   has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
   has_many :created_endpoints, class_name: 'Endpoint', foreign_key: :creator_id
 
-  after_save :sync_to_starhub_server
+  # after_save :sync_to_starhub_server
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
