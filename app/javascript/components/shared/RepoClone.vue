@@ -55,10 +55,7 @@
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
-              <a v-if="repoType == 'model'" href="https://opencsg.com/docs/Model/download_models" target="_blank" class="underline">access token</a> 
-              <a v-if="repoType == 'dataset'" href="https://opencsg.com/docs/Dataset/download_datasets" target="_blank" class="underline">access token</a> 
-              <a v-if="repoType == 'code'" href="https://opencsg.com/docs/Model/download_codes" target="_blank" class="underline">access token</a> 
-              <a v-if="repoType == 'space'" href="https://opencsg.com/docs/Space/download_space_repo" target="_blank" class="underline">access token</a> 
+              <a :href="downloadModalUrl" target="_blank" class="underline">access token</a> 
               as git password/credential
             </div>
             <div
@@ -95,10 +92,7 @@
           >
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-              <a href="https://opencsg.com/docs/Model/download_models" target="_blank" class="underline">Add your SSH public key</a> 
-              <a href="https://opencsg.com/docs/Model/download_datasets" target="_blank" class="underline">Add your SSH public key</a> 
-              <a href="https://opencsg.com/docs/Model/download_codes" target="_blank" class="underline">Add your SSH public key</a> 
-              <a href="https://opencsg.com/docs/Space/download_space_repo" target="_blank" class="underline">Add your SSH public key</a> 
+              <a :href="downloadModalUrl" target="_blank" class="underline">Add your SSH public key</a> 
               to clone private repos
             </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
@@ -238,6 +232,22 @@
         return ''
     }
   })
+
+  const downloadModalUrl = computed(() => {
+    switch (props.repoType) {
+      case 'dataset':
+        return 'https://opencsg.com/docs/Dataset/download_datasets'
+      case 'model':
+        return 'https://opencsg.com/docs/Model/download_models'
+      case 'code':
+        return 'https://opencsg.com/docs/Code/download_codes'
+      case 'space':
+        return 'https://opencsg.com/docs/Space/download_space_repo'
+      default:
+        return ''
+    }
+  })
+
 
   function toFinetunePage() {
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
