@@ -6,6 +6,8 @@ class InternalApi::DiscussionsController < InternalApi::ApplicationController
     discussions = discussionable.discussions.order(updated_at: :desc)
 
     render json: discussions.as_json, status: :ok
+  rescue
+    render json: { message: '找不到该资源' }, status: :not_found
   end
 
   def create

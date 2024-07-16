@@ -56,21 +56,22 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject } from 'vue'
+  import { ref, inject, onMounted } from 'vue'
   import CodeEditor from '../shared/CodeEditor.vue'
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { ElMessage } from 'element-plus'
+  import { atob_utf8 } from '../../packs/utils'
 
   const props = defineProps({
-    originalCodeContent: String,
     repoName: String,
     namespacePath: String,
     currentPath: String,
-    sha: String
   })
 
-  const codeContent = ref(props.originalCodeContent)
+  const originalCodeContent = ref('')
+  const codeContent = ref('')
+  const sha = ref('')
 
   const fileName = ref(props.currentPath)
   const commitTitle = ref('')
@@ -118,7 +119,7 @@
       message: buildCommitMessage(),
       branch: 'main',
       new_branch: 'main',
-      sha: props.sha
+      sha: sha.value
     }
     const option = {
       method: 'PUT',
@@ -149,6 +150,30 @@
   const cancel = () => {
     redirectToFilePreview()
   }
+
+  const fetchFileContent = async () => {
+    try {
+      const response = await jwtFetch(
+        `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}`
+      )
+
+      const result = await response.json()
+
+      if (response.ok) {
+        originalCodeContent.value = atob_utf8(result.data.content)
+        codeContent.value = originalCodeContent.value
+        sha.value = result.data.sha
+      } else {
+        ElMessage({ message: result.msg, type: 'error' })
+      }
+    } catch (err) {
+      ElMessage({ message: err.message, type: 'error' })
+    }
+  }
+
+  onMounted(() => {
+    fetchFileContent()
+  })
 </script>
 
 <style scoped>

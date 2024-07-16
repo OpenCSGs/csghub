@@ -4,13 +4,13 @@
   - [x] Dataset Management: Supports both Git protocol and web interface, enabling branch version control and access control.
   - [x] Large File Support: Supports Git Large File Storage (LFS) protocol and Object Storage Service (OSS) storage.
   - [x] Code Repos: Built-in code repo management functionality, allowing for the association of code with models, datasets, and Space applications.
-  - [ ] Multiple Sources Sync: Supports configuration and enabling of remote repositories for automatic data synchronization, with support for remote sources like OpenCSG ChuanShen Community and Huggingface.
+  - [x] Multiple Sources Sync: Supports configuration and enabling of remote repositories for automatic data synchronization, with support for remote sources like OpenCSG ChuanShen Community and Huggingface.
   - [x] Online Edit: Models, datasets, and code repos can be uploaded, downloaded, edited, or deleted through a web interface, with support for committing changes.
   - [x] DataSet Online Viewer: A dataset web viewing tool that supports viewing metadata and TopN data of datasets in various formats.
 - **LLM Capability Enhancement**
   - [x] Dataset Preview: Supports the functionality of previewing dataset data.
-  - [ ] OneClick Train: Supports integration with OpenCSG llm-finetune, enabling one-click initiation of model fine-tuning training.
-  - [x] OneClick Deploy: Supports integration with OpenCSG llm-inference, enabling one-click initiation of model inference services.
+  - [x] OneClick Fine-Tuning: Supports integration with OpenCSG llm-finetune, enabling one-click initiation of model fine-tuning training.
+  - [x] OneClick Inference: Supports integration with OpenCSG llm-inference, enabling one-click initiation of model inference services.
   - [ ] Data Format Convert: Conversion of mainstream model and dataset formats, with support for configuring automated format conversion rules.
   - [ ] Asset Copilot: Implements an Asset Management Copilot, supporting natural language queries and management of assets via Chatbot or API interface.
 - **Applications and Enterprise Features**

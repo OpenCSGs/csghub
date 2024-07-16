@@ -1,14 +1,24 @@
 <template>
   <div
-    class="flex items-center absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
+    class="flex items-center gap-4 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
   >
+    <el-button
+      v-if="showSyncButton"
+      type="default"
+      class="!rounded-lg"
+      :disabled="syncInprogress"
+      @click="handleSyncRepo"
+    >
+      <SvgIcon name="sync" class="mr-2" />
+      {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
+    </el-button>
     <DeployDropdown
-      v-if="repoType === 'model' && admin && enableEndpoint"
+      v-if="repoType === 'model' && admin && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
-      v-if="repoType === 'model' && admin && enableFinetune"
+      v-if="repoType === 'model' && admin && enableFinetune && !!httpCloneUrl"
       @click="toFinetunePage"
     >
       <SvgIcon
@@ -18,6 +28,7 @@
       <div class="text-sm">{{ $t('finetune.title') }}</div>
     </div>
     <div
+      v-if="!!httpCloneUrl"
       class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
@@ -104,6 +115,7 @@
   import SvgIcon from './SvgIcon.vue'
   import { useCookies } from 'vue3-cookies'
   import jwtFetch from '../../packs/jwtFetch'
+  import { ElMessage } from "element-plus"
 
   const { cookies } = useCookies()
 
@@ -112,9 +124,9 @@
     sshCloneUrl: String,
     repoType: String,
     userName: String,
-    userToken: String,
     namespacePath: String,
     admin: Boolean,
+    repo: Object,
     enableEndpoint: Boolean,
     enableFinetune: Boolean
   })
@@ -125,6 +137,17 @@
   const useToken = ref(false)
   const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
+
+  const showSyncButton = computed(() =>
+    props.admin &&
+    props.repo.source === 'opencsg' &&
+    ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
+  )
+
+  // 同步按钮禁用
+  const syncInprogress = computed(() => {
+    return props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
+  })
 
   const getMarkdownCode = (code, lang, multiline = false) => {
     return `\`\`\`${lang}${multiline ? '' : '\n'}${code}${
@@ -204,9 +227,11 @@
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
   }
 
-  const fetchUserToken = async () => {
+  const fetchUserToken = async() => {
+    if (!currentUser.value) return
+
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${currentUser}/tokens?app=git`
+      `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
     )
     if (!res.ok) {
       res.json().then((error) => {
@@ -217,6 +242,29 @@
         if (body.data) {
           accessToken.value = body.data[0].token
         }
+      })
+    }
+  }
+
+  const handleSyncRepo =  async () => {
+    const syncUrl = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/mirror_from_saas`
+    const res = await jwtFetch(syncUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (!res.ok) {
+      res.json().then(error => {
+        ElMessage({message: error.msg, type: "warning"})
+      })
+    } else {
+      res.json().then(body => {
+        ElMessage({message: 'Sync repo success', type: "success"})
+        setTimeout(() => {
+          location.reload()
+        }, 2000)
       })
     }
   }
