@@ -54,13 +54,6 @@ class ModelsController < ApplicationController
                                                      save_as: @current_path,
                                                      current_user: current_user&.name })
         redirect_to JSON.parse(file_url)['data'], allow_other_host: true
-      else
-        file = csghub_api.download_model_file(params[:namespace],
-                                               params[:model_name],
-                                               @current_path,
-                                               { ref: @current_branch,
-                                                 current_user: current_user&.name })
-        send_data file, filename: @current_path
       end
     else
       content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
