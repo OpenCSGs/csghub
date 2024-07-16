@@ -152,12 +152,11 @@
             class="underline"
             >{{ $t('shared.lfs2') }}</a
           >{{ $t('shared.lfs3') }}
-          <a
-            :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${currentPath}?download=true&lfs=${lfs}&lfs_path=${lfsRelativePath}`"
-            download
-            class="underline"
+          <span
+            class="underline cursor-pointer"
+            @click="lfsDownload"
             >{{ $t('shared.lfs4') }}
-          </a>
+          </span>
           {{ $t('shared.lfs5') }}
         </p>
       </div>
@@ -215,6 +214,8 @@
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import resolveContent from '../../packs/resolveContent'
+  import { useI18n } from 'vue-i18n'
+  import { createAndClickAnchor } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -225,6 +226,7 @@
   })
 
   const csghubServer = inject('csghubServer')
+  const { t } = useI18n()
 
   const breadcrumb = ref([])
   const fileType = ref('')
@@ -322,6 +324,26 @@
       }
     } catch (err) {
       ElMessage({ message: err.message, type: 'error' })
+    }
+  }
+
+  const lfsDownload = async () => {
+    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${props.currentBranch}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${props.currentPath}`
+
+    try {
+      const response = await jwtFetch(url, { method: 'GET' })
+
+      if (!response.ok) {
+        ElMessage({
+          message: t('all.fetchError'),
+          type: 'warning'
+        })
+      } else {
+        const { data: downloadUrl } = await response.json()
+        createAndClickAnchor(downloadUrl, props.currentPath)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
