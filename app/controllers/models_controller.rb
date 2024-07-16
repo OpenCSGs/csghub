@@ -122,5 +122,6 @@ class ModelsController < ApplicationController
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
     @settings_visibility = current_user ? current_user.can_manage?(@local_model) : false
+    @license_info = SystemConfig.first[:license_info].to_json
   end
 end

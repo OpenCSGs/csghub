@@ -19,5 +19,6 @@
     user-token="<%= current_user&.git_token %>"
     commit-id="<%= @commit_id %>"
     :admin="<%= current_user&.admin? %>"
+    :license-info="<%= @license_info.to_json %>"
   ></model-detail>
 </div>

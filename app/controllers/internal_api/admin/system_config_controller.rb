@@ -21,6 +21,6 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
                                           s3_configs: {},
                                           oidc_configs: {},
                                           starhub_configs: {},
-                                          license_info: {})
+                                          license_info: [])
   end
 end

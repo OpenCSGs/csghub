@@ -15,7 +15,10 @@
         <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
-    <div class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]">
+    <div 
+      v-if="repoType == 'model'" 
+      class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
+    >
       <div class="flex">
         <SvgIcon name="license" />
         <p class="ml-[8px] text-[16px] leading-[24px] text-[#344054]">License</p>
@@ -82,7 +85,8 @@
     currentBranch: String,
     widgetType: String,
     inferenceStatus: String,
-    repoType: String
+    repoType: String,
+    licenseInfo: Object
   })
 
   const loading = ref(true)
@@ -147,5 +151,6 @@
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
+    console.log(props.licenseInfo);
   })
 </script>
