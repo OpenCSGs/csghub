@@ -1,7 +1,7 @@
 <template>
   <a
     :href="`/spaces/${repo.path}`"
-    class="xl:w-full focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 mlg:!w-full"
+    :class="`${widthStyle} focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4`"
   >
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
@@ -87,7 +87,11 @@
 
   const props = defineProps({
     repo: Object,
-    repoType: String
+    repoType: String,
+    widthStyle: {
+      type: String,
+      default: "xl:w-full"
+    }
   })
 
   const coverImageUrl = computed(() => {
