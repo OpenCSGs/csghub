@@ -3,7 +3,7 @@
     class="flex flex-col gap-[24px] w-full max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-4"
   >
     <!-- header -->
-    <div class="flex w-full justify-between mb-[12px]">
+    <div class="flex w-full justify-between mb-[12px] md:flex-col">
       <div class="flex flex-col">
         <div class="flex gap-2 text-[20px] leading-[30px]">
           <SvgIcon
@@ -15,7 +15,30 @@
         </div>
         <div class="text-[16px] leading-[24px] text-[#667085]">{{ $t('collections.title') }}</div>
       </div>
-      <!-- <div>搜索条搜索条搜索条</div> -->
+      <div class="xl:mt-[16px]">
+        <ElInput
+          v-model="nameFilterInput"
+          class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
+          size="large"
+          :placeholder="$t(`collections.placeholder`)"
+          :prefix-icon="Search"
+          @change="filterChange"
+        />
+        <el-select
+          v-model="sortSelection"
+          @change="filterChange"
+          style="width: 200px"
+          class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
+          size="large"
+        >
+          <el-option
+            v-for="item in sortOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
     </div>
     <div
       class="flex gap-1 max-w-[max-content] px-2 rounded-[6px] border border-[#D5D9EB] text-[14px] leading-[20px] bg-[#D5D9EB] text-[#363F72]"
@@ -41,6 +64,9 @@
   import CollectionCards from './CollectionCards.vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
+  const csghubServer = inject('csghubServer')
+  const { t } = useI18n()
 
   const perPage = ref(10)
   const currentPage = ref(1)
@@ -138,8 +164,27 @@
       username: 'string'
     }
   ])
+  const nameFilterInput = ref('')
+  const sortSelection = ref('trending')
+  const sortOptions = [
+    {
+      value: 'trending',
+      label: t('all.trending')
+    },
+    {
+      value: 'recently_update',
+      label: t('all.recentlyUpdate')
+    },
+    {
+      value: 'most_favorite',
+      label: t('all.mostFavorite')
+    }
+  ]
 
-  const csghubServer = inject('csghubServer')
+
+  const filterChange = () => {
+    fetchCollections()
+  }
 
   const fetchCollections = async (childCurrent) => {
     if (childCurrent) {
@@ -148,6 +193,8 @@
     const params = new URLSearchParams()
     params.append('per', perPage.value)
     params.append('page', currentPage.value)
+    params.append('search', nameFilterInput.value)
+    params.append('sort', sortSelection.value)
     const url = `${csghubServer}/api/v1/collections?${params.toString()}`
     const res = await jwtFetch(url)
     if (!res.ok) {
