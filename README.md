@@ -44,10 +44,10 @@ In order to help users to quickly understand the features and usage of CSGHub, w
 ### ROADMAP
 - **Asset Management**
   - [x] Built-in Code Repo: Built-in Code Repo management function to associate the code of model, dataset, Space space application.
-  - [ ] Multi-source data synchronization: Support configure and enable remote repository, automatic data synchronization, support OpenCSG community, Huggingface and other remote sources。
+  - [x] Multi-source data synchronization: Support configure and enable remote repository, automatic data synchronization, support OpenCSG community, Huggingface and other remote sources。
 - **AI Enhancement**
-  - [ ] One-Click Fine-Tuning: Support integration with OpenCSG llm-finetune tool to start model fine-tuning training with one click.
-  - [x] One-Click Reasoning: Support integration with OpenCSG llm-inference tool to start model reasoning service with one click.
+  - [x] One-Click Fine-Tuning: Support integration with OpenCSG llm-finetune tool to start model fine-tuning training with one click.
+  - [x] One-Click Inference: Support integration with OpenCSG llm-inference tool to start model reasoning service with one click.
 - **LLM App and Enterprise Features**
   - [x] App Space: Support hosting Gradio/Streamlit applications and publishing them to App Space.
   - [x] Fine-grained Permission Control: Fine-grained permission and access control settings for enterprise architecture.
