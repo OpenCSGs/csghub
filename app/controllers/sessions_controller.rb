@@ -64,6 +64,13 @@ class SessionsController < ApplicationController
     end
   end
 
+  def server
+    debugger
+    res = csghub_api.verify_jwt_token(params[:jwt])
+    cookies['user_token'] = params[:jwt]
+    cookies['token_expire_at'] = Time.at(params[:expire]).in_time_zone("Beijing").strftime("%Y-%m-%d %H:%M:%S")
+  end
+
   def oidc
     @openid_client = Oidc.instance.client
     @openid_client.authorization_code = params['code']
