@@ -6,7 +6,6 @@
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
       :userName="userName"
-      :userToken="userToken"
       :namespacePath="repoDetail.path"
       :admin="admin"
       :enableEndpoint="repoDetail.enable_inference"
@@ -24,12 +23,12 @@
         <ApplicationPage v-if="repoType === 'space' && repoDetail.path === 'leaderboard/SuperClueRanking'"
                          appEndpoint="https://www.superclueai.com/"
         />
-        <InitializeGuide v-else-if="repoType === 'space' && appStatus === 'NoAppFile'"
-                         :http-clone-url="repoDetail.repository.http_clone_url"
-                         :ssh-clone-url="repoDetail.repository.ssh_clone_url"
-                         :sdk="sdk"
-                         :user-name="userName"
-                         :user-token="userToken"
+        <InitializeGuide
+          v-else-if="repoType === 'space' && appStatus === 'NoAppFile'"
+          :http-clone-url="repoDetail.repository.http_clone_url"
+          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
+          :sdk="sdk"
+          :user-name="userName"
         />
         <ApplicationPage
           v-else-if="repoType === 'space' && appStatus === 'Running'"
@@ -287,7 +286,6 @@
     appEndpoint: String,
     sdk: String,
     userName: String,
-    userToken: String,
     commitId: String,
     hardware: String,
     modelId: String,
