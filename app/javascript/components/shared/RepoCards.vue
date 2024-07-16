@@ -15,9 +15,9 @@
         :type="repoType"
       />
     </div>
-    <div class="pr-[20px] pt-[32px] mlg:px-[20px] w-full">
+    <div class="pt-[32px] w-full xl:pr-[20px] mlg:px-[20px]">
       <div
-        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-4 md:pl-0' : ''}`"
+        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] mlg:pl-0' : ''}`"
       >
         <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
           <SvgIcon
@@ -69,7 +69,7 @@
           </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
+            class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
@@ -93,13 +93,12 @@
       </div>
       <div
         v-if="repoType === 'space'"
-        class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mb-4 mt-[16px]"
+        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-6 mb-4 mt-[16px] xl:pl-[20px] mlg:pl-0"
       >
         <application-space-item
           v-for="repo in reposData"
           :repo="repo"
           :repo-type="repoType"
-          width="409"
         />
       </div>
       <div
