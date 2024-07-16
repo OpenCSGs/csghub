@@ -2,15 +2,11 @@ module Api::RepoValidation
   extend ActiveSupport::Concern
 
   included do
-    before_action except: [:index, :create] do
-      validate_repo(controller_name)
-    end
-
     before_action only: [:update, :destroy] do
       validate_manage(controller_name)
     end
 
-    before_action only: [:create_file, :update_file, :upload_file] do
+    before_action only: [:upload_file] do
       validate_write(controller_name)
     end
 
@@ -23,17 +19,10 @@ module Api::RepoValidation
 
   private
 
-  def validate_repo(type)
-    repo = get_repo(type)
-    unless repo
-      return render json: { message: "未找到对应仓库" }, status: 404
-    end
-  end
-
   def validate_manage(type)
     repo = get_repo(type)
 
-    unless current_user.can_manage?(repo)
+    unless repo && current_user.can_manage?(repo)
       render_unauthorized('无权限')
       return
     end
@@ -42,7 +31,7 @@ module Api::RepoValidation
   def validate_write(type)
     repo = get_repo(type)
 
-    unless current_user.can_write?(repo)
+    unless repo && current_user.can_write?(repo)
       render_unauthorized('无权限')
       return
     end
@@ -64,9 +53,9 @@ module Api::RepoValidation
   def validate_authorization(type)
     local_repo = get_repo(type)
 
-    return render_unauthorized('仓库不存在') unless local_repo
-
-    return render_unauthorized('无权限') unless valid_authorization?(local_repo, type)
+    if local_repo
+      return render_unauthorized('无权限') unless valid_authorization?(local_repo, type)
+    end
   end
 
   def valid_authorization?(repo, type)

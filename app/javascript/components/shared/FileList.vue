@@ -14,7 +14,7 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="flex items-center text-sm text-[#606266]">
+      <div v-if="lastCommit" class="flex items-center text-sm text-[#606266]">
         <div class="flex items-center mr-4 py-[1px] md:hidden">
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 {{ $t('all.contributors') }}
@@ -43,8 +43,8 @@
       </div>
     </div>
 
-    <div v-if="!loading" class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
-      <div class="flex items-center text-sm overflow-hidden mr-2">
+    <div v-if="!loading" class="flex items-center justify-between min-h-[36px] mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]">
+      <div v-if="lastCommit" class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
           <el-avatar :size="24" class="mr-2" :src="lastCommitAvatar" />
           <a href="#" class="text-[#303133] hover:underline">{{ lastCommit.author_name }}</a>
@@ -54,7 +54,7 @@
           {{ lastCommit.id && lastCommit.id.substring(0, 7) }}
         </a>
       </div>
-      <div class="text-[#909399] text-sm cursor-pointer flex-shrink-0 md:hidden">
+      <div v-if="lastCommit" class="text-[#909399] text-sm cursor-pointer flex-shrink-0 md:hidden">
         <el-popover
           width="158"
           placement="top"
@@ -89,7 +89,7 @@
           :width="270"
           trigger="hover"
           effect="dark"
-          :content="this.$t('all.notSupportPreview')"
+          :content="!!lastCommit ? $t('all.notSupportPreview') : $t('all.syncNotSupportPreview')"
         >
           <template #reference>
             <div class="ml-2 text-sm text-[#303133] hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
@@ -192,12 +192,16 @@
 
   // 预览放行规则：非 LFS，文件大小不超过 10MB
   const canPreview = (file) => {
+    if (!lastCommit.value) return false
+
     const isFileSizeLessThan10MB = file.size <= 10 * 1024 * 1024
 
     return isFileSizeLessThan10MB || file.lfs
   }
 
   const canDownload = (file) => {
+    if (!lastCommit.value) return false
+
     return file.lfs || (file.size <= 10 * 1024 * 1024)
   }
 

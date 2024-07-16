@@ -64,6 +64,7 @@
           :placeholder="$t('all.select')"
           size="large"
           style="width: 100%"
+          @change="fetchResources"
         >
           <el-option
             v-for="item in endpointClusters"
@@ -87,6 +88,7 @@
             :key="item.name"
             :label="item.name"
             :value="item.id"
+            :disabled="!item.is_available"
           />
         </el-select>
         <p class="text-[#475467] mt-2 font-light">
@@ -240,7 +242,7 @@
       method: "GET",
       headers: { "Content-Type": "application/json" }
     };
-    const res = await jwtFetch(`${csghubServer}/api/v1/space_resources`, options);
+    const res = await jwtFetch(`${csghubServer}/api/v1/space_resources?cluster_id=${endpointCluster.value}`, options);
     if (!res.ok) {
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
@@ -263,6 +265,7 @@
       res.json().then((body) => {
         endpointCluster.value = body.data[0]?.cluster_id || "";
         endpointClusters.value = body.data;
+        fetchResources()
       });
     }
   };
@@ -339,7 +342,6 @@
   });
 
   onMounted(() => {
-    fetchResources();
     updateRuntimeFramework();
     fetchClusters();
   });
