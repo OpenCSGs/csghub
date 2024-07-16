@@ -20,7 +20,7 @@ import { components } from './en_js/components';
 import { endpoints } from './en_js/endpoints';
 import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
-
+import { collections } from './en_js/collections';
 
 export default {
   all,
@@ -44,5 +44,6 @@ export default {
   components,
   endpoints,
   admin,
-  finetune
+  finetune,
+  collections
 };
