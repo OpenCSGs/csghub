@@ -99,6 +99,7 @@
           <ApplicationSpaceItem
             v-for="space in hotSpaces"
             :repo="space"
+            widthStyle="w-[409px] mlg:w-full"
           />
           <div class="w-full relative flex items-center">
             <div class="flex-grow border border-[#EAECF0]"></div>

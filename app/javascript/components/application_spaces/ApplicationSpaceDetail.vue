@@ -40,7 +40,6 @@
       :can-write="canWrite"
       repo-type="space"
       :user-name="userName"
-      :user-token="userToken"
       :commitId="commitId"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       :isAdmin="isAdmin"
@@ -122,7 +121,6 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String,
     isAdmin: Boolean,
     commitId: String
   })

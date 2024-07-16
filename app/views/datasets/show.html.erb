@@ -26,7 +26,6 @@
     avatar="<%= @avatar_url %>"
     :can-write="<%= !!(@local_dataset && current_user&.can_write?(@local_dataset)) %>"
     user-name="<%= current_user&.name %>"
-    user-token="<%= current_user&.git_token %>"
     commit-id="<%= @commit_id %>"
   >
   </dataset-detail>

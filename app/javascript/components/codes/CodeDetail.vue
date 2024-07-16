@@ -32,7 +32,6 @@
       :settingsVisibility="settingsVisibility"
       :can-write="canWrite"
       :userName="userName"
-      :userToken="userToken"
       repo-type="code"
       :commitId="commitId"
     />
@@ -60,7 +59,6 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    userToken: String,
     commitId: String
   })
   const repoDetailStore = useRepoDetailStore()
