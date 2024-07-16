@@ -8,6 +8,7 @@
       :userName="userName"
       :namespacePath="repoDetail.path"
       :admin="admin"
+      :repo="repoDetail"
       :enableEndpoint="repoDetail.enable_inference"
       :enableFinetune="repoDetail.enable_finetune"
     />
@@ -15,7 +16,10 @@
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
       :repoType="repoType"
+      :localRepoId="localRepoId"
       :sdk="sdk"
+      :repo="repoDetail"
+
       @tabChange="tabChange"
     >
       <!-- summary -->
