@@ -37,7 +37,7 @@
                   <li>${t('rule.specialStrNotTogether')}</li>
                 </ul>
                 `" placement="top">
-                  <el-icon class="cursor-pointer hover:text-[var(--Brand-300)]"><Warning /></el-icon>
+                  <el-icon><Warning /></el-icon>
                 </el-tooltip>
               </template>
             </el-input>
@@ -97,9 +97,8 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import csrfFetch from "../../packs/csrfFetch.js"
-import InputTip from '../shared/inputs/InputTip.vue'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 
@@ -205,6 +204,16 @@ const createModel = async () => {
       })
   }
 };
+
+onMounted(() => {
+  const params = new URLSearchParams(window.location.search)
+  const result = props.namespaces.find(item => item[1] === params.get('orgName'));
+  if (result) {
+    const form = dataForm.value
+    form.owner = result[0]
+    dataForm.value = form
+  }
+});
 </script>
 
 <style scoped>
