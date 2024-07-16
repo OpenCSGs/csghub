@@ -42,9 +42,9 @@ OpenCSG团队专注于大模型领域，希望通过CSGHub项目解决大模型�
 ### 近期路线图
 - **资产管理**
   - [x] 内置代码仓库：内置代码Repo管理功能，可关联模型、数据集、Space空间应用的代码。
-  - [ ] 多源数据同步: 支持配置并启用远端仓库, 自动数据同步，支持OpenCSG传神社区、Huggingface等远端源。
+  - [x] 多源数据同步: 支持配置并启用远端仓库, 自动数据同步，支持OpenCSG传神社区、Huggingface等远端源。
 - **AI能力增强**
-  - [ ] 一键微调: 支持与OpenCSG llm-finetune集成，一键启动模型微调训练。
+  - [x] 一键微调: 支持与OpenCSG llm-finetune集成，一键启动模型微调训练。
   - [x] 一键推理: 支持与OpenCSG llm-inference集成，一键启动模型推理服务。
 - **应用与企业功能**
   - [x] 应用空间: 支持托管Gradio/Streamlit应用并发布到Space应用空间
