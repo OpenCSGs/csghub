@@ -58,7 +58,7 @@
         <SvgIcon name="spaces" width="18" height="18" />
         <span>{{ $t("organization.space") }}</span>
       </h3>
-      <div v-if="hasSpaces" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
+      <div v-if="hasSpaces" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
         <application-space-item v-for="repo in spaces.data" :repo="repo" repo-type="space" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
@@ -152,7 +152,7 @@
   })
 
   const getData = async () =>{
-    const defaultTotal = 6 
+    const defaultTotal = 6
     const modelsUrl = reposUrl("models")
     const datasetsUrl = reposUrl("datasets")
     const spacesUrl = reposUrl("spaces")
@@ -168,7 +168,7 @@
         promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));
         const finetunesUrl = reposUrl("finetunes")
         promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
-        
+
     }
     await Promise.all(promises);
   }
