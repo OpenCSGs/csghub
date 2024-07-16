@@ -6,7 +6,7 @@
       class="p-4 rounded-[12px] border border-[#EAECF0]"
       :style="generateGradientStyle(collection.theme)"
     >
-      <div class="flex justify-between">
+      <div class="flex justify-between cursor-pointer" @click="goCollectionDetails(collection.id)">
         <div class="text-[14px] leading-[20px] text-[#344054]">{{ collection.name }}</div>
         <SvgIcon name="chevron_right" />
       </div>
@@ -36,5 +36,10 @@
     return {
       background: gradient
     }
+  }
+  
+  const goCollectionDetails = (collection_id) =>{
+    // console.log('跳详情页');
+    // location.href = `/collections/${collection_id}`
   }
 </script>
