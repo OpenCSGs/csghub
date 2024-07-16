@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="reposData.repository_type === 'space'"
-    class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mb-4 mt-[16px]"
+    class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mt-[16px]"
   >
     <application-space-item
       :repo="reposData"
