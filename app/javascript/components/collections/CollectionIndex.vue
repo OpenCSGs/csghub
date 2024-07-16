@@ -47,9 +47,15 @@
       {{ $t('collections.hot') }}
     </div>
     <!-- collections -->
-    <CollectionCards v-if="collectionData.length > 0" :collections="collectionData"></CollectionCards>
+    <CollectionCards
+      v-if="collectionData.length > 0"
+      :collections="collectionData"
+    ></CollectionCards>
     <!-- empty state -->
-    <div v-else class="h-[480px] md:h-auto">
+    <div
+      v-else
+      class="h-[480px] md:h-auto"
+    >
       <div class="w-[480px] absolute left-1/2 -translate-x-1/2 md:hidden">
         <img
           class="w-full"
@@ -60,25 +66,25 @@
         <div class="border border-[#EAECF0] rounded-[10px] p-3 max-w-[max-content] mb-4">
           <SvgIcon name="search" />
         </div>
-        <div class="test-[16px] leading-[24px]">搜索无结果</div>
+        <div class="test-[16px] leading-[24px]">{{ $t('collections.noData') }}</div>
         <div
           class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
         >
-          没有找到与您的搜索条件匹配的内容您也可以创建对应的合集
+          {{ $t('collections.noDataDesc') }}
         </div>
         <div class="flex gap-3">
           <div
             class="flex px-4 py-[10px] border border-[#D0D5DD] justify-center items-center gap-1 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
             @click="resetInput"
           >
-            清空搜索
+            {{ $t('collections.cleanSearch') }}
           </div>
           <a
             href="/collections/new"
             class="flex px-4 py-[10px] text-[#FFFFFF] border border-[#3250BD] justify-center items-center gap-[6px] rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
           >
             <SvgIcon name="plus" />
-            新建合集
+            {{ $t('collections.newCollection.title') }}
           </a>
         </div>
       </div>

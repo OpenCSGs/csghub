@@ -1,5 +1,9 @@
 export const collections = {
   placeholder: 'Search collections',
+  noData: 'No results found',
+  noDataDesc:
+    'No content matches your search criteria. You can also create a corresponding collection.',
+  cleanSearch: 'Clear search',
   collection: 'Collection',
   title: 'Exploring Featured Popular Collections in the Community',
   hot: 'Featured Collections of the Week',
