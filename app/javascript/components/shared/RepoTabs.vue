@@ -6,7 +6,6 @@
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
       :userName="userName"
-      :userToken="userToken"
       :namespacePath="repoDetail.path"
       :admin="admin"
       :enableEndpoint="repoDetail.enable_inference"
@@ -31,7 +30,6 @@
           :ssh-clone-url="repoDetail.repository.ssh_clone_url"
           :sdk="sdk"
           :user-name="userName"
-          :user-token="userToken"
         />
         <ApplicationPage
           v-else-if="repoType === 'space' && appStatus === 'Running'"
@@ -75,18 +73,11 @@
         v-if="actionName === 'blob'"
       >
         <blob
-          :content="decodedContent"
-          :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="repoDetail.path"
-          :size="blob.size"
           :can-write="canWrite"
-          :path="blob.path"
-          :lfs="blob.lfs"
-          :lfs-pointer-size="blob.lfs_pointer_size"
-          :lfs-relative-path="blob.lfs_relative_path"
         />
       </template>
       <template
@@ -109,8 +100,6 @@
           :current-path="currentPath"
           :repo-name="repoDetail.name"
           :namespace-path="repoDetail.path"
-          :originalCodeContent="decodedContent"
-          :sha="blob.sha"
         />
       </template>
       <template
@@ -299,7 +288,6 @@
     appEndpoint: String,
     sdk: String,
     userName: String,
-    userToken: String,
     commitId: String,
     hardware: String,
     modelId: String,

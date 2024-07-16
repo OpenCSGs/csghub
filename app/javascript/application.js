@@ -9,6 +9,8 @@ import { createApp } from "vue/dist/vue.esm-bundler.js"
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import '../assets/stylesheets/element-plus/_variables.css'
+
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import { createWebHistory, createRouter } from 'vue-router'
@@ -90,6 +92,8 @@ import AdminCodeDetail from "./components/new_admin/codes/AdminCodeDetail.vue"
 import AdminModelList from "./components/new_admin/models/AdminModelList.vue"
 import AdminModelDetail from "./components/new_admin/models/AdminModelDetail.vue"
 import AdminEmailGroup from "./components/new_admin/AdminEmailGroup.vue"
+import AdminDatasetList from "./components/new_admin/dataset/AdminDatasetList.vue"
+import AdminDatasetDetail from "./components/new_admin/dataset/AdminDatasetDetail.vue"
 import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystemConfig.vue"
 
 const pinia = createPinia()
@@ -193,6 +197,8 @@ const routes = [
   { path: '/new_admin/models', component: AdminModelList },
   { path: '/new_admin/models/:namespace/:name', component: AdminModelDetail },
   { path: '/new_admin/email_group', component: AdminEmailGroup },
+  { path: '/new_admin/datasets', component: AdminDatasetList },
+  { path: '/new_admin/datasets/:namespace/:name', component: AdminDatasetDetail },
   { path: '/new_admin/system_config', component: AdminSystemConfig },
 ]
 

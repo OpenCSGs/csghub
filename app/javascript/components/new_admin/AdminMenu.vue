@@ -31,10 +31,25 @@
     </RouterLink>
 
     <RouterLink
+      to="/new_admin/datasets"
+      class="underline"
+    >
+      Datasets
+    </RouterLink>
+
+    <RouterLink
       to="/new_admin/codes"
       class="underline"
     >
       Codes
+    </RouterLink>
+
+    <RouterLink
+      v-if="onPremise === 'true'"
+      to="/new_admin/sync"
+      class="underline"
+    >
+      Sync Setting
     </RouterLink>
 
     <RouterLink
@@ -58,5 +73,5 @@
 <script setup>
   import { ref, inject } from 'vue';
 
-  const onPremise = inject('onPremise', ref(true))
+  const onPremise = inject('onPremise', ref('true'))
 </script>
