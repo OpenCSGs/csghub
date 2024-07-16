@@ -17,6 +17,11 @@ class EndpointsController < ApplicationController
     render :show
   end
 
+  def billing
+    @default_tab = 'billing'
+    render :show
+  end
+
   def settings
     @default_tab = 'settings'
     render :show
