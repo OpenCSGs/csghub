@@ -18,7 +18,7 @@
   const active = ref(false)
 
   onBeforeMount(() => {
-    if (window.location.pathname.match(/\/datasets/)) {
+    if (window.location.pathname.match(/\/collections/)) {
       active.value = true
     }
   })
