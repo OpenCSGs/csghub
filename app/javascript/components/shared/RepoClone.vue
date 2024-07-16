@@ -243,11 +243,8 @@
         return 'https://opencsg.com/docs/Code/download_codes'
       case 'space':
         return 'https://opencsg.com/docs/Space/download_space_repo'
-      default:
-        return ''
     }
   })
-
 
   function toFinetunePage() {
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
