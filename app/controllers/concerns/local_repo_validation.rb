@@ -11,6 +11,7 @@ module LocalRepoValidation
       :edit_file,
       :resolve,
       :community,
+      :billing,
       :settings,
       :commits,
       :commit,
@@ -38,9 +39,13 @@ module LocalRepoValidation
         end
       end
     else
+      # 如果 @owner 不存在则不创建本地 repo
+      return unless @owner
       server_repo = JSON.parse(get_server_repo(type))
+      server_repo_info = server_repo['data']
+      # 多源同步的情况，不创建本地 repo
+      return if server_repo_info['source'] != 'local'
       if server_repo['msg'] == 'OK'
-        server_repo_info = server_repo['data']
         repo_visibility = if server_repo_info['private'].to_s == 'true'
                             'private'
                           else
@@ -63,7 +68,7 @@ module LocalRepoValidation
   def get_owner_info
     @owner = User.find_by(name: params[:namespace]) || Organization.find_by(name: params[:namespace])
     @owner_url = helpers.code_repo_owner_url @owner
-    @avatar_url = @owner.avatar_url
+    @avatar_url = @owner&.avatar_url
   end
 
   def create_local_repo(type, visibility, creator_id)
@@ -127,6 +132,8 @@ module LocalRepoValidation
   def validate_settings
     type = controller_name
     local_repo = get_local_repo(type)
+
+    return if local_repo.nil?
 
     unless current_user.can_manage?(local_repo)
       return redirect_to errors_unauthorized_path

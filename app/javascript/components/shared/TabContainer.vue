@@ -24,7 +24,7 @@
 
       <!-- repo community -->
       <el-tab-pane
-        v-if="repoType !== 'endpoint'"
+        v-if="repoType !== 'endpoint' && !!localRepoId"
         :label="$t('all.community')"
         name="community"
         class="min-h-[300px]"
@@ -40,6 +40,16 @@
         class="min-h-[300px]"
       >
         <slot name="logs"></slot>
+      </el-tab-pane>
+
+       <!-- billing -->
+       <el-tab-pane
+        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
+        :label="$t('billing.billing')"
+        name="billing"
+        class="min-h-[300px]"
+      >
+        <slot name="billing"></slot>
       </el-tab-pane>
 
       <!-- repo settings -->
@@ -65,7 +75,9 @@
     defaultTab: String,
     settingsVisibility: Boolean,
     repoType: String,
-    sdk: String
+    sdk: String,
+    localRepoId: String,
+    repo: Object
   })
 
   const summaryLabel = computed(() => {
@@ -79,18 +91,11 @@
   })
 
   const showFiles = computed(() => {
-    if (props.repoType === 'endpoint') {
-      return false
-    } else if (props.repoType === 'space') {
-      if (props.sdk === 'nginx') {
-        return props.settingsVisibility
-      } else {
-        return true
-      }
-    } else {
-      return true
-    }
-  })
+    if (props.repoType === 'endpoint') return false
+    if (props.repoType === 'space' && props.sdk === 'nginx') return props.settingsVisibility
+
+    return true
+  });
 
   const activeName = ref(props.defaultTab)
 

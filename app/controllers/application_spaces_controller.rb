@@ -6,9 +6,9 @@ class ApplicationSpacesController < ApplicationController
   include BlobContentHelper
 
   before_action :check_user_info_integrity
-  before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file]
-  before_action :load_branch_and_path, only: [:files, :blob, :new_file, :upload_file, :resolve, :edit_file]
-  before_action :load_application_space_detail, only: [:show, :files, :blob, :new_file, :upload_file, :edit_file, :community, :settings, :commits, :commit]
+  before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file, :settings]
+  before_action :load_branch_and_path, except: [:index, :new]
+  before_action :load_application_space_detail, except: [:index, :new, :resolve]
 
   def index
     get_tag_list('application_spaces')
@@ -36,6 +36,11 @@ class ApplicationSpacesController < ApplicationController
 
   def settings
     @default_tab = 'settings'
+    render :show
+  end
+
+  def billing
+    @default_tab = 'billing'
     render :show
   end
 
@@ -121,6 +126,6 @@ class ApplicationSpacesController < ApplicationController
       @application_space, @branches = csghub_api.get_application_space_detail_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
     end
     @tags = Tag.build_detail_tags(JSON.parse(@application_space)['data']['tags'], 'space').to_json
-    @settings_visibility = current_user ? current_user.can_manage?(@local_application_space) : false
+    @settings_visibility = (current_user && @local_application_space) ? current_user.can_manage?(@local_application_space) : false
   end
 end
