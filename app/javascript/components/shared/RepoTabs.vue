@@ -65,6 +65,7 @@
           :widget-type="repoDetail.widget_type"
           :inference-status="repoDetail.status"
           :license-info="licenseInfo"
+          :license-tags="tags.license_tags"
         />
       </template>
 

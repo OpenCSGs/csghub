@@ -20,7 +20,7 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
                                           general_configs: {},
                                           s3_configs: {},
                                           oidc_configs: {},
-                                          starhub_configs: {},
-                                          license_info: [])
+                                          starhub_configs: {})
+    params.require(:system_config).permit!.to_h
   end
 end
