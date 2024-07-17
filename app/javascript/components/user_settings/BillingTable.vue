@@ -33,6 +33,7 @@
 
       <!-- creation time -->
       <el-table-column
+        v-if="type !== 'starship'"
         :label="$t('billing.createTime')"
         label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         align="center"
