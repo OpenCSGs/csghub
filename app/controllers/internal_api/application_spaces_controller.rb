@@ -55,11 +55,6 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     end
   end
 
-  def upload_file
-    sync_upload_file('application_space', upload_options)
-    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
-  end
-
   private
 
   def create_params

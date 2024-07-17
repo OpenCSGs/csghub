@@ -59,11 +59,6 @@ class InternalApi::CodesController < InternalApi::ApplicationController
     end
   end
 
-  def upload_file
-    sync_upload_file('code', upload_options)
-    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
-  end
-
   private
 
   def code_params

@@ -58,15 +58,17 @@
 </template>
 <script setup>
 import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
-import {ref} from 'vue'
+import { ref, inject } from 'vue'
 import {ElMessage} from "element-plus"
 import { useI18n } from 'vue-i18n'
-import csrfFetch from "../../packs/csrfFetch"
+import jwtFetch from '../../packs/jwtFetch'
 
 const props = defineProps({
   repoName: String,
   namespacePath: String
 })
+
+const csghubServer = inject('csghubServer')
 
 const { t } = useI18n();
 const uploadRef = ref();
@@ -93,7 +95,7 @@ const submitUpload = () => {
       return
     }
   }
-  submitForm()
+  syncUploadFile()
 }
 
 const handleFileChange = (file) => {
@@ -108,29 +110,46 @@ const cancel = () => {
   window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
 }
 
-async function submitForm() {
-    const uploadEndpoint = `/internal_api/${prefixPath}/${props.namespacePath}/files/main/upload_file`
-    const formData = new FormData()
+const buildCommitMessage = () => {
+  if (commitTitle.value.trim() === '' && commitDesc.value.trim() === '') {
+    return commitTitlePlaceholder.value
+  }
+  return `${commitTitle.value.trim()} \n ${commitDesc.value.trim()}`
+}
 
-    filesList.value.forEach((file, index) => {
-      formData.append(`file${index}`, file.raw);
-    });
+const appendFilesToFormData = (formData, files) => {
+  files.forEach((file) => {
+    formData.append('file', file.raw)
+    formData.append('file_path', file.name)
+  })
+}
 
-    formData.append('commit_title', commitTitle.value || '')
-    formData.append('commit_desc', commitDesc.value || '')
-    formData.append('file_num', filesList.value.length)
+const syncUploadFile = async () => {
+  const formData = new FormData()
+  formData.append('branch', 'main')
+  formData.append('message', buildCommitMessage())
 
-    const options = { method: 'POST', body: formData }
+  appendFilesToFormData(formData, filesList.value)
 
-    const response = await csrfFetch(uploadEndpoint, options)
+  try {
+    const response = await jwtFetch(
+      `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/upload_file`,
+      {
+        method: 'POST',
+        body: formData
+      }
+    )
+
+    const result = await response.json()
+
     if (!response.ok) {
-      const data = await response.json()
-      ElMessage({message: t('all.upLoadError'), type: "warning"})
-      throw new Error(data.message)
+      ElMessage({ message: result.msg, type: 'error' })
     } else {
-      ElMessage({message: t('all.upLoadSuccess'), type: "success"})
       filesList.value = []
       window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
     }
+  } catch (error) {
+    console.error(error)
   }
+}
 </script>
