@@ -114,7 +114,12 @@ class ModelsController < ApplicationController
     @model, @branches = csghub_api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
     @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
-    @license_info = SystemConfig.first[:license_info].to_json
+    license_tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model')["license_tags"]
+    license_info = SystemConfig.first[:license_info]
+    @license_tags_info = license_tags.each do |tag|
+      license_tag_info = license_info.find { |info| info["name"].downcase == tag["name"] }
+      tag.merge!(license_tag_info) if license_tag_info
+    end
     @settings_visibility = (current_user && @local_model) ? current_user.can_manage?(@local_model) : false
   end
 end

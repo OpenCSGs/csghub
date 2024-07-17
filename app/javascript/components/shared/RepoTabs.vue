@@ -64,8 +64,7 @@
           :currentBranch="currentBranch"
           :widget-type="repoDetail.widget_type"
           :inference-status="repoDetail.status"
-          :license-info="licenseInfo"
-          :license-tags="tags.license_tags"
+          :license-tags-info="licenseTagsInfo"
         />
       </template>
 
@@ -298,7 +297,7 @@
     endpointId: String,
     admin: Boolean,
     replicaList: Array,
-    licenseInfo: { type: Object,default: null }
+    licenseTagsInfo: { type: Object, default: null }
   })
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])

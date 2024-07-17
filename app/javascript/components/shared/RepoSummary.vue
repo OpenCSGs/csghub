@@ -29,17 +29,23 @@
           <SvgIcon name="license2" width="15" height="15" />
           <p class="text-[14px] leading-[20px] text-[#667085]">License: {{ licenseTagInfo.name }}</p>
         </div>
-        <div class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center">
+        <a :href="licenseTagInfo.url" target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center">
           <SvgIcon name="arrow2" />
-        </div>
+        </a>
       </div>
       <div 
         class="text-[16px] leading-[24px] text-[#344054]"
-        :class="moreLicenseDesc == false ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
+        :class="showMoreLicenseDescButton(licenseTagInfo.desc.length) ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
       >
       {{ licenseTagInfo.desc }}
       </div>
-      <div v-if="moreLicenseDesc === false" class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer" @click="moreLicenseDesc = true">展开更多</div>
+      <div 
+        v-if="showMoreLicenseDesc(licenseTagInfo.desc.length)" 
+        @click="moreLicenseDesc = true" 
+        class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer"
+      >
+        展开更多
+      </div>
     </div>
 
       <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
@@ -87,8 +93,7 @@
     widgetType: String,
     inferenceStatus: String,
     repoType: String,
-    licenseInfo: Object,
-    licenseTags: Object
+    licenseTagsInfo: Object
   })
 
   const loading = ref(true)
@@ -96,11 +101,18 @@
   const previewData = ref({})
   const relations = ref({})
   const moreLicenseDesc = ref(false)
-  const licenseTagsInfo = ref({})
 
-  const mappingLicenseTagsInfo = computed (() => {
-    licenseTagsInfo.value = JSON.parse(props.licenseInfo)
-  })
+  const showMoreLicenseDescButton = (length) => {
+    return moreLicenseDesc.value == false && length >= 70
+  }
+
+  const showMoreLicenseDesc = (length) => {
+    if (length < 70) {
+      return false
+    } else {
+      return showMoreLicenseDescButton(length)
+    }
+  }
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
@@ -158,8 +170,5 @@
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
-    licenseTagsInfo.value = JSON.parse(props.licenseInfo)
-    console.log(props.licenseInfo);
-    console.log(props.licenseTags);
   })
 </script>

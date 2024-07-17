@@ -18,6 +18,6 @@
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
     :admin="<%= current_user&.admin? %>"
-    :license-info="<%= @license_info.to_json %>"
+    :license-tags-info="<%= @license_tags_info&.to_json %>"
   ></model-detail>
 </div>
