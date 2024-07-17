@@ -13,9 +13,15 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   end
 
   def files
-    last_commit, files = csghub_api.get_dataset_detail_files_data_in_parallel(params[:namespace], params[:dataset_name], files_options)
-    last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
-    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
+    files = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], files_options)
+    last_commit = csghub_api.get_dataset_last_commit(params[:namespace], params[:dataset_name], { current_user: current_user&.name }) rescue nil
+
+    if last_commit
+      last_commit_user = User.find_by(name: JSON.parse(last_commit)['data']['committer_name'])
+      render json: { files: JSON.parse(files)['data'], last_commit: JSON.parse(last_commit)['data'], last_commit_user: last_commit_user }
+    else
+      render json: { files: JSON.parse(files)['data'] }
+    end
   end
 
   def readme
@@ -77,13 +83,5 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
 
   def dataset_params
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :license)
-  end
-
-  def create_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def update_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 end

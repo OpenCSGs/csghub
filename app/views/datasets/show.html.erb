@@ -12,7 +12,7 @@
   <dataset-detail
     :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_dataset.id %>"
+    local-repo-id="<%= @local_dataset&.id %>"
     :dataset="<%= @dataset %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"
@@ -24,7 +24,7 @@
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
-    :can-write="<%= !!current_user&.can_write?(@local_dataset) %>"
+    :can-write="<%= !!(@local_dataset && current_user&.can_write?(@local_dataset)) %>"
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
   >

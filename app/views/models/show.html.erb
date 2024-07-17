@@ -12,7 +12,7 @@
   <model-detail
     :tag-list="<%= @tags_list.to_json %>"
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_model.id %>"
+    local-repo-id="<%= @local_model&.id %>"
     :model="<%= @model %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"
@@ -24,7 +24,7 @@
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
-    :can-write="<%= !!current_user&.can_write?(@local_model) %>"
+    :can-write="<%= !!(@local_model && current_user&.can_write?(@local_model)) %>"
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
     :admin="<%= current_user&.admin? %>"

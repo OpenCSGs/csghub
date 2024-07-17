@@ -50,6 +50,11 @@ Rails.application.routes.draw do
 
       resources :email_sending, only: [:create]
       resources :email_groups, only: [:index, :create]
+      resources :sync_settings, only: [:index, :create] do
+        collection do
+          get :sync_repos
+        end
+      end
       resources :system_config, only: [:index, :update]
     end
 

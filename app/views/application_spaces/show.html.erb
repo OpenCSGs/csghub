@@ -11,7 +11,7 @@
 <div class="bg-white">
   <application-space-detail
     :tags="<%= @tags %>"
-    local-repo-id="<%= @local_application_space.id %>"
+    local-repo-id="<%= @local_application_space&.id %>"
     :application-space="<%= @application_space %>"
     :last-commit="<%= @last_commit || {} %>"
     :branches="<%= @branches %>"
@@ -23,7 +23,7 @@
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
     avatar="<%= @avatar_url %>"
-    :can-write="<%= !!current_user&.can_write?(@local_application_space) %>"
+    :can-write="<%= !!(@local_application_space && current_user&.can_write?(@local_application_space)) %>"
     user-name="<%= current_user&.name %>"
     :is-admin="<%= @is_admin %>"
     commit-id="<%= @commit_id %>"
