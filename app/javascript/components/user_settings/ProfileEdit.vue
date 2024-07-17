@@ -153,7 +153,7 @@ export default {
             type: "success",
           });
           this.$emit("updateUserInfo", {
-            avatar: file && URL.createObjectURL(file),
+            avatar: this.avatarUrl,
             name: this.inputName,
             nickname: this.inputNickname
           });
