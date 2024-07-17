@@ -18,7 +18,7 @@
         align="center"
       >
         <template #default="scope">
-          <div class="flex gap-[12px] items-center pl-3">
+          <div class="items-center pl-3">
             <div class="flex flex-col">
               <div
                 class="text-[14px] font-[300] leading-[20px] text-[#475467]"
