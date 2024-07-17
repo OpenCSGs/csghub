@@ -128,8 +128,12 @@ This will start the Rails development server and compile Tailwind CSS. It will l
 The system will create a default super user named `admin001` with the password set as `admin001`. You can access the system configuration and management by visiting http://localhost:3000/admin.
 
 ### Multi-source Synchronization
-The multi-source synchronization feature is developed to facilitate users in synchronizing models and datasets from the OpenCSG community. By configuring the following settings, you can get real-time updates on the latest models and datasets, and view their README summaries and file lists.
+Multi-source synchronization provides users with private deployments the ability to synchronize models and datasets from the OpenCSG community. The synchronized models and datasets cannot be modified, but otherwise, they function the same as locally created models and datasets.
 
-1. Set `STARHUB_SERVER_PUBLIC_DOMAIN` to `https://hub.opencsg.com`.
-2. Set `STARHUB_SERVER_MIRROR_URL` to `https://sync.opencsg.com`.
-3. Start the all-in-one script and wait for a while. You will be able to see the models and datasets from the OpenCSG community. We have embedded a read-only token in the project, allowing you to browse the README and file lists of these datasets, but you cannot view the file contents. If you want to synchronize the models or datasets to your local repository, please contact us to purchase a sync token.
+Before using the multi-source synchronization feature correctly, you need to set two environment variables.
+
+1. Configure `STARHUB_SERVER_PUBLIC_DOMAIN` to `https://hub.opencsg.com`.
+2. Configure `STARHUB_SERVER_MIRROR_URL` to `https://sync.opencsg.com`.
+3. Start the all-in-one script and wait for a moment. You will be able to see the models and datasets from the OpenCSG community.
+
+The project comes with a built-in read-only token by default, allowing you to browse the `README` content and file lists of models and datasets in the `OpenCSG` community, but it does not allow you to download the models and datasets locally. If you need a token with synchronization download capabilities, please apply through the official website at [opencsg.com](https://opencsg.com).

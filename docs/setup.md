@@ -135,4 +135,4 @@ bin/dev
 2. 配置 `STARHUB_SERVER_MIRROR_URL` 为 `https://sync.opencsg.com`。
   
 启动 all in one 脚本，稍等片刻，就可以看到 OpenCSG 社区中的模型和数据集了。
-项目默认内置了一个只读权限的token，允许浏览`OpenCSG`社区的模型和数据集的`README`内容和文件列表，但无法将模型和数据集下载到本地。如需要具备同步下载功能的token，请通过 opencsg.com 官网申请。
+项目默认内置了一个只读权限的token，允许浏览`OpenCSG`社区的模型和数据集的`README`内容和文件列表，但无法将模型和数据集下载到本地。如需要具备同步下载功能的token，请通过 [opencsg.com](https://opencsg.com) 官网申请。
