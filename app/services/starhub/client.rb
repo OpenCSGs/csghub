@@ -28,7 +28,6 @@ module Starhub
     end
 
     def upload(path, options = {})
-      p options
       starhub_api_connection_upload.post(request_path(path)) do |req|
         req.body = options
       end
