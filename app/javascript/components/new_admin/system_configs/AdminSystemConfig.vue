@@ -134,7 +134,7 @@
       <el-button
         type="info"
         size="small"
-        @click="updatelicenseInfo"
+        @click="updateLicenseInfo"
         >Update</el-button
       >
     </el-form-item>
@@ -192,7 +192,7 @@
   }
 
   const licenseInfoRef = ref(null)
-  const updatelicenseInfo = () => {
+  const updateLicenseInfo = () => {
     systemConfigs.value.license_info = JSON.parse(
       licenseInfoRef.value.value
     )
