@@ -108,10 +108,6 @@ export default {
       this.$refs.fileInput.value = null;
       this.avatarUrl = "";
     },
-    previewImage() {
-      this.avatarUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
-    },
-
     async uploadAvatar() {
       const uploadEndpoint = `/internal_api/upload`;
       const formData = new FormData()
@@ -128,14 +124,9 @@ export default {
         this.avatarUrl = result.url
       }
     },
-
     async updateProfile() {
       const profileUpdateEndpoint = `/internal_api/users/${this.displayName}`;
       const formData = new FormData();
-      // const file = this.$refs.fileInput.files[0];
-      // if (file !== undefined) {
-      //   formData.append("avatar", file);
-      // }
       formData.append("avatar", this.avatarUrl);
       formData.append("name", this.inputName);
       formData.append("nickname", this.inputNickname);
