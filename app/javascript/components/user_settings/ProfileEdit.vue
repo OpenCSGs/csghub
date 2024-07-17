@@ -17,7 +17,7 @@
         <input ref="fileInput"
               type="file"
               class="hidden"
-              @change="previewImage"/>
+              @change="uploadAvatar"/>
         <div @click="uploadImage" class="text-[14px] border border-[#DCDFE6] px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
           {{ $t('profile.edit.uploadAvatar') }}
         </div>
@@ -111,13 +111,32 @@ export default {
     previewImage() {
       this.avatarUrl = URL.createObjectURL(this.$refs.fileInput.files[0]);
     },
+
+    async uploadAvatar() {
+      const uploadEndpoint = `/internal_api/upload`;
+      const formData = new FormData()
+      formData.append("file", this.$refs.fileInput.files[0])
+      const options = {
+        method: 'POST',
+        body: formData
+      }
+      const response = await csrfFetch(uploadEndpoint, options)
+      const result = await response.json()
+      if (!response.ok) {
+        ElMessage({ message: result.message, type: 'warning' })
+      } else {
+        this.avatarUrl = result.url
+      }
+    },
+
     async updateProfile() {
       const profileUpdateEndpoint = `/internal_api/users/${this.displayName}`;
       const formData = new FormData();
-      const file = this.$refs.fileInput.files[0];
-      if (file !== undefined) {
-        formData.append("avatar", file);
-      }
+      // const file = this.$refs.fileInput.files[0];
+      // if (file !== undefined) {
+      //   formData.append("avatar", file);
+      // }
+      formData.append("avatar", this.avatarUrl);
       formData.append("name", this.inputName);
       formData.append("nickname", this.inputNickname);
       formData.append("email", this.inputEmail);
