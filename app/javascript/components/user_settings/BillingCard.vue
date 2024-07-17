@@ -327,7 +327,7 @@
   // scene = 11：space
   // scene = 12: model finetune
   // scene = 20：starship-ide
-  const fetchStarship = async () => {
+  const fetchStarship = async (childCurrent) => {
     const params = new URLSearchParams()
     params.append('per', perPage.value)
     params.append('page', childCurrent ? childCurrent : starshipCurrentPage.value)
