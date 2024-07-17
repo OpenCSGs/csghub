@@ -127,3 +127,9 @@ This will start the Rails development server and compile Tailwind CSS. It will l
 
 The system will create a default super user named `admin001` with the password set as `admin001`. You can access the system configuration and management by visiting http://localhost:3000/admin.
 
+### Multi-source Synchronization
+The multi-source synchronization feature is developed to facilitate users in synchronizing models and datasets from the OpenCSG community. By configuring the following settings, you can get real-time updates on the latest models and datasets, and view their README summaries and file lists.
+
+1. Set `STARHUB_SERVER_PUBLIC_DOMAIN` to `https://hub.opencsg.com`.
+2. Set `STARHUB_SERVER_MIRROR_URL` to `https://sync.opencsg.com`.
+3. Start the all-in-one script and wait for a while. You will be able to see the models and datasets from the OpenCSG community. We have embedded a read-only token in the project, allowing you to browse the README and file lists of these datasets, but you cannot view the file contents. If you want to synchronize the models or datasets to your local repository, please contact us to purchase a sync token.
