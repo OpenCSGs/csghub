@@ -16,6 +16,7 @@
                  :homepage="homepage"
                  :bio="bio"
                  :displayName="displayName"
+                 @updateUserInfo="updateUserInfo"
     ></ProfileEdit>
   </div>
 </template>
@@ -43,7 +44,15 @@ export default {
       profileName: this.name,
       profileDisplayName: this.displayName,
       profileAvatar: this.avatar,
-    };
+    }
+  },
+  methods: {
+    updateUserInfo(data) {
+      const { nickname, name, avatar } = data;
+      this.profileName = name || this.name;
+      this.profileDisplayName = nickname || this.displayName;
+      this.profileAvatar = avatar || this.avatar;
+    },
   }
-};
+}
 </script>
