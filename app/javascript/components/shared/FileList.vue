@@ -220,11 +220,11 @@
           message: t('all.fetchError'),
           type: 'warning'
         })
+      } else {
+        const blob = await response.blob()
+        const downloadUrl = window.URL.createObjectURL(blob)
+        createAndClickAnchor(downloadUrl, file.path)
       }
-
-      const blob = await response.blob()
-      const downloadUrl = window.URL.createObjectURL(blob)
-      createAndClickAnchor(downloadUrl, file.path)
     } catch (error) {
       console.error(error)
     }
