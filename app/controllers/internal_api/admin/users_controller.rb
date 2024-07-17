@@ -22,7 +22,9 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
   end
 
   def recharge
-    render json: csghub_api.user_recharge(@user.login_identity, current_user.id, current_user.name, params[:value].to_i)
+    # 用户充值单位是‘元’，这里需要把元转换为分
+    account = params[:value].to_i * 100
+    render json: csghub_api.user_recharge(@user.login_identity, current_user.id, current_user.name, account)
   end
 
   private

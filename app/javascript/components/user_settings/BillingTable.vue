@@ -65,7 +65,7 @@
       >
         <template #default="scope">
           <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
-            {{ Math.abs(scope.row.value) / 100 }}
+            {{ (Math.abs(scope.row.value)/100.0).toFixed(2) }}
           </div>
         </template>
       </el-table-column>

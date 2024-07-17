@@ -233,7 +233,7 @@
       })
     } else {
       res.json().then(({ data }) => {
-        balance.value = data.balance
+        balance.value = (data.balance/100.0).toFixed(2)
       })
     }
   }
@@ -267,7 +267,7 @@
       const { data } = await res.json()
       inferenceBillings.value = data.data
       inferenceTotalBillings.value = data.total
-      inferenceTotalPrice.value = Math.abs(data.total_value) / 100
+      inferenceTotalPrice.value = (Math.abs(data.total_value)/100.0).toFixed(2)
     }
   }
 
@@ -293,7 +293,7 @@
       const { data } = await res.json()
       spaceBillings.value = data.data
       spaceTotalBillings.value = data.total
-      spaceTotalPrice.value = Math.abs(data.total_value) / 100
+      spaceTotalPrice.value = (Math.abs(data.total_value)/100.0).toFixed(2)
     }
   }
 
@@ -319,7 +319,7 @@
       const { data } = await res.json()
       finetuneBillings.value = data.data
       finetuneTotalBillings.value = data.total
-      finetuneTotalPrice.value = Math.abs(data.total_value) / 100
+      finetuneTotalPrice.value = (Math.abs(data.total_value)/100.0).toFixed(2)
     }
   }
 
@@ -345,7 +345,7 @@
       const { data } = await res.json()
       starshipBillings.value = data.data
       starshipTotalBillings.value = data.total
-      starshipTotalPrice.value = Math.abs(data.total_value) / 100
+      starshipTotalPrice.value = (Math.abs(data.total_value)/100.0).toFixed(2)
     }
   }
 

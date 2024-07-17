@@ -31,7 +31,7 @@
           <label>Credit</label>
           <div class="flex items-center">
             <p class="mr-3">{{ credit }} 元</p>
-            <div 
+            <div
               @click="refreshDialogVisible = true"
               class="border px-[16px] rounded-lg border-amber-50 bg-orange-500 cursor-pointer"
             >
@@ -41,31 +41,31 @@
         </li>
       </ul>
     </el-card>
-    <el-dialog 
-      v-model="refreshDialogVisible" 
-      :title="$t('new_admin.user.recharge')" 
-      width="20%" 
+    <el-dialog
+      v-model="refreshDialogVisible"
+      :title="$t('new_admin.user.recharge')"
+      width="20%"
       class="dialogWidth"
-      style="border-radius: 0.5rem;" 
+      style="border-radius: 0.5rem;"
       left
     >
       <div class="mb-[16px]">
         <p class="text-[#303133] text-[14px] mb-[8px]">
-          {{ $t('new_admin.user.inputTitle') }} 
+          {{ $t('new_admin.user.inputTitle') }}
           <span class="text-red-400">*</span>
         </p>
-        <el-input 
-          v-model="rechargeAmount" 
-          type="number" 
-          :placeholder="$t('new_admin.user.inputPlaceholder')" 
-          maxlength="20" 
+        <el-input
+          v-model="rechargeAmount"
+          type="number"
+          :placeholder="$t('new_admin.user.inputPlaceholder')"
+          maxlength="20"
         />
       </div>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="clickCancel">{{ $t('new_admin.user.cancel') }}</el-button>
-          <el-button 
-            type="primary" 
+          <el-button
+            type="primary"
             @click="fetchRecharge"
           >
             {{ $t('new_admin.user.confirm') }}
@@ -104,7 +104,7 @@
     const response = await csrfFetch(`/internal_api/admin/users/balance/${route.params.id}`, { method: 'GET' })
     if (response.ok) {
       const res = await response.json()
-      credit.value = res.data.balance
+      credit.value = (res.data.balance/100.).toFixed(2)
     } else {
       ElMessage.error('Failed to fetch credit')
     }
@@ -114,7 +114,7 @@
     const response = await csrfFetch(`/internal_api/admin/users/recharge/${route.params.id}/${rechargeAmount.value}`, { method: 'PUT' })
     if (response.ok) {
       const res = await response.json()
-      credit.value = res.data.balance
+      credit.value = (res.data.balance/100.).toFixed(2)
       refreshDialogVisible.value = false
       rechargeAmount.value = 0
       ElMessage.success('Be recharged successfully')
