@@ -128,7 +128,7 @@ This will start the Rails development server and compile Tailwind CSS. It will l
 The system will create a default super user named `admin001` with the password set as `admin001`. You can access the system configuration and management by visiting http://localhost:3000/admin.
 
 ### Multi-source Synchronization
-Multi-source synchronization provides users with On-Premise the ability to synchronize models and datasets from the OpenCSG community. The synchronized models and datasets cannot be modified, but otherwise, they function the same as locally created models and datasets.
+Multi-source synchronization provides On-Premise users the ability to synchronize models and datasets from the OpenCSG community. The synchronized models and datasets cannot be modified, but otherwise, they function the same as locally created models and datasets.
 
 Before using the multi-source synchronization feature correctly, you need to set two environment variables.
 
@@ -137,4 +137,4 @@ Before using the multi-source synchronization feature correctly, you need to set
 
 Start the all-in-one script and wait for a moment. You will be able to see the models and datasets from the OpenCSG community.
 
-The project comes with a built-in read-only token by default, allowing you to browse the `README` content and file lists of models and datasets in the `OpenCSG` community, but it does not allow you to download the models and datasets locally. If you need a token with synchronization download capabilities, please apply through the official website at [opencsg.com](https://opencsg.com).
+The project comes with a built-in read-only token by default, allowing you to browse the `README` content and file lists of models and datasets in the `OpenCSG` community, but it does not allow you to sync (or download) the models and datasets. If you need a token with synchronization capabilities, please apply through the official website at [opencsg.com](https://opencsg.com).
