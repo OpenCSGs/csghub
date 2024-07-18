@@ -19,10 +19,8 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :blob="blob.data"
       :local-repo-id="localRepoId"
       :repo-detail="model.data"
-      :last-commit="lastCommit.data"
       :branches="branches.data"
       :current-branch="currentBranch"
       :current-path="currentPath"
@@ -46,25 +44,23 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
 
   const props = defineProps({
-    localRepoId: String,
-    defaultTab: String,
-    model: Object,
-    tagList: Object,
-    localModel: Object,
-    lastCommit: Object,
-    branches: Object,
-    tags: Object,
-    currentBranch: String,
-    currentPath: String,
-    blob: Object,
-    actionName: String,
-    settingsVisibility: Boolean,
-    avatar: String,
-    ownerUrl: String,
-    canWrite: Boolean,
-    userName: String,
-    commitId: String,
-    admin: Boolean
+    localRepoId: String, // view
+    defaultTab: String, // view
+    model: Object, // jwt
+    tagList: Object, // view
+    localModel: Object, // view
+    branches: Object, // jwt
+    tags: Object, // view
+    currentBranch: String, // view
+    currentPath: String, // view
+    actionName: String, // view
+    settingsVisibility: Boolean, // view
+    avatar: String, // view，后续从 cookies 读
+    ownerUrl: String, // view, 后续从 jwt 获取
+    canWrite: Boolean, // view, 后续 jwt
+    userName: String, // view, 后续从 cookies 读
+    commitId: String, // view
+    admin: Boolean // view，后续从 cookies 读
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)

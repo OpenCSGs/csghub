@@ -271,12 +271,10 @@
   const props = defineProps({
     localRepoId: String,
     repoDetail: Object,
-    lastCommit: Object,
     branches: Object,
     currentBranch: String,
     currentPath: String,
     defaultTab: String,
-    blob: Object,
     tags: Object,
     tagList: String,
     actionName: String,
@@ -309,8 +307,6 @@
       return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`
     }
   })
-
-  const decodedContent = props.blob?.content || ''
 
   const showSpaceLogs = () => {
     emit('toggleSpaceLogsDrawer')
