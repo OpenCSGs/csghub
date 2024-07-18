@@ -111,99 +111,7 @@
   const perPage = ref(10)
   const currentPage = ref(1)
   const totalCollections = ref(0)
-  const collectionData = ref([
-    {
-      description: 'codeLlama finetune by OpenCSG',
-      id: 0,
-      name: 'opencsg-codeLlama',
-      nickname: 'string',
-      private: true,
-      repositories: [
-        {
-          created_at: 'created_at',
-          description: 'description',
-          download_count: 0,
-          id: 0,
-          likes: 0,
-          name: 'name',
-          nickname: 'nickname',
-          path: 'xxxxx/asdvg',
-          private: true,
-          repository_type: 'space',
-          tags: [
-            {
-              commit: {
-                id: 'string'
-              },
-              message: 'string',
-              name: 'string'
-            }
-          ],
-          updated_at: 'updated_at',
-          user_id: 0
-        },
-        {
-          created_at: 'created_at',
-          description: 'description',
-          download_count: 0,
-          id: 1,
-          likes: 0,
-          name: 'name',
-          nickname: 'nickname',
-          path: 'xxxxx/asdvg',
-          private: true,
-          repository_type: 'model',
-          tags: [
-            {
-              commit: {
-                id: 'string'
-              },
-              message: 'string',
-              name: 'string'
-            }
-          ],
-          updated_at: 'updated_at',
-          user_id: 0
-        }
-      ],
-      theme: '#ECFDF3',
-      username: 'string'
-    },
-    {
-      description: 'codeLlama finetune by OpenCSG2',
-      id: 1,
-      name: 'opencsg-codeLlama2',
-      nickname: 'string',
-      private: true,
-      repositories: [
-        {
-          created_at: 'created_at',
-          description: 'description',
-          download_count: 0,
-          id: 0,
-          likes: 0,
-          name: 'name',
-          nickname: 'nickname',
-          path: 'xxxxx/asdvg',
-          private: true,
-          repository_type: 'model',
-          tags: [
-            {
-              commit: {
-                id: 'string'
-              },
-              message: 'string',
-              name: 'string'
-            }
-          ],
-          updated_at: 'updated_at',
-          user_id: 0
-        }
-      ],
-      theme: '#EAECF0',
-      username: 'string'
-    }
-  ])
+  const collectionData = ref([])
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
   const sortOptions = [
@@ -247,13 +155,11 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      billings.value = data.data
-      totalBillings.value = data.total
-      totalPrice.value = data.total_value
+      collectionData.value = data.data
+      totalCollections.value = data.total
     }
   }
   onMounted(() => {
-    // 等api ready 后解除注释
-    // fetchCollections()
+    fetchCollections()
   })
 </script>

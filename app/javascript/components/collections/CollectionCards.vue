@@ -6,7 +6,10 @@
       class="p-4 rounded-[12px] border border-[#EAECF0]"
       :style="generateGradientStyle(collection.theme)"
     >
-      <div class="flex justify-between cursor-pointer" @click="goCollectionDetails(collection.id)">
+      <div
+        class="flex justify-between cursor-pointer"
+        @click="goCollectionDetails(collection.id)"
+      >
         <div class="text-[14px] leading-[20px] text-[#344054]">{{ collection.name }}</div>
         <SvgIcon name="chevron_right" />
       </div>
@@ -18,6 +21,12 @@
           v-for="repo in collection.repositories"
           :reposData="repo"
         ></CollectionCard>
+        <div
+          v-if="!collection.repositories"
+          class="p-4 mlg:w-full border border-gray-200 rounded-xl flex justify-center items-center"
+        >
+          {{ $t('all.noData') }}
+        </div>
       </div>
     </div>
   </div>
@@ -37,8 +46,8 @@
       background: gradient
     }
   }
-  
-  const goCollectionDetails = (collection_id) =>{
+
+  const goCollectionDetails = (collection_id) => {
     // console.log('跳详情页');
     // location.href = `/collections/${collection_id}`
   }
