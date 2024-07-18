@@ -20,13 +20,13 @@
                 v-for="item in namespaces"
                 :key="item[0]"
                 :label="item[1]"
-                :value="item[0]"
+                :value="item[1]"
               />
             </el-select>
           </el-form-item>
           <el-form-item class="w-full" :label="t('models.newModel.modelEnName')" prop="name">
             <el-input v-model="dataForm.name" :placeholder="t('all.pleaseInput', { value: t('models.newModel.modelEnName') })" input-style="width: 100%" >
-              <template #suffix>            
+              <template #suffix>
                 <el-tooltip class="item" effect="dark" raw-content :content="`
                 <p>${t('models.modelNameTips')}</p>
                 <ul style='margin-left: 18px; list-style: disc; margin-top: 12px;'>
@@ -59,7 +59,7 @@
           </el-form-item>
         </div>
         <el-form-item class="w-full" :label="t('models.newModel.modelDesc')" prop="desc">
-          <el-input 
+          <el-input
             v-model="dataForm.desc"
             :rows="6"
             type="textarea"
@@ -99,10 +99,11 @@
 <script setup>
 import { ref, inject } from 'vue'
 import csrfFetch from "../../packs/csrfFetch.js"
-import InputTip from '../shared/inputs/InputTip.vue'
+import jwtFetch from '../../packs/jwtFetch.js'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 
+const csghubServer = inject('csghubServer')
 const { t } = useI18n();
 const dataFormRef = ref(null)
 const nameRule = inject('nameRule')
@@ -122,7 +123,7 @@ const props = defineProps({
 
 // State
 const dataForm = ref({
-  owner: props.namespaces[0][0],
+  owner: props.namespaces[0][1],
   name: '',
   nickname: '',
   license: props.licenses[0][0],
@@ -172,20 +173,21 @@ const handleSubmit = () => {
 }
 
 const createModel = async () => {
-  const params = Object.assign({}, dataForm.value)
-  if (params.owner) {
-    const [owner_id, owner_type] = params.owner.split('_')
-    params.owner_id = owner_id
-    params.owner_type = owner_type
-    delete params.owner
+  const params = {
+    name: dataForm.value.name,
+    nickname: dataForm.value.nickname,
+    namespace: dataForm.value.owner,
+    license: dataForm.value.license,
+    description: dataForm.value.desc,
+    private: dataForm.value.visibility === 'private'
   }
   const options = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params)
   }
-  const uploadEndpoint = '/internal_api/models'
-  const response = await csrfFetch(uploadEndpoint, options)
+  const uploadEndpoint = `${csghubServer}/api/v1/models`
+  const response = await jwtFetch(uploadEndpoint, options)
   if (response.ok) {
     ElMessage({
       message: t('models.newModel.createSuccess'),
@@ -193,7 +195,7 @@ const createModel = async () => {
     })
     response.json()
       .then(res => {
-        window.location.href = `/models/${res.path}`
+        window.location.href = `/models/${res.data.path}`
       })
   } else {
     response.json()
