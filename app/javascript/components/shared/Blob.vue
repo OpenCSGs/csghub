@@ -318,10 +318,12 @@
         detectFileType()
         lfsContentRegex()
       } else {
-        ElMessage({ message: result.msg, type: 'error' })
+        console.error(result.msg)
+        location.href = '/errors/not-found'
       }
     } catch (err) {
-      ElMessage({ message: err.message, type: 'error' })
+      console.error(err)
+      location.href = '/errors/not-found'
     }
   }
 
