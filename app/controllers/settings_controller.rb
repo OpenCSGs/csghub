@@ -7,6 +7,12 @@ class SettingsController < ApplicationController
   def access_token
   end
 
+  def starship_access_token
+  end
+
+  def sync_access_token
+  end
+
   def ssh_keys
     res = csghub_api.get_ssh_key(current_user.name, current_user.name)
     raise StarhubError, res.body unless res.success?

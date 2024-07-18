@@ -20,19 +20,21 @@ class User < ApplicationRecord
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
   has_many :comments, dependent: :destroy
-  has_many :models, as: :owner
-  has_many :created_models, class_name: 'Model', foreign_key: :creator_id
   has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
 
-  after_save :sync_to_starhub_server
-
+  has_many :models, as: :owner
   has_many :datasets, as: :owner
-  has_many :application_spaces, as: :owner
-  has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
-
   has_many :codes, as: :owner
+  has_many :application_spaces, as: :owner
+  has_many :endpoints, as: :owner
+
+  has_many :created_models, class_name: 'Model', foreign_key: :creator_id
+  has_many :created_datasets, class_name: 'Dataset', foreign_key: :creator_id
   has_many :created_codes, class_name: 'Code', foreign_key: :creator_id
   has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
+  has_many :created_endpoints, class_name: 'Endpoint', foreign_key: :creator_id
+
+  after_save :sync_to_starhub_server
 
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
@@ -117,6 +119,14 @@ class User < ApplicationRecord
     end
   end
 
+  def can_read? repository
+    if repository.owner.class == Organization
+      org_role(repository.owner) == 'admin' || org_role(repository.owner) == 'write' || org_role(repository.owner) == 'read'
+    else
+      self == repository.owner
+    end
+  end
+
   def set_org_role org, role
     membership = org_membership_by_org(org)
     if membership
@@ -141,10 +151,10 @@ class User < ApplicationRecord
     Starhub.api(session_ip).image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
     if starhub_synced?
-      res = Starhub.api(session_ip).update_user(name, nickname, email)
+      res = Starhub.api(session_ip).update_user(name, nickname, phone, email, login_identity)
       raise StarhubError, res.body unless res.success?
     else
-      res = Starhub.api(session_ip).create_user(name, nickname, email)
+      res = Starhub.api(session_ip).create_user(name, nickname, phone, email, login_identity)
       raise StarhubError, res.body unless res.success?
       starhub_synced!
     end
@@ -165,7 +175,9 @@ class User < ApplicationRecord
       email: email,
       phone: phone,
       avatar: avatar_url,
+      role: roles,
       last_login_at: last_login_at,
+      created_at: created_at
     }
   end
 

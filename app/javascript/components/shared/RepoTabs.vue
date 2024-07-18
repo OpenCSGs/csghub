@@ -1,19 +1,28 @@
 <template>
   <div class="relative">
-    <repo-clone
+    <RepoClone
+      v-if="repoType !== 'endpoint'"
       :repoType="repoType"
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
       :userName="userName"
-      :userToken="userToken"
+      :namespacePath="repoDetail.path"
+      :admin="admin"
+      :repo="repoDetail"
+      :enableEndpoint="repoDetail.enable_inference"
+      :enableFinetune="repoDetail.enable_finetune"
     />
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
       :repoType="repoType"
+      :localRepoId="localRepoId"
       :sdk="sdk"
+      :repo="repoDetail"
+
       @tabChange="tabChange"
     >
+      <!-- summary -->
       <template #summary>
         <InitializeGuide
           v-if="repoType === 'space' && appStatus === 'NoAppFile'"
@@ -21,7 +30,6 @@
           :ssh-clone-url="repoDetail.repository.ssh_clone_url"
           :sdk="sdk"
           :user-name="userName"
-          :user-token="userToken"
         />
         <ApplicationPage
           v-else-if="repoType === 'space' && appStatus === 'Running'"
@@ -39,6 +47,15 @@
           :canWrite="canWrite"
           @showSpaceLogs="showSpaceLogs"
         />
+        <EndpointPage
+          v-else-if="repoType === 'endpoint'"
+          :appEndpoint="appEndpoint"
+          :modelId="modelId"
+          :private="private"
+          :endpointReplica="endpointReplica"
+          :hardware="hardware"
+          :replicaList="replicaList"
+        />
         <repo-summary
           v-else
           :repo-type="repoType"
@@ -49,23 +66,18 @@
           :inference-status="repoDetail.status"
         />
       </template>
+
+      <!-- files -->
       <template
         #files
         v-if="actionName === 'blob'"
       >
         <blob
-          :content="decodedContent"
-          :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="repoDetail.path"
-          :size="blob.size"
           :can-write="canWrite"
-          :path="blob.path"
-          :lfs="blob.lfs"
-          :lfs-pointer-size="blob.lfs_pointer_size"
-          :lfs-relative-path="blob.lfs_relative_path"
         />
       </template>
       <template
@@ -88,8 +100,6 @@
           :current-path="currentPath"
           :repo-name="repoDetail.name"
           :namespace-path="repoDetail.path"
-          :originalCodeContent="decodedContent"
-          :sha="blob.sha"
         />
       </template>
       <template
@@ -136,12 +146,39 @@
           :repo-type="repoType"
         />
       </template>
+
+      <!-- logs -->
+      <template
+        #logs
+        v-if="repoType === 'endpoint' && actionName === 'logs'"
+      >
+        <EndpointLogs
+          :instances="repoDetail.instances"
+          :modelId="repoDetail.model_id"
+          :deployId="repoDetail.deploy_id"
+        />
+      </template>
+
+      <!-- community -->
       <template #community>
         <community-page
           :type="repoTypeClass"
           :localModelId="localRepoId"
         ></community-page>
       </template>
+
+      <!-- billing -->
+      <template
+        v-if="settingsVisibility"
+        #billing
+      >
+        <BillingDetail
+          :type="repoType"
+          :instanceName="repoDetail.svc_name"
+        ></BillingDetail>
+      </template>
+
+      <!-- settings -->
       <template
         v-if="settingsVisibility"
         #settings
@@ -171,7 +208,7 @@
           :application-space-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
           :appStatus="appStatus"
-          :cloudResource="repoDetail.hardware"
+          :cloudResource="repoDetail.sku || repoDetail.hardware"
           :coverImage="repoDetail.cover_image_url"
           @showSpaceLogs="showSpaceLogs"
         />
@@ -181,6 +218,18 @@
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
+        />
+        <EndpointSettings
+          v-if="repoType === 'endpoint'"
+          :endpointName="endpointName"
+          :endpointId="endpointId"
+          :appStatus="appStatus"
+          :modelId="modelId"
+          :userName="userName"
+          :cloudResource="repoDetail.sku || repoDetail.hardware"
+          :framework="repoDetail.runtime_framework"
+          :maxReplica="repoDetail.max_replica"
+          :minReplica="repoDetail.min_replica"
         />
       </template>
     </tab-container>
@@ -205,6 +254,7 @@
   import DatasetSettings from '../datasets/DatasetSettings.vue'
   import ApplicationSpaceSettings from '../application_spaces/ApplicationSpaceSettings.vue'
   import CodeSettings from '../codes/CodeSettings.vue'
+  import EndpointSettings from '../endpoints/EndpointSettings.vue'
   import UploadFile from '../shared/UploadFile.vue'
   import NewFile from '../shared/NewFile.vue'
   import Blob from '../shared/Blob.vue'
@@ -213,6 +263,9 @@
   import ApplicationPage from '../application_spaces/ApplicationPage.vue'
   import StoppedPage from '../application_spaces/StoppedPage.vue'
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
+  import EndpointPage from '../endpoints/EndpointPage.vue'
+  import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import BillingDetail from './BillingDetail.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({
@@ -234,8 +287,15 @@
     appEndpoint: String,
     sdk: String,
     userName: String,
-    userToken: String,
-    commitId: String
+    commitId: String,
+    hardware: String,
+    modelId: String,
+    private: Boolean,
+    endpointReplica: Number,
+    endpointName: String,
+    endpointId: String,
+    admin: Boolean,
+    replicaList: Array
   })
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
@@ -256,10 +316,28 @@
     emit('toggleSpaceLogsDrawer')
   }
 
+  const repoNamespace = computed(() => {
+    if (!!props.repoDetail.path) {
+      return props.repoDetail.path.split('/')[0]
+    } else if (!!props.repoDetail.model_id) {
+      return props.userName
+    } else {
+      return ''
+    }
+  })
+
+  const summaryUrl = () => {
+    if (props.repoType === 'endpoint') {
+      return `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}`
+    } else {
+      return `/${props.repoType}s/${props.repoDetail.path}`
+    }
+  }
+
   const tabChange = (tab) => {
     switch (tab) {
       case 'summary':
-        location.href = `/${props.repoType}s/${props.repoDetail.path}`
+        location.href = summaryUrl()
         break
       case 'files':
         location.href = `/${props.repoType}s/${props.repoDetail.path}/files/main`
@@ -268,7 +346,21 @@
         location.href = `/${props.repoType}s/${props.repoDetail.path}/community`
         break
       case 'settings':
-        location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+        if (props.repoType === 'endpoint') {
+          location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/settings`
+        } else {
+          location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+        }
+        break
+      case 'logs':
+        location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
+        break
+      case 'billing':
+        if (props.repoType === 'endpoint') {
+          location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
+        } else {
+          location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
+        }
         break
       default:
         break

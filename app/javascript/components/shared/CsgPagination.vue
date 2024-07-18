@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Previous from "./Previous.vue";
 import Next from "./Next.vue";
 const props = defineProps({
@@ -31,6 +31,11 @@ const nextIcon = ref(Next);
 const currentChange = (currentPage) => {
   emit("currentChange", currentPage);
 };
+
+// 监听 props.currentPage 的变化来更新 theCurrentPage
+watch(() => props.currentPage, (newPage) => {
+  theCurrentPage.value = newPage;
+});
 </script>
 <style scoped>
 :deep(.btn-prev) {

@@ -1,24 +1,10 @@
 class InternalApi::CodesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def index
-    res_body = csghub_api.get_codes(current_user&.name,
-                                    params[:search],
-                                    params[:sort],
-                                    params[:task_tag],
-                                    params[:framework_tag],
-                                    params[:language_tag],
-                                    params[:license_tag],
-                                    params[:page],
-                                    params[:per_page])
-    api_response = JSON.parse(res_body)
-    render json: { codes: api_response['data'], total: api_response['total'] }
-  end
 
   def related_repos
     res_body = csghub_api.code_related_repos(params[:namespace], params[:code_name], files_options)
@@ -73,29 +59,6 @@ class InternalApi::CodesController < InternalApi::ApplicationController
     end
   end
 
-  def create_file
-    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
-    sync_create_file('code', options)
-    render json: { message: I18n.t('repo.createFileSuccess') }
-  end
-
-
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content])
-                                                            })
-    sync_update_file('code', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
   def upload_file
     sync_upload_file('code', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
@@ -105,13 +68,5 @@ class InternalApi::CodesController < InternalApi::ApplicationController
 
   def code_params
     params.permit(:name, :nickname, :desc, :owner_id, :owner_type, :visibility, :license)
-  end
-
-  def create_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def update_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 end

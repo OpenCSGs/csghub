@@ -19,6 +19,16 @@ Rails.application.routes.draw do
 
   # internal api
   namespace :internal_api do
+    namespace :admin do
+      resources :users, only: [:index, :show]
+      resources :sync_settings, only: [:index, :create] do
+        collection do
+          get :sync_repos
+        end
+      end
+      resources :system_config, only: [:index, :update]
+    end
+
     resources :organizations, only: [:create, :update] do
       collection do
         post '/new-members', to: 'organizations#new_members'
@@ -30,12 +40,6 @@ Rails.application.routes.draw do
       end
     end
     resources :comments, only: [:create, :destroy, :index]
-    resources :ssh_keys, only: [:create, :destroy]
-    resources :access_token, only: [] do
-      collection do
-        post 'refresh', to: 'access-tokens/refresh'
-      end
-    end
     resources :users, only: [:index, :update] do
       collection do
         put 'jwt_token', to: 'users/jwt_token'
@@ -46,48 +50,42 @@ Rails.application.routes.draw do
     get '/organizations/:namespace/codes', to: 'organizations#codes', namespace: /[^\/]+/
     get '/organizations/:namespace/spaces', to: 'organizations#spaces', namespace: /[^\/]+/
 
-    resources :models, only: [:index, :create]
+    resources :models, only: [:create]
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/files', to: 'models#files', namespace: /[^\/]+/
-    post '/models/:namespace/(*model_name)/files/:branch', to: 'models#create_file', namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file', namespace: /[^\/]+/
-    put '/models/:namespace/(*model_name)/files/:branch', to: 'models#update_file', namespace: /[^\/]+/
-    put '/models/:namespace/(*model_name)/update_readme_tags', to: 'models#update_readme_tags', namespace: /[^\/]+/
     delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/related_repos', to: 'models#related_repos', namespace: /[^\/]+/
 
-    resources :datasets, only: [:index, :create]
+    resources :datasets, only: [:create]
     get '/datasets/:namespace/(*dataset_name)/readme', to: 'datasets#readme', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/files', to: 'datasets#files', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/preview', to: 'datasets#preview_parquet', namespace: /[^\/]+/
-    post '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#create_file', namespace: /[^\/]+/
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file', namespace: /[^\/]+/
-    put '/datasets/:namespace/(*dataset_name)/files/:branch', to: 'datasets#update_file', namespace: /[^\/]+/
-    put '/datasets/:namespace/(*dataset_name)/update_readme_tags', to: 'datasets#update_readme_tags', namespace: /[^\/]+/
     delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/related_repos', to: 'datasets#related_repos', namespace: /[^\/]+/
 
-    resources :codes, only: [:index, :create]
+    resources :codes, only: [:create]
     get '/codes/:namespace/(*code_name)/readme', to: 'codes#readme', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/files', to: 'codes#files', namespace: /[^\/]+/
-    post '/codes/:namespace/(*code_name)/files/:branch', to: 'codes#create_file', namespace: /[^\/]+/
     post '/codes/:namespace/(*code_name)/files/:branch/upload_file', to: 'codes#upload_file', namespace: /[^\/]+/
-    put '/codes/:namespace/(*code_name)/files/:branch', to: 'codes#update_file', namespace: /[^\/]+/
     delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/related_repos', to: 'codes#related_repos', namespace: /[^\/]+/
 
-    resources :spaces, controller: 'application_spaces', only: [:index, :create]
+    resources :spaces, controller: 'application_spaces', only: [:create]
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files', namespace: /[^\/]+/
-    post '/spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#create_file', namespace: /[^\/]+/
     post '/spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file', namespace: /[^\/]+/
-    put '/spaces/:namespace/(*application_space_name)/files/:branch', to: 'application_spaces#update_file', namespace: /[^\/]+/
     delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+
+    resources :endpoints, only: [:create]
+    put '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+    delete '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     resources :tags, only: [] do
       collection do
@@ -105,10 +103,15 @@ Rails.application.routes.draw do
   scope "(:locale)", :locale => /en|zh/ do
     root "models#index"
 
+    # New Admin Pannel routes
+    get '/new_admin/(*path)', to: 'new_admin#index'
+
     resources :settings, only: [] do
       collection do
         get 'profile'
         get 'access-token'
+        get 'starship-access-token'
+        get 'sync-access-token'
         get 'ssh-keys'
         get 'locale'
       end
@@ -119,6 +122,8 @@ Rails.application.routes.draw do
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
     resources :collections, only: [:index, :new]
+    resources :endpoints, only: [:index, :new]
+    resources :finetune, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
         get 'members'
@@ -135,6 +140,13 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/commits', to: 'models#commits', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/commit/:commit_id', to: 'models#commit', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/billing', to: 'endpoints#billing', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
+
+    get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
@@ -168,6 +180,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/resolve/:branch/(*path)', to: 'application_spaces#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/community', to: 'application_spaces#community', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/settings', to: 'application_spaces#settings', namespace: /[^\/]+/
+    get '/spaces/:namespace/(*application_space_name)/billing', to: 'application_spaces#billing', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commits', to: 'application_spaces#commits', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commit/:commit_id', to: 'application_spaces#commit', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/

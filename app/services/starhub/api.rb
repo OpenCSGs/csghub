@@ -7,25 +7,32 @@ module Starhub
     include DatasetApis
     include ApplicationSpaceApis
     include CodeApis
+    include EndpointApis
 
     def initialize user_ip
       @client = Starhub::Client.init_with user_ip
     end
 
-    def create_user(name, nickname, email)
+    def create_user(name, nickname, phone, email, login_identity)
       options = {
         username: name,
         name: nickname,
-        email: email
+        email: email,
+        phone: phone,
+        uuid: login_identity,
+        reg_provider: ENV.fetch('REG_PROVIDER', 'default')
       }
       @client.post("/users?current_user=#{name}", options)
     end
 
-    def update_user(name, nickname, email)
+    def update_user(name, nickname, phone, email, login_identity)
       options = {
         username: name,
         name: nickname,
-        email: email
+        email: email,
+        phone: phone,
+        uuid: login_identity,
+        reg_provider: ENV.fetch('REG_PROVIDER', 'default')
       }
       @client.put("/users/#{name}?current_user=#{name}", options)
     end
@@ -95,6 +102,15 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
+    def get_user_endpoints(namespace, username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/user/#{namespace}/run/model", options)
+      raise StarhubError, res.body unless res.success?
+      res.body.force_encoding('UTF-8')
+    end
+
     def get_org_application_spaces(namespace, username, options = {})
       options[:per] ||= 6
       options[:page] ||= 1
@@ -120,30 +136,12 @@ module Starhub
       res.body
     end
 
-    def create_ssh_key(username, key_name, content, current_user)
-      options = {
-        username: username,
-        name: key_name,
-        content: content
-      }
-      @client.post("/user/#{username}/ssh_keys?current_user=#{current_user}", options)
-    end
-
     def get_ssh_key(username, current_user)
       options = {
         username: username,
         current_user: current_user
       }
       @client.get("/user/#{username}/ssh_keys", options)
-    end
-
-    def delete_ssh_key(username, key_name, current_user)
-      options = {
-        username: username,
-        name: key_name,
-        current_user: current_user
-      }
-      @client.delete("/user/#{username}/ssh_key/#{key_name}")
     end
 
     def create_organization(username, org_name, org_full_name, desc, current_user)
@@ -255,6 +253,27 @@ module Starhub
       res = @client.get("/user/#{username}/likes/#{repotype}", options)
       raise StarhubError, res.body unless res.success?
       res.body
+    end
+
+    def get_sync_repos(username, options = {})
+      options[:per] ||= 6
+      options[:page] ||= 1
+      options[:current_user] = username
+      res = @client.get("/mirror/repos", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def get_sync_settings(username, options = {})
+      options[:current_user] = username
+      res = @client.get("/sync/client_setting", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def create_sync_settings(username, options = {})
+      options[:current_user] = username
+      @client.post("/sync/client_setting", options)
     end
 
     # TODO: add more starhub api

@@ -3,10 +3,6 @@ module Api::BuildCommitHelper
 
   private
 
-  def build_create_commit_message
-    build_commit_message('Create')
-  end
-
   def build_update_commit_message
     build_commit_message('Update')
   end

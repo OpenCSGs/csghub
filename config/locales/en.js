@@ -18,6 +18,11 @@ import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
 import { collections } from './en_js/collections';
+import { endpoints } from './en_js/endpoints';
+import { finetune } from './en_js/finetune';
+import { admin } from './en_js/admin';
+import { billing } from './en_js/billing';
+
 
 export default {
   all,
@@ -39,5 +44,9 @@ export default {
   shared,
   repo,
   components,
-  collections
+  collections,
+  endpoints,
+  admin,
+  finetune,
+  billing
 };

@@ -1,11 +1,13 @@
 <template>
   <a
     :href="`/spaces/${repo.path}`"
-    class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 w-[409px] xl:w-full"
+    class="xl:w-full focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 mlg:!w-full"
   >
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
-        <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]">
+        <h3
+          class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]"
+        >
           {{ getComputed.path }}
         </h3>
         <div class="flex gap-2">
@@ -30,7 +32,7 @@
     <div class="my-2">
       <img
         :src="coverImageUrl"
-        class="w-[375px] xl:w-full h-[144px] object-cover rounded cursor-pointer hover:opacity-50"
+        class="w-full h-[144px] object-cover rounded cursor-pointer hover:opacity-50"
       />
     </div>
     <div
@@ -47,7 +49,7 @@
     >
       <template #reference>
         <p
-          class="max-w-[402px] xl:max-w-full h-[36px] text-[#606266] text-sm overflow-hidden text-ellipsis line-clamp-2"
+          class="max-w-full h-[36px] text-[#606266] text-sm overflow-hidden text-ellipsis line-clamp-2"
         >
           {{ repo.description }}
         </p>
@@ -57,9 +59,9 @@
       v-if="getComputed.taskTag"
       class="flex gap-2 my-2 overflow-x-auto no-scrollbar"
     >
-      <span class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">{{
-        getComputed.taskTag
-      }}</span>
+      <span class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+        {{ getComputed.taskTag }}
+      </span>
       <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"

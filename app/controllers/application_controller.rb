@@ -39,6 +39,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
+  def authenticate_admin_user
+    unless helpers.logged_in?
+      return redirect_to login_path
+    end
+    unless current_user.admin?
+      return redirect_to errors_unauthorized_path
+    end
+  end
+
   def check_user_login
     return if helpers.logged_in?
     if helpers.logged_in_other_system?

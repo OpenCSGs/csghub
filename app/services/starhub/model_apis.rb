@@ -12,10 +12,6 @@ module Starhub
       get_repo_detail_blob_data_in_parallel('models', namespace, model_name, options)
     end
 
-    def get_models(current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page = 1, per = 16)
-      get_repos('models', current_user, keyword, sort_by, task_tag, framework_tag, language_tag, license_tag, page, per)
-    end
-
     def get_model_detail(namespace, model_name, options = {})
       get_repo_detail('models', namespace, model_name, options)
     end
@@ -28,7 +24,7 @@ module Starhub
       get_blob_sha('models', namespace, model_name, path, options)
     end
 
-    def get_model_last_commit(namespace, model_name, path, options = {})
+    def get_model_last_commit(namespace, model_name, options = {})
       get_repo_last_commit('models', namespace, model_name, options)
     end
 
@@ -62,10 +58,6 @@ module Starhub
 
     def download_model_resolve_file(namespace, model_name, path, options = {})
       download_repo_resolve_file('models', namespace, model_name, path, options)
-    end
-
-    def create_model_file(namespace, model_name, path, options = {})
-      create_repo_file('models', namespace, model_name, path, options)
     end
 
     def update_model_file(namespace, model_name, path, options = {})

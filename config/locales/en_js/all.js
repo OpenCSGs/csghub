@@ -5,6 +5,7 @@ export const all = {
   summary: "Summary",
   files: "Files",
   community: "Community",
+  logs: "logs",
   settings: "Settings",
   tasks: "Tasks",
   framework: "Framework",
@@ -24,6 +25,7 @@ export const all = {
   loadError: "Load Error",
   notSupportPreview:
     "Preview is not supported at the moment, please download via git clone",
+  syncNotSupportPreview: "Preview is not supported at the moment",
   changeVis: "Change visibility to ",
   enterPls: "Enter Please",
   sureDel: "Sure to Del",
@@ -43,6 +45,7 @@ export const all = {
   changeCancel: "Operation canceled",
   addSuccess: "Added successfully",
   delSuccess: "Del successfully",
+  updateSuccess: "Update successfully",
   lastTime: "Last Updated",
   downloadCount: "Download",
   public: "Public",
@@ -77,4 +80,6 @@ export const all = {
   deleteSuccess: "Successfully delete",
   commits: "commit history",
   fetchError: "Failed to fetch data",
+  deploy: "Deploy",
+  more:"More"
 }

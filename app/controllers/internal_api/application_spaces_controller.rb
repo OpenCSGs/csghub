@@ -1,24 +1,10 @@
 class InternalApi::ApplicationSpacesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:index, :files, :readme]
+  before_action :authenticate_user, except: [:files, :readme]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def index
-    res_body = csghub_api.get_application_spaces(current_user&.name,
-                                                 params[:search],
-                                                 params[:sort],
-                                                 params[:task_tag],
-                                                 params[:framework_tag],
-                                                 params[:language_tag],
-                                                 params[:license_tag],
-                                                 params[:page],
-                                                 params[:per_page])
-    api_response = JSON.parse(res_body)
-    render json: { spaces: api_response['data'], total: api_response['total'] }
-  end
 
   def files
     last_commit, files = csghub_api.get_application_space_detail_files_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
@@ -69,29 +55,6 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     end
   end
 
-  def create_file
-    options = create_file_params.slice(:branch).merge({ message: build_create_commit_message,
-                                                        new_branch: 'main',
-                                                        username: current_user.name,
-                                                        email: current_user.email,
-                                                        content: Base64.encode64(params[:content])
-                                                      })
-    sync_create_file('application_space', options)
-    render json: { message: I18n.t('repo.createFileSuccess') }
-  end
-
-
-  def update_file
-    options = update_file_params.slice(:branch, :sha).merge({ message: build_update_commit_message,
-                                                              new_branch: 'main',
-                                                              username: current_user.name,
-                                                              email: current_user.email,
-                                                              content: Base64.encode64(params[:content])
-                                                            })
-    sync_update_file('application_space', options)
-    render json: { message: I18n.t('repo.updateFileSuccess') }
-  end
-
   def upload_file
     sync_upload_file('application_space', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
@@ -101,13 +64,5 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
 
   def create_params
     params.permit(:name, :nickname, :desc, :sdk, :cloud_resource, :owner_id, :owner_type, :visibility, :license, :cover_image)
-  end
-
-  def create_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc)
-  end
-
-  def update_file_params
-    params.permit(:path, :content, :branch, :commit_title, :commit_desc, :sha)
   end
 end
