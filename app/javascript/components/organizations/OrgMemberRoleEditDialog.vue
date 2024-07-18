@@ -18,7 +18,7 @@
       <div class="text-[18px] leading-[28px] text-[#101828]">{{ $t('organization.edit.role') }}</div>
       <div class="text-[14px] leading-[20px] text-[#475467] font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
       <el-form
-      :model="formDataRaw"
+      :model="dataForm"
       :rules="rules"
       class="w-full"
       ref="form"
@@ -51,6 +51,9 @@
 </template>
 <script>
   import csrfFetch from "../../packs/csrfFetch.js"
+  import jwtFetch from "../../packs/jwtFetch.js"
+  import { inject } from 'vue'
+
   export default {
     props: {
       visible: {
@@ -69,7 +72,7 @@
     data() {
       return {
         dialogVisible: this.visible,
-        dataForm: this.formDataRaw || {},
+        dataForm: Object.assign({}, this.formDataRaw),
         roleMappings: [
           { value: 'read', label: 'read' },
           { value: 'write', label: 'write' },
@@ -79,7 +82,8 @@
           role: [
             { required: true, message: 'Please select a role', trigger: 'change' }
           ]
-        }
+        },
+        csghubServer: inject('csghubServer')
       }
     },
     watch: {
@@ -87,7 +91,7 @@
         this.dialogVisible = val
       },
       formDataRaw(val) {
-        this.dataForm = val
+        this.dataForm = Object.assign({}, val)
       }
     },
     methods: {
@@ -101,10 +105,13 @@
             const options = {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ user_role: this.dataForm.role })
+              body: JSON.stringify({
+                old_role: this.formDataRaw.role,
+                new_role: this.dataForm.role
+              })
             }
-            const url = `/internal_api/organizations/${this.organization.name}/members/${this.formDataRaw.id}`
-            csrfFetch(url, options)
+            const url = `${this.csghubServer}/api/v1/organizations/${this.organization.name}/members/${this.formDataRaw.name}`
+            jwtFetch(url, options)
               .then((res) => {
                 if(res.ok) {
                   res.json().then((data) => {

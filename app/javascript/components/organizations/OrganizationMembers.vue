@@ -15,7 +15,7 @@
             </div>
           </div>
           <div class="flex gap-[16px]">
-            <InviteMember 
+            <InviteMember
               :org-name="organization.name"
               @resetMemberList="fetchMembers"
               :admin="admin"
@@ -109,13 +109,16 @@
       </div>
     </div>
   </div>
-  
+
 </template>
 <script>
 import csrfFetch from "../../packs/csrfFetch.js"
+import jwtFetch from "../../packs/jwtFetch.js"
+import { ElMessage } from 'element-plus'
 import InviteMember from './InviteMember.vue'
 import OrgMemberRoleEditDialog from './OrgMemberRoleEditDialog.vue'
-import dayjs from "dayjs";
+import dayjs from "dayjs"
+import { inject } from 'vue'
 
 // import Member from './Member.vue'
 
@@ -138,7 +141,8 @@ export default {
       searchForm: {
         page: 1,
         per: 8
-      }
+      },
+      csghubServer: inject('csghubServer')
     }
   },
   mounted() {
@@ -170,11 +174,13 @@ export default {
       return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
     },
     handleDelete(member) {
-      const url = `/internal_api/organizations/${this.organization.name}/members/${member.id}`;
+      const url = `${this.csghubServer}/api/v1/organizations/${this.organization.name}/members/${member.name}`
       const options = {
-        method: 'DELETE'
+        method: 'DELETE',
+        body: JSON.stringify({ role: member.role }),
+        headers: { 'Content-Type': 'application/json' }
       }
-      csrfFetch(url, options)
+      jwtFetch(url, options)
         .then((res) => {
           if(res.ok) {
             res.json().then((data) => {
