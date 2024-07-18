@@ -124,3 +124,15 @@ bin/dev
 ### 系统初始化默认用户
 
 系统会默认创建一个超级用户 `admin001`，密码默认为 `admin001`，可以通过 `http://localhost:3000/admin` 进入后台进行系统配置和管理。
+
+### 多源同步
+
+多源同步为私有化部署的用户提供了从`OpenCSG`社区同步模型和数据集的能力。同步下来的模型和数据集不可修改，除此之外与本地创建的模型和数据集无异。
+
+在正确使用多源同步功能之前，需要先设置2个环境变量。
+
+1. 配置 `STARHUB_SERVER_PUBLIC_DOMAIN` 为 `https://hub.opencsg.com`。
+2. 配置 `STARHUB_SERVER_MIRROR_URL` 为 `https://sync.opencsg.com`。
+  
+启动 all in one 脚本，稍等片刻，就可以看到 OpenCSG 社区中的模型和数据集了。
+项目默认内置了一个只读权限的token，允许浏览`OpenCSG`社区的模型和数据集的`README`内容和文件列表，但无法将模型和数据集下载到本地。如需要具备同步下载功能的token，请通过 [opencsg.com](https://opencsg.com) 官网申请。
