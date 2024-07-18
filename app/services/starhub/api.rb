@@ -286,11 +286,25 @@ module Starhub
       res.body
     end
 
+    def get_user_balance(user_uuid, username, options = {})
+      res = @client.get("/accounting/credit/#{user_uuid}/balance?current_user=#{username}", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def get_sync_repos(username, options = {})
       options[:per] ||= 6
       options[:page] ||= 1
       options[:current_user] = username
       res = @client.get("/mirror/repos", options)
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
+    def user_recharge(user_uuid, op_uid, current_user, value, options = {})
+      options[:op_uid] = op_uid
+      options[:value] = value
+      res = @client.put("/accounting/credit/#{user_uuid}/recharge?current_user=#{current_user}", options)
       raise StarhubError, res.body unless res.success?
       res.body
     end

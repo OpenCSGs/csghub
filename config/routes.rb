@@ -41,9 +41,15 @@ Rails.application.routes.draw do
   # internal api
   namespace :internal_api do
     namespace :admin do
+      resources :users, only: [:index, :show] do
+        collection do
+          put 'recharge/:id/:value', to: 'users#recharge'
+          get 'balance/:id', to: 'users#balance'
+        end
+      end
+
       resources :email_sending, only: [:create]
       resources :email_groups, only: [:index, :create]
-      resources :users, only: [:index, :show]
       resources :sync_settings, only: [:index, :create] do
         collection do
           get :sync_repos
@@ -162,6 +168,7 @@ Rails.application.routes.draw do
         get 'starship-access-token'
         get 'sync-access-token'
         get 'ssh-keys'
+        get 'billing'
         get 'locale'
       end
     end
@@ -192,10 +199,11 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/billing', to: 'endpoints#billing', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
-    get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id', to: 'finetune#show', namespace: /[^\/]+/
+    get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
@@ -229,6 +237,7 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/resolve/:branch/(*path)', to: 'application_spaces#resolve', defaults: {format: 'txt'}, namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/community', to: 'application_spaces#community', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/settings', to: 'application_spaces#settings', namespace: /[^\/]+/
+    get '/spaces/:namespace/(*application_space_name)/billing', to: 'application_spaces#billing', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commits', to: 'application_spaces#commits', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/commit/:commit_id', to: 'application_spaces#commit', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/

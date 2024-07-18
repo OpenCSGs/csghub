@@ -43,6 +43,11 @@ class ApplicationSpacesController < ApplicationController
     render :show
   end
 
+  def billing
+    @default_tab = 'billing'
+    render :show
+  end
+
   def blob
     @default_tab = 'files'
     render :show

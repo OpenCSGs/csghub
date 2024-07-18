@@ -1,5 +1,5 @@
 class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationController
-  before_action :find_user, only: [:show]
+  before_action :find_user, only: [:show, :balance, :recharge]
 
   def index
     if params[:keyword].present?
@@ -15,6 +15,16 @@ class InternalApi::Admin::UsersController < InternalApi::Admin::ApplicationContr
 
   def show
     render json: @user.to_json
+  end
+
+  def balance
+    render json: csghub_api.get_user_balance(@user.login_identity, @user.name)
+  end
+
+  def recharge
+    # 用户充值单位是‘元’，这里需要把元转换为分
+    account = params[:value].to_i * 100
+    render json: csghub_api.user_recharge(@user.login_identity, current_user.id, current_user.name, account)
   end
 
   private
