@@ -209,9 +209,7 @@ onMounted(() => {
   const params = new URLSearchParams(window.location.search)
   const result = props.namespaces.find(item => item[1] === params.get('orgName'));
   if (result) {
-    const form = dataForm.value
-    form.owner = result[0]
-    dataForm.value = form
+    dataForm.value.owner = result[0]
   }
 });
 </script>
