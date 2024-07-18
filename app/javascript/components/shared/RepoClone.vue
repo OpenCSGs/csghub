@@ -104,13 +104,18 @@
           </div>
         </el-tab-pane>
         <el-tab-pane
-          :label="$t('all.cmdTittle')"
-          name="cmd"
+          label="SDK"
+          name="sdk"
         >
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
-            <div class="text-[#909399]"># {{ $t(downloadButtonKey) }}</div>
+          <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+            <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+            Use
+            <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a> 
+            to download
+            </div>
             <markdown-viewer
               :content="cmdCloneCodeMarkdown"
             ></markdown-viewer>
