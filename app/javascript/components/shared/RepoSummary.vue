@@ -26,11 +26,11 @@
       </div>
       <div class="flex gap-[8px]">
         <div class="flex gap-[4px] px-[8px] py-[4px] border rounded-[16px]">
-          <SvgIcon name="license2" width="15" height="15" />
+          <SvgIcon name="license" width="15" height="15" />
           <p class="text-[14px] leading-[20px] text-[#667085]">License: {{ licenseTagInfo.name }}</p>
         </div>
         <a :href="licenseTagInfo.url" target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center">
-          <SvgIcon name="arrow2" />
+          <SvgIcon name="top_right_arrow" />
         </a>
       </div>
       <div 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_15_093551) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_18_122854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -147,6 +147,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_15_093551) do
     t.text "backtrace"
   end
 
+  create_table "mirrors", force: :cascade do |t|
+    t.string "source_url"
+    t.bigint "mirror_source_id"
+    t.string "username"
+    t.string "access_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "mirrorable_type"
+    t.bigint "mirrorable_id"
+    t.bigint "user_id"
+  end
+
   create_table "models", force: :cascade do |t|
     t.string "owner_type", null: false
     t.bigint "owner_id", null: false
@@ -213,7 +225,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_15_093551) do
     t.jsonb "feature_flags", default: {}
     t.jsonb "general_configs", default: {}
     t.jsonb "s3_configs"
-    t.json "license_info", default: {}
+    t.jsonb "license_info", default: {}
   end
 
   create_table "taggings", force: :cascade do |t|
