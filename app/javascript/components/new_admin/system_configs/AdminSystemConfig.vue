@@ -184,6 +184,7 @@
   }
 
   const updateSystemConfig = async (payload) => {
+    console.log(payload);
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
