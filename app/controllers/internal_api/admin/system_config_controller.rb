@@ -13,6 +13,11 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
     end
   end
 
+  def license
+    license_info_list = SystemConfig.first[:license_info]
+    render json: {license_info: license_info_list}
+  end
+
   private
 
   def system_config_params

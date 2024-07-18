@@ -36,7 +36,6 @@
       :commitId="commitId"
       repo-type="model"
       :admin="admin"
-      :license-tags-info="licenseTagsInfo"
     />
   </div>
 </template>
@@ -65,8 +64,7 @@
     canWrite: Boolean,
     userName: String,
     commitId: String,
-    admin: Boolean,
-    licenseTagsInfo: Object
+    admin: Boolean
   })
   const repoDetailStore = useRepoDetailStore()
   repoDetailStore.initialize(props.model.data)

@@ -17,7 +17,6 @@
       </div>
     <div 
       v-if="repoType == 'model'" 
-      v-for="licenseTagInfo in licenseTagsInfo"
       class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
     >
       <div class="flex">
@@ -29,18 +28,22 @@
           <SvgIcon name="license" width="15" height="15" />
           <p class="text-[14px] leading-[20px] text-[#667085]">License: {{ licenseTagInfo.name }}</p>
         </div>
-        <a :href="licenseTagInfo.url" target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center">
+        <a 
+          v-if="licenseTagInfo.url" 
+          :href="licenseTagInfo.url" 
+          target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center"
+        >
           <SvgIcon name="top_right_arrow" />
         </a>
       </div>
       <div 
         class="text-[16px] leading-[24px] text-[#344054]"
-        :class="showMoreLicenseDescButton(licenseTagInfo.desc.length) ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
+        :class="licenseTagInfo.desc.length > 70 && !moreLicenseDesc ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
       >
       {{ licenseTagInfo.desc }}
       </div>
       <div 
-        v-if="showMoreLicenseDesc(licenseTagInfo.desc.length)" 
+        v-if="licenseTagInfo.desc.length > 70 && !moreLicenseDesc" 
         @click="moreLicenseDesc = true" 
         class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer"
       >
@@ -77,7 +80,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
@@ -93,7 +96,6 @@
     widgetType: String,
     inferenceStatus: String,
     repoType: String,
-    licenseTagsInfo: Object
   })
 
   const loading = ref(true)
@@ -101,18 +103,7 @@
   const previewData = ref({})
   const relations = ref({})
   const moreLicenseDesc = ref(false)
-
-  const showMoreLicenseDescButton = (length) => {
-    return moreLicenseDesc.value == false && length >= 70
-  }
-
-  const showMoreLicenseDesc = (length) => {
-    if (length < 70) {
-      return false
-    } else {
-      return showMoreLicenseDescButton(length)
-    }
-  }
+  const licenseTagInfo = ref({desc: ''})
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
@@ -166,9 +157,24 @@
     })
   }
 
+  const fetchLicenseInfo = async () => {
+    const url = '/internal_api/admin/system_config/license'
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        const tagName = "CC-BY-4.0as"
+        console.log(data);
+        licenseTagInfo.value = data.license_info.find(item => item.name === tagName) || { name: tagName, desc: '' }
+      }).catch((error) => {
+        console.error(error)
+      })
+    })
+  }
+
   onMounted(() => {
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
+    fetchLicenseInfo()
   })
 </script>
