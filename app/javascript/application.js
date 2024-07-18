@@ -102,7 +102,8 @@ const app = createApp({
     NewFinetune,
     finetuneDetail,
     StarshipAccessTokenSettings,
-    SyncAccessTokenSettings
+    SyncAccessTokenSettings,
+    EndpointDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
