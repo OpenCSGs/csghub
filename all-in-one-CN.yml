@@ -16,7 +16,7 @@ services:
     restart: always
 
   postgres:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_postgres:latest
+    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_postgres:14.4
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "sdfa23Sh!322"
