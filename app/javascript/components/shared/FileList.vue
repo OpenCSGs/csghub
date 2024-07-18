@@ -215,10 +215,11 @@
 
     try {
       const response = await fetch(url)
+      const data = await response.json()
       if (!response.ok) {
-        throw new Error('Failed to fetch files')
+        console.error(data.msg)
+        location.href = '/errors/not-found'
       } else {
-        const data = await response.json()
         files.value = data.files
         lastCommit.value = data.last_commit
         if (data.last_commit_user && data.last_commit_user.avatar) {
