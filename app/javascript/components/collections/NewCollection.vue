@@ -110,47 +110,6 @@
   </div>
 </template>
 
-<style scoped>
-  :deep(.el-input) {
-    height: 40px;
-
-    @media screen and (max-width: 768px) {
-      width: 100%;
-    }
-  }
-
-  :deep(.el-radio__input) {
-    margin-top: 4px;
-  }
-
-  :deep(.el-radio__label) {
-    color: #344054 !important;
-    font-weight: 400;
-  }
-
-  :deep(.el-radio.is-bordered.is-checked ) {
-    border: 2px solid #3250BD;
-  }
-
-  :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250BD;
-    border-color: #3250BD;
-  }
-
-  :deep(.el-select) {
-    width: 240px;
-    height: 40px;
-
-    @media screen and (max-width: 768px) {
-      width: 100%;
-    }
-  }
-
-  :deep(.el-input .el-input__wrapper) {
-    border-radius: 8px;
-  }
-</style>
-
 <script setup>
   import InputTip from '../shared/inputs/InputTip.vue'
   import { ref, computed, onMounted } from 'vue'
@@ -216,3 +175,44 @@
     window.location.pathname = `/collections/${path}`
   }
 </script>
+
+<style scoped>
+  :deep(.el-input) {
+    height: 40px;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  :deep(.el-radio__input) {
+    margin-top: 4px;
+  }
+
+  :deep(.el-radio__label) {
+    color: #344054 !important;
+    font-weight: 400;
+  }
+
+  :deep(.el-radio.is-bordered.is-checked ) {
+    border: 2px solid #3250BD;
+  }
+
+  :deep(.el-radio__input.is-checked .el-radio__inner) {
+    background: #3250BD;
+    border-color: #3250BD;
+  }
+
+  :deep(.el-select) {
+    width: 240px;
+    height: 40px;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  :deep(.el-input .el-input__wrapper) {
+    border-radius: 8px;
+  }
+</style>
