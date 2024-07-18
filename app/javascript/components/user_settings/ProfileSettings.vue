@@ -5,60 +5,69 @@
     <Menu
       class="max-w-[411px] md:mb-[24px]"
       :name="profileName"
-      :email="email"
+      :email="profileEmail"
       :displayName="profileDisplayName"
       :avatar="profileAvatar"
     >
     </Menu>
     <ProfileEdit
       class="grow"
-      :name="name"
-      :nickname="nickname"
-      :avatar="avatar"
-      :phone="phone"
-      :email="email"
-      :homepage="homepage"
-      :bio="bio"
-      :displayName="displayName"
+      :name="profileName"
+      :nickname="profileNickname"
+      :avatar="profileAvatar"
+      :phone="profilePhone"
+      :email="profileEmail"
+      :homepage="profileHomepage"
+      :bio="profileBio"
+      :displayName="profileDisplayName"
       @updateUserInfo="updateUserInfo"
     >
     </ProfileEdit>
   </div>
 </template>
 
-<script>
+<script setup>
   import Menu from './Menu.vue'
   import ProfileEdit from './ProfileEdit.vue'
-  export default {
-    props: {
-      name: String,
-      nickname: String,
-      phone: String,
-      avatar: String,
-      email: String,
-      homepage: String,
-      bio: String,
-      displayName: String
-    },
-    components: {
-      Menu,
-      ProfileEdit
-    },
-    data() {
-      return {
-        profileName: this.name,
-        profileDisplayName: this.displayName,
-        profileAvatar: this.avatar
-      }
-    },
-    mounted() {},
-    methods: {
-      updateUserInfo(data) {
-        const { nickname, name, avatar } = data
-        this.profileName = name || this.name
-        this.profileDisplayName = nickname || this.displayName
-        this.profileAvatar = avatar || this.avatar
-      }
-    }
+  import { ref, onMounted, inject } from 'vue'
+  import jwtFetch from '../../packs/jwtFetch.js'
+
+  const props = defineProps({
+    name: String
+  })
+
+  const csghubServer = inject('csghubServer')
+
+  const profileName = ref(props.name)
+  const profileDisplayName = ref('')
+  const profileAvatar = ref('')
+  const profileEmail = ref('')
+  const profileNickname = ref('')
+  const profilePhone = ref('')
+  const profileHomepage = ref('')
+  const profileBio = ref('')
+
+  const updateUserInfo = (data) => {
+    const { nickname, name, avatar } = data
+    profileName.value = name || profileName.value
+    profileDisplayName.value = nickname || profileDisplayName.value
+    profileAvatar.value = avatar || profileAvatar.value
   }
+
+  onMounted(() => {
+    jwtFetch(`${csghubServer}/api/v1/users/${props.name}`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        profileName.value = data.username
+        profileDisplayName.value = data.name
+        profileAvatar.value = data.avatar
+        profileEmail.value = data.email
+        profileNickname.value = data.nickname
+        profilePhone.value = data.phone
+        profileHomepage.value = data.homepage
+        profileBio.value = data.bio
+      })
+  })
 </script>
