@@ -79,5 +79,6 @@ export const all = {
   commits: "提交历史",
   fetchError: "获取数据失败",
   deploy: "部署",
-  more:"更多"
+  more:"更多",
+  sdkTips: "请先在注册，然后从 OpenCSG 的账号页面获取 Token"
 }

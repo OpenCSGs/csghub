@@ -104,6 +104,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane
+          v-if="repoType == 'model' || repoType == 'dataset'"
           label="SDK"
           name="sdk"
         >
@@ -116,6 +117,7 @@
             <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a> 
             to download
             </div>
+            <div class="text-[#909399] mt-[8px]"># {{ $t('all.sdkTips') }}</div>
             <markdown-viewer
               :content="cmdCloneCodeMarkdown"
             ></markdown-viewer>
@@ -199,12 +201,33 @@
     return getMarkdownCode(sshCloneCode, 'bash', true)
   })
 
-  const cmdCloneCode = ref(`
-  from opencsg import snapshot_download
-  ${props.repoType}_dir = snapshot_download('${props.namespacePath}')
-  `)
+  const getCmdCloneCode = () => {
+    console.log("test")
+  if (props.repoType == 'model') {
+    return ref(`
+from pycsghub.snapshot_download import snapshot_download
+token = "token of your from opencsg.com"
+endpoint = "https://hub.opencsg.com"
+repo_type = "model"
+repo_id = 'OpenCSG/csg-wukong-1B'
+cache_dir = '/Users/hhwang/temp/'
+result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
+`)
+  } else if (props.repoType == 'dataset') {
+    return ref(`
+from pycsghub.snapshot_download import snapshot_download
+token = "token of your from opencsg.com"
+endpoint = "https://hub.opencsg.com"
+repo_id = 'AIWizards/tmmluplus'
+repo_type = "dataset"
+cache_dir = '/Users/xiangzhen/Downloads/'
+result = snapshot_download(repo_id, repo_type=repo_type, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
+`)
+  }
+}
 
   const cmdCloneCodeMarkdown = computed(() => {
+    const cmdCloneCode = getCmdCloneCode()
     return getMarkdownCode(cmdCloneCode.value, 'bash', true)
   })
 
