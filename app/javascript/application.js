@@ -96,7 +96,6 @@ const app = createApp({
     CodeDetail,
     NewCollection,
     NewEndpoint,
-    EndpointDetail,
     AdminNavbar,
     AdminMenu,
     NewFinetune,
