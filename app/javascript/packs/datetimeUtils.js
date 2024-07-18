@@ -44,3 +44,15 @@ export const isFutureDate = (date) => {
     return compareDate > current
   }
 }
+
+export const getLastDayOfMonthFromDateString = (dateString) => {
+  const date = new Date(dateString)
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+
+  const nextMonthFirstDay = new Date(year, month, 1)
+  const lastDay = new Date(nextMonthFirstDay - 86400000).getDate()
+  const formattedMonth = (month).toString().padStart(2, '0')
+
+  return `${year}-${formattedMonth}-${lastDay}`
+}

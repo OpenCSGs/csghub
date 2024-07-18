@@ -115,7 +115,8 @@
     getFirstDayOfTime,
     formatDate,
     formatDateTime,
-    isFutureDate
+    isFutureDate,
+    getLastDayOfMonthFromDateString
   } from '../../packs/datetimeUtils'
   import CsgPagination from '../shared/CsgPagination.vue'
 
@@ -167,23 +168,6 @@
     const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString) + ' 23:59:59'
     endTime.value = lastDayOfMonth
     fetchDetails()
-  }
-
-  const getLastDayOfMonthFromDateString = (dateString) => {
-    const parts = dateString.split('-')
-    const year = parseInt(parts[0], 10)
-    const month = parseInt(parts[1], 10) - 1 // 月份在 Date 对象中是从 0 到 11 表示的
-
-    const lastDay = getLastDayOfMonth(year, month)
-    const formattedMonth = (month + 1).toString().padStart(2, '0')
-
-    return `${year}-${formattedMonth}-${lastDay}`
-  }
-
-  const getLastDayOfMonth = (year, month) => {
-    const nextMonthFirstDay = new Date(year, month + 1, 1)
-    const lastDay = new Date(nextMonthFirstDay - 86400000).getDate() // 获取月底的日期
-    return lastDay
   }
 
   // scene = 10：model inference endpoint
