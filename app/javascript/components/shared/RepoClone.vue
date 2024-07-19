@@ -202,25 +202,24 @@
   })
 
   const getCmdCloneCode = () => {
-    console.log("test")
   if (props.repoType == 'model') {
     return ref(`
 from pycsghub.snapshot_download import snapshot_download
-token = "token of your from opencsg.com"
+token = '' # token from opencsg.com
 endpoint = "https://hub.opencsg.com"
 repo_type = "model"
-repo_id = 'OpenCSG/csg-wukong-1B'
-cache_dir = '/Users/hhwang/temp/'
+repo_id = '${props.namespacePath}'
+chache_dir = '' # cache dir of download data
 result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
 `)
   } else if (props.repoType == 'dataset') {
     return ref(`
 from pycsghub.snapshot_download import snapshot_download
-token = "token of your from opencsg.com"
+token = '' # token from opencsg.com
 endpoint = "https://hub.opencsg.com"
-repo_id = 'AIWizards/tmmluplus'
+repo_id = '${props.namespacePath}'
 repo_type = "dataset"
-cache_dir = '/Users/xiangzhen/Downloads/'
+chache_dir = '' # cache dir of download data
 result = snapshot_download(repo_id, repo_type=repo_type, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
 `)
   }
