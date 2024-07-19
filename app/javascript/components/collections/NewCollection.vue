@@ -172,15 +172,14 @@
     hasCreateCollection.value = true
 
     const response = await jwtFetch(`${csghubServer}/api/v1/collections`, options)
+    const data = await response.json()
     if (!response.ok) {
       hasCreateCollection.value = false
-      const data = await response.json()
-      ElMessage.warning(err.message)
-      throw new Error(data.message)
+      ElMessage.warning(data.msg)
     } else {
       hasCreateCollection.value = false
       ElMessage.success(t('collections.newCollection.createSuccess'))
-      toCollectionDetail(res.path)
+      toCollectionDetail(data.data.data.id)
       return response.json()
     }
   }
