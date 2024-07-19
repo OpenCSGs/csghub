@@ -9,19 +9,15 @@
         size="large"
         class="w-full"
       >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />        
+        <el-option label="Private" :value="true" />
+        <el-option label="Public" :value="false" />    
       </el-select>
     </el-form-item>
     <el-form-item>
       <el-button
         type="info"
         size="small"
-        @click="updateModelVisibility(model.private)"
+        @click="updateModel({ private: model.private })"
         >Update</el-button
       >
     </el-form-item>
@@ -29,22 +25,21 @@
 
   <hr />
 
-  <!-- base information -->
+  <!-- base_model -->
   <div class="my-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">Base Information</h3>
+    <h3 class="text-[18px] font-[500] mb-[8px]">Base Model</h3>
     <el-form-item>
-      <textarea
-        ref="generalConfigsRef"
-        class="system-config-obj-box"
-        :value="model.base_model"
-        rows="5"
-      ></textarea>
+      <el-input
+        v-model="model.base_model"
+        clearable
+        size="large"
+      />
     </el-form-item>
     <el-form-item>
       <el-button
         type="info"
         size="small"
-        @click="updateGeneralConfigs"
+        @click="updateModel({ base_model: model.base_model })"
         >Update</el-button
       >
     </el-form-item>
@@ -59,26 +54,21 @@
   import { ElMessage } from 'element-plus'
 
   const csghubServer = inject('csghubServer')
-
-  const updateModelVisibility = () => {
-      if (!!this.theModelDesc.trim()) {
-        const payload = {desc: this.theModelDesc}
-        updateModel(payload)
-      } else {
-        ElMessage({ message: this.$t('models.edit.needModelDesc'), type: "warning" })
-      }
-    },
-
+  const route = useRoute()
+  const model = ref({
+    private: null,
+    base_model: ""
+  })
+  
   const updateModel = async (payload) => {
-    console.log(payload);
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-    const res = await jwtFetch(`${csghubServer}/api/v1/models/${namespace}/${repo_name}`, options)
 
-
+    const res = await jwtFetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`, options)
+    
     if (res.ok) {
       ElMessage({
         message: '更新成功！',
@@ -88,20 +78,11 @@
       res.json().then((error) => {
         ElMessage({
           message: error.msg,
-          type: 'success'
+          type: 'error'
         })
       })
     }
   }
-
-  options = ref([{value: true, label: 'Private'},
-                 {value: false, label:  'Public'}])
-
-  const route = useRoute()
-  const model = ref({
-    private: false,
-    base_model: ""
-  })
 
   const fetchModel = async () => {
     const response = await jwtFetch(
@@ -109,8 +90,8 @@
     )
     if (response.ok) {
       const res_json = await response.json()
-      model.value = res_json.data
-      // model.value.visibility = model.private == false ? 'public' : 'private'
+      model.value.private = res_json.data.private
+      model.value.base_model = res_json.data.base_model
     } else {
       ElMessage.error('Failed to fetch model')
     }
