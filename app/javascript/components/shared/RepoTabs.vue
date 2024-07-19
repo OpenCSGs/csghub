@@ -6,9 +6,9 @@
       :httpCloneUrl="repoDetail.repository.http_clone_url"
       :sshCloneUrl="repoDetail.repository.ssh_clone_url"
       :userName="userName"
-      :userToken="userToken"
       :namespacePath="repoDetail.path"
       :admin="admin"
+      :repo="repoDetail"
       :enableEndpoint="repoDetail.enable_inference"
       :enableFinetune="repoDetail.enable_finetune"
     />
@@ -16,7 +16,10 @@
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
       :repoType="repoType"
+      :localRepoId="localRepoId"
       :sdk="sdk"
+      :repo="repoDetail"
+
       @tabChange="tabChange"
     >
       <!-- summary -->
@@ -27,17 +30,13 @@
           :ssh-clone-url="repoDetail.repository.ssh_clone_url"
           :sdk="sdk"
           :user-name="userName"
-          :user-token="userToken"
         />
         <ApplicationPage
           v-else-if="repoType === 'space' && appStatus === 'Running'"
           :appEndpoint="appEndpoint"
         />
         <StoppedPage
-          v-else-if="
-            repoType === 'space' &&
-            (appStatus === 'Stopped' || appStatus === 'Sleeping')
-          "
+          v-else-if="repoType === 'space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
           :appStatus="appStatus"
           :canWrite="canWrite"
           :path="repoDetail.path"
@@ -74,18 +73,11 @@
         v-if="actionName === 'blob'"
       >
         <blob
-          :content="decodedContent"
-          :last-commit="blob.commit"
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
           :namespace-path="repoDetail.path"
-          :size="blob.size"
           :can-write="canWrite"
-          :path="blob.path"
-          :lfs="blob.lfs"
-          :lfs-pointer-size="blob.lfs_pointer_size"
-          :lfs-relative-path="blob.lfs_relative_path"
         />
       </template>
       <template
@@ -108,8 +100,6 @@
           :current-path="currentPath"
           :repo-name="repoDetail.name"
           :namespace-path="repoDetail.path"
-          :originalCodeContent="decodedContent"
-          :sha="blob.sha"
         />
       </template>
       <template
@@ -175,6 +165,17 @@
           :type="repoTypeClass"
           :localModelId="localRepoId"
         ></community-page>
+      </template>
+
+      <!-- billing -->
+      <template
+        v-if="settingsVisibility"
+        #billing
+      >
+        <BillingDetail
+          :type="repoType"
+          :instanceName="repoDetail.svc_name"
+        ></BillingDetail>
       </template>
 
       <!-- settings -->
@@ -264,6 +265,7 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import BillingDetail from './BillingDetail.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({
@@ -285,7 +287,6 @@
     appEndpoint: String,
     sdk: String,
     userName: String,
-    userToken: String,
     commitId: String,
     hardware: String,
     modelId: String,
@@ -305,9 +306,7 @@
     if (props.repoType === 'space') {
       return 'ApplicationSpace'
     } else {
-      return `${props.repoType.charAt(0).toUpperCase()}${props.repoType
-        .slice(1)
-        .toLowerCase()}`
+      return `${props.repoType.charAt(0).toUpperCase()}${props.repoType.slice(1).toLowerCase()}`
     }
   })
 
@@ -355,6 +354,13 @@
         break
       case 'logs':
         location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
+        break
+      case 'billing':
+        if (props.repoType === 'endpoint') {
+          location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
+        } else {
+          location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
+        }
         break
       default:
         break

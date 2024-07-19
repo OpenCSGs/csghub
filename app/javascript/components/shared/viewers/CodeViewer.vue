@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { computed } from 'vue';
   import hljs from 'highlight.js';
   import 'highlight.js/styles/atom-one-light.css';
 
@@ -18,8 +18,6 @@
     content: String,
     extension: String,
   })
-
-  const highlightContent = ref('')
 
   const detectLanguage = () => {
     const { extension } = props;
@@ -48,12 +46,15 @@
         return 'c';
     }
   }
+  
+  const highlightContent = computed(() => {
+    if (detectLanguage()) {
+      return hljs.highlight(props.content, { language: detectLanguage() }).value
+    } else {
+      return hljs.highlightAuto(props.content).value
+    }
+  })
 
-  if (detectLanguage()) {
-    highlightContent.value = hljs.highlight(props.content, { language: detectLanguage() }).value
-  } else {
-    highlightContent.value = hljs.highlightAuto(props.content).value
-  }
 </script>
 
 <style scoped>

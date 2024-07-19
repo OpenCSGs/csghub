@@ -1,7 +1,7 @@
 class EndpointsController < ApplicationController
   include LocalRepoValidation
 
-  before_action :authenticate_user
+  before_action :authenticate_user, except: :show
   before_action :check_user_info_integrity
   before_action :load_endpoint_detail, except: :new
 
@@ -14,6 +14,11 @@ class EndpointsController < ApplicationController
 
   def logs
     @default_tab = 'logs'
+    render :show
+  end
+
+  def billing
+    @default_tab = 'billing'
     render :show
   end
 

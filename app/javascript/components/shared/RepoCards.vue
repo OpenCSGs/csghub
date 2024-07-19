@@ -15,9 +15,9 @@
         :type="repoType"
       />
     </div>
-    <div class="pr-[20px] pt-[32px] mlg:px-[20px] w-full">
+    <div class="pt-[32px] w-full xl:pr-[20px] mlg:px-[20px]">
       <div
-        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-4 md:pl-0' : ''}`"
+        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] mlg:pl-0' : ''}`"
       >
         <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
           <SvgIcon
@@ -52,9 +52,24 @@
           </span>
         </h3>
         <div class="xl:mt-[16px]">
+          <el-select
+            v-if="onPremise === 'true'"
+            v-model="sourceSelection"
+            @change="filterChange"
+            style="width: 150px"
+            class="mr-4 sm:!w-[122px] sm:mr-1"
+            size="large"
+          >
+            <el-option
+              v-for="item in sourceOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
+            class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
@@ -63,8 +78,8 @@
           <el-select
             v-model="sortSelection"
             @change="filterChange"
-            style="width: 200px"
-            class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
+            style="width: 150px"
+            class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
             size="large"
           >
             <el-option
@@ -78,13 +93,12 @@
       </div>
       <div
         v-if="repoType === 'space'"
-        class="w-full xl:flex-col xl:pl-4 md:pl-0 flex flex-wrap gap-4 mb-4 mt-[16px]"
+        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-6 mb-4 mt-[16px] xl:pl-[20px] mlg:pl-0"
       >
         <application-space-item
           v-for="repo in reposData"
           :repo="repo"
           :repo-type="repoType"
-          width="409"
         />
       </div>
       <div
@@ -107,7 +121,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { onMounted, ref, computed } from 'vue'
+  import { onMounted, ref, computed, inject } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
@@ -115,7 +129,6 @@
   import TagSidebar from '../tags/TagSidebar.vue'
   import CsgPagination from './CsgPagination.vue'
   import { useI18n } from 'vue-i18n'
-  import { inject } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
 
   const props = defineProps({
@@ -128,10 +141,12 @@
     repoType: String
   })
 
+  const onPremise = inject('onPremise', 'true')
   const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
+  const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
   const taskTag = ref('')
@@ -155,6 +170,21 @@
     {
       value: 'most_favorite',
       label: t('all.mostFavorite')
+    }
+  ]
+
+  const sourceOptions = [
+    {
+      value: 'all',
+      label: t('repo.source.all')
+    },
+    {
+      value: 'opencsg',
+      label: t('repo.source.opencsg')
+    },
+    {
+      value: 'local',
+      label: t('repo.source.local')
     }
   ]
 
@@ -188,6 +218,7 @@
     url = url + `&framework_tag=${frameworkTag.value}`
     url = url + `&language_tag=${languageTag.value}`
     url = url + `&license_tag=${licenseTag.value}`
+    url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }
 
