@@ -40,7 +40,6 @@ module Starhub
     end
 
     def get_repo_detail(repo_type, namespace, repo_name, options = {})
-      debugger
       res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}", options)
       raise StarhubError, res.body unless res.success?
       res.body
