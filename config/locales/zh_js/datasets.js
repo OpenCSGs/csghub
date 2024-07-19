@@ -27,7 +27,9 @@ export const datasets = {
     tips3: " 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
     createDataset: "创建数据集",
     createSuccess: "数据集创建成功",
-    tip: "应用于数据集数据，创建后不可更改"
+    tip: "应用于数据集数据，创建后不可更改",
+    datasetEnName: "数据集英文名称",
+    license: "许可证",
   },
   edit: {
     tips: "将会显示在数据集列表页面中，选填",

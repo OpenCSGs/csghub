@@ -21,8 +21,13 @@
     color: var(--Brand-300);
   }
 
+  /* default input icon style */
+  .el-input__wrapper .el-icon, .el-select__wrapper .el-icon {
+    cursor: pointer;
+  }
+
   /* when hover input icon style */
-  .el-input__wrapper .el-icon:hover {
+  .el-select__wrapper .el-icon:hover, .el-input__wrapper .el-icon:hover {
     color: var(--Brand-300);
   }
 
