@@ -112,9 +112,11 @@
 
 <script setup>
   import InputTip from '../shared/inputs/InputTip.vue'
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, computed, inject, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import csrfFetch from "../../packs/csrfFetch";
+  import jwtFetch from '../../packs/jwtFetch'
+  const csghubServer = inject('csghubServer')
+
   import {ElMessage} from "element-plus";
   
   const props = defineProps({
@@ -127,8 +129,9 @@
   const visibility = ref('private')
   const hasCreateCollection = ref(false)
   const colorNameList = ref([
-    ["blue", "蓝色"],
-    ["red", "红色"]
+    ["#F5F3FF", "淡紫色"],
+    ["#ECFDF3", "淡绿色"],
+    ["#FFF4ED","淡橙色"]
   ])
   const dataForm = ref({
     visibility: 'private',
@@ -151,13 +154,24 @@
   }
 
   async function submitCollectionForm() {
-    const collectionCreateEndpoint = `/internal_api/collections`
-    const [ownerId, ownerType] = owner.value.split('_')
+    const transformedData = {
+      description: '',
+      name: '',
+      nickname: '',
+      private: true,
+      theme: '#000000'
+    }
+    // 将 dataFormValue 的值直接复制到 transformedData
+    transformedData.description = dataForm.value.collectionDesc
+    transformedData.name = dataForm.value.title
+    transformedData.nickname = dataForm.value.collectionNickName
+    transformedData.private = dataForm.value.visibility === 'private' // 根据需要进行布尔值转换
+    transformedData.theme = dataForm.value.colorName
 
-    const options = { method: 'POST', body: dataForm.value }
+    const options = { method: 'POST', body: JSON.stringify(transformedData) }
     hasCreateCollection.value = true
 
-    const response = await csrfFetch(collectionCreateEndpoint, options)
+    const response = await jwtFetch(`${csghubServer}/api/v1/collections`, options)
     if (!response.ok) {
       hasCreateCollection.value = false
       const data = await response.json()
