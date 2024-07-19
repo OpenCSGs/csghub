@@ -1,18 +1,20 @@
 <template>
   <div class="flex flex-col gap-[24px] px-6 py-10 border-l">
     <div class="font-semibold text-[20px] leading-[28px]">{{ $t('profile.edit.title') }}</div>
+    <!-- name -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.userName') }}</div>
       <el-input class="max-w-[600px]"
-                v-model="inputName"
+                v-model="profileData.profileName"
                 disabled
                 :placeholder="this.$t('all.userName')">
       </el-input>
       <p class="text-gray-500 text-[12px] italic pt-1">{{ $t('rule.nameRule') }}</p>
     </div>
+    <!-- avatar -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户头像</div>
-      <el-avatar :size="120" :src="avatarUrl"> </el-avatar>
+      <el-avatar :size="120" :src="profileData.profileAvatar"> </el-avatar>
       <div class="flex gap-[12px] fileInput">
         <input ref="fileInput"
               type="file"
@@ -26,44 +28,49 @@
         </div>
       </div>
     </div>
+    <!-- nickname -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.nickName') }}</div>
       <el-input class="max-w-[600px]"
-                v-model="inputNickname"
+                v-model="profileData.profileNickname"
                 :placeholder="this.$t('all.nickName')">
       </el-input>
     </div>
+    <!-- homepage -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.homepage') }}</div>
       <el-input class="max-w-[600px]"
-                v-model="inputHomepage"
+                v-model="profileData.profileHomepage"
                 :placeholder="this.$t('all.homepage')">
       </el-input>
     </div>
+    <!-- bio -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.bio') }}</div>
       <el-input class="max-w-[600px]"
-                v-model="inputBio"
+                v-model="profileData.profileBio"
                 clearable
                 type="textarea"
                 :autosize="{minRows: 8, maxRows: 30}"
                 :placeholder="this.$t('all.bio')">
       </el-input>
     </div>
+    <!-- phone -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.phone') }}<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
       </div>
       <el-input class="max-w-[600px]"
-                v-model="inputPhone"
+                v-model="profileData.profilePhone"
                 disabled
                 :placeholder="this.$t('all.phone')">
       </el-input>
     </div>
+    <!-- email -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('all.email') }}<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6" fill="none"><path d="M2.21714 5.21809L3.35474 3.85009L4.49234 5.21809L5.12594 4.75729L4.20434 3.25969L5.77394 2.61169L5.52914 1.87729L3.88754 2.26609L3.74354 0.538086H2.96594L2.82194 2.28049L1.18034 1.87729L0.921143 2.61169L2.49074 3.25969L1.58354 4.75729L2.21714 5.21809Z" fill="#F56C6C"/></svg>
       </div>
       <el-input class="max-w-[600px]"
-                v-model="inputEmail"
+                v-model="profileData.profileEmail"
                 :placeholder="this.$t('all.email')">
       </el-input>
     </div>
@@ -77,6 +84,8 @@ import csrfFetch from "../../packs/csrfFetch.js"
 import { useCookies } from "vue3-cookies";
 import { ElMessage } from "element-plus";
 const { cookies } = useCookies();
+import { inject } from "vue"
+
 export default {
   props: {
     name: String,
@@ -97,6 +106,7 @@ export default {
       inputHomepage: this.homepage,
       inputBio: this.bio,
       avatarUrl: this.avatar,
+      profileData: inject('profileData')
     };
   },
   mounted() {},
@@ -121,11 +131,11 @@ export default {
       if (!response.ok) {
         ElMessage({ message: result.message, type: 'warning' })
       } else {
-        this.avatarUrl = result.url
+        this.profileData.profileAvatar = result.url
       }
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `/internal_api/users/${this.displayName}`;
+      const profileUpdateEndpoint = `/internal_api/users/${this.name}`;
       const formData = new FormData();
       formData.append("avatar", this.avatarUrl);
       formData.append("name", this.inputName);
