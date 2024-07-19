@@ -10,25 +10,14 @@
       :avatar="profileData.profileAvatar"
     >
     </Menu>
-    <ProfileEdit
-      class="grow"
-      :name="profileData.profileName"
-      :nickname="profileData.profileNickname"
-      :avatar="profileData.profileAvatar"
-      :phone="profileData.profilePhone"
-      :email="profileData.profileEmail"
-      :homepage="profileData.profileHomepage"
-      :bio="profileData.profileBio"
-      @updateUserInfo="updateUserInfo"
-    >
-    </ProfileEdit>
+    <ProfileEdit class="grow" />
   </div>
 </template>
 
 <script setup>
   import Menu from './Menu.vue'
   import ProfileEdit from './ProfileEdit.vue'
-  import { ref, onMounted, inject, provide, reactive } from 'vue'
+  import { ref, onMounted, inject, provide } from 'vue'
   import jwtFetch from '../../packs/jwtFetch.js'
 
   const props = defineProps({
@@ -49,27 +38,6 @@
 
   provide('profileData', profileData);
 
-  // const profileName = ref(props.name)
-  // const profileNickname = ref('')
-  // const profileAvatar = ref('')
-  // const profileEmail = ref('')
-  // const profilePhone = ref('')
-  // const profileHomepage = ref('')
-  // const profileBio = ref('')
-
-  const updateUserInfo = (data) => {
-    const { nickname, name, avatar } = data
-    if (name) {
-      profileData.value.profileName = name
-    }
-    if (nickname) {
-      profileData.value.profileNickname = nickname
-    }
-    if (avatar) {
-      profileData.value.profileAvatar = avatar
-    }
-  }
-
   onMounted(() => {
     jwtFetch(`${csghubServer}/api/v1/user/${props.name}`, {
       method: 'GET',
@@ -83,14 +51,6 @@
         profileData.value.profilePhone = body.data.phone
         profileData.value.profileHomepage = body.data.homepage
         profileData.value.profileBio = body.data.bio
-
-        // profileName.value = body.data.username
-        // profileAvatar.value = body.data.avatar
-        // profileEmail.value = body.data.email
-        // profileNickname.value = body.data.nickname
-        // profilePhone.value = body.data.phone
-        // profileHomepage.value = body.data.homepage
-        // profileBio.value = body.data.bio
       })
   })
 </script>

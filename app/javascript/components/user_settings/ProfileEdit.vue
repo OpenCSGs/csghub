@@ -81,32 +81,16 @@
 </template>
 <script>
 import csrfFetch from "../../packs/csrfFetch.js"
-import { useCookies } from "vue3-cookies";
+import jwtFetch from "../../packs/jwtFetch.js"
 import { ElMessage } from "element-plus";
-const { cookies } = useCookies();
 import { inject } from "vue"
 
 export default {
-  props: {
-    name: String,
-    nickname: String,
-    avatar: String,
-    phone: String,
-    email: String,
-    homepage: String,
-    bio: String,
-    displayName: String,
-  },
+  props: {},
   data() {
     return {
-      inputName: this.name,
-      inputNickname: this.nickname,
-      inputPhone: this.phone,
-      inputEmail: this.email,
-      inputHomepage: this.homepage,
-      inputBio: this.bio,
-      avatarUrl: this.avatar,
-      profileData: inject('profileData')
+      profileData: inject('profileData'),
+      csghubServer: inject('csghubServer')
     };
   },
   mounted() {},
@@ -135,21 +119,23 @@ export default {
       }
     },
     async updateProfile() {
-      const profileUpdateEndpoint = `/internal_api/users/${this.name}`;
-      const formData = new FormData();
-      formData.append("avatar", this.avatarUrl);
-      formData.append("name", this.inputName);
-      formData.append("nickname", this.inputNickname);
-      formData.append("email", this.inputEmail);
-      formData.append("homepage", this.inputHomepage);
-      formData.append("bio", this.inputBio);
+      const profileUpdateEndpoint = `${this.csghubServer}/api/v1/user/${this.profileData.profileName}`
+      const params = {
+        avatar: this.profileData.profileAvatar,
+        username: this.profileData.profileName,
+        name: this.profileData.profileNickname,
+        email: this.profileData.profileEmail,
+        phone: this.profileData.profilePhone,
+        homepage: this.profileData.profileHomepage,
+        bio: this.profileData.profileBio
+      }
       const options = {
         method: "PUT",
-        body: formData,
-      };
-
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+      }
       try {
-        const response = await csrfFetch(profileUpdateEndpoint, options);
+        const response = await jwtFetch(profileUpdateEndpoint, options)
         if (!response.ok) {
           response.json().then(data => {
             ElMessage({
@@ -161,13 +147,7 @@ export default {
           ElMessage({
             message: this.$t('profile.edit.updateSuccess'),
             type: "success",
-          });
-          this.$emit("updateUserInfo", {
-            avatar: this.avatarUrl,
-            name: this.inputName,
-            nickname: this.inputNickname
-          });
-          // 处理成功响应
+          })
         }
       } catch (error) {
         console.error(error);
