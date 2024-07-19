@@ -16,7 +16,7 @@
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
     <div 
-      v-if="repoType == 'model'" 
+      v-if="repoType == 'model' && tagName" 
       class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
     >
       <div class="flex">
@@ -104,6 +104,7 @@
   const relations = ref({})
   const moreLicenseDesc = ref(false)
   const licenseTagInfo = ref({desc: ''})
+  const tagName = 'cc-by-4.0'
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
@@ -162,9 +163,8 @@
 
     fetch(url).then((response) => {
       response.json().then((data) => {
-        const tagName = "CC-BY-4.0as"
         console.log(data);
-        licenseTagInfo.value = data.license_info.find(item => item.name === tagName) || { name: tagName, desc: '' }
+        licenseTagInfo.value = data.license_info.find(item => item.name.toLowerCase() === tagName) || { name: tagName, desc: '' }
       }).catch((error) => {
         console.error(error)
       })
