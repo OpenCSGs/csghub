@@ -56,6 +56,7 @@ module SessionsHelper
   end
 
   def get_admin_secret
-    SystemConfig.first[:general_configs]["admin_secret"] || ''
+    general_configs = (SystemConfig.first.general_configs rescue {}) || {}
+    general_configs["admin_secret"]
   end
 end
