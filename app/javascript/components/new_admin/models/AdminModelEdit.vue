@@ -52,8 +52,10 @@
   import { ref, onMounted, inject } from 'vue'
   import { useRoute } from 'vue-router'
   import { ElMessage } from 'element-plus'
+  import { useCookies } from "vue3-cookies";
 
   const csghubServer = inject('csghubServer')
+  const { cookies } = useCookies()
   const route = useRoute()
   const model = ref({
     private: null,
@@ -66,8 +68,8 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-
-    const res = await jwtFetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`, options)
+    const admin_secret = cookies.get('admin_secret')
+    const res = await jwtFetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}?admin=${admin_secret}`, options)
     
     if (res.ok) {
       ElMessage({
