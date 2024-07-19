@@ -13,6 +13,7 @@
         :repoId="model.data.repository_id"
         :totalLikes="model.data.likes"
         :hasLike="model.data.user_likes"
+        :baseModel="model.data.base_model"
         repo-type="model"
       />
     </div>

@@ -182,12 +182,12 @@
       <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
     <div 
-      v-if="repoType === 'model'"
+      v-if="repoType === 'model' && baseModel"
       class="flex items-center text-[16px] leading-[24px] text-[#344054]"
     >
       {{ $t('all.baseModel') }}: 
       <div class="text-[14px] leading-[20px] cursor-pointer text-[#475467] ml-[8px] disabled:text-[#98A2B3]">
-        OpenCSGs/CSGHub
+        {{ baseModel }}
       </div>
     </div>
   </div>
@@ -239,7 +239,8 @@
       default: 0
     },
     hasLike: Boolean,
-    resourceName: String
+    resourceName: String,
+    baseModel: String
   })
 
   const userLiked = ref(props.hasLike)
