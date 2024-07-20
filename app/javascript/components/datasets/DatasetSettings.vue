@@ -384,13 +384,13 @@ export default {
     },
 
     async deleteDataset() {
-      const datesetDeleteEndpoint = "/internal_api/datasets/" + this.path
+      const datasetDeleteEndpoint = `${this.csghubServer}/api/v1/datasets/${this.path}`
       const option = {method: 'DELETE'}
-      const response = await csrfFetch(datesetDeleteEndpoint, option)
+      const response = await jwtFetch(datasetDeleteEndpoint, option)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          throw new Error(data.message)
+        return response.json().then((err) => {
+          throw new Error(err.message)
         })
       } else {
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})
