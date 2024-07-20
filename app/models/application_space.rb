@@ -8,7 +8,6 @@ class ApplicationSpace < ApplicationRecord
   has_many :discussions, as: :discussionable, dependent: :destroy
 
   after_create :sync_created_space_to_starhub_server
-  after_destroy :delete_application_space_from_starhub_server
   after_save :update_starhub_server_application_space
   before_save :detect_sensitive_content
 
@@ -48,11 +47,6 @@ class ApplicationSpace < ApplicationRecord
                                                                      resource_id: cloud_resource.to_i,
                                                                      cover_image_url: cover_image
                                                                    })
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def delete_application_space_from_starhub_server
-    res = Starhub.api(creator.session_ip).delete_application_space(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 

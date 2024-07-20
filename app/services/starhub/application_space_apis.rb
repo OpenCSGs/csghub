@@ -36,10 +36,6 @@ module Starhub
       create_repo('spaces', username, application_space_name, namespace, nickname, desc, options)
     end
 
-    def delete_application_space(namespace, application_space_name, params = {})
-      delete_repo('spaces', namespace, application_space_name, params)
-    end
-
     def update_application_space(username, application_space_name, namespace, nickname, desc, options = {})
       update_repo('spaces', username, application_space_name, namespace, nickname, desc, options)
     end
