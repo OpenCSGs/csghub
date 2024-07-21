@@ -143,7 +143,7 @@
         </el-form-item>
         <el-form-item class="w-full !mb-0" :label="$t('application_spaces.new.cloudResource')">
           <el-select
-            v-model="spaceResource"
+            v-model="dataForm.cloud_resource"
             :placeholder="t('all.pleaseSelect', { value: t('application_spaces.new.cloudResource') })"
             size="large"
             style="width: 100%"
@@ -202,6 +202,9 @@
   import { useI18n } from 'vue-i18n'
   import jwtFetch from '../../packs/jwtFetch'
   const dataFormRef = ref(null)
+  const imageUploaded = ref(false)
+  const images = ref([])
+  const coverImage = ref('')
 
   const props = defineProps({
     licenses: Array,
@@ -248,15 +251,14 @@
 
   onMounted(() => {
     const params = new URLSearchParams(window.location.search)
-    const result = props.namespaces.find((item) => item[1] === params.get('orgName'))
+    const result = props.namespaces.find((item) => item[1] === params.get('orgName'));
     if (result) {
-      owner.value = result[0]
+      dataForm.value.owner = result[0]
     }
     fetchSpaceResources()
-  })
+  });
 
   const spaceResources = ref([])
-  const spaceResource = ref('')
 
   const fetchSpaceResources = async () => {
     const options = {
@@ -268,7 +270,7 @@
       ElMessage({ message: t('application_spaces.new.failedFetchResources'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        spaceResource.value = body?.data ? body.data[0]?.id : ''
+        dataForm.value.cloud_resource = body?.data ? body.data[0]?.id : ''
         spaceResources.value = body.data
       })
     }
@@ -284,12 +286,12 @@
   }
 
   const handleRemoveImage = () => {
-    coverImage.value = ''
+    dataForm.value.cover_image = ''
     imageUploaded.value = false
   }
 
   const handleUploadSuccess = (res) => {
-    coverImage.value = res.url
+    dataForm.value.cover_image = res.url
     imageUploaded.value = true
   }
 
