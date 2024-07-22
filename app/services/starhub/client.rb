@@ -91,7 +91,7 @@ module Starhub
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         request: {
-          timeout: 60
+          timeout: 2
         },
         url: base_url,
         headers: {
@@ -110,7 +110,7 @@ module Starhub
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         request: {
-          timeout: 60
+          timeout: 2
         },
         url: base_url,
         headers: {
