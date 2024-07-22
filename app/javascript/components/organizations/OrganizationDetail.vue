@@ -85,7 +85,7 @@
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
-              <a v-for="user in membersList" :href="`/profile/${user.name}`">
+              <a v-for="user in membersList" :href="`/profile/${user.username}`">
                 <el-tooltip placement="bottom" effect="light">
                   <div class="flex flex-col items-center">
                     <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
@@ -104,7 +104,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script setup>
   import { ref, onMounted, inject } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
@@ -161,7 +161,20 @@
       })
   }
 
+  const fetchOrgMemberList = async () => {
+    const orgMemberListEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members`
+    jwtFetch(orgMemberListEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        membersList.value = body.data
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
+
   onMounted(() => {
     fetchOrgDetail()
+    fetchOrgMemberList()
   })
 </script>
