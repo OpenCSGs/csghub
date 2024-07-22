@@ -149,9 +149,9 @@ class ApplicationController < ActionController::Base
       return redirect_to '/settings/profile'
     end
 
-    unless current_user.starhub_synced?
-      current_user.sync_to_starhub_server
-    end
+    # unless current_user.starhub_synced?
+    #   current_user.sync_to_starhub_server
+    # end
   end
 
   def relative_path_to_resolve_path type, content
