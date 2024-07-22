@@ -22,6 +22,8 @@ const handleTag = (tag, tagCategories) => {
 }
 
 export const buildTags = (tags) => {
+  if (!tags) return
+
   const tagCategories = {
     task_tags: [],
     framework_tags: [],
