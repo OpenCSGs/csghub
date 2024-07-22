@@ -84,6 +84,22 @@ class ApplicationController < ActionController::Base
     cookies[:locale] = I18n.locale
   end
 
+  # 通过独立的用户服务，这种模式下，只考虑通过用户的 uuid 来判断用户是否存在
+  def login_by_server_user_infos user_infos
+    user = User.find_or_create_by(login_identity: user_infos['uuid']) do |u|
+      u.roles = user_infos['roles']
+      u.avatar = user_infos['avatar']
+      u.name = user_infos['username']
+      u.nickname = user_infos['nickname']
+      u.phone = user_infos['phone']
+      u.email = user_infos['email']
+    end
+
+    helpers.log_in user
+    redirect_path = session.delete(:original_request_path) || root_path
+    redirect_to redirect_path
+  end
+
   def login_by_user_infos user_infos
     user = User.find_by(login_identity: user_infos['sub'])
     if user
