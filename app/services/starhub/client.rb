@@ -69,7 +69,7 @@ module Starhub
     private
 
     def starhub_configs
-      env_base_url = ENV.fetch('STARHUB_BASE_URL', nil)
+      env_base_url = ENV.fetch('STARHUB_INNER_BASE_URL', nil)
       env_token = ENV.fetch('STARHUB_TOKEN', nil)
 
       return [env_base_url, env_token] if env_base_url.present? && env_token.present?
@@ -91,7 +91,7 @@ module Starhub
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         request: {
-          timeout: 60
+          timeout: 2
         },
         url: base_url,
         headers: {
@@ -110,7 +110,7 @@ module Starhub
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
         request: {
-          timeout: 60
+          timeout: 2
         },
         url: base_url,
         headers: {
