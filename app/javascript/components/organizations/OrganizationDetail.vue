@@ -133,9 +133,7 @@
   const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
 
-  const admin = cookies.isKey('admin')
-
-  // const membersList = ref(props.members)
+  const admin = cookies.isKey('admin_user')
 
   const resetMemberList = (newMembers, userRole) => {
     newMembers.forEach(member => member.role = userRole)
