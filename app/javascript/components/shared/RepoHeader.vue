@@ -183,10 +183,10 @@
     </div>
     <div 
       v-if="repoType === 'model' && baseModel"
-      class="flex items-center text-[16px] leading-[24px] text-[#344054]"
+      class="flex items-center text-[#344054] font-normal"
     >
       {{ $t('all.baseModel') }}: 
-      <div class="text-[14px] leading-[20px] cursor-pointer text-[#475467] ml-[8px] disabled:text-[#98A2B3]">
+      <div class="cursor-pointer text-[#344054] ml-[8px]">
         {{ baseModel }}
       </div>
     </div>
