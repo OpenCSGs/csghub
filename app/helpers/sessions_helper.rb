@@ -3,6 +3,7 @@ module SessionsHelper
     session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
     cookies[:current_user] = user.name
+    cookies[:admin_user] = 'true' if user.admin?
 
     # need to add later
     # cookies[:avatar] = user.avatar
@@ -36,6 +37,7 @@ module SessionsHelper
     cookies.delete :login_identity
     cookies.delete :user_token
     cookies.delete :token_expire_at
+    cookies.delete :admin_user
 
     # unset odic cookies
     cookies.delete :oidcUuid
