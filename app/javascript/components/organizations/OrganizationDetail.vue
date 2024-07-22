@@ -98,7 +98,7 @@
           </div>
         </div>
         <profile-repo-list
-          :name="organizationData.name"
+          :name="name"
         />
       </div>
     </div>
