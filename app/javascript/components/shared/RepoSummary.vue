@@ -16,7 +16,7 @@
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
     <div 
-      v-if="repoType == 'model' && tagName" 
+      v-if="repoType == 'model' && licenseTagInfo" 
       class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
     >
       <div class="flex">
@@ -96,6 +96,7 @@
     widgetType: String,
     inferenceStatus: String,
     repoType: String,
+    license: String, default: ''
   })
 
   const loading = ref(true)
@@ -103,8 +104,7 @@
   const previewData = ref({})
   const relations = ref({})
   const moreLicenseDesc = ref(false)
-  const licenseTagInfo = ref({desc: ''})
-  const tagName = 'cc-by-4.0'
+  const licenseTagInfo = ref({ name: props.license, desc: '' })
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
@@ -163,10 +163,11 @@
 
     fetch(url).then((response) => {
       response.json().then((data) => {
-        console.log(data);
-        licenseTagInfo.value = data.license_info.find(item => item.name.toLowerCase() === tagName) || { name: tagName, desc: '' }
+        licenseTagInfo.value = data.license_info.find(
+          item => item.name.toLowerCase() == props.license
+        ) || licenseTagInfo.value
       }).catch((error) => {
-        console.error(error)
+        console.error(licenseTagInfo.value)
       })
     })
   }
@@ -175,6 +176,6 @@
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
-    fetchLicenseInfo()
+    if (props.repoType == 'model') { fetchLicenseInfo() }
   })
 </script>
