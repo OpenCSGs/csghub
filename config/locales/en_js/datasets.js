@@ -31,7 +31,9 @@ export const datasets = {
     tips3: "Choose classification labels corresponding to the dataset to facilitate users in quickly finding your model during filtering.",
     createDataset: "Create",
     createSuccess: "Dataset created successfully",
-    tip: "Applies to data set data and cannot be changed after creation"
+    tip: "Applies to data set data and cannot be changed after creation",
+    datasetEnName: "Dataset Name",
+    license: "License",
   },
   edit: {
     tips: "Will be displayed on the dataset list page, optional",
