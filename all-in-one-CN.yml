@@ -2,7 +2,7 @@ version: '2.4'
 
 services:
   nginx:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_nginx:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_nginx:latest
     ports:
       - 80:80
     volumes:
@@ -16,7 +16,7 @@ services:
     restart: always
 
   postgres:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_postgres:14.4
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_postgres:14.4
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "sdfa23Sh!322"
@@ -30,7 +30,7 @@ services:
       interval: 5s
 
   csghub_portal:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_portal:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:latest
     restart: always
     command: >
       bash -c "bundle exec rails assets:precompile
@@ -62,7 +62,7 @@ services:
       - postgres
 
   csghub_server:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
     depends_on:
       - postgres
       - gitea
@@ -102,7 +102,7 @@ services:
 
 
   gitea:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_git:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_git:latest
     depends_on:
       - postgres
     environment:
@@ -149,7 +149,7 @@ services:
     restart: always
 
   minio:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_minio:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_minio:latest
     ports:
       - "9000:9000" # api
       - "9001:9001" # console
@@ -164,7 +164,7 @@ services:
       - opencsg
 
   natsmaster:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_nats:2.10.16
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_nats:2.10.16
     ports:
       - "4222:4222" # api
       - "6222:6222" # cluster
@@ -174,7 +174,7 @@ services:
       - opencsg
 
   account_server:
-    image: registry.cn-beijing.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
     entrypoint:
       - /starhub-bin/starhub
       - accounting
