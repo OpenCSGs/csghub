@@ -112,8 +112,6 @@ class CodesController < ApplicationController
   private
 
   def load_code_detail
-    @code, @branches = csghub_api.get_code_detail_data_in_parallel(params[:namespace], params[:code_name], files_options)
-    @tags = Tag.build_detail_tags(JSON.parse(@code)['data']['tags'], 'code').to_json
     @settings_visibility = (current_user && @local_code) ? current_user.can_manage?(@local_code) : false
   end
 end
