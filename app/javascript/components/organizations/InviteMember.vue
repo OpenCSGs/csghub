@@ -133,13 +133,14 @@
   import { ref, inject } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js'
   import jwtFetch from '../../packs/jwtFetch.js'
-  import cookies from '../../packs/cookies.js'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import { useCookies } from 'vue3-cookies'
 
+  const { cookies } = useCookies()
   const csghubServer = inject('csghubServer')
   const emit = defineEmits(['resetMemberList'])
-  const admin = cookies.isKey('admin-user')
+  const admin = cookies.isKey('admin_user')
 
   const props = defineProps({
     orgName: String
@@ -237,15 +238,15 @@
   }
 
   async function inviteNewMember() {
-    const inviteNewMemberEndpoint = `${csghubServer}/api/v1/organizations/${props.orgName}/members`
+    const inviteNewMemberEndpoint = `${csghubServer}/api/v1/organization/${props.orgName}/members`
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user_role: userRoleInput.value,
-        user_names: selectedUsers.value.map((user) => user.name).join(',')
+        role: userRoleInput.value,
+        user: selectedUsers.value.map((user) => user.name).join(',')
       })
     }
     const response = await jwtFetch(inviteNewMemberEndpoint, options)
@@ -258,6 +259,7 @@
     }
   }
 </script>
+
 <style>
   @media (max-width: 768px) {
     .InviteMember .invite_dialog {

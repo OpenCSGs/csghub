@@ -110,7 +110,7 @@
                 new_role: this.dataForm.role
               })
             }
-            const url = `${this.csghubServer}/api/v1/organizations/${this.organization.name}/members/${this.formDataRaw.name}`
+            const url = `${this.csghubServer}/api/v1/organization/${this.organization.name}/members/${this.formDataRaw.username}`
             jwtFetch(url, options)
               .then((res) => {
                 if(res.ok) {

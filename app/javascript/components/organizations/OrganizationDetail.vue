@@ -112,13 +112,6 @@
 
   const props = defineProps({
     name: String
-    // organization: Object,
-    // members: Array,
-    // models: Object,
-    // datasets: Object,
-    // spaces: Object,
-    // codes: Object,
-    // admin: Boolean
   })
 
   const organizationData = ref({

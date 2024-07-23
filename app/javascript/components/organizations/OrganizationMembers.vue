@@ -156,14 +156,16 @@
 <script setup>
   import csrfFetch from '../../packs/csrfFetch.js'
   import jwtFetch from '../../packs/jwtFetch.js'
-  import cookies from '../../packs/cookies.js'
   import { ElMessage } from 'element-plus'
   import InviteMember from './InviteMember.vue'
   import OrgMemberRoleEditDialog from './OrgMemberRoleEditDialog.vue'
   import dayjs from 'dayjs'
   import { ref, inject, onMounted } from 'vue'
+  import { useCookies } from 'vue3-cookies'
+  import { useI18n } from 'vue-i18n'
 
-  // import Member from './Member.vue'
+  const { cookies } = useCookies()
+  const { t } = useI18n()
 
   const props = defineProps({
     organizationRaw: {
@@ -209,149 +211,36 @@
       })
   }
 
-  // const fetchMembers = () => {
-  //   loading.value = true
-  //   const params = new URLSearchParams()
-  //   params.append('page', searchForm.value.page)
-  //   params.append('per', searchForm.value.per)
-  //   const url = `/internal_api/organizations/${organization.value.name}/members?${params.toString()}`
-  //   const options = { method: 'GET' }
-  //   csrfFetch(url, options)
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       members.value = res.members
-  //       totalCount.value = res.total_count
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error)
-  //     })
-  //     .finally(() => {
-  //       loading.value = false
-  //     })
-  // }
-
   const formatDate = (date) => {
     return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
   }
 
-  const handleDelete = (member) => {
-    const url = `${csghubServer}/api/v1/organizations/${organization.name}/members/${member.name}`
+  const handleDelete = async (member) => {
+    const url = `${csghubServer}/api/v1/organization/${organization.value.name}/members/${member.username}`
     const options = {
       method: 'DELETE',
       body: JSON.stringify({ role: member.role }),
       headers: { 'Content-Type': 'application/json' }
     }
-    jwtFetch(url, options)
-      .then((res) => {
-        if (res.ok) {
-          res.json().then((data) => {
-            ElMessage({
-              messsage: t('organization.members.deleteSuccess'),
-              type: 'success'
-            })
-            fetchMembers()
-          })
-        } else {
-          res.json().then((error) => {
-            ElMessage({
-              messsage: error.msg,
-              type: 'warning'
-            })
-          })
-        }
+    const res = await jwtFetch(url, options)
+    if (res.ok) {
+      ElMessage({
+        message: t('organization.members.deleteSuccess'),
+        type: 'success'
       })
-      .catch((error) => {
-        console.error('Error:', error)
+      fetchMembers()
+    } else {
+      res.json().then((error) => {
+        ElMessage({
+          message: error.msg,
+          type: 'warning'
+        })
       })
+    }
   }
 
   const handleToRoleEdit = (row) => {
     editRow.value = Object.assign({}, row)
     roleEditDialog.value = true
   }
-
-  // export default {
-  //   props: {
-  //     organization: Object
-  //   },
-  //   components: {
-  //     InviteMember,
-  //     OrgMemberRoleEditDialog
-  //   },
-  //   data() {
-  //     return {
-  //       members: [],
-  //       loading: false,
-  //       roleEditDialog: false,
-  //       editRow: {},
-  //       totalCount: 0,
-  //       searchForm: {
-  //         page: 1,
-  //         per: 8
-  //       },
-  //       csghubServer: inject('csghubServer')
-  //     }
-  //   },
-  //   mounted() {
-  //     this.fetchMembers()
-  //   },
-  //   methods: {
-  //     fetchMembers() {
-  //       this.loading = true
-  //       const params = new URLSearchParams()
-  //       params.append('page', this.searchForm.page)
-  //       params.append('per', this.searchForm.per)
-  //       const url = `/internal_api/organizations/${
-  //         this.organization.name
-  //       }/members?${params.toString()}`
-  //       const options = { method: 'GET' }
-  //       csrfFetch(url, options)
-  //         .then((res) => res.json())
-  //         .then((res) => {
-  //           this.members = res.members
-  //           this.totalCount = res.total_count
-  //         })
-  //         .catch((error) => {
-  //           console.error('Error:', error)
-  //         })
-  //         .finally(() => {
-  //           this.loading = false
-  //         })
-  //     },
-  //     formatDate(date) {
-  //       if (!date) return '-'
-  //       return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
-  //     },
-  //     handleDelete(member) {
-  //       const url = `${this.csghubServer}/api/v1/organizations/${this.organization.name}/members/${member.name}`
-  //       const options = {
-  //         method: 'DELETE',
-  //         body: JSON.stringify({ role: member.role }),
-  //         headers: { 'Content-Type': 'application/json' }
-  //       }
-  //       jwtFetch(url, options)
-  //         .then((res) => {
-  //           if (res.ok) {
-  //             res.json().then((data) => {
-  //               this.$message.success(
-  //                 this.$t('organization.members.deleteSuccess')
-  //               )
-  //               this.fetchMembers()
-  //             })
-  //           } else {
-  //             res.json().then((data) => {
-  //               this.$message.error(data.message)
-  //             })
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error('Error:', error)
-  //         })
-  //     },
-  //     handleToRoleEdit(row) {
-  //       this.editRow = Object.assign({}, row)
-  //       this.roleEditDialog = true
-  //     }
-  //   }
-  // }
 </script>
