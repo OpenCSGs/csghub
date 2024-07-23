@@ -10,7 +10,9 @@ export const collections = {
   hot: 'Featured Collections of the Week',
   details: {
     tabProject: 'Project',
-    tabSettings: 'Settings'
+    tabSettings: 'Settings',
+    emptyCollection: 'Empty Collection',
+    tips: 'To add projects to this collection, use the + Add to Collection button or the Add to Collection button on the model, dataset, space, or paper pages.'
   },
   edit: {
     add: 'Add Project',
