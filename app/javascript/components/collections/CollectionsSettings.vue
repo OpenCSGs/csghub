@@ -59,9 +59,6 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
-          {{ $t('finetune.detail.settings.regionTip3') }}
-        </p>
         <el-select
           v-model="themeColor"
           :placeholder="$t('all.select')"
