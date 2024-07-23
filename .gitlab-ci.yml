@@ -33,38 +33,37 @@ staging-main-build:
   tags:
     - linux-medium-amd64
   rules:
-    - <<: *if-production-tag-build
+    - <<: *if-main-original-repo
   variables:
-    # IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   script:
     - docker login $CI_REGISTRY -u $CI_USER -p $CI_TOKEN
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
-# prod-tag-build:
-#   stage: build
-#   services:
-#     - docker:24.0.6-dind
-#   tags:
-#     - linux-medium-amd64
-#   rules:
-#     - <<: *if-production-tag-build
-#   variables:
-#     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
-#   script:
-#     - docker login $CI_REGISTRY -u $CI_USER -p $CI_TOKEN
-#     - docker build -t $IMAGE_TAG .
-#     - docker push $IMAGE_TAG
-
-staging-main-deploy:
-  stage: deploy
+prod-tag-build:
+  stage: build
+  services:
+    - docker:24.0.6-dind
   tags:
     - linux-medium-amd64
   rules:
     - <<: *if-production-tag-build
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  script:
+    - docker login $CI_REGISTRY -u $CI_USER -p $CI_TOKEN
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+staging-main-deploy:
+  stage: deploy
+  tags:
+    - linux-medium-amd64
+  rules:
+    - <<: *if-main-original-repo
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -83,35 +82,37 @@ staging-main-deploy:
           docker image prune -f
         EOT
 
-# prod-tag-deploy:
-#   stage: deploy
-#   tags:
-#     - linux-medium-amd64
-#   rules:
-#     - <<: *if-production-tag-build
-#   variables:
-#     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
-#   before_script:
-#     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-#     - eval $(ssh-agent -s)
-#     - echo "$OPEN_PORTAL_STAGING_PEM" | tr -d '\r' | ssh-add -
-#     - mkdir -p ~/.ssh
-#     - chmod 700 ~/.ssh
-#     - ssh-keyscan $OPEN_PORTAL_PRD_HOST >> ~/.ssh/known_hosts
-#     - ssh-keyscan $OPEN_PORTAL_PRD_TWO_HOST >> ~/.ssh/known_hosts
-#     - chmod 644 ~/.ssh/known_hosts
-#   script:
-#     - |
-#         ssh root@$OPEN_PORTAL_PRD_HOST "/bin/bash -s" << EOT
-#           cd /root/open_portal/
-#           docker compose -f docker_compose_production.yml pull
-#           docker compose -f docker_compose_production.yml up -d --force-recreate web docs
-#           docker image prune -f
-#         EOT
-#     - |
-#         ssh root@$OPEN_PORTAL_PRD_TWO_HOST "/bin/bash -s" << EOT
-#           cd /root/open_portal/
-#           docker compose -f docker_compose_production.yml pull
-#           docker compose -f docker_compose_production.yml up -d --force-recreate web docs
-#           docker image prune -f
-#         EOT
+prod-tag-deploy:
+  stage: deploy
+  tags:
+    - linux-medium-amd64
+  rules:
+    - <<: *if-production-tag-build
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$OPEN_PORTAL_STAGING_PEM" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $OPEN_PORTAL_PRD_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $OPEN_PORTAL_PRD_TWO_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - |
+        ssh root@$OPEN_PORTAL_PRD_HOST "/bin/bash -s" << EOT
+          export DEPLOY_IMAGE_TAG=$IMAGE_TAG
+          cd /root/open_portal/
+          docker compose -f docker_compose_production.yml pull
+          docker compose -f docker_compose_production.yml up -d --force-recreate web docs
+          docker image prune -f
+        EOT
+    - |
+        ssh root@$OPEN_PORTAL_PRD_TWO_HOST "/bin/bash -s" << EOT
+          export DEPLOY_IMAGE_TAG=$IMAGE_TAG
+          cd /root/open_portal/
+          docker compose -f docker_compose_production.yml pull
+          docker compose -f docker_compose_production.yml up -d --force-recreate web docs
+          docker image prune -f
+        EOT
