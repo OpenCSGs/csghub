@@ -98,7 +98,7 @@
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
 
-  const organization = ref(props.organizationRaw)
+  const organization = ref(Object.assign({}, props.organizationRaw))
   const nameRule = inject('nameRule')
   const selectedProtocol = ref('https://')
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')

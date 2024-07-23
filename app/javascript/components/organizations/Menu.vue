@@ -12,7 +12,9 @@
             :title="nickName"
             class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[24px] leading-[32px] font-semibold"
           >
-            {{ nickName || name }}
+            <a :href="`/organizations/${name}`">
+              {{ nickName || name }}
+            </a>
           </div>
           <div
             class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-[#909399] leading-[24px]"
