@@ -155,7 +155,7 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      collectionData.value = data.data
+      collectionData.value = data.data || []
       totalCollections.value = data.total
     }
   }
