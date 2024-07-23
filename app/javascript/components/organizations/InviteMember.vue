@@ -1,5 +1,6 @@
 <template>
   <div class="InviteMember">
+    <!-- org detail invite button -->
     <button
       v-if="admin"
       @click="dialogVisible = true"
@@ -8,6 +9,7 @@
       <SvgIcon name="invite_org_member" />
       <span>{{ $t('organization.invite.title') }}</span>
     </button>
+    <!-- invite dialog -->
     <el-dialog
       v-model="dialogVisible"
       top="10vh"
@@ -15,7 +17,7 @@
       width="450"
       class="invite_dialog"
     >
-      <template #header="{ close }">
+      <template #header>
         <div class="flex justify-between">
           <div
             class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-[#EAECF0]"
@@ -28,6 +30,7 @@
           />
         </div>
       </template>
+      <!-- dialog content -->
       <div class="relative">
         <div class="text-[18px] leading-[28px] text-[#101828]">
           {{ $t('organization.invite.inviteNew') }}
@@ -126,7 +129,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
   import { ref } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js'
   import { ElMessage } from 'element-plus'
@@ -177,17 +180,21 @@
   }
 
   const showUserList = (e) => {
-    getUsers(userNameInput.value)
-      .then((data) => {
-        shouldShowUserList.value = data.users.length > 0
-        userList.value = data.users.slice(0, 6)
-      })
-      .catch((err) => {
-        ElMessage({
-          message: err.message,
-          type: 'warning'
+    if (e.target.value) {
+      getUsers(userNameInput.value)
+        .then((data) => {
+          shouldShowUserList.value = data.users.length > 0
+          userList.value = data.users.slice(0, 6)
         })
-      })
+        .catch((err) => {
+          ElMessage({
+            message: err.message,
+            type: 'warning'
+          })
+        })
+    } else {
+      shouldShowUserList.value = false
+    }
   }
 
   async function getUsers(username) {
