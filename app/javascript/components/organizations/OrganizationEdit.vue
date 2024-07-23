@@ -32,9 +32,9 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('organization.orgHomepage')" prop="homepage">
-        <el-input v-model="organization.homepage" placeholder="example.com" @blur="formatHomepage">
+        <el-input v-model="organization.homepage" placeholder="example.com">
           <template #prepend>
-            <el-select v-model="selectedProtocol" style="width: 100px">
+            <el-select v-model="selectedProtocol" style="width: 100px; border: none">
               <el-option label="https://" value="https://" />
               <el-option label="http://" value="http://" />
             </el-select>
@@ -100,7 +100,6 @@
 
   const organization = ref(props.organizationRaw)
   const nameRule = inject('nameRule')
-  // const organization = inject('organizationObject')
   const selectedProtocol = ref('https://')
   const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const org_types = ['企业', '高校', '非营利组织', '社区组织']
@@ -111,7 +110,12 @@
   const logo_images = ref([])
 
   watch(props.organizationRaw, (newVal) => {
-    logo_images.value = [{ url: newVal.logo, name: newVal.logo }]
+    if (newVal.logo) {
+      logo_images.value = [{ url: newVal.logo, name: newVal.logo }]
+    }
+    if (newVal.homepage) {
+      formatHomepage(newVal.homepage)
+    }
   })
 
   const rules = computed(() => {
@@ -134,19 +138,11 @@
             }
   })
 
-  onMounted(() => {
-    // parseDataForm()
-    formatHomepage()
-  })
-
   const handleUploadSuccess = (res) => {
     organization.value.logo = res.url
-    // this.dataForm.logo_url = res.url
-    // this.showUpload = false
   }
 
   const handleUploadError = (res) => {
-    // this.showUpload = true
     ElMessage({
       message: JSON.parse(res.message).message,
       type: 'error'
@@ -154,30 +150,28 @@
   }
 
   const handleRemoveImage = () => {
-    // this.showUpload = true
     organization.value.logo = ""
   }
 
   const handleUploadProgress = () => {
-    // this.showUpload = false
   }
 
   const getDomain = () => {
     return `${window.location.hostname}/`
   }
 
-  const formatHomepage = () => {
-    if (organization.value.homepage) {
+  const formatHomepage = (homepage) => {
+    if (homepage) {
       // 检查并移除 http:// 或 https://，同时更新 selectedProtocol
       const httpRegex = /^http:\/\//;
       const httpsRegex = /^https:\/\//;
 
-      if (httpRegex.test(organization.value.homepage)) {
+      if (httpRegex.test(homepage)) {
         selectedProtocol.value = 'http://';
-        organization.value.homepage = organization.value.homepage.replace(httpRegex, '');
-      } else if (httpsRegex.test(organization.value.homepage)) {
+        organization.value.homepage = homepage.replace(httpRegex, '');
+      } else if (httpsRegex.test(homepage)) {
         selectedProtocol.value = 'https://';
-        organization.value.homepage = organization.value.homepage.replace(httpsRegex, '');
+        organization.value.homepage = homepage.replace(httpsRegex, '');
       }
     }
   }
@@ -234,6 +228,8 @@
         });
       })
   }
+
+  onMounted(() => {})
 </script>
 
 <style scoped>
