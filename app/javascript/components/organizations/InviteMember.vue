@@ -133,15 +133,16 @@
   import { ref, inject } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js'
   import jwtFetch from '../../packs/jwtFetch.js'
+  import cookies from '../../packs/cookies.js'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
 
   const csghubServer = inject('csghubServer')
   const emit = defineEmits(['resetMemberList'])
+  const admin = cookies.isKey('admin-user')
 
   const props = defineProps({
-    orgName: String,
-    admin: Boolean
+    orgName: String
   })
 
   const { t } = useI18n()

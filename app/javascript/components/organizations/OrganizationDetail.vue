@@ -80,7 +80,6 @@
 
           <InviteMember :orgName="organizationData.name"
                         @resetMemberList="resetMemberList"
-                        :admin="admin"
                         class="my-[16px]"
           />
 
