@@ -130,11 +130,13 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, inject } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js'
+  import jwtFetch from '../../packs/jwtFetch.js'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
 
+  const csghubServer = inject('csghubServer')
   const emit = defineEmits(['resetMemberList'])
 
   const props = defineProps({
@@ -234,19 +236,18 @@
   }
 
   async function inviteNewMember() {
-    const inviteNewMemberEndpoint = '/internal_api/organizations/new-members'
+    const inviteNewMemberEndpoint = `${csghubServer}/api/v1/organizations/${props.orgName}/members`
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        org_name: props.orgName,
-        user_names: selectedUsers.value.map((user) => user.name).join(','),
-        user_role: userRoleInput.value
+        user_role: userRoleInput.value,
+        user_names: selectedUsers.value.map((user) => user.name).join(',')
       })
     }
-    const response = await csrfFetch(inviteNewMemberEndpoint, options)
+    const response = await jwtFetch(inviteNewMemberEndpoint, options)
     if (!response.ok) {
       return response.json().then((data) => {
         throw new Error(data.message)
