@@ -4,16 +4,16 @@
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
-      :nickName="organizationNickname"
-      :homepage="organizationHomepage"
+      :nickName="organization.nickname"
+      :homepage="organization.homepage"
       :name="organization.name"
-      :logo="organizationAvatar"
+      :logo="organization.logo"
     >
     </Menu>
     <OrganizationEdit
       v-if="action === 'edit'"
       class="grow py-[24px]"
-      :organization="organization"
+      :organizationRaw="organization"
       @updateOrganization="updateOrganization"
     >
     </OrganizationEdit>
@@ -26,35 +26,61 @@
     </OrganizationMembers>
   </div>
 </template>
-<script>
+
+<script setup>
   import Menu from './Menu.vue'
   import OrganizationEdit from './OrganizationEdit.vue'
   import OrganizationMembers from './OrganizationMembers.vue'
-  export default {
-    props: {
-      organization: Object,
-      action: String,
-      admin: Boolean
-    },
-    components: {
-      Menu,
-      OrganizationEdit,
-      OrganizationMembers
-    },
-    data() {
-      return {
-        organizationNickname: this.organization.nickname,
-        organizationHomepage: this.organization.homepage,
-        organizationAvatar: this.organization.avatar
-      }
-    },
-    methods: {
-      updateOrganization(data) {
-        const { nickname, homepage, logo } = data
-        this.organizationNickname = nickname || this.organizationNickname
-        this.organizationHomepage = homepage || this.organizationHomepage
-        this.organizationAvatar = logo || this.organizationAvatar
-      }
+  import jwtFetch from "../../packs/jwtFetch.js"
+  import { ref, onMounted, inject, provide } from 'vue'
+
+  const props = defineProps({
+    name: String,
+    action: String
+  })
+
+  const csghubServer = inject('csghubServer')
+
+  const organization = ref({
+    name: props.name,
+    nickname: '',
+    verified: false,
+    logo: '',
+    homepage: '',
+    org_type: ''
+  })
+
+  const fetchOrgDetail = async () => {
+    const orgDetailEndpoint = `${csghubServer}/api/v1/organization/${props.name}`
+    jwtFetch(orgDetailEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        organization.value.name = body.data.path
+        organization.value.nickname = body.data.name
+        organization.value.verified = body.data.verified
+        organization.value.logo = body.data.logo
+        organization.value.homepage = body.data.homepage
+        organization.value.org_type = body.data.org_type
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
+
+  const updateOrganization = (data) => {
+    const { nickname, homepage, logo } = data
+    if (nickname) {
+      organization.value.nickname = nickname
+    }
+    if (homepage) {
+      organization.value.homepage = homepage
+    }
+    if (logo) {
+      organization.value.logo = logo
     }
   }
+
+  onMounted(() => {
+    fetchOrgDetail()
+  })
 </script>

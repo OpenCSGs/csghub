@@ -3,8 +3,9 @@ class OrganizationsController < ApplicationController
   before_action :authenticate_user, except: [:show]
 
   def edit
-    @organization = Organization.find_by(name: params[:id])
-    authorize @organization
+    # @organization = Organization.find_by(name: params[:id])
+    @name = params[:id]
+    # authorize @organization
   end
 
   def new
