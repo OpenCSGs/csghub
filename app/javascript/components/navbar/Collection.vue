@@ -9,7 +9,7 @@
       width="18"
       height="18"
     />
-    <span class="ml-[8px]"> {{ $t('collection.collection')}} </span>
+    <span class="ml-[8px]"> {{ $t('collections.collection')}} </span>
   </a>
 </template>
 
