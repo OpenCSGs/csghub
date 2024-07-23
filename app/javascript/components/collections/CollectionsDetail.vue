@@ -24,7 +24,35 @@
         :label="'项目'"
         name="page"
       >
-        <div class="pt-[24px]">项目项目</div>
+        <div class="pt-[24px]">
+          <div class="h-[480px] md:h-auto">
+            <div class="w-[480px] absolute left-1/2 -translate-x-1/2 md:hidden">
+              <img
+                class="w-full"
+                src="/images/search_circle_bg.png"
+              />
+            </div>
+            <div class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5">
+              <div class="border border-[#EAECF0] rounded-[10px] p-3 max-w-[max-content] mb-4">
+                <SvgIcon name="collections" width="24" />
+              </div>
+              <div class="test-[16px] leading-[24px]">空合集</div>
+              <div
+                class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
+              >
+              要将项目添加到此合集，请使用 + 添加到合集或使用模型、数据集、空间或论文页面上的添加合集按钮
+              </div>
+              <div class="flex gap-3">
+                <div
+                  class="flex px-4 py-[10px] text-[#FFFFFF] border border-[#3250BD] justify-center items-center gap-[6px] rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+                >
+                  <SvgIcon name="plus" />
+                  添加项目
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </el-tab-pane>
       <el-tab-pane
         :label="'设置'"
