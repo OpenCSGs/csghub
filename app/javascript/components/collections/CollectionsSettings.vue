@@ -113,7 +113,7 @@
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('collections.edit.modelVisibility') }}
+          {{ $t('collections.edit.changeVisibility') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('collections.edit.statusText') }}
@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">{{ $t('models.edit.modelVisibility') }}</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('collections.edit.collectionVisibility') }}</p>
         <el-select
           v-model="visibility"
           @change="changeVisibility"
