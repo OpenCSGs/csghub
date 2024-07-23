@@ -78,7 +78,7 @@
             <span class="text-[#303133] text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
           </h3>
 
-          <InviteMember :org-name="organizationData.name"
+          <InviteMember :orgName="organizationData.name"
                         @resetMemberList="resetMemberList"
                         :admin="admin"
                         class="my-[16px]"
