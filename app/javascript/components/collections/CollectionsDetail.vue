@@ -156,9 +156,7 @@
     } else {
       const { data } = await res.json()
       console.log(data)
-      collectionData.value = data.data
-      console.log(collectionData.value.likes)
-      //   totalCollections.value = data.total
+      collectionData.value = data.data || []
     }
   }
   onBeforeMount(() => {
