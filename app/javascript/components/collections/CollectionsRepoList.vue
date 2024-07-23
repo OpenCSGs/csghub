@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:w-[100%] sm:mt-[36px]">
+  <div class="sm:w-[100%] sm:mt-[36px] pt-4">
     <!-- models -->
     <div>
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
@@ -15,7 +15,7 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <repo-item
-          v-for="model in models.data"
+          v-for="model in models"
           :repo="model"
           repo-type="model"
         ></repo-item>
@@ -43,7 +43,7 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <repo-item
-          v-for="dataset in datasets.data"
+          v-for="dataset in datasets"
           :repo="dataset"
           repo-type="dataset"
         ></repo-item>
@@ -71,7 +71,7 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <repo-item
-          v-for="code in codes.data"
+          v-for="code in codes"
           :repo="code"
           repo-type="code"
         ></repo-item>
@@ -99,7 +99,7 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <application-space-item
-          v-for="repo in spaces.data"
+          v-for="repo in spaces"
           :repo="repo"
           repo-type="space"
         />
@@ -116,16 +116,40 @@
 <script setup>
   import { computed, ref, onMounted, inject } from 'vue'
 
-  import RepoItem from "'../shared/RepoItem.vue"
-  import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
+  import RepoItem from '../shared/RepoItem.vue'
+  import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
 
+  const props = defineProps({
+    repositories: Object
+  })
   const models = ref([])
   const datasets = ref([])
   const codes = ref([])
   const spaces = ref([])
 
-  const hasModels = computed(() => models.value?.total > 0)
-  const hasDatasets = computed(() => datasets.value?.total > 0)
-  const hasCodes = computed(() => codes.value?.total > 0)
-  const hasSpaces = computed(() => spaces.value?.total > 0)
+  const hasModels = computed(() => models.value?.length > 0)
+  const hasDatasets = computed(() => datasets.value?.length > 0)
+  const hasCodes = computed(() => codes.value?.length > 0)
+  const hasSpaces = computed(() => spaces.value?.length > 0)
+
+  onMounted(() => {
+    props.repositories.forEach((item) => {
+      switch (item.repository_type) {
+        case 'model':
+          models.value.push(item)
+          break
+        case 'dataset':
+          datasets.value.push(item)
+          break
+        case 'space':
+          spaces.value.push(item)
+          break
+        case 'code':
+          codes.value.push(item)
+          break
+      }
+    })
+    console.log(models.value);
+    console.log(hasModels.value);
+  })
 </script>
