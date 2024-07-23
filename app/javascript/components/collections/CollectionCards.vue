@@ -48,7 +48,6 @@
   }
 
   const goCollectionDetails = (collection_id) => {
-    // console.log('跳详情页');
-    // location.href = `/collections/${collection_id}`
+    location.href = `/collections/${collection_id}`
   }
 </script>
