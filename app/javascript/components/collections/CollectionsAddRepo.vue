@@ -102,7 +102,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject } from 'vue'
+  import { ref, inject, onMounted } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -188,6 +188,9 @@
       return response.json()
     }
   }
+  onMounted(() => {
+    fetchRepoList('models')
+  })
 </script>
 <style>
   @media (max-width: 768px) {
