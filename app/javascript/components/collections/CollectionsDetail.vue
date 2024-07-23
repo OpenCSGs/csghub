@@ -21,7 +21,7 @@
       @tabClick="tabChange"
     >
       <el-tab-pane
-        :label="'项目'"
+        :label="$t('collections.details.tabProject')"
         name="page"
       >
         <div class="pt-[24px]">
@@ -42,12 +42,11 @@
                   width="24"
                 />
               </div>
-              <div class="test-[16px] leading-[24px]">空合集</div>
+              <div class="test-[16px] leading-[24px]">{{ $t('collections.details.emptyCollection') }}</div>
               <div
                 class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
               >
-                要将项目添加到此合集，请使用 +
-                添加到合集或使用模型、数据集、空间或论文页面上的添加合集按钮
+              {{ $t('collections.details.tips') }}
               </div>
               <div class="flex gap-3">
                 <CollectionsAddRepo
@@ -58,7 +57,7 @@
             </div>
           </div>
         </div>
-        <div class="w-[120px]">
+        <div class="max-w-[max-content]">
           <CollectionsAddRepo
             v-if="showRepoList"
             :settingsVisibility="settingsVisibility"
@@ -71,7 +70,7 @@
         />
       </el-tab-pane>
       <el-tab-pane
-        :label="'设置'"
+        :label="$t('collections.details.tabSettings')"
         name="setting"
         v-if="settingsVisibility"
       >

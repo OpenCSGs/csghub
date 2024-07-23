@@ -6,7 +6,7 @@
       class="flex px-4 py-[10px] text-[#FFFFFF] border border-[#3250BD] justify-center items-center gap-[6px] rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
     >
       <SvgIcon name="plus" />
-      添加项目
+      {{ $t('collections.edit.add') }}
     </div>
     <el-dialog
       v-model="dialogVisible"
@@ -30,7 +30,7 @@
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-[#344054] text-[14px] mb-[6px]">项目类型</p>
+              <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('collections.edit.type') }}</p>
               <el-select
                 v-model="typeInput"
                 @change="typeChange"
@@ -46,7 +46,7 @@
                 />
               </el-select>
             </div>
-            <p class="text-[#344054] text-[14px] mb-[6px]">项目名称</p>
+            <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('collections.edit.name') }}</p>
             <el-select
               v-model="repoIdsInput"
               :placeholder="this.$t('all.select')"
@@ -159,7 +159,7 @@
       .then(() => {
         dialogVisible.value = false
         ElMessage({
-          message: '添加成功',
+          message: t('all.addSuccess'),
           type: 'success'
         })
         location.href = `/collections/${props.collectionsId}`
@@ -173,7 +173,6 @@
   }
 
   async function collectionAddRepo() {
-
     const addRepoData = {
       repo_ids: [repoIdsInput.value]
     }

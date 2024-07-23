@@ -5,9 +5,11 @@
     <!-- 合集中文名称 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">合集中文名称</div>
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('collections.edit.cnName') }}
+        </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          将会显示在模型列表页面中，选填
+          {{ $t('collections.edit.cnNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -29,9 +31,11 @@
     <!-- 合集介绍 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">合集介绍</div>
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('collections.edit.desc') }}
+        </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          一段关于合集的介绍，选填
+          {{ $t('collections.edit.descTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -53,9 +57,11 @@
     <!-- 主题 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">主题</div>
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('collections.edit.theme') }}
+        </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          更新主题
+          {{ $t('collections.edit.upDateTheme') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -106,13 +112,17 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">修改合集可见性</div>
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('collections.edit.modelVisibility') }}
+        </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          当前合集目前是
+          {{ $t('collections.edit.statusText') }}
           <span class="text-black font-semibold"
             >【{{ visibility ? $t('all.private') : $t('all.public') }}】</span
           >
-          状态。{{ visibility ? '只有创建者或组织成员可见' : '任何人都可以看到此合集' }}
+          {{ $t('collections.edit.status') }}。{{
+            visibility ? $t('collections.edit.privateVis') : $t('collections.edit.publicVis')
+          }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -138,13 +148,15 @@
     <!-- 删除 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">删除合集</div>
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('collections.edit.delCollection') }}
+        </div>
         <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          此操作无法撤销.这将永久删除
+          {{ $t('collections.edit.delTips') }}
           <span class="text-black font-medium break-words">{{
             `${collection.username}/${collection.name}`
           }}</span>
-          合集
+          {{ $t('collections.collection') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('all.enterPls') }}
@@ -155,7 +167,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">模型名称</p>
+        <p class="text-[#344054] text-[14px]">{{ $t('collections.collectionName') }}</p>
         <el-input
           v-model="delDesc"
           clearable
@@ -217,11 +229,15 @@
   const changeVisibility = (value) => {
     console.log(value)
     ElMessageBox({
-      title: '修改合集可见性',
+      title: t('collections.edit.changeVisibility'),
       message: h('p', null, [
         h('span', null, t('all.changeVis')),
         h('span', null, value ? t('all.private') : t('all.public')),
-        h('span', null, value ? t('models.edit.privateInfo') : t('models.edit.publicInfo'))
+        h(
+          'span',
+          null,
+          value ? t('collections.edit.privateInfo') : t('collections.edit.publicInfo')
+        )
       ]),
       showCancelButton: true,
       confirmButtonText: t('all.confirm'),
@@ -239,7 +255,7 @@
   }
 
   async function updateCollection(value) {
-    console.log(value);
+    console.log(value)
     const transformedData = {
       description: collectionDesc.value,
       name: collectionName.value,
@@ -258,7 +274,7 @@
     if (!response.ok) {
       ElMessage.warning(data.msg)
     } else {
-      ElMessage.success('更新成功')
+      ElMessage.success(t('all.updateSuccess'))
       return response.json()
     }
   }
