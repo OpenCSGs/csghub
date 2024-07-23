@@ -24,9 +24,10 @@ class OrganizationsController < ApplicationController
   end
 
   def members
-    @organization = Organization.find_by(name: params[:id])
-    authorize @organization
-    user_org_role = current_user && current_user.org_role(@organization)
-    @admin = user_org_role == 'admin'
+    @name = params[:id]
+    # @organization = Organization.find_by(name: params[:id])
+    # authorize @organization
+    # user_org_role = current_user && current_user.org_role(@organization)
+    # @admin = user_org_role == 'admin'
   end
 end
