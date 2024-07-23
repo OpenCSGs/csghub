@@ -42,11 +42,13 @@
                   width="24"
                 />
               </div>
-              <div class="test-[16px] leading-[24px]">{{ $t('collections.details.emptyCollection') }}</div>
+              <div class="test-[16px] leading-[24px]">
+                {{ $t('collections.details.emptyCollection') }}
+              </div>
               <div
                 class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
               >
-              {{ $t('collections.details.tips') }}
+                {{ $t('collections.details.tips') }}
               </div>
               <div class="flex gap-3">
                 <CollectionsAddRepo
@@ -117,11 +119,7 @@
   })
 
   const showRepoList = computed(() => {
-    if (collectionData.value) {
-      return collectionData.value.repositories.length > 0
-    } else {
-      return false
-    }
+    return collectionData.value?.repositories?.length > 0
   })
 
   const handleTabLeave = (tab) => {
