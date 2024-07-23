@@ -21,7 +21,7 @@
       v-if="action === 'members'"
       class="grow py-[24px]"
       :admin="admin"
-      :organization="organization"
+      :organizationRaw="organization"
     >
     </OrganizationMembers>
   </div>

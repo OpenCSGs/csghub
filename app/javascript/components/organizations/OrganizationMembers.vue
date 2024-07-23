@@ -20,7 +20,7 @@
           </div>
           <div class="flex gap-[16px]">
             <InviteMember
-              :org-name="organization.name"
+              :orgName="organization.name"
               @resetMemberList="fetchMembers"
             />
           </div>
@@ -165,6 +165,14 @@
 
   // import Member from './Member.vue'
 
+  const props = defineProps({
+    organizationRaw: {
+      type: Object,
+      required: true
+    }
+  })
+
+  const organization = ref(props.organizationRaw)
   const admin = cookies.isKey('admin_user')
   const csghubServer = inject('csghubServer')
   const members = ref([])
@@ -181,28 +189,46 @@
     fetchMembers()
   })
 
-  const fetchMembers = () => {
+  const fetchMembers = async () => {
     loading.value = true
     const params = new URLSearchParams()
     params.append('page', searchForm.value.page)
     params.append('per', searchForm.value.per)
-    const url = `/internal_api/organizations/${
-      organization.value.name
-    }/members?${params.toString()}`
-    const options = { method: 'GET' }
-    csrfFetch(url, options)
-      .then((res) => res.json())
-      .then((res) => {
-        members.value = res.members
-        totalCount.value = res.total_count
+    const orgMemberListEndpoint = `${csghubServer}/api/v1/organization/${organization.value.name}/members?${params.toString()}`
+    jwtFetch(orgMemberListEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        members.value = body.data
+        totalCount.value = body.data.length
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error:', error)
       })
       .finally(() => {
         loading.value = false
       })
   }
+
+  // const fetchMembers = () => {
+  //   loading.value = true
+  //   const params = new URLSearchParams()
+  //   params.append('page', searchForm.value.page)
+  //   params.append('per', searchForm.value.per)
+  //   const url = `/internal_api/organizations/${organization.value.name}/members?${params.toString()}`
+  //   const options = { method: 'GET' }
+  //   csrfFetch(url, options)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       members.value = res.members
+  //       totalCount.value = res.total_count
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error)
+  //     })
+  //     .finally(() => {
+  //       loading.value = false
+  //     })
+  // }
 
   const formatDate = (date) => {
     return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
