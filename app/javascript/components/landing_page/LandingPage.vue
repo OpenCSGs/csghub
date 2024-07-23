@@ -9,7 +9,7 @@
           class="relative mb-[24px] tracking-[-1.2px] md:tracking-[-0.72px] m-auto text-[60px] md:text-[36px] md:leading-[44px] text-[#101828] leading-[72px]"
         >
           <span class="relative z-10 font-medium md:font-normal">
-            Test Test Test
+            {{ $t('landingPage.banner.title') }}
           </span>
           <!-- underline svg -->
           <SvgIcon
