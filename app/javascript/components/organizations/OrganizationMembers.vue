@@ -200,8 +200,8 @@
     jwtFetch(orgMemberListEndpoint)
       .then(response => response.json())
       .then(body => {
-        members.value = body.data
-        totalCount.value = body.data.length
+        members.value = body.data.data
+        totalCount.value = body.data.total
       })
       .catch(error => {
         console.error('Error:', error)
