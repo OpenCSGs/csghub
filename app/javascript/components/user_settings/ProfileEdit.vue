@@ -99,8 +99,8 @@ export default {
       this.$refs.fileInput.click();
     },
     removeImage() {
-      this.$refs.fileInput.value = null;
-      this.avatarUrl = "";
+      this.$refs.fileInput.value = null
+      this.profileData.profileAvatar = ""
     },
     async uploadAvatar() {
       const uploadEndpoint = `/internal_api/upload`;
