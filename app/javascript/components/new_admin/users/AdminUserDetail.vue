@@ -94,11 +94,11 @@
   })
 
   const fetchUser = async () => {
-    const response = await fetch(`/internal_api/admin/users/${route.params.id}`)
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${route.params.id}`)
     if (response.ok) {
-      const data = await response.json()
-      user.value = data
-      form.value.roles = data.role
+      const result = await response.json()
+      user.value = result.data
+      form.value.roles = result.data.roles
     } else {
       ElMessage.error('Failed to fetch user')
     }
