@@ -28,27 +28,96 @@
           <p>{{ dayjs(user.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
         </li>
       </ul>
+      <template #footer>
+        <el-button @click="dialogFormVisible = true">Edit</el-button>
+      </template>
     </el-card>
+
+    <el-dialog
+      v-model="dialogFormVisible"
+      :title="`Update user: ${user.name}`"
+      width="500"
+    >
+      <el-form :model="form">
+        <el-form-item label="Roles">
+          <el-select
+            v-model="form.roles"
+            multiple
+            placeholder="Please select the roles"
+          >
+            <el-option
+              label="Super User"
+              value="super_user"
+            />
+            <el-option
+              label="Admin"
+              value="admin"
+            />
+            <el-option
+              label="Personal User"
+              value="personal_user"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button
+            type="primary"
+            @click="submitUserForm"
+          >
+            Confirm
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { useRoute } from 'vue-router'
-  import dayjs from "dayjs"
+  import jwtFetch from '../../../packs/jwtFetch.js'
+  import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
 
   const route = useRoute()
+  const csghubServer = inject('csghubServer')
 
   const user = ref({})
+
+  const dialogFormVisible = ref(false)
+
+  const form = ref({
+    roles: String
+  })
 
   const fetchUser = async () => {
     const response = await fetch(`/internal_api/admin/users/${route.params.id}`)
     if (response.ok) {
       const data = await response.json()
       user.value = data
+      form.value.roles = data.role
     } else {
       ElMessage.error('Failed to fetch user')
+    }
+  }
+
+  const submitUserForm = async () => {
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${user.value.name}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ roles: form.value.roles })
+    })
+    if (response.ok) {
+      ElMessage.success('User updated successfully')
+      dialogFormVisible.value = false
+      fetchUser()
+    } else {
+      ElMessage.error('Failed to update user')
     }
   }
 
