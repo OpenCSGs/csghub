@@ -200,8 +200,6 @@
   })
 
   const createCollection = () => {
-    console.log(dataForm.value)
-    console.log(dataFormRef.value)
     if (!dataForm.value) return
     dataFormRef.value.validate((valid) => {
       if (valid) {
