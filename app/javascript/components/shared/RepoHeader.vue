@@ -186,7 +186,7 @@
       class="flex items-center text-[#344054] font-normal"
     >
       {{ $t('all.baseModel') }}: 
-      <div class="cursor-pointer text-[#344054] ml-[8px]">
+      <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
         {{ baseModel }}
       </div>
     </div>
@@ -264,6 +264,10 @@
       return likesNumber.value.toString()
     }
   })
+
+  const redirectBaseModel = () => {
+    window.location.href = `/models/${props.baseModel}`
+  }
 
   const clickLike = () => {
     userLiked.value === true ? removeLike() : addLike()
