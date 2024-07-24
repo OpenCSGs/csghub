@@ -1,0 +1,193 @@
+<template>
+  <div class="flex rounded-2xl border border-[#EAECF0] my-6">
+    <div class="border-r border-[#EAECF0] w-[320px]">
+      <div
+        class="p-4 flex items-center justify-between border-b border-[#EAECF0]"
+      >
+        <div
+          class="flex items-center gap-2 text-base text-[#344054] font-medium"
+        >
+          <SvgIcon name="playground" />
+          Playground
+        </div>
+        <div
+          class="h-11 p-1 bg-[#f8f9fb] rounded-[10px] border border-[#eaecf0] items-center gap-1 inline-flex"
+        >
+          <div
+            class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"
+            :class="
+              playgroundMode === 'test' ? 'bg-white shadow' : 'bg-[#f8f9fb]'
+            "
+            @click="changePlaygroundMode('test')"
+          >
+            <div
+              class="text-[#344053] text-sm font-medium"
+              :class="
+                playgroundMode === 'test' ? 'text-[#344053]' : 'text-[#667084]'
+              "
+            >
+              Test
+            </div>
+          </div>
+          <div
+            class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"
+            :class="
+              playgroundMode === 'api' ? 'bg-white shadow' : 'bg-[#f8f9fb]'
+            "
+            @click="changePlaygroundMode('api')"
+          >
+            <div
+              class="text-[#667084] text-sm font-medium"
+              :class="
+                playgroundMode === 'api' ? 'text-[#344053]' : 'text-[#667084]'
+              "
+            >
+              API
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4">
+        <div class="text-[#344053] text-base font-medium leading-normal mb-4">
+          Parameters
+        </div>
+        <el-form
+          :model="form"
+          label-width="auto"
+          label-position="top"
+          style="max-width: 288px"
+        >
+          <el-form-item label="Top P">
+            <el-select
+              v-model="form.top_p"
+              size="large"
+            >
+              <el-option
+                v-for="top_p in topPRange"
+                :key="top_p"
+                :label="top_p"
+                :value="top_p"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Top K">
+            <el-select
+              v-model="form.top_k"
+              size="large"
+            >
+              <el-option
+                v-for="top_k in topKRange"
+                :key="top_k"
+                :label="top_k"
+                :value="top_k"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Temperature">
+            <el-select
+              v-model="form.temperature"
+              size="large"
+            >
+              <el-option
+                v-for="temperature in temperatureRange"
+                :key="temperature"
+                :label="temperature"
+                :value="temperature"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="Max Tokens">
+            <el-select
+              v-model="form.max_tokens"
+              size="large"
+            >
+              <el-option
+                v-for="max_tokens in maxTokensRange"
+                :key="max_tokens"
+                :label="max_tokens"
+                :value="max_tokens"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+
+    <div
+      v-show="playgroundMode === 'test'"
+      class="flex-1"
+    >
+      <TestEndpoint
+        :app-endpoint="props.appEndpoint"
+        :model-id="props.modelId"
+
+      />
+      <div class="px-4 flex justify-between items-center">
+        <div class="items-center gap-1.5 flex cursor-pointer">
+          <SvgIcon name="json" />
+          <div class="text-[#475466] text-xs leading-[18px]">JSON 输出</div>
+        </div>
+        <div
+          class="items-center gap-1.5 flex cursor-pointer"
+          @click="dialogVisible = true"
+        >
+          <SvgIcon name="fullscreen" />
+          <div class="text-[#475466] text-xs leading-[18px]">最大化</div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-show="playgroundMode === 'api'"
+      class="flex-1"
+    >
+      <ApiExample :form="form" />
+    </div>
+  </div>
+  <el-dialog
+    v-model="dialogVisible"
+    fullscreen
+    append-to-body
+  >
+    <TestEndpoint
+      :app-endpoint="props.appEndpoint"
+      :model-id="props.modelId"
+      :form="form"
+    />
+  </el-dialog>
+</template>
+
+<script setup>
+  import { ref } from 'vue'
+  import ApiExample from './playground/ApiExample.vue'
+  import TestEndpoint from './playground/TestEndpoint.vue'
+
+  const props = defineProps({
+    appEndpoint: String,
+    modelId: String
+  })
+
+  const dialogVisible = ref(false)
+
+  const topPRange = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
+  const topKRange = [-1, 0, 1, 2, 3, 4, 5]
+  const temperatureRange = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  const maxTokensRange = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+  const playgroundMode = ref('test') // test, api
+
+  const form = ref({
+    top_p: 1,
+    top_k: -1,
+    temperature: 0.5,
+    max_tokens: 20,
+  })
+
+  const changePlaygroundMode = (mode) => {
+    playgroundMode.value = mode
+  }
+</script>
