@@ -4,10 +4,7 @@
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
-      :name="profileName"
-      :email="email"
-      :displayName="profileDisplayName"
-      :avatar="profileAvatar"
+      :name="name"
     >
     </Menu>
     <div class="grow py-[24px]">
@@ -19,14 +16,14 @@
         {{ $t('sshKey.addSshKey') }}
       </button>
       <div
-        v-if="theSshKeys === '[]'"
+        v-if="theSshKeys.length === 0"
         class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]"
       >
         {{ $t('sshKey.noKeyTips') }}
       </div>
       <ssh-key-card
-        v-for="sshkey in JSON.parse(theSshKeys)"
-        :profile-name="profileName"
+        v-for="sshkey in theSshKeys"
+        :profile-name="name"
         :ssh-key-name="sshkey.name"
         :ssh-key="sshkey.content"
         :ssh-key-id="sshkey.id"
@@ -35,7 +32,7 @@
       </ssh-key-card>
       <el-dialog
         v-model="centerDialogVisible"
-        :title="this.$t('sshKey.addSshKey')"
+        :title="$t('sshKey.addSshKey')"
         width="30%"
         class="dialogWidth"
         style="border-radius: 0.5rem"
@@ -44,7 +41,7 @@
         <el-form
           :model="formData"
           :rules="formRules"
-          ref="formRules"
+          ref="formRef"
         >
           <div class="mb-[16px]">
             <p class="text-[#303133] text-[14px] mb-[8px]">
@@ -86,116 +83,123 @@
     </div>
   </div>
 </template>
-<script>
+
+<script setup>
   import Menu from './Menu.vue'
   import SshKeyCard from './SshKeyCard.vue'
   import { ElMessage } from 'element-plus'
-  import { inject } from 'vue'
+  import { ref, inject, onMounted } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
+  import { useI18n } from 'vue-i18n'
 
-  export default {
-    props: {
-      name: String,
-      sshKeys: String
-    },
-    components: {
-      Menu,
-      SshKeyCard
-    },
+  const { t } = useI18n()
 
-    data() {
-      return {
-        csghubServer: inject('csghubServer'),
-        centerDialogVisible: false,
-        sshKeyWarningDialogVisible: false,
-        profileName: this.name,
-        profileDisplayName: this.displayName,
-        profileAvatar: this.avatar,
-        theSshKeys: this.sshKeys,
-        theSshKeyName: '',
-        formData: {
-          theSshKey: ''
-        },
-        formRules: {
-          theSshKey: [
-            { validator: this.validateTheSshKey, trigger: 'blur' } // blur: 聚焦时触发验证
-          ]
-        }
-      }
-    },
+  const props = defineProps({
+    name: String
+  })
 
-    mounted() {},
+  const csghubServer = inject('csghubServer')
+  const centerDialogVisible = ref(false)
+  const sshKeyWarningDialogVisible = ref(false)
+  const theSshKeys = ref([])
+  const theSshKeyName = ref('')
+  const formRef = ref(null)
+  const formData = ref({
+    theSshKey: ''
+  })
 
-    methods: {
-      // 验证theSshKey
-      async validateTheSshKey(rule, value, callback) {
-        let regex =
-          /^(ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh.com|sk-ssh-ed25519@openssh.com)/
+  const validateTheSshKey = async (rule, value, callback) => {
+    let regex =
+      /^(ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh.com|sk-ssh-ed25519@openssh.com)/
 
-        if (!value) {
-          callback(new Error('Please input the ssh key'))
-          return
-        }
-        // 正则校验theSshKey
-        if (!regex.test(value)) {
-          callback(new Error('Invalid SSH key'))
-        }
-      },
-
-      submitSshKey() {
-        if (this.theSshKeyName == '') {
-          ElMessage({ message: this.$t('sshKey.nameWarning'), type: 'warning' })
-          return
-        }
-        if (this.formData.theSshKey == '') {
-          ElMessage({
-            message: this.$t('sshKey.contentWarning'),
-            type: 'warning'
-          })
-          return
-        }
-
-        // 异步操作: 提交时验证表单(注意: 验证通过时valid为true，否则为false)
-        this.$refs.formRules.validate((valid) => {
-          if (valid) {
-            // 异步发送请求
-            this.createTheSshKey().catch((err) => {
-              ElMessage({
-                message: err.message,
-                type: 'warning'
-              })
-            })
-          }
-        })
-      },
-
-      async createTheSshKey() {
-        const options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: this.profileName,
-            name: this.theSshKeyName,
-            content: this.formData.theSshKey
-          })
-        }
-        const SshKeyCreateEndpoint = `${this.csghubServer}/api/v1/user/${this.profileName}/ssh_keys`
-        const response = await jwtFetch(SshKeyCreateEndpoint, options)
-
-        if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.msg)
-          })
-        } else {
-          setTimeout(() => {
-            window.location.href = '/settings/ssh-keys'
-          }, 1000)
-          ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
-        }
-      }
+    if (!value) {
+      callback(new Error('Please input the ssh key'))
+      return
+    }
+    // 正则校验theSshKey
+    if (!regex.test(value)) {
+      callback(new Error('Invalid SSH key'))
     }
   }
+
+  const formRules = ref({
+    theSshKey: [
+      { validator: validateTheSshKey, trigger: 'blur' } // blur: 聚焦时触发验证
+    ]
+  })
+
+  const submitSshKey = () => {
+    if (theSshKeyName.value == '') {
+      ElMessage({ message: t('sshKey.nameWarning'), type: 'warning' })
+      return
+    }
+    if (formData.value.theSshKey == '') {
+      ElMessage({
+        message: t('sshKey.contentWarning'),
+        type: 'warning'
+      })
+      return
+    }
+
+    // 异步操作: 提交时验证表单(注意: 验证通过时valid为true，否则为false)
+    formRef.value.validate((valid) => {
+      if (valid) {
+        // 异步发送请求
+        createTheSshKey().catch((err) => {
+          ElMessage({
+            message: err.message,
+            type: 'warning'
+          })
+        })
+      }
+    })
+  }
+
+  const createTheSshKey = async () => {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: props.name,
+        name: theSshKeyName.value,
+        content: formData.value.theSshKey
+      })
+    }
+    const SshKeyCreateEndpoint = `${csghubServer}/api/v1/user/${props.name}/ssh_keys`
+    const response = await jwtFetch(SshKeyCreateEndpoint, options)
+
+    if (!response.ok) {
+      return response.json().then((data) => {
+        throw new Error(data.msg)
+      })
+    } else {
+      setTimeout(() => {
+        window.location.href = '/settings/ssh-keys'
+      }, 1000)
+      ElMessage({ message: t('all.addSuccess'), type: 'success' })
+    }
+  }
+
+  const fetchSshKeys = async () => {
+    const SshKeyEndpoint = `${csghubServer}/api/v1/user/${props.name}/ssh_keys`
+    const response = await jwtFetch(SshKeyEndpoint)
+    const result = await response.json()
+
+    if (!response.ok) {
+      ElMessage({
+        message: result.msg,
+        type: 'warning'
+      })
+    } else {
+      theSshKeys.value = result.data || []
+    }
+  }
+
+  onMounted(() => {
+    fetchSshKeys()
+  })
 </script>
+
 <style>
   .dialogWidth {
     width: 30%;
