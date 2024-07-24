@@ -17,6 +17,7 @@ import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
+import { collections } from './en_js/collections';
 import { endpoints } from './en_js/endpoints';
 import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
@@ -44,6 +45,7 @@ export default {
   shared,
   repo,
   components,
+  collections,
   endpoints,
   admin,
   finetune,

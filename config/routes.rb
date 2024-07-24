@@ -123,6 +123,7 @@ Rails.application.routes.draw do
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
     resources :collections, only: [:index, :new]
     resources :endpoints, only: [:index, :new]
+    resources :collections, only: [:index, :new]
     resources :finetune, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
@@ -147,6 +148,8 @@ Rails.application.routes.draw do
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
     get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
+
+    get '/collections/:collections_id/(*path)', to: 'collections#show', namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/

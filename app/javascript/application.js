@@ -50,6 +50,7 @@ import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
 import CollectionIndex from "./components/collections/CollectionIndex.vue"
+import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
 
 
 // Admin pages
@@ -102,7 +103,8 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
-    CollectionIndex
+    CollectionIndex,
+    CollectionsDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

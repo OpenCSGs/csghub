@@ -90,6 +90,9 @@ module Starhub
       # add this config to solve URL with unicode query
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
+        request: {
+          timeout: 60
+        },
         url: base_url,
         headers: {
           'Content-Type' => 'application/json',
@@ -106,6 +109,9 @@ module Starhub
       # add this config to solve URL with unicode query
       Faraday::Utils.default_uri_parser = ->(uri) { Addressable::URI.parse(uri) }
       Faraday.new(
+        request: {
+          timeout: 60
+        },
         url: base_url,
         headers: {
           'Authorization' => "Bearer #{token}",
