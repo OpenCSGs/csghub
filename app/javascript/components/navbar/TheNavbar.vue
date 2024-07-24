@@ -190,6 +190,7 @@
   import CodeNav from './CodeNav.vue'
   import { ref, inject, onMounted } from 'vue'
   import jwtFetch from '../../packs/jwtFetch.js'
+  import useUserStore from '../../stores/UserStore.js'
 
   const props = defineProps({
     logo: String,
@@ -202,6 +203,8 @@
     userName: String
   })
 
+  const userStore = useUserStore()
+
   const isLoggedInBoolean = ref(JSON.parse(props.isLoggedIn.toLowerCase()))
   const userProfile = ref(`/profile/${props.userName}`)
   const userAvatar = ref(props.avatar)
@@ -211,14 +214,21 @@
     location.href = `/${locale}/settings/locale`
   }
 
-  onMounted(() => {
+  const fetchUser = async () => {
     jwtFetch(`${csghubServer}/api/v1/user/${props.userName}`, {
         method: 'GET',
       })
         .then((res) => res.json())
         .then((body) => {
           userAvatar.value = body.data.avatar
+          userStore.initialize(body.data)
         })
+  }
+
+  onMounted(() => {
+    if (props.userName) {
+      fetchUser()
+    }
   })
 </script>
 
