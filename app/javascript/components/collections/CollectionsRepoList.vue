@@ -153,7 +153,5 @@
           break
       }
     })
-    console.log(models.value);
-    console.log(hasModels.value);
   })
 </script>

@@ -227,7 +227,6 @@
   ])
 
   const changeVisibility = (value) => {
-    console.log(value)
     ElMessageBox({
       title: t('collections.edit.changeVisibility'),
       message: h('p', null, [
@@ -255,7 +254,6 @@
   }
 
   async function updateCollection(value) {
-    console.log(value)
     const transformedData = {
       description: collectionDesc.value,
       name: collectionName.value,

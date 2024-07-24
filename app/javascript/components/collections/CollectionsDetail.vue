@@ -152,7 +152,6 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      console.log(data)
       collectionData.value = data.data || []
     }
   }
@@ -160,8 +159,6 @@
     if (props.path) {
       activeName.value = props.path
     }
-    console.log(props.path)
-    console.log(props.collectionsId)
     fetchCollectionDetail()
   })
 </script>
