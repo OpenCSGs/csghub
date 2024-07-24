@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
+    class="flex justify-center md:flex-col px-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
@@ -9,7 +9,7 @@
     </Menu>
 
     <!-- API Key list -->
-    <div class="grow py-[24px]">
+    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l min-h-[calc(100vh-153px)]">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
           <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">
@@ -29,7 +29,7 @@
 
       <button
         @click="centerDialogVisible = true"
-        class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]"
+        class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] w-[160px]"
       >
         {{ $t('accessToken.starshipAddToken') }}
       </button>

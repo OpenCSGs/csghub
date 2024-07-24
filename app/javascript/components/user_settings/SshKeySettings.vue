@@ -1,17 +1,17 @@
 <template>
   <div
-    class="flex justify-center md:flex-col h-auto px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
+    class="flex justify-center md:flex-col px-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
       :name="name"
     >
     </Menu>
-    <div class="grow py-[24px]">
+    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l min-h-[calc(100vh-153px)]">
       <h3 class="text-[#303133] text-[20px] font-[600]">SSH Keys</h3>
       <button
         @click="centerDialogVisible = true"
-        class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px]"
+        class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px] w-[160px]"
       >
         {{ $t('sshKey.addSshKey') }}
       </button>
