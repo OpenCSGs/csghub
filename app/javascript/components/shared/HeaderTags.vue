@@ -58,7 +58,7 @@
       class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
     >
       <SvgIcon name="language_tag" />
-      {{ this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name }}
+      {{ this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </a>
     <MoreTags
       v-if="theLanguageTags.moreTags"
@@ -77,7 +77,7 @@
       v-for="tag in theIndustryTags.theTags"
       class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
-      {{ this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name }}
+      {{ this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </div>
     <MoreTags
       v-if="theIndustryTags.moreTags"
@@ -117,7 +117,7 @@
       class="text-sm text-[#303133] px-[8px] py-[3px] rounded cursor-pointer flex items-center border gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
-      {{ tag.zh_name }}
+      {{ tag.name }}
     </a>
     <MoreTags
       v-if="theLicenseTags.moreTags"
@@ -129,7 +129,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import PyTorch from '../../components/tags/frameworks/PyTorch.vue'
   import TensorFlow from '../../components/tags/frameworks/TensorFlow.vue'
   import Safetensors from '../../components/tags/frameworks/Safetensors.vue'
@@ -138,51 +138,85 @@
   import PaddlePaddle from '../../components/tags/frameworks/PaddlePaddle.vue'
   import GGUF from '../../components/tags/frameworks/GGUF.vue'
   import Joblib from '../../components/tags/frameworks/Joblib.vue'
-  import { useI18n } from 'vue-i18n'
   import TagItem from '../tags/TagItem.vue'
   import MoreTags from './MoreTags.vue'
 
   const props = defineProps({
-    taskTags: Array,
-    frameworkTags: Array,
-    languageTags: Array,
-    licenseTags: Array,
-    industryTags: Array,
-    otherTags: Array,
+    tags: Object,
     prefix: {
       type: String,
       default: ''
     }
   })
 
-  const { t, locale } = useI18n()
+  const taskTags = ref([])
+  const frameworkTags = ref([])
+  const languageTags = ref([])
+  const licenseTags = ref([])
+  const industryTags = ref([])
+  const otherTags = ref([])
+
+  const theTaskTags = ref({})
+  const theFrameworkTags = ref({})
+  const theLanguageTags = ref({})
+  const theLicenseTags = ref({})
+  const theIndustryTags = ref({})
+  const theOtherTags = ref({})
+
+  watch(() => props.tags, () => {
+    taskTags.value = props.tags.task_tags
+    frameworkTags.value = props.tags.framework_tags
+    languageTags.value = props.tags.language_tags
+    licenseTags.value = props.tags.license_tags
+    industryTags.value = props.tags.industry_tags
+    otherTags.value = props.tags.other_tags
+
+    theTaskTags.value = createTagRefs(taskTags)
+    theFrameworkTags.value = createTagRefs(frameworkTags)
+    theLanguageTags.value = createTagRefs(languageTags)
+    theLicenseTags.value = createTagRefs(licenseTags)
+    theIndustryTags.value = createTagRefs(industryTags)
+    theOtherTags.value = createTagRefs(otherTags)
+  })
+
   //先定义一个生产参数的方法
   const createTagRefs = (tagType) => {
-    const moreTags = ref(props[`${tagType}Tags`]?.length > 3)
-    const theTags = ref(props[`${tagType}Tags`]?.slice(0, 3))
+    const moreTags = ref(tagType.value?.length > 3)
+    const theTags = ref(tagType.value?.slice(0, 3))
     return { moreTags, theTags }
   }
 
-  const theTaskTags = ref(createTagRefs('task'))
-  const theFrameworkTags = ref(createTagRefs('framework'))
-  const theLanguageTags = ref(createTagRefs('language'))
-  const theLicenseTags = ref(createTagRefs('license'))
-  const theIndustryTags = ref(createTagRefs('industry'))
-  const theOtherTags = ref(createTagRefs('other'))
-
   const tagGroups = {
-    task: theTaskTags,
-    framework: theFrameworkTags,
-    language: theLanguageTags,
-    license: theLicenseTags,
-    industry: theIndustryTags,
-    other: theOtherTags
+    task: {
+      source: taskTags,
+      target: theTaskTags
+    },
+    framework: {
+      source: frameworkTags,
+      target: theFrameworkTags
+    },
+    language: {
+      source: languageTags,
+      target: theLanguageTags
+    },
+    license: {
+      source: licenseTags,
+      target: theLicenseTags
+    },
+    industry: {
+      source: industryTags,
+      target: theIndustryTags
+    },
+    other: {
+      source: otherTags,
+      target: theOtherTags
+    }
   }
 
   const viewMoreTargets = (target) => {
-    const tagRef = tagGroups[target]
+    const tagRef = tagGroups[target].target
     if (tagRef) {
-      tagRef.value.theTags = props[`${target}Tags`]
+      tagRef.value.theTags = tagGroups[target].source.value
       tagRef.value.moreTags = false
     }
   }

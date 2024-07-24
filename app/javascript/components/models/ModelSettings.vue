@@ -277,9 +277,13 @@ export default {
   mounted() {
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
-    this.getSelectTags()
     this.getIndustryTags()
     this.fetchReadme()
+  },
+  watch: {
+    tags() {
+      this.getSelectTags()
+    }
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听

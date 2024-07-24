@@ -187,12 +187,7 @@
   <!-- repo tags -->
   <header-tags
     v-if="repoType === 'model' || repoType === 'dataset'"
-    :task-tags="tags.task_tags"
-    :framework-tags="tags.framework_tags"
-    :license-tags="tags.license_tags"
-    :language-tags="tags.language_tags"
-    :industry-tags="tags.industry_tags"
-    :other-tags="tags.other_tags"
+    :tags="tags"
     :prefix="`${repoType}s/`"
   />
 </template>
@@ -202,8 +197,7 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { ref, inject } from 'vue'
-  import { computed } from 'vue'
+  import { ref, inject, computed } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { ElMessage } from 'element-plus'
 
