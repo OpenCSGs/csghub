@@ -71,8 +71,8 @@
     </div>
 
     <div class="bg-[#fff]">
-      <div class="max-w-[1280px] m-auto py-[36px] flex sm:flex-col">
-        <div class="w-[30%] md:w-[45%] px-[16px] sm:w-[100%]">
+      <div class="flex justify-center lg:flex-col rounded-[8px] max-w-[1280px] m-auto bg-white">
+        <div class="max-w-[320px] pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>
             <span class="text-[#303133] text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
@@ -84,25 +84,26 @@
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
-              <a v-for="user in membersList" :href="`/profile/${user.username}`">
-                <el-tooltip placement="bottom" effect="light">
-                  <div class="flex flex-col items-center">
-                    <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
-                  </div>
-                  <template #content>
-                    <span class="text-[12px] py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
-                  </template>
-                </el-tooltip>
-              </a>
+            <a v-for="user in membersList" :href="`/profile/${user.username}`">
+              <el-tooltip placement="bottom" effect="light">
+                <div class="flex flex-col items-center">
+                  <img :src="user.avatar" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
+                </div>
+                <template #content>
+                  <span class="text-[12px] py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
+                </template>
+              </el-tooltip>
+            </a>
           </div>
         </div>
-        <profile-repo-list
-          :name="name"
-        />
+        <div class="grow px-[20px] py-[36px] sm:py-0">
+          <ProfileRepoList :name="name" />
+        </div>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
   import { ref, onMounted, inject } from 'vue'
   import InviteMember from './InviteMember.vue'
@@ -156,7 +157,7 @@
     jwtFetch(orgMemberListEndpoint)
       .then(response => response.json())
       .then(body => {
-        membersList.value = body.data
+        membersList.value = body.data.data
       })
       .catch(error => {
         console.error('Error:', error)
