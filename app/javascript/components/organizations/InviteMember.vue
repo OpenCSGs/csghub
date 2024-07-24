@@ -246,7 +246,7 @@
       },
       body: JSON.stringify({
         role: userRoleInput.value,
-        user: selectedUsers.value.map((user) => user.name).join(',')
+        users: selectedUsers.value.map((user) => user.name).join(',')
       })
     }
     const response = await jwtFetch(inviteNewMemberEndpoint, options)
