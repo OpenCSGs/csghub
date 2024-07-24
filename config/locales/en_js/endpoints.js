@@ -30,7 +30,10 @@ export const endpoints = {
     privateDesc: "Only you (personal) or members of your organization can see this endpoint.",
     createEndpoint: "Create",
     createSuccess: "Endpoint created successfully",
-    dedicated: "Dedicated endpoint"
+    dedicated: "Dedicated endpoint",
+    tip: "Applied to the endpoint, cannot be changed after creation",
+    createSuccess: "Endpoint created successfully",
+    createFail: "Failed to create endpoint",
   },
   settings: {
     stop: "Stop",
