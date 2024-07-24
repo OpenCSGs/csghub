@@ -1,7 +1,7 @@
 <template>
   <div class="w-[640px] m-auto flex flex-col items-center md:w-full md:p-5">
     <div>
-      <SvgIcon name="collections" />
+      <SvgIcon name="new_collection" />
     </div>
     <h3 class="text-[#303133] text-xl font-medium mt-6 mb-2">{{ $t('collections.newCollection.title') }}</h3>
     <p class="text-[#606266] text-base font-normal md:text-center">{{ $t('collections.newCollection.titleDesc') }}</p>
@@ -17,7 +17,7 @@
           <div>
             <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
             <el-form-item prop="owner">
-              <el-select v-model="dataForm.owner" :placeholder="$t('all.select')" style="width: 312px">
+              <el-select v-model="dataForm.owner" :placeholder="$t('all.select')" size="large" style="width: 312px">
                 <el-option
                   v-for="item in namespaces"
                   :key="item[0]"
@@ -53,7 +53,7 @@
           <div class="">
             <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.selectTheme') }}</p>
             <el-form-item prop="colorName">
-              <el-select v-model="dataForm.colorName" :placeholder="$t('all.select')" style="width: 312px">
+              <el-select v-model="dataForm.colorName" :placeholder="$t('all.select')" size="large" style="width: 312px">
                 <el-option
                   v-for="item in colorNameList"
                   :key="item[0]"
@@ -79,13 +79,12 @@
             </el-form-item>
           </div>
         </div>
-        <hr class="mb-9" />
         <!--第四排-->
         <div class="mb-9">
           <el-form-item prop="visibility">
             <el-radio-group v-model="dataForm.visibility" class="!block">
-              <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
-                {{ $t('collections.newCollection.public') }}
+              <el-radio class="w-full flex mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
+                <p>{{ $t('collections.newCollection.public') }}</p>
                 <p class="whitespace-normal text-[#475467] font-light">{{ $t('collections.newCollection.publicDesc') }}</p>
               </el-radio>
               <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
@@ -199,7 +198,7 @@
   }
 
   :deep(.el-radio__input) {
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   :deep(.el-radio__label) {
