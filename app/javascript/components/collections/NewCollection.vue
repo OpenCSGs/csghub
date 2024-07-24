@@ -17,7 +17,7 @@
         label-position="top"
         class="mt-[48px] text-left"
       >
-        <!--第一排-->
+       <!-- First row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
           <div>
             <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
@@ -58,7 +58,7 @@
             </el-form-item>
           </div>
         </div>
-        <!--第二排-->
+        <!-- Second row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
           <div class="flex-1">
             <p class="text-[#303133] text-sm mb-2">
@@ -96,7 +96,7 @@
             </el-form-item>
           </div>
         </div>
-        <!--第三排-->
+        <!-- Third row -->
         <div class="w-full flex sm:flex-col mb-9">
           <div class="flex-1">
             <p class="text-[#303133] text-sm mb-2">
@@ -112,7 +112,7 @@
             </el-form-item>
           </div>
         </div>
-        <!--第四排-->
+        <!-- Fourth row -->
         <div class="mb-9">
           <el-form-item prop="visibility">
             <el-radio-group

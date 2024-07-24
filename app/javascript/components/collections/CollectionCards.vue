@@ -39,7 +39,7 @@
     collections: Object
   })
 
-  // 定义一个方法来生成渐变样式
+  // Method to generate gradient styles
   const generateGradientStyle = (color1) => {
     const gradient = `linear-gradient(180deg, ${color1} 0%, #FFF 20%)`
     return {

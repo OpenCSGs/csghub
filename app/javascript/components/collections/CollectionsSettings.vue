@@ -2,7 +2,7 @@
   <div
     class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
-    <!-- 合集中文名称 -->
+    <!-- collection name -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -28,7 +28,7 @@
     </div>
     <el-divider />
 
-    <!-- 合集介绍 -->
+    <!-- collection desc -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -54,7 +54,7 @@
     </div>
     <el-divider />
 
-    <!-- 主题 -->
+    <!-- theme -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -83,8 +83,7 @@
     </div>
     <el-divider />
 
-    <!-- 增加项目 -->
-    <!-- 改为先选类型再选 -->
+    <!-- add project -->
     <!-- <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">增加项目</div>
@@ -109,7 +108,7 @@
     </div>
     <el-divider /> -->
 
-    <!-- 修改可见性 -->
+    <!-- Change Visibility -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -145,7 +144,7 @@
     </div>
     <el-divider />
 
-    <!-- 删除 -->
+    <!-- Delete -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
