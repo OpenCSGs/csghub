@@ -133,6 +133,7 @@
     ["#FFF4ED","淡橙色"]
   ])
   const dataForm = ref({
+    owner:owner.value,
     visibility: 'private',
     colorName: colorNameList.value[0][0]
   })
