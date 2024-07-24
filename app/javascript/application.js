@@ -46,6 +46,7 @@ import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
+import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
@@ -95,14 +96,15 @@ const app = createApp({
     RepoCards,
     NewCode,
     CodeDetail,
+    NewCollection,
     NewEndpoint,
-    EndpointDetail,
     AdminNavbar,
     AdminMenu,
     NewFinetune,
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
+    EndpointDetail,
     CollectionIndex,
     CollectionsDetail
   },
