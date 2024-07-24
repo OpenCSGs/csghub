@@ -9,7 +9,8 @@
   </div>
 
   <div class="p-4">
-    <div class="text-[#344053] text-sm font-medium leading-tight mb-4">
+    <div class="text-[#344053] text-sm font-medium leading-tight mb-4 flex items-center gap-2">
+      <SvgIcon name="text_generation" />
       文本生成
     </div>
     <div
