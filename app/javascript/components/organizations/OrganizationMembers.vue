@@ -184,7 +184,7 @@
   const totalCount = ref(0)
   const searchForm = ref({
     page: 1,
-    per: 8
+    per: 6
   })
 
   onMounted(() => {
