@@ -147,18 +147,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_122854) do
     t.text "backtrace"
   end
 
-  create_table "mirrors", force: :cascade do |t|
-    t.string "source_url"
-    t.bigint "mirror_source_id"
-    t.string "username"
-    t.string "access_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "mirrorable_type"
-    t.bigint "mirrorable_id"
-    t.bigint "user_id"
-  end
-
   create_table "models", force: :cascade do |t|
     t.string "owner_type", null: false
     t.bigint "owner_id", null: false
