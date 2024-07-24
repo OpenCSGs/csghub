@@ -24,7 +24,7 @@
         :label="$t('collections.details.tabProject')"
         name="page"
       >
-        <div class="pt-[24px]">
+        <div class="pt-[24px] px-2">
           <div
             class="h-[480px] md:h-auto pt-[24px]"
             v-if="!showRepoList"
@@ -59,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="max-w-[max-content]">
+        <div class="max-w-[max-content] px-2">
           <CollectionsAddRepo
             v-if="showRepoList"
             :settingsVisibility="settingsVisibility"
