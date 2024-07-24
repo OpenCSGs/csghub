@@ -81,5 +81,6 @@ export const all = {
   commits: "commit history",
   fetchError: "Failed to fetch data",
   deploy: "Deploy",
-  more:"More"
+  more:"More",
+  moreDesc: "Expand more"
 }

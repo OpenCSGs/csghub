@@ -38,16 +38,16 @@
       </div>
       <div 
         class="text-[16px] leading-[24px] text-[#344054]"
-        :class="licenseTagInfo.desc.length > 70 && !moreLicenseDesc ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
+        :class="showMoreLicenseDesc ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
       >
-      {{ licenseTagInfo.desc }}
+        {{ locale == 'zh' ? licenseTagInfo.desc: licenseTagInfo.desc_en}}
       </div>
       <div 
-        v-if="licenseTagInfo.desc.length > 70 && !moreLicenseDesc" 
+        v-if="showMoreLicenseDesc" 
         @click="moreLicenseDesc = true" 
         class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer"
       >
-        展开更多
+        {{ $t('all.moreDesc') }}
       </div>
     </div>
 
@@ -80,7 +80,8 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
@@ -105,6 +106,11 @@
   const relations = ref({})
   const moreLicenseDesc = ref(false)
   const licenseTagInfo = ref({ name: props.license, desc: '' })
+  const { locale } = useI18n()
+
+  const showMoreLicenseDesc = computed(() => {
+    return licenseTagInfo.value.desc.length > 70 && licenseTagInfo.value.desc_en.length > 125 && !moreLicenseDesc.value
+  })
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
