@@ -5,9 +5,6 @@
     <Menu
       class="max-w-[411px] md:mb-[24px]"
       :name="name"
-      :email="email"
-      :displayName="displayName"
-      :avatar="avatar"
     >
     </Menu>
     <div class="grow py-[24px]">
@@ -70,10 +67,7 @@
   import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
-    name: String,
-    displayName: String,
-    avatar: String,
-    email: String
+    name: String
   })
 
   const { t } = useI18n()

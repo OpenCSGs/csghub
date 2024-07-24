@@ -65,9 +65,6 @@ import jwtFetch from '../../packs/jwtFetch'
 export default {
   props: {
     name: String,
-    displayName: String,
-    avatar: String,
-    email: String,
     sshKeys: String
   },
   components: {
@@ -142,7 +139,7 @@ export default {
       const options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           username: this.profileName,
           name: this.theSshKeyName,
           content: this.formData.theSshKey

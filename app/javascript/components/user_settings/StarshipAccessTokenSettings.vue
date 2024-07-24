@@ -5,9 +5,6 @@
     <Menu
       class="max-w-[411px] md:mb-[24px]"
       :name="name"
-      :email="email"
-      :displayName="displayName"
-      :avatar="avatar"
     >
     </Menu>
 
@@ -87,10 +84,7 @@
   import { ElMessage } from 'element-plus'
 
   const props = defineProps({
-    name: String,
-    displayName: String,
-    avatar: String,
-    email: String
+    name: String
   })
 
   const { t } = useI18n()

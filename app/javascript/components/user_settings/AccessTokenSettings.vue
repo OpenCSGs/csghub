@@ -3,9 +3,6 @@
       class="flex justify-center md:flex-col px-[24px] py-[36px] my-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white">
     <Menu class="max-w-[411px] md:mb-[24px]"
           :name="profileName"
-          :email="email"
-          :displayName="profileDisplayName"
-          :avatar="profileAvatar">
     </Menu>
     <div class="grow py-[24px]">
       <div class="max-w-[512px]">
@@ -48,10 +45,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default {
   props: {
-    name: String,
-    displayName: String,
-    avatar: String,
-    email: String
+    name: String
   },
   components: {
     Menu
