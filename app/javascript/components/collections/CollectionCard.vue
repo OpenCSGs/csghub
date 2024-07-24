@@ -27,5 +27,4 @@
   const props = defineProps({
     reposData: Object
   })
-  console.log('1231231', props.reposData)
 </script>
