@@ -183,7 +183,7 @@
     </div>
     <div 
       v-if="repoType === 'model' && baseModel"
-      class="flex items-center text-[#344054] font-normal"
+      class="flex items-center text-[#344054] text-base font-normal"
     >
       {{ $t('all.baseModel') }}: 
       <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
