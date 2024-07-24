@@ -3,8 +3,8 @@
     <div>
       <SvgIcon name="collections" />
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('collections.newCollection.title') }}</h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('collections.newCollection.titleDesc') }}</p>
+    <h3 class="text-[#303133] text-xl font-medium mt-6 mb-2">{{ $t('collections.newCollection.title') }}</h3>
+    <p class="text-[#606266] text-base font-normal md:text-center">{{ $t('collections.newCollection.titleDesc') }}</p>
     <div class="mt-9">
       <el-form
         ref="dataFormRef"
