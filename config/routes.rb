@@ -121,6 +121,7 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :new]
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
+    resources :collections, only: [:index, :new]
     resources :endpoints, only: [:index, :new]
     resources :collections, only: [:index, :new]
     resources :finetune, only: [:index, :new]

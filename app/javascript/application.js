@@ -49,6 +49,7 @@ import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+import CollectionIndex from "./components/collections/CollectionIndex.vue"
 import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
 
 
@@ -102,6 +103,7 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
+    CollectionIndex,
     CollectionsDetail
   },
   provide:{
