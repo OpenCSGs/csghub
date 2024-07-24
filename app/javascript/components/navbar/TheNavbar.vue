@@ -118,7 +118,7 @@
             <a :href="userProfile">
               <el-dropdown-item> {{ $t('navbar.profile') }} </el-dropdown-item>
             </a>
-            <a :href="`/profile/likes/${this.userName}`">
+            <a :href="`/profile/likes/${userName}`">
               <el-dropdown-item>
                 {{ $t('profile.myCollect') }}
               </el-dropdown-item>
