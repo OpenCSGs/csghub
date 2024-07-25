@@ -20,12 +20,11 @@ class ApplicationSpacesController < ApplicationController
     @available_namespaces = current_user.available_namespaces
     @is_admin = !!current_user&.admin?
     get_license_list
-    @is_admin = current_user.admin?
   end
 
   def show
     @default_tab = 'summary'
-    @is_admin = current_user.admin?
+    @is_admin = !!current_user&.admin?
   end
 
   def files
