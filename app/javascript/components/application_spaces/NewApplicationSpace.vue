@@ -511,6 +511,8 @@
       description: dataForm.value.desc,
       sdk: dataForm.value.sdk,
       cover_image_url: dataForm.value.cover_image,
+      hardware: dataForm.value.cloud_resource,
+      resource_id: dataForm.value.cloud_resource,
       private: dataForm.value.visibility === 'private'
     }
     const options = {

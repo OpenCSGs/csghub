@@ -1,5 +1,5 @@
 <div class="bg-white">
-  <repo-detail
+  <application-space-detail
     local-repo-id="<%= @local_application_space&.id %>"
     repo-type="space"
     current-branch="<%= @current_branch || 'main' %>"
@@ -15,5 +15,5 @@
     namespace="<%= params[:namespace] %>"
     repo-name="<%= params[:application_space_name] %>"
   >
-  </repo-detail>
+  </application-space-detail>
 </div>

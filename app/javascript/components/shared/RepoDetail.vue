@@ -90,7 +90,9 @@
 
       if (response.ok) {
         repo.value = json.data
-        tags.value = buildTags(json.data.tags)
+        if (json.data.tags) {
+          tags.value = buildTags(json.data.tags)
+        }
         repoDetailStore.initialize(json.data)
       } else {
         ElMessage({ message: json.msg, type: 'warning' })
