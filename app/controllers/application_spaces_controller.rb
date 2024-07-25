@@ -15,7 +15,6 @@ class ApplicationSpacesController < ApplicationController
   end
 
   def new
-    @is_admin = !!current_user&.admin?
     get_license_list
   end
 

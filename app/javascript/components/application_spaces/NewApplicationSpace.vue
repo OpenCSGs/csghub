@@ -250,22 +250,23 @@
 <script setup>
   import { ref, computed, onMounted, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
   import InputTip from '../shared/inputs/InputTip.vue'
   import jwtFetch from '../../packs/jwtFetch'
   import useUserStore from '../../stores/UserStore'
+  import { useCookies } from "vue3-cookies";
 
   const userStore = useUserStore()
+  const { cookies } = useCookies()
 
   const props = defineProps({
-    licenses: Array,
-    isAdmin: Boolean
+    licenses: Array
   })
 
   const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const nameRule = inject('nameRule')
+  const isAdmin = cookies.isKey('admin_user')
 
   const license = ref(props.licenses[0][0])
   const owner = ref('')
