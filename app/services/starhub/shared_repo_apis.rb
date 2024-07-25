@@ -79,10 +79,6 @@ module Starhub
       @client.post("/#{repo_type}?current_user=#{username}", options)
     end
 
-    def delete_repo(repo_type, namespace, repo_name, params = {})
-      @client.delete("/#{repo_type}/#{namespace}/#{repo_name}", params)
-    end
-
     def update_repo(repo_type, username, repo_name, namespace, nickname, desc, options = {})
       options[:username] = username
       options[:name] = repo_name

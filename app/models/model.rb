@@ -33,7 +33,6 @@ class Model < ApplicationRecord
   has_many :discussions, as: :discussionable, dependent: :destroy
 
   after_create :sync_created_model_to_starhub_server
-  after_destroy :delete_model_from_starhub_server
   after_update :update_starhub_server_model
   before_save :detect_sensitive_content
 
@@ -70,11 +69,6 @@ class Model < ApplicationRecord
                                                        desc,
                                                        { license: license,
                                                          private: model_private? })
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def delete_model_from_starhub_server
-    res = Starhub.api(creator.session_ip).delete_model(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 

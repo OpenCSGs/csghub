@@ -479,13 +479,13 @@ export default {
     },
 
     async deleteApplicationSpace() {
-      const applicationSpaceDeleteEndpoint = "/internal_api/spaces/" + this.path
+      const applicationSpaceDeleteEndpoint = `${this.csghubServer}/api/v1/spaces/${this.path}`
       const option = {method: 'DELETE'}
-      const response = await csrfFetch(applicationSpaceDeleteEndpoint, option)
+      const response = await jwtFetch(applicationSpaceDeleteEndpoint, option)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          throw new Error(data.message)
+        return response.json().then((err) => {
+          throw new Error(err.message)
         })
       } else {
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})
