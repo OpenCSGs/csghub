@@ -215,15 +215,6 @@
 
   const loading = ref(false)
 
-  const namespaces = () => {
-    let namespaces = userStore.orgs.map((org) => org.path)
-    namespaces.unshift(userStore.username)
-    const params = new URLSearchParams(window.location.search)
-    const orgName = params.get('orgName')
-    dataForm.value.owner = orgName || namespaces[0]
-    return namespaces
-  }
-
   // Validation rules
   const rules = ref({
     owner: [
@@ -289,6 +280,15 @@
   })
 
   // Methods
+  const namespaces = () => {
+    let namespaces = userStore.orgs.map((org) => org.path)
+    namespaces.unshift(userStore.username)
+    const params = new URLSearchParams(window.location.search)
+    const orgName = params.get('orgName')
+    dataForm.value.owner = orgName || namespaces[0]
+    return namespaces
+  }
+
   const handleSubmit = () => {
     loading.value = true
     dataFormRef.value

@@ -177,23 +177,20 @@
 
 <script setup>
   import { ref, inject } from 'vue'
-  import csrfFetch from '../../packs/csrfFetch.js'
+  import jwtFetch from '../../packs/jwtFetch.js'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useUserStore from '../../stores/UserStore'
 
   const userStore = useUserStore()
 
+  const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const dataFormRef = ref(null)
   const nameRule = inject('nameRule')
 
   // Props
   const props = defineProps({
-    namespaces: {
-      type: Array,
-      default: () => []
-    },
     licenses: {
       type: Array,
       default: () => []
@@ -202,7 +199,7 @@
 
   // State
   const dataForm = ref({
-    owner: props.namespaces[0][0],
+    owner: '',
     name: '',
     nickname: '',
     license: props.licenses[0][0],
@@ -276,7 +273,7 @@
     namespaces.unshift(userStore.username)
     const params = new URLSearchParams(window.location.search)
     const orgName = params.get('orgName')
-    owner.value = orgName || namespaces[0]
+    dataForm.value.owner = orgName || namespaces[0]
     return namespaces
   }
 
@@ -310,14 +307,14 @@
       body: JSON.stringify(params)
     }
     const newEndpoint = `${csghubServer}/api/v1/codes`
-    const response = await csrfFetch(newEndpoint, options)
+    const response = await jwtFetch(newEndpoint, options)
     if (response.ok) {
       ElMessage({
         message: t('codes.newCode.createSuccess'),
         type: 'success'
       })
       response.json().then((res) => {
-        window.location.href = `/codes/${res.path}`
+        window.location.href = `/codes/${res.data.path}`
       })
     } else {
       response.json().then((res) => {
