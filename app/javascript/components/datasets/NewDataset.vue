@@ -145,7 +145,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, inject } from 'vue'
+  import { ref, computed, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch.js'
   import { useI18n } from 'vue-i18n'
