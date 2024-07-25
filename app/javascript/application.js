@@ -164,7 +164,6 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
-    EndpointDetail,
     CollectionIndex,
     CollectionsDetail
   },
