@@ -141,8 +141,7 @@
   const fetchCollectionDetail = async () => {
     const url = `${csghubServer}/api/v1/collections/${props.collectionsId}`
     const res = await jwtFetch(url)
-    const { msg } = await res.json()
-    const { data } = await res.json()
+    const { msg, data } = await res.json()
     if (!res.ok) {
       ElMessage({ message: msg, type: 'warning' })
     } else {
