@@ -32,7 +32,6 @@ export const endpoints = {
     createSuccess: "Endpoint created successfully",
     dedicated: "Dedicated endpoint",
     tip: "Applied to the endpoint, cannot be changed after creation",
-    createSuccess: "Endpoint created successfully",
     createFail: "Failed to create endpoint",
   },
   settings: {
