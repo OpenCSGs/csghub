@@ -17,7 +17,7 @@
         label-position="top"
         class="mt-[48px] text-left"
       >
-       <!-- First row -->
+        <!-- First row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
           <div>
             <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
@@ -90,7 +90,7 @@
                   :value="item[0]"
                 />
                 <template #prefix>
-                  <SvgIcon name="blue" />
+                  <div class="w-4 h-4 border" :style="{ backgroundColor: dataForm.colorName }"></div>
                 </template>
               </el-select>
             </el-form-item>
