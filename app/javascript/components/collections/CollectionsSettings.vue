@@ -220,9 +220,9 @@
   const themeColor = ref(props.collection.theme)
 
   const colorNameList = ref([
-    ['#F5F3FF', '淡紫色'],
-    ['#ECFDF3', '淡绿色'],
-    ['#FFF4ED', '淡橙色']
+    ['#F5F3FF', t('collections.color.lPurple')],
+    ['#ECFDF3', t('collections.color.lGreen')],
+    ['#FFF4ED', t('collections.color.lOrange')]
   ])
 
   const changeVisibility = (value) => {

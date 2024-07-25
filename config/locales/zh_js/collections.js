@@ -7,6 +7,11 @@ export const collections = {
   collection: '合集',
   title: '探索社区中的精选热门合集',
   hot: '本周热门合集',
+  color: {
+    lPurple: '淡紫色',
+    lGreen: '淡绿色',
+    lOrange: '淡橙色'
+  },
   details: {
     tabProject: '项目',
     tabSettings: '设置',

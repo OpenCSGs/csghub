@@ -8,6 +8,11 @@ export const collections = {
   collection: 'Collection',
   title: 'Exploring Featured Popular Collections in the Community',
   hot: 'Featured Collections of the Week',
+  color: {
+    lPurple: 'Light Purple',
+    lGreen: 'Light Green',
+    lOrange: 'Light Orange'
+  },
   details: {
     tabProject: 'Project',
     tabSettings: 'Settings',
