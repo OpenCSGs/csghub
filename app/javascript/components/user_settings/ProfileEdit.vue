@@ -124,7 +124,7 @@ export default {
         avatar: this.profileData.profileAvatar,
         username: this.profileData.profileName,
         name: this.profileData.profileNickname,
-        email: this.profileData.profileEmail,
+        email: this.profileData.profileEmail.trim(),
         phone: this.profileData.profilePhone,
         homepage: this.profileData.profileHomepage,
         bio: this.profileData.profileBio
