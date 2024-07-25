@@ -5,6 +5,7 @@ module SessionsHelper
     cookies[:current_user] = user.name
     cookies[:user_synced] = user.starhub_synced
     setup_jwt_token(user.name) if user.starhub_synced?
+    cookies[:admin_secret] = get_admin_secret if user.admin?
     user.update_column('session_ip', request.remote_ip)
   end
 
@@ -33,6 +34,7 @@ module SessionsHelper
     cookies.delete :user_synced
     cookies.delete :user_token
     cookies.delete :token_expire_at
+    cookies.delete :admin_secret
   end
 
   def is_on_premise?
@@ -51,5 +53,10 @@ module SessionsHelper
     expire_time = JSON.parse(res)['data']['expire_at']
     cookies['user_token'] = token
     cookies['token_expire_at'] = expire_time
+  end
+
+  def get_admin_secret
+    general_configs = (SystemConfig.first.general_configs rescue {}) || {}
+    general_configs["admin_secret"]
   end
 end
