@@ -57,6 +57,7 @@ class SystemConfig < ApplicationRecord
 
   def customers=(value)
     self[:customers] = value.is_a?(String) ? JSON.parse(value) : value
+  end
 
   def license_info=(value)
     self[:license_info] = value.is_a?(String) ? JSON.parse(value) : value
