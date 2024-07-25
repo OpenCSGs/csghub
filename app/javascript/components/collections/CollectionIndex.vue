@@ -130,6 +130,7 @@
   ]
 
   const filterChange = () => {
+    currentPage.value = 1
     fetchCollections()
   }
 
