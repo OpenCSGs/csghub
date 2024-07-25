@@ -142,9 +142,10 @@
   </div>
 </template>
 <script>
-import {h} from 'vue'
+import { h, inject } from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
+import jwtFetch from '../../packs/jwtFetch'
 import useRepoDetailStore from '../../stores/RepoDetailStore'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -158,6 +159,7 @@ export default {
   components: {},
   data() {
     return {
+      csghubServer: inject('csghubServer'),
       delDesc: '',
       codeName: this.path.split('/')[1],
       theCodeNickname: this.codeNickname || "",
@@ -195,13 +197,13 @@ export default {
     },
 
     async deleteCode() {
-      const codeDeleteEndpoint = "/internal_api/codes/" + this.path
+      const codeDeleteEndpoint = `${this.csghubServer}/api/v1/codes/${this.path}`
       const option = {method: 'DELETE'}
-      const response = await csrfFetch(codeDeleteEndpoint, option)
+      const response = await jwtFetch(codeDeleteEndpoint, option)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          throw new Error(data.message)
+        return response.json().then((err) => {
+          throw new Error(err.message)
         })
       } else {
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})

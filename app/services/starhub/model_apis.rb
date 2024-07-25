@@ -40,10 +40,6 @@ module Starhub
       create_repo('models', username, model_name, namespace, nickname, desc, options)
     end
 
-    def delete_model(namespace, model_name, params = {})
-      delete_repo('models', namespace, model_name, params)
-    end
-
     def update_model(username, model_name, namespace, nickname, desc, options = {})
       update_repo('models', username, model_name, namespace, nickname, desc, options)
     end
