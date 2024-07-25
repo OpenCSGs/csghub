@@ -312,8 +312,8 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = `${csghubServer}/api/v1/models`
-    const response = await jwtFetch(uploadEndpoint, options)
+    const updateEndpoint = `${csghubServer}/api/v1/models`
+    const response = await jwtFetch(updateEndpoint, options)
     if (response.ok) {
       ElMessage({
         message: t('models.newModel.createSuccess'),
