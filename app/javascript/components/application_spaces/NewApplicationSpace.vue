@@ -30,7 +30,7 @@
             </el-form-item>
             <el-form-item class="w-full" :label="t('application_spaces.new.spaceEnName')" prop="name">
               <el-input v-model="dataForm.name" :placeholder="t('all.pleaseInput', { value: t('application_spaces.new.spaceEnName') })" input-style="width: 100%" >
-                <template #suffix>            
+                <template #suffix>
                   <el-tooltip class="item" effect="dark" raw-content :content="`
                   <p>${t('application_spaces.new.tip')}</p>
                   <ul style='margin-left: 18px; list-style: disc; margin-top: 12px;'>
@@ -66,7 +66,7 @@
         </div>
 
         <el-form-item class="w-full" :label="t('application_spaces.new.description')" prop="desc">
-          <el-input 
+          <el-input
             v-model="dataForm.desc"
             :rows="6"
             type="textarea"
@@ -270,7 +270,8 @@
       ElMessage({ message: t('application_spaces.new.failedFetchResources'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        dataForm.value.cloud_resource = body?.data ? body.data[0]?.id : ''
+        const firstAvailableResource = body.data.find((item) => item.is_available)
+        dataForm.value.cloud_resource = firstAvailableResource?.id || ''
         spaceResources.value = body.data
       })
     }
