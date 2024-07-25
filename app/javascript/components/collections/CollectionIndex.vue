@@ -7,7 +7,7 @@
       <div class="flex flex-col">
         <div class="flex gap-2 text-[20px] leading-[30px]">
           <SvgIcon
-            name="collection_icon"
+            name="collections"
             width="18"
             height="18"
           />

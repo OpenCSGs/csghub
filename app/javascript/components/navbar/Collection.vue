@@ -5,7 +5,7 @@
     :class="active ? 'text-[#009933]' : ''"
   >
     <SvgIcon
-      name="collection_icon"
+      name="collections"
       width="18"
       height="18"
     />
