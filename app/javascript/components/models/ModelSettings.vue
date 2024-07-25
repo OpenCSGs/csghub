@@ -381,13 +381,13 @@ export default {
     },
 
     async deleteModel() {
-      const modelDeleteEndpoint = "/internal_api/models/" + this.path
+      const modelDeleteEndpoint = `${this.csghubServer}/api/v1/models/${this.path}`
       const option = {method: 'DELETE'}
-      const response = await csrfFetch(modelDeleteEndpoint, option)
+      const response = await jwtFetch(modelDeleteEndpoint, option)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          throw new Error(data.message)
+        return response.json().then((err) => {
+          throw new Error(err.message)
         })
       } else {
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})

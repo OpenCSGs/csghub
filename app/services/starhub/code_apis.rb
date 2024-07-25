@@ -36,10 +36,6 @@ module Starhub
       create_repo('codes', username, code_name, namespace, nickname, desc, options)
     end
 
-    def delete_code(namespace, code_name, params = {})
-      delete_repo('codes', namespace, code_name, params)
-    end
-
     def update_code(username, code_name, namespace, nickname, desc, options = {})
       update_repo('codes', username, code_name, namespace, nickname, desc, options)
     end
