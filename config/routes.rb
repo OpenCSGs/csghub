@@ -185,7 +185,6 @@ Rails.application.routes.draw do
     resources :daily_papers, only: [:index, :new, :create, :show], param: :uuid
     resources :collections, only: [:index, :new]
     resources :endpoints, only: [:index, :new]
-    resources :collections, only: [:index, :new]
     resources :finetune, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
