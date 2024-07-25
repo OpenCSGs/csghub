@@ -90,7 +90,10 @@
                   :value="item[0]"
                 />
                 <template #prefix>
-                  <div class="w-4 h-4 border" :style="{ backgroundColor: dataForm.colorName }"></div>
+                  <div
+                    class="w-4 h-4 border"
+                    :style="{ backgroundColor: dataForm.colorName }"
+                  ></div>
                 </template>
               </el-select>
             </el-form-item>
@@ -174,6 +177,8 @@
 
   const { t } = useI18n()
   const dataFormRef = ref()
+  const nameRule = inject('nameRule')
+
   const owner = ref(props.namespaces[0][0])
   const visibility = ref('private')
   const hasCreateCollection = ref(false)
@@ -191,11 +196,20 @@
     title: [
       { required: true, message: t('collections.newCollection.validation1'), trigger: 'blur' },
       { min: 2, max: 70, message: t('collections.newCollection.validation2'), trigger: 'blur' },
+      // Starts with a letter
+      { pattern: /^[a-zA-Z]/, message: t('rule.startWithLetter'), trigger: 'blur' },
+      // Ends with a letter or number
+      { pattern: /[a-zA-Z0-9]$/, message: t('rule.endWithLetterOrNumber'), trigger: 'blur' },
+      // Only contains letters, numbers, and -_.
       {
-        pattern: /^(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/,
-        message: t('collections.newCollection.validation3'),
+        pattern: /^[a-zA-Z0-9-_\.]+$/,
+        message: t('rule.onlyLetterNumberAndSpecialStr'),
         trigger: 'blur'
-      }
+      },
+      // Special characters cannot appear consecutively
+      { pattern: /^(?!.*[-_.]{2,}).*$/, message: t('rule.specialStrNotTogether'), trigger: 'blur' },
+      // As a final step, add the final regex rule
+      { pattern: nameRule, message: t('rule.nameRule'), trigger: 'blur' }
     ]
   })
 
