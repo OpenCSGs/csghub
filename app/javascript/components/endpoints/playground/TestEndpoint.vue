@@ -134,7 +134,6 @@
     const endpoint = `${props.appEndpoint}/v1/chat/completions`
     const payload = {
       model: props.modelId,
-      model: 'wanghh2003/csg-wukong-1B',
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: message.value }
