@@ -1,10 +1,8 @@
 <div class="bg-white">
-  <model-detail
+  <repo-detail
     :tag-list="<%= @tags_list.to_json %>"
-    :tags="<%= @tags %>"
     local-repo-id="<%= @local_model&.id %>"
-    :model="<%= @model %>"
-    :branches="<%= @branches %>"
+    repo-type="model"
     current-branch="<%= @current_branch || 'main' %>"
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
@@ -16,5 +14,7 @@
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
     :admin="<%= current_user&.admin? %>"
-  ></model-detail>
+    namespace="<%= params[:namespace] %>"
+    repo-name="<%= params[:model_name] %>"
+  ></repo-detail>
 </div>
