@@ -141,11 +141,11 @@
   const fetchCollectionDetail = async () => {
     const url = `${csghubServer}/api/v1/collections/${props.collectionsId}`
     const res = await jwtFetch(url)
+    const { msg } = await res.json()
+    const { data } = await res.json()
     if (!res.ok) {
-      const { msg } = await res.json()
       ElMessage({ message: msg, type: 'warning' })
     } else {
-      const { data } = await res.json()
       collectionData.value = data.data || []
     }
   }
