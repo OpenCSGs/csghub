@@ -16,7 +16,6 @@ class CodesController < ApplicationController
   end
 
   def new
-    @available_namespaces = current_user.available_namespaces
     get_license_list
   end
 

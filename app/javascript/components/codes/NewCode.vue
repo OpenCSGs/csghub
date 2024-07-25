@@ -15,10 +15,10 @@
           <p class="text-[#303133] text-sm mb-2">{{ $t('codes.newCode.owner') }}</p>
           <el-select v-model="owner" :placeholder="$t('all.select')" size="large">
             <el-option
-              v-for="item in namespaces"
-              :key="item[0]"
-              :label="item[1]"
-              :value="item[0]"
+              v-for="item in namespaces()"
+              :key="item"
+              :label="item"
+              :value="item"
             />
           </el-select>
         </div>
@@ -140,17 +140,19 @@
   import csrfFetch from "../../packs/csrfFetch.js"
   import { useI18n } from 'vue-i18n'
   import InputTip from '../shared/inputs/InputTip.vue'
+  import useUserStore from '../../stores/UserStore'
+
+  const userStore = useUserStore()
 
   const { t } = useI18n()
   const nameRule = inject('nameRule')
 
   const props = defineProps({
-    licenses: Array,
-    namespaces: Array,
+    licenses: Array
   })
 
   const license = ref(props.licenses[0][0])
-  const owner = ref(props.namespaces[0][0])
+  const owner = ref('')
   const codeName = ref('')
   const codeNickName = ref('')
   const codeDesc = ref('')
@@ -158,6 +160,15 @@
   const hasCreateCode = ref(false)
 
   const canCreateCode = computed(() => { return nameRule.test(codeName.value) })
+
+  const namespaces = () => {
+    let namespaces = userStore.orgs.map(org => org.path)
+    namespaces.unshift(userStore.username)
+    const params = new URLSearchParams(window.location.search);
+    const orgName = params.get('orgName')
+    owner.value = orgName || namespaces[0]
+    return namespaces
+  }
 
   const createCode = async () => {
     try {
@@ -198,11 +209,4 @@
   const toCodelDetail = (path) => {
     window.location.pathname = `/codes/${path}`
   }
-  onMounted(() => {
-    const params = new URLSearchParams(window.location.search)
-    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
-    if (result) {
-      owner.value = result[0]
-    }
-  })
 </script>
