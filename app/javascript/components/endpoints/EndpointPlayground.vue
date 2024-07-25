@@ -1,6 +1,6 @@
 <template>
-  <div class="flex rounded-2xl border border-[#EAECF0] my-6">
-    <div class="border-r border-[#EAECF0] w-[320px]">
+  <div class="flex rounded-2xl border border-[#EAECF0] my-6 md:m-5 md:flex-col">
+    <div class="border-r border-[#EAECF0] w-[320px] md:w-full md:border-none">
       <div
         class="p-4 flex items-center justify-between border-b border-[#EAECF0]"
       >
@@ -50,13 +50,13 @@
 
       <div class="p-4">
         <div class="text-[#344053] text-base font-medium leading-normal mb-4">
-          Parameters
+          {{ $t('endpoints.playground.parameters') }}
         </div>
         <el-form
           :model="form"
           label-width="auto"
           label-position="top"
-          style="max-width: 288px"
+          class="max-w-[288px] md:max-w-full"
         >
           <el-form-item label="Top P">
             <el-select
@@ -126,17 +126,17 @@
         :model-id="props.modelId"
 
       />
-      <div class="px-4 flex justify-between items-center">
-        <div class="items-center gap-1.5 flex cursor-pointer">
+      <div class="px-4 mb-4 flex justify-between items-center">
+        <div class="items-center gap-1.5 flex cursor-not-allowed">
           <SvgIcon name="json" />
-          <div class="text-[#475466] text-xs leading-[18px]">JSON 输出</div>
+          <div class="text-[#98a1b2] text-xs leading-[18px]">{{ $t('endpoints.playground.json') }}</div>
         </div>
         <div
           class="items-center gap-1.5 flex cursor-pointer"
           @click="dialogVisible = true"
         >
           <SvgIcon name="fullscreen" />
-          <div class="text-[#475466] text-xs leading-[18px]">最大化</div>
+          <div class="text-[#475466] text-xs leading-[18px]">{{ $t('endpoints.playground.maximum') }}</div>
         </div>
       </div>
     </div>

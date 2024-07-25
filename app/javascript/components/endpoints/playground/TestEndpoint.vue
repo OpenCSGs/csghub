@@ -9,9 +9,11 @@
   </div>
 
   <div class="p-4">
-    <div class="text-[#344053] text-sm font-medium leading-tight mb-4 flex items-center gap-2">
+    <div
+      class="text-[#344053] text-sm font-medium leading-tight mb-4 flex items-center gap-2"
+    >
       <SvgIcon name="text_generation" />
-      文本生成
+      {{ $t('endpoints.playground.generation') }}
     </div>
     <div
       class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border border-[#cfd4dc] text-[#0f1728] text-base font-light leading-normal mb-4 overflow-auto"
@@ -19,12 +21,22 @@
       {{ anwserContent }}
     </div>
     <div
-      class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border border-[#cfd4dc]"
+      class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border"
+      :class="
+        inputFocus
+          ? 'border-[#6483f8] [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
+          : 'border-[#cfd4dc]'
+      "
       v-loading="loading"
     >
       <el-input
         v-model="message"
         inputStyle="outline: none"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @keydown.enter="handleEnterPress"
+        @compositionend="compositionEnd"
+        @compositionstart="compositionStart"
       ></el-input>
 
       <div
@@ -40,7 +52,8 @@
           class="text-xs font-normal flex items-center justify-center gap-1"
           :class="canSendMessage ? 'text-[#fff]' : 'text-[#98a1b2]'"
         >
-          发送
+          <SvgIcon name="send_message" />
+          {{ $t('endpoints.playground.send') }}
         </div>
       </div>
     </div>
@@ -65,9 +78,35 @@
   const anwserContent = ref('')
   const message = ref('')
   const loading = ref(false)
+  const inputFocus = ref(false)
+  const compositionInput = ref(false)
+
+  const handleFocus = () => {
+    inputFocus.value = true
+  }
+
+  const handleBlur = () => {
+    inputFocus.value = false
+  }
+
+  const compositionEnd = (event) => {
+    event.preventDefault()
+    compositionInput.value = true
+  }
+
+  const compositionStart = (event) => {
+    event.preventDefault()
+    compositionInput.value = true
+  }
+
+  const handleEnterPress = (event) => {
+    event.preventDefault()
+    if (compositionInput.value) return
+
+    handleSendMessage()
+  }
 
   const typewriter = new Typewriter((str) => {
-    console.log('str===', str)
     if (str) {
       anwserContent.value += str
     }
@@ -92,7 +131,7 @@
 
     resetAnwserContent()
 
-    const endpoint = `http://s-wanghh2003-csg-wukong-1b-ab.spaces-stg.opencsg.com/v1/chat/completions`
+    const endpoint = `https://s-wanghh2003-csg-wukong-1b-ab.space-stg.opencsg.com/v1/chat/completions`
     const payload = {
       model: 'wanghh2003/csg-wukong-1B',
       messages: [
@@ -120,17 +159,16 @@
 
   const handleOpen = (e) => {
     if (e.ok) {
-      console.log("everything's good")
       typewriter.start()
     }
   }
 
   const handleMessage = (msg) => {
-    console.log('message')
     const { data } = msg
     console.log('onmessage === ', data)
     if (data === '[DONE]') {
       typewriter.done()
+      loading.value = false
       return
     }
     const res = JSON.parse(data)
@@ -162,5 +200,9 @@
 
   :deep(.el-loading-spinner svg) {
     width: 50%;
+  }
+
+  :deep(.el-loading-mask) {
+    border-radius: 8px;
   }
 </style>

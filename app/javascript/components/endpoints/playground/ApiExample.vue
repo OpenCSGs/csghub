@@ -49,7 +49,7 @@
         </div>
       </div>
       <div
-        class="px-3 py-2 bg-white rounded-lg shadow border border-[#cfd4dc] justify-center items-center gap-1 flex"
+        class="px-3 py-2 bg-white rounded-lg shadow border border-[#cfd4dc] justify-center items-center gap-1 flex md:hidden"
       >
         <SvgIcon name="app_tokens" />
         <div class="text-[#344053] text-xs font-normal leading-[18px]">
@@ -57,13 +57,13 @@
         </div>
       </div>
     </div>
-    <div class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-6 relative">
+    <div class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-6 relative group">
       <CodeViewer
         :content="codeContent"
         :extension="codeExtension"
       />
       <div
-        class="absolute text-xs text-[#344053] right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer flex items-center gap-1"
+        class="absolute bg-white text-xs text-[#344053] right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer  items-center gap-1 hidden group-hover:flex"
         @click="copyCode"
       >
         <SvgIcon name="copy" />

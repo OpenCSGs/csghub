@@ -62,5 +62,12 @@ export const endpoints = {
     minReplica: "最小弹性副本",
     currentMaxReplica: "当前最大弹性副本",
     currentMinReplica: "当前最小弹性副本"
+  },
+  playground: {
+    parameters: "参数项",
+    generation: "文本生成",
+    json: "JSON 输出",
+    maximum: "最大化",
+    send: "发送",
   }
 }
