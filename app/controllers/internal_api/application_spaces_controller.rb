@@ -47,14 +47,6 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     end
   end
 
-  def destroy
-    if @application_space.destroy
-      render json: { message: I18n.t('repo.delSuccess') }
-    else
-      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
-    end
-  end
-
   def upload_file
     sync_upload_file('application_space', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200

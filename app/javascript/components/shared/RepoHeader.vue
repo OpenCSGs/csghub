@@ -1,11 +1,11 @@
 <template>
   <div
-    class="flex flex-col gap-[8px] flex-wrap mb-5 text-lg text-[#606266] font-semibold md:px-5"
+    class="flex flex-col gap-[16px] flex-wrap mb-[16px] text-lg text-[#606266] font-semibold md:px-5"
   >
     <!-- dataset repo -->
     <div
       v-if="repoType === 'dataset'"
-      class="mb-[16px] w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
+      class="w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
     >
       <SvgIcon
         name="repoheader_dataset"
@@ -43,7 +43,7 @@
     <!-- endpoint -->
     <div
       v-else-if="repoType === 'endpoint'"
-      class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
+      class="flex flex-wrap w-full gap-[16px] items-center"
     >
       <el-avatar
         :size="24"
@@ -68,7 +68,7 @@
     <!-- finetune -->
     <div
       v-else-if="repoType === 'finetune'"
-      class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
+      class="flex flex-wrap w-full gap-[16px] items-center"
     >
       <SvgIcon
         name="model_finetune_create"
@@ -89,7 +89,7 @@
     <!-- other repo -->
     <div
       v-else
-      class="flex flex-wrap w-full gap-[16px] items-center mb-[16px]"
+      class="flex flex-wrap w-full gap-[16px] items-center"
     >
       <el-avatar
         :size="24"
@@ -181,6 +181,15 @@
       />
       <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
+    <div 
+      v-if="repoType === 'model' && baseModel"
+      class="flex items-center text-[#344054] text-base font-normal"
+    >
+      {{ $t('all.baseModel') }}: 
+      <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
+        {{ baseModel }}
+      </div>
+    </div>
   </div>
   <div class="leading-[24px] pb-[16px] md:px-5">{{ desc }}</div>
 
@@ -224,7 +233,8 @@
       default: 0
     },
     hasLike: Boolean,
-    resourceName: String
+    resourceName: String,
+    baseModel: String
   })
 
   const userLiked = ref(props.hasLike)
@@ -248,6 +258,10 @@
       return likesNumber.value.toString()
     }
   })
+
+  const redirectBaseModel = () => {
+    window.location.href = `/models/${props.baseModel}`
+  }
 
   const clickLike = () => {
     userLiked.value === true ? removeLike() : addLike()

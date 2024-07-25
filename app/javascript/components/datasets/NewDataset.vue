@@ -1,172 +1,217 @@
 <template>
   <div class="w-[640px] m-auto flex flex-col items-center md:w-full md:p-5">
     <div>
-      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <path opacity="0.12" d="M18 33C25.4558 33 31.5 30.9853 31.5 28.5V7.5C31.5 7.5 30.75 12 18 12C5.25 12 4.5 7.5 4.5 7.5V28.5C4.5 30.9853 10.5442 33 18 33Z" fill="#1F75CB"/>
-        <path d="M31.5 18C31.5 20.4853 25.4558 22.5 18 22.5C10.5442 22.5 4.5 20.4853 4.5 18M31.5 7.5C31.5 9.98528 25.4558 12 18 12C10.5442 12 4.5 9.98528 4.5 7.5M31.5 7.5C31.5 5.01472 25.4558 3 18 3C10.5442 3 4.5 5.01472 4.5 7.5M31.5 7.5V28.5C31.5 30.9853 25.4558 33 18 33C10.5442 33 4.5 30.9853 4.5 28.5V7.5" stroke="#1F75CB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <SvgIcon name="datasets" height="36" width="37" />
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ $t('datasets.newDataset.title') }}</h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">{{ $t('datasets.newDataset.titleDesc') }}</p>
+    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">{{ t('datasets.newDataset.title') }}</h3>
+    <p class="text-[#606266] text-base font-medium md:text-center">{{ t('datasets.newDataset.titleDesc') }}</p>
     <div class="mt-9">
-      <!-- 数据集名称选择 -->
-      <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
-        <div>
-          <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.owner') }}</p>
-          <el-select v-model="owner" :placeholder="$t('all.select')" size="large">
-            <el-option
-              v-for="item in namespaces"
-              :key="item[0]"
-              :label="item[1]"
-              :value="item[0]"
-            />
-          </el-select>
+      <el-form
+        ref="dataFormRef"
+        :model="dataForm"
+        :rules="rules"
+        class="w-full flex flex-col gap-[14px]"
+        label-position="top"
+      >
+        <div class="w-full flex md:flex-col gap-[16px] items-center">
+          <el-form-item :label="t('datasets.newDataset.owner')" prop="owner" class="w-full">
+            <el-select v-model="dataForm.owner" :placeholder="t('all.select')" size="large" style="width: 100%;">
+              <el-option
+                v-for="item in namespaces"
+                :key="item[0]"
+                :label="item[1]"
+                :value="item[0]"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item class="w-full" :label="t('datasets.newDataset.datasetEnName')" prop="name">
+            <el-input v-model="dataForm.name" :placeholder="t('all.pleaseInput', { value: t('datasets.newDataset.datasetEnName') })" input-style="width: 100%" >
+              <template #suffix>            
+                <el-tooltip class="item" effect="dark" raw-content :content="`
+                  <p>${t('datasets.datasetNameTips')}</p>
+                  <ul style='margin-left: 18px; list-style: disc; margin-top: 12px;'>
+                    <li>${t('rule.lengthLimit', {min: 2, max: 64})}</li>
+                    <li>${t('rule.startWithLetter')}</li>
+                    <li>${t('rule.endWithLetterOrNumber')}</li>
+                    <li>${t('rule.onlyLetterNumberAndSpecialStr')}</li>
+                    <li>${t('rule.specialStrNotTogether')}</li>
+                  </ul>
+                  `" placement="top">
+                  <el-icon><Warning /></el-icon>
+                </el-tooltip>
+              </template>
+            </el-input>
+          </el-form-item>
         </div>
-        <div class="md:hidden">
-          <p class="h-8"></p>
-          <p class="text-[#909399] text-xl font-light">/</p>
+        <div class="w-full flex md:flex-col gap-[16px] items-center justify-between">
+          <el-form-item class="w-full" :label="t('datasets.newDataset.datasetNickName')" prop="nickname">
+            <el-input v-model="dataForm.nickname" :placeholder="t('all.pleaseInput', { value: t('datasets.newDataset.datasetNickName') })" />
+          </el-form-item>
+          <el-form-item label="License" prop="license" class="w-full">
+            <el-select v-model="dataForm.license" :placeholder="t('all.select')" size="large" style="width: 100%;">
+              <el-option
+                v-for="item in licenses"
+                :key="item[0]"
+                :label="item[1]"
+                :value="item[0]"
+              />
+            </el-select>
+          </el-form-item>
         </div>
-        <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetName') }}</p>
-          <el-input v-model="datasetName" :placeholder="$t('rule.nameRule')" input-style="width: 100%">
-          <template #suffix>            
-              <InputTip :content="$t('datasets.newDataset.tip')" />
-            </template>
-          </el-input>
+        <el-form-item class="w-full" :label="t('datasets.newDataset.datasetDesc')" prop="desc">
+          <el-input 
+            v-model="dataForm.desc"
+            :rows="6"
+            type="textarea"
+            :placeholder="t('all.pleaseInput', { value: t('datasets.newDataset.datasetDesc') })" />
+        </el-form-item>
+        <el-form-item class="w-full">
+          <el-radio-group v-model="dataForm.visibility" class="!block">
+            <el-radio class="w-full !border-2 mr-0 mb-[32px] !rounded-xl !h-auto !items-start !p-4" label="public" size="large" border>
+              {{ t('datasets.newDataset.public') }}
+              <p class="whitespace-normal text-[#475467] font-light">{{ t('datasets.newDataset.publicDesc') }}</p>
+            </el-radio>
+            <el-radio class="w-full !border-2 mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
+              {{ t('datasets.newDataset.private') }}
+              <p class="whitespace-normal text-[#475467] font-light">{{ t('datasets.newDataset.privateDesc') }}</p>
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <p class="mb-[18px] rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
+          {{ t('datasets.newDataset.tips') }}
+        </p>
+        <div class="flex justify-end">
+          <el-form-item>
+            <el-button
+              :loading="loading"
+              class="!text-center !h-9 !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]"
+              @click="handleSubmit"
+            >
+              {{ t('datasets.newDataset.createDataset') }}
+            </el-button>
+          </el-form-item>
         </div>
-      </div>
-
-      <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
-        <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetNickName') }}</p>
-          <el-input v-model="datasetNickName" :placeholder="$t('all.inputNickNamePlc')" />
-        </div>
-        <div class="">
-          <p class="text-[#303133] text-sm mb-2">License</p>
-          <el-select v-model="license" :placeholder="$t('all.select')" size="large">
-            <el-option
-              v-for="item in licenses"
-              :key="item[0]"
-              :label="item[1]"
-              :value="item[0]"
-            />
-          </el-select>
-        </div>
-      </div>
-
-      <div class="w-full flex sm:flex-col mb-9">
-        <div class="flex-1">
-          <p class="text-[#303133] text-sm mb-2">{{ $t('datasets.newDataset.datasetDesc') }}</p>
-          <el-input v-model="datasetDesc"
-                    :rows="6"
-                    type="textarea"
-                    :placeholder="this.$t('all.inputDescPlc')" />
-        </div>
-      </div>
-
-      <hr class="mb-9" />
-      <div class="mb-9">
-        <el-radio-group v-model="visibility" class="!block">
-          <el-radio class="w-full mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4 bg-[#F9FAFB]" label="public" size="large" border disabled>
-            {{ $t('datasets.newDataset.public') }}
-            <p class="whitespace-normal text-[#475467] font-light">{{ $t('datasets.newDataset.publicDesc') }}</p>
-          </el-radio>
-          <el-radio class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4" label="private" size="large" border>
-            {{ $t('datasets.newDataset.private') }}
-            <p class="whitespace-normal text-[#475467] font-light">{{ $t('datasets.newDataset.privateDesc') }}</p>
-          </el-radio>
-        </el-radio-group>
-      </div>
-      <hr class="mb-9" />
-      <p class="mb-9 rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4">
-        <span> {{ $t('datasets.newDataset.tips') }}</span>
-        <br />
-        <span> {{ $t('datasets.newDataset.tips2') }}</span>
-      </p>
-      <div class="flex justify-end">
-        <button
-          class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
-          @click="createDataset"
-          :disabled="!canCreateDataset || hasCreateDataset"
-        >
-        {{ $t('datasets.newDataset.createDataset') }}
-        </button>
-      </div>
+      </el-form>
     </div>
   </div>
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, inject } from 'vue'
-  import { ElInput, ElMessage } from 'element-plus'
-  import csrfFetch from "../../packs/csrfFetch.js"
-  import { useI18n } from 'vue-i18n'
-  import InputTip from '../shared/inputs/InputTip.vue'
+import { ref, onMounted, inject } from 'vue'
+import csrfFetch from "../../packs/csrfFetch.js"
+import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
-  const props = defineProps({
-    licenses: Array,
-    namespaces: Array,
-  })
+const { t } = useI18n();
+const dataFormRef = ref(null)
+const nameRule = inject('nameRule')
 
-  const { t } = useI18n();
-  const nameRule = inject('nameRule')
-
-  const license = ref(props.licenses[0][0])
-  const owner = ref(props.namespaces[0][0])
-  const datasetName = ref('')
-  const datasetNickName = ref('')
-  const datasetDesc = ref('')
-  const visibility = ref('private')
-  const hasCreateDataset = ref(false)
-
-  const canCreateDataset = computed(() => { return nameRule.test(datasetName.value) })
-
-  const createDataset = async () => {
-    try {
-      const res = await submitDatasetForm()
-      ElMessage.success(t('datasets.newDataset.createSuccess'))
-      toDatasetDetail(res.path)
-    } catch (err) {
-      ElMessage.warning(err.message)
-    }
+// Props
+const props = defineProps({
+  namespaces: {
+    type: Array,
+    default: () => []
+  },
+  licenses: {
+    type: Array,
+    default: () => []
   }
+})
 
-  async function submitDatasetForm() {
-    const datasetCreateEndpoint = `/internal_api/datasets`
-    const formData = new FormData()
-    const [ownerId, ownerType] = owner.value.split('_')
-    formData.append('owner_id', ownerId)
-    formData.append('owner_type', ownerType)
-    formData.append('name', datasetName.value)
-    formData.append('nickname', datasetNickName.value)
-    formData.append('desc', datasetDesc.value)
-    formData.append('license', license.value)
-    formData.append('visibility', visibility.value)
 
-    const options = { method: 'POST', body: formData }
-    hasCreateDataset.value = true
+// State
+const dataForm = ref({
+  owner: props.namespaces[0][0],
+  name: '',
+  nickname: '',
+  license: props.licenses[0][0],
+  desc: '',
+  visibility: 'public',
+})
 
-    const response = await csrfFetch(datasetCreateEndpoint, options)
-    if (!response.ok) {
-      hasCreateDataset.value = false
-      const data = await response.json()
-      throw new Error(data.message)
+const loading = ref(false)
+
+// Validation rules
+const rules = ref({
+  owner: [
+    { required: true, message: t('all.pleaseSelect', { value: t('datasets.newDataset.owner') }), trigger: 'change' }
+  ],
+  name: [
+    { required: true, message: t('all.pleaseInput', { value: t('datasets.newDataset.datasetName') }), trigger: 'blur' },
+    // limit 2-64 length
+    { min: 2, max: 64, message: t('rule.lengthLimit', { min: 2, max: 64 }), trigger: 'blur' },
+    // 以字母开头
+    { pattern: /^[a-zA-Z]/, message: t('rule.startWithLetter'), trigger: 'blur' },
+    // 以数字或字母结尾
+    { pattern: /[a-zA-Z0-9]$/, message: t('rule.endWithLetterOrNumber'), trigger: 'blur' },
+    // 只能包含字母、数字与-_.
+    { pattern: /^[a-zA-Z0-9-_\.]+$/, message: t('rule.onlyLetterNumberAndSpecialStr'), trigger: 'blur' },
+    // 特殊字符不能并列出现
+    { pattern: /^(?!.*[-_.]{2,}).*$/, message: t('rule.specialStrNotTogether'), trigger: 'blur' },
+    // 保险起见最后一步还是加上最终的正则吧
+    { pattern: nameRule, message: t('rule.nameRule'), trigger: 'blur' },
+  ],
+  license: [
+    { required: true, message: t('all.pleaseSelect', { value: t('datasets.newDataset.license') }), trigger: 'change' }
+  ],
+})
+
+// Methods
+const handleSubmit = () => {
+  loading.value = true
+  dataFormRef.value.validate(async (valid) => {
+    if (valid) {
+      await createDataset()
     } else {
-      hasCreateDataset.value = false
-      return response.json()
+      return false
     }
-  }
-
-  const toDatasetDetail = (path) => {
-    window.location.pathname = `/datasets/${path}`
-  }
-  onMounted(() => {
-    const params = new URLSearchParams(window.location.search)
-    const result = props.namespaces.find(item => item[1] === params.get('orgName'));
-    if (result) {
-      owner.value = result[0]
-    }
+  }).finally(() => {
+    loading.value = false
   })
+}
+
+const createDataset = async () => {
+  const params = Object.assign({}, dataForm.value)
+  if (params.owner) {
+    const [owner_id, owner_type] = params.owner.split('_')
+    params.owner_id = owner_id
+    params.owner_type = owner_type
+    delete params.owner
+  }
+  const options = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  }
+  const uploadEndpoint = '/internal_api/datasets'
+  const response = await csrfFetch(uploadEndpoint, options)
+  if (response.ok) {
+    ElMessage({
+      message: t('datasets.newDataset.createSuccess'),
+      type: 'success'
+    })
+    response.json()
+      .then(res => {
+        window.location.href = `/datasets/${res.path}`
+      })
+  } else {
+    response.json()
+      .then(res => {
+        ElMessage({
+          message: t('datasets.newDataset.createFail') + `: ${res.message}`,
+          type: 'error'
+        })
+      })
+  }
+};
+
+onMounted(() => {
+  const params = new URLSearchParams(window.location.search)
+  const result = props.namespaces.find(item => item[1] === params.get('orgName'));
+  if (result) {
+    dataForm.value.owner = result[0]
+  }
+});
 </script>
 
 <style scoped>
@@ -179,7 +224,7 @@
   }
 
   :deep(.el-radio__input) {
-    margin-top: 4px;
+    margin-top: 10px;
   }
 
   :deep(.el-radio__label) {
@@ -204,6 +249,7 @@
       width: 100%;
     }
   }
+
   :deep(.el-input .el-input__wrapper) {
     border-radius: 8px;
   }

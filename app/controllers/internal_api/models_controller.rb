@@ -57,14 +57,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
   end
 
-  def destroy
-    if @model.destroy
-      render json: { message: I18n.t('repo.delSuccess') }
-    else
-      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
-    end
-  end
-
   def upload_file
     sync_upload_file('model', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200

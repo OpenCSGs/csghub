@@ -45,7 +45,7 @@ services:
       ASSET_HOST: http://127.0.0.1:3000
       RAILS_MASTER_KEY: 64f15f995b044427e43fe4897370fd66
       RAILS_SERVE_STATIC_FILES: 'false'
-      STARHUB_BASE_URL: http://csghub_server:8080
+      STARHUB_BASE_URL: http://${SERVER_DOMAIN}
       STARHUB_TOKEN: ${HUB_SERVER_API_TOKEN:-c7ab4948c36d6ecdf35fd4582def759ddd820f8899f5ff365ce16d7185cb2f609f3052e15681e931897259872391cbf46d78f4e75763a0a0633ef52abcdc840c}
       BUCKET_NAME: opencsg-portal-storage
       ENDPOINT: http://${SERVER_DOMAIN}:9000
@@ -91,6 +91,9 @@ services:
       STARHUB_SERVER_MIRRORSERVER_HOST: http://${SERVER_DOMAIN}/gitserver
       STARHUB_SERVER_MIRRORSERVER_USERNAME: root
       STARHUB_SERVER_MIRRORSERVER_PASSWORD: password123
+      OPENCSG_ACCOUNTING_NATS_URL: nats://natsadmin:gALqqbP6SpftVdFzrU2URJ8k1G@natsmaster:4222
+      OPENCSG_ACCOUNTING_SERVER_HOST: http://account_server
+      OPENCSG_ACCOUNTING_SERVER_PORT: 8086
     ports:
       - "8080:8080"
     restart: always
@@ -160,6 +163,39 @@ services:
     networks:
       - opencsg
 
+  natsmaster:
+    image: opencsg/csghub-nats:2.10.16
+    ports:
+      - "4222:4222" # api
+      - "6222:6222" # cluster
+      - "8222:8222" # monitor
+    restart: always
+    networks:
+      - opencsg
+
+  account_server:
+    image: opencsg/csghub-server:latest
+    entrypoint:
+      - /starhub-bin/starhub
+      - accounting
+      - launch
+    depends_on:
+      - natsmaster
+    environment:
+      STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN:-c7ab4948c36d6ecdf35fd4582def759ddd820f8899f5ff365ce16d7185cb2f609f3052e15681e931897259872391cbf46d78f4e75763a0a0633ef52abcdc840c}
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      OPENCSG_ACCOUNTING_SERVER_PORT: 8086
+      OPENCSG_ACCOUNTING_NATS_URL: nats://natsadmin:gALqqbP6SpftVdFzrU2URJ8k1G@natsmaster:4222
+      OPENCSG_ACCOUNTING_FEE_EVENT_SUBJECT: "accounting.fee.>"
+      OPENCSG_ACCOUNTING_NOTIFY_NOBALANCE_SUBJECT: "accounting.notify.nobalance"
+      OPENCSG_ACCOUNTING_MSG_FETCH_TIMEOUTINSEC: 5
+      OPENCSG_ACCOUNTING_CHARGING_ENABLE: true
+      GIN_MODE: release
+    ports:
+      - "8086:8086"
+    restart: always
+    networks:
+      - opencsg
 networks:
   opencsg:
     driver: bridge
