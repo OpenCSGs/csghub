@@ -3,7 +3,6 @@ class ModelsController < ApplicationController
   include LicenseListHelper
   include LocalRepoValidation
   include FileOptionsHelper
-  include BlobContentHelper
 
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
