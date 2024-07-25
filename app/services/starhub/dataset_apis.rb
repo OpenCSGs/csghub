@@ -39,10 +39,6 @@ module Starhub
       create_repo('datasets', username, dataset_name, namespace, nickname, desc, options)
     end
 
-    def delete_dataset(namespace, dataset_name, params = {})
-      delete_repo('datasets', namespace, dataset_name, params)
-    end
-
     def update_dataset(username, dataset_name, namespace, nickname, desc, options = {})
       update_repo('datasets', username, dataset_name, namespace, nickname, desc, options)
     end

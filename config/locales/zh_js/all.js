@@ -81,5 +81,6 @@ export const all = {
   deploy: "部署",
   more:"更多",
   baseModel:"基座模型",
+  moreDesc: "展开更多",
   sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token"
 }

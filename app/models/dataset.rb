@@ -8,7 +8,6 @@ class Dataset < ApplicationRecord
   has_many :discussions, as: :discussionable, dependent: :destroy
 
   after_create :sync_created_dataset_to_starhub_server
-  after_destroy :delete_dataset_from_starhub_server
   before_save :detect_sensitive_content
   after_update :update_starhub_server_dataset
 
@@ -56,11 +55,6 @@ class Dataset < ApplicationRecord
                                                          { private: dataset_private?,
                                                            current_user: creator&.name
                                                          })
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def delete_dataset_from_starhub_server
-    res = Starhub.api(creator.session_ip).delete_dataset(owner.name, name, {current_user: creator.name})
     raise StarhubError, res.body unless res.success?
   end
 

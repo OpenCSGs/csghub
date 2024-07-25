@@ -15,6 +15,41 @@
         <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
+    <div 
+      v-if="repoType == 'model' && licenseTagInfo" 
+      class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
+    >
+      <div class="flex">
+        <SvgIcon name="license" />
+        <p class="ml-[8px] text-[16px] leading-[24px] text-[#344054]">License</p>
+      </div>
+      <div class="flex gap-[8px]">
+        <div class="flex gap-[4px] px-[8px] py-[4px] border rounded-[16px]">
+          <SvgIcon name="license" width="15" height="15" />
+          <p class="text-[14px] leading-[20px] text-[#667085]">License: {{ licenseTagInfo.name }}</p>
+        </div>
+        <a 
+          v-if="licenseTagInfo.url" 
+          :href="licenseTagInfo.url" 
+          target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center"
+        >
+          <SvgIcon name="top_right_arrow" />
+        </a>
+      </div>
+      <div 
+        class="text-[16px] leading-[24px] text-[#344054]"
+        :class="showMoreLicenseDesc ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
+      >
+        {{ locale == 'zh' ? licenseTagInfo.desc: licenseTagInfo.desc_en}}
+      </div>
+      <div 
+        v-if="showMoreLicenseDesc" 
+        @click="moreLicenseDesc = true" 
+        class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer"
+      >
+        {{ $t('all.moreDesc') }}
+      </div>
+    </div>
 
       <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
                       :namespacePath="namespacePath"
@@ -45,7 +80,8 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
@@ -60,13 +96,21 @@
     currentBranch: String,
     widgetType: String,
     inferenceStatus: String,
-    repoType: String
+    repoType: String,
+    license: String, default: ''
   })
 
   const loading = ref(true)
   const readmeContent = ref('')
   const previewData = ref({})
   const relations = ref({})
+  const moreLicenseDesc = ref(false)
+  const licenseTagInfo = ref({ name: props.license, desc: '' })
+  const { locale } = useI18n()
+
+  const showMoreLicenseDesc = computed(() => {
+    return licenseTagInfo.value.desc.length > 70 && licenseTagInfo.value.desc_en.length > 125 && !moreLicenseDesc.value
+  })
 
   const fetchData = async () => {
     const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
@@ -120,9 +164,24 @@
     })
   }
 
+  const fetchLicenseInfo = async () => {
+    const url = '/internal_api/admin/system_config/license'
+
+    fetch(url).then((response) => {
+      response.json().then((data) => {
+        licenseTagInfo.value = data.license_info.find(
+          item => item.name.toLowerCase() == props.license
+        ) || licenseTagInfo.value
+      }).catch((error) => {
+        console.error(licenseTagInfo.value)
+      })
+    })
+  }
+
   onMounted(() => {
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
+    if (props.repoType == 'model') { fetchLicenseInfo() }
   })
 </script>

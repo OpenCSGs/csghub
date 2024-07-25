@@ -118,6 +118,27 @@
       >
     </el-form-item>
   </div>
+
+    <!-- License info -->
+    <div class="my-[30px]">
+    <h3 class="text-[18px] font-[500] mb-[8px]">License info</h3>
+    <el-form-item>
+      <textarea
+        ref="licenseInfoRef"
+        class="system-config-obj-box"
+        :value="stringifyObject(systemConfigs.license_info)"
+        rows="5"
+      ></textarea>
+    </el-form-item>
+    <el-form-item>
+      <el-button
+        type="info"
+        size="small"
+        @click="updateLicenseInfo"
+        >Update</el-button
+      >
+    </el-form-item>
+  </div>
 </template>
 
 <script setup>
@@ -132,7 +153,8 @@
     license_configs: {},
     oidc_configs: {},
     s3_configs: {},
-    starhub_configs: {}
+    starhub_configs: {},
+    license_info: {}
   })
 
   const featureFlagsRef = ref()
@@ -165,6 +187,14 @@
   const updateStarhubConfigs = () => {
     systemConfigs.value.starhub_configs = JSON.parse(
       starhubConfigsRef.value.value
+    )
+    updateSystemConfig(systemConfigs.value)
+  }
+
+  const licenseInfoRef = ref(null)
+  const updateLicenseInfo = () => {
+    systemConfigs.value.license_info = JSON.parse(
+      licenseInfoRef.value.value
     )
     updateSystemConfig(systemConfigs.value)
   }
