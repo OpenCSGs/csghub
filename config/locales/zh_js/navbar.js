@@ -66,4 +66,5 @@ export const navbar = {
   loginRegister: "登录/注册",
   "login": "登录",
   "source": "资源控制台",
+  newCollection: "新建合集"
 }

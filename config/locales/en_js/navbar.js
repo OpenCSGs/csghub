@@ -66,4 +66,5 @@ export const navbar = {
   loginRegister: "Login/Registe",
   "login": "Login",
   "source": "Console",
+  newCollection: "New Collection"
 }
