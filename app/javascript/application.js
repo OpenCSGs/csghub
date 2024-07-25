@@ -46,9 +46,12 @@ import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
+import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+import CollectionIndex from "./components/collections/CollectionIndex.vue"
+import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
 
 
 // Admin pages
@@ -94,14 +97,17 @@ const app = createApp({
     RepoCards,
     NewCode,
     CodeDetail,
+    NewCollection,
     NewEndpoint,
-    EndpointDetail,
     AdminNavbar,
     AdminMenu,
     NewFinetune,
     finetuneDetail,
     StarshipAccessTokenSettings,
-    SyncAccessTokenSettings
+    SyncAccessTokenSettings,
+    EndpointDetail,
+    CollectionIndex,
+    CollectionsDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
