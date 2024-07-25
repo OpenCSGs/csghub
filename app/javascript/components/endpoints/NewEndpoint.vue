@@ -276,7 +276,8 @@
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
       res.json().then((body) => {
-        dataForm.value.cloud_resource = body.data[0]?.id || "";
+        const firstAvailableResource = body.data?.find(resource => resource.is_available)
+        dataForm.value.cloud_resource = firstAvailableResource?.id || ''
         endpointResources.value = body.data;
       });
     }
@@ -347,7 +348,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = '/internal_api/endpoint'
+    const uploadEndpoint = '/internal_api/endpoints'
     const response = await csrfFetch(uploadEndpoint, options)
     if (response.ok) {
       ElMessage({
