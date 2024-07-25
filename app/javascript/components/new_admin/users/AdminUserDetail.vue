@@ -13,7 +13,7 @@
         </li>
         <li class="flex justify-between mb-4">
           <label>Name</label>
-          <p>{{ user.name }}</p>
+          <p>{{ user.username }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Nickname</label>
@@ -47,7 +47,7 @@
 
     <el-dialog
       v-model="dialogFormVisible"
-      :title="`Update user: ${user.name}`"
+      :title="`${user.username}`"
       width="500"
     >
       <el-form :model="form">
