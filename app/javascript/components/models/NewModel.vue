@@ -17,10 +17,10 @@
           <el-form-item :label="t('models.newModel.owner')" prop="owner" class="w-full">
             <el-select v-model="dataForm.owner" :placeholder="t('all.select')" size="large" style="width: 100%;">
               <el-option
-                v-for="item in namespaces"
-                :key="item[0]"
-                :label="item[1]"
-                :value="item[1]"
+                v-for="item in namespaces()"
+                :key="item"
+                :label="item"
+                :value="item"
               />
             </el-select>
           </el-form-item>
@@ -98,10 +98,12 @@
 
 <script setup>
 import { ref, inject } from 'vue'
-import csrfFetch from "../../packs/csrfFetch.js"
 import jwtFetch from '../../packs/jwtFetch.js'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import useUserStore from '../../stores/UserStore.js'
+
+const userStore = useUserStore()
 
 const csghubServer = inject('csghubServer')
 const { t } = useI18n();
@@ -110,20 +112,15 @@ const nameRule = inject('nameRule')
 
 // Props
 const props = defineProps({
-  namespaces: {
-    type: Array,
-    default: () => []
-  },
   licenses: {
     type: Array,
     default: () => []
   }
 })
 
-
 // State
 const dataForm = ref({
-  owner: props.namespaces[0][1],
+  owner: '',
   name: '',
   nickname: '',
   license: props.licenses[0][0],
@@ -159,6 +156,15 @@ const rules = ref({
 })
 
 // Methods
+const namespaces = () => {
+  let namespaces = userStore.orgs.map(org => org.path)
+  namespaces.unshift(userStore.username)
+  const params = new URLSearchParams(window.location.search);
+  const orgName = params.get('orgName')
+  dataForm.value.owner = orgName || namespaces[0]
+  return namespaces
+}
+
 const handleSubmit = () => {
   loading.value = true
   dataFormRef.value.validate(async (valid) => {
