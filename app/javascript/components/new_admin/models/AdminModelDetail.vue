@@ -28,6 +28,11 @@
           <p>{{ dayjs(model.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
         </li>
       </ul>
+      <template #footer>
+        <div class="card-footer">
+          <el-button @click="redirectModelEdit" class="w-[100px]">编辑</el-button>
+        </div>
+      </template>
     </el-card>
   </div>
 </template>
@@ -52,6 +57,9 @@
     } else {
       ElMessage.error('Failed to fetch model')
     }
+  }
+  const redirectModelEdit = () => {
+    window.location.href = `/new_admin/models/${route.params.namespace}/${route.params.name}/edit`
   }
 
   onMounted(() => {
