@@ -29,6 +29,9 @@
         <!-- application space -->
         <el-menu-item  index="/spaces" style="border:none" @click="routerLink('/spaces')">{{ $t('navbar.spaces') }}</el-menu-item>
 
+        <!-- collection -->
+        <el-menu-item index="/collections" style="border:none" @click="routerLink('/collections')">{{ $t('collections.collection') }}</el-menu-item>
+
         <!-- hardware -->
         <el-menu-item index="/computing" style="border:none" @click="routerLink('/computing')">{{ $t('navbar.computer') }}</el-menu-item>
 
