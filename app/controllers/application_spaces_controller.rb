@@ -15,7 +15,6 @@ class ApplicationSpacesController < ApplicationController
   end
 
   def new
-    @available_namespaces = current_user.available_namespaces
     @is_admin = !!current_user&.admin?
     get_license_list
   end
