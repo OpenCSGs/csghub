@@ -8,6 +8,10 @@
       </template>
       <ul class="max-w-[480px]">
         <li class="flex justify-between mb-4">
+          <label>Uuid</label>
+          <p>{{ user.uuid }}</p>
+        </li>
+        <li class="flex justify-between mb-4">
           <label>Name</label>
           <p>{{ user.name }}</p>
         </li>
@@ -16,12 +20,20 @@
           <p>{{ user.nickname }}</p>
         </li>
         <li class="flex justify-between mb-4">
+          <label>Avatar</label>
+          <p>{{ user.avatar }}</p>
+        </li>
+        <li class="flex justify-between mb-4">
+          <label>Email</label>
+          <p>{{ user.email }}</p>
+        </li>
+        <li class="flex justify-between mb-4">
           <label>Phone</label>
           <p>{{ user.phone }}</p>
         </li>
         <li class="flex justify-between mb-4">
-          <label>Role</label>
-          <p>{{ user.role }}</p>
+          <label>Roles</label>
+          <p>{{ user.roles }}</p>
         </li>
         <li class="flex justify-between mb-4">
           <label>Created At</label>
@@ -105,7 +117,7 @@
   }
 
   const submitUserForm = async () => {
-    const response = await jwtFetch(`${csghubServer}/api/v1/user/${user.value.name}`, {
+    const response = await jwtFetch(`${csghubServer}/api/v1/user/${user.value.username}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
