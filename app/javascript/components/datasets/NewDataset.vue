@@ -220,7 +220,7 @@
     namespaces.unshift(userStore.username)
     const params = new URLSearchParams(window.location.search)
     const orgName = params.get('orgName')
-    owner.value = orgName || namespaces[0]
+    dataForm.value.owner = orgName || namespaces[0]
     return namespaces
   }
 
@@ -326,7 +326,7 @@
         type: 'success'
       })
       response.json().then((res) => {
-        window.location.href = `/datasets/${res.path}`
+        window.location.href = `/datasets/${res.data.path}`
       })
     } else {
       response.json().then((res) => {
