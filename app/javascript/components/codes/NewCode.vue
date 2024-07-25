@@ -296,20 +296,21 @@
   }
 
   const createCode = async () => {
-    const params = Object.assign({}, dataForm.value)
-    if (params.owner) {
-      const [owner_id, owner_type] = params.owner.split('_')
-      params.owner_id = owner_id
-      params.owner_type = owner_type
-      delete params.owner
+    const params = {
+      name: dataForm.value.name,
+      nickname: dataForm.value.nickname,
+      namespace: dataForm.value.owner,
+      license: dataForm.value.license,
+      description: dataForm.value.desc,
+      private: dataForm.value.visibility === 'private'
     }
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = '/internal_api/codes'
-    const response = await csrfFetch(uploadEndpoint, options)
+    const newEndpoint = `${csghubServer}/api/v1/codes`
+    const response = await csrfFetch(newEndpoint, options)
     if (response.ok) {
       ElMessage({
         message: t('codes.newCode.createSuccess'),

@@ -318,8 +318,8 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const updateEndpoint = `${csghubServer}/api/v1/datasets`
-    const response = await jwtFetch(updateEndpoint, options)
+    const newEndpoint = `${csghubServer}/api/v1/datasets`
+    const response = await jwtFetch(newEndpoint, options)
     if (response.ok) {
       ElMessage({
         message: t('datasets.newDataset.createSuccess'),
