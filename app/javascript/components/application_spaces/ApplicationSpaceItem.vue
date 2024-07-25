@@ -2,7 +2,7 @@
   <a
     :href="`/spaces/${repo.path}`"
     class="xl:w-full focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 mlg:!w-full"
-    :style="width ? `width: ${width}px;` : isCollection ? 'width:100%' : ''"
+    :style="`width: ${itemWidth};`"
   >
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
@@ -95,6 +95,12 @@
     repoType: String,
     width: String,
     isCollection: Boolean
+  })
+
+  const itemWidth = computed(() => {
+    if (props.width) return `${props.width}px`
+    if (props.isCollection) return '100%'
+    return ''
   })
 
   const coverImageUrl = computed(() => {
