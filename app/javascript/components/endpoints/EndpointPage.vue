@@ -54,6 +54,7 @@
   </div>
 
   <EndpointPlayground
+    v-if="!!appEndpoint"
     :appEndpoint="appEndpoint"
     :model-id="modelId"
   />

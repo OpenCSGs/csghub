@@ -100,6 +100,20 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="Repetition Penalty">
+            <el-select
+              v-model="form.repetition_penalty"
+              size="large"
+            >
+              <el-option
+                v-for="repetition_penalty in repetitionPenaltyRange"
+                :key="repetition_penalty"
+                :label="repetition_penalty"
+                :value="repetition_penalty"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="Max Tokens">
             <el-select
               v-model="form.max_tokens"
@@ -122,30 +136,38 @@
       class="flex-1"
     >
       <TestEndpoint
-        :app-endpoint="props.appEndpoint"
-        :model-id="props.modelId"
-
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="form"
       />
       <div class="px-4 mb-4 flex justify-between items-center">
         <div class="items-center gap-1.5 flex cursor-not-allowed">
           <SvgIcon name="json" />
-          <div class="text-[#98a1b2] text-xs leading-[18px]">{{ $t('endpoints.playground.json') }}</div>
+          <div class="text-[#98a1b2] text-xs leading-[18px]">
+            {{ $t('endpoints.playground.json') }}
+          </div>
         </div>
         <div
           class="items-center gap-1.5 flex cursor-pointer"
           @click="dialogVisible = true"
         >
           <SvgIcon name="fullscreen" />
-          <div class="text-[#475466] text-xs leading-[18px]">{{ $t('endpoints.playground.maximum') }}</div>
+          <div class="text-[#475466] text-xs leading-[18px]">
+            {{ $t('endpoints.playground.maximum') }}
+          </div>
         </div>
       </div>
     </div>
 
     <div
       v-show="playgroundMode === 'api'"
-      class="flex-1"
+      class="flex-1 overflow-hidden"
     >
-      <ApiExample :form="form" />
+      <ApiExample
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="form"
+      />
     </div>
   </div>
   <el-dialog
@@ -154,8 +176,8 @@
     append-to-body
   >
     <TestEndpoint
-      :app-endpoint="props.appEndpoint"
-      :model-id="props.modelId"
+      :appEndpoint="appEndpoint"
+      :modelId="modelId"
       :form="form"
     />
   </el-dialog>
@@ -176,6 +198,9 @@
   const topPRange = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
   const topKRange = [-1, 0, 1, 2, 3, 4, 5]
   const temperatureRange = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  const repetitionPenaltyRange = [
+    0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0
+  ]
   const maxTokensRange = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
   const playgroundMode = ref('test') // test, api
@@ -184,7 +209,8 @@
     top_p: 1,
     top_k: -1,
     temperature: 0.5,
-    max_tokens: 20,
+    repetition_penalty: 1.0,
+    max_tokens: 20
   })
 
   const changePlaygroundMode = (mode) => {

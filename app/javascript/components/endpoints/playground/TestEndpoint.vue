@@ -131,8 +131,9 @@
 
     resetAnwserContent()
 
-    const endpoint = `https://s-wanghh2003-csg-wukong-1b-ab.space-stg.opencsg.com/v1/chat/completions`
+    const endpoint = `${props.appEndpoint}/v1/chat/completions`
     const payload = {
+      model: props.modelId,
       model: 'wanghh2003/csg-wukong-1B',
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },

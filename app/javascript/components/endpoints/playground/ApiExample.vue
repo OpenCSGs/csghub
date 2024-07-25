@@ -57,13 +57,15 @@
         </div>
       </div>
     </div>
-    <div class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-6 relative group">
+    <div
+      class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-6 relative group"
+    >
       <CodeViewer
         :content="codeContent"
         :extension="codeExtension"
       />
       <div
-        class="absolute bg-white text-xs text-[#344053] right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer  items-center gap-1 hidden group-hover:flex"
+        class="absolute bg-white text-xs text-[#344053] right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer items-center gap-1 hidden group-hover:flex"
         @click="copyCode"
       >
         <SvgIcon name="copy" />
@@ -79,6 +81,8 @@
   import { copyToClipboard } from '../../../packs/clipboard'
 
   const props = defineProps({
+    modelId: String,
+    appEndpoint: String,
     form: Object
   })
 
@@ -90,49 +94,99 @@
   }
 
   const pythonContent = computed(
-    () => `import openai as openai
+    () => `import requests
+import json
+import re
 
-openai.api_key = "YOUR_API_KEY"
+url = "${props.appEndpoint}"
 
-response = openai.Completion.create(
-  model="text-davinci-003",
-  prompt="",
-  max_tokens=${props.form.max_tokens},
-  temperature=${props.form.temperature},
-  top_p=${props.form.top_p},
-  top_k=${props.form.top_k}
-)
+data = {
+    "model": "${props.modelId}",
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant."
+        },
+        {
+            "role": "user",
+            "content": "What is deep learning?"
+        }
+    ],
+    "stream": True,
+    "temperature": ${props.form.temperature},
+    "max_tokens": ${props.form.max_tokens},
+    "top_k": ${props.form.top_k},
+    "top_p": ${props.form.top_p},
+    "repetition_penalty": ${props.form.repetition_penalty}
+}
 
-print(response.choices[0].text)
+response = requests.post(url=url, json=data, stream=True)
+response.raise_for_status()
+
+if response.status_code == 200:
+    for line in response.iter_lines():
+        if line:
+            try:
+                decoded_line = re.sub(r'^data:', '', line.decode('utf-8'))
+                data = json.loads(decoded_line)
+                if ("choices" in data) and data['choices'][0]['delta'] and ("content" in data['choices'][0]['delta']):
+                    print(data['choices'][0]['delta'])
+            except json.JSONDecodeError:
+                pass
 `
   )
 
   const jsContent = computed(
     () =>
-      `const response = openai.createCompletion({
-  model: "text-davinci-003",
-  prompt: "",
-  max_tokens: ${props.form.max_tokens},
-  temperature: ${props.form.temperature},
-  top_p: ${props.form.top_p},
-  top_k: ${props.form.top_k}
-});
-console.log(response.data.choices[0].text)
-`
+      `fetch("${props.appEndpoint}", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+  },
+  body: JSON.stringify({
+    model: "${props.modelId}",
+    messages: [
+      {
+        role: "system",
+        content: "You are a helpful assistant."
+      },
+      {
+        role: "user",
+        content: "What is deep learning?"
+      }
+    ],
+    stream: true,
+    temperature: ${props.form.temperature},
+    max_tokens: ${props.form.max_tokens},
+    top_k: ${props.form.top_k},
+    top_p: ${props.form.top_p},
+    repetition_penalty: ${props.form.repetition_penalty}
+  })
+})
+.then(response => response.json())
+.then(data => {
+  console.log(data)
+})`
   )
 
   const curlContent = computed(
     () => `curl -X POST \\
-"https://api.openai.com/v1/completions" \\
+"${props.appEndpoint}" \\
 -H "Content-Type: application/json" \\
 -H "Authorization: Bearer YOUR_API_KEY" \\
--d '{
-  "model": "text-davinci-003",
-  "prompt": "",
-  "max_tokens": ${props.form.max_tokens},
-  "temperature": ${props.form.temperature},
-  "top_p": ${props.form.top_p},
-  "top_k": ${props.form.top_k}
+-d '{ \\
+  "model": "${props.modelId}", \\
+  "messages": [ \\
+    { "role": "system", "content": "You are a helpful assistant." }, \\
+    { "role": "user", "content": "What is deep learning?" } \\
+  ], \\
+  "stream": true, \\
+  "max_tokens": ${props.form.max_tokens}, \\
+  "temperature": ${props.form.temperature}, \\
+  "repetition_penalty": ${props.form.repetition_penalty}, \\
+  "top_p": ${props.form.top_p}, \\
+  "top_k": ${props.form.top_k} \\
 }'
 `
   )
