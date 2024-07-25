@@ -97,9 +97,6 @@
   import jwtFetch from '../../packs/jwtFetch'
   const csghubServer = inject('csghubServer')
 
-  //   const perPage = ref(10)
-  //   const currentPage = ref(1)
-  //   const totalCollections = ref(0)
   const collectionData = ref()
 
   const props = defineProps({
@@ -141,10 +138,7 @@
     }
   }
 
-  const fetchCollectionDetail = async (childCurrent) => {
-    if (childCurrent) {
-      currentPage.value = childCurrent
-    }
+  const fetchCollectionDetail = async () => {
     const url = `${csghubServer}/api/v1/collections/${props.collectionsId}`
     const res = await jwtFetch(url)
     if (!res.ok) {
