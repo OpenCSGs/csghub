@@ -26,7 +26,9 @@ export default useUserStore = defineStore('User', () => {
     homepage.value = initialData.homepage
     bio.value = initialData.bio
     roles.value = initialData.roles
-    orgs.value = initialData.orgs
+    if (initialData.orgs) {
+      orgs.value = initialData.orgs
+    }
     lastLoginTime.value = initialData.lastLoginTime
   }
 
