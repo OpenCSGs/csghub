@@ -63,10 +63,13 @@ export const endpoints = {
     currentMinReplica: "Current minimum number of replicas",
   },
   playground: {
+    title: "Playground",
     parameters: "Parameters",
     generation: "Text Generation",
     json: "JSON Output",
     maximum: "Maximum",
     send: "Send",
+    test: "Test your endpoint",
+    api: "Send requests to endpoint",
   }
 }

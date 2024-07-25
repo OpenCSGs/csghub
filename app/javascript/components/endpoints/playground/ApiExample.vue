@@ -4,7 +4,7 @@
   >
     <SvgIcon name="playground_api" />
     <div class="text-[#344053] text-base font-medium leading-normal">
-      Send requests to endpoint
+      {{ $t('endpoints.playground.api') }}
     </div>
   </div>
 

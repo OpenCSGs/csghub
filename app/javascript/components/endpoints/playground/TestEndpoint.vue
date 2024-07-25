@@ -4,7 +4,7 @@
   >
     <SvgIcon name="playground_test" />
     <div class="text-[#344053] text-base font-medium leading-normal">
-      Test your endpoint
+      {{ $t('endpoints.playground.test') }}
     </div>
   </div>
 

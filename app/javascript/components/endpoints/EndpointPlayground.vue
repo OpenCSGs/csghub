@@ -8,7 +8,7 @@
           class="flex items-center gap-2 text-base text-[#344054] font-medium"
         >
           <SvgIcon name="playground" />
-          Playground
+          {{ $t('endpoints.playground.title') }}
         </div>
         <div
           class="h-11 p-1 bg-[#f8f9fb] rounded-[10px] border border-[#eaecf0] items-center gap-1 inline-flex"
