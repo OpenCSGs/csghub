@@ -235,6 +235,12 @@ module Starhub
       res.body
     end
 
+    def verify_jwt_token(token)
+      res = @client.get("/jwt/#{token}")
+      raise StarhubError, res.body unless res.success?
+      res.body
+    end
+
     def model_predict(namespace, name, user, input, version)
       options = {
         current_user: user,

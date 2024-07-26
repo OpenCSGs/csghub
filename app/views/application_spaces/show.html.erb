@@ -1,14 +1,10 @@
 <div class="bg-white">
   <application-space-detail
-    :tags="<%= @tags %>"
     local-repo-id="<%= @local_application_space&.id %>"
-    :application-space="<%= @application_space %>"
-    :last-commit="<%= @last_commit || {} %>"
-    :branches="<%= @branches %>"
+    repo-type="space"
     current-branch="<%= @current_branch || 'main' %>"
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
-    :blob="<%= @blob || {} %>"
     :action-name="'<%= action_name %>'"
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
@@ -16,6 +12,8 @@
     :can-write="<%= !!(@local_application_space && current_user&.can_write?(@local_application_space)) %>"
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
+    namespace="<%= params[:namespace] %>"
+    repo-name="<%= params[:application_space_name] %>"
   >
   </application-space-detail>
 </div>

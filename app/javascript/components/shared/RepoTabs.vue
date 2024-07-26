@@ -3,10 +3,10 @@
     <RepoClone
       v-if="repoType !== 'endpoint'"
       :repoType="repoType"
-      :httpCloneUrl="repoDetail.repository.http_clone_url"
-      :sshCloneUrl="repoDetail.repository.ssh_clone_url"
+      :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
+      :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
       :userName="userName"
-      :namespacePath="repoDetail.path"
+      :namespacePath="path"
       :admin="admin"
       :repo="repoDetail"
       :enableEndpoint="repoDetail.enable_inference"
@@ -26,8 +26,8 @@
       <template #summary>
         <InitializeGuide
           v-if="repoType === 'space' && appStatus === 'NoAppFile'"
-          :http-clone-url="repoDetail.repository.http_clone_url"
-          :ssh-clone-url="repoDetail.repository.ssh_clone_url"
+          :http-clone-url="repoDetail.repository?.http_clone_url || ''"
+          :ssh-clone-url="repoDetail.repository?.ssh_clone_url || ''"
           :sdk="sdk"
           :user-name="userName"
         />
@@ -39,7 +39,7 @@
           v-else-if="repoType === 'space' && (appStatus === 'Stopped' || appStatus === 'Sleeping')"
           :appStatus="appStatus"
           :canWrite="canWrite"
-          :path="repoDetail.path"
+          :path="path"
         />
         <BuildAndErrorPage
           v-else-if="repoType === 'space'"
@@ -59,7 +59,7 @@
         <repo-summary
           v-else
           :repo-type="repoType"
-          :namespace-path="repoDetail.path"
+          :namespace-path="path"
           :download-count="repoDetail.downloads"
           :currentBranch="currentBranch"
           :widget-type="repoDetail.widget_type"
@@ -77,7 +77,7 @@
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :namespace-path="repoDetail.path"
+          :namespace-path="path"
           :can-write="canWrite"
         />
       </template>
@@ -88,7 +88,7 @@
         <new-file
           :current-branch="currentBranch"
           :repo-name="repoDetail.name"
-          :namespace-path="repoDetail.path"
+          :namespace-path="path"
           originalCodeContent=""
         />
       </template>
@@ -100,7 +100,7 @@
           :current-branch="currentBranch"
           :current-path="currentPath"
           :repo-name="repoDetail.name"
-          :namespace-path="repoDetail.path"
+          :namespace-path="path"
         />
       </template>
       <template
@@ -110,7 +110,7 @@
         <upload-file
           :current-branch="currentBranch"
           :repo-name="repoDetail.name"
-          :namespace-path="repoDetail.path"
+          :namespace-path="path"
         />
       </template>
       <template
@@ -120,7 +120,7 @@
         <RepoCommits
           :branches="branches"
           :currentBranch="currentBranch"
-          :namespacePath="repoDetail.path"
+          :namespacePath="path"
           :repoType="repoType"
         />
       </template>
@@ -129,20 +129,20 @@
         v-if="actionName === 'commit'"
       >
         <RepoCommit
-          :namespacePath="repoDetail.path"
+          :namespacePath="path"
           :repoType="repoType"
           :commitId="commitId"
         />
       </template>
       <template
         #files
-        v-if="actionName === 'show' || actionName === 'files'"
+        v-if="actionName === 'files'"
       >
         <repo-files
           :branches="branches"
           :current-branch="currentBranch"
           :current-path="currentPath"
-          :namespace-path="repoDetail.path"
+          :namespace-path="path"
           :can-write="canWrite"
           :repo-type="repoType"
         />
@@ -186,7 +186,7 @@
       >
         <model-settings
           v-if="repoType === 'model'"
-          :path="repoDetail.path"
+          :path="path"
           :model-nickname="repoDetail.nickname"
           :model-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
@@ -195,7 +195,7 @@
         />
         <dataset-settings
           v-if="repoType === 'dataset'"
-          :path="repoDetail.path"
+          :path="path"
           :dataset-nickname="repoDetail.nickname"
           :dataset-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
@@ -204,7 +204,7 @@
         />
         <application-space-settings
           v-if="repoType === 'space'"
-          :path="repoDetail.path"
+          :path="path"
           :application-space-nickname="repoDetail.nickname"
           :application-space-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
@@ -215,7 +215,7 @@
         />
         <code-settings
           v-if="repoType === 'code'"
-          :path="repoDetail.path"
+          :path="path"
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
           :default_branch="repoDetail.default_branch"
@@ -272,12 +272,9 @@
   const props = defineProps({
     localRepoId: String,
     repoDetail: Object,
-    lastCommit: Object,
-    branches: Object,
     currentBranch: String,
     currentPath: String,
     defaultTab: String,
-    blob: Object,
     tags: Object,
     tagList: String,
     actionName: String,
@@ -296,7 +293,8 @@
     endpointName: String,
     endpointId: String,
     admin: Boolean,
-    replicaList: Array
+    replicaList: Array,
+    path: String
   })
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
@@ -311,15 +309,13 @@
     }
   })
 
-  const decodedContent = props.blob?.content || ''
-
   const showSpaceLogs = () => {
     emit('toggleSpaceLogsDrawer')
   }
 
   const repoNamespace = computed(() => {
-    if (!!props.repoDetail.path) {
-      return props.repoDetail.path.split('/')[0]
+    if (!!props.path) {
+      return props.path.split('/')[0]
     } else if (!!props.repoDetail.model_id) {
       return props.userName
     } else {
@@ -331,7 +327,7 @@
     if (props.repoType === 'endpoint') {
       return `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}`
     } else {
-      return `/${props.repoType}s/${props.repoDetail.path}`
+      return `/${props.repoType}s/${props.path}`
     }
   }
 
@@ -341,16 +337,16 @@
         location.href = summaryUrl()
         break
       case 'files':
-        location.href = `/${props.repoType}s/${props.repoDetail.path}/files/main`
+        location.href = `/${props.repoType}s/${props.path}/files/main`
         break
       case 'community':
-        location.href = `/${props.repoType}s/${props.repoDetail.path}/community`
+        location.href = `/${props.repoType}s/${props.path}/community`
         break
       case 'settings':
         if (props.repoType === 'endpoint') {
           location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/settings`
         } else {
-          location.href = `/${props.repoType}s/${props.repoDetail.path}/settings`
+          location.href = `/${props.repoType}s/${props.path}/settings`
         }
         break
       case 'logs':
@@ -360,7 +356,7 @@
         if (props.repoType === 'endpoint') {
           location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
         } else {
-          location.href = `/${props.repoType}s/${props.repoDetail.path}/billing`
+          location.href = `/${props.repoType}s/${props.path}/billing`
         }
         break
       default:

@@ -2,35 +2,32 @@
   <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
-        :private="applicationSpace.data.private"
-        :license="applicationSpace.data.license"
-        :name="applicationSpace.data.name"
-        :nickname="applicationSpace.data.nickname"
-        :desc="applicationSpace.data.description"
-        :path="applicationSpace.data.path"
+        :private="applicationSpace.private"
+        :license="applicationSpace.license"
+        :name="applicationSpace.name"
+        :nickname="applicationSpace.nickname"
+        :path="`${namespace}/${repoName}`"
+        :desc="applicationSpace.description"
         :appStatus="appStatus"
-        :space-resource="applicationSpace.data.hardware"
+        :space-resource="applicationSpace.hardware"
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
         :canWrite="canWrite"
         repo-type="space"
-        :repoId="applicationSpace.data.repository_id"
-        :totalLikes="applicationSpace.data.like_count"
-        :hasLike="applicationSpace.data.user_likes"
+        :repoId="applicationSpace.repository_id"
+        :totalLikes="applicationSpace.like_count"
+        :hasLike="applicationSpace.user_likes"
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :blob="blob.data"
       :local-repo-id="localRepoId"
-      :repo-detail="applicationSpace.data"
-      :last-commit="lastCommit.data"
-      :branches="branches.data"
+      :repo-detail="applicationSpace"
       :appStatus="appStatus"
-      :sdk="applicationSpace.data.sdk"
+      :sdk="applicationSpace.sdk"
       :appEndpoint="appEndpoint"
       :current-branch="currentBranch"
       :current-path="currentPath"
@@ -42,6 +39,7 @@
       :user-name="userName"
       :commitId="commitId"
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
+      :path="`${namespace}/${repoName}`"
     />
   </div>
   <div v-if="canWrite">
@@ -102,9 +100,11 @@
   import { useI18n } from 'vue-i18n'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import jwtFetch from '../../packs/jwtFetch.js'
+  import { buildTags } from '../../packs/buildTags'
 
   const props = defineProps({
-    applicationSpace: Object,
+    repoType: String,
     files: Object,
     lastCommit: Object,
     branches: Object,
@@ -120,25 +120,36 @@
     ownerUrl: String,
     canWrite: Boolean,
     userName: String,
-    commitId: String
+    commitId: String,
+    namespace: String,
+    repoName: String
+
   })
 
   const csghubServer = inject('csghubServer')
-
   const repoDetailStore = useRepoDetailStore()
-  repoDetailStore.initialize(props.applicationSpace.data)
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
+  const applicationSpace = ref({})
   const { t } = useI18n();
   const { cookies } = useCookies();
-  const appStatus = ref(props.applicationSpace.data.status)
+  const appStatus = ref(applicationSpace.value.status)
   const appEndpoint = computed(() => {
     if(ENABLE_HTTPS === 'true') {
-      return `https://${props.applicationSpace.data.endpoint}`
+      return `https://${applicationSpace.value.endpoint}`
     } else {
-      return `http://${props.applicationSpace.data.endpoint}`
+      return `http://${applicationSpace.value.endpoint}`
     }
+  })
+
+  const tags = ref({
+    task_tags: [],
+    framework_tags: [],
+    language_tags: [],
+    license_tags: [],
+    industry_tags: [],
+    other_tags: []
   })
 
   const spaceLogsDrawer = ref(false)
@@ -178,8 +189,27 @@
     }
   }
 
+  const fetchRepoDetail = async () => {
+    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespace}/${props.repoName}`
+
+    try {
+      const response = await jwtFetch(url, { method: 'GET' })
+      const json = await response.json()
+
+      if (response.ok) {
+        applicationSpace.value = json.data
+        tags.value = buildTags(json.data.tags)
+        repoDetailStore.initialize(json.data)
+      } else {
+        ElMessage({ message: json.msg, type: 'warning' })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const syncSpaceLogs = () => {
-    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/logs`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.namespace}/${props.repoName}/logs`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -231,7 +261,7 @@
   }
 
   const syncSpaceStatus = () => {
-    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.applicationSpace.data.path}/status`, {
+    fetchEventSource(`${csghubServer}/api/v1/spaces/${props.namespace}/${props.repoName}/status`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -281,8 +311,9 @@
   }
 
   onMounted(() => {
+    fetchRepoDetail()
     console.log(`Space 初始状态：${appStatus.value}`)
-    if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
+    if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
   })

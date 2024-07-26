@@ -22,10 +22,8 @@ import zh from '../../config/locales/zh.js'
 
 import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
-import ModelDetail from "./components/models/ModelDetail.vue"
-import DatasetDetail from "./components/datasets/DatasetDetail.vue"
 import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
-import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
+import RepoDetail from "./components/shared/RepoDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
@@ -44,15 +42,14 @@ import NewApplicationSpace from "./components/application_spaces/NewApplicationS
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
-import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import CollectionIndex from "./components/collections/CollectionIndex.vue"
 import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
-
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -77,9 +74,7 @@ const app = createApp({
   components: {
     Navbar,
     CommentList,
-    DatasetDetail,
-    ModelDetail,
-    ApplicationSpaceDetail,
+    RepoDetail,
     Profile,
     ProfileEdit,
     ProfileSettings,
@@ -96,7 +91,6 @@ const app = createApp({
     OrganizationSettings,
     RepoCards,
     NewCode,
-    CodeDetail,
     NewCollection,
     NewEndpoint,
     AdminNavbar,
@@ -105,6 +99,7 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
+    ApplicationSpaceDetail,
     EndpointDetail,
     CollectionIndex,
     CollectionsDetail
