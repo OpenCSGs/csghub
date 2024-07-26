@@ -38,7 +38,6 @@ module SessionsHelper
     cookies.delete :user_token
     cookies.delete :token_expire_at
     cookies.delete :admin_user
-    cookies.delete :
 
     # unset odic cookies
     cookies.delete :oidcUuid
