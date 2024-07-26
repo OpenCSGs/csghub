@@ -7,16 +7,22 @@ With CSGHub, users can perform operations on LLM assets, including uploading, do
 
 CSGHub is committed to bringing users an asset management platform that is natively designed for large models and can be deployed On-Premise for fully offline operation. CSGHub offers functionalities similar to a privatized Huggingface(on-premise Huggingface), managing LLM assets in a manner akin to how OpenStack Glance manages virtual machine images, Harbor manages container images, and Sonatype Nexus manages artifacts.
 
-You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
+You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 <kbd>
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
 ### UPDATES
-- [2024.02.15] v0.2 Plan: Built-in code Repo; automatic conversion for datasets, complete dataset preview function. *
-- [2024.01.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as below.
+- [2024.07.15] v0.7.0 Big release to support `Multiple Resource Sync` for models and datasets, One-Click Fintune, Resource Usage Metering.
+- [2024.06.21] v0.6.1 bug fix and user experience enhancement. 
+- [2024.06.18] v0.6.0 Big release to support `dedicated` model inference endpoint, support `streamlit` Space, allow use to `like` repos allow to set repo's `industry tag`, enhance git history and commit diff details.
+- [2024.05.14] v0.5.0 Enhance Space user experience, auto build `relations` between repos(model,dataset,code and spaces), support multiple files uploading. 
+- [2024.04.18] v0.4.0 Allow to run `Application Space` (gradio app), add a widget to try model inference, support new repo type `Code`, support organization members management, support wechat login.
+- [2024.03.15] v0.3.0 Plan: Files online editing, organization edit, dataset preview.
+- [2024.02.15] v0.2.0 Improve the function of model dataset hosting, and add the feature of inviting new organization members.
+- [2024.01.15] v0.1.0 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as below.
 
 ### CORE FUNCTIONS
-In the ear of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. CSGHub is an open-source project designed to address these issues.
+In the era of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. CSGHub is an open-source project designed to address these issues.
 
 CSGHub's core funtions（update reguarly）：
 - **Unified Management of LLM Assets**: A one-stop Hub for unified management of model files, datasets, and large-scale model application codes.
@@ -42,17 +48,17 @@ In order to help users to quickly understand the features and usage of CSGHub, w
 
 ### ROADMAP
 - **Asset Management**
-  - [ ] Built-in Code Repo: Built-in Code Repo management function to associate the code of model, dataset, Space space application.
-  - [ ] Multi-source data synchronization: Support configure and enable remote repository, automatic data synchronization, support OpenCSG community, Huggingface and other remote sources。
+  - [x] Built-in Code Repo: Built-in Code Repo management function to associate the code of model, dataset, Space space application.
+  - [x] Multi-source data synchronization: Support configure and enable remote repository, automatic data synchronization, support OpenCSG community, Huggingface and other remote sources。
 - **AI Enhancement**
-  - [ ] One-Click Fine-Tuning: Support integration with OpenCSG llm-finetune tool to start model fine-tuning training with one click.
-  - [ ] One-Click Reasoning: Support integration with OpenCSG llm-inference tool to start model reasoning service with one click.
+  - [x] One-Click Fine-Tuning: Support integration with OpenCSG llm-finetune tool to start model fine-tuning training with one click.
+  - [x] One-Click Inference: Support integration with OpenCSG llm-inference tool to start model reasoning service with one click.
 - **LLM App and Enterprise Features**
-  - [ ] App Space: Support hosting Gradio/Streamlit applications and publishing them to App Space.
-  - [ ] Fine-grained Permission Control: Fine-grained permission and access control settings for enterprise architecture.
+  - [x] App Space: Support hosting Gradio/Streamlit applications and publishing them to App Space.
+  - [x] Fine-grained Permission Control: Fine-grained permission and access control settings for enterprise architecture.
 - **Security Compliance**
   - [ ] GitServer Adapter: Generic GitServer adapter to support multiple major Git repository types through Adaptor mode.
-  - [ ] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
+  - [x] Asset Metadata: Asset metadata management mechanism, supporting customized metadata types and corresponding AutoTag rules.
 
 The detailed roadmap is designed as follows: [full roadmap](/docs/roadmap_en.md)
 
@@ -92,7 +98,7 @@ curl -L https://opencsg-public-resource.oss-cn-beijing.aliyuncs.com/csghub/all-i
 docker compose -f all-in-one-CN.yml up -d
 ```
 
-After all, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
+Then, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
 inital admin account: admin001/admin001
 You can check our website for more user guide information: [User Guide](https://opencsg.com/docs/) 
 
@@ -116,7 +122,7 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
 If you meet any problem during usage, you can contact with us by any following way:
 1. initiate an issue in github
 2. join our WeChat group by scaning wechat helper qrcode
-3. join our offical discord channel: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
+3. join our official discord channel: [OpenCSG Discord Channel](https://discord.gg/bXnu4C9BkR)
 4. join our slack workspace:[OpenCSG Slack Channel](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 <div style="display:inline-block">
 <img src="/docs/images/wechat-assistant-new.png" width='200'>
