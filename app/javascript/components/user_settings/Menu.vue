@@ -2,14 +2,14 @@
     <div class="pt-6">
       <div class="w-[294px] rounded-[8px] mx-[24px]">
         <div class="flex p-[16px]">
-          <el-avatar :size="60" :src="avatar"> </el-avatar>
+          <el-avatar :size="60" :src="userStore.avatar"> </el-avatar>
           <div class="ml-[10px]">
             <div class="text-[18px] leading-[28px] font-semibold">
-              <a :href="'/profile/' + displayName">
-                {{displayName}}
+              <a :href="'/profile/' + userStore.username">
+                {{ userStore.nickname || userStore.username }}
               </a>
             </div>
-            <div class="text-[16px] text-[#909399] leading-[24px] font-light">@{{name}}</div>
+            <div class="text-[16px] text-[#909399] leading-[24px] font-light">@{{ userStore.username }}</div>
           </div>
         </div>
         <div class="flex flex-col">
@@ -78,21 +78,13 @@
 </template>
 
 <script setup>
-  import { ref, watch, onMounted, inject, computed } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import { computed } from 'vue'
+  import useUserStore from '../../stores/UserStore'
 
-  const csghubServer = inject('csghubServer')
-
-  const props = defineProps({
-    name: String
-  })
-
-  const displayName = ref(props.name)
-  const avatar = ref('/images/default_avatar.png')
-  const email = ref('')
+  const userStore = useUserStore()
 
   const hasEmail = computed(() => {
-    return email.value.length !== 0
+    return userStore.email !== 0
   })
 
   const menuClass = (menuPath) => {
@@ -102,16 +94,4 @@
       return ''
     }
   }
-
-  onMounted(() => {
-    jwtFetch(`${csghubServer}/api/v1/user/${props.name}`, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((body) => {
-        displayName.value = body.data.username || body.data.nickname
-        avatar.value = body.data.avatar
-        email.value = body.data.email
-      })
-  })
 </script>
