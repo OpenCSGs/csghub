@@ -92,6 +92,7 @@
                   :placeholder="$t('all.phone')">
         </el-input>
         <div v-if="updatePhoneEnabled" class="flex gap-[13px] max-w-[400px] items-center mt-[16px]">
+          <!-- sms code input -->
           <div class="flex items-center">
             <p class="w-[88px] h-[40px] text-[#98A2B3] flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200">
               {{ $t('profile.edit.smsCode') }}
@@ -100,11 +101,13 @@
                   v-model="inputSmsCode">
             </input>
           </div>
+          <!-- countdown -->
           <button v-if="inCountDown"
                   class="rounded-md border border-gray-200 bg-gray-200 shadow-sm px-[14px] py-[8px] font-[500] text-[#98A2B3] text-[14px] leading-[20px]"
           >
             {{ countdown }}s {{ $t('profile.edit.retrySendSms') }}
           </button>
+          <!-- send sms -->
           <button v-else
                   @click="sendSmsCode"
                   class="rounded-md border border-[#409EFF] bg-[#409EFF] shadow-sm px-[14px] py-[8px] font-[500] text-white text-[14px] leading-[20px]"
@@ -280,25 +283,30 @@
           type: 'success'
         })
           disableUpdatePhone()
-          // 处理成功响应
-          setTimeout(() => {
-            window.location.reload()
-          }, 1000)
       }
     } catch (error) {
       console.error(error)
     }
   }
 
+  const isSmsCodeValid = () => {
+    return inputSmsCode.value === generatedSmscode.value &&
+      phoneJustSendcode.value === profileData.value.phone
+  }
+
   const saveProfile = () => {
     if (profileData.value.username.trim().length === 0 || profileData.value.email.trim().length === 0) {
       ElMessage({
-        message: "请提供用户名和邮箱",
+        message: "Please provide username and email",
         type: "warning",
       });
       return
     }
-    updateProfile()
+    if (isSmsCodeValid()) {
+      updateProfile()
+    } else {
+      ElMessage.warning("SMS code not correct")
+    }
   }
 </script>
 
