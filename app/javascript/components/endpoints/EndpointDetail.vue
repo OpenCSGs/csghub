@@ -69,7 +69,9 @@
   const { cookies } = useCookies()
   const appStatus = ref(props.endpoint.data.status)
   const appEndpoint = computed(() => {
-    const endpointUrl = props.endpoint.data.endpoint || ''
+    if (!props.endpoint.data.endpoint) return ''
+
+    const endpointUrl = props.endpoint.data.endpoint
     if(ENABLE_HTTPS === 'true') {
       return `https://${endpointUrl}`
     } else {

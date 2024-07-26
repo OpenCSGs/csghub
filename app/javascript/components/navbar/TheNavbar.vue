@@ -18,10 +18,11 @@
     <div class="flex justify-between items-center pl-4">
       <!-- desktop 导航栏 -->
       <ul class="flex justify-between items-center">
-        <li class="px-5 mlg:!hidden"><model></model></li>
-        <li class="px-5 mlg:!hidden lg:!hidden"><dataset></dataset></li>
-        <li class="px-5 mlg:!hidden lg:!hidden"><code-nav></code-nav></li>
-        <li class="px-5 mlg:!hidden lg:!hidden"><space></space></li>
+        <li class="px-5 mlg:!hidden"> <model></model> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <code-nav></code-nav> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <space></space> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <collection></collection> </li>
       </ul>
 
       <!-- mobile 导航栏 -->
@@ -31,18 +32,11 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item class="!hidden mlg:!flex">
-              <model></model>
-            </el-dropdown-item>
-            <el-dropdown-item class="!hidden lg:!flex">
-              <dataset></dataset>
-            </el-dropdown-item>
-            <el-dropdown-item class="!hidden lg:!flex">
-              <code-nav></code-nav>
-            </el-dropdown-item>
-            <el-dropdown-item class="!hidden lg:!flex">
-              <space></space>
-            </el-dropdown-item>
+            <el-dropdown-item class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <code-nav></code-nav> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <space></space> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <collection></collection> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -148,6 +142,9 @@
                 + {{ $t('navbar.newApplicationSpace') }}
               </el-dropdown-item>
             </a>
+            <a href="/collections/new">
+              <el-dropdown-item> + {{ $t('navbar.newCollection') }} </el-dropdown-item>
+            </a>
             <a href="/organizations/new">
               <el-dropdown-item divided>
                 {{ $t('navbar.newOrganization') }}
@@ -188,6 +185,7 @@
   import Dataset from './dataset.vue'
   import Space from './space.vue'
   import CodeNav from './CodeNav.vue'
+  import Collection from "./Collection.vue";
   import { ref, inject, onMounted } from 'vue'
   import jwtFetch from '../../packs/jwtFetch.js'
   import useUserStore from '../../stores/UserStore.js'

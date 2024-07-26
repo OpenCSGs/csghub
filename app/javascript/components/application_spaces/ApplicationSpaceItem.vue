@@ -2,12 +2,11 @@
   <a
     :href="`/spaces/${repo.path}`"
     class="xl:w-full focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 mlg:!w-full"
+    :style="`width: ${itemWidth};`"
   >
     <div class="flex justify-between items-center mb-1">
       <div class="w-full flex items-center justify-between">
-        <h3
-          class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]"
-        >
+        <h3 class="flex-1 text-[#303133] font-semibold leading-6 truncate mr-[8px]">
           {{ getComputed.path }}
         </h3>
         <div class="flex gap-2">
@@ -29,32 +28,38 @@
         <span>{{ repo.updated_at.substring(0, 10) }}</span>
       </p>
     </div>
-    <div class="my-2">
+    <div
+      class="my-2"
+      :class="isCollection ? 'hidden' : ''"
+    >
       <img
         :src="coverImageUrl"
         class="w-full h-[144px] object-cover rounded cursor-pointer hover:opacity-50"
       />
     </div>
-    <div
-      class="h-[36px]"
-      v-if="!repo.description"
-    ></div>
-    <el-popover
-      :width="384"
-      trigger="hover"
-      placement="bottom"
-      effect="dark"
-      :content="repo.description"
-      v-else
-    >
-      <template #reference>
-        <p
-          class="max-w-full h-[36px] text-[#606266] text-sm overflow-hidden text-ellipsis line-clamp-2"
-        >
-          {{ repo.description }}
-        </p>
-      </template>
-    </el-popover>
+    <div v-if="!isCollection">
+      <div
+        class="h-[36px]"
+        v-if="!repo.description"
+      ></div>
+      <el-popover
+        :width="384"
+        trigger="hover"
+        placement="bottom"
+        effect="dark"
+        :content="repo.description"
+        v-else
+      >
+        <template #reference>
+          <p
+            class="max-w-full h-[36px] text-[#606266] text-sm overflow-hidden text-ellipsis line-clamp-2"
+          >
+            {{ repo.description }}
+          </p>
+        </template>
+      </el-popover>
+    </div>
+
     <div
       v-if="getComputed.taskTag"
       class="flex gap-2 my-2 overflow-x-auto no-scrollbar"
@@ -87,7 +92,15 @@
 
   const props = defineProps({
     repo: Object,
-    repoType: String
+    repoType: String,
+    width: String,
+    isCollection: Boolean
+  })
+
+  const itemWidth = computed(() => {
+    if (props.width) return `${props.width}px`
+    if (props.isCollection) return '100%'
+    return ''
   })
 
   const coverImageUrl = computed(() => {

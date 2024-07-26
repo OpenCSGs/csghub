@@ -62,5 +62,15 @@ export const endpoints = {
     minReplica: "最小弹性副本",
     currentMaxReplica: "当前最大弹性副本",
     currentMinReplica: "当前最小弹性副本"
+  },
+  playground: {
+    title: "沙盒",
+    parameters: "参数",
+    generation: "文本生成",
+    json: "JSON 输出",
+    maximum: "最大化",
+    send: "发送",
+    test: "专属实例测试",
+    api: "发送请求到专属实例",
   }
 }
