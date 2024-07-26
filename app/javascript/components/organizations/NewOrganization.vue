@@ -9,6 +9,7 @@
       class="mt-[48px] text-left"
       style="--el-border-radius-base: 8px"
       >
+      <!-- name -->
       <el-form-item :label="$t('organization.orgNameSpace')" prop="name">
         <el-input v-model="dataForm.name" :placeholder="$t('rule.nameRule')">
           <template #prepend>{{getDomain()}}</template>
@@ -17,10 +18,13 @@
           <p class="text-[#475467] text-[14px] font-[300] leading-[20px]">{{ $t('organization.orgSpaceTips') }}</p>
         </div>
       </el-form-item>
+
+      <!-- nickname -->
       <el-form-item :label="$t('organization.orgNickName')" prop="nickname">
         <el-input v-model="dataForm.nickname" :placeholder="$t('all.pleaseInput', {value: $t('organization.orgNickName')})"></el-input>
       </el-form-item>
 
+      <!-- org_type -->
       <el-form-item :label="$t('organization.orgType')" prop="org_type">
         <el-select
           v-model="dataForm.org_type"
@@ -35,6 +39,8 @@
           />
         </el-select>
       </el-form-item>
+
+      <!-- homepage -->
       <el-form-item :label="$t('organization.orgHomepage')" prop="homepage">
         <el-input v-model="dataForm.homepage" placeholder="example.com" @blur="formatHomepage">
           <template #prepend>
@@ -46,6 +52,7 @@
         </el-input>
       </el-form-item>
 
+      <!-- avatar -->
       <el-form-item :label="$t('organization.orgAvatar')" prop="logo_image">
         <el-upload
           :class="`w-full ${showUpload ? 'h-[229px]' : 'hide'}`"
@@ -80,7 +87,6 @@
         </el-upload>
       </el-form-item>
 
-
       <el-form-item>
         <el-button
           class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]"
@@ -96,6 +102,7 @@
 
 <script>
   import csrfFetch from "../../packs/csrfFetch.js"
+  import jwtFetch from "../../packs/jwtFetch.js"
   import { inject } from 'vue'
 
   export default {
@@ -110,7 +117,8 @@
         csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         dataForm: {},
         org_types: ['企业', '高校', '非营利组织', '社区组织'],
-        submitting: false
+        submitting: false,
+        csghubServer: inject('csghubServer')
       }
     },
     computed: {
@@ -133,7 +141,7 @@
     },
     methods: {
       handleUploadSuccess(res) {
-        this.dataForm.logo = res.code
+        this.dataForm.logo = res.url
         this.showUpload = false
       },
       handleUploadError(res) {
@@ -185,14 +193,15 @@
         if (params.homepage) {
           params.homepage = this.selectedProtocol + params.homepage
         }
-        const orgCreateEndpoint = `/internal_api/organizations`;
+        // const orgCreateEndpoint = `/internal_api/organizations`;
+        const orgCreateEndpoint = `${this.csghubServer}/api/v1/organizations`;
         const options = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params)
         }
 
-        csrfFetch(orgCreateEndpoint, options)
+        jwtFetch(orgCreateEndpoint, options)
           .then(response => {
             if (response.ok) {
               this.$message({

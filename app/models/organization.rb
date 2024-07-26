@@ -19,7 +19,7 @@ class Organization < ApplicationRecord
 
   has_many :admin_users, -> { distinct.joins(:org_memberships).where({ org_memberships: {role: :admin} }) }, class_name: 'User', through: :org_memberships, source: :user
 
-  after_save :sync_to_starhub_server
+  # after_save :sync_to_starhub_server
   before_save :detect_sensitive_content
 
   def avatar_url

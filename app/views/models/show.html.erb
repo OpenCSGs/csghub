@@ -9,17 +9,13 @@
 <% end %>
 
 <div class="bg-white">
-  <model-detail
+  <repo-detail
     :tag-list="<%= @tags_list.to_json %>"
-    :tags="<%= @tags %>"
     local-repo-id="<%= @local_model&.id %>"
-    :model="<%= @model %>"
-    :last-commit="<%= @last_commit || {} %>"
-    :branches="<%= @branches %>"
+    repo-type="model"
     current-branch="<%= @current_branch || 'main' %>"
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
-    :blob="<%= @blob || {} %>"
     :action-name="'<%= action_name %>'"
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
@@ -28,5 +24,7 @@
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
     :admin="<%= current_user&.admin? %>"
-  ></model-detail>
+    namespace="<%= params[:namespace] %>"
+    repo-name="<%= params[:model_name] %>"
+  ></repo-detail>
 </div>

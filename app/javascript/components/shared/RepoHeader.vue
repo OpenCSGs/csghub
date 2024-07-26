@@ -181,11 +181,11 @@
       />
       <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
-    <div 
+    <div
       v-if="repoType === 'model' && baseModel"
       class="flex items-center text-[#344054] text-base font-normal"
     >
-      {{ $t('all.baseModel') }}: 
+      {{ $t('all.baseModel') }}:
       <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
         {{ baseModel }}
       </div>
@@ -196,12 +196,7 @@
   <!-- repo tags -->
   <header-tags
     v-if="repoType === 'model' || repoType === 'dataset'"
-    :task-tags="tags.task_tags"
-    :framework-tags="tags.framework_tags"
-    :license-tags="tags.license_tags"
-    :language-tags="tags.language_tags"
-    :industry-tags="tags.industry_tags"
-    :other-tags="tags.other_tags"
+    :tags="tags"
     :prefix="`${repoType}s/`"
   />
 </template>

@@ -27,18 +27,18 @@ import SpaceCards from "./components/spaces/SpaceCards.vue"
 import PageFooter from "./components/footer/PageFooter.vue"
 import RepoFooter from "./components/footer/RepoFooter.vue"
 import CommentList from "./components/comment/CommentList.vue"
+// SaaS specific
 import ExpertCard from "./components/ExpertCard.vue"
 import PartnerCards from "./components/partners/PartnerCards.vue"
 import DatasetCard from "./components/DatasetCard.vue"
-import ModelDetail from "./components/models/ModelDetail.vue"
-import DatasetDetail from "./components/datasets/DatasetDetail.vue"
 import ModelCard from "./components/ModelCard.vue"
 import ExpertForm from "./components/form/ExpertForm.vue"
 import PartnerForm from "./components/form/PartnerForm.vue"
 import CampaignCard from "./components/campaigns/CampaignCard.vue"
 import CampaignCards from "./components/campaigns/CampaignCards.vue"
+// end SaaS specific
 import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
-import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
+import RepoDetail from "./components/shared/RepoDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
@@ -71,7 +71,6 @@ import ApplicationSpaceItem from "./components/application_spaces/ApplicationSpa
 import EkbLanding from "./components/ekb/EkbLanding.vue"
 import NewApplicationSpace from "./components/application_spaces/NewApplicationSpace.vue"
 import NewCode from "./components/codes/NewCode.vue"
-import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
@@ -79,9 +78,9 @@ import CsghubPage from "./components/csghub/CsghubPage.vue"
 import StarShipPage from "./components/starship/StarShipPage.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import CollectionIndex from "./components/collections/CollectionIndex.vue"
 import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
-
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -110,19 +109,19 @@ const app = createApp({
     SpaceCard,
     SpaceCards,
     CommentList,
+    // SaaS specific
     DatasetCard,
-    DatasetDetail,
     ExpertCard,
     ExpertForm,
     ModelCard,
-    ModelDetail,
     PartnerCards,
     PartnerForm,
     PageFooter,
     RepoFooter,
     CampaignCard,
     CampaignCards,
-    ApplicationSpaceDetail,
+    // SaaS specific
+    RepoDetail,
     Profile,
     ProfileEdit,
     ProfileSettings,
@@ -152,10 +151,8 @@ const app = createApp({
     EkbLanding,
     NewApplicationSpace,
     NewCode,
-    CodeDetail,
     NewCollection,
     NewEndpoint,
-    EndpointDetail,
     CsghubPage,
     AdminNavbar,
     AdminMenu,
@@ -165,6 +162,8 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
+    ApplicationSpaceDetail,
+    EndpointDetail,
     CollectionIndex,
     CollectionsDetail
   },
