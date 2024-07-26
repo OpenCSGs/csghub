@@ -249,7 +249,7 @@ export default {
       }
     },
     saveProfile() {
-      if (this.inputName.trim().length === 0 || this.inputEmail.trim().length === 0) {
+      if (this.profileData.profileName.trim().length === 0 || this.profileData.profileEmail.trim().length === 0) {
         ElMessage({
           message: "请提供用户名和邮箱",
           type: "warning",
