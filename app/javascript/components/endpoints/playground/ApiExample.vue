@@ -48,17 +48,14 @@
           cURL
         </div>
       </div>
-      <div
-        class="px-3 py-2 bg-white rounded-lg shadow border border-[#cfd4dc] justify-center items-center gap-1 flex md:hidden"
-      >
-        <SvgIcon name="app_tokens" />
-        <div class="text-[#344053] text-xs font-normal leading-[18px]">
-          App Tokens
-        </div>
-      </div>
+      <el-checkbox
+        v-model="useToken"
+        :label="$t('endpoints.playground.useToken')"
+        size="large"
+      />
     </div>
     <div
-      class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-6 relative group"
+      class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-4 relative group"
     >
       <CodeViewer
         :content="codeContent"
@@ -76,9 +73,11 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watch } from 'vue'
+  import { ref, computed, onMounted, watch, inject } from 'vue'
   import CodeViewer from '../../shared/viewers/CodeViewer.vue'
   import { copyToClipboard } from '../../../packs/clipboard'
+  import { useCookies } from 'vue3-cookies'
+  import jwtFetch from '../../../packs/jwtFetch'
 
   const props = defineProps({
     modelId: String,
@@ -86,8 +85,15 @@
     form: Object
   })
 
+  const { cookies } = useCookies()
+  const csghubServer = inject('csghubServer')
+  const currentUser = ref(cookies.get('current_user'))
+
   const codeExtension = ref('py') // py, js, bash
   const codeContent = ref('')
+  const useToken = ref(false)
+  const accessToken = ref('')
+  const endpointUrl = ref('')
 
   const changeLanguage = (ext) => {
     codeExtension.value = ext
@@ -98,7 +104,7 @@
 import json
 import re
 
-url = "${props.appEndpoint}"
+url = "${endpointUrl.value}"
 
 data = {
     "model": "${props.modelId}",
@@ -138,11 +144,10 @@ if response.status_code == 200:
 
   const jsContent = computed(
     () =>
-      `fetch("${props.appEndpoint}", {
+      `fetch("${endpointUrl.value}", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "Authorization": "Bearer YOUR_API_KEY"
   },
   body: JSON.stringify({
     model: "${props.modelId}",
@@ -172,9 +177,8 @@ if response.status_code == 200:
 
   const curlContent = computed(
     () => `curl -X POST \\
-"${props.appEndpoint}" \\
+"${endpointUrl.value}" \\
 -H "Content-Type: application/json" \\
--H "Authorization: Bearer YOUR_API_KEY" \\
 -d '{ \\
   "model": "${props.modelId}", \\
   "messages": [ \\
@@ -208,6 +212,14 @@ if response.status_code == 200:
     }
   }
 
+  const setEndpointUrl = () => {
+    if (useToken.value) {
+      endpointUrl.value = `${props.appEndpoint}/v1/chat/completions?jwt=${accessToken.value}`
+    } else {
+      endpointUrl.value = `${props.appEndpoint}/v1/chat/completions`
+    }
+  }
+
   const copyCode = () => {
     copyToClipboard(codeContent.value)
   }
@@ -227,7 +239,43 @@ if response.status_code == 200:
     { deep: true }
   )
 
+  watch(
+    () => useToken.value,
+    () => {
+      setEndpointUrl()
+      setCodeContent()
+    }
+  )
+
+  const fetchUserToken = async () => {
+    if (!currentUser.value) return
+
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
+    )
+    if (!res.ok) {
+      res.json().then((error) => {
+        console.log(error)
+      })
+    } else {
+      res.json().then((body) => {
+        if (body.data) {
+          accessToken.value = body.data[0].token
+        }
+      })
+    }
+  }
+
   onMounted(() => {
+    setEndpointUrl()
     setCodeContent()
+    fetchUserToken()
   })
 </script>
+
+<style scoped>
+  :deep(.el-checkbox__label) {
+    color: #344054;
+    font-weight: 400;
+  }
+</style>
