@@ -135,7 +135,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted, inject, watch } from 'vue'
   import { useRoute } from 'vue-router'
   import jwtFetch from '../../../packs/jwtFetch.js'
   import dayjs from 'dayjs'
@@ -155,33 +155,35 @@
     roles: String
   })
 
+  watch(user, () => {
+    fetchCredit()
+  })
+
   const fetchUser = async () => {
     const response = await jwtFetch(`${csghubServer}/api/v1/user/${route.params.id}`)
+    const result = await response.json()
     if (response.ok) {
-      const result = await response.json()
       user.value = result.data
       form.value.roles = result.data.roles
-      fetchCredit()
     } else {
-      ElMessage.error('Failed to fetch user')
+      ElMessage.warning(result.msg)
     }
   }
 
   const fetchCredit = async () => {
     const response = await jwtFetch(`${csghubServer}/api/v1/accounting/credit/${user.value.uuid}/balance`)
+    const result = await response.json()
     if (response.ok) {
-      const res = await response.json()
-      console.log(res);
-      credit.value = (res.data.balance/100.).toFixed(2)
+      credit.value = (result.data.balance/100.0).toFixed(2)
     } else {
-      ElMessage.error('Failed to fetch credit')
+      ElMessage.warning(result.msg)
     }
   }
 
   const fetchRecharge = async () => {
     const params = {
       op_uid: 1,
-      value: int(rechargeAmount.value) * 100
+      value: rechargeAmount.value * 100
     }
     const options = {
       method: 'PUT',
@@ -189,15 +191,14 @@
       body: JSON.stringify(params)
     }
     const response = await jwtFetch(`${csghubServer}/api/v1/accounting/credit/${user.value.uuid}/recharge`, options)
+    const result = await response.json()
     if (response.ok) {
-      const res = await response.json()
-      console.log(res);
-      credit.value = (res.data.balance/100.).toFixed(2)
+      credit.value = (result.data.balance/100.0).toFixed(2)
       refreshDialogVisible.value = false
       rechargeAmount.value = 0
       ElMessage.success('Be recharged successfully')
     } else {
-      ElMessage.error('Failed to recharge')
+      ElMessage.warning(result.msg)
     }
   }
 
@@ -214,12 +215,13 @@
       },
       body: JSON.stringify({ roles: form.value.roles })
     })
+    const result = response.json()
     if (response.ok) {
       ElMessage.success('User updated successfully')
       dialogFormVisible.value = false
       fetchUser()
     } else {
-      ElMessage.error('Failed to update user')
+      ElMessage.warning(result.msg)
     }
   }
 
