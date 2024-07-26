@@ -7,7 +7,7 @@ With CSGHub, users can perform operations on LLM assets, including uploading, do
 
 CSGHub is committed to bringing users an asset management platform that is natively designed for large models and can be deployed On-Premise for fully offline operation. CSGHub offers functionalities similar to a privatized Huggingface(on-premise Huggingface), managing LLM assets in a manner akin to how OpenStack Glance manages virtual machine images, Harbor manages container images, and Sonatype Nexus manages artifacts.
 
-You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
+You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com<br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 <kbd>
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
