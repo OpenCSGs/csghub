@@ -140,7 +140,6 @@
   import jwtFetch from '../../../packs/jwtFetch.js'
   import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
-  import csrfFetch from '../../../packs/csrfFetch'
 
   const route = useRoute()
   const csghubServer = inject('csghubServer')
@@ -169,9 +168,10 @@
   }
 
   const fetchCredit = async () => {
-    const response = await csrfFetch(`/internal_api/admin/users/balance/${route.params.id}`, { method: 'GET' })
+    const response = await jwtFetch(`${csghubServer}/api/v1/accounting/credit/${user.value.uuid}/balance`)
     if (response.ok) {
       const res = await response.json()
+      console.log(res);
       credit.value = (res.data.balance/100.).toFixed(2)
     } else {
       ElMessage.error('Failed to fetch credit')
@@ -179,9 +179,19 @@
   }
 
   const fetchRecharge = async () => {
-    const response = await csrfFetch(`/internal_api/admin/users/recharge/${route.params.id}/${rechargeAmount.value}`, { method: 'PUT' })
+    const params = {
+      op_uid: 1,
+      value: int(rechargeAmount.value) * 100
+    }
+    const options = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    }
+    const response = await jwtFetch(`${csghubServer}/api/v1/accounting/credit/${user.value.uuid}/recharge`, options)
     if (response.ok) {
       const res = await response.json()
+      console.log(res);
       credit.value = (res.data.balance/100.).toFixed(2)
       refreshDialogVisible.value = false
       rechargeAmount.value = 0
