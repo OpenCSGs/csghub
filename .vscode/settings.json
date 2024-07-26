@@ -7,5 +7,6 @@
   "prettier.singleAttributePerLine": true,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "none",
-  "prettier.vueIndentScriptAndStyle": true
+  "prettier.vueIndentScriptAndStyle": true,
+  "Codegeex.GenerationPreference": "line by line"
 }

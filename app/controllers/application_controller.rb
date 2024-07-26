@@ -87,7 +87,6 @@ class ApplicationController < ActionController::Base
   # 通过独立的用户服务，这种模式下，只考虑通过用户的 uuid 来判断用户是否存在
   def login_by_server_user_infos user_infos
     user = User.find_or_create_by(login_identity: user_infos['uuid']) do |u|
-      u.roles = user_infos['roles']
       u.avatar = user_infos['avatar']
       u.name = user_infos['username']
       u.nickname = user_infos['nickname']
@@ -144,14 +143,14 @@ class ApplicationController < ActionController::Base
   def check_user_info_integrity
     return if !helpers.logged_in?
 
-    if current_user.email.blank?
-      flash[:alert] = "请补充邮箱，以便能使用完整的功能"
-      return redirect_to '/settings/profile'
-    end
+    # if current_user.email.blank?
+    #   flash[:alert] = "请补充邮箱，以便能使用完整的功能"
+    #   return redirect_to '/settings/profile'
+    # end
 
-    unless current_user.starhub_synced?
-      current_user.sync_to_starhub_server
-    end
+    # unless current_user.starhub_synced?
+    #   current_user.sync_to_starhub_server
+    # end
   end
 
   def relative_path_to_resolve_path type, content

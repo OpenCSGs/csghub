@@ -38,7 +38,7 @@ class User < ApplicationRecord
   # user.roles = "super_user"
   # user.roles = ["super_user", "admin"]
   def roles=(*roles)
-    roles = [*roles].flatten.map { |r| r.to_sym }
+    roles = [*roles].flatten.compact.map { |r| r.to_sym }
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
   end
 

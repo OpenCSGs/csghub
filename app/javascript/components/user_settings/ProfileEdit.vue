@@ -99,8 +99,8 @@ export default {
       this.$refs.fileInput.click();
     },
     removeImage() {
-      this.$refs.fileInput.value = null;
-      this.avatarUrl = "";
+      this.$refs.fileInput.value = null
+      this.profileData.profileAvatar = ""
     },
     async uploadAvatar() {
       const uploadEndpoint = `/internal_api/upload`;
@@ -124,7 +124,7 @@ export default {
         avatar: this.profileData.profileAvatar,
         username: this.profileData.profileName,
         name: this.profileData.profileNickname,
-        email: this.profileData.profileEmail,
+        email: this.profileData.profileEmail.trim(),
         phone: this.profileData.profilePhone,
         homepage: this.profileData.profileHomepage,
         bio: this.profileData.profileBio

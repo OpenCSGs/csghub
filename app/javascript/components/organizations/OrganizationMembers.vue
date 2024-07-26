@@ -4,21 +4,24 @@
       <div class="py-[16px]">
         {{ $t('organization.orgMembers') }}
       </div>
-      <div class="flex flex-col items-start rounded-[12px] border border-[1px] border-[#EAECF0] shadow-sm">
-        <div class="px-[24px] py-[20px] w-full flex justify-between border-b border-[#EAECF0]">
+      <div
+        class="flex flex-col items-start rounded-[12px] border border-[1px] border-[#EAECF0] shadow-sm"
+      >
+        <div
+          class="px-[24px] py-[20px] w-full flex justify-between border-b border-[#EAECF0]"
+        >
           <div class="flex flex-col gap-[4px]">
             <div class="text-[18px] font-[500] leading-[28px] text-[#101828]">
               {{ $t('organization.members.title') }}
             </div>
-            <div class="text-[14px] font-[300] leading-[20px] text-[#475467] ">
+            <div class="text-[14px] font-[300] leading-[20px] text-[#475467]">
               {{ $t('organization.members.description') }}
             </div>
           </div>
           <div class="flex gap-[16px]">
-            <InviteMember 
-              :org-name="organization.name"
+            <InviteMember
+              :orgName="organization.name"
               @resetMemberList="fetchMembers"
-              :admin="admin"
             />
           </div>
         </div>
@@ -29,54 +32,93 @@
             v-loading="loading"
             style="width: 100%"
           >
-            <el-table-column :label="$t('organization.members.username')" label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]">
+            <el-table-column
+              :label="$t('organization.members.username')"
+              label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
+            >
               <template #default="scope">
                 <div class="flex gap-[12px] items-center pl-3">
-                  <el-avatar :size="40" :src="scope.row.avatar"></el-avatar>
+                  <el-avatar
+                    :size="40"
+                    :src="scope.row.avatar"
+                  ></el-avatar>
                   <div class="flex flex-col">
-                    <div class="text-[14px] font-[400] leading-[20px] text-[#101828]" v-if="!!scope.row.nickname">
+                    <div
+                      class="text-[14px] font-[400] leading-[20px] text-[#101828]"
+                      v-if="!!scope.row.nickname"
+                    >
                       {{ scope.row.nickname }}
                     </div>
-                    <div class="text-[14px] font-[300] leading-[20px] text-[#475467]" v-if="!!scope.row.name">
+                    <div
+                      class="text-[14px] font-[300] leading-[20px] text-[#475467]"
+                      v-if="!!scope.row.name"
+                    >
                       @{{ scope.row.name }}
                     </div>
                   </div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column :label="$t('organization.members.role')" label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]">
+            <el-table-column
+              :label="$t('organization.members.role')"
+              label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+            >
               <template #default="scope">
-                <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+                <div
+                  class="text-[14px] font-[400] leading-[20px] text-[#101828]"
+                >
                   {{ scope.row.role }}
                 </div>
               </template>
             </el-table-column>
             <!-- 上次登录时间 -->
-            <el-table-column :label="$t('organization.members.last_login_at')" label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]">
+            <el-table-column
+              :label="$t('organization.members.last_login_at')"
+              label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+            >
               <template #default="scope">
-                <div class="text-[14px] font-[400] leading-[20px] text-[#101828]">
+                <div
+                  class="text-[14px] font-[400] leading-[20px] text-[#101828]"
+                >
                   {{ formatDate(scope.row.last_login_at) }}
                 </div>
               </template>
             </el-table-column>
 
-            <el-table-column v-if="admin" width="100" align="center" fixed="right">
+            <el-table-column
+              v-if="admin"
+              width="100"
+              align="center"
+              fixed="right"
+            >
               <template #default="scope">
-                <div class="flex gap-4 justify-end pr-4" >
-                  <el-icon :size="16" class="cursor-pointer" @click="handleToRoleEdit(scope.row)" >
+                <div class="flex gap-4 justify-end pr-4">
+                  <el-icon
+                    :size="16"
+                    class="cursor-pointer"
+                    @click="handleToRoleEdit(scope.row)"
+                  >
                     <Edit />
                   </el-icon>
                   <el-popconfirm
-                    :title="$t('organization.members.deleteConfirmTitle', {username: scope.row.nickname || scope.row.name, orgName: organization.name})"
+                    :title="
+                      $t('organization.members.deleteConfirmTitle', {
+                        username: scope.row.nickname || scope.row.name,
+                        orgName: organization.name
+                      })
+                    "
                     :confirm-button-text="$t('organization.members.confirm')"
-                    :cancel-button-text	="$t('organization.members.cancel')"
+                    :cancel-button-text="$t('organization.members.cancel')"
                     confirm-button-type="danger"
                     icon="el-icon-info"
                     :width="180"
                     @confirm="handleDelete(scope.row)"
                   >
                     <template #reference>
-                      <el-icon :size="16" class="cursor-pointer">
+                      <el-icon
+                        :size="16"
+                        class="cursor-pointer"
+                      >
                         <Delete />
                       </el-icon>
                     </template>
@@ -109,92 +151,96 @@
       </div>
     </div>
   </div>
-  
 </template>
-<script>
-import csrfFetch from "../../packs/csrfFetch.js"
-import InviteMember from './InviteMember.vue'
-import OrgMemberRoleEditDialog from './OrgMemberRoleEditDialog.vue'
-import dayjs from "dayjs";
 
-// import Member from './Member.vue'
+<script setup>
+  import csrfFetch from '../../packs/csrfFetch.js'
+  import jwtFetch from '../../packs/jwtFetch.js'
+  import { ElMessage } from 'element-plus'
+  import InviteMember from './InviteMember.vue'
+  import OrgMemberRoleEditDialog from './OrgMemberRoleEditDialog.vue'
+  import dayjs from 'dayjs'
+  import { ref, inject, onMounted } from 'vue'
+  import { useCookies } from 'vue3-cookies'
+  import { useI18n } from 'vue-i18n'
 
-export default {
-  props: {
-    organization: Object,
-    admin: Boolean,
-  },
-  components: {
-    InviteMember,
-    OrgMemberRoleEditDialog
-  },
-  data() {
-    return {
-      members: [],
-      loading: false,
-      roleEditDialog: false,
-      editRow: {},
-      totalCount: 0,
-      searchForm: {
-        page: 1,
-        per: 8
-      }
+  const { cookies } = useCookies()
+  const { t } = useI18n()
+
+  const props = defineProps({
+    organizationRaw: {
+      type: Object,
+      required: true
     }
-  },
-  mounted() {
-    this.fetchMembers()
-  },
-  methods: {
-    fetchMembers() {
-      this.loading = true
-      const params = new URLSearchParams();
-      params.append('page', this.searchForm.page);
-      params.append('per', this.searchForm.per);
-      const url = `/internal_api/organizations/${this.organization.name}/members?${params.toString()}`;
-      const options = { method: 'GET' }
-      csrfFetch(url, options)
-        .then((res) => res.json())
-        .then((res) => {
-          this.members = res.members
-          this.totalCount = res.total_count
+  })
+
+  const organization = ref(props.organizationRaw)
+  const admin = cookies.isKey('admin_user')
+  const csghubServer = inject('csghubServer')
+  const members = ref([])
+  const loading = ref(false)
+  const roleEditDialog = ref(false)
+  const editRow = ref({})
+  const totalCount = ref(0)
+  const searchForm = ref({
+    page: 1,
+    per: 6
+  })
+
+  onMounted(() => {
+    fetchMembers()
+  })
+
+  const fetchMembers = async () => {
+    loading.value = true
+    const params = new URLSearchParams()
+    params.append('page', searchForm.value.page)
+    params.append('per', searchForm.value.per)
+    const orgMemberListEndpoint = `${csghubServer}/api/v1/organization/${organization.value.name}/members?${params.toString()}`
+    jwtFetch(orgMemberListEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        members.value = body.data.data
+        totalCount.value = body.data.total
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+      .finally(() => {
+        loading.value = false
+      })
+  }
+
+  const formatDate = (date) => {
+    return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
+  }
+
+  const handleDelete = async (member) => {
+    const url = `${csghubServer}/api/v1/organization/${organization.value.name}/members/${member.username}`
+    const options = {
+      method: 'DELETE',
+      body: JSON.stringify({ role: member.role }),
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(url, options)
+    if (res.ok) {
+      ElMessage({
+        message: t('organization.members.deleteSuccess'),
+        type: 'success'
+      })
+      fetchMembers()
+    } else {
+      res.json().then((error) => {
+        ElMessage({
+          message: error.msg,
+          type: 'warning'
         })
-        .catch((error) => {
-          console.error("Error:", error);
-        })
-        .finally(() => {
-          this.loading = false
-        })
-    },
-    formatDate(date) {
-      if(!date) return '-'
-      return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
-    },
-    handleDelete(member) {
-      const url = `/internal_api/organizations/${this.organization.name}/members/${member.id}`;
-      const options = {
-        method: 'DELETE'
-      }
-      csrfFetch(url, options)
-        .then((res) => {
-          if(res.ok) {
-            res.json().then((data) => {
-              this.$message.success(this.$t('organization.members.deleteSuccess'))
-              this.fetchMembers()
-            })
-          } else {
-            res.json().then((data) => {
-              this.$message.error(data.message)
-            })
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        })
-    },
-    handleToRoleEdit(row) {
-      this.editRow = Object.assign({}, row)
-      this.roleEditDialog = true
+      })
     }
   }
-};
+
+  const handleToRoleEdit = (row) => {
+    editRow.value = Object.assign({}, row)
+    roleEditDialog.value = true
+  }
 </script>

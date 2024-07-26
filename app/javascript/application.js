@@ -47,9 +47,9 @@ import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
+import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import CollectionIndex from "./components/collections/CollectionIndex.vue"
 import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
-
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -99,6 +99,7 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
+    ApplicationSpaceDetail,
     EndpointDetail,
     CollectionIndex,
     CollectionsDetail

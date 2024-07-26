@@ -39,8 +39,9 @@ module LocalRepoValidation
         end
       end
     else
+      return if true
       # 如果 @owner 不存在则不创建本地 repo
-      return unless @owner
+      # return unless @owner
       server_repo = JSON.parse(get_server_repo(type))
       server_repo_info = server_repo['data']
       # 多源同步的情况，不创建本地 repo
