@@ -13,6 +13,7 @@
           </div>
         </div>
         <div class="flex flex-col">
+          <!-- profile -->
           <a href="/settings/profile"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/profile')"
@@ -32,6 +33,7 @@
             {{ $t('profile.menu.accessToken')}}
           </div> -->
 
+          <!-- access token -->
           <a v-if="hasEmail"
              href="/settings/access-token"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
@@ -40,6 +42,7 @@
             {{ $t('profile.menu.gitToken')}}
           </a>
 
+          <!-- starship api key -->
           <a href="/settings/starship-access-token"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/starship-access-token')"
@@ -47,6 +50,7 @@
             {{ $t('profile.menu.starshipAccessToken')}}
           </a>
 
+          <!-- sync access token -->
           <a href="/settings/sync-access-token"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/sync-access-token')"
@@ -54,6 +58,7 @@
             {{ $t('profile.menu.syncAccessToken')}}
           </a>
 
+          <!-- ssh key -->
           <a v-if="hasEmail"
              href="/settings/ssh-keys"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
@@ -71,28 +76,42 @@
       </div>
     </div>
 </template>
-<script>
-export default {
-  props: {
-    name: String,
-    displayName: String,
-    avatar: String,
-    email: String
-  },
-  data() {
-    return {
-      hasEmail: this.email.length !== 0
-    }
-  },
-  mounted() {},
-  methods: {
-    menuClass(menuPath) {
-      if (menuPath === window.location.pathname) {
-        return 'text-[#303133] font-semibold'
-      } else {
-        return ''
-      }
+
+<script setup>
+  import { ref, watch, onMounted, inject, computed } from 'vue'
+  import jwtFetch from '../../packs/jwtFetch'
+
+  const csghubServer = inject('csghubServer')
+
+  const props = defineProps({
+    name: String
+  })
+
+  const displayName = ref(props.name)
+  const avatar = ref('/images/default_avatar.png')
+  const email = ref('')
+
+  const hasEmail = computed(() => {
+    return email.value.length !== 0
+  })
+
+  const menuClass = (menuPath) => {
+    if (menuPath === window.location.pathname) {
+      return 'text-[#303133] font-semibold'
+    } else {
+      return ''
     }
   }
-};
+
+  onMounted(() => {
+    jwtFetch(`${csghubServer}/api/v1/user/${props.name}`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((body) => {
+        displayName.value = body.data.username || body.data.nickname
+        avatar.value = body.data.avatar
+        email.value = body.data.email
+      })
+  })
 </script>

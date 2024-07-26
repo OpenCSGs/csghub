@@ -54,3 +54,4 @@ config/master.key.starhub
 config/master.key.xty
 
 /.env.development
+.vscode/settings.json
