@@ -23,7 +23,10 @@ export const codes = {
     tips: "创建代码仓库后，你可以使用网页或 Git 上传你的文件。",
     createCode: "创建代码仓库",
     createSuccess: "代码仓库创建成功",
-    tip: "应用于代码库路径，创建后不可更改" 
+    tip: "应用于代码库路径，创建后不可更改",
+    license: "许可证",
+    createFail: "代码仓库创建失败",
+    codeEnName: "代码仓库英文名称",
   },
   edit: {
     tips: "将会显示在代码列表页面中，选填",

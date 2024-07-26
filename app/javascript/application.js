@@ -22,10 +22,8 @@ import zh from '../../config/locales/zh.js'
 
 import Navbar from "./components/navbar/TheNavbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
-import ModelDetail from "./components/models/ModelDetail.vue"
-import DatasetDetail from "./components/datasets/DatasetDetail.vue"
 import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
-import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
+import RepoDetail from "./components/shared/RepoDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
@@ -44,12 +42,14 @@ import NewApplicationSpace from "./components/application_spaces/NewApplicationS
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
-import CodeDetail from "./components/codes/CodeDetail.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
+import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
 import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
-
+import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
+import CollectionIndex from "./components/collections/CollectionIndex.vue"
+import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -63,6 +63,7 @@ import AdminCodeList from "./components/new_admin/codes/AdminCodeList.vue"
 import AdminCodeDetail from "./components/new_admin/codes/AdminCodeDetail.vue"
 import AdminModelList from "./components/new_admin/models/AdminModelList.vue"
 import AdminModelDetail from "./components/new_admin/models/AdminModelDetail.vue"
+import AdminModelEdit from "./components/new_admin/models/AdminModelEdit.vue"
 import AdminDatasetList from "./components/new_admin/dataset/AdminDatasetList.vue"
 import AdminDatasetDetail from "./components/new_admin/dataset/AdminDatasetDetail.vue"
 import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystemConfig.vue"
@@ -73,9 +74,7 @@ const app = createApp({
   components: {
     Navbar,
     CommentList,
-    DatasetDetail,
-    ModelDetail,
-    ApplicationSpaceDetail,
+    RepoDetail,
     Profile,
     ProfileEdit,
     ProfileSettings,
@@ -92,15 +91,18 @@ const app = createApp({
     OrganizationSettings,
     RepoCards,
     NewCode,
-    CodeDetail,
+    NewCollection,
     NewEndpoint,
-    EndpointDetail,
     AdminNavbar,
     AdminMenu,
     NewFinetune,
     finetuneDetail,
     StarshipAccessTokenSettings,
-    SyncAccessTokenSettings
+    SyncAccessTokenSettings,
+    ApplicationSpaceDetail,
+    EndpointDetail,
+    CollectionIndex,
+    CollectionsDetail
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
@@ -139,6 +141,7 @@ const routes = [
   { path: '/new_admin/codes/:namespace/:name', component: AdminCodeDetail },
   { path: '/new_admin/models', component: AdminModelList },
   { path: '/new_admin/models/:namespace/:name', component: AdminModelDetail },
+  { path: '/new_admin/models/:namespace/:name/edit', component: AdminModelEdit },
   { path: '/new_admin/datasets', component: AdminDatasetList },
   { path: '/new_admin/datasets/:namespace/:name', component: AdminDatasetDetail },
   { path: '/new_admin/system_config', component: AdminSystemConfig },

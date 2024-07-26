@@ -81,5 +81,8 @@ export const all = {
   commits: "commit history",
   fetchError: "Failed to fetch data",
   deploy: "Deploy",
-  more:"More"
+  more:"More",
+  baseModel:"Base Model",
+  moreDesc: "Expand more",
+  sdkTips: "Please register first and then obtain the Token from OpenCSG's account page"
 }

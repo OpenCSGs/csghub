@@ -63,8 +63,14 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+              <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+              Use
+              <a :href="downloadModalUrl" target="_blank" class="underline">access token</a> 
+              as git password/credential
+            </div>
             <div
-              class="my-[4px]"
+              class="mb-[4px]"
               v-if="currentUser"
             >
               <el-checkbox
@@ -95,11 +101,36 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
           >
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
+              <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+              <a :href="downloadModalUrl" target="_blank" class="underline">Add your SSH public key</a> 
+              to clone private repos
+            </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
             <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
               :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"
+            ></markdown-viewer>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane
+          v-if="repoType == 'model' || repoType == 'dataset'"
+          label="SDK"
+          name="sdk"
+        >
+          <div
+            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+          >
+          <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+            <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+            Use
+            <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a> 
+            to download
+            </div>
+            <div class="text-[#909399] mt-[8px]"># {{ $t('all.sdkTips') }}</div>
+            <markdown-viewer
+              :content="cmdCloneCodeMarkdown"
             ></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -193,6 +224,23 @@
     return getMarkdownCode(sshCloneCode, 'bash', true)
   })
 
+  const getCmdCloneCode = () => {
+    return ref(`
+from pycsghub.snapshot_download import snapshot_download
+token = '' # token from opencsg.com
+endpoint = "https://hub.opencsg.com"
+repo_type = "${props.repoType}"
+repo_id = '${props.namespacePath}'
+chache_dir = '' # cache dir of download data
+result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
+`)  
+  }
+
+  const cmdCloneCodeMarkdown = computed(() => {
+    const cmdCloneCode = getCmdCloneCode()
+    return getMarkdownCode(cmdCloneCode.value, 'bash', true)
+  })
+
   const downloadButtonKey = computed(() => {
     switch (props.repoType) {
       case 'dataset':
@@ -223,19 +271,33 @@
     }
   })
 
+  const downloadModalUrl = computed(() => {
+    switch (props.repoType) {
+      case 'dataset':
+        return 'https://opencsg.com/docs/Dataset/download_datasets'
+      case 'model':
+        return 'https://opencsg.com/docs/Model/download_models'
+      case 'code':
+        return 'https://opencsg.com/docs/Code/download_codes'
+      case 'space':
+        return 'https://opencsg.com/docs/Space/download_space_repo'
+    }
+  })
+
   function toFinetunePage() {
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
   }
 
   const fetchUserToken = async() => {
     if (!currentUser.value) return
+    if (!props.userName) return
 
     const res = await jwtFetch(
       `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
     )
     if (!res.ok) {
       res.json().then((error) => {
-        ElMessage({ message: error.msg, type: 'warning' })
+        console.log(error)
       })
     } else {
       res.json().then((body) => {

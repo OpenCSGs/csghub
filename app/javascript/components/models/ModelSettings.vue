@@ -67,7 +67,7 @@
 
     <el-divider/>
 
-        <!-- 模型标签 -->
+    <!-- 模型标签 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -220,7 +220,7 @@
   </div>
 </template>
 <script>
-import {h, inject} from 'vue'
+import { h, inject } from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import csrfFetch from "../../packs/csrfFetch"
 import jwtFetch from '../../packs/jwtFetch'
@@ -259,7 +259,7 @@ export default {
       readmeContent: '',
       readmeSha: '',
       options: [{value: 'Private', label: this.$t('all.private')},
-        {value: 'Public', label:  this.$t('all.public')}]
+                {value: 'Public', label:  this.$t('all.public')}]
     };
   },
   computed: {
@@ -277,9 +277,13 @@ export default {
   mounted() {
     // 监听全局点击事件
     document.addEventListener('click', this.collapseTagList);
-    this.getSelectTags()
     this.getIndustryTags()
     this.fetchReadme()
+  },
+  watch: {
+    tags() {
+      this.getSelectTags()
+    }
   },
   beforeDestroy() {
     // 组件销毁前移除事件监听
@@ -381,13 +385,13 @@ export default {
     },
 
     async deleteModel() {
-      const modelDeleteEndpoint = "/internal_api/models/" + this.path
+      const modelDeleteEndpoint = `${this.csghubServer}/api/v1/models/${this.path}`
       const option = {method: 'DELETE'}
-      const response = await csrfFetch(modelDeleteEndpoint, option)
+      const response = await jwtFetch(modelDeleteEndpoint, option)
 
       if (!response.ok) {
-        return response.json().then((data) => {
-          throw new Error(data.message)
+        return response.json().then((err) => {
+          throw new Error(err.message)
         })
       } else {
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})
@@ -529,7 +533,7 @@ export default {
 
     updateModelDesc() {
       if (!!this.theModelDesc.trim()) {
-        const payload = {desc: this.theModelDesc}
+        const payload = {description: this.theModelDesc}
         this.updateModel(payload)
       } else {
         ElMessage({ message: this.$t('models.edit.needModelDesc'), type: "warning" })
@@ -537,23 +541,23 @@ export default {
     },
 
     async updateModel(payload) {
-      const modelUpdateEndpoint = "/internal_api/models/" + this.path
+      const modelUpdateEndpoint = `${this.csghubServer}/api/v1/models/${this.path}`
       const options = {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
       }
-      const response = await csrfFetch(modelUpdateEndpoint, options)
+      const response = await jwtFetch(modelUpdateEndpoint, options)
       if (!response.ok) {
         response.json().then((err) => {
-          ElMessage({ message: err.message, type: "warning" })
+          ElMessage({ message: err.msg, type: "warning" })
         })
       } else {
         if (payload.hasOwnProperty('private')) {
           this.updateVisibility(payload.private)
         }
         response.json().then((data) => {
-          ElMessage({ message: data.message, type: "success" })
+          ElMessage({ message: "Success", type: "success" })
         })
       }
     },

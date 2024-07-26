@@ -153,7 +153,8 @@
       ElMessage({ message: t('all.fetchError'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        finetuneResource.value = body.data[0]?.id || ''
+        const firstAvailableResource = body.data.find((item) => item.is_available)
+        finetuneResource.value = firstAvailableResource?.id || ''
         finetuneResources.value = body.data
       })
     }
@@ -215,7 +216,6 @@
   const createFinetune = async () => {
     try {
       const res = await submitFinetuneForm()
-      ElMessage.success(t('endpoints.new.createSuccess'))
     } catch (err) {
       ElMessage.warning(err.message)
     }

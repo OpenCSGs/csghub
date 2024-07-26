@@ -26,7 +26,11 @@ Rails.application.routes.draw do
           get :sync_repos
         end
       end
-      resources :system_config, only: [:index, :update]
+      resources :system_config, only: [:index, :update] do
+        collection do
+          get '/license', to: 'system_config#license'
+        end
+      end
     end
 
     resources :organizations, only: [:create, :update] do
@@ -54,7 +58,6 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/readme', to: 'models#readme', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/files', to: 'models#files', namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file', namespace: /[^\/]+/
-    delete '/models/:namespace/(*model_name)', to: 'models#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)/related_repos', to: 'models#related_repos', namespace: /[^\/]+/
@@ -64,7 +67,6 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/files', to: 'datasets#files', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/preview', to: 'datasets#preview_parquet', namespace: /[^\/]+/
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file', namespace: /[^\/]+/
-    delete '/datasets/:namespace/(*dataset_name)', to: 'datasets#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/related_repos', to: 'datasets#related_repos', namespace: /[^\/]+/
 
@@ -72,7 +74,6 @@ Rails.application.routes.draw do
     get '/codes/:namespace/(*code_name)/readme', to: 'codes#readme', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/files', to: 'codes#files', namespace: /[^\/]+/
     post '/codes/:namespace/(*code_name)/files/:branch/upload_file', to: 'codes#upload_file', namespace: /[^\/]+/
-    delete '/codes/:namespace/(*code_name)', to: 'codes#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/related_repos', to: 'codes#related_repos', namespace: /[^\/]+/
 
@@ -80,7 +81,6 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)/files', to: 'application_spaces#files', namespace: /[^\/]+/
     post '/spaces/:namespace/(*application_space_name)/files/:branch/upload_file', to: 'application_spaces#upload_file', namespace: /[^\/]+/
-    delete '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     resources :endpoints, only: [:create]
@@ -121,7 +121,9 @@ Rails.application.routes.draw do
     resources :datasets, only: [:index, :new]
     resources :codes, only: [:index, :new]
     resources :spaces, controller: 'application_spaces', only: [:index, :new]
+    resources :collections, only: [:index, :new]
     resources :endpoints, only: [:index, :new]
+    resources :collections, only: [:index, :new]
     resources :finetune, only: [:index, :new]
     resources :organizations, only: [:new, :show, :edit] do
       member do
@@ -146,6 +148,8 @@ Rails.application.routes.draw do
     get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
     get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
+
+    get '/collections/:collections_id/(*path)', to: 'collections#show', namespace: /[^\/]+/
 
     get '/datasets/:namespace/(*dataset_name)/:branch/new', to: 'datasets#new_file', namespace: /[^\/]+/
     get '/datasets/:namespace/(*dataset_name)/edit/:branch/(*path)', to: 'datasets#edit_file', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
@@ -189,6 +193,7 @@ Rails.application.routes.draw do
     get    '/signup', to: 'sessions#signup'
     get    '/login', to: 'sessions#new'
     get    '/oidc/callback', to: 'sessions#oidc'
+    get    '/server/callback', to: 'sessions#server'
     post   '/login',   to: 'sessions#create'
     post   '/signup',   to: 'sessions#registration'
     delete '/logout',  to: 'sessions#destroy'

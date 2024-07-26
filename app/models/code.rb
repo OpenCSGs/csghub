@@ -8,7 +8,6 @@ class Code < ApplicationRecord
   has_many :discussions, as: :discussionable, dependent: :destroy
 
   after_create :sync_created_code_to_starhub_server
-  after_destroy :delete_code_from_starhub_server
   after_update :update_starhub_server_code
   before_save :detect_sensitive_content
 
@@ -45,11 +44,6 @@ class Code < ApplicationRecord
                                                       desc,
                                                       { license: license,
                                                         private: code_private? })
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def delete_code_from_starhub_server
-    res = Starhub.api(creator.session_ip).delete_code(owner.name, name, { current_user: creator.name })
     raise StarhubError, res.body unless res.success?
   end
 
