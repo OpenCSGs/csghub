@@ -52,6 +52,7 @@ export const application_spaces = {
     subTitle2: 'You can use different SDKs to build app spaces',
     owner: 'Owner',
     name: 'Name',
+    spaceEnName: 'Space Name',
     namePlaceholder: '2-70 alphanumeric strings _.-, _.- cannot appear side by side',
     nickname: 'Nickname',
     nicknamePlaceholder: 'Please enter nickname',
