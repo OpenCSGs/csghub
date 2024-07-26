@@ -99,7 +99,7 @@ const app = createApp({
     finetuneDetail,
     StarshipAccessTokenSettings,
     SyncAccessTokenSettings,
-    ApplicationSpaceDetail
+    ApplicationSpaceDetail,
     EndpointDetail,
     CollectionIndex,
     CollectionsDetail
