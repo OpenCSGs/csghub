@@ -264,6 +264,7 @@ Rails.application.routes.draw do
     get    '/login', to: 'sessions#new'
     get    '/authing/callback', to: 'sessions#authing'
     get    '/oidc/callback', to: 'sessions#oidc'
+    get    '/server/callback', to: 'sessions#server'
     post   '/login',   to: 'sessions#create'
     post   '/signup',   to: 'sessions#registration'
     delete '/logout',  to: 'sessions#destroy'

@@ -56,3 +56,4 @@ config/master.key.xty
 /.env.development
 
 db/schema_backup.rb
+.vscode/settings.json
