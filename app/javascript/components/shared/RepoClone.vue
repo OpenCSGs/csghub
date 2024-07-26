@@ -290,13 +290,14 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
 
   const fetchUserToken = async() => {
     if (!currentUser.value) return
+    if (!props.userName) return
 
     const res = await jwtFetch(
       `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
     )
     if (!res.ok) {
       res.json().then((error) => {
-        ElMessage({ message: error.msg, type: 'warning' })
+        console.log(error)
       })
     } else {
       res.json().then((body) => {
