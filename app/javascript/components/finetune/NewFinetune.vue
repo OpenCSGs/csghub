@@ -242,7 +242,9 @@
       options
     )
     if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+      res.json().then((error) => {
+        ElMessage({ message: error.msg, type: 'warning' })
+      })
     } else {
       hasCreateFinetune.value = false
       res.json().then((body) => {
