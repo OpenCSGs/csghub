@@ -238,6 +238,8 @@
   }
 
   onMounted(() => {
-    reloadRepos()
+    if (props.repoType === 'space') {
+      reloadRepos()
+    }
   })
 </script>
