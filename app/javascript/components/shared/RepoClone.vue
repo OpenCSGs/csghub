@@ -151,8 +151,6 @@
   const { cookies } = useCookies()
 
   const props = defineProps({
-    httpCloneUrl: String,
-    sshCloneUrl: String,
     repoType: String,
     userName: String,
     namespacePath: String,
@@ -160,6 +158,35 @@
     repo: Object,
     enableEndpoint: Boolean,
     enableFinetune: Boolean
+  })
+
+  const httpCloneUrl = ref('')
+  const sshCloneUrl = ref('')
+
+  const httpsCloneCode = ref('')
+  const sshCloneCode = ref('')
+  const httpsCloneCodeWithToken = ref('')
+
+  watch(() => props.repo, () => {
+    httpCloneUrl.value = props.repo.repository.http_clone_url
+    sshCloneUrl.value = props.repo.repository.ssh_clone_url
+
+    httpsCloneCode.value = `
+  git lfs install
+  git clone ${httpCloneUrl.value}
+`
+
+    sshCloneCode.value = `
+  git lfs install
+  git clone ${sshCloneUrl.value}
+`
+
+  httpsCloneCodeWithToken.value = `
+  git lfs install
+  git clone https://${
+    currentUser.value
+  }:${accessToken.value}@${httpCloneUrl.value.replace('https://', '')}
+`
   })
 
   const csghubServer = inject('csghubServer')
@@ -186,42 +213,25 @@
     }\`\`\``
   }
 
-  const httpsCloneCode = `
-  git lfs install
-  git clone ${props.httpCloneUrl}
-`
-
-  const httpsCloneCodeWithToken = ref(`
-  git lfs install
-  git clone https://${currentUser.value}:${
-    accessToken.value
-  }@${props.httpCloneUrl.replace('https://', '')}
-  `)
-
   watch(accessToken, async (newAccessToken) => {
     httpsCloneCodeWithToken.value = `
   git lfs install
   git clone https://${
     currentUser.value
-  }:${newAccessToken}@${props.httpCloneUrl.replace('https://', '')}
+  }:${newAccessToken}@${httpCloneUrl.value.replace('https://', '')}
 `
   })
 
   const httpsCloneCodeMarkdown = computed(() => {
-    return getMarkdownCode(httpsCloneCode, 'bash', true)
+    return getMarkdownCode(httpsCloneCode.value, 'bash', true)
   })
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
     return getMarkdownCode(httpsCloneCodeWithToken.value, 'bash', true)
   })
 
-  const sshCloneCode = `
-  git lfs install
-  git clone ${props.sshCloneUrl}
-`
-
   const sshCloneCodeMarkdown = computed(() => {
-    return getMarkdownCode(sshCloneCode, 'bash', true)
+    return getMarkdownCode(sshCloneCode.value, 'bash', true)
   })
 
   const getCmdCloneCode = () => {
