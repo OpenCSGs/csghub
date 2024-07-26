@@ -18,10 +18,10 @@
     <div
       class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border border-[#cfd4dc] text-[#0f1728] text-base font-light leading-normal mb-4 overflow-auto"
     >
-      {{ anwserContent }}
+      <MarkdownViewer :content="anwserContent" />
     </div>
     <div
-      class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border"
+      class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border relative"
       :class="
         inputFocus
           ? 'border-[#6483f8] [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
@@ -66,6 +66,7 @@
   import { Typewriter } from '../../../packs/typewriter'
   import { useCookies } from 'vue3-cookies'
   import { ElMessage } from 'element-plus'
+  import MarkdownViewer from '../../shared/viewers/MarkdownViewer.vue'
 
   const { cookies } = useCookies()
 
@@ -124,6 +125,16 @@
     return props.form ? props.form : { max_tokens: 100 }
   })
 
+  const authHeaders = computed(() => {
+    const userToken = cookies.get('user_token')
+
+    return userToken
+      ? {
+          Authorization: `Bearer ${userToken}`
+        }
+      : {}
+  })
+
   const handleSendMessage = () => {
     if (!canSendMessage.value) return
 
@@ -143,11 +154,12 @@
     }
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${cookies.get('user_token')}`
+      ...authHeaders.value
     }
 
     fetchEventSource(endpoint, {
       method: 'POST',
+      openWhenHidden: true,
       headers,
       body: JSON.stringify(payload),
       onopen: handleOpen,

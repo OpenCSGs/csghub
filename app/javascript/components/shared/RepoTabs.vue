@@ -63,7 +63,6 @@
           :download-count="repoDetail.downloads"
           :currentBranch="currentBranch"
           :widget-type="repoDetail.widget_type"
-          :inference-status="repoDetail.status"
           :license="repoDetail.license"
         />
       </template>

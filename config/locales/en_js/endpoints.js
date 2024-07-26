@@ -69,7 +69,8 @@ export const endpoints = {
     json: "JSON Output",
     maximum: "Maximum",
     send: "Send",
-    test: "Test your endpoint",
+    test: "Inference API",
     api: "Send requests to endpoint",
+    useToken: 'Use my token'
   }
 }
