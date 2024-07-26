@@ -51,9 +51,10 @@
       </div>
     </div>
 
-      <QuestionAnswer v-if="inferenceStatus === 'RUNNING' && widgetType === 'generation'"
-                      :namespacePath="namespacePath"
-                      :currentBranch="currentBranch"
+      <TestEndpoint
+        v-if="widgetType === 'generation' && endpoint?.status === 'Running'"
+        :appEndpoint="appEndpoint"
+        :modelId="namespacePath"
       />
 
       <SpaceRelationsCard v-if="relations['spaces'] && relations['spaces'].length !== 0"
@@ -80,30 +81,33 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import { ref, onMounted, inject, computed } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
-  import QuestionAnswer from '../models/widgets/QuestionAnswer.vue';
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
   import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
   import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';
+  import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
+  import jwtFetch from '../../packs/jwtFetch'
 
   const props = defineProps({
     namespacePath: String,
     downloadCount: Number,
     currentBranch: String,
     widgetType: String,
-    inferenceStatus: String,
     repoType: String,
     license: String, default: ''
   })
+
+  const csghubServer = inject('csghubServer')
 
   const loading = ref(true)
   const readmeContent = ref('')
   const previewData = ref({})
   const relations = ref({})
+  const endpoint = ref({})
   const moreLicenseDesc = ref(false)
   const licenseTagInfo = ref({ name: props.license, desc: '' })
   const { locale } = useI18n()
@@ -178,10 +182,35 @@
     })
   }
 
+  const appEndpoint = computed(() => {
+    if (!endpoint.value) return ''
+
+    return `https://${endpoint.value.proxy_endpoint}`
+  })
+
+  const fetchEndpoint = async () => {
+    const url = `${csghubServer}/api/v1/models/${props.namespacePath}/serverless`
+
+    const response = await jwtFetch(url)
+
+    if (!response.ok) {
+      response.json().then((error) => {
+        console.error(error)
+      })
+    } else {
+      response.json().then(({ data }) => {
+        endpoint.value = data
+      })
+    }
+  }
+
   onMounted(() => {
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
-    if (props.repoType == 'model') { fetchLicenseInfo() }
+    if (props.repoType == 'model') {
+      fetchLicenseInfo()
+      fetchEndpoint()
+    }
   })
 </script>
