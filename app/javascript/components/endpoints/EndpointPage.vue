@@ -52,9 +52,16 @@
       </p>
     </div>
   </div>
+
+  <EndpointPlayground
+    :appEndpoint="appEndpoint"
+    :model-id="modelId"
+  />
 </template>
 
 <script setup>
+  import EndpointPlayground from './EndpointPlayground.vue'
+
   const props = defineProps({
     appEndpoint: String,
     hardware: String,
