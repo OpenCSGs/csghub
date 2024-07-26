@@ -12,9 +12,14 @@ You can try the free SaaS version of CSGHub through the OpenCSG Community offici
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
 ### UPDATES
-- [2024.03.15] v0.3 Plan: Files online editing, organization edit, dataset preview.
-- [2024.02.15] v0.2 Improve the function of model dataset hosting, and add the feature of inviting new organization members.
-- [2024.01.15] v0.1 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as below.
+- [2024.07.15] v0.7.0 Big release to support `Multiple Resource Sync` for models and datasets, One-Click Fintune, Resource Usage Metering.
+- [2024.06.21] v0.6.1 bug fix and user experience enhancement. 
+- [2024.06.18] v0.6.0 Big release to support `dedicated` model inference endpoint, support `streamlit` Space, allow use to `like` repos allow to set repo's `industry tag`, enhance git history and commit diff details.
+- [2024.05.14] v0.5.0 Enhance Space user experience, auto build `relations` between repos(model,dataset,code and spaces), support multiple files uploading. 
+- [2024.04.18] v0.4.0 Allow to run `Application Space` (gradio app), add a widget to try model inference, support new repo type `Code`, support organization members management, support wechat login.
+- [2024.03.15] v0.3.0 Plan: Files online editing, organization edit, dataset preview.
+- [2024.02.15] v0.2.0 Improve the function of model dataset hosting, and add the feature of inviting new organization members.
+- [2024.01.15] v0.1.0 CSGHub Alpha version release, supports model and dataset management functions, detailed function is as below.
 
 ### CORE FUNCTIONS
 In the era of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. CSGHub is an open-source project designed to address these issues.
