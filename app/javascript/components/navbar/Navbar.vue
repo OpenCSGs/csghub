@@ -256,7 +256,7 @@
           class="el-dropdown-link relative">
           <el-avatar
             :size="35"
-            :src="avatar">
+            :src="userAvatar">
           </el-avatar>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -289,7 +289,7 @@
           class="el-dropdown-link relative">
           <el-avatar
             :size="35"
-            :src="avatar">
+            :src="userAvatar">
           </el-avatar>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -323,7 +323,7 @@
           class="el-dropdown-link">
           <el-avatar
             :size="35"
-            :src="avatar">
+            :src="userAvatar">
           </el-avatar>
         </span>
         <template #dropdown>
@@ -411,9 +411,8 @@
   <ContactUs ref="child" />
 </template>
 
-<script>
+<script setup>
   import ContactUs from '../form/ContactUs.vue'
-  import StarCloud from './menuItem/StarCloud.vue'
   import ProductCsgHub from './menuItem/ProductCsgHub.vue'
   import StarShip from './menuItem/StarShip.vue'
   import EKB from './menuItem/EKB.vue'
@@ -434,73 +433,71 @@
   import Experts from './menuItem/Experts.vue'
   import Campaigns from './menuItem/Campaigns.vue'
   import DailyPapers from './menuItem/DailyPapers.vue'
+  import { ref, inject, onMounted } from 'vue'
+  import jwtFetch from '../../packs/jwtFetch.js'
+  import useUserStore from '../../stores/UserStore.js'
 
-  export default {
-    props: {
-      logo: String,
-      avatar: String,
-      starChainUrl: String,
-      isCompanyUser: String,
-      companyVerified: String,
-      phone: String,
-      isLoggedIn: String,
-      userName: String,
-      userId: String,
-      canCreateDailyPaper: Boolean,
-      starcloudUrl: String
-    },
-    data() {
-      const classParam = new URLSearchParams(window.location.search).get(
-        'class'
-      )
-      return {
-        csgHubUrl: 'https://github.com/OpenCSGs/CSGHub',
-        llmInference: 'https://github.com/OpenCSGs/llm-inference',
-        llmFinetune: 'https://github.com/OpenCSGs/llm-finetune',
-        OpenSourceStarCloudUrl: 'https://github.com/OpenCSGs/llm-scheduler-ui',
-        activeIndex: classParam ? classParam : window.location.pathname,
-        isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
-        userProfile: `/profile/${this.userId}`
-      }
-    },
-    components: {
-      ContactUs,
-      StarCloud,
-      StarShip,
-      EKB,
-      StarAIO,
-      Imagen,
-      StarCode,
-      AllSolution,
-      CSGHub,
-      Inference,
-      StarChain,
-      Space,
-      Doc,
-      News,
-      About,
-      Experts,
-      Partners,
-      Campaigns,
-      DailyPapers,
-      LlmFinetune,
-      ProductCsgHub
-    },
-    methods: {
-      routerLink(path) {
-        window.location.href = path
-      },
-      handleNavigation(path, className) {
-        window.location.href = path + '?class=' + className
-      },
-      showDialog() {
-        this.$refs.child.showDialog()
-      },
-      handleLocaleChange(locale) {
-        location.href = `/${locale}/settings/locale`
-      }
-    }
+  const userStore = useUserStore()
+  const classParam = new URLSearchParams(window.location.search).get('class')
+  const csghubServer = inject('csghubServer')
+
+  const props = defineProps({
+    logo: String,
+    avatar: String,
+    starChainUrl: String,
+    isCompanyUser: String,
+    companyVerified: String,
+    phone: String,
+    isLoggedIn: String,
+    userName: String,
+    userId: String,
+    canCreateDailyPaper: Boolean,
+    starcloudUrl: String
+  })
+
+  const isLoggedInBoolean = ref(JSON.parse(props.isLoggedIn.toLowerCase()))
+  const userProfile = ref(`/profile/${props.userId}`)
+  const userAvatar = ref(props.avatar)
+
+  const csgHubUrl = ref('https://github.com/OpenCSGs/CSGHub')
+  const llmInference = ref('https://github.com/OpenCSGs/llm-inference')
+  const llmFinetune = ref('https://github.com/OpenCSGs/llm-finetune')
+  const OpenSourceStarCloudUrl = ref('https://github.com/OpenCSGs/llm-scheduler-ui')
+
+  const activeIndex = ref(classParam ? classParam : window.location.pathname)
+
+  const routerLink = (path) => {
+    window.location.href = path
   }
+
+  const handleNavigation = (path, className) => {
+    window.location.href = path + '?class=' + className
+  }
+
+  const showDialog = () => {
+    this.$refs.child.showDialog()
+  }
+
+  const handleLocaleChange= (locale) => {
+    location.href = `/${locale}/settings/locale`
+  }
+
+  const fetchUser = async () => {
+    jwtFetch(`${csghubServer}/api/v1/user/${props.userName}`, {
+        method: 'GET',
+      })
+        .then((res) => res.json())
+        .then((body) => {
+          userAvatar.value = body.data.avatar
+          userStore.initialize(body.data)
+        })
+  }
+
+  onMounted(() => {
+    if (props.userName) {
+      fetchUser()
+    }
+  })
 </script>
 
 <style>
