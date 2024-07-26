@@ -72,7 +72,8 @@ export const endpoints = {
     json: "JSON 输出",
     maximum: "最大化",
     send: "发送",
-    test: "专属实例测试",
+    test: "推理 API",
     api: "发送请求到专属实例",
+    useToken: '使用我的 token'
   }
 }
