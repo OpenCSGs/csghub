@@ -1,5 +1,5 @@
 <template>
-  <div class="menuItem min-h-max w-full bg-[#F9FAFB] flex items-center justify-center gap-[8px] py-[14px]">
+  <div class="menuItem min-h-max w-full bg-[#F9FAFB] flex items-center justify-center gap-[8px] py-[24px] rounded-[0_0_12px_12px]">
     <div class="text-[#223B99]">{{ $t('navbar.allSolution')}}</div>
     <svg
       xmlns="http://www.w3.org/2000/svg"

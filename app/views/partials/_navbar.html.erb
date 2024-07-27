@@ -1,4 +1,4 @@
-<div class="bg-white <%= class_name %>">
+<div class="bg-white <%= class_name %> sticky top-0 z-[999]">
   <% if logged_in? %>
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
             avatar="<%= current_user.avatar_url %>"
