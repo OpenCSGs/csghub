@@ -130,19 +130,49 @@
     })
   }
 
-  const fetchPreviewData = async () => {
-    if (props.repoType !== 'dataset') {
-      return
-    }
-    const url = `/internal_api/datasets/${props.namespacePath}/preview`
+  const fetchParquetFilePath = async () => {
+    if (props.repoType !== 'dataset') { return }
+    
+    const options = { path: '/' }
+    const url = `${csghubServer}/api/v1/datasets/${props.namespacePath}/tree`
 
-    fetch(url).then((response) => {
+    jwtFetch(url, options).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
           console.error(data.message)
         })
       } else {
+        response.json().then((res_json) => {
+          const parquetFilePath = res_json['data'].filter(file => file.path.endsWith('.parquet'))
+                                  .map(file => file.path)
+                                  .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))[0]
+          if (parquetFilePath) {
+            fetchPreviewData(parquetFilePath)
+          } else {
+            previewData.value = {}
+          }
+          console.log(previewData.value);
+        })
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
+
+  const fetchPreviewData = async (parquetFilePath) => {
+    const options = {
+      count: 6
+    }
+    const url = `${csghubServer}/api/v1/datasets/${props.namespacePath}/viewer/${parquetFilePath}`
+
+    jwtFetch(url, options).then((response) => {
+      if (!response.ok) {
         response.json().then((data) => {
+          console.error(data.message)
+        })
+      } else {
+        response.json().then((res_json) => {
+          const data = res_json['data']
           previewData.value = data
         })
       }
@@ -206,7 +236,7 @@
 
   onMounted(() => {
     fetchData()
-    fetchPreviewData()
+    fetchParquetFilePath()
     fetchRepoRelations()
     if (props.repoType == 'model') {
       fetchLicenseInfo()
