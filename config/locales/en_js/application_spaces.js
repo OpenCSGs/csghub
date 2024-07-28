@@ -74,7 +74,10 @@ export const application_spaces = {
     create: 'Create',
     createSuccess: "Application Space created successfully",
     tip: "This parameter applies to the application space path and cannot be changed after it is created",
-    failedFetchResources: "Failed to fetch resources"
+    failedFetchResources: "Failed to fetch resources",
+    license: "License",
+    createFail: "Application Space creation failed",
+    spaceEnName: "Application Space Name"
   },
   edit: {
     cloudResource: 'Cloud Resource',

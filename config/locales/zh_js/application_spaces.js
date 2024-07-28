@@ -74,7 +74,10 @@ export const application_spaces = {
     create: '创建应用空间',
     createSuccess: "应用空间创建成功",
     tip: "应用于应用空间路径，创建后不可更改",
-    failedFetchResources: "获取资源失败"
+    failedFetchResources: "获取资源失败",
+    license: "许可证",
+    createFail: "应用空间创建失败",
+    spaceEnName: "应用空间英文名称"
   },
   edit: {
     cloudResource: '空间云资源',

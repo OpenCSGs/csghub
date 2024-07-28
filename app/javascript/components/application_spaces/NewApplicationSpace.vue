@@ -442,7 +442,6 @@
   }
 
   const spaceResources = ref([])
-  const spaceResource = ref('')
 
   const fetchSpaceResources = async () => {
     const options = {
@@ -469,13 +468,22 @@
     }
   }
 
+  const handleBeforeUpload = (file) => {
+    if (file.size / 1024 <= 2000) {
+      return true
+    } else {
+      ElMessage({ message: '文件过大', type: 'warning' })
+      return false
+    }
+  }
+
   const handleRemoveImage = () => {
-    coverImage.value = ''
+    dataForm.value.cover_image = ''
     imageUploaded.value = false
   }
 
   const handleUploadSuccess = (res) => {
-    coverImage.value = res.url
+    dataForm.value.cover_image = res.url
     imageUploaded.value = true
   }
 
@@ -575,6 +583,7 @@
   :deep(.hide .el-upload.el-upload--picture-card) {
     display: none;
   }
+
   :deep(.el-input .el-input__wrapper) {
     border-radius: 8px;
   }
