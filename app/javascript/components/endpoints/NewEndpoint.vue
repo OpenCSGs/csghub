@@ -217,9 +217,8 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted, inject, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch.js'
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
 
@@ -236,15 +235,15 @@
   const dataForm = ref({
     model_path: searchParams.get('model_id') || '',
     visibility: 'public',
-    min_replica: '1',
-    max_replica: '5'
+    min_replica: 1,
+    max_replica: 5
   })
   const endpointFrameworks = ref([])
   const endpointClusters = ref([])
   const endpointResources = ref([])
   const loading = ref(false)
 
-  const replicaRanges = ['1', '2', '3', '4', '5']
+  const replicaRanges = [1, 2, 3, 4, 5]
 
   const rules = ref({
     name: [
@@ -401,26 +400,35 @@
   }
 
   const createEndpoint = async () => {
-    const params = Object.assign({}, dataForm.value)
+    const params = {
+      deploy_name: dataForm.value.name,
+      hardware: dataForm.value.cloud_resource,
+      resource_id: dataForm.value.cloud_resource,
+      min_replica: dataForm.value.min_replica,
+      max_replica: dataForm.value.max_replica,
+      runtime_framework_id: dataForm.value.endpoint_framework,
+      secure_level: dataForm.value.visibility === 'public' ? 1: 2,
+      cluster_id: dataForm.value.endpoint_cluster
+    }
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = '/internal_api/endpoints'
-    const response = await csrfFetch(uploadEndpoint, options)
+    const uploadEndpoint = `${csghubServer}/api/v1/models/${dataForm.value.model_path}/run`
+    const response = await jwtFetch(uploadEndpoint, options)
     if (response.ok) {
       ElMessage({
         message: t('endpoints.new.createSuccess'),
         type: 'success'
       })
       response.json().then((res) => {
-        window.location.href = `/endpoint/${res.path}`
+        window.location.href = `/endpoint/${props.namespace}/${dataForm.value.name}/${res.data.deploy_id}`
       })
     } else {
       response.json().then((res) => {
         ElMessage({
-          message: t('endpoints.new.createFail') + `: ${res.message}`,
+          message: t('endpoints.new.createFail') + `: ${res.msg}`,
           type: 'error'
         })
       })
