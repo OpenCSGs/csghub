@@ -440,7 +440,7 @@
         const currentFramework = body.data.find((framework) => {
           return framework.frame_name === props.framework
         })
-        currentFrameworkId.value = currentFramework.id
+        currentFrameworkId.value = currentFramework?.id
       })
     }
   }
