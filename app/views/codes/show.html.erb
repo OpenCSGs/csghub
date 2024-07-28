@@ -1,24 +1,20 @@
 <% content_for :meta_title do %>
-  <title><%= "#{default_meta_title} #{name_for_meta_title(@code)}" %></title>
+  <title><%= "#{default_meta_title}" %></title>
 <% end %>
 
 <% content_for :meta_desc do %>
   <meta name="description"
-        content="<%= "#{default_meta_description} #{desc_for_meta_description(@code)}" %>"
+        content="<%= "#{default_meta_description}" %>"
   >
 <% end %>
 
 <div class="bg-white">
-  <code-detail
-    :tags="<%= @tags %>"
+  <repo-detail
     local-repo-id="<%= @local_code&.id %>"
-    :code="<%= @code %>"
-    :last-commit="<%= @last_commit || {} %>"
-    :branches="<%= @branches %>"
+    repo-type="code"
     current-branch="<%= @current_branch || 'main' %>"
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
-    :blob="<%= @blob || {} %>"
     :action-name="'<%= action_name %>'"
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
@@ -26,5 +22,7 @@
     :can-write="<%= !!(@local_code && current_user&.can_write?(@local_code)) %>"
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
-  ></code-detail>
+    namespace="<%= params[:namespace] %>"
+    repo-name="<%= params[:code_name] %>"
+  ></repo-detail>
 </div>

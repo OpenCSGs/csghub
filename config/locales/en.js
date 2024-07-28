@@ -28,6 +28,7 @@ import { landingPage } from './en_js/landing_page';
 import { footer } from './en_js/footer';
 import { ekb } from './en_js/ekb';
 import { partner } from './en_js/partner';
+import { collections } from './en_js/collections';
 import { endpoints } from './en_js/endpoints';
 import { csghub } from './en_js/csghub';
 import { finetune } from './en_js/finetune';
@@ -58,6 +59,7 @@ export default {
   shared,
   repo,
   components,
+  collections,
   endpoints,
   admin,
   // portal

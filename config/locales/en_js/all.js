@@ -82,6 +82,7 @@ export const all = {
   fetchError: "Failed to fetch data",
   deploy: "Deploy",
   more:"More",
+  baseModel:"Base Model",
   moreDesc: "Expand more",
   sdkTips: "Please register first and then obtain the Token from OpenCSG's account page"
 }

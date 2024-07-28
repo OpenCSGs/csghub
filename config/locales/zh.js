@@ -16,6 +16,7 @@ import { codes } from './zh_js/codes';
 import { widgets } from './zh_js/widgets';
 import { spaces } from './zh_js/spaces';
 import { user_sessions } from './zh_js/user_sessions';
+import { collections } from './zh_js/collections';
 import { components } from './zh_js/components';
 import { space } from './zh_js/space';
 import { campaign } from './zh_js/campaign';
@@ -56,6 +57,7 @@ export default {
   sshKey,
   shared,
   repo,
+  collections,
   components,
   endpoints,
   admin,

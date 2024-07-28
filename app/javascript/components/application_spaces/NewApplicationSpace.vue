@@ -38,10 +38,10 @@
                 style="width: 100%"
               >
                 <el-option
-                  v-for="item in namespaces"
-                  :key="item[0]"
-                  :label="item[1]"
-                  :value="item[0]"
+                  v-for="item in namespaces()"
+                  :key="item"
+                  :label="item"
+                  :value="item"
                 />
               </el-select>
             </el-form-item>
@@ -336,33 +336,35 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, inject } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
   import jwtFetch from '../../packs/jwtFetch'
+  import useUserStore from '../../stores/UserStore'
+  import { useCookies } from 'vue3-cookies'
+
+  const userStore = useUserStore()
+
+  const csghubServer = inject('csghubServer')
+  const { cookies } = useCookies()
   const dataFormRef = ref(null)
   const imageUploaded = ref(false)
   const images = ref([])
-  const coverImage = ref('')
+  const { t } = useI18n()
+  const nameRule = inject('nameRule')
+  const isAdmin = cookies.isKey('admin_user')
 
   const props = defineProps({
-    licenses: Array,
-    namespaces: Array,
-    isAdmin: Boolean
+    licenses: Array
   })
 
   const dataForm = ref({
-    owner: props.namespaces[0][0],
+    owner: '',
     license: props.licenses[0][0],
     visibility: 'private',
     sdk: 'gradio'
   })
   const loading = ref(false)
-
-  const csghubServer = inject('csghubServer')
-  const { t } = useI18n()
-  const nameRule = inject('nameRule')
 
   const rules = ref({
     owner: [
@@ -430,16 +432,14 @@
     .querySelector('meta[name="csrf-token"]')
     .getAttribute('content')
 
-  onMounted(() => {
+  const namespaces = () => {
+    let namespaces = userStore.orgs.map((org) => org.path)
+    namespaces.unshift(userStore.username)
     const params = new URLSearchParams(window.location.search)
-    const result = props.namespaces.find(
-      (item) => item[1] === params.get('orgName')
-    )
-    if (result) {
-      dataForm.value.owner = result[0]
-    }
-    fetchSpaceResources()
-  })
+    const orgName = params.get('orgName')
+    dataForm.value.owner = orgName || namespaces[0]
+    return namespaces
+  }
 
   const spaceResources = ref([])
 
@@ -503,27 +503,32 @@
   }
 
   const createApplicationSpace = async () => {
-    const params = Object.assign({}, dataForm.value)
-    if (params.owner) {
-      const [owner_id, owner_type] = params.owner.split('_')
-      params.owner_id = owner_id
-      params.owner_type = owner_type
-      delete params.owner
+    const params = {
+      name: dataForm.value.name,
+      nickname: dataForm.value.nickname,
+      namespace: dataForm.value.owner,
+      license: dataForm.value.license,
+      description: dataForm.value.desc,
+      sdk: dataForm.value.sdk,
+      cover_image_url: dataForm.value.cover_image,
+      hardware: dataForm.value.cloud_resource,
+      resource_id: dataForm.value.cloud_resource,
+      private: dataForm.value.visibility === 'private'
     }
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = '/internal_api/spaces'
-    const response = await csrfFetch(uploadEndpoint, options)
+    const newEndpoint = `${csghubServer}/api/v1/spaces`
+    const response = await jwtFetch(newEndpoint, options)
     if (response.ok) {
       ElMessage({
         message: t('application_spaces.new.createSuccess'),
         type: 'success'
       })
       response.json().then((res) => {
-        window.location.href = `/spaces/${res.path}`
+        window.location.href = `/spaces/${res.data.path}`
       })
     } else {
       response.json().then((res) => {
@@ -534,6 +539,10 @@
       })
     }
   }
+
+  onMounted(() => {
+    fetchSpaceResources()
+  })
 </script>
 
 <style scoped>

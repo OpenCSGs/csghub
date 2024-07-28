@@ -61,5 +61,16 @@ export const endpoints = {
     minReplica: "Minimum number of replicas",
     currentMaxReplica: "Current maximum number of replicas",
     currentMinReplica: "Current minimum number of replicas",
+  },
+  playground: {
+    title: "Playground",
+    parameters: "Parameters",
+    generation: "Text Generation",
+    json: "JSON Output",
+    maximum: "Maximum",
+    send: "Send",
+    test: "Inference API",
+    api: "Send requests to endpoint",
+    useToken: 'Use my token'
   }
 }

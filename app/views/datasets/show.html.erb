@@ -1,25 +1,21 @@
 <% content_for :meta_title do %>
-  <title><%= "#{default_meta_title} #{name_for_meta_title(@dataset)}" %></title>
+  <title><%= "#{default_meta_title}" %></title>
 <% end %>
 
 <% content_for :meta_desc do %>
   <meta name="description"
-        content="<%= "#{default_meta_description} #{desc_for_meta_description(@dataset)}" %>"
+        content="<%= "#{default_meta_description}" %>"
   >
 <% end %>
 
 <div class="bg-white">
-  <dataset-detail
+  <repo-detail
     :tag-list="<%= @tags_list.to_json %>"
-    :tags="<%= @tags %>"
     local-repo-id="<%= @local_dataset&.id %>"
-    :dataset="<%= @dataset %>"
-    :last-commit="<%= @last_commit || {} %>"
-    :branches="<%= @branches %>"
+    repo-type="dataset"
     current-branch="<%= @current_branch || 'main' %>"
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
-    :blob="<%= @blob || {} %>"
     :action-name="'<%= action_name %>'"
     :settings-visibility="<%= @settings_visibility %>"
     :owner-url="'<%= @owner_url %>'"
@@ -27,6 +23,8 @@
     :can-write="<%= !!(@local_dataset && current_user&.can_write?(@local_dataset)) %>"
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
+    namespace="<%= params[:namespace] %>"
+    repo-name="<%= params[:dataset_name] %>"
   >
-  </dataset-detail>
+  </repo-detail>
 </div>

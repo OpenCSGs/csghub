@@ -5,7 +5,6 @@ class ModelsController < ApplicationController
   include LicenseListHelper
   include LocalRepoValidation
   include FileOptionsHelper
-  include BlobContentHelper
 
   before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
@@ -17,7 +16,6 @@ class ModelsController < ApplicationController
   end
 
   def new
-    @available_namespaces = current_user.available_namespaces
     get_license_list
   end
 
@@ -113,9 +111,7 @@ class ModelsController < ApplicationController
   private
 
   def load_model_detail
-    @model, @branches = csghub_api.get_model_detail_data_in_parallel(params[:namespace], params[:model_name], files_options)
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
-    @tags = Tag.build_detail_tags(JSON.parse(@model)['data']['tags'], 'model').to_json
     @settings_visibility = (current_user && @local_model) ? current_user.can_manage?(@local_model) : false
   end
 end

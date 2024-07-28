@@ -433,10 +433,7 @@
       options
     )
     if (!res.ok) {
-      ElMessage({
-        message: t('all.fetchError'),
-        type: 'warning'
-      })
+      console.log('fetch frameworks failed')
     } else {
       res.json().then((body) => {
         frameworks.value = body.data
