@@ -484,13 +484,13 @@
   }
 
   const deleteEndpoint = async () => {
-    const endpointDeleteEndpoint = `/internal_api/endpoints/${props.userName}/${props.endpointName}/${props.endpointId}`
-    const option = { method: 'DELETE' }
-    const response = await csrfFetch(endpointDeleteEndpoint, option)
+    const endpointDeleteEndpoint = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}`
+    const options = { method: 'DELETE' }
+    const response = await jwtFetch(endpointDeleteEndpoint, options)
 
     if (!response.ok) {
       return response.json().then((data) => {
-        throw new Error(data.message)
+        throw new Error(data.msg)
       })
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
