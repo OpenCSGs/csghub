@@ -62,8 +62,8 @@ export const navbar = {
   newOrganization: "New Organization",
   "recommendation": "Paper Recommendation",
   "logout": "Sign Out",
-  "register": "Login",
-  loginRegister: "Login/Registe",
+  "register": "Register",
+  loginRegister: "Login/Register",
   "login": "Login",
   "source": "Console",
   newCollection: "New Collection"

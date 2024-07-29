@@ -1,9 +1,14 @@
 :root {
   --Brand-300: #6584F8;
+  --Brand-400: #5271E3;
+  --Brand-600: #3250BD;
   --Colors-Error-300: #FDA29B;
   
   --el-border-radius-base: 8px;
+  --Gray-300: #D0D5DD;
+  --Gray-600: #475467;
   --Gray-700: #344054;
+  --Gray-50: #F9FAFB;
   
   /* 所有的input 添加 */
   .el-textarea__inner, .el-input__wrapper, .el-select__wrapper {

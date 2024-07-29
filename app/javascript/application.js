@@ -9,7 +9,7 @@ import { createApp } from "vue/dist/vue.esm-bundler.js"
 import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import '../assets/stylesheets/element-plus/_variables.css'
+import '../assets/stylesheets/element-plus/application.css'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'

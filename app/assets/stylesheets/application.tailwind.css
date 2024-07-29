@@ -16,12 +16,28 @@ body {
 
 .is-active {
   font-weight: bold !important;
+  color: var(--Brand-600) !important;
 }
 
 .el-button {
   &:focus-visible {
     outline: none !important;
   }
+}
+
+.btn-primary {
+  border-radius: var(--el-border-radius-base);
+  background-color: var(--Brand-600);
+  color: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.btn-outline {
+  border-radius: var(--el-border-radius-base);
+  color: var(--Brand-600);
+  border: 1px solid var(--Gray-300);
+  color: var(--Gray-700);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
 .el-dialog__body {
