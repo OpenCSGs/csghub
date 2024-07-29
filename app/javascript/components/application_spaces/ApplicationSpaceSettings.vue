@@ -664,7 +664,7 @@
       },
 
       updateApplicationSpaceCloudResource() {
-        const payload = { cloud_resource: this.theCloudResource }
+        const payload = { resource_id: this.theCloudResource }
         this.updateApplicationSpace(payload)
       },
 
