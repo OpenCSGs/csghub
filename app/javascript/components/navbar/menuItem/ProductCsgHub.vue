@@ -4,7 +4,7 @@
       <SvgIcon name="navbar_csghub" />      
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div class="text-[#101828] flex gap-[8px] items-center">
+      <div class="text-[#101828] text-[16px] flex gap-[8px] items-center">
         {{ $t('navbar.csgHub') }}
         <SvgIcon name="hot_fire" width="16" height="16" />
       </div>

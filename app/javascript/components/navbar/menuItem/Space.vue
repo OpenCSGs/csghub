@@ -39,7 +39,7 @@
       </svg>
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div class="text-[#101828]">{{ $t('navbar.space') }}</div>
+      <div class="text-[#101828] text-[16px]">{{ $t('navbar.space') }}</div>
       <div
         class="text-[14px] w-[247px] md:w-[unset] text-[#475467] font-light leading-[20px] md:hidden"
       >

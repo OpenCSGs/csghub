@@ -347,7 +347,7 @@
         {
           title: 'All Solution',
           index: '/solution',
-          class: '!px-0 mb-[-12px] rounded-[0_0_12px_12px]',
+          class: '!px-0 mb-[-12px] rounded-[0_0_12px_12px] !mt-[12px] md:!mt-0',
           style: 'height: auto;',
           component: AllSolutionRef,
           target: '',
