@@ -2,6 +2,7 @@
   <div class="bg-white sticky top-0 z-[999]">
     <div
       class="flex text-[#303133] justify-between items-center max-w-[1320px] px-[20px] m-auto h-[80px] sm:h-[60px] gap-[40px]">
+      <!-- pc logo -->
       <div class="flex">
         <a href="/">
           <img
@@ -10,6 +11,7 @@
             class="w-[99px]" />
         </a>
       </div>
+      <!-- pc menu -->
       <div
         class="flex items-center justify-end gap-4 w-[calc(100%-99px-40px-40px-158px)] md:gap-0 md:hidden"
         id="pc-menu">
@@ -32,6 +34,7 @@
             :starChainUrl="starChainUrl" />
         </el-menu>
       </div>
+      <!-- pc i18n/avatar/avatar dropdown menu -->
       <div class="flex gap-[16px] md:gap-[8px] items-center">
         <!-- i18n -->
         <el-dropdown @command="handleLocaleChange">
@@ -58,10 +61,11 @@
           </template>
         </el-dropdown>
 
-        <!-- avatar dropdown -->
+        <!-- logged in avatar dropdown -->
         <el-dropdown
           v-if="isLoggedInBoolean"
           class="pl-1">
+          <!-- verified_company_user/company_user/user -->
           <span
             v-if="JSON.parse(companyVerified.toLowerCase())"
             class="el-dropdown-link relative">
@@ -69,31 +73,7 @@
               :size="35"
               :src="avatar">
             </el-avatar>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 15 15"
-              fill="none"
-              class="absolute bottom-0 right-0">
-              <rect
-                x="0.5"
-                y="0.5"
-                width="14"
-                height="14"
-                rx="7"
-                fill="white" />
-              <path
-                d="M7.5 1C3.88208 1 1 3.88208 1 7.5C1 11.1179 3.88208 14 7.5 14C11.1179 14 14 11.1179 14 7.5C14 3.88208 11.1179 1 7.5 1ZM11.3019 11.3632H3.57547V10.5047H4.92453V7.00943H5.78302V10.5047H7.31604V5.66038H8.17453V7.62264H10.6274V8.48113H8.17453V10.5047H11.3019V11.3632ZM11.3632 7.00943C9.89151 6.21226 8.60377 5.23113 7.5 3.9434C6.51887 5.10849 5.23113 6.15094 3.63679 7.00943L3.14623 6.15094C4.74057 5.35377 6.08962 4.37264 7.1934 3.14623H7.86792C9.03302 4.43396 10.3821 5.41509 11.8538 6.15094L11.3632 7.00943Z"
-                fill="#67C23A" />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="14"
-                height="14"
-                rx="7"
-                stroke="white" />
-            </svg>
+            <SvgIcon name="verified_company" height="15px" width="15px" />
           </span>
           <span
             v-else-if="JSON.parse(isCompanyUser.toLowerCase())"
@@ -102,32 +82,7 @@
               :size="35"
               :src="avatar">
             </el-avatar>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 15 15"
-              fill="none"
-              class="absolute bottom-0 right-0">
-              <rect
-                x="0.5"
-                y="0.5"
-                width="14"
-                height="14"
-                rx="7"
-                fill="black"
-                fill-opacity="0.8" />
-              <path
-                d="M7.5 1C3.88208 1 1 3.88208 1 7.5C1 11.1179 3.88208 14 7.5 14C11.1179 14 14 11.1179 14 7.5C14 3.88208 11.1179 1 7.5 1ZM11.3019 11.3632H3.57547V10.5047H4.92453V7.00943H5.78302V10.5047H7.31604V5.66038H8.17453V7.62264H10.6274V8.48113H8.17453V10.5047H11.3019V11.3632ZM11.3632 7.00943C9.89151 6.21226 8.60377 5.23113 7.5 3.9434C6.51887 5.10849 5.23113 6.15094 3.63679 7.00943L3.14623 6.15094C4.74057 5.35377 6.08962 4.37264 7.1934 3.14623H7.86792C9.03302 4.43396 10.3821 5.41509 11.8538 6.15094L11.3632 7.00943Z"
-                fill="white" />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="14"
-                height="14"
-                rx="7"
-                stroke="#DCDFE6" />
-            </svg>
+            <SvgIcon name="company" height="15px" width="15px" />
           </span>
           <span
             v-else
@@ -137,6 +92,7 @@
               :src="avatar">
             </el-avatar>
           </span>
+          <!-- avatar dropdown menu -->
           <template #dropdown>
             <el-dropdown-menu>
               <a :href="userProfile">
@@ -207,6 +163,7 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
+        <!-- not logged in -->
         <template v-else>
           <div
             class="px-[16px] py-[10px] text-[16px] font-500 leading-[24px] md:hidden btn-primary">
@@ -235,7 +192,9 @@
       </div>
     </div>
   </div>
+  <!-- contact dialog -->
   <ContactUs ref="child" />
+  <!-- mobile menu -->
   <el-drawer
     :z-index="998"
     v-model="mobileMenuVisibility"
