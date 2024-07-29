@@ -318,7 +318,6 @@
         tagInput: '',
         industryTagInput: '',
         delDesc: '',
-        modelName: this.path.split('/')[1],
         theModelNickname: this.modelNickname || '',
         theModelDesc: this.modelDesc || '',
         modelPath: this.path,
@@ -351,6 +350,12 @@
     watch: {
       tags() {
         this.getSelectTags()
+      },
+      modelNickname(newNickname, _) {
+        this.theModelNickname = newNickname
+      },
+      modelDesc(newDesc, _) {
+        this.theModelDesc = newDesc
       }
     },
     beforeDestroy() {
