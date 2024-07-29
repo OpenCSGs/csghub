@@ -270,13 +270,14 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, inject, onMounted } from 'vue'
+  import { h, ref, computed, inject, onMounted, watchEffect } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import jwtFetch from '../../packs/jwtFetch'
-  import csrfFetch from '../../packs/csrfFetch'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+
+  const repoDetailStore = useRepoDetailStore()
 
   const props = defineProps({
     endpointId: Number,
@@ -290,24 +291,20 @@
     minReplica: Number
   })
 
-  const initResource = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
-
   const { t } = useI18n()
   const csghubServer = inject('csghubServer')
   const delDesc = ref('')
-  const currentResource = ref(initResource)
   const cloudResources = ref([])
-  const currentFrameworkId = ref('')
-
   const frameworks = ref([])
-  const replicaRanges = ['1', '2', '3', '4', '5']
-  const currentMaxReplica = ref(props.maxReplica)
-  const currentMinReplica = ref(props.minReplica)
-  const repoDetailStore = useRepoDetailStore()
+  const replicaRanges = [1, 2, 3, 4, 5]
   const visibilityOptions = ref([
     { value: 'Private', label: t('all.private') },
     { value: 'Public', label: t('all.public') }
   ])
+  const currentResource = ref(null)
+  const currentFrameworkId = ref(null)
+  const currentMinReplica = ref(null)
+  const currentMaxReplica = ref(null)
 
   const visibilityName = computed(() => {
     return !!repoDetailStore.privateVisibility ? 'Private' : 'Public'
@@ -333,6 +330,36 @@
 
   const isStopped = computed(() => {
     return ['Stopped'].includes(props.appStatus)
+  })
+
+  const fetchFrameworks = async () => {
+    const options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await jwtFetch(
+      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
+      options
+    )
+    if (!res.ok) {
+      console.log('fetch frameworks failed')
+    } else {
+      res.json().then((body) => {
+        frameworks.value = body.data
+        const currentFramework = body.data.find((framework) => {
+          return framework.frame_name === props.framework
+        })
+        currentFrameworkId.value = currentFramework?.id
+      })
+    }
+  }
+
+  // fetchFrameworks 的定义需要放到前面，不然找不到定义
+  watchEffect(() => {
+    currentResource.value = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
+    currentMaxReplica.value = props.maxReplica
+    currentMinReplica.value = props.minReplica
+    fetchFrameworks()
   })
 
   const stopEndpoint = async () => {
@@ -419,30 +446,8 @@
   }
 
   const updateCloudResource = (value) => {
-    const payload = { cloud_resource: value }
+    const payload = { resource_id: value }
     updateEndpoint(payload)
-  }
-
-  const fetchFrameworks = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
-      options
-    )
-    if (!res.ok) {
-      console.log('fetch frameworks failed')
-    } else {
-      res.json().then((body) => {
-        frameworks.value = body.data
-        const currentFramework = body.data.find((framework) => {
-          return framework.frame_name === props.framework
-        })
-        currentFrameworkId.value = currentFramework?.id
-      })
-    }
   }
 
   const updateFramework = (value) => {
@@ -461,24 +466,24 @@
   }
 
   const updateEndpoint = async (payload) => {
-    const endpointUpdateEndpoint = `/internal_api/endpoints/${props.userName}/${props.endpointName}/${props.endpointId}`
-    const option = {
+    const endpointUpdateEndpoint = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}`
+    const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-    const response = await csrfFetch(endpointUpdateEndpoint, option)
+    const response = await jwtFetch(endpointUpdateEndpoint, options)
 
     if (!response.ok) {
       response.json().then((err) => {
-        ElMessage({ message: err.message, type: 'warning' })
+        ElMessage({ message: err.msg, type: 'warning' })
       })
     } else {
       if (payload.hasOwnProperty('private')) {
         repoDetailStore.updateVisibility(payload.private)
       }
       response.json().then((data) => {
-        ElMessage({ message: data.message, type: 'success' })
+        ElMessage({ message: data.msg, type: 'success' })
       })
     }
   }
@@ -551,6 +556,5 @@
 
   onMounted(() => {
     fetchResources()
-    fetchFrameworks()
   })
 </script>
