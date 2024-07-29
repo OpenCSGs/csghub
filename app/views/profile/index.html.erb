@@ -1,6 +1,15 @@
 <div class="flex justify-center lg:flex-col rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white min-h-[calc(100vh-129px)]">
   <div class="md:mb-[24px] border-r md:border-r-0 sm:bg-white md:bg-white">
     <profile name="<%= @user.name %>"
+             display-name="<%= @user.display_name %>"
+             phone="<%= @user.phone %>"
+             email="<%= @user.email %>"
+             avatar="<%= @user.avatar_url %>"
+             last-login-time="<%= @user.last_login_at %>"
+             login-identity="<%= @user.login_identity %>"
+             roles="<%= @user.roles.to_json %>"
+             orgs="<%= @user.organizations.to_json %>"
+             :is-logged-in="<%= @is_current_user_access %>"
     ></profile>
   </div>
   <div class="grow px-[20px] py-[36px] md:px-0 sm:py-0">
