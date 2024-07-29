@@ -22,6 +22,7 @@
             --el-menu-item-font-size: 14px;
             --el-menu-item-font-weight: 500;
             --el-menu-item-height: 36px;
+            --el-menu-hover-text-color: var(--Brand-400);
           "
           class="w-full el-menu-nav flex items-center gap-[16px]"
           text-color="#475467"

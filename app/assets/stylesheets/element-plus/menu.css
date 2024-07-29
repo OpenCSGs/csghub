@@ -1,7 +1,7 @@
 :root {
   --el-menu-hover-bg-color: var(--Gray-50);
+  --el-menu-hover-text-color: var(--Brand-400);
   --el-menu-active-color: var(--Brand-600);
-
   .el-menu-item {
     padding: 8px 14px;
     height: 36px;
