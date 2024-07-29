@@ -333,7 +333,6 @@
 <script>
   import { h, inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch'
   import { useCookies } from 'vue3-cookies'
   import refreshJWT from '../../packs/refreshJWT.js'
   import jwtFetch from '../../packs/jwtFetch'
@@ -418,6 +417,18 @@
       },
       isSpaceStopped() {
         return this.appStatus === 'Stopped' ? true : false
+      }
+    },
+
+    watch: {
+      applicationSpaceNickname(newNickname, _) {
+        this.theApplicationSpaceNickname = newNickname
+      },
+      applicationSpaceDesc(newDesc, _) {
+        this.theApplicationSpaceDesc = newDesc
+      },
+      cloudResource(newResource, _) {
+        this.theCloudResource = /^\d+$/.test(newResource) ? Number(newResource) : this.cloudResource
       }
     },
 
@@ -642,7 +653,7 @@
 
       updateApplicationSpaceDesc() {
         if (!!this.theApplicationSpaceDesc.trim()) {
-          const payload = { desc: this.theApplicationSpaceDesc }
+          const payload = { description: this.theApplicationSpaceDesc }
           this.updateApplicationSpace(payload)
         } else {
           ElMessage({
@@ -663,27 +674,26 @@
       },
 
       async updateApplicationSpace(payload) {
-        const applicationSpaceUpdateEndpoint =
-          '/internal_api/spaces/' + this.path
+        const applicationSpaceUpdateEndpoint = `${this.csghubServer}/api/v1/spaces/${this.path}`
         const options = {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await csrfFetch(
+        const response = await jwtFetch(
           applicationSpaceUpdateEndpoint,
           options
         )
         if (!response.ok) {
           response.json().then((err) => {
-            ElMessage({ message: err.message, type: 'warning' })
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
           response.json().then((data) => {
-            ElMessage({ message: data.message, type: 'success' })
+            ElMessage({ message: data.msg, type: 'success' })
           })
         }
       },
