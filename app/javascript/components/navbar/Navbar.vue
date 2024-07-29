@@ -1,17 +1,18 @@
 <template>
   <div class="bg-white sticky top-0 z-[999]">
     <div
-      class="flex text-[#303133] justify-between items-center max-w-[1320px] px-[20px] m-auto h-[80px] sm:h-[60px] gap-[40px]"
-    >
+      class="flex text-[#303133] justify-between items-center max-w-[1320px] px-[20px] m-auto h-[80px] sm:h-[60px] gap-[40px]">
       <div class="flex">
         <a href="/">
-          <img :src="logo" alt="OpenCSG Logo" class="w-[99px]" />
+          <img
+            :src="logo"
+            alt="OpenCSG Logo"
+            class="w-[99px]" />
         </a>
       </div>
       <div
         class="flex items-center justify-end gap-4 w-[calc(100%-99px-40px-40px-158px)] md:gap-0 md:hidden"
-        id="pc-menu"
-      >
+        id="pc-menu">
         <el-menu
           :default-active="activeIndex"
           mode="horizontal"
@@ -25,12 +26,10 @@
             --el-menu-hover-text-color: var(--Brand-400);
           "
           class="w-full el-menu-nav flex items-center gap-[16px]"
-          text-color="#475467"
-        >
+          text-color="#475467">
           <MenuItems
             :isLoggedInBoolean="isLoggedInBoolean"
-            :starChainUrl="starChainUrl"
-          />
+            :starChainUrl="starChainUrl" />
         </el-menu>
       </div>
       <div class="flex gap-[16px] md:gap-[8px] items-center">
@@ -42,12 +41,10 @@
               viewBox="0 0 24 24"
               width="1.2em"
               height="1.2em"
-              data-v-12008bb2=""
-            >
+              data-v-12008bb2="">
               <path
                 fill="currentColor"
-                d="m18.5 10l4.4 11h-2.155l-1.201-3h-4.09l-1.199 3h-2.154L16.5 10h2zM10 2v2h6v2h-1.968a18.222 18.222 0 0 1-3.62 6.301a14.864 14.864 0 0 0 2.336 1.707l-.751 1.878A17.015 17.015 0 0 1 9 13.725a16.676 16.676 0 0 1-6.201 3.548l-.536-1.929a14.7 14.7 0 0 0 5.327-3.042A18.078 18.078 0 0 1 4.767 8h2.24A16.032 16.032 0 0 0 9 10.877a16.165 16.165 0 0 0 2.91-4.876L2 6V4h6V2h2zm7.5 10.885L16.253 16h2.492L17.5 12.885z"
-              ></path>
+                d="m18.5 10l4.4 11h-2.155l-1.201-3h-4.09l-1.199 3h-2.154L16.5 10h2zM10 2v2h6v2h-1.968a18.222 18.222 0 0 1-3.62 6.301a14.864 14.864 0 0 0 2.336 1.707l-.751 1.878A17.015 17.015 0 0 1 9 13.725a16.676 16.676 0 0 1-6.201 3.548l-.536-1.929a14.7 14.7 0 0 0 5.327-3.042A18.078 18.078 0 0 1 4.767 8h2.24A16.032 16.032 0 0 0 9 10.877a16.165 16.165 0 0 0 2.91-4.876L2 6V4h6V2h2zm7.5 10.885L16.253 16h2.492L17.5 12.885z"></path>
             </svg>
             <el-icon class="el-icon--right">
               <arrow-down />
@@ -62,55 +59,56 @@
         </el-dropdown>
 
         <!-- avatar dropdown -->
-        <el-dropdown v-if="isLoggedInBoolean" class="pl-1">
+        <el-dropdown
+          v-if="isLoggedInBoolean"
+          class="pl-1">
           <span
             v-if="JSON.parse(companyVerified.toLowerCase())"
-            class="el-dropdown-link relative"
-          >
-            <el-avatar :size="35" :src="avatar"> </el-avatar>
+            class="el-dropdown-link relative">
+            <el-avatar
+              :size="35"
+              :src="avatar">
+            </el-avatar>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="15"
               height="15"
               viewBox="0 0 15 15"
               fill="none"
-              class="absolute bottom-0 right-0"
-            >
+              class="absolute bottom-0 right-0">
               <rect
                 x="0.5"
                 y="0.5"
                 width="14"
                 height="14"
                 rx="7"
-                fill="white"
-              />
+                fill="white" />
               <path
                 d="M7.5 1C3.88208 1 1 3.88208 1 7.5C1 11.1179 3.88208 14 7.5 14C11.1179 14 14 11.1179 14 7.5C14 3.88208 11.1179 1 7.5 1ZM11.3019 11.3632H3.57547V10.5047H4.92453V7.00943H5.78302V10.5047H7.31604V5.66038H8.17453V7.62264H10.6274V8.48113H8.17453V10.5047H11.3019V11.3632ZM11.3632 7.00943C9.89151 6.21226 8.60377 5.23113 7.5 3.9434C6.51887 5.10849 5.23113 6.15094 3.63679 7.00943L3.14623 6.15094C4.74057 5.35377 6.08962 4.37264 7.1934 3.14623H7.86792C9.03302 4.43396 10.3821 5.41509 11.8538 6.15094L11.3632 7.00943Z"
-                fill="#67C23A"
-              />
+                fill="#67C23A" />
               <rect
                 x="0.5"
                 y="0.5"
                 width="14"
                 height="14"
                 rx="7"
-                stroke="white"
-              />
+                stroke="white" />
             </svg>
           </span>
           <span
             v-else-if="JSON.parse(isCompanyUser.toLowerCase())"
-            class="el-dropdown-link relative"
-          >
-            <el-avatar :size="35" :src="avatar"> </el-avatar>
+            class="el-dropdown-link relative">
+            <el-avatar
+              :size="35"
+              :src="avatar">
+            </el-avatar>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="15"
               height="15"
               viewBox="0 0 15 15"
               fill="none"
-              class="absolute bottom-0 right-0"
-            >
+              class="absolute bottom-0 right-0">
               <rect
                 x="0.5"
                 y="0.5"
@@ -118,86 +116,92 @@
                 height="14"
                 rx="7"
                 fill="black"
-                fill-opacity="0.8"
-              />
+                fill-opacity="0.8" />
               <path
                 d="M7.5 1C3.88208 1 1 3.88208 1 7.5C1 11.1179 3.88208 14 7.5 14C11.1179 14 14 11.1179 14 7.5C14 3.88208 11.1179 1 7.5 1ZM11.3019 11.3632H3.57547V10.5047H4.92453V7.00943H5.78302V10.5047H7.31604V5.66038H8.17453V7.62264H10.6274V8.48113H8.17453V10.5047H11.3019V11.3632ZM11.3632 7.00943C9.89151 6.21226 8.60377 5.23113 7.5 3.9434C6.51887 5.10849 5.23113 6.15094 3.63679 7.00943L3.14623 6.15094C4.74057 5.35377 6.08962 4.37264 7.1934 3.14623H7.86792C9.03302 4.43396 10.3821 5.41509 11.8538 6.15094L11.3632 7.00943Z"
-                fill="white"
-              />
+                fill="white" />
               <rect
                 x="0.5"
                 y="0.5"
                 width="14"
                 height="14"
                 rx="7"
-                stroke="#DCDFE6"
-              />
+                stroke="#DCDFE6" />
             </svg>
           </span>
-          <span v-else class="el-dropdown-link">
-            <el-avatar :size="35" :src="avatar"> </el-avatar>
+          <span
+            v-else
+            class="el-dropdown-link">
+            <el-avatar
+              :size="35"
+              :src="avatar">
+            </el-avatar>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
               <a :href="userProfile">
                 <el-dropdown-item>
-                  {{ $t("navbar.profile") }}
+                  {{ $t('navbar.profile') }}
                 </el-dropdown-item>
               </a>
               <a :href="`/profile/likes/${this.userName}`">
                 <el-dropdown-item>
-                  {{ $t("profile.myCollect") }}
+                  {{ $t('profile.myCollect') }}
                 </el-dropdown-item>
               </a>
               <a href="/settings/profile">
                 <el-dropdown-item>
-                  {{ $t("navbar.setting") }}
+                  {{ $t('navbar.setting') }}
                 </el-dropdown-item>
               </a>
               <el-dropdown-item @click="showDialog">
-                {{ $t("navbar.contact") }}
+                {{ $t('navbar.contact') }}
               </el-dropdown-item>
-              <a :href="starcloudUrl" target="_blank">
-                <el-dropdown-item> {{ $t("navbar.source") }} </el-dropdown-item>
+              <a
+                :href="starcloudUrl"
+                target="_blank">
+                <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
               </a>
               <a href="/models/new">
                 <el-dropdown-item divided>
-                  + {{ $t("navbar.newModel") }}
+                  + {{ $t('navbar.newModel') }}
                 </el-dropdown-item>
               </a>
               <a href="/datasets/new">
                 <el-dropdown-item>
-                  + {{ $t("navbar.newDataset") }}
+                  + {{ $t('navbar.newDataset') }}
                 </el-dropdown-item>
               </a>
               <a href="/codes/new">
                 <el-dropdown-item>
-                  + {{ $t("navbar.newCode") }}
+                  + {{ $t('navbar.newCode') }}
                 </el-dropdown-item>
               </a>
               <a href="/spaces/new">
                 <el-dropdown-item>
-                  + {{ $t("navbar.newApplicationSpace") }}
+                  + {{ $t('navbar.newApplicationSpace') }}
                 </el-dropdown-item>
               </a>
               <a href="/collections/new">
                 <el-dropdown-item>
-                  + {{ $t("navbar.newCollection") }}
+                  + {{ $t('navbar.newCollection') }}
                 </el-dropdown-item>
               </a>
               <a href="/organizations/new">
                 <el-dropdown-item divided>
-                  {{ $t("navbar.newOrg") }}
+                  {{ $t('navbar.newOrg') }}
                 </el-dropdown-item>
               </a>
-              <a href="/daily_papers/new" v-if="canCreateDailyPaper">
+              <a
+                href="/daily_papers/new"
+                v-if="canCreateDailyPaper">
                 <el-dropdown-item>
-                  {{ $t("navbar.recommendation") }}
+                  {{ $t('navbar.recommendation') }}
                 </el-dropdown-item>
               </a>
               <a href="/logout">
                 <el-dropdown-item divided>
-                  {{ $t("navbar.logout") }}
+                  {{ $t('navbar.logout') }}
                 </el-dropdown-item>
               </a>
             </el-dropdown-menu>
@@ -205,12 +209,13 @@
         </el-dropdown>
         <template v-else>
           <div
-            class="px-[16px] py-[10px] text-[16px] font-500 leading-[24px] md:hidden btn-primary"
-          >
-            <a href="/login">{{ $t("navbar.loginRegister") }}</a>
+            class="px-[16px] py-[10px] text-[16px] font-500 leading-[24px] md:hidden btn-primary">
+            <a href="/login">{{ $t('navbar.loginRegister') }}</a>
           </div>
-          <a class="hidden md:block text-[14px] font-500" href="/login">
-            {{ $t("navbar.loginRegister") }}
+          <a
+            class="hidden md:block text-[14px] font-500"
+            href="/login">
+            {{ $t('navbar.loginRegister') }}
           </a>
         </template>
         <div class="flex md:block hidden">
@@ -219,14 +224,12 @@
               v-if="!mobileMenuVisibility"
               name="menu"
               class="p-[8px]"
-              @click="mobileMenuVisibility = !mobileMenuVisibility"
-            />
+              @click="mobileMenuVisibility = !mobileMenuVisibility" />
             <SvgIcon
               v-else
               name="close_menu"
               class="p-[8px]"
-              @click="mobileMenuVisibility = !mobileMenuVisibility"
-            />
+              @click="mobileMenuVisibility = !mobileMenuVisibility" />
           </div>
         </div>
       </div>
@@ -240,8 +243,7 @@
     :with-header="false"
     direction="rtl"
     style="--el-dialog-padding-primary: 12px 0px"
-    class="mobile-menu"
-  >
+    class="mobile-menu">
     <el-menu
       :default-active="activeIndex"
       :ellipsis="false"
@@ -253,84 +255,84 @@
         --el-menu-item-font-weight: 500;
         --el-menu-item-height: auto;
       "
-      text-color="#475467"
-    >
+      text-color="#475467">
       <MenuItems
         :isLoggedInBoolean="isLoggedInBoolean"
-        :starChainUrl="starChainUrl"
-      />
+        :starChainUrl="starChainUrl" />
     </el-menu>
   </el-drawer>
 </template>
 
 <script>
-import ContactUs from "../form/ContactUs.vue";
-import MenuItems from "./MenuItems.vue";
+  import ContactUs from '../form/ContactUs.vue'
+  import MenuItems from './MenuItems.vue'
 
-export default {
-  props: {
-    logo: String,
-    avatar: String,
-    starChainUrl: String,
-    isCompanyUser: String,
-    companyVerified: String,
-    phone: String,
-    isLoggedIn: String,
-    userName: String,
-    userId: String,
-    canCreateDailyPaper: Boolean,
-    starcloudUrl: String,
-  },
-  data() {
-    const classParam = new URLSearchParams(window.location.search).get("class");
-    return {
-      activeIndex: classParam
-        ? `${window.location.pathname}?class=${classParam}`
-        : window.location.pathname,
-      isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
-      userProfile: `/profile/${this.userId}`,
-      mobileMenuVisibility: false,
-    };
-  },
-  components: {
-    ContactUs,
-    MenuItems,
-  },
-  methods: {
-    showDialog() {
-      this.$refs.child.showDialog();
+  export default {
+    props: {
+      logo: String,
+      avatar: String,
+      starChainUrl: String,
+      isCompanyUser: String,
+      companyVerified: String,
+      phone: String,
+      isLoggedIn: String,
+      userName: String,
+      userId: String,
+      canCreateDailyPaper: Boolean,
+      starcloudUrl: String
     },
-    handleLocaleChange(locale) {
-      location.href = `/${locale}/settings/locale`;
+    data() {
+      const classParam = new URLSearchParams(window.location.search).get(
+        'class'
+      )
+      return {
+        activeIndex: classParam
+          ? `${window.location.pathname}?class=${classParam}`
+          : window.location.pathname,
+        isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
+        userProfile: `/profile/${this.userId}`,
+        mobileMenuVisibility: false
+      }
     },
-  },
-};
+    components: {
+      ContactUs,
+      MenuItems
+    },
+    methods: {
+      showDialog() {
+        this.$refs.child.showDialog()
+      },
+      handleLocaleChange(locale) {
+        location.href = `/${locale}/settings/locale`
+      }
+    }
+  }
 </script>
 
 <style scoped>
-.el-menu-nav {
-  border: none !important;
-}
-.navbar {
-  .el-dropdown {
-    color: #303133;
+  .el-menu-nav {
+    border: none !important;
   }
-  .el-dropdown-link {
-    &:focus {
-      outline: none;
+  .navbar {
+    .el-dropdown {
+      color: #303133;
+    }
+    .el-dropdown-link {
+      &:focus {
+        outline: none;
+      }
+    }
+    .el-menu--horizontal.el-menu {
+      border-bottom: none;
     }
   }
-  .el-menu--horizontal.el-menu {
-    border-bottom: none;
+  .popper-submenu .el-menu {
+    min-width: 200px;
+    padding: var(--el-menu-base-level-padding);
+    .el-menu-item {
+      font-size: 16px;
+      height: auto;
+      line-height: 24px;
+    }
   }
-}
-.popper-submenu .el-menu {
-  min-width: 200px;
-  padding: var(--el-menu-base-level-padding);
-  .el-menu-item {
-    font-size: 16px;
-    height: auto;
-    line-height: 24px;
-  }
-}
 </style>

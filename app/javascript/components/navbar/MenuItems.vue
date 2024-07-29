@@ -1,18 +1,37 @@
 <template>
-  <template :key="item.index" v-for="item in items">
-    <a v-if="!item.items" :href="item.index">
-      <el-menu-item :index="item.index" :class="item.class" :style="item.style">
+  <template
+    :key="item.index"
+    v-for="item in items">
+    <a
+      v-if="!item.items"
+      :href="item.index">
+      <el-menu-item
+        :index="item.index"
+        :class="item.class"
+        :style="item.style">
         {{ item.title }}
       </el-menu-item>
     </a>
-    <el-sub-menu v-else :index="item.index" :popper-class="item.popperClass" :class="item.class">
+    <el-sub-menu
+      v-else
+      :index="item.index"
+      :popper-class="item.popperClass"
+      :class="item.class">
       <template #title>
         {{ item.title }}
       </template>
-      <template :key="subItem.index" v-for="subItem in item.items">
+      <template
+        :key="subItem.index"
+        v-for="subItem in item.items">
         <!-- <a :href="llmFinetune" target="_blank"></a> -->
-        <a :href="subItem.index" :target="subItem.target" v-if="subItem.condition">
-          <el-menu-item :class="subItem.class" :style="subItem.style" :index="subItem.index">
+        <a
+          :href="subItem.index"
+          :target="subItem.target"
+          v-if="subItem.condition">
+          <el-menu-item
+            :class="subItem.class"
+            :style="subItem.style"
+            :index="subItem.index">
             <!-- subItem.component -->
             <component :is="subItem.component" />
           </el-menu-item>
@@ -28,26 +47,47 @@
     :class="subMenuClass"
     expand-close-icon="null"
     expand-open-icon="null"
-    style="--el-menu-icon-width: 0px"
-  >
+    style="--el-menu-icon-width: 0px">
     <template #title>
-      <SvgIcon name="more_menu" class="p-[4px]" /> 更多
+      <SvgIcon
+        name="more_menu"
+        class="p-[4px]" />
+      更多
     </template>
-    
-    <template :key="item.index" v-for="item in moreItems">
-      <a v-if="!item.items" :href="item.index">
-        <el-menu-item :index="item.index" :class="item.class" :style="item.style">
+
+    <template
+      :key="item.index"
+      v-for="item in moreItems">
+      <a
+        v-if="!item.items"
+        :href="item.index">
+        <el-menu-item
+          :index="item.index"
+          :class="item.class"
+          :style="item.style">
           {{ item.title }}
         </el-menu-item>
       </a>
-      <el-sub-menu v-else :index="item.index" :popper-class="item.popperClass" :class="item.class">
+      <el-sub-menu
+        v-else
+        :index="item.index"
+        :popper-class="item.popperClass"
+        :class="item.class">
         <template #title>
           {{ item.title }}
         </template>
-        <template :key="subItem.index" v-for="subItem in item.items">
+        <template
+          :key="subItem.index"
+          v-for="subItem in item.items">
           <!-- <a :href="llmFinetune" target="_blank"></a> -->
-          <a :href="subItem.index" :target="subItem.target" v-if="subItem.condition">
-            <el-menu-item :class="subItem.class" :style="subItem.style" :index="subItem.index">
+          <a
+            :href="subItem.index"
+            :target="subItem.target"
+            v-if="subItem.condition">
+            <el-menu-item
+              :class="subItem.class"
+              :style="subItem.style"
+              :index="subItem.index">
               <!-- subItem.component -->
               <component :is="subItem.component" />
             </el-menu-item>
@@ -58,12 +98,16 @@
   </el-sub-menu>
 
   <template v-if="!props.isLoggedInBoolean">
-    <hr>
+    <hr />
     <div class="px-[16px] py-[24px] flex flex-col gap-[12px]">
-      <a href="/signup" class="hidden md:block btn-primary w-full px-[16px] py-[10px] text-[16px] font-500 leading-24 text-center">
+      <a
+        href="/signup"
+        class="hidden md:block btn-primary w-full px-[16px] py-[10px] text-[16px] font-500 leading-24 text-center">
         {{ $t('navbar.register') }}
       </a>
-      <a href="/login" class="hidden md:block btn-outline text-black w-full px-[16px] py-[10px] text-[16px] font-500 leading-24 text-center">
+      <a
+        href="/login"
+        class="hidden md:block btn-outline text-black w-full px-[16px] py-[10px] text-[16px] font-500 leading-24 text-center">
         {{ $t('navbar.login') }}
       </a>
     </div>
@@ -71,27 +115,27 @@
 </template>
 
 <script setup>
-  import { ref, watch, onMounted, shallowRef } from "vue"
+  import { ref, watch, onMounted, shallowRef } from 'vue'
 
-  import ProductCsgHub from "./menuItem/ProductCsgHub.vue"
-  import StarShip from "./menuItem/StarShip.vue"
-  import EKB from "./menuItem/EKB.vue"
-  import StarAIO from "./menuItem/StarAIO.vue"
-  import Imagen from "./menuItem/Imagen.vue"
-  import StarCode from "./menuItem/StarCode.vue"
-  import AllSolution from "./menuItem/AllSolution.vue"
-  import CSGHub from "./menuItem/CSGHub.vue"
-  import Inference from "./menuItem/Inference.vue"
-  import LlmFinetune from "./menuItem/LlmFinetune.vue"
-  import OpenSourceStarCloud from "./menuItem/OpenSourceStarCloud.vue"
-  import StarChain from "./menuItem/StarChain.vue"
-  import Space from "./menuItem/Space.vue"
-  import DailyPapers from "./menuItem/DailyPapers.vue"
-  import Campaigns from "./menuItem/Campaigns.vue"
-  import Partners from "./menuItem/Partners.vue"
-  import Experts from "./menuItem/Experts.vue"
-  import News from "./menuItem/News.vue"
-  import Doc from "./menuItem/Doc.vue"
+  import ProductCsgHub from './menuItem/ProductCsgHub.vue'
+  import StarShip from './menuItem/StarShip.vue'
+  import EKB from './menuItem/EKB.vue'
+  import StarAIO from './menuItem/StarAIO.vue'
+  import Imagen from './menuItem/Imagen.vue'
+  import StarCode from './menuItem/StarCode.vue'
+  import AllSolution from './menuItem/AllSolution.vue'
+  import CSGHub from './menuItem/CSGHub.vue'
+  import Inference from './menuItem/Inference.vue'
+  import LlmFinetune from './menuItem/LlmFinetune.vue'
+  import OpenSourceStarCloud from './menuItem/OpenSourceStarCloud.vue'
+  import StarChain from './menuItem/StarChain.vue'
+  import Space from './menuItem/Space.vue'
+  import DailyPapers from './menuItem/DailyPapers.vue'
+  import Campaigns from './menuItem/Campaigns.vue'
+  import Partners from './menuItem/Partners.vue'
+  import Experts from './menuItem/Experts.vue'
+  import News from './menuItem/News.vue'
+  import Doc from './menuItem/Doc.vue'
 
   const ProductCsgHubRef = shallowRef(ProductCsgHub)
   const StarShipRef = shallowRef(StarShip)
@@ -112,16 +156,15 @@
   const ExpertsRef = shallowRef(Experts)
   const NewsRef = shallowRef(News)
   const DocRef = shallowRef(Doc)
-  
 
   const csgHubUrl = 'https://github.com/OpenCSGs/CSGHub'
-  const llmInference =  'https://github.com/OpenCSGs/llm-inference'
-  const llmFinetune =  'https://github.com/OpenCSGs/llm-finetune'
+  const llmInference = 'https://github.com/OpenCSGs/llm-inference'
+  const llmFinetune = 'https://github.com/OpenCSGs/llm-finetune'
   const OpenSourceStarCloudUrl = 'https://github.com/OpenCSGs/llm-scheduler-ui'
-  
+
   import { useI18n } from 'vue-i18n'
 
-  const { t } = useI18n();
+  const { t } = useI18n()
 
   const props = defineProps({
     isLoggedInBoolean: Boolean,
@@ -135,21 +178,21 @@
   const moreMenuWidth = 107
 
   const handleResize = () => {
-    currentScreenWidth.value = window.innerWidth;
-  };
+    currentScreenWidth.value = window.innerWidth
+  }
 
   onMounted(() => {
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize)
     if (window.innerWidth > 768) {
       initMenuItems()
     }
-  });
+  })
 
   watch(currentScreenWidth, (newVal) => {
     if (window.innerWidth > 768) {
       adjustMenuItems()
     }
-  });
+  })
 
   const initMenuItems = () => {
     const menuWidth = document.querySelector('#pc-menu').offsetWidth
@@ -166,7 +209,7 @@
   const adjustMenuItems = () => {
     const menuWidth = document.querySelector('#pc-menu').offsetWidth
     let width = moreMenuWidth + safePadding // 更多按钮加上安全距离
-    
+
     // 超出宽度的菜单放到更多里面
     items.value.map((item, index) => {
       width += item.width
@@ -177,7 +220,7 @@
         }
       }
     })
-    
+
     // 将更多里面的菜单放回去
     moreItems.value.map((item, index) => {
       width += item.width
@@ -189,12 +232,11 @@
       }
     })
   }
-    
 
-  const menuItemClass = "md:!px-[12px] md:!py-[16px] md:!h-auto"
-  const subMenuClass = "md:!h-auto md:!py-[16px]"
-  const subMenuItemClass = "mx-[12px] md:mx-0 md:!px-[12px]"
-  const popperClass = "popper-submenu"
+  const menuItemClass = 'md:!px-[12px] md:!py-[16px] md:!h-auto'
+  const subMenuClass = 'md:!h-auto md:!py-[16px]'
+  const subMenuItemClass = 'mx-[12px] md:mx-0 md:!px-[12px]'
+  const popperClass = 'popper-submenu'
   const menuItemWidth = 56
   const subMenuItemWidth = 76
 
@@ -204,46 +246,46 @@
       index: '/models',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
+      width: menuItemWidth
     },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
+      width: menuItemWidth
     },
     {
       title: t('navbar.spaces'),
       index: '/spaces',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
+      width: menuItemWidth
     },
     {
       title: t('navbar.codes'),
       index: '/codes',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
+      width: menuItemWidth
     },
     {
       title: t('collections.collection'),
       index: '/collections',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
+      width: menuItemWidth
     },
     {
       title: t('navbar.computer'),
       index: '/computing',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
+      width: menuItemWidth
     },
     {
       title: t('navbar.product'),
-      index: "product",
+      index: 'product',
       class: subMenuClass,
       popperClass: popperClass,
       width: subMenuItemWidth,
@@ -315,7 +357,7 @@
     },
     {
       title: t('navbar.developer'),
-      index: "developer",
+      index: 'developer',
       class: subMenuClass,
       popperClass: popperClass,
       width: subMenuItemWidth,
@@ -369,7 +411,7 @@
     },
     {
       title: t('navbar.community'),
-      index: "community",
+      index: 'community',
       class: subMenuClass,
       popperClass: popperClass,
       width: subMenuItemWidth,
@@ -430,19 +472,20 @@
         }
       ]
     }
-  ]);
+  ])
 </script>
+
 <style scoped>
   :deep(.el-sub-menu__title) {
     /* padding: 16px; */
   }
-  :deep(.popper-submenu .el-menu){
+  :deep(.popper-submenu .el-menu) {
     min-width: 200px;
     padding: var(--el-menu-base-level-padding);
   }
   :deep(.popper-submenu .el-menu .el-menu-item) {
     font-size: 16px;
-    height:auto;
-    line-height:24px;
+    height: auto;
+    line-height: 24px;
   }
 </style>
