@@ -9,6 +9,7 @@ class ProfileController < ApplicationController
 
     @organizations = @user.organizations
     @is_current_user_access = current_user.present? && (current_user == @user)
+    @user_id = params[:user_id]
     @initiator = "profile"
   end
 
