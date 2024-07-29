@@ -206,6 +206,14 @@
         }
       }
     },
+    watch: {
+      codeNickname(newNickname, _) {
+        this.theCodeNickname = newNickname
+      },
+      codeDesc(newDesc, _) {
+        this.theCodeDesc = newDesc
+      }
+    },
     mounted() {},
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
@@ -293,7 +301,7 @@
 
       updateCodeDesc() {
         if (!!this.theCodeDesc.trim()) {
-          const payload = { desc: this.theCodeDesc }
+          const payload = { description: this.theCodeDesc }
           this.updateCode(payload)
         } else {
           ElMessage({
@@ -304,23 +312,23 @@
       },
 
       async updateCode(payload) {
-        const codeUpdateEndpoint = '/internal_api/codes/' + this.path
+        const codeUpdateEndpoint = `${this.csghubServer}/api/v1/codes/${this.path}`
         const options = {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await csrfFetch(codeUpdateEndpoint, options)
+        const response = await jwtFetch(codeUpdateEndpoint, options)
         if (!response.ok) {
           response.json().then((err) => {
-            ElMessage({ message: err.message, type: 'warning' })
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
           response.json().then((data) => {
-            ElMessage({ message: data.message, type: 'success' })
+            ElMessage({ message: data.msg, type: 'success' })
           })
         }
       },
