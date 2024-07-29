@@ -12,15 +12,6 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
     render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
   end
 
-  def readme
-    readme = csghub_api.get_application_space_file_content(params[:namespace], params[:application_space_name], 'README.md', {current_user: current_user&.name})
-    readme_content = JSON.parse(readme)['data']
-    readme_content = relative_path_to_resolve_path 'application_space', readme_content
-    render json: { readme: readme_content }
-  rescue StarhubError
-    render json: { readme: '' }
-  end
-
   def create
     application_space = current_user.created_application_spaces.build(create_params)
     if application_space.save

@@ -24,15 +24,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
   end
 
-  def readme
-    readme = csghub_api.get_model_file_content(params[:namespace], params[:model_name], 'README.md', {current_user: current_user&.name})
-    readme_content = JSON.parse(readme)['data']
-    readme_content = relative_path_to_resolve_path 'model', readme_content
-    render json: { readme: readme_content }
-  rescue StarhubError
-    render json: { readme: '' }
-  end
-
   def create
     model = current_user.created_models.build(model_params)
     if model.save

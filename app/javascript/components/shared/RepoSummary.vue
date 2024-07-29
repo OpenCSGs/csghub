@@ -91,6 +91,7 @@
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
   import jwtFetch from '../../packs/jwtFetch'
+  import resolveContent from '../../packs/resolveContent'
 
   const props = defineProps({
     namespacePath: String,
@@ -117,17 +118,20 @@
   })
 
   const fetchData = async () => {
-    const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
+    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/blob/README.md`
 
-    fetch(url).then((response) => {
-      response.json().then((data) => {
-        readmeContent.value = data.readme
-      }).catch((error) => {
-        console.error(error)
-      }).then(() => {
-        loading.value = false
-      })
-    })
+    const response = await jwtFetch(url)
+
+    const json = await response.json()
+
+    if (response.ok) {
+      console.log(json.data)
+      const content = resolveContent(`${props.repoType}s`, json.data.content, props.namespacePath)
+      readmeContent.value = content
+    } else {
+      console.error(json.msg)
+    }
+    loading.value = false
   }
 
   const fetchPreviewData = async () => {

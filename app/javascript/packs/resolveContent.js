@@ -39,11 +39,16 @@ const resolveContent = (repoType, encodedContent, namespacePath) => {
     content = `<img src='${requestUrl.href.replace('blob', 'resolve')}'>`
   } else {
     const parsedBlobContent = atob_utf8(encodedContent)
-    content = relativePathToResolvePath(
-      repoType,
-      parsedBlobContent,
-      namespacePath
-    )
+    try {
+      content = relativePathToResolvePath(
+        repoType,
+        parsedBlobContent,
+        namespacePath
+      )
+    } catch (error) {
+      console.error(error)
+      content = parsedBlobContent
+    }
   }
 
   return content
