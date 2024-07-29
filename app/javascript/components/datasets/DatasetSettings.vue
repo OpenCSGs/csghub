@@ -295,7 +295,6 @@
 <script>
   import { h, inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch'
   import jwtFetch from '../../packs/jwtFetch'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState } from 'pinia'
@@ -360,6 +359,12 @@
     watch: {
       tags() {
         this.getSelectTags()
+      },
+      datasetNickname(newNickname, _) {
+        this.theDatasetNickname = newNickname
+      },
+      datasetDesc(newDesc, _) {
+        this.theDatasetDesc = newDesc
       }
     },
     beforeDestroy() {
@@ -658,7 +663,7 @@
 
       updateDatasetDesc() {
         if (!!this.theDatasetDesc.trim()) {
-          const payload = { desc: this.theDatasetDesc }
+          const payload = { description: this.theDatasetDesc }
           this.updateDataset(payload)
         } else {
           ElMessage({
@@ -669,20 +674,20 @@
       },
 
       async updateDataset(payload) {
-        const datasetUpdateEndpoint = '/internal_api/datasets/' + this.path
+        const datasetUpdateEndpoint = `${this.csghubServer}/api/v1/datasets/${this.path}`
         const options = {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await csrfFetch(datasetUpdateEndpoint, options)
+        const response = await jwtFetch(datasetUpdateEndpoint, options)
         if (!response.ok) {
           response.json().then((err) => {
-            ElMessage({ message: err.message, type: 'warning' })
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           response.json().then((data) => {
-            ElMessage({ message: data.message, type: 'success' })
+            ElMessage({ message: data.msg, type: 'success' })
           })
         }
       },
