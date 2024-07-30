@@ -87,6 +87,8 @@
   const userOrgs = ref([])
 
   const isCurrentUser = computed(() => {
+    console.log(props.userId);
+    console.log(userStore.uuid);
     return props.userId == userStore.uuid
   })
 
@@ -117,7 +119,7 @@
     }
   }
   onMounted(() => {
-    if((props.userId !== uuid )&&(props.userId !== props.name)){
+    if((props.userId !== userStore.uuid )&&(props.userId !== props.name)){
       fetchUserInfo()
     }
   })
