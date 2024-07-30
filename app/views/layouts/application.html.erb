@@ -23,7 +23,10 @@
   <body class="h-full">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
-        <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
+        <% if current_user.email.blank? %>
+          <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
+        <% end %>
+        <el-alert title="<%= I18n.t('errors_alert.email_missing') %>" type="warning"></el-alert>
         <%= yield.force_encoding(Encoding::UTF_8) %>
       </div>
       <%= render partial: 'partials/footer' %>
