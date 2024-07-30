@@ -95,7 +95,7 @@ class ApplicationController < ActionController::Base
       u.roles = user_infos['roles']
     end
 
-    user.roles = user_infos['roles'] if user.roles.blank? && user_infos['roles'].present?
+    user.roles = user_infos['roles'] if user_infos['roles'].present?
     user.save
 
     helpers.log_in user.reload
