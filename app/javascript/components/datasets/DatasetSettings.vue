@@ -350,16 +350,13 @@
       }
     },
     mounted() {
+      this.getSelectTags()
       // 监听全局点击事件
       document.addEventListener('click', this.collapseTagList)
-
       this.getIndustryTags()
       this.fetchReadme()
     },
     watch: {
-      tags() {
-        this.getSelectTags()
-      },
       datasetNickname(newNickname, _) {
         this.theDatasetNickname = newNickname
       },

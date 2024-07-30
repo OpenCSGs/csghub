@@ -343,14 +343,12 @@
     },
     mounted() {
       // 监听全局点击事件
+      this.getSelectTags()
       document.addEventListener('click', this.collapseTagList)
       this.getIndustryTags()
       this.fetchReadme()
     },
     watch: {
-      tags() {
-        this.getSelectTags()
-      },
       modelNickname(newNickname, _) {
         this.theModelNickname = newNickname
       },
