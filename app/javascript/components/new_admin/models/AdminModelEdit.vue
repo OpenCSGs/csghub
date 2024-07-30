@@ -100,7 +100,7 @@
   }
 
   const fetchBaseModels = async (query, cb) => {
-    const res = await jwtFetch(`${csghubServer}/api/v1/runtime_framework/models?search=${query}`);
+    const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`);
     if (!res.ok) {
       ElMessage({ message: t("all.fetchError"), type: "warning" });
     } else {
