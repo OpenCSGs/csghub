@@ -1,5 +1,5 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:files, :readme, :preview_parquet, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme, :related_repos]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
@@ -56,19 +56,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
   def upload_file
     sync_upload_file('dataset', upload_options)
     render json: { message: I18n.t('repo.uploadFileSuccess') }
-  end
-
-  def preview_parquet
-    json_data = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], { path: params[:path], current_user: current_user&.name })
-    parquet_file_path = JSON.parse(json_data)['data']
-                            .filter_map { |file| file['path'].end_with?('.parquet') ? file['path'] : nil }
-                            .sort_by { |path| path.downcase }.first
-    if parquet_file_path
-      preview_data = csghub_api.preview_datasets_parquet_file(params[:namespace], params[:dataset_name], parquet_file_path, {current_user: current_user&.name})
-      render json: preview_data
-    else
-      render json: {}
-    end
   end
 
   private

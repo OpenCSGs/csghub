@@ -129,13 +129,6 @@ module Starhub
       res.body.force_encoding('UTF-8')
     end
 
-    def preview_datasets_parquet_file(username, dataset_name, path, options = {})
-      options[:count] ||= 6
-      res = @client.get("/datasets/#{username}/#{dataset_name}/viewer/#{path}", options)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
     def get_ssh_key(username, current_user)
       options = {
         username: username,
