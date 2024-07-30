@@ -60,7 +60,6 @@ Rails.application.routes.draw do
     post '/models/:namespace/(*model_name)/files/:branch/upload_file', to: 'models#upload_file', namespace: /[^\/]+/
     put '/models/:namespace/(*model_name)', to: 'models#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
     post '/models/:namespace/(*model_name)/predict', to: 'models#predict', namespace: /[^\/]+/
-    get '/models/:namespace/(*model_name)/related_repos', to: 'models#related_repos', namespace: /[^\/]+/
 
     resources :datasets, only: [:create]
     get '/datasets/:namespace/(*dataset_name)/readme', to: 'datasets#readme', namespace: /[^\/]+/
@@ -68,14 +67,12 @@ Rails.application.routes.draw do
     get '/datasets/:namespace/(*dataset_name)/preview', to: 'datasets#preview_parquet', namespace: /[^\/]+/
     post '/datasets/:namespace/(*dataset_name)/files/:branch/upload_file', to: 'datasets#upload_file', namespace: /[^\/]+/
     put '/datasets/:namespace/(*dataset_name)', to: 'datasets#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
-    get '/datasets/:namespace/(*dataset_name)/related_repos', to: 'datasets#related_repos', namespace: /[^\/]+/
 
     resources :codes, only: [:create]
     get '/codes/:namespace/(*code_name)/readme', to: 'codes#readme', namespace: /[^\/]+/
     get '/codes/:namespace/(*code_name)/files', to: 'codes#files', namespace: /[^\/]+/
     post '/codes/:namespace/(*code_name)/files/:branch/upload_file', to: 'codes#upload_file', namespace: /[^\/]+/
     put '/codes/:namespace/(*code_name)', to: 'codes#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
-    get '/codes/:namespace/(*code_name)/related_repos', to: 'codes#related_repos', namespace: /[^\/]+/
 
     resources :spaces, controller: 'application_spaces', only: [:create]
     get '/spaces/:namespace/(*application_space_name)/readme', to: 'application_spaces#readme', namespace: /[^\/]+/

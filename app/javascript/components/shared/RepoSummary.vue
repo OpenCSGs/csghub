@@ -167,7 +167,7 @@
     jwtFetch(url, options).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
-          console.error(data.message)
+          console.log(data.message)
         })
       } else {
         response.json().then((res_json) => {
@@ -175,7 +175,7 @@
         })
       }
     }).catch((error) => {
-      console.error(error)
+      console.log(error)
     })
   }
 

@@ -59,9 +59,5 @@ module Starhub
     def upload_code_file(namespace, code_name, options = {})
       upload_repo_file('codes', namespace, code_name, options)
     end
-
-    def code_related_repos(namespace, code_name, options = {})
-      related_repos('codes', namespace, code_name, options)
-    end
   end
 end
