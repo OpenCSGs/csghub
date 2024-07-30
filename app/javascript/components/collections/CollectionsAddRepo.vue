@@ -138,7 +138,7 @@
   const reposMappings = ref([])
   const typeInput = ref('model')
   const repoIdsInput = ref('')
-  repoIdsInput
+  
   const typeChange = (type) => {
     repoIdsInput.value = ''
     fetchRepoList(type)
