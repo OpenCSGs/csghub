@@ -92,9 +92,13 @@ class ApplicationController < ActionController::Base
       u.nickname = user_infos['nickname']
       u.phone = user_infos['phone']
       u.email = user_infos['email']
+      u.roles = user_infos['roles']
     end
 
-    helpers.log_in user
+    user.roles = user_infos['roles'] if user.roles.blank? && user_infos['roles'].present?
+    user.save
+
+    helpers.log_in user.reload
     redirect_path = session.delete(:original_request_path) || root_path
     redirect_to redirect_path
   end
