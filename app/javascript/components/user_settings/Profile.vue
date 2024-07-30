@@ -81,6 +81,8 @@
   const csghubServer = inject('csghubServer')
 
   const uuid = cookies.get('login_identity')
+  const current_user = cookies.get('current_user')
+  
   const userId = new URL(window.location.href).pathname.split('/').pop()
   const avatar = ref('')
   const username = ref('')
@@ -91,7 +93,7 @@
   const userOrgs = ref([])
 
   const isCurrentUser = computed(() => {
-    return userId === uuid || userId === props.name
+    return userId === uuid || userId === current_user
   })
 
   const hasPhone = computed(() => isCurrentUser.value ? !!userStore.phone : !!phone.value)
@@ -121,7 +123,7 @@
     }
   }
   onMounted(() => {
-    if((userId !== uuid)&&(userId !== props.name)){
+    if(!isCurrentUser.value){
       fetchUserInfo()
     }
   })
