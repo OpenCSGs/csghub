@@ -6,7 +6,6 @@
       v-if="!item.items"
       :href="item.index">
       <el-menu-item
-        v-if="hasEmail || (!item.emailSensitive && !hasEmail)"
         :index="item.index"
         :class="item.class"
         :style="item.style">
@@ -247,32 +246,28 @@
       index: '/models',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
-      emailSensitive: true
+      width: menuItemWidth
     },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
-      emailSensitive: true
+      width: menuItemWidth
     },
     {
       title: t('navbar.spaces'),
       index: '/spaces',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
-      emailSensitive: true
+      width: menuItemWidth
     },
     {
       title: t('navbar.codes'),
       index: '/codes',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth,
-      emailSensitive: true
+      width: menuItemWidth
     },
     {
       title: t('collections.collection'),
