@@ -17,6 +17,7 @@
         :totalLikes="repo.likes"
         :hasLike="repo.user_likes"
         :repoType="repoType"
+        :baseModel="repo.base_model"
       />
     </div>
   </div>
@@ -90,6 +91,7 @@
 
       if (response.ok) {
         repo.value = json.data
+        console.log(json.data)
         if (json.data.tags) {
           tags.value = buildTags(json.data.tags)
         }

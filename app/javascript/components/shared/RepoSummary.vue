@@ -82,7 +82,7 @@
 
 <script setup>
   import { useI18n } from 'vue-i18n'
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
@@ -204,12 +204,13 @@
     }
   }
 
+  watch(() => props.license, fetchLicenseInfo)
+
   onMounted(() => {
     fetchData()
     fetchPreviewData()
     fetchRepoRelations()
     if (props.repoType == 'model') {
-      fetchLicenseInfo()
       fetchEndpoint()
     }
   })
