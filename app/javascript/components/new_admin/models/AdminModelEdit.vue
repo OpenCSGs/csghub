@@ -53,7 +53,9 @@
   import { ref, onMounted, inject } from 'vue'
   import { useRoute } from 'vue-router'
   import { ElMessage } from 'element-plus'
+  import { useI18n } from "vue-i18n";
 
+  const { t } = useI18n();
   const csghubServer = inject('csghubServer')
   const route = useRoute()
   const model = ref({
