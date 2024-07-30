@@ -54,6 +54,7 @@
         <EndpointPage
           v-else-if="repoType === 'endpoint'"
           :appEndpoint="appEndpoint"
+          :appStatus="appStatus"
           :modelId="modelId"
           :private="private"
           :endpointReplica="endpointReplica"
