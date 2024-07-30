@@ -235,6 +235,7 @@
   import useUserStore from '../../stores/UserStore.js'
   import { inject } from 'vue'
   import jwtFetch from '../../packs/jwtFetch.js'
+  import { mapState } from 'pinia'
 
   export default {
     props: {
@@ -271,9 +272,12 @@
       ContactUs,
       MenuItems
     },
+    computed: {
+      ...mapState(useUserStore, ['email']),
+    },
     watch: {
-      userStore(newStore, _) {
-        this.hasEmail = !!newStore.email
+      email(newEmail, _) {
+        this.hasEmail = !!newEmail
       }
     },
     methods: {
