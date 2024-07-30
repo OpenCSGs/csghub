@@ -17,7 +17,7 @@ export const collections = {
     tabProject: 'Project',
     tabSettings: 'Settings',
     emptyCollection: 'Empty Collection',
-    tips: 'To add projects to this collection, use the + Add to Collection button or the Add to Collection button on the model, dataset, space, or paper pages.'
+    tips: 'To add a project to this collection, please click the "Add Project" button or use the "Add to Collection" button on the Model, Dataset, Space, or Paper pages.'
   },
   edit: {
     add: 'Add Project',
