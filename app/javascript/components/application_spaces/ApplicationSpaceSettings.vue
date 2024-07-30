@@ -669,7 +669,7 @@
       },
 
       updateApplicationSpaceCoverImage() {
-        const payload = { cover_image: this.uploadCoverImageUrl }
+        const payload = { cover_image_url: this.uploadCoverImageUrl }
         this.updateApplicationSpace(payload)
       },
 
