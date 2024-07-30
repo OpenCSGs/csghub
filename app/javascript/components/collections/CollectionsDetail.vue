@@ -16,7 +16,9 @@
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0 relative">
-    <div class="max-w-[max-content] px-2 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
+    <div
+      class="max-w-[max-content] px-2 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
+    >
       <CollectionsAddRepo
         v-if="showRepoList"
         :settingsVisibility="settingsVisibility"
@@ -60,6 +62,7 @@
               </div>
               <div
                 class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
+                :class="settingsVisibility ? '' : 'hidden'"
               >
                 {{ $t('collections.details.tips') }}
               </div>
