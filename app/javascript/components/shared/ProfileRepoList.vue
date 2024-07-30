@@ -147,11 +147,7 @@
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
   const csghubServer = inject("csghubServer")
 
-  onMounted(() => {
-    getData()
-  })
-
-  const getData = async () =>{
+  const getProfileRepoData = async () =>{
     const defaultTotal = 6
     const modelsUrl = reposUrl("models")
     const datasetsUrl = reposUrl("datasets")
@@ -276,4 +272,8 @@
         }
       })
   }
+
+  onMounted(() => {
+    getProfileRepoData()
+  })
 </script>

@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, inject } from 'vue'
+  import { ref, inject, watch } from 'vue'
   import refreshJWT from '../../packs/refreshJWT.js'
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useCookies } from "vue3-cookies";
@@ -39,15 +39,17 @@
   const instanceLogDiv = ref(null)
   const instanceLogLineNum = ref(0)
 
-  const defaultInstance = computed(() => {
-    if (props.instances && props.instances.length !== 0) {
-      return props.instances[0].name
-    } else {
-      return ''
+  const currentInstance = ref('')
+
+  watch(() => props.instances, (newInstances) => {
+    if (newInstances && newInstances.length !== 0) {
+      currentInstance.value = newInstances[0].name
+      if (isLogsSSEConnected.value === false) {
+        syncInstanceLogs(currentInstance.value)
+      }
     }
   })
 
-  const currentInstance = ref(defaultInstance.value)
   const isLogsSSEConnected = ref(false)
 
   const syncInstanceLogs = (instanceName) => {
@@ -99,10 +101,4 @@
   const refreshInstanceLogs = (value) => {
     syncInstanceLogs(value)
   }
-
-  onMounted(() => {
-    if (isLogsSSEConnected.value === false && currentInstance.value !== '') {
-      syncInstanceLogs(currentInstance.value)
-    }
-  })
 </script>
