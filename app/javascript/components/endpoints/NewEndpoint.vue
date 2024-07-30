@@ -423,7 +423,7 @@
         type: 'success'
       })
       response.json().then((res) => {
-        window.location.href = `/endpoint/${props.namespace}/${dataForm.value.name}/${res.data.deploy_id}`
+        window.location.href = `/endpoints/${dataForm.value.model_path}/${res.data.deploy_id}`
       })
     } else {
       response.json().then((res) => {
