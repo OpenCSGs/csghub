@@ -67,6 +67,10 @@
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
+  import { useCookies } from 'vue3-cookies'
+  const { cookies } = useCookies()
+  
+  const userStore = useUserStore()
 
   const { t } = useI18n()
 
@@ -75,9 +79,12 @@
     userId: String
   })
 
-  const userStore = useUserStore()
   const csghubServer = inject('csghubServer')
 
+  const uuid = cookies.get('login_identity')
+  const current_user = cookies.get('current_user')
+  
+  const userId = new URL(window.location.href).pathname.split('/').pop()
   const avatar = ref('')
   const username = ref('')
   const nickname = ref('')
@@ -87,27 +94,26 @@
   const userOrgs = ref([])
 
   const isCurrentUser = computed(() => {
-    return props.userId == userStore.uuid
+    return userId === uuid || userId === current_user
   })
 
   const hasPhone = computed(() => isCurrentUser.value ? !!userStore.phone : !!phone.value)
   const hasEmail = computed(() => isCurrentUser.value ? !!userStore.email : !!email.value)
   const hasLastLoginTime = computed(() => isCurrentUser.value ? !!userStore.lastLoginTime : !!theLastLoginTime.value)
   const hasOrg = computed(() => isCurrentUser.value ? !!userStore.orgs : !!userOrgs.value)
-
   const fetchUserInfo = async () => {
     const options = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/users/${props.userId}`,
+      `${csghubServer}/api/v1/user/${userId}`,
       options
     )
-    const data = await res.json()
     if (!res.ok){
       ElMessage({message: t('all.fetchError'), type: "warning"})
     }else{
+      const { data } = await res.json()
       avatar.value = data.avatar
       username.value = data.username
       nickname.value = data.nickname
@@ -118,9 +124,8 @@
     }
   }
   onMounted(() => {
-    if(props.userId !== userStore.uuid){
+    if(!isCurrentUser.value){
       fetchUserInfo()
     }
   })
-
 </script>
