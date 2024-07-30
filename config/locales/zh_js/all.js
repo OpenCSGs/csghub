@@ -63,6 +63,7 @@ export const all = {
   uploadAvatar: "上传头像",
   uploadPic1Mb: "请上传不超过1MB的图片文件",
   select: "选择",
+  selectProject: "请选择项目",
   selectFilePls: "请选择文件",
   fileTooLarge: "文件过大",
   inputPls: "请输入",
