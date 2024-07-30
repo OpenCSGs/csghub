@@ -71,7 +71,7 @@
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
-              :src="avatar">
+              :src="userAvatar">
             </el-avatar>
             <SvgIcon name="verified_company" height="15px" width="15px" />
           </span>
@@ -80,7 +80,7 @@
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
-              :src="avatar">
+              :src="userAvatar">
             </el-avatar>
             <SvgIcon name="company" height="15px" width="15px" />
           </span>
@@ -89,7 +89,7 @@
             class="el-dropdown-link">
             <el-avatar
               :size="35"
-              :src="avatar">
+              :src="userAvatar">
             </el-avatar>
           </span>
           <!-- avatar dropdown menu -->
@@ -225,6 +225,9 @@
 <script>
   import ContactUs from '../form/ContactUs.vue'
   import MenuItems from './MenuItems.vue'
+  import useUserStore from '../../stores/UserStore.js'
+  import { inject } from 'vue'
+  import jwtFetch from '../../packs/jwtFetch.js'
 
   export default {
     props: {
@@ -250,7 +253,10 @@
           : window.location.pathname,
         isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
         userProfile: `/profile/${this.userId}`,
-        mobileMenuVisibility: false
+        mobileMenuVisibility: false,
+        userAvatar: this.avatar,
+        userStore: useUserStore(),
+        csghubServer: inject('csghubServer'),
       }
     },
     components: {
@@ -263,6 +269,20 @@
       },
       handleLocaleChange(locale) {
         location.href = `/${locale}/settings/locale`
+      },
+      async fetchUser() {
+        jwtFetch(`${this.csghubServer}/api/v1/user/${this.userName}`, {
+          method: 'GET',
+        }).then((res) => res.json())
+          .then((body) => {
+          this.userAvatar = body.data.avatar
+          this.userStore.initialize(body.data)
+        })
+      }
+    },
+    mounted() {
+      if (this.userName) {
+        this.fetchUser()
       }
     }
   }
