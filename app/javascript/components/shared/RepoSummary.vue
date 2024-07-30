@@ -152,14 +152,18 @@
   }
 
   const fetchRepoRelations = async () => {
+    let current_path
+    if (props.namespacePath.split('/').pop().split('.').pop() === 'html') {
+      current_path = `${props.namespacePath}.html`
+    } else {
+      current_path = props.namespacePath
+    }
     options = {
       ref: 'main',
-      path: 
-      //     @current_path = if request.path.split('/').last.split('.').last == params[:format]
-      // "#{params[:path]}.#{params[:format]}"
-      //              else params[:path] end
+      path: current_path
     }
     const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/relations`
+    console.log(url);
     jwtFetch(url, options).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
