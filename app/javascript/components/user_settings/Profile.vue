@@ -67,6 +67,7 @@
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
+  const userStore = useUserStore()
 
   const { t } = useI18n()
 
@@ -75,7 +76,6 @@
     userId: String
   })
 
-  const userStore = useUserStore()
   const csghubServer = inject('csghubServer')
 
   const avatar = ref('')
@@ -94,17 +94,16 @@
   const hasEmail = computed(() => isCurrentUser.value ? !!userStore.email : !!email.value)
   const hasLastLoginTime = computed(() => isCurrentUser.value ? !!userStore.lastLoginTime : !!theLastLoginTime.value)
   const hasOrg = computed(() => isCurrentUser.value ? !!userStore.orgs : !!userOrgs.value)
-
   const fetchUserInfo = async () => {
     const options = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/users/${props.userId}`,
+      `${csghubServer}/api/v1/user/${props.userId}`,
       options
     )
-    const data = await res.json()
+    const { data } = await res.json()
     if (!res.ok){
       ElMessage({message: t('all.fetchError'), type: "warning"})
     }else{
@@ -118,7 +117,7 @@
     }
   }
   onMounted(() => {
-    if(props.userId !== userStore.uuid){
+    if((props.userId !== uuid )&&(props.userId !== props.name)){
       fetchUserInfo()
     }
   })
