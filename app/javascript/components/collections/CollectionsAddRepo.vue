@@ -49,6 +49,7 @@
             <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('collections.edit.name') }}</p>
             <el-select
               v-model="repoIdsInput"
+              filterable
               :placeholder="this.$t('all.select')"
               size="large"
               class="w-full"
@@ -56,7 +57,7 @@
               <el-option
                 v-for="item in reposMappings"
                 :key="item.repository_id"
-                :label="item.nickname ? item.nickname : item.name"
+                :label="item.path ? item.path : item.name"
                 :value="item.repository_id"
               />
             </el-select>
