@@ -1,15 +1,40 @@
 module BlobContentHelper
   extend ActiveSupport::Concern
 
-  private
-
-  def update_blob_content(repo_type)
-    if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? request.url.split('.').last
-      content = "<img src='#{request.url.gsub('blob', 'resolve')}'>"
+  def resolve_file_or_content(image_api_method, text_api_method, name_key)
+    if image_format?(params[:format])
+      send_image_data(image_api_method, name_key)
     else
-      parsed_blob_content = Base64.decode64(JSON.parse(@blob)['data']['content']).force_encoding('UTF-8')
-      content = relative_path_to_resolve_path repo_type, parsed_blob_content
+      render_text_data(text_api_method, name_key)
     end
-    @blob = {data: JSON.parse(@blob)['data'].merge(content: content)}.to_json
+  end
+
+  private
+  
+  def content_type
+    helpers.content_type_format_mapping[params[:format]] || 'text/plain'
+  end
+
+  def image_format?(format)
+    ['jpg', 'png', 'jpeg', 'gif', 'svg'].include?(format)
+  end
+
+  def send_image_data(api_method, name_key)
+    result = call_resolve_api_method(api_method, name_key)
+    send_data result, type: content_type, disposition: 'inline'
+  end
+  
+  def render_text_data(api_method, name_key)
+    result = call_resolve_api_method(api_method, name_key)
+    render plain: JSON.parse(result)['data']
+  end
+  
+  def call_resolve_api_method(api_method, name_key)
+    csghub_api.send(api_method,
+                    params[:namespace],
+                    params[name_key],
+                    @current_path,
+                    { ref: @current_branch,
+                      current_user: current_user&.name })
   end
 end

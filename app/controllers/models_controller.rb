@@ -44,42 +44,7 @@ class ModelsController < ApplicationController
   end
 
   def resolve
-    if params[:download] == 'true'
-      if params[:lfs] == 'true'
-        file_url = csghub_api.download_model_file(params[:namespace],
-                                                   params[:model_name],
-                                                   params[:lfs_path],
-                                                   { ref: @current_branch,
-                                                     lfs: true,
-                                                     save_as: @current_path,
-                                                     current_user: current_user&.name })
-        redirect_to JSON.parse(file_url)['data'], allow_other_host: true
-      else
-        file = csghub_api.download_model_file(params[:namespace],
-                                               params[:model_name],
-                                               @current_path,
-                                               { ref: @current_branch,
-                                                 current_user: current_user&.name })
-        send_data file, filename: @current_path
-      end
-    else
-      content_type = helpers.content_type_format_mapping[params[:format]] || 'text/plain'
-      if ['jpg', 'png', 'jpeg', 'gif', 'svg'].include? params[:format]
-        result = csghub_api.download_model_resolve_file(params[:namespace],
-                                                         params[:model_name],
-                                                         @current_path,
-                                                         { ref: @current_branch,
-                                                           current_user: current_user&.name })
-        send_data result, type: content_type, disposition: 'inline'
-      else
-        result = csghub_api.get_model_file_content(params[:namespace],
-                                                    params[:model_name],
-                                                    @current_path,
-                                                    { ref: @current_branch,
-                                                      current_user: current_user&.name })
-        render plain: JSON.parse(result)['data']
-      end
-    end
+    resolve_file_or_content(:download_model_resolve_file, :get_model_file_content, :model_name)
   end
 
   def upload_file
