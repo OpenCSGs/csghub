@@ -120,23 +120,23 @@
   const typeMappings = [
     {
       value: 'models',
-      label: 'models'
+      label: t('navbar.models')
     },
     {
       value: 'datasets',
-      label: 'datasets'
+      label: t('navbar.datasets')
     },
     {
       value: 'codes',
-      label: 'codes'
+      label: t('navbar.codes')
     },
     {
       value: 'spaces',
-      label: 'spaces'
+      label: t('navbar.spaces')
     }
   ]
   const reposMappings = ref([])
-  const typeInput = ref('model')
+  const typeInput = ref(t('navbar.models'))
   const repoIdsInput = ref('')
   
   const typeChange = (type) => {
