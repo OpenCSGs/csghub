@@ -18,10 +18,10 @@
     <div class="flex justify-between items-center pl-4">
       <!-- desktop 导航栏 -->
       <ul class="flex justify-between items-center">
-        <li class="px-5 mlg:!hidden"> <model></model> </li>
-        <li class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
-        <li class="px-5 mlg:!hidden lg:!hidden"> <code-nav></code-nav> </li>
-        <li class="px-5 mlg:!hidden lg:!hidden"> <space></space> </li>
+        <li v-if="hasEmail" class="px-5 mlg:!hidden"> <model></model> </li>
+        <li v-if="hasEmail" class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
+        <li v-if="hasEmail" class="px-5 mlg:!hidden lg:!hidden"> <code-nav></code-nav> </li>
+        <li v-if="hasEmail" class="px-5 mlg:!hidden lg:!hidden"> <space></space> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <collection></collection> </li>
       </ul>
 
@@ -32,10 +32,10 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
-            <el-dropdown-item class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
-            <el-dropdown-item class="!hidden lg:!flex"> <code-nav></code-nav> </el-dropdown-item>
-            <el-dropdown-item class="!hidden lg:!flex"> <space></space> </el-dropdown-item>
+            <el-dropdown-item v-if="hasEmail" class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
+            <el-dropdown-item v-if="hasEmail" class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
+            <el-dropdown-item v-if="hasEmail" class="!hidden lg:!flex"> <code-nav></code-nav> </el-dropdown-item>
+            <el-dropdown-item v-if="hasEmail" class="!hidden lg:!flex"> <space></space> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <collection></collection> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -122,22 +122,22 @@
                 {{ $t('navbar.editProfile') }}
               </el-dropdown-item>
             </a>
-            <a href="/models/new">
+            <a v-if="hasEmail" href="/models/new">
               <el-dropdown-item divided>
                 + {{ $t('navbar.newModel') }}
               </el-dropdown-item>
             </a>
-            <a href="/datasets/new">
+            <a v-if="hasEmail" href="/datasets/new">
               <el-dropdown-item>
                 + {{ $t('navbar.newDataset') }}
               </el-dropdown-item>
             </a>
-            <a href="/codes/new">
+            <a v-if="hasEmail" href="/codes/new">
               <el-dropdown-item>
                 + {{ $t('navbar.newCode') }}
               </el-dropdown-item>
             </a>
-            <a href="/spaces/new">
+            <a v-if="hasEmail" href="/spaces/new">
               <el-dropdown-item>
                 + {{ $t('navbar.newApplicationSpace') }}
               </el-dropdown-item>
@@ -145,7 +145,7 @@
             <a href="/collections/new">
               <el-dropdown-item> + {{ $t('navbar.newCollection') }} </el-dropdown-item>
             </a>
-            <a href="/organizations/new">
+            <a v-if="hasEmail" href="/organizations/new">
               <el-dropdown-item divided>
                 {{ $t('navbar.newOrganization') }}
               </el-dropdown-item>
@@ -186,7 +186,7 @@
   import Space from './space.vue'
   import CodeNav from './CodeNav.vue'
   import Collection from "./Collection.vue";
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, inject, onMounted, watch } from 'vue'
   import jwtFetch from '../../packs/jwtFetch.js'
   import useUserStore from '../../stores/UserStore.js'
 
@@ -201,7 +201,12 @@
     userName: String
   })
 
+  const hasEmail = ref(false)
   const userStore = useUserStore()
+
+  watch(() => userStore.email, (email, _) => {
+    hasEmail.value = !!email ? true : false
+  })
 
   const isLoggedInBoolean = ref(JSON.parse(props.isLoggedIn.toLowerCase()))
   const userProfile = ref(`/profile/${props.userName}`)
