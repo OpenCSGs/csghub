@@ -18,10 +18,10 @@
     <div class="flex justify-between items-center pl-4">
       <!-- desktop 导航栏 -->
       <ul class="flex justify-between items-center">
-        <li v-if="hasEmail" class="px-5 mlg:!hidden"> <model></model> </li>
-        <li v-if="hasEmail" class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
-        <li v-if="hasEmail" class="px-5 mlg:!hidden lg:!hidden"> <code-nav></code-nav> </li>
-        <li v-if="hasEmail" class="px-5 mlg:!hidden lg:!hidden"> <space></space> </li>
+        <li class="px-5 mlg:!hidden"> <model></model> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <dataset></dataset> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <code-nav></code-nav> </li>
+        <li class="px-5 mlg:!hidden lg:!hidden"> <space></space> </li>
         <li class="px-5 mlg:!hidden lg:!hidden"> <collection></collection> </li>
       </ul>
 
@@ -32,10 +32,10 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item v-if="hasEmail" class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
-            <el-dropdown-item v-if="hasEmail" class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
-            <el-dropdown-item v-if="hasEmail" class="!hidden lg:!flex"> <code-nav></code-nav> </el-dropdown-item>
-            <el-dropdown-item v-if="hasEmail" class="!hidden lg:!flex"> <space></space> </el-dropdown-item>
+            <el-dropdown-item class="!hidden mlg:!flex"> <model></model> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <dataset></dataset> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <code-nav></code-nav> </el-dropdown-item>
+            <el-dropdown-item class="!hidden lg:!flex"> <space></space> </el-dropdown-item>
             <el-dropdown-item class="!hidden lg:!flex"> <collection></collection> </el-dropdown-item>
           </el-dropdown-menu>
         </template>
