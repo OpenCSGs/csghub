@@ -107,7 +107,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${userId}`,
+      `${csghubServer}/api/v1/user/${props.name}`,
       options
     )
     if (!res.ok){
