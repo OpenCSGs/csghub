@@ -109,10 +109,10 @@
       `${csghubServer}/api/v1/user/${userId}`,
       options
     )
-    const { data } = await res.json()
     if (!res.ok){
       ElMessage({message: t('all.fetchError'), type: "warning"})
     }else{
+      const { data } = await res.json()
       avatar.value = data.avatar
       username.value = data.username
       nickname.value = data.nickname
