@@ -47,10 +47,6 @@ module Starhub
       get_repo_tags('datasets', namespace, dataset_name, options)
     end
 
-    def download_dataset_file(namespace, dataset_name, path, options = {})
-      download_repo_file('datasets', namespace, dataset_name, path, options)
-    end
-
     def download_dataset_resolve_file(namespace, dataset_name, path, options = {})
       download_repo_resolve_file('datasets', namespace, dataset_name, path, options)
     end

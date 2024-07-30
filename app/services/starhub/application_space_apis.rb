@@ -44,10 +44,6 @@ module Starhub
       get_repo_tags('spaces', namespace, application_space_name, options)
     end
 
-    def download_application_space_file(namespace, application_space_name, path, options = {})
-      download_repo_file('spaces', namespace, application_space_name, path, options)
-    end
-
     def download_application_space_resolve_file(namespace, application_space_name, path, options = {})
       download_repo_resolve_file('spaces', namespace, application_space_name, path, options)
     end
