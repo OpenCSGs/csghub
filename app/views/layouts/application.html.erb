@@ -33,6 +33,7 @@
   <body class="h-full">
     <div id="app" class="min-h-full flex flex-col">
       <div class="grow">
+        <%# navbar %>
         <%= render partial: 'partials/navbar', locals: { class_name: 'border-b border-[#DCDFE6]' } %>
 
         <%# check email %>
@@ -44,6 +45,8 @@
         <%= yield.force_encoding(Encoding::UTF_8) %>
         <%= render partial: 'partials/little_monster' %>
       </div>
+
+      <%# footer %>
       <%= render partial: 'partials/footer' %>
     </div>
   </body>

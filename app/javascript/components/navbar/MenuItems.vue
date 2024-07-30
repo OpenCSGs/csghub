@@ -6,6 +6,7 @@
       v-if="!item.items"
       :href="item.index">
       <el-menu-item
+        v-if="hasEmail || (!item.emailSensitive && !hasEmail)"
         :index="item.index"
         :class="item.class"
         :style="item.style">
@@ -169,7 +170,7 @@
   const props = defineProps({
     isLoggedInBoolean: Boolean,
     starChainUrl: String,
-    mobileMenuVisibility: Boolean
+    hasEmail: Boolean
   })
 
   const moreItems = ref([])
@@ -246,28 +247,32 @@
       index: '/models',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
+      width: menuItemWidth,
+      emailSensitive: true
     },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
+      width: menuItemWidth,
+      emailSensitive: true
     },
     {
       title: t('navbar.spaces'),
       index: '/spaces',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
+      width: menuItemWidth,
+      emailSensitive: true
     },
     {
       title: t('navbar.codes'),
       index: '/codes',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
+      width: menuItemWidth,
+      emailSensitive: true
     },
     {
       title: t('collections.collection'),

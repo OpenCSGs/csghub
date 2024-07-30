@@ -31,7 +31,8 @@
           text-color="#475467">
           <MenuItems
             :isLoggedInBoolean="isLoggedInBoolean"
-            :starChainUrl="starChainUrl" />
+            :starChainUrl="starChainUrl"
+            :hasEmail="hasEmail" />
         </el-menu>
       </div>
       <!-- pc i18n/avatar/avatar dropdown menu -->
@@ -118,22 +119,26 @@
                 target="_blank">
                 <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
               </a>
-              <a href="/models/new">
+              <a v-if="hasEmail"
+                 href="/models/new">
                 <el-dropdown-item divided>
                   + {{ $t('navbar.newModel') }}
                 </el-dropdown-item>
               </a>
-              <a href="/datasets/new">
+              <a v-if="hasEmail"
+                 href="/datasets/new">
                 <el-dropdown-item>
                   + {{ $t('navbar.newDataset') }}
                 </el-dropdown-item>
               </a>
-              <a href="/codes/new">
+              <a v-if="hasEmail"
+                 href="/codes/new">
                 <el-dropdown-item>
                   + {{ $t('navbar.newCode') }}
                 </el-dropdown-item>
               </a>
-              <a href="/spaces/new">
+              <a v-if="hasEmail"
+                 href="/spaces/new">
                 <el-dropdown-item>
                   + {{ $t('navbar.newApplicationSpace') }}
                 </el-dropdown-item>
@@ -143,7 +148,8 @@
                   + {{ $t('navbar.newCollection') }}
                 </el-dropdown-item>
               </a>
-              <a href="/organizations/new">
+              <a v-if="hasEmail"
+                 href="/organizations/new">
                 <el-dropdown-item divided>
                   {{ $t('navbar.newOrg') }}
                 </el-dropdown-item>
@@ -217,7 +223,8 @@
       text-color="#475467">
       <MenuItems
         :isLoggedInBoolean="isLoggedInBoolean"
-        :starChainUrl="starChainUrl" />
+        :starChainUrl="starChainUrl"
+        :hasEmail="hasEmail" />
     </el-menu>
   </el-drawer>
 </template>
@@ -257,11 +264,17 @@
         userAvatar: this.avatar,
         userStore: useUserStore(),
         csghubServer: inject('csghubServer'),
+        hasEmail: false
       }
     },
     components: {
       ContactUs,
       MenuItems
+    },
+    watch: {
+      userStore(newStore, _) {
+        this.hasEmail = !!newStore.email
+      }
     },
     methods: {
       showDialog() {
