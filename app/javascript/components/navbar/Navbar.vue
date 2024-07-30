@@ -73,7 +73,7 @@
               :size="35"
               :src="userAvatar">
             </el-avatar>
-            <SvgIcon name="verified_company" height="15px" width="15px" />
+            <SvgIcon name="verified_company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
           </span>
           <span
             v-else-if="JSON.parse(isCompanyUser.toLowerCase())"
@@ -82,7 +82,7 @@
               :size="35"
               :src="userAvatar">
             </el-avatar>
-            <SvgIcon name="company" height="15px" width="15px" />
+            <SvgIcon name="company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
           </span>
           <span
             v-else
