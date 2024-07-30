@@ -15,3 +15,13 @@ export const atob_utf8 = (value) => {
   const decoder = new TextDecoder('utf-8')
   return decoder.decode(bytes)
 }
+
+export const createAndClickAnchor = (url, filename) => {
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = filename
+  document.body.appendChild(anchor)
+  anchor.click()
+  document.body.removeChild(anchor)
+  window.URL.revokeObjectURL(url) // Clean up the URL object
+}

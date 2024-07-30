@@ -53,9 +53,12 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     end
   end
 
-  def upload_file
-    sync_upload_file('dataset', upload_options)
-    render json: { message: I18n.t('repo.uploadFileSuccess') }
+  def destroy
+    if @dataset.destroy
+      render json: { message: I18n.t('repo.delSuccess') }
+    else
+      render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
+    end
   end
 
   def preview_parquet

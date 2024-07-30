@@ -44,20 +44,12 @@ module Starhub
       get_repo_tags('codes', namespace, code_name, options)
     end
 
-    def download_code_file(namespace, code_name, path, options = {})
-      download_repo_file('codes', namespace, code_name, path, options)
-    end
-
     def download_code_resolve_file(namespace, code_name, path, options = {})
       download_repo_resolve_file('codes', namespace, code_name, path, options)
     end
 
     def update_code_file(namespace, code_name, path, options = {})
       update_repo_file('codes', namespace, code_name, path, options)
-    end
-
-    def upload_code_file(namespace, code_name, options = {})
-      upload_repo_file('codes', namespace, code_name, options)
     end
 
     def code_related_repos(namespace, code_name, options = {})
