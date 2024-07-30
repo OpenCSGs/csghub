@@ -91,7 +91,6 @@
 
       if (response.ok) {
         repo.value = json.data
-        console.log(json.data)
         if (json.data.tags) {
           tags.value = buildTags(json.data.tags)
         }
