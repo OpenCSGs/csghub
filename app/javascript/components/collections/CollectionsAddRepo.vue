@@ -57,7 +57,7 @@
               <el-option
                 v-for="item in reposMappings"
                 :key="item.repository_id"
-                :label="item.path ? item.path : item.name"
+                :label="item.path"
                 :value="item.repository_id"
               />
             </el-select>
