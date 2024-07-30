@@ -31,7 +31,6 @@
         cell-class-name="billing-table-row-cell"
         :data="billings"
         stripe
-        v-loading="loading"
         style="width: 100%"
       >
         <!-- instance ID -->
