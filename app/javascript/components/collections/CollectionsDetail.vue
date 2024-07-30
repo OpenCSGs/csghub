@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div
+    class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+  >
     <div class="mx-auto max-w-[1280px]">
       <repo-header
         v-if="collectionData"
@@ -14,6 +16,13 @@
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0 relative">
+    <div class="max-w-[max-content] px-2 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10">
+      <CollectionsAddRepo
+        v-if="showRepoList"
+        :settingsVisibility="settingsVisibility"
+        :collectionsId="collectionsId"
+      />
+    </div>
     <el-tabs
       v-model="activeName"
       class="demo-tabs"
@@ -35,8 +44,12 @@
                 src="/images/search_circle_bg.png"
               />
             </div>
-            <div class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5">
-              <div class="border border-[#EAECF0] rounded-[10px] p-3 max-w-[max-content] mb-4">
+            <div
+              class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5"
+            >
+              <div
+                class="border border-[#EAECF0] rounded-[10px] p-3 max-w-[max-content] mb-4"
+              >
                 <SvgIcon
                   name="collections"
                   width="24"
@@ -58,13 +71,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="max-w-[max-content] px-2">
-          <CollectionsAddRepo
-            v-if="showRepoList"
-            :settingsVisibility="settingsVisibility"
-            :collectionsId="collectionsId"
-          />
         </div>
         <CollectionsRepoList
           v-if="showRepoList"
