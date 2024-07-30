@@ -3,7 +3,7 @@
     <div
       v-for="collection in collections"
       :key="collection.id"
-      class="p-4 rounded-[12px] border border-[#EAECF0]"
+      class="px-4 pt-4 pb-2 rounded-[12px] border border-[#EAECF0]"
       :style="generateGradientStyle(collection.theme)"
     >
       <div
