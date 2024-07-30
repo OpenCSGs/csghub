@@ -65,11 +65,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     end
   end
 
-  def upload_file
-    sync_upload_file('model', upload_options)
-    render json: { message: I18n.t('repo.uploadFileSuccess') }, status: 200
-  end
-
   def predict
     res = csghub_api.model_predict(params[:namespace], params[:model_name], current_user&.name, params[:input], params[:current_branch])
     render json: { message: I18n.t('models.predict_success'), result: JSON.parse(res)['data']['content'] }

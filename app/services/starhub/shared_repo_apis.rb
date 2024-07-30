@@ -113,10 +113,6 @@ module Starhub
       @client.put("/#{repo_type}/#{username}/#{repo_name}/raw/#{path}?current_user=#{options[:username]}", options)
     end
 
-    def upload_repo_file(repo_type, namespace, repo_name, options = {})
-      @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file?current_user=#{options[:username]}", options)
-    end
-
     def related_repos(repo_type, namespace, repo_name, options)
       res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/relations", options)
       raise StarhubError, res.body unless res.success?

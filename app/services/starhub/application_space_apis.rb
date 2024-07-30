@@ -59,9 +59,5 @@ module Starhub
     def update_application_space_file(namespace, application_space_name, path, options = {})
       update_repo_file('spaces', namespace, application_space_name, path, options)
     end
-
-    def upload_application_space_file(namespace, application_space_name, options = {})
-      upload_repo_file('spaces', namespace, application_space_name, options)
-    end
   end
 end
