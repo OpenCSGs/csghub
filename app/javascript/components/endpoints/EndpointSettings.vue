@@ -270,7 +270,7 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, inject, onMounted, watchEffect } from 'vue'
+  import { h, ref, computed, inject, onMounted, watchEffect, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import jwtFetch from '../../packs/jwtFetch'
@@ -305,9 +305,10 @@
   const currentFrameworkId = ref(null)
   const currentMinReplica = ref(null)
   const currentMaxReplica = ref(null)
+  const visibilityName = ref('Public')
 
-  const visibilityName = computed(() => {
-    return !!repoDetailStore.privateVisibility ? 'Private' : 'Public'
+  watch(() => repoDetailStore.privateVisibility, (newVal) => {
+    visibilityName.value = newVal ? 'Private' : 'Public'
   })
 
   const initialized = computed(() => {
@@ -419,8 +420,8 @@
   }
 
   const changeVisibilityCall = (value) => {
-    const isprivateSelected = value === 'Private' ? true : false
-    const payload = { private: isprivateSelected }
+    visibilityName.value = value
+    const payload = { secure_level: value === 'Private' ? 2 : 1 }
     updateEndpoint(payload)
   }
 
