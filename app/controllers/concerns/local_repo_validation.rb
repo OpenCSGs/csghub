@@ -19,8 +19,6 @@ module LocalRepoValidation
     ] do
       local_repo_validation
     end
-
-    before_action :validate_settings, only: [:settings]
   end
 
   private
@@ -127,17 +125,6 @@ module LocalRepoValidation
       @local_application_space = @owner && @owner.application_spaces.find_by(name: params[:application_space_name])
     when 'endpoints'
       @local_endpoint = @owner && @owner.endpoints.find_by(name: params[:endpoint_name])
-    end
-  end
-
-  def validate_settings
-    type = controller_name
-    local_repo = get_local_repo(type)
-
-    return if local_repo.nil?
-
-    unless current_user.can_manage?(local_repo)
-      return redirect_to errors_unauthorized_path
     end
   end
 end
