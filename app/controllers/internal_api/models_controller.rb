@@ -12,18 +12,6 @@ class InternalApi::ModelsController < InternalApi::ApplicationController
     render json: { relations: api_response['data']}
   end
 
-  def files
-    files = csghub_api.get_model_files(params[:namespace], params[:model_name], files_options)
-    last_commit = csghub_api.get_model_last_commit(params[:namespace], params[:model_name], { current_user: current_user&.name }) rescue nil
-
-    if last_commit
-      last_commit_user = User.find_by(name: JSON.parse(last_commit)['data']['committer_name'])
-      render json: { files: JSON.parse(files)['data'], last_commit: JSON.parse(last_commit)['data'], last_commit_user: last_commit_user }
-    else
-      render json: { files: JSON.parse(files)['data'] }
-    end
-  end
-
   def create
     model = current_user.created_models.build(model_params)
     if model.save

@@ -12,12 +12,6 @@ class InternalApi::CodesController < InternalApi::ApplicationController
     render json: { relations: api_response['data']}
   end
 
-  def files
-    last_commit, files = csghub_api.get_code_detail_files_data_in_parallel(params[:namespace], params[:code_name], files_options)
-    last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
-    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
-  end
-
   def create
     code = current_user.created_codes.build(code_params)
     if code.save

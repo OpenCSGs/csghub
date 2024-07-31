@@ -6,12 +6,6 @@ class InternalApi::ApplicationSpacesController < InternalApi::ApplicationControl
   include Api::FileOptionsHelper
   include Api::RepoValidation
 
-  def files
-    last_commit, files = csghub_api.get_application_space_detail_files_data_in_parallel(params[:namespace], params[:application_space_name], files_options)
-    last_commit_user = User.find_by(name: JSON.parse(last_commit)["data"]["committer_name"])
-    render json: { last_commit: JSON.parse(last_commit)['data'], files: JSON.parse(files)['data'], last_commit_user: last_commit_user }
-  end
-
   def create
     application_space = current_user.created_application_spaces.build(create_params)
     if application_space.save

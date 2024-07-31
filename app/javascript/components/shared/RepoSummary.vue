@@ -125,7 +125,6 @@
     const json = await response.json()
 
     if (response.ok) {
-      console.log(json.data)
       const content = resolveContent(`${props.repoType}s`, json.data.content, props.namespacePath)
       readmeContent.value = content
     } else {

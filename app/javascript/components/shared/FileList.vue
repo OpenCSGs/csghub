@@ -133,11 +133,12 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
   import { useI18n } from 'vue-i18n'
   import BranchDropdown from './BranchDropdown.vue';
+  import jwtFetch from '../../packs/jwtFetch.js'
 
   const props = defineProps({
     branches: Object,
@@ -146,6 +147,8 @@
     namespacePath: String,
     canWrite: Boolean
   })
+
+  const csghubServer = inject('csghubServer')
 
   const { t, locale } = useI18n();
   const loading = ref(true)
@@ -210,32 +213,44 @@
     return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
   }
 
-  const fetchData = async () => {
-    const url = `/internal_api/${prefixPath}/${props.namespacePath}/files?branch=${props.currentBranch}&path=${props.currentPath}`
+  const fetchFileListData = async () => {
+    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
 
     try {
-      const response = await fetch(url)
-      const data = await response.json()
+      const response = await jwtFetch(url)
+      const json = await response.json()
       if (!response.ok) {
-        console.error(data.msg)
+        console.log(json.msg)
         location.href = '/errors/not-found'
       } else {
-        files.value = data.files
-        lastCommit.value = data.last_commit
-        if (data.last_commit_user && data.last_commit_user.avatar) {
-          lastCommitAvatar.value = data.last_commit_user.avatar
-        }
+        files.value = json.data
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       location.href = '/errors/not-found'
     } finally {
       loading.value = false
     }
   }
 
+  const fetchLastCommit = async () => {
+    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/last_commit`
+    try {
+      const response = await jwtFetch(url)
+      const json = await response.json()
+      if (!response.ok) {
+        console.log(json.msg)
+      } else {
+        lastCommit.value = json.data
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   onMounted(() => {
     updateBreadcrumb()
-    fetchData()
+    fetchFileListData()
+    fetchLastCommit()
   })
 </script>
