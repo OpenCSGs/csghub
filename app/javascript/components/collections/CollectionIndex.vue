@@ -18,7 +18,7 @@
       <div class="xl:mt-[16px]">
         <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
+          class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
           size="large"
           :placeholder="$t(`collections.placeholder`)"
           :prefix-icon="Search"
@@ -27,7 +27,7 @@
         <el-select
           v-model="sortSelection"
           @change="filterChange"
-          style="width: 200px"
+          style="width: 150px"
           class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
           size="large"
         >
@@ -100,6 +100,7 @@
 
 <script setup>
   import { ref, onMounted, inject } from 'vue'
+  import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import CollectionCards from './CollectionCards.vue'
   import jwtFetch from '../../packs/jwtFetch'
