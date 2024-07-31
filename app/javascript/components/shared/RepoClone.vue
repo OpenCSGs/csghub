@@ -16,7 +16,7 @@
       v-if="repoType === 'model' && admin && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
-    <div v-if="showNickDeployFinetuneBtn">
+    <div v-if="isLoggedIn">
       <el-button type="default" class="!rounded-lg" @click="toLoginPage">
         {{ $t("all.deploy") }}
         <el-icon class="ml-1 el-icon--right">
@@ -26,7 +26,7 @@
     </div>
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
-      v-if="showNickDeployFinetuneBtn || (repoType === 'model' && admin && enableFinetune && !!httpCloneUrl)"
+      v-if="isLoggedIn || (repoType === 'model' && admin && enableFinetune && !!httpCloneUrl)"
       @click="handleButtonClick"
     >
       <SvgIcon
@@ -174,7 +174,7 @@
   const httpsCloneCode = ref('')
   const sshCloneCode = ref('')
   const httpsCloneCodeWithToken = ref('')
-  const showNickDeployFinetuneBtn =ref(false)
+  const isLoggedIn =ref(false)
   watch(() => props.repo, () => {
     httpCloneUrl.value = props.repo.repository.http_clone_url
     sshCloneUrl.value = props.repo.repository.ssh_clone_url
@@ -350,7 +350,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   }
 
   const handleButtonClick = () =>{
-    if(showNickDeployFinetuneBtn.value){
+    if(isLoggedIn.value){
       toLoginPage()
     }else{
       toFinetunePage()
@@ -362,7 +362,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
 
   onMounted(() => {
     if(props.userName == ''){
-      showNickDeployFinetuneBtn.value = true
+      isLoggedIn.value = true
     }
     fetchUserToken()
   })
