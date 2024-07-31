@@ -116,13 +116,16 @@
   import { useI18n } from "vue-i18n"
   import jwtFetch from "../../packs/jwtFetch"
   import { ElMessage } from "element-plus"
-
+  import { useCookies } from 'vue3-cookies'
+  const { cookies } = useCookies()
   const props = defineProps({
     name: String,
     initiator: String
   })
 
   const { t } = useI18n()
+  const current_user = cookies.get('current_user')
+
   const models = ref([])
   const datasets = ref([])
   const codes = ref([])
@@ -160,8 +163,10 @@
         fetchData(codesUrl, codes, defaultTotal)
     ];
     if(props.initiator=='profile'){
+      if(props.name === current_user){
         const endpointsUrl = reposUrl("endpoints")
-        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));
+        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));       
+      }
         const finetunesUrl = reposUrl("finetunes")
         promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
 
