@@ -142,9 +142,9 @@ class ApplicationController < ActionController::Base
           end
         end
         user.nickname = nickname if user.nickname.blank? && nickname.present?
-        user.avatar = user_infos['avatar'] if user.avatar.blank?
-        user.phone = user_infos['phone'] if user.phone.blank?
-        user.email = user_infos['email'] if user.email.blank?
+        user.avatar = user_infos['avatar'] if user.avatar.blank? && user_infos['avatar'].present?
+        user.phone = user_infos['phone'] if user.phone.blank? && user_infos['phone'].present?
+        user.email = user_infos['email'] if user.email.blank? && user_infos['email'].present?
         unless user.save
           flash[:alert] = I18n.t('errors_page.flash_alert.historical_conflict')
           log_error "用户登录历史数据问题", user.errors.messages
