@@ -15,7 +15,8 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= User.find_by_login_identity(session[:login_identity].presence)
+    login_identity = session[:login_identity].presence
+    @current_user ||= login_identity && User.find_by_login_identity(login_identity)
   end
 
   def logged_in?
