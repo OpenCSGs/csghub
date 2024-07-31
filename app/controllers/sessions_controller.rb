@@ -67,6 +67,7 @@ class SessionsController < ApplicationController
   def server
     res = csghub_api.verify_jwt_token(params[:jwt])
     user_infos = JSON.parse(res)["data"]
+    current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
     cookies['user_token'] = {value: params[:jwt], domain: current_domain}
     cookies['token_expire_at'] = Time.at(params[:expire].to_i).in_time_zone("Beijing").strftime("%Y-%m-%d %H:%M:%S")
     login_by_server_user_infos user_infos
