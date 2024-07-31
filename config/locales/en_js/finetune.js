@@ -17,7 +17,9 @@ export const finetune = {
     resourceDec1: 'You can switch to different cloud resources within the space settings at any time',
     resourceDec2: 'Switching to paid resources will incur charges based on the usage duration',
     createFinetune: 'Create Instance',
-    createSuccess: 'Instance created successfully'
+    createSuccess: 'Instance created successfully',
+    tip: "Applied to the fine-tuning instance, cannot be changed after creation",
+    createFail: "Failed to create the fine-tuning instance"
   },
   detail: {
     notebook: 'Start Notebook',
