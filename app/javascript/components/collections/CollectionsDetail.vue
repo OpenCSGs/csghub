@@ -37,7 +37,7 @@
       >
         <div class="pt-[24px] px-2">
           <div
-            class="h-[480px] md:h-auto pt-[24px]"
+            class="h-[520px] md:h-auto pt-[24px]"
             v-if="!showRepoList"
           >
             <div class="w-[480px] absolute left-1/2 -translate-x-1/2 md:hidden">
