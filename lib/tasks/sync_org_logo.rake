@@ -1,18 +1,11 @@
 # frozen_string_literal: true
 
 desc 'Sync org logo'
-task :sync_org_logo, [:username] => :environment do |_, args|
-  args.with_defaults(username: nil)
-  if args.username.nil?
-    puts "Please provide username"
-    exit
-  end
-
+task sync_org_logo: :environment do
   Organization.all.each do |org|
-    if org.logo.present?
-      puts "username: #{args.username}"
-      puts "current org: #{org.name} #{org.logo}"
-      res = Starhub.api.update_org_logo(args.username, org.name, org.logo)
+    if org.logo.present? && org.creator.present?
+      puts "current org: #{org.creator.name}/#{org.name} #{org.logo}"
+      res = Starhub.api.update_org_logo(org.creator.name, org.name, org.logo)
       if res.success?
         puts "synced"
       else
