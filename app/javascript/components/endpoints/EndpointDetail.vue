@@ -2,80 +2,88 @@
   <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
-        :private="endpoint.data.private"
-        :name="endpoint.data.deploy_name"
-        :path="endpoint.data.model_id"
+        :private="endpoint.private"
+        :name="endpoint.deploy_name"
+        :path="endpoint.model_id"
         :appStatus="appStatus"
-        :space-resource="endpoint.data.hardware"
+        :space-resource="endpoint.hardware"
         :avatar="avatar"
         :owner-url="ownerUrl"
         repo-type="endpoint"
-        :repoId="endpoint.data.repository_id"
+        :repoId="endpoint.repository_id"
       />
     </div>
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :repo-detail="endpoint.data"
+      :repo-detail="endpoint"
       :appStatus="appStatus"
       :appEndpoint="appEndpoint"
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
-      :settingsVisibility="settingsVisibility"
+      :settingsVisibility="canManage"
       :can-write="canWrite"
       repo-type="endpoint"
-      :hardware="endpoint.data.hardware"
-      :modelId="endpoint.data.model_id"
-      :private="endpoint.data.private"
-      :endpointReplica="endpoint.data.actual_replica"
-      :endpointName="endpoint.data.deploy_name"
-      :endpointId="endpoint.data.deploy_id"
-      :userName="userName"
+      :hardware="endpoint.hardware"
+      :modelId="endpoint.model_id"
+      :private="endpoint.private"
+      :endpointReplica="endpoint.actual_replica"
+      :endpointName="endpoint.deploy_name"
+      :endpointId="endpoint.deploy_id"
+      :userName="namespace"
       :replicaList="replicaList"
+      :path="`${namespace}/${modelName}`"
     />
   </div>
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import jwtFetch from '../../packs/jwtFetch.js'
+
+  const { cookies } = useCookies()
 
   const props = defineProps({
-    endpoint: Object,
     currentPath: String,
     defaultTab: String,
     actionName: String,
     avatar: String,
-    settingsVisibility: Boolean,
     tags: Object,
     ownerUrl: String,
-    canWrite: Boolean,
-    userName: String
+    namespace: String,
+    modelName: String,
+    endpointId: Number
   })
+
+  const currentUser = cookies.get('current_user')
+
+  const canWrite = ref(currentUser === props.namespace)
+  const canManage = ref(currentUser === props.namespace)
 
   const csghubServer = inject('csghubServer')
 
   const repoDetailStore = useRepoDetailStore()
-  repoDetailStore.initialize(props.endpoint.data)
 
-  const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
+  const endpoint = ref({})
 
-  const { cookies } = useCookies()
-  const appStatus = ref(props.endpoint.data.status)
-  const appEndpoint = computed(() => {
-    if (!props.endpoint.data.endpoint) return ''
+  // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
-    const endpointUrl = props.endpoint.data.endpoint
+  const appStatus = ref('')
+  const appEndpoint = ref('')
+
+  watch(endpoint, (newVal) => {
+    const endpointUrl = newVal.endpoint
     if(ENABLE_HTTPS === 'true') {
-      return `https://${endpointUrl}`
+      appEndpoint.value = `https://${endpointUrl}`
     } else {
-      return `http://${endpointUrl}`
+      appEndpoint.value = `http://${endpointUrl}`
     }
   })
 
@@ -83,8 +91,26 @@
 
   const replicaList = ref([])
 
+  const fetchRepoDetail = async () => {
+    const url = `${csghubServer}/api/v1/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
+
+    try {
+      const response = await jwtFetch(url, { method: 'GET' })
+      const json = await response.json()
+
+      if (response.ok) {
+        endpoint.value = json.data
+        repoDetailStore.initialize(json.data)
+      } else {
+        ElMessage({ message: json.msg, type: 'warning' })
+      }
+    } catch (error) {
+      console.log(error.msg)
+    }
+  }
+
   const syncEndpointStatus = () => {
-    fetchEventSource(`${csghubServer}/api/v1/models/${props.endpoint.data.model_id}/run/${props.endpoint.data.deploy_id}/status`, {
+    fetchEventSource(`${csghubServer}/api/v1/models/${props.namespace}/${props.modelName}/run/${props.endpointId}/status`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -125,8 +151,9 @@
   }
 
   onMounted(() => {
+    fetchRepoDetail()
     console.log(`Endpoint 初始状态：${appStatus.value}`)
-    if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
+    if (isStatusSSEConnected.value === false) {
       syncEndpointStatus()
     }
   })

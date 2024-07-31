@@ -1,4 +1,6 @@
 en:
+  errors_alert:
+    email_missing: 'Please provide your email address before proceeding'
   errors_page:
     not_found:
       title: 'Page not found'

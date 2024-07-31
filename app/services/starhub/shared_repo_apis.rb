@@ -93,12 +93,6 @@ module Starhub
       res.body
     end
 
-    def download_repo_file(repo_type, namespace, repo_name, path, options = {})
-      res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/download/#{path}", options)
-      raise StarhubError, res.body unless res.success?
-      res.body
-    end
-
     def download_repo_resolve_file(repo_type, namespace, repo_name, path, options = {})
       res = @client.get("/#{repo_type}/#{namespace}/#{repo_name}/resolve/#{path}", options)
       raise StarhubError, res.body unless res.success?
@@ -107,10 +101,6 @@ module Starhub
 
     def update_repo_file(repo_type, username, repo_name, path, options = {})
       @client.put("/#{repo_type}/#{username}/#{repo_name}/raw/#{path}?current_user=#{options[:username]}", options)
-    end
-
-    def upload_repo_file(repo_type, namespace, repo_name, options = {})
-      @client.upload("/#{repo_type}/#{namespace}/#{repo_name}/upload_file?current_user=#{options[:username]}", options)
     end
 
     def related_repos(repo_type, namespace, repo_name, options)

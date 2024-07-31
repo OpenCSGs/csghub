@@ -13,7 +13,7 @@
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
-        :canWrite="canWrite"
+        :canWrite="applicationSpace.can_write"
         repo-type="space"
         :repoId="applicationSpace.repository_id"
         :totalLikes="applicationSpace.like_count"
@@ -33,8 +33,8 @@
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
-      :settingsVisibility="settingsVisibility"
-      :can-write="canWrite"
+      :settingsVisibility="applicationSpace.can_manage"
+      :can-write="applicationSpace.can_write"
       repo-type="space"
       :user-name="userName"
       :commitId="commitId"
@@ -42,7 +42,7 @@
       :path="`${namespace}/${repoName}`"
     />
   </div>
-  <div v-if="canWrite">
+  <div v-if="applicationSpace.can_write">
     <el-drawer
       v-model="spaceLogsDrawer"
       direction="btt"
@@ -299,7 +299,7 @@
         }
 
         // 启动日志
-        if (isLogsSSEConnected.value === false && props.canWrite) {
+        if (isLogsSSEConnected.value === false && applicationSpace.value.can_write) {
           syncSpaceLogs()
         }
       },

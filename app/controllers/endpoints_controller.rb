@@ -30,15 +30,6 @@ class EndpointsController < ApplicationController
   private
 
   def load_endpoint_detail
-    # 这里后台接口中 namespace 需要是模型的
-    namespace = @local_endpoint.model_path.split('/')[0]
-    model_name = @local_endpoint.model_path.split('/')[1]
-    @endpoint = csghub_api.get_endpoint_detail(namespace,
-                                               model_name,
-                                               params[:endpoint_id],
-                                               {
-                                                 current_user: current_user&.name
-                                               })
-    @settings_visibility = current_user ? current_user.can_manage?(@local_endpoint) : false
+    @settings_visibility = (current_user && @local_endpoint) ? current_user.can_manage?(@local_endpoint) : false
   end
 end
