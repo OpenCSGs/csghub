@@ -105,6 +105,11 @@ class ApplicationController < ActionController::Base
     end
 
     user.roles = user_infos['roles'] if user_infos['roles'].present?
+    user.avatar = user_infos['avatar'] if user_infos['avatar'].present?
+    user.name = user_infos['username'] if user_infos['username'].present?
+    user.nickname = user_infos['nickname'] if user_infos['nickname'].present?
+    user.phone = user_infos['phone'] if user_infos['phone'].present?
+    user.email = user_infos['email'] if user_infos['email'].present?
     user.save
 
     helpers.log_in user.reload
