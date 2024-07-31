@@ -368,23 +368,6 @@
           { value: 'Public', label: this.$t('all.public') }
         ],
         spaceResources: [],
-        deployFailed: [
-          'BuildingFailed',
-          'DeployFailed',
-          'RuntimeError'
-        ].includes(this.appStatus),
-        initialized: [
-          'Building',
-          'Deploying',
-          'Startup',
-          'Running',
-          'Stopped',
-          'Sleeping',
-          'BuildingFailed',
-          'DeployFailed',
-          'RuntimeError'
-        ].includes(this.appStatus),
-        notInitialized: this.appStatus === 'NoAppFile',
         cookies: useCookies().cookies,
         csghubServer: inject('csghubServer'),
         images: [
@@ -418,6 +401,29 @@
       },
       isSpaceStopped() {
         return this.appStatus === 'Stopped' ? true : false
+      },
+      deployFailed() {
+        return [
+          'BuildingFailed',
+          'DeployFailed',
+          'RuntimeError'
+        ].includes(this.appStatus)
+      },
+      initialized() {
+        return [
+          'Building',
+          'Deploying',
+          'Startup',
+          'Running',
+          'Stopped',
+          'Sleeping',
+          'BuildingFailed',
+          'DeployFailed',
+          'RuntimeError'
+        ].includes(this.appStatus)
+      },
+      notInitialized() {
+        return this.appStatus === 'NoAppFile'
       }
     },
 
