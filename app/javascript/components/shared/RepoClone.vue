@@ -361,7 +361,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   }
 
   onMounted(() => {
-    isLoggedIn.value = currentUser.value !== '';
+    isLoggedIn.value = !!currentUser.value;
     fetchUserToken()
   })
 </script>
