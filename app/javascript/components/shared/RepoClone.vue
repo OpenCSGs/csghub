@@ -168,8 +168,6 @@
     enableFinetune: Boolean
   })
 
-  const current_user = cookies.get('current_user')
-
   const httpCloneUrl = ref('')
   const sshCloneUrl = ref('')
 
@@ -363,7 +361,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   }
 
   onMounted(() => {
-    isLoggedIn.value = current_user !== '';
+    isLoggedIn.value = currentUser.value !== '';
     fetchUserToken()
   })
 </script>
