@@ -286,33 +286,11 @@
         </el-form-item>
         <el-divider class="my-[18px]" />
         <el-form-item class="w-full">
-          <el-radio-group
+          <PublicAndPrivateRadioGroup
             v-model="dataForm.visibility"
-            class="!block"
-          >
-            <el-radio
-              class="w-full !border-2 mr-0 mb-[32px] !rounded-xl !h-auto !items-start !p-4"
-              label="public"
-              size="large"
-              border
-            >
-              {{ t('application_spaces.new.public') }}
-              <p class="whitespace-normal text-[#475467] font-light">
-                {{ t('application_spaces.new.publicDesc') }}
-              </p>
-            </el-radio>
-            <el-radio
-              class="w-full !border-2 mr-0 !rounded-xl !h-auto !items-start !p-4"
-              label="private"
-              size="large"
-              border
-            >
-              {{ t('application_spaces.new.private') }}
-              <p class="whitespace-normal text-[#475467] font-light">
-                {{ t('application_spaces.new.privateDesc') }}
-              </p>
-            </el-radio>
-          </el-radio-group>
+            :publicDesc="t('application_spaces.new.publicDesc')"
+            :privateDesc="t('application_spaces.new.privateDesc')"
+          /> 
         </el-form-item>
         <p
           class="mb-[18px] rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4"
@@ -342,6 +320,7 @@
   import jwtFetch from '../../packs/jwtFetch'
   import useUserStore from '../../stores/UserStore'
   import { useCookies } from 'vue3-cookies'
+  import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
 
   const userStore = useUserStore()
 

@@ -118,33 +118,11 @@
         <!-- Fourth row -->
         <div class="mb-9">
           <el-form-item prop="visibility">
-            <el-radio-group
+            <PublicAndPrivateRadioGroup
               v-model="dataForm.visibility"
-              class="!block"
-            >
-              <el-radio
-                class="w-full flex mr-0 mb-9 !rounded-xl !h-auto !items-start !p-4"
-                label="public"
-                size="large"
-                border
-              >
-                <p>{{ $t('collections.newCollection.public') }}</p>
-                <p class="whitespace-normal text-[#475467] font-light">
-                  {{ $t('collections.newCollection.publicDesc') }}
-                </p>
-              </el-radio>
-              <el-radio
-                class="w-full mr-0 !rounded-xl !h-auto !items-start !p-4"
-                label="private"
-                size="large"
-                border
-              >
-                {{ $t('collections.newCollection.private') }}
-                <p class="whitespace-normal text-[#475467] font-light">
-                  {{ $t('collections.newCollection.privateDesc') }}
-                </p>
-              </el-radio>
-            </el-radio-group>
+              :publicDesc="t('collections.newCollection.publicDesc')"
+              :privateDesc="t('collections.newCollection.privateDesc')"
+            /> 
           </el-form-item>
         </div>
       </el-form>
@@ -168,6 +146,7 @@
   import { useI18n } from 'vue-i18n'
   import jwtFetch from '../../packs/jwtFetch'
   import { ElMessage } from 'element-plus'
+  import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
 
   const csghubServer = inject('csghubServer')
 
