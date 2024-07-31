@@ -15,7 +15,7 @@ export const finetune = {
     resource: '资源配置',
     resourceTip: '请选择资源配置',
     resourceDec1: '您可以随时在空间设置中切换到不同的空间云资源',
-    resourceDec2: '切换到付费资源后，将根据使用时长想您收取费用',
+    resourceDec2: '切换到付费资源后，将根据使用时长向您收取费用',
     createFinetune: '创建实例',
     createSuccess: '微调实例创建成功',
     tip: "应用于微调实例，创建后不可更改",
