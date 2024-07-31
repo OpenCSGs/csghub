@@ -184,8 +184,10 @@ module Starhub
       @client.put("/organizations/#{org_name}?current_user=#{current_user}", options)
     end
 
-    def update_org_logo(current_user, org_name, org_logo)
+    def update_org_logo(current_user, org_name, org_logo, homepage, org_type)
       options = {
+        homepage: homepage,
+        org_type: org_type,
         logo: org_logo
       }
       @client.put("/organization/#{org_name}?current_user=#{current_user}", options)
