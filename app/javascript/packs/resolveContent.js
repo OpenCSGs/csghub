@@ -46,7 +46,7 @@ const resolveContent = (repoType, encodedContent, namespacePath) => {
         namespacePath
       )
     } catch (error) {
-      console.error(error)
+      console.log(error)
       content = parsedBlobContent
     }
   }
