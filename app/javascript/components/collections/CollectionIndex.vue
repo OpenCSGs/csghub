@@ -157,7 +157,9 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
-      collectionData.value = data.data || []
+      if(data.data){
+        collectionData.value = data.data.filter(item => !!item.repositories)
+      }
       totalCollections.value = data.total
     }
   }
