@@ -162,6 +162,7 @@
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
   import { useCookies } from 'vue3-cookies'
+  import { isBlank } from '../../packs/utils'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -322,11 +323,12 @@
   }
 
   const saveProfile = () => {
-    if (profileData.value.username.trim().length === 0 || profileData.value.email.trim().length === 0) {
-      ElMessage({
-        message: "Please provide username and email",
-        type: "warning",
-      });
+    if (isBlank(profileData.value.username)) {
+      ElMessage.warning("Please provide username")
+      return
+    }
+    if (isBlank(profileData.value.email)) {
+      ElMessage.warning("Please provide email")
       return
     }
     if (isSmsCodeValid()) {
