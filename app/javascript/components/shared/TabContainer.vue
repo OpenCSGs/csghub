@@ -9,6 +9,7 @@
       <el-tab-pane
         :label="summaryLabel"
         name="summary"
+        lazy
       >
         <slot name="summary"></slot>
       </el-tab-pane>
@@ -18,6 +19,7 @@
         v-if="showFiles"
         :label="$t('all.files')"
         name="files"
+        lazy
       >
         <slot name="files"></slot>
       </el-tab-pane>
@@ -28,6 +30,7 @@
         :label="$t('all.community')"
         name="community"
         class="min-h-[300px]"
+        lazy
       >
         <slot name="community"></slot>
       </el-tab-pane>
@@ -38,6 +41,7 @@
         :label="$t('all.logs')"
         name="logs"
         class="min-h-[300px]"
+        lazy
       >
         <slot name="logs"></slot>
       </el-tab-pane>
@@ -48,6 +52,7 @@
         :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"
+        lazy
       >
         <slot name="billing"></slot>
       </el-tab-pane>
@@ -58,6 +63,7 @@
         :label="$t('all.settings')"
         name="settings"
         class="min-h-[300px]"
+        lazy
       >
         <slot name="settings"></slot>
       </el-tab-pane>
