@@ -18,7 +18,7 @@
       <div class="xl:mt-[16px]">
         <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] mr-[16px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
+          class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
           size="large"
           :placeholder="$t(`collections.placeholder`)"
           :prefix-icon="Search"
@@ -27,7 +27,7 @@
         <el-select
           v-model="sortSelection"
           @change="filterChange"
-          style="width: 200px"
+          style="width: 150px"
           class="xl:!w-[150px] xl:mr-[20px] sm:!w-[120px] sm:mr-0"
           size="large"
         >
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div
-      class="flex gap-1 max-w-[max-content] px-2 rounded-[6px] border border-[#D5D9EB] text-[14px] leading-[20px] bg-[#D5D9EB] text-[#363F72]"
+      class="flex gap-1 max-w-[max-content] px-2 rounded-[16px] border border-[#D5D9EB] text-[14px] leading-[20px] bg-[#F8F9FC] text-[#363F72]"
     >
       <SvgIcon name="star" />
       {{ $t('collections.hot') }}
@@ -100,6 +100,7 @@
 
 <script setup>
   import { ref, onMounted, inject } from 'vue'
+  import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import CollectionCards from './CollectionCards.vue'
   import jwtFetch from '../../packs/jwtFetch'
@@ -156,6 +157,10 @@
       ElMessage({ message: msg, type: 'warning' })
     } else {
       const { data } = await res.json()
+      // To be used after the profile collection is developed.
+      // if(data.data){
+      //   collectionData.value = data.data.filter(item => !!item.repositories)
+      // }
       collectionData.value = data.data || []
       totalCollections.value = data.total
     }
