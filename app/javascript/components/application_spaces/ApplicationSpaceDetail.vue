@@ -43,7 +43,9 @@
       :path="`${namespace}/${repoName}`"
     />
   </div>
-  <div v-if="applicationSpace.can_write">
+
+  <!-- logs drawer -->
+  <div v-show="applicationSpace.can_write">
     <el-drawer
       v-model="spaceLogsDrawer"
       direction="btt"
@@ -206,7 +208,7 @@
         ElMessage({ message: json.msg, type: 'warning' })
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -313,11 +315,12 @@
   }
 
   onMounted(() => {
-    fetchRepoDetail()
     console.log(`Space 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
+
+    fetchRepoDetail()
   })
 </script>
 
