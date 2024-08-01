@@ -10,7 +10,7 @@ module Api::RepoValidation
       validate_write(controller_name)
     end
 
-    before_action only: [:files, :readme, :preview_parquet] do
+    before_action only: [:files, :readme] do
       validate_authorization(controller_name)
     end
 
