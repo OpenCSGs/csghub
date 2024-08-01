@@ -15,8 +15,8 @@
         <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
-    <div 
-      v-if="repoType == 'model' && licenseTagInfo" 
+    <div
+      v-if="repoType == 'model' && licenseTagInfo"
       class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
     >
       <div class="flex">
@@ -28,23 +28,23 @@
           <SvgIcon name="license" width="15" height="15" />
           <p class="text-[14px] leading-[20px] text-[#667085]">License: {{ licenseTagInfo.name }}</p>
         </div>
-        <a 
-          v-if="licenseTagInfo.url" 
-          :href="licenseTagInfo.url" 
+        <a
+          v-if="licenseTagInfo.url"
+          :href="licenseTagInfo.url"
           target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center"
         >
           <SvgIcon name="top_right_arrow" />
         </a>
       </div>
-      <div 
+      <div
         class="text-[16px] leading-[24px] text-[#344054]"
         :class="showMoreLicenseDesc ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
       >
         {{ locale == 'zh' ? licenseTagInfo.desc: licenseTagInfo.desc_en}}
       </div>
-      <div 
-        v-if="showMoreLicenseDesc" 
-        @click="moreLicenseDesc = true" 
+      <div
+        v-if="showMoreLicenseDesc"
+        @click="moreLicenseDesc = true"
         class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer"
       >
         {{ $t('all.moreDesc') }}
@@ -82,7 +82,7 @@
 
 <script setup>
   import { useI18n } from 'vue-i18n'
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
@@ -91,6 +91,7 @@
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
   import jwtFetch from '../../packs/jwtFetch'
+  import resolveContent from '../../packs/resolveContent'
 
   const props = defineProps({
     namespacePath: String,
@@ -117,17 +118,19 @@
   })
 
   const fetchData = async () => {
-    const url = `/internal_api/${props.repoType}s/${props.namespacePath}/readme`
+    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/blob/README.md`
 
-    fetch(url).then((response) => {
-      response.json().then((data) => {
-        readmeContent.value = data.readme
-      }).catch((error) => {
-        console.error(error)
-      }).then(() => {
-        loading.value = false
-      })
-    })
+    const response = await jwtFetch(url)
+
+    const json = await response.json()
+
+    if (response.ok) {
+      const content = resolveContent(`${props.repoType}s`, json.data.content, props.namespacePath)
+      readmeContent.value = content
+    } else {
+      console.log(json.msg)
+    }
+    loading.value = false
   }
 
   const fetchParquetFilePath = async () => {
@@ -176,7 +179,7 @@
         })
       }
     }).catch((error) => {
-      console.log(error)
+      console.log(error.msg)
     })
   }
 
@@ -185,7 +188,7 @@
     fetch(url).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
-          console.error(data.message)
+          console.log(data.message)
         })
       } else {
         response.json().then((data) => {
@@ -193,7 +196,7 @@
         })
       }
     }).catch((error) => {
-      console.error(error)
+      console.log(error.message)
     })
   }
 
@@ -206,7 +209,7 @@
           item => item.name.toLowerCase() == props.license
         ) || licenseTagInfo.value
       }).catch((error) => {
-        console.error(licenseTagInfo.value)
+        console.log(error.msg)
       })
     })
   }
@@ -224,7 +227,7 @@
 
     if (!response.ok) {
       response.json().then((error) => {
-        console.error(error)
+        console.log(error.msg)
       })
     } else {
       response.json().then(({ data }) => {
@@ -233,12 +236,13 @@
     }
   }
 
+  watch(() => props.license, fetchLicenseInfo)
+
   onMounted(() => {
     fetchData()
     fetchParquetFilePath()
     fetchRepoRelations()
     if (props.repoType == 'model') {
-      fetchLicenseInfo()
       fetchEndpoint()
     }
   })

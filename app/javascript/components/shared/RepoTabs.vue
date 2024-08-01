@@ -50,6 +50,7 @@
         <EndpointPage
           v-else-if="repoType === 'endpoint'"
           :appEndpoint="appEndpoint"
+          :appStatus="appStatus"
           :modelId="modelId"
           :private="private"
           :endpointReplica="endpointReplica"
@@ -236,12 +237,6 @@
   </div>
 </template>
 
-<style>
-  .clone-tabs .el-tabs__header {
-    padding-left: 12px;
-  }
-</style>
-
 <script setup>
   import RepoClone from '../shared/RepoClone.vue'
   import TabContainer from '../shared/TabContainer.vue'
@@ -312,19 +307,9 @@
     emit('toggleSpaceLogsDrawer')
   }
 
-  const repoNamespace = computed(() => {
-    if (!!props.path) {
-      return props.path.split('/')[0]
-    } else if (!!props.repoDetail.model_id) {
-      return props.userName
-    } else {
-      return ''
-    }
-  })
-
   const summaryUrl = () => {
     if (props.repoType === 'endpoint') {
-      return `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}`
+      return `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}`
     } else {
       return `/${props.repoType}s/${props.path}`
     }
@@ -343,17 +328,17 @@
         break
       case 'settings':
         if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/settings`
+          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}/settings`
         } else {
           location.href = `/${props.repoType}s/${props.path}/settings`
         }
         break
       case 'logs':
-        location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/logs`
+        location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}/logs`
         break
       case 'billing':
         if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${repoNamespace.value}/${props.repoDetail.deploy_name}/${props.repoDetail.deploy_id}/billing`
+          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}/billing`
         } else {
           location.href = `/${props.repoType}s/${props.path}/billing`
         }
@@ -363,3 +348,9 @@
     }
   }
 </script>
+
+<style>
+  .clone-tabs .el-tabs__header {
+    padding-left: 12px;
+  }
+</style>

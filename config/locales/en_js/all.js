@@ -65,6 +65,7 @@ export const all = {
   uploadAvatar: "Upload Avatar",
   uploadPic1Mb: "Please upload image files not exceeding 1MB.",
   select: "Select",
+  selectProject: "Please select Project",
   selectFilePls: "Please select a file",
   fileTooLarge: "File size is too large",
   inputPls: "Please enter",
@@ -84,5 +85,7 @@ export const all = {
   more:"More",
   baseModel:"Base Model",
   moreDesc: "Expand more",
-  sdkTips: "Please register first and then obtain the Token from OpenCSG's account page"
+  sdkTips: "Please register first and then obtain the Token from OpenCSG's account page",
+  public: "Public",
+  private: "Private",
 }

@@ -4,6 +4,8 @@
   
   --el-border-radius-base: 8px;
   --Gray-700: #344054;
+
+  --el-color-primary: #3250BD;
   
   /* 所有的input 添加 */
   .el-textarea__inner, .el-input__wrapper, .el-select__wrapper {

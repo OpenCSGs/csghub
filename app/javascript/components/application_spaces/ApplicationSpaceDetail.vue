@@ -13,7 +13,7 @@
         :avatar="avatar"
         :tags="tags"
         :owner-url="ownerUrl"
-        :canWrite="canWrite"
+        :canWrite="applicationSpace.can_write"
         repo-type="space"
         :repoId="applicationSpace.repository_id"
         :totalLikes="applicationSpace.like_count"
@@ -33,8 +33,8 @@
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
-      :settingsVisibility="settingsVisibility"
-      :can-write="canWrite"
+      :settingsVisibility="applicationSpace.can_manage"
+      :can-write="applicationSpace.can_write"
       repo-type="space"
       :user-name="userName"
       :commitId="commitId"
@@ -42,7 +42,9 @@
       :path="`${namespace}/${repoName}`"
     />
   </div>
-  <div v-if="canWrite">
+
+  <!-- logs drawer -->
+  <div v-show="applicationSpace.can_write">
     <el-drawer
       v-model="spaceLogsDrawer"
       direction="btt"
@@ -186,6 +188,7 @@
       spaceLogsDrawer.value = false
     } else {
       spaceLogsDrawer.value = true
+      syncSpaceLogs()
     }
   }
 
@@ -204,7 +207,7 @@
         ElMessage({ message: json.msg, type: 'warning' })
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -297,11 +300,6 @@
           }
           appStatus.value = ev.data
         }
-
-        // 启动日志
-        if (isLogsSSEConnected.value === false && props.canWrite) {
-          syncSpaceLogs()
-        }
       },
       onerror(err) {
         console.log('Status Server Error:')
@@ -311,11 +309,12 @@
   }
 
   onMounted(() => {
-    fetchRepoDetail()
     console.log(`Space 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
+
+    fetchRepoDetail()
   })
 </script>
 

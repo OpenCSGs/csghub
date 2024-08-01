@@ -83,8 +83,8 @@ Rails.application.routes.draw do
     put '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     resources :endpoints, only: [:create]
-    put '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
-    delete '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+    put '/endpoints/:namespace/(*model_name)/:endpoint_id', to: 'endpoints#update', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
+    delete '/endpoints/:namespace/(*model_name)/:endpoint_id', to: 'endpoints#destroy', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
     resources :tags, only: [] do
       collection do
@@ -141,10 +141,10 @@ Rails.application.routes.draw do
     get '/models/:namespace/(*model_name)/commit/:commit_id', to: 'models#commit', namespace: /[^\/]+/
     get '/models/:namespace/(*model_name)', to: 'models#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
-    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
-    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/billing', to: 'endpoints#billing', namespace: /[^\/]+/
-    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
-    get '/endpoints/:namespace/(*endpoint_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*model_name)/:endpoint_id/logs', to: 'endpoints#logs', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*model_name)/:endpoint_id/billing', to: 'endpoints#billing', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*model_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
+    get '/endpoints/:namespace/(*model_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
     get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
 

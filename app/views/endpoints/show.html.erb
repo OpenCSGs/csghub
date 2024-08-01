@@ -1,14 +1,13 @@
 <div class="bg-white">
   <endpoint-detail
-    :endpoint="<%= @endpoint %>"
     current-path="<%= @current_path || '' %>"
     default-tab="<%= @default_tab || 'summary' %>"
-    :action-name="'<%= action_name %>'"
+    action-name="<%= action_name %>"
     :settings-visibility="<%= @settings_visibility %>"
-    :owner-url="'<%= @owner_url %>'"
+    owner-url="<%= @owner_url %>"
     avatar="<%= @avatar_url %>"
-    :can-write="<%= !!current_user&.can_write?(@local_endpoint) %>"
-    user-name="<%= params[:namespace] %>"
-  >
-  </endpoint-detail>
+    namespace="<%= params[:namespace] %>"
+    model-name="<%= params[:model_name] %>"
+    :endpoint-id="<%= params[:endpoint_id] %>"
+  ></endpoint-detail>
 </div>

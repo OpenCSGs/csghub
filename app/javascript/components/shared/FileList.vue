@@ -105,11 +105,11 @@
           </svg>
           LFS
         </span>
-        <a v-if="file.type === 'file' && canDownload(file)" class="ml-2" :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${file.path}?download=true&lfs=${file.lfs}&lfs_path=${file.lfs_relative_path}`" download>
+        <span v-if="file.type === 'file' && canDownload(file)" class="ml-2 cursor-pointer" @click="downloadFile(file)">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
             <path d="M6.99967 1.6665V10.4165M6.99967 10.4165L10.4997 6.9165M6.99967 10.4165L3.49967 6.9165M2.33301 10.9998V11.7332C2.33301 12.2932 2.33301 12.5732 2.442 12.7872C2.53787 12.9753 2.69086 13.1283 2.87902 13.2242C3.09293 13.3332 3.37296 13.3332 3.93301 13.3332H10.0663C10.6264 13.3332 10.9064 13.3332 11.1203 13.2242C11.3085 13.1283 11.4615 12.9753 11.5573 12.7872C11.6663 12.5732 11.6663 12.2932 11.6663 11.7332V10.9998" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+        </span>
       </div>
       <a href="#" class="text-[#606266] w-[37%] pl-3 text-sm truncate hover:underline">
         {{ file.commit.message }}
@@ -133,11 +133,13 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
   import { useI18n } from 'vue-i18n'
   import BranchDropdown from './BranchDropdown.vue';
+  import jwtFetch from '../../packs/jwtFetch'
+  import { createAndClickAnchor } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -147,12 +149,14 @@
     canWrite: Boolean
   })
 
+  const csghubServer = inject('csghubServer')
+
   const { t, locale } = useI18n();
   const loading = ref(true)
 
   const breadcrumb = ref([])
   const files = ref([])
-  const lastCommit = ref({})
+  const lastCommit = ref()
   const lastCommitAvatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
   const prefixPath = document.location.pathname.split('/')[1]
 
@@ -205,37 +209,70 @@
     return file.lfs || (file.size <= 10 * 1024 * 1024)
   }
 
+  const downloadFile = async (file) => {
+    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/download/${file.path}?ref=${props.currentBranch}`
+
+    try {
+      const response = await jwtFetch(url, { method: 'GET' })
+
+      if (!response.ok) {
+        ElMessage({
+          message: t('all.fetchError'),
+          type: 'warning'
+        })
+      } else {
+        const blob = await response.blob()
+        const downloadUrl = window.URL.createObjectURL(blob)
+        createAndClickAnchor(downloadUrl, file.path)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const beiJingTimeParser = (utcTimeStr) => {
     utcTime = new Date(utcTimeStr)
     return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
   }
 
-  const fetchData = async () => {
-    const url = `/internal_api/${prefixPath}/${props.namespacePath}/files?branch=${props.currentBranch}&path=${props.currentPath}`
+  const fetchFileListData = async () => {
+    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
 
     try {
-      const response = await fetch(url)
-      const data = await response.json()
+      const response = await jwtFetch(url)
+      const json = await response.json()
       if (!response.ok) {
-        console.error(data.msg)
+        console.log(json.msg)
         location.href = '/errors/not-found'
       } else {
-        files.value = data.files
-        lastCommit.value = data.last_commit
-        if (data.last_commit_user && data.last_commit_user.avatar) {
-          lastCommitAvatar.value = data.last_commit_user.avatar
-        }
+        files.value = json.data
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       location.href = '/errors/not-found'
     } finally {
       loading.value = false
     }
   }
 
+  const fetchLastCommit = async () => {
+    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/last_commit`
+    try {
+      const response = await jwtFetch(url)
+      const json = await response.json()
+      if (!response.ok) {
+        console.log(json.msg)
+      } else {
+        lastCommit.value = json.data
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   onMounted(() => {
     updateBreadcrumb()
-    fetchData()
+    fetchFileListData()
+    fetchLastCommit()
   })
 </script>

@@ -48,20 +48,12 @@ module Starhub
       get_repo_tags('models', namespace, model_name, options)
     end
 
-    def download_model_file(namespace, model_name, path, options = {})
-      download_repo_file('models', namespace, model_name, path, options)
-    end
-
     def download_model_resolve_file(namespace, model_name, path, options = {})
       download_repo_resolve_file('models', namespace, model_name, path, options)
     end
 
     def update_model_file(namespace, model_name, path, options = {})
       update_repo_file('models', namespace, model_name, path, options)
-    end
-
-    def upload_model_file(namespace, model_name, options = {})
-      upload_repo_file('models', namespace, model_name, options)
     end
 
     def model_related_repos(namespace, model_name, options = {})
