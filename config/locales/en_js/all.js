@@ -65,6 +65,7 @@ export const all = {
   uploadAvatar: "Upload Avatar",
   uploadPic1Mb: "Please upload image files not exceeding 1MB.",
   select: "Select",
+  selectProject: "Please select Project",
   selectFilePls: "Please select a file",
   fileTooLarge: "File size is too large",
   inputPls: "Please enter",
