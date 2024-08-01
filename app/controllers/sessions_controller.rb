@@ -71,6 +71,7 @@ class SessionsController < ApplicationController
     current_domain = Rails.env.development? ? 'localhost' : '.opencsg.com'
     cookies['user_token'] = {value: params[:jwt], domain: current_domain}
     cookies['token_expire_at'] = Time.at(params[:expire].to_i).in_time_zone("Beijing").strftime("%Y-%m-%d %H:%M:%S")
+    cookies['can_change_username'] = {value: user_infos['can_change_username'], domain: current_domain}
     login_by_server_user_infos user_infos
   end
 
