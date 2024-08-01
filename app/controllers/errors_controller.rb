@@ -1,5 +1,5 @@
 class ErrorsController < ApplicationController
-  skip_before_action :check_user_login
+  skip_before_action :check_user_login, :call_event_api
 
   def not_found
     render '404', status: 404

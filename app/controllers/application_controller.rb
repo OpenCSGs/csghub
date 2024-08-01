@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_default_locale, :check_user_login, :call_event_api
 
-  def call_event_api
-    csghub_api.visit_url(request.fullpath, request.user_agent)
-  end
-
   rescue_from StarhubError do |e|
     log_error e.message, e.backtrace
     flash[:alert] = e.message
@@ -76,6 +72,11 @@ class ApplicationController < ActionController::Base
       payload: request.params.to_s,
       backtrace: backtrace
     )
+  end
+
+  def call_event_api
+    res = csghub_api.visit_url(request.fullpath, request.user_agent)
+    raise StarhubError, res.body unless res.success?
   end
 
   def current_user
