@@ -43,7 +43,7 @@
     <!-- endpoint -->
     <div
       v-else-if="repoType === 'endpoint'"
-      class="flex flex-wrap w-full gap-[16px] items-center"
+      class="flex flex-wrap w-full gap-2 items-center"
     >
       <el-avatar
         :size="24"
@@ -68,7 +68,7 @@
     <!-- finetune -->
     <div
       v-else-if="repoType === 'finetune'"
-      class="flex flex-wrap w-full gap-[16px] items-center"
+      class="flex flex-wrap w-full gap-2 items-center"
     >
       <SvgIcon
         name="model_finetune_create"
@@ -89,7 +89,7 @@
     <!-- other repo -->
     <div
       v-else
-      class="flex flex-wrap w-full gap-[16px] items-center"
+      class="flex flex-wrap w-full gap-2 items-center"
     >
       <el-avatar
         :size="24"
