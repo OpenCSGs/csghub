@@ -43,7 +43,9 @@
       :path="`${namespace}/${repoName}`"
     />
   </div>
-  <div v-if="applicationSpace.can_write">
+
+  <!-- logs drawer -->
+  <div v-show="applicationSpace.can_write">
     <el-drawer
       v-model="spaceLogsDrawer"
       direction="btt"
@@ -188,6 +190,7 @@
       spaceLogsDrawer.value = false
     } else {
       spaceLogsDrawer.value = true
+      syncSpaceLogs()
     }
   }
 
@@ -206,7 +209,7 @@
         ElMessage({ message: json.msg, type: 'warning' })
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -298,11 +301,6 @@
             }
           }
           appStatus.value = ev.data
-        }
-
-        // 启动日志
-        if (isLogsSSEConnected.value === false && applicationSpace.value.can_write) {
-          syncSpaceLogs()
         }
       },
       onerror(err) {
