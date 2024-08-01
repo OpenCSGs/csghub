@@ -5,7 +5,7 @@
     <!-- dataset repo -->
     <div
       v-if="repoType === 'dataset'"
-      class="w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
+      class="w-full flex flex-wrap gap-2 items-center md:w-full md:mb-1"
     >
       <SvgIcon
         name="repoheader_dataset"
@@ -20,7 +20,7 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
@@ -133,18 +133,18 @@
     </div>
 
     <div
-      class="flex gap-[8px] items-center"
+      class="flex gap-1 items-center"
       v-if="repoType !== 'finetune'"
     >
       <a
-        class="md:ml-0 hover:text-[#223B99]"
+        class="md:ml-0 hover:text-[#223B99] text-[#667084] font-normal"
         :href="ownerUrl"
       >
         {{ path?.split('/')[0] }}
       </a>
       <div>/</div>
       <a
-        class="text-[#303133] max-w-full break-words hover:text-[#223B99]"
+        class="text-[#303133] max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
         href="#"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
