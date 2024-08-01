@@ -162,20 +162,15 @@
   }
 
   const fetchPreviewData = async (parquetFilePath) => {
-    const options = {
-      count: 6
-    }
-    const url = `${csghubServer}/api/v1/datasets/${props.namespacePath}/viewer/${parquetFilePath}`
-
-    jwtFetch(url, options).then((response) => {
+    const url = `${csghubServer}/api/v1/datasets/${props.namespacePath}/viewer/${parquetFilePath}?count=6`
+    jwtFetch(url).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
           console.log(data.message)
         })
       } else {
         response.json().then((res_json) => {
-          const data = res_json['data']
-          previewData.value = data
+          previewData.value = res_json
         })
       }
     }).catch((error) => {
