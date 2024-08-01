@@ -50,7 +50,7 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
@@ -76,7 +76,7 @@
         height="16"
         class="flex-shrink-0"
       />
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <AppStatus
@@ -96,7 +96,7 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
@@ -144,7 +144,7 @@
       </a>
       <div>/</div>
       <a
-        class="text-[#303133] max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
+        class="max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
         href="#"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
