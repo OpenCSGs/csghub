@@ -161,25 +161,17 @@
     } else {
       current_path = props.namespacePath
     }
-    options = {
-      ref: 'main',
-      path: current_path
-    }
     const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/relations`
-    console.log(url);
-    jwtFetch(url, options).then((response) => {
-      if (!response.ok) {
-        response.json().then((data) => {
-          console.log(data.message)
-        })
-      } else {
-        response.json().then((res_json) => {
-          relations.value = res_json["data"].relations
-        })
-      }
-    }).catch((error) => {
-      console.log(error.message)
-    })
+    const response = await jwtFetch(url)
+    if (!response.ok) {
+      response.json().then((error) => {
+        console.log(error.message)
+      })
+    } else {
+      response.json().then((res_json) => {
+        relations.value = res_json["data"]
+      })
+    }
   }
 
   const fetchLicenseInfo = async () => {
