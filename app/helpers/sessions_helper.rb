@@ -39,6 +39,7 @@ module SessionsHelper
     cookies.delete :token_expire_at
     cookies.delete :current_user
     cookies.delete :admin_user
+    cookies.delete :can_change_username, domain: current_cookie_domain
 
     # unset odic cookies
     cookies.delete :oidcUuid, domain: current_cookie_domain
