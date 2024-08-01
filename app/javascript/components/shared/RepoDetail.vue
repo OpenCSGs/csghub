@@ -49,6 +49,7 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import jwtFetch from '../../packs/jwtFetch'
   import { buildTags } from '../../packs/buildTags'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     localRepoId: String,
@@ -61,7 +62,6 @@
     actionName: String,
     settingsVisibility: Boolean,
     avatar: String,
-    ownerUrl: String,
     canWrite: Boolean,
     userName: String,
     commitId: String,
@@ -79,8 +79,17 @@
     industry_tags: [],
     other_tags: []
   })
+  const ownerUrl = ref('')
   const csghubServer = inject('csghubServer')
   const repoDetailStore = useRepoDetailStore()
+
+  const getOwnerUrl = (repo) => {
+    if (repo.user.username === props.namespace) {
+      return `/profile/${props.namespace}`
+    } else {
+      return `/organizations/${props.namespace}`
+    }
+  }
 
   const fetchRepoDetail = async () => {
     const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespace}/${props.repoName}`
@@ -95,6 +104,7 @@
           tags.value = buildTags(json.data.tags)
         }
         repoDetailStore.initialize(json.data)
+        ownerUrl.value = getOwnerUrl(json.data)
       } else {
         ElMessage({ message: json.msg, type: 'warning' })
       }
