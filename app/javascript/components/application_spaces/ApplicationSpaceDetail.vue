@@ -190,6 +190,7 @@
       spaceLogsDrawer.value = false
     } else {
       spaceLogsDrawer.value = true
+      syncSpaceLogs()
     }
   }
 
@@ -301,11 +302,6 @@
           }
           appStatus.value = ev.data
         }
-
-        // 启动日志
-        if (isLogsSSEConnected.value === false && applicationSpace.value.can_write) {
-          syncSpaceLogs()
-        }
       },
       onerror(err) {
         console.log('Status Server Error:')
@@ -315,12 +311,11 @@
   }
 
   onMounted(() => {
+    fetchRepoDetail()
     console.log(`Space 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
-
-    fetchRepoDetail()
   })
 </script>
 
