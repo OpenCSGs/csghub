@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center flex-wrap gap-4 md:px-5 md:mb-[30px] md:flex-col md:items-start">
+  <div class="flex items-center flex-wrap gap-2 px-5 mb-4 md:mb-[30px]">
     <!-- Task -->
     <div
       v-if="taskTags.length"
