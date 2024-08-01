@@ -191,7 +191,7 @@
       </div>
     </div>
   </div>
-  <div class="leading-[24px] pb-[16px] md:px-5">{{ desc }}</div>
+  <div class="leading-[24px] pb-[16px] text-[#344054] md:px-5">{{ desc }}</div>
 
   <!-- repo tags -->
   <header-tags
