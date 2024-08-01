@@ -12,7 +12,7 @@ export const starShip = {
       'Four steps to implement from requirements to code: requirements understanding, code retrieval, programming planning, code writing',
     secDetails2: 'SWEBench Resolved 23.67% (🔗 swebench.com)',
     secDetails3:
-      'Seamlessly integrates with mainstream DevOps processes, enabling collaboration between large models and human engineers',
+      'A GitHub Copilot alternative that supports both online and offline modes',
     sec2Title: 'Code Review',
     sec2Desc:
       'The code review function automatically reviews code changes, summarizes content, and provides modification suggestions. It conducts comprehensive evaluation through dynamically configurable review items, assisting reviewers in quickly understanding and providing evaluation scores and opinions.',

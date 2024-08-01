@@ -10,7 +10,7 @@ export const starShip = {
       '代码生成功能通过需求理解、代码检索、编程计划和编写代码四个步骤完成实现，与主流 DevOps 流程完美融合，实现大模型与人类工程师的协同作业',
     secDetails: '四大步骤完成从需求到代码的实现：需求理解、代码检索、编程计划、编写代码',
     secDetails2: 'SWEBench Resolved 23.67%（🔗 swebench.com）',
-    secDetails3: '与主流 DevOps 流程完美融合，实现大模型与人类工程师的协作',
+    secDetails3: '支持线上线下两种模式的的GitHub Copilot平替版',
     sec2Title: '代码审查',
     sec2Desc:
       '代码审查功能自动审阅代码变更、总结内容并提供修改建议，通过动态可配置的审查项进行全面评估，辅助审核者快速理解并给出评估分值和意见。',
