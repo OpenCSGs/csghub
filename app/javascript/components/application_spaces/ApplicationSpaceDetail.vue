@@ -188,6 +188,7 @@
       spaceLogsDrawer.value = false
     } else {
       spaceLogsDrawer.value = true
+      syncSpaceLogs()
     }
   }
 
@@ -298,11 +299,6 @@
             }
           }
           appStatus.value = ev.data
-        }
-
-        // 启动日志
-        if (isLogsSSEConnected.value === false && applicationSpace.value.can_write) {
-          syncSpaceLogs()
         }
       },
       onerror(err) {
