@@ -2,6 +2,7 @@
   <div class="grid grid-cols-2 xl:grid-cols-1 gap-9">
     <div
       v-for="collection in collections"
+      class="rounded-[12px]"
       :key="collection.id"
       :style="generateGradientStyle(collection.theme)"
     >
