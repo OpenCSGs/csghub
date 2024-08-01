@@ -88,6 +88,7 @@
         <el-input class="max-w-[600px]"
                   v-model="profileData.phone"
                   ref="phoneInputElement"
+                  @change="resetPhoneStatus"
                   :disabled="!updatePhoneEnabled"
                   :placeholder="$t('all.phone')">
         </el-input>
@@ -156,7 +157,7 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import jwtFetch from '../../packs/jwtFetch.js'
   import { ElMessage } from 'element-plus'
-  import { ref, inject } from 'vue'
+  import { ref, inject, watch } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -174,7 +175,8 @@
   const inCountDown = ref(false)
   const countdown = ref(30)
   const intervalId = ref(null)
-  const phoneJustSendcode = ref(profileData.value.phone)
+  const phoneJustSendcode = ref('')
+  const phoneChanged = ref(false)
 
   const uploadImage = () => {
     fileInput.value.click()
@@ -183,6 +185,10 @@
   const removeImage = () => {
     fileInput.value = null
     profileData.value.avatar = ''
+  }
+
+  const resetPhoneStatus = () => {
+    phoneChanged.value = true
   }
 
   const sendSmsCode = async () => {
@@ -229,10 +235,12 @@
   }
 
   const disableUpdatePhone = () => {
+    phoneChanged.value = false
     updatePhoneEnabled.value = false
     inputSmsCode.value = ''
     generatedSmscode.value = ''
     phoneInputElement.value.disabled = true
+    phoneJustSendcode.value = ''
   }
 
   const uploadAvatar = async () => {
@@ -282,7 +290,7 @@
           message: t('profile.edit.updateSuccess'),
           type: 'success'
         })
-          disableUpdatePhone()
+        disableUpdatePhone()
       }
     } catch (error) {
       console.error(error)
@@ -290,8 +298,12 @@
   }
 
   const isSmsCodeValid = () => {
-    return inputSmsCode.value === generatedSmscode.value &&
-      phoneJustSendcode.value === profileData.value.phone
+    if (phoneJustSendcode.value === '' && phoneChanged.value === false) {
+      return true
+    } else {
+      return inputSmsCode.value === generatedSmscode.value &&
+        phoneJustSendcode.value === profileData.value.phone
+    }
   }
 
   const saveProfile = () => {
