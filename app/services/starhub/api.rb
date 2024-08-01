@@ -50,6 +50,13 @@ module Starhub
       @client.put("/users/#{name}?current_user=#{name}", options)
     end
 
+    def update_user_avatar(name, avatar)
+      options = {
+        avatar: avatar
+      }
+      @client.put("/users/#{name}?current_user=#{name}", options)
+    end
+
     def generate_git_token(username, name, options = {})
       options[:name] = name
       res = @client.post("/user/#{username}/tokens?current_user=#{username}", options)
@@ -175,6 +182,15 @@ module Starhub
         description: desc
       }
       @client.put("/organizations/#{org_name}?current_user=#{current_user}", options)
+    end
+
+    def update_org_logo(current_user, org_name, org_logo, homepage, org_type)
+      options = {
+        homepage: homepage,
+        org_type: org_type,
+        logo: org_logo
+      }
+      @client.put("/organization/#{org_name}?current_user=#{current_user}", options)
     end
 
     def text_secure_check(scenario, content)

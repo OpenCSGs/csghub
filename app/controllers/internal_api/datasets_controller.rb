@@ -12,27 +12,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     render json: { relations: api_response['data']}
   end
 
-  def files
-    files = csghub_api.get_dataset_files(params[:namespace], params[:dataset_name], files_options)
-    last_commit = csghub_api.get_dataset_last_commit(params[:namespace], params[:dataset_name], { current_user: current_user&.name }) rescue nil
-
-    if last_commit
-      last_commit_user = User.find_by(name: JSON.parse(last_commit)['data']['committer_name'])
-      render json: { files: JSON.parse(files)['data'], last_commit: JSON.parse(last_commit)['data'], last_commit_user: last_commit_user }
-    else
-      render json: { files: JSON.parse(files)['data'] }
-    end
-  end
-
-  def readme
-    readme = csghub_api.get_dataset_file_content(params[:namespace], params[:dataset_name], 'README.md', {current_user: current_user&.name})
-    readme_content = JSON.parse(readme)['data']
-    readme_content = relative_path_to_resolve_path 'dataset', readme_content
-    render json: { readme: readme_content }
-  rescue StarhubError
-    render json: { readme: '' }
-  end
-
   def create
     dataset = current_user.created_datasets.build(dataset_params)
     if dataset.save
@@ -59,11 +38,6 @@ class InternalApi::DatasetsController < InternalApi::ApplicationController
     else
       render json: { message: I18n.t('repo.delFailed') }, status: :bad_request
     end
-  end
-
-  def upload_file
-    sync_upload_file('dataset', upload_options)
-    render json: { message: I18n.t('repo.uploadFileSuccess') }
   end
 
   def preview_parquet

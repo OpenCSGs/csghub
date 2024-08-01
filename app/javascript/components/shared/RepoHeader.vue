@@ -140,14 +140,14 @@
         class="md:ml-0 hover:text-[#223B99]"
         :href="ownerUrl"
       >
-        {{ path.split('/')[0] }}
+        {{ path?.split('/')[0] }}
       </a>
       <div>/</div>
       <a
         class="text-[#303133] max-w-full break-words hover:text-[#223B99]"
         href="#"
       >
-        {{ repoType === 'endpoint' ? name : path.split('/')[1] }}
+        {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
       </a>
       <div
         class="cursor-pointer"

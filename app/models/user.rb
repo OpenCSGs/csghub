@@ -22,8 +22,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
 
-  before_update :prevent_name_change, if: -> { name_changed? && name_was.present? }
-  after_save :sync_to_starhub_server
+  # before_update :prevent_name_change, if: -> { name_changed? && name_was.present? }
+  # after_save :sync_to_starhub_server
 
   has_many :daily_paper
 
