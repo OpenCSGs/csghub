@@ -17,6 +17,7 @@
         :totalLikes="repo.likes"
         :hasLike="repo.user_likes"
         :repoType="repoType"
+        :baseModel="repo.base_model"
       />
     </div>
   </div>
@@ -28,8 +29,8 @@
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
-      :settingsVisibility="settingsVisibility"
-      :can-write="canWrite"
+      :settingsVisibility="repo.can_manage"
+      :can-write="repo.can_write"
       :tags="tags"
       :tag-list="tagList"
       :userName="userName"

@@ -43,7 +43,8 @@
           </a>
 
           <!-- starship api key -->
-          <a href="/settings/starship-access-token"
+          <a v-if="hasEmail"
+             href="/settings/starship-access-token"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/starship-access-token')"
           >
@@ -51,7 +52,8 @@
           </a>
 
           <!-- sync access token -->
-          <a href="/settings/sync-access-token"
+          <a v-if="hasEmail"
+             href="/settings/sync-access-token"
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/sync-access-token')"
           >
@@ -84,7 +86,7 @@
   const userStore = useUserStore()
 
   const hasEmail = computed(() => {
-    return userStore.email !== 0
+    return !!userStore.email
   })
 
   const menuClass = (menuPath) => {

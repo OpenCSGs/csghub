@@ -29,9 +29,10 @@
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">Base Model</h3>
     <el-form-item>
-      <el-input
-        v-model="model.base_model"
+      <el-autocomplete
         clearable
+        v-model="model.base_model"
+        :fetch-suggestions="fetchBaseModels"
         size="large"
       />
     </el-form-item>
@@ -52,10 +53,10 @@
   import { ref, onMounted, inject } from 'vue'
   import { useRoute } from 'vue-router'
   import { ElMessage } from 'element-plus'
-  import { useCookies } from "vue3-cookies";
+  import { useI18n } from "vue-i18n";
 
+  const { t } = useI18n();
   const csghubServer = inject('csghubServer')
-  const { cookies } = useCookies()
   const route = useRoute()
   const model = ref({
     private: null,
@@ -68,8 +69,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-    const admin_secret = cookies.get('admin_secret')
-    const res = await jwtFetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}?admin=${admin_secret}`, options)
+    const res = await jwtFetch(`${csghubServer}/api/v1/models/${route.params.namespace}/${route.params.name}`, options)
     
     if (res.ok) {
       ElMessage({
@@ -98,6 +98,22 @@
       ElMessage.error('Failed to fetch model')
     }
   }
+
+  const fetchBaseModels = async (query, cb) => {
+    const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`);
+    if (!res.ok) {
+      res.json().then((error) => {
+        ElMessage({ message: error.msg, type: 'warning' })
+      })
+    } else {
+      res.json().then((body) => {
+        const paths = body.data?.map((model) => {
+          return { key: model.path, value: model.path };
+        });
+        cb(paths);
+      });
+    }
+  };
 
   onMounted(() => {
     fetchModel()

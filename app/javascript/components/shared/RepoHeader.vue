@@ -140,14 +140,14 @@
         class="md:ml-0 hover:text-[#223B99]"
         :href="ownerUrl"
       >
-        {{ path.split('/')[0] }}
+        {{ path?.split('/')[0] }}
       </a>
       <div>/</div>
       <a
         class="text-[#303133] max-w-full break-words hover:text-[#223B99]"
         href="#"
       >
-        {{ repoType === 'endpoint' ? name : path.split('/')[1] }}
+        {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
       </a>
       <div
         class="cursor-pointer"
@@ -181,11 +181,11 @@
       />
       <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
-    <div 
+    <div
       v-if="repoType === 'model' && baseModel"
       class="flex items-center text-[#344054] text-base font-normal"
     >
-      {{ $t('all.baseModel') }}: 
+      {{ $t('all.baseModel') }}:
       <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
         {{ baseModel }}
       </div>

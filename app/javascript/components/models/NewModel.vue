@@ -130,33 +130,11 @@
           />
         </el-form-item>
         <el-form-item class="w-full">
-          <el-radio-group
+          <PublicAndPrivateRadioGroup
             v-model="dataForm.visibility"
-            class="!block"
-          >
-            <el-radio
-              class="w-full !border-2 mr-0 mb-[32px] !rounded-xl !h-auto !items-start !p-4"
-              label="public"
-              size="large"
-              border
-            >
-              {{ t('models.newModel.public') }}
-              <p class="whitespace-normal text-[#475467] font-light">
-                {{ t('models.newModel.publicDesc') }}
-              </p>
-            </el-radio>
-            <el-radio
-              class="w-full !border-2 mr-0 !rounded-xl !h-auto !items-start !p-4"
-              label="private"
-              size="large"
-              border
-            >
-              {{ t('models.newModel.private') }}
-              <p class="whitespace-normal text-[#475467] font-light">
-                {{ t('models.newModel.privateDesc') }}
-              </p>
-            </el-radio>
-          </el-radio-group>
+            :publicDesc="t('models.newModel.publicDesc')"
+            :privateDesc="t('models.newModel.privateDesc')"
+          />
         </el-form-item>
         <p
           class="mb-[18px] rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4"
@@ -181,6 +159,7 @@
 
 <script setup>
   import { ref, inject } from 'vue'
+  import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import jwtFetch from '../../packs/jwtFetch.js'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -340,24 +319,6 @@
     @media screen and (max-width: 768px) {
       width: 100%;
     }
-  }
-
-  :deep(.el-radio__input) {
-    margin-top: 10px;
-  }
-
-  :deep(.el-radio__label) {
-    color: #344054 !important;
-    font-weight: 400;
-  }
-
-  :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid #3250bd;
-  }
-
-  :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250bd;
-    border-color: #3250bd;
   }
 
   :deep(.el-select) {

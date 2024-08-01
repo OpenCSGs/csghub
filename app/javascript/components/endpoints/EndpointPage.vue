@@ -54,6 +54,7 @@
   </div>
 
   <EndpointPlayground
+    v-if="appStatus === 'Running'"
     :appEndpoint="appEndpoint"
     :model-id="modelId"
   />
@@ -64,6 +65,7 @@
 
   const props = defineProps({
     appEndpoint: String,
+    appStatus: String,
     hardware: String,
     modelId: String,
     private: String,

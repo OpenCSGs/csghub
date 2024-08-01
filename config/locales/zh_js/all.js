@@ -63,6 +63,7 @@ export const all = {
   uploadAvatar: "上传头像",
   uploadPic1Mb: "请上传不超过1MB的图片文件",
   select: "选择",
+  selectProject: "请选择项目",
   selectFilePls: "请选择文件",
   fileTooLarge: "文件过大",
   inputPls: "请输入",
@@ -82,5 +83,7 @@ export const all = {
   more:"更多",
   baseModel:"基座模型",
   moreDesc: "展开更多",
-  sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token"
+  sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token",
+  public: "公开",
+  private: "私有",
 }
