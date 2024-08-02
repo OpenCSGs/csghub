@@ -18,6 +18,12 @@ export const profile = {
     title: "个人资料设置",
     uploadAvatar: "上传头像",
     removeAvatar: "移除头像",
-    updateSuccess: "profile已更新",
+    updateSuccess: "profile 已更新",
+    confirmUpdateTitle: "更新 Profile",
+    confirmUpdateMessage: "更新个人信息之后，您需要重新登录！",
+    confirmUpdate: "更新",
+    cancelUpdate: "取消",
+    updateCancelled: "更新已取消",
+    renameUsername: "您当前用名是系统自动生成的临时用户名，在继续使用完成功能之前，您需要更新您的用户名"
   },
 }
