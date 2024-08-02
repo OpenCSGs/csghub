@@ -326,6 +326,12 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     }
   }
 
+  watch(() => cloneRepositoryVisible.value, () => {
+    if (cloneRepositoryVisible.value && !accessToken.value) {
+      fetchUserToken()
+    }
+  })
+
   const handleSyncRepo =  async () => {
     const syncUrl = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/mirror_from_saas`
     const res = await jwtFetch(syncUrl, {
@@ -362,6 +368,5 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
 
   onMounted(() => {
     isLoggedIn.value = !!currentUser.value;
-    fetchUserToken()
   })
 </script>
