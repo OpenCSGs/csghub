@@ -136,6 +136,7 @@
             v-model="dataForm.visibility"
             :publicDesc="t('datasets.newDataset.publicDesc')"
             :privateDesc="t('datasets.newDataset.privateDesc')"
+            :canPublic="false"
           />
         </el-form-item>
         <p
@@ -189,7 +190,7 @@
     nickname: '',
     license: props.licenses[0][0],
     desc: '',
-    visibility: 'public'
+    visibility: 'private'
   })
 
   const loading = ref(false)

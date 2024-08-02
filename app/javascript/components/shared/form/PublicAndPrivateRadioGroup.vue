@@ -9,6 +9,7 @@
       label="public"
       size="large"
       border
+      :disabled="!canPublic"
     >
       {{ t('all.public') }}
       <p class="whitespace-normal text-[#475467] font-light">
@@ -45,6 +46,10 @@
     privateDesc: {
       type: String,
       default: ''
+    },
+    canPublic: {
+      type: Boolean,
+      default: true
     }
   })
   const visibility = ref(props.value)
