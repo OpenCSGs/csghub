@@ -3,6 +3,7 @@ module SessionsHelper
     session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
     cookies[:current_user] = user.name
+    cookies[:current_user_email] = user.email
     cookies[:admin_user] = 'true' if user.admin?
 
     # need to add later
@@ -34,6 +35,8 @@ module SessionsHelper
   def logout
     # unset current_user
     session[:login_identity] = nil
+    cookies.delete :current_user
+    cookies.delete :current_user_email
     cookies.delete :login_identity
     cookies.delete :user_token, domain: current_cookie_domain
     cookies.delete :token_expire_at

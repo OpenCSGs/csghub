@@ -1,5 +1,12 @@
 <template>
   <div class="flex flex-col gap-[24px] px-6 py-10 border-l">
+    <el-alert
+      v-if="canChangeUsername === 'true'"
+      :title="$t('profile.edit.renameUsername')"
+      center
+      show-icon
+      type="warning">
+    </el-alert>
     <div class="font-semibold text-[20px] leading-[28px]">
       {{ $t('profile.edit.title') }}
     </div>
@@ -146,7 +153,7 @@
       </el-input>
     </div>
     <div
-      @click="saveProfile"
+      @click="confirmUpdateProfile"
       class="w-[111px] text-[14px] border border-[#DCDFE6] px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
       {{ $t('all.save') }}
     </div>
@@ -156,8 +163,8 @@
 <script setup>
   import csrfFetch from '../../packs/csrfFetch.js'
   import jwtFetch from '../../packs/jwtFetch.js'
-  import { ElMessage } from 'element-plus'
-  import { ref, inject, watch } from 'vue'
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  import { ref, inject } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -264,7 +271,30 @@
     }
   }
 
-  const updateProfile = async () => {
+  const confirmUpdateProfile = () => {
+    if (canChangeUsername === 'true') {
+      ElMessageBox.confirm(
+        t('profile.edit.confirmUpdateMessage'),
+        t('profile.edit.confirmUpdateTitle'),
+        {
+          confirmButtonText: t('profile.edit.confirmUpdate'),
+          cancelButtonText: t('profile.edit.cancelUpdate'),
+          type: 'warning',
+        }
+      ).then(() => {
+        saveProfile({relogin: true})
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: t('profile.edit.updateCancelled'),
+        })
+      })
+    } else {
+      saveProfile()
+    }
+  }
+
+  const updateProfile = async (config={}) => {
     const currentUsername = cookies.get('current_user')
     const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${currentUsername}`
     let params = {
@@ -295,18 +325,14 @@
     try {
       const response = await jwtFetch(profileUpdateEndpoint, options)
       if (!response.ok) {
-        response.json().then((error) => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
+        response.json().then((data) => {
+          ElMessage.warning(data.msg)
         })
       } else {
-        ElMessage({
-          message: t('profile.edit.updateSuccess'),
-          type: 'success'
-        })
-        disableUpdatePhone()
+        ElMessage.success(t('profile.edit.updateSuccess'))
+        if (config.relogin) {
+          window.location.href = '/logout'
+        }
       }
     } catch (error) {
       console.error(error)
@@ -322,7 +348,7 @@
     }
   }
 
-  const saveProfile = () => {
+  const saveProfile = (config={}) => {
     if (isBlank(profileData.value.username)) {
       ElMessage.warning("Please provide username")
       return
@@ -332,7 +358,7 @@
       return
     }
     if (isSmsCodeValid()) {
-      updateProfile()
+      updateProfile(config)
     } else {
       ElMessage.warning("SMS code not correct")
     }

@@ -105,12 +105,13 @@ class ApplicationController < ActionController::Base
       u.roles = user_infos['roles']
     end
 
-    user.roles = user_infos['roles'] if user_infos['roles'].present?
-    user.avatar = user_infos['avatar'] if user_infos['avatar'].present?
-    user.name = user_infos['username'] if user_infos['username'].present?
-    user.nickname = user_infos['nickname'] if user_infos['nickname'].present?
-    user.phone = user_infos['phone'] if user_infos['phone'].present?
-    user.email = user_infos['email'] if user_infos['email'].present?
+    # 保持数据一致性
+    user.roles = user_infos['roles']
+    user.avatar = user_infos['avatar']
+    user.name = user_infos['username']
+    user.nickname = user_infos['nickname']
+    user.phone = user_infos['phone']
+    user.email = user_infos['email']
     user.save
 
     helpers.log_in user.reload

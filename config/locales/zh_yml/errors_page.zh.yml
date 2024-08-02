@@ -1,6 +1,4 @@
 zh:
-  errors_alert:
-    email_missing: '体验完整功能，请提供您的电子邮件'
   errors_page:
     not_found:
       title: '无法访问网页'
