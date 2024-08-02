@@ -36,6 +36,7 @@ module SessionsHelper
     # unset current_user
     session[:login_identity] = nil
     cookies.delete :current_user
+    cookies.delete :current_user_email
     cookies.delete :login_identity
     cookies.delete :user_token
     cookies.delete :token_expire_at
