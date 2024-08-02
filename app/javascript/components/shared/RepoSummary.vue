@@ -179,17 +179,11 @@
   }
 
   const fetchRepoRelations = async () => {
-    let current_path
-    if (props.namespacePath.split('/').pop().split('.').pop() === 'html') {
-      current_path = `${props.namespacePath}.html`
-    } else {
-      current_path = props.namespacePath
-    }
     const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/relations`
     const response = await jwtFetch(url)
     if (!response.ok) {
       response.json().then((error) => {
-        console.log(error.message)
+        console.log(error.msg)
       })
     } else {
       response.json().then((res_json) => {
