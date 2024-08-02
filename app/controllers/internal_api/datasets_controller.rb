@@ -1,16 +1,10 @@
 class InternalApi::DatasetsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:files, :readme, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def related_repos
-    res_body = csghub_api.dataset_related_repos(params[:namespace], params[:dataset_name], files_options)
-    api_response = JSON.parse(res_body)
-    render json: { relations: api_response['data']}
-  end
 
   def create
     dataset = current_user.created_datasets.build(dataset_params)
