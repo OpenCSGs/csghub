@@ -215,7 +215,7 @@
     userName: String
   })
 
-  const hasEmail = ref(false)
+  const hasEmail = ref(true)
   const userStore = useUserStore()
 
   watch(

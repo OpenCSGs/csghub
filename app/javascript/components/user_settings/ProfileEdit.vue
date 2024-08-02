@@ -146,6 +146,7 @@
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
   import { useCookies } from 'vue3-cookies'
+  import { isBlank } from '../../packs/utils'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -193,7 +194,7 @@
           type: 'warning',
         }
       ).then(() => {
-        updateProfile({relogin: true})
+        saveProfile({relogin: true})
       }).catch(() => {
         ElMessage({
           type: 'info',
@@ -201,7 +202,7 @@
         })
       })
     } else {
-      updateProfile()
+      saveProfile()
     }
   }
 
@@ -248,5 +249,17 @@
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const saveProfile = (config={}) => {
+    if (isBlank(profileData.value.username)) {
+      ElMessage.warning("Please provide username")
+      return
+    }
+    if (isBlank(profileData.value.email)) {
+      ElMessage.warning("Please provide email")
+      return
+    }
+    updateProfile(config)
   }
 </script>
