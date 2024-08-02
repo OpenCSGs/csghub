@@ -138,7 +138,7 @@
   const applicationSpace = ref({})
   // const { t } = useI18n();
   const { cookies } = useCookies();
-  const appStatus = ref(applicationSpace.value.status)
+  const appStatus = ref('')
   const appEndpoint = computed(() => {
     if(ENABLE_HTTPS === 'true') {
       return `https://${applicationSpace.value.endpoint}`
@@ -203,6 +203,7 @@
 
       if (response.ok) {
         applicationSpace.value = json.data
+        appStatus.value = json.data.status
         tags.value = buildTags(json.data.tags)
         repoDetailStore.initialize(json.data)
       } else {
@@ -312,6 +313,7 @@
 
   onMounted(() => {
     fetchRepoDetail()
+
     console.log(`Space 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
