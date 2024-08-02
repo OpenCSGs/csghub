@@ -5,7 +5,7 @@ export const collections = {
   noDataDesc:
     'No content matches your search criteria. You can also create a corresponding collection.',
   cleanSearch: 'Clear search',
-  collection: 'Collection',
+  collection: 'Collections',
   title: 'Exploring Featured Popular Collections in the Community',
   hot: 'Featured Collections of the Week',
   color: {
