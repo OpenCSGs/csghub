@@ -330,6 +330,7 @@
         })
       } else {
         ElMessage.success(t('profile.edit.updateSuccess'))
+        disableUpdatePhone()
         if (config.relogin) {
           window.location.href = '/logout'
         }
