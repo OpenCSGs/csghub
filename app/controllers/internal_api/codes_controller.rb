@@ -1,16 +1,10 @@
 class InternalApi::CodesController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:files, :readme, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def related_repos
-    res_body = csghub_api.code_related_repos(params[:namespace], params[:code_name], files_options)
-    api_response = JSON.parse(res_body)
-    render json: { relations: api_response['data']}
-  end
 
   def create
     code = current_user.created_codes.build(code_params)

@@ -55,9 +55,5 @@ module Starhub
     def update_model_file(namespace, model_name, path, options = {})
       update_repo_file('models', namespace, model_name, path, options)
     end
-
-    def model_related_repos(namespace, model_name, options = {})
-      related_repos('models', namespace, model_name, options)
-    end
   end
 end
