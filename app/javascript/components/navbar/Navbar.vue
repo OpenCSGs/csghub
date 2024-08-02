@@ -227,6 +227,13 @@
         :hasEmail="hasEmail" />
     </el-menu>
   </el-drawer>
+
+  <el-alert
+    v-if="!hasEmail && isLoggedInBoolean"
+    :title="$t('navbar.emailMissing')"
+    center
+    show-icon
+    type="warning"></el-alert>
 </template>
 
 <script>
@@ -265,7 +272,7 @@
         userAvatar: this.avatar,
         userStore: useUserStore(),
         csghubServer: inject('csghubServer'),
-        hasEmail: false
+        hasEmail: true
       }
     },
     components: {

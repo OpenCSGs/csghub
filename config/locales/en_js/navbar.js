@@ -66,5 +66,6 @@ export const navbar = {
   loginRegister: "Login/Register",
   "login": "Login",
   "source": "Console",
-  newCollection: "New Collection"
+  newCollection: "New Collection",
+  emailMissing: 'Please provide your email address before proceeding'
 }
