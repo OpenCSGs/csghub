@@ -70,9 +70,9 @@
         <el-form-item
           :label="t('finetune.new.cluster')"
           class="w-full"
-          prop="endpoint_cluster">
+          prop="cluster_id">
           <el-select
-            v-model="dataForm.endpoint_cluster"
+            v-model="dataForm.cluster_id"
             :placeholder="
               t('all.pleaseSelect', { value: t('finetune.new.cluster') })
             "
@@ -80,7 +80,7 @@
             style="width: 100%"
             @change="fetchResources">
             <el-option
-              v-for="item in endpointClusters"
+              v-for="item in finetuneClusters"
               :key="item.cluster_id"
               :label="item.region"
               :value="item.cluster_id" />
@@ -107,7 +107,7 @@
             size="large"
             style="width: 100%">
             <el-option
-              v-for="item in endpointResources"
+              v-for="item in finetuneResources"
               :key="item.name"
               :label="item.name"
               :value="item.id"
@@ -135,7 +135,7 @@
             size="large"
             style="width: 100%">
             <el-option
-              v-for="item in endpointFrameworks"
+              v-for="item in finetuneFrameworks"
               :key="item.id"
               :label="item.frame_name"
               :value="item.id" />

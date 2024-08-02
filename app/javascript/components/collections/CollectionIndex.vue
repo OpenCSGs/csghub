@@ -161,8 +161,8 @@
       // if(data.data){
       //   collectionData.value = data.data.filter(item => !!item.repositories)
       // }
-      collectionData.value = data.data || []
-      totalCollections.value = data.total
+      collectionData.value = data || []
+      totalCollections.value = res.total
     }
   }
   onMounted(() => {

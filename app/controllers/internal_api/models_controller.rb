@@ -1,16 +1,10 @@
 class InternalApi::ModelsController < InternalApi::ApplicationController
-  before_action :authenticate_user, except: [:files, :readme, :predict, :related_repos]
+  before_action :authenticate_user, except: [:files, :readme, :predict]
 
   include Api::SyncStarhubHelper
   include Api::BuildCommitHelper
   include Api::FileOptionsHelper
   include Api::RepoValidation
-
-  def related_repos
-    res_body = csghub_api.model_related_repos(params[:namespace], params[:model_name], files_options)
-    api_response = JSON.parse(res_body)
-    render json: { relations: api_response['data']}
-  end
 
   def create
     model = current_user.created_models.build(model_params)
