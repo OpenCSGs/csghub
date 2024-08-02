@@ -31,6 +31,6 @@ export const profile = {
     confirmUpdate: "更新",
     cancelUpdate: "取消",
     updateCancelled: "更新已取消",
-    renameUsername: "您当前用名是系统自动生成的临时用户名，在继续使用完成功能之前，您需要更新您的用户名"
+    renameUsername: "您当前用名是系统自动生成的临时用户名，在继续使用完整的功能之前，需要更新您的用户名"
   },
 }
