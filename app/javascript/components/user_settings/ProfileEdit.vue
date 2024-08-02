@@ -11,7 +11,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.username"
-        disabled
+        :disabled="canChangeUsername === 'false'"
         :placeholder="this.$t('all.userName')">
       </el-input>
       <p class="text-gray-500 text-[12px] italic pt-1">
@@ -138,13 +138,16 @@
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
+  import { useCookies } from 'vue3-cookies'
 
+  const { cookies } = useCookies()
   const { t } = useI18n()
   const userStore = useUserStore()
   const csghubServer = inject('csghubServer')
   const profileData = ref(storeToRefs(userStore))
 
   const fileInput = ref(null)
+  const canChangeUsername = cookies.get('can_change_username')
 
   const uploadImage = () => {
     fileInput.value.click()
@@ -173,16 +176,28 @@
   }
 
   const updateProfile = async () => {
-    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${profileData.value.username}`
-    const params = {
+    const currentUsername = cookies.get('current_user')
+    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${currentUsername}`
+    let params = {
       avatar: profileData.value.avatar,
       username: profileData.value.username,
       name: profileData.value.nickname,
-      email: profileData.value.email.trim(),
+      email: (profileData.value.email || "").trim(),
       phone: profileData.value.phone,
       homepage: profileData.value.homepage,
       bio: profileData.value.bio
     }
+
+    if (canChangeUsername === 'true') {
+      params['new_username'] = profileData.value.username
+    }
+
+    Object.keys(params).forEach(key => {
+      if (params[key] === '' || params[key] === undefined) {
+        delete params[key]
+      }
+    })
+
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -193,7 +208,7 @@
       if (!response.ok) {
         response.json().then((data) => {
           ElMessage({
-            message: data.message,
+            message: data.msg,
             type: 'warning'
           })
         })
