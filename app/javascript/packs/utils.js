@@ -25,3 +25,8 @@ export const createAndClickAnchor = (url, filename) => {
   document.body.removeChild(anchor)
   window.URL.revokeObjectURL(url) // Clean up the URL object
 }
+
+export const isBlank = (value) => {
+  if (!value) return true
+  return value.trim() === ''
+}
