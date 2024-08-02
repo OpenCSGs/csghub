@@ -154,7 +154,7 @@
     if (!res.ok) {
       ElMessage({ message: msg, type: 'warning' })
     } else {
-      collectionData.value = data.data || []
+      collectionData.value = data || []
     }
   }
   onBeforeMount(() => {

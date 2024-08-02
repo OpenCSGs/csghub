@@ -227,7 +227,7 @@
     } else {
       hasCreateCollection.value = false
       ElMessage.success(t('collections.newCollection.createSuccess'))
-      toCollectionDetail(data.data.data.id)
+      toCollectionDetail(data.data.id)
       return response.json()
     }
   }
