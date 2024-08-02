@@ -138,6 +138,7 @@
 
   onMounted(() => {
     props.repositories.forEach((item) => {
+      item.downloads = item.download_count
       switch (item.repository_type) {
         case 'model':
           models.value.push(item)
