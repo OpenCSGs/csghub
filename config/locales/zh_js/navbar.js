@@ -13,5 +13,6 @@ export const navbar = {
   logout: "退出登录",
   loginRegister: "登录/注册",
   login: "登录",
-  newCollection: "新建合集"
+  newCollection: "新建合集",
+  emailMissing: '体验完整功能，请提供您的电子邮件'
 }
