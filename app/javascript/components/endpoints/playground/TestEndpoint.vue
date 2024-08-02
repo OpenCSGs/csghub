@@ -122,7 +122,15 @@
   })
 
   const extraParams = computed(() => {
-    return props.form ? props.form : { max_tokens: 100 }
+    return props.form
+      ? props.form
+      : {
+          temperature: 0.2,
+          max_tokens: 128,
+          top_k: 10,
+          top_p: 0.95,
+          repetition_penalty: 1.0
+        }
   })
 
   const authHeaders = computed(() => {
