@@ -5,14 +5,14 @@
     <!-- dataset repo -->
     <div
       v-if="repoType === 'dataset'"
-      class="w-full flex flex-wrap gap-[16px] items-center md:w-full md:mb-1"
+      class="w-full flex flex-wrap gap-2 items-center md:w-full md:mb-1"
     >
       <SvgIcon
         name="repoheader_dataset"
         width="16"
         height="16"
       />
-      <span class="text-[#A8ABB2] text-[18px] font-semibold ml-1 mr-2"
+      <span class="text-[#A8ABB2] text-[18px] font-medium"
         >Dataset:</span
       >
       <el-avatar
@@ -20,7 +20,7 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
@@ -43,14 +43,14 @@
     <!-- endpoint -->
     <div
       v-else-if="repoType === 'endpoint'"
-      class="flex flex-wrap w-full gap-[16px] items-center"
+      class="flex flex-wrap w-full gap-2 items-center"
     >
       <el-avatar
         :size="24"
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
@@ -68,7 +68,7 @@
     <!-- finetune -->
     <div
       v-else-if="repoType === 'finetune'"
-      class="flex flex-wrap w-full gap-[16px] items-center"
+      class="flex flex-wrap w-full gap-2 items-center"
     >
       <SvgIcon
         name="model_finetune_create"
@@ -76,7 +76,7 @@
         height="16"
         class="flex-shrink-0"
       />
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <AppStatus
@@ -89,14 +89,14 @@
     <!-- other repo -->
     <div
       v-else
-      class="flex flex-wrap w-full gap-[16px] items-center"
+      class="flex flex-wrap w-full gap-2 items-center"
     >
       <el-avatar
         :size="24"
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words">{{
+      <span class="max-w-full break-words text-[#344053] font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
@@ -133,18 +133,18 @@
     </div>
 
     <div
-      class="flex gap-[8px] items-center"
+      class="flex gap-1 items-center"
       v-if="repoType !== 'finetune'"
     >
       <a
-        class="md:ml-0 hover:text-[#223B99]"
+        class="md:ml-0 hover:text-[#223B99] text-[#667084] font-normal"
         :href="ownerUrl"
       >
         {{ path?.split('/')[0] }}
       </a>
       <div>/</div>
       <a
-        class="text-[#303133] max-w-full break-words hover:text-[#223B99]"
+        class="max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
         href="#"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
@@ -191,7 +191,7 @@
       </div>
     </div>
   </div>
-  <div class="leading-[24px] pb-[16px] md:px-5">{{ desc }}</div>
+  <div class="leading-[24px] pb-[16px] text-[#344054] md:px-5">{{ desc }}</div>
 
   <!-- repo tags -->
   <header-tags
