@@ -13,5 +13,6 @@ export const navbar = {
   logout: "Logout",
   loginRegister: "Login/Registe",
   login: "Login",
-  newCollection: "New Collection"
+  newCollection: "New Collection",
+  emailMissing: 'Please provide your email address before proceeding'
 }

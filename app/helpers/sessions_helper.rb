@@ -3,6 +3,7 @@ module SessionsHelper
     session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
     cookies[:current_user] = user.name
+    cookies[:current_user_email] = user.email
     cookies[:admin_user] = 'true' if user.admin?
 
     # need to add later
