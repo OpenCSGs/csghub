@@ -179,20 +179,17 @@
   }
 
   const fetchRepoRelations = async () => {
-    const url = `/internal_api/${props.repoType}s/${props.namespacePath}/related_repos`
-    fetch(url).then((response) => {
-      if (!response.ok) {
-        response.json().then((data) => {
-          console.log(data.message)
-        })
-      } else {
-        response.json().then((data) => {
-          relations.value = data.relations
-        })
-      }
-    }).catch((error) => {
-      console.log(error.message)
-    })
+    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/relations`
+    const response = await jwtFetch(url)
+    if (!response.ok) {
+      response.json().then((error) => {
+        console.log(error.msg)
+      })
+    } else {
+      response.json().then((res_json) => {
+        relations.value = res_json["data"]
+      })
+    }
   }
 
   const fetchLicenseInfo = async () => {

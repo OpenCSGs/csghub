@@ -58,9 +58,5 @@ module Starhub
     def update_dataset_file(namespace, dataset_name, path, options = {})
       update_repo_file('datasets', namespace, dataset_name, path, options)
     end
-
-    def dataset_related_repos(namespace, dataset_name, options = {})
-      related_repos('datasets', namespace, dataset_name, options)
-    end
   end
 end
