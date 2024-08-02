@@ -196,7 +196,7 @@
   const dialogVisible = ref(false)
 
   const topPRange = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
-  const topKRange = [-1, 0, 1, 2, 3, 4, 5]
+  const topKRange = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   const temperatureRange = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
   const repetitionPenaltyRange = [
     0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0
@@ -206,9 +206,9 @@
   const playgroundMode = ref('test') // test, api
 
   const form = ref({
-    top_p: 1,
-    top_k: -1,
-    temperature: 0.5,
+    top_p: 0.9,
+    top_k: 10,
+    temperature: 0.2,
     repetition_penalty: 1.0,
     max_tokens: 20
   })
