@@ -67,6 +67,7 @@
             :key="item.name"
             :label="item.name"
             :value="item.id"
+            :disabled="!item.is_available"
           />
         </el-select>
       </div>

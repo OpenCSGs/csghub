@@ -66,6 +66,7 @@
             :key="item.name"
             :label="item.name"
             :value="item.resources"
+            :disabled="!item.is_available"
           />
         </el-select>
       </div>
