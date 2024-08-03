@@ -3,7 +3,7 @@
   <div class="sm:w-[95%] absolute top-[108px] sm:top-[67px] left-1/2 translate-x-[-50%]">
     <new-organization
       org-types="<%= Organization.org_types.to_a.to_json %>"
-      current-user-profile="/profile/<%= current_user.login_identity %>"
+      current-user-profile="/profile/<%= current_user.name %>"
     >
     </new-organization>
   </div>

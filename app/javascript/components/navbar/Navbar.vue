@@ -267,7 +267,7 @@
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
         isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
-        userProfile: `/profile/${this.userId}`,
+        userProfile: `/profile/${this.userName}`,
         mobileMenuVisibility: false,
         userAvatar: this.avatar,
         userStore: useUserStore(),

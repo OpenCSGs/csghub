@@ -34,7 +34,7 @@ class DailyPapersController < ApplicationController
     @daily_papers = @daily_papers.map do |daily_paper|
       {
         daily_paper: daily_paper,
-        recommender_url: '/profile/' + daily_paper.recommender.login_identity
+        recommender_url: '/profile/' + daily_paper.recommender.name
       }
     end
   end
