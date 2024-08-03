@@ -140,7 +140,6 @@
   const { cookies } = useCookies()
   const csghubServer = inject('csghubServer')
   const emit = defineEmits(['resetMemberList'])
-  // const admin = cookies.isKey('admin_user')
 
   const props = defineProps({
     orgName: String,
