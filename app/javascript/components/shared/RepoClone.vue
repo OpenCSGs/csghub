@@ -13,10 +13,10 @@
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
     <DeployDropdown
-      v-if="repoType === 'model' && admin && enableEndpoint && !!httpCloneUrl"
+      v-if="isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
-    <div v-if="!isLoggedIn">
+    <div v-if="!isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl">
       <el-button type="default" class="!rounded-lg" @click="toLoginPage">
         {{ $t("all.deploy") }}
         <el-icon class="ml-1 el-icon--right">
@@ -26,7 +26,7 @@
     </div>
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
-      v-if="!isLoggedIn || (repoType === 'model' && admin && enableFinetune && !!httpCloneUrl)"
+      v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
       @click="handleButtonClick"
     >
       <SvgIcon
