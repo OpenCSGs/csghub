@@ -21,6 +21,7 @@
           <div class="flex gap-[16px]">
             <InviteMember
               :orgName="organization.name"
+              :admin="admin"
               @resetMemberList="fetchMembers"
             />
           </div>
@@ -171,11 +172,14 @@
     organizationRaw: {
       type: Object,
       required: true
+    },
+    admin: {
+      type: Boolean,
+      default: false
     }
   })
 
   const organization = ref(props.organizationRaw)
-  const admin = cookies.isKey('admin_user')
   const csghubServer = inject('csghubServer')
   const members = ref([])
   const loading = ref(false)

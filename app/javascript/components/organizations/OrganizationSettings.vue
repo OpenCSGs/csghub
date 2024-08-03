@@ -33,12 +33,15 @@
   import OrganizationMembers from './OrganizationMembers.vue'
   import jwtFetch from "../../packs/jwtFetch.js"
   import { ref, onMounted, inject, provide } from 'vue'
+  import { useCookies } from 'vue3-cookies'
 
   const props = defineProps({
     name: String,
     action: String
   })
-
+  
+  const { cookies } = useCookies()
+  const current_user = cookies.get('current_user')
   const csghubServer = inject('csghubServer')
 
   const organization = ref({
@@ -49,6 +52,8 @@
     homepage: '',
     org_type: ''
   })
+
+  const admin =ref(false)
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `${csghubServer}/api/v1/organization/${props.name}`
@@ -79,8 +84,22 @@
       organization.value.logo = logo
     }
   }
+  
+  // const isCurrentUserAdmin = async () => {
+  //   const orgIsAdminEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members/${current_user}`
+  //   jwtFetch(orgIsAdminEndpoint)
+  //     .then(response => response.json())
+  //     .then(body => {
+  //       console.log(body.data);
+  //       admin.value = body.data === 'admin'
+  //     })
+  //     .catch(error => {
+  //       console.error('Error:', error)
+  //     })
+  // }
 
   onMounted(() => {
     fetchOrgDetail()
+    // isCurrentUserAdmin()
   })
 </script>
