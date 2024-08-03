@@ -80,6 +80,7 @@
 
           <InviteMember :orgName="organizationData.name"
                         @resetMemberList="resetMemberList"
+                        :admin="admin"
                         class="my-[16px]"
           />
 
@@ -126,7 +127,7 @@
   const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
 
-  const admin = cookies.isKey('admin_user')
+  const admin = ref(false)
 
   const resetMemberList = (newMembers, userRole) => {
     newMembers.forEach(member => member.role = userRole)
@@ -158,12 +159,18 @@
       .then(response => response.json())
       .then(body => {
         membersList.value = body.data.data
+        isCurrentUserAdmin(body.data.data)
       })
       .catch(error => {
         console.error('Error:', error)
       })
   }
-
+  const isCurrentUserAdmin = (members) => {
+    const currentUser = members.find(member => (member.username === cookies.get('current_user')) && member.role === 'admin')
+    if (currentUser) {
+      admin.value = true
+    }
+  }
   onMounted(() => {
     fetchOrgDetail()
     fetchOrgMemberList()
