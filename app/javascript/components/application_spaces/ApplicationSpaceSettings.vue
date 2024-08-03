@@ -66,7 +66,9 @@
             v-for="item in spaceResources"
             :key="item.name"
             :label="item.name"
-            :value="item.id" />
+            :value="item.id"
+            :disabled="!item.is_available"
+          />
         </el-select>
       </div>
     </div>
