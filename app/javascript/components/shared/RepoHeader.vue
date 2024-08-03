@@ -206,7 +206,7 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { ref, inject, computed } from 'vue'
+  import { ref, inject, computed, watch } from 'vue'
   import jwtFetch from '../../packs/jwtFetch'
   import { ElMessage } from 'element-plus'
 
@@ -240,6 +240,20 @@
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
   const csghubServer = inject('csghubServer')
+
+  watch(
+    () => props.hasLike,
+    (newVal) => {
+      userLiked.value = newVal
+    }
+  )
+
+  watch(
+    () => props.totalLikes,
+    (newVal) => {
+      likesNumber.value = newVal
+    }
+  )
 
   const copyName = () => {
     copyToClipboard(props.path)
