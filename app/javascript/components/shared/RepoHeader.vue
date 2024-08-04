@@ -107,6 +107,7 @@
       <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
+        v-show="repoType !== 'collections'"
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
