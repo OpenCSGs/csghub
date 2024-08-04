@@ -263,12 +263,12 @@
       class: menuItemClass,
       style: 'border:none',
     },
-    {
-      title: t('collections.collection'),
-      index: '/collections',
-      class: menuItemClass,
-      style: 'border:none',
-    },
+    // {
+    //   title: t('collections.collection'),
+    //   index: '/collections',
+    //   class: menuItemClass,
+    //   style: 'border:none',
+    // },
     {
       title: t('navbar.computer'),
       index: '/computing',
