@@ -380,7 +380,7 @@
         )
         if (!response.ok) {
           response.json().then(({ err }) => {
-            ElMessage({ message: err.message, type: 'warning' })
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           response.json().then(({ data }) => {
@@ -494,7 +494,7 @@
 
         if (!response.ok) {
           return response.json().then((err) => {
-            throw new Error(err.message)
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
@@ -637,7 +637,7 @@
         )
         if (!response.ok) {
           response.json().then((err) => {
-            ElMessage({ message: err.message, type: 'warning' })
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           response.json().then((data) => {

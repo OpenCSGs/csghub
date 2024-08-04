@@ -512,7 +512,7 @@
     } else {
       response.json().then((res) => {
         ElMessage({
-          message: t('application_spaces.new.createFail') + `: ${res.message}`,
+          message: t('application_spaces.new.createFail') + `: ${res.msg}`,
           type: 'error'
         })
       })

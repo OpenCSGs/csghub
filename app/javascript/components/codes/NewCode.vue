@@ -298,7 +298,7 @@
     } else {
       response.json().then((res) => {
         ElMessage({
-          message: t('codes.newCode.createFail') + `: ${res.message}`,
+          message: t('codes.newCode.createFail') + `: ${res.msg}`,
           type: 'error'
         })
       })

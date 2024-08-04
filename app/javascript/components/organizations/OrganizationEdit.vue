@@ -216,7 +216,7 @@
           response.json()
             .then(res => {
               ElMessage({
-                message: res.message,
+                message: res.msg,
                 type: 'warning'
               });
             })

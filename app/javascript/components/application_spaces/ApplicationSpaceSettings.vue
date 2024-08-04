@@ -595,7 +595,7 @@
 
         if (!response.ok) {
           return response.json().then((err) => {
-            throw new Error(err.message)
+            ElMessage({ message: err.msg, type: 'warning' })
           })
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })

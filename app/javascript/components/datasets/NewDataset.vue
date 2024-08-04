@@ -310,7 +310,7 @@
     } else {
       response.json().then((res) => {
         ElMessage({
-          message: t('datasets.newDataset.createFail') + `: ${res.message}`,
+          message: t('datasets.newDataset.createFail') + `: ${res.msg}`,
           type: 'error'
         })
       })
