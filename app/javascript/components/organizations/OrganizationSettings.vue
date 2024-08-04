@@ -20,7 +20,7 @@
     <OrganizationMembers
       v-if="action === 'members'"
       class="grow py-[24px]"
-      :admin="admin"
+      :role="role"
       :organizationRaw="organization"
     >
     </OrganizationMembers>
@@ -53,7 +53,7 @@
     org_type: ''
   })
 
-  const admin =ref(false)
+  const role =ref('')
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `${csghubServer}/api/v1/organization/${props.name}`
@@ -85,21 +85,21 @@
     }
   }
   
-  // const isCurrentUserAdmin = async () => {
-  //   const orgIsAdminEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members/${current_user}`
-  //   jwtFetch(orgIsAdminEndpoint)
-  //     .then(response => response.json())
-  //     .then(body => {
-  //       console.log(body.data);
-  //       admin.value = body.data === 'admin'
-  //     })
-  //     .catch(error => {
-  //       console.error('Error:', error)
-  //     })
-  // }
+  const currentUserRole = async () => {
+    const orgIsAdminEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members/${current_user}`
+    jwtFetch(orgIsAdminEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        console.log(body.data);
+        role.value = body.data
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
 
   onMounted(() => {
     fetchOrgDetail()
-    // isCurrentUserAdmin()
+    currentUserRole()
   })
 </script>

@@ -21,7 +21,7 @@
           <div class="flex gap-[16px]">
             <InviteMember
               :orgName="organization.name"
-              :admin="admin"
+              :role="role"
               @resetMemberList="fetchMembers"
             />
           </div>
@@ -87,7 +87,7 @@
             </el-table-column>
 
             <el-table-column
-              v-if="admin"
+              v-if="role === 'admin'"
               width="100"
               align="center"
               fixed="right"
@@ -173,9 +173,9 @@
       type: Object,
       required: true
     },
-    admin: {
-      type: Boolean,
-      default: false
+    role: {
+      type: String,
+      default: ''
     }
   })
 

@@ -2,7 +2,7 @@
   <div class="InviteMember">
     <!-- org detail invite button -->
     <button
-      v-if="admin"
+      v-if="role === 'admin'"
       @click="dialogVisible = true"
       class="px-[12px] py-[8px] flex gap-[4px] items-center rounded-md border border-gray-300 text-[14px]"
     >
@@ -143,7 +143,7 @@
 
   const props = defineProps({
     orgName: String,
-    admin: Boolean
+    role: String
   })
 
   const { t } = useI18n()
