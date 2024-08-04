@@ -12,6 +12,7 @@ export const models = {
   modelTag: "Model Tags",
   modelIndustryTag: "Industry tags",
   tips:" Creating and Uploading Model Files",
+  modelsUsedToTrain: "Model used to train",
   newModel: {
     title: "Create a new model repository",
     titleDesc: "The repository contains all model files and revision history",
