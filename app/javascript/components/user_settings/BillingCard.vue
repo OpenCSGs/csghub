@@ -1,5 +1,5 @@
 <template>
-  <div class="p-[12px] rounded-[8px] mt-[16px]">
+  <div class="rounded-[8px]">
     <!-- billing title -->
     <div class="flex justify-between items-center mb-8">
       <div class="text-[30px] leading-[38px]">
