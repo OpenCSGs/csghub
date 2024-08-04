@@ -2,6 +2,7 @@
   <div
     class="flex items-center gap-4 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
   >
+    <!-- multi-source sync button -->
     <el-button
       v-if="showSyncButton"
       type="default"
@@ -12,6 +13,8 @@
       <SvgIcon name="sync" class="mr-2" />
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
+
+    <!-- endpoint deploy button -->
     <DeployDropdown
       v-if="isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
@@ -24,6 +27,8 @@
         </el-icon>
       </el-button>
     </div>
+
+    <!-- finetune deploy button -->
     <div
       class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
       v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
@@ -35,6 +40,8 @@
       />
       <div class="text-sm">{{ $t('finetune.title') }}</div>
     </div>
+
+    <!-- repo download clone button -->
     <div
       v-if="!!httpCloneUrl"
       class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
@@ -46,6 +53,8 @@
       />
       <div class="text-[#fff] text-sm">{{ $t(downloadButtonKey) }}</div>
     </div>
+
+    <!-- clone dialog -->
     <el-dialog
       v-model="cloneRepositoryVisible"
       title=""
@@ -74,7 +83,7 @@
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
-              <a :href="downloadModalUrl" target="_blank" class="underline">access token</a> 
+              <a href="https://opencsg.com/settings/access-token" target="_blank" class="underline">access token</a>
               as git password/credential
             </div>
             <div
@@ -111,7 +120,7 @@
           >
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-              <a :href="downloadModalUrl" target="_blank" class="underline">Add your SSH public key</a> 
+              <a href="https://opencsg.com/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
             </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
@@ -133,7 +142,7 @@
           <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
             <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
             Use
-            <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a> 
+            <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a>
             to download
             </div>
             <div class="text-[#909399] mt-[8px]"># {{ $t('all.sdkTips') }}</div>
@@ -251,7 +260,7 @@ repo_type = "${props.repoType}"
 repo_id = '${props.namespacePath}'
 chache_dir = '' # cache dir of download data
 result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
-`)  
+`)
   }
 
   const cmdCloneCodeMarkdown = computed(() => {

@@ -10,6 +10,7 @@ export const datasets = {
   datasetTag: "数据集标签",
   datasetIndustryTag: "数据集行业标签",
   tips:"轻松的托管数据集",
+  datasetsUsedToTrain: "关联数据集",
   newDataset: {
     title: "新建数据集仓库",
     titleDesc: "仓库包含所有的模型文件和修订的历史记录",
