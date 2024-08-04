@@ -28,7 +28,7 @@
             {{ commit.message }}
           </a>
           <el-button-group class="ml-2 min-w-[107px]">
-            <el-button :href="`/${repoType}s/${namespacePath}/commit/${commit.id}`" type="default" size="small">
+            <el-button plain type="default" size="small" class="!cursor-default hover:!text-[#344054] hover:!border-[#dcdfe6]">
               {{ commit.id.slice(0, 7) }}
             </el-button>
             <el-button type="default" size="small" @click="copyCommitId(commit.id)">
