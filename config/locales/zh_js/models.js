@@ -10,6 +10,7 @@ export const models = {
   modelDesc: "模型介绍",
   modelTag: "模型标签",
   modelIndustryTag: "模型行业标签",
+  modelsUsedToTrain: "关联模型",
   tips:"创建并上传模型文件",
   newModel: {
     title: "新建模型仓库",

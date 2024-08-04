@@ -9,6 +9,7 @@ export const codes = {
   namespaceCodeName: "Namespace/Code Name",
   codeNickName: "Code Nickname",
   codeDesc: "Code Description",
+  codesUsedToTrain: 'Codes used to train',
   newCode: {
     title: "New Code Repository",
     titleDesc: "Repository contains all code files and revision history",
