@@ -90,7 +90,6 @@
     jwtFetch(orgIsAdminEndpoint)
       .then(response => response.json())
       .then(body => {
-        console.log(body.data);
         role.value = body.data
       })
       .catch(error => {
