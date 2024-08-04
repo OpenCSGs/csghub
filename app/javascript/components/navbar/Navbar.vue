@@ -143,11 +143,11 @@
                   + {{ $t('navbar.newApplicationSpace') }}
                 </el-dropdown-item>
               </a>
-              <a href="/collections/new">
+              <!-- <a href="/collections/new">
                 <el-dropdown-item>
                   + {{ $t('navbar.newCollection') }}
                 </el-dropdown-item>
-              </a>
+              </a> -->
               <a v-if="hasEmail"
                  href="/organizations/new">
                 <el-dropdown-item divided>
