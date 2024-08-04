@@ -2,7 +2,7 @@ export const navbar = {
   "allSolution":"全部解决方案",
   "models": "模型",
   "datasets": "数据",
-  spaces: "空间",
+  spaces: "应用",
   codes: "代码",
   "product": "产品",
   "openSourceStarCloud":"开源StarCloud",
