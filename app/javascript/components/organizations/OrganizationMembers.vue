@@ -21,6 +21,7 @@
           <div class="flex gap-[16px]">
             <InviteMember
               :orgName="organization.name"
+              :role="role"
               @resetMemberList="fetchMembers"
             />
           </div>
@@ -86,7 +87,7 @@
             </el-table-column>
 
             <el-table-column
-              v-if="admin"
+              v-if="role === 'admin'"
               width="100"
               align="center"
               fixed="right"
@@ -171,11 +172,14 @@
     organizationRaw: {
       type: Object,
       required: true
+    },
+    role: {
+      type: String,
+      default: ''
     }
   })
 
   const organization = ref(props.organizationRaw)
-  const admin = cookies.isKey('admin_user')
   const csghubServer = inject('csghubServer')
   const members = ref([])
   const loading = ref(false)
