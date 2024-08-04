@@ -304,7 +304,7 @@
     } else {
       response.json().then((res) => {
         ElMessage({
-          message: t('models.newModel.createFail') + `: ${res.message}`,
+          message: t('models.newModel.createFail') + `: ${res.msg}`,
           type: 'error'
         })
       })

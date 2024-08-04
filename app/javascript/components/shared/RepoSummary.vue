@@ -142,7 +142,7 @@
     jwtFetch(url, options).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
-          console.log(data.message)
+          console.log(data.msg)
         })
       } else {
         response.json().then((res_json) => {
@@ -166,7 +166,7 @@
     jwtFetch(url).then((response) => {
       if (!response.ok) {
         response.json().then((data) => {
-          console.log(data.message)
+          console.log(data.msg)
         })
       } else {
         response.json().then((res_json) => {
