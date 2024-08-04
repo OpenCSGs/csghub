@@ -192,7 +192,7 @@
     const response = await jwtFetch(url, options)
     if (!response.ok) {
       return response.json().then((data) => {
-        throw new Error(data.message)
+        ElMessage({ message: data.msg, type: 'warning' })
       })
     } else {
       return response.json()

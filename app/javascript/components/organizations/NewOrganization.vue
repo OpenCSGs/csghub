@@ -215,7 +215,7 @@
               response.json()
                 .then(res => {
                   this.$message({
-                    message: res.message,
+                    message: res.msg,
                     type: 'warning'
                   });
                 })

@@ -497,7 +497,7 @@
 
     if (!response.ok) {
       return response.json().then((data) => {
-        throw new Error(data.msg)
+        ElMessage({ message: data.msg, type: 'warning' })
       })
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
