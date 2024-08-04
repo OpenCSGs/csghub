@@ -47,7 +47,7 @@
 
       <!-- usage duration -->
       <el-table-column
-        :label="$t('billing.usageTime')"
+        :label="type === 'starship'? $t('billing.tokenNum') : $t('billing.usageTime')"
         label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
         align="center"
       >
