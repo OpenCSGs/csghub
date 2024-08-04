@@ -252,9 +252,10 @@
       ElMessage({ message: t('all.fetchError'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        const firstAvailableResource = body.data.find((item) => item.is_available)
+        const allGPUResources = body.data.filter((item) => JSON.parse(item.resources).hasOwnProperty('gpu'))
+        const firstAvailableResource = allGPUResources.find((item) => item.is_available)
         dataForm.value.resource_id = firstAvailableResource?.id || ''
-        finetuneResources.value = body.data
+        finetuneResources.value = allGPUResources
       })
     }
   }
