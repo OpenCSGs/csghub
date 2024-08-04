@@ -198,7 +198,7 @@
     const menuWidth = document.querySelector('#pc-menu').offsetWidth
     let width = moreMenuWidth + safePadding
     items.value.forEach((item, index) => {
-      width += item.width
+      width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
       if (width > menuWidth) {
         moreItems.value = items.value.splice(index, items.value.length - index)
         return
@@ -212,7 +212,7 @@
 
     // 超出宽度的菜单放到更多里面
     items.value.map((item, index) => {
-      width += item.width
+      width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
       if (width > menuWidth) {
         const removedItem = items.value.pop()
         if (removedItem) {
@@ -223,7 +223,7 @@
 
     // 将更多里面的菜单放回去
     moreItems.value.map((item, index) => {
-      width += item.width
+      width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
       if (width <= menuWidth) {
         const removedItem = moreItems.value.shift()
         if (removedItem) {
@@ -233,12 +233,10 @@
     })
   }
 
-  const menuItemClass = 'md:!px-[12px] md:!py-[16px] md:!h-auto'
-  const subMenuClass = 'md:!h-auto md:!py-[16px]'
+  const menuItemClass = 'md:!px-[12px] md:!py-[16px] md:!h-auto js-menu-item-width'
+  const subMenuClass = 'md:!h-auto md:!py-[16px] js-menu-item-width'
   const subMenuItemClass = 'mx-[12px] md:mx-0 md:!px-[12px]'
   const popperClass = 'popper-submenu'
-  const menuItemWidth = 56
-  const subMenuItemWidth = 76
 
   const items = ref([
     {
@@ -246,49 +244,42 @@
       index: '/models',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
     },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
     },
     {
       title: t('navbar.spaces'),
       index: '/spaces',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
     },
     {
       title: t('navbar.codes'),
       index: '/codes',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
     },
     {
       title: t('collections.collection'),
       index: '/collections',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
     },
     {
       title: t('navbar.computer'),
       index: '/computing',
       class: menuItemClass,
       style: 'border:none',
-      width: menuItemWidth
     },
     {
       title: t('navbar.product'),
       index: 'product',
       class: subMenuClass,
       popperClass: popperClass,
-      width: subMenuItemWidth,
       items: [
         {
           title: 'csghub',
@@ -360,7 +351,6 @@
       index: 'developer',
       class: subMenuClass,
       popperClass: popperClass,
-      width: subMenuItemWidth,
       items: [
         {
           title: 'CSG Hub',
@@ -414,7 +404,6 @@
       index: 'community',
       class: subMenuClass,
       popperClass: popperClass,
-      width: subMenuItemWidth,
       items: [
         {
           title: 'Daily Papers',
