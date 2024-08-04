@@ -18,7 +18,7 @@
         <div class="flex gap-[10px]">
           <el-popover placement="bottom-start" :width="300" trigger="click">
             <template #reference>
-              <div v-if="role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
+              <div v-if="role === 'admin' || role ==='write'" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
                 <SvgIcon name="create_org_repo"/>
                 {{ $t('organization.create') }}
               </div>
