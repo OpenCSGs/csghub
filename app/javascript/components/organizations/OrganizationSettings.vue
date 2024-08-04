@@ -20,7 +20,7 @@
     <OrganizationMembers
       v-if="action === 'members'"
       class="grow py-[24px]"
-      :admin="admin"
+      :role="role"
       :organizationRaw="organization"
     >
     </OrganizationMembers>
@@ -33,12 +33,15 @@
   import OrganizationMembers from './OrganizationMembers.vue'
   import jwtFetch from "../../packs/jwtFetch.js"
   import { ref, onMounted, inject, provide } from 'vue'
+  import { useCookies } from 'vue3-cookies'
 
   const props = defineProps({
     name: String,
     action: String
   })
-
+  
+  const { cookies } = useCookies()
+  const current_user = cookies.get('current_user')
   const csghubServer = inject('csghubServer')
 
   const organization = ref({
@@ -49,6 +52,8 @@
     homepage: '',
     org_type: ''
   })
+
+  const role =ref('')
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `${csghubServer}/api/v1/organization/${props.name}`
@@ -79,8 +84,21 @@
       organization.value.logo = logo
     }
   }
+  
+  const currentUserRole = async () => {
+    const orgIsAdminEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members/${current_user}`
+    jwtFetch(orgIsAdminEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        role.value = body.data
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
 
   onMounted(() => {
     fetchOrgDetail()
+    currentUserRole()
   })
 </script>

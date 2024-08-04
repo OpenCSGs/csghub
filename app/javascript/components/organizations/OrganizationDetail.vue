@@ -18,7 +18,7 @@
         <div class="flex gap-[10px]">
           <el-popover placement="bottom-start" :width="300" trigger="click">
             <template #reference>
-              <div v-if="admin" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
+              <div v-if="role === 'admin' || role ==='write'" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
                 <SvgIcon name="create_org_repo"/>
                 {{ $t('organization.create') }}
               </div>
@@ -62,7 +62,7 @@
               </a>
             </div>
           </el-popover>
-          <a v-if="admin" :href="`/organizations/${organizationData.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
+          <a v-if="role === 'write' || role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
             <SvgIcon name="invite_org_member" />
             {{ $t('organization.orgSetting') }}
           </a>
@@ -80,6 +80,7 @@
 
           <InviteMember :orgName="organizationData.name"
                         @resetMemberList="resetMemberList"
+                        :role="role"
                         class="my-[16px]"
           />
 
@@ -126,7 +127,7 @@
   const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
 
-  const admin = cookies.isKey('admin_user')
+  const role = ref('')
 
   const resetMemberList = (newMembers, userRole) => {
     newMembers.forEach(member => member.role = userRole)
@@ -163,9 +164,21 @@
         console.error('Error:', error)
       })
   }
+  const currentUserRole = async () => {
+    const orgIsAdminEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members/${cookies.get('current_user')}`
+    jwtFetch(orgIsAdminEndpoint)
+      .then(response => response.json())
+      .then(body => {
+        role.value = body.data
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
 
   onMounted(() => {
     fetchOrgDetail()
     fetchOrgMemberList()
+    currentUserRole()
   })
 </script>
