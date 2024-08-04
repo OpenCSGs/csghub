@@ -5,6 +5,7 @@ export const billing = {
   finetune: 'Finetune Instance',
   instanceID: 'Instance ID',
   createTime: 'Creation Time',
+  tokenNum: 'Token Num',
   usageTime: 'Usage Duration(m)',
   cost: 'Cost(yuan)',
   status: 'Status',
