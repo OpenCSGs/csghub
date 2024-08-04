@@ -89,7 +89,7 @@
     </div>
 
     <!-- finetunes -->
-    <div>
+    <div v-if="isCurrentUser">
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <SvgIcon name="profile_finetune" width="18" height="18" />
         <span>{{ $t("finetune.title") }}</span>
@@ -125,6 +125,9 @@
 
   const { t } = useI18n()
   const current_user = cookies.get('current_user')
+  const isCurrentUser = computed(() => {
+    return props.name === current_user
+  })
 
   const models = ref([])
   const datasets = ref([])
@@ -163,13 +166,12 @@
         fetchData(codesUrl, codes, defaultTotal)
     ];
     if(props.initiator=='profile'){
-      if(props.name === current_user){
+      if(isCurrentUser.value){
         const endpointsUrl = reposUrl("endpoints")
-        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));       
-      }
+        promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));
         const finetunesUrl = reposUrl("finetunes")
-        promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
-
+        promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));  
+      }
     }
     await Promise.all(promises);
   }
