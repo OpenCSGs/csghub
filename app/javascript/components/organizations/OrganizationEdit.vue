@@ -113,10 +113,10 @@
     if (newVal.logo) {
       logo_images.value = [{ url: newVal.logo, name: newVal.logo }]
     }
+    organization.value = newVal
     if (newVal.homepage) {
       formatHomepage(newVal.homepage)
     }
-    organization.value = newVal
   })
 
   const rules = computed(() => {
