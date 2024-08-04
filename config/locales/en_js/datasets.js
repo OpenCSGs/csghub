@@ -11,6 +11,7 @@ export const datasets = {
   datasetTag: "Dataset Tags",
   datasetIndustryTag: "Industry tags",
   tips:"Easy Dataset Hosting",
+  datasetsUsedToTrain: "Dataset used to train",
   newDataset: {
     title: "Create New Dataset Repository",
     titleDesc:
