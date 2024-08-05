@@ -1,9 +1,6 @@
 class EndpointsController < ApplicationController
-  include LocalRepoValidation
-
   before_action :authenticate_user, except: :show
   before_action :check_user_info_integrity
-  before_action :load_endpoint_detail, except: :new
 
   def new
   end
@@ -25,11 +22,5 @@ class EndpointsController < ApplicationController
   def settings
     @default_tab = 'settings'
     render :show
-  end
-
-  private
-
-  def load_endpoint_detail
-    @settings_visibility = (current_user && @local_endpoint) ? current_user.can_manage?(@local_endpoint) : false
   end
 end
