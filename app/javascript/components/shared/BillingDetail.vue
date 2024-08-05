@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, onMounted, computed } from 'vue'
+  import { ref, inject, computed, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
@@ -157,6 +157,14 @@
     return tempScene
   })
 
+  // props instanceName is from Endpoint Detail async data
+  // so we need to watch it here
+  watch(() => props.instanceName, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      fetchDetails()
+    }
+  })
+
   const disabledDate = (date) => {
     return isFutureDate(date)
   }
@@ -205,7 +213,6 @@
       selectedMonth.value = searchParams.get('time')
       dateChange(selectedMonth.value)
     }
-    fetchDetails()
   })
 </script>
 
