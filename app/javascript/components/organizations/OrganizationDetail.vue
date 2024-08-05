@@ -72,7 +72,7 @@
 
     <div class="bg-[#fff]">
       <div class="flex justify-center lg:flex-col rounded-[8px] max-w-[1280px] m-auto bg-white">
-        <div class="max-w-[320px] pl-[16px] pr-[32px] pt-[36px]">
+        <div class="pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>
             <span class="text-[#303133] text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
