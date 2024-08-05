@@ -65,7 +65,8 @@
   const currentUser = cookies.get('current_user')
 
   const canWrite = ref(currentUser === props.namespace)
-  const canManage = ref(currentUser === props.namespace)
+  // only owner can view endpoint detail, so just set true
+  const canManage = ref(true)
 
   const csghubServer = inject('csghubServer')
 
