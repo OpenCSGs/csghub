@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-x-auto">
     <table class="w-full text-sm code-preview">
-      <tr :id="`L${index + 1}`" v-for="row, index in highlightContent.split('\n')" :key="row">
+      <tr :id="`L${index + 1}`" v-for="row, index in highlightContent.split('\n')" :key="index">
         <td class="blob-line-number w-8 text-center text-gray-300 cursor-pointer hover:text-black" :data-line-number="index + 1"></td>
         <td class="overflow-visible whitespace-pre px-3" v-html="row"></td>
       </tr>

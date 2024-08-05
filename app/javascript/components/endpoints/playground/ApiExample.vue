@@ -106,6 +106,13 @@ import re
 
 url = "${endpointUrl.value}"
 
+auth_token = "${ useToken.value ? accessToken.value : '' }"
+
+headers = {
+    'Authorization': f'Bearer {auth_token}',
+    'Content-Type': 'application/json'
+}
+
 data = {
     "model": "${props.modelId}",
     "messages": [
@@ -126,7 +133,7 @@ data = {
     "repetition_penalty": ${props.form.repetition_penalty}
 }
 
-response = requests.post(url=url, json=data, stream=True)
+response = requests.post(url=url, json=data, headers=headers, stream=True)
 response.raise_for_status()
 
 if response.status_code == 200:
@@ -148,6 +155,7 @@ if response.status_code == 200:
   method: "POST",
   headers: {
     "Content-Type": "application/json",
+    "Authorization": "${ useToken.value ? `Bearer ${accessToken.value}` : '' }"
   },
   body: JSON.stringify({
     model: "${props.modelId}",
@@ -179,6 +187,7 @@ if response.status_code == 200:
     () => `curl -X POST \\
 "${endpointUrl.value}" \\
 -H "Content-Type: application/json" \\
+-H "Authorization: ${ useToken.value ? `Bearer ${accessToken.value}` : '' }" \\
 -d '{ \\
   "model": "${props.modelId}", \\
   "messages": [ \\
@@ -212,17 +221,17 @@ if response.status_code == 200:
     }
   }
 
-  const setEndpointUrl = () => {
-    if (useToken.value) {
-      endpointUrl.value = `${props.appEndpoint}/v1/chat/completions?jwt=${accessToken.value}`
-    } else {
-      endpointUrl.value = `${props.appEndpoint}/v1/chat/completions`
-    }
-  }
-
   const copyCode = () => {
     copyToClipboard(codeContent.value)
   }
+
+  watch(
+    () => props.appEndpoint,
+    () => {
+      endpointUrl.value = `${props.appEndpoint}/api/v1/chat/completions`
+      setCodeContent()
+    }
+  )
 
   watch(
     () => codeExtension.value,
@@ -242,7 +251,6 @@ if response.status_code == 200:
   watch(
     () => useToken.value,
     () => {
-      setEndpointUrl()
       setCodeContent()
     }
   )
@@ -267,7 +275,6 @@ if response.status_code == 200:
   }
 
   onMounted(() => {
-    setEndpointUrl()
     setCodeContent()
     fetchUserToken()
   })
