@@ -50,6 +50,7 @@
   import jwtFetch from '../../packs/jwtFetch'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
+  import { usePermissionCheck } from '../../packs/usePermissionCheck'
 
   const props = defineProps({
     localRepoId: String,
@@ -96,6 +97,9 @@
 
     try {
       const response = await jwtFetch(url, { method: 'GET' })
+      const hasPermission = usePermissionCheck(response)
+      if (!hasPermission) return
+
       const json = await response.json()
 
       if (response.ok) {
