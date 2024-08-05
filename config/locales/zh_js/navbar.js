@@ -67,5 +67,6 @@ export const navbar = {
   "login": "登录",
   "source": "资源控制台",
   newCollection: "新建合集",
-  emailMissing: '体验完整功能，请提供您的电子邮件'
+  emailMissing: '体验完整功能，请提供您的电子邮件',
+  "more": "更多"
 }

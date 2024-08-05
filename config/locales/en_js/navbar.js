@@ -67,5 +67,6 @@ export const navbar = {
   "login": "Login",
   "source": "Console",
   newCollection: "New Collection",
-  emailMissing: 'Please provide your email address before proceeding'
+  emailMissing: 'Please provide your email address before proceeding',
+  "more": "more"
 }

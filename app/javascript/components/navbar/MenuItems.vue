@@ -52,7 +52,7 @@
       <SvgIcon
         name="more_menu"
         class="p-[4px]" />
-      更多
+      {{ $t('navbar.more') }}
     </template>
 
     <template
