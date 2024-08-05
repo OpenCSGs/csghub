@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="`/endpoints/${namespace}/${modelName}/${endpoint.deploy_id}`"
+    :href="`/endpoints/${endpoint.model_id}/${endpoint.deploy_id}`"
     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl p-4 w-full"
   >
     <div class="flex justify-between items-center mb-2">
@@ -29,16 +29,10 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
   import AppStatus from "../application_spaces/AppStatus.vue";
 
   const props = defineProps({
     endpoint: Object,
     namespace: String
-  })
-
-  // ToDo: 因为从 profile 列表获取的 endpoint 的详情中，model_path 不对，所以需要这里解析，后续要优化
-  const modelName = computed(() => {
-    return props.endpoint.model_id.split("/")[1]
   })
 </script>
