@@ -70,11 +70,8 @@ class AwsS3
 
   def load_s3_config key
     env_config = ENV.fetch(key.upcase, nil)
-    system_config = SystemConfig.first
-    s3_configs = (system_config.s3_configs rescue {}) || {}
-    sc_config = s3_configs[key]
     default_config = Rails.application.credentials.s3.send(Rails.env)&.send(key)
-    env_config || sc_config || default_config
+    env_config || default_config
   end
 
   def random_file_name

@@ -17,7 +17,6 @@
 这个是一种进行项目配置的方式，基于一个数据对象 SystemConfig，对应到数据库表 system_configs。针对每个环境使用管理员账号只需要新建一条 SystemConfig 记录。
 
 目前系统支持这些 System Config 字段，他们都是 jsonb 的类型：
-- s3_configs
 
 当前你可以随时添加更多其他的字段
 

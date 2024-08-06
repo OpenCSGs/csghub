@@ -6,29 +6,6 @@
 
   <hr />
 
-  <!-- S3 configs -->
-  <div class="my-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">S3 Configs</h3>
-    <el-form-item>
-      <textarea
-        ref="s3ConfigsRef"
-        class="system-config-obj-box"
-        :value="stringifyObject(systemConfigs.s3_configs)"
-        rows="5"
-      ></textarea>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="info"
-        size="small"
-        @click="updateS3Configs"
-        >Update</el-button
-      >
-    </el-form-item>
-  </div>
-
-  <hr />
-
   <!-- License info -->
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">License info</h3>
@@ -58,15 +35,8 @@
 
   const systemConfigs = ref({
     application_env: '',
-    s3_configs: {},
     license_info: {}
   })
-
-  const s3ConfigsRef = ref(null)
-  const updateS3Configs = () => {
-    systemConfigs.value.s3_configs = JSON.parse(s3ConfigsRef.value.value)
-    updateSystemConfig(systemConfigs.value)
-  }
 
   const licenseInfoRef = ref(null)
   const updateLicenseInfo = () => {

@@ -10,7 +10,6 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     application_env: Field::String,
-    s3_configs: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -31,7 +30,6 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     application_env
-    s3_configs
     created_at
     updated_at
   ].freeze
@@ -41,7 +39,6 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     application_env
-    s3_configs
   ].freeze
 
   # COLLECTION_FILTERS
