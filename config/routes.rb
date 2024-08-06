@@ -2,9 +2,6 @@ Rails.application.routes.draw do
   # admin
   namespace :admin do
     resources :system_configs
-    resources :users do
-      get :export, on: :collection
-    end
     resources :comments
     resources :discussions
     resources :system_api_keys
@@ -14,7 +11,7 @@ Rails.application.routes.draw do
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
 
-    root to: "users#index"
+    root to: "system_configs#index"
   end
 
   # internal api
