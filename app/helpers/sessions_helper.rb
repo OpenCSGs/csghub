@@ -1,6 +1,5 @@
 module SessionsHelper
   def log_in user
-    session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
     cookies[:current_user] = user.name
     cookies[:current_user_email] = user.email
@@ -16,7 +15,7 @@ module SessionsHelper
   end
 
   def current_user
-    login_identity = session[:login_identity].presence
+    login_identity = cookies[:login_identity].presence
     @current_user ||= login_identity && User.find_by_login_identity(login_identity)
   end
 
@@ -34,7 +33,6 @@ module SessionsHelper
 
   def logout
     # unset current_user
-    session[:login_identity] = nil
     cookies.delete :current_user
     cookies.delete :current_user_email
     cookies.delete :login_identity
