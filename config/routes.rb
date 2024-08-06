@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :system_configs
     resources :tags
-    resources :organizations
     resources :error_logs
     resources :models, except: [:new, :create]
     resources :datasets, except: [:new, :create]
