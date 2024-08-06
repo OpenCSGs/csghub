@@ -4,8 +4,6 @@ Rails.application.routes.draw do
     resources :system_configs
     resources :tags
     resources :error_logs
-    resources :models, except: [:new, :create]
-    resources :datasets, except: [:new, :create]
 
     root to: "system_configs#index"
   end
