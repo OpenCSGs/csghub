@@ -82,7 +82,6 @@
   const systemConfigs = ref({
     application_env: '',
     feature_flags: {},
-    license_configs: {},
     s3_configs: {},
     license_info: {}
   })
