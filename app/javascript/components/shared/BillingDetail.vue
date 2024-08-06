@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, computed, watch } from 'vue'
+  import { ref, inject, computed, watch, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useCookies } from 'vue3-cookies'
