@@ -1,12 +1,12 @@
 <template>
   <a :href="detailLink"
      :class="`${repoType}-card  hover:active-${repoType}-card `"
-     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-xl"
+     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-[#EAECF0] rounded-lg flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
      :style="isCollection ? 'width:100%' : ''"
   >
-    <div class="flex items-center justify-between mb-[5px] w-[399px] lg:w-full">
+    <div class="flex items-center justify-between mb-1 w-[399px] lg:w-full">
       <div :class="`${repoType}-path`"
-           class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap"
+           class="text-md text-[#344054] font-normal text-ellipsis overflow-hidden whitespace-nowrap"
       >
         {{ getComputed.path }}
       </div>
@@ -29,13 +29,13 @@
     </div>
 
     <p v-if="getComputed.showDescription"
-      class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-[5px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left"
+      class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-1 text-[#667085] text-sm overflow-hidden text-ellipsis line-clamp-2 text-left"
       :class="isCollection ? 'hidden' : ''"
      >
       {{ repo.description }}
     </p>
 
-    <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-[#909399]">
+    <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-[#667085]">
       <span v-if="getComputed.taskTag"
             class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
       >

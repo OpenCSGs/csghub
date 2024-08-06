@@ -2,7 +2,7 @@
   <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0">
     <div
       v-if="repoType !== 'space'"
-      class="w-[30%] min-w-[360px] border-r border-[#DCDFE6] pr-6 xl:pl-[20px] mlg:hidden"
+      class="w-[30%] min-w-[360px] border-r border-[#EAECF0] pr-6 xl:pl-[20px] mlg:hidden"
     >
       <TagSidebar
         :taskTags="props.taskTags"
@@ -19,7 +19,7 @@
       <div
         :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] mlg:pl-0' : ''}`"
       >
-        <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+        <h3 class="text-lg font-normal text-[#101828] flex items-center gap-2">
           <SvgIcon
             v-if="repoType === 'model'"
             name="models"
@@ -93,7 +93,7 @@
       </div>
       <div
         v-if="repoType === 'space'"
-        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-6 mb-4 mt-[16px] xl:pl-[20px] mlg:pl-0"
+        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] mlg:pl-0"
       >
         <application-space-item
           v-for="repo in reposData"
@@ -103,7 +103,7 @@
       </div>
       <div
         v-else
-        class="w-[896px] xl:flex-col xl:w-full flex flex-wrap justify-between gap-y-4 mb-4 mt-[16px]"
+        class="xl:flex-col xl:w-full flex flex-wrap justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
       >
         <repo-item
           v-for="repo in reposData"
