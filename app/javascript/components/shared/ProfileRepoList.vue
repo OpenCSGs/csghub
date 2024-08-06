@@ -1,7 +1,7 @@
 <template>
   <div class="sm:w-[100%] sm:mt-[36px]">
     <!-- collections -->
-    <div v-if="initiator!=='organization'" >
+    <div>
       <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
         <SvgIcon name="collections" width="18" height="18" />
         <span>{{ $t("collections.collection") }}</span>
@@ -178,20 +178,18 @@
 
   const getProfileRepoData = async () =>{
     const defaultTotal = 6
+    const collectionsUrl = reposUrl("collections")
     const modelsUrl = reposUrl("models")
     const datasetsUrl = reposUrl("datasets")
     const spacesUrl = reposUrl("spaces")
     const codesUrl = reposUrl("codes")
     const promises = [
+        fetchData(collectionsUrl, collections, defaultTotal),
         fetchData(modelsUrl, models, defaultTotal),
         fetchData(datasetsUrl, datasets, defaultTotal),
         fetchData(spacesUrl, spaces, defaultTotal),
         fetchData(codesUrl, codes, defaultTotal)
     ];
-    if(props.initiator!=='organization'){
-      const collectionsUrl = reposUrl("collections")
-      promises.push(fetchData(collectionsUrl, collections, defaultTotal))
-    }
     if(props.initiator=='profile'){
       if(isCurrentUser.value){
         const endpointsUrl = reposUrl("endpoints")
