@@ -8,9 +8,10 @@
         :name="collectionData.name"
         :nickname="collectionData.nickname"
         :path="`${collectionData.username}/${collectionData.name}`"
-        :hasLike="false"
+        :hasLike="!!collectionData.user_likes"
         :desc="collectionData.description"
         :totalLikes="collectionData.likes"
+        :repo-id="collectionData.id"
         repo-type="collections"
       />
     </div>
