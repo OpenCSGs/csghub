@@ -98,7 +98,7 @@
           </div>
         </div>
         <div class="grow px-[20px] py-[36px] sm:py-0">
-          <ProfileRepoList :name="name" />
+          <ProfileRepoList :name="name" initiator="organization"/>
         </div>
       </div>
     </div>
