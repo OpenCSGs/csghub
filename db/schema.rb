@@ -211,7 +211,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_122854) do
     t.jsonb "starhub_configs", default: {}
     t.jsonb "license_configs", default: {}
     t.jsonb "feature_flags", default: {}
-    t.jsonb "general_configs", default: {}
     t.jsonb "s3_configs"
     t.jsonb "license_info", default: {}
   end

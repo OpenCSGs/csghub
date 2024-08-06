@@ -17,7 +17,6 @@
 这个是一种进行项目配置的方式，基于一个数据对象 SystemConfig，对应到数据库表 system_configs。针对每个环境使用管理员账号只需要新建一条 SystemConfig 记录。
 
 目前系统支持这些 System Config 字段，他们都是 jsonb 的类型：
-- general_configs
 - oidc_configs
 - starhub_configs
 - license_configs
@@ -133,6 +132,6 @@ bin/dev
 
 1. 配置 `STARHUB_SERVER_PUBLIC_DOMAIN` 为 `https://hub.opencsg.com`。
 2. 配置 `STARHUB_SERVER_MIRROR_URL` 为 `https://sync.opencsg.com`。
-  
+
 启动 all in one 脚本，稍等片刻，就可以看到 OpenCSG 社区中的模型和数据集了。
 项目默认内置了一个只读权限的token，允许浏览`OpenCSG`社区的模型和数据集的`README`内容和文件列表，但无法将模型和数据集下载到本地。如需要具备同步下载功能的token，请通过 [opencsg.com](https://opencsg.com) 官网申请。

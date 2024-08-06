@@ -143,7 +143,6 @@ class CreateTables < ActiveRecord::Migration[7.0]
       t.jsonb "starhub_configs", default: {}
       t.jsonb "license_configs", default: {}
       t.jsonb "feature_flags", default: {}
-      t.jsonb "general_configs", default: {}
       t.jsonb "s3_configs"
     end
 
