@@ -10,11 +10,9 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     application_env: Field::String,
-    oidc_configs: Field::JSONB,
     starhub_configs: Field::JSONB,
     license_configs: Field::JSONB,
     feature_flags: Field::JSONB,
-    general_configs: Field::JSONB,
     s3_configs: Field::JSONB,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -36,8 +34,6 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     id
     application_env
-    general_configs
-    oidc_configs
     starhub_configs
     license_configs
     feature_flags
@@ -51,8 +47,6 @@ class SystemConfigDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     application_env
-    general_configs
-    oidc_configs
     starhub_configs
     license_configs
     feature_flags
