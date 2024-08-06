@@ -205,7 +205,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_122854) do
 
   create_table "system_configs", force: :cascade do |t|
     t.string "application_env"
-    t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "starhub_configs", default: {}

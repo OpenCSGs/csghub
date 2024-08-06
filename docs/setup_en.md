@@ -1,15 +1,15 @@
 ### General Environment Variables
 
-- **RAILS_MASTER_KEY**  
+- **RAILS_MASTER_KEY**
 Used for decrypting Rails Credentials. The current master key for this open-source project is: `64f15f995b044427e43fe4897370fd66`
 
-- **ON_PREMISE**  
+- **ON_PREMISE**
 A switch used to toggle between project versions. If set to true, it indicates an on-premise version; otherwise, it is a non-on-premise version. The main difference is that non-on-premise versions support OIDC login authorization, while on-premise versions use the system's built-in login authorization.
 
-- **SENSITIVE_CHECK**  
+- **SENSITIVE_CHECK**
 A switch used to enable or disable sensitive information monitoring. If set to true, sensitive information monitoring is enabled. This feature requires collaboration with the Starhub Server. If the Starhub Server has enabled the API for sensitive information monitoring, we can turn on this switch.
 
-- **SUPER_USERS**  
+- **SUPER_USERS**
 You can set the system's super admin users using this environment variable. The format is comma-separated phone numbers. This means that when registering, the matching phone number needs to be provided.
 
 
@@ -19,12 +19,10 @@ This is a way to configure the project based on a data object called SystemConfi
 
 Currently, the system supports the following System Config fields, which are all of type jsonb:
 
-- general_configs
-- oidc_configs
 - starhub_configs
 - license_configs
 - feature_flags
-- s3_configs  
+- s3_configs
 
 You can add more fields as needed.
 

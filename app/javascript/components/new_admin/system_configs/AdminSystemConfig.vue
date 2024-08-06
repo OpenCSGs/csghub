@@ -52,29 +52,6 @@
 
   <hr />
 
-  <!-- Oidc configs -->
-  <div class="my-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">OIDC Configs</h3>
-    <el-form-item>
-      <textarea
-        ref="oidcConfigsRef"
-        class="system-config-obj-box"
-        :value="stringifyObject(systemConfigs.oidc_configs)"
-        rows="5"
-      ></textarea>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="info"
-        size="small"
-        @click="updateOidcConfigs"
-        >Update</el-button
-      >
-    </el-form-item>
-  </div>
-
-  <hr />
-
   <!-- Starhub configs -->
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">Starhub Configs</h3>
@@ -127,7 +104,6 @@
     application_env: '',
     feature_flags: {},
     license_configs: {},
-    oidc_configs: {},
     s3_configs: {},
     starhub_configs: {},
     license_info: {}
@@ -142,12 +118,6 @@
   const s3ConfigsRef = ref(null)
   const updateS3Configs = () => {
     systemConfigs.value.s3_configs = JSON.parse(s3ConfigsRef.value.value)
-    updateSystemConfig(systemConfigs.value)
-  }
-
-  const oidcConfigsRef = ref(null)
-  const updateOidcConfigs = () => {
-    systemConfigs.value.oidc_configs = JSON.parse(oidcConfigsRef.value.value)
     updateSystemConfig(systemConfigs.value)
   }
 
