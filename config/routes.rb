@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :system_configs
     resources :tags
-    resources :error_logs
 
     root to: "system_configs#index"
   end
