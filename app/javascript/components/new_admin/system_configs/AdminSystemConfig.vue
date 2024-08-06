@@ -52,29 +52,8 @@
 
   <hr />
 
-  <!-- Starhub configs -->
+  <!-- License info -->
   <div class="my-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">Starhub Configs</h3>
-    <el-form-item>
-      <textarea
-        ref="starhubConfigsRef"
-        class="system-config-obj-box"
-        :value="stringifyObject(systemConfigs.starhub_configs)"
-        rows="5"
-      ></textarea>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="info"
-        size="small"
-        @click="updateStarhubConfigs"
-        >Update</el-button
-      >
-    </el-form-item>
-  </div>
-
-    <!-- License info -->
-    <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">License info</h3>
     <el-form-item>
       <textarea
@@ -105,7 +84,6 @@
     feature_flags: {},
     license_configs: {},
     s3_configs: {},
-    starhub_configs: {},
     license_info: {}
   })
 
@@ -118,14 +96,6 @@
   const s3ConfigsRef = ref(null)
   const updateS3Configs = () => {
     systemConfigs.value.s3_configs = JSON.parse(s3ConfigsRef.value.value)
-    updateSystemConfig(systemConfigs.value)
-  }
-
-  const starhubConfigsRef = ref(null)
-  const updateStarhubConfigs = () => {
-    systemConfigs.value.starhub_configs = JSON.parse(
-      starhubConfigsRef.value.value
-    )
     updateSystemConfig(systemConfigs.value)
   }
 

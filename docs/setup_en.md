@@ -19,7 +19,6 @@ This is a way to configure the project based on a data object called SystemConfi
 
 Currently, the system supports the following System Config fields, which are all of type jsonb:
 
-- starhub_configs
 - license_configs
 - feature_flags
 - s3_configs

@@ -22,8 +22,7 @@ class InternalApi::Admin::SystemConfigController < InternalApi::Admin::Applicati
 
   def system_config_params
     params.require(:system_config).permit(feature_flags: {},
-                                          s3_configs: {},
-                                          starhub_configs: {})
+                                          s3_configs: {})
     params.require(:system_config).permit!.to_h
   end
 end
