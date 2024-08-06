@@ -4,10 +4,10 @@
     :class="`${repoType}-card  hover:active-${repoType}-card `"
     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-xl"
   >
-    <div class="flex items-center justify-between mb-[5px]">
+    <div class="flex items-center justify-between mb-1">
       <div
         :class="`${repoType}-path`"
-        class="text-sm text-[#303133] font-medium text-ellipsis overflow-hidden whitespace-nowrap"
+        class="text-md text-[#344054] font-normal text-ellipsis overflow-hidden whitespace-nowrap"
       >
         {{ repo.deploy_name }}
       </div>
