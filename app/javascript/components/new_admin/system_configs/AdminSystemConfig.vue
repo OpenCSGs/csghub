@@ -6,29 +6,6 @@
 
   <hr />
 
-  <!-- feature flags -->
-  <div class="my-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">Feature Flags</h3>
-    <el-form-item>
-      <textarea
-        ref="featureFlagsRef"
-        class="system-config-obj-box"
-        :value="stringifyObject(systemConfigs.feature_flags)"
-        rows="5"
-      ></textarea>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="info"
-        size="small"
-        @click="updateFeatureFlags"
-        >Update</el-button
-      >
-    </el-form-item>
-  </div>
-
-  <hr />
-
   <!-- S3 configs -->
   <div class="my-[30px]">
     <h3 class="text-[18px] font-[500] mb-[8px]">S3 Configs</h3>
@@ -81,16 +58,9 @@
 
   const systemConfigs = ref({
     application_env: '',
-    feature_flags: {},
     s3_configs: {},
     license_info: {}
   })
-
-  const featureFlagsRef = ref()
-  const updateFeatureFlags = () => {
-    systemConfigs.value.feature_flags = JSON.parse(featureFlagsRef.value.value)
-    updateSystemConfig(systemConfigs.value)
-  }
 
   const s3ConfigsRef = ref(null)
   const updateS3Configs = () => {
