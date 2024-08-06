@@ -103,9 +103,10 @@
   import CollectionsSettings from './CollectionsSettings.vue'
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
   import { ElMessage } from 'element-plus'
-
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
   import jwtFetch from '../../packs/jwtFetch'
   const csghubServer = inject('csghubServer')
+  const repoDetailStore = useRepoDetailStore()
 
   const collectionData = ref()
 
@@ -155,6 +156,7 @@
     if (!res.ok) {
       ElMessage({ message: msg, type: 'warning' })
     } else {
+      repoDetailStore.initialize(data)
       collectionData.value = data || []
     }
   }
