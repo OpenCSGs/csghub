@@ -8,13 +8,11 @@ import { user_sessions as sessions_zh } from "../../../config/locales/zh_js/user
 const refreshJWT = () => {
   const { cookies } = useCookies();
   const jwt = cookies.get('user_token');
-  const expireTimeStr = cookies.get('token_expire_at');
+  const expireTime = cookies.get('token_expire_at');
   const loginIdentity = cookies.get('login_identity');
-  const userSyncedStr = cookies.get('user_synced');
-  const userSynced = !!userSyncedStr && userSyncedStr.toString() === 'true';
   const sessionLocale = cookies.get('locale') === 'en' ? sessions_en : sessions_zh
 
-  if(loginIdentity && userSynced && !jwt) {
+  if(loginIdentity && !jwt) {
     ElMessageBox.alert(sessionLocale.expiredDesc, sessionLocale.expiredTitle, {
       'show-close': false,
       confirmButtonText: sessionLocale.reLogin,
@@ -22,11 +20,14 @@ const refreshJWT = () => {
         window.location.href = "/logout"
       },
     })
-  } else if (expireTimeStr) {
-    const expireTime = new Date(expireTimeStr);
-    const currentTime = new Date();
-    const differenceInMinutes = Math.floor((expireTime - currentTime) / (1000 * 60));
+  } else if (expireTime) {
+    const currentTime = Date.now()/1000;
+    const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
+    console.log(expireTime)
+    console.log(currentTime)
+    console.log(differenceInMinutes)
     if (differenceInMinutes < 10) {
+      console.log('refresh jwt')
       const options = {method: 'PUT'}
       csrfFetch('/internal_api/users/jwt_token', options)
     }
