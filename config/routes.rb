@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   # admin
   namespace :admin do
     resources :system_configs
-    resources :comments
     resources :discussions
     resources :system_api_keys
     resources :tags
