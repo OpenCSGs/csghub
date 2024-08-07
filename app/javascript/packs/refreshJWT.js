@@ -24,6 +24,7 @@ const refreshJWT = async () => {
   if(loginIdentity) {
     csrfFetch('/internal_api/users/verify_jwt_token', options).then((res) => {
       if (!res.ok) {
+        cookies.set('user_token_valid', false)
         ElMessageBox.alert(sessionLocale.expiredDesc, sessionLocale.expiredTitle, {
           'show-close': false,
           confirmButtonText: sessionLocale.reLogin,
@@ -31,7 +32,6 @@ const refreshJWT = async () => {
             window.location.href = "/logout?redirect_to=/login"
           }
         })
-        cookies.set('user_token_valid', false)
       } else {
         cookies.set('user_token_valid', true)
         const currentTime = Date.now()/1000;
