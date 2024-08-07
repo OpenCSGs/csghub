@@ -81,10 +81,12 @@
 
   watch(endpoint, (newVal) => {
     const endpointUrl = newVal.endpoint
-    if(ENABLE_HTTPS === 'true') {
-      appEndpoint.value = `https://${endpointUrl}`
-    } else {
-      appEndpoint.value = `http://${endpointUrl}`
+    if (endpointUrl) {
+      if(ENABLE_HTTPS === 'true') {
+        appEndpoint.value = `https://${endpointUrl}`
+      } else {
+        appEndpoint.value = `http://${endpointUrl}`
+      }
     }
   })
 
