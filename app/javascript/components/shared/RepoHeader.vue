@@ -273,7 +273,7 @@
     }
   })
 
-  const url = computed(() => {
+  const likeUrl = computed(() => {
     if(props.repoType === 'collections'){
       return `${csghubServer}/api/v1/user/${props.name}/likes/collections/${props.repoId}`
     }else{
@@ -292,7 +292,7 @@
   const addLike = async () => {
     const options = { method: 'PUT' }
     const response = await jwtFetch(
-      url.value,
+      likeUrl.value,
       options,
       true
     )
@@ -312,7 +312,7 @@
   const removeLike = async () => {
     const options = { method: 'DELETE' }
     const response = await jwtFetch(
-      url.value,
+      likeUrl.value,
       options
     )
     if (!response.ok) {
