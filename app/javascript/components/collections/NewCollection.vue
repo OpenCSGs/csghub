@@ -220,7 +220,7 @@
 
   async function submitCollectionForm() {
     const transformedData = {
-      namespaces:'',
+      namespace:'',
       description: '',
       name: '',
       nickname: '',
@@ -228,7 +228,7 @@
       theme: '#000000'
     }
     // 将 dataFormValue 的值直接复制到 transformedData
-    transformedData.namespaces = dataForm.value.owner
+    transformedData.namespace = dataForm.value.owner
     transformedData.description = dataForm.value.collectionDesc
     transformedData.name = dataForm.value.title
     transformedData.nickname = dataForm.value.collectionNickName
