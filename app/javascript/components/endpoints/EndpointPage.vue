@@ -54,7 +54,7 @@
   </div>
 
   <EndpointPlayground
-    v-if="appStatus === 'Running'"
+    v-if="appStatus === 'Running' && !!appEndpoint"
     :appEndpoint="appEndpoint"
     :model-id="modelId"
   />
