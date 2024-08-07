@@ -202,8 +202,8 @@
       const { data } = await res.json()
       billings.value = data.data
       totalBillings.value = data.total
-      billingLoading.value = false
     }
+    billingLoading.value = false
   }
 </script>
 
