@@ -152,10 +152,6 @@
   const userStore = useUserStore()
   const csghubServer = inject('csghubServer')
 
-  const props = defineProps({
-    namespaces: Array
-  })
-
   const { t } = useI18n()
   const dataFormRef = ref()
   const nameRule = inject('nameRule')
