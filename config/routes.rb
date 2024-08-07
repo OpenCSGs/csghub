@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update] do
       collection do
         put 'jwt_token', to: 'users/jwt_token'
+        post 'verify_jwt_token', to: 'users/verify_jwt_token'
       end
     end
     get '/organizations/:namespace/models', to: 'organizations#models', namespace: /[^\/]+/
