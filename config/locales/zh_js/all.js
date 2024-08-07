@@ -30,6 +30,7 @@ export const all = {
   canNot: "无法",
   role: "角色",
   userName: "用户名",
+  updateUserName: "更新 用户名",
   nickName: "用户昵称",
   homepage:"主页",
   bio:"个人简介",

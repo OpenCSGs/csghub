@@ -32,6 +32,7 @@ export const all = {
   canNot: "Cannot",
   role: "Role",
   userName: "Username",
+  updateUserName: "Update Username",
   nickName: "Nickname",
   homepage:"homepage",
   bio:"bio",
