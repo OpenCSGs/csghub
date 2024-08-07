@@ -41,12 +41,6 @@
 
   const currentInstance = ref('')
 
-  watch(() => props.modelId, () => {
-    if (isLogsSSEConnected.value === false) {
-      syncInstanceLogs(currentInstance.value)
-    }
-  })
-
   watch(() => props.instances, (newInstances) => {
     if (newInstances && newInstances.length !== 0) {
       currentInstance.value = newInstances[0].name
