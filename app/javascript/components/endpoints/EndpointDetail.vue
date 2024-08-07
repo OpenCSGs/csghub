@@ -101,6 +101,7 @@
 
       if (response.ok) {
         endpoint.value = json.data
+        appStatus.value = json.data.status
         repoDetailStore.initialize(json.data)
       } else {
         ElMessage({ message: json.msg, type: 'warning' })
