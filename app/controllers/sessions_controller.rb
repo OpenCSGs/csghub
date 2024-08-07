@@ -120,6 +120,6 @@ class SessionsController < ApplicationController
 
   def destroy
     helpers.logout
-    redirect_to root_path
+    redirect_to params[:redirect_to] || root_path
   end
 end

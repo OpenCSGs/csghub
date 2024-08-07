@@ -17,7 +17,7 @@ const refreshJWT = () => {
       'show-close': false,
       confirmButtonText: sessionLocale.reLogin,
       callback: () => {
-        window.location.href = "/logout"
+        window.location.href = "/logout?redirect_to=/login"
       },
     })
   } else if (expireTime) {
