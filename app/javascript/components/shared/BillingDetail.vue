@@ -1,7 +1,10 @@
 <template>
-  <div class="w-full mt-8 mb-8 rounded-t-lg pt-9 xl:px-10 md:px-0 md:h-auto border border-[#EBEEF5]">
+  <div
+    class="w-full mt-8 mb-8 rounded-t-lg pt-9 xl:px-10 md:px-0 md:h-auto border border-[#EBEEF5]">
     <div class="flex justify-between px-6 mb-5">
-      <div class="text-[18px] leading-[28px]">{{ $t('billing.instanceBilling') }}</div>
+      <div class="text-[18px] leading-[28px]">
+        {{ $t('billing.instanceBilling') }}
+      </div>
       <div class="flex gap-3 items-center">
         <el-date-picker
           v-model="selectedMonth"
@@ -9,18 +12,17 @@
           type="month"
           placeholder="Pick"
           :disabled-date="disabledDate"
-          style="width: 120px"
-        />
-        <div
+          style="width: 120px" />
+        <el-button
+          :loading="billingLoading"
           class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer"
           @click="fetchDetails(1)"
-        >
-          <SvgIcon name="refresh" />{{ $t('billing.refresh') }}
-        </div>
+          > {{ $t('billing.refresh') }} </el-button>
       </div>
     </div>
     <div>
       <el-table
+        v-loading="billingLoading"
         class="billing-table"
         header-row-class-name="billing-table-header-row"
         header-cell-class-name="billing-table-header-cell"
@@ -28,21 +30,18 @@
         cell-class-name="billing-table-row-cell"
         :data="billings"
         stripe
-        style="width: 100%"
-      >
+        style="width: 100%">
         <!-- instance ID -->
         <el-table-column
           :label="$t('billing.instanceID')"
           label-class-name="indent-3 text-[12px] justify-center font-[400] leading-[18px] text-[#475467]"
-          align="center"
-        >
+          align="center">
           <template #default="scope">
             <div class="flex justify-center gap-[12px] items-center pl-3">
               <div class="flex flex-col">
                 <div
                   class="text-[14px] font-[300] leading-[20px] text-[#475467]"
-                  v-if="!!scope.row.customer_id"
-                >
+                  v-if="!!scope.row.customer_id">
                   #{{ scope.row.customer_id }}
                 </div>
               </div>
@@ -54,8 +53,7 @@
         <el-table-column
           :label="$t('billing.usageTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
-          align="center"
-        >
+          align="center">
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ scope.row.value }}
@@ -67,8 +65,7 @@
         <el-table-column
           :label="$t('billing.createTime')"
           label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
-          align="center"
-        >
+          align="center">
           <template #default="scope">
             <div class="text-[14px] font-[400] leading-[20px] text-[#475467]">
               {{ formatDateTime(scope.row.created_at) }}
@@ -82,8 +79,7 @@
         :perPage="perPage"
         :currentPage="currentPage"
         @currentChange="fetchDetails"
-        :total="totalBillings"
-      />
+        :total="totalBillings" />
     </div>
   </div>
 </template>
@@ -111,6 +107,7 @@
   const csghubServer = inject('csghubServer')
   const loginIdentity = cookies.get('login_identity')
 
+  const billingLoading = ref(false)
   const perPage = ref(10)
   const currentPage = ref(1)
   const totalBillings = ref(0)
@@ -141,9 +138,12 @@
 
   // props instanceName is from Endpoint Detail async data
   // so we need to watch it here
-  watch(() => props.instanceName, () => {
-    fetchDetails()
-  })
+  watch(
+    () => props.instanceName,
+    () => {
+      fetchDetails()
+    }
+  )
 
   const disabledDate = (date) => {
     return isFutureDate(date)
@@ -152,7 +152,8 @@
   const dateChange = (e) => {
     const dateString = formatDate(e) + ' 00:00:00'
     startTime.value = dateString
-    const lastDayOfMonth = getLastDayOfMonthFromDateString(dateString) + ' 23:59:59'
+    const lastDayOfMonth =
+      getLastDayOfMonthFromDateString(dateString) + ' 23:59:59'
     endTime.value = lastDayOfMonth
     fetchDetails()
   }
@@ -179,6 +180,7 @@
   // scene = 12: model finetune
   // scene = 20：starship-ide
   const fetchDetails = async (childCurrent) => {
+    billingLoading.value = true
     if (childCurrent) {
       currentPage.value = childCurrent
     }
@@ -200,6 +202,7 @@
       const { data } = await res.json()
       billings.value = data.data
       totalBillings.value = data.total
+      billingLoading.value = false
     }
   }
 </script>
