@@ -141,10 +141,8 @@
 
   // props instanceName is from Endpoint Detail async data
   // so we need to watch it here
-  watch(() => props.instanceName, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-      fetchDetails()
-    }
+  watch(() => props.instanceName, () => {
+    fetchDetails()
   })
 
   const disabledDate = (date) => {
