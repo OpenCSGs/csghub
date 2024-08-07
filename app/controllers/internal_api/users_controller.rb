@@ -28,6 +28,12 @@ class InternalApi::UsersController < InternalApi::ApplicationController
     cookies['token_expire_at'] = expire_time
   end
 
+  def verify_jwt_token
+    user_token = params[:user_token]
+    res = csghub_api.verify_jwt_token(user_token)
+    render json: { user_infos: JSON.parse(res)['data'] }
+  end
+
   private
 
   def user_params
