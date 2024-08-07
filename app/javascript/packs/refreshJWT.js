@@ -31,7 +31,9 @@ const refreshJWT = async () => {
             window.location.href = "/logout?redirect_to=/login"
           }
         })
+        cookies.set('user_token_valid', false)
       } else {
+        cookies.set('user_token_valid', true)
         const currentTime = Date.now()/1000;
         const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
         console.log(expireTime)
