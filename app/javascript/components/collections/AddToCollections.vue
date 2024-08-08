@@ -1,18 +1,37 @@
 <template>
-  <div class="AddRepoToCollections absolute top-0 right-[120px] md:relative md:right-0 md:pl-5 md:pb-4 z-20">
-    <div v-if="settingsVisibility" @click="dialogVisible = true"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer">
-      <SvgIcon name="collections" width="12px" height="12px" />
+  <div
+    class="AddRepoToCollections absolute top-0 right-[120px] md:relative md:right-0 md:pl-5 md:pb-4 z-20"
+  >
+    <div
+      v-if="settingsVisibility"
+      @click="dialogVisible = true"
+      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+    >
+      <SvgIcon
+        name="collections"
+        width="12px"
+        height="12px"
+      />
       {{ $t('collections.edit.addCollection') }}
     </div>
-    <el-dialog v-model="dialogVisible" top="10vh" :style="{ borderRadius: '10px' }" width="450" class="invite_dialog">
+    <el-dialog
+      v-model="dialogVisible"
+      top="10vh"
+      :style="{ borderRadius: '10px' }"
+      width="450"
+      class="invite_dialog"
+    >
       <template #header="{ close }">
         <div class="flex justify-between">
           <div
-            class="rounded-full px-[12px] py-[12px] rounded-[10px] border-[2px] bg-[#DCFAE6] border-[8px] border-[#ECFDF3]">
+            class="rounded-full px-[12px] py-[12px] rounded-[10px] border-[2px] bg-[#DCFAE6] border-[8px] border-[#ECFDF3]"
+          >
             <SvgIcon name="check_circle" />
           </div>
-          <img src="/images/collection_half_cirle.png" class="w-[50%] absolute top-0 left-0" />
+          <img
+            src="/images/collection_half_cirle.png"
+            class="w-[50%] absolute top-0 left-0"
+          />
         </div>
       </template>
       <div class="relative">
@@ -22,9 +41,19 @@
               <p class="text-[#344054] text-[14px] mb-[6px]">
                 {{ $t('collections.edit.addCollection') }}
               </p>
-              <el-select v-model="collectionsIdsInput" :placeholder="this.$t('all.select')" filterable size="large"
-                class="w-full">
-                <el-option v-for="item in collectionsList" :key="item.id" :label="item.name" :value="item.id" />
+              <el-select
+                v-model="collectionsIdsInput"
+                :placeholder="this.$t('all.select')"
+                filterable
+                size="large"
+                class="w-full"
+              >
+                <el-option
+                  v-for="item in collectionsList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
               </el-select>
             </div>
           </div>
@@ -34,12 +63,14 @@
         <span class="flex justify-between gap-3 px-5">
           <div
             class="w-[50%] active:outline active:outline-4 active:outline-[#EAECF0] hover:bg-[#F0F2F5] text-center py-[10px] px-4 border border-[#D0D5DD] cursor-pointer shadow-xs rounded-[8px]"
-            @click="dialogVisible = false">
+            @click="dialogVisible = false"
+          >
             {{ $t('all.cancel') }}
           </div>
           <div
             class="w-[50%] hover:bg-[#223B99] hover:border-[#223B99] active:outline active:outline-4 active:outline-[#D4DbF5] text-[#ffffff] text-center py-[10px] px-4 border border-[#3250BD] bg-[#3250BD] cursor-pointer shadow-xs rounded-[8px]"
-            @click="confirmAddCollections">
+            @click="confirmAddCollections"
+          >
             {{ $t('all.confirm') }}
           </div>
         </span>
