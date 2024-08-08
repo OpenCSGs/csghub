@@ -22,10 +22,12 @@ class InternalApi::UsersController < InternalApi::ApplicationController
 
   def jwt_token
     res = csghub_api.get_jwt_token(current_user.name)
-    token = JSON.parse(res)['data']['token']
-    expire_time = Time.parse(JSON.parse(res)['data']['expire_at']).to_time.utc.to_i
-    cookies['user_token'] = token
-    cookies['token_expire_at'] = expire_time
+    parsed_res = JSON.parse(res)['data']
+    token = parsed_res['token']
+    expire_time = Time.at(parsed_res['expire_at'].to_i)
+
+    cookies['user_token'] = { value: token, expires: expire_time }
+    cookies['token_expire_at'] = expire_time.to_i
   end
 
   def verify_jwt_token

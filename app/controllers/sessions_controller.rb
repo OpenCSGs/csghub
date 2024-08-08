@@ -66,11 +66,14 @@ class SessionsController < ApplicationController
 
   def server
     res = csghub_api.verify_jwt_token(params[:jwt])
-    user_infos = JSON.parse(res)["data"]
-    cookies['user_token'] = params[:jwt]
-    cookies['token_expire_at'] = params[:expire]
+    user_infos = JSON.parse(res)['data']
+    expire_time = Time.at(params[:expire].to_i)
+
+    cookies['user_token'] = { value: params[:jwt], expires: expire_time }
+    cookies['token_expire_at'] = expire_time.to_i
     cookies['can_change_username'] = user_infos['can_change_username']
-    login_by_server_user_infos user_infos
+
+    login_by_server_user_infos(user_infos)
   end
 
   def oidc
