@@ -4,12 +4,6 @@ module SessionsHelper
     cookies[:current_user] = user.name
     cookies[:admin_user] = 'true' if user.admin?
 
-    # need to add later
-    # cookies[:avatar] = user.avatar
-    # cookies[:roles] = user.roles
-
-    # cookies[:user_synced] = user.starhub_synced
-    # setup_jwt_token(user.name) if user.starhub_synced?
     user.update_column('session_ip', request.remote_ip)
   end
 
@@ -38,8 +32,8 @@ module SessionsHelper
 
     # unset user token
     cookies.delete :user_token
-    cookies.delete :token_expire_at
     cookies.delete :can_change_username
+    cookies.delete :user_token_valid
 
     # unset odic cookies
     cookies.delete :oidcUuid
@@ -58,13 +52,5 @@ module SessionsHelper
     on_premise = on_premise_from_env || feature_flags['on_premise']
 
     on_premise.to_s == 'true'
-  end
-
-  def setup_jwt_token username
-    res = csghub_api.get_jwt_token(username)
-    token = JSON.parse(res)['data']['token']
-    expire_time = JSON.parse(res)['data']['expire_at']
-    cookies['user_token'] = token
-    cookies['token_expire_at'] = expire_time
   end
 end

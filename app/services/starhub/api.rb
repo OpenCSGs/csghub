@@ -219,9 +219,10 @@ module Starhub
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
 
-    def get_jwt_token(username)
+    def get_jwt_token(username, login_identity)
       options = {
-        current_user: username
+        current_user: username,
+        uuid: login_identity
       }
       res = @client.post("/jwt/token?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
