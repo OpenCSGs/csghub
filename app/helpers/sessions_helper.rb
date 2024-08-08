@@ -33,6 +33,7 @@ module SessionsHelper
     # unset user token
     cookies.delete :user_token
     cookies.delete :can_change_username
+    cookies.delete :user_token_valid
 
     # unset odic cookies
     cookies.delete :oidcUuid

@@ -29,7 +29,7 @@ const refreshJWT = async () => {
   if(loginIdentity) {
     if (currentTime > expireTime) {
       // user token invalid, relogin
-      cookies.set('user_token_valid', false)
+      cookies.set('user_token_valid', false, 0)
       popupReloginDialog()
     } else {
       // if current user and user token match, user token valid and will expire soon, refresh
@@ -41,7 +41,7 @@ const refreshJWT = async () => {
         const options = {method: 'PUT'}
         csrfFetch('/internal_api/users/jwt_token', options)
       }
-      cookies.set('user_token_valid', true)
+      cookies.set('user_token_valid', true, 0)
     }
   } else {
     // if user not logged in but jwt is there, relogin
