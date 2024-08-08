@@ -63,7 +63,7 @@
         <span class="flex justify-between gap-3 px-5">
           <div
             class="w-[50%] active:outline active:outline-4 active:outline-[#EAECF0] hover:bg-[#F0F2F5] text-center py-[10px] px-4 border border-[#D0D5DD] cursor-pointer shadow-xs rounded-[8px]"
-            @click="dialogVisible = false"
+            @click="cancelAddCollections"
           >
             {{ $t('all.cancel') }}
           </div>
@@ -117,6 +117,11 @@
     repoAddToCollections()
   }
 
+  const cancelAddCollections = () => {
+    dialogVisible.value = false
+    collectionsIdsInput.value = ''
+  }
+
   async function repoAddToCollections() {
     const addRepoData = {
       repo_ids: [props.repoId]
@@ -132,6 +137,7 @@
         message: t('all.addSuccess'),
         type: 'success'
       })
+      collectionsIdsInput.value = ''
     }
   }
   onMounted(() => {
