@@ -109,36 +109,23 @@
       return
     }
     repoAddToCollections()
-      .then(() => {
-        dialogVisible.value = false
-        ElMessage({
-          message: t('all.addSuccess'),
-          type: 'success'
-        })
-        location.href = `/collections/${collectionsIdsInput.value}`
-      })
-      .catch((err) => {
-        ElMessage({
-          message: err.message,
-          type: 'warning'
-        })
-      })
   }
 
   async function repoAddToCollections() {
     const addRepoData = {
       repo_ids: [props.repoId]
     }
-
     const options = { method: 'POST', body: JSON.stringify(addRepoData) }
     const url = `${csghubServer}/api/v1/collections/${collectionsIdsInput.value}/repos`
     const response = await jwtFetch(url, options)
     if (!response.ok) {
-      return response.json().then((data) => {
-        ElMessage({ message: data.msg, type: 'warning' })
-      })
+      ElMessage({ message: (await response.json()).msg, type: 'warning' })
     } else {
-      return response.json()
+      dialogVisible.value = false
+      ElMessage({
+        message: t('all.addSuccess'),
+        type: 'success'
+      })
     }
   }
   onMounted(() => {
