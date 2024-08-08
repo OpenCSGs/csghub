@@ -27,14 +27,13 @@ const refreshJWT = async () => {
 
   // user logged in
   if(loginIdentity) {
-    if (currentTime > expireTime) {
-      // user token invalid, relogin
+    if (currentTime >= expireTime) {
+      // user token expired, relogin
       cookies.set('user_token_valid', false, 0)
       popupReloginDialog()
     } else {
-      // if current user and user token match, user token valid and will expire soon, refresh
-      // if current user and user token match, user token valid and will not expire soon, do nothing
-      // else if current user and user token do not match, relogin
+      // if user token will expire soon, refresh
+      // if user token will not expire soon, do nothing
       const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
       if (differenceInMinutes < 10) {
         console.log('refresh jwt')
