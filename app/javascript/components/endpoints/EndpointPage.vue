@@ -57,6 +57,7 @@
     v-if="appStatus === 'Running' && !!appEndpoint"
     :appEndpoint="appEndpoint"
     :model-id="modelId"
+    :private="private"
   />
 </template>
 
