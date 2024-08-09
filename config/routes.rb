@@ -143,7 +143,7 @@ Rails.application.routes.draw do
     get '/endpoints/:namespace/(*model_name)/:endpoint_id/settings', to: 'endpoints#settings', namespace: /[^\/]+/
     get '/endpoints/:namespace/(*model_name)/:endpoint_id', to: 'endpoints#show', namespace: /[^\/]+/
 
-    get '/finetune/:namespace/:name/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
+    get '/finetune/:namespace/(*name)/(*finetune_name)/:finetune_id/(*path)', to: 'finetune#show', namespace: /[^\/]+/
 
     get '/collections/:collections_id/(*path)', to: 'collections#show', namespace: /[^\/]+/
 
