@@ -15,7 +15,6 @@ class TagDashboard < Administrate::BaseDashboard
     tag_field: Field::Select.with_options(searchable: true, include_blank: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     tag_origin: Field::Select.with_options(searchable: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     tag_type: Field::Select.with_options(searchable: true, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
-    taggings: Field::HasMany,
     zh_name: Field::String,
     scope: Field::String,
     label: Field::String,
@@ -52,7 +51,6 @@ class TagDashboard < Administrate::BaseDashboard
     tag_origin
     tag_type
     tag_field
-    taggings
     zh_name
     scope
     label

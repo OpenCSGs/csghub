@@ -137,14 +137,8 @@ class CreateTables < ActiveRecord::Migration[7.0]
 
     create_table "system_configs", force: :cascade do |t|
       t.string "application_env"
-      t.jsonb "oidc_configs", default: {}
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
-      t.jsonb "starhub_configs", default: {}
-      t.jsonb "license_configs", default: {}
-      t.jsonb "feature_flags", default: {}
-      t.jsonb "general_configs", default: {}
-      t.jsonb "s3_configs"
     end
 
     create_table "taggings", force: :cascade do |t|

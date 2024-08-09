@@ -282,10 +282,7 @@ module Starhub
 
     def sensitive_check_enabled?
       config_from_env = ENV.fetch('SENSITIVE_CHECK', nil)
-      system_config = SystemConfig.first
-      feature_flags = (system_config.feature_flags rescue {}) || {}
-      sensitive_check = config_from_env || feature_flags['sensitive_check']
-      sensitive_check.to_s == 'true'
+      config_from_env.to_s == 'true'
     end
   end
 end

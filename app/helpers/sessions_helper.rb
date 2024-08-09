@@ -46,11 +46,6 @@ module SessionsHelper
 
   def is_on_premise?
     on_premise_from_env = ENV.fetch('ON_PREMISE', nil)
-
-    system_config = SystemConfig.first
-    feature_flags = (system_config.feature_flags rescue {}) || {}
-    on_premise = on_premise_from_env || feature_flags['on_premise']
-
-    on_premise.to_s == 'true'
+    on_premise_from_env.to_s == 'true'
   end
 end

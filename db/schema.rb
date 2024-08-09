@@ -196,23 +196,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_122854) do
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
   end
 
-  create_table "system_api_keys", force: :cascade do |t|
-    t.string "service"
-    t.string "secret_key"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "system_configs", force: :cascade do |t|
     t.string "application_env"
-    t.jsonb "oidc_configs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "starhub_configs", default: {}
-    t.jsonb "license_configs", default: {}
-    t.jsonb "feature_flags", default: {}
-    t.jsonb "general_configs", default: {}
-    t.jsonb "s3_configs"
     t.jsonb "license_info", default: {}
   end
 
