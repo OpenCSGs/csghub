@@ -453,7 +453,7 @@
   }
 
   const updateFramework = (value) => {
-    const payload = { framework_id: value }
+    const payload = { runtime_framework_id: value }
     updateEndpoint(payload)
   }
 

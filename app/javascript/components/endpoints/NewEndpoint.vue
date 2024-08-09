@@ -159,7 +159,7 @@
           class="w-full"
           prop="framework_id">
           <el-select
-            v-model="dataForm.framework_id"
+            v-model="dataForm.endpoint_framework"
             :placeholder="
               t('all.pleaseSelect', { value: t('endpoints.new.framework') })
             "
@@ -178,7 +178,7 @@
             v-model="dataForm.visibility"
             :publicDesc="t('endpoints.new.publicDesc')"
             :privateDesc="t('endpoints.new.privateDesc')"
-          /> 
+          />
         </el-form-item>
 
         <div class="flex justify-end">
@@ -197,7 +197,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
@@ -217,7 +217,7 @@
     model_path: searchParams.get('model_id') || '',
     visibility: 'public',
     min_replica: 1,
-    max_replica: 5
+    max_replica: 1
   })
   const endpointFrameworks = ref([])
   const endpointClusters = ref([])

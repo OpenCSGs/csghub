@@ -1,22 +1,14 @@
 module SessionsHelper
   def log_in user
-    session[:login_identity] = user.login_identity
     cookies[:login_identity] = user.login_identity
     cookies[:current_user] = user.name
-    cookies[:current_user_email] = user.email
     cookies[:admin_user] = 'true' if user.admin?
 
-    # need to add later
-    # cookies[:avatar] = user.avatar
-    # cookies[:roles] = user.roles
-
-    # cookies[:user_synced] = user.starhub_synced
-    # setup_jwt_token(user.name) if user.starhub_synced?
     user.update_column('session_ip', request.remote_ip)
   end
 
   def current_user
-    login_identity = session[:login_identity].presence
+    login_identity = cookies[:login_identity].presence
     @current_user ||= login_identity && User.find_by_login_identity(login_identity)
   end
 
@@ -34,14 +26,14 @@ module SessionsHelper
 
   def logout
     # unset current_user
-    session[:login_identity] = nil
-    cookies.delete :current_user
-    cookies.delete :current_user_email
     cookies.delete :login_identity
-    cookies.delete :user_token
-    cookies.delete :token_expire_at
+    cookies.delete :current_user
     cookies.delete :admin_user
+
+    # unset user token
+    cookies.delete :user_token
     cookies.delete :can_change_username
+    cookies.delete :user_token_valid
 
     # unset odic cookies
     cookies.delete :oidcUuid
@@ -55,13 +47,5 @@ module SessionsHelper
   def is_on_premise?
     on_premise_from_env = ENV.fetch('ON_PREMISE', nil)
     on_premise_from_env.to_s == 'true'
-  end
-
-  def setup_jwt_token username
-    res = csghub_api.get_jwt_token(username)
-    token = JSON.parse(res)['data']['token']
-    expire_time = JSON.parse(res)['data']['expire_at']
-    cookies['user_token'] = token
-    cookies['token_expire_at'] = expire_time
   end
 end

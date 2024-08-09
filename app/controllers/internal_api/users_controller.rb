@@ -21,11 +21,9 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   end
 
   def jwt_token
-    res = csghub_api.get_jwt_token(current_user.name)
+    res = csghub_api.get_jwt_token(current_user.name, current_user.login_identity)
     token = JSON.parse(res)['data']['token']
-    expire_time = Time.parse(JSON.parse(res)['data']['expire_at']).to_time.utc.to_i
     cookies['user_token'] = token
-    cookies['token_expire_at'] = expire_time
   end
 
   private

@@ -23,7 +23,7 @@
     </div>
     <!-- roles -->
     <div v-if="isCurrentUser ? userStore.roles : userRoles" class="mt-[16px] text-[#606266] text-[16px] leading-[24px] flex items-center gap-[8px]"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.66663 12.533C2.66663 10.7657 4.09931 9.33301 5.86663 9.33301H10.1333C11.9006 9.33301 13.3333 10.7657 13.3333 12.533V12.533C13.3333 13.7112 12.3782 14.6663 11.2 14.6663H4.79996C3.62175 14.6663 2.66663 13.7112 2.66663 12.533V12.533Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.6666 3.99967C10.6666 5.47243 9.47272 6.66634 7.99996 6.66634C6.5272 6.66634 5.33329 5.47243 5.33329 3.99967C5.33329 2.52692 6.5272 1.33301 7.99996 1.33301C9.47272 1.33301 10.6666 2.52692 10.6666 3.99967Z" stroke="#2F384C" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      {{ isCurrentUser ? userStore.roles : userRoles.join(', ') }}
+      {{ isCurrentUser ? userStore.roles.join(',') : userRoles.join(', ') }}
     </div>
     <!-- phone -->
     <div v-if="hasPhone"
@@ -69,7 +69,7 @@
   import { ElMessage } from 'element-plus'
   import { useCookies } from 'vue3-cookies'
   const { cookies } = useCookies()
-  
+
   const userStore = useUserStore()
 
   const { t } = useI18n()
@@ -82,7 +82,7 @@
 
   const uuid = cookies.get('login_identity')
   const current_user = cookies.get('current_user')
-  
+
   const userId = new URL(window.location.href).pathname.split('/').pop()
   const avatar = ref('')
   const username = ref('')

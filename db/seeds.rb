@@ -1,5 +1,4 @@
 # 初始化用户
-User.skip_callback(:save, :after, :sync_to_starhub_server)
 super_user = User.find_by(name: 'admin001', email: 'admin001@opencsg.com')
 unless super_user
   User.create(login_identity: SecureRandom.uuid,
