@@ -78,6 +78,8 @@
         <CollectionsRepoList
           v-if="showRepoList"
           :repositories="collectionData.repositories"
+          :collectionsId="collectionsId"
+          :settingsVisibility="settingsVisibility"
         />
       </el-tab-pane>
       <el-tab-pane
@@ -118,7 +120,7 @@
 
   const settingsVisibility = computed(() => {
     if (collectionData.value) {
-      return props.userName === collectionData.value.username
+      return collectionData.value.can_manage
     } else {
       return false
     }

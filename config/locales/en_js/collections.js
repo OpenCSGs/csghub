@@ -36,7 +36,9 @@ export const collections = {
     status: 'Status',
     collectionVisibility: 'Collection visibility',
     delCollection: 'Delete collection',
+    removeRepos: 'Remove Repo',
     delTips: 'This action can be undone and will permanently delete',
+    removeTips: 'This action can be undone and will permanently remove',
     privateInfo: ', only the creator or organization admin can make submissions',
     publicInfo: ', visible to anyone on the internet.'
   },
