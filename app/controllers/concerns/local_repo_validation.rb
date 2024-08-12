@@ -27,7 +27,6 @@ module LocalRepoValidation
     get_owner_info
     type = controller_name
     get_local_repo(type)
-    debugger
   end
 
   def get_owner_info
