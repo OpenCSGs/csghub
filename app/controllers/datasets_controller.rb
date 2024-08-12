@@ -1,4 +1,5 @@
 class DatasetsController < ApplicationController
+  include LocalRepoValidation
   include TagListHelper
   include LicenseListHelper
   include FileOptionsHelper
