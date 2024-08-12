@@ -1,13 +1,9 @@
 class ModelsController < ApplicationController
   include TagListHelper
   include LicenseListHelper
-  # Todo: remove later
-  # include LocalRepoValidation
   include FileOptionsHelper
   include BlobContentHelper
 
-  # Todo: remove later
-  # before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
   before_action :load_model_detail, except: [:index, :new, :resolve]
@@ -78,7 +74,5 @@ class ModelsController < ApplicationController
 
   def load_model_detail
     @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
-    # Todo: remove later
-    # @settings_visibility = (current_user && @local_model) ? current_user.can_manage?(@local_model) : false
   end
 end
