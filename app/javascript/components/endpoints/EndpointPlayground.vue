@@ -166,7 +166,7 @@
       <ApiExample
         :appEndpoint="appEndpoint"
         :modelId="modelId"
-        :form="form",
+        :form="form"
         :private="private"
       />
     </div>

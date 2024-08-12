@@ -11,7 +11,7 @@
         :desc="repo.description"
         :path="`${namespace}/${repoName}`"
         :tags="tags"
-        :avatar="avatar"
+        :avatar="repo.namespace?.Avatar"
         :owner-url="ownerUrl"
         :repoId="repo.repository_id"
         :totalLikes="repo.likes"
@@ -62,7 +62,6 @@
     currentPath: String,
     actionName: String,
     settingsVisibility: Boolean,
-    avatar: String,
     canWrite: Boolean,
     userName: String,
     commitId: String,
