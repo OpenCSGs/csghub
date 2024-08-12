@@ -8,8 +8,6 @@
     default-tab="<%= @default_tab || 'summary' %>"
     :action-name="'<%= action_name %>'"
     :settings-visibility="<%= @settings_visibility %>"
-    :owner-url="'<%= @owner_url %>'"
-    avatar="<%= @avatar_url %>"
     :can-write="<%= !!(@local_model && current_user&.can_write?(@local_model)) %>"
     user-name="<%= current_user&.name %>"
     commit-id="<%= @commit_id %>"
