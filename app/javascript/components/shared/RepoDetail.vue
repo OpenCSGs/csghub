@@ -11,7 +11,7 @@
         :desc="repo.description"
         :path="`${namespace}/${repoName}`"
         :tags="tags"
-        :avatar="avatar"
+        :avatar="repo.namespace?.Avatar"
         :owner-url="ownerUrl"
         :repoId="repo.repository_id"
         :totalLikes="repo.likes"
@@ -61,7 +61,6 @@
     currentBranch: String,
     currentPath: String,
     actionName: String,
-    avatar: String,
     userName: String,
     commitId: String,
     admin: Boolean,

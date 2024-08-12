@@ -10,7 +10,7 @@
         :desc="applicationSpace.description"
         :appStatus="appStatus"
         :space-resource="applicationSpace.hardware"
-        :avatar="avatar"
+        :avatar="applicationSpace.namespace?.Avatar"
         :tags="tags"
         :owner-url="ownerUrl"
         :canWrite="applicationSpace.can_write"
@@ -117,13 +117,11 @@
     defaultTab: String,
     blob: Object,
     actionName: String,
-    avatar: String,
     tags: Object,
     userName: String,
     commitId: String,
     namespace: String,
     repoName: String
-
   })
 
   const csghubServer = inject('csghubServer')

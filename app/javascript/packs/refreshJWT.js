@@ -44,6 +44,7 @@ const refreshJWT = async () => {
         cookies.set('user_token_valid', true, 0)
       }
     } else {
+      // if user logged in but jwt is not there, relogin
       popupReloginDialog()
     }
   } else {
