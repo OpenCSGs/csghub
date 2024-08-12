@@ -99,7 +99,7 @@
           :disabled="!isStopped"
         >
           <el-option
-            v-for="item in frameworks"
+            v-for="item in filterFrameworks"
             :key="item.id"
             :label="item.frame_name"
             :value="item.id"
@@ -340,7 +340,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
+      `${csghubServer}/api/v1/models/${props.modelId}/runtime_framework?deploy_type=1`,
       options
     )
     if (!res.ok) {
@@ -355,6 +355,20 @@
       })
     }
   }
+
+  const filterFrameworks = computed(() => {
+    if (!currentResource.value) return []
+
+    return frameworks.value.filter((framework) => {
+      if (currentResource.value.type === 'npu') {
+        return !!framework.frame_npu_image
+      } else if (currentResource.value.type === 'gpu') {
+        return !!framework.frame_image
+      } else {
+        return !!framework.frame_cpu_image
+      }
+    })
+  })
 
   // fetchFrameworks 的定义需要放到前面，不然找不到定义
   watchEffect(() => {
