@@ -135,7 +135,7 @@
             size="large"
             style="width: 100%">
             <el-option
-              v-for="item in finetuneFrameworks"
+              v-for="item in filterFrameworks"
               :key="item.id"
               :label="item.frame_name"
               :value="item.id" />
@@ -158,7 +158,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted, inject, computed } from 'vue'
   import { ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
@@ -256,6 +256,11 @@
         const firstAvailableResource = allGPUResources.find((item) => item.is_available)
         dataForm.value.resource_id = firstAvailableResource?.id || ''
         finetuneResources.value = allGPUResources
+        if (!dataForm.value.resource_id) {
+          dataForm.value.runtime_framework_id = ''
+        } else {
+          fetchFrameworks()
+        }
       })
     }
   }
@@ -268,19 +273,39 @@
 
     try {
       const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/runtime_framework?deploy_type=2`,
+        `${csghubServer}/api/v1/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`,
         options
       )
       if (res.ok) {
         res.json().then((body) => {
-          dataForm.value.runtime_framework_id = body.data[0]?.id || ''
           finetuneFrameworks.value = body.data
+          dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
         })
       }
     } catch (err) {
       console.log(err)
     }
   }
+
+  const filterFrameworks = computed(() => {
+    if (!dataForm.value.resource_id) return []
+
+    const currentResource = finetuneResources.value.find(
+      (resource) => resource.id == dataForm.value.resource_id
+    )
+
+    if (!currentResource) return []
+
+    return finetuneFrameworks.value.filter((framework) => {
+      if (currentResource.type === 'npu') {
+        return !!framework.frame_npu_image
+      } else if (currentResource.type === 'gpu') {
+        return !!framework.frame_image
+      } else {
+        return !!framework.frame_cpu_image
+      }
+    })
+  })
 
   const fetchClusters = async () => {
     const options = {
@@ -355,7 +380,6 @@
   }
 
   onMounted(() => {
-    fetchFrameworks()
     fetchClusters()
   })
 </script>
