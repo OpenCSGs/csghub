@@ -1,14 +1,17 @@
 class CodesController < ApplicationController
   include TagListHelper
   include LicenseListHelper
-  include LocalRepoValidation
+  # Todo: remove later
+  # include LocalRepoValidation
   include FileOptionsHelper
   include BlobContentHelper
 
-  before_action :check_user_info_integrity
+  # Todo: remove later
+  # before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
-  before_action :load_code_detail, except: [:index, :new, :resolve]
+  # Todo: remove later
+  # before_action :load_code_detail, except: [:index, :new, :resolve]
 
 
   def index
@@ -73,9 +76,9 @@ class CodesController < ApplicationController
     render :show
   end
 
-  private
-
-  def load_code_detail
-    @settings_visibility = (current_user && @local_code) ? current_user.can_manage?(@local_code) : false
-  end
+  # Todo: remove later
+  # private
+  # def load_code_detail
+  #   @settings_visibility = (current_user && @local_code) ? current_user.can_manage?(@local_code) : false
+  # end
 end

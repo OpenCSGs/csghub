@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
-  before_action :check_user_info_integrity
+  # Todo: remove later
+  # before_action :check_user_info_integrity
   before_action :authenticate_user, except: [:show]
 
   def edit

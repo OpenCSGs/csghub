@@ -20,27 +20,31 @@ const popupReloginDialog = () => {
 
 const refreshJWT = async () => {
   const jwt = cookies.get('user_token');
-  const jwtInfos = jwtDecode(jwt);
-  const expireTime = jwtInfos.exp;
   const currentTime = Date.now()/1000;
   const loginIdentity = cookies.get('login_identity');
 
   // user logged in
   if(loginIdentity) {
-    if (currentTime >= expireTime) {
-      // user token expired, relogin
-      cookies.set('user_token_valid', false, 0)
-      popupReloginDialog()
-    } else {
-      // if user token will expire soon, refresh
-      // if user token will not expire soon, do nothing
-      const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
-      if (differenceInMinutes < 10) {
-        console.log('refresh jwt')
-        const options = {method: 'PUT'}
-        csrfFetch('/internal_api/users/jwt_token', options)
+    if (jwt) {
+      const jwtInfos = jwtDecode(jwt);
+      const expireTime = jwtInfos.exp;
+      if (currentTime >= expireTime) {
+        // user token expired, relogin
+        cookies.set('user_token_valid', false, 0)
+        popupReloginDialog()
+      } else {
+        // if user token will expire soon, refresh
+        // if user token will not expire soon, do nothing
+        const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
+        if (differenceInMinutes < 10) {
+          console.log('refresh jwt')
+          const options = {method: 'PUT'}
+          csrfFetch('/internal_api/users/jwt_token', options)
+        }
+        cookies.set('user_token_valid', true, 0)
       }
-      cookies.set('user_token_valid', true, 0)
+    } else {
+      popupReloginDialog()
     }
   } else {
     // if user not logged in but jwt is there, relogin

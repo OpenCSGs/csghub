@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   SUPER_USERS = ENV.fetch('SUPER_USERS', []).split(',')
 
+  # Todo: remove later
   # validates_uniqueness_of :name, :phone, :email, allow_blank: true, on: :create
   # validates_length_of :nickname, maximum: 20
   # validates_length_of :email, maximum: 30
@@ -18,8 +19,11 @@ class User < ApplicationRecord
 
   has_many :org_memberships, dependent: :destroy
   has_many :organizations, through: :org_memberships
+
   has_many :comments, dependent: :destroy
-  has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
+
+  # Todo: remove later
+  # has_many :created_organizations, class_name: 'Organization', foreign_key: :creator_id
 
   has_many :models, as: :owner
   has_many :datasets, as: :owner
@@ -33,6 +37,7 @@ class User < ApplicationRecord
   has_many :created_application_spaces, class_name: 'ApplicationSpace', foreign_key: :creator_id
   has_many :created_endpoints, class_name: 'Endpoint', foreign_key: :creator_id
 
+  # ToDo: remove later
   # after_save :sync_to_starhub_server
 
   # user.roles = "super_user"
@@ -64,15 +69,15 @@ class User < ApplicationRecord
     has_role?('company_user')
   end
 
-  def password
-    return nil unless password_hash.present?
-    @password ||= Password.new(password_hash)
-  end
+  # def password
+  #   return nil unless password_hash.present?
+  #   @password ||= Password.new(password_hash)
+  # end
 
-  def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
-  end
+  # def password=(new_password)
+  #   @password = Password.create(new_password)
+  #   self.password_hash = @password
+  # end
 
   def display_name
     nickname.presence || name.presence || phone.presence || login_identity.presence
@@ -98,73 +103,75 @@ class User < ApplicationRecord
     org_membership_by_org(org)&.role
   end
 
-  def org_membership_by_org org
-    org_memberships.find_by(organization: org)
-  end
+  # Todo: remove later
+  # def org_membership_by_org org
+  #   org_memberships.find_by(organization: org)
+  # end
 
-  def can_manage? repository
-    if repository.owner.class == Organization
-      org_role(repository.owner) == 'admin'
-    else
-      self == repository.owner
-    end
-  end
+  # def can_manage? repository
+  #   if repository.owner.class == Organization
+  #     org_role(repository.owner) == 'admin'
+  #   else
+  #     self == repository.owner
+  #   end
+  # end
 
-  def can_write? repository
-    if repository.owner.class == Organization
-      org_role(repository.owner) == 'admin' || org_role(repository.owner) == 'write'
-    else
-      self == repository.owner
-    end
-  end
+  # def can_write? repository
+  #   if repository.owner.class == Organization
+  #     org_role(repository.owner) == 'admin' || org_role(repository.owner) == 'write'
+  #   else
+  #     self == repository.owner
+  #   end
+  # end
 
-  def can_read? repository
-    if repository.owner.class == Organization
-      org_role(repository.owner) == 'admin' || org_role(repository.owner) == 'write' || org_role(repository.owner) == 'read'
-    else
-      self == repository.owner
-    end
-  end
+  # def can_read? repository
+  #   if repository.owner.class == Organization
+  #     org_role(repository.owner) == 'admin' || org_role(repository.owner) == 'write' || org_role(repository.owner) == 'read'
+  #   else
+  #     self == repository.owner
+  #   end
+  # end
 
-  def set_org_role org, role
-    membership = org_membership_by_org(org)
-    if membership
-      membership.update(role: role)
-    end
-  end
+  # def set_org_role org, role
+  #   membership = org_membership_by_org(org)
+  #   if membership
+  #     membership.update(role: role)
+  #   end
+  # end
 
-  def starhub_synced!
-    # do not trigger the callback again
-    self.update_column('starhub_synced', true)
-  end
+  # Todo: remove later
+  # def starhub_synced!
+  #   # do not trigger the callback again
+  #   self.update_column('starhub_synced', true)
+  # end
 
-  def starhub_synced?
-    starhub_synced == true
-  end
+  # def starhub_synced?
+  #   starhub_synced == true
+  # end
 
-  def sync_to_starhub_server
-    # user info missing 不同步
-    return if name.blank? or email.blank?
+  # def sync_to_starhub_server
+  #   # user info missing 不同步
+  #   return if name.blank? or email.blank?
 
-    Starhub.api(session_ip).text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
-    Starhub.api(session_ip).image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
+  #   Starhub.api(session_ip).text_secure_check('nickname_detection', "#{name} #{nickname} #{email}")
+  #   Starhub.api(session_ip).image_secure_check('profilePhotoCheck', bucket_name, avatar) if avatar.to_s.match(/^avatar\/*/)
 
-    if starhub_synced?
-      res = Starhub.api(session_ip).update_user(name, nickname, phone, email, login_identity)
-      raise StarhubError, res.body unless res.success?
-    else
-      res = Starhub.api(session_ip).create_user(name, nickname, phone, email, login_identity)
-      raise StarhubError, res.body unless res.success?
-      starhub_synced!
-    end
+  #   if starhub_synced?
+  #     res = Starhub.api(session_ip).update_user(name, nickname, phone, email, login_identity)
+  #     raise StarhubError, res.body unless res.success?
+  #   else
+  #     res = Starhub.api(session_ip).create_user(name, nickname, phone, email, login_identity)
+  #     raise StarhubError, res.body unless res.success?
+  #     starhub_synced!
+  #   end
 
-    if starhub_synced? && git_token.blank?
-      random_name = SecureRandom.uuid
-      res_body = Starhub.api(session_ip).generate_git_token(name, random_name)
-      res_json = JSON.parse(res_body)
-      self.update_columns(git_token_name: res_json["data"]["name"], git_token: res_json["data"]["token"])
-    end
-  end
+  #   if starhub_synced? && git_token.blank?
+  #     random_name = SecureRandom.uuid
+  #     res_body = Starhub.api(session_ip).generate_git_token(name, random_name)
+  #     res_json = JSON.parse(res_body)
+  #     self.update_columns(git_token_name: res_json["data"]["name"], git_token: res_json["data"]["token"])
+  #   end
+  # end
 
   def as_json options = nil
     {
@@ -180,13 +187,13 @@ class User < ApplicationRecord
     }
   end
 
-  private
+  # private
 
-  def bucket_name
-    AwsS3.instance.bucket_name
-  end
+  # def bucket_name
+  #   AwsS3.instance.bucket_name
+  # end
 
-  def unique_name_by_organization
-    errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
-  end
+  # def unique_name_by_organization
+  #   errors.add(:name, 'is already taken') if Organization.where(name: name).exists?
+  # end
 end
