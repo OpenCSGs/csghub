@@ -277,6 +277,11 @@
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import { useCookies } from 'vue3-cookies'
+
+  const { cookies } = useCookies()
+  const currentUser = cookies.get('current_user')
+
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -518,7 +523,7 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${props.userName}`
+        window.location.href = `/profile/${currentUser}`
       }, 500)
       return response.json()
     }
