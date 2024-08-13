@@ -292,7 +292,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${currentCid}/${type}`,
+      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${props.finetuneId}/${type}`,
       options
     )
     if (!res.ok) {
@@ -331,7 +331,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources?cluster_id=${props.clusterId}&deploy_type=2`,
+      `${csghubServer}/api/v1/space_resources?cluster_id=${currentCid}&deploy_type=2`,
       options
     )
     if (!res.ok) {
