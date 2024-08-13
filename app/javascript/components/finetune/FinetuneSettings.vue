@@ -220,10 +220,14 @@
 </template>
 
 <script setup>
-  import { ref, computed, inject, onMounted, watch } from 'vue'
-  import { ElMessage, ElMessageBox } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import { ref, computed, onMounted, watch } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
+  import { cookies } from 'vue3-cookies'
+
+  const { cookies } = useCookies()
+  const currentUser = cookies.get('current_user')
 
   const props = defineProps({
     finetune: Object,
@@ -239,7 +243,6 @@
 
   const statusVal = ref(props.appStatus == 'Running')
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
   const delDesc = ref('')
   const currentResource = ref(props.cloudResource)
   const cloudResources = ref([])
@@ -292,111 +295,82 @@
   })
 
   const changeStatus = async (type) => {
-    const options = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${props.finetuneId}/${type}`,
-      options
-    )
-    if (!res.ok) {
+    const { error } = await useFetchApi(
+      `/models/${props.modelId}/finetune/${props.finetuneId}/${type}`
+    ).put().json()
+    if (error.value) {
       ElMessage({
-        message: t('all.fetchError'),
+        message: error.value.msg,
         type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        ElMessage({
-          message: t('all.updateSuccess'),
-          type: 'success'
-        })
+      ElMessage({
+        message: t('all.updateSuccess'),
+        type: 'success'
       })
     }
   }
 
   const fetchClusters = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(`${csghubServer}/api/v1/cluster`, options)
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi('/cluster').json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        finetuneClusters.value = body.data
-      })
+      const body = data.value
+      finetuneClusters.value = body.data
     }
   }
 
   const fetchResources = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources`,
-      options
-    )
-    if (!res.ok) {
+    const { data, error } = await useFetchApi('/space_resources').json()
+    if (error.value) {
       ElMessage({
-        message: t('all.fetchError'),
+        message: error.value.msg,
         type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        cloudResources.value = body.data
-      })
+      const body = data.value
+      cloudResources.value = body.data
     }
   }
 
   const fetchFrameworks = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=2`,
-      options
-    )
-    if (!res.ok) {
+    const { data, error } = await useFetchApi(
+      `/models/runtime_framework?deploy_type=2`
+    ).json()
+    if (error.value) {
       ElMessage({
-        message: t('all.fetchError'),
+        message: error.value.msg,
         type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        frameworks.value = body.data
-        const currentFramework = body.data.find((framework) => {
-          return framework.frame_name === props.framework
-        })
-        currentFrameworkId.value = currentFramework?.id || ''
+      const body = data.value
+      frameworks.value = body.data
+      const currentFramework = body.data.find((framework) => {
+        return framework.frame_name === props.framework
       })
+      currentFrameworkId.value = currentFramework?.id || ''
     }
   }
 
   const deleteFinetune = async () => {
     const options = {
-      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${props.finetuneId}`,
+    const { error } = await useFetchApi(
+      `/models/${props.modelId}/finetune/${props.finetuneId}`,
       options
-    )
-    if (!res.ok) {
+    ).delete().json()
+    if (error.value) {
       ElMessage({
-        message: t('all.fetchError'),
+        message: error.value.msg,
         type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        ElMessage({ message: t('all.delSuccess'), type: 'success' })
-        setTimeout(() => {
-          window.location.href = `/profile/${props.userName}`
-        }, 500)
-      })
+      ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      setTimeout(() => {
+        window.location.href = `/profile/${currentUser}`
+      }, 500)
     }
   }
 

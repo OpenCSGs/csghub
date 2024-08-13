@@ -102,7 +102,7 @@
   import { useI18n } from 'vue-i18n'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
 
@@ -127,6 +127,7 @@
   })
 
   const csghubServer = inject('csghubServer')
+
   const repoDetailStore = useRepoDetailStore()
 
   const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
@@ -201,20 +202,20 @@
   }
 
   const fetchRepoDetail = async () => {
-    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespace}/${props.repoName}`
+    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
 
     try {
-      const response = await jwtFetch(url, { method: 'GET' })
-      const json = await response.json()
+      const { data, error } = await useFetchApi(url).json()
 
-      if (response.ok) {
+      const json = data.value
+      if (json) {
         applicationSpace.value = json.data
         appStatus.value = json.data.status
         tags.value = buildTags(json.data.tags)
         repoDetailStore.initialize(json.data)
         ownerUrl.value = getOwnerUrl(json.data)
       } else {
-        ElMessage({ message: json.msg, type: 'warning' })
+        ElMessage({ message: error.value.msg, type: 'warning' })
       }
     } catch (error) {
       console.log(error)

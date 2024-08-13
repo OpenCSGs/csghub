@@ -120,7 +120,7 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
   import { onMounted, ref, computed, inject } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
@@ -129,7 +129,7 @@
   import TagSidebar from '../tags/TagSidebar.vue'
   import CsgPagination from './CsgPagination.vue'
   import { useI18n } from 'vue-i18n'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
     taskTags: String,
@@ -142,7 +142,6 @@
   })
 
   const onPremise = inject('onPremise', 'true')
-  const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
@@ -209,7 +208,7 @@
   }
 
   const reloadRepos = (childCurrent) => {
-    let url = `${csghubServer}/api/v1/${props.repoType}s`
+    let url = `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
@@ -223,17 +222,15 @@
   }
 
   async function loadRepos(url) {
-    const response = await jwtFetch(url)
-    if (!response.ok) {
+    const { error, data } = await useFetchApi(url).json()
+    if (!data.value) {
       ElMessage({
-        message: '加载模型数据报错',
+        message: error.value.msg || t('all.fetchError'),
         type: 'warning'
       })
     } else {
-      response.json().then((res_json) => {
-        reposData.value = res_json.data
-        totalRepos.value = res_json.total
-      })
+      reposData.value = data.value.data
+      totalRepos.value = data.value.total
     }
   }
 
