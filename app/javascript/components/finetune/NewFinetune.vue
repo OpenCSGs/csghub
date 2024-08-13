@@ -252,7 +252,7 @@
       ElMessage({ message: t('all.fetchError'), type: 'warning' })
     } else {
       res.json().then((body) => {
-        const allGPUResources = body.data.filter((item) => JSON.parse(item.resources).hasOwnProperty('gpu'))
+        const allGPUResources = body.data
         const firstAvailableResource = allGPUResources.find((item) => item.is_available)
         dataForm.value.resource_id = firstAvailableResource?.id || ''
         finetuneResources.value = allGPUResources
