@@ -7,15 +7,15 @@ With CSGHub, users can perform operations on LLM assets, including uploading, do
 
 CSGHub is committed to bringing users an asset management platform that is natively designed for large models and can be deployed On-Premise for fully offline operation. CSGHub offers functionalities similar to a privatized Huggingface(on-premise Huggingface), managing LLM assets in a manner akin to how OpenStack Glance manages virtual machine images, Harbor manages container images, and Sonatype Nexus manages artifacts.
 
-You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://portal.opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
+You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 <kbd>
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
 ### UPDATES
 - [2024.07.15] v0.7.0 Big release to support `Multiple Resource Sync` for models and datasets, One-Click Fintune, Resource Usage Metering.
-- [2024.06.21] v0.6.1 bug fix and user experience enhancement. 
+- [2024.06.21] v0.6.1 bug fix and user experience enhancement.
 - [2024.06.18] v0.6.0 Big release to support `dedicated` model inference endpoint, support `streamlit` Space, allow use to `like` repos allow to set repo's `industry tag`, enhance git history and commit diff details.
-- [2024.05.14] v0.5.0 Enhance Space user experience, auto build `relations` between repos(model,dataset,code and spaces), support multiple files uploading. 
+- [2024.05.14] v0.5.0 Enhance Space user experience, auto build `relations` between repos(model,dataset,code and spaces), support multiple files uploading.
 - [2024.04.18] v0.4.0 Allow to run `Application Space` (gradio app), add a widget to try model inference, support new repo type `Code`, support organization members management, support wechat login.
 - [2024.03.15] v0.3.0 Plan: Files online editing, organization edit, dataset preview.
 - [2024.02.15] v0.2.0 Improve the function of model dataset hosting, and add the feature of inviting new organization members.
@@ -100,7 +100,7 @@ docker compose -f all-in-one-CN.yml up -d
 
 Then, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
 inital admin account: admin001/admin001
-You can check our website for more user guide information: [User Guide](https://opencsg.com/docs/) 
+You can check our website for more user guide information: [User Guide](https://opencsg.com/docs/)
 
 **Note:**
 
