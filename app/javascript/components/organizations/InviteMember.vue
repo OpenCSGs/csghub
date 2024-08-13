@@ -252,7 +252,7 @@
     const response = await jwtFetch(inviteNewMemberEndpoint, options)
     if (!response.ok) {
       return response.json().then((data) => {
-        ElMessage({ message: data.msg, type: 'warning' })
+        console.log(data.msg)
       })
     } else {
       return response.json()
