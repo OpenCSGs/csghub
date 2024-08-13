@@ -259,6 +259,9 @@
     () => props.clusterId,
     (newVal, oldVal) => {
       currentCid.value = newVal
+      if (newVal) {
+        fetchResources()
+      }
     }
   )
   const initialized = computed(() => {
@@ -328,7 +331,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources`,
+      `${csghubServer}/api/v1/space_resources?cluster_id=${currentCid.value}&deploy_type=2`,
       options
     )
     if (!res.ok) {
@@ -418,7 +421,6 @@
   }
 
   onMounted(() => {
-    fetchResources()
     fetchFrameworks()
     fetchClusters()
   })
