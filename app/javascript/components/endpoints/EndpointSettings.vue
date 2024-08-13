@@ -375,7 +375,9 @@
     currentResource.value = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
     currentMaxReplica.value = props.maxReplica
     currentMinReplica.value = props.minReplica
-    fetchFrameworks()
+    if (props.modelId) {
+      fetchFrameworks()
+    }
   })
 
   const stopEndpoint = async () => {
