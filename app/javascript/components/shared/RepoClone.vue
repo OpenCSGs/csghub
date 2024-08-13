@@ -258,7 +258,7 @@ token = '' # token from opencsg.com
 endpoint = "https://hub.opencsg.com"
 repo_type = "${props.repoType}"
 repo_id = '${props.namespacePath}'
-chache_dir = '' # cache dir of download data
+cache_dir = '' # cache dir of download data
 result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
 `)
   }
