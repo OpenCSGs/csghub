@@ -331,7 +331,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources?cluster_id=${currentCid}&deploy_type=2`,
+      `${csghubServer}/api/v1/space_resources?cluster_id=${currentCid.value}&deploy_type=2`,
       options
     )
     if (!res.ok) {
