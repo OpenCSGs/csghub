@@ -259,6 +259,9 @@
     () => props.clusterId,
     (newVal, oldVal) => {
       currentCid.value = newVal
+      if (newVal) {
+        fetchResources()
+      }
     }
   )
   const initialized = computed(() => {
@@ -289,7 +292,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${props.finetuneId}/${type}`,
+      `${csghubServer}/api/v1/models/${props.modelId}/finetune/${currentCid}/${type}`,
       options
     )
     if (!res.ok) {
@@ -328,7 +331,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources`,
+      `${csghubServer}/api/v1/space_resources?cluster_id=${props.clusterId}&deploy_type=2`,
       options
     )
     if (!res.ok) {
@@ -418,7 +421,6 @@
   }
 
   onMounted(() => {
-    fetchResources()
     fetchFrameworks()
     fetchClusters()
   })
