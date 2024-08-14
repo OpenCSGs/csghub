@@ -116,7 +116,7 @@
   }
 
   const submitUserForm = async () => {
-    const { data } = await jwtFetch(`/user/${user.value.username}`, {
+    const { data } = await useFetchApi(`/user/${user.value.username}`, {
       headers: {
         'Content-Type': 'application/json'
       },
