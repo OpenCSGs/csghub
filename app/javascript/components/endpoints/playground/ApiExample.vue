@@ -82,7 +82,8 @@
   const props = defineProps({
     modelId: String,
     appEndpoint: String,
-    form: Object
+    form: Object,
+    private: Boolean
   })
 
   const { cookies } = useCookies()
@@ -91,7 +92,7 @@
 
   const codeExtension = ref('py') // py, js, bash
   const codeContent = ref('')
-  const useToken = ref(false)
+  const useToken = ref(props.private)
   const accessToken = ref('')
 
   const changeLanguage = (ext) => {
@@ -196,7 +197,7 @@ if response.status_code == 200:
     repetition_penalty: ${props.form.repetition_penalty}
   })
 })
-.then(response => response.json())
+.then(response => response.text())
 .then(data => {
   console.log(data)
 })`
@@ -213,19 +214,7 @@ if response.status_code == 200:
     () => `curl -X POST \\
 "${endpointUrl.value}" \\
 ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
--d '{ \\
-  "model": "${props.modelId}", \\
-  "messages": [ \\
-    { "role": "system", "content": "You are a helpful assistant." }, \\
-    { "role": "user", "content": "What is deep learning?" } \\
-  ], \\
-  "stream": true, \\
-  "max_tokens": ${props.form.max_tokens}, \\
-  "temperature": ${props.form.temperature}, \\
-  "repetition_penalty": ${props.form.repetition_penalty}, \\
-  "top_p": ${props.form.top_p}, \\
-  "top_k": ${props.form.top_k} \\
-}'
+-d '{ "model": "${props.modelId}", "messages": [{ "role": "system", "content": "You are a helpful assistant." }, {"role": "user", "content": "What is deep learning?" }], "stream": true, "max_tokens": ${props.form.max_tokens}, "temperature": ${props.form.temperature}, "repetition_penalty": ${props.form.repetition_penalty}, "top_p": ${props.form.top_p}, "top_k": ${props.form.top_k}}'
 `
   )
 
@@ -251,7 +240,7 @@ ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
   }
 
   const endpointUrl = computed(
-    () => `${props.appEndpoint}/api/v1/chat/completions`
+    () => `${props.appEndpoint}/v1/chat/completions`
   )
 
   watch(
@@ -297,6 +286,7 @@ ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
       res.json().then((body) => {
         if (body.data) {
           accessToken.value = body.data[0].token
+          setCodeContent()
         }
       })
     }

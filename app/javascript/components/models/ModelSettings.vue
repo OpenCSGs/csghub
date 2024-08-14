@@ -8,7 +8,7 @@
           {{ $t('models.modelName') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('models.modelNickName') }}
+          {{ $t('models.modelNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">

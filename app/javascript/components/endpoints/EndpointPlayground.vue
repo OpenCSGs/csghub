@@ -167,6 +167,7 @@
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="form"
+        :private="private"
       />
     </div>
   </div>
@@ -190,7 +191,8 @@
 
   const props = defineProps({
     appEndpoint: String,
-    modelId: String
+    modelId: String,
+    private: Boolean
   })
 
   const dialogVisible = ref(false)

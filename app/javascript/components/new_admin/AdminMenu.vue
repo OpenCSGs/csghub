@@ -24,27 +24,6 @@
     </RouterLink>
 
     <RouterLink
-      to="/new_admin/models"
-      class="underline"
-    >
-      Models
-    </RouterLink>
-
-    <RouterLink
-      to="/new_admin/datasets"
-      class="underline"
-    >
-      Datasets
-    </RouterLink>
-
-    <RouterLink
-      to="/new_admin/codes"
-      class="underline"
-    >
-      Codes
-    </RouterLink>
-
-    <RouterLink
       v-if="onPremise === 'true'"
       to="/new_admin/sync"
       class="underline"
