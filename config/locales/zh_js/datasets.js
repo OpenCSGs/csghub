@@ -31,6 +31,7 @@ export const datasets = {
     tip: "应用于数据集数据，创建后不可更改",
     datasetEnName: "数据集英文名称",
     license: "许可证",
+    createFail: "数据集创建失败"
   },
   edit: {
     tips: "将会显示在数据集列表页面中，选填",
