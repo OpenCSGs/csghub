@@ -139,9 +139,9 @@
 
 <script setup>
   import csrfFetch from '../../packs/csrfFetch.js'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, inject } from 'vue'
+  import { ref } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -151,7 +151,6 @@
   const { cookies } = useCookies()
   const { t } = useI18n()
   const userStore = useUserStore()
-  const csghubServer = inject('csghubServer')
   const profileData = ref(storeToRefs(userStore))
 
   const fileInput = ref(null)
@@ -208,7 +207,7 @@
 
   const updateProfile = async (config={}) => {
     const currentUsername = cookies.get('current_user')
-    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${currentUsername}`
+    const profileUpdateEndpoint = `/user/${currentUsername}`
     let params = {
       avatar: profileData.value.avatar,
       username: profileData.value.username,
@@ -230,16 +229,13 @@
     })
 
     const options = {
-      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
     try {
-      const response = await jwtFetch(profileUpdateEndpoint, options)
-      if (!response.ok) {
-        response.json().then((data) => {
-          ElMessage.warning(data.msg)
-        })
+      const { error } = await useFetchApi(profileUpdateEndpoint, options).put().json()
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
         ElMessage.success(t('profile.edit.updateSuccess'))
         if (config.relogin) {

@@ -88,14 +88,13 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
-  import jwtFetch from '../../../packs/jwtFetch.js'
+  import useFetchApi from '../../../packs/useFetchApi'
   import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
 
   const route = useRoute()
-  const csghubServer = inject('csghubServer')
 
   const user = ref({})
 
@@ -106,9 +105,9 @@
   })
 
   const fetchUser = async () => {
-    const response = await jwtFetch(`${csghubServer}/api/v1/user/${route.params.id}`)
-    if (response.ok) {
-      const result = await response.json()
+    const { data } = await useFetchApi(`/user/${route.params.id}`).json()
+    if (data.value) {
+      const result = data.value
       user.value = result.data
       form.value.roles = result.data.roles
     } else {
@@ -117,14 +116,13 @@
   }
 
   const submitUserForm = async () => {
-    const response = await jwtFetch(`${csghubServer}/api/v1/user/${user.value.username}`, {
-      method: 'PUT',
+    const { data } = await jwtFetch(`/user/${user.value.username}`, {
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ roles: form.value.roles })
-    })
-    if (response.ok) {
+    }).put().json()
+    if (data.value) {
       ElMessage.success('User updated successfully')
       dialogFormVisible.value = false
       fetchUser()

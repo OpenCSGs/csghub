@@ -88,8 +88,8 @@
   import Menu from './Menu.vue'
   import SshKeyCard from './SshKeyCard.vue'
   import { ElMessage } from 'element-plus'
-  import { ref, inject, onMounted } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import { ref, onMounted } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
@@ -98,7 +98,6 @@
     name: String
   })
 
-  const csghubServer = inject('csghubServer')
   const centerDialogVisible = ref(false)
   const sshKeyWarningDialogVisible = ref(false)
   const theSshKeys = ref([])
@@ -157,7 +156,6 @@
 
   const createTheSshKey = async () => {
     const options = {
-      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: props.name,
@@ -165,13 +163,11 @@
         content: formData.value.theSshKey
       })
     }
-    const SshKeyCreateEndpoint = `${csghubServer}/api/v1/user/${props.name}/ssh_keys`
-    const response = await jwtFetch(SshKeyCreateEndpoint, options)
+    const SshKeyCreateEndpoint = `/user/${props.name}/ssh_keys`
+    const { error } = await useFetchApi(SshKeyCreateEndpoint, options).post().json()
 
-    if (!response.ok) {
-      return response.json().then((data) => {
-        throw new Error(data.msg)
-      })
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       setTimeout(() => {
         window.location.href = '/settings/ssh-keys'
@@ -181,17 +177,16 @@
   }
 
   const fetchSshKeys = async () => {
-    const SshKeyEndpoint = `${csghubServer}/api/v1/user/${props.name}/ssh_keys`
-    const response = await jwtFetch(SshKeyEndpoint)
-    const result = await response.json()
+    const SshKeyEndpoint = `/user/${props.name}/ssh_keys`
+    const { data, error } = await useFetchApi(SshKeyEndpoint).get().json()
 
-    if (!response.ok) {
+    if (error.value) {
       ElMessage({
-        message: result.msg,
+        message: error.value.msg,
         type: 'warning'
       })
     } else {
-      theSshKeys.value = result.data || []
+      theSshKeys.value = data.value.data || []
     }
   }
 

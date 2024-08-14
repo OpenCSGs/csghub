@@ -101,8 +101,7 @@
 </template>
 
 <script>
-  import csrfFetch from "../../packs/csrfFetch.js"
-  import jwtFetch from "../../packs/jwtFetch.js"
+  import useFetchApi from "../../packs/useFetchApi"
   import { inject } from 'vue'
 
   export default {
@@ -118,7 +117,6 @@
         dataForm: {},
         org_types: ['企业', '高校', '非营利组织', '社区组织'],
         submitting: false,
-        csghubServer: inject('csghubServer')
       }
     },
     computed: {
@@ -186,7 +184,7 @@
           }
         })
       },
-      createOrganization() {
+      async createOrganization() {
         this.submitting = true
         const params = Object.assign({}, this.dataForm)
         delete params.logo_image
@@ -194,42 +192,30 @@
           params.homepage = this.selectedProtocol + params.homepage
         }
         // const orgCreateEndpoint = `/internal_api/organizations`;
-        const orgCreateEndpoint = `${this.csghubServer}/api/v1/organizations`;
+        const orgCreateEndpoint = '/organizations';
         const options = {
-          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params)
         }
 
-        jwtFetch(orgCreateEndpoint, options)
-          .then(response => {
-            if (response.ok) {
-              this.$message({
-                message: this.$t('organization.newOrganization.createSuccess'),
-                type: 'success'
-              });
-              setTimeout(() => {
-                window.location.href = "/organizations/" + this.dataForm.name
-              }, 500)
-            } else {
-              response.json()
-                .then(res => {
-                  this.$message({
-                    message: res.msg,
-                    type: 'warning'
-                  });
-                })
-            }
-          })
-          .catch(err => {
-            this.$message({
-              message: err.message,
-              type: 'warning'
-            });
-          })
-          .finally(() => {
-            this.submitting = false
-          })
+        const { error } = await useFetchApi(orgCreateEndpoint, options).post().json()
+
+        if (error.value) {
+          this.$message({
+            message: error.value.msg,
+            type: 'warning'
+          });
+        } else {
+          this.$message({
+            message: this.$t('organization.newOrganization.createSuccess'),
+            type: 'success'
+          });
+          setTimeout(() => {
+            window.location.href = "/organizations/" + this.dataForm.name
+          }, 500)
+        }
+
+        this.submitting = false
       }
     }
   }

@@ -160,7 +160,7 @@
 <script setup>
   import { ref, onMounted, inject, computed } from 'vue'
   import { ElMessage } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
@@ -181,7 +181,6 @@
   })
 
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
   const nameRule = inject('nameRule')
 
   const finetuneResources = ref([])
@@ -240,47 +239,34 @@
   })
 
   const fetchResources = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources?cluster_id=${dataForm.value.cluster_id}`,
-      options
-    )
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi(
+      `/space_resources?cluster_id=${dataForm.value.cluster_id}`
+    ).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        const allGPUResources = body.data.filter((item) => JSON.parse(item.resources).hasOwnProperty('gpu'))
-        const firstAvailableResource = allGPUResources.find((item) => item.is_available)
-        dataForm.value.resource_id = firstAvailableResource?.id || ''
-        finetuneResources.value = allGPUResources
-        if (!dataForm.value.resource_id) {
-          dataForm.value.runtime_framework_id = ''
-        } else {
-          fetchFrameworks()
-        }
-      })
+      const body = data.value
+      const allGPUResources = body.data.filter((item) => JSON.parse(item.resources).hasOwnProperty('gpu'))
+      const firstAvailableResource = allGPUResources.find((item) => item.is_available)
+      dataForm.value.resource_id = firstAvailableResource?.id || ''
+      finetuneResources.value = allGPUResources
+      if (!dataForm.value.resource_id) {
+        dataForm.value.runtime_framework_id = ''
+      } else {
+        fetchFrameworks()
+      }
     }
   }
 
   const fetchFrameworks = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-
     try {
-      const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`,
-        options
-      )
-      if (res.ok) {
-        res.json().then((body) => {
-          finetuneFrameworks.value = body.data
-          dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
-        })
+      const { data } = await useFetchApi(
+        `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`
+      ).json()
+      if (data.value) {
+        const body = data.value
+        finetuneFrameworks.value = body.data
+        dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
       }
     } catch (err) {
       console.log(err)
@@ -308,33 +294,27 @@
   })
 
   const fetchClusters = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(`${csghubServer}/api/v1/cluster`, options)
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi('/cluster').json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        dataForm.value.cluster_id = body.data[0]?.cluster_id || ''
-        finetuneClusters.value = body.data
-        fetchResources()
-      })
+      const body = data.value
+      dataForm.value.cluster_id = body.data[0]?.cluster_id || ''
+      finetuneClusters.value = body.data
+      fetchResources()
     }
   }
 
   const fetchModels = async (query, cb) => {
-    const res = await jwtFetch(`${csghubServer}/api/v1/models?search=${query}`)
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi(`/models?search=${query}`).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        const paths = body.data?.map((model) => {
-          return { key: model.path, value: model.path }
-        })
-        cb(paths)
+      const body = data.value
+      const paths = body.data?.map((model) => {
+        return { key: model.path, value: model.path }
       })
+      cb(paths)
     }
   }
 
@@ -354,28 +334,23 @@
   }
 
   const submitFinetuneForm = async () => {
-
     const options = {
-      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataForm.value)
     }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${dataForm.value.model_id}/finetune?current_user=${
+    const { data, error } = await useFetchApi(
+      `/models/${dataForm.value.model_id}/finetune?current_user=${
         dataForm.value.model_id ? dataForm.value.model_id.split('/')[0] : ''
       }`,
       options
-    )
-    if (!res.ok) {
-      res.json().then((error) => {
-        ElMessage({ message: error.msg, type: 'error' })
-      })
+    ).post().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        if (body.data && body.data.deploy_id) {
-          window.location.pathname = `/finetune/${dataForm.value.model_id}/${dataForm.value.deploy_name}/${body.data.deploy_id}`
-        }
-      })
+      const body = data.value
+      if (body.data && body.data.deploy_id) {
+        window.location.pathname = `/finetune/${dataForm.value.model_id}/${dataForm.value.deploy_name}/${body.data.deploy_id}`
+      }
     }
   }
 

@@ -62,9 +62,9 @@
   </div>
 </template>
 <script setup>
-  import { ref, computed, inject, onMounted } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import useUserStore from '../../stores/UserStore.js'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
   import { useCookies } from 'vue3-cookies'
@@ -77,8 +77,6 @@
   const props = defineProps({
     name: String
   })
-
-  const csghubServer = inject('csghubServer')
 
   const uuid = cookies.get('login_identity')
   const current_user = cookies.get('current_user')
@@ -101,25 +99,20 @@
   const hasLastLoginTime = computed(() => isCurrentUser.value ? !!userStore.lastLoginTime : !!theLastLoginTime.value)
   const hasOrg = computed(() => isCurrentUser.value ? !!userStore.orgs : !!userOrgs.value)
   const fetchUserInfo = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${props.name}`,
-      options
-    )
-    if (!res.ok){
-      ElMessage({message: t('all.fetchError'), type: "warning"})
+    const { data, error } = await useFetchApi(
+      `/user/${props.name}`
+    ).json()
+    if (error.value) {
+      ElMessage({ message: error.value, type: 'warning' })
     }else{
-      const { data } = await res.json()
-      avatar.value = data.avatar
-      username.value = data.username
-      nickname.value = data.nickname
-      phone.value = data.phone
-      email.value = data.email
-      theLastLoginTime.value = data.last_login_at
-      userOrgs.value = data.orgs
+      const body = data.value
+      avatar.value = body.data.avatar
+      username.value = body.data.username
+      nickname.value = body.data.nickname
+      phone.value = body.data.phone
+      email.value = body.data.email
+      theLastLoginTime.value = body.data.last_login_at
+      userOrgs.value = body.data.orgs
     }
   }
   onMounted(() => {

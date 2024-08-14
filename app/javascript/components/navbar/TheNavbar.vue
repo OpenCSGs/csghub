@@ -200,8 +200,8 @@
   import Space from './space.vue'
   import CodeNav from './CodeNav.vue'
   import Collection from './Collection.vue'
-  import { ref, inject, onMounted, watch } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import { ref, onMounted, watch } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
   import { useCookies } from 'vue3-cookies'
 
@@ -232,21 +232,18 @@
   const isLoggedInBoolean = ref(JSON.parse(props.isLoggedIn.toLowerCase()))
   const userProfile = ref(`/profile/${props.userName}`)
   const userAvatar = ref(props.avatar)
-  const csghubServer = inject('csghubServer')
 
   const handleLocaleChange = (locale) => {
     location.href = `/${locale}/settings/locale`
   }
 
   const fetchUser = async () => {
-    jwtFetch(`${csghubServer}/api/v1/user/${props.userName}`, {
-      method: 'GET'
-    })
-      .then((res) => res.json())
-      .then((body) => {
-        userAvatar.value = body.data.avatar
-        userStore.initialize(body.data)
-      })
+    const { data } = await useFetchApi(`/user/${props.userName}`).json()
+    if (data.value) {
+      const body = data.value
+      userAvatar.value = body.data.avatar
+      userStore.initialize(body.data)
+    }
   }
 
   onMounted(() => {

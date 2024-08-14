@@ -224,7 +224,7 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
-  import { cookies } from 'vue3-cookies'
+  import { useCookies } from 'vue3-cookies'
 
   const { cookies } = useCookies()
   const currentUser = cookies.get('current_user')
