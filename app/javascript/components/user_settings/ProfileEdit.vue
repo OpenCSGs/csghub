@@ -10,21 +10,6 @@
     <div class="font-semibold text-[20px] leading-[28px]">
       {{ $t('profile.edit.title') }}
     </div>
-    <!-- name -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.userName') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.username"
-        :disabled="canChangeUsername === 'false'"
-        :placeholder="this.$t('all.userName')">
-      </el-input>
-      <p class="text-gray-500 text-[12px] italic pt-1">
-        {{ $t('rule.nameRule') }}
-      </p>
-    </div>
     <!-- avatar -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户头像</div>
@@ -50,41 +35,20 @@
         </div>
       </div>
     </div>
-    <!-- nickname -->
+    <!-- name -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.nickName') }}
+        {{ $t('all.userName') }}
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.nickname"
-        :placeholder="this.$t('all.nickName')">
+        v-model="profileData.username"
+        :disabled="canChangeUsername === 'false'"
+        :placeholder="this.$t('all.userName')">
       </el-input>
-    </div>
-    <!-- homepage -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.homepage') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.homepage"
-        :placeholder="this.$t('all.homepage')">
-      </el-input>
-    </div>
-    <!-- bio -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.bio') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.bio"
-        clearable
-        type="textarea"
-        :autosize="{ minRows: 8, maxRows: 30 }"
-        :placeholder="this.$t('all.bio')">
-      </el-input>
+      <p class="text-gray-500 text-[12px] italic pt-1">
+        {{ $t('rule.nameRule') }}
+      </p>
     </div>
     <!-- phone -->
     <div>
@@ -127,6 +91,42 @@
         class="max-w-[600px]"
         v-model="profileData.email"
         :placeholder="this.$t('all.email')">
+      </el-input>
+    </div>
+    <!-- nickname -->
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">
+        {{ $t('all.nickName') }}
+      </div>
+      <el-input
+        class="max-w-[600px]"
+        v-model="profileData.nickname"
+        :placeholder="this.$t('all.nickName')">
+      </el-input>
+    </div>
+    <!-- homepage -->
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">
+        {{ $t('all.homepage') }}
+      </div>
+      <el-input
+        class="max-w-[600px]"
+        v-model="profileData.homepage"
+        :placeholder="this.$t('all.homepage')">
+      </el-input>
+    </div>
+    <!-- bio -->
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">
+        {{ $t('all.bio') }}
+      </div>
+      <el-input
+        class="max-w-[600px]"
+        v-model="profileData.bio"
+        clearable
+        type="textarea"
+        :autosize="{ minRows: 8, maxRows: 30 }"
+        :placeholder="this.$t('all.bio')">
       </el-input>
     </div>
     <div

@@ -240,13 +240,13 @@
 
   const fetchResources = async () => {
     const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${dataForm.value.cluster_id}`
-    ).json()
+      `/space_resources?cluster_id=${dataForm.value.cluster_id}&deploy_type=2`
+    )
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       const body = data.value
-      const allGPUResources = body.data.filter((item) => JSON.parse(item.resources).hasOwnProperty('gpu'))
+      const allGPUResources = body.data
       const firstAvailableResource = allGPUResources.find((item) => item.is_available)
       dataForm.value.resource_id = firstAvailableResource?.id || ''
       finetuneResources.value = allGPUResources

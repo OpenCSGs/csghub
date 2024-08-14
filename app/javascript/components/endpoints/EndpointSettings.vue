@@ -373,7 +373,9 @@
   })
 
   watch(() => props.modelId, () => {
-    fetchFrameworks()
+    if (props.modelId) {
+      fetchFrameworks()
+    }
   })
 
   const stopEndpoint = async () => {

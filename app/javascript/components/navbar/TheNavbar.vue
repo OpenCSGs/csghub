@@ -209,7 +209,6 @@
 
   const props = defineProps({
     logo: String,
-    avatar: String,
     starChainUrl: String,
     isCompanyUser: String,
     companyVerified: String,

@@ -129,7 +129,7 @@
           {{ $t('application_spaces.name') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('application_spaces.nickname') }}
+          {{ $t('application_spaces.nameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">

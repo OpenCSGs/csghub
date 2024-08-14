@@ -2,6 +2,7 @@ export const application_spaces = {
   title: "应用空间",
   placeholder: "应用空间名字",
   name: "应用空间名称",
+  nameTips: "应用于空间路径，创建后不可更改",
   nickname: "应用空间别名",
   namespaceName: "命名空间/应用空间名称",
   desc: "应用空间介绍",

@@ -1,14 +1,12 @@
 class ApplicationSpacesController < ApplicationController
+  include LocalRepoValidation
   include TagListHelper
   include LicenseListHelper
-  include LocalRepoValidation
   include FileOptionsHelper
   include BlobContentHelper
 
-  before_action :check_user_info_integrity
   before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
-  before_action :load_application_space_detail, except: [:index, :new, :resolve]
 
   def index
     get_tag_list('application_spaces')
@@ -75,11 +73,5 @@ class ApplicationSpacesController < ApplicationController
     @default_tab = 'files'
     @commit_id = params[:commit_id]
     render :show
-  end
-
-  private
-
-  def load_application_space_detail
-    @settings_visibility = (current_user && @local_application_space) ? current_user.can_manage?(@local_application_space) : false
   end
 end

@@ -2,7 +2,92 @@
   <div
     class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
-  <!-- 区域 -->
+    <!-- 英文名称 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('finetune.detail.settings.enName') }}
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          {{ $t('finetune.detail.settings.enNameTip1') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-input
+          :value="props.finetuneName"
+          disabled
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        />
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- 别名 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('finetune.detail.settings.cnName') }}
+        </div>
+        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+          {{ $t('finetune.detail.settings.cnNameTip1') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-input
+          v-model="cnName"
+          clearable
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        />
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- 暂停 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.stopEndpoint') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <div class="flex flex-col gap-[6px]">
+          <el-button
+            @click="changeStatus('stop')"
+            class="w-[100px]"
+            :disabled="!initialized || isStopped"
+          >
+            {{ $t('endpoints.settings.stop') }}
+          </el-button>
+        </div>
+      </div>
+    </div>
+    <el-divider />
+
+    <!-- 重启 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+          {{ $t('endpoints.settings.restartEndpoint') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-[6px]">
+        <el-button
+          @click="changeStatus('start')"
+          class="w-[100px]"
+          :disabled="notInitialized"
+        >
+          {{ $t('endpoints.settings.restart') }}
+        </el-button>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- 区域 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
@@ -71,100 +156,7 @@
         </el-select>
       </div>
     </div>
-    <el-divider />
 
-    <!-- 暂停 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('endpoints.settings.stopEndpoint') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-[6px]">
-        <div class="flex flex-col gap-[6px]">
-          <el-button
-            @click="changeStatus('stop')"
-            class="w-[100px]"
-            :disabled="!initialized || isStopped"
-          >
-            {{ $t('endpoints.settings.stop') }}
-          </el-button>
-        </div>
-      </div>
-    </div>
-    <el-divider />
-
-    <!-- 重启 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('endpoints.settings.restartEndpoint') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-[6px]">
-        <el-button
-          @click="changeStatus('start')"
-          class="w-[100px]"
-          :disabled="notInitialized"
-        >
-          {{ $t('endpoints.settings.restart') }}
-        </el-button>
-      </div>
-    </div>
-    <el-divider />
-
-    <!-- 英文名称&中文名称 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetune.detail.settings.enName') }}
-        </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          {{ $t('finetune.detail.settings.enNameTip1') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-[6px]">
-        <el-input
-          :value="props.finetuneName"
-          disabled
-          size="large"
-          class="!w-[512px] sm:!w-full"
-        />
-        <div class="flex items-center">
-          <el-input
-            :value="`portal.opencsg.com/${props.modelId}`"
-            disabled
-            size="large"
-            class="!w-[50%] sm:!w-full"
-          />
-          <el-input
-            :value="props.finetuneName"
-            disabled
-            size="large"
-            class="!w-[50%] sm:!w-full"
-          />
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
-          {{ $t('finetune.detail.settings.cnName') }}
-        </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
-          {{ $t('finetune.detail.settings.cnNameTip1') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-[6px]">
-        <el-input
-          v-model="cnName"
-          clearable
-          size="large"
-          class="!w-[512px] sm:!w-full"
-        />
-      </div>
-    </div>
     <el-divider />
 
     <!-- 删除 -->
@@ -270,6 +262,9 @@
     () => props.clusterId,
     (newVal, oldVal) => {
       currentCid.value = newVal
+      if (newVal) {
+        fetchResources()
+      }
     }
   )
   const initialized = computed(() => {
@@ -322,7 +317,9 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi('/space_resources').json()
+    const { data, error } = await useFetchApi(
+      `/space_resources?cluster_id=${currentCid.value}&deploy_type=2`
+    ).json()
     if (error.value) {
       ElMessage({
         message: error.value.msg,
@@ -400,7 +397,6 @@
   }
 
   onMounted(() => {
-    fetchResources()
     fetchFrameworks()
     fetchClusters()
   })
