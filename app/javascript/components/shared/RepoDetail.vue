@@ -61,8 +61,6 @@
     currentBranch: String,
     currentPath: String,
     actionName: String,
-    settingsVisibility: Boolean,
-    canWrite: Boolean,
     userName: String,
     commitId: String,
     admin: Boolean,

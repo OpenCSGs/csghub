@@ -1,6 +1,7 @@
 class EndpointsController < ApplicationController
-  before_action :authenticate_user, except: :show
-  before_action :check_user_info_integrity
+  include LocalRepoValidation
+
+  before_action :authenticate_user
 
   def new
   end
