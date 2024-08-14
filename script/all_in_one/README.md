@@ -16,13 +16,13 @@
 
 ### 前置条件
 * 硬件
-  
+
 最小配置: 2c CPU/6GB 内存/50GB 硬盘
 
 推荐配置: 4c CPU/16GB 内存/500GB 硬盘
 
 * 软件
-  
+
 x86_64架构的任意Linux OS
 
 docker engine（>=5:20.10.24）
@@ -32,7 +32,7 @@ docker engine（>=5:20.10.24）
 2. 编辑.env文件，设置`SERVER_DOMAIN`为当前主机的ip地址或者自定义域名（域名可能会有备案问题，因此推荐使用ip地址，公网/内网ip皆可）。请不要使用`127.0.0.1`或者`localhost`。
 3. 运行`startup.sh`脚本，待所有服务启动完毕，即可以通过`http://[SERVER_DOMAIN]`访问到自部署的CSGHub服务。
 
-详细使用方法可参看[使用文档](https://portal.opencsg.com/docs/)
+详细使用方法可参看[使用文档](https://opencsg.com/docs/)
 
 ### 注意事项
 1. 自部署CSGHub使用local类型的docker volume来进行相关持久化，比如postgresql，minio。请确保docker local volume有足够的磁盘空间。

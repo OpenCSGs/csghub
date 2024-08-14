@@ -99,7 +99,7 @@
           :disabled="!isStopped"
         >
           <el-option
-            v-for="item in frameworks"
+            v-for="item in filterFrameworks"
             :key="item.id"
             :label="item.frame_name"
             :value="item.id"
@@ -277,6 +277,11 @@
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import { useCookies } from 'vue3-cookies'
+
+  const { cookies } = useCookies()
+  const currentUser = cookies.get('current_user')
+
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -340,7 +345,7 @@
       headers: { 'Content-Type': 'application/json' }
     }
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/runtime_framework?deploy_type=1`,
+      `${csghubServer}/api/v1/models/${props.modelId}/runtime_framework?deploy_type=1`,
       options
     )
     if (!res.ok) {
@@ -356,12 +361,28 @@
     }
   }
 
+  const filterFrameworks = computed(() => {
+    if (!currentResource.value) return []
+
+    return frameworks.value.filter((framework) => {
+      if (currentResource.value.type === 'npu') {
+        return !!framework.frame_npu_image
+      } else if (currentResource.value.type === 'gpu') {
+        return !!framework.frame_image
+      } else {
+        return !!framework.frame_cpu_image
+      }
+    })
+  })
+
   // fetchFrameworks 的定义需要放到前面，不然找不到定义
   watchEffect(() => {
     currentResource.value = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
     currentMaxReplica.value = props.maxReplica
     currentMinReplica.value = props.minReplica
-    fetchFrameworks()
+    if (props.modelId) {
+      fetchFrameworks()
+    }
   })
 
   const stopEndpoint = async () => {
@@ -502,7 +523,7 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${props.userName}`
+        window.location.href = `/profile/${currentUser}`
       }, 500)
       return response.json()
     }

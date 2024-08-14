@@ -197,7 +197,7 @@ if response.status_code == 200:
     repetition_penalty: ${props.form.repetition_penalty}
   })
 })
-.then(response => response.json())
+.then(response => response.text())
 .then(data => {
   console.log(data)
 })`

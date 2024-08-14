@@ -157,7 +157,7 @@
         <el-form-item
           :label="t('endpoints.new.framework')"
           class="w-full"
-          prop="framework_id">
+          prop="endpoint_framework">
           <el-select
             v-model="dataForm.endpoint_framework"
             :placeholder="
@@ -166,7 +166,7 @@
             size="large"
             style="width: 100%">
             <el-option
-              v-for="item in endpointFrameworks"
+              v-for="item in filterFrameworks"
               :key="item.id"
               :label="item.frame_name"
               :value="item.id" />
@@ -197,7 +197,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted, inject, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import jwtFetch from '../../packs/jwtFetch'
   import { useI18n } from 'vue-i18n'
@@ -291,6 +291,15 @@
         }),
         trigger: 'change'
       }
+    ],
+    endpoint_framework: [
+      {
+        required: true,
+        message: t('all.pleaseSelect', {
+          value: t('endpoints.new.framework')
+        }),
+        trigger: 'blur'
+      }
     ]
   })
 
@@ -312,6 +321,11 @@
         )
         dataForm.value.cloud_resource = firstAvailableResource?.id || ''
         endpointResources.value = body.data
+        if (!dataForm.value.cloud_resource) {
+          dataForm.value.endpoint_framework = ''
+        } else {
+          updateRuntimeFramework()
+        }
       })
     }
   }
@@ -351,19 +365,38 @@
 
   const updateRuntimeFramework = async () => {
     const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${dataForm.value.model_path}/runtime_framework`
+      `${csghubServer}/api/v1/models/${dataForm.value.model_path}/runtime_framework?deploy_type=1`
     )
     if (!res.ok) {
       dataForm.value.endpoint_framework = ''
       endpointFrameworks.value = []
     } else {
       res.json().then((body) => {
-        dataForm.value.endpoint_framework =
-          body.data == null ? '' : body.data[0].id
         endpointFrameworks.value = body.data
+        dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
       })
     }
   }
+
+  const filterFrameworks = computed(() => {
+    if (!dataForm.value.cloud_resource) return []
+
+    const currentResource = endpointResources.value.find(
+      (resource) => resource.id == dataForm.value.cloud_resource
+    )
+
+    if (!currentResource) return []
+
+    return endpointFrameworks.value.filter((framework) => {
+      if (currentResource.type === 'npu') {
+        return !!framework.frame_npu_image
+      } else if (currentResource.type === 'gpu') {
+        return !!framework.frame_image
+      } else {
+        return !!framework.frame_cpu_image
+      }
+    })
+  })
 
   const handleSubmit = () => {
     loading.value = true
@@ -417,7 +450,6 @@
   }
 
   onMounted(() => {
-    updateRuntimeFramework()
     fetchClusters()
   })
 </script>
