@@ -92,6 +92,15 @@
           :userName:="userName"
         />
       </el-tab-pane>
+      <el-tab-pane
+        :label="$t('collections.details.tabCommunity')"
+        name="community"
+      >
+        <CommunityPage
+          type="collections"
+          :localRepoId="collectionsId"
+        ></CommunityPage>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -103,6 +112,7 @@
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
+  import CommunityPage from '../community/CommunityPage.vue'
 
   const collectionData = ref()
 

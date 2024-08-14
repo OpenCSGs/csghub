@@ -164,7 +164,7 @@
       <template #community>
         <community-page
           :type="repoTypeClass"
-          :localModelId="localRepoId"
+          :localRepoId="localRepoId"
         ></community-page>
       </template>
 

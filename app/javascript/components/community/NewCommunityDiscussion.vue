@@ -33,7 +33,7 @@ import csrfFetch from "../../packs/csrfFetch";
 import { ElMessage } from 'element-plus'
 export default {
   props: {
-    localModelId: String,
+    localRepoId: String,
     type:String
   },
   components: {
@@ -82,7 +82,7 @@ export default {
       const discussionCreateEndpoint = "/internal_api/discussions"
       const discussionJsonData = {
         discussionable_type: this.type,
-        discussionable_id: this.localModelId,
+        discussionable_id: this.localRepoId,
         title: this.title
       }
       const option = {
