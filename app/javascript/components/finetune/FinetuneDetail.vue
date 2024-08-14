@@ -37,7 +37,7 @@
         <div class="pt-[24px]">
           <iframe
             v-if="finetune.endpoint"
-            :src="`https://${finetune.proxy_endpoint}?jwt=${jwtToken}`"
+            :src="`${httpProtocal}://${finetune.proxy_endpoint}?jwt=${jwtToken}`"
             width="100%"
             height="700"
             frameborder="0"
@@ -71,7 +71,6 @@
         name="billing"
       >
         <BillingDetail
-          v-if="finetune.svc_name"
           type="finetune"
           :instanceName="finetune.svc_name"
         ></BillingDetail>
@@ -146,6 +145,8 @@
   const isStatusSSEConnected = ref(false)
 
   const csghubServer = inject('csghubServer')
+
+  const httpProtocal = ENABLE_HTTPS === 'true' ? 'https' : 'http'
 
   const handleTabLeave = (tab) => {
     tabChange(tab)

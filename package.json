@@ -19,6 +19,7 @@
     "esbuild": "^0.19.3",
     "esbuild-plugin-vue3": "^0.3.2",
     "highlight.js": "^11.9.0",
+    "jwt-decode": "^4.0.0",
     "less": "^4.2.0",
     "markdown-it": "^13.0.2",
     "markdown-it-anchor": "^8.6.7",

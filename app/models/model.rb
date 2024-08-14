@@ -1,6 +1,4 @@
 class Model < ApplicationRecord
-  attr_accessor :skip_create_callback
-
   DEFAULT_LICENSES = {
     'apache-2.0' => 'Apache-2.0',
     'mit' => 'MIT',
@@ -32,16 +30,6 @@ class Model < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
   has_many :discussions, as: :discussionable, dependent: :destroy
 
-  after_create :sync_created_model_to_starhub_server
-  after_update :update_starhub_server_model
-  before_save :detect_sensitive_content
-
-  skip_callback :create, :after, :sync_created_model_to_starhub_server, if: :skip_create_callback
-
-  validates :name, format: { with: NAME_RULE }
-
-  validates :name, uniqueness: { scope: [:owner_type, :owner_id], case_sensitive: false }
-
   def path
     "#{owner.name}/#{name}"
   end
@@ -57,34 +45,5 @@ class Model < ApplicationRecord
       path: path,
       updated_at: updated_at
     }
-  end
-
-  private
-
-  def sync_created_model_to_starhub_server
-    res = Starhub.api(creator.session_ip).create_model(creator.name,
-                                                       name,
-                                                       owner.name,
-                                                       nickname,
-                                                       desc,
-                                                       { license: license,
-                                                         private: model_private? })
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def update_starhub_server_model
-    res = Starhub.api(creator.session_ip).update_model(creator.name,
-                                                       name,
-                                                       owner.name,
-                                                       nickname,
-                                                       desc,
-                                                       { private: model_private?,
-                                                         current_user: creator&.name
-                                                       })
-    raise StarhubError, res.body unless res.success?
-  end
-
-  def detect_sensitive_content
-    Starhub.api(creator.session_ip).text_secure_check('nickname_detection', name)
   end
 end

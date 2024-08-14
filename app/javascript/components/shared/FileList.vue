@@ -111,7 +111,7 @@
           </svg>
         </span>
       </div>
-      <a href="#" class="text-[#606266] w-[37%] pl-3 text-sm truncate hover:underline">
+      <a :href="`/${prefixPath}/${namespacePath}/commit/${file.last_commit_sha}`" class="text-[#606266] w-[37%] pl-3 text-sm truncate hover:underline">
         {{ file.commit.message }}
       </a>
       <div class="text-[#909399] w-[15%] text-sm text-right cursor-pointer md:hidden">

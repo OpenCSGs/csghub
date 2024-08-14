@@ -19,7 +19,7 @@
     </div>
     <div class="text-sm leading-snug text-[#606266] mb-3">
       <div>{{ $t("models.title") }}: {{ endpoint.model_id }}</div>
-      <div>{{ $t("endpoints.resourceType") }}: {{ endpoint.hardware?.gpu ? "GPU" : "CPU" }}</div>
+      <div>{{ $t("endpoints.resourceType") }}: {{ hardwareType }}</div>
     </div>
     <div class="text-sm leading-snug text-[#667085] flex justify-between">
       <div>{{ $t("all.lastTime") }}: {{ endpoint.updated_at.substring(0, 10) }}</div>
@@ -29,10 +29,18 @@
 </template>
 
 <script setup>
+  import { computed } from "vue"
   import AppStatus from "../application_spaces/AppStatus.vue";
 
   const props = defineProps({
     endpoint: Object,
     namespace: String
+  })
+
+  const hardwareType = computed(() => {
+    if (!props.endpoint?.hardware) return ''
+
+    const hardware = JSON.parse(props.endpoint.hardware)
+    return hardware.gpu ? "GPU" : "CPU"
   })
 </script>

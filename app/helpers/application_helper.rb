@@ -24,11 +24,6 @@ module ApplicationHelper
     end
   end
 
-  def feature_flags
-    system_config = SystemConfig.first
-    (system_config.feature_flags rescue {}) || {}
-  end
-
   def code_repo_owner_url owner
     if owner
       if owner.is_a?(User)

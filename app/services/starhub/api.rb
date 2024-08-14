@@ -219,9 +219,10 @@ module Starhub
       @client.delete("/organizations/#{org_name}/members/#{user}", options)
     end
 
-    def get_jwt_token(username)
+    def get_jwt_token(username, login_identity)
       options = {
-        current_user: username
+        current_user: username,
+        uuid: login_identity
       }
       res = @client.post("/jwt/token?current_user=#{username}", options)
       raise StarhubError, res.body unless res.success?
@@ -281,10 +282,7 @@ module Starhub
 
     def sensitive_check_enabled?
       config_from_env = ENV.fetch('SENSITIVE_CHECK', nil)
-      system_config = SystemConfig.first
-      feature_flags = (system_config.feature_flags rescue {}) || {}
-      sensitive_check = config_from_env || feature_flags['sensitive_check']
-      sensitive_check.to_s == 'true'
+      config_from_env.to_s == 'true'
     end
   end
 end
