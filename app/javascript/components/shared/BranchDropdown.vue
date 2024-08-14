@@ -27,15 +27,14 @@
 </template>
 
 <script setup>
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
     currentBranch: String
   })
 
-  const csghubServer = inject('csghubServer')
   const branches = ref([])
 
   const emit = defineEmits(['changeBranch'])
@@ -49,16 +48,14 @@
   const repoName = document.location.pathname.split('/')[3]
 
   const fetchBranches = async () => {
-    const url = `${csghubServer}/api/v1/${prefixPath}/${namespace}/${repoName}/branches`
+    const url = `/${prefixPath}/${namespace}/${repoName}/branches`
 
-    const response = await jwtFetch(url, { method: 'GET' })
+    const { data, error } = await useFetchApi(url).json()
 
-    const result = await response.json()
-
-    if (response.ok) {
-      branches.value = result.data
+    if (!error.value) {
+      branches.value = data.value.data
     } else {
-      ElMessage({ message: data.msg, type: 'warning' })
+      ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
 

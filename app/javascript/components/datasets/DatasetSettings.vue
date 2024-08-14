@@ -293,9 +293,9 @@
 </template>
 
 <script>
-  import { h, inject } from 'vue'
+  import { h } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState } from 'pinia'
   import parseMD from 'parse-md'
@@ -314,7 +314,6 @@
     components: {},
     data() {
       return {
-        csghubServer: inject('csghubServer'),
         theTagList: this.tagList,
         industryTagsList: [],
         theIndustryTagsList: this.industryTagsList,
@@ -370,24 +369,14 @@
     },
     methods: {
       async getIndustryTags() {
-        const getIndustryOptions = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        }
-        const response = await jwtFetch(
-          `${this.csghubServer}/api/v1/tags`,
-          getIndustryOptions
-        )
-        if (!response.ok) {
-          response.json().then(({ err }) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        const { data, error } = await useFetchApi('/tags').json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          response.json().then(({ data }) => {
-            this.industryTagsList = data.filter(
-              (item) => item.category === 'industry' && item.scope === 'dataset'
-            )
-          })
+          const tags = data.value.data
+          this.industryTagsList = tags.filter(
+            (item) => item.category === 'industry' && item.scope === 'dataset'
+          )
         }
       },
       collapseTagList(event) {
@@ -488,20 +477,18 @@
       },
 
       async deleteDataset() {
-        const datasetDeleteEndpoint = `${this.csghubServer}/api/v1/datasets/${this.path}`
-        const option = { method: 'DELETE' }
-        const response = await jwtFetch(datasetDeleteEndpoint, option)
+        const datasetDeleteEndpoint = `/datasets/${this.path}`
 
-        if (!response.ok) {
-          return response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        const { error } = await useFetchApi(datasetDeleteEndpoint).delete().json()
+
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
             window.location.href = '/datasets'
           }, 1000)
-          return response.json()
+          return true
         }
       },
 
@@ -570,22 +557,15 @@
       },
 
       async fetchReadme() {
-        const url = `${this.csghubServer}/api/v1/datasets/${this.path}/blob/README.md`
-        const options = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+        const url = `datasets/${this.path}/blob/README.md`
+
+        const { data } = await useFetchApi(url).get().json()
+
+        if (data.value) {
+          const res = data.value
+          this.readmeContent = atob_utf8(res.data.content)
+          this.readmeSha = res.data.sha
         }
-        await jwtFetch(url, options).then((response) => {
-          response
-            .json()
-            .then(({ data }) => {
-              this.readmeContent = atob_utf8(data.content)
-              this.readmeSha = data.sha
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-        })
       },
       async updateTagsInReadme(newTags) {
         if (this.readmeContent) {
@@ -600,7 +580,7 @@
         }
       },
       async updateReadme(newContent) {
-        const updateReadmeEndpoint = `${this.csghubServer}/api/v1/datasets/${this.path}/raw/README.md`
+        const updateReadmeEndpoint = `/datasets/${this.path}/raw/README.md`
         const bodyData = {
           content: btoa_utf8(newContent),
           message: 'Update README.md',
@@ -609,40 +589,32 @@
           sha: this.readmeSha
         }
         const option = {
-          method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(bodyData)
         }
-        const response = await jwtFetch(updateReadmeEndpoint, option)
-        if (response.ok) {
+        const { error } = await useFetchApi(updateReadmeEndpoint, option).put().json()
+        if (!error.value) {
           ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         } else {
-          response.json().then((data) => {
-            ElMessage({ message: data.msg, type: 'warning' })
-          })
+          ElMessage({ message: error.value.msg, type: 'warning' })
         }
       },
 
       async updateIndustryTagsAPI(tags) {
         const industryOptions = {
-          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(tags)
         }
-        const response = await jwtFetch(
-          `${this.csghubServer}/api/v1/datasets/${this.path}/tags/industry`,
+        const { error } = await useFetchApi(
+          `/datasets/${this.path}/tags/industry`,
           industryOptions
-        )
-        if (!response.ok) {
-          response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        ).post().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          response.json().then((data) => {
-            ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
-          })
+          ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
         }
       },
 
@@ -671,21 +643,16 @@
       },
 
       async updateDataset(payload) {
-        const datasetUpdateEndpoint = `${this.csghubServer}/api/v1/datasets/${this.path}`
+        const datasetUpdateEndpoint = `/datasets/${this.path}`
         const options = {
-          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await jwtFetch(datasetUpdateEndpoint, options)
-        if (!response.ok) {
-          response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        const { data, error } = await useFetchApi(datasetUpdateEndpoint, options).put().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          response.json().then((data) => {
-            ElMessage({ message: data.msg, type: 'success' })
-          })
+          ElMessage({ message: data.value.msg, type: 'success' })
         }
       },
 

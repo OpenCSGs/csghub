@@ -165,10 +165,9 @@
 </template>
 
 <script>
-  import { h, inject } from 'vue'
+  import { h } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import csrfFetch from '../../packs/csrfFetch'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -182,7 +181,6 @@
     components: {},
     data() {
       return {
-        csghubServer: inject('csghubServer'),
         delDesc: '',
         codeName: this.path.split('/')[1],
         theCodeNickname: this.codeNickname || '',
@@ -229,20 +227,17 @@
       },
 
       async deleteCode() {
-        const codeDeleteEndpoint = `${this.csghubServer}/api/v1/codes/${this.path}`
-        const option = { method: 'DELETE' }
-        const response = await jwtFetch(codeDeleteEndpoint, option)
+        const codeDeleteEndpoint = `/codes/${this.path}`
+        const { error } = await useFetchApi(codeDeleteEndpoint).delete().json()
 
-        if (!response.ok) {
-          return response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
             window.location.href = '/codes'
           }, 500)
-          return response.json()
+          return true
         }
       },
 
@@ -312,24 +307,19 @@
       },
 
       async updateCode(payload) {
-        const codeUpdateEndpoint = `${this.csghubServer}/api/v1/codes/${this.path}`
+        const codeUpdateEndpoint = `/codes/${this.path}`
         const options = {
-          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await jwtFetch(codeUpdateEndpoint, options)
-        if (!response.ok) {
-          response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        const { data, error } = await useFetchApi(codeUpdateEndpoint, options).put().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          response.json().then((data) => {
-            ElMessage({ message: data.msg, type: 'success' })
-          })
+          ElMessage({ message: data.value.msg, type: 'success' })
         }
       },
 

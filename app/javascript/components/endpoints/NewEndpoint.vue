@@ -199,7 +199,7 @@
 <script setup>
   import { ref, onMounted, inject, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
 
@@ -210,7 +210,6 @@
   const searchParams = new URLSearchParams(window.location.search)
 
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
   const nameRule = inject('nameRule')
   const dataFormRef = ref(null)
   const dataForm = ref({
@@ -304,77 +303,64 @@
   })
 
   const fetchResources = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources?cluster_id=${dataForm.value.endpoint_cluster}`,
-      options
-    )
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi(
+      `/space_resources?cluster_id=${dataForm.value.endpoint_cluster}`
+    ).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        const firstAvailableResource = body.data?.find(
-          (resource) => resource.is_available
-        )
-        dataForm.value.cloud_resource = firstAvailableResource?.id || ''
-        endpointResources.value = body.data
-        if (!dataForm.value.cloud_resource) {
-          dataForm.value.endpoint_framework = ''
-        } else {
-          updateRuntimeFramework()
-        }
-      })
+      const body = data.value
+      const firstAvailableResource = body.data?.find(
+        (resource) => resource.is_available
+      )
+      dataForm.value.cloud_resource = firstAvailableResource?.id || ''
+      endpointResources.value = body.data
+      if (!dataForm.value.cloud_resource) {
+        dataForm.value.endpoint_framework = ''
+      } else {
+        updateRuntimeFramework()
+      }
     }
   }
 
   const fetchClusters = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(`${csghubServer}/api/v1/cluster`, options)
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi('/cluster').json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        dataForm.value.endpoint_cluster = body.data[0]?.cluster_id || ''
-        endpointClusters.value = body.data
-        fetchResources()
-      })
+      const body = data.value
+      dataForm.value.endpoint_cluster = body.data[0]?.cluster_id || ''
+      endpointClusters.value = body.data
+      fetchResources()
     }
   }
 
   const fetchModels = async (query, cb) => {
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/runtime_framework/models?search=${query}`
-    )
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi(
+      `/runtime_framework/models?search=${query}`
+    ).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        const paths = body.data?.map((model) => {
-          return { key: model.path, value: model.path }
-        })
-        cb(paths)
+      const body = data.value
+      const paths = body.data?.map((model) => {
+        return { key: model.path, value: model.path }
       })
+      cb(paths)
     }
   }
 
   const updateRuntimeFramework = async () => {
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${dataForm.value.model_path}/runtime_framework?deploy_type=1`
-    )
-    if (!res.ok) {
+    const { data, error } = await useFetchApi(
+      `/models/${dataForm.value.model_path}/runtime_framework?deploy_type=1`
+    ).json()
+    if (error.value) {
       dataForm.value.endpoint_framework = ''
       endpointFrameworks.value = []
     } else {
-      res.json().then((body) => {
-        endpointFrameworks.value = body.data
-        dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
-      })
+      const body = data.value
+      endpointFrameworks.value = body.data
+      dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
     }
   }
 
@@ -425,26 +411,22 @@
       cluster_id: dataForm.value.endpoint_cluster
     }
     const options = {
-      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = `${csghubServer}/api/v1/models/${dataForm.value.model_path}/run`
-    const response = await jwtFetch(uploadEndpoint, options)
-    if (response.ok) {
+    const uploadEndpoint = `/models/${dataForm.value.model_path}/run`
+    const { data, error } = await useFetchApi(uploadEndpoint, options).post().json()
+    if (data.value) {
       ElMessage({
         message: t('endpoints.new.createSuccess'),
         type: 'success'
       })
-      response.json().then((res) => {
-        window.location.href = `/endpoints/${dataForm.value.model_path}/${res.data.deploy_id}`
-      })
+      const res = data.value
+      window.location.href = `/endpoints/${dataForm.value.model_path}/${res.data.deploy_id}`
     } else {
-      response.json().then((res) => {
-        ElMessage({
-          message: t('endpoints.new.createFail') + `: ${res.msg}`,
-          type: 'error'
-        })
+      ElMessage({
+        message: t('endpoints.new.createFail') + `: ${error.value.msg}`,
+        type: 'error'
       })
     }
   }

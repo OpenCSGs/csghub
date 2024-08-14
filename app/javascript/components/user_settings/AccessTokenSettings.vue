@@ -61,9 +61,8 @@
 
 <script>
   import Menu from './Menu.vue'
-  import { inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { copyToClipboard } from '../../packs/clipboard'
   import { v4 as uuidv4 } from 'uuid'
 
@@ -82,7 +81,6 @@
         profileDisplayName: this.displayName,
         profileAvatar: this.avatar,
         accessTokenName: '',
-        csghubServer: inject('csghubServer')
       }
     },
     mounted() {
@@ -94,46 +92,39 @@
       },
 
       async fetchUserTokens() {
-        const res = await jwtFetch(
-          `${this.csghubServer}/api/v1/user/${this.name}/tokens?app=git`
-        )
-        if (!res.ok) {
-          res.json().then((error) => {
-            ElMessage({ message: error.msg, type: 'warning' })
-          })
+        const { data, error } = await useFetchApi(
+          `/user/${this.name}/tokens?app=git`
+        ).json()
+        if (error.value) {
+          ElMessage({ message: error.value, type: 'warning' })
         } else {
-          res.json().then((body) => {
-            if (body.data) {
-              this.theAccessToken = body.data[0].token
-              this.theTokenName = body.data[0].token_name
-            } else {
-              const randomUUID = uuidv4()
-              this.createUserToken(randomUUID)
-            }
-          })
+          const body = data.value
+          if (body.data) {
+            this.theAccessToken = body.data[0].token
+            this.theTokenName = body.data[0].token_name
+          } else {
+            const randomUUID = uuidv4()
+            this.createUserToken(randomUUID)
+          }
         }
       },
 
       async createUserToken(token) {
         const options = {
-          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name: token
           })
         }
-        const res = await jwtFetch(
-          `${this.csghubServer}/api/v1/token/git/${this.name}`,
+        const { data, error } = await useFetchApi(
+          `/token/git/${this.name}`,
           options
-        )
-        if (!res.ok) {
-          res.json().then((error) => {
-            ElMessage({ message: error.msg, type: 'warning' })
-          })
+        ).post().json()
+        if (error.value) {
+          ElMessage({ message: error.value, type: 'warning' })
         } else {
-          res.json().then((body) => {
-            this.theAccessToken = body.data.token
-          })
+          const body = data.value
+          this.theAccessToken = body.data.token
         }
       },
 
@@ -155,22 +146,14 @@
       },
 
       async refreshAccessToken() {
-        const options = {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' }
-        }
-        const res = await jwtFetch(
-          `${this.csghubServer}/api/v1/token/git/${this.theTokenName}`,
-          options
-        )
-        if (!res.ok) {
-          res.json().then((error) => {
-            ElMessage({ message: error.msg, type: 'warning' })
-          })
+        const { data, error } = await useFetchApi(
+          `/token/git/${this.theTokenName}`
+        ).put().json()
+        if (error.value) {
+          ElMessage({ message: error.value, type: 'warning' })
         } else {
-          res.json().then((body) => {
-            this.theAccessToken = body.data.token
-          })
+          const body = data.value
+          this.theAccessToken = body.data.token
         }
       }
     }

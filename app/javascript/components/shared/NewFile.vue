@@ -56,10 +56,10 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject } from 'vue'
+  import { ref } from 'vue'
   import CodeEditor from '../shared/CodeEditor.vue'
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
     originalCodeContent: String,
@@ -77,7 +77,6 @@
   const submiting = ref(false)
 
   const prefixPath = document.location.pathname.split('/')[1]
-  const csghubServer = inject('csghubServer')
 
   const handleCommentInputChange = (value) => {
     commitDesc.value = value
@@ -107,7 +106,7 @@
   const createFile = async () => {
     submiting.value = true
     // TODO: main branch for now; should support different branches
-    const createFileEndpoint = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/raw/${fileName.value}`
+    const createFileEndpoint = `/${prefixPath}/${props.namespacePath}/raw/${fileName.value}`
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),
@@ -115,25 +114,19 @@
       new_branch: 'main'
     }
     const option = {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(bodyData)
     }
-    const response = await jwtFetch(createFileEndpoint, option)
-    if (response.ok) {
+    const { error } = await useFetchApi(createFileEndpoint, option).post().json()
+    if (!error.value) {
       redirectToFilePreview()
     } else {
-      return response
-        .json()
-        .then((data) => {
-          throw new Error(data.msg)
-        })
-        .finally(() => {
-          submiting.value = false
-        })
+      ElMessage({ message: error.value.msg, type: 'warning' })
     }
+
+    submiting.value = false
   }
 
   const redirectToFilePreview = () => {
