@@ -10,7 +10,7 @@ class ErrorsController < ApplicationController
   end
 
   def login_failed
-    @error_msg = params[:error_msg] || '未知登录错误，请联系管理员'
+    @error_msg = params[:error_msg] || I18n.t('errors_page.login_failed.default_msg')
     render 'login_failed'
   end
 end

@@ -8,3 +8,7 @@ en:
       desc: 'Please contact the administrator for authorization'
     login_failed:
       title: 'Login failed'
+      default_msg: 'unknown login error, please contact the administrator'
+      back_to_homepage: 'To homepage'
+      relogin: 'Relogin'
+
