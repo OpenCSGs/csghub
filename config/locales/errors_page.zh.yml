@@ -6,3 +6,5 @@ zh:
     unauthorized:
       title: '暂无权限'
       desc: '请联系管理员授权'
+    login_failed:
+      title: '登录失败'

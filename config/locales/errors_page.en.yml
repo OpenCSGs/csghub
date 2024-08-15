@@ -6,3 +6,5 @@ en:
     unauthorized:
       title: 'Not authorized'
       desc: 'Please contact the administrator for authorization'
+    login_failed:
+      title: 'Login failed'
