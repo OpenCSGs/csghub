@@ -79,14 +79,12 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject, onMounted } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import useFetchApi from '../../packs/useFetchApi';
 
   const { t } = useI18n()
-
-  const csghubServer = inject('csghubServer')
 
   const props = defineProps({
     repoId: String,
@@ -98,14 +96,15 @@
   const collectionsIdsInput = ref('')
 
   const fetchCollectionsList = async () => {
-    const url = `${csghubServer}/api/v1/user/${props.userName}/collections`
-    const res = await jwtFetch(url)
-    if (!res.ok) {
-      const { msg } = await res.json()
-      ElMessage({ message: msg, type: 'warning' })
-    } else {
-      const { data } = await res.json()
-      collectionsList.value = data
+    const url = `/user/${props.userName}/collections`
+    const { data, error } = await useFetchApi(url).json()
+    console.log(data);
+    const json = data.value
+    if (json) {
+      console.log(json);
+      collectionsList.value = json.data
+    }else{
+      ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
 
@@ -126,25 +125,25 @@
     const addRepoData = {
       repo_ids: [props.repoId]
     }
-    const options = { method: 'POST', body: JSON.stringify(addRepoData) }
-    const url = `${csghubServer}/api/v1/collections/${collectionsIdsInput.value}/repos`
-    const response = await jwtFetch(url, options)
-    if (!response.ok) {
-      ElMessage({ message: (await response.json()).msg, type: 'warning' })
-    } else {
+    const options = { body: JSON.stringify(addRepoData) }
+    const url = `/collections/${collectionsIdsInput.value}/repos`
+    const { response, error } = await useFetchApi(url, options).post().json()
+    if(response.value.ok){
       dialogVisible.value = false
       ElMessage({
         message: t('all.addSuccess'),
         type: 'success'
       })
       collectionsIdsInput.value = ''
+    }else{
+      ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
   onMounted(() => {
     fetchCollectionsList()
   })
 </script>
-<style>
+<style scoped>
   @media (max-width: 768px) {
     .AddRepoToCollections .invite_dialog {
       width: 350px;
