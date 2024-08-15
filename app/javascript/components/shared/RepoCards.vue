@@ -103,7 +103,7 @@
       </div>
       <div
         v-else
-        class="xl:flex-col xl:w-full flex flex-wrap justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
+        class="grid grid-cols-2 xl:flex-col xl:w-full flex flex-wrap justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
       >
         <repo-item
           v-for="repo in reposData"
