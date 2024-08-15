@@ -155,13 +155,12 @@
 </template>
 
 <script setup>
-  import csrfFetch from '../../packs/csrfFetch.js'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import InviteMember from './InviteMember.vue'
   import OrgMemberRoleEditDialog from './OrgMemberRoleEditDialog.vue'
   import dayjs from 'dayjs'
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useCookies } from 'vue3-cookies'
   import { useI18n } from 'vue-i18n'
 
@@ -180,7 +179,6 @@
   })
 
   const organization = ref(props.organizationRaw)
-  const csghubServer = inject('csghubServer')
   const members = ref([])
   const loading = ref(false)
   const roleEditDialog = ref(false)
@@ -200,19 +198,17 @@
     const params = new URLSearchParams()
     params.append('page', searchForm.value.page)
     params.append('per', searchForm.value.per)
-    const orgMemberListEndpoint = `${csghubServer}/api/v1/organization/${organization.value.name}/members?${params.toString()}`
-    jwtFetch(orgMemberListEndpoint)
-      .then(response => response.json())
-      .then(body => {
-        members.value = body.data.data
-        totalCount.value = body.data.total
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
-      .finally(() => {
-        loading.value = false
-      })
+    const orgMemberListEndpoint = `/organization/${organization.value.name}/members?${params.toString()}`
+
+    const { data, error } = await useFetchApi(orgMemberListEndpoint).json()
+
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      members.value = body.data.data
+      totalCount.value = body.data.total
+    }
   }
 
   const formatDate = (date) => {
@@ -220,25 +216,22 @@
   }
 
   const handleDelete = async (member) => {
-    const url = `${csghubServer}/api/v1/organization/${organization.value.name}/members/${member.username}`
+    const url = `/organization/${organization.value.name}/members/${member.username}`
     const options = {
-      method: 'DELETE',
       body: JSON.stringify({ role: member.role }),
       headers: { 'Content-Type': 'application/json' }
     }
-    const res = await jwtFetch(url, options)
-    if (res.ok) {
+    const { error } = await useFetchApi(url, options).delete().json()
+    if (!error.value) {
       ElMessage({
         message: t('organization.members.deleteSuccess'),
         type: 'success'
       })
       fetchMembers()
     } else {
-      res.json().then((error) => {
-        ElMessage({
-          message: error.msg,
-          type: 'warning'
-        })
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
       })
     }
   }

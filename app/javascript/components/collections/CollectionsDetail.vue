@@ -97,16 +97,15 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject, onBeforeMount, computed } from 'vue'
+  import { ref, onBeforeMount, computed } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import CollectionsRepoList from './CollectionsRepoList.vue'
   import CollectionsSettings from './CollectionsSettings.vue'
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
   import { ElMessage } from 'element-plus'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import jwtFetch from '../../packs/jwtFetch'
-  const csghubServer = inject('csghubServer')
   const repoDetailStore = useRepoDetailStore()
+  import useFetchApi from '../../packs/useFetchApi'
 
   const collectionData = ref()
 
@@ -150,14 +149,14 @@
   }
 
   const fetchCollectionDetail = async () => {
-    const url = `${csghubServer}/api/v1/collections/${props.collectionsId}`
-    const res = await jwtFetch(url)
-    const { msg, data } = await res.json()
-    if (!res.ok) {
-      ElMessage({ message: msg, type: 'warning' })
+    const url = `/collections/${props.collectionsId}`
+    const { data, error } = await useFetchApi(url).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      repoDetailStore.initialize(data)
-      collectionData.value = data || []
+      const res = data.value
+      repoDetailStore.initialize(res.data)
+      collectionData.value = res.data || []
     }
   }
   onBeforeMount(() => {

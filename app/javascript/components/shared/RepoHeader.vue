@@ -206,8 +206,8 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { ref, inject, computed, watch } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import { ref, computed, watch } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
 
   const repoDetailStore = useRepoDetailStore()
@@ -239,7 +239,6 @@
 
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
-  const csghubServer = inject('csghubServer')
 
   watch(
     () => props.hasLike,
@@ -275,9 +274,9 @@
 
   const likeUrl = computed(() => {
     if(props.repoType === 'collections'){
-      return `${csghubServer}/api/v1/user/${props.name}/likes/collections/${props.repoId}`
+      return `/user/${props.name}/likes/collections/${props.repoId}`
     }else{
-      return `${csghubServer}/api/v1/user/${props.name}/likes/${props.repoId}`
+      return `/user/${props.name}/likes/${props.repoId}`
     }
   })
 
@@ -290,18 +289,11 @@
   }
 
   const addLike = async () => {
-    const options = { method: 'PUT' }
-    const response = await jwtFetch(
-      likeUrl.value,
-      options,
-      true
-    )
-    if (!response.ok) {
-      response.json().then((data) => {
-        ElMessage({
-          type: 'warning',
-          message: data
-        })
+    const { error } = await useFetchApi(likeUrl.value).put().json()
+    if (error.value) {
+      ElMessage({
+        type: 'warning',
+        message: error.value.msg
       })
     } else {
       userLiked.value = true
@@ -310,17 +302,11 @@
   }
 
   const removeLike = async () => {
-    const options = { method: 'DELETE' }
-    const response = await jwtFetch(
-      likeUrl.value,
-      options
-    )
-    if (!response.ok) {
-      response.json().then((data) => {
-        ElMessage({
-          type: 'warning',
-          message: data
-        })
+    const { error } = await useFetchApi(likeUrl.value).delete().json()
+    if (error.value) {
+      ElMessage({
+        type: 'warning',
+        message: error.value.msg
       })
     } else {
       userLiked.value = false

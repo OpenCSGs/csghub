@@ -76,11 +76,11 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import Menu from './Menu.vue'
   import { useI18n } from 'vue-i18n'
   import StarshipAccessTokenCard from './StarshipAccessTokenCard.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
 
   const props = defineProps({
@@ -88,7 +88,6 @@
   })
 
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
 
   const accessTokenFormRef = ref(null)
   const centerDialogVisible = ref(false)
@@ -106,22 +105,14 @@
   })
 
   const fetchUserStarshipTokens = async () => {
-    const userStarshipTokensEndpoint = `${csghubServer}/api/v1/user/${props.name}/tokens?app=starship`
-    const response = await jwtFetch(userStarshipTokensEndpoint, {
-      method: 'GET'
-    })
-    if (response.ok) {
-      response.json().then((result) => {
-        userTokens.value = result.data
-        centerDialogVisible.value = false
-      })
+    const userStarshipTokensEndpoint = `/user/${props.name}/tokens?app=starship`
+    const { data, error } = await useFetchApi(userStarshipTokensEndpoint).json()
+    if (data.value) {
+      const result = data.value
+      userTokens.value = result.data
+      centerDialogVisible.value = false
     } else {
-      response.json().then((error) => {
-        ElMessage({
-          message: error.msg,
-          type: 'warning'
-        })
-      })
+      ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
 
@@ -129,22 +120,16 @@
     if (!accessTokenFormRef) return
     accessTokenFormRef.value.validate(async(valid) => {
       if (valid) {
-        const userTokenCreateEndpoint = `${csghubServer}/api/v1/token/starship/${formData.value.accessTokenName}`
+        const userTokenCreateEndpoint = `/token/starship/${formData.value.accessTokenName}`
         const options = {
-          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({})
         }
-        const response = await jwtFetch(userTokenCreateEndpoint, options)
-        if (response.ok) {
+        const { error } = await useFetchApi(userTokenCreateEndpoint, options).post().json()
+        if (!error.value) {
           fetchUserStarshipTokens()
         } else {
-          response.json().then((error) => {
-            ElMessage({
-              message: error.msg,
-              type: 'warning'
-            })
-          })
+          ElMessage({ message: error.value.msg, type: 'warning' })
         }
       } else {
         console.log('error submit!')

@@ -43,14 +43,14 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import jwtFetch from '../../packs/jwtFetch'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import { usePermissionCheck } from '../../packs/usePermissionCheck'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
     localRepoId: String,
@@ -78,7 +78,6 @@
     other_tags: []
   })
   const ownerUrl = ref('')
-  const csghubServer = inject('csghubServer')
   const repoDetailStore = useRepoDetailStore()
 
   const getOwnerUrl = (repo) => {
@@ -90,16 +89,16 @@
   }
 
   const fetchRepoDetail = async () => {
-    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespace}/${props.repoName}`
+    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
 
     try {
-      const response = await jwtFetch(url, { method: 'GET' })
-      const hasPermission = usePermissionCheck(response)
+      const { response, data, error } = await useFetchApi(url).json()
+
+      const hasPermission = usePermissionCheck(response.value)
       if (!hasPermission) return
 
-      const json = await response.json()
-
-      if (response.ok) {
+      const json = data.value
+      if (json) {
         repo.value = json.data
         if (json.data.tags) {
           tags.value = buildTags(json.data.tags)
@@ -107,7 +106,7 @@
         repoDetailStore.initialize(json.data)
         ownerUrl.value = getOwnerUrl(json.data)
       } else {
-        ElMessage({ message: json.msg, type: 'warning' })
+        ElMessage({ message: error.value.msg, type: 'warning' })
       }
     } catch (error) {
       console.error(error)
