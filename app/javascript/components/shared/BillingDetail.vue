@@ -88,7 +88,6 @@
   import { ref, computed, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
-  import { useCookies } from 'vue3-cookies'
   import {
     getCurrentTime,
     getFirstDayOfTime,
@@ -97,15 +96,16 @@
     isFutureDate
   } from '../../packs/datetimeUtils'
   import CsgPagination from '../shared/CsgPagination.vue'
+  import useUserStore from '../../stores/UserStore'
+
+  const userStore = useUserStore()
 
   const props = defineProps({
     type: String,
     instanceName: String
   })
 
-  const { cookies } = useCookies()
-  const loginIdentity = cookies.get('login_identity')
-
+  const loginIdentity = ref('')
   const billingLoading = ref(false)
   const perPage = ref(10)
   const currentPage = ref(1)
@@ -141,6 +141,13 @@
     () => props.instanceName,
     () => {
       fetchDetails()
+    }
+  )
+
+  watch(
+    () => userStore.uuid,
+    () => {
+      loginIdentity.value = userStore.uuid
     }
   )
 
@@ -191,7 +198,7 @@
     params.append('scene', scene.value)
     params.append('instance_name', props.instanceName)
 
-    const url = `/accounting/metering/${loginIdentity}/statements?${params.toString()}`
+    const url = `/accounting/metering/${loginIdentity.value}/statements?${params.toString()}`
 
     const { data, error } = await useFetchApi(url).json()
 
