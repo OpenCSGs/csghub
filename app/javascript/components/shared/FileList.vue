@@ -133,12 +133,12 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { format } from 'timeago.js';
   import { ElMessage } from "element-plus"
   import { useI18n } from 'vue-i18n'
   import BranchDropdown from './BranchDropdown.vue';
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { createAndClickAnchor } from '../../packs/utils'
 
   const props = defineProps({
@@ -148,8 +148,6 @@
     namespacePath: String,
     canWrite: Boolean
   })
-
-  const csghubServer = inject('csghubServer')
 
   const { t, locale } = useI18n();
   const loading = ref(true)
@@ -210,20 +208,18 @@
   }
 
   const lfsFileDownload = async (file) => {
-    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/download/${file.lfs_relative_path}?ref=${props.currentBranch}&lfs=true&lfs_path=${file.lfs_relative_path}&save_as=${file.path}`
+    const url = `/${prefixPath}/${props.namespacePath}/download/${file.lfs_relative_path}?ref=${props.currentBranch}&lfs=true&lfs_path=${file.lfs_relative_path}&save_as=${file.path}`
 
     try {
-      const response = await jwtFetch(url, { method: 'GET' })
+      const { data: downloadUrl, error } = await useFetchApi(url).json()
 
-      if (!response.ok) {
-        const error = await response.json()
+      if (error.value) {
         ElMessage({
-          message: error.msg,
+          message: error.value.msg,
           type: 'warning'
         })
       } else {
-        const { data: downloadUrl } = await response.json()
-        createAndClickAnchor(downloadUrl, file.path)
+        createAndClickAnchor(downloadUrl.value, file.path)
       }
     } catch (error) {
       console.error(error)
@@ -231,20 +227,18 @@
   }
 
   const normalFileDownload = async (file) => {
-    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/download/${file.path}?ref=${props.currentBranch}`
+    const url = `/${prefixPath}/${props.namespacePath}/download/${file.path}?ref=${props.currentBranch}`
 
     try {
-      const response = await jwtFetch(url, { method: 'GET' })
+      const { data, error } = await useFetchApi(url).blob()
 
-      if (!response.ok) {
-        const error = await response.json()
+      if (error.value) {
         ElMessage({
-          message: error.msg,
+          message: error.value.msg,
           type: 'warning'
         })
       } else {
-        const blob = await response.blob()
-        const downloadUrl = window.URL.createObjectURL(blob)
+        const downloadUrl = window.URL.createObjectURL(data.value)
         createAndClickAnchor(downloadUrl, file.path)
       }
     } catch (error) {
@@ -266,15 +260,15 @@
   }
 
   const fetchFileListData = async () => {
-    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
+    const url = `/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
 
     try {
-      const response = await jwtFetch(url)
-      const json = await response.json()
-      if (!response.ok) {
-        console.log(json.msg)
+      const { data, error } = await useFetchApi(url).json()
+
+      if (error.value) {
         location.href = '/errors/not-found'
       } else {
+        const json = data.value
         files.value = json.data
       }
     } catch (error) {
@@ -286,13 +280,12 @@
   }
 
   const fetchLastCommit = async () => {
-    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/last_commit`
+    const url = `/${prefixPath}/${props.namespacePath}/last_commit`
     try {
-      const response = await jwtFetch(url)
-      const json = await response.json()
-      if (!response.ok) {
-        console.log(json.msg)
-      } else {
+      const { data } = await useFetchApi(url).json()
+
+      if (data.value) {
+        const json = data.value
         lastCommit.value = json.data
       }
     } catch (error) {

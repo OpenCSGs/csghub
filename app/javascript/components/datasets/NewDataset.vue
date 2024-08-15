@@ -161,7 +161,7 @@
 
 <script setup>
   import { ref, inject } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useUserStore from '../../stores/UserStore.js'
@@ -169,7 +169,6 @@
 
   const userStore = useUserStore()
 
-  const csghubServer = inject('csghubServer')
   const { t } = useI18n()
   const dataFormRef = ref(null)
   const nameRule = inject('nameRule')
@@ -293,26 +292,22 @@
       private: dataForm.value.visibility === 'private'
     }
     const options = {
-      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const newEndpoint = `${csghubServer}/api/v1/datasets`
-    const response = await jwtFetch(newEndpoint, options)
-    if (response.ok) {
+    const newEndpoint = '/datasets'
+    const { data, error } = await useFetchApi(newEndpoint, options).post().json()
+    if (data.value) {
       ElMessage({
         message: t('datasets.newDataset.createSuccess'),
         type: 'success'
       })
-      response.json().then((res) => {
-        window.location.href = `/datasets/${res.data.path}`
-      })
+      const res = data.value
+      window.location.href = `/datasets/${res.data.path}`
     } else {
-      response.json().then((res) => {
-        ElMessage({
-          message: t('datasets.newDataset.createFail') + `: ${res.msg}`,
-          type: 'error'
-        })
+      ElMessage({
+        message: error.value.msg,
+        type: 'error'
       })
     }
   }

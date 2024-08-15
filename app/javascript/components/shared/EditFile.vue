@@ -56,10 +56,10 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import CodeEditor from '../shared/CodeEditor.vue'
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { atob_utf8 } from '../../packs/utils'
 
@@ -80,8 +80,6 @@
   const commitTitlePlaceholder = ref(`Update ${fileName.value}`)
   const commitValid = ref(true)
   const submiting = ref(false)
-  
-  const csghubServer = inject('csghubServer')
 
   const prefixPath = document.location.pathname.split('/')[1]
 
@@ -113,7 +111,7 @@
   const updateFile = async () => {
     submiting.value = true
     // TODO: main branch for now; should support different branches
-    const updateFileEndpoint = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/raw/${fileName.value}`
+    const updateFileEndpoint = `/${prefixPath}/${props.namespacePath}/raw/${fileName.value}`
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),
@@ -122,25 +120,20 @@
       sha: sha.value
     }
     const option = {
-      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(bodyData)
     }
-    const response = await jwtFetch(updateFileEndpoint, option)
-    if (response.ok) {
+    const { error } = await useFetchApi(updateFileEndpoint, option).put().json()
+
+    if (!error.value) {
       redirectToFilePreview()
     } else {
-      response
-        .json()
-        .then((data) => {
-          ElMessage({ message: data.msg, type: 'warning' })
-        })
-        .finally(() => {
-          submiting.value = false
-        })
+      ElMessage({ message: error.value.msg, type: 'warning' })
     }
+
+    submiting.value = false
   }
 
   const redirectToFilePreview = () => {
@@ -153,18 +146,17 @@
 
   const fetchFileContent = async () => {
     try {
-      const response = await jwtFetch(
-        `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}`
-      )
+      const { data, error } = await useFetchApi(
+        `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}`
+      ).json()
 
-      const result = await response.json()
-
-      if (response.ok) {
+      if (!error.value) {
+        const result = data.value
         originalCodeContent.value = atob_utf8(result.data.content)
         codeContent.value = originalCodeContent.value
         sha.value = result.data.sha
       } else {
-        ElMessage({ message: result.msg, type: 'error' })
+        ElMessage({ message: error.value.msg, type: 'error' })
       }
     } catch (err) {
       ElMessage({ message: err.message, type: 'error' })

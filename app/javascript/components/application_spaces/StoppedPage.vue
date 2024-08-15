@@ -34,6 +34,7 @@
   import { useI18n } from 'vue-i18n'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
     path: String,
@@ -55,52 +56,24 @@
   const { t } = useI18n()
 
   async function startSpace() {
-    const startUrl = `${csghubServer}/api/v1/spaces/${props.path}/run`
-    const response = await fetch(startUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${cookies.get('user_token')}`,
-      }
-    })
+    const startUrl = `/spaces/${props.path}/run`
+    const { error } = await useFetchApi(startUrl).post().json()
 
-    if (response.ok) {
+    if (!error.value) {
       ElMessage({message: t('application_spaces.errorPage.startSuccess'), type: "success"})
     } else {
-      if (response.status === 401) {
-        refreshJWT()
-      } else {
-        response.json().then(data => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
-        })
-      }
+      ElMessage({ message: error.value, type: 'warning' })
     }
   }
 
   async function wakeupSpace() {
-    const wakeUrl = `${csghubServer}/api/v1/spaces/${props.path}/wakeup`
-    const response = await fetch(wakeUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${cookies.get('user_token')}`,
-      }
-    })
+    const wakeUrl = `/spaces/${props.path}/wakeup`
+    const { error } = await useFetchApi(wakeUrl).post().json()
 
-    if (response.ok) {
+    if (!error.value) {
       ElMessage({message: t('application_spaces.errorPage.startSuccess'), type: "success"})
     } else {
-      if (response.status === 401) {
-        refreshJWT()
-      } else {
-        response.json().then(data => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
-        })
-      }
+      ElMessage({ message: error.value, type: 'warning' })
     }
   }
 </script>

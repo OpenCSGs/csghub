@@ -317,14 +317,13 @@
   import { ref, onMounted, inject } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore'
   import { useCookies } from 'vue3-cookies'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
 
   const userStore = useUserStore()
 
-  const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
   const dataFormRef = ref(null)
   const imageUploaded = ref(false)
@@ -423,27 +422,20 @@
   const spaceResources = ref([])
 
   const fetchSpaceResources = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources`,
-      options
-    )
-    if (!res.ok) {
+    const { data, error } = await useFetchApi('/space_resources').json()
+
+    if (error.value) {
       ElMessage({
-        message: t('application_spaces.new.failedFetchResources'),
+        message: error.value.msg || t('application_spaces.new.failedFetchResources'),
         type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        const firstAvailableResource = body.data.find(
-          (item) => item.is_available
-        )
-        dataForm.value.cloud_resource = firstAvailableResource?.id || ''
-        spaceResources.value = body.data
-      })
+      const body = data.value
+      const firstAvailableResource = body.data.find(
+        (item) => item.is_available
+      )
+      dataForm.value.cloud_resource = firstAvailableResource?.id || ''
+      spaceResources.value = body.data
     }
   }
 
@@ -495,26 +487,21 @@
       private: dataForm.value.visibility === 'private'
     }
     const options = {
-      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const newEndpoint = `${csghubServer}/api/v1/spaces`
-    const response = await jwtFetch(newEndpoint, options)
-    if (response.ok) {
+    const newEndpoint = '/spaces'
+    const { data, error } = await useFetchApi(newEndpoint, options).post().json()
+    if (data.value) {
       ElMessage({
         message: t('application_spaces.new.createSuccess'),
         type: 'success'
       })
-      response.json().then((res) => {
-        window.location.href = `/spaces/${res.data.path}`
-      })
+      window.location.href = `/spaces/${data.value.data.path}`
     } else {
-      response.json().then((res) => {
-        ElMessage({
-          message: t('application_spaces.new.createFail') + `: ${res.msg}`,
-          type: 'error'
-        })
+      ElMessage({
+        message: t('application_spaces.new.createFail') + `: ${error.value.msg}`,
+        type: 'error'
       })
     }
   }

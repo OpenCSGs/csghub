@@ -205,14 +205,14 @@
 </template>
 
 <script setup>
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { format } from 'timeago.js'
   import MarkdownViewer from './viewers/MarkdownViewer.vue'
   import TextViewer from './viewers/TextViewer.vue'
   import CodeViewer from './viewers/CodeViewer.vue'
   import BranchDropdown from './BranchDropdown.vue'
   import { ElMessage } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { useI18n } from 'vue-i18n'
   import { createAndClickAnchor } from '../../packs/utils'
@@ -225,7 +225,6 @@
     canWrite: Boolean
   })
 
-  const csghubServer = inject('csghubServer')
   const { t } = useI18n()
 
   const breadcrumb = ref([])
@@ -308,19 +307,17 @@
 
   const fetchFileContent = async () => {
     try {
-      const response = await jwtFetch(
-        `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
-      )
+      const { data } = await useFetchApi(
+        `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
+      ).json()
 
-      const result = await response.json()
-
-      if (response.ok) {
+      if (data.value) {
+        const result = data.value
         updateFileData(result.data)
         updateBreadcrumb()
         detectFileType()
         lfsContentRegex()
       } else {
-        console.error(result.msg)
         location.href = '/errors/not-found'
       }
     } catch (err) {
@@ -330,18 +327,18 @@
   }
 
   const lfsDownload = async () => {
-    const url = `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${props.currentBranch}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${props.currentPath}`
+    const url = `/${prefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${props.currentBranch}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${props.currentPath}`
 
     try {
-      const response = await jwtFetch(url, { method: 'GET' })
+      const { data, error } = await useFetchApi(url).json()
 
-      if (!response.ok) {
+      if (error.value) {
         ElMessage({
-          message: t('all.fetchError'),
+          message: error.value.msg,
           type: 'warning'
         })
       } else {
-        const { data: downloadUrl } = await response.json()
+        const { data: downloadUrl } = data.value
         createAndClickAnchor(downloadUrl, props.currentPath)
       }
     } catch (error) {
