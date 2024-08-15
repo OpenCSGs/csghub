@@ -179,13 +179,16 @@
 
   const httpCloneUrl = ref('')
   const sshCloneUrl = ref('')
+  const httpCloneProtocol = ref('https:')
 
   const httpsCloneCode = ref('')
   const sshCloneCode = ref('')
   const httpsCloneCodeWithToken = ref('')
   const isLoggedIn =ref(false)
   watch(() => props.repo, () => {
+    const url = new URL(props.repo.repository.http_clone_url)
     httpCloneUrl.value = props.repo.repository.http_clone_url
+    httpCloneProtocol.value = url.protocol
     sshCloneUrl.value = props.repo.repository.ssh_clone_url
 
     httpsCloneCode.value = `
@@ -200,9 +203,9 @@
 
   httpsCloneCodeWithToken.value = `
   git lfs install
-  git clone https://${
+  git clone ${httpCloneProtocol.value}//${
     currentUser.value
-  }:${accessToken.value}@${httpCloneUrl.value.replace('https://', '')}
+  }:${accessToken.value}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
   })
 
@@ -232,9 +235,9 @@
   watch(accessToken, async (newAccessToken) => {
     httpsCloneCodeWithToken.value = `
   git lfs install
-  git clone https://${
+  git clone ${httpCloneProtocol.value}//${
     currentUser.value
-  }:${newAccessToken}@${httpCloneUrl.value.replace('https://', '')}
+  }:${newAccessToken}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
   })
 
