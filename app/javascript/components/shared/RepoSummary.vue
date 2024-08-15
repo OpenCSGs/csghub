@@ -82,7 +82,7 @@
 
 <script setup>
   import { useI18n } from 'vue-i18n'
-  import { ref, onMounted, inject, computed, watch } from 'vue'
+  import { ref, onMounted, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
@@ -90,7 +90,7 @@
   import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
 
   const props = defineProps({
@@ -101,8 +101,6 @@
     repoType: String,
     license: String, default: ''
   })
-
-  const csghubServer = inject('csghubServer')
 
   const loading = ref(true)
   const readmeContent = ref('')
@@ -118,17 +116,13 @@
   })
 
   const fetchData = async () => {
-    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/blob/README.md`
+    const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
 
-    const response = await jwtFetch(url)
+    const { data } = await useFetchApi(url).json()
 
-    const json = await response.json()
-
-    if (response.ok) {
-      const content = resolveContent(`${props.repoType}s`, json.data.content, props.namespacePath)
+    if (data.value) {
+      const content = resolveContent(`${props.repoType}s`, data.value.data.content, props.namespacePath)
       readmeContent.value = content
-    } else {
-      console.log(json.msg)
     }
     loading.value = false
   }
@@ -137,58 +131,37 @@
     if (props.repoType !== 'dataset') { return }
     
     const options = { path: '/' }
-    const url = `${csghubServer}/api/v1/datasets/${props.namespacePath}/tree`
+    const url = `/datasets/${props.namespacePath}/tree`
 
-    jwtFetch(url, options).then((response) => {
-      if (!response.ok) {
-        response.json().then((data) => {
-          console.log(data.msg)
-        })
+    const { data } = await useFetchApi(url, options).json()
+
+    if (data.value) {
+      const res_json = data.value
+      const parquetFilePath = res_json['data'].filter(file => file.path.endsWith('.parquet'))
+                              .map(file => file.path)
+                              .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))[0]
+      if (parquetFilePath) {
+        fetchPreviewData(parquetFilePath)
       } else {
-        response.json().then((res_json) => {
-          const parquetFilePath = res_json['data'].filter(file => file.path.endsWith('.parquet'))
-                                  .map(file => file.path)
-                                  .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))[0]
-          if (parquetFilePath) {
-            fetchPreviewData(parquetFilePath)
-          } else {
-            previewData.value = {}
-          }
-        })
+        previewData.value = {}
       }
-    }).catch((error) => {
-      console.log(error)
-    })
+    }
   }
 
   const fetchPreviewData = async (parquetFilePath) => {
-    const url = `${csghubServer}/api/v1/datasets/${props.namespacePath}/viewer/${parquetFilePath}?count=6`
-    jwtFetch(url).then((response) => {
-      if (!response.ok) {
-        response.json().then((data) => {
-          console.log(data.msg)
-        })
-      } else {
-        response.json().then((res_json) => {
-          previewData.value = res_json
-        })
-      }
-    }).catch((error) => {
-      console.log(error.msg)
-    })
+    const url = `/datasets/${props.namespacePath}/viewer/${parquetFilePath}?count=6`
+    const { data } = await useFetchApi(url).json()
+    
+    if (data.value) {
+      previewData.value = data.value
+    }
   }
 
   const fetchRepoRelations = async () => {
-    const url = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/relations`
-    const response = await jwtFetch(url)
-    if (!response.ok) {
-      response.json().then((error) => {
-        console.log(error.msg)
-      })
-    } else {
-      response.json().then((res_json) => {
-        relations.value = res_json["data"]
-      })
+    const url = `/${props.repoType}s/${props.namespacePath}/relations`
+    const { data } = await useFetchApi(url).json()
+    if (data.value) {
+      relations.value = data.value.data
     }
   }
 
@@ -213,18 +186,12 @@
   })
 
   const fetchEndpoint = async () => {
-    const url = `${csghubServer}/api/v1/models/${props.namespacePath}/serverless`
+    const url = `/models/${props.namespacePath}/serverless`
 
-    const response = await jwtFetch(url)
+    const { data } = await useFetchApi(url).json()
 
-    if (!response.ok) {
-      response.json().then((error) => {
-        console.log(error.msg)
-      })
-    } else {
-      response.json().then(({ data }) => {
-        endpoint.value = data
-      })
+    if (data.value) {
+      endpoint.value = data.value.data
     }
   }
 

@@ -17,9 +17,9 @@
 <script setup>
   import GradioInitializeGuide from './GradioInitializeGuide.vue'
   import StreamlitInitializeGuide from './StreamlitInitializeGuide.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useCookies } from 'vue3-cookies'
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
 
   const props = defineProps({
     httpCloneUrl: String,
@@ -29,25 +29,23 @@
   })
 
   const { cookies } = useCookies()
-  const csghubServer = inject('csghubServer')
 
   const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
 
   const fetchUserToken = async () => {
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
-    )
-    if (!res.ok) {
-      res.json().then((error) => {
-        ElMessage({ message: error.msg, type: 'warning' })
+    const { data, error } = await useFetchApi(
+      `/user/${currentUser.value}/tokens?app=git`
+    ).json()
+
+    if (error.value) {
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        if (body.data) {
-          accessToken.value = body.data[0].token
-        }
-      })
+      const tokens = data.value.data
+      accessToken.value = tokens[0]?.token || ''
     }
   }
 

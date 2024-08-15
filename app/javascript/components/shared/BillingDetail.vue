@@ -85,9 +85,9 @@
 </template>
 
 <script setup>
-  import { ref, inject, computed, watch } from 'vue'
+  import { ref, computed, watch } from 'vue'
   import { ElMessage } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useCookies } from 'vue3-cookies'
   import {
     getCurrentTime,
@@ -104,7 +104,6 @@
   })
 
   const { cookies } = useCookies()
-  const csghubServer = inject('csghubServer')
   const loginIdentity = cookies.get('login_identity')
 
   const billingLoading = ref(false)
@@ -192,16 +191,19 @@
     params.append('scene', scene.value)
     params.append('instance_name', props.instanceName)
 
-    const url = `${csghubServer}/api/v1/accounting/metering/${loginIdentity}/statements?${params.toString()}`
-    const res = await jwtFetch(url)
+    const url = `/accounting/metering/${loginIdentity}/statements?${params.toString()}`
 
-    if (!res.ok) {
-      const { msg } = await res.json()
-      ElMessage({ message: msg, type: 'warning' })
+    const { data, error } = await useFetchApi(url).json()
+
+    if (error.value) {
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
+      })
     } else {
-      const { data } = await res.json()
-      billings.value = data.data
-      totalBillings.value = data.total
+      const body = data.value
+      billings.value = body.data.data
+      totalBillings.value = body.data.total
     }
     billingLoading.value = false
   }

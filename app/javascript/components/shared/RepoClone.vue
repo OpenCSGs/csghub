@@ -157,12 +157,12 @@
 </template>
 
 <script setup>
-  import { computed, ref, inject, onMounted, watch } from 'vue'
+  import { computed, ref, onMounted, watch } from 'vue'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
   import SvgIcon from './SvgIcon.vue'
   import { useCookies } from 'vue3-cookies'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from "element-plus"
 
   const { cookies } = useCookies()
@@ -206,7 +206,6 @@
 `
   })
 
-  const csghubServer = inject('csghubServer')
   const activeCloneType = ref('https')
   const cloneRepositoryVisible = ref(false)
   const useToken = ref(false)
@@ -319,19 +318,14 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     if (!currentUser.value) return
     if (!props.userName) return
 
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
-    )
-    if (!res.ok) {
-      res.json().then((error) => {
-        console.log(error)
-      })
-    } else {
-      res.json().then((body) => {
-        if (body.data) {
-          accessToken.value = body.data[0].token
-        }
-      })
+    const { data } = await useFetchApi(
+      `/user/${currentUser.value}/tokens?app=git`
+    ).json()
+    if (data.value) {
+      const body = data.value
+      if (body.data) {
+        accessToken.value = body.data[0].token
+      }
     }
   }
 
@@ -342,25 +336,20 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   })
 
   const handleSyncRepo =  async () => {
-    const syncUrl = `${csghubServer}/api/v1/${props.repoType}s/${props.namespacePath}/mirror_from_saas`
-    const res = await jwtFetch(syncUrl, {
-      method: "POST",
+    const syncUrl = `/${props.repoType}s/${props.namespacePath}/mirror_from_saas`
+    const { error } = await useFetchApi(syncUrl, {
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    }).post().json()
 
-    if (!res.ok) {
-      res.json().then(error => {
-        ElMessage({message: error.msg, type: "warning"})
-      })
+    if (error.value) {
+      ElMessage({message: error.value.msg, type: "warning"})
     } else {
-      res.json().then(body => {
-        ElMessage({message: 'Sync repo success', type: "success"})
-        setTimeout(() => {
-          location.reload()
-        }, 2000)
-      })
+      ElMessage({message: 'Sync repo success', type: "success"})
+      setTimeout(() => {
+        location.reload()
+      }, 2000)
     }
   }
 

@@ -106,11 +106,12 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
   import { useCookies } from 'vue3-cookies'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     name: String
@@ -124,7 +125,6 @@
   })
   const membersList = ref([])
 
-  const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
 
   const role = ref('')
@@ -139,41 +139,38 @@
   }
 
   const fetchOrgDetail = async () => {
-    const orgDetailEndpoint = `${csghubServer}/api/v1/organization/${props.name}`
-    jwtFetch(orgDetailEndpoint)
-      .then(response => response.json())
-      .then(body => {
-        organizationData.value.name = body.data.path
-        organizationData.value.nickname = body.data.name
-        organizationData.value.verified = body.data.verified
-        organizationData.value.avatar = body.data.logo
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
+    const orgDetailEndpoint = `/organization/${props.name}`
+    const { data, error } = await useFetchApi(orgDetailEndpoint).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      organizationData.value.name = body.data.path
+      organizationData.value.nickname = body.data.name
+      organizationData.value.verified = body.data.verified
+      organizationData.value.avatar = body.data.logo
+    }
   }
 
   const fetchOrgMemberList = async () => {
-    const orgMemberListEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members`
-    jwtFetch(orgMemberListEndpoint)
-      .then(response => response.json())
-      .then(body => {
-        membersList.value = body.data.data
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
+    const orgMemberListEndpoint = `/organization/${props.name}/members`
+    const { data, error } = await useFetchApi(orgMemberListEndpoint).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      membersList.value = body.data.data
+    }
   }
   const currentUserRole = async () => {
-    const orgIsAdminEndpoint = `${csghubServer}/api/v1/organization/${props.name}/members/${cookies.get('current_user')}`
-    jwtFetch(orgIsAdminEndpoint)
-      .then(response => response.json())
-      .then(body => {
-        role.value = body.data
-      })
-      .catch(error => {
-        console.error('Error:', error)
-      })
+    const orgIsAdminEndpoint = `/organization/${props.name}/members/${cookies.get('current_user')}`
+    const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      role.value = body.data
+    }
   }
 
   onMounted(() => {

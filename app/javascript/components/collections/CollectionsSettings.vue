@@ -195,10 +195,13 @@
 </template>
 
 <script setup>
-  import { ref, computed, inject, onMounted, h } from 'vue'
+  import { ref, onMounted, h } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
+  import { useCookies } from 'vue3-cookies'
+
+  const { cookies } = useCookies()
 
   const props = defineProps({
     collection: Object,
@@ -207,7 +210,8 @@
   })
   const { t } = useI18n()
 
-  const csghubServer = inject('csghubServer')
+  const currentUser = cookies.get('current_user')
+
   const delDesc = ref('')
   const collectionName = ref(props.collection.name)
   const collectionNickname = ref(props.collection.nickname)
@@ -261,18 +265,18 @@
       theme: themeColor.value
     }
 
-    const options = { method: 'PUT', body: JSON.stringify(transformedData) }
+    const options = { body: JSON.stringify(transformedData) }
 
-    const response = await jwtFetch(
-      `${csghubServer}/api/v1/collections/${props.collectionsId}`,
+    const { data, error } = await useFetchApi(
+      `/collections/${props.collectionsId}`,
       options
-    )
-    const data = await response.json()
-    if (!response.ok) {
-      ElMessage.warning(data.msg)
+    ).put().json()
+
+    if (error.value) {
+      ElMessage.warning(error.value.msg)
     } else {
       ElMessage.success(t('all.updateSuccess'))
-      return response.json()
+      return data.value
     }
   }
 
@@ -299,22 +303,16 @@
 
   const deleteCollection = async () => {
     const options = {
-      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     }
-    const res = await jwtFetch(`${csghubServer}/api/v1/collections/${props.collectionsId}`, options)
-    if (!res.ok) {
-      ElMessage({
-        message: t('all.fetchError'),
-        type: 'warning'
-      })
+    const { error } = await useFetchApi(`/collections/${props.collectionsId}`, options).delete().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        ElMessage({ message: t('all.delSuccess'), type: 'success' })
-        setTimeout(() => {
-          window.location.href = `/profile/${props.userName}`
-        }, 500)
-      })
+      ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      setTimeout(() => {
+        window.location.href = `/profile/${currentUser}`
+      }, 500)
     }
   }
 

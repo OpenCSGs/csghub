@@ -50,9 +50,7 @@
 
 </template>
 <script>
-  import csrfFetch from "../../packs/csrfFetch.js"
-  import jwtFetch from "../../packs/jwtFetch.js"
-  import { inject } from 'vue'
+  import useFetchApi from "../../packs/useFetchApi"
 
   export default {
     props: {
@@ -83,7 +81,6 @@
             { required: true, message: 'Please select a role', trigger: 'change' }
           ]
         },
-        csghubServer: inject('csghubServer')
       }
     },
     watch: {
@@ -103,31 +100,24 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             const options = {
-              method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 old_role: this.formDataRaw.role,
                 new_role: this.dataForm.role
               })
             }
-            const url = `${this.csghubServer}/api/v1/organization/${this.organization.name}/members/${this.formDataRaw.username}`
-            jwtFetch(url, options)
-              .then((res) => {
-                if(res.ok) {
-                  res.json().then((data) => {
-                    this.$message.success(this.$t('organization.members.editRoleSuccess'))
-                    this.$emit('close')
-                    this.$emit('submit')
-                  })
-                } else {
-                  res.json().then((data) => {
-                    this.$message.error(data.msg)
-                  })
-                }
-              })
-              .catch((err) => {
-                this.$message.error('Edit role failed')
-              })
+            const url = `/organization/${this.organization.name}/members/${this.formDataRaw.username}`
+
+            const { error } = useFetchApi(url, options).put().json()
+
+            if (error.value) {
+              this.$message.error(error.value.msg)
+              return
+            } else {
+              this.$message.success(this.$t('organization.members.editRoleSuccess'))
+              this.$emit('close')
+              this.$emit('submit')
+            }
           }
         })
       }

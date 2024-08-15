@@ -59,7 +59,7 @@
   import { useI18n } from 'vue-i18n'
   import { format } from 'timeago.js'
   import { UserFilled } from '@element-plus/icons-vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { copyToClipboard } from '../../packs/clipboard'
   import CsgPagination from './CsgPagination.vue'
   import BranchDropdown from './BranchDropdown.vue'
@@ -96,15 +96,14 @@
 
   const fetchCommits = async (params = new URLSearchParams()) => {
     params.append('per', perPage.value)
-    const url = `${CSGHUB_SERVER}/api/v1/${props.repoType}s/${props.namespacePath}/commits?${params.toString()}`
-    const res = await jwtFetch(url)
-    if (!res.ok) {
-      ElMessage({message: t('all.fetchError'), type: "warning"})
+    const url = `/${props.repoType}s/${props.namespacePath}/commits?${params.toString()}`
+    const { data, error } = await useFetchApi(url).json()
+    if (error.value) {
+      ElMessage({message: error.value, type: "warning"})
     } else {
-      res.json().then(({ data }) => {
-        commits.value = data.commits
-        totalCommits.value = data.total
-      })
+      const body = data.value
+      commits.value = body.data.commits
+      totalCommits.value = body.data.total
     }
   }
 

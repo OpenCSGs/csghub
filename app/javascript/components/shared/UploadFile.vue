@@ -58,17 +58,15 @@
 </template>
 <script setup>
 import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
-import { ref, inject } from 'vue'
+import { ref } from 'vue'
 import {ElMessage} from "element-plus"
 import { useI18n } from 'vue-i18n'
-import jwtFetch from '../../packs/jwtFetch'
+import useFetchApi from '../../packs/useFetchApi'
 
 const props = defineProps({
   repoName: String,
   namespacePath: String
 })
-
-const csghubServer = inject('csghubServer')
 
 const { t } = useI18n();
 const uploadRef = ref();
@@ -132,18 +130,15 @@ const syncUploadFile = async () => {
   appendFilesToFormData(formData, filesList.value)
 
   try {
-    const response = await jwtFetch(
-      `${csghubServer}/api/v1/${prefixPath}/${props.namespacePath}/upload_file`,
+    const { error } = await useFetchApi(
+      `/${prefixPath}/${props.namespacePath}/upload_file`,
       {
-        method: 'POST',
         body: formData
       }
-    )
+    ).post().json()
 
-    const result = await response.json()
-
-    if (!response.ok) {
-      ElMessage({ message: result.msg, type: 'error' })
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'error' })
     } else {
       filesList.value = []
       window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`

@@ -99,14 +99,14 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import CollectionCards from './CollectionCards.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
-  const csghubServer = inject('csghubServer')
+
   const { t } = useI18n()
 
   const perPage = ref(10)
@@ -150,18 +150,17 @@
     params.append('page', currentPage.value)
     params.append('search', nameFilterInput.value)
     params.append('sort', sortSelection.value)
-    const url = `${csghubServer}/api/v1/collections?${params.toString()}`
-    const res = await jwtFetch(url)
-    if (!res.ok) {
-      const { msg } = await res.json()
-      ElMessage({ message: msg, type: 'warning' })
+    const url = `/collections?${params.toString()}`
+    const { data, error } = await useFetchApi(url).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      const { data } = await res.json()
+      const res = data.value
       // To be used after the profile collection is developed.
       // if(data.data){
       //   collectionData.value = data.data.filter(item => !!item.repositories)
       // }
-      collectionData.value = data || []
+      collectionData.value = res.data || []
       totalCollections.value = res.total
     }
   }

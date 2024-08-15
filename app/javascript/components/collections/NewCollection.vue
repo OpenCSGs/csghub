@@ -144,11 +144,9 @@
   import InputTip from '../shared/inputs/InputTip.vue'
   import { ref, computed, inject, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
-
-  const csghubServer = inject('csghubServer')
 
   const props = defineProps({
     namespaces: Array
@@ -216,19 +214,19 @@
     transformedData.private = dataForm.value.visibility === 'private' // 根据需要进行布尔值转换
     transformedData.theme = dataForm.value.colorName
 
-    const options = { method: 'POST', body: JSON.stringify(transformedData) }
+    const options = { body: JSON.stringify(transformedData) }
     hasCreateCollection.value = true
 
-    const response = await jwtFetch(`${csghubServer}/api/v1/collections`, options)
-    const data = await response.json()
-    if (!response.ok) {
+    const { data, error } = await useFetchApi('/collections', options).post().json()
+
+    if (error.value) {
       hasCreateCollection.value = false
-      ElMessage.warning(data.msg)
+      ElMessage.warning(error.value.msg)
     } else {
       hasCreateCollection.value = false
       ElMessage.success(t('collections.newCollection.createSuccess'))
-      toCollectionDetail(data.data.id)
-      return response.json()
+      toCollectionDetail(data.value.data.id)
+      return data.value
     }
   }
 
