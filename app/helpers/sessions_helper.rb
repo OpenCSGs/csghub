@@ -1,9 +1,8 @@
 module SessionsHelper
   def log_in user
-    cookies[:login_identity] = user.login_identity
-    cookies[:current_user] = user.name
-    cookies[:admin_user] = 'true' if user.admin?
-
+    set_cookie 'login_identity', user.login_identity
+    set_cookie 'current_user', user.name
+    set_cookie 'admin_user', 'true' if user.admin?
     user.update_column('session_ip', request.remote_ip)
   end
 
@@ -26,26 +25,49 @@ module SessionsHelper
 
   def logout
     # unset current_user
-    cookies.delete :login_identity
-    cookies.delete :current_user
-    cookies.delete :admin_user
+    unset_cookie :login_identity
+    unset_cookie :current_user
+    unset_cookie :admin_user
 
     # unset user token
-    cookies.delete :user_token
-    cookies.delete :can_change_username
-    cookies.delete :user_token_valid
+    unset_cookie :user_token
+    unset_cookie :can_change_username
+    unset_cookie :user_token_valid
 
-    # unset odic cookies
-    cookies.delete :oidcUuid
-    cookies.delete :idToken
-    cookies.delete :userinfos
-
-    # unset starhub synced
-    cookies.delete :user_synced
+    # unset deprecated cookies
+    unset_cookie :oidcUuid
+    unset_cookie :idToken
+    unset_cookie :userinfos
+    unset_cookie :current_user_email
+    unset_cookie :token_expire_at
+    unset_cookie :user_synced
   end
 
   def is_on_premise?
     on_premise_from_env = ENV.fetch('ON_PREMISE', nil)
     on_premise_from_env.to_s == 'true'
+  end
+
+  def set_cookie name, value
+    if cookie_domain
+      cookies[name] = { value: value, domain: cookie_domain }
+    else
+      cookies[name] = value
+    end
+  end
+
+  def unset_cookie name
+    cookies.delete name
+    possible_cookie_domains.each do |domain|
+      cookies.delete name, domain: domain
+    end
+  end
+
+  def possible_cookie_domains
+    []
+  end
+
+  def cookie_domain
+    nil
   end
 end

@@ -67,8 +67,8 @@ class SessionsController < ApplicationController
   def server
     res = csghub_api.verify_jwt_token(params[:jwt])
     user_infos = JSON.parse(res)["data"]
-    cookies['user_token'] = params[:jwt]
-    cookies['can_change_username'] = user_infos['can_change_username']
+    helpers.set_cookie 'user_token', params[:jwt]
+    helpers.set_cookie 'can_change_username', user_infos['can_change_username']
     login_by_server_user_infos user_infos
   end
 
