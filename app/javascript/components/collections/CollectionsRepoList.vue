@@ -126,10 +126,10 @@
   </div>
 </template>
 <script setup>
-  import { computed, ref, onMounted, inject } from 'vue'
+  import { computed, ref, onMounted } from 'vue'
   import RepoItem from '../shared/RepoItem.vue'
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { useI18n } from 'vue-i18n'
 
@@ -140,8 +140,6 @@
     settingsVisibility: Boolean
   })
 
-  const csghubServer = inject('csghubServer')
-  
   const models = ref([])
   const datasets = ref([])
   const codes = ref([])
@@ -174,14 +172,12 @@
     const removeRepoData = {
       repo_ids: [id]
     }
-    const options = { method: "DELETE", body: JSON.stringify(removeRepoData) }
-    const url = `${csghubServer}/api/v1/collections/${props.collectionsId}/repos`
-    const response = await jwtFetch(url, options)
-      if (!response.ok) {
-      return response.json().then((data) => {
-        ElMessage({ message: data.msg, type: 'warning' })
-      })
-    } else {
+    const options = { body: JSON.stringify(removeRepoData) }
+    const url = `/collections/${props.collectionsId}/repos`
+    const { error } = await useFetchApi(url, options).delete().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    }else{
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       location.href = `/collections/${props.collectionsId}`
     }
