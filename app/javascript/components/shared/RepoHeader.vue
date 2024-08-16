@@ -145,7 +145,7 @@
       <div>/</div>
       <a
         class="max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
-        href="#"
+        :href="repoType == 'collections' ? '#': repoPath"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
       </a>
@@ -239,6 +239,7 @@
 
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
+  const repoPath = ref(`/${props.repoType}s/${props.path}`)
 
   watch(
     () => props.hasLike,
