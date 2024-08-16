@@ -49,12 +49,12 @@
           <el-avatar :size="24" class="mr-2" :src="lastCommitAvatar" />
           <a href="#" class="text-[#303133] hover:underline">{{ lastCommit.author_name }}</a>
         </div>
-        <a :href="`/${prefixPath}/${namespacePath}/commit/${lastCommit.id}`" class="mr-2 text-[#606266] truncate hover:underline">{{ lastCommit.message }}</a>
+        <a :href="`/${prefixPath}/${namespacePath}/commit/${lastCommit.id}`" class="mr-2 text-[#606266] truncate md:hidden hover:underline">{{ lastCommit.message }}</a>
         <a :href="`/${prefixPath}/${namespacePath}/commit/${lastCommit.id}`" class="rounded border border-[#DCDFE6] text-xs text-[#606266] px-3 py-[2px] hover:underline">
           {{ lastCommit.id && lastCommit.id.substring(0, 7) }}
         </a>
       </div>
-      <div v-if="lastCommit" class="text-[#909399] text-sm cursor-pointer flex-shrink-0 md:hidden">
+      <div v-if="lastCommit" class="text-[#909399] text-sm cursor-pointer flex-shrink-0">
         <el-popover
           width="158"
           placement="top"
@@ -96,7 +96,7 @@
           </template>
         </el-popover>
       </div>
-      <div class="flex items-center justify-end pr-3 text-sm text-[#606266] flex-shrink-0 text-right w-[14%]">
+      <div class="flex items-center justify-end pr-3 text-sm text-[#606266] flex-shrink-0 text-right">
         <span v-if="file.type === 'file'">{{ formatBytes(file.size) }}</span>
         <span v-if="file.lfs" class="flex items-center gap-1 text-xs text-[#344054] ml-2 rounded px-1 border border-[#909399]">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -111,7 +111,7 @@
           </svg>
         </span>
       </div>
-      <a :href="`/${prefixPath}/${namespacePath}/commit/${file.last_commit_sha}`" class="text-[#606266] w-[37%] pl-3 text-sm truncate hover:underline">
+      <a :href="`/${prefixPath}/${namespacePath}/commit/${file.last_commit_sha}`" class="text-[#606266] w-[37%] pl-3 text-sm truncate md:hidden hover:underline">
         {{ file.commit.message }}
       </a>
       <div class="text-[#909399] w-[15%] text-sm text-right cursor-pointer md:hidden">
