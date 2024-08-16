@@ -1,6 +1,6 @@
 <template>
   <div
-    class="AddRepoToCollections absolute top-0 right-[120px] md:relative md:right-0 md:pl-5 md:pb-4 z-20"
+    class="AddRepoToCollections md:pl-5 md:pb-4 z-20"
   >
     <div
       v-if="canManage"
