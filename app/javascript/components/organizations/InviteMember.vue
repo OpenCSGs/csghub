@@ -251,6 +251,10 @@
         console.log(data.msg)
       })
     } else {
+      ElMessage({
+        message: t('organization.invite.addSuccess'),
+        type: 'success'
+      })
       return response.json()
     }
   }
