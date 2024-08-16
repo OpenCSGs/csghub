@@ -1,7 +1,7 @@
 <template>
   <div class="CollectionAddRepo">
     <div
-      v-if="settingsVisibility"
+      v-if="canManage"
       @click="dialogVisible = true"
       class="flex px-4 py-[5px] text-[#FFFFFF] border border-[#3250BD] justify-center items-center gap-[6px] rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
     >
@@ -116,7 +116,7 @@
 
   const props = defineProps({
     collectionsId: String,
-    settingsVisibility: Boolean
+    canManage: Boolean
   })
   const dialogVisible = ref(false)
   const typeMappings = [

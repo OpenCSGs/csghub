@@ -22,7 +22,7 @@
     >
       <CollectionsAddRepo
         v-if="showRepoList"
-        :settingsVisibility="settingsVisibility"
+        :canManage="canManage"
         :collectionsId="collectionsId"
       />
     </div>
@@ -63,13 +63,13 @@
               </div>
               <div
                 class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
-                :class="settingsVisibility ? '' : 'hidden'"
+                :class="canManage ? '' : 'hidden'"
               >
                 {{ $t('collections.details.tips') }}
               </div>
               <div class="flex gap-3">
                 <CollectionsAddRepo
-                  :settingsVisibility="settingsVisibility"
+                  :canManage="canManage"
                   :collectionsId="collectionsId"
                 />
               </div>
@@ -79,12 +79,14 @@
         <CollectionsRepoList
           v-if="showRepoList"
           :repositories="collectionData.repositories"
+          :collectionsId="collectionsId"
+          :canManage="canManage"
         />
       </el-tab-pane>
       <el-tab-pane
         :label="$t('collections.details.tabSettings')"
         name="setting"
-        v-if="settingsVisibility"
+        v-if="canManage"
       >
         <CollectionsSettings
           v-if="collectionData"
@@ -117,9 +119,9 @@
 
   const activeName = ref('page')
 
-  const settingsVisibility = computed(() => {
+  const canManage = computed(() => {
     if (collectionData.value) {
-      return props.userName === collectionData.value.username
+      return collectionData.value.can_manage
     } else {
       return false
     }
