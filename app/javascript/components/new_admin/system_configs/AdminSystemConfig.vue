@@ -3,29 +3,6 @@
     <h3 class="text-[18px] font-[500] mb-[8px]">Application ENV</h3>
     <p class="text-[#606266]">{{ systemConfigs.application_env }}</p>
   </div>
-
-  <hr />
-
-  <!-- License info -->
-  <div class="my-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">License info</h3>
-    <el-form-item>
-      <textarea
-        ref="licenseInfoRef"
-        class="system-config-obj-box"
-        :value="stringifyObject(systemConfigs.license_info)"
-        rows="5"
-      ></textarea>
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="info"
-        size="small"
-        @click="updateLicenseInfo"
-        >Update</el-button
-      >
-    </el-form-item>
-  </div>
 </template>
 
 <script setup>
@@ -34,19 +11,8 @@
   import { ElMessage } from 'element-plus'
 
   const systemConfigs = ref({
-    application_env: '',
-    license_info: {}
+    application_env: ''
   })
-
-  const licenseInfoRef = ref(null)
-  const updateLicenseInfo = () => {
-    systemConfigs.value.license_info = JSON.parse(
-      licenseInfoRef.value.value
-    )
-    updateSystemConfig(systemConfigs.value)
-  }
-
-  const stringifyObject = (obj) => JSON.stringify(obj, null, 2)
 
   const fetchSystemConfig = async () => {
     const res = await csrfFetch('/internal_api/admin/system_config')
