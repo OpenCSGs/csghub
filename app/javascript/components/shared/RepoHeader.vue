@@ -182,15 +182,6 @@
       />
       <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
-    <div
-      v-if="repoType === 'model' && baseModel"
-      class="flex items-center text-[#344054] text-base font-normal"
-    >
-      {{ $t('all.baseModel') }}:
-      <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
-        {{ baseModel }}
-      </div>
-    </div>
   </div>
   <div class="leading-[24px] pb-[16px] text-[#344054] md:px-5">{{ desc }}</div>
 
@@ -234,8 +225,7 @@
       default: 0
     },
     hasLike: Boolean,
-    resourceName: String,
-    baseModel: String
+    resourceName: String
   })
 
   const userLiked = ref(props.hasLike)
@@ -272,10 +262,6 @@
       return likesNumber.value.toString()
     }
   })
-
-  const redirectBaseModel = () => {
-    window.location.href = `/models/${props.baseModel}`
-  }
 
   const clickLike = () => {
     userLiked.value === true ? removeLike() : addLike()
