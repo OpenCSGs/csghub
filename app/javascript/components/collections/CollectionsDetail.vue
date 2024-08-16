@@ -116,7 +116,7 @@
 
   const settingsVisibility = computed(() => {
     if (collectionData.value) {
-      return  collectionData.value.can_manage
+      return collectionData.value.can_manage
     } else {
       return false
     }
