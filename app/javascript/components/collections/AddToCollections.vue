@@ -98,10 +98,8 @@
   const fetchCollectionsList = async () => {
     const url = `/user/${props.userName}/collections`
     const { data, error } = await useFetchApi(url).json()
-    console.log(data);
     const json = data.value
     if (json) {
-      console.log(json);
       collectionsList.value = json.data
     }else{
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -127,8 +125,8 @@
     }
     const options = { body: JSON.stringify(addRepoData) }
     const url = `/collections/${collectionsIdsInput.value}/repos`
-    const { response, error } = await useFetchApi(url, options).post().json()
-    if(response.value.ok){
+    const { data, error } = await useFetchApi(url, options).post().json()
+    if(data.value){
       dialogVisible.value = false
       ElMessage({
         message: t('all.addSuccess'),
