@@ -16,11 +16,7 @@ Rails.application.routes.draw do
           get :sync_repos
         end
       end
-      resources :system_config, only: [:index, :update] do
-        collection do
-          get '/license', to: 'system_config#license'
-        end
-      end
+      resources :system_config, only: [:index, :update]
     end
     resources :comments, only: [:create, :destroy, :index]
     resources :users, only: [:index] do

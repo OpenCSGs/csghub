@@ -15,41 +15,6 @@
         <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
-    <div
-      v-if="repoType == 'model' && licenseTagInfo"
-      class="flex flex-col gap-[16px] border-t border-[#EBEEF5] p-[16px]"
-    >
-      <div class="flex">
-        <SvgIcon name="license" />
-        <p class="ml-[8px] text-[16px] leading-[24px] text-[#344054]">License</p>
-      </div>
-      <div class="flex gap-[8px]">
-        <div class="flex gap-[4px] px-[8px] py-[4px] border rounded-[16px]">
-          <SvgIcon name="license" width="15" height="15" />
-          <p class="text-[14px] leading-[20px] text-[#667085]">License: {{ licenseTagInfo.name }}</p>
-        </div>
-        <a
-          v-if="licenseTagInfo.url"
-          :href="licenseTagInfo.url"
-          target="_blank" class="flex w-[30px] h-[30px] border rounded-[8px] justify-center items-center"
-        >
-          <SvgIcon name="top_right_arrow" />
-        </a>
-      </div>
-      <div
-        class="text-[16px] leading-[24px] text-[#344054]"
-        :class="showMoreLicenseDesc ? 'overflow-hidden text-ellipsis line-clamp-2 text-left': ''"
-      >
-        {{ locale == 'zh' ? licenseTagInfo.desc: licenseTagInfo.desc_en}}
-      </div>
-      <div
-        v-if="showMoreLicenseDesc"
-        @click="moreLicenseDesc = true"
-        class="text-[12px] leading-[16px] text-[#223B99] cursor-pointer"
-      >
-        {{ $t('all.moreDesc') }}
-      </div>
-    </div>
 
       <TestEndpoint
         v-if="widgetType === 'generation' && endpoint?.status === 'Running'"
@@ -81,8 +46,7 @@
 </template>
 
 <script setup>
-  import { useI18n } from 'vue-i18n'
-  import { ref, onMounted, computed, watch } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
@@ -98,8 +62,7 @@
     downloadCount: Number,
     currentBranch: String,
     widgetType: String,
-    repoType: String,
-    license: String, default: ''
+    repoType: String
   })
 
   const loading = ref(true)
@@ -107,13 +70,6 @@
   const previewData = ref({})
   const relations = ref({})
   const endpoint = ref({})
-  const moreLicenseDesc = ref(false)
-  const licenseTagInfo = ref({ name: props.license, desc: '' })
-  const { locale } = useI18n()
-
-  const showMoreLicenseDesc = computed(() => {
-    return licenseTagInfo.value.desc.length > 70 && licenseTagInfo.value.desc_en.length > 125 && !moreLicenseDesc.value
-  })
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
@@ -129,7 +85,7 @@
 
   const fetchParquetFilePath = async () => {
     if (props.repoType !== 'dataset') { return }
-    
+
     const options = { path: '/' }
     const url = `/datasets/${props.namespacePath}/tree`
 
@@ -151,7 +107,7 @@
   const fetchPreviewData = async (parquetFilePath) => {
     const url = `/datasets/${props.namespacePath}/viewer/${parquetFilePath}?count=6`
     const { data } = await useFetchApi(url).json()
-    
+
     if (data.value) {
       previewData.value = data.value
     }
@@ -163,20 +119,6 @@
     if (data.value) {
       relations.value = data.value.data
     }
-  }
-
-  const fetchLicenseInfo = async () => {
-    const url = '/internal_api/admin/system_config/license'
-
-    fetch(url).then((response) => {
-      response.json().then((data) => {
-        licenseTagInfo.value = data.license_info.find(
-          item => item.name.toLowerCase() == props.license
-        ) || licenseTagInfo.value
-      }).catch((error) => {
-        console.log(error.msg)
-      })
-    })
   }
 
   const appEndpoint = computed(() => {
@@ -194,8 +136,6 @@
       endpoint.value = data.value.data
     }
   }
-
-  watch(() => props.license, fetchLicenseInfo)
 
   onMounted(() => {
     fetchData()
