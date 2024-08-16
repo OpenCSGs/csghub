@@ -20,7 +20,7 @@
             :repo="model"
             repo-type="model"
           ></repo-item>
-          <SvgIcon class="cursor-pointer" v-if="settingsVisibility" @click="removeRepo(model.id)" name="trash" />
+          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(model.id)" name="trash" />
         </div>
       </div>
       <div
@@ -51,7 +51,7 @@
             :repo="dataset"
             repo-type="dataset"
           ></repo-item>
-          <SvgIcon class="cursor-pointer" v-if="settingsVisibility" @click="removeRepo(dataset.id)" name="trash" />
+          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(dataset.id)" name="trash" />
         </div>
       </div>
       <div
@@ -82,7 +82,7 @@
             :repo="code"
             repo-type="code"
           ></repo-item>
-          <SvgIcon class="cursor-pointer" v-if="settingsVisibility" @click="removeRepo(code.id)" name="trash" />
+          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(code.id)" name="trash" />
         </div>
       </div>
       <div
@@ -113,7 +113,7 @@
             :repo="space"
             repo-type="space"
           ></application-space-item>
-          <SvgIcon class="cursor-pointer" v-if="settingsVisibility" @click="removeRepo(space.id)" name="trash" />
+          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(space.id)" name="trash" />
         </div>
       </div>
       <div
@@ -137,7 +137,7 @@
   const props = defineProps({
     repositories: Object,
     collectionsId: String,
-    settingsVisibility: Boolean
+    canManage: Boolean
   })
 
   const models = ref([])
