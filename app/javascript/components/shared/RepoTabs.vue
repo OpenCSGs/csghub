@@ -1,18 +1,20 @@
 <template>
   <div class="relative">
-    <AddToCollections  :canManage="settingsVisibility" :repoId="repoDetail.repository_id" :userName="userName" />
-    <RepoClone
-      v-if="repoType !== 'endpoint'"
-      :repoType="repoType"
-      :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
-      :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
-      :userName="userName"
-      :namespacePath="path"
-      :admin="admin"
-      :repo="repoDetail"
-      :enableEndpoint="repoDetail.enable_inference"
-      :enableFinetune="repoDetail.enable_finetune"
-    />
+    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-2">
+      <AddToCollections  :canManage="settingsVisibility" :repoId="repoDetail.repository_id" :userName="userName" />
+      <RepoClone
+        v-if="repoType !== 'endpoint'"
+        :repoType="repoType"
+        :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
+        :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
+        :userName="userName"
+        :namespacePath="path"
+        :admin="admin"
+        :repo="repoDetail"
+        :enableEndpoint="repoDetail.enable_inference"
+        :enableFinetune="repoDetail.enable_finetune"
+      />
+    </div>
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"

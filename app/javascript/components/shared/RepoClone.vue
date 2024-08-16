@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center gap-4 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
+    class="flex items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
   >
     <!-- multi-source sync button -->
     <el-button
