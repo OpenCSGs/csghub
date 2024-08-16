@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <AddToCollections  :settingsVisibility="settingsVisibility" :repoId="repoDetail.repository_id" :userName="userName" />
+    <AddToCollections  :canManage="settingsVisibility" :repoId="repoDetail.repository_id" :userName="userName" />
     <RepoClone
       v-if="repoType !== 'endpoint'"
       :repoType="repoType"
