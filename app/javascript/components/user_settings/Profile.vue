@@ -51,7 +51,7 @@
       <div v-if="hasOrg" class="flex gap-[10px] flex-wrap mt-[16px]">
         <p v-for="org in (isCurrentUser ? userStore.orgs : userOrgs)">
           <a :href="`/organizations/${org.path}`">
-            <img :src="org.logo" class="rounded-[50%] h-[40px] w-[40px]" />
+            <img :src="org.logo ? org.logo : '/images/default_org.png'" class="rounded-[50%] h-[40px] w-[40px]" />
           </a>
         </p>
       </div>
