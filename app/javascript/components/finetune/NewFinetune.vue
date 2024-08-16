@@ -241,7 +241,7 @@
   const fetchResources = async () => {
     const { data, error } = await useFetchApi(
       `/space_resources?cluster_id=${dataForm.value.cluster_id}&deploy_type=2`
-    )
+    ).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
