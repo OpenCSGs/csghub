@@ -8,9 +8,10 @@
         :name="collectionData.name"
         :nickname="collectionData.nickname"
         :path="`${collectionData.username}/${collectionData.name}`"
-        :hasLike="false"
+        :hasLike="!!collectionData.user_likes"
         :desc="collectionData.description"
         :totalLikes="collectionData.likes"
+        :repo-id="collectionData.id"
         repo-type="collections"
       />
     </div>
@@ -102,6 +103,8 @@
   import CollectionsSettings from './CollectionsSettings.vue'
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
   import { ElMessage } from 'element-plus'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
+  const repoDetailStore = useRepoDetailStore()
   import useFetchApi from '../../packs/useFetchApi'
 
   const collectionData = ref()
@@ -152,6 +155,7 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       const res = data.value
+      repoDetailStore.initialize(res.data)
       collectionData.value = res.data || []
     }
   }
