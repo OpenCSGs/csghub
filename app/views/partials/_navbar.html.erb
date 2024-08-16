@@ -1,7 +1,6 @@
 <div class="bg-white <%= class_name %>">
   <% if logged_in? %>
     <Navbar logo="<%= asset_path('opencsg_logo.png') %>"
-            avatar="<%= current_user.avatar_url %>"
             star-chain-url=""
             is-company-user="<%= current_user.company_user? %>"
             company-verified="<%= current_user.company_verified %>"

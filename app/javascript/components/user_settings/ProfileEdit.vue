@@ -10,21 +10,6 @@
     <div class="font-semibold text-[20px] leading-[28px]">
       {{ $t('profile.edit.title') }}
     </div>
-    <!-- name -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.userName') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.username"
-        :disabled="canChangeUsername === 'false'"
-        :placeholder="this.$t('all.userName')">
-      </el-input>
-      <p class="text-gray-500 text-[12px] italic pt-1">
-        {{ $t('rule.nameRule') }}
-      </p>
-    </div>
     <!-- avatar -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">用户头像</div>
@@ -50,41 +35,20 @@
         </div>
       </div>
     </div>
-    <!-- nickname -->
+    <!-- name -->
     <div>
       <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.nickName') }}
+        {{ $t('all.userName') }}
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.nickname"
-        :placeholder="this.$t('all.nickName')">
+        v-model="profileData.username"
+        :disabled="canChangeUsername === 'false'"
+        :placeholder="this.$t('all.userName')">
       </el-input>
-    </div>
-    <!-- homepage -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.homepage') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.homepage"
-        :placeholder="this.$t('all.homepage')">
-      </el-input>
-    </div>
-    <!-- bio -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.bio') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.bio"
-        clearable
-        type="textarea"
-        :autosize="{ minRows: 8, maxRows: 30 }"
-        :placeholder="this.$t('all.bio')">
-      </el-input>
+      <p class="text-gray-500 text-[12px] italic pt-1">
+        {{ $t('rule.nameRule') }}
+      </p>
     </div>
     <!-- phone -->
     <div>
@@ -129,6 +93,42 @@
         :placeholder="this.$t('all.email')">
       </el-input>
     </div>
+    <!-- nickname -->
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">
+        {{ $t('all.nickName') }}
+      </div>
+      <el-input
+        class="max-w-[600px]"
+        v-model="profileData.nickname"
+        :placeholder="this.$t('all.nickName')">
+      </el-input>
+    </div>
+    <!-- homepage -->
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">
+        {{ $t('all.homepage') }}
+      </div>
+      <el-input
+        class="max-w-[600px]"
+        v-model="profileData.homepage"
+        :placeholder="this.$t('all.homepage')">
+      </el-input>
+    </div>
+    <!-- bio -->
+    <div>
+      <div class="flex items-center gap-[4px] mb-[8px]">
+        {{ $t('all.bio') }}
+      </div>
+      <el-input
+        class="max-w-[600px]"
+        v-model="profileData.bio"
+        clearable
+        type="textarea"
+        :autosize="{ minRows: 8, maxRows: 30 }"
+        :placeholder="this.$t('all.bio')">
+      </el-input>
+    </div>
     <div
       @click="confirmUpdateProfile"
       class="w-[111px] text-[14px] border border-[#DCDFE6] px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
@@ -139,9 +139,9 @@
 
 <script setup>
   import csrfFetch from '../../packs/csrfFetch.js'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, inject } from 'vue'
+  import { ref } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -151,7 +151,6 @@
   const { cookies } = useCookies()
   const { t } = useI18n()
   const userStore = useUserStore()
-  const csghubServer = inject('csghubServer')
   const profileData = ref(storeToRefs(userStore))
 
   const fileInput = ref(null)
@@ -208,7 +207,7 @@
 
   const updateProfile = async (config={}) => {
     const currentUsername = cookies.get('current_user')
-    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${currentUsername}`
+    const profileUpdateEndpoint = `/user/${currentUsername}`
     let params = {
       avatar: profileData.value.avatar,
       username: profileData.value.username,
@@ -230,16 +229,13 @@
     })
 
     const options = {
-      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
     try {
-      const response = await jwtFetch(profileUpdateEndpoint, options)
-      if (!response.ok) {
-        response.json().then((data) => {
-          ElMessage.warning(data.msg)
-        })
+      const { error } = await useFetchApi(profileUpdateEndpoint, options).put().json()
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
         ElMessage.success(t('profile.edit.updateSuccess'))
         if (config.relogin) {

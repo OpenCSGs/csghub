@@ -130,15 +130,12 @@
 </template>
 
 <script setup>
-  import { ref, inject } from 'vue'
+  import { ref } from 'vue'
   import csrfFetch from '../../packs/csrfFetch.js'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
-  import { useCookies } from 'vue3-cookies'
 
-  const { cookies } = useCookies()
-  const csghubServer = inject('csghubServer')
   const emit = defineEmits(['resetMemberList'])
 
   const props = defineProps({
@@ -234,9 +231,8 @@
   }
 
   async function inviteNewMember() {
-    const inviteNewMemberEndpoint = `${csghubServer}/api/v1/organization/${props.orgName}/members`
+    const inviteNewMemberEndpoint = `/organization/${props.orgName}/members`
     const options = {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -245,17 +241,15 @@
         users: selectedUsers.value.map((user) => user.name).join(',')
       })
     }
-    const response = await jwtFetch(inviteNewMemberEndpoint, options)
-    if (!response.ok) {
-      return response.json().then((data) => {
-        console.log(data.msg)
-      })
+    const { error } = await useFetchApi(inviteNewMemberEndpoint, options).post().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       ElMessage({
         message: t('organization.invite.addSuccess'),
         type: 'success'
       })
-      return response.json()
+      return true
     }
   }
 </script>

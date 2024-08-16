@@ -107,14 +107,12 @@
   </div>
 </template>
 <script setup>
-  import { ref, inject, onMounted } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch'
+  import { ref, onMounted } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
-
-  const csghubServer = inject('csghubServer')
 
   const props = defineProps({
     collectionsId: String,
@@ -149,14 +147,16 @@
   }
 
   const fetchRepoList = async (type) => {
-    const url = `${csghubServer}/api/v1/${type}`
-    const res = await jwtFetch(url)
-    if (!res.ok) {
-      const { msg } = await res.json()
-      ElMessage({ message: msg, type: 'warning' })
+    const url = `/${type}`
+    const { data, error } = await useFetchApi(url).json()
+    if (error.value) {
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
+      })
     } else {
-      const { data } = await res.json()
-      reposMappings.value = data
+      const res = data.value
+      reposMappings.value = res.data
     }
   }
 
@@ -187,15 +187,16 @@
       repo_ids: [repoIdsInput.value]
     }
 
-    const options = { method: 'POST', body: JSON.stringify(addRepoData) }
-    const url = `${csghubServer}/api/v1/collections/${props.collectionsId}/repos`
-    const response = await jwtFetch(url, options)
-    if (!response.ok) {
-      return response.json().then((data) => {
-        ElMessage({ message: data.msg, type: 'warning' })
+    const options = { body: JSON.stringify(addRepoData) }
+    const url = `/collections/${props.collectionsId}/repos`
+    const { data, error } = await useFetchApi(url, options).post().json()
+    if (error.value) {
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
       })
     } else {
-      return response.json()
+      return data.value
     }
   }
   onMounted(() => {

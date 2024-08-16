@@ -83,7 +83,7 @@
   </div>
 </template>
 <script setup>
-  import jwtFetch from "../../packs/jwtFetch.js"
+  import useFetchApi from "../../packs/useFetchApi"
   import { ref, inject, computed, onMounted, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
@@ -96,7 +96,6 @@
   })
 
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
 
   const organization = ref(Object.assign({}, props.organizationRaw))
   const nameRule = inject('nameRule')
@@ -190,47 +189,36 @@
     })
   }
 
-  const updateOrganization = () => {
+  const updateOrganization = async () => {
     const params = Object.assign({}, organization.value)
     delete params.logo_image
     if (params.homepage) {
       params.homepage = selectedProtocol.value + params.homepage
     }
-    const orgUpdateEndpoint = `${csghubServer}/api/v1/organization/${organization.value.name}`;
+    const orgUpdateEndpoint = `/organization/${organization.value.name}`;
     const options = {
-      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
 
-    jwtFetch(orgUpdateEndpoint, options)
-      .then(response => {
-        if (response.ok) {
-          ElMessage({
-            message: t('organization.edit.updateSuccess'),
-            type: 'success'
-          });
-          emit("updateOrganization", {
-            logo: organization.value.logo,
-            nickname: organization.value.nickname || organization.value.name,
-            homepage: selectedProtocol.value + organization.value.homepage,
-          })
-        } else {
-          response.json()
-            .then(res => {
-              ElMessage({
-                message: res.msg,
-                type: 'warning'
-              });
-            })
-        }
+    const { error } = await useFetchApi(orgUpdateEndpoint, options).put().json()
+
+    if (error.value) {
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
+      });
+    } else {
+      ElMessage({
+        message: t('organization.edit.updateSuccess'),
+        type: 'success'
+      });
+      emit("updateOrganization", {
+        logo: organization.value.logo,
+        nickname: organization.value.nickname || organization.value.name,
+        homepage: selectedProtocol.value + organization.value.homepage,
       })
-      .catch(err => {
-        ElMessage({
-          message: err.message,
-          type: 'warning'
-        });
-      })
+    }
   }
 
   onMounted(() => {})

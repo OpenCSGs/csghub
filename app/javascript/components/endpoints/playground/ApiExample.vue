@@ -73,11 +73,11 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watch, inject } from 'vue'
+  import { ref, computed, onMounted, watch } from 'vue'
   import CodeViewer from '../../shared/viewers/CodeViewer.vue'
   import { copyToClipboard } from '../../../packs/clipboard'
   import { useCookies } from 'vue3-cookies'
-  import jwtFetch from '../../../packs/jwtFetch'
+  import useFetchApi from '../../../packs/useFetchApi'
 
   const props = defineProps({
     modelId: String,
@@ -87,7 +87,6 @@
   })
 
   const { cookies } = useCookies()
-  const csghubServer = inject('csghubServer')
   const currentUser = ref(cookies.get('current_user'))
 
   const codeExtension = ref('py') // py, js, bash
@@ -197,7 +196,7 @@ if response.status_code == 200:
     repetition_penalty: ${props.form.repetition_penalty}
   })
 })
-.then(response => response.json())
+.then(response => response.text())
 .then(data => {
   console.log(data)
 })`
@@ -275,20 +274,16 @@ ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
   const fetchUserToken = async () => {
     if (!currentUser.value) return
 
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/user/${currentUser.value}/tokens?app=git`
-    )
-    if (!res.ok) {
-      res.json().then((error) => {
-        console.log(error)
-      })
-    } else {
-      res.json().then((body) => {
-        if (body.data) {
-          accessToken.value = body.data[0].token
-          setCodeContent()
-        }
-      })
+    const { data } = await useFetchApi(
+      `/user/${currentUser.value}/tokens?app=git`
+    ).json()
+
+    if (data.value) {
+      const body = data.value
+      if (body.data) {
+        accessToken.value = body.data[0].token
+        setCodeContent()
+      }
     }
   }
 

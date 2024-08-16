@@ -35,6 +35,7 @@ export const datasets = {
     tip: "Applies to data set data and cannot be changed after creation",
     datasetEnName: "Dataset Name",
     license: "License",
+    createFail: "Create Failed"
   },
   edit: {
     tips: "Will be displayed on the dataset list page, optional",

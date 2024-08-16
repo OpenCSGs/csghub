@@ -30,12 +30,12 @@
 </template>
 
 <script setup>
-  import { ref, inject } from 'vue'
+  import { ref } from 'vue'
   import SvgIcon from '../shared/SvgIcon.vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { copyToClipboard } from '../../packs/clipboard'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
     tokenName: String,
@@ -43,7 +43,6 @@
   })
 
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
 
   const theTokenValue = ref(props.tokenValue)
 
@@ -67,23 +66,19 @@
   }
 
   const refreshAccessToken = async() => {
-    const refreshTokenEndpoint = `${csghubServer}/api/v1/token/starship/${props.tokenName}`
+    const refreshTokenEndpoint = `/token/starship/${props.tokenName}`
     const options = {
-      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({})
     }
-    const response = await jwtFetch(refreshTokenEndpoint, options)
+    const { data, error } = await useFetchApi(refreshTokenEndpoint, options).put().json()
 
-    if (!response.ok) {
-      response.json().then((err) => {
-        ElMessage({ message: err.msg, type: 'warning' })
-      })
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      response.json().then((result) => {
-        theTokenValue.value = result.data.token
-        ElMessage({ message: result.msg, type: 'success' })
-      })
+      const result = data.value
+      theTokenValue.value = result.data.token
+      ElMessage({ message: result.msg, type: 'success' })
     }
   }
 </script>

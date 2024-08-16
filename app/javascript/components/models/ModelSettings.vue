@@ -8,7 +8,7 @@
           {{ $t('models.modelName') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('models.modelNickName') }}
+          {{ $t('models.modelNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -287,9 +287,9 @@
 </template>
 
 <script>
-  import { h, inject } from 'vue'
+  import { h } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState, mapActions } from 'pinia'
   import parseMD from 'parse-md'
@@ -307,7 +307,6 @@
     },
     data() {
       return {
-        csghubServer: inject('csghubServer'),
         theTagList: this.tagList,
         industryTagsList: [],
         theIndustryTagsList: this.industryTagsList,
@@ -363,24 +362,14 @@
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
       async getIndustryTags() {
-        const getIndustryOptions = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        }
-        const response = await jwtFetch(
-          `${this.csghubServer}/api/v1/tags`,
-          getIndustryOptions
-        )
-        if (!response.ok) {
-          response.json().then(({ err }) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        const { data, error } = await useFetchApi('/tags').json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          response.json().then(({ data }) => {
-            this.industryTagsList = data.filter(
-              (item) => item.category === 'industry' && item.scope === 'model'
-            )
-          })
+          const body = data.value
+          this.industryTagsList = body.data.filter(
+            (item) => item.category === 'industry' && item.scope === 'model'
+          )
         }
       },
       collapseTagList(event) {
@@ -480,20 +469,17 @@
       },
 
       async deleteModel() {
-        const modelDeleteEndpoint = `${this.csghubServer}/api/v1/models/${this.path}`
-        const option = { method: 'DELETE' }
-        const response = await jwtFetch(modelDeleteEndpoint, option)
+        const modelDeleteEndpoint = `/models/${this.path}`
+        const { error } = await useFetchApi(modelDeleteEndpoint).delete().json()
 
-        if (!response.ok) {
-          return response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
             window.location.href = '/models'
           }, 500)
-          return response.json()
+          return true
         }
       },
 
@@ -564,22 +550,13 @@
       },
 
       async fetchReadme() {
-        const url = `${this.csghubServer}/api/v1/models/${this.path}/blob/README.md`
-        const options = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+        const url = `/models/${this.path}/blob/README.md`
+        const { data } = await useFetchApi(url).json()
+        if (data.value) {
+          const body = data.value
+          this.readmeContent = atob_utf8(body.data.content)
+          this.readmeSha = body.data.sha
         }
-        await jwtFetch(url, options).then((response) => {
-          response
-            .json()
-            .then(({ data }) => {
-              this.readmeContent = atob_utf8(data.content)
-              this.readmeSha = data.sha
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-        })
       },
       async updateTagsInReadme(newTags) {
         if (this.readmeContent) {
@@ -594,7 +571,7 @@
         }
       },
       async updateReadme(newContent) {
-        const updateReadmeEndpoint = `${this.csghubServer}/api/v1/models/${this.path}/raw/README.md`
+        const updateReadmeEndpoint = `/models/${this.path}/raw/README.md`
         const bodyData = {
           content: btoa_utf8(newContent),
           message: 'Update README.md',
@@ -603,39 +580,31 @@
           sha: this.readmeSha
         }
         const option = {
-          method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(bodyData)
         }
-        const response = await jwtFetch(updateReadmeEndpoint, option)
-        if (response.ok) {
+        const { data, error } = await useFetchApi(updateReadmeEndpoint, option).put().json()
+        if (data.value) {
           ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         } else {
-          response.json().then((data) => {
-            ElMessage({ message: data.msg, type: 'warning' })
-          })
+          ElMessage({ message: error.value.msg, type: 'warning' })
         }
       },
       async updateIndustryTagsAPI(tags) {
         const industryOptions = {
-          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(tags)
         }
-        const response = await jwtFetch(
-          `${this.csghubServer}/api/v1/models/${this.path}/tags/industry`,
+        const { error } = await useFetchApi(
+          `/models/${this.path}/tags/industry`,
           industryOptions
-        )
-        if (!response.ok) {
-          response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        ).post().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          response.json().then((data) => {
-            ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
-          })
+          ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
         }
       },
 
@@ -664,24 +633,19 @@
       },
 
       async updateModel(payload) {
-        const modelUpdateEndpoint = `${this.csghubServer}/api/v1/models/${this.path}`
+        const modelUpdateEndpoint = `/models/${this.path}`
         const options = {
-          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await jwtFetch(modelUpdateEndpoint, options)
-        if (!response.ok) {
-          response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        const { error } = await useFetchApi(modelUpdateEndpoint, options).put().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          response.json().then((data) => {
-            ElMessage({ message: 'Success', type: 'success' })
-          })
+          ElMessage({ message: 'Success', type: 'success' })
         }
       },
 

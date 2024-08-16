@@ -271,12 +271,16 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, inject, onMounted, watchEffect, watch } from 'vue'
+  import { h, ref, computed, onMounted, watchEffect, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import { useCookies } from 'vue3-cookies'
+
+  const { cookies } = useCookies()
+  const currentUser = cookies.get('current_user')
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -293,7 +297,6 @@
   })
 
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
   const delDesc = ref('')
   const cloudResources = ref([])
   const frameworks = ref([])
@@ -335,24 +338,16 @@
   })
 
   const fetchFrameworks = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/models/${props.modelId}/runtime_framework?deploy_type=1`,
-      options
-    )
-    if (!res.ok) {
-      console.log('fetch frameworks failed')
-    } else {
-      res.json().then((body) => {
-        frameworks.value = body.data
-        const currentFramework = body.data.find((framework) => {
-          return framework.frame_name === props.framework
-        })
-        currentFrameworkId.value = currentFramework?.id
+    const { data } = await useFetchApi(
+      `/models/${props.modelId}/runtime_framework?deploy_type=1`
+    ).json()
+    if (data.value) {
+      const body = data.value
+      frameworks.value = body.data
+      const currentFramework = body.data.find((framework) => {
+        return framework.frame_name === props.framework
       })
+      currentFrameworkId.value = currentFramework?.id
     }
   }
 
@@ -375,27 +370,30 @@
     currentResource.value = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
     currentMaxReplica.value = props.maxReplica
     currentMinReplica.value = props.minReplica
-    fetchFrameworks()
+  })
+
+  watch(() => props.modelId, () => {
+    if (props.modelId) {
+      fetchFrameworks()
+    }
   })
 
   const stopEndpoint = async () => {
-    stopUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}/stop`
-    const response = await jwtFetch(stopUrl, { method: 'PUT' })
+    stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
+    const { response, error } = await useFetchApi(stopUrl).put().json()
 
-    if (response.ok) {
+    if (!error.value) {
       ElMessage({
         message: t('endpoints.settings.toggleStatusSuccess'),
         type: 'success'
       })
     } else {
-      if (response.status === 401) {
+      if (response.value.status === 401) {
         refreshJWT()
       } else {
-        response.json().then((data) => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
+        ElMessage({
+          message: error.value.msg,
+          type: 'warning'
         })
       }
     }
@@ -441,23 +439,16 @@
   }
 
   const fetchResources = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(
-      `${csghubServer}/api/v1/space_resources`,
-      options
-    )
-    if (!res.ok) {
+    const { data, error } = await useFetchApi('/space_resources').json()
+
+    if (error.value) {
       ElMessage({
-        message: t('all.fetchError'),
+        message: error.value.msg,
         type: 'warning'
       })
     } else {
-      res.json().then((body) => {
-        cloudResources.value = body.data
-      })
+      const body = data.value
+      cloudResources.value = body.data
     }
   }
 
@@ -482,64 +473,55 @@
   }
 
   const updateEndpoint = async (payload) => {
-    const endpointUpdateEndpoint = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}`
+    const endpointUpdateEndpoint = `/models/${props.modelId}/run/${props.endpointId}`
     const options = {
-      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-    const response = await jwtFetch(endpointUpdateEndpoint, options)
+    const { data, error } = await useFetchApi(endpointUpdateEndpoint, options).put().json()
 
-    if (!response.ok) {
-      response.json().then((err) => {
-        ElMessage({ message: err.msg, type: 'warning' })
-      })
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       if (payload.hasOwnProperty('private')) {
         repoDetailStore.updateVisibility(payload.private)
       }
-      response.json().then((data) => {
-        ElMessage({ message: data.msg, type: 'success' })
-      })
+      ElMessage({ message: data.value.msg, type: 'success' })
     }
   }
 
   const deleteEndpoint = async () => {
-    const endpointDeleteEndpoint = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}`
-    const options = { method: 'DELETE' }
-    const response = await jwtFetch(endpointDeleteEndpoint, options)
+    const endpointDeleteEndpoint = `/models/${props.modelId}/run/${props.endpointId}`
 
-    if (!response.ok) {
-      return response.json().then((data) => {
-        ElMessage({ message: data.msg, type: 'warning' })
-      })
+    const { error } = await useFetchApi(endpointDeleteEndpoint).delete().json()
+
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${props.userName}`
+        window.location.href = `/profile/${currentUser}`
       }, 500)
-      return response.json()
+      return true
     }
   }
 
   const restartEndpoint = async () => {
-    startUrl = `${csghubServer}/api/v1/models/${props.modelId}/run/${props.endpointId}/start`
-    const response = await jwtFetch(startUrl, { method: 'PUT' })
+    startUrl = `/models/${props.modelId}/run/${props.endpointId}/start`
+    const { response, error } = await useFetchApi(startUrl).put().json()
 
-    if (response.ok) {
+    if (!error.value) {
       ElMessage({
         message: t('endpoints.settings.toggleStatusSuccess'),
         type: 'success'
       })
     } else {
-      if (response.status === 401) {
+      if (response.value.status === 401) {
         refreshJWT()
       } else {
-        response.json().then((data) => {
-          ElMessage({
-            message: data.msg,
-            type: 'warning'
-          })
+        ElMessage({
+          message: error.value.msg,
+          type: 'warning'
         })
       }
     }

@@ -39,14 +39,14 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed, watch } from 'vue'
+  import { ref, onMounted, inject, watch } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const { cookies } = useCookies()
 
@@ -95,18 +95,18 @@
   const replicaList = ref([])
 
   const fetchRepoDetail = async () => {
-    const url = `${csghubServer}/api/v1/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
+    const url = `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
 
     try {
-      const response = await jwtFetch(url, { method: 'GET' })
-      const json = await response.json()
+      const { data, error } = await useFetchApi(url).json()
 
-      if (response.ok) {
+      if (data.value) {
+        const json = data.value
         endpoint.value = json.data
         appStatus.value = json.data.status
         repoDetailStore.initialize(json.data)
       } else {
-        ElMessage({ message: json.msg, type: 'warning' })
+        ElMessage({ message: error.value.msg, type: 'warning' })
       }
     } catch (error) {
       console.log(error.msg)

@@ -107,14 +107,14 @@
 </template>
 
 <script setup>
-  import { computed, ref, onMounted, inject } from "vue"
+  import { computed, ref, onMounted } from "vue"
   import RepoItem from "./RepoItem.vue"
   import FinetuneItem from "./FinetuneItem.vue"
   import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
   import EndpointItem from "../endpoints/EndpointItem.vue"
   import ViewMore from "./ViewMore.vue"
   import { useI18n } from "vue-i18n"
-  import jwtFetch from "../../packs/jwtFetch"
+  import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
   import { useCookies } from 'vue3-cookies'
   const { cookies } = useCookies()
@@ -151,7 +151,6 @@
 
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
-  const csghubServer = inject("csghubServer")
 
   const getProfileRepoData = async () =>{
     const defaultTotal = 6
@@ -198,15 +197,15 @@
   const reposUrl = (type) => {
     switch (props.initiator) {
       case "likes":
-        return `${csghubServer}/api/v1/${prefixPath}/${props.name}/likes/${type}`
+        return `/${prefixPath}/${props.name}/likes/${type}`
       case "profile":
       default:
         if (type === "endpoints") {
-          return `${csghubServer}/api/v1/${prefixPath}/${props.name}/run/model`
+          return `/${prefixPath}/${props.name}/run/model`
         } else if (type === "finetunes") {
-          return `${csghubServer}/api/v1/${prefixPath}/${props.name}/finetune/instances`
+          return `/${prefixPath}/${props.name}/finetune/instances`
         } else {
-          return `${csghubServer}/api/v1/${prefixPath}/${props.name}/${type}`
+          return `/${prefixPath}/${props.name}/${type}`
         }
     }
   }
@@ -244,40 +243,37 @@
       params.append("deploy_type", 1)
     }
 
-    jwtFetch(`${url}?${params}`)
-      .then((response) => {
-        if (!response.ok) {
-          ElMessage({
-            message: t("all.loadError"),
-            type: "warning"
-          })
-        } else {
-          response.json().then((data) => {
-            targetRef.value = data
-            if(targetRef.value?.total > 6 && total === 6){
-              targetRef.value.more = true
-            }else if(total > 6){
-              targetRef.value.more = false
-            }
-          })
+    try {
+      const { data, error } = await useFetchApi(`${url}?${params}`).json()
+
+      if (error.value) {
+        ElMessage({
+          message: error.value.msg,
+          type: "warning"
+        })
+      } else {
+        targetRef.value = data.value
+        if(targetRef.value?.total > 6 && total === 6){
+          targetRef.value.more = true
+        }else if(total > 6){
+          targetRef.value.more = false
         }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-      .finally(() => {
-        if (targetRef === models) {
-          modelsLoading.value = false
-        } else if (targetRef === datasets) {
-          datasetsLoading.value = false
-        } else if (targetRef === codes) {
-          codeLoading.value = false
-        } else if (targetRef === spaces) {
-          spacesLoading.value = false
-        } else if (targetRef === endpoints) {
-          endpointsLoading.value = false
-        }
-      })
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      if (targetRef === models) {
+        modelsLoading.value = false
+      } else if (targetRef === datasets) {
+        datasetsLoading.value = false
+      } else if (targetRef === codes) {
+        codeLoading.value = false
+      } else if (targetRef === spaces) {
+        spacesLoading.value = false
+      } else if (targetRef === endpoints) {
+        endpointsLoading.value = false
+      }
+    }
   }
 
   onMounted(() => {

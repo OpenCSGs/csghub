@@ -39,7 +39,7 @@
   import { useI18n } from "vue-i18n";
   import { format } from "timeago.js";
   import { UserFilled } from "@element-plus/icons-vue";
-  import jwtFetch from "../../packs/jwtFetch";
+  import useFetchApi from "../../packs/useFetchApi";
   import { copyToClipboard } from "../../packs/clipboard";
   import { ElMessage } from "element-plus";
   import { parse, html } from "diff2html";
@@ -66,15 +66,14 @@
   };
 
   const fetchCommit = async () => {
-    const url = `${CSGHUB_SERVER}/api/v1/${props.repoType}s/${props.namespacePath}/commit/${props.commitId}`;
-    const res = await jwtFetch(url);
-    if (!res.ok) {
-      ElMessage({ message: t("all.fetchError"), type: "warning" });
+    const url = `/${props.repoType}s/${props.namespacePath}/commit/${props.commitId}`;
+    const { data, error } = await useFetchApi(url).json()
+    if (error.value) {
+      ElMessage({ message: error.value, type: "warning" });
     } else {
-      res.json().then(({ data }) => {
-        commit.value = data;
-        diffContent.value = getDiffContent();
-      });
+      const body = data.value
+      commit.value = body.data;
+      diffContent.value = getDiffContent();
     }
   };
 

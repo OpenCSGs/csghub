@@ -103,7 +103,7 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import FinetuneSettings from './FinetuneSettings.vue'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
 
   const props = defineProps({
@@ -172,26 +172,21 @@
     if (type != 'reload') {
       dataLoading.value = true
     }
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
+
     try {
-      const res = await jwtFetch(
-        `${csghubServer}/api/v1/models/${props.namespace}/${props.name}/run/${props.finetuneId}`,
-        options
-      )
-      if (res.ok) {
-        res.json().then((body) => {
-          if (body.msg == 'OK' && body.data) {
-            finetune.value = body.data
-            appStatus.value = finetune.value.status
-            fetchResources()
-            if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
-              syncfinetuneStatus()
-            }
+      const { data } = await useFetchApi(
+        `/models/${props.namespace}/${props.name}/run/${props.finetuneId}`
+      ).json()
+      if (data.value) {
+        const body = data.value
+        if (body.data) {
+          finetune.value = body.data
+          appStatus.value = finetune.value.status
+          fetchResources()
+          if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
+            syncfinetuneStatus()
           }
-        })
+        }
       }
     } catch (err) {
       console.log(err)
@@ -201,21 +196,16 @@
   }
 
   const fetchResources = async () => {
-    const options = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }
-    const res = await jwtFetch(`${csghubServer}/api/v1/space_resources`, options)
-    if (!res.ok) {
-      ElMessage({ message: t('all.fetchError'), type: 'warning' })
+    const { data, error } = await useFetchApi('/space_resources').json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      res.json().then((body) => {
-        finetuneResources.value = body.data
-        const obj = body.data.find((item) => {
-          return item.resources === finetune.value.hardware
-        })
-        finetuneResource.value = obj?.name
+      const body = data.value
+      finetuneResources.value = body.data
+      const obj = body.data.find((item) => {
+        return item.resources === finetune.value.hardware
       })
+      finetuneResource.value = obj?.name
     }
   }
 

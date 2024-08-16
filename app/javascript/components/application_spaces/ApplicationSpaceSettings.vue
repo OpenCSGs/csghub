@@ -129,7 +129,7 @@
           {{ $t('application_spaces.name') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('application_spaces.nickname') }}
+          {{ $t('application_spaces.nameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -337,7 +337,7 @@
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { useCookies } from 'vue3-cookies'
   import refreshJWT from '../../packs/refreshJWT.js'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState, mapActions } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -480,129 +480,104 @@
       },
 
       async fetchSpaceResources() {
-        const options = {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        }
-        const res = await jwtFetch(
-          `${this.csghubServer}/api/v1/space_resources`,
-          options
-        )
-        if (!res.ok) {
+        const { data, error } = await useFetchApi('/space_resources').json()
+
+        if (!data.value) {
           ElMessage({
-            message: t('application_spaces.new.failedFetchResources'),
+            message: error.value.msg || t('application_spaces.new.failedFetchResources'),
             type: 'warning'
           })
         } else {
-          res.json().then((body) => {
-            this.spaceResources = body.data
-          })
+          this.spaceResources = data.value.data
         }
       },
 
       async stopSpace() {
-        stopUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/stop`
-        const response = await fetch(stopUrl, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.cookies.get('user_token')}`
-          }
-        })
+        stopUrl = `/spaces/${this.path}/stop`
+        const { response, error } = await useFetchApi(stopUrl).post().json()
 
-        if (response.ok) {
+        if (response.value.ok) {
           ElMessage({
             message: this.$t('application_spaces.toggleStatusSuccess'),
             type: 'success'
           })
           return true
         } else {
-          if (response.status === 401) {
+          if (response.value.status === 401) {
             refreshJWT()
           } else {
-            response.json().then((data) => {
-              ElMessage({
-                message: data.msg,
-                type: 'warning'
-              })
+            ElMessage({
+              message: error.value.msg,
+              type: 'warning'
             })
           }
         }
       },
 
       async restartSpace() {
-        restartUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/run`
-        const response = await fetch(restartUrl, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.cookies.get('user_token')}`
-          }
-        })
+        restartUrl = `/spaces/${this.path}/run`
+        const { response, error } = await useFetchApi(restartUrl).post().json()
 
-        if (response.ok) {
+        if (response.value.ok) {
           ElMessage({
             message: this.$t('application_spaces.toggleStatusSuccess'),
             type: 'success'
           })
           return true
         } else {
-          if (response.status === 401) {
+          if (response.value.status === 401) {
             refreshJWT()
           } else {
-            response.json().then((data) => {
-              ElMessage({
-                message: data.msg,
-                type: 'warning'
-              })
-            })
-          }
-        }
-      },
-
-      async toggleSpaceStatus() {
-        let toggleUrl = ''
-        if (this.appStatus === 'Stopped') {
-          toggleUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/run`
-        } else {
-          toggleUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/stop`
-        }
-        const response = await fetch(toggleUrl, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.cookies.get('user_token')}`
-          }
-        })
-
-        if (response.ok) {
-          ElMessage({
-            message: this.$t('application_spaces.toggleStatusSuccess'),
-            type: 'success'
-          })
-          return true
-        } else {
-          response.json().then((data) => {
             ElMessage({
-              message: data.msg,
+              message: error.value.msg,
               type: 'warning'
             })
-          })
+          }
         }
       },
 
-      async deleteApplicationSpace() {
-        const applicationSpaceDeleteEndpoint = `${this.csghubServer}/api/v1/spaces/${this.path}`
-        const option = { method: 'DELETE' }
-        const response = await jwtFetch(applicationSpaceDeleteEndpoint, option)
+      // async toggleSpaceStatus() {
+      //   let toggleUrl = ''
+      //   if (this.appStatus === 'Stopped') {
+      //     toggleUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/run`
+      //   } else {
+      //     toggleUrl = `${this.csghubServer}/api/v1/spaces/${this.path}/stop`
+      //   }
+      //   const response = await fetch(toggleUrl, {
+      //     method: 'POST',
+      //     headers: {
+      //       Authorization: `Bearer ${this.cookies.get('user_token')}`
+      //     }
+      //   })
 
-        if (!response.ok) {
-          return response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+      //   if (response.ok) {
+      //     ElMessage({
+      //       message: this.$t('application_spaces.toggleStatusSuccess'),
+      //       type: 'success'
+      //     })
+      //     return true
+      //   } else {
+      //     response.json().then((data) => {
+      //       ElMessage({
+      //         message: data.msg,
+      //         type: 'warning'
+      //       })
+      //     })
+      //   }
+      // },
+
+      async deleteApplicationSpace() {
+        const applicationSpaceDeleteEndpoint = `/spaces/${this.path}`
+        const { error } = await useFetchApi(applicationSpaceDeleteEndpoint).delete().json()
+
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
             window.location.href = '/spaces'
           }, 500)
-          return response.json()
+          return true
         }
       },
 
@@ -682,27 +657,22 @@
       },
 
       async updateApplicationSpace(payload) {
-        const applicationSpaceUpdateEndpoint = `${this.csghubServer}/api/v1/spaces/${this.path}`
+        const applicationSpaceUpdateEndpoint = `/spaces/${this.path}`
         const options = {
-          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const response = await jwtFetch(
+        const { data, error } = await useFetchApi(
           applicationSpaceUpdateEndpoint,
           options
-        )
-        if (!response.ok) {
-          response.json().then((err) => {
-            ElMessage({ message: err.msg, type: 'warning' })
-          })
+        ).put().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          response.json().then((data) => {
-            ElMessage({ message: data.msg, type: 'success' })
-          })
+          ElMessage({ message: data.value.msg, type: 'success' })
         }
       },
 

@@ -59,9 +59,9 @@
 </template>
 <script setup>
   import Menu from './Menu.vue'
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import jwtFetch from '../../packs/jwtFetch'
+  import useFetchApi from '../../packs/useFetchApi'
   import { copyToClipboard } from '../../packs/clipboard'
   import { v4 as uuidv4 } from 'uuid'
   import { useI18n } from 'vue-i18n'
@@ -72,8 +72,6 @@
 
   const { t } = useI18n()
 
-  const csghubServer = inject('csghubServer')
-
   const accessToken = ref('')
   const tokenName = ref('')
 
@@ -82,22 +80,21 @@
   }
 
   const refreshAccessToken = async () => {
-    const refreshTokenEndpoint = `${csghubServer}/api/v1/token/mirror/${tokenName.value}`
+    const refreshTokenEndpoint = `/token/mirror/${tokenName.value}`
     const options = {
-      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({})
     }
 
     try {
-      const response = await jwtFetch(refreshTokenEndpoint, options)
-      const result = await response.json()
+      const { data, error } = await useFetchApi(refreshTokenEndpoint, options).put().json()
 
-      if (!response.ok) {
-        ElMessage({ message: result.msg, type: 'warning' })
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
         return
       }
 
+      const result = data.value
       accessToken.value = result.data.token
       ElMessage({ message: result.msg, type: 'success' })
     } catch (error) {
@@ -122,15 +119,16 @@
 
   const fetchUserToken = async () => {
     try {
-      const res = await jwtFetch(
-        `${csghubServer}/api/v1/user/${props.name}/tokens?app=mirror`
-      )
-      const body = await res.json()
+      const { data, error } = await useFetchApi(
+        `/user/${props.name}/tokens?app=mirror`
+      ).json()
 
-      if (!res.ok) {
-        ElMessage({ message: body.msg, type: 'warning' })
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
         return
       }
+
+      const body = data.value
 
       if (body.data && body.data.length > 0) {
         accessToken.value = body.data[0].token
@@ -143,20 +141,18 @@
 
   const createUserToken = async () => {
     const options = {
-      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({})
     }
 
     try {
-      const res = await jwtFetch(
-        `${csghubServer}/api/v1/token/mirror/${uuidv4()}`,
+      const { error } = await useFetchApi(
+        `/token/mirror/${uuidv4()}`,
         options
-      )
-      const data = await res.json()
+      ).post().json()
 
-      if (!res.ok) {
-        ElMessage({ message: data.msg, type: 'warning' })
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
         return
       }
 
