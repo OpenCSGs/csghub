@@ -145,7 +145,7 @@
       <div>/</div>
       <a
         class="max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
-        :href="repoType == 'collections' ? '#': repoPath"
+        href="#"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
       </a>
@@ -170,9 +170,9 @@
         height="16"
         class="flex-shrink-0"
       />
-      <span class="md:ml-0 text-[#344054] font-normal hover:text-[#344054]">
+      <a :href="`/models/${props.path}`" class="md:ml-0 text-[#344054] font-normal hover:text-[#223B99]">
         {{ path }}
-      </span>
+      </a>
       <SvgIcon
         name="finetune_cpu_icon"
         width="16"
@@ -239,7 +239,7 @@
 
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
-  const repoPath = ref(`/${props.repoType}s/${props.path}`)
+  const repoPath = ref(`/models/${props.path}`)
 
   watch(
     () => props.hasLike,
