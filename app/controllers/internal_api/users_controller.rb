@@ -10,6 +10,6 @@ class InternalApi::UsersController < InternalApi::ApplicationController
   def jwt_token
     res = csghub_api.get_jwt_token(current_user.name, current_user.login_identity)
     token = JSON.parse(res)['data']['token']
-    cookies['user_token'] = token
+    helpers.set_cookie 'user_token', token
   end
 end

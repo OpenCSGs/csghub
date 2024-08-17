@@ -187,7 +187,7 @@
   </div>
 
   <el-alert
-    v-if="!hasEmail && isLoggedInBoolean && userTokenValid"
+    v-if="!hasEmail && isLoggedInBoolean"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -203,9 +203,6 @@
   import { ref, onMounted, watch } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
-  import { useCookies } from 'vue3-cookies'
-
-  const { cookies } = useCookies()
 
   const props = defineProps({
     logo: String,
@@ -217,7 +214,6 @@
     userName: String
   })
 
-  const userTokenValid = cookies.get('user_token_valid') === 'true'
   const hasEmail = ref(true)
   const userStore = useUserStore()
 
