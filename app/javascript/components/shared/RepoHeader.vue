@@ -239,7 +239,6 @@
 
   const userLiked = ref(props.hasLike)
   const likesNumber = ref(props.totalLikes)
-  const repoPath = ref(`/models/${props.path}`)
 
   watch(
     () => props.hasLike,
