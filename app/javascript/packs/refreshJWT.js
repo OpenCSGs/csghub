@@ -7,7 +7,6 @@ const { cookies } = useCookies()
 const refreshJWT = async () => {
   const jwt = cookies.get('user_token');
   const currentTime = Date.now()/1000;
-  // const currentTime = 1723995400;
   const loginIdentity = cookies.get('login_identity');
 
   // user logged in
