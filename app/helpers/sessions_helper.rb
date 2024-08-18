@@ -50,7 +50,7 @@ module SessionsHelper
 
   def set_cookie name, value
     if cookie_domain
-      cookies[name] = { value: value, domain: cookie_domain }
+      cookies[name] = { value: value, domain: cookie_domain, expires: 7.days }
     else
       cookies[name] = value
     end
