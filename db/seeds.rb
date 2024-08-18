@@ -1,21 +1,3 @@
-# 初始化用户
-super_user = User.find_by(name: 'admin001', email: 'admin001@opencsg.com')
-unless super_user
-  User.create(login_identity: SecureRandom.uuid,
-              name: 'admin001',
-              password: 'admin001',
-              roles: 'super_user',
-              email: 'admin001@opencsg.com')
-end
-
-# 初始化默认的四个 Space Tag
-Tag::DEFAULT_TAGS.each do |htag|
-  tag = Tag.find_by(name: htag[:name])
-  next if tag
-  puts "creating tag: #{htag[:name]}"
-  Tag.create(name: htag[:name], color: htag[:color])
-end
-
 # 初始化 System Config
 if SystemConfig.first.blank?
   if Rails.env.development?
