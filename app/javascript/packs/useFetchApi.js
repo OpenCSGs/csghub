@@ -19,7 +19,6 @@ const popupReloginDialog = () => {
   })
 }
 
-
 const useFetchApi = createFetch({
   updateDataOnError: true,
   baseUrl: `${CSGHUB_SERVER}/api/v1`,
