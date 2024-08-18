@@ -52,7 +52,7 @@ module SessionsHelper
     if cookie_domain
       cookies[name] = { value: value, domain: cookie_domain, expires: 7.days }
     else
-      cookies[name] = value
+      cookies[name] = { value: value, expires: 7.days }
     end
   end
 
