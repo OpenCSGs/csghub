@@ -74,40 +74,7 @@ If you want to dive deep into CSGHub Server detail or wish to integrate the Serv
 <img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### QUICK START
-You can quickly deploy a CSGHub instance with portal/server and all other relevant dependencies to your environment using the following commands:
-```shell
-# please replace [IP Address] with your own LAN/WLAN ip address
-export SERVER_DOMAIN=[IP Address]
-curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one.yml -o all-in-one.yml
-docker compose -f all-in-one.yml up -d
-```
-
-if you are in China or you meet dockerhub network connection issue, you can try our aliyun docker registry alternative version with below:
-```shell
-# please replace [IP Address] with your own LAN/WLAN ip address
-export SERVER_DOMAIN=[IP Address]
-curl -L https://raw.githubusercontent.com/OpenCSGs/csghub/main/all-in-one-CN.yml -o all-in-one-CN.yml
-docker compose -f all-in-one-CN.yml up -d
-```
-
-or if you still meet Github network connection issue, you can try this one:
-```shell
-# please replace [IP Address] with your own LAN/WLAN ip address
-export SERVER_DOMAIN=[IP Address]
-curl -L https://opencsg-public-resource.oss-cn-beijing.aliyuncs.com/csghub/all-in-one-CN.yml -o all-in-one-CN.yml
-docker compose -f all-in-one-CN.yml up -d
-```
-
-Then, you could visit `http://[IP Address]` with your web browser to access this new CSHub instance; you could try all feature with your
-inital admin account: admin001/admin001
-You can check our website for more user guide information: [User Guide](https://opencsg.com/docs/)
-
-**Note:**
-
-* `SERVER_DOMAIN` ([IP Address]) should be the IP address or domain name of the target host. Please avoid using `127.0.0.1` or `localhost`.
-* Released container images are for the x86_64 architecture only and have been tested on Linux/Windows and Mac environments. For Mac Silicon user, it is necessary to enable the [Rosetta for x86/AMD64 emulation Feature](https://docs.docker.com/desktop/settings/mac/#general) in your Docker Desktop.
-* **WARNING: This quick start is only for trial testing and does not support production-level deployment.** The CSGHub instance that deployed with this all-in-one script do not effectively persist user data: When using the `docker compose up` command to reload the service, errors may occur. In this case, you can use the `docker compose down -v` to completely remove the instance before relaunch it. Please always  follow the [Step-by-Step Deployment Guide](/script/all_in_one/README.md) for regular service deployment.
-* **WARNING: The quick start does not include space application's deployment.** Starting from CSGHhub v0.4.0, the space function is supported. Since it still requires addtional Kubernetes and other services, please refer [Full Deployment Guide](/docs/full_deployment_en.md).
+You can refer to [here](/deploy/all_in_one/README.md)quickly deploy a basic csghub instance. 
 
 #### Tech docs in detail
 - [setup development env](/docs/setup_en.md)
