@@ -61,25 +61,24 @@
     </div>
   </div>
 </template>
+
 <script setup>
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import useUserStore from '../../stores/UserStore.js'
   import useFetchApi from '../../packs/useFetchApi'
-  import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
-  import { useCookies } from 'vue3-cookies'
-  const { cookies } = useCookies()
 
   const userStore = useUserStore()
-
-  const { t } = useI18n()
 
   const props = defineProps({
     name: String
   })
 
-  const uuid = cookies.get('login_identity')
-  const current_user = cookies.get('current_user')
+  watch(() => userStore.username, () => {
+    if (!isCurrentUser.value) {
+      fetchUserInfo()
+    }
+  })
 
   const userId = new URL(window.location.href).pathname.split('/').pop()
   const avatar = ref('')
@@ -91,7 +90,7 @@
   const userOrgs = ref([])
 
   const isCurrentUser = computed(() => {
-    return userId === uuid || userId === current_user
+    return userId === userStore.uuid || userId === userStore.username
   })
 
   const hasPhone = computed(() => isCurrentUser.value ? !!userStore.phone : !!phone.value)
@@ -104,7 +103,7 @@
     ).json()
     if (error.value) {
       ElMessage({ message: error.value, type: 'warning' })
-    }else{
+    } else {
       const body = data.value
       avatar.value = body.data.avatar
       username.value = body.data.username
@@ -115,9 +114,4 @@
       userOrgs.value = body.data.orgs
     }
   }
-  onMounted(() => {
-    if(!isCurrentUser.value){
-      fetchUserInfo()
-    }
-  })
 </script>

@@ -139,5 +139,6 @@ Rails.application.routes.draw do
     # errors
     get '/errors/not-found', to: 'errors#not_found'
     get '/errors/unauthorized', to: 'errors#unauthorized'
+    get '/errors/login-failed', to: 'errors#login_failed'
   end
 end

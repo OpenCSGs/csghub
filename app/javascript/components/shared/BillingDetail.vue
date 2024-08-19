@@ -16,8 +16,9 @@
         <el-button
           :loading="billingLoading"
           class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer"
-          @click="fetchDetails(1)"
-          > {{ $t('billing.refresh') }} </el-button>
+          @click="fetchDetails(1)">
+          {{ $t('billing.refresh') }}
+        </el-button>
       </div>
     </div>
     <div>
@@ -88,7 +89,6 @@
   import { ref, computed, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
-  import { useCookies } from 'vue3-cookies'
   import {
     getCurrentTime,
     getFirstDayOfTime,
@@ -97,14 +97,14 @@
     isFutureDate
   } from '../../packs/datetimeUtils'
   import CsgPagination from '../shared/CsgPagination.vue'
+  import useUserStore from '../../stores/UserStore'
+
+  const userStore = useUserStore()
 
   const props = defineProps({
     type: String,
     instanceName: String
   })
-
-  const { cookies } = useCookies()
-  const loginIdentity = cookies.get('login_identity')
 
   const billingLoading = ref(false)
   const perPage = ref(10)
@@ -138,9 +138,11 @@
   // props instanceName is from Endpoint Detail async data
   // so we need to watch it here
   watch(
-    () => props.instanceName,
-    () => {
-      fetchDetails()
+    [() => props.instanceName, () => userStore.uuid],
+    (newInsName, newUuid) => {
+      if (newInsName && newUuid) {
+        fetchDetails()
+      }
     }
   )
 
@@ -191,7 +193,9 @@
     params.append('scene', scene.value)
     params.append('instance_name', props.instanceName)
 
-    const url = `/accounting/metering/${loginIdentity}/statements?${params.toString()}`
+    const url = `/accounting/metering/${
+      userStore.uuid
+    }/statements?${params.toString()}`
 
     const { data, error } = await useFetchApi(url).json()
 
