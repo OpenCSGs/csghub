@@ -43,7 +43,7 @@
     <div
       class="flex gap-1 max-w-[max-content] px-2 rounded-[16px] border border-[#D5D9EB] text-[14px] leading-[20px] bg-[#F8F9FC] text-[#363F72]"
     >
-      <SvgIcon name="star" />
+      <SvgIcon width="12px" height="12px" name="star" />
       {{ $t('collections.hot') }}
     </div>
     <!-- collections -->
