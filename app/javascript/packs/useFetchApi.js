@@ -10,12 +10,16 @@ const { cookies } = useCookies()
 
 const popupReloginDialog = () => {
   const sessionLocale = cookies.get('locale') === 'en' ? sessions_en : sessions_zh
-  ElMessageBox.alert(sessionLocale.expiredDesc, sessionLocale.expiredTitle, {
+  ElMessageBox.confirm(sessionLocale.expiredDesc, sessionLocale.expiredTitle, {
     'show-close': false,
     confirmButtonText: sessionLocale.reLogin,
-    callback: () => {
-      window.location.href = "/logout?redirect_to=/login"
-    }
+    cancelButtonText: sessionLocale.cancelLogin,
+  })
+  .then(() => {
+    window.location.href = "/logout?redirect_to=/login"
+  })
+  .catch(() => {
+    window.location.href = "/logout"
   })
 }
 
