@@ -119,6 +119,7 @@
             <application-space-item
               :repo="space"
               repo-type="space"
+              class="flex-grow"
             ></application-space-item>
             <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(space.id)" name="trash" />
           </div>
