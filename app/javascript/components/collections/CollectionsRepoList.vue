@@ -16,11 +16,13 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="model in models">
-          <repo-item
-            :repo="model"
-            repo-type="model"
-          ></repo-item>
-          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(model.id)" name="trash" />
+          <div class="flex w-full gap-2 group">
+            <repo-item
+              :repo="model"
+              repo-type="model"
+            ></repo-item>
+            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(model.id)" name="trash" />
+          </div>
         </div>
       </div>
       <div
@@ -47,11 +49,13 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="dataset in datasets">
-          <repo-item
-            :repo="dataset"
-            repo-type="dataset"
-          ></repo-item>
-          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(dataset.id)" name="trash" />
+          <div class="flex w-full gap-2 group">
+            <repo-item
+              :repo="dataset"
+              repo-type="dataset"
+            ></repo-item>
+            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(dataset.id)" name="trash" />
+          </div>
         </div>
       </div>
       <div
@@ -78,11 +82,13 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="code in codes">
-          <repo-item
-            :repo="code"
-            repo-type="code"
-          ></repo-item>
-          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(code.id)" name="trash" />
+          <div class="flex w-full gap-2 group">
+            <repo-item
+              :repo="code"
+              repo-type="code"
+            ></repo-item>
+            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(code.id)" name="trash" />
+          </div>
         </div>
       </div>
       <div
@@ -109,11 +115,13 @@
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="space in spaces">
-          <application-space-item
-            :repo="space"
-            repo-type="space"
-          ></application-space-item>
-          <SvgIcon class="cursor-pointer" v-if="canManage" @click="removeRepo(space.id)" name="trash" />
+          <div class="flex w-full gap-2 group">
+            <application-space-item
+              :repo="space"
+              repo-type="space"
+            ></application-space-item>
+            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(space.id)" name="trash" />
+          </div>
         </div>
       </div>
       <div
