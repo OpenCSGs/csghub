@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-2">
-      <AddToCollections  :canManage="settingsVisibility" :repoId="repoDetail.repository_id" :userName="userName" />
+      <AddToCollections v-if="repoType !== 'endpoint'" :repoId="repoDetail.repository_id" :userName="userName" />
       <RepoClone
         v-if="repoType !== 'endpoint'"
         :repoType="repoType"
