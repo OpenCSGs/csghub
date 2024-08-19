@@ -16,8 +16,9 @@
         <el-button
           :loading="billingLoading"
           class="flex gap-1 border border-[#D0D5DD] rounded-[8px] py-1 px-2 cursor-pointer"
-          @click="fetchDetails(1)"
-          > {{ $t('billing.refresh') }} </el-button>
+          @click="fetchDetails(1)">
+          {{ $t('billing.refresh') }}
+        </el-button>
       </div>
     </div>
     <div>
@@ -105,7 +106,6 @@
     instanceName: String
   })
 
-  const loginIdentity = ref('')
   const billingLoading = ref(false)
   const perPage = ref(10)
   const currentPage = ref(1)
@@ -138,16 +138,11 @@
   // props instanceName is from Endpoint Detail async data
   // so we need to watch it here
   watch(
-    () => props.instanceName,
-    () => {
-      fetchDetails()
-    }
-  )
-
-  watch(
-    () => userStore.uuid,
-    () => {
-      loginIdentity.value = userStore.uuid
+    [() => props.instanceName, () => userStore.uuid],
+    (newInsName, newUuid) => {
+      if (newInsName && newUuid) {
+        fetchDetails()
+      }
     }
   )
 
@@ -198,7 +193,9 @@
     params.append('scene', scene.value)
     params.append('instance_name', props.instanceName)
 
-    const url = `/accounting/metering/${loginIdentity.value}/statements?${params.toString()}`
+    const url = `/accounting/metering/${
+      userStore.uuid
+    }/statements?${params.toString()}`
 
     const { data, error } = await useFetchApi(url).json()
 
