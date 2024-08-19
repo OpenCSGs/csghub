@@ -125,6 +125,10 @@
     z-index: 0;
   }
 
+  .el-tabs__header:hover {
+    color: #409EFF;
+}
+
   .el-tabs__nav-wrap:after {
     height: 1px;
   }
