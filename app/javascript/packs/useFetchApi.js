@@ -28,8 +28,8 @@ const useFetchApi = createFetch({
   baseUrl: `${CSGHUB_SERVER}/api/v1`,
   combination: 'chain',
   options: {
-    beforeFetch({ options }) {
-      refreshJWT()
+    async beforeFetch({ options }) {
+      await refreshJWT()
 
       const loginIdentity = cookies.get('login_identity')
       const jwtToken = cookies.get('user_token')
