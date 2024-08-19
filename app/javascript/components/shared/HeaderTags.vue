@@ -94,7 +94,7 @@
     </div>
     <div
       v-for="tag in theOtherTags.theTags"
-      class="text-sm text-[#303133] px-[8px] py-[4px] flex items-center gap-1"
+      class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
       {{ tag.name }}
     </div>
