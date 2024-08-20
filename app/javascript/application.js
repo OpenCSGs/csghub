@@ -1,8 +1,5 @@
 import "trix"
 import "@rails/actiontext"
-import refreshJWT from "./packs/refreshJWT.js"
-
-refreshJWT()
 
 // Vue config
 import { createApp } from "vue/dist/vue.esm-bundler.js"

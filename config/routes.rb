@@ -16,11 +16,7 @@ Rails.application.routes.draw do
           get :sync_repos
         end
       end
-      resources :system_config, only: [:index, :update] do
-        collection do
-          get '/license', to: 'system_config#license'
-        end
-      end
+      resources :system_config, only: [:index, :update]
     end
     resources :comments, only: [:create, :destroy, :index]
     resources :users, only: [:index] do
@@ -143,5 +139,6 @@ Rails.application.routes.draw do
     # errors
     get '/errors/not-found', to: 'errors#not_found'
     get '/errors/unauthorized', to: 'errors#unauthorized'
+    get '/errors/login-failed', to: 'errors#login_failed'
   end
 end
