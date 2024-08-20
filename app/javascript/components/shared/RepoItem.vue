@@ -68,6 +68,7 @@
   const props = defineProps({
     repo: Object,
     repoType: String,
+    selectedTaskTag: String,
     isCollection: Boolean,
     cardType: {
       type: String,
@@ -124,7 +125,7 @@
     const visibility = props.repo.private ? t('all.private')  : t('all.public')
     const showDescription = props.cardType === 'index' || !!props.repo.description?.trim()
 
-    let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
+    let taskTag = (props.repo.tags || []).find(tag => tag.category === "task" && (props.selectedTaskTag ? tag.name === props.selectedTaskTag : true))
     if (locale.value === 'en') {
       taskTag = taskTag? taskTag["name"].replace(/-/g, ' ') : null
     }

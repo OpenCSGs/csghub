@@ -109,6 +109,7 @@
           v-for="repo in reposData"
           :repo="repo"
           :repo-type="repoType"
+          :selectedTaskTag="taskTag"
         />
       </div>
       <CsgPagination
@@ -200,6 +201,8 @@
     frameworkTag.value = framework
     languageTag.value = language
     licenseTag.value = license
+    console.log(taskTag.value);
+    // console.log(props.selectedTag)
     reloadRepos()
   }
 
