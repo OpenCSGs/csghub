@@ -103,7 +103,7 @@
                 class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
-                    ? tag.zh_name || tag.name
+                    ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
                 <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
@@ -163,7 +163,7 @@
                 class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
-                    ? tag.zh_name || tag.name
+                    ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
                 <el-icon

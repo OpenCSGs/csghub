@@ -1,21 +1,3 @@
-# 初始化用户
-super_user = User.find_by(name: 'admin001', email: 'admin001@opencsg.com')
-unless super_user
-  User.create(login_identity: SecureRandom.uuid,
-              name: 'admin001',
-              password: 'admin001',
-              roles: 'super_user',
-              email: 'admin001@opencsg.com')
-end
-
-# 初始化默认的四个 Space Tag
-Tag::DEFAULT_TAGS.each do |htag|
-  tag = Tag.find_by(name: htag[:name])
-  next if tag
-  puts "creating tag: #{htag[:name]}"
-  Tag.create(name: htag[:name], color: htag[:color])
-end
-
 # 初始化 System Config
 if SystemConfig.first.blank?
   if Rails.env.development?
@@ -161,26 +143,23 @@ end
 [
   ['apache-2.0', 'Apache-2.0', 1],
   ['mit', 'MIT', 2],
-  ['lgpl', 'LGPL', 3],
-  ['lgpl-2.1', 'LGPL-2.1', 4],
-  ['lgpl-3.0', 'LGPL-3.0', 5],
-  ['gpl', 'GPL', 6],
-  ['gpl-2.0', 'GPL-2.0', 7],
-  ['gpl-3.0', 'GPL-3.0', 8],
-  ['afl-3.0', 'AFL-3.0', 9],
-  ['ecl-2.0', 'ECL-2.0', 10],
-  ['creativeml-openrail-m', 'CreativeML Open RAIL-M', 11],
-  ['agpl-3.0', 'AGPL-3.0', 12],
-  ['cc', 'CC', 13],
-  ['cc0-1.0', 'CC0 1.0', 14],
-  ['cc-by-4.0', 'CC BY 4.0', 15],
-  ['cc-by-nc-nd-3.0', 'CC BY-NC-ND 3.0', 16],
-  ['cc-by-nc-nd-4.0', 'CC BY-NC-ND 4.0', 17],
-  ['cc-by-nc-4.0', 'CC BY-NC 4.0', 18],
-  ['cc-by-nc-sa-2.0', 'CC BY-NC-SA 2.0', 19],
-  ['cc-by-nc-sa-3.0', 'CC BY-NC-SA 3.0', 20],
-  ['cc-by-nc-sa-4.0', 'CC BY-NC-SA 4.0', 21],
-  ['other', 'other', 22]
+  ['lgpl-2.1', 'LGPL-2.1', 3],
+  ['lgpl-3.0', 'LGPL-3.0', 4],
+  ['gpl-2.0', 'GPL-2.0', 5],
+  ['gpl-3.0', 'GPL-3.0', 6],
+  ['afl-3.0', 'AFL-3.0', 7],
+  ['ecl-2.0', 'ECL-2.0', 8],
+  ['creativeml-openrail-m', 'CreativeML Open RAIL-M', 9],
+  ['agpl-3.0', 'AGPL-3.0', 10],
+  ['cc0-1.0', 'CC0 1.0', 11],
+  ['cc-by-4.0', 'CC BY 4.0', 12],
+  ['cc-by-nc-nd-3.0', 'CC BY-NC-ND 3.0', 13],
+  ['cc-by-nc-nd-4.0', 'CC BY-NC-ND 4.0', 14],
+  ['cc-by-nc-4.0', 'CC BY-NC 4.0', 15],
+  ['cc-by-nc-sa-2.0', 'CC BY-NC-SA 2.0', 16],
+  ['cc-by-nc-sa-3.0', 'CC BY-NC-SA 3.0', 17],
+  ['cc-by-nc-sa-4.0', 'CC BY-NC-SA 4.0', 18],
+  ['other', 'other', 19]
 ].each do |tag|
   local_tag = Tag.find_by(name: tag, tag_type: 'license', tag_origin: 'system')
   next if local_tag

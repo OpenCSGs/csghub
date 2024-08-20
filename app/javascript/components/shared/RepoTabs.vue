@@ -1,17 +1,20 @@
 <template>
   <div class="relative">
-    <RepoClone
-      v-if="repoType !== 'endpoint'"
-      :repoType="repoType"
-      :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
-      :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
-      :userName="userName"
-      :namespacePath="path"
-      :admin="admin"
-      :repo="repoDetail"
-      :enableEndpoint="repoDetail.enable_inference"
-      :enableFinetune="repoDetail.enable_finetune"
-    />
+    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-2">
+      <AddToCollections v-if="showAddToCollections" :repoId="repoDetail.repository_id" :userName="userName" />
+      <RepoClone
+        v-if="repoType !== 'endpoint'"
+        :repoType="repoType"
+        :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
+        :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
+        :userName="userName"
+        :namespacePath="path"
+        :admin="admin"
+        :repo="repoDetail"
+        :enableEndpoint="repoDetail.enable_inference"
+        :enableFinetune="repoDetail.enable_finetune"
+      />
+    </div>
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
@@ -64,7 +67,6 @@
           :download-count="repoDetail.downloads"
           :currentBranch="currentBranch"
           :widget-type="repoDetail.widget_type"
-          :license="repoDetail.license"
         />
       </template>
 
@@ -261,6 +263,7 @@
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
   import BillingDetail from './BillingDetail.vue'
+  import AddToCollections from '../collections/AddToCollections.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({
@@ -294,6 +297,10 @@
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
   onMounted(() => {})
+
+  const showAddToCollections = computed(() => {
+    return props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
+  })
 
   const repoTypeClass = computed(() => {
     if (props.repoType === 'space') {

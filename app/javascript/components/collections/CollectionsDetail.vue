@@ -8,9 +8,10 @@
         :name="collectionData.name"
         :nickname="collectionData.nickname"
         :path="`${collectionData.username}/${collectionData.name}`"
-        :hasLike="false"
+        :hasLike="!!collectionData.user_likes"
         :desc="collectionData.description"
         :totalLikes="collectionData.likes"
+        :repo-id="collectionData.id"
         repo-type="collections"
       />
     </div>
@@ -21,7 +22,7 @@
     >
       <CollectionsAddRepo
         v-if="showRepoList"
-        :settingsVisibility="settingsVisibility"
+        :canManage="canManage"
         :collectionsId="collectionsId"
       />
     </div>
@@ -62,13 +63,13 @@
               </div>
               <div
                 class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
-                :class="settingsVisibility ? '' : 'hidden'"
+                :class="canManage ? '' : 'hidden'"
               >
                 {{ $t('collections.details.tips') }}
               </div>
               <div class="flex gap-3">
                 <CollectionsAddRepo
-                  :settingsVisibility="settingsVisibility"
+                  :canManage="canManage"
                   :collectionsId="collectionsId"
                 />
               </div>
@@ -78,12 +79,14 @@
         <CollectionsRepoList
           v-if="showRepoList"
           :repositories="collectionData.repositories"
+          :collectionsId="collectionsId"
+          :canManage="canManage"
         />
       </el-tab-pane>
       <el-tab-pane
         :label="$t('collections.details.tabSettings')"
         name="setting"
-        v-if="settingsVisibility"
+        v-if="canManage"
       >
         <CollectionsSettings
           v-if="collectionData"
@@ -102,6 +105,8 @@
   import CollectionsSettings from './CollectionsSettings.vue'
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
   import { ElMessage } from 'element-plus'
+  import useRepoDetailStore from '../../stores/RepoDetailStore'
+  const repoDetailStore = useRepoDetailStore()
   import useFetchApi from '../../packs/useFetchApi'
 
   const collectionData = ref()
@@ -114,9 +119,9 @@
 
   const activeName = ref('page')
 
-  const settingsVisibility = computed(() => {
+  const canManage = computed(() => {
     if (collectionData.value) {
-      return props.userName === collectionData.value.username
+      return collectionData.value.can_manage
     } else {
       return false
     }
@@ -152,6 +157,7 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       const res = data.value
+      repoDetailStore.initialize(res.data)
       collectionData.value = res.data || []
     }
   }

@@ -125,6 +125,25 @@
     z-index: 0;
   }
 
+  /* 修改选中的文字颜色 */
+  .el-tabs__item.is-active {
+    color: #223B99;
+  }
+
+  /* 修改选中标签的颜色 */
+  .el-tabs__active-bar {
+    background-color: #223B99;
+  }
+
+  /* 修改选项卡中的文字大小 */
+  .el-tabs__item {
+    font-size: 16px;
+  }
+
+  .el-tabs {
+    color: #667085;
+  }
+
   .el-tabs__nav-wrap:after {
     height: 1px;
   }

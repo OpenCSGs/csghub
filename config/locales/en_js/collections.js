@@ -17,10 +17,11 @@ export const collections = {
     tabProject: 'Project',
     tabSettings: 'Settings',
     emptyCollection: 'Empty Collection',
-    tips: 'To add a project to this collection, please click the "Add Project" button or use the "Add to Collection" button on the Model, Dataset, Space, or Paper pages.'
+    tips: 'To add a project to this collection, please click the "Add Project" button or use the "Add to Collection" button on the Model, Dataset, Code, or Space.'
   },
   edit: {
     add: 'Add Project',
+    addCollection: 'Add to Collection',
     type: 'Project Type',
     name: 'Project Name',
     cnName: 'Collection Name in Chinese',
@@ -36,7 +37,9 @@ export const collections = {
     status: 'Status',
     collectionVisibility: 'Collection visibility',
     delCollection: 'Delete collection',
+    removeRepos: 'Remove Repo',
     delTips: 'This action can be undone and will permanently delete',
+    removeTips: 'This action can be undone and will permanently remove',
     privateInfo: ', only the creator or organization admin can make submissions',
     publicInfo: ', visible to anyone on the internet.'
   },

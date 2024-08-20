@@ -24,12 +24,13 @@ function initialCheck(){
 function checkOS(){
   arch_info=`arch`
   if [[ $arch_info !=  "x86_64" && $arch_info != "amd64"  ]]; then
-	  echo "Current OS arch is $arch_info, Only x86_64 and amd64 are supported!"
+    echo "Current OS arch is $arch_info, Only x86_64 and amd64 are supported!"
           exit 1
   fi
 }
 
 nginx_conf=${CURRENT_DIR}/nginx/nginx.conf
+casdoor_init_data_conf=${CURRENT_DIR}/casdoor/conf/init_data.json
 ## check for root, OS etc..
 initialCheck
 
@@ -40,9 +41,16 @@ if [[ $? -ne 0 ]]; then
        exit 1
 fi
 
-echo "1. replace domain name in nginx.conf"
+echo "1. replace domain name and space external domane name in nginx.conf"
 echo "the configured domain name is ${SERVER_DOMAIN}"
+echo "the configured domain name is ${SPACE_APP_EXTERNAL_DOMAIN}"
 sed -i "s/_CSGHUB_DOMAINNAME/${SERVER_DOMAIN}/g" ${nginx_conf}
+sed -i "s/_CSGHUB_DOMAINPORT/${SERVER_PORT}/g" ${nginx_conf}
+sed -i "s/_CSGHUB_SPACE_EXTERNAL_DOMAINNAME/${SPACE_APP_EXTERNAL_DOMAIN}/g" ${nginx_conf}
+
+echo "replace domain name and port in casdoor's init_data.json"
+sed -i "s/_CSGHUB_DOMAINNAME/${SERVER_DOMAIN}/g" ${casdoor_init_data_conf}
+sed -i "s/_CSGHUB_DOMAINPORT/${SERVER_PORT}/g" ${casdoor_init_data_conf}
 
 echo "2. prepare and check mounted folder"
 gitdata_folder=${CURRENT_DIR}/gitdata

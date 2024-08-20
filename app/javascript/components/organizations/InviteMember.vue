@@ -178,6 +178,8 @@
     if (!findUser) {
       selectedUsers.value.push({ name: newUser.name, avatar: newUser.avatar })
     }
+    userNameInput.value = ''
+    shouldShowUserList.value = false
   }
 
   const showUserList = (e) => {

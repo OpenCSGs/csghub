@@ -16,10 +16,11 @@ export const collections = {
     tabProject: '项目',
     tabSettings: '设置',
     emptyCollection: '空合集',
-    tips: '要将项目添加到此合集，请点击 添加项目 按钮 或使用模型、数据集、空间或论文页面上的加入合集按钮'
+    tips: '要将项目添加到此合集，请点击 添加项目 按钮 或使用模型、数据集、代码或应用空间页的加入合集按钮'
   },
   edit: {
     add: '添加项目',
+    addCollection: '加入合集',
     type: '项目类型',
     name: '项目名称',
     cnName: '合集中文名称',
@@ -35,7 +36,9 @@ export const collections = {
     status: '状态',
     collectionVisibility: '合集可见性',
     delCollection: '删除合集',
+    removeRepos: '移除项目',
     delTips: '此操作无法撤销，这将永久删除',
+    removeTips: '此操作无法撤销，这将永久移除',
     privateInfo: '，仅创建者或者组织管理员可进行提交',
     publicInfo: '， 任何互联网上的人都可以看到此模型'
   },

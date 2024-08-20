@@ -107,7 +107,6 @@
       <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
-        v-show="repoType !== 'collections'"
         @click="clickLike"
       >
         {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
@@ -182,15 +181,6 @@
       />
       <span class="text-[#344054] font-normal">{{ resourceName }}</span>
     </div>
-    <div
-      v-if="repoType === 'model' && baseModel"
-      class="flex items-center text-[#344054] text-base font-normal"
-    >
-      {{ $t('all.baseModel') }}:
-      <div @click="redirectBaseModel" class="cursor-pointer text-[#475467] hover:text-[#344054] focus:text-[#475467] ml-[8px]">
-        {{ baseModel }}
-      </div>
-    </div>
   </div>
   <div class="leading-[24px] pb-[16px] text-[#344054] md:px-5">{{ desc }}</div>
 
@@ -234,8 +224,7 @@
       default: 0
     },
     hasLike: Boolean,
-    resourceName: String,
-    baseModel: String
+    resourceName: String
   })
 
   const userLiked = ref(props.hasLike)
@@ -273,18 +262,20 @@
     }
   })
 
-  const redirectBaseModel = () => {
-    window.location.href = `/models/${props.baseModel}`
-  }
+  const likeUrl = computed(() => {
+    if(props.repoType === 'collections'){
+      return `/user/${props.name}/likes/collections/${props.repoId}`
+    }else{
+      return `/user/${props.name}/likes/${props.repoId}`
+    }
+  })
 
   const clickLike = () => {
     userLiked.value === true ? removeLike() : addLike()
   }
 
   const addLike = async () => {
-    const { error } = await useFetchApi(
-      `/user/${props.name}/likes/${props.repoId}`
-    ).put().json()
+    const { error } = await useFetchApi(likeUrl.value).put().json()
     if (error.value) {
       ElMessage({
         type: 'warning',
@@ -297,9 +288,7 @@
   }
 
   const removeLike = async () => {
-    const { error } = await useFetchApi(
-      `/user/${props.name}/likes/${props.repoId}`
-    ).delete().json()
+    const { error } = await useFetchApi(likeUrl.value).delete().json()
     if (error.value) {
       ElMessage({
         type: 'warning',
