@@ -9,7 +9,7 @@
       />
     </div>
     <p 
-      class="h-[28px] pl-[4px] pr-[8px] py-[3px] border border-[#D0D5DD] rounded-r-[6px]"
+      class="h-[28px] pl-[4px] pr-[8px] py-[3px] border border-l-0 border-[#D0D5DD] rounded-r-[6px]"
       @click="emit('handleTagClick', tag)"
       :class="{ 'bg-[#4D6AD6]': active, 'text-white': active, 'border-[#4D6AD6]': active }"
     >
