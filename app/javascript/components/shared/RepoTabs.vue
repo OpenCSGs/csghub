@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-2">
+    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-4">
       <AddToCollections v-if="showAddToCollections" :repoId="repoDetail.repository_id" :userName="userName" />
       <RepoClone
         v-if="repoType !== 'endpoint'"
