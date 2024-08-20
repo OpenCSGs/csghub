@@ -79,7 +79,7 @@
           </h3>
 
           <InviteMember :orgName="organizationData.name"
-                        @resetMemberList="resetMemberList"
+                        @resetMemberList="fetchOrgMemberList"
                         :role="role"
                         class="my-[16px]"
           />
@@ -128,15 +128,6 @@
   const { cookies } = useCookies()
 
   const role = ref('')
-
-  const resetMemberList = (newMembers, userRole) => {
-    newMembers.forEach(member => member.role = userRole)
-    const newMembersList = membersList.value.concat(newMembers).reverse()
-    const uniqNewMembersList = newMembersList.filter((member, index, self) => {
-      return index === self.findIndex((nestedMember) => nestedMember.name === member.name);
-    });
-    membersList.value = uniqNewMembersList.reverse()
-  }
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `/organization/${props.name}`

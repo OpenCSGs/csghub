@@ -163,7 +163,7 @@
   ])
   const dataForm = ref({
     owner: '',
-    visibility: 'private',
+    visibility: 'public',
     colorName: colorNameList.value[0][0]
   })
   const rules = ref({

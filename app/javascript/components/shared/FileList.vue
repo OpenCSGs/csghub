@@ -211,7 +211,7 @@
     const url = `/${prefixPath}/${props.namespacePath}/download/${file.lfs_relative_path}?ref=${props.currentBranch}&lfs=true&lfs_path=${file.lfs_relative_path}&save_as=${file.path}`
 
     try {
-      const { data: downloadUrl, error } = await useFetchApi(url).json()
+      const { data, error } = await useFetchApi(url).json()
 
       if (error.value) {
         ElMessage({
@@ -219,7 +219,8 @@
           type: 'warning'
         })
       } else {
-        createAndClickAnchor(downloadUrl.value, file.path)
+        const downloadUrl = data.value.data
+        createAndClickAnchor(downloadUrl, file.path)
       }
     } catch (error) {
       console.error(error)
