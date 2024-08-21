@@ -43,6 +43,7 @@
   import { useI18n } from 'vue-i18n'
   import { useCookies } from 'vue3-cookies'
   import { ElMessage } from 'element-plus'
+  import useUserStore from '../../stores/UserStore'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -50,9 +51,10 @@
   const nameRule = inject('nameRule')
   const formData = ref({ username: '' })
   const formRef = ref(null)
+  const userStore = useUserStore()
 
   const getChangeUsername = computed(() => {
-    const canChangeUsername = cookies.get('user_token') ? cookies.get('can_change_username') : 'false'
+    const canChangeUsername = userStore.isLoggedIn ? cookies.get('can_change_username') : 'false'
     return canChangeUsername === 'true'
   })
 
@@ -116,8 +118,8 @@
   }
 
   const updateUsername = async () => {
-    const currentUsername = cookies.get('current_user')
-    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${currentUsername}`
+    
+    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${userStore.username}`
 
     const params = { new_username: formData.value.username }
 
