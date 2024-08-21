@@ -11,7 +11,7 @@
         @click="goCollectionDetails(collection.id)"
       >
         <div class="flex justify-between">
-          <div class="text-[14px] leading-[20px] text-[#344054]">
+          <div class="text-[14px] leading-[20px] text-[#344054] text-ellipsis overflow-hidden whitespace-nowrap">
             {{ collection.name }}
           </div>
           <SvgIcon name="chevron_right" />
