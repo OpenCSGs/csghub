@@ -21,7 +21,11 @@
       :modelId="namespacePath"
     />
     <div v-if="!isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl">
-      <el-button type="default" class="!rounded-lg" @click="toLoginPage">
+      <el-button type="default" class="!rounded-lg shadow-sm hover:bg-slate-50" @click="toLoginPage">
+        <SvgIcon
+        name="model_endpoint_create"
+        class="mr-1"
+      />
         {{ $t("all.deploy") }}
         <el-icon class="ml-1 el-icon--right">
           <arrow-down />
