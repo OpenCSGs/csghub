@@ -114,10 +114,11 @@
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-sm text-[#303133] px-[8px] py-[3px] rounded cursor-pointer flex items-center border gap-1"
+      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[16px] cursor-pointer flex items-center border border-[#D0D5DD] gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
-      {{ tag.name }}
+      License: 
+      <p class="text-[#344054]">{{ tag.name }}</p>
     </a>
     <MoreTags
       v-if="theLicenseTags.moreTags"
