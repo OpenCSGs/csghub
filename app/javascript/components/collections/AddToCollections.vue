@@ -1,9 +1,9 @@
 <template>
   <div
-    class="AddRepoToCollections md:pl-5 md:pb-4 z-20"
+    class="AddRepoToCollections z-20"
   >
     <div
-      @click="dialogVisible = true"
+      @click="openAddCollections"
       class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
     >
       <SvgIcon
@@ -82,6 +82,8 @@
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
+  import { useCookies } from 'vue3-cookies'
+  const { cookies } = useCookies()
 
   const { t } = useI18n()
 
@@ -92,7 +94,8 @@
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
-
+  const currentUser = ref(cookies.get('current_user'))
+  const isLoggedIn =ref(false)
   const fetchCollectionsList = async () => {
     const url = `/user/${props.userName}/collections`
     const { data, error } = await useFetchApi(url).json()
@@ -101,6 +104,14 @@
       collectionsList.value = json.data
     }else{
       ElMessage({ message: error.value.msg, type: 'warning' })
+    }
+  }
+  
+  const openAddCollections = () => {
+    if(isLoggedIn.value){
+      dialogVisible.value = true
+    }else{
+      window.location.href = '/login'
     }
   }
 
@@ -136,7 +147,10 @@
     }
   }
   onMounted(() => {
-    fetchCollectionsList()
+    isLoggedIn.value = !!currentUser.value;
+    if(isLoggedIn.value){
+      fetchCollectionsList()
+    }
   })
 </script>
 <style scoped>
