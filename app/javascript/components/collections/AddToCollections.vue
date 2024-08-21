@@ -78,13 +78,13 @@
   </div>
 </template>
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
-  import { useCookies } from 'vue3-cookies'
-  const { cookies } = useCookies()
+  import useUserStore from '../../stores/UserStore.js'
 
+  const userStore = useUserStore()
   const { t } = useI18n()
 
   const props = defineProps({
@@ -94,8 +94,7 @@
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
-  const currentUser = ref(cookies.get('current_user'))
-  const isLoggedIn =ref(false)
+  const isLogged =ref(false)
   const fetchCollectionsList = async () => {
     const url = `/user/${props.userName}/collections`
     const { data, error } = await useFetchApi(url).json()
@@ -108,7 +107,7 @@
   }
   
   const openAddCollections = () => {
-    if(isLoggedIn.value){
+    if(isLogged.value){
       dialogVisible.value = true
     }else{
       window.location.href = '/login'
@@ -146,12 +145,16 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
-  onMounted(() => {
-    isLoggedIn.value = !!currentUser.value;
-    if(isLoggedIn.value){
-      fetchCollectionsList()
+
+  watch(
+    () => userStore.isLoggedIn,
+    (isLoggedIn, _) => {
+      if(isLoggedIn){
+        isLogged.value = true
+        fetchCollectionsList()
+      }
     }
-  })
+  )
 </script>
 <style scoped>
   @media (max-width: 768px) {
