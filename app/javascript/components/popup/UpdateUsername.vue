@@ -42,7 +42,6 @@
   import { ref, inject, computed } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { useCookies } from 'vue3-cookies'
-  import jwtFetch from '../../packs/jwtFetch.js'
   import { ElMessage } from 'element-plus'
 
   const { cookies } = useCookies()
@@ -53,8 +52,8 @@
   const formRef = ref(null)
 
   const getChangeUsername = computed(() => {
-    const canChangeUsername = cookies.get('can_change_username')
-    return canChangeUsername == 'true'
+    const canChangeUsername = cookies.get('user_token') ? cookies.get('can_change_username') : 'false'
+    return canChangeUsername === 'true'
   })
 
   const formRules = ref({
@@ -128,7 +127,7 @@
       body: JSON.stringify(params)
     }
     try {
-      const response = await jwtFetch(profileUpdateEndpoint, options)
+      const response = await fetch(profileUpdateEndpoint, options)
       if (!response.ok) {
         response.json().then((data) => {
           ElMessage.warning(data.msg)
