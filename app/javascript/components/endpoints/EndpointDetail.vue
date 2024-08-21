@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, watch } from 'vue'
+  import { ref, onMounted, inject, watch, computed } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
@@ -54,9 +54,7 @@
     currentPath: String,
     defaultTab: String,
     actionName: String,
-    avatar: String,
     tags: Object,
-    ownerUrl: String,
     namespace: String,
     modelName: String,
     endpointId: Number
@@ -73,6 +71,7 @@
   const repoDetailStore = useRepoDetailStore()
 
   const endpoint = ref({})
+  const modelInfo = ref({})
 
   // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
@@ -93,6 +92,44 @@
   const isStatusSSEConnected = ref(false)
 
   const replicaList = ref([])
+
+  const ownerUrl = computed(() => {
+    const modelNameInfo = modelInfo.value.namespace
+    if (modelNameInfo) {
+      if (modelNameInfo.Type === 'user') {
+        return `/profile/${modelNameInfo.Path}`
+      } else {
+        return `/organizations/${modelNameInfo.Path}`
+      }
+    } else {
+      return ''
+    }
+  })
+
+  const avatar = computed(() => {
+    const modelNameInfo = modelInfo.value.namespace
+    if (modelNameInfo) {
+      return modelNameInfo.Avatar
+    } else {
+      return ''
+    }
+  })
+
+  const fetchModelDetail = async () => {
+    const url = `/models/${props.namespace}/${props.modelName}`
+
+    try {
+      const { data, error } = await useFetchApi(url).json()
+
+      if (data.value) {
+        modelInfo.value = data.value.data
+      } else {
+        ElMessage({ message: error.value.msg, type: 'warning' })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const fetchRepoDetail = async () => {
     const url = `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
@@ -159,6 +196,7 @@
 
   onMounted(() => {
     fetchRepoDetail()
+    fetchModelDetail()
     console.log(`Endpoint 初始状态：${appStatus.value}`)
     if (isStatusSSEConnected.value === false) {
       syncEndpointStatus()
