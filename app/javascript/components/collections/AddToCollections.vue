@@ -4,7 +4,7 @@
   >
     <div
       @click="dialogVisible = true"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
     >
       <SvgIcon
         name="collections"

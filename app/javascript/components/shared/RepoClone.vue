@@ -14,13 +14,18 @@
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
 
+    
     <!-- endpoint deploy button -->
     <DeployDropdown
       v-if="isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
     <div v-if="!isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl">
-      <el-button type="default" class="!rounded-lg" @click="toLoginPage">
+      <el-button type="default" class="!rounded-lg shadow-sm hover:bg-slate-50" @click="toLoginPage">
+        <SvgIcon
+        name="model_endpoint_create"
+        class="mr-1"
+      />
         {{ $t("all.deploy") }}
         <el-icon class="ml-1 el-icon--right">
           <arrow-down />
@@ -28,15 +33,16 @@
       </el-button>
     </div>
 
+
     <!-- finetune deploy button -->
     <div
-      class="flex px-[12px] py-[5px] mr-4 justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-sm hover:bg-slate-50 cursor-pointer"
       v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
       @click="handleButtonClick"
     >
       <SvgIcon
         name="model_finetune_create"
-        class="mr-1"
+        class="mr-0"
       />
       <div class="text-sm">{{ $t('finetune.title') }}</div>
     </div>
@@ -44,12 +50,12 @@
     <!-- repo download clone button -->
     <div
       v-if="!!httpCloneUrl"
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-sm hover:bg-blue-800 cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
       <SvgIcon
         name="download"
-        class="mr-1"
+        class="mr-0"
       />
       <div class="text-[#fff] text-sm">{{ $t(downloadButtonKey) }}</div>
     </div>
