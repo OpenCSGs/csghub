@@ -160,11 +160,11 @@
                 {{ $t('navbar.newOrganization') }}
               </el-dropdown-item>
             </a>
-            <a href="/logout">
+            <p @click="clearCookies">
               <el-dropdown-item divided>
                 {{ $t('navbar.logout') }}
               </el-dropdown-item>
-            </a>
+            </p>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -203,6 +203,9 @@
   import { ref, onMounted, watch } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
+  import { useCookies } from 'vue3-cookies'
+
+  const { cookies } = useCookies()
 
   const props = defineProps({
     logo: String,
@@ -239,6 +242,13 @@
       userAvatar.value = body.data.avatar
       userStore.initialize(body.data)
     }
+  }
+
+  const clearCookies = () => {
+    cookies.keys().forEach((cookie) => {
+      cookies.remove(cookie)
+    })
+    window.location.href = '/logout'
   }
 
   onMounted(() => {
