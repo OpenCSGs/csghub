@@ -94,26 +94,14 @@
   const replicaList = ref([])
 
   const ownerUrl = computed(() => {
-    const modelNameInfo = modelInfo.value.namespace
-    if (modelNameInfo) {
-      if (modelNameInfo.Type === 'user') {
-        return `/profile/${modelNameInfo.Path}`
-      } else {
-        return `/organizations/${modelNameInfo.Path}`
-      }
-    } else {
-      return ''
-    }
+    const { namespace } = modelInfo.value
+    if (!namespace) return ''
+    
+    const baseUrl = namespace.Type === 'user' ? '/profile/' : '/organizations/'
+    return baseUrl + namespace.Path
   })
 
-  const avatar = computed(() => {
-    const modelNameInfo = modelInfo.value.namespace
-    if (modelNameInfo) {
-      return modelNameInfo.Avatar
-    } else {
-      return ''
-    }
-  })
+  const avatar = computed(() => modelInfo.value.namespace?.Avatar || '')
 
   const fetchModelDetail = async () => {
     const url = `/models/${props.namespace}/${props.modelName}`
