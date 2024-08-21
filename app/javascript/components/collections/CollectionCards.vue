@@ -6,11 +6,11 @@
       :key="collection.id"
       :style="generateGradientStyle(collection.theme)"
     >
-      <div class="px-4 pt-4 pb-2 w-full rounded-[12px] border border-[#EAECF0]">
-        <div
-          class="flex justify-between cursor-pointer"
-          @click="goCollectionDetails(collection.id)"
-        >
+      <div
+        class="active:outline active:outline-4 active:outline-[#EAECF0] hover:shadow-md px-4 pt-4 pb-2 w-full rounded-[12px] border border-[#EAECF0] cursor-pointer"
+        @click="goCollectionDetails(collection.id)"
+      >
+        <div class="flex justify-between">
           <div class="text-[14px] leading-[20px] text-[#344054] text-ellipsis overflow-hidden whitespace-nowrap">
             {{ collection.name }}
           </div>
