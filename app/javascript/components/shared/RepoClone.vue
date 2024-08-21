@@ -1,7 +1,8 @@
 <template>
   <div
-    class="flex items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
+    class="flex flex-wrap items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
   >
+    <AddToCollections v-if="showAddToCollections" :repoId="repo.repository_id" :userName="userName" />
     <!-- multi-source sync button -->
     <el-button
       v-if="showSyncButton"
@@ -170,7 +171,8 @@
   import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from "element-plus"
-
+  import AddToCollections from '../collections/AddToCollections.vue'
+  
   const { cookies } = useCookies()
 
   const props = defineProps({
@@ -180,7 +182,8 @@
     admin: Boolean,
     repo: Object,
     enableEndpoint: Boolean,
-    enableFinetune: Boolean
+    enableFinetune: Boolean,
+    showAddToCollections: Boolean
   })
 
   const httpCloneUrl = ref('')
