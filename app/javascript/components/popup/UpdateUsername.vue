@@ -130,11 +130,10 @@
       body: JSON.stringify(params)
     }
     try {
-      const response = await useFetchApi(profileUpdateEndpoint, options)
-      if (!response.ok) {
-        response.json().then((data) => {
-          ElMessage.warning(data.msg)
-        })
+      const { data, error } = await useFetchApi(profileUpdateEndpoint, options).json()
+
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
         ElMessage.success(t('profile.edit.updateSuccess'))
         window.location.href = '/logout'
