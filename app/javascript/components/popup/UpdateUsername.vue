@@ -44,6 +44,7 @@
   import { useCookies } from 'vue3-cookies'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
+  import useFetchApi from '../../packs/useFetchApi'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -129,7 +130,7 @@
       body: JSON.stringify(params)
     }
     try {
-      const response = await fetch(profileUpdateEndpoint, options)
+      const response = await useFetchApi(profileUpdateEndpoint, options)
       if (!response.ok) {
         response.json().then((data) => {
           ElMessage.warning(data.msg)
