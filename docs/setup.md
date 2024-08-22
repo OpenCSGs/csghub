@@ -5,7 +5,7 @@
   用于解密 Rails Credentials，当前开源项目的 master key 为：`64f15f995b044427e43fe4897370fd66`
 
 - **ON_PREMISE** \
-  一个用于切换项目版本的开关，如果为 true 则是 on premise 版本，否则是非 on premise 版本。目前的主要差别在于，非 on premise 的版本支持的登录方式为 OIDC 的登录授权方式。on premise 版本的登录方式为系统自带的登录授权。
+  一个用于切换项目版本的开关，如果为 true 则是 on premise 版本，否则是非 on premise 版本。
 
 - **SENSITIVE_CHECK** \
   一个用于打开和关闭敏感信息监测的开关，如果为 true 表示打开了敏感信息监测。这个需要同 Starhub Server 协作使用，如果 Starhub Server 开通了支持敏感信息监测的 API 那么我们就可以打开这个开关。
@@ -50,31 +50,19 @@
   - 环境变量：STARHUB_BASE_URL, STARHUB_TOKEN
   - Credentials/SystemConfig: base_url, token
 
-##### OIDC
-如果使用是非 on premise 的版本，即 ON_PREMISE 为 false，那么系统支持的登录授权方式为 OIDC 的方式，可以通过下面的方式进行配置：
-
+##### OIDC 授权登录入口
   - 环境变量
   - Rails Credentials
   - System Config
 
 环境变量支持的字段如下：
+  - LOGIN_URL
+  - SIGNUP_URL
 
-  - OIDC_IDENTIFIER
-  - OIDC_SECRET
-  - OIDC_REDIRECT_URI
-  - OIDC_AUTHORIZATION_ENDPOINT
-  - OIDC_TOKEN_ENDPOINT
-  - OIDC_USERINFO_ENDPOINT
 
 其他两种方式支持的字段如下：
-
-  - identifier
-  - secret
-  - redirect_uri
-  - authorization_endpoint
-  - token_endpoint
-  - userinfo_endpoint
-
+  - login_url
+  - signup_url
 
 ### 项目启动步骤
 
