@@ -138,6 +138,12 @@
   /* 修改选项卡中的文字大小 */
   .el-tabs__item {
     font-size: 16px;
+    font-weight: 500;
+  }
+
+  .el-tabs__item.is-top {
+    color: #667085;
+    font-weight: 500;
   }
 
   .el-tabs {

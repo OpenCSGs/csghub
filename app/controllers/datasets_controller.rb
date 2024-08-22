@@ -5,7 +5,7 @@ class DatasetsController < ApplicationController
   include FileOptionsHelper
   include BlobContentHelper
 
-  before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
+  before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
   before_action :load_dataset_detail, except: [:index, :new, :resolve]
 

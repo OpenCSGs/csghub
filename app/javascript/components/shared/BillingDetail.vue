@@ -181,6 +181,8 @@
   // scene = 12: model finetune
   // scene = 20：starship-ide
   const fetchDetails = async (childCurrent) => {
+    if (!userStore.uuid) return
+
     billingLoading.value = true
     if (childCurrent) {
       currentPage.value = childCurrent

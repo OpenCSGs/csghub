@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-2">
-      <AddToCollections v-if="showAddToCollections" :repoId="repoDetail.repository_id" :userName="userName" />
+    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-4">
       <RepoClone
         v-if="repoType !== 'endpoint'"
+        :showAddToCollections="showAddToCollections"
         :repoType="repoType"
         :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
         :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
@@ -263,7 +263,6 @@
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
   import BillingDetail from './BillingDetail.vue'
-  import AddToCollections from '../collections/AddToCollections.vue'
   import { computed, onMounted } from 'vue'
 
   const props = defineProps({

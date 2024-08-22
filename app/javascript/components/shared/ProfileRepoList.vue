@@ -216,6 +216,9 @@
     } else if (target === "endpoints") {
       endpointsLoading.value = true
       fetchMoreEndpoints()
+    } else if (target === "finetunes") {
+      finetunesLoading.value = true
+      fetchMoreFinetunes()
     } else if (target === "collections") {
       collectionsLoading.value = true
       fetchMoreCollections()
@@ -265,6 +268,11 @@
   const fetchMoreEndpoints = async () => {
     const url = reposUrl("endpoints")
     await fetchData(url, endpoints, endpoints.value.total, 'endpoints')
+  }
+
+  const fetchMoreFinetunes = async () => {
+    const url = reposUrl("finetunes")
+    await fetchData(url, finetunes, finetunes.value.total, 'finetunes')
   }
 
   const fetchData = async (url, targetRef, total, type) => {

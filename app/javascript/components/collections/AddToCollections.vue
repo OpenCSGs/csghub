@@ -1,10 +1,10 @@
 <template>
   <div
-    class="AddRepoToCollections md:pl-5 md:pb-4 z-20"
+    class="AddRepoToCollections z-20"
   >
     <div
-      @click="dialogVisible = true"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      @click="openAddCollections"
+      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
     >
       <SvgIcon
         name="collections"
@@ -15,7 +15,7 @@
     </div>
     <el-dialog
       v-model="dialogVisible"
-      top="10vh"
+      top="20vh"
       :style="{ borderRadius: '10px' }"
       width="450"
       class="invite_dialog"
@@ -78,11 +78,13 @@
   </div>
 </template>
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
+  import useUserStore from '../../stores/UserStore.js'
 
+  const userStore = useUserStore()
   const { t } = useI18n()
 
   const props = defineProps({
@@ -92,7 +94,7 @@
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
-
+  const isLogged =ref(false)
   const fetchCollectionsList = async () => {
     const url = `/user/${props.userName}/collections`
     const { data, error } = await useFetchApi(url).json()
@@ -101,6 +103,14 @@
       collectionsList.value = json.data
     }else{
       ElMessage({ message: error.value.msg, type: 'warning' })
+    }
+  }
+  
+  const openAddCollections = () => {
+    if(isLogged.value){
+      dialogVisible.value = true
+    }else{
+      window.location.href = '/login'
     }
   }
 
@@ -135,9 +145,16 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
-  onMounted(() => {
-    fetchCollectionsList()
-  })
+
+  watch(
+    () => userStore.isLoggedIn,
+    (isLoggedIn, _) => {
+      if(isLoggedIn){
+        isLogged.value = true
+        fetchCollectionsList()
+      }
+    }
+  )
 </script>
 <style scoped>
   @media (max-width: 768px) {

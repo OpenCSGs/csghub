@@ -1,6 +1,6 @@
 <template>
   <a :href="detailLink"
-     :class="`${repoType}-card  hover:active-${repoType}-card `"
+     :class="`${repoType}-card`"
      class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-[#EAECF0] rounded-lg flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
      :style="isCollection ? 'width:100%' : ''"
   >
@@ -143,5 +143,9 @@
 
   .model-card:hover .model-path {
     color: var(--theme-dark-red-t-red-500-ad-4-a-3-b, #AD4A3B);
+  }
+
+  .code-card:hover .code-path {
+    color: var(--blue-blue-5001-f-75-cb, #1F75CB);
   }
 </style>
