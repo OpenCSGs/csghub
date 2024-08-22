@@ -5,23 +5,14 @@ class SessionsController < ApplicationController
 
   def signup
     return redirect_to root_path if helpers.logged_in?
-
-    if helpers.is_on_premise?
-      render 'signup'
-    else
-      signup_url = Oidc.instance.signup_url
-      redirect_to signup_url, allow_other_host: true
-    end
+    signup_url = Oidc.instance.signup_url
+    redirect_to signup_url, allow_other_host: true
   end
 
   def new
     return redirect_to root_path if helpers.logged_in?
-    if helpers.is_on_premise?
-      render 'new'
-    else
-      login_url = Oidc.instance.login_url
-      redirect_to login_url, allow_other_host: true
-    end
+    login_url = Oidc.instance.login_url
+    redirect_to login_url, allow_other_host: true
   end
 
   def create

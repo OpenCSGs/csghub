@@ -4,7 +4,7 @@
 Used for decrypting Rails Credentials. The current master key for this open-source project is: `64f15f995b044427e43fe4897370fd66`
 
 - **ON_PREMISE**
-A switch used to toggle between project versions. If set to true, it indicates an on-premise version; otherwise, it is a non-on-premise version. The main difference is that non-on-premise versions support OIDC login authorization, while on-premise versions use the system's built-in login authorization.
+A switch used to toggle between project versions. If set to true, it indicates an on-premise version; otherwise, it is a non-on-premise version.
 
 - **SENSITIVE_CHECK**
 A switch used to enable or disable sensitive information monitoring. If set to true, sensitive information monitoring is enabled. This feature requires collaboration with the Starhub Server. If the Starhub Server has enabled the API for sensitive information monitoring, we can turn on this switch.
@@ -64,21 +64,13 @@ If you are using the non-on-premise version (ON_PREMISE is set to false), the su
 
 The environment variables support the following fields:
 
-- OIDC_IDENTIFIER
-- OIDC_SECRET
-- OIDC_REDIRECT_URI
-- OIDC_AUTHORIZATION_ENDPOINT
-- OIDC_TOKEN_ENDPOINT
-- OIDC_USERINFO_ENDPOINT
+- LOGIN_URL
+- SIGNUP_URL
 
 The other two methods support the following fields:
 
-- identifier
-- secret
-- redirect_uri
-- authorization_endpoint
-- token_endpoint
-- userinfo_endpoint
+- login_url
+- signup_url
 
 ### Quick Start
 
