@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
-    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-2">
-      <AddToCollections  :canManage="settingsVisibility" :repoId="repoDetail.repository_id" :userName="userName" />
+    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-4">
+      <AddToCollections v-if="showAddToCollections" :repoId="repoDetail.repository_id" :userName="userName" />
       <RepoClone
         v-if="repoType !== 'endpoint'"
         :repoType="repoType"
@@ -297,6 +297,10 @@
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
   onMounted(() => {})
+
+  const showAddToCollections = computed(() => {
+    return props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
+  })
 
   const repoTypeClass = computed(() => {
     if (props.repoType === 'space') {

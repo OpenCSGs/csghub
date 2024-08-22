@@ -1,0 +1,10 @@
+$ORIGIN space.app.internal.
+@ 3600 IN SOA ns1.space.app.internal. admin.space.app.internal. (
+        2022042401 ; Serial
+        3600       ; Refresh
+        1800       ; Retry
+        604800     ; Expire
+        86400      ; Minimum TTL
+)
+
+*   3600 IN A  [knative lb]

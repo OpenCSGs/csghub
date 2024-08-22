@@ -208,6 +208,7 @@
       const body = data.value
       members.value = body.data.data
       totalCount.value = body.data.total
+      loading.value = false
     }
   }
 

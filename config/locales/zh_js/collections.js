@@ -16,7 +16,7 @@ export const collections = {
     tabProject: '项目',
     tabSettings: '设置',
     emptyCollection: '空合集',
-    tips: '要将项目添加到此合集，请点击 添加项目 按钮 或使用模型、数据集、空间或论文页面上的加入合集按钮'
+    tips: '要将项目添加到此合集，请点击 添加项目 按钮 或使用模型、数据集、代码或应用空间页的加入合集按钮'
   },
   edit: {
     add: '添加项目',

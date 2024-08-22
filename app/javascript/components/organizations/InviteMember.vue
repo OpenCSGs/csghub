@@ -223,10 +223,6 @@
       .then(() => {
         emit('resetMemberList', selectedUsers.value, userRoleInput.value)
         dialogVisible.value = false
-        ElMessage({
-          message: t('organization.invite.addSuccess'),
-          type: 'success'
-        })
       })
       .catch((err) => {
         ElMessage({
@@ -251,6 +247,10 @@
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
+      ElMessage({
+        message: t('organization.invite.addSuccess'),
+        type: 'success'
+      })
       return true
     }
   }

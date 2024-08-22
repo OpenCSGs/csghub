@@ -3,9 +3,8 @@
     class="AddRepoToCollections md:pl-5 md:pb-4 z-20"
   >
     <div
-      v-if="canManage"
       @click="dialogVisible = true"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-[#D0D5DD] justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
     >
       <SvgIcon
         name="collections"
@@ -16,7 +15,7 @@
     </div>
     <el-dialog
       v-model="dialogVisible"
-      top="10vh"
+      top="20vh"
       :style="{ borderRadius: '10px' }"
       width="450"
       class="invite_dialog"
@@ -88,8 +87,7 @@
 
   const props = defineProps({
     repoId: String,
-    userName: String,
-    canManage: Boolean
+    userName: String
   })
   const dialogVisible = ref(false)
   const collectionsList = ref([])

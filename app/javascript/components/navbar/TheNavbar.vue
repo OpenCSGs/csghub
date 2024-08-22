@@ -160,11 +160,11 @@
                 {{ $t('navbar.newOrganization') }}
               </el-dropdown-item>
             </a>
-            <a href="/logout">
+            <p @click="clearCookies">
               <el-dropdown-item divided>
                 {{ $t('navbar.logout') }}
               </el-dropdown-item>
-            </a>
+            </p>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -187,7 +187,7 @@
   </div>
 
   <el-alert
-    v-if="!hasEmail && isLoggedInBoolean && userTokenValid"
+    v-if="!hasEmail && isLoggedInBoolean"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -217,7 +217,6 @@
     userName: String
   })
 
-  const userTokenValid = cookies.get('user_token_valid') === 'true'
   const hasEmail = ref(true)
   const userStore = useUserStore()
 
@@ -243,6 +242,13 @@
       userAvatar.value = body.data.avatar
       userStore.initialize(body.data)
     }
+  }
+
+  const clearCookies = () => {
+    cookies.keys().forEach((cookie) => {
+      cookies.remove(cookie)
+    })
+    window.location.href = '/logout'
   }
 
   onMounted(() => {

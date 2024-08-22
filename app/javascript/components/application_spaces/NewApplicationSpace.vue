@@ -339,7 +339,7 @@
   const dataForm = ref({
     owner: '',
     license: props.licenses[0][0],
-    visibility: 'private',
+    visibility: 'public',
     sdk: 'gradio'
   })
   const loading = ref(false)

@@ -39,6 +39,10 @@
          v-html="renderMarkdown(textOutput)"
     ></div>
     <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">{{ `${$t('widgets.timeCost')}: ${timeSpend}` }} ms</p>
+    <div> 
+      <SvgIcon name="exclamation_point" /> 
+      <p class="ml-[4px] text-[12px] leading-[18px] text-[#667085]">{{ $t('widgets.liabilityExemption') }}</p>
+    </div>
   </div>
 </template>
 
