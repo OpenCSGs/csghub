@@ -3,7 +3,7 @@
     <!-- Task -->
     <div
       v-if="taskTags.length"
-      class="text-sm text-[#909399]"
+      class="text-[#344054] text-[14px] text-medium"
     >
       {{ $t('all.tasks') }}:
     </div>
@@ -28,6 +28,7 @@
     <a
       v-for="tag in theFrameworkTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
+      class="text-[#344054]"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
       <TensorFlow v-if="tag.name.toLowerCase() === 'tensorflow'" />
@@ -94,7 +95,7 @@
     </div>
     <div
       v-for="tag in theOtherTags.theTags"
-      class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
+      class="bg-white text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
       {{ tag.name }}
     </div>
@@ -114,7 +115,7 @@
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[16px] cursor-pointer flex items-center border border-[#D0D5DD] gap-1"
+      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-[#D0D5DD] gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 
