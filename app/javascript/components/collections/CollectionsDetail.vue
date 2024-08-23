@@ -7,7 +7,7 @@
         v-if="collectionData"
         :name="collectionData.name"
         :nickname="collectionData.nickname"
-        :path="`${collectionData.username}/${collectionData.name}`"
+        :path="`${collectionData.namespace || collectionData.username}/${collectionData.name}`"
         :hasLike="!!collectionData.user_likes"
         :desc="collectionData.description"
         :totalLikes="collectionData.likes"
