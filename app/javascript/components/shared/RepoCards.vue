@@ -119,6 +119,7 @@
       />
     </div>
   </div>
+  <UpdateUsername />
 </template>
 <script setup>
   import { onMounted, ref, computed, inject } from 'vue'
@@ -130,6 +131,7 @@
   import CsgPagination from './CsgPagination.vue'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
+  import UpdateUsername from '../popup/UpdateUsername.vue'
 
   const props = defineProps({
     taskTags: String,
