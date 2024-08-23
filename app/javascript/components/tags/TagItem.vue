@@ -1,20 +1,13 @@
 <template>
-  <span class="text-[14px] text-[#344054] cursor-pointer flex items-center">
-    <div class="px-[8px] py-[6px] bg-[#F0F3FF] border border-r-0 border-[#D0D5DD] rounded-l-[6px]">
-      <img 
-        :src="'/images/tags/' + tag.name + '.svg'"
-        class="w-[14px] h-[14px]"
-        alt=""
-        onerror="this.style.display='none'" 
-      />
-    </div>
-    <p 
-      class="h-[28px] pl-[4px] pr-[8px] py-[3px] border border-l-0 border-[#D0D5DD] rounded-r-[6px]"
-      @click="emit('handleTagClick', tag)"
-      :class="{ 'bg-[#4D6AD6]': active, 'text-white': active, 'border-[#4D6AD6]': active }"
-    >
-      {{ tagName }}
-    </p>
+  <span class="text-[14px] text-[#344054] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center gap-[3px] border border-[#D0D5DD]"
+        :class="{ 'bg-[#4D6AD6]': active, 'text-white': active, 'border-[#4D6AD6]': active }"
+        @click="emit('handleTagClick', tag)">
+    <img :src="'/images/tags/' + tag.name + '.svg'"
+         class="w-[14px] h-[14px]"
+         :style="active ? 'filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);' : ''"
+         alt=""
+         onerror="this.style.display='none'" />
+    {{ tagName }}
   </span>
 </template>
 
