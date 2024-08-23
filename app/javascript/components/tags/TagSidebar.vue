@@ -242,10 +242,10 @@
 
   const setActiveLicenseTag = (e) => {
     const span = e.target.closest('span'); 
-    if (activeLicenseTag.value === span.target.dataset.tag_name) {
+    if (activeLicenseTag.value === span.dataset.tag_name) {
       activeLicenseTag.value = ''
     } else {
-      activeLicenseTag.value = span.target.dataset.tag_name
+      activeLicenseTag.value = span.dataset.tag_name
     }
     emitTag()
   }
