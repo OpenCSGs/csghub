@@ -68,9 +68,9 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useCookies } from "vue3-cookies";
-  
+
   const { cookies } = useCookies()
-  const isLogged = cookies.get('login_identity')
+  const isLoggedIn = cookies.get('login_identity')
 
   const userStore = useUserStore()
 
@@ -85,7 +85,7 @@
   })
 
   onMounted(() => {
-    if (!isLogged) {
+    if (!isLoggedIn) {
       fetchUserInfo()
     }
   })
