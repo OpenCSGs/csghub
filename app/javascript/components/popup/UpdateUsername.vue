@@ -1,10 +1,12 @@
 <template>
-  <el-dialog 
-    v-model="getChangeUsername" 
-    :title="$t('profile.edit.updateUsername')" 
-    width="30%" 
+  <el-dialog
+    v-model="getChangeUsername"
+    :title="$t('profile.edit.updateUsername')"
+    width="30%"
     class="dialogWidth"
-    style="border-radius: 0.5rem" 
+    :close-on-click-modal="false"
+    :show-close="false"
+    style="border-radius: 0.5rem"
     left
   >
     <el-form :model="formData" :rules="formRules" ref="formRef">
@@ -16,11 +18,11 @@
           </p>
         </div>
         <p class="text-[#303133] text-[14px] mb-[8px] mt-[8px]">
-          {{ $t('profile.edit.username') }}
+          {{ $t('profile.edit.internalUsername') }}
           <span class="text-red-400">*</span>
         </p>
         <el-form-item prop="username">
-          <el-input v-model="formData.username" :rows="6" placeholder="请输入用户名" />        
+          <el-input v-model="formData.username" :rows="6" placeholder="请输入用户名" />
         </el-form-item>
         <p class="text-gray-500 text-[12px] italic mt-[24px]">
           {{ $t('rule.nameRule') }}
@@ -29,7 +31,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="canChangeUsername = 'false'">{{ $t('all.cancel') }}</el-button>
+        <!-- <el-button @click="canChangeUsername = 'false'">{{ $t('all.cancel') }}</el-button> -->
         <el-button type="primary" @click="submiteUsername">
           {{ $t('all.update') }}
         </el-button>
@@ -119,7 +121,7 @@
   }
 
   const updateUsername = async () => {
-    
+
     const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${userStore.username}`
 
     const params = { new_username: formData.value.username }
