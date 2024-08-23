@@ -156,10 +156,6 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       const res = data.value
-      // To be used after the profile collection is developed.
-      // if(data.data){
-      //   collectionData.value = data.data.filter(item => !!item.repositories)
-      // }
       collectionData.value = res.data || []
       totalCollections.value = res.total
     }

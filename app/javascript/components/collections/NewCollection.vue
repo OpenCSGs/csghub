@@ -221,7 +221,8 @@
       private: true,
       theme: '#000000'
     }
-    // 将 dataFormValue 的值直接复制到 transformedData
+    // dataFormValue value to transformedData
+    // Only pass the namespace if it is an organization
     if(dataForm.value.owner !== userStore.username){
       transformedData.namespace = dataForm.value.owner
     }
