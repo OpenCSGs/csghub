@@ -11,8 +11,11 @@ export const navbar = {
   newApplicationSpace: "New Application Space",
   newOrganization: "New Organization",
   logout: "Logout",
+  register: "Register",
   loginRegister: "Login/Registe",
   login: "Login",
   newCollection: "New Collection",
-  emailMissing: 'Please provide your email address before proceeding'
+  emailMissing: 'Please provide your email address before proceeding',
+  more: "More",
+  setting: "Account Settings",
 }

@@ -16,6 +16,7 @@ body {
 
 .is-active {
   font-weight: bold !important;
+  color: var(--Brand-600) !important;
 }
 
 .el-button {

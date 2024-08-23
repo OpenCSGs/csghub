@@ -49,8 +49,6 @@ export const all = {
   updateSuccess: "Update successfully",
   lastTime: "Last Updated",
   downloadCount: "Download",
-  public: "Public",
-  private: "Private",
   recentlyUpdate: "Recently Update",
   trending: "Trending",
   mostDownload: "Most Download",
