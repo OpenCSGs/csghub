@@ -1,6 +1,6 @@
 export const spaces = {
   title: "Application Space",
-  placeholder: "Search Spaces",
+  placeholder: "Application Space Name",
   tips:"Creating Interactive Machine Learning Demos",
   using:'Space using'
 }

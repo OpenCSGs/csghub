@@ -1,6 +1,6 @@
 export const models = {
   title: "Model",
-  placeholder: "Search Models",
+  placeholder: "Models name",
   downloadModel: "Download model data",
   download: "Download Model",
   modelName: "Model name",
