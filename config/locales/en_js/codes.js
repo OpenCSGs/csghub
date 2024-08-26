@@ -1,7 +1,7 @@
 export const codes = {
   title: "Codes",
   tips:"Creating a code repository to host your code",
-  placeholder: "Codes name",
+  placeholder: "Search Codes",
   downloadCode: "Download Code",
   codeName: "Code Name",
   codeNameTips:

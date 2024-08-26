@@ -1,6 +1,6 @@
 export const datasets = {
   title: "Datasets",
-  placeholder: "Datasets name",
+  placeholder: "Search Datasets",
   downloadDataset: "Download Dataset",
   datasetName: "Dataset Name",
   datasetNameTips:
