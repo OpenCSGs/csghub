@@ -1,4 +1,4 @@
-**[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md) ∙ [日本語](/docs/readme_ja.md)**
+**[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md) ∙ [日本語](/docs/readme_ja.md)  ∙ [한국어](/docs/readme_kr.md)**
 ## CSGHub 説明書
 
 CSGHubは、LLMおよびLLMアプリケーションのライフサイクルに関与する資産（データセット、モデルファイル、コードなど）を管理するためのオープンソースで信頼性の高い大規模モデル資産管理プラットフォームです。
