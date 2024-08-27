@@ -76,21 +76,28 @@ yarn install
 
 ## 启动
 
-### 启动前端服务
+### 同时启动前后端服务
 
-要启动前端服务，运行以下命令：
+要同时启动前后端服务，运行以下命令：
 
 ```shell
-cd frontend
-yarn dev_build
+make
 ```
 
-### 启动 Go 服务
+### 单独启动前端服务
 
-在项目根目录打开一个新的终端标签，并使用 Air 启动 Go 服务：
+如果只想启动前端服务，运行以下命令：
 
 ```shell
-air
+make run-frontend
+```
+
+### 单独启动 Go 服务
+
+如果只想启动 Go 服务，运行以下命令：
+
+```shell
+make run-backend
 ```
 
 ### 访问应用程序
