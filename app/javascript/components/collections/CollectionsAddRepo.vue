@@ -56,10 +56,11 @@
             <el-select
               v-model="repoIdsInput"
               filterable
+              remote
               :placeholder="this.$t('all.select')"
               size="large"
               class="w-full"
-              @change="repoInputChange"
+              :remote-method="repoInputChange"
             >
               <el-option
                 v-for="item in reposMappings"
@@ -91,7 +92,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -122,35 +123,21 @@
     }
   ]
   const reposMappings = ref([])
-  const typeInput = ref(t('navbar.models'))
+  const typeInput = ref('models')
   const repoIdsInput = ref('')
 
   const typeChange = (type) => {
     repoIdsInput.value = ''
     typeInput.value = type
-    fetchDefaultRepoList(type)
+    fetchRepoList(type)
   }
-  const repoInputChange = () => {
+  const repoInputChange = (search) => {
     repoIdsInput.value = ''
-    fetchRepoList()
+    fetchRepoList(typeInput.value,search)
   }
-  const fetchDefaultRepoList = async (type) => {
-    const url = `/${type}`
-    const { data, error } = await useFetchApi(url).json()
-    if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
-    } else {
-      const res = data.value
-      reposMappings.value = res.data
-    }
-  }
-
-  const fetchRepoList = async () => {
-    const url = `/${typeInput.value}`
-    url = url + `&select=${repoIdsInput.value}`
+  const fetchRepoList = async (type,search) => {
+    let url = `/${type}`
+    url = url + `?search=${search || ''}`
     const { data, error } = await useFetchApi(url).json()
     if (error.value) {
       ElMessage({
@@ -202,9 +189,6 @@
       return data.value
     }
   }
-  onMounted(() => {
-    fetchRepoList('models')
-  })
 </script>
 <style>
   @media (max-width: 768px) {
