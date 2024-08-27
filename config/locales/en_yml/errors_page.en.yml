@@ -3,6 +3,8 @@ en:
     not_found:
       title: 'Page not found'
       desc: 'Sorry, OpenCSG could not find this web page. This web page may have been removed due to a product update, or your URL is incorrect.'
+      back: 'Go back'
+      home: 'Go home'
     unauthorized:
       title: 'Not authorized'
       desc: 'Please contact the administrator for authorization'
