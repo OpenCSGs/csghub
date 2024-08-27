@@ -11,7 +11,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/api/handler"
 	"opencsg.com/portal/config"
+	"opencsg.com/portal/config/middleware"
 	"opencsg.com/portal/frontend"
+	"opencsg.com/portal/store/database"
 )
 
 const (
@@ -25,18 +27,16 @@ type GlobalConfig struct {
 	EnableHttps   string
 }
 
-// 创建全局配置实例
-var globalConfig = GlobalConfig{
-	ServerBaseUrl: config.Env("STARHUB_INNER_BASE_URL", "https://hub.opencsg-stg.com").(string),
-	OnPremise:     config.Env("ON_PREMISE", "false").(string),
-	EnableHttps:   config.Env("ENABLE_HTTPS", "false").(string),
-}
-
 func Initialize() *gin.Engine {
 	g := gin.Default()
 	// 设置信任网络 []string
 	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
+
+	store := database.NewUserStore()
+
+	// 注册中间件
+	g.Use(middleware.AuthMiddleware(store))
 
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
@@ -58,13 +58,25 @@ func getConfig(c *gin.Context) GlobalConfig {
 	return c.MustGet("Config").(GlobalConfig)
 }
 
+func getCurrentUserInfo(c *gin.Context) (database.User, bool) {
+	currentUser := middleware.GetCurrentUser(c)
+	if currentUser != nil {
+		return *currentUser, true
+	}
+	return database.User{}, false
+}
+
 // 辅助函数：创建模板数据
 func createTemplateData(c *gin.Context, extraData map[string]interface{}) gin.H {
 	config := getConfig(c)
+	currentUser, isLoggedIn := getCurrentUserInfo(c)
+
 	data := gin.H{
 		"csghubServer": config.ServerBaseUrl,
 		"onPremise":    config.OnPremise,
 		"enableHttps":  config.EnableHttps,
+		"currentUser":  currentUser,
+		"isLoggedIn":   isLoggedIn,
 	}
 
 	for k, v := range extraData {
@@ -107,6 +119,12 @@ func createRender() multitemplate.Renderer {
 }
 
 func setupViewsRouter(engine *gin.Engine) {
+	// 创建全局配置实例
+	var globalConfig = GlobalConfig{
+		ServerBaseUrl: config.Env("STARHUB_INNER_BASE_URL", "https://hub.opencsg-stg.com").(string),
+		OnPremise:     config.Env("ON_PREMISE", "false").(string),
+		EnableHttps:   config.Env("ENABLE_HTTPS", "false").(string),
+	}
 	// 使用中间件注入全局配置
 	engine.Use(injectConfig(globalConfig))
 

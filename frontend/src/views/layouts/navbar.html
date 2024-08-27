@@ -2,7 +2,10 @@
 <div class="bg-white border-b border-[#DCDFE6]">
   <Navbar
     logo="/images/opencsg_logo.png"
-    is-logged-in="false"
+    is-logged-in="{{ .isLoggedIn }}"
+    user-name="{{ .currentUser.Name }}"
+    company-verified="false"
+    is-company-user="false"
   />
 </div>
 {{ end }}

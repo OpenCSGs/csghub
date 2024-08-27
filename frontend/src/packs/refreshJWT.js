@@ -1,5 +1,4 @@
 import { useCookies } from "vue3-cookies";
-import csrfFetch from "./csrfFetch";
 import { jwtDecode } from "jwt-decode";
 
 const { cookies } = useCookies()
@@ -18,19 +17,19 @@ const refreshJWT = async () => {
       if (currentTime >= expireTime) {
         // user token expired, refresh token
         console.log('refresh jwt')
-        await csrfFetch('/internal_api/users/jwt_token', {method: 'PUT'})
+        await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
       } else {
         // if user token will expire soon, refresh
         // if user token will not expire soon, do nothing
         const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
         if (differenceInMinutes < 120) {
           console.log('refresh jwt')
-          await csrfFetch('/internal_api/users/jwt_token', {method: 'PUT'})
+          await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
         }
       }
     } else {
       console.log('refresh jwt')
-      await csrfFetch('/internal_api/users/jwt_token', {method: 'PUT'})
+      await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
     }
   }
 }
