@@ -126,10 +126,8 @@
   const typeInput = ref('models')
   const repoIdsInput = ref('')
 
-  const typeChange = (type) => {
+  const typeChange = () => {
     repoIdsInput.value = ''
-    typeInput.value = type
-    fetchRepoList(type)
   }
   const repoInputChange = (search) => {
     repoIdsInput.value = ''
