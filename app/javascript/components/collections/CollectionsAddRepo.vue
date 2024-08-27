@@ -59,6 +59,7 @@
               :placeholder="this.$t('all.select')"
               size="large"
               class="w-full"
+              @change="repoInputChange"
             >
               <el-option
                 v-for="item in reposMappings"
@@ -67,23 +68,6 @@
                 :value="item.repository_id"
               />
             </el-select>
-            <div
-              v-show="shouldShowUserList"
-              class="md:max-h-[110px] max-h-[210px] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]"
-            >
-              <p
-                v-for="user in userList"
-                @click="selectUser(user)"
-                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
-              >
-                <img
-                  :src="user.avatar"
-                  height="16"
-                  width="16"
-                />
-                {{ user.name }}
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -143,11 +127,30 @@
 
   const typeChange = (type) => {
     repoIdsInput.value = ''
-    fetchRepoList(type)
+    typeInput.value = type
+    fetchDefaultRepoList(type)
+  }
+  const repoInputChange = () => {
+    repoIdsInput.value = ''
+    fetchRepoList()
+  }
+  const fetchDefaultRepoList = async (type) => {
+    const url = `/${type}`
+    const { data, error } = await useFetchApi(url).json()
+    if (error.value) {
+      ElMessage({
+        message: error.value.msg,
+        type: 'warning'
+      })
+    } else {
+      const res = data.value
+      reposMappings.value = res.data
+    }
   }
 
-  const fetchRepoList = async (type) => {
-    const url = `/${type}`
+  const fetchRepoList = async () => {
+    const url = `/${typeInput.value}`
+    url = url + `&select=${repoIdsInput.value}`
     const { data, error } = await useFetchApi(url).json()
     if (error.value) {
       ElMessage({
