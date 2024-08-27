@@ -1,67 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
-
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 无法访问网页</title>
+    <style>
+      body {
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          background-color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+      }
+      .container {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center; 
+          text-align: center;
+          padding: 40px;
+          border-radius: 8px;
+      }
+      .error-code {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: -1;
+          font-size: 400px;
+          color: #F2F4F7;
+          margin: 0;
+          line-height: 1;
+      }
+      .button-group {
+          display: flex;
+          justify-content: center; /* 按钮在父容器内居中 */
+          gap: 20px; /* 按钮之间的间距 */
+      }
+      h1 {
+          font-size: 60px;
+          margin-top: -60px;
+          color: #101828;
+          margin-bottom: 24px;
+      }
+      p {
+          color: #475467;
+          font-size: 20px;
+          margin-bottom: 48px;
+      }
+      .btn {
+          display: inline-block;
+          padding: 16px 24px;
+          font-weight: 500;
+          margin: 0 10px;
+          text-decoration: none;
+          border-radius: 8px;
+      }
+      .btn-primary {
+          background-color: #3250BD;
+          color: white;
+      }
+      .btn-primary:hover {
+          background-color: #223B99;
+          color: white;
+      }
+      .btn-secondary {
+          background-color: #fff;
+          color: #344054;
+          border: 1px solid #D0D5DD;
+      }
+      .btn-secondary:hover {
+          background-color: #F9FAFB; /* 改变背景色 */
+          color: #182230; /* 改变文本颜色 */
+          border-color: #D0D5DD; /* 改变边框颜色 */
+      }
+  
+      /* 移动端样式 */
+      @media (max-width: 768px) {
+          .container {
+              padding: 20px;
+          }
+          .error-code {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            font-size: 200px;
+            color: #F2F4F7;
+            margin: 0;
+            line-height: 1;
+            margin-bottom: 36px;
+          }
+          h1 {
+              font-size: 36px;
+              margin-top: 0px;
+              color: #101828;
+              margin-bottom: 8px;
+          }
+          p {
+              color: #475467;
+              font-size: 16px;
+              margin-bottom: 24px;
+          }
+          .btn {
+              display: inline-block;
+              padding: 10px 18px;
+              font-weight: 500;
+              margin: 0 10px;
+              text-decoration: none;
+              border-radius: 8px;
+          }
+          .btn-primary {
+              background-color: #3250BD;
+              color: white;
+          }
+          .btn-primary:hover {
+              background-color: #223B99;
+              color: white;
+          }
+          .btn-secondary {
+              background-color: #fff;
+              color: #344054;
+              border: 1px solid #D0D5DD;
+          }
+          .btn-secondary:hover {
+              background-color: #F9FAFB; /* 改变背景色 */
+              color: #182230; /* 改变文本颜色 */
+              border-color: #D0D5DD; /* 改变边框颜色 */
+          }
+      }
   </style>
 </head>
-
-<body class="rails-default-error-page">
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <div>
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
+<body>
+    <div class="container">
+        <h1 class="error-code">404</h1>
+        <h1>无法访问网页</h1>
+        <p>抱歉，OpenCSG找不到该网页。<br>该网页或许由于产品更新已被删除，或者您的网址不正确。</p>
+        <div class="button-group">
+          <a href="javascript:history.back();" class="btn btn-secondary">返回</a>
+          <a href="/" class="btn btn-primary">回到首页</a>
+      </div>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
-  </div>
 </body>
 </html>
