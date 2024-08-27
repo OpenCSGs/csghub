@@ -1,0 +1,11 @@
+{{ define "content" }}
+<div class="bg-white">
+  <application-space-detail
+    repo-type="code"
+    default-tab="summary"
+    action-name="show"
+    namespace="{{ .namespace }}"
+    repo-name="{{ .spaceName }}"
+  ></application-space-detail>
+</div>
+{{ end }}

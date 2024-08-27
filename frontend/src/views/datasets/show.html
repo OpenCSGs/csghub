@@ -1,0 +1,11 @@
+{{ define "content" }}
+<div class="bg-white">
+  <repo-detail
+    repo-type="dataset"
+    default-tab="summary"
+    action-name="show"
+    namespace="{{ .namespace }}"
+    repo-name="{{ .datasetName }}"
+  ></repo-detail>
+</div>
+{{ end }}

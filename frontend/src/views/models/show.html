@@ -1,0 +1,11 @@
+{{ define "content" }}
+<div class="bg-white">
+  <repo-detail
+    repo-type="model"
+    default-tab="summary"
+    action-name="show"
+    namespace="{{ .namespace }}"
+    repo-name="{{ .modelName }}"
+  ></repo-detail>
+</div>
+{{ end }}

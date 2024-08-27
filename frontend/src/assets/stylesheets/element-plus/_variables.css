@@ -1,0 +1,69 @@
+:root {
+  --Brand-300: #6584F8;
+  --Colors-Error-300: #FDA29B;
+  
+  --el-border-radius-base: 8px;
+  --Gray-700: #344054;
+
+  --el-color-primary: #3250BD;
+  
+  /* 所有的input 添加 */
+  .el-textarea__inner, .el-input__wrapper, .el-select__wrapper {
+    border: 1px solid transparent;
+  }
+
+  /* default focus style */
+  .el-textarea__inner:focus, .el-input__wrapper.is-focus, .el-select__wrapper.is-focused {
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
+    border: 1px solid var(--Brand-300);
+  }
+
+  /* default focus input icon style */
+  .el-select__wrapper.is-focused .el-icon, .el-input__wrapper.is-focus .el-icon{
+    color: var(--Brand-300);
+  }
+
+  /* default input icon style */
+  .el-input__wrapper .el-icon, .el-select__wrapper .el-icon {
+    cursor: pointer;
+  }
+
+  /* when hover input icon style */
+  .el-select__wrapper .el-icon:hover, .el-input__wrapper .el-icon:hover {
+    color: var(--Brand-300);
+  }
+
+  /* error input icon style */
+  .el-form-item.is-error .el-input__wrapper .el-icon, .el-form-item.is-error .el-select__wrapper .el-icon {
+    color: var(--Colors-Error-300);
+  }
+
+  /* error input style */
+  .el-form-item.is-error .el-input__wrapper, .el-form-item.is-error .el-input__wrapper.is-focus, .el-form-item.is-error .el-input__wrapper:focus, .el-form-item.is-error .el-input__wrapper:hover, .el-form-item.is-error .el-select__wrapper, .el-form-item.is-error .el-select__wrapper.is-focus, .el-form-item.is-error .el-select__wrapper:focus, .el-form-item.is-error .el-select__wrapper:hover, .el-form-item.is-error .el-textarea__inner, .el-form-item.is-error .el-textarea__inner.is-focus, .el-form-item.is-error .el-textarea__inner:focus, .el-form-item.is-error .el-textarea__inner:hover {
+    border: 1px solid var(--Colors-Error-300);
+    box-shadow: unset
+  }
+
+  /* error focus input style */
+  .el-form-item.is-error .el-input__wrapper.is-focus, .el-form-item.is-error .el-input__wrapper:focus, .el-form-item.is-error .el-select__wrapper.is-focus, .el-form-item.is-error .el-select__wrapper:focus, .el-form-item.is-error .el-textarea__inner.is-focus, .el-form-item.is-error .el-textarea__inner:focus{
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
+  }
+
+  /* validation failed tips style */
+  .el-form-item__error {
+    margin-top: 6px;
+  }
+
+  /* element form top label style */
+  .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
+    margin-bottom: 6px;
+  }
+
+  /* element item label defaulr style */
+  .el-form-item__label {
+    color: var(--Gray-700);
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .title }}</title>
+    <script>
+      const CSGHUB_SERVER = "{{ .csghubServer }}";
+      const DEFAULT_TAGS = "[]";
+      const ON_PREMISE = "{{ .onPremise }}";
+      const ENABLE_HTTPS = "{{ .enableHttps }}";
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="grow">
+        {{ template "layouts/navbar.html" . }}
+        {{ template "content" .}}
+      </div>
+      {{ template "layouts/footer.html" . }}
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

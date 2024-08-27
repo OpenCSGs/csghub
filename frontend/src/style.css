@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Global css
+*/
+
+/*
+  Overwrite plugin css like ElementUI here
+*/
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+.is-active {
+  font-weight: bold !important;
+}
+
+.el-button {
+  &:focus-visible {
+    outline: none !important;
+  }
+}
+
+.el-dialog__body {
+  padding: 10px 20px !important;
+}
+
+.el-upload-list--picture-card {
+  width: 100% !important;
+}
+
+.el-upload--picture-card {
+  width: 100% !important;
+}
+
+.el-upload-list__item {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.el-upload-list__item > div {
+    width: 100% !important;
+}
+.el-upload-list--picture-card .el-upload-list__item-thumbnail {
+  object-fit: cover !important;
+}
+img, video {
+  max-width: unset !important;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+  Overwite tributejs css
+*/
+
+.tribute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  overflow: auto;
+  display: block;
+  z-index: 999999;
+  width: 200px;
+}
+.tribute-container ul {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #efefef;
+}
+.tribute-container li {
+  padding: 5px 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tribute-container li img {
+  height: 20px;
+  width: auto;
+}
+.tribute-container li.highlight {
+  background: #ddd;
+}
+.tribute-container li span {
+  font-weight: bold;
+}
+.tribute-container li.no-match {
+  cursor: default;
+}
+.tribute-container .menu-highlighted {
+  font-weight: bold;
+}
+
+/*
+  Define tailwindcss group class
+*/
+
+@layer utilities {
+  .active-model-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+
+  .active-dataset-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+  }
+
+  .system-config-obj-box {
+    @apply w-full border border-gray-300 p-[10px] rounded-[8px] text-gray-500 focus:border-blue-300 focus:outline-none overflow-auto whitespace-nowrap;
+  }
+
+  .error_page_bg {
+    background-image: url('../images/error_page_bg.png');
+    background-position: top;
+  }
+}
