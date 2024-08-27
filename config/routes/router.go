@@ -156,9 +156,13 @@ func setupStaticRouter(engine *gin.Engine) {
 }
 
 func setupApiRouter(g *gin.Engine) {
-	v1 := g.Group("/api/v1")
+	internal_api := g.Group("/internal_api")
 
 	{
-		v1.GET("/ping", handler.Ping)
+		internal_api.GET("/ping", handler.Ping)
+	}
+
+	{
+		internal_api.GET("/:locale/settings/locale", handler.SetLocale)
 	}
 }
