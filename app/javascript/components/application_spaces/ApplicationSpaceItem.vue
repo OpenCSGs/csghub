@@ -15,6 +15,7 @@
             >{{ getComputed.visibility }}</span
           >
           <AppStatus
+            v-if="!isCollection"
             :appStatus="repo.status || 'NoAppFile'"
             :spaceResource="repo.hardware"
           />
