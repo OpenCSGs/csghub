@@ -21,7 +21,6 @@ func SetLocale(c *gin.Context) {
 func configureLocale(c *gin.Context) {
 	locale := getLocale(c)
 	setLocaleCookie(c, locale)
-	c.Next()
 }
 
 func getLocale(c *gin.Context) string {
