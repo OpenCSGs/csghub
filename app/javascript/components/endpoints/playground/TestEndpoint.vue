@@ -57,6 +57,11 @@
         </div>
       </div>
     </div>
+
+    <div class="flex"> 
+      <SvgIcon name="exclamation_point" /> 
+      <p class="ml-[4px] text-[12px] leading-[18px] text-[#667085]">{{ $t('widgets.liabilityExemption') }}</p>
+    </div>
   </div>
 </template>
 
