@@ -47,6 +47,7 @@ import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
 import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import CollectionIndex from "./components/collections/CollectionIndex.vue"
 import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
+import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -92,7 +93,8 @@ const app = createApp({
     ApplicationSpaceDetail,
     EndpointDetail,
     CollectionIndex,
-    CollectionsDetail
+    CollectionsDetail,
+    ResourceConsoleIndex
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
