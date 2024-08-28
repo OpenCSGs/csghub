@@ -12,6 +12,7 @@ You can try the free SaaS version of CSGHub through the OpenCSG Community offici
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
 ### UPDATES
+- [2024.08.15] v0.8.0 Big release to introduce a standalone `user_server` service and move user, org, token management from `CSGHub` to backend server `CSGHub-server`, introduce a standalone `starhub_server_runner service` for uniformed deployment of Application Space, Mode Inference and Finetune. Resource management enchanced, multiple k8s clusters in different regions are not supported.
 - [2024.07.15] v0.7.0 Big release to support `Multiple Resource Sync` for models and datasets, One-Click Fintune, Resource Usage Metering.
 - [2024.06.21] v0.6.1 bug fix and user experience enhancement.
 - [2024.06.18] v0.6.0 Big release to support `dedicated` model inference endpoint, support `streamlit` Space, allow use to `like` repos allow to set repo's `industry tag`, enhance git history and commit diff details.
