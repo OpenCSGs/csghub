@@ -144,7 +144,7 @@
           {{ $t('datasets.datasetIndustryTag') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('datasets.edit.tips3') }}
+          {{ $t('datasets.edit.tips4') }}
         </div>
       </div>
       <div
@@ -214,7 +214,7 @@
               isPrivate ? this.$t('all.private') : this.$t('all.public')
             }}】</span
           >
-          {{ $t('datasets.edit.status') }}。{{
+          {{ $t('datasets.edit.status') }}{{
             isPrivate
               ? this.$t('datasets.edit.privateVis')
               : this.$t('datasets.edit.publicVis')
@@ -251,15 +251,15 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('datasets.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          <span class="text-black font-medium">{{ $t('datasets.edit.canNot') }}</span>
           {{ $t('datasets.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.delTips3') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('all.enterPls') }}
+          {{ $t('datasets.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          {{ $t('all.sureDel') }}
+          {{ $t('datasets.edit.sureDel') }}
         </div>
       </div>
 
