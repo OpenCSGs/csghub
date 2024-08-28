@@ -43,7 +43,7 @@ export const datasets = {
     delDataset: "Delete dataset",
     delTips: "This action",
     canNot: "cannot",
-    delTips2: "be undone and will permanently delete the model repository",
+    delTips2: "be undone and will permanently delete the dataset repository",
     delTips3: "and all its files.",
     enterPls: "Please type",
     sureDel: "to confirm deletion",
