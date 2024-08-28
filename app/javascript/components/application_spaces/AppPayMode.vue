@@ -7,6 +7,9 @@
 
 <script setup>
   import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     payMode: String
@@ -14,14 +17,14 @@
   const thePayMode = computed(() => {
     switch (props.payMode) {
       case 'free':
-        return '免费'
+        return t('resourceConsole.free')
       case 'minute':
-        return '按需付费'
+        return t('resourceConsole.minute')
       case 'year':
       case 'month':
-        return '包年包月'
+        return t('resourceConsole.yearMonth')
       default:
-        return '包年包月'
+        return t('resourceConsole.others')
     }
   })
 </script>
