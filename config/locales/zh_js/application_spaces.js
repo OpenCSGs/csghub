@@ -93,6 +93,7 @@ export const application_spaces = {
     visibility: "应用空间可见性",
     del: "删除应用空间",
     delTips: "此操作",
+    canNot: "无法",
     delTips2: "撤销，这将永久删除",
     delTips3: "应用空间仓库及其所有文件。",
     privateVis: "只有创建者或组织成员可见",

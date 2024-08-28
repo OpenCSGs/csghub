@@ -36,8 +36,11 @@ export const collections = {
     status: '状态。',
     collectionVisibility: '合集可见性',
     delCollection: '删除合集',
+    canNot: "无法",
     removeRepos: '移除项目',
-    delTips: '此操作无法撤销，这将永久删除',
+    delTips: '此操作',
+    delTips2: '撤销，这将永久删除',
+    delTips3: '合集及其所有收藏。',
     removeTips: '此操作无法撤销，这将永久移除',
     privateInfo: '，仅创建者或者组织管理员可进行提交',
     publicInfo: '， 任何互联网上的人都可以看到此模型'
