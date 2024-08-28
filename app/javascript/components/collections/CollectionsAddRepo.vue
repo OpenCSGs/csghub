@@ -131,9 +131,9 @@
   }
   const repoInputChange = (search) => {
     repoIdsInput.value = ''
-    fetchRepoList(typeInput.value,search)
+    fetchRepoList(typeInput.value, search)
   }
-  const fetchRepoList = async (type,search) => {
+  const fetchRepoList = async (type, search) => {
     let url = `/${type}`
     url = url + `?search=${search || ''}`
     const { data, error } = await useFetchApi(url).json()
