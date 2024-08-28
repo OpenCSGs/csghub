@@ -1,6 +1,5 @@
 export const all = {
-  defaultText:
-    "```\nREADME file is empty, please download the file and add description content.\n```",
+  defaultText: "```\nREADME file is empty, please download the file and add description content.\n```",
   tip: "tip",
   summary: "Summary",
   files: "Files",
@@ -23,12 +22,11 @@ export const all = {
   createFile: "Create File",
   uploadFile: "Upload file",
   loadError: "Load Error",
-  notSupportPreview:
-    "Preview is not supported at the moment, please download via git clone",
+  notSupportPreview: "Preview is not supported at the moment, please download via git clone",
   syncNotSupportPreview: "Preview is not supported at the moment",
   changeVis: "Change visibility to ",
-  enterPls: "Enter Please",
-  sureDel: "Sure to Del",
+  enterPls: "Please type",
+  sureDel: "to confirm deletion",
   canNot: "Cannot",
   role: "Role",
   userName: "Username",

@@ -34,7 +34,7 @@ export const codes = {
     tips2: "一段关于代码的介绍，选填",
     changeVisibility: "修改代码可见性",
     statusText: "当前代码目前是",
-    status: "状态",
+    status: "状态。",
     codeVisibility: "代码可见性",
     delCode: "删除代码",
     delTips: "此操作",

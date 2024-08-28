@@ -211,7 +211,7 @@
               isPrivate ? this.$t('all.private') : this.$t('all.public')
             }}】</span
           >
-          {{ $t('application_spaces.edit.status') }}。{{
+          {{ $t('application_spaces.edit.status') }}{{
             isPrivate
               ? this.$t('application_spaces.edit.privateVis')
               : this.$t('application_spaces.edit.publicVis')
@@ -292,15 +292,15 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('application_spaces.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          <span class="text-black font-medium">{{ $t('application_spaces.edit.canNot') }}</span>
           {{ $t('application_spaces.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.delTips3') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('all.enterPls') }}
+          {{ $t('application_spaces.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          {{ $t('all.sureDel') }}
+          {{ $t('application_spaces.edit.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">

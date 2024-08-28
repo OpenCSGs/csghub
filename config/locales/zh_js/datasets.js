@@ -39,7 +39,7 @@ export const datasets = {
     tips3: " 选择数据集对应的分类标签，便于用户在筛选时更快的找到您的数据集。",
     changeVisibility: "修改数据集可见性",
     statusText: "当前数据集目前是",
-    status: "状态",
+    status: "状态。",
     datasetVisibility: "数据集可见性",
     delDataset: "删除数据集",
     delTips: "此操作",

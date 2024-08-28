@@ -89,7 +89,7 @@ export const application_spaces = {
     tips2: "一段关于应用空间的介绍，选填",
     changeVisibility: "修改应用空间可见性",
     statusText: "当前应用空间目前是",
-    status: "状态",
+    status: "状态。",
     visibility: "应用空间可见性",
     del: "删除应用空间",
     delTips: "此操作",

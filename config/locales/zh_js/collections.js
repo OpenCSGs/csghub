@@ -33,7 +33,7 @@ export const collections = {
     statusText: '当前合集目前是',
     privateVis: '只有创建者或组织成员可见',
     publicVis: '任何人都可以看到此合集',
-    status: '状态',
+    status: '状态。',
     collectionVisibility: '合集可见性',
     delCollection: '删除合集',
     removeRepos: '移除项目',

@@ -38,7 +38,7 @@ export const models = {
     tips3: "选择模型对应的分类标签，便于用户在筛选时更快的找到您的模型。",
     changeVisibility: "修改模型可见性",
     statusText: "当前模型目前是",
-    status: "状态",
+    status: "状态。",
     modelVisibility: "模型可见性",
     delModel: "删除模型",
     delTips: "此操作",
