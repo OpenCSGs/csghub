@@ -1,69 +1,72 @@
 :root {
+  --Base-White: #FFF;
+
+  --Gray-25: #FCFCFD;
+  --Gray-50: #F9FAFB;
+  --Gray-100: #F2F4F7;
+  --Gray-200: #EAECF0;
+  --Gray-300: #D0D5DD;
+  --Gray-400: #98A2B3;
+  --Gray-500: #667085;
+  --Gray-600: #475467;
+  --Gray-700: #344054;
+  --Gray-800: #182230;
+  --Gray-900: #101828;
+  --Gray-950: #0C111D;
+
+  --Brand-25: #F0F3FF;
+  --Brand-50: #CED8FF;
+  --Brand-100: #ACBDFF;
+  --Brand-200: #99AFFF;
   --Brand-300: #6584F8;
-  --Colors-Error-300: #FDA29B;
+  --Brand-400: #5271E3;
+  --Brand-500: #4D6AD6;
+  --Brand-600: #3250BD;
+  --Brand-700: #223B99;
+  --Brand-800: #17308F;
+  --Brand-900: #25367A;
+  --Brand-950: #0E1B4E;
+  
+
+  --Error-25: #FFFBFA;
+  --Error-50: #FEF3F2;
+  --Error-100: #FEE4E2;
+  --Error-200: #FECDCA;
+  --Error-300: #FDA29B;
+  --Error-400: #F97066;
+  --Error-500: #F04438;
+  --Error-600: #D92D20;
+  --Error-700: #B42318;
+  --Error-800: #912018;
+  --Error-900: #7A271A;
+  --Error-950: #55160C;
+
+  --Warning-25: #FFFCF5;
+  --Warning-50: #FFFAEB;
+  --Warning-100: #FEF0C7;
+  --Warning-200: #FEDF89;
+  --Warning-300: #FEC84B;
+  --Warning-400: #FDB022;
+  --Warning-500: #F79009;
+  --Warning-600: #DC6803;
+  --Warning-700: #B54708;
+  --Warning-800: #93370D;
+  --Warning-900: #7A2E0E;
+  --Warning-950: #4E1D09;
+
+  --Success-25: #F6FEF9;
+  --Success-50: #ECFDF3;
+  --Success-100: #DCFAE6;
+  --Success-200: #ABEFC6;
+  --Success-300: #75E0A7;
+  --Success-400: #47CD89;
+  --Success-500: #17B26A;
+  --Success-600: #079455;
+  --Success-700: #067647;
+  --Success-800: #085D3A;
+  --Success-900: #074D31;
+  --Success-950: #053321;
   
   --el-border-radius-base: 8px;
-  --Gray-700: #344054;
-
-  --el-color-primary: #3250BD;
-  
-  /* 所有的input 添加 */
-  .el-textarea__inner, .el-input__wrapper, .el-select__wrapper {
-    border: 1px solid transparent;
-  }
-
-  /* default focus style */
-  .el-textarea__inner:focus, .el-input__wrapper.is-focus, .el-select__wrapper.is-focused {
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
-    border: 1px solid var(--Brand-300);
-  }
-
-  /* default focus input icon style */
-  .el-select__wrapper.is-focused .el-icon, .el-input__wrapper.is-focus .el-icon{
-    color: var(--Brand-300);
-  }
-
-  /* default input icon style */
-  .el-input__wrapper .el-icon, .el-select__wrapper .el-icon {
-    cursor: pointer;
-  }
-
-  /* when hover input icon style */
-  .el-select__wrapper .el-icon:hover, .el-input__wrapper .el-icon:hover {
-    color: var(--Brand-300);
-  }
-
-  /* error input icon style */
-  .el-form-item.is-error .el-input__wrapper .el-icon, .el-form-item.is-error .el-select__wrapper .el-icon {
-    color: var(--Colors-Error-300);
-  }
-
-  /* error input style */
-  .el-form-item.is-error .el-input__wrapper, .el-form-item.is-error .el-input__wrapper.is-focus, .el-form-item.is-error .el-input__wrapper:focus, .el-form-item.is-error .el-input__wrapper:hover, .el-form-item.is-error .el-select__wrapper, .el-form-item.is-error .el-select__wrapper.is-focus, .el-form-item.is-error .el-select__wrapper:focus, .el-form-item.is-error .el-select__wrapper:hover, .el-form-item.is-error .el-textarea__inner, .el-form-item.is-error .el-textarea__inner.is-focus, .el-form-item.is-error .el-textarea__inner:focus, .el-form-item.is-error .el-textarea__inner:hover {
-    border: 1px solid var(--Colors-Error-300);
-    box-shadow: unset
-  }
-
-  /* error focus input style */
-  .el-form-item.is-error .el-input__wrapper.is-focus, .el-form-item.is-error .el-input__wrapper:focus, .el-form-item.is-error .el-select__wrapper.is-focus, .el-form-item.is-error .el-select__wrapper:focus, .el-form-item.is-error .el-textarea__inner.is-focus, .el-form-item.is-error .el-textarea__inner:focus{
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
-  }
-
-  /* validation failed tips style */
-  .el-form-item__error {
-    margin-top: 6px;
-  }
-
-  /* element form top label style */
-  .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
-    margin-bottom: 6px;
-  }
-
-  /* element item label defaulr style */
-  .el-form-item__label {
-    color: var(--Gray-700);
-    line-height: 20px;
-    font-weight: 400;
-  }
-
+  --el-color-primary: var(--Brand-600);
 }
