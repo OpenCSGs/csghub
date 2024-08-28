@@ -149,7 +149,7 @@
               <a v-if="hasEmail"
                  href="/organizations/new">
                 <el-dropdown-item divided>
-                  {{ $t('navbar.newOrg') }}
+                  {{ $t('navbar.newOrganization') }}
                 </el-dropdown-item>
               </a>
               <a
