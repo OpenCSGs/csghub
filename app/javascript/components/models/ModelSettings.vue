@@ -212,7 +212,7 @@
               isPrivate ? this.$t('all.private') : this.$t('all.public')
             }}】</span
           >
-          {{ $t('models.edit.status') }}。{{
+          {{ $t('models.edit.status') }}{{
             isPrivate
               ? this.$t('models.edit.privateVis')
               : this.$t('models.edit.publicVis')
@@ -248,7 +248,7 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('models.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          <span class="text-black font-medium">{{ $t('models.edit.canNot') }}</span>
           {{ $t('models.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('models.edit.delTips3') }}

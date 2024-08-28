@@ -211,7 +211,7 @@
               isPrivate ? this.$t('all.private') : this.$t('all.public')
             }}】</span
           >
-          {{ $t('application_spaces.edit.status') }}。{{
+          {{ $t('application_spaces.edit.status') }}{{
             isPrivate
               ? this.$t('application_spaces.edit.privateVis')
               : this.$t('application_spaces.edit.publicVis')
