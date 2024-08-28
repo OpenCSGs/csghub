@@ -232,7 +232,7 @@
   const userAvatar = ref(props.avatar)
 
   const handleLocaleChange = (locale) => {
-    location.href = `/${locale}/settings/locale`
+    location.href = `/internal_api/${locale}/settings/locale`
   }
 
   const fetchUser = async () => {
