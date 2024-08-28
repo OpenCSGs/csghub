@@ -111,6 +111,11 @@
                   {{ $t('navbar.setting') }}
                 </el-dropdown-item>
               </a>
+              <a href="/resource-console">
+                <el-dropdown-item>
+                  {{ $t('navbar.console') }}
+                </el-dropdown-item>
+              </a>
               <!-- <a
                 :href="starcloudUrl"
                 target="_blank">

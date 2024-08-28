@@ -1,4 +1,5 @@
 export const navbar = {
+  console:'Console',
   models: "Models",
   datasets: "Datasets",
   spaces: "Spaces",
