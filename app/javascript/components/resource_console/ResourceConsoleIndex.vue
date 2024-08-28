@@ -1,6 +1,6 @@
 <template>
   <div class="w-full sm:mt-[36px] py-9 text-[#101828]">
-    <div class="text-[30px] leading-[38px]">
+    <div class="text-[30px] leading-[38px mb-6">
       {{ $t("resourceConsole.title") }}
     </div>
     <!-- finetunes -->
