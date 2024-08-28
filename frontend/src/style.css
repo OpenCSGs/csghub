@@ -1,3 +1,6 @@
+@import 'assets/stylesheets/element-plus/_variables.css';
+@import 'assets/stylesheets/markdown.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
