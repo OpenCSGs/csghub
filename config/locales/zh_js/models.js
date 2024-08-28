@@ -41,6 +41,7 @@ export const models = {
     status: "状态。",
     modelVisibility: "模型可见性",
     delModel: "删除模型",
+    canNot: "无法",
     delTips: "此操作",
     delTips2: "撤销，这将永久删除",
     delTips3: "模型仓库及其所有文件。",

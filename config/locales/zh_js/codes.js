@@ -37,6 +37,7 @@ export const codes = {
     status: "状态。",
     codeVisibility: "代码可见性",
     delCode: "删除代码",
+    canNot: "无法",
     delTips: "此操作",
     delTips2: "撤销，这将永久删除",
     delTips3: "代码仓库及其所有文件。",

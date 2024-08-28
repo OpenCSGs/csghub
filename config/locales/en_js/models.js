@@ -44,7 +44,7 @@ export const models = {
     modelVisibility: "Model visibility",
     delModel: "Delete model",
     delTips: "This action",
-    canNot: "cannot"
+    canNot: "cannot",
     delTips2: "be undone and will permanently delete the model repository",
     delTips3: "and all its files.",
     privateVis: "Only creator or members of your organization can see",
