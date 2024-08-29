@@ -125,6 +125,8 @@ Rails.application.routes.draw do
     get '/spaces/:namespace/(*application_space_name)/commit/:commit_id', to: 'application_spaces#commit', namespace: /[^\/]+/
     get '/spaces/:namespace/(*application_space_name)', to: 'application_spaces#show', format: false, defaults: {format: 'html'}, namespace: /[^\/]+/
 
+    get '/resource-console', to: 'resource_console#index'
+    
     get '/profile/:user_id', to: 'profile#index', user_id: /[^\/]+/
     get '/profile/likes/:user_id', to: 'profile#likes', user_id: /[^\/]+/
     get    '/signup', to: 'sessions#signup'

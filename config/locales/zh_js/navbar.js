@@ -1,4 +1,5 @@
 export const navbar = {
+  console:'资源控制台',
   models: "模型",
   datasets: "数据集",
   spaces: "应用空间",
