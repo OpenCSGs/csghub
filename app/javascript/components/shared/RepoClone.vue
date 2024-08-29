@@ -90,7 +90,7 @@
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
-              <a :href="dynamicHrefAccessToken" target="_blank" class="underline">access token</a>
+              <a href="/settings/access-token" target="_blank" class="underline">access token</a>
               as git password/credential
             </div>
             <div
@@ -127,7 +127,7 @@
           >
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-              <a :href="dynamicHrefSSh" target="_blank" class="underline">Add your SSH public key</a>
+              <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
             </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
@@ -189,8 +189,6 @@
   const httpCloneUrl = ref('')
   const sshCloneUrl = ref('')
   const httpCloneProtocol = ref('https:')
-  const dynamicHrefAccessToken =ref('')
-  const dynamicHrefSSh =ref('')
 
   const httpsCloneCode = ref('')
   const sshCloneCode = ref('')
@@ -380,8 +378,5 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
 
   onMounted(() => {
     isLoggedIn.value = !!currentUser.value;
-    const currentOrigin = window.location.origin;
-    dynamicHrefAccessToken.value = `${currentOrigin}/settings/access-token`;
-    dynamicHrefSSh.value=`${currentOrigin}/settings/ssh-keys`
   })
 </script>
