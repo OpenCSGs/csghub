@@ -114,7 +114,7 @@
             ></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
-              :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"
+              :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"
             ></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -134,7 +134,8 @@
             <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
-              :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"
+              :setDefaultText="true"
+              :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"
             ></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -199,20 +200,20 @@
     httpCloneUrl.value = props.repo.repository.http_clone_url
     httpCloneProtocol.value = url.protocol
     sshCloneUrl.value = props.repo.repository.ssh_clone_url
-
+// no space
     httpsCloneCode.value = `
-  git lfs install
-  git clone ${httpCloneUrl.value}
+git lfs install
+git clone ${httpCloneUrl.value}
 `
-
+    // no space
     sshCloneCode.value = `
-  git lfs install
-  git clone ${sshCloneUrl.value}
+git lfs install
+git clone ${sshCloneUrl.value}
 `
-
+  // no space
   httpsCloneCodeWithToken.value = `
-  git lfs install
-  git clone ${httpCloneProtocol.value}//${
+git lfs install
+git clone ${httpCloneProtocol.value}//${
     currentUser.value
   }:${accessToken.value}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
@@ -242,9 +243,10 @@
   }
 
   watch(accessToken, async (newAccessToken) => {
+    // no space
     httpsCloneCodeWithToken.value = `
-  git lfs install
-  git clone ${httpCloneProtocol.value}//${
+git lfs install
+git clone ${httpCloneProtocol.value}//${
     currentUser.value
   }:${newAccessToken}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
