@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -49,18 +48,11 @@ type Operator struct {
 	Core bun.IDB
 }
 
-func InitDB(config DBConfig) {
-	bg, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	var err error
-	defaultDB, err = NewDB(bg, config)
-	if err != nil {
-		log.Fatal("failed to initialize database", err.Error())
-	}
-}
-
 // NewDB initializes a DB via config
-func NewDB(ctx context.Context, config DBConfig) (db *DB, err error) {
+func NewDB(config DBConfig) (db *DB, err error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
 	var bunDB *bun.DB
 
 	switch config.Dialect {

@@ -9,11 +9,14 @@ import (
 
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
-	"opencsg.com/portal/api/handler"
-	"opencsg.com/portal/config"
-	"opencsg.com/portal/config/middleware"
 	"opencsg.com/portal/frontend"
-	"opencsg.com/portal/store/database"
+	"opencsg.com/portal/internal/config"
+	frontendHandlers "opencsg.com/portal/internal/handlers/frontend"
+	renderHandlers "opencsg.com/portal/internal/handlers/render"
+	"opencsg.com/portal/internal/middleware"
+	"opencsg.com/portal/internal/models"
+	"opencsg.com/portal/internal/svc"
+	"opencsg.com/portal/pkg/constants"
 )
 
 const (
@@ -21,32 +24,38 @@ const (
 )
 
 // 全局配置结构体
-type GlobalConfig struct {
-	ServerBaseUrl string
-	OnPremise     string
-	EnableHttps   string
+
+type HandlersRegistry struct {
+	FrontendHandlers *frontendHandlers.FrontendHandlerRegistry
+	RenderHandler    *renderHandlers.RenderHandlerRegistry
+	// adminHandlers    *adminHandlers.AdminHandlerRegistry
 }
 
-func Initialize() *gin.Engine {
+func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
 	g := gin.Default()
 	// 设置信任网络 []string
 	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
 
-	store := database.NewUserStore()
+	userModel := models.NewUserStore(svcCtx.Db)
 
 	// 注册中间件
-	g.Use(middleware.AuthMiddleware(store))
+	g.Use(middleware.AuthMiddleware(userModel))
 
+	handlersRegistry := &HandlersRegistry{
+		FrontendHandlers: frontendHandlers.NewHandlersRegistry(svcCtx),
+		RenderHandler:    renderHandlers.NewHandlersRegistry(svcCtx),
+		// AdminHandlers:    adminHandlers.NewHandlersRegistry(svcCtx),
+	}
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
-	setupViewsRouter(g)
-	setupApiRouter(g)
+	setupViewsRouter(g, handlersRegistry)
+	setupApiRouter(g, handlersRegistry)
 	return g
 }
 
 // 中间件：注入全局配置
-func injectConfig(config GlobalConfig) gin.HandlerFunc {
+func injectConfig(config constants.GlobalConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("Config", config)
 		c.Next()
@@ -54,16 +63,16 @@ func injectConfig(config GlobalConfig) gin.HandlerFunc {
 }
 
 // 辅助函数：获取注入的配置
-func getConfig(c *gin.Context) GlobalConfig {
-	return c.MustGet("Config").(GlobalConfig)
+func getConfig(c *gin.Context) constants.GlobalConfig {
+	return c.MustGet("Config").(constants.GlobalConfig)
 }
 
-func getCurrentUserInfo(c *gin.Context) (database.User, bool) {
+func getCurrentUserInfo(c *gin.Context) (models.User, bool) {
 	currentUser := middleware.GetCurrentUser(c)
 	if currentUser != nil {
 		return *currentUser, true
 	}
-	return database.User{}, false
+	return models.User{}, false
 }
 
 // 辅助函数：创建模板数据
@@ -118,9 +127,9 @@ func createRender() multitemplate.Renderer {
 	return r
 }
 
-func setupViewsRouter(engine *gin.Engine) {
+func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	// 创建全局配置实例
-	var globalConfig = GlobalConfig{
+	var globalConfig = constants.GlobalConfig{
 		ServerBaseUrl: config.Env("STARHUB_INNER_BASE_URL", "https://hub.opencsg-stg.com").(string),
 		OnPremise:     config.Env("ON_PREMISE", "false").(string),
 		EnableHttps:   config.Env("ENABLE_HTTPS", "false").(string),
@@ -128,11 +137,11 @@ func setupViewsRouter(engine *gin.Engine) {
 	// 使用中间件注入全局配置
 	engine.Use(injectConfig(globalConfig))
 
-	registerHomeRoutes(engine)
-	registerModelRoutes(engine)
-	registerDatasetRoutes(engine)
-	registerCodeRoutes(engine)
-	registerSpaceRoutes(engine)
+	registerHomeRoutes(engine, handlersRegistry)
+	registerModelRoutes(engine, handlersRegistry)
+	registerDatasetRoutes(engine, handlersRegistry)
+	registerCodeRoutes(engine, handlersRegistry)
+	registerSpaceRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {
@@ -155,14 +164,9 @@ func setupStaticRouter(engine *gin.Engine) {
 	engine.StaticFS("/images", http.FS(imageFolder))
 }
 
-func setupApiRouter(g *gin.Engine) {
+func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	internal_api := g.Group("/internal_api")
 
-	{
-		internal_api.GET("/ping", handler.Ping)
-	}
-
-	{
-		internal_api.GET("/:locale/settings/locale", handler.SetLocale)
-	}
+	internal_api.GET("/ping", handlersRegistry.FrontendHandlers.PingHandler.Ping)
+	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
 }

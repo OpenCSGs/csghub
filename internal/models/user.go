@@ -1,16 +1,18 @@
-package database
+package models
 
 import (
 	"context"
+
+	"opencsg.com/portal/pkg/database"
 )
 
 type UserStore struct {
-	db *DB
+	db *database.DB
 }
 
-func NewUserStore() *UserStore {
+func NewUserStore(db *database.DB) *UserStore {
 	return &UserStore{
-		db: defaultDB,
+		db: db,
 	}
 }
 

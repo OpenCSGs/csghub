@@ -3,7 +3,8 @@ package config
 import (
 	"os"
 
-	"opencsg.com/portal/helpers"
+	"opencsg.com/portal/internal/helpers"
+	"opencsg.com/portal/pkg/database"
 
 	"github.com/spf13/cast"
 	viperlib "github.com/spf13/viper" // 自定义包名，避免与内置 viper 实例冲突
@@ -17,6 +18,10 @@ type ConfigFunc func() map[string]interface{}
 
 // ConfigFuncs 先加载到此数组，loadConfig 再动态生成配置信息
 var ConfigFuncs map[string]ConfigFunc
+
+type Config struct {
+	DbConfig database.DBConfig
+}
 
 func init() {
 
