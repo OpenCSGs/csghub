@@ -8,4 +8,5 @@ func registerDatasetRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistr
 	engine.GET("/datasets", handlersRegistry.RenderHandler.DatasetHandler.List)
 	engine.GET("/datasets/:namespace/:dataset_name", handlersRegistry.RenderHandler.DatasetHandler.Detail)
 	engine.GET("/datasets/:namespace/:dataset_name/files/:branch/*path", handlersRegistry.RenderHandler.DatasetHandler.Files)
+	engine.GET("/datasets/:namespace/:dataset_name/blob/:branch/*path", handlersRegistry.RenderHandler.DatasetHandler.Blob)
 }
