@@ -16,7 +16,11 @@ module BlobContentHelper
   end
 
   def image_format?(format)
-    ['jpg', 'png', 'jpeg', 'gif', 'svg'].include?(format)
+    [
+      'jpg', 'jpeg', 'png', 'gif', 'svg',
+      'webp', 'avif', 'tiff', 'bmp', 'ico',
+      'heic', 'heif'
+    ].include?(format.to_s.downcase)
   end
 
   def send_image_data(api_method, name_key)
