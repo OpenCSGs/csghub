@@ -47,6 +47,8 @@ export const datasets = {
     delTips: "此操作",
     delTips2: "撤销，这将永久删除",
     delTips3: "数据集及其所有文件。",
+    enterPls: "请输入",
+    sureDel: "确认删除",
     privateVis: "只有创建者或组织成员可见",
     publicVis: "任何人都可以看到此数据集",
     confirmDel: "我已知晓,确认删除",
