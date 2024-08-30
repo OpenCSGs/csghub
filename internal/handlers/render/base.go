@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	defaultMetaTitle       = "OpenCSG 打造中国本土化 Huggingface plus 开源社区 开放传神 OpenCSG  传神社区 官网"
-	defaultMetaKeywords    = "开源大模型、算力平台、Huggingface、开源社区、开源社区、数据集、开源代码、算力租赁、英伟达的算力、A800、H800、新质生产力"
-	defaultMetaDescription = "OpenCSG愿景： 让大模型赋能每一个人,大模型驱动全民，推动技术创新，OpenCSG——平台有各个领域的大模型，提供模型探索体验、推理、训练、部署和应用的一站式服务，共建模型开源社区，发现、学习、定制和分享心仪的模型。"
+	DEFAULT_META_TITLE       = "OpenCSG 打造中国本土化 Huggingface plus 开源社区 开放传神 OpenCSG  传神社区 官网"
+	DEFAULT_META_KEYWORDS    = "开源大模型、算力平台、Huggingface、开源社区、开源社区、数据集、开源代码、算力租赁、英伟达的算力、A800、H800、新质生产力"
+	DEFAULT_META_DESCRIPTION = "OpenCSG愿景： 让大模型赋能每一个人,大模型驱动全民，推动技术创新，OpenCSG——平台有各个领域的大模型，提供模型探索体验、推理、训练、部署和应用的一站式服务，共建模型开源社区，发现、学习、定制和分享心仪的模型。"
 )
 
 // 辅助函数：创建模板数据
@@ -24,9 +24,9 @@ func CreateTemplateData(ctx *gin.Context, extraData map[string]interface{}) gin.
 		"enableHttps":     config.EnableHttps,
 		"currentUser":     currentUser,
 		"isLoggedIn":      isLoggedIn,
-		"metaTitle":       defaultMetaTitle,
-		"metaKeywords":    defaultMetaKeywords,
-		"metaDescription": defaultMetaDescription,
+		"metaTitle":       DEFAULT_META_TITLE,
+		"metaKeywords":    DEFAULT_META_KEYWORDS,
+		"metaDescription": DEFAULT_META_DESCRIPTION,
 	}
 
 	for k, v := range extraData {
