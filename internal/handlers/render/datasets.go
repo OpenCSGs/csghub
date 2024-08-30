@@ -29,6 +29,8 @@ func (i *DatasetHandlerImpl) Detail(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "datasets_show", CreateTemplateData(ctx, map[string]interface{}{
 		"namespace":   namespace,
 		"datasetName": datasetName,
+		"defaultTab":  "summary",
+		"actionName":  "show",
 	}))
 }
 

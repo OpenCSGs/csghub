@@ -27,8 +27,10 @@ func (i *SpaceHandlerImpl) Detail(ctx *gin.Context) {
 	spaceName := ctx.Param("space_name")
 
 	ctx.HTML(http.StatusOK, "spaces_show", CreateTemplateData(ctx, map[string]interface{}{
-		"namespace": namespace,
-		"spaceName": spaceName,
+		"namespace":  namespace,
+		"spaceName":  spaceName,
+		"defaultTab": "summary",
+		"actionName": "show",
 	}))
 }
 
