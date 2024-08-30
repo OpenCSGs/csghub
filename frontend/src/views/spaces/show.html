@@ -1,11 +1,13 @@
 {{ define "content" }}
 <div class="bg-white">
   <application-space-detail
-    repo-type="code"
-    default-tab="summary"
-    action-name="show"
+    repo-type="space"
+    default-tab="{{ .defaultTab }}"
+    action-name="{{ .actionName }}"
     namespace="{{ .namespace }}"
     repo-name="{{ .spaceName }}"
+    current-branch="{{ .currentBranch }}"
+    current-path="{{ .currentPath }}"
   ></application-space-detail>
 </div>
 {{ end }}

@@ -256,7 +256,9 @@
   }
 
   const beiJingTimeParser = (utcTimeStr) => {
-    utcTime = new Date(utcTimeStr)
+    if (!utcTimeStr) return
+
+    const utcTime = new Date(utcTimeStr)
     return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
   }
 

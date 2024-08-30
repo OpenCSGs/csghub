@@ -58,7 +58,7 @@
       class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
     >
       <SvgIcon name="language_tag" />
-      {{ this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </a>
     <MoreTags
       v-if="theLanguageTags.moreTags"
@@ -77,7 +77,7 @@
       v-for="tag in theIndustryTags.theTags"
       class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
-      {{ this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </div>
     <MoreTags
       v-if="theIndustryTags.moreTags"
@@ -141,6 +141,9 @@
   import Joblib from '../../components/tags/frameworks/Joblib.vue'
   import TagItem from '../tags/TagItem.vue'
   import MoreTags from './MoreTags.vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { locale } = useI18n()
 
   const props = defineProps({
     tags: Object,

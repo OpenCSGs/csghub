@@ -2,10 +2,12 @@
 <div class="bg-white">
   <repo-detail
     repo-type="model"
-    default-tab="summary"
-    action-name="show"
+    default-tab="{{ .defaultTab }}"
+    action-name="{{ .actionName }}"
     namespace="{{ .namespace }}"
     repo-name="{{ .modelName }}"
+    current-branch="{{ .currentBranch }}"
+    current-path="{{ .currentPath }}"
   ></repo-detail>
 </div>
 {{ end }}
