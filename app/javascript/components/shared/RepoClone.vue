@@ -90,7 +90,7 @@
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
-              <a href="https://opencsg.com/settings/access-token" target="_blank" class="underline">access token</a>
+              <a href="/settings/access-token" target="_blank" class="underline">access token</a>
               as git password/credential
             </div>
             <div
@@ -127,7 +127,7 @@
           >
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-              <a href="https://opencsg.com/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
+              <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
             </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
