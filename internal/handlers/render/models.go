@@ -27,8 +27,10 @@ func (i *ModelHandlerImpl) Detail(ctx *gin.Context) {
 	modelName := ctx.Param("model_name")
 
 	ctx.HTML(http.StatusOK, "models_show", CreateTemplateData(ctx, map[string]interface{}{
-		"namespace": namespace,
-		"modelName": modelName,
+		"namespace":  namespace,
+		"modelName":  modelName,
+		"defaultTab": "summary",
+		"actionName": "show",
 	}))
 }
 

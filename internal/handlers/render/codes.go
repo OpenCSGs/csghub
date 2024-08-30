@@ -27,8 +27,10 @@ func (i *CodeHandlerImpl) Detail(ctx *gin.Context) {
 	codeName := ctx.Param("code_name")
 
 	ctx.HTML(http.StatusOK, "codes_show", CreateTemplateData(ctx, map[string]interface{}{
-		"namespace": namespace,
-		"codeName":  codeName,
+		"namespace":  namespace,
+		"codeName":   codeName,
+		"defaultTab": "summary",
+		"actionName": "show",
 	}))
 }
 
