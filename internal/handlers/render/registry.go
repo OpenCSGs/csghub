@@ -7,6 +7,7 @@ type RenderHandlerRegistry struct {
 	DatasetHandler DatasetHandler
 	CodeHandler    CodeHandler
 	SpaceHandler   SpaceHandler
+	SessionHandler SessionHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
@@ -14,11 +15,13 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 	datasetHandler := NewDatasetHandler()
 	codeHandler := NewCodeHandler()
 	spaceHandler := NewSpaceHandler()
+	sessionHandler := NewSessionHandler()
 
 	return &RenderHandlerRegistry{
 		ModelHandler:   modelHandler,
 		DatasetHandler: datasetHandler,
 		CodeHandler:    codeHandler,
 		SpaceHandler:   spaceHandler,
+		SessionHandler: sessionHandler,
 	}
 }

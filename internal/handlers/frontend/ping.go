@@ -6,10 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// type SettingsHandler interface {
-// 	SetLocale(ctx *gin.Context)
-// }
-
 type PingHandler interface {
 	Ping(c *gin.Context)
 }

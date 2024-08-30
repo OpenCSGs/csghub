@@ -3,8 +3,8 @@ package config
 import (
 	"os"
 
-	"opencsg.com/portal/internal/helpers"
 	"opencsg.com/portal/pkg/database"
+	"opencsg.com/portal/pkg/utils"
 
 	"github.com/spf13/cast"
 	viperlib "github.com/spf13/viper" // 自定义包名，避免与内置 viper 实例冲突
@@ -21,6 +21,8 @@ var ConfigFuncs map[string]ConfigFunc
 
 type Config struct {
 	DbConfig database.DBConfig
+	// redis config
+	// mq config
 }
 
 func init() {
@@ -98,7 +100,7 @@ func Get(path string, defaultValue ...interface{}) string {
 
 func internalGet(path string, defaultValue ...interface{}) interface{} {
 	// config 或者环境变量不存在的情况
-	if !viper.IsSet(path) || helpers.Empty(viper.Get(path)) {
+	if !viper.IsSet(path) || utils.Empty(viper.Get(path)) {
 		if len(defaultValue) > 0 {
 			return defaultValue[0]
 		}

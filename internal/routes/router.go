@@ -16,7 +16,8 @@ import (
 	"opencsg.com/portal/internal/middleware"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/internal/svc"
-	"opencsg.com/portal/pkg/constants"
+	"opencsg.com/portal/pkg/types"
+	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 const (
@@ -55,7 +56,7 @@ func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
 }
 
 // 中间件：注入全局配置
-func injectConfig(config constants.GlobalConfig) gin.HandlerFunc {
+func injectConfig(config types.GlobalConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("Config", config)
 		c.Next()
@@ -63,12 +64,12 @@ func injectConfig(config constants.GlobalConfig) gin.HandlerFunc {
 }
 
 // 辅助函数：获取注入的配置
-func getConfig(c *gin.Context) constants.GlobalConfig {
-	return c.MustGet("Config").(constants.GlobalConfig)
+func getConfig(c *gin.Context) types.GlobalConfig {
+	return c.MustGet("Config").(types.GlobalConfig)
 }
 
 func getCurrentUserInfo(c *gin.Context) (models.User, bool) {
-	currentUser := middleware.GetCurrentUser(c)
+	currentUser := jwt.GetCurrentUser(c)
 	if currentUser != nil {
 		return *currentUser, true
 	}
@@ -129,7 +130,7 @@ func createRender() multitemplate.Renderer {
 
 func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	// 创建全局配置实例
-	var globalConfig = constants.GlobalConfig{
+	var globalConfig = types.GlobalConfig{
 		ServerBaseUrl: config.Env("STARHUB_INNER_BASE_URL", "https://hub.opencsg-stg.com").(string),
 		OnPremise:     config.Env("ON_PREMISE", "false").(string),
 		EnableHttps:   config.Env("ENABLE_HTTPS", "false").(string),
@@ -142,6 +143,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerDatasetRoutes(engine, handlersRegistry)
 	registerCodeRoutes(engine, handlersRegistry)
 	registerSpaceRoutes(engine, handlersRegistry)
+	registerSessionsRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {
@@ -169,4 +171,5 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 
 	internal_api.GET("/ping", handlersRegistry.FrontendHandlers.PingHandler.Ping)
 	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
+	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
 }

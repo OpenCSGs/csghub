@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/internal/svc"
-	"opencsg.com/portal/pkg/enum"
+	"opencsg.com/portal/pkg/types/enum"
 )
 
 type SettingsHandler interface {

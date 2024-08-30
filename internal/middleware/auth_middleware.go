@@ -24,12 +24,3 @@ func AuthMiddleware(userModel *models.UserStore) gin.HandlerFunc {
 		c.Next()
 	}
 }
-
-// GetCurrentUser 从上下文获取当前用户
-func GetCurrentUser(c *gin.Context) *models.User {
-	if user, exists := c.Get("currentUser"); exists {
-		return user.(*models.User)
-	}
-
-	return nil
-}

@@ -1,4 +1,4 @@
-package constants
+package types
 
 type GlobalConfig struct {
 	ServerBaseUrl string

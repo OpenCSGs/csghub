@@ -1,5 +1,4 @@
-// Package helpers 存放辅助方法
-package helpers
+package utils
 
 import (
 	"reflect"
