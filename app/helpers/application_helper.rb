@@ -38,11 +38,18 @@ module ApplicationHelper
 
   def content_type_format_mapping
     {
-      'jpg': 'image/jpeg',
-      'jpeg': 'image/jpeg',
-      'png': 'image/png',
-      'gif': 'image/gif',
-      'svg': 'image/svg+xml',
+      'jpg' => 'image/jpeg',
+      'jpeg' => 'image/jpeg',
+      'png' => 'image/png',
+      'gif' => 'image/gif',
+      'svg' => 'image/svg+xml',
+      'webp' => 'image/webp',
+      'avif' => 'image/avif',
+      'tiff' => 'image/tiff',
+      'bmp' => 'image/bmp',
+      'ico' => 'image/x-icon',
+      'heic' => 'image/heic',
+      'heif' => 'image/heif',
       'pdf': 'application/pdf',
       'md': 'text/markdown'
     }.with_indifferent_access
