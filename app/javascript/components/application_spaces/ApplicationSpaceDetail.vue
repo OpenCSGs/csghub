@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, nextTick } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
@@ -252,8 +252,14 @@
       onmessage(ev) {
         if (ev.event === 'Build') {
           appendLog(buildLogDiv, ev.data, buildLogLineNum)
+          nextTick(() => {
+            scrollToBottom(buildLogDiv);
+          });
         } else if (ev.event === 'Container') {
           appendLog(containerLogDiv, ev.data, containerLogLineNum)
+          nextTick(() => {
+            scrollToBottom(containerLogDiv);
+          });
         }
       },
       onerror(err) {
@@ -261,6 +267,13 @@
         console.log(err)
       }
     })
+  }
+
+  const scrollToBottom = (targetRef) => {
+    const targetDiv = targetRef.value;
+    if (targetDiv) {
+      targetDiv.scrollTop = targetDiv.scrollHeight;
+    }
   }
 
   const appendLog = (refElem, data, refLineNum) => {
