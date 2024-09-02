@@ -12,7 +12,6 @@ func NewDatasetHandler() DatasetHandler {
 	return &DatasetHandlerImpl{
 		BaseHandlerImpl{
 			resourceType: "datasets",
-			showTemplate: "datasets_show",
 		},
 	}
 }

@@ -12,7 +12,6 @@ func NewSpaceHandler() ModelHandler {
 	return &ModelHandlerImpl{
 		BaseHandlerImpl{
 			resourceType: "spaces",
-			showTemplate: "spaces_show",
 		},
 	}
 }

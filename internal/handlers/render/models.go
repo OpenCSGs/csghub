@@ -12,7 +12,6 @@ func NewModelHandler() ModelHandler {
 	return &ModelHandlerImpl{
 		BaseHandlerImpl{
 			resourceType: "models",
-			showTemplate: "models_show",
 		},
 	}
 }

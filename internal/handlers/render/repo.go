@@ -15,7 +15,6 @@ type BaseHandler interface {
 
 type BaseHandlerImpl struct {
 	resourceType string
-	showTemplate string
 }
 
 func (b *BaseHandlerImpl) List(ctx *gin.Context) {
@@ -59,7 +58,7 @@ func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab st
 			data[k] = v
 		}
 	}
-	renderTemplate(ctx, b.showTemplate, data)
+	renderTemplate(ctx, b.resourceType+"_show", data)
 }
 
 func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[string]interface{}) {
