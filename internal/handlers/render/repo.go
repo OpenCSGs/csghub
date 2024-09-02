@@ -52,15 +52,7 @@ func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab st
 		"defaultTab":    defaultTab,
 	}
 
-	if b.resourceType == "datasets" {
-		data["datasetName"] = ctx.Param("dataset_name")
-	} else if b.resourceType == "models" {
-		data["modelName"] = ctx.Param("model_name")
-	} else if b.resourceType == "spaces" {
-		data["spaceName"] = ctx.Param("space_name")
-	} else if b.resourceType == "codes" {
-		data["codeName"] = ctx.Param("code_name")
-	}
+	b.addResourceSpecificData(ctx, data)
 
 	for _, e := range extraData {
 		for k, v := range e {
@@ -68,4 +60,17 @@ func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab st
 		}
 	}
 	renderTemplate(ctx, b.showTemplate, data)
+}
+
+func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[string]interface{}) {
+	switch b.resourceType {
+	case "datasets":
+		data["datasetName"] = ctx.Param("dataset_name")
+	case "models":
+		data["modelName"] = ctx.Param("model_name")
+	case "codes":
+		data["codeName"] = ctx.Param("code_name")
+	case "spaces":
+		data["spaceName"] = ctx.Param("space_name")
+	}
 }
