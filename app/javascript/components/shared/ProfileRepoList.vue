@@ -233,8 +233,6 @@
         codeLoading.value = false
       } else if (targetRef === spaces) {
         spacesLoading.value = false
-      } else if (targetRef === endpoints) {
-        endpointsLoading.value = false
       }
     }
   }
