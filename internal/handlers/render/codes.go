@@ -8,8 +8,8 @@ type CodeHandlerImpl struct {
 	BaseHandlerImpl
 }
 
-func NewCodeHandler() ModelHandler {
-	return &ModelHandlerImpl{
+func NewCodeHandler() CodeHandler {
+	return &CodeHandlerImpl{
 		BaseHandlerImpl{
 			resourceType: "codes",
 		},

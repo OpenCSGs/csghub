@@ -8,8 +8,8 @@ type SpaceHandlerImpl struct {
 	BaseHandlerImpl
 }
 
-func NewSpaceHandler() ModelHandler {
-	return &ModelHandlerImpl{
+func NewSpaceHandler() SpaceHandler {
+	return &SpaceHandlerImpl{
 		BaseHandlerImpl{
 			resourceType: "spaces",
 		},
