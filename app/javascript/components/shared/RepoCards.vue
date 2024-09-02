@@ -202,14 +202,17 @@
     frameworkTag.value = framework
     languageTag.value = language
     licenseTag.value = license
-    reloadRepos()
+    reloadRepos(1)
   }
 
   const filterChange = () => {
-    reloadRepos()
+    reloadRepos(1)
   }
 
   const reloadRepos = (childCurrent) => {
+    if(childCurrent){
+      currentPage.value = childCurrent
+    }
     let url = `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
