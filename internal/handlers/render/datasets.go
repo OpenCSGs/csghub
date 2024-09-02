@@ -10,6 +10,7 @@ type DatasetHandler interface {
 	List(ctx *gin.Context)
 	Detail(ctx *gin.Context)
 	Files(ctx *gin.Context)
+	Blob(ctx *gin.Context)
 }
 
 type DatasetHandlerImpl struct{}
@@ -47,5 +48,21 @@ func (i *DatasetHandlerImpl) Files(ctx *gin.Context) {
 		"currentBranch": branch,
 		"defaultTab":    "files",
 		"actionName":    "files",
+	}))
+}
+
+func (i *DatasetHandlerImpl) Blob(ctx *gin.Context) {
+	namespace := ctx.Param("namespace")
+	datasetName := ctx.Param("dataset_name")
+	path := ctx.Param("path")
+	branch := ctx.Param("branch")
+
+	ctx.HTML(http.StatusOK, "datasets_show", CreateTemplateData(ctx, map[string]interface{}{
+		"namespace":     namespace,
+		"datasetName":   datasetName,
+		"currentPath":   path,
+		"currentBranch": branch,
+		"defaultTab":    "files",
+		"actionName":    "blob",
 	}))
 }

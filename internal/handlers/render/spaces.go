@@ -10,6 +10,7 @@ type SpaceHandler interface {
 	List(ctx *gin.Context)
 	Detail(ctx *gin.Context)
 	Files(ctx *gin.Context)
+	Blob(ctx *gin.Context)
 }
 
 type SpaceHandlerImpl struct{}
@@ -47,5 +48,21 @@ func (i *SpaceHandlerImpl) Files(ctx *gin.Context) {
 		"currentBranch": branch,
 		"defaultTab":    "files",
 		"actionName":    "files",
+	}))
+}
+
+func (i *SpaceHandlerImpl) Blob(ctx *gin.Context) {
+	namespace := ctx.Param("namespace")
+	spaceName := ctx.Param("space_name")
+	path := ctx.Param("path")
+	branch := ctx.Param("branch")
+
+	ctx.HTML(http.StatusOK, "spaces_show", CreateTemplateData(ctx, map[string]interface{}{
+		"namespace":     namespace,
+		"spaceName":     spaceName,
+		"currentPath":   path,
+		"currentBranch": branch,
+		"defaultTab":    "files",
+		"actionName":    "blob",
 	}))
 }
