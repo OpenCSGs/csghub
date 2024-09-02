@@ -139,7 +139,7 @@
   import { useI18n } from 'vue-i18n'
   import BranchDropdown from './BranchDropdown.vue';
   import useFetchApi from '../../packs/useFetchApi'
-  import { createAndClickAnchor } from '../../packs/utils'
+  import { createAndClickAnchor, beiJingTimeParser } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -253,13 +253,6 @@
     } else {
       normalFileDownload(file)
     }
-  }
-
-  const beiJingTimeParser = (utcTimeStr) => {
-    if (!utcTimeStr) return
-
-    const utcTime = new Date(utcTimeStr)
-    return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
   }
 
   const fetchFileListData = async () => {

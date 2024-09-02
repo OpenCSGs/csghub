@@ -1,6 +1,8 @@
 package renderHandlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/pkg/types"
@@ -46,4 +48,8 @@ func getCurrentUserInfo(ctx *gin.Context) (models.User, bool) {
 		return *currentUser, true
 	}
 	return models.User{}, false
+}
+
+func renderTemplate(ctx *gin.Context, templateName string, data map[string]interface{}) {
+	ctx.HTML(http.StatusOK, templateName, CreateTemplateData(ctx, data))
 }

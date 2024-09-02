@@ -44,6 +44,7 @@
   import { ElMessage } from "element-plus";
   import { parse, html } from "diff2html";
   import MarkdownViewer from "./viewers/MarkdownViewer.vue";
+  import { beiJingTimeParser } from '../../packs/utils'
   import "../../styles/codediff.css";
 
   const { t } = useI18n();
@@ -55,11 +56,6 @@
     repoType: String,
     commitId: String
   });
-
-  const beiJingTimeParser = (utcTimeStr) => {
-    utcTime = new Date(utcTimeStr);
-    return utcTime.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
-  };
 
   const copyCommitId = (commitId) => {
     copyToClipboard(commitId);
