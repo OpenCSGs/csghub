@@ -131,7 +131,7 @@
       ? props.form
       : {
           temperature: 0.2,
-          max_tokens: 128,
+          max_tokens: 200,
           top_k: 10,
           top_p: 0.95,
           repetition_penalty: 1.0
