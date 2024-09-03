@@ -152,7 +152,8 @@
       'audio',
       'video',
       'multimodal'
-    ]
+    ],
+    code: []
   }
 
   const onPremise = inject('onPremise', 'true')

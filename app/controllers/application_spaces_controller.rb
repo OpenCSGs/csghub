@@ -1,6 +1,5 @@
 class ApplicationSpacesController < ApplicationController
   include LocalRepoValidation
-  include TagListHelper
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper
@@ -9,7 +8,6 @@ class ApplicationSpacesController < ApplicationController
   before_action :load_branch_and_path, except: [:index, :new]
 
   def index
-    get_tag_list('application_spaces')
   end
 
   def new
