@@ -102,7 +102,7 @@
           @input = "filterLanguageTags"
         />
         <div class="flex gap-[8px] flex-wrap">
-          <span v-for="languageTag in theLanguageTags" 
+          <span v-for="languageTag in theLanguageTags"
                 class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer flex items-center gap-[4px]"
                 :data-tag_name="languageTag.name"
                 :style="setLanguageTagColor(languageTag.label)"
@@ -112,7 +112,7 @@
             {{ cookies.get('locale') === 'en' ? languageTag.name : languageTag.zh_name }}
           </span>
         </div>
-      </div>      
+      </div>
 
       <div v-show="showLicense">
         <el-input
@@ -153,10 +153,10 @@
   import TagItem from './TagItem.vue'
 
   const props = defineProps({
-    taskTags: String,
-    frameworkTags: String,
-    languageTags: String,
-    licenseTags: String,
+    taskTags: Array,
+    frameworkTags: Array,
+    languageTags: Array,
+    licenseTags: Array,
     type: String,
     selectedTag: String,
     selectedTagType: String
@@ -167,10 +167,10 @@
   const emit = defineEmits(['resetTags'])
 
   const activeNavItem = ref('Task')
-  const theTaskTags = ref(JSON.parse(props.taskTags))
-  const theFrameworkTags = ref(JSON.parse(props.frameworkTags))
-  const theLanguageTags = ref(JSON.parse(props.languageTags))
-  const theLicenseTags = ref(JSON.parse(props.licenseTags))
+  const theTaskTags = ref(props.taskTags)
+  const theFrameworkTags = ref(props.frameworkTags)
+  const theLanguageTags = ref(props.languageTags)
+  const theLicenseTags = ref(props.licenseTags)
   const activeTaskTag = ref('')
   const activeFrameworkTag = ref('')
   const activeLanguageTag = ref('')
@@ -236,7 +236,7 @@
       activeLanguageTag.value = ''
     } else {
       activeLanguageTag.value = tagLabel
-    }    
+    }
     emitTag()
   }
 
@@ -275,28 +275,28 @@
 
   const filterTaskTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i');
-    const newTags = JSON.parse(props.taskTags)
+    const newTags = props.taskTags
     const result = removeNotMatchedTags(newTags, keywordsRegex)
     theTaskTags.value = result
   }
 
   const filterFrameworkTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i');
-    const newTags = JSON.parse(props.frameworkTags)
+    const newTags = props.frameworkTags
     const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
     theFrameworkTags.value = result
   }
 
   const filterLanguageTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i');
-    const newTags = JSON.parse(props.languageTags)
+    const newTags = props.languageTags
     const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
     theLanguageTags.value = result
   }
 
   const filterLicenseTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i');
-    const newTags = JSON.parse(props.licenseTags)
+    const newTags = props.licenseTags
     const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
     theLicenseTags.value = result
   }
@@ -307,7 +307,7 @@
   }
 
   const frameworkTagExist = (tagName) => {
-    result = theFrameworkTags.value.find(ftag => ftag.name.toLowerCase() === tagName.toLowerCase())
+    result = props.frameworkTags.find(ftag => ftag.name.toLowerCase() === tagName.toLowerCase())
     return result
   }
 
