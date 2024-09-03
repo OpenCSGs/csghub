@@ -5,10 +5,10 @@
       class="w-[30%] min-w-[360px] border-r border-[#EAECF0] pr-6 xl:pl-[20px] mlg:hidden"
     >
       <TagSidebar
-        :taskTags="props.taskTags"
-        :frameworkTags="props.frameworkTags"
-        :languageTags="props.languageTags"
-        :licenseTags="props.licenseTags"
+        :taskTags="taskTags"
+        :frameworkTags="frameworkTags"
+        :languageTags="languageTags"
+        :licenseTags="licenseTags"
         :selectedTag="props.selectedTag"
         :selectedTagType="props.selectedTagType"
         @resetTags="resetTags"
@@ -134,17 +134,34 @@
   import UpdateUsername from '../popup/UpdateUsername.vue'
 
   const props = defineProps({
-    taskTags: String,
-    frameworkTags: String,
-    languageTags: String,
-    licenseTags: String,
     selectedTag: String,
     selectedTagType: String,
     repoType: String
   })
 
+  const tagFields = {
+    model: [
+      'computer_vision',
+      'natural_language_processing',
+      'audio_processing',
+      'multimodal'
+    ],
+    dataset: [
+      'text_processing',
+      'graphics',
+      'audio',
+      'video',
+      'multimodal'
+    ],
+    code: []
+  }
+
   const onPremise = inject('onPremise', 'true')
   const { t } = useI18n()
+  const taskTags = ref({})
+  const frameworkTags = ref([])
+  const languageTags = ref([])
+  const licenseTags = ref([])
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
   const sourceSelection = ref('all')
@@ -239,9 +256,32 @@
     }
   }
 
+  async function fetchTags() {
+    const { error, data } = await useFetchApi(`/tags`).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      let tempTaskTags = {}
+      const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
+      tagFields[props.repoType].forEach((field) => {
+        const fieldTags = allTaskTags.filter(tag => tag.group === field)
+        tempTaskTags[field] = fieldTags
+      })
+
+      taskTags.value = tempTaskTags
+      frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework')
+      languageTags.value = data.value.data.filter(tag => tag.category === 'language')
+      licenseTags.value = data.value.data.filter(tag => tag.category === 'license')
+    }
+  }
+
   onMounted(() => {
     if (props.repoType === 'space') {
       reloadRepos()
     }
+    fetchTags()
   })
 </script>

@@ -1,6 +1,5 @@
 class CodesController < ApplicationController
   include LocalRepoValidation
-  include TagListHelper
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper
@@ -9,7 +8,6 @@ class CodesController < ApplicationController
   before_action :load_branch_and_path, except: [:index, :new]
 
   def index
-    get_tag_list('codes')
   end
 
   def new
