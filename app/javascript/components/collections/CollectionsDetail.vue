@@ -5,6 +5,7 @@
     <div class="mx-auto max-w-[1280px]">
       <repo-header
         v-if="collectionData"
+        :avatar="collectionData.avatar"
         :name="collectionData.name"
         :nickname="collectionData.nickname"
         :path="`${collectionData.namespace || collectionData.username}/${collectionData.name}`"
