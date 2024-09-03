@@ -64,6 +64,7 @@
   import CsgPagination from './CsgPagination.vue'
   import BranchDropdown from './BranchDropdown.vue'
   import { ElMessage } from 'element-plus'
+  import { beiJingTimeParser } from '../../packs/utils'
 
   const { t } = useI18n()
   const commits = ref([])
@@ -77,11 +78,6 @@
     namespacePath: String,
     repoType: String
   })
-
-  const beiJingTimeParser = (utcTimeStr) => {
-    utcTime = new Date(utcTimeStr)
-    return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
-  }
 
   const copyCommitId = (commitId) => {
     copyToClipboard(commitId)

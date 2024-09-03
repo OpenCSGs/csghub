@@ -9,4 +9,6 @@ func registerModelRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry)
 	engine.GET("/models/:namespace/:model_name", handlersRegistry.RenderHandler.ModelHandler.Detail)
 	engine.GET("/models/:namespace/:model_name/files/:branch/*path", handlersRegistry.RenderHandler.ModelHandler.Files)
 	engine.GET("/models/:namespace/:model_name/blob/:branch/*path", handlersRegistry.RenderHandler.ModelHandler.Blob)
+	engine.GET("/models/:namespace/:model_name/commits", handlersRegistry.RenderHandler.ModelHandler.Commits)
+	engine.GET("/models/:namespace/:model_name/commit/:commit_id", handlersRegistry.RenderHandler.ModelHandler.Commit)
 }

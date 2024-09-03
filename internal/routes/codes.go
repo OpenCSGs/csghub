@@ -9,4 +9,6 @@ func registerCodeRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) 
 	engine.GET("/codes/:namespace/:code_name", handlersRegistry.RenderHandler.CodeHandler.Detail)
 	engine.GET("/codes/:namespace/:code_name/files/:branch/*path", handlersRegistry.RenderHandler.CodeHandler.Files)
 	engine.GET("/codes/:namespace/:code_name/blob/:branch/*path", handlersRegistry.RenderHandler.CodeHandler.Blob)
+	engine.GET("/codes/:namespace/:code_name/commits", handlersRegistry.RenderHandler.CodeHandler.Commits)
+	engine.GET("/codes/:namespace/:code_name/commit/:commit_id", handlersRegistry.RenderHandler.CodeHandler.Commit)
 }
