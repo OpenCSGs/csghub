@@ -16,7 +16,7 @@
             drag
             multiple
             :limit="5"
-            :headers="{ 'X-CSRF-TOKEN': csrf_token }"
+            :headers="{}"
             :data="{ commit_title: commitTitle, commit_desc: commitDesc}"
             :auto-upload="false"
             @change="handleFileChange"
@@ -76,7 +76,6 @@ const commitTitlePlaceholder = ref('Upload file')
 const new_branch = ref('main')
 const commitDesc = ref('')
 const prefixPath = document.location.pathname.split('/')[1]
-const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
 const handleCommentInputChange = (value) => {
   commitDesc.value = value
