@@ -1,0 +1,23 @@
+export const languages = {
+  Chinese: 'Chinese',
+  English: 'English',
+  French: 'French',
+  German: 'German',
+  Italian: 'Italian',
+  Japanese: 'Japanese',
+  Korean: 'Korean',
+  Spanish: 'Spanish',
+  Portuguese: 'Portuguese',
+  Russian: 'Russian',
+  Arabic: 'Arabic',
+  ChineseTraditional: 'ChineseTraditional',
+  ChineseSimplified: 'ChineseSimplified',
+  Hindi: 'Hindi',
+  Indonesian: 'Indonesian',
+  Malay: 'Malay',
+  Vietnamese: 'Vietnamese',
+  Turkish: 'Turkish',
+  Dutch: 'Dutch',
+  Polish: 'Polish',
+  Swedish: 'Swedish'
+}
