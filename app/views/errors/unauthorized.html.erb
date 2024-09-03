@@ -5,11 +5,13 @@
   <% end %>
 </p>
 
+<%= image_tag '/images/Background-pattern-decorative.svg', 
+  class: 'absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[-1] w-full max-w-[768px] sm:max-w-[480px]' %>
+
 <div class="h-[calc(100vh-80px)] min-h-[500px] flex items-center justify-center m-auto">
-  <div class="flex flex-col items-center" style="position: relative; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 40px;">
-      
-  <div class="flex flex-col gap-[8px] items-center text-center mt-[24px] px-[16px]">
-    <%= image_tag '/images/Background-pattern-decorative.svg', class: 'absolute w-auto h-auto min-w-full min-h-full object-cover', style: 'z-index: -1; left: 50%; top: 50%; transform: translate(-50%, -50%);' %>
+  <div class="flex flex-col items-center" style="position: relative; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 40px;"> 
+  
+  <div class="flex flex-col items-center relative w-full max-w-[600px] p-[40px]">
       
     <div class="Badge h-7 px-2.5 py-1 bg-white rounded-lg shadow border border-[#cfd4dc] justify-start items-center gap-1.5 inline-flex">
       <div class="Dot w-2 h-2 relative">
@@ -17,10 +19,8 @@
         </div>
           <div class="Text text-center text-[#344053] text-sm font-normal font-['PingFang SC'] leading-tight">error</div>
       </div>
-
-        <h1 id="error-header" class="error-header" style="font-size: 60px; font-weight: 500;margin-bottom: 24px; color: #101828;"> <%= t('errors_page.unauthorized.title') %> </h1>
-      
-        <p id="error-description" class="error-description" style="font-size: 20px; margin-bottom: 48px; color: #475467;"> <%= t('errors_page.unauthorized.desc') %> </p>
+        <h1 id="error-Header" class="error-Header" style="font-size: 60px; font-weight: 500;margin-bottom: 24px; color: #101828;"> <%= t('errors_page.unauthorized.title') %> </h1>    
+        <p id="error-Description" class="error-Description" style="font-size: 20px; margin-bottom: 48px; color: #475467;"> <%= t('errors_page.unauthorized.desc') %> </p>
         <div id="error-button" class="error-button" style="display: flex; gap: 20px;">
           <a href="javascript:history.back();" class="btn btn-secondary" style="background-color: #fff; padding: 16px 24px; font-weight: 500; color: #344054; border: 1px solid #D0D5DD;" onmouseover="this.style.backgroundColor='#F9FAFB'; this.style.color='#344054';" onmouseout="this.style.backgroundColor='#fff'; this.style.color='#344054';"> <%= t('errors_page.not_found.back') %> </a>
           <a href="/" class="btn btn-primary" style="background-color: #3250BD; font-weight: 500; color: #fff; padding: 16px 24px;" onmouseover="this.style.backgroundColor='#223B99'; this.style.color='white';" onmouseout="this.style.backgroundColor='#3250BD'; this.style.color='#fff';"> <%= t('errors_page.not_found.home') %> </a>
@@ -29,36 +29,36 @@
     </div>
   </div>
 
-  <%= javascript_tag do %>
-    function adjustFontSize() {
-      const errorHeader = document.querySelector('h1');
-      const errorDescription = document.querySelector('p');
-      const buttons = document.querySelectorAll('.btn');
-  
-      if (window.innerWidth < 768) {
-        errorHeader.classList.replace('text-6xl', 'text-4xl');
-        errorHeader.classList.replace('mb-6', 'mb-2');
-        errorDescription.classList.replace('text-xl', 'text-base');
-        errorDescription.classList.replace('mb-12', 'mb-6');
-        buttons.forEach(button => {
-          button.classList.replace('px-6', 'px-4');
-          button.classList.replace('py-4', 'py-2');
-        });
-      } else {
-        errorHeader.classList.replace('text-4xl', 'text-6xl');
-        errorHeader.classList.replace('mb-2', 'mb-6');
-        errorDescription.classList.replace('text-base', 'text-xl');
-        errorDescription.classList.replace('mb-6', 'mb-12');
-        buttons.forEach(button => {
-          button.classList.replace('px-4', 'px-6');
-          button.classList.replace('py-2', 'py-4');
-        });
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function adjustFontSize() {
+        var errorHeader = document.getElementById('error-Header');
+        var errorDescription = document.getElementById('error-Description');
+        var buttons = document.querySelectorAll('.error-button .btn');
+        
+        if (window.innerWidth < 768) {
+          errorHeader.style.fontSize = '36px';
+          errorHeader.style.marginBottom = '8px';
+          errorDescription.style.fontSize = '16px';
+          errorDescription.style.marginBottom = '24px';
+          buttons.forEach(function(button) {
+            button.style.padding = '10px 18px';
+          });
+        } else {
+          errorHeader.style.fontSize = '60px';
+          errorHeader.style.marginBottom = '24px';
+          errorDescription.style.fontSize = '20px';
+          errorDescription.style.marginBottom = '48px';
+          buttons.forEach(function(button) {
+            button.style.padding = '16px 24px';
+          });
+        }
       }
-    }
-  
-    // 初始检查
-    adjustFontSize();
-  
-    // 窗口大小改变时调整
-    window.addEventListener('resize', adjustFontSize);
-  <% end %>
+
+      // 初始检查
+      adjustFontSize();
+
+      // 窗口大小改变时调整
+      window.addEventListener('resize', adjustFontSize);
+    });
+  </script>
