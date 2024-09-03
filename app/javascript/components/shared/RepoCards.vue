@@ -264,8 +264,6 @@
         type: 'warning'
       })
     } else {
-      console.log(data.value.data)
-
       let tempTaskTags = {}
       const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
       tagFields[props.repoType].forEach((field) => {
