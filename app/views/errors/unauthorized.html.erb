@@ -1,16 +1,64 @@
+<title>403 - 暂无权限</title>
 <p>
   <% if flash[:alert].present? %>
     <el-alert title="<%= flash[:alert] %>" type="error" class="justify-center" />
   <% end %>
 </p>
-<div class="h-[calc(100vh-80px)] min-h-[500px] flex items-center justify-center bg-[#F3F0FF] m-auto">
-  <div class="flex flex-col items-center">
-    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17.5 20V17C17.5 12.7996 17.5 10.6994 18.3175 9.09507C19.0365 7.68386 20.1839 6.5365 21.5951 5.81745C23.1994 5 25.2996 5 29.5 5H30.5C34.7004 5 36.8006 5 38.4049 5.81745C39.8161 6.5365 40.9635 7.68386 41.6825 9.09507C42.5 10.6994 42.5 12.7996 42.5 17V20M30 35V40M23.5 55H36.5C42.1005 55 44.9008 55 47.0399 53.9101C48.9215 52.9513 50.4513 51.4215 51.4101 49.5399C52.5 47.4008 52.5 44.6005 52.5 39V36C52.5 30.3995 52.5 27.5992 51.4101 25.4601C50.4513 23.5785 48.9215 22.0487 47.0399 21.0899C44.9008 20 42.1005 20 36.5 20H23.5C17.8995 20 15.0992 20 12.9601 21.0899C11.0785 22.0487 9.54867 23.5785 8.58993 25.4601C7.5 27.5992 7.5 30.3995 7.5 36V39C7.5 44.6005 7.5 47.4008 8.58993 49.5399C9.54867 51.4215 11.0785 52.9513 12.9601 53.9101C15.0992 55 17.8995 55 23.5 55Z" stroke="#2F384C" stroke-width="3.75" stroke-linecap="round"/>
-    </svg>
-    <div class="flex flex-col gap-[8px] items-center text-center mt-[24px] px-[16px] text-[#303133]">
-      <p class="font-semibold text-[48px]"><%= t('errors_page.unauthorized.title') %></p>
-      <p class="text-[20px]"><%= t('errors_page.unauthorized.desc') %></p>
+
+<%= image_tag '/images/Background-pattern-decorative.svg', 
+  class: 'absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[-1] w-full max-w-[768px] sm:max-w-[480px]' %>
+
+<div class="h-[calc(100vh-80px)] min-h-[500px] flex items-center justify-center m-auto">
+  <div class="flex flex-col items-center" style="position: relative; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 40px;"> 
+  
+  <div class="flex flex-col items-center relative w-full max-w-[600px] p-[40px]">
+      
+    <div class="Badge h-7 px-2.5 py-1 bg-white rounded-lg shadow border border-[#cfd4dc] justify-start items-center gap-1.5 inline-flex">
+      <div class="Dot w-2 h-2 relative">
+        <div class="Dot w-1.5 h-1.5 left-[1px] top-[1px] absolute bg-[#f78f08] rounded-full"></div>
+        </div>
+          <div class="Text text-center text-[#344053] text-sm font-normal font-['PingFang SC'] leading-tight">error</div>
+      </div>
+        <h1 id="error-Header" class="error-Header" style="font-size: 60px; font-weight: 500;margin-bottom: 24px; color: #101828;"> <%= t('errors_page.unauthorized.title') %> </h1>    
+        <p id="error-Description" class="error-Description" style="font-size: 20px; margin-bottom: 48px; color: #475467;"> <%= t('errors_page.unauthorized.desc') %> </p>
+        <div id="error-button" class="error-button" style="display: flex; gap: 20px;">
+          <a href="javascript:history.back();" class="btn btn-secondary" style="background-color: #fff; padding: 16px 24px; font-weight: 500; color: #344054; border: 1px solid #D0D5DD;" onmouseover="this.style.backgroundColor='#F9FAFB'; this.style.color='#344054';" onmouseout="this.style.backgroundColor='#fff'; this.style.color='#344054';"> <%= t('errors_page.not_found.back') %> </a>
+          <a href="/" class="btn btn-primary" style="background-color: #3250BD; font-weight: 500; color: #fff; padding: 16px 24px;" onmouseover="this.style.backgroundColor='#223B99'; this.style.color='white';" onmouseout="this.style.backgroundColor='#3250BD'; this.style.color='#fff';"> <%= t('errors_page.not_found.home') %> </a>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function adjustFontSize() {
+        var errorHeader = document.getElementById('error-Header');
+        var errorDescription = document.getElementById('error-Description');
+        var buttons = document.querySelectorAll('.error-button .btn');
+        
+        if (window.innerWidth < 768) {
+          errorHeader.style.fontSize = '36px';
+          errorHeader.style.marginBottom = '8px';
+          errorDescription.style.fontSize = '16px';
+          errorDescription.style.marginBottom = '24px';
+          buttons.forEach(function(button) {
+            button.style.padding = '10px 18px';
+          });
+        } else {
+          errorHeader.style.fontSize = '60px';
+          errorHeader.style.marginBottom = '24px';
+          errorDescription.style.fontSize = '20px';
+          errorDescription.style.marginBottom = '48px';
+          buttons.forEach(function(button) {
+            button.style.padding = '16px 24px';
+          });
+        }
+      }
+
+      // 初始检查
+      adjustFontSize();
+
+      // 窗口大小改变时调整
+      window.addEventListener('resize', adjustFontSize);
+    });
+  </script>
