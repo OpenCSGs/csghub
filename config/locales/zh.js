@@ -23,6 +23,7 @@ import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
 import { billing } from './zh_js/billing';
 import { resourceConsole } from './zh_js/resource_console';
+import { tags } from './zh_js/tags'
 
 export default {
   all,
@@ -49,5 +50,6 @@ export default {
   admin,
   finetune,
   billing,
-  resourceConsole
+  resourceConsole,
+  tags
 };

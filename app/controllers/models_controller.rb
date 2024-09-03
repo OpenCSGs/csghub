@@ -1,5 +1,4 @@
 class ModelsController < ApplicationController
-  include TagListHelper
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper
@@ -10,7 +9,6 @@ class ModelsController < ApplicationController
   before_action :load_model_detail, except: [:index, :new, :resolve]
 
   def index
-    get_tag_list('models')
   end
 
   def new

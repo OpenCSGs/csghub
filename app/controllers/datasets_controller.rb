@@ -1,6 +1,5 @@
 class DatasetsController < ApplicationController
   include LocalRepoValidation
-  include TagListHelper
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper
@@ -10,7 +9,6 @@ class DatasetsController < ApplicationController
   before_action :load_dataset_detail, except: [:index, :new, :resolve]
 
   def index
-    get_tag_list('datasets')
   end
 
   def new
