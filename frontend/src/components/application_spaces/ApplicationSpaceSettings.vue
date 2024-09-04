@@ -252,7 +252,7 @@
           :limit="1"
           v-model:file-list="images"
           list-type="picture-card"
-          :headers="{ 'X-CSRF-TOKEN': csrfToken }"
+          :headers="{}"
           accept="image/png, image/jpeg, image/gif, image/svg+xml"
           :data="{ namespace: 'application_space' }"
           action="/internal_api/upload"
@@ -379,9 +379,6 @@
         ],
         uploadCoverImageUrl: '/images/default_cover_image.png',
         imageUploaded: false,
-        csrfToken: document
-          .querySelector('meta[name="csrf-token"]')
-          .getAttribute('content'),
         t: useI18n()
       }
     },
