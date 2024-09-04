@@ -306,7 +306,7 @@
   }
 
   const fetchModels = async (query, cb) => {
-    const { data, error } = await useFetchApi(`/models?search=${query}`).json()
+    const { data, error } = await useFetchApi(`/runtime_framework/models?search=${query}`).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
