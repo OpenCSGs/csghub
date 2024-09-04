@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/uptrace/bun/migrate"
-	"opencsg.com/portal/internal/config"
+	"opencsg.com/portal/config"
 	"opencsg.com/portal/pkg/database"
 	"opencsg.com/portal/pkg/database/migrations"
 )
@@ -49,12 +49,12 @@ var Cmd = &cobra.Command{
 			}
 		}
 
-		dbConfig := database.DBConfig{
-			Dialect: database.DatabaseDialect(config.Env("DB_DIALECT", "pg").(string)),
-			DSN:     config.Env("DB_DSN", "postgresql://postgres:postgres@localhost:5432/csghub_development?sslmode=disable").(string),
+		config, err := config.LoadConfig()
+		if err != nil {
+			return err
 		}
 
-		db, err = database.NewDB(dbConfig)
+		db, err := database.NewDB(config)
 		if err != nil {
 			err = fmt.Errorf("initializing DB connection: %w", err)
 			return

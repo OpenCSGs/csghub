@@ -9,8 +9,8 @@ import (
 
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
+	"opencsg.com/portal/config"
 	"opencsg.com/portal/frontend"
-	"opencsg.com/portal/internal/config"
 	frontendHandlers "opencsg.com/portal/internal/handlers/frontend"
 	renderHandlers "opencsg.com/portal/internal/handlers/render"
 	"opencsg.com/portal/internal/middleware"
@@ -26,9 +26,10 @@ type HandlersRegistry struct {
 	FrontendHandlers *frontendHandlers.FrontendHandlerRegistry
 	RenderHandler    *renderHandlers.RenderHandlerRegistry
 	// adminHandlers    *adminHandlers.AdminHandlerRegistry
+	Config *config.Config
 }
 
-func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
+func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	g := gin.Default()
 	// 设置信任网络 []string
 	// nil 为不计算，避免性能消耗，上线应当设置
@@ -39,17 +40,22 @@ func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
 	// 注册中间件
 	g.Use(middleware.AuthMiddleware(userModel))
 
+	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
+	if err != nil {
+		return nil, err
+	}
 	handlersRegistry := &HandlersRegistry{
-		FrontendHandlers: frontendHandlers.NewHandlersRegistry(svcCtx),
+		FrontendHandlers: frontendHandlers,
 		RenderHandler:    renderHandlers.NewHandlersRegistry(svcCtx),
 		// AdminHandlers:    adminHandlers.NewHandlersRegistry(svcCtx),
+		Config: svcCtx.Config,
 	}
 
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
 	setupViewsRouter(g, handlersRegistry)
 	setupApiRouter(g, handlersRegistry)
-	return g
+	return g, nil
 }
 
 // 中间件：注入全局配置
@@ -141,9 +147,9 @@ func createRender() multitemplate.Renderer {
 func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	// 创建全局配置实例
 	var globalConfig = types.GlobalConfig{
-		ServerBaseUrl: config.Env("STARHUB_INNER_BASE_URL", "https://hub.opencsg-stg.com").(string),
-		OnPremise:     config.Env("ON_PREMISE", "false").(string),
-		EnableHttps:   config.Env("ENABLE_HTTPS", "false").(string),
+		ServerBaseUrl: handlersRegistry.Config.StarhubServer.BaseURL,
+		OnPremise:     handlersRegistry.Config.OnPremise,
+		EnableHttps:   handlersRegistry.Config.EnableHttps,
 	}
 	// 使用中间件注入全局配置
 	engine.Use(injectConfig(globalConfig))

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"opencsg.com/portal/internal/config"
+	"opencsg.com/portal/config"
 )
 
 type SessionHandler interface {
@@ -13,18 +13,22 @@ type SessionHandler interface {
 	Logout(ctx *gin.Context)
 }
 
-type SessionHandlerImpl struct{}
+type SessionHandlerImpl struct {
+	Config *config.Config
+}
 
-func NewSessionHandler() SessionHandler {
-	return &SessionHandlerImpl{}
+func NewSessionHandler(config *config.Config) SessionHandler {
+	return &SessionHandlerImpl{
+		Config: config,
+	}
 }
 
 func (i *SessionHandlerImpl) Login(ctx *gin.Context) {
-	ctx.Redirect(http.StatusFound, config.Env("SIGNUP_URL", "").(string))
+	ctx.Redirect(http.StatusFound, i.Config.SignupURL)
 }
 
 func (i *SessionHandlerImpl) SignUp(ctx *gin.Context) {
-	ctx.Redirect(http.StatusFound, config.Env("LOGIN_URL", "").(string))
+	ctx.Redirect(http.StatusFound, i.Config.LoginURL)
 }
 
 func (i *SessionHandlerImpl) Logout(ctx *gin.Context) {

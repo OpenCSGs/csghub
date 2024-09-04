@@ -8,14 +8,17 @@ type FrontendHandlerRegistry struct {
 	TokenHandler    TokenHandler
 }
 
-func NewHandlersRegistry(svcCtx *svc.ServiceContext) *FrontendHandlerRegistry {
+func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*FrontendHandlerRegistry, error) {
 	settingsHandler := NewSettingsHandler(svcCtx)
 	pingHandler := NewPingHandler()
-	tokenHandler := NewTokenHandler()
+	tokenHandler, err := NewTokenHandler(svcCtx.Config)
+	if err != nil {
+		return nil, err
+	}
 
 	return &FrontendHandlerRegistry{
 		SettingsHandler: settingsHandler,
 		PingHandler:     pingHandler,
 		TokenHandler:    tokenHandler,
-	}
+	}, nil
 }

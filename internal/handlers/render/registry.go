@@ -15,7 +15,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 	datasetHandler := NewDatasetHandler()
 	codeHandler := NewCodeHandler()
 	spaceHandler := NewSpaceHandler()
-	sessionHandler := NewSessionHandler()
+	sessionHandler := NewSessionHandler(svcCtx.Config)
 
 	return &RenderHandlerRegistry{
 		ModelHandler:   modelHandler,
