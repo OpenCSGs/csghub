@@ -8,7 +8,11 @@ import (
 	"net/http"
 	"sync"
 	"time"
+
+	"opencsg.com/portal/pkg/server/backend"
 )
+
+var _ backend.Server = (*CsgHubServer)(nil)
 
 type CsgHubServer struct {
 	baseURL    string
