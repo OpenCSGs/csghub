@@ -18,10 +18,10 @@ func NewUserStore(db *database.DB) *UserStore {
 
 type User struct {
 	ID            int64  `bun:",pk,autoincrement" json:"id"`
-	Nickname      string `bun:"column:nickname,notnull" json:"nickname"`
-	Name          string `bun:"column:name,notnull,unique" json:"name"`
-	Email         string `bun:"column:email,notnull,unique" json:"email"`
-	LoginIdentity string `bun:"column:login_identity,notnull" json:"login_identity"`
+	Nickname      string `bun:",notnull" json:"nickname"`
+	Name          string `bun:",notnull,unique" json:"name"`
+	Email         string `bun:",notnull,unique" json:"email"`
+	LoginIdentity string `bun:",notnull" json:"login_identity"`
 	Gender        string `bun:"," json:"gender"`
 	RolesMask     string `bun:"," json:"roles_mask"`
 	Phone         string `bun:"," json:"phone"`
