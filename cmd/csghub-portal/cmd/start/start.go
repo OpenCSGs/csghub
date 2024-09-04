@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"opencsg.com/portal/internal/config"
+	"opencsg.com/portal/config"
 	"opencsg.com/portal/pkg/database"
 	"opencsg.com/portal/pkg/database/migrations"
 )
@@ -22,12 +22,12 @@ var Cmd = &cobra.Command{
 		ctx, cancel := context.WithTimeout(cmd.Context(), 10*time.Second)
 		defer cancel()
 
-		dbConfig := database.DBConfig{
-			Dialect: database.DatabaseDialect(config.Env("DB_DIALECT", "pg").(string)),
-			DSN:     config.Env("DB_DSN", "postgresql://postgres:postgres@localhost:5432/csghub_development?sslmode=disable").(string),
+		config, err := config.LoadConfig()
+		if err != nil {
+			return err
 		}
 
-		db, err := database.NewDB(dbConfig)
+		db, err := database.NewDB(config)
 		if err != nil {
 			return fmt.Errorf("initializing DB: %w", err)
 		}

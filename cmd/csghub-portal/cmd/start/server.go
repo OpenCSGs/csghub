@@ -1,12 +1,13 @@
 package start
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
-	"opencsg.com/portal/internal/config"
+	"opencsg.com/portal/config"
 	"opencsg.com/portal/internal/routes"
 	"opencsg.com/portal/internal/svc"
-	"opencsg.com/portal/pkg/database"
 )
 
 var serverCmd = &cobra.Command{
@@ -14,19 +15,20 @@ var serverCmd = &cobra.Command{
 	Short: "start a server",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		gin.SetMode(gin.ReleaseMode)
-		config.InitConfig("../../../../.env")
-
-		// load env
-		cfg := &config.Config{
-			DbConfig: database.DBConfig{
-				Dialect: database.DatabaseDialect(config.Env("DB_DIALECT", "pg").(string)),
-				DSN:     config.Env("DB_DSN", "postgresql://postgres:postgres@localhost:5432/csghub_development?sslmode=disable").(string),
-			},
+		config, err := config.LoadConfig()
+		if err != nil {
+			return err
 		}
 
-		svcCtx := svc.NewServiceContext(cfg)
+		svcCtx, err := svc.NewServiceContext(config)
+		if err != nil {
+			return fmt.Errorf("initializing service context: %w", err)
+		}
 
-		engine := routes.Initialize(svcCtx)
+		engine, err := routes.Initialize(svcCtx)
+		if err != nil {
+			return fmt.Errorf("initializing routes: %w", err)
+		}
 
 		engine.Run(":8090")
 

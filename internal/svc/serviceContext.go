@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"opencsg.com/portal/internal/config"
+	"opencsg.com/portal/config"
 	"opencsg.com/portal/pkg/database"
 )
 
@@ -12,15 +12,17 @@ type ServiceContext struct {
 	// async
 	// worker
 	// other service will be added here
+	Config *config.Config
 }
 
-func NewServiceContext(cfg *config.Config) *ServiceContext {
-	db, err := database.NewDB(cfg.DbConfig)
+func NewServiceContext(cfg *config.Config) (*ServiceContext, error) {
+	db, err := database.NewDB(cfg)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	return &ServiceContext{
-		Db: db,
-	}
+		Db:     db,
+		Config: cfg,
+	}, nil
 }
