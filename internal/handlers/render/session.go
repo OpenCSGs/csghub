@@ -30,3 +30,6 @@ func (i *SessionHandlerImpl) SignUp(ctx *gin.Context) {
 func (i *SessionHandlerImpl) Logout(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, "/")
 }
+
+func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
+}
