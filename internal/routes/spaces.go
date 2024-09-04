@@ -11,4 +11,7 @@ func registerSpaceRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry)
 	engine.GET("/spaces/:namespace/:space_name/blob/:branch/*path", handlersRegistry.RenderHandler.SpaceHandler.Blob)
 	engine.GET("/spaces/:namespace/:space_name/commits", handlersRegistry.RenderHandler.SpaceHandler.Commits)
 	engine.GET("/spaces/:namespace/:space_name/commit/:commit_id", handlersRegistry.RenderHandler.SpaceHandler.Commit)
+	engine.GET("/spaces/:namespace/:space_name/:branch/new", handlersRegistry.RenderHandler.SpaceHandler.NewFile)
+	engine.GET("/spaces/:namespace/:space_name/:branch/upload", handlersRegistry.RenderHandler.SpaceHandler.UploadFile)
+	engine.GET("/spaces/:namespace/:space_name/edit/:branch/:path", handlersRegistry.RenderHandler.SpaceHandler.EditFile)
 }

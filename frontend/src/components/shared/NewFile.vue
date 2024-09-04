@@ -8,7 +8,7 @@
         :maxLength="200"
         show-word-limit
         clearable
-        :placeholder="this.$t('all.fileName')"
+        :placeholder="$t('all.fileName')"
         @input="handleFileNameChange"
         class="w-full h-[40px] text-[#606266]"
       />
@@ -41,7 +41,7 @@
     </div>
     <CommunityMDTextarea
       desc=""
-      :placeholder="this.$t('all.provideMoreDesc')"
+      :placeholder="$t('all.provideMoreDesc')"
       @inputChange="handleCommentInputChange"
     ></CommunityMDTextarea>
     <div>

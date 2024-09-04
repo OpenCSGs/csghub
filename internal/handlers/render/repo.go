@@ -1,6 +1,8 @@
 package renderHandlers
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,6 +13,9 @@ type BaseHandler interface {
 	Blob(ctx *gin.Context)
 	Commits(ctx *gin.Context)
 	Commit(ctx *gin.Context)
+	NewFile(ctx *gin.Context)
+	UploadFile(ctx *gin.Context)
+	EditFile(ctx *gin.Context)
 }
 
 type BaseHandlerImpl struct {
@@ -42,11 +47,23 @@ func (b *BaseHandlerImpl) Commit(ctx *gin.Context) {
 	b.renderShow(ctx, "commit", "files", map[string]interface{}{"commitId": commitId})
 }
 
+func (b *BaseHandlerImpl) NewFile(ctx *gin.Context) {
+	b.renderShow(ctx, "new_file", "files")
+}
+
+func (b *BaseHandlerImpl) UploadFile(ctx *gin.Context) {
+	b.renderShow(ctx, "upload_file", "files")
+}
+
+func (b *BaseHandlerImpl) EditFile(ctx *gin.Context) {
+	b.renderShow(ctx, "edit_file", "files")
+}
+
 func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab string, extraData ...map[string]interface{}) {
 	data := map[string]interface{}{
 		"namespace":     ctx.Param("namespace"),
 		"actionName":    actionName,
-		"currentPath":   ctx.Param("path"),
+		"currentPath":   strings.TrimPrefix(ctx.Param("path"), "/"),
 		"currentBranch": ctx.Param("branch"),
 		"defaultTab":    defaultTab,
 	}
@@ -58,6 +75,7 @@ func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab st
 			data[k] = v
 		}
 	}
+
 	renderTemplate(ctx, b.resourceType+"_show", data)
 }
 
