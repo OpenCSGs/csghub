@@ -78,7 +78,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
@@ -135,7 +135,8 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
-  onMounted(() => {
+
+  watch(() => props.userName, () => {
     fetchCollectionsList()
   })
 </script>

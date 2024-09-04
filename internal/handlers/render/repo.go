@@ -16,6 +16,8 @@ type BaseHandler interface {
 	NewFile(ctx *gin.Context)
 	UploadFile(ctx *gin.Context)
 	EditFile(ctx *gin.Context)
+	Settings(ctx *gin.Context)
+	Billing(ctx *gin.Context)
 }
 
 type BaseHandlerImpl struct {
@@ -57,6 +59,14 @@ func (b *BaseHandlerImpl) UploadFile(ctx *gin.Context) {
 
 func (b *BaseHandlerImpl) EditFile(ctx *gin.Context) {
 	b.renderShow(ctx, "edit_file", "files")
+}
+
+func (b *BaseHandlerImpl) Settings(ctx *gin.Context) {
+	b.renderShow(ctx, "settings", "settings")
+}
+
+func (b *BaseHandlerImpl) Billing(ctx *gin.Context) {
+	b.renderShow(ctx, "billing", "billing")
 }
 
 func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab string, extraData ...map[string]interface{}) {

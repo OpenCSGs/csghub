@@ -14,4 +14,5 @@ func registerDatasetRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistr
 	engine.GET("/datasets/:namespace/:dataset_name/:branch/new", handlersRegistry.RenderHandler.DatasetHandler.NewFile)
 	engine.GET("/datasets/:namespace/:dataset_name/:branch/upload", handlersRegistry.RenderHandler.DatasetHandler.UploadFile)
 	engine.GET("/datasets/:namespace/:dataset_name/edit/:branch/:path", handlersRegistry.RenderHandler.DatasetHandler.EditFile)
+	engine.GET("/datasets/:namespace/:dataset_name/settings", handlersRegistry.RenderHandler.DatasetHandler.Settings)
 }

@@ -14,4 +14,5 @@ func registerCodeRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) 
 	engine.GET("/codes/:namespace/:code_name/:branch/new", handlersRegistry.RenderHandler.CodeHandler.NewFile)
 	engine.GET("/codes/:namespace/:code_name/:branch/upload", handlersRegistry.RenderHandler.CodeHandler.UploadFile)
 	engine.GET("/codes/:namespace/:code_name/edit/:branch/:path", handlersRegistry.RenderHandler.CodeHandler.EditFile)
+	engine.GET("/codes/:namespace/:code_name/settings", handlersRegistry.RenderHandler.CodeHandler.Settings)
 }
