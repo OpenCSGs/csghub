@@ -1,10 +1,10 @@
 package routes
 
 import (
+	"html/template"
 	"io/fs"
 	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/gin-contrib/multitemplate"
@@ -18,10 +18,6 @@ import (
 	"opencsg.com/portal/internal/svc"
 	"opencsg.com/portal/pkg/types"
 	"opencsg.com/portal/pkg/utils/jwt"
-)
-
-const (
-	viewsPath = "frontend/dist/src/views"
 )
 
 // 全局配置结构体
@@ -48,6 +44,7 @@ func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
 		RenderHandler:    renderHandlers.NewHandlersRegistry(svcCtx),
 		// AdminHandlers:    adminHandlers.NewHandlersRegistry(svcCtx),
 	}
+
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
 	setupViewsRouter(g, handlersRegistry)
@@ -97,32 +94,45 @@ func createTemplateData(c *gin.Context, extraData map[string]interface{}) gin.H 
 }
 
 func createRender() multitemplate.Renderer {
+	viewsFS, err := fs.Sub(frontend.Dist, "dist/src/views")
+	if err != nil {
+		// 处理错误，例如 panic 或日志记录
+		panic(err)
+	}
+
 	r := multitemplate.NewRenderer()
 
 	// 定义基础布局文件
 	layouts := []string{
-		filepath.Join(viewsPath, "layouts/base.html"),
-		filepath.Join(viewsPath, "layouts/navbar.html"),
-		filepath.Join(viewsPath, "layouts/footer.html"),
+		"layouts/base.html",
+		"layouts/navbar.html",
+		"layouts/footer.html",
 	}
 
 	// 定义页面和对应的模板文件
 	pages := map[string]string{
-		"index":          filepath.Join(viewsPath, "home/index.html"),
-		"models_index":   filepath.Join(viewsPath, "models/index.html"),
-		"models_show":    filepath.Join(viewsPath, "models/show.html"),
-		"datasets_index": filepath.Join(viewsPath, "datasets/index.html"),
-		"datasets_show":  filepath.Join(viewsPath, "datasets/show.html"),
-		"codes_index":    filepath.Join(viewsPath, "codes/index.html"),
-		"codes_show":     filepath.Join(viewsPath, "codes/show.html"),
-		"spaces_index":   filepath.Join(viewsPath, "spaces/index.html"),
-		"spaces_show":    filepath.Join(viewsPath, "spaces/show.html"),
+		"index":          "home/index.html",
+		"models_index":   "models/index.html",
+		"models_show":    "models/show.html",
+		"datasets_index": "datasets/index.html",
+		"datasets_show":  "datasets/show.html",
+		"codes_index":    "codes/index.html",
+		"codes_show":     "codes/show.html",
+		"spaces_index":   "spaces/index.html",
+		"spaces_show":    "spaces/show.html",
 	}
 
 	// 动态添加模板
 	for name, page := range pages {
-		files := append(layouts, page)
-		r.AddFromFiles(name, files...)
+		files := make([]string, len(layouts)+1)
+		copy(files, layouts)
+		files[len(layouts)] = page
+
+		tmpl, err := template.ParseFS(viewsFS, files...)
+		if err != nil {
+			panic(err)
+		}
+		r.Add(name, tmpl)
 	}
 
 	return r
