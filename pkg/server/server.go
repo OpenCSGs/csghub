@@ -4,10 +4,11 @@ import (
 	"context"
 
 	"opencsg.com/portal/config"
-	"opencsg.com/portal/pkg/server/csghubserver"
+	"opencsg.com/portal/pkg/server/backend"
+	"opencsg.com/portal/pkg/server/backend/csghubserver"
 )
 
-func NewServer(config *config.Config) (Server, error) {
+func NewServer(config *config.Config) (backend.Server, error) {
 	server, err := csghubserver.NewCsgHubServer(
 		context.Background(),
 		config.StarhubServer.BaseURL,
