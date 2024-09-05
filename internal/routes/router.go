@@ -117,15 +117,18 @@ func createRender() multitemplate.Renderer {
 
 	// 定义页面和对应的模板文件
 	pages := map[string]string{
-		"index":          "home/index.html",
-		"models_index":   "models/index.html",
-		"models_show":    "models/show.html",
-		"datasets_index": "datasets/index.html",
-		"datasets_show":  "datasets/show.html",
-		"codes_index":    "codes/index.html",
-		"codes_show":     "codes/show.html",
-		"spaces_index":   "spaces/index.html",
-		"spaces_show":    "spaces/show.html",
+		"index":                  "home/index.html",
+		"models_index":           "models/index.html",
+		"models_show":            "models/show.html",
+		"datasets_index":         "datasets/index.html",
+		"datasets_show":          "datasets/show.html",
+		"codes_index":            "codes/index.html",
+		"codes_show":             "codes/show.html",
+		"spaces_index":           "spaces/index.html",
+		"spaces_show":            "spaces/show.html",
+		"organizations_show":     "organizations/show.html",
+		"organizations_new":      "organizations/new.html",
+		"organizations_settings": "organizations/settings.html",
 	}
 
 	// 动态添加模板
@@ -160,6 +163,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerCodeRoutes(engine, handlersRegistry)
 	registerSpaceRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)
+	registerOrganizationRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

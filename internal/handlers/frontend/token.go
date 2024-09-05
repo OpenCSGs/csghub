@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
 	"opencsg.com/portal/pkg/server"
+	"opencsg.com/portal/pkg/server/backend"
 	"opencsg.com/portal/pkg/server/types"
 	"opencsg.com/portal/pkg/utils/jwt"
 )
@@ -15,7 +16,7 @@ type TokenHandler interface {
 }
 
 type TokenHandlerImpl struct {
-	Server server.Server
+	Server backend.Server
 }
 
 func NewTokenHandler(config *config.Config) (TokenHandler, error) {

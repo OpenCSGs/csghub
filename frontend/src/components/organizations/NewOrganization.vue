@@ -113,7 +113,7 @@
         nameRule: inject('nameRule'),
         showUpload: true,
         selectedProtocol: 'https://',
-        csrf_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        csrf_token: 'csrf_token', //todo pending for upload api
         dataForm: {},
         org_types: ['企业', '高校', '非营利组织', '社区组织'],
         submitting: false,
