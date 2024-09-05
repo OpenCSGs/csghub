@@ -29,7 +29,7 @@ type HandlersRegistry struct {
 }
 
 func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
-	g := gin.Default()
+	g := gin.New()
 	// 设置信任网络 []string
 	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
@@ -37,7 +37,9 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	userModel := models.NewUserStore(svcCtx.Db)
 
 	// 注册中间件
+	g.Use(gin.Recovery())
 	g.Use(middleware.AuthMiddleware(userModel))
+	g.Use(middleware.Log())
 
 	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
 	if err != nil {
@@ -83,17 +85,20 @@ func createRender() multitemplate.Renderer {
 
 	// 定义页面和对应的模板文件
 	pages := map[string]string{
-		"index":          "home/index.html",
-		"models_index":   "models/index.html",
-		"models_show":    "models/show.html",
-		"datasets_index": "datasets/index.html",
-		"datasets_show":  "datasets/show.html",
-		"codes_index":    "codes/index.html",
-		"codes_show":     "codes/show.html",
-		"spaces_index":   "spaces/index.html",
-		"spaces_show":    "spaces/show.html",
-		"endpoints_show": "endpoints/show.html",
-		"finetunes_show": "finetunes/show.html",
+		"index":                  "home/index.html",
+		"models_index":           "models/index.html",
+		"models_show":            "models/show.html",
+		"datasets_index":         "datasets/index.html",
+		"datasets_show":          "datasets/show.html",
+		"codes_index":            "codes/index.html",
+		"codes_show":             "codes/show.html",
+		"spaces_index":           "spaces/index.html",
+		"spaces_show":            "spaces/show.html",
+		"endpoints_show":         "endpoints/show.html",
+		"finetunes_show":         "finetunes/show.html",
+		"organizations_show":     "organizations/show.html",
+		"organizations_new":      "organizations/new.html",
+		"organizations_settings": "organizations/settings.html",
 	}
 
 	// 动态添加模板
@@ -130,6 +135,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerEndpointRoutes(engine, handlersRegistry)
 	registerFinetuneRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)
+	registerOrganizationRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

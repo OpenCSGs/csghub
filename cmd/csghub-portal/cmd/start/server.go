@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"opencsg.com/portal/config"
+	"opencsg.com/portal/internal/httpbase"
 	"opencsg.com/portal/internal/routes"
 	"opencsg.com/portal/internal/svc"
 )
@@ -30,7 +31,14 @@ var serverCmd = &cobra.Command{
 			return fmt.Errorf("initializing routes: %w", err)
 		}
 
-		engine.Run(":8090")
+		server := httpbase.NewGracefulServer(
+			httpbase.GraceServerOpt{
+				Port: config.ServerPort,
+			},
+			engine,
+		)
+
+		server.Start()
 
 		return nil
 	},
