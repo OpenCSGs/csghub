@@ -263,7 +263,8 @@
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
   import BillingDetail from './BillingDetail.vue'
-  import { computed, onMounted } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
+  import { ref, computed, onMounted } from 'vue'
 
   const props = defineProps({
     localRepoId: String,
@@ -272,7 +273,6 @@
     currentPath: String,
     defaultTab: String,
     tags: Object,
-    tagList: String,
     actionName: String,
     settingsVisibility: Boolean,
     canWrite: Boolean,
@@ -293,9 +293,12 @@
     path: String
   })
 
+  const tagList = ref([])
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
-  onMounted(() => {})
+  onMounted(() => {
+    fetchTags()
+  })
 
   const showAddToCollections = computed(() => {
     return props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
@@ -351,6 +354,18 @@
         break
       default:
         break
+    }
+  }
+
+  async function fetchTags() {
+    const { error, data } = await useFetchApi(`/tags`).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      tagList.value = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
     }
   }
 </script>

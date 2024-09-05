@@ -31,7 +31,6 @@
       :settingsVisibility="repo.can_manage"
       :can-write="repo.can_write"
       :tags="tags"
-      :tag-list="tagList"
       :userName="userName"
       :commitId="commitId"
       :repoType="repoType"
@@ -55,7 +54,6 @@
     localRepoId: String,
     defaultTab: String,
     repoType: String,
-    tagList: Object,
     localModel: Object,
     currentBranch: String,
     currentPath: String,

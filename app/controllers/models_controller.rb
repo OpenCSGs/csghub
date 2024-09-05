@@ -6,7 +6,6 @@ class ModelsController < ApplicationController
 
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
-  before_action :load_model_detail, except: [:index, :new, :resolve]
 
   def index
   end
@@ -67,11 +66,5 @@ class ModelsController < ApplicationController
     @default_tab = 'files'
     @commit_id = params[:commit_id]
     render :show
-  end
-
-  private
-
-  def load_model_detail
-    @tags_list = Tag.where(scope: 'model', tag_type: 'task').as_json
   end
 end
