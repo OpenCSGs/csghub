@@ -122,7 +122,7 @@
               @click="selectTag(tag)"
               class="flex gap-[8px] items-center cursor-pointer p-[10px]">
               {{
-                this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name
+                this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
               }}
             </p>
           </div>
@@ -361,6 +361,9 @@
       },
       datasetDesc(newDesc, _) {
         this.theDatasetDesc = newDesc
+      },
+      tagList(newTagList, _) {
+        this.theTagList = newTagList
       }
     },
     beforeDestroy() {
@@ -411,7 +414,7 @@
         if (this.tagInput != '') {
           const userTriggerTagList = this.tagList.filter((tag) => {
             return (
-              tag.zh_name.includes(this.tagInput) ||
+              tag.show_name.includes(this.tagInput) ||
               tag.name.includes(this.tagInput)
             )
           })
@@ -448,7 +451,7 @@
           (tag) => tag.name === newTag.name
         )
         if (!findTag) {
-          this.selectedTags.push({ name: newTag.name, zh_name: newTag.zh_name })
+          this.selectedTags.push({ name: newTag.name, zh_name: newTag.show_name })
         }
       },
 
