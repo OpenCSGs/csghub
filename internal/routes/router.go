@@ -30,7 +30,7 @@ type HandlersRegistry struct {
 }
 
 func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
-	g := gin.Default()
+	g := gin.New()
 	// 设置信任网络 []string
 	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
@@ -38,7 +38,9 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	userModel := models.NewUserStore(svcCtx.Db)
 
 	// 注册中间件
+	g.Use(gin.Recovery())
 	g.Use(middleware.AuthMiddleware(userModel))
+	g.Use(middleware.Log())
 
 	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
 	if err != nil {

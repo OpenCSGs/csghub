@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
 	"opencsg.com/portal/pkg/server"
+	"opencsg.com/portal/pkg/server/backend"
 	"opencsg.com/portal/pkg/server/types"
 	"opencsg.com/portal/pkg/utils/jwt"
 )
@@ -15,7 +16,7 @@ type TokenHandler interface {
 }
 
 type TokenHandlerImpl struct {
-	Server server.Server
+	Server backend.Server
 }
 
 func NewTokenHandler(config *config.Config) (TokenHandler, error) {
@@ -44,7 +45,7 @@ func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("user_token", r.Token, 3600*24*7, "/", "", false, false)
+	c.SetCookie("user_token", r.Data.Token, 3600*24*7, "/", "", false, false)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Token set successfully"})
 }
