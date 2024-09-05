@@ -22,7 +22,6 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :local-repo-id="localRepoId"
       :repo-detail="repo"
       :current-branch="currentBranch"
       :current-path="currentPath"
@@ -51,7 +50,6 @@
   import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
-    localRepoId: String,
     defaultTab: String,
     repoType: String,
     localModel: Object,

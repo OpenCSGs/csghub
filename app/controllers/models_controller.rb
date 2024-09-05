@@ -2,7 +2,6 @@ class ModelsController < ApplicationController
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper
-  include LocalRepoValidation
 
   before_action :authenticate_user, only: [:new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]

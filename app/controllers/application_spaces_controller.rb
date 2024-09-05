@@ -1,5 +1,4 @@
 class ApplicationSpacesController < ApplicationController
-  include LocalRepoValidation
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper

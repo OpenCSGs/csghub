@@ -26,7 +26,7 @@
 
       <!-- repo community -->
       <el-tab-pane
-        v-if="repoType !== 'endpoint' && !!localRepoId"
+        v-if="repoType !== 'endpoint'"
         :label="$t('all.community')"
         name="community"
         class="min-h-[300px]"
@@ -82,7 +82,6 @@
     settingsVisibility: Boolean,
     repoType: String,
     sdk: String,
-    localRepoId: String,
     repo: Object
   })
 

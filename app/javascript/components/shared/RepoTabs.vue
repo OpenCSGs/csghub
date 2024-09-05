@@ -19,7 +19,6 @@
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
       :repoType="repoType"
-      :localRepoId="localRepoId"
       :sdk="sdk"
       :repo="repoDetail"
 
@@ -166,7 +165,6 @@
       <template #community>
         <community-page
           :type="repoTypeClass"
-          :localModelId="localRepoId"
         ></community-page>
       </template>
 
@@ -267,7 +265,6 @@
   import { ref, computed, onMounted } from 'vue'
 
   const props = defineProps({
-    localRepoId: String,
     repoDetail: Object,
     currentBranch: String,
     currentPath: String,
