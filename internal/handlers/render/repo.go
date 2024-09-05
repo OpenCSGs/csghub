@@ -18,6 +18,7 @@ type BaseHandler interface {
 	EditFile(ctx *gin.Context)
 	Settings(ctx *gin.Context)
 	Billing(ctx *gin.Context)
+	Logs(ctx *gin.Context)
 }
 
 type BaseHandlerImpl struct {
@@ -69,6 +70,10 @@ func (b *BaseHandlerImpl) Billing(ctx *gin.Context) {
 	b.renderShow(ctx, "billing", "billing")
 }
 
+func (b *BaseHandlerImpl) Logs(ctx *gin.Context) {
+	b.renderShow(ctx, "logs", "logs")
+}
+
 func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab string, extraData ...map[string]interface{}) {
 	data := map[string]interface{}{
 		"namespace":     ctx.Param("namespace"),
@@ -99,5 +104,12 @@ func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[str
 		data["codeName"] = ctx.Param("code_name")
 	case "spaces":
 		data["spaceName"] = ctx.Param("space_name")
+	case "endpoints":
+		data["modelName"] = ctx.Param("model_name")
+		data["endpointId"] = ctx.Param("endpoint_id")
+	case "finetunes":
+		data["modelName"] = ctx.Param("model_name")
+		data["finetuneId"] = ctx.Param("finetune_id")
+		data["finetuneName"] = ctx.Param("finetune_name")
 	}
 }
