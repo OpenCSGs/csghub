@@ -8,20 +8,22 @@
       @changeFlag="changeFlag"></DiscussionCards>
     <NewCommunityDiscussion
       v-if="theFlag == 'new'"
-      :type="type"
+      :repoType="repoType"
+      :repoPath="repoPath"
       @getDiscussion="getDiscussion"
-      @changeFlag="changeFlag"
-      :localModelId="localModelId"></NewCommunityDiscussion>
+      @changeFlag="changeFlag"></NewCommunityDiscussion>
   </div>
 </template>
 
 <script>
   import DiscussionCards from './DiscussionCards.vue'
   import NewCommunityDiscussion from './NewCommunityDiscussion.vue'
+  import useFetchApi from '../../packs/useFetchApi'
+
   export default {
     props: {
-      localModelId: String,
-      type: String
+      repoType: String,
+      repoPath: String
     },
     components: {
       DiscussionCards,
@@ -29,14 +31,15 @@
     },
     data() {
       return {
-        // cards:[],
         theFlag: 'show',
         cards: [],
         lastCommentId: ''
       }
     },
-    mounted() {
-      this.getDiscussion()
+    watch: {
+      repoPath(newPath, _) {
+        this.getDiscussion()
+      }
     },
     methods: {
       updateDetails(card) {
@@ -46,11 +49,16 @@
         this.theFlag = flag
       },
       async getDiscussion() {
-        const discussionCreateEndpoint = `/internal_api/discussions?discussionable_type=${this.type}&discussionable_id=${this.localModelId}`
-        const response = await fetch(discussionCreateEndpoint)
-        response.json().then((data) => {
-          this.cards = data
-        })
+        const discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
+        const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
+        if (data.value) {
+          this.cards = data.value.data.discussions || []
+        } else {
+          ElMessage({
+            message: error.value.msg,
+            type: 'warning'
+          })
+        }
       }
     }
   }

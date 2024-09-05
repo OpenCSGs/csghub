@@ -9,9 +9,9 @@
         </div>
         <div v-show="isEdit"  class="text-[#303133] text-[16px] leading-[24px] font-semibold flex items-center gap-[8px]">
           <input type="text"
-                 ref="inputTitle" 
-                 v-model="theTitle" 
-                 @change="saveTitle" 
+                 ref="inputTitle"
+                 v-model="theTitle"
+                 @change="saveTitle"
                  @blur="isEdit=false">
         </div>
         <div class="text-[#606266] flex gap-[8px] text-[14px] leading-[22px]">
@@ -57,11 +57,12 @@
 <script>
 import CommunityTimeLine from './CommunityTimeLine.vue'
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
-import { format } from 'timeago.js';
-import csrfFetch from "../../packs/csrfFetch";
+import { format } from 'timeago.js'
+import csrfFetch from "../../packs/csrfFetch"
 import { ElMessage } from 'element-plus'
-import MarkdownIt from "markdown-it";
+import MarkdownIt from "markdown-it"
 import { createI18n } from 'vue-i18n'
+import useFetchApi from '../../packs/useFetchApi'
 
 export default {
   props: {
@@ -94,113 +95,91 @@ export default {
   },
   methods: {
     editTitle() {
-      this.isEdit = true;
+      this.isEdit = true
       this.$nextTick(() => {
-        this.$refs.inputTitle.focus();
+        this.$refs.inputTitle.focus()
       });
     },
     saveTitle() {
       this.isEdit = false;
-      this.updateDiscussion(this.discussionId).then((data) => {
-        this.$emit("getDiscussion")
-        ElMessage({
-          message: this.$t('community.discussionDetail.updateSuccess'),
-          type: 'success'
-        })
-      })
-      .catch(err => {
-        ElMessage({
-          message: err.message,
-          type: 'warning'
-        })
-      })
-
-      // if(this.title!=this.oldTitle){
-      //   let data={name:'username',type:'change title',title_from:this.oldTitle,title_to:this.title,date:new Date().toISOString()}
-      //   this.timelineData.push(data)
-      // }
+      this.updateDiscussion(this.discussionId)
     },
     handleInputChange(value) {
       this.desc = value;
     },
     quote(content){
-      console.log(content);
-      console.log(this.desc);
+      console.log(content)
+      console.log(this.desc)
       this.desc = '> '+content
-      this.$refs.mdTextarea.quote(this.desc);
+      this.$refs.mdTextarea.quote(this.desc)
     },
     renderMarkdown(text) {
-      const mdParser = new MarkdownIt();
-      return mdParser.render(text);
+      const mdParser = new MarkdownIt()
+      return mdParser.render(text)
     },
     async create(){
       if (this.desc === '') {
-        ElMessage({ message: this.$t('community.discussionDetail.warn'), type: "warning" });
-        return;
+        ElMessage({ message: this.$t('community.discussionDetail.warn'), type: "warning" })
+        return
       }
-      this.createComment(this.discussionId).then((data) => {
-        ElMessage({ message: this.$t('community.discussionDetail.addSuccess'), type: "success" });
-        this.getComment(this.discussionId)
-      })
-      .catch(err => {
-        ElMessage({ message: err.message, type: 'warning' });
-      })
-      // let data={name:'username',type:'desc',desc:this.desc,date:new Date().toISOString()}
-      // this.timelineData.push(data)
-      this.$refs.mdTextarea.clearTextarea();
+      this.createComment(this.discussionId)
+      this.$refs.mdTextarea.clearTextarea()
     },
     cancel(){
       this.$emit("toggleDetails");
     },
 
     async updateDiscussion(id) {
-      const discussionUpdateEndpoint = `/internal_api/discussions/${id}`;
-      const formData = new FormData()
-      formData.append("title", this.theTitle);
+      const discussionUpdateEndpoint = `/discussions/${id}`
       const options = {
         method: 'PUT',
-        body: formData
-      };
-      const response = await csrfFetch(discussionUpdateEndpoint, options)
-
-      if (!response.ok) {
-        return response.json().then(data => { throw new Error(data.message) })
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: this.theTitle,
+        })
+      }
+      const {data, error} = await useFetchApi(discussionUpdateEndpoint, options).json()
+      if (data.value) {
+        this.$emit("getDiscussion")
+        ElMessage.success(this.$t('community.discussionDetail.updateSuccess'))
       } else {
-        return response.json();
+        debugger
+        ElMessage.warning(error.value.msg)
       }
     },
     async getComment(discussionId){
-      const commentCreateEndpoint = `/internal_api/comments?commentable_type=Discussion&commentable_id=${discussionId}`
-      const response = await fetch(commentCreateEndpoint);
-      response.json().then((data) => {
-        console.log(data);
-        this.commentData=data
-      })
+      const commentCreateEndpoint = `discussions/${discussionId}/comments`
+      const {data, error} = await useFetchApi(commentCreateEndpoint).json()
+      if (data.value) {
+        this.commentData = data.value.data
+      } else {
+        ElMessage.warning(error.value.msg)
+      }
     },
     async createComment(discussionId){
-      const commentCreateEndpoint = "/internal_api/comments"
-      const newComment = {
-        content: this.desc,
-      };
+      const commentCreateEndpoint = `discussions/${discussionId}/comments`
       const commentJsonData = {
-        commentable_type:'Discussion',
-        commentable_id:discussionId,
-        comment:newComment
+        commentable_type: 'Discussion',
+        commentable_id: discussionId,
+        comment: this.desc
       }
-      const commentOption = {
+      const commentOptions = {
         method:'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(commentJsonData)
       }
-      const response = await csrfFetch(commentCreateEndpoint, commentOption);
-      if (response.ok) {
-        return response.json();
+      const {data, error} = await useFetchApi(commentCreateEndpoint, commentOptions).json()
+      if (data.value) {
+        this.getComment(this.discussionId)
+        ElMessage.success(this.$t('community.discussionDetail.addSuccess'))
       } else {
-        return response.json().then(data => { throw new Error(data.message) })
+        ElMessage.warning(error.value.msg)
       }
     }
-  },
-};
+  }
+}
 </script>

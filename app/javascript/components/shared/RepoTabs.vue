@@ -164,7 +164,8 @@
       <!-- community -->
       <template #community>
         <community-page
-          :type="repoTypeClass"
+          :repoType="repoType"
+          :repoPath="repoDetail.path"
         ></community-page>
       </template>
 
