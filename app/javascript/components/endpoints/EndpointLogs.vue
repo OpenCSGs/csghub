@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, watch } from 'vue'
+  import { ref, inject, watch, nextTick } from 'vue'
   import refreshJWT from '../../packs/refreshJWT.js'
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useCookies } from "vue3-cookies";
@@ -80,6 +80,9 @@
       onmessage(ev) {
         if (ev.event === 'Container') {
           appendLog(instanceLogDiv, ev.data, instanceLogLineNum)
+          nextTick(() => {
+            scrollToBottom(instanceLogDiv);
+          });
         }
       },
       onerror(err) {
@@ -87,6 +90,13 @@
         console.log(err)
       }
     })
+  }
+
+  const scrollToBottom = (targetRef) => {
+    const targetDiv = targetRef.value;
+    if (targetDiv) {
+      targetDiv.scrollTop = targetDiv.scrollHeight;
+    }
   }
 
   const appendLog = (refElem, data, refLineNum) => {
