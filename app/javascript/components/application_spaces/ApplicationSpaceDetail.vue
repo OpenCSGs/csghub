@@ -81,12 +81,12 @@
       </template>
       <div v-show="isBuildLogTab"
            ref="buildLogDiv"
-           class="overflow-scroll"
+           class="h-full"
       >
       </div>
       <div v-show="!isBuildLogTab"
            ref="containerLogDiv"
-           class="overflow-scroll"
+           class="h-full"
       >
       </div>
     </el-drawer>
@@ -253,12 +253,12 @@
         if (ev.event === 'Build') {
           appendLog(buildLogDiv, ev.data, buildLogLineNum)
           nextTick(() => {
-            scrollToBottom(buildLogDiv);
+            scrollToBottom()
           });
         } else if (ev.event === 'Container') {
           appendLog(containerLogDiv, ev.data, containerLogLineNum)
           nextTick(() => {
-            scrollToBottom(containerLogDiv);
+            scrollToBottom()
           });
         }
       },
@@ -269,8 +269,8 @@
     })
   }
 
-  const scrollToBottom = (targetRef) => {
-    const targetDiv = targetRef.value;
+  const scrollToBottom = () => {
+    const targetDiv = document.getElementsByClassName('el-drawer__body')[0]
     if (targetDiv) {
       targetDiv.scrollTop = targetDiv.scrollHeight;
     }

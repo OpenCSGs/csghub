@@ -81,7 +81,7 @@
         if (ev.event === 'Container') {
           appendLog(instanceLogDiv, ev.data, instanceLogLineNum)
           nextTick(() => {
-            scrollToBottom(buildLogDiv);
+            scrollToBottom(instanceLogDiv);
           });
         }
       },
@@ -98,7 +98,7 @@
       targetDiv.scrollTop = targetDiv.scrollHeight;
     }
   }
-  
+
   const appendLog = (refElem, data, refLineNum) => {
     const node = document.createElement("p")
     node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
