@@ -17,7 +17,6 @@ import (
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/internal/svc"
 	"opencsg.com/portal/pkg/types"
-	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 // 全局配置结构体
@@ -68,39 +67,6 @@ func injectConfig(config types.GlobalConfig) gin.HandlerFunc {
 	}
 }
 
-// 辅助函数：获取注入的配置
-func getConfig(c *gin.Context) types.GlobalConfig {
-	return c.MustGet("Config").(types.GlobalConfig)
-}
-
-func getCurrentUserInfo(c *gin.Context) (models.User, bool) {
-	currentUser := jwt.GetCurrentUser(c)
-	if currentUser != nil {
-		return *currentUser, true
-	}
-	return models.User{}, false
-}
-
-// 辅助函数：创建模板数据
-func createTemplateData(c *gin.Context, extraData map[string]interface{}) gin.H {
-	config := getConfig(c)
-	currentUser, isLoggedIn := getCurrentUserInfo(c)
-
-	data := gin.H{
-		"csghubServer": config.ServerBaseUrl,
-		"onPremise":    config.OnPremise,
-		"enableHttps":  config.EnableHttps,
-		"currentUser":  currentUser,
-		"isLoggedIn":   isLoggedIn,
-	}
-
-	for k, v := range extraData {
-		data[k] = v
-	}
-
-	return data
-}
-
 func createRender() multitemplate.Renderer {
 	viewsFS, err := fs.Sub(frontend.Dist, "dist/src/views")
 	if err != nil {
@@ -128,6 +94,8 @@ func createRender() multitemplate.Renderer {
 		"codes_show":             "codes/show.html",
 		"spaces_index":           "spaces/index.html",
 		"spaces_show":            "spaces/show.html",
+		"endpoints_show":         "endpoints/show.html",
+		"finetunes_show":         "finetunes/show.html",
 		"organizations_show":     "organizations/show.html",
 		"organizations_new":      "organizations/new.html",
 		"organizations_settings": "organizations/settings.html",
@@ -164,6 +132,8 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerDatasetRoutes(engine, handlersRegistry)
 	registerCodeRoutes(engine, handlersRegistry)
 	registerSpaceRoutes(engine, handlersRegistry)
+	registerEndpointRoutes(engine, handlersRegistry)
+	registerFinetuneRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)
 	registerOrganizationRoutes(engine, handlersRegistry)
 }
