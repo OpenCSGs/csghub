@@ -109,7 +109,7 @@
           },
           body: JSON.stringify(discussionJsonData)
         }
-        const { data, error } = await useFetchApi(discussionCreateEndpoint, options)
+        const { data, error } = await useFetchApi(discussionCreateEndpoint, options).json()
         if (data.value) {
           this.createComment(data.value.data.id)
           ElMessage.success(this.$t('community.newDiscussion.success'))
@@ -131,7 +131,7 @@
           },
           body: JSON.stringify(commentJsonData)
         }
-        const {data, error} = await useFetchApi(commentCreateEndpoint, commentOptions)
+        const {data, error} = await useFetchApi(commentCreateEndpoint, commentOptions).json()
         if (data.value) {
           this.$emit('changeFlag', 'show')
           this.$emit('getDiscussion')

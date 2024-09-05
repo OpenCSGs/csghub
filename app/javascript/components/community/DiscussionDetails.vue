@@ -58,10 +58,8 @@
 import CommunityTimeLine from './CommunityTimeLine.vue'
 import CommunityMDTextarea from './CommunityMDTextarea.vue'
 import { format } from 'timeago.js'
-import csrfFetch from "../../packs/csrfFetch"
 import { ElMessage } from 'element-plus'
 import MarkdownIt from "markdown-it"
-import { createI18n } from 'vue-i18n'
 import useFetchApi from '../../packs/useFetchApi'
 
 export default {
