@@ -22,7 +22,7 @@ import { endpoints } from './zh_js/endpoints';
 import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
 import { billing } from './zh_js/billing';
-
+import { errors_page } from './zh_js/error';
 export default {
   all,
   rule,
@@ -47,5 +47,6 @@ export default {
   endpoints,
   admin,
   finetune,
-  billing
+  billing,
+  errors_page
 };

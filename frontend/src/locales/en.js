@@ -22,6 +22,8 @@ import { endpoints } from './en_js/endpoints';
 import { finetune } from './en_js/finetune';
 import { admin } from './en_js/admin';
 import { billing } from './en_js/billing';
+import { errors_page } from './en_js/error';
+
 
 
 export default {
@@ -48,5 +50,6 @@ export default {
   endpoints,
   admin,
   finetune,
-  billing
+  billing,
+  errors_page
 };

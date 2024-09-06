@@ -85,6 +85,10 @@ func createRender() multitemplate.Renderer {
 
 	// 定义页面和对应的模板文件
 	pages := map[string]string{
+		"errors_404":          "errors/404.html",
+		"errors_401":          "errors/unauthorized.html",
+		"errors_login_failed": "errors/login_failed.html",
+
 		"index":                  "home/index.html",
 		"models_index":           "models/index.html",
 		"models_show":            "models/show.html",
@@ -127,6 +131,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	// 使用中间件注入全局配置
 	engine.Use(injectConfig(globalConfig))
 
+	registerErrorRoutes(engine, handlersRegistry)
 	registerHomeRoutes(engine, handlersRegistry)
 	registerModelRoutes(engine, handlersRegistry)
 	registerDatasetRoutes(engine, handlersRegistry)

@@ -3,6 +3,7 @@ package renderHandlers
 import "opencsg.com/portal/internal/svc"
 
 type RenderHandlerRegistry struct {
+	ErrorHandler        ErrorHandler
 	ModelHandler        ModelHandler
 	DatasetHandler      DatasetHandler
 	CodeHandler         CodeHandler
@@ -14,6 +15,7 @@ type RenderHandlerRegistry struct {
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
+	errorHandler := NewErrorHandler()
 	modelHandler := NewModelHandler()
 	datasetHandler := NewDatasetHandler()
 	codeHandler := NewCodeHandler()
@@ -24,6 +26,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 	organizationHandler := NewOrganizationHandler()
 
 	return &RenderHandlerRegistry{
+		ErrorHandler:        errorHandler,
 		ModelHandler:        modelHandler,
 		DatasetHandler:      datasetHandler,
 		CodeHandler:         codeHandler,
