@@ -393,7 +393,7 @@ services:
     networks:
       opencsg:
         ipv4_address: 172.25.0.26
-    restart: alway
+    restart: always
 
 networks:
   opencsg:
