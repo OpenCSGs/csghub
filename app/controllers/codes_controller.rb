@@ -1,5 +1,4 @@
 class CodesController < ApplicationController
-  include LocalRepoValidation
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper

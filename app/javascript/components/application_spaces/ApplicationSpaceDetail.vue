@@ -24,7 +24,6 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :local-repo-id="localRepoId"
       :repo-detail="applicationSpace"
       :appStatus="appStatus"
       :sdk="applicationSpace.sdk"
@@ -111,7 +110,6 @@
     files: Object,
     lastCommit: Object,
     branches: Object,
-    localRepoId: String,
     currentBranch: String,
     currentPath: String,
     defaultTab: String,
