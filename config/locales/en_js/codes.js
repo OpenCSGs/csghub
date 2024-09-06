@@ -4,10 +4,10 @@ export const codes = {
   placeholder: "Search Codes",
   downloadCode: "Download Code",
   codeName: "Code name",
-  codeNameTips: "Applierento the code path, cannot be changed after creation",
+  codeNameTips: "Applied to the code path, cannot be changed after creation",
   namespaceCodeName: "Code name",
   codeNickName: "Code alias",
-  codeDesc: "Code Description",
+  codeDesc: "Code description",
   codesUsedToTrain: 'Codes used to train',
   newCode: {
     title: "Create New Code Repository",

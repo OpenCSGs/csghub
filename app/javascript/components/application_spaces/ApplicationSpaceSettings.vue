@@ -201,17 +201,17 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-[#0a0d12] leading-[20px] font-medium">
           {{ $t('application_spaces.edit.changeVisibility') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('application_spaces.edit.statusText') }}
           <span class="text-black font-semibold"
-            >【{{
+            >[{{
               isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            }}]</span
           >
-          {{ $t('application_spaces.edit.status') }}{{
+          {{ $t('application_spaces.edit.status') }} {{
             isPrivate
               ? this.$t('application_spaces.edit.privateVis')
               : this.$t('application_spaces.edit.publicVis')

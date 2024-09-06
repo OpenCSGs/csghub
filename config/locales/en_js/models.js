@@ -8,7 +8,7 @@ export const models = {
     "Applied to the model path, cannot be changed after creation",
   namespaceModelName: "Name space",
   modelNickName: "Model alias",
-  modelDesc: "Model Profile",
+  modelDesc: "Model description",
   modelTag: "Model tags",
   modelIndustryTag: "Industry tags",
   tips:" Creating and Uploading Model Files",
@@ -37,7 +37,7 @@ export const models = {
   edit: {
     tips: "Will be displayed on the model list page, optional",
     tips2: "An introduction about the model, optional",
-    tips3: "Select task labels, users can filter models by labels",
+    tips3: "Select industry labels, users can filter models by labels",
     changeVisibility: "Change model visibility",
     statusText: "The current model is now",
     status: "Status.",
