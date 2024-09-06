@@ -18,7 +18,7 @@ type User struct {
 	Roles             []string       `json:"roles,omitempty"`
 	LastLoginAt       string         `json:"last_login_at,omitempty"`
 	Orgs              []Organization `json:"orgs,omitempty"`
-	CanChangeUserName bool           `json:"can_change_username"`
+	CanChangeUserName string         `json:"can_change_username"`
 }
 
 type Organization struct {
