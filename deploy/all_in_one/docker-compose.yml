@@ -154,6 +154,7 @@ services:
       OPENCSG_ACCOUNTING_SERVER_PORT: 8086
       OPENCSG_USER_SERVER_HOST: http://user_server
       OPENCSG_USER_SERVER_PORT: 8088
+      STARHUB_SERVER_S3_ENABLE_SSL: false
     ports:
       - "8080:8080"
     restart: always
@@ -363,6 +364,7 @@ services:
       OPENCSG_USER_SERVER_SIGNIN_SUCCESS_REDIRECT_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}/server/callback
     ports:
       - "8088:8088"
+    restart: always
     networks:
       - opencsg
     volumes:
