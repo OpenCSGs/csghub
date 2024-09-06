@@ -161,7 +161,7 @@ export default {
       const commentJsonData = {
         commentable_type: 'Discussion',
         commentable_id: discussionId,
-        comment: this.desc
+        content: this.desc
       }
       const commentOptions = {
         method:'POST',
