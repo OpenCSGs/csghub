@@ -215,15 +215,17 @@
 
   async function submitCollectionForm() {
     const transformedData = {
-      namespace:'',
       description: '',
       name: '',
       nickname: '',
       private: true,
       theme: '#000000'
     }
-    // 将 dataFormValue 的值直接复制到 transformedData
-    transformedData.namespace = dataForm.value.owner
+    // dataFormValue value to transformedData
+    // Only pass the namespace if it is an organization
+    if(dataForm.value.owner !== userStore.username){
+      transformedData.namespace = dataForm.value.owner
+    }
     transformedData.description = dataForm.value.collectionDesc
     transformedData.name = dataForm.value.title
     transformedData.nickname = dataForm.value.collectionNickName
