@@ -106,8 +106,6 @@ export default {
       this.desc = value;
     },
     quote(content){
-      console.log(content)
-      console.log(this.desc)
       this.desc = '> '+content
       this.$refs.mdTextarea.quote(this.desc)
     },
@@ -143,7 +141,6 @@ export default {
         this.$emit("getDiscussion")
         ElMessage.success(this.$t('community.discussionDetail.updateSuccess'))
       } else {
-        debugger
         ElMessage.warning(error.value.msg)
       }
     },
