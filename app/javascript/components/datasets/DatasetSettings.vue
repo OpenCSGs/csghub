@@ -210,11 +210,11 @@
         <div class="max-w-[864px] text-[14px] text-[#475467] leading-[20px]">
           {{ $t('datasets.edit.statusText') }}
           <span class="text-black font-medium"
-            >【{{
+            >[{{
               isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            }}]</span
           >
-          {{ $t('datasets.edit.status') }}{{
+          {{ $t('datasets.edit.status') }} {{
             isPrivate
               ? this.$t('datasets.edit.privateVis')
               : this.$t('datasets.edit.publicVis')

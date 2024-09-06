@@ -86,11 +86,11 @@
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('codes.edit.statusText') }}
           <span class="text-black font-semibold"
-            >【{{
+            >[{{
               isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            }}]</span
           >
-          {{ $t('codes.edit.status') }}{{
+          {{ $t('codes.edit.status') }} {{
             isPrivate
               ? this.$t('codes.edit.privateVis')
               : this.$t('codes.edit.publicVis')
