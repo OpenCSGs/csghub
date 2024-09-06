@@ -18,10 +18,10 @@ export const datasets = {
     datasetName: "数据集名称",
     datasetNickName: "数据集别名",
     datasetDesc: "数据集简介",
-    public: "【公开】",
+    public: "公开",
     publicDesc:
       "任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。",
-    private: "【私有】",
+    private: "私有",
     privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
     tips: "创建数据集后，你可以使用网页或 Git 上传你的文件。",
     tips2: "暂不支持创建公开的数据集，如有需要可以联系管理员进行人工审核。",
