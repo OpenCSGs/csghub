@@ -9,15 +9,14 @@ import (
 
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
+	"opencsg.com/portal/config"
 	"opencsg.com/portal/frontend"
-	"opencsg.com/portal/internal/config"
 	frontendHandlers "opencsg.com/portal/internal/handlers/frontend"
 	renderHandlers "opencsg.com/portal/internal/handlers/render"
 	"opencsg.com/portal/internal/middleware"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/internal/svc"
 	"opencsg.com/portal/pkg/types"
-	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 // 全局配置结构体
@@ -26,10 +25,11 @@ type HandlersRegistry struct {
 	FrontendHandlers *frontendHandlers.FrontendHandlerRegistry
 	RenderHandler    *renderHandlers.RenderHandlerRegistry
 	// adminHandlers    *adminHandlers.AdminHandlerRegistry
+	Config *config.Config
 }
 
-func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
-	g := gin.Default()
+func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
+	g := gin.New()
 	// 设置信任网络 []string
 	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
@@ -37,19 +37,26 @@ func Initialize(svcCtx *svc.ServiceContext) *gin.Engine {
 	userModel := models.NewUserStore(svcCtx.Db)
 
 	// 注册中间件
+	g.Use(gin.Recovery())
 	g.Use(middleware.AuthMiddleware(userModel))
+	g.Use(middleware.Log())
 
+	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
+	if err != nil {
+		return nil, err
+	}
 	handlersRegistry := &HandlersRegistry{
-		FrontendHandlers: frontendHandlers.NewHandlersRegistry(svcCtx),
+		FrontendHandlers: frontendHandlers,
 		RenderHandler:    renderHandlers.NewHandlersRegistry(svcCtx),
 		// AdminHandlers:    adminHandlers.NewHandlersRegistry(svcCtx),
+		Config: svcCtx.Config,
 	}
 
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
 	setupViewsRouter(g, handlersRegistry)
 	setupApiRouter(g, handlersRegistry)
-	return g
+	return g, nil
 }
 
 // 中间件：注入全局配置
@@ -58,39 +65,6 @@ func injectConfig(config types.GlobalConfig) gin.HandlerFunc {
 		c.Set("Config", config)
 		c.Next()
 	}
-}
-
-// 辅助函数：获取注入的配置
-func getConfig(c *gin.Context) types.GlobalConfig {
-	return c.MustGet("Config").(types.GlobalConfig)
-}
-
-func getCurrentUserInfo(c *gin.Context) (models.User, bool) {
-	currentUser := jwt.GetCurrentUser(c)
-	if currentUser != nil {
-		return *currentUser, true
-	}
-	return models.User{}, false
-}
-
-// 辅助函数：创建模板数据
-func createTemplateData(c *gin.Context, extraData map[string]interface{}) gin.H {
-	config := getConfig(c)
-	currentUser, isLoggedIn := getCurrentUserInfo(c)
-
-	data := gin.H{
-		"csghubServer": config.ServerBaseUrl,
-		"onPremise":    config.OnPremise,
-		"enableHttps":  config.EnableHttps,
-		"currentUser":  currentUser,
-		"isLoggedIn":   isLoggedIn,
-	}
-
-	for k, v := range extraData {
-		data[k] = v
-	}
-
-	return data
 }
 
 func createRender() multitemplate.Renderer {
@@ -111,15 +85,20 @@ func createRender() multitemplate.Renderer {
 
 	// 定义页面和对应的模板文件
 	pages := map[string]string{
-		"index":          "home/index.html",
-		"models_index":   "models/index.html",
-		"models_show":    "models/show.html",
-		"datasets_index": "datasets/index.html",
-		"datasets_show":  "datasets/show.html",
-		"codes_index":    "codes/index.html",
-		"codes_show":     "codes/show.html",
-		"spaces_index":   "spaces/index.html",
-		"spaces_show":    "spaces/show.html",
+		"index":                  "home/index.html",
+		"models_index":           "models/index.html",
+		"models_show":            "models/show.html",
+		"datasets_index":         "datasets/index.html",
+		"datasets_show":          "datasets/show.html",
+		"codes_index":            "codes/index.html",
+		"codes_show":             "codes/show.html",
+		"spaces_index":           "spaces/index.html",
+		"spaces_show":            "spaces/show.html",
+		"endpoints_show":         "endpoints/show.html",
+		"finetunes_show":         "finetunes/show.html",
+		"organizations_show":     "organizations/show.html",
+		"organizations_new":      "organizations/new.html",
+		"organizations_settings": "organizations/settings.html",
 	}
 
 	// 动态添加模板
@@ -141,9 +120,9 @@ func createRender() multitemplate.Renderer {
 func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	// 创建全局配置实例
 	var globalConfig = types.GlobalConfig{
-		ServerBaseUrl: config.Env("STARHUB_INNER_BASE_URL", "https://hub.opencsg-stg.com").(string),
-		OnPremise:     config.Env("ON_PREMISE", "false").(string),
-		EnableHttps:   config.Env("ENABLE_HTTPS", "false").(string),
+		ServerBaseUrl: handlersRegistry.Config.StarhubServer.BaseURL,
+		OnPremise:     handlersRegistry.Config.OnPremise,
+		EnableHttps:   handlersRegistry.Config.EnableHttps,
 	}
 	// 使用中间件注入全局配置
 	engine.Use(injectConfig(globalConfig))
@@ -153,7 +132,10 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerDatasetRoutes(engine, handlersRegistry)
 	registerCodeRoutes(engine, handlersRegistry)
 	registerSpaceRoutes(engine, handlersRegistry)
+	registerEndpointRoutes(engine, handlersRegistry)
+	registerFinetuneRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)
+	registerOrganizationRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

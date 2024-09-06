@@ -4,11 +4,21 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
+type DatabaseDialect string
+
+const (
+	DialectPostgres DatabaseDialect = "pg"
+	DialectSQLite   DatabaseDialect = "sqlite"
+)
+
 type Config struct {
+	ServerPort     int    `envconfig:"CSGHUB_PORTAL_SERVER_PORT" default:"8090"`
 	SuperUsers     string `envconfig:"CSGHUB_PORTAL_SUPER_USERS" default:""`
 	OnPremise      bool   `envconfig:"CSGHUB_PORTAL_ON_PREMISE" default:"true"`
 	SensitiveCheck bool   `envconfig:"CSGHUB_PORTAL_SENSITIVE_CHECK" default:"false"`
 	EnableHttps    bool   `envconfig:"CSGHUB_PORTAL_ENABLE_HTTPS" default:"true"`
+	SignupURL      string `envconfig:"CSGHUB_PORTAL_SIGNUP_URL" default:""`
+	LoginURL       string `envconfig:"CSGHUB_PORTAL_LOGIN_URL" default:""`
 
 	StarhubServer struct {
 		BaseURL string `envconfig:"CSGHUB_PORTAL_STARHUB_BASE_URL" default:"http://localhost:8080"`
@@ -16,8 +26,8 @@ type Config struct {
 	}
 
 	Database struct {
-		DSN     string `envconfig:"CSGHUB_PORTAL_DATABASE_DSN" default:"postgresql://postgres:postgres@localhost:5432/starhub_portal?sslmode=disable"`
-		Dialect string `envconfig:"CSGHUB_PORTAL_DATABASE_DIALECT" default:"pg"`
+		DSN     string          `envconfig:"CSGHUB_PORTAL_DATABASE_DSN" default:"postgresql://postgres:postgres@localhost:5432/starhub_portal?sslmode=disable"`
+		Dialect DatabaseDialect `envconfig:"CSGHUB_PORTAL_DATABASE_DIALECT" default:"pg"`
 	}
 }
 

@@ -22,6 +22,7 @@ func (c *CsgHubServer) VerifyJWTToken(token string) (*types.User, *http.Response
 	return s.Data, resp, err
 }
 
+// Refresh JWT token
 func (c *CsgHubServer) CreateJWTToken(req types.CreateJWTReq) (*types.CreateJWTResp, *http.Response, error) {
 	checkResp := new(types.CreateJWTResp)
 	body, err := json.Marshal(&req)

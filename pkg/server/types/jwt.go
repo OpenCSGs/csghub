@@ -37,6 +37,9 @@ type CreateJWTReq struct {
 }
 
 type CreateJWTResp struct {
-	ExpireAt time.Time `json:"expire_at"`
-	Token    string    `json:"token"`
+	Msg  string `json:"msg"`
+	Data struct {
+		ExpireAt time.Time `json:"expire_at"`
+		Token    string    `json:"token"`
+	} `json:"data"`
 }

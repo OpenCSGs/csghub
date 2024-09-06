@@ -4,8 +4,8 @@ tmp_dir = "tmp"
 
 [build]
   args_bin = []
-  bin = "./tmp/main"
-  cmd = "go build -o ./tmp/main ./cmd/main.go"
+  bin = "./tmp/csghub-portal start server"
+  cmd = "go build -o ./tmp/csghub-portal ./cmd/csghub-portal"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []

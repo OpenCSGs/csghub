@@ -3,11 +3,14 @@ package renderHandlers
 import "opencsg.com/portal/internal/svc"
 
 type RenderHandlerRegistry struct {
-	ModelHandler   ModelHandler
-	DatasetHandler DatasetHandler
-	CodeHandler    CodeHandler
-	SpaceHandler   SpaceHandler
-	SessionHandler SessionHandler
+	ModelHandler        ModelHandler
+	DatasetHandler      DatasetHandler
+	CodeHandler         CodeHandler
+	SpaceHandler        SpaceHandler
+	EndpointHandler     EndpointHandler
+	FinetuneHandler     FinetuneHandler
+	SessionHandler      SessionHandler
+	OrganizationHandler OrganizationHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
@@ -15,13 +18,19 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 	datasetHandler := NewDatasetHandler()
 	codeHandler := NewCodeHandler()
 	spaceHandler := NewSpaceHandler()
-	sessionHandler := NewSessionHandler()
+	endpointHandler := NewEndpointHandler()
+	finetuneHandler := NewFinetuneHandler()
+	sessionHandler := NewSessionHandler(svcCtx.Config)
+	organizationHandler := NewOrganizationHandler()
 
 	return &RenderHandlerRegistry{
-		ModelHandler:   modelHandler,
-		DatasetHandler: datasetHandler,
-		CodeHandler:    codeHandler,
-		SpaceHandler:   spaceHandler,
-		SessionHandler: sessionHandler,
+		ModelHandler:        modelHandler,
+		DatasetHandler:      datasetHandler,
+		CodeHandler:         codeHandler,
+		SpaceHandler:        spaceHandler,
+		EndpointHandler:     endpointHandler,
+		FinetuneHandler:     finetuneHandler,
+		SessionHandler:      sessionHandler,
+		OrganizationHandler: organizationHandler,
 	}
 }
