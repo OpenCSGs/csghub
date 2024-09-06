@@ -43,87 +43,165 @@
       <div class="flex flex-col gap-[8px]">
         <p>Subset（100）</p>
         <el-select
-          v-model="visibilityName"
-          @change="changeVisibility"
+          v-model="subset"
+          @change="changeSubsetName"
           placeholder="Select"
           size="large"
           class="!w-[350px] sm:!w-full">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value" />
+            v-for="item in configs"
+            :key="item.config_name"
+            :label="item.config_name"
+            :value="item.config_name" />
         </el-select>
       </div>
       <div class="flex flex-col gap-[8px]">
         <p>Split (1)</p>
         <el-select
-          v-model="visibilityName"
-          @change="changeVisibility"
+          v-model="split"
+          @change="changeSplitName"
           placeholder="Select"
           size="large"
           class="!w-[350px] sm:!w-full">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value" />
+            v-for="item in dataFiles"
+            :key="item"
+            :label="item"
+            :value="item" />
         </el-select>   
       </div>
     </div>
     <div>
       <el-input
-        v-model="delDesc"
+        v-model="nameFilterInput"
         clearable
         size="large"
         :prefix-icon="Search"
         placeholder="Search this dataset"
+        @change="filterChange"
         class="w-full" />
     </div>
-    <el-table :data="tableData"
-              border
-              stripe
-              max-height="420"
-              @row-click="toggleRow"
-              class="w-full rounded-md mb-4"
-              row-class-name="row-item-clamp cursor-pointer"
-              cell-class-name="!align-top">
-      <el-table-column v-for="column in previewData.columns"
-                      :key="column"
-                      :prop="column"
-                      :label="column"
-                      min-width="180" />
-    </el-table>
+    <div>
+      <el-table :data="tableData"
+                border
+                stripe
+                max-height="420"
+                @row-click="toggleRow"
+                class="w-full rounded-md mb-4"
+                row-class-name="row-item-clamp cursor-pointer"
+                cell-class-name="!align-top">
+        <el-table-column v-for="column in previewData.columns"
+                        :key="column"
+                        :prop="column"
+                        :label="column"
+                        min-width="180" />
+      </el-table>
+      <CsgPagination
+        perPage="4"
+        :currentPage="currentPage"
+        @currentChange="reloadRows"
+        :total="totalRows"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
-import { Search } from '@element-plus/icons-vue'
+  import { computed, onMounted, ref } from 'vue'
+  import { Search } from '@element-plus/icons-vue'
+  import useFetchApi from '../../packs/useFetchApi'
+  import CsgPagination from '../shared/CsgPagination.vue'
 
-const props = defineProps({
-  previewData: Object
-})
-
-const tableData = computed(() => {
-  const rows = props.previewData?.rows || []
-  const columns = props.previewData?.columns || []
-  return rows.map(row => {
-    const obj = {}
-    for (let i = 0; i < columns.length; i++) {
-      obj[columns[i]] = row[i]
-    }
-    return obj
+  const props = defineProps({
+    previewData: Object,
+    namespacePath: String
   })
-})
 
-const toggleRow = (_row, _column, event) => {
-  const row = event.target.closest('.el-table__row')
-  row.classList.toggle('row-item-clamp')
-}
+  const currentPage = ref(1)
+  const totalRows = ref(props.previewData.total)
+  const nameFilterInput = ref('')
+  const configs = ref([])
+  const dataFiles = ref([])
+  const subset = ref(configs[0].config_name || '')
+  const split = ref('')
 
-onMounted(() => {
-    // fetchCatalog()
+  const tableData = computed(() => {
+    const rows = props.previewData?.rows.slice(0, 4) || []
+    const columns = props.previewData?.columns || []
+    return rows.map(row => {
+      const obj = {}
+      for (let i = 0; i < columns.length; i++) {
+        obj[columns[i]] = row[i]
+      }
+      return obj
+    })
+  })
+  const toggleRow = (_row, _column, event) => {
+    const row = event.target.closest('.el-table__row')
+    row.classList.toggle('row-item-clamp')
+  }
+  
+  const changeSubsetName = (value) => {
+    const filteredItem = data.find(item => item.config_name === value)
+    dataFiles.value = filteredItem ? filteredItem.data_files: null
+    currentPage.value = 1
+    reloadRows()
+  }
+
+  const changeSplitName = (value) => {
+    currentPage.value = 1
+    reloadRows()
+  }
+
+  const filterChange = () => {
+    currentPage.value = 1
+    reloadRows()
+  }
+
+  async function fetchCatalog() {
+    const { error, data } = await useFetchApi(`datasets/${props.namespacePath}/dataviewer/catalog`).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      configs.value = data.value.data.configs
+      console.log(data.value.data.configs);
+      console.log(data.value.data.dataset_info);
+    }
+  }
+
+  const reloadRows = (childCurrent) => {
+    if(childCurrent){
+      currentPage.value = childCurrent
+    }
+    let url = `datasets/${props.namespacePath}/dataviewer/rows`
+    url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
+    url = url + `&per=4`
+    url = url + `&search=${nameFilterInput.value}`
+
+    url = url + `&namespace=${props.namespacePath.split('/')[0]}`
+    url = url + `&config=${subset.value}`
+    url = url + `&split=${split.value}`
+    loadRows(url)
+  }
+
+  async function loadRows(url) {
+    const { error, data } = await useFetchApi(url).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      console.log(data.value.data);
+    }
+  }
+
+  onMounted(() => {
+    console.log(props.previewData);
+    fetchCatalog()
   })
 </script>
 
