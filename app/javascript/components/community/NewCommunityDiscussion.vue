@@ -80,19 +80,6 @@
           return
         }
         this.createDiscussion()
-          .then((discussion) => {
-            this.createComment(discussion.id).catch((err) => {
-              ElMessage({
-                message:
-                  this.$t('community.newDiscussion.comment') + err.message,
-                type: 'warning'
-              })
-              return
-            })
-          })
-          .catch((err) => {
-            ElMessage({ message: err.message, type: 'warning' })
-          })
       },
       cancel() {
         this.$emit('changeFlag', 'show')
@@ -122,7 +109,7 @@
         const commentJsonData = {
           commentable_type: 'Discussion',
           commentable_id: discussionId,
-          comment: this.desc
+          content: this.desc
         }
         const commentOptions = {
           method: 'POST',
