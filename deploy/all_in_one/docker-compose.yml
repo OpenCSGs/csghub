@@ -76,11 +76,7 @@ services:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:latest
     restart: always
     command: >
-      bash -c "bundle exec rails assets:precompile
-      && bundle exec rails db:create
-      && bundle exec rails db:migrate
-      && bundle exec rails db:seed
-      && bundle exec rails s -p 3000 -b '0.0.0.0'"
+      bash -c "bundle exec rails assets:precompile && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails db:seed && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./log:/myapp/log
     environment:
@@ -103,7 +99,7 @@ services:
       ENDPOINT: http://${SERVER_DOMAIN}:9000
       ACCESS_ID: admin
       ACCESS_SECRET: Password_123
-      REGION:  cn-beijing
+      REGION: cn-beijing
       ON_PREMISE: false
       FORCE_PATH_STYLE: true
     ports:
@@ -142,10 +138,10 @@ services:
       STARHUB_SERVER_SPACE_BUILDER_ENDPOINT: http://space_builder:8080
       STARHUB_SERVER_SPACE_RUNNER_ENDPOINT: http://csghub_server_runner:8082
       STARHUB_SERVER_PUBLIC_ROOT_DOMAIN: ${SPACE_APP_EXTERNAL_DOMAIN}:${SERVER_PORT} #opencsg.public:80
-      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT}  #space.lwf.internal:30446
-      STARHUB_SERVER_MODEL_DOWNLOAD_ENDPOINT:  http://${SERVER_DOMAIN}:${SERVER_PORT}
+      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT} #space.lwf.internal:30446
+      STARHUB_SERVER_MODEL_DOWNLOAD_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_PORT}
       STARHUB_SERVER_SAAS: false
-      STARHUB_SERVER_MIRRORSERVER_ENABLE : false
+      STARHUB_SERVER_MIRRORSERVER_ENABLE: false
       STARHUB_SERVER_CASDOOR_CLIENT_ID: d554744494d93c21a6ab
       STARHUB_SERVER_CASDOOR_CLIENT_SECRET: 2d942276879382c66363ef6303e0d66d37e5d98d
       STARHUB_SERVER_CASDOOR_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}
@@ -173,7 +169,7 @@ services:
       - deploy
       - runner
     environment:
-      STARHUB_DATABASE_DSN:  postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
       STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
       STARHUB_SERVER_DOCKER_REG_BASE: ${DOCKER_REGISTRY_SERVER}/${DOCKER_REGISTRY_NS}/
       STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT}
@@ -196,7 +192,7 @@ services:
       - rproxy
     environment:
       STARHUB_SERVER_SPACE_SESSION_SECRET_KEY: c8f771f2a178089b99172cbbd7e3b01d
-      STARHUB_DATABASE_DSN:  postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
       STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
       STARHUB_SERVER_GITSERVER_HOST: http://gitea:3001
       STARHUB_SERVER_GITSERVER_URL: http://gitea:3001
@@ -205,7 +201,7 @@ services:
       STARHUB_SERVER_GITSERVER_WEBHOOK_URL: http://csghub_server:8080/api/v1/callback/git
       STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT}
       STARHUB_SERVER_SAAS: false
-      STARHUB_SERVER_MIRRORSERVER_ENABLE : false
+      STARHUB_SERVER_MIRRORSERVER_ENABLE: false
       STARHUB_JWT_SIGNING_KEY: e2kk6awudc3620ed9a
     ports:
       - "8083:8083"
@@ -291,10 +287,10 @@ services:
       - "9000:9000" # api
       - "9001:9001" # console
     environment:
-       MINIO_ROOT_USER: admin
-       MINIO_ROOT_PASSWORD: Password_123
-       MINIO_DEFAULT_BUCKETS: opencsg-server-lfs:public,opencsg-portal-storage:public
-       MINIO_SCHEME: http
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: Password_123
+      MINIO_DEFAULT_BUCKETS: opencsg-server-lfs:public,opencsg-portal-storage:public
+      MINIO_SCHEME: http
     volumes:
       - minio_data:/bitnami/minio/data
     networks:
@@ -344,6 +340,7 @@ services:
       - user
       - launch
     depends_on:
+      - postgres
       - gitea
     environment:
       STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN}
@@ -385,6 +382,18 @@ services:
     volumes:
       - ./casdoor/conf:/conf/
 
+  server_proxy_nginx:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/public/nginx:latest
+    ports:
+      - "8090:80"
+    volumes:
+      - ./rproxy_nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./rproxy_nginx/logs:/var/log/nginx
+    privileged: true
+    networks:
+      opencsg:
+        ipv4_address: 172.25.0.26
+    restart: alway
 
 networks:
   opencsg:
