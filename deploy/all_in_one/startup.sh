@@ -41,10 +41,12 @@ function checkOS(){
 
 nginx_conf=${CURRENT_DIR}/nginx/nginx.conf
 casdoor_init_data_conf=${CURRENT_DIR}/casdoor/conf/init_data.json
+
+source ${CURRENT_DIR}/.env
+
 ## check for root, OS etc..
 initialCheck
 
-source ${CURRENT_DIR}/.env
 set | grep  -E "SERVER_DOMAIN=[0-9a-z.]*" >>  /dev/null
 if [[ $? -ne 0 ]]; then
        echo "SERVER_DOMAIN is not set, you should set a valid domain name, such as 121.11.40.42 or demo.opencsg.com etc.."
