@@ -14,7 +14,6 @@ import (
 type SessionHandler interface {
 	Login(ctx *gin.Context)
 	SignUp(ctx *gin.Context)
-	Logout(ctx *gin.Context)
 	Create(ctx *gin.Context)
 }
 
@@ -29,29 +28,23 @@ func NewSessionHandler(config *config.Config) SessionHandler {
 }
 
 func (i *SessionHandlerImpl) Login(ctx *gin.Context) {
-	ctx.Redirect(http.StatusFound, i.Config.SignupURL)
-}
-
-func (i *SessionHandlerImpl) SignUp(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, i.Config.LoginURL)
 }
 
-func (i *SessionHandlerImpl) Logout(ctx *gin.Context) {
-	ctx.Redirect(http.StatusFound, "/")
+func (i *SessionHandlerImpl) SignUp(ctx *gin.Context) {
+	ctx.Redirect(http.StatusFound, i.Config.SignupURL)
 }
 
 func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	// 调用 jwt token 验证接口获取 userinfos
 	server, err := server.NewServer(i.Config)
 	if err != nil {
-		// ToDo: need to redirect to /errors/login-failed
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ctx.Redirect(http.StatusFound, "/error/login-failed")
 		return
 	}
 	userResp, _, err := server.VerifyJWTToken(ctx.Param("jwt"))
 	if err != nil {
-		// ToDo: need to redirect to /errors/login-failed
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ctx.Redirect(http.StatusFound, "/error/login-failed")
 		return
 	}
 	ctx.SetCookie("user_token", ctx.Param("jwt"), 3600*24*7, "/", "", false, false)
