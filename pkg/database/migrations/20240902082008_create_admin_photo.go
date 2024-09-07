@@ -15,6 +15,7 @@ type User struct {
 	Gender        string `bun:"," json:"gender"`
 	RolesMask     string `bun:"," json:"roles_mask"`
 	Phone         string `bun:"," json:"phone"`
+	SessionIP     string `bun:"," json:"session_ip"`
 
 	times
 }

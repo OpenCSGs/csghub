@@ -6,7 +6,20 @@ import (
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/schema"
+	"opencsg.com/portal/config"
+	"opencsg.com/portal/pkg/database"
 )
+
+var defaultDB *database.DB
+
+func InitDB(config *config.Config) error {
+	db, err := database.NewDB(config)
+	if err != nil {
+		return err
+	}
+	defaultDB = db
+	return nil
+}
 
 type times struct {
 	CreatedAt time.Time `bun:",nullzero,notnull,skipupdate,default:current_timestamp" json:"created_at"`

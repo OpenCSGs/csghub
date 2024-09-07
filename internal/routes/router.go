@@ -34,7 +34,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
 
-	userModel := models.NewUserStore(svcCtx.Db)
+	userModel := models.NewUserStore()
 
 	// 注册中间件
 	g.Use(gin.Recovery())
@@ -45,9 +45,14 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	renderHandler, err := renderHandlers.NewHandlersRegistry(svcCtx)
+	if err != nil {
+		return nil, err
+	}
 	handlersRegistry := &HandlersRegistry{
 		FrontendHandlers: frontendHandlers,
-		RenderHandler:    renderHandlers.NewHandlersRegistry(svcCtx),
+		RenderHandler:    renderHandler,
 		// AdminHandlers:    adminHandlers.NewHandlersRegistry(svcCtx),
 		Config: svcCtx.Config,
 	}

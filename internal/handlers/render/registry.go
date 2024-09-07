@@ -1,6 +1,10 @@
 package renderHandlers
 
-import "opencsg.com/portal/internal/svc"
+import (
+	"fmt"
+
+	"opencsg.com/portal/internal/svc"
+)
 
 type RenderHandlerRegistry struct {
 	ErrorHandler        ErrorHandler
@@ -15,7 +19,7 @@ type RenderHandlerRegistry struct {
 	CollectionsHandler  CollectionsHandler
 }
 
-func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
+func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, error) {
 	errorHandler := NewErrorHandler()
 	modelHandler := NewModelHandler()
 	datasetHandler := NewDatasetHandler()
@@ -23,7 +27,10 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 	spaceHandler := NewSpaceHandler()
 	endpointHandler := NewEndpointHandler()
 	finetuneHandler := NewFinetuneHandler()
-	sessionHandler := NewSessionHandler(svcCtx.Config)
+	sessionHandler, err := NewSessionHandler(svcCtx.Config)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create session handler: %w", err)
+	}
 	organizationHandler := NewOrganizationHandler()
 	collectionsHandler := NewCollectionsHandler()
 
@@ -38,5 +45,5 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 		SessionHandler:      sessionHandler,
 		OrganizationHandler: organizationHandler,
 		CollectionsHandler:  collectionsHandler,
-	}
+	}, nil
 }
