@@ -1,0 +1,37 @@
+<title>403 - 暂无权限</title>
+  {{ define "content" }}
+    <unauthorized />
+  {{ end }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function adjustFontSize() {
+        var errorHeader = document.getElementById('error-Header');
+        var errorDescription = document.getElementById('error-Description');
+        var buttons = document.querySelectorAll('.error-button .btn');
+        
+        if (window.innerWidth < 768) {
+          errorHeader.style.fontSize = '36px';
+          errorHeader.style.marginBottom = '8px';
+          errorDescription.style.fontSize = '16px';
+          errorDescription.style.marginBottom = '24px';
+          buttons.forEach(function(button) {
+            button.style.padding = '10px 18px';
+          });
+        } else {
+          errorHeader.style.fontSize = '60px';
+          errorHeader.style.marginBottom = '24px';
+          errorDescription.style.fontSize = '20px';
+          errorDescription.style.marginBottom = '48px';
+          buttons.forEach(function(button) {
+            button.style.padding = '16px 24px';
+          });
+        }
+      }
+
+      // 初始检查
+      adjustFontSize();
+
+      // 窗口大小改变时调整
+      window.addEventListener('resize', adjustFontSize);
+    });
+  </script>

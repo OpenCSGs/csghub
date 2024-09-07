@@ -46,6 +46,9 @@ import finetuneDetail from "./components/finetune/FinetuneDetail.vue"
 import ApplicationSpaceDetail from "./components/application_spaces/ApplicationSpaceDetail.vue"
 import CollectionIndex from "./components/collections/CollectionIndex.vue"
 import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
+import NotFound from "./components/error/NotFound.vue"
+import Unauthorized from "./components/error/Unauthorized.vue"
+import LoginFailed from "./components/error/LoginFailed.vue"
 
 const pinia = createPinia()
 
@@ -80,7 +83,10 @@ const app = createApp({
     ApplicationSpaceDetail,
     EndpointDetail,
     CollectionIndex,
-    CollectionsDetail
+    CollectionsDetail,
+    NotFound,
+    Unauthorized,
+    LoginFailed
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

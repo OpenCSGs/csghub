@@ -1,0 +1,40 @@
+<title>404 - 无法访问网页</title>
+{{ define "content" }}
+  <not-found />
+{{ end }}
+
+<script>
+  function adjustFontSize() {
+    var errorCode = document.getElementById('error-code');
+    var errorHeader = document.getElementById('error-header');
+    var errorDescription = document.getElementById('error-description');
+    var buttons = document.querySelectorAll('.error-button .btn');
+    if (window.innerWidth < 768) {
+      errorCode.style.fontSize = '200px';
+      errorCode.style.top = '10px';
+      errorHeader.style.fontSize = '36px';
+      errorHeader.style.marginBottom = '8px';
+      errorDescription.style.fontSize = '16px';
+      errorDescription.style.marginBottom = '24px';
+      buttons.forEach(function(button) {
+        button.style.padding = '10px 18px';
+      });
+    } else {
+      errorCode.style.fontSize = '400px';
+      errorCode.style.top = '-60px';
+      errorHeader.style.fontSize = '60px';
+      errorHeader.style.marginBottom = '24px';
+      errorDescription.style.fontSize = '20px';
+      errorDescription.style.marginBottom = '48px';
+      buttons.forEach(function(button) {
+        button.style.padding = '16px 24px';
+      });
+    }
+  }
+
+  // Initial check
+  adjustFontSize();
+
+  // Adjust on window resize
+  window.addEventListener('resize', adjustFontSize);
+</script>

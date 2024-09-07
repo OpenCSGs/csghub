@@ -119,7 +119,7 @@
           <span class="text-black font-semibold"
             >【{{ visibility ? $t('all.private') : $t('all.public') }}】</span
           >
-          {{ $t('collections.edit.status') }}。{{
+          {{ $t('collections.edit.status') }}{{
             visibility ? $t('collections.edit.privateVis') : $t('collections.edit.publicVis')
           }}
         </div>
@@ -144,19 +144,21 @@
     </div>
     <el-divider />
 
-    <!-- Delete -->
+    <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
         <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
           {{ $t('collections.edit.delCollection') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        
+        <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('collections.edit.delTips') }}
-          <span class="text-black font-medium break-words">{{
-            `${collection.username}/${collection.name}`
-          }}</span>
-          {{ $t('collections.collection') }}
+          <span class="text-black font-medium">{{ $t('collections.edit.canNot') }}</span>
+          {{ $t('collections.edit.delTips2') }}
+          <span class="text-black font-medium break-words">{{ path }}</span>
+          {{ $t('collections.edit.delTips3') }}
         </div>
+
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">

@@ -56,9 +56,11 @@
             <el-select
               v-model="repoIdsInput"
               filterable
+              remote
               :placeholder="this.$t('all.select')"
               size="large"
               class="w-full"
+              :remote-method="repoInputChange"
             >
               <el-option
                 v-for="item in reposMappings"
@@ -67,23 +69,6 @@
                 :value="item.repository_id"
               />
             </el-select>
-            <div
-              v-show="shouldShowUserList"
-              class="md:max-h-[110px] max-h-[210px] overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]"
-            >
-              <p
-                v-for="user in userList"
-                @click="selectUser(user)"
-                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
-              >
-                <img
-                  :src="user.avatar"
-                  height="16"
-                  width="16"
-                />
-                {{ user.name }}
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -107,7 +92,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -138,16 +123,19 @@
     }
   ]
   const reposMappings = ref([])
-  const typeInput = ref(t('navbar.models'))
+  const typeInput = ref('models')
   const repoIdsInput = ref('')
 
-  const typeChange = (type) => {
+  const typeChange = () => {
     repoIdsInput.value = ''
-    fetchRepoList(type)
   }
-
-  const fetchRepoList = async (type) => {
-    const url = `/${type}`
+  const repoInputChange = (search) => {
+    repoIdsInput.value = ''
+    fetchRepoList(typeInput.value, search)
+  }
+  const fetchRepoList = async (type, search) => {
+    let url = `/${type}`
+    url = url + `?search=${search || ''}`
     const { data, error } = await useFetchApi(url).json()
     if (error.value) {
       ElMessage({
@@ -199,9 +187,6 @@
       return data.value
     }
   }
-  onMounted(() => {
-    fetchRepoList('models')
-  })
 </script>
 <style>
   @media (max-width: 768px) {
