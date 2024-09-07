@@ -12,6 +12,7 @@ type RenderHandlerRegistry struct {
 	FinetuneHandler     FinetuneHandler
 	SessionHandler      SessionHandler
 	OrganizationHandler OrganizationHandler
+	CollectionsHandler  CollectionsHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
@@ -24,6 +25,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 	finetuneHandler := NewFinetuneHandler()
 	sessionHandler := NewSessionHandler(svcCtx.Config)
 	organizationHandler := NewOrganizationHandler()
+	collectionsHandler := NewCollectionsHandler()
 
 	return &RenderHandlerRegistry{
 		ErrorHandler:        errorHandler,
@@ -35,5 +37,6 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) *RenderHandlerRegistry {
 		FinetuneHandler:     finetuneHandler,
 		SessionHandler:      sessionHandler,
 		OrganizationHandler: organizationHandler,
+		CollectionsHandler:  collectionsHandler,
 	}
 }
