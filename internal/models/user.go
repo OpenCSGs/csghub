@@ -54,6 +54,6 @@ func (s *UserStore) Create(ctx context.Context, user *User) (err error) {
 }
 
 func (s *UserStore) Update(ctx context.Context, user *User) (err error) {
-	err = s.db.Operator.Core.NewUpdate().Model(user).WherePK().Scan(ctx)
+	_, err = s.db.Operator.Core.NewUpdate().Model(user).WherePK().Exec(ctx)
 	return
 }

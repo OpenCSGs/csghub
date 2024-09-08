@@ -54,12 +54,12 @@ func (i *SessionHandlerImpl) SignUp(ctx *gin.Context) {
 func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	// 调用 jwt token 验证接口获取 userinfos
 	var user *models.User
-	jwtToken := ctx.Param("jwt")
+	jwtToken := ctx.Query("jwt")
 	if jwtToken == "" {
 		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
 		return
 	}
-	userResp, _, err := i.Server.VerifyJWTToken(ctx.Param("jwt"))
+	userResp, _, err := i.Server.VerifyJWTToken(jwtToken)
 	if err != nil {
 		ctx.Redirect(http.StatusFound, "/error/login-failed")
 		return
@@ -71,7 +71,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	}
 
 	ctx.SetCookie("user_token", ctx.Param("jwt"), cookieMaxAge, "/", "", false, false)
-	ctx.SetCookie("can_change_username", userResp.CanChangeUserName, cookieMaxAge, "/", "", false, false)
+	ctx.SetCookie("can_change_username", fmt.Sprintf("%v", userResp.CanChangeUserName), cookieMaxAge, "/", "", false, false)
 
 	dbUser, err := i.userModel.FindByLoginIdentity(ctx, userResp.UUID)
 	user = &dbUser
@@ -108,7 +108,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Redirect(http.StatusOK, "/")
+	ctx.Redirect(http.StatusFound, "/")
 	// login_by_server_user_infos 通过 userinfo 创建用户
 	// ? 如何初始化 userModel 以及创建  create user 接口
 	// log_in 设置 user session，其他 cookies
