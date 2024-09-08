@@ -18,7 +18,7 @@ type Config struct {
 	SensitiveCheck bool   `envconfig:"CSGHUB_PORTAL_SENSITIVE_CHECK" default:"false"`
 	EnableHttps    bool   `envconfig:"CSGHUB_PORTAL_ENABLE_HTTPS" default:"true"`
 	SignupURL      string `envconfig:"CSGHUB_PORTAL_SIGNUP_URL" default:""`
-	LoginURL       string `envconfig:"CSGHUB_PORTAL_LOGIN_URL" default:""`
+	LoginURL       string `envconfig:"CSGHUB_PORTAL_LOGIN_URL" default:"http://60.205.228.141:8000/login/oauth/authorize?client_id=4ba65e712c5dabca3e48&response_type=code&redirect_uri=http://localhost:8080/api/v1/callback/casdoor&scope=read&state=casdoor"`
 
 	StarhubServer struct {
 		BaseURL string `envconfig:"CSGHUB_PORTAL_STARHUB_BASE_URL" default:"http://localhost:8080"`
