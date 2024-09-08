@@ -11,10 +11,11 @@ type User struct {
 	Nickname      string `bun:",notnull" json:"nickname"`
 	Name          string `bun:",notnull,unique" json:"name"`
 	Email         string `bun:",notnull,unique" json:"email"`
-	LoginIdentity string `bun:",notnull" json:"login_identity"`
+	LoginIdentity string `bun:",pk,notnull" json:"login_identity"`
 	Gender        string `bun:"," json:"gender"`
 	RolesMask     string `bun:"," json:"roles_mask"`
 	Phone         string `bun:"," json:"phone"`
+	SessionIP     string `bun:"," json:"session_ip"`
 
 	times
 }

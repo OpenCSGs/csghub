@@ -248,7 +248,7 @@
     cookies.keys().forEach((cookie) => {
       cookies.remove(cookie)
     })
-    window.location.href = '/logout'
+    window.location.href = '/'
   }
 
   onMounted(() => {

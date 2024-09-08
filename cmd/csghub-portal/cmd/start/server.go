@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"opencsg.com/portal/config"
 	"opencsg.com/portal/internal/httpbase"
+	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/internal/routes"
 	"opencsg.com/portal/internal/svc"
 )
@@ -19,6 +20,11 @@ var serverCmd = &cobra.Command{
 		config, err := config.LoadConfig()
 		if err != nil {
 			return err
+		}
+
+		err = models.InitDB(config)
+		if err != nil {
+			return fmt.Errorf("initializing DB: %w", err)
 		}
 
 		svcCtx, err := svc.NewServiceContext(config)
