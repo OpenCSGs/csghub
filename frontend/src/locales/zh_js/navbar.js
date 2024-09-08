@@ -1,4 +1,5 @@
 export const navbar = {
+  console:'资源控制台',
   models: "模型",
   datasets: "数据集",
   spaces: "应用空间",
@@ -11,8 +12,11 @@ export const navbar = {
   newApplicationSpace: "新建应用空间",
   newOrganization: "新建组织",
   logout: "退出登录",
+  register: "注册",
   loginRegister: "登录/注册",
   login: "登录",
   newCollection: "新建合集",
-  emailMissing: '体验完整功能，请提供您的电子邮件'
+  emailMissing: '体验完整功能，请提供您的电子邮件',
+  more: "更多",
+  setting: "账号设置",
 }

@@ -122,7 +122,7 @@
               @click="selectTag(tag)"
               class="flex gap-[8px] items-center cursor-pointer p-[10px]">
               {{
-                this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name
+                this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
               }}
             </p>
           </div>
@@ -144,7 +144,7 @@
           {{ $t('datasets.datasetIndustryTag') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('datasets.edit.tips3') }}
+          {{ $t('datasets.edit.tips4') }}
         </div>
       </div>
       <div
@@ -210,11 +210,11 @@
         <div class="max-w-[864px] text-[14px] text-[#475467] leading-[20px]">
           {{ $t('datasets.edit.statusText') }}
           <span class="text-black font-medium"
-            >【{{
+            >[{{
               isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            }}]</span
           >
-          {{ $t('datasets.edit.status') }}。{{
+          {{ $t('datasets.edit.status') }} {{
             isPrivate
               ? this.$t('datasets.edit.privateVis')
               : this.$t('datasets.edit.publicVis')
@@ -251,15 +251,15 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('datasets.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          <span class="text-black font-medium">{{ $t('datasets.edit.canNot') }}</span>
           {{ $t('datasets.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.delTips3') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('all.enterPls') }}
+          {{ $t('datasets.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          {{ $t('all.sureDel') }}
+          {{ $t('datasets.edit.sureDel') }}
         </div>
       </div>
 
@@ -361,6 +361,9 @@
       },
       datasetDesc(newDesc, _) {
         this.theDatasetDesc = newDesc
+      },
+      tagList(newTagList, _) {
+        this.theTagList = newTagList
       }
     },
     beforeDestroy() {
@@ -411,7 +414,7 @@
         if (this.tagInput != '') {
           const userTriggerTagList = this.tagList.filter((tag) => {
             return (
-              tag.zh_name.includes(this.tagInput) ||
+              tag.show_name.includes(this.tagInput) ||
               tag.name.includes(this.tagInput)
             )
           })
@@ -448,7 +451,7 @@
           (tag) => tag.name === newTag.name
         )
         if (!findTag) {
-          this.selectedTags.push({ name: newTag.name, zh_name: newTag.zh_name })
+          this.selectedTags.push({ name: newTag.name, zh_name: newTag.show_name })
         }
       },
 

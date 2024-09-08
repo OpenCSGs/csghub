@@ -19,6 +19,7 @@ type BaseHandler interface {
 	Settings(ctx *gin.Context)
 	Billing(ctx *gin.Context)
 	Logs(ctx *gin.Context)
+	Community(ctx *gin.Context)
 }
 
 type BaseHandlerImpl struct {
@@ -72,6 +73,10 @@ func (b *BaseHandlerImpl) Billing(ctx *gin.Context) {
 
 func (b *BaseHandlerImpl) Logs(ctx *gin.Context) {
 	b.renderShow(ctx, "logs", "logs")
+}
+
+func (b *BaseHandlerImpl) Community(ctx *gin.Context) {
+	b.renderShow(ctx, "community", "community")
 }
 
 func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab string, extraData ...map[string]interface{}) {

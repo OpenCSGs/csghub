@@ -20,10 +20,13 @@ export const profile = {
     removeAvatar: "移除头像",
     updateSuccess: "profile 已更新",
     confirmUpdateTitle: "更新 Profile",
-    confirmUpdateMessage: "更新个人信息之后，您需要重新登录！",
+    confirmUpdateMessage: "更新之后，登录用户名不变，且需要重新登录！",
     confirmUpdate: "更新",
     cancelUpdate: "取消",
     updateCancelled: "更新已取消",
-    renameUsername: "您当前用名是系统自动生成的临时用户名，在继续使用完成功能之前，您需要更新您的用户名"
+    renameUsername: "您当前用名是系统自动生成的临时用户名，在继续使用完整的功能之前，需要更新您的用户名",
+    updateUsername: "首次登录更新内部用户名",
+    username: "用户名",
+    internalUsername: "内部用户名",
   },
 }

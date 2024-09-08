@@ -26,7 +26,7 @@
 
       <!-- repo community -->
       <el-tab-pane
-        v-if="repoType !== 'endpoint' && !!localRepoId"
+        v-if="repoType !== 'endpoint'"
         :label="$t('all.community')"
         name="community"
         class="min-h-[300px]"
@@ -82,7 +82,6 @@
     settingsVisibility: Boolean,
     repoType: String,
     sdk: String,
-    localRepoId: String,
     repo: Object
   })
 
@@ -138,6 +137,12 @@
   /* 修改选项卡中的文字大小 */
   .el-tabs__item {
     font-size: 16px;
+    font-weight: 500;
+  }
+
+  .el-tabs__item.is-top {
+    color: #667085;
+    font-weight: 500;
   }
 
   .el-tabs {
