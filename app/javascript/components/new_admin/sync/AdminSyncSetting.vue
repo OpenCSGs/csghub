@@ -89,6 +89,7 @@
   import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import csrfFetch from '../../../packs/csrfFetch'
+  import useFetchApi from '../../../packs/useFetchApi'
 
   const form = ref({
     token: '',
@@ -116,62 +117,50 @@
   }
 
   const createSyncSetting = async () => {
-    const createEndpoint = '/internal_api/admin/sync_settings'
-    const response = await csrfFetch(createEndpoint, {
+    const createEndpoint = '/sync/client_settings'
+    const {data, error} = await useFetchApi(createEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(form.value)
-    })
-    if (response.ok) {
-      ElMessage({
-        message: 'Sync Setting created successfully',
-        type: 'success'
-      })
+    }).json()
+    if (data.value) {
+      ElMessage.success('Sync Setting created successfully')
     } else {
-      response.json().then((err) => {
-        ElMessage({ message: err.msg, type: 'warning' })
-      })
+      ElMessage.warning(error.value.msg)
     }
   }
 
   const fetchSyncSettings = async () => {
-    const settingsEndpoint = '/internal_api/admin/sync_settings'
-    const response = await csrfFetch(settingsEndpoint, {
+    const settingsEndpoint = '/sync/client_settings'
+    const {data, _} = await useFetchApi(settingsEndpoint, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-    if (response.ok) {
-      const { data } = await response.json()
-      if (data) {
-        form.value = data
-        submitKey.value = 'admin.syncSetting.update'
-      }
+    }).json()
+    if (data.value) {
+      form.value = data.value.data
+      submitKey.value = 'admin.syncSetting.update'
     }
   }
 
   const fetchSyncRecords = async (current) => {
-    const queuesEndpoint = '/internal_api/admin/sync_settings/sync_repos'
-    const response = await csrfFetch(
-      `${queuesEndpoint}?page=${current || page.value}&per=${per.value}`,
+    const queuesEndpoint = `/mirror/repos?page=${current || page.value}&per=${per.value}`
+    const {data, error} = await useFetchApi(queuesEndpoint,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }
       }
-    )
-    if (response.ok) {
-      const { data } = await response.json()
-      queues.value = data.data
-      total.value = data.total
+    ).json()
+    if (data.value) {
+      queues.value = data.value.data
+      total.value = data.value.total
     } else {
-      response.json().then((err) => {
-        ElMessage({ message: err.msg, type: 'warning' })
-      })
+      ElMessage.warning(error.value.msg)
     }
   }
 
