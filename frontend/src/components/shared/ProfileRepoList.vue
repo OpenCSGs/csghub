@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <div class="sm:w-[100%] sm:mt-[36px] mb-[36px]" v-if="initiator=='likes'">
+      <div class="font-medium text-xl">
+        {{ $t("profile.myCollect") }}
+      </div>
+    </div>
   <div class="sm:w-[100%] sm:mt-[36px]">
     <!-- collections -->
     <div>
@@ -122,6 +128,7 @@
       <view-more v-if="finetunes.more" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
     </div>
+  </div>
   </div>
 </template>
 

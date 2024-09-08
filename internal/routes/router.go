@@ -111,6 +111,8 @@ func createRender() multitemplate.Renderer {
 		"collections_index":      "collections/index.html",
 		"collections_show":       "collections/show.html",
 		"collections_new":        "collections/new.html",
+		"profile":                "profile/profile.html",
+		"profile_likes":          "profile/likes.html",
 	}
 
 	// 动态添加模板
@@ -150,6 +152,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerSessionsRoutes(engine, handlersRegistry)
 	registerOrganizationRoutes(engine, handlersRegistry)
 	registerCollectionRoutes(engine, handlersRegistry)
+	registerProfileRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {
