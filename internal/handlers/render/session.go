@@ -110,7 +110,4 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	}
 
 	ctx.Redirect(http.StatusFound, "/")
-	// login_by_server_user_infos 通过 userinfo 创建用户
-	// ? 如何初始化 userModel 以及创建  create user 接口
-	// log_in 设置 user session，其他 cookies
 }
