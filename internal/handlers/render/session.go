@@ -90,6 +90,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 			if err != nil {
 				slog.Error("failed to create user", slog.Any("error", err))
 				ctx.Redirect(http.StatusInternalServerError, "/error/login-failed")
+				return
 			}
 		}
 		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
