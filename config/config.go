@@ -29,6 +29,15 @@ type Config struct {
 		DSN     string          `envconfig:"CSGHUB_PORTAL_DATABASE_DSN" default:"postgresql://postgres:postgres@localhost:5432/starhub_portal?sslmode=disable"`
 		Dialect DatabaseDialect `envconfig:"CSGHUB_PORTAL_DATABASE_DIALECT" default:"pg"`
 	}
+
+	S3 struct {
+		EnableSSL       bool   `envconfig:"CSGHUB_PORTAL_S3_ENABLE_SSL" default:"false"`
+		Endpoint        string `envconfig:"CSGHUB_PORTAL_S3_ENDPOINT" default:"http://localhost:9000"`
+		AccessKeyID     string `envconfig:"CSGHUB_PORTAL_S3_ACCESS_KEY_ID" default:""`
+		AccessKeySecret string `envconfig:"CSGHUB_PORTAL_S3_ACCESS_KEY_SECRET" default:""`
+		Region          string `envconfig:"CSGHUB_PORTAL_S3_REGION" default:""`
+		BucketName      string `envconfig:"CSGHUB_PORTAL_S3_BUCKET_NAME" default:""`
+	}
 }
 
 func LoadConfig() (*Config, error) {
