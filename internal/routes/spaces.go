@@ -16,4 +16,5 @@ func registerSpaceRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry)
 	engine.GET("/spaces/:namespace/:space_name/edit/:branch/:path", handlersRegistry.RenderHandler.SpaceHandler.EditFile)
 	engine.GET("/spaces/:namespace/:space_name/settings", handlersRegistry.RenderHandler.SpaceHandler.Settings)
 	engine.GET("/spaces/:namespace/:space_name/billing", handlersRegistry.RenderHandler.SpaceHandler.Billing)
+	engine.GET("/spaces/:namespace/:space_name/community", handlersRegistry.RenderHandler.SpaceHandler.Community)
 }

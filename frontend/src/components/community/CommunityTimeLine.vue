@@ -23,6 +23,33 @@
     </div>
   </div>
 </template>
+
+<script>
+  import MarkdownIt from "markdown-it"
+  import { format } from 'timeago.js'
+  export default {
+    props: {
+      timelineData:Array
+    },
+    components: {},
+    data() {
+      return {
+        thetimelineData:this.timelineData
+      }
+    },
+    mounted() {},
+    methods: {
+      renderMarkdown(text) {
+        const mdParser = new MarkdownIt()
+        return mdParser.render(text)
+      },
+      formatDate(date){
+        return format(date, 'zh_CN')
+      }
+    },
+  }
+</script>
+
 <style>
   .timeline-line{
     margin:10px 12px 0;
@@ -30,40 +57,7 @@
     width:1px;
     background:#DCDFE6;
   }
-  /* .timeline-item::before {
-    content: '|';
-    margin-right: 0.5rem;
-  }
-  .timeline-item.first-item::before {
-    content: none; 
-  } */
   .timeline-item.first-item .timeline-line {
     display:none
   }
 </style>
-<script>
-import CommunityTimeLine from './CommunityTimeLine.vue'
-import MarkdownIt from "markdown-it";
-import { format } from 'timeago.js';
-export default {
-  props: {
-    timelineData:Array
-  },
-  components: {},
-  data() {
-    return {
-        thetimelineData:this.timelineData
-    };
-  },
-  mounted() {},
-  methods: {
-    renderMarkdown(text) {
-      const mdParser = new MarkdownIt();
-      return mdParser.render(text);
-    },
-    formatDate(date){
-      return format(date, 'zh_CN')
-    }
-  },
-};
-</script>

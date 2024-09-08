@@ -15,4 +15,5 @@ func registerModelRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry)
 	engine.GET("/models/:namespace/:model_name/:branch/upload", handlersRegistry.RenderHandler.ModelHandler.UploadFile)
 	engine.GET("/models/:namespace/:model_name/edit/:branch/:path", handlersRegistry.RenderHandler.ModelHandler.EditFile)
 	engine.GET("/models/:namespace/:model_name/settings", handlersRegistry.RenderHandler.ModelHandler.Settings)
+	engine.GET("/models/:namespace/:model_name/community", handlersRegistry.RenderHandler.ModelHandler.Community)
 }

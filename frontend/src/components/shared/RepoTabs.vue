@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
     <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-4">
-      <AddToCollections v-if="showAddToCollections" :repoId="repoDetail.repository_id" :userName="userName" />
       <RepoClone
         v-if="repoType !== 'endpoint'"
+        :showAddToCollections="showAddToCollections"
         :repoType="repoType"
         :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
         :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
@@ -19,7 +19,6 @@
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
       :repoType="repoType"
-      :localRepoId="localRepoId"
       :sdk="sdk"
       :repo="repoDetail"
 
@@ -165,8 +164,8 @@
       <!-- community -->
       <template #community>
         <community-page
-          :type="repoTypeClass"
-          :localModelId="localRepoId"
+          :repoType="repoType"
+          :repoPath="repoDetail.path"
         ></community-page>
       </template>
 
@@ -263,17 +262,15 @@
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
   import BillingDetail from './BillingDetail.vue'
-  import AddToCollections from '../collections/AddToCollections.vue'
-  import { computed, onMounted } from 'vue'
+  import useFetchApi from '../../packs/useFetchApi'
+  import { ref, computed, onMounted } from 'vue'
 
   const props = defineProps({
-    localRepoId: String,
     repoDetail: Object,
     currentBranch: String,
     currentPath: String,
     defaultTab: String,
     tags: Object,
-    tagList: String,
     actionName: String,
     settingsVisibility: Boolean,
     canWrite: Boolean,
@@ -294,9 +291,12 @@
     path: String
   })
 
+  const tagList = ref([])
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
-  onMounted(() => {})
+  onMounted(() => {
+    fetchTags()
+  })
 
   const showAddToCollections = computed(() => {
     return props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
@@ -352,6 +352,18 @@
         break
       default:
         break
+    }
+  }
+
+  async function fetchTags() {
+    const { error, data } = await useFetchApi(`/tags`).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      tagList.value = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
     }
   }
 </script>
