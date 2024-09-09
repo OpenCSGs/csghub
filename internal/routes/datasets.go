@@ -10,7 +10,6 @@ func registerDatasetRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 
 	// 无需登录的路由
 	datasetRoutes := engine.Group("/datasets")
-	datasetRoutes.GET("", datasetHandler.List)
 	{
 		datasetRoutes.GET("", datasetHandler.List)
 	}
