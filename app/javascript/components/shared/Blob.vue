@@ -95,7 +95,7 @@
       </div>
     </div>
     <div
-      v-if="!lfs || isImage()"
+      v-if="!lfs"
       class="border border-t-0 border-[#DCDFE6] rounded-b"
     >
       <div

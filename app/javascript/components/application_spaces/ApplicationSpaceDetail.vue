@@ -24,7 +24,6 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :local-repo-id="localRepoId"
       :repo-detail="applicationSpace"
       :appStatus="appStatus"
       :sdk="applicationSpace.sdk"
@@ -81,12 +80,12 @@
       </template>
       <div v-show="isBuildLogTab"
            ref="buildLogDiv"
-           class="overflow-scroll"
+           class="h-full"
       >
       </div>
       <div v-show="!isBuildLogTab"
            ref="containerLogDiv"
-           class="overflow-scroll"
+           class="h-full"
       >
       </div>
     </el-drawer>
@@ -94,7 +93,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, nextTick } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
@@ -111,7 +110,6 @@
     files: Object,
     lastCommit: Object,
     branches: Object,
-    localRepoId: String,
     currentBranch: String,
     currentPath: String,
     defaultTab: String,
@@ -252,8 +250,14 @@
       onmessage(ev) {
         if (ev.event === 'Build') {
           appendLog(buildLogDiv, ev.data, buildLogLineNum)
+          nextTick(() => {
+            scrollToBottom()
+          });
         } else if (ev.event === 'Container') {
           appendLog(containerLogDiv, ev.data, containerLogLineNum)
+          nextTick(() => {
+            scrollToBottom()
+          });
         }
       },
       onerror(err) {
@@ -261,6 +265,13 @@
         console.log(err)
       }
     })
+  }
+
+  const scrollToBottom = () => {
+    const targetDiv = document.getElementsByClassName('el-drawer__body')[0]
+    if (targetDiv) {
+      targetDiv.scrollTop = targetDiv.scrollHeight;
+    }
   }
 
   const appendLog = (refElem, data, refLineNum) => {

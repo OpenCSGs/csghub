@@ -22,7 +22,6 @@
   </div>
   <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
     <repo-tabs
-      :local-repo-id="localRepoId"
       :repo-detail="repo"
       :current-branch="currentBranch"
       :current-path="currentPath"
@@ -31,7 +30,6 @@
       :settingsVisibility="repo.can_manage"
       :can-write="repo.can_write"
       :tags="tags"
-      :tag-list="tagList"
       :userName="userName"
       :commitId="commitId"
       :repoType="repoType"
@@ -52,10 +50,8 @@
   import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
-    localRepoId: String,
     defaultTab: String,
     repoType: String,
-    tagList: Object,
     localModel: Object,
     currentBranch: String,
     currentPath: String,

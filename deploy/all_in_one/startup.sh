@@ -16,6 +16,16 @@ function initialCheck(){
       exit 1
  fi
 
+ if [ -z "$SERVER_DOMAIN" ]; then
+    echo "SERVER_DOMAIN is required, please specify in .env file"
+    exit 1
+ fi
+
+ if [ "$KNATIVE_GATEWAY_HOST" != "" ]; then
+    echo "Tip 1:Please make sure namespace space was created in k8s cluster"
+    echo "Tip 1:Please make sure the gateway can be accessed in csghub server: telnet $KNATIVE_GATEWAY_HOST $KNATIVE_GATEWAY_PORT"
+ fi
+
  checkOS
 
 }
@@ -31,10 +41,12 @@ function checkOS(){
 
 nginx_conf=${CURRENT_DIR}/nginx/nginx.conf
 casdoor_init_data_conf=${CURRENT_DIR}/casdoor/conf/init_data.json
+
+source ${CURRENT_DIR}/.env
+
 ## check for root, OS etc..
 initialCheck
 
-source ${CURRENT_DIR}/.env
 set | grep  -E "SERVER_DOMAIN=[0-9a-z.]*" >>  /dev/null
 if [[ $? -ne 0 ]]; then
        echo "SERVER_DOMAIN is not set, you should set a valid domain name, such as 121.11.40.42 or demo.opencsg.com etc.."
@@ -51,6 +63,13 @@ sed -i "s/_CSGHUB_SPACE_EXTERNAL_DOMAINNAME/${SPACE_APP_EXTERNAL_DOMAIN}/g" ${ng
 echo "replace domain name and port in casdoor's init_data.json"
 sed -i "s/_CSGHUB_DOMAINNAME/${SERVER_DOMAIN}/g" ${casdoor_init_data_conf}
 sed -i "s/_CSGHUB_DOMAINPORT/${SERVER_PORT}/g" ${casdoor_init_data_conf}
+
+ if [ "$KNATIVE_GATEWAY_HOST" != "" ]; then
+    echo "start to configure knative gateway"
+    rproxy_nginx_conf=${CURRENT_DIR}/rproxy_nginx/nginx.conf
+    sed -i "s/_CSGHUB_KNATIVE_GATEWAY_HOST/${KNATIVE_GATEWAY_HOST}/g" ${rproxy_nginx_conf}
+    sed -i "s/_CSGHUB_KNATIVE_GATEWAY_PORT/${KNATIVE_GATEWAY_PORT}/g" ${rproxy_nginx_conf}
+ fi
 
 echo "2. prepare and check mounted folder"
 gitdata_folder=${CURRENT_DIR}/gitdata

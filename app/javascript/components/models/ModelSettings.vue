@@ -101,7 +101,7 @@
                 class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
-                    ? tag.zh_name || tag.show_name ||tag.name
+                    ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
                 <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
@@ -120,7 +120,7 @@
               @click="selectTag(tag)"
               class="flex gap-[8px] items-center cursor-pointer p-[10px]">
               {{
-                this.$i18n.locale === 'zh' ? tag.zh_name || tag.name : tag.name
+                this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
               }}
             </p>
           </div>
@@ -208,11 +208,11 @@
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('models.edit.statusText') }}
           <span class="text-black font-semibold"
-            >【{{
+            >[{{
               isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            }}]</span
           >
-          {{ $t('models.edit.status') }}{{
+          {{ $t('models.edit.status') }} {{
             isPrivate
               ? this.$t('models.edit.privateVis')
               : this.$t('models.edit.publicVis')
@@ -353,6 +353,9 @@
       },
       modelDesc(newDesc, _) {
         this.theModelDesc = newDesc
+      },
+      tagList(newTagList, _) {
+        this.theTagList = newTagList
       }
     },
     beforeDestroy() {
@@ -403,7 +406,7 @@
         if (this.tagInput != '') {
           const userTriggerTagList = this.tagList.filter((tag) => {
             return (
-              tag.zh_name.includes(this.tagInput) ||
+              tag.show_name.includes(this.tagInput) ||
               tag.name.includes(this.tagInput)
             )
           })
@@ -440,7 +443,7 @@
           (tag) => tag.name === newTag.name
         )
         if (!findTag) {
-          this.selectedTags.push({ name: newTag.name, zh_name: newTag.zh_name })
+          this.selectedTags.push({ name: newTag.name, zh_name: newTag.show_name })
         }
       },
 

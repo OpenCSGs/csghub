@@ -9,7 +9,7 @@
           View closed（1）
         </div> -->
     </div>
-    <EmptyCommunity v-if="cards.length <= 0" @changeFlag="changeFlag" />
+    <EmptyCommunity v-if="theCards.length <= 0" @changeFlag="changeFlag" />
     <template v-else>
       <DiscussionDetails v-if="showDetail"
         :discussionId="currentDiscussion"
@@ -19,7 +19,7 @@
         :time="currentTime"
         @getDiscussion="getDiscussion"
         @toggleDetails="toggleDetails" />
-      <DiscussionCard v-else v-for="card in cards"  @click="showDetails(card)"
+      <DiscussionCard v-else v-for="card in theCards" @click="showDetails(card)"
         :key="card.id"
         :discussionId="card.id"
         :num="card.num"
@@ -30,45 +30,52 @@
     </template>
   </div>
 </template>
+
 <script>
-import EmptyCommunity from "./EmptyCommunity.vue";
-import DiscussionCard from "./DiscussionCard.vue";
-import DiscussionDetails from "./DiscussionDetails.vue";
-export default {
-  props: {
-    cards: Array
-  },
-  components: {
-    DiscussionCard,
-    DiscussionDetails,
-    EmptyCommunity
-  },
-  data() {
-    return {
-      showDetail: false,
-      currentDiscussion: ''
-    };
-  },
-  mounted() {
-  },
-  methods: {
-    showDetails(card) {
-      this.currentDiscussion = card.id
-      this.currentTitle = card.title
-      this.currentUserName = card.user.name
-      this.createUserId = card.user.id
-      this.currentTime = card.time
-      this.showDetail = true
+  import EmptyCommunity from "./EmptyCommunity.vue"
+  import DiscussionCard from "./DiscussionCard.vue"
+  import DiscussionDetails from "./DiscussionDetails.vue"
+
+  export default {
+    props: {
+      cards: Array
     },
-    toggleDetails() {
-      this.showDetail = false
+    components: {
+      DiscussionCard,
+      DiscussionDetails,
+      EmptyCommunity
     },
-    changeFlag(flag){
-      this.$emit('changeFlag',flag)
+    data() {
+      return {
+        theCards: this.cards,
+        showDetail: false,
+        currentDiscussion: ''
+      }
     },
-    getDiscussion(){
-      this.$emit("getDiscussion");
+    watch: {
+      cards(newCards, _) {
+        this.theCards = newCards
+      }
+    },
+    mounted() {},
+    methods: {
+      showDetails(card) {
+        this.currentDiscussion = card.id
+        this.currentTitle = card.title
+        this.currentUserName = card.user.name
+        this.createUserId = card.user.id
+        this.currentTime = card.time
+        this.showDetail = true
+      },
+      toggleDetails() {
+        this.showDetail = false
+      },
+      changeFlag(flag){
+        this.$emit('changeFlag',flag)
+      },
+      getDiscussion(){
+        this.$emit("getDiscussion")
+      }
     }
   }
-};
 </script>

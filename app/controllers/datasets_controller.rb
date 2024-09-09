@@ -1,12 +1,10 @@
 class DatasetsController < ApplicationController
-  include LocalRepoValidation
   include LicenseListHelper
   include FileOptionsHelper
   include BlobContentHelper
 
   before_action :authenticate_user, only: [:show, :new, :new_file, :upload_file, :edit_file, :settings]
   before_action :load_branch_and_path, except: [:index, :new]
-  before_action :load_dataset_detail, except: [:index, :new, :resolve]
 
   def index
   end
@@ -67,11 +65,5 @@ class DatasetsController < ApplicationController
     @default_tab = 'files'
     @commit_id = params[:commit_id]
     render :show
-  end
-
-  private
-
-  def load_dataset_detail
-    @tags_list = Tag.where(scope: 'dataset', tag_type: 'task').as_json
   end
 end
