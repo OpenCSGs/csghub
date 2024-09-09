@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column
-          prop="name"
+          prop="username"
           label="Name"
         />
         <el-table-column
@@ -62,6 +62,7 @@
   import { ref, onMounted } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import { ElMessage } from 'element-plus'
+  import useFetchApi from '../../../packs/useFetchApi'
 
   const users = ref([])
   const page = ref(1)
@@ -70,17 +71,12 @@
   const keyword = ref('')
 
   const fetchUsers = async (current) => {
-    const response = await fetch(
-      `/internal_api/admin/users?page=${current || page.value}&per=${
-        per.value
-      }&keyword=${keyword.value}`
-    )
-    if (response.ok) {
-      const data = await response.json()
-      users.value = data.users
-      total.value = data.total_count
+    const {data, error} = await useFetchApi(`/users?page=${current || page.value}&per=${per.value}&search=${keyword.value}`).json()
+    if (data.value) {
+      users.value = data.value.data.data
+      total.value = data.value.data.total
     } else {
-      ElMessage.error('Failed to fetch users')
+      ElMessage.error(error.value.msg)
     }
   }
 
@@ -90,7 +86,7 @@
   }
 
   const showDetail = (row) => {
-    window.location.href = `/new_admin/users/${row.name}`
+    window.location.href = `/new_admin/users/${row.username}`
   }
 
   onMounted(() => {
