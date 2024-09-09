@@ -118,6 +118,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.component('SvgIcon', SvgIcon)
+app.component('FlashMessage', FlashMessage)
 app.use(ElementPlus)
 app.use(i18n)
 app.use(pinia)
