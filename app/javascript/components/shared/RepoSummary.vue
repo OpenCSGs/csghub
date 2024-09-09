@@ -98,8 +98,6 @@
                               .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))[0]
       if (parquetFilePath) {
         fetchCatalog()
-      } else {
-        datasetInfo.value = {}
       }
     }
   }
