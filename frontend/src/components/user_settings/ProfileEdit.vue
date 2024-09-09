@@ -44,7 +44,7 @@
         class="max-w-[600px]"
         v-model="profileData.username"
         :disabled="canChangeUsername === 'false'"
-        :placeholder="this.$t('all.userName')">
+        :placeholder="$t('all.userName')">
       </el-input>
       <p class="text-gray-500 text-[12px] italic pt-1">
         {{ $t('rule.nameRule') }}
@@ -69,7 +69,7 @@
         class="max-w-[600px]"
         v-model="profileData.phone"
         disabled
-        :placeholder="this.$t('all.phone')">
+        :placeholder="$t('all.phone')">
       </el-input>
     </div>
     <!-- email -->
@@ -90,7 +90,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.email"
-        :placeholder="this.$t('all.email')">
+        :placeholder="$t('all.email')">
       </el-input>
     </div>
     <!-- nickname -->
@@ -101,7 +101,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.nickname"
-        :placeholder="this.$t('all.nickName')">
+        :placeholder="$t('all.nickName')">
       </el-input>
     </div>
     <!-- homepage -->
@@ -112,7 +112,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.homepage"
-        :placeholder="this.$t('all.homepage')">
+        :placeholder="$t('all.homepage')">
       </el-input>
     </div>
     <!-- bio -->
@@ -126,7 +126,7 @@
         clearable
         type="textarea"
         :autosize="{ minRows: 8, maxRows: 30 }"
-        :placeholder="this.$t('all.bio')">
+        :placeholder="$t('all.bio')">
       </el-input>
     </div>
     <div
