@@ -5,130 +5,130 @@
         {{ $t("profile.myCollect") }}
       </div>
     </div>
-  <div class="sm:w-[100%] sm:mt-[36px]">
-    <!-- collections -->
-    <div>
-      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
-        <SvgIcon name="collections" width="18" height="18" />
-        <span>{{ $t("collections.collection") }}</span>
-      </h3>
-      <div v-if="hasCollections" class="mb-4 mt-[16px]">
-        <CollectionCards 
-          v-if="collections.data.length > 0" 
-          :collections="collections.data"
-        />
+    <div class="sm:w-[100%] sm:mt-[36px]">
+      <!-- collections -->
+      <div>
+        <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+          <SvgIcon name="collections" width="18" height="18" />
+          <span>{{ $t("collections.collection") }}</span>
+        </h3>
+        <div v-if="hasCollections" class="mb-4 mt-[16px]">
+          <CollectionCards 
+            v-if="collections.data.length > 0" 
+            :collections="collections.data"
+          />
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more v-if="collections.more" target="collections" @view-more-targets="viewMoreTargets"></view-more>
+        <el-skeleton class="pr-6" v-if="collectionsLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more v-if="collections.more" target="collections" @view-more-targets="viewMoreTargets"></view-more>
-      <el-skeleton class="pr-6" v-if="collectionsLoading" :rows="2" animated />
-    </div>
 
-    <!-- models -->
-    <div>
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
-        <SvgIcon name="models" width="18" height="18" />
-        <span>{{ $t("organization.model") }}</span>
-      </h3>
-      <div v-if="hasModels" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <repo-item v-for="model in models.data" :repo="model" repo-type="model"></repo-item>
+      <!-- models -->
+      <div>
+        <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+          <SvgIcon name="models" width="18" height="18" />
+          <span>{{ $t("organization.model") }}</span>
+        </h3>
+        <div v-if="hasModels" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+          <repo-item v-for="model in models.data" :repo="model" repo-type="model"></repo-item>
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more v-if="models.more" target="models" @view-more-targets="viewMoreTargets"></view-more>
+        <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more v-if="models.more" target="models" @view-more-targets="viewMoreTargets"></view-more>
-      <el-skeleton class="pr-6" v-if="modelsLoading" :rows="2" animated />
-    </div>
 
-    <!-- datasets -->
-    <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
-        <SvgIcon name="datasets" width="18" height="18" />
-        <span>{{ $t("organization.dataset") }}</span>
-      </h3>
-      <div v-if="hasDatasets" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <repo-item v-for="dataset in datasets.data" :repo="dataset" repo-type="dataset"></repo-item>
+      <!-- datasets -->
+      <div class="mt-[32px]">
+        <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+          <SvgIcon name="datasets" width="18" height="18" />
+          <span>{{ $t("organization.dataset") }}</span>
+        </h3>
+        <div v-if="hasDatasets" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+          <repo-item v-for="dataset in datasets.data" :repo="dataset" repo-type="dataset"></repo-item>
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more
+          v-if="datasets.more"
+          target="datasets"
+          @view-more-targets="viewMoreTargets"
+        ></view-more>
+        <el-skeleton class="pr-6" v-if="datasetsLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more
-        v-if="datasets.more"
-        target="datasets"
-        @view-more-targets="viewMoreTargets"
-      ></view-more>
-      <el-skeleton class="pr-6" v-if="datasetsLoading" :rows="2" animated />
-    </div>
 
-    <!-- code repo -->
-    <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
-        <SvgIcon name="codes" width="18" height="18" />
-        <span>{{ $t("organization.code") }}</span>
-      </h3>
-      <div v-if="hasCodes" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <repo-item v-for="code in codes.data" :repo="code" repo-type="code"></repo-item>
+      <!-- code repo -->
+      <div class="mt-[32px]">
+        <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+          <SvgIcon name="codes" width="18" height="18" />
+          <span>{{ $t("organization.code") }}</span>
+        </h3>
+        <div v-if="hasCodes" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+          <repo-item v-for="code in codes.data" :repo="code" repo-type="code"></repo-item>
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more v-if="codes.more" target="codes" @view-more-targets="viewMoreTargets"></view-more>
+        <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more v-if="codes.more" target="codes" @view-more-targets="viewMoreTargets"></view-more>
-      <el-skeleton class="pr-6" v-if="codeLoading" :rows="2" animated />
-    </div>
 
-    <!-- spaces -->
-    <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
-        <SvgIcon name="spaces" width="18" height="18" />
-        <span>{{ $t("organization.space") }}</span>
-      </h3>
-      <div v-if="hasSpaces" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <application-space-item v-for="repo in spaces.data" :repo="repo" repo-type="space" />
+      <!-- spaces -->
+      <div class="mt-[32px]">
+        <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+          <SvgIcon name="spaces" width="18" height="18" />
+          <span>{{ $t("organization.space") }}</span>
+        </h3>
+        <div v-if="hasSpaces" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+          <application-space-item v-for="repo in spaces.data" :repo="repo" repo-type="space" />
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more v-if="spaces.more" target="spaces" @view-more-targets="viewMoreTargets"></view-more>
+        <el-skeleton class="pr-6" v-if="spacesLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more v-if="spaces.more" target="spaces" @view-more-targets="viewMoreTargets"></view-more>
-      <el-skeleton class="pr-6" v-if="spacesLoading" :rows="2" animated />
-    </div>
 
-    <!-- endpoints -->
-    <div v-if="hasEndpoints" class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
-        <SvgIcon name="endpoint" width="18" height="18" />
-        <span>{{ $t("endpoints.title") }}</span>
-      </h3>
-      <div v-if="hasEndpoints" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <EndpointItem v-for="endpoint in endpoints.data" :endpoint="endpoint" :namespace="name" />
+      <!-- endpoints -->
+      <div v-if="hasEndpoints" class="mt-[32px]">
+        <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+          <SvgIcon name="endpoint" width="18" height="18" />
+          <span>{{ $t("endpoints.title") }}</span>
+        </h3>
+        <div v-if="hasEndpoints" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-4 mt-[16px]">
+          <EndpointItem v-for="endpoint in endpoints.data" :endpoint="endpoint" :namespace="name" />
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more
+          v-if="endpoints.more"
+          target="endpoints"
+          @view-more-targets="viewMoreTargets"
+        ></view-more>
+        <el-skeleton class="pr-6" v-if="endpointsLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more
-        v-if="endpoints.more"
-        target="endpoints"
-        @view-more-targets="viewMoreTargets"
-      ></view-more>
-      <el-skeleton class="pr-6" v-if="endpointsLoading" :rows="2" animated />
-    </div>
 
-    <!-- finetunes -->
-    <div v-if="isCurrentUser" class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
-        <SvgIcon name="profile_finetune" width="18" height="18" />
-        <span>{{ $t("finetune.title") }}</span>
-      </h3>
-      <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
-        <FinetuneItem v-for="finetune in finetunes.data" :repo="finetune" repo-type="finetune" />
+      <!-- finetunes -->
+      <div v-if="isCurrentUser" class="mt-[32px]">
+        <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+          <SvgIcon name="profile_finetune" width="18" height="18" />
+          <span>{{ $t("finetune.title") }}</span>
+        </h3>
+        <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+          <FinetuneItem v-for="finetune in finetunes.data" :repo="finetune" repo-type="finetune" />
+        </div>
+        <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+          {{ $t("all.noData") }}
+        </div>
+        <view-more v-if="finetunes.more" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
+        <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
-        {{ $t("all.noData") }}
-      </div>
-      <view-more v-if="finetunes.more" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
-      <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
     </div>
-  </div>
   </div>
 </template>
 
