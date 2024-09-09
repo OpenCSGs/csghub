@@ -71,7 +71,7 @@
   const keyword = ref('')
 
   const fetchUsers = async (current) => {
-    const {data, error} = await useFetchApi(`/users?page=${current || page.value}&per=${per.value}&keyword=${keyword.value}`).json()
+    const {data, error} = await useFetchApi(`/users?page=${current || page.value}&per=${per.value}&search=${keyword.value}`).json()
     if (data.value) {
       users.value = data.value.data.data
       total.value = data.value.data.total
