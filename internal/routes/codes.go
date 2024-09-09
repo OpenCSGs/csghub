@@ -2,18 +2,32 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"opencsg.com/portal/internal/middleware"
 )
 
-func registerCodeRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
-	engine.GET("/codes", handlersRegistry.RenderHandler.CodeHandler.List)
-	engine.GET("/codes/:namespace/:code_name", handlersRegistry.RenderHandler.CodeHandler.Detail)
-	engine.GET("/codes/:namespace/:code_name/files/:branch/*path", handlersRegistry.RenderHandler.CodeHandler.Files)
-	engine.GET("/codes/:namespace/:code_name/blob/:branch/*path", handlersRegistry.RenderHandler.CodeHandler.Blob)
-	engine.GET("/codes/:namespace/:code_name/commits", handlersRegistry.RenderHandler.CodeHandler.Commits)
-	engine.GET("/codes/:namespace/:code_name/commit/:commit_id", handlersRegistry.RenderHandler.CodeHandler.Commit)
-	engine.GET("/codes/:namespace/:code_name/:branch/new", handlersRegistry.RenderHandler.CodeHandler.NewFile)
-	engine.GET("/codes/:namespace/:code_name/:branch/upload", handlersRegistry.RenderHandler.CodeHandler.UploadFile)
-	engine.GET("/codes/:namespace/:code_name/edit/:branch/:path", handlersRegistry.RenderHandler.CodeHandler.EditFile)
-	engine.GET("/codes/:namespace/:code_name/settings", handlersRegistry.RenderHandler.CodeHandler.Settings)
-	engine.GET("/codes/:namespace/:code_name/community", handlersRegistry.RenderHandler.CodeHandler.Community)
+func registerCodeRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
+	codeHandler := handlers.RenderHandler.CodeHandler
+
+	// 无需登录的路由
+	codeRoutes := engine.Group("/codes")
+	{
+		codeRoutes.GET("", codeHandler.List)
+		codeRoutes.GET("/:namespace/:code_name", codeHandler.Detail)
+		codeRoutes.GET("/:namespace/:code_name/files/:branch/*path", codeHandler.Files)
+		codeRoutes.GET("/:namespace/:code_name/blob/:branch/*path", codeHandler.Blob)
+		codeRoutes.GET("/:namespace/:code_name/commits", codeHandler.Commits)
+		codeRoutes.GET("/:namespace/:code_name/commit/:commit_id", codeHandler.Commit)
+		codeRoutes.GET("/:namespace/:code_name/community", codeHandler.Community)
+	}
+
+	// 需要登录的路由
+	authenticatedRoutes := codeRoutes.Group("")
+	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	{
+		authenticatedRoutes.GET("/new", codeHandler.New)
+		authenticatedRoutes.GET("/:namespace/:code_name/:branch/new", codeHandler.NewFile)
+		authenticatedRoutes.GET("/:namespace/:code_name/:branch/upload", codeHandler.UploadFile)
+		authenticatedRoutes.GET("/:namespace/:code_name/edit/:branch/:path", codeHandler.EditFile)
+		authenticatedRoutes.GET("/:namespace/:code_name/settings", codeHandler.Settings)
+	}
 }

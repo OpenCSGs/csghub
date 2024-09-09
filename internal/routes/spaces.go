@@ -2,19 +2,33 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"opencsg.com/portal/internal/middleware"
 )
 
-func registerSpaceRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
-	engine.GET("/spaces", handlersRegistry.RenderHandler.SpaceHandler.List)
-	engine.GET("/spaces/:namespace/:space_name", handlersRegistry.RenderHandler.SpaceHandler.Detail)
-	engine.GET("/spaces/:namespace/:space_name/files/:branch/*path", handlersRegistry.RenderHandler.SpaceHandler.Files)
-	engine.GET("/spaces/:namespace/:space_name/blob/:branch/*path", handlersRegistry.RenderHandler.SpaceHandler.Blob)
-	engine.GET("/spaces/:namespace/:space_name/commits", handlersRegistry.RenderHandler.SpaceHandler.Commits)
-	engine.GET("/spaces/:namespace/:space_name/commit/:commit_id", handlersRegistry.RenderHandler.SpaceHandler.Commit)
-	engine.GET("/spaces/:namespace/:space_name/:branch/new", handlersRegistry.RenderHandler.SpaceHandler.NewFile)
-	engine.GET("/spaces/:namespace/:space_name/:branch/upload", handlersRegistry.RenderHandler.SpaceHandler.UploadFile)
-	engine.GET("/spaces/:namespace/:space_name/edit/:branch/:path", handlersRegistry.RenderHandler.SpaceHandler.EditFile)
-	engine.GET("/spaces/:namespace/:space_name/settings", handlersRegistry.RenderHandler.SpaceHandler.Settings)
-	engine.GET("/spaces/:namespace/:space_name/billing", handlersRegistry.RenderHandler.SpaceHandler.Billing)
-	engine.GET("/spaces/:namespace/:space_name/community", handlersRegistry.RenderHandler.SpaceHandler.Community)
+func registerSpaceRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
+	spaceHandler := handlers.RenderHandler.SpaceHandler
+
+	// 无需登录的路由
+	spaceRoutes := engine.Group("/spaces")
+	{
+		spaceRoutes.GET("", spaceHandler.List)
+		spaceRoutes.GET("/:namespace/:space_name", spaceHandler.Detail)
+		spaceRoutes.GET("/:namespace/:space_name/files/:branch/*path", spaceHandler.Files)
+		spaceRoutes.GET("/:namespace/:space_name/blob/:branch/*path", spaceHandler.Blob)
+		spaceRoutes.GET("/:namespace/:space_name/commits", spaceHandler.Commits)
+		spaceRoutes.GET("/:namespace/:space_name/commit/:commit_id", spaceHandler.Commit)
+		spaceRoutes.GET("/:namespace/:space_name/community", spaceHandler.Community)
+	}
+
+	// 需要登录的路由
+	authenticatedRoutes := spaceRoutes.Group("")
+	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	{
+		authenticatedRoutes.GET("/new", spaceHandler.New)
+		authenticatedRoutes.GET("/:namespace/:space_name/:branch/new", spaceHandler.NewFile)
+		authenticatedRoutes.GET("/:namespace/:space_name/:branch/upload", spaceHandler.UploadFile)
+		authenticatedRoutes.GET("/:namespace/:space_name/edit/:branch/:path", spaceHandler.EditFile)
+		authenticatedRoutes.GET("/:namespace/:space_name/settings", spaceHandler.Settings)
+		authenticatedRoutes.GET("/:namespace/:space_name/billing", spaceHandler.Billing)
+	}
 }
