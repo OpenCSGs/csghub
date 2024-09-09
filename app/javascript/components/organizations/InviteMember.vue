@@ -231,6 +231,8 @@
     inviteNewMember()
       .then(() => {
         emit('resetMemberList', selectedUsers.value, userRoleInput.value)
+        selectedUsers.value = []
+        fetchOrgMemberList()
         dialogVisible.value = false
       })
       .catch((err) => {
