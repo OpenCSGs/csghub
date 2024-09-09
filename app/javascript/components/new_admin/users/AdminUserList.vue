@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column
-          prop="name"
+          prop="username"
           label="Name"
         />
         <el-table-column
@@ -73,9 +73,8 @@
   const fetchUsers = async (current) => {
     const {data, error} = await useFetchApi(`/users?page=${current || page.value}&per=${per.value}&keyword=${keyword.value}`).json()
     if (data.value) {
-      debugger
-      users.value = data.value.data
-      total.value = data.value.data.total_count
+      users.value = data.value.data.data
+      total.value = data.value.data.total
     } else {
       ElMessage.error(error.value.msg)
     }
@@ -87,7 +86,7 @@
   }
 
   const showDetail = (row) => {
-    window.location.href = `/new_admin/users/${row.name}`
+    window.location.href = `/new_admin/users/${row.username}`
   }
 
   onMounted(() => {
