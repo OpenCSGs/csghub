@@ -155,6 +155,7 @@ services:
       OPENCSG_USER_SERVER_HOST: http://user_server
       OPENCSG_USER_SERVER_PORT: 8088
       STARHUB_SERVER_S3_ENABLE_SSL: false
+      STARHUB_SERVER_PUBLIC_DOMAIN: http://${SERVER_DOMAIN}:${SERVER_PORT}
     ports:
       - "8080:8080"
     restart: always
