@@ -77,8 +77,8 @@
                     height="16"
                     width="16"
                   />
-                  {{ user.name }}
-                  <el-icon><Close @click="removeUser(user.name)" /></el-icon>
+                  {{ user.username }}
+                  <el-icon><Close @click="removeUser(user.username)" /></el-icon>
                 </span>
               </div>
               <input
@@ -97,11 +97,11 @@
                 class="flex gap-[8px] items-center cursor-pointer p-[10px]"
               >
                 <img
-                  :src="user.avatar"
+                  :src="user.avatar || 'https://cdn.casbin.org/img/casbin.svg'"
                   height="16"
                   width="16"
                 />
-                {{ user.name }}
+                {{ user.username }}
               </p>
             </div>
           </div>
@@ -131,7 +131,6 @@
 
 <script setup>
   import { ref } from 'vue'
-  import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -173,10 +172,10 @@
 
   const selectUser = (newUser) => {
     const findUser = selectedUsers.value.find(
-      (user) => user.name === newUser.name
+      (user) => user.username === newUser.username
     )
     if (!findUser) {
-      selectedUsers.value.push({ name: newUser.name, avatar: newUser.avatar })
+      selectedUsers.value.push({ username: newUser.username, avatar: newUser.avatar || 'https://cdn.casbin.org/img/casbin.svg' })
     }
     userNameInput.value = ''
     shouldShowUserList.value = false
@@ -185,36 +184,25 @@
   const showUserList = (e) => {
     if (e.target.value) {
       getUsers(userNameInput.value)
-        .then((data) => {
-          shouldShowUserList.value = data.users.length > 0
-          userList.value = data.users.slice(0, 6)
-        })
-        .catch((err) => {
-          ElMessage({
-            message: err.message,
-            type: 'warning'
-          })
-        })
     } else {
       shouldShowUserList.value = false
     }
   }
 
   async function getUsers(username) {
-    const usersEndpoint = `/internal_api/users?name=${username}`
+    const usersEndpoint = `/users?search=${username}`
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const response = await csrfFetch(usersEndpoint, options)
-    if (!response.ok) {
-      return response.json().then((data) => {
-        throw new Error(data.message)
-      })
+    const {data, error} = await useFetchApi(usersEndpoint, options).json()
+    if (data.value) {
+      shouldShowUserList.value = data.value.data.total > 0
+      userList.value = data.value.data.data.slice(0, 6)
     } else {
-      return response.json()
+      ElMessage.warning(error.value.msg)
     }
   }
 
@@ -240,7 +228,7 @@
       },
       body: JSON.stringify({
         role: userRoleInput.value,
-        users: selectedUsers.value.map((user) => user.name).join(',')
+        users: selectedUsers.value.map((user) => user.username).join(',')
       })
     }
     const { error } = await useFetchApi(inviteNewMemberEndpoint, options).post().json()
