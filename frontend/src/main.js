@@ -49,6 +49,7 @@ import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
 import NotFound from "./components/error/NotFound.vue"
 import Unauthorized from "./components/error/Unauthorized.vue"
 import LoginFailed from "./components/error/LoginFailed.vue"
+import FlashMessage from "./components/shared/FlashMessage.vue"
 
 const pinia = createPinia()
 
@@ -86,7 +87,8 @@ const app = createApp({
     CollectionsDetail,
     NotFound,
     Unauthorized,
-    LoginFailed
+    LoginFailed,
+    FlashMessage
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
@@ -116,6 +118,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.component('SvgIcon', SvgIcon)
+app.component('FlashMessage', FlashMessage)
 app.use(ElementPlus)
 app.use(i18n)
 app.use(pinia)

@@ -94,25 +94,30 @@ func createRender() multitemplate.Renderer {
 		"errors_401":          "errors/unauthorized.html",
 		"errors_login_failed": "errors/login_failed.html",
 
-		"index":                  "home/index.html",
-		"models_index":           "models/index.html",
-		"models_show":            "models/show.html",
-		"datasets_index":         "datasets/index.html",
-		"datasets_show":          "datasets/show.html",
-		"codes_index":            "codes/index.html",
-		"codes_show":             "codes/show.html",
-		"spaces_index":           "spaces/index.html",
-		"spaces_show":            "spaces/show.html",
-		"endpoints_show":         "endpoints/show.html",
-		"finetunes_show":         "finetunes/show.html",
-		"organizations_show":     "organizations/show.html",
-		"organizations_new":      "organizations/new.html",
-		"organizations_settings": "organizations/settings.html",
-		"collections_index":      "collections/index.html",
-		"collections_show":       "collections/show.html",
-		"collections_new":        "collections/new.html",
-		"profile":                "profile/profile.html",
-		"profile_likes":          "profile/likes.html",
+		"index":                          "home/index.html",
+		"models_index":                   "models/index.html",
+		"models_show":                    "models/show.html",
+		"datasets_index":                 "datasets/index.html",
+		"datasets_show":                  "datasets/show.html",
+		"codes_index":                    "codes/index.html",
+		"codes_show":                     "codes/show.html",
+		"spaces_index":                   "spaces/index.html",
+		"spaces_show":                    "spaces/show.html",
+		"endpoints_show":                 "endpoints/show.html",
+		"finetunes_show":                 "finetunes/show.html",
+		"organizations_show":             "organizations/show.html",
+		"organizations_new":              "organizations/new.html",
+		"organizations_settings":         "organizations/settings.html",
+		"collections_index":              "collections/index.html",
+		"collections_show":               "collections/show.html",
+		"collections_new":                "collections/new.html",
+		"profile":                        "profile/profile.html",
+		"profile_likes":                  "profile/likes.html",
+		"settings_profile":               "settings/profile.html",
+		"settings_access_token":          "settings/access_token.html",
+		"settings_starship_access_token": "settings/starship_access_token.html",
+		"settings_sync_access_token":     "settings/sync_access_token.html",
+		"settings_ssh_keys":              "settings/ssh_keys.html",
 	}
 
 	// 动态添加模板
@@ -153,6 +158,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerOrganizationRoutes(engine, handlersRegistry)
 	registerCollectionRoutes(engine, handlersRegistry)
 	registerProfileRoutes(engine, handlersRegistry)
+	registerSettingRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

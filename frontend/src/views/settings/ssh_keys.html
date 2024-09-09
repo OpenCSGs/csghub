@@ -1,0 +1,9 @@
+{{ define "content" }}
+<div>
+  <ssh-key-settings
+    name="{{ .currentUser.Name }}"
+    ssh-keys="{{ .SSHKeys }}"
+  >
+  </ssh-key-settings>
+</div>
+{{ end }}
