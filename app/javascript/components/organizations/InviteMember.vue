@@ -94,14 +94,16 @@
               <p
                 v-for="user in userList"
                 @click="selectUser(user)"
-                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+                class="flex gap-[8px] items-center  p-[10px]"
+                :class="user.invited ? 'cursor-not-allowed' : 'cursor-pointer'"
               >
-                <img
+                <img  
                   :src="user.avatar || 'https://cdn.casbin.org/img/casbin.svg'"
                   height="16"
                   width="16"
                 />
                 {{ user.username }}
+                <span>{{ user.invited ? $t('organization.invite.invited') : '' }}</span>
               </p>
             </div>
           </div>
@@ -130,7 +132,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -147,6 +149,7 @@
   const userNameInput = ref('')
   const userRoleInput = ref('read')
   const selectedUsers = ref([])
+  const membersList = ref([])
   const userList = ref([])
   const shouldShowUserList = ref(false)
   const roleMappings = [
@@ -170,7 +173,21 @@
     )
   }
 
+  const fetchOrgMemberList = async () => {
+    const orgMemberListEndpoint = `/organization/${props.orgName}/members`
+    const { data, error } = await useFetchApi(orgMemberListEndpoint).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      membersList.value = body.data.data
+    }
+  }
+
   const selectUser = (newUser) => {
+    if(newUser.invited){
+      return
+    }
     const findUser = selectedUsers.value.find(
       (user) => user.username === newUser.username
     )
@@ -200,7 +217,11 @@
     const {data, error} = await useFetchApi(usersEndpoint, options).json()
     if (data.value) {
       shouldShowUserList.value = data.value.data.total > 0
-      userList.value = data.value.data.data.slice(0, 6)
+      // Add invited
+      userList.value = data.value.data.data.slice(0, 6).map(user => ({
+        ...user,
+        invited: new Set(membersList.value.map(member => member.username)).has(user.username),
+      }));
     } else {
       ElMessage.warning(error.value.msg)
     }
@@ -242,6 +263,9 @@
       return true
     }
   }
+  onMounted(() => {
+    fetchOrgMemberList()
+  })
 </script>
 
 <style>

@@ -32,6 +32,7 @@ export const organization = {
     inviteNew: "邀请新成员",
     inviteDesc: "你正在邀请新成员到组织",
     addSuccess: "添加成员成功",
+    invited:'已邀请'
   },
   newOrganization: {
     title: "新建组织",
