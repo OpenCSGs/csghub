@@ -169,7 +169,7 @@
 
   const removeUser = (username) => {
     selectedUsers.value = selectedUsers.value.filter(
-      (item) => item.name !== username
+      (item) => item.username !== username
     )
   }
 
