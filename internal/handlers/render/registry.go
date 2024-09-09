@@ -19,6 +19,7 @@ type RenderHandlerRegistry struct {
 	CollectionsHandler  CollectionsHandler
 	ProfileHandler      ProfileHandler
 	SettingHandler      SettingHandler
+	AdminHandler        AdminHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, error) {
@@ -37,7 +38,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 	collectionsHandler := NewCollectionsHandler()
 	profileHandler := NewProfileHandler(svcCtx)
 	settingHandler := NewSettingHandler(svcCtx)
-
+	adminHandler := NewAdminHandler()
 	return &RenderHandlerRegistry{
 		ErrorHandler:        errorHandler,
 		ModelHandler:        modelHandler,
@@ -51,5 +52,6 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 		CollectionsHandler:  collectionsHandler,
 		ProfileHandler:      profileHandler,
 		SettingHandler:      settingHandler,
+		AdminHandler:        adminHandler,
 	}, nil
 }

@@ -25,6 +25,7 @@ import { billing } from './en_js/billing';
 import { resourceConsole } from './en_js/resource_console';
 import { tags } from './en_js/tags';
 import { languages } from './en_js/languages';
+import { errors_page } from './en_js/error';
 
 export default {
   all,
@@ -53,5 +54,6 @@ export default {
   billing,
   resourceConsole,
   tags,
-  languages
+  languages,
+  errors_page
 };
