@@ -33,7 +33,9 @@ func CheckCurrentUser() gin.HandlerFunc {
 		currentUser := jwt.GetCurrentUser(ctx)
 		if currentUser == nil {
 			ctx.Redirect(http.StatusFound, "/login")
+			ctx.Abort()
 			return
 		}
+		ctx.Next()
 	}
 }
