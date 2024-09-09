@@ -41,7 +41,7 @@
     </div>
     <div class="flex justify-between gap-[16px] text-[#344054] text-[14px] leading-[20px]">
       <div class="flex flex-col gap-[8px]">
-        <p>Subset（100）</p>
+        <p>Subset</p>
         <el-select
           v-model="subset"
           @change="changeSubsetName"
@@ -49,14 +49,14 @@
           size="large"
           class="!w-[350px] sm:!w-full">
           <el-option
-            v-for="item in configs"
+            v-for="item in datasetInfo"
             :key="item.config_name"
             :label="item.config_name"
             :value="item.config_name" />
         </el-select>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p>Split (1)</p>
+        <p>Split {{ numSplits }}</p>
         <el-select
           v-model="split"
           @change="changeSplitName"
@@ -64,10 +64,10 @@
           size="large"
           class="!w-[350px] sm:!w-full">
           <el-option
-            v-for="item in dataFiles"
-            :key="item"
-            :label="item"
-            :value="item" />
+            v-for="item in splits"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name" />
         </el-select>   
       </div>
     </div>
@@ -97,7 +97,7 @@
                         min-width="180" />
       </el-table>
       <CsgPagination
-        perPage="4"
+        perPage="3"
         :currentPage="currentPage"
         @currentChange="reloadRows"
         :total="totalRows"
@@ -108,26 +108,29 @@
 
 <script setup>
   import { computed, onMounted, ref } from 'vue'
+  import { ElMessage } from 'element-plus'
   import { Search } from '@element-plus/icons-vue'
   import useFetchApi from '../../packs/useFetchApi'
   import CsgPagination from '../shared/CsgPagination.vue'
 
   const props = defineProps({
-    previewData: Object,
+    datasetInfo: Object,
     namespacePath: String
   })
 
+  const previewData = ref({ columns: [], rows: [], total: 0 })
   const currentPage = ref(1)
-  const totalRows = ref(props.previewData.total)
+  const totalRows = computed(() => { return previewData.value.total });
   const nameFilterInput = ref('')
-  const configs = ref([])
-  const dataFiles = ref([])
-  const subset = ref(configs[0].config_name || '')
-  const split = ref('')
+  // 默认subset和split的值
+  const splits = ref(props.datasetInfo[0].splits)
+  const subset = ref(props.datasetInfo[0].config_name)
+  const split = ref(splits.value[0]?.name || '')
+  const numSplits = ref(splits.value[0]?.num_examples || 0)
 
   const tableData = computed(() => {
-    const rows = props.previewData?.rows.slice(0, 4) || []
-    const columns = props.previewData?.columns || []
+    const rows = previewData.value?.rows.slice(0, 4) || []
+    const columns = previewData.value?.columns || []
     return rows.map(row => {
       const obj = {}
       for (let i = 0; i < columns.length; i++) {
@@ -136,14 +139,17 @@
       return obj
     })
   })
+
   const toggleRow = (_row, _column, event) => {
     const row = event.target.closest('.el-table__row')
     row.classList.toggle('row-item-clamp')
   }
   
   const changeSubsetName = (value) => {
-    const filteredItem = data.find(item => item.config_name === value)
-    dataFiles.value = filteredItem ? filteredItem.data_files: null
+    const filteredItem = props.datasetInfo.find(item => item.config_name === value)
+    splits.value = filteredItem ? filteredItem.data_files: null
+    split.value = splits.value[0].name || ''
+    numSplits.value = splits.value[0].num_examples || 0
     currentPage.value = 1
     reloadRows()
   }
@@ -158,27 +164,13 @@
     reloadRows()
   }
 
-  async function fetchCatalog() {
-    const { error, data } = await useFetchApi(`datasets/${props.namespacePath}/dataviewer/catalog`).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
-      configs.value = data.value.data.configs
-      console.log(data.value.data.configs);
-      console.log(data.value.data.dataset_info);
-    }
-  }
-
   const reloadRows = (childCurrent) => {
     if(childCurrent){
       currentPage.value = childCurrent
     }
     let url = `datasets/${props.namespacePath}/dataviewer/rows`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
-    url = url + `&per=4`
+    url = url + `&per=3`
     url = url + `&search=${nameFilterInput.value}`
 
     url = url + `&namespace=${props.namespacePath.split('/')[0]}`
@@ -195,13 +187,12 @@
         type: 'warning'
       })
     } else {
-      console.log(data.value.data);
+      previewData.value = data.value.data
     }
   }
 
   onMounted(() => {
-    console.log(props.previewData);
-    fetchCatalog()
+    reloadRows()
   })
 </script>
 
