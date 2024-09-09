@@ -178,4 +178,5 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	internal_api.GET("/ping", handlersRegistry.FrontendHandlers.PingHandler.Ping)
 	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
+	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
 }

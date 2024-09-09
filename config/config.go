@@ -32,11 +32,11 @@ type Config struct {
 
 	S3 struct {
 		EnableSSL       bool   `envconfig:"CSGHUB_PORTAL_S3_ENABLE_SSL" default:"false"`
-		Endpoint        string `envconfig:"CSGHUB_PORTAL_S3_ENDPOINT" default:"http://localhost:9000"`
+		Endpoint        string `envconfig:"CSGHUB_PORTAL_S3_ENDPOINT" default:"localhost:9000"`
 		AccessKeyID     string `envconfig:"CSGHUB_PORTAL_S3_ACCESS_KEY_ID" default:""`
 		AccessKeySecret string `envconfig:"CSGHUB_PORTAL_S3_ACCESS_KEY_SECRET" default:""`
 		Region          string `envconfig:"CSGHUB_PORTAL_S3_REGION" default:""`
-		BucketName      string `envconfig:"CSGHUB_PORTAL_S3_BUCKET_NAME" default:""`
+		Bucket          string `envconfig:"CSGHUB_PORTAL_S3_BUCKET" default:""`
 	}
 }
 
