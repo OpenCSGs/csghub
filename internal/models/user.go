@@ -36,7 +36,7 @@ func (u *User) IsAdmin() bool {
 }
 
 func (s *UserStore) FindByLoginIdentity(ctx context.Context, login_identity string) (user User, err error) {
-	err = s.db.Operator.Core.NewSelect().Model(&user).Where("login_identity = ?", login_identity).Scan(ctx)
+	err = s.db.Operator.Core.NewSelect().Model(&user).Where("login_identity = ?", login_identity).Scan(ctx, &user)
 	return
 }
 
@@ -55,5 +55,10 @@ func (s *UserStore) Create(ctx context.Context, user *User) (err error) {
 
 func (s *UserStore) Update(ctx context.Context, user *User) (err error) {
 	_, err = s.db.Operator.Core.NewUpdate().Model(user).WherePK().Exec(ctx)
+	return
+}
+
+func (s *UserStore) FindyByName(ctx context.Context, name string) (user User, err error) {
+	err = s.db.Operator.Core.NewSelect().Model(&user).Where("name = ?", name).Scan(ctx, &user)
 	return
 }
