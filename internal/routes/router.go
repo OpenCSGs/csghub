@@ -133,6 +133,26 @@ func createRender() multitemplate.Renderer {
 		r.Add(name, tmpl)
 	}
 
+	adminLayouts := []string{
+		"admin/layouts/base.html",
+	}
+
+	adminPages := map[string]string{
+		"admin_index": "admin/index.html",
+	}
+
+	for name, page := range adminPages {
+		files := make([]string, len(adminLayouts)+1)
+		copy(files, adminLayouts)
+		files[len(adminLayouts)] = page
+
+		tmpl, err := template.ParseFS(viewsFS, files...)
+		if err != nil {
+			panic(err)
+		}
+		r.Add(name, tmpl)
+	}
+
 	return r
 }
 
@@ -159,6 +179,8 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerCollectionRoutes(engine, handlersRegistry)
 	registerProfileRoutes(engine, handlersRegistry)
 	registerSettingRoutes(engine, handlersRegistry)
+
+	registerAdminRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

@@ -90,7 +90,7 @@
   }
 
   const showDetail = (row) => {
-    window.location.href = `/new_admin/users/${row.name}`
+    window.location.href = `/admin/users/${row.name}`
   }
 
   onMounted(() => {
