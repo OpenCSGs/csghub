@@ -220,7 +220,7 @@
       // Add invited
       userList.value = data.value.data.data.slice(0, 6).map(user => ({
         ...user,
-        invited: new Set(membersList.value.map(member => member.username)).has(user.username),
+        invited: membersList.value.find(member => member.username === user.username) !== undefined
       }));
     } else {
       ElMessage.warning(error.value.msg)
