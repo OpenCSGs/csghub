@@ -1,6 +1,6 @@
 <template>
   <span
-    class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-[#344054] text-[12px]"
+    class="px-[8px] py-[2px] flex items-center justify-center border rounded-md text-[#344054] text-[12px] leading-[18px]"
     >{{ thePayMode }}
   </span>
 </template>
