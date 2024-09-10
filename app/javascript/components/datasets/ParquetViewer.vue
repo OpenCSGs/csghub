@@ -7,9 +7,9 @@
           width="13px"
           height="13px"
         />
-        <p class="ml-[8px] text-[#101828] text-[18px] leading-[28px]">数据集预览</p>
+        <p class="ml-[8px] text-[#101828] text-[18px] leading-[28px]">{{ $t('all.parquet') }}</p>
       </div>
-      <div class="flex items-center justify-center">
+      <!-- <div class="flex items-center justify-center">
         <SvgIcon
           name="parquet_auto_converted"
           width="10px"
@@ -37,7 +37,7 @@
         <p class="ml-[8px] text-[12px] leading-[18px] text-[#667085]">
           Go to dataset viewer
         </p>
-      </div>
+      </div> -->
     </div>
     <div class="flex justify-between gap-[16px] text-[#344054] text-[14px] leading-[20px]">
       <div class="flex flex-col gap-[8px]">
@@ -97,7 +97,7 @@
                         min-width="180" />
       </el-table>
       <CsgPagination
-        perPage="3"
+        perPage="4"
         :currentPage="currentPage"
         @currentChange="reloadRows"
         :total="totalRows"
@@ -170,7 +170,7 @@
     }
     let url = `datasets/${props.namespacePath}/dataviewer/rows`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
-    url = url + `&per=3`
+    url = url + `&per=4`
     url = url + `&search=${nameFilterInput.value}`
 
     url = url + `&namespace=${props.namespacePath.split('/')[0]}`
