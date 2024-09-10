@@ -32,6 +32,7 @@ export const organization = {
     inviteNew: "Invite New Member",
     inviteDesc: "You are inviting a new member to the organization",
     addSuccess: "Member added successfully",
+    invited:'Invited'
   },
   newOrganization: {
     title: "Create New Organization",
