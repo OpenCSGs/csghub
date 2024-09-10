@@ -8,7 +8,6 @@ import (
 func registerSpaceRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	spaceHandler := handlers.RenderHandler.SpaceHandler
 
-	// 无需登录的路由
 	spaceRoutes := engine.Group("/spaces")
 	{
 		spaceRoutes.GET("", spaceHandler.List)
@@ -20,7 +19,6 @@ func registerSpaceRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		spaceRoutes.GET("/:namespace/:space_name/community", spaceHandler.Community)
 	}
 
-	// 需要登录的路由
 	authenticatedRoutes := spaceRoutes.Group("")
 	authenticatedRoutes.Use(middleware.CheckCurrentUser())
 	{

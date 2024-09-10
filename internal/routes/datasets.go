@@ -8,13 +8,11 @@ import (
 func registerDatasetRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	datasetHandler := handlers.RenderHandler.DatasetHandler
 
-	// 无需登录的路由
 	datasetRoutes := engine.Group("/datasets")
 	{
 		datasetRoutes.GET("", datasetHandler.List)
 	}
 
-	// 需要登录的路由
 	authenticatedRoutes := datasetRoutes.Group("")
 	authenticatedRoutes.Use(middleware.CheckCurrentUser())
 	{

@@ -8,7 +8,6 @@ import (
 func registerCodeRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	codeHandler := handlers.RenderHandler.CodeHandler
 
-	// 无需登录的路由
 	codeRoutes := engine.Group("/codes")
 	{
 		codeRoutes.GET("", codeHandler.List)
@@ -20,7 +19,6 @@ func registerCodeRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		codeRoutes.GET("/:namespace/:code_name/community", codeHandler.Community)
 	}
 
-	// 需要登录的路由
 	authenticatedRoutes := codeRoutes.Group("")
 	authenticatedRoutes.Use(middleware.CheckCurrentUser())
 	{

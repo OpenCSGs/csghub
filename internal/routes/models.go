@@ -8,7 +8,6 @@ import (
 func registerModelRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	modelHandler := handlers.RenderHandler.ModelHandler
 
-	// 无需登录的路由
 	modelRoutes := engine.Group("/models")
 	{
 		modelRoutes.GET("", modelHandler.List)
@@ -20,7 +19,6 @@ func registerModelRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		modelRoutes.GET("/:namespace/:model_name/community", modelHandler.Community)
 	}
 
-	// 需要登录的路由
 	authenticatedRoutes := modelRoutes.Group("")
 	authenticatedRoutes.Use(middleware.CheckCurrentUser())
 	{
