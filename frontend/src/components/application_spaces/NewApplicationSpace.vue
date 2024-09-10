@@ -152,7 +152,7 @@
               :limit="1"
               v-model:file-list="images"
               list-type="picture-card"
-              :headers="{ 'X-CSRF-TOKEN': csrf_token }"
+              :headers="{}"
               accept="image/png, image/jpeg, image/gif, image/svg+xml"
               :data="{ namespace: 'application_space' }"
               action="/internal_api/upload"
@@ -406,9 +406,6 @@
       }
     ]
   })
-  const csrf_token = document
-    .querySelector('meta[name="csrf-token"]')
-    .getAttribute('content')
 
   const namespaces = () => {
     let namespaces = userStore.orgs.map((org) => org.path)
