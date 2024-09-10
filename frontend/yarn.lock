@@ -1834,6 +1834,13 @@ vue-i18n@9:
     "@intlify/shared" "9.14.0"
     "@vue/devtools-api" "^6.5.0"
 
+vue-router@4:
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.4.3.tgz#58a39dc804632bfb6d26f052aa8f6718bd130299"
+  integrity sha512-sv6wmNKx2j3aqJQDMxLFzs/u/mjA9Z5LCgy6BE0f7yFWMjrPLnS/sPNn8ARY/FXw6byV18EFutn5lTO6+UsV5A==
+  dependencies:
+    "@vue/devtools-api" "^6.6.3"
+
 vue3-cookies@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/vue3-cookies/-/vue3-cookies-1.0.6.tgz#c1da41f1f3d6bbea8e75157d49d09dfc2a18ca8a"

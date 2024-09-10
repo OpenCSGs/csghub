@@ -9,6 +9,8 @@ import 'element-plus/dist/index.css'
 import './assets/stylesheets/element-plus/_variables.css'
 import './assets/stylesheets/markdown.css'
 import './style.css'
+import { createWebHistory, createRouter } from 'vue-router'
+
 
 import HelloWorld from './components/HelloWorld.vue'
 
@@ -52,10 +54,25 @@ import LoginFailed from "./components/error/LoginFailed.vue"
 import FlashMessage from "./components/shared/FlashMessage.vue"
 import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
 
+// Admin pages
+import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
+import AdminMenu from "./components/new_admin/AdminMenu.vue"
+import AdminDashboard from "./components/new_admin/AdminDashboard.vue"
+import AdminEmailSending from "./components/new_admin/AdminEmailSending.vue"
+import AdminUserList from "./components/new_admin/users/AdminUserList.vue"
+import AdminUserDetail from "./components/new_admin/users/AdminUserDetail.vue"
+import AdminSyncSetting from "./components/new_admin/sync/AdminSyncSetting.vue"
+import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystemConfig.vue"
+
+
 const pinia = createPinia()
 
 const app = createApp({
   components: {
+    // admin pages begin
+    AdminNavbar,
+    AdminMenu,
+    // admin pages end
     HelloWorld,
     Navbar,
     CommentList,
@@ -119,9 +136,24 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
+const routes = [
+  { path: '/admin/', component: AdminDashboard },
+  { path: '/admin/email_sending', component: AdminEmailSending },
+  { path: '/admin/users', component: AdminUserList },
+  { path: '/admin/users/:id', component: AdminUserDetail },
+  { path: '/admin/sync', component: AdminSyncSetting },
+  { path: '/admin/system_config', component: AdminSystemConfig },
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
+
 app.component('SvgIcon', SvgIcon)
 app.component('FlashMessage', FlashMessage)
 app.use(ElementPlus)
 app.use(i18n)
 app.use(pinia)
+app.use(router)
 app.mount('#app')

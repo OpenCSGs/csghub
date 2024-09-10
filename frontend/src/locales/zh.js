@@ -25,6 +25,7 @@ import { billing } from './zh_js/billing';
 import { resourceConsole } from './zh_js/resource_console';
 import { tags } from './zh_js/tags';
 import { languages } from './zh_js/languages';
+import { errors_page } from './zh_js/error';
 
 export default {
   all,
@@ -53,5 +54,6 @@ export default {
   billing,
   resourceConsole,
   tags,
-  languages
+  languages,
+  errors_page
 };
