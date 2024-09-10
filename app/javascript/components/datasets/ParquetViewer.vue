@@ -55,7 +55,7 @@
             :value="item.config_name" />
         </el-select>
       </div>
-      <div class="flex flex-col gap-[8px]">
+      <div v-if="splits" class="flex flex-col gap-[8px]">
         <p>Split {{ numSplits }}</p>
         <el-select
           v-model="split"
@@ -71,7 +71,7 @@
         </el-select>   
       </div>
     </div>
-    <div>
+    <!-- <div>
       <el-input
         v-model="nameFilterInput"
         clearable
@@ -80,7 +80,7 @@
         placeholder="Search this dataset"
         @change="filterChange"
         class="w-full" />
-    </div>
+    </div> -->
     <div>
       <el-table :data="tableData"
                 border

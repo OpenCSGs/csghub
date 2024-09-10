@@ -2,7 +2,7 @@
   <div class="flex md:px-5 md:flex-col-reverse min-h-[calc(100vh-341px)]">
     <div class="max-w-[60%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-[#EBEEF5] md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
-      <ParquetViewer v-if="datasetInfo[0].splits" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
+      <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
       <markdown-viewer
         :content="readmeContent"
         :setDefaultText="true"
@@ -69,7 +69,7 @@
   const readmeContent = ref('')
   const relations = ref({})
   const endpoint = ref({})
-  const datasetInfo = ref([{}])
+  const datasetInfo = ref(null)
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
@@ -110,7 +110,7 @@
         type: 'warning'
       })
     } else {
-      datasetInfo.value = data.value.data.dataset_info
+      datasetInfo.value = data.value.data.dataset_info 
     }
   }
 
