@@ -111,6 +111,7 @@ func createRender() multitemplate.Renderer {
 		"endpoints_new":                  "endpoints/new.html",
 		"finetunes_show":                 "finetunes/show.html",
 		"finetunes_new":                  "finetunes/new.html",
+		"resource_console_index":         "resource-console/index.html",
 		"organizations_show":             "organizations/show.html",
 		"organizations_new":              "organizations/new.html",
 		"organizations_settings":         "organizations/settings.html",
@@ -165,6 +166,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerCollectionRoutes(engine, handlersRegistry)
 	registerProfileRoutes(engine, handlersRegistry)
 	registerSettingRoutes(engine, handlersRegistry)
+	registerResourceConsoleRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

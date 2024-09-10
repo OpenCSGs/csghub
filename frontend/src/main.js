@@ -50,6 +50,7 @@ import NotFound from "./components/error/NotFound.vue"
 import Unauthorized from "./components/error/Unauthorized.vue"
 import LoginFailed from "./components/error/LoginFailed.vue"
 import FlashMessage from "./components/shared/FlashMessage.vue"
+import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
 
 const pinia = createPinia()
 
@@ -88,7 +89,8 @@ const app = createApp({
     NotFound,
     Unauthorized,
     LoginFailed,
-    FlashMessage
+    FlashMessage,
+    ResourceConsoleIndex
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
