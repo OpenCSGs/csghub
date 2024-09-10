@@ -13,6 +13,8 @@ export const profile = {
     gitToken: "Access Token",
     sshKey: "SSH Keys",
     billing: "Billing",
+    warningTip: "Hint",
+    warningTipDesc: "Are you sure to leave the Settings page unsaved?",
   },
   edit: {
     title: "Profile Edit",
