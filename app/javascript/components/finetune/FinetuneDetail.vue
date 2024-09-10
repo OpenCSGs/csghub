@@ -165,7 +165,7 @@
   }
 
   const toNotebookPage = () => {
-    window.open(`https://${finetune.value.endpoint}?jwt=${jwtToken}`)
+    window.open(`${httpProtocal}://${finetune.value.endpoint}?jwt=${jwtToken}`)
   }
 
   const getDetail = async (type) => {
