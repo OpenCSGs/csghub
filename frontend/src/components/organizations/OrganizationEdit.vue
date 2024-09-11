@@ -49,7 +49,6 @@
           v-model:file-list="logo_images"
           drag
           list-type="picture"
-          :headers="{ 'X-CSRF-TOKEN': csrf_token }"
           accept="image/png, image/jpeg, image/gif, image/svg+xml"
           :data="{
             namespace: 'org-logo',
@@ -100,7 +99,6 @@
   const organization = ref(Object.assign({}, props.organizationRaw))
   const nameRule = inject('nameRule')
   const selectedProtocol = ref('https://')
-  const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const org_types = ['企业', '高校', '非营利组织', '社区组织']
   const dataFormRef = ref(null)
 
