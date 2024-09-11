@@ -36,12 +36,12 @@ run-backend:
 build:
 	@echo "Building the project..."
 	cd frontend && yarn build
-	go build -o app
+	go build -o csghub-portal ./cmd/csghub-portal
 
 # 清理项目
 clean:
 	@echo "Cleaning up..."
-	rm -f app
+	rm -f csghub-portal
 
 # 帮助信息
 help:

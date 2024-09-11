@@ -61,6 +61,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	setupStaticRouter(g)
 	setupApiRouter(g, handlersRegistry)
 	setupViewsRouter(g, handlersRegistry)
+	setupNotFoundRouter(g)
 	return g, nil
 }
 
@@ -220,4 +221,11 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 
 	resolve_group := g.Group("")
 	resolve_group.GET("/:repo_type/:namespace/:name/resolve/:branch/*path", handlersRegistry.FrontendHandlers.ResolveHandler.Resolve)
+}
+
+func setupNotFoundRouter(engine *gin.Engine) {
+	engine.NoRoute(func(ctx *gin.Context) {
+		ctx.Redirect(http.StatusFound, "/errors/not-found")
+		ctx.AbortWithStatus(http.StatusNotFound)
+	})
 }
