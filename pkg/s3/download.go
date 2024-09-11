@@ -2,16 +2,13 @@ package s3
 
 import (
 	"context"
-	"net/url"
+	"fmt"
 	"time"
 )
 
 const objectURLExpiry = 6 * 24 * time.Hour
 
-func (c *Client) Download(ctx context.Context, key string) (*url.URL, error) {
-	url, err := c.Client.PresignedGetObject(ctx, c.Bucket, key, objectURLExpiry, nil)
-	if err != nil {
-		return nil, err
-	}
-	return url, nil
+func (c *Client) Download(ctx context.Context, key string) string {
+	endpoint := c.Client.EndpointURL().String()
+	return fmt.Sprintf("%s/%s/%s", endpoint, c.Bucket, key)
 }
