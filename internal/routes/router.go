@@ -61,6 +61,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	setupStaticRouter(g)
 	setupViewsRouter(g, handlersRegistry)
 	setupApiRouter(g, handlersRegistry)
+	setupNotFoundRouter(g)
 	return g, nil
 }
 
@@ -216,4 +217,11 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
 	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
+}
+
+func setupNotFoundRouter(engine *gin.Engine) {
+	engine.NoRoute(func(ctx *gin.Context) {
+		ctx.Redirect(http.StatusFound, "/errors/not-found")
+		ctx.AbortWithStatus(http.StatusNotFound)
+	})
 }
