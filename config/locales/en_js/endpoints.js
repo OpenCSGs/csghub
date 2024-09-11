@@ -59,7 +59,7 @@ export const endpoints = {
     resourceTip: "You can switch to different cloud resources at any time. After switching to paid resources, you will be charged based on the length of use.",
     framework: "Framework",
     currentFramework: 'Current Framework',
-    currentCloudResource: 'Current Resource',
+    currentCloudResource: 'Current Cloud Resource',
     maxReplica: "Maximum number of replicas",
     minReplica: "Minimum number of replicas",
     currentMaxReplica: "Current maximum number of replicas",
