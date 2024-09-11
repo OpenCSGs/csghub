@@ -60,7 +60,6 @@
           v-model:file-list="dataForm.logo_image"
           drag
           list-type="picture"
-          :headers="{ 'X-CSRF-TOKEN': csrf_token }"
           accept="image/png, image/jpeg, image/gif, image/svg+xml"
           :data="{
             namespace: 'org-logo',
@@ -113,7 +112,6 @@
         nameRule: inject('nameRule'),
         showUpload: true,
         selectedProtocol: 'https://',
-        csrf_token: 'csrf_token', //todo pending for upload api
         dataForm: {},
         org_types: ['企业', '高校', '非营利组织', '社区组织'],
         submitting: false,
