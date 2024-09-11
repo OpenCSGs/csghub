@@ -30,7 +30,7 @@ func (i *ProfileHandlerImpl) Detail(ctx *gin.Context) {
 	user, err := i.userModel.FindyByName(ctx.Request.Context(), user_id)
 
 	if user.ID == 0 || err != nil {
-		ctx.Redirect(http.StatusFound, "/error/not-found")
+		ctx.Redirect(http.StatusFound, "/errors/not-found")
 		return
 	}
 
@@ -46,7 +46,7 @@ func (i *ProfileHandlerImpl) Likes(ctx *gin.Context) {
 	user, err := i.userModel.FindyByName(ctx.Request.Context(), user_id)
 
 	if user.ID == 0 || err != nil {
-		ctx.Redirect(http.StatusFound, "/error/not-found")
+		ctx.Redirect(http.StatusFound, "/errors/not-found")
 		return
 	}
 

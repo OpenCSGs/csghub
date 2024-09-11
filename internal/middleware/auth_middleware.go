@@ -32,7 +32,7 @@ func CheckCurrentUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		currentUser := jwt.GetCurrentUser(ctx)
 		if currentUser == nil {
-			ctx.Redirect(http.StatusFound, "/login")
+			ctx.Redirect(http.StatusFound, "/errors/unauthorized")
 			ctx.Abort()
 			return
 		}
@@ -49,7 +49,7 @@ func AuthenticateAdminUser() gin.HandlerFunc {
 			return
 		}
 		if !currentUser.IsAdmin() {
-			ctx.Redirect(http.StatusFound, "/error/unauthorized")
+			ctx.Redirect(http.StatusFound, "/errors/unauthorized")
 			ctx.Abort()
 			return
 		}

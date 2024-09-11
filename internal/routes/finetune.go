@@ -6,7 +6,8 @@ import (
 )
 
 func registerFinetuneRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
-	engine.Use(middleware.CheckCurrentUser())
-	engine.GET("/finetune/:namespace/:model_name/:finetune_name/:finetune_id/*path", handlersRegistry.RenderHandler.FinetuneHandler.Detail)
-	engine.GET("/finetune/new", handlersRegistry.RenderHandler.FinetuneHandler.New)
+	finetuneRoutes := engine.Group("/finetune")
+	finetuneRoutes.Use(middleware.CheckCurrentUser())
+	finetuneRoutes.GET("/:namespace/:model_name/:finetune_name/:finetune_id/*path", handlersRegistry.RenderHandler.FinetuneHandler.Detail)
+	finetuneRoutes.GET("/new", handlersRegistry.RenderHandler.FinetuneHandler.New)
 }
