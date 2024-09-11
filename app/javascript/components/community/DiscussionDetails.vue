@@ -119,7 +119,6 @@ export default {
         return
       }
       this.createComment(this.discussionId)
-      this.$refs.mdTextarea.clearTextarea()
     },
     cancel(){
       this.$emit("toggleDetails");
@@ -142,6 +141,7 @@ export default {
         ElMessage.success(this.$t('community.discussionDetail.updateSuccess'))
       } else {
         ElMessage.warning(error.value.msg)
+        this.editTitle()
       }
     },
     async getComment(discussionId){
