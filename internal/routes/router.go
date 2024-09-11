@@ -59,8 +59,8 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
-	setupViewsRouter(g, handlersRegistry)
 	setupApiRouter(g, handlersRegistry)
+	setupViewsRouter(g, handlersRegistry)
 	return g, nil
 }
 
@@ -217,4 +217,7 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
 	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
+
+	resolve_group := g.Group("")
+	resolve_group.GET("/:repo_type/:namespace/:name/resolve/:branch/*path", handlersRegistry.FrontendHandlers.ResolveHandler.Resolve)
 }

@@ -1,12 +1,15 @@
 package frontendHandlers
 
-import "opencsg.com/portal/internal/svc"
+import (
+	"opencsg.com/portal/internal/svc"
+)
 
 type FrontendHandlerRegistry struct {
 	SettingsHandler SettingsHandler
 	PingHandler     PingHandler
 	TokenHandler    TokenHandler
 	UploadHandler   UploadHandler
+	ResolveHandler  ResolveHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*FrontendHandlerRegistry, error) {
@@ -21,10 +24,16 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*FrontendHandlerRegistry, 
 		return nil, err
 	}
 
+	resolveHandler, err := NewResolveHandler(svcCtx.Config)
+	if err != nil {
+		return nil, err
+	}
+
 	return &FrontendHandlerRegistry{
 		SettingsHandler: settingsHandler,
 		PingHandler:     pingHandler,
 		TokenHandler:    tokenHandler,
 		UploadHandler:   uploadHandler,
+		ResolveHandler:  resolveHandler,
 	}, nil
 }
