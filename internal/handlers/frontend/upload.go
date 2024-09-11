@@ -1,6 +1,7 @@
 package frontendHandlers
 
 import (
+	"log/slog"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -66,18 +67,21 @@ func (i *UploadHandlerImpl) Create(c *gin.Context) {
 
 	reader, err := file.Open()
 	if err != nil {
+		slog.Error("failed to open file", slog.Any("error", err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	objectKey, err = i.S3.Upload(c, namespace, reader)
 	if err != nil {
+		slog.Error("failed to upload file", slog.Any("error", err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	url, err = i.S3.Download(c, objectKey)
 	if err != nil {
+		slog.Error("failed to get file download url", slog.Any("error", err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

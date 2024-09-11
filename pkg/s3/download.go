@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const objectURLExpiry = 7 * 24 * time.Hour
+const objectURLExpiry = 6 * 24 * time.Hour
 
 func (c *Client) Download(ctx context.Context, key string) (*url.URL, error) {
 	url, err := c.Client.PresignedGetObject(ctx, c.Bucket, key, objectURLExpiry, nil)
