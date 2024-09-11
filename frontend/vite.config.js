@@ -10,7 +10,8 @@ export default defineConfig({
     rollupOptions: {
       input: getHtmlEntryFiles('src'),
     },
-    emptyOutDir: true
+    emptyOutDir: true,
+		sourcemap: true
   },
   resolve: {
     alias: {
