@@ -1,6 +1,9 @@
 package s3
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"opencsg.com/portal/config"
@@ -16,6 +19,15 @@ func NewMinio(cfg *config.Config) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	policy := `{"Version": "2012-10-17","Statement": [{"Action": ["s3:GetObject"],"Effect": "Allow","Principal": {"AWS": ["*"]},"Resource": ["arn:aws:s3:::%s/*"],"Sid": ""}]}`
+
+	policy = fmt.Sprintf(policy, cfg.S3.Bucket)
+	err = minioClient.SetBucketPolicy(context.Background(), cfg.S3.Bucket, policy)
+	if err != nil {
+		return nil, fmt.Errorf("failed to set bucket %s policy: %w", cfg.S3.Bucket, err)
+	}
+
 	return &Client{
 		Client: *minioClient,
 		Bucket: cfg.S3.Bucket,
