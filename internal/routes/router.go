@@ -59,8 +59,8 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 
 	g.HTMLRender = createRender()
 	setupStaticRouter(g)
-	setupViewsRouter(g, handlersRegistry)
 	setupApiRouter(g, handlersRegistry)
+	setupViewsRouter(g, handlersRegistry)
 	setupNotFoundRouter(g)
 	return g, nil
 }
@@ -112,6 +112,7 @@ func createRender() multitemplate.Renderer {
 		"endpoints_new":                  "endpoints/new.html",
 		"finetunes_show":                 "finetunes/show.html",
 		"finetunes_new":                  "finetunes/new.html",
+		"resource_console_index":         "resource-console/index.html",
 		"organizations_show":             "organizations/show.html",
 		"organizations_new":              "organizations/new.html",
 		"organizations_settings":         "organizations/settings.html",
@@ -186,7 +187,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerCollectionRoutes(engine, handlersRegistry)
 	registerProfileRoutes(engine, handlersRegistry)
 	registerSettingRoutes(engine, handlersRegistry)
-
+	registerResourceConsoleRoutes(engine, handlersRegistry)
 	registerAdminRoutes(engine, handlersRegistry)
 }
 
@@ -217,6 +218,9 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
 	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
+
+	resolve_group := g.Group("")
+	resolve_group.GET("/:repo_type/:namespace/:name/resolve/:branch/*path", handlersRegistry.FrontendHandlers.ResolveHandler.Resolve)
 }
 
 func setupNotFoundRouter(engine *gin.Engine) {
