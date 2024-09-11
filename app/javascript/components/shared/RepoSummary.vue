@@ -2,7 +2,7 @@
   <div class="flex md:px-5 md:flex-col-reverse min-h-[calc(100vh-341px)]">
     <div class="max-w-[60%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-[#EBEEF5] md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
-      <ParquetViewer v-if="previewData.data" :previewData="previewData.data" />
+      <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
       <markdown-viewer
         :content="readmeContent"
         :setDefaultText="true"
@@ -67,9 +67,9 @@
 
   const loading = ref(true)
   const readmeContent = ref('')
-  const previewData = ref({})
   const relations = ref({})
   const endpoint = ref({})
+  const datasetInfo = ref(null)
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
@@ -97,19 +97,20 @@
                               .map(file => file.path)
                               .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))[0]
       if (parquetFilePath) {
-        fetchPreviewData(parquetFilePath)
-      } else {
-        previewData.value = {}
+        fetchCatalog()
       }
     }
   }
 
-  const fetchPreviewData = async (parquetFilePath) => {
-    const url = `/datasets/${props.namespacePath}/viewer/${parquetFilePath}?count=6`
-    const { data } = await useFetchApi(url).json()
-
-    if (data.value) {
-      previewData.value = data.value
+  async function fetchCatalog() {
+    const { error, data } = await useFetchApi(`datasets/${props.namespacePath}/dataviewer/catalog`).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      datasetInfo.value = data.value.data.dataset_info 
     }
   }
 
