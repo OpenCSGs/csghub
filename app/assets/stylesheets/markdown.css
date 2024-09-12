@@ -72,7 +72,7 @@
   margin: .67em 0;
   font-weight: 600;
   padding-bottom: .3em;
-  font-size: 2em;
+  font-size: 1.25em;
 }
 
 .markdown-body mark {
@@ -316,28 +316,28 @@
 .markdown-body h2 {
   font-weight: 600;
   padding-bottom: .3em;
-  font-size: 1.5em;
+  font-size: 1.125em;
 }
 
 .markdown-body h3 {
   font-weight: 600;
-  font-size: 1.25em;
+  font-size: 1.1em;
 }
 
 .markdown-body h4 {
   font-weight: 600;
-  font-size: 1em;
+  font-size: 1.05em;
 }
 
 .markdown-body h5 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: .875em;
 }
 
 .markdown-body h6 {
-  font-weight: 600;
+  font-weight: 400;
   font-size: .85em;
-  color: #656d76;
+  color: #667085;
 }
 
 .markdown-body p {
@@ -757,8 +757,9 @@
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
-  background-color: #f2f4f7;
+  background-color: #F2F4F7;
   border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
 }
 
 .markdown-body code br,
