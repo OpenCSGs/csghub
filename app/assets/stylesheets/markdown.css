@@ -123,9 +123,9 @@
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
-  height: .25em;
+  height: .0625em;
   padding: 0;
-  margin: 24px 0;
+  margin-bottom: 48px;
   background-color: #D0D5DD;
   border: 0;
 }
