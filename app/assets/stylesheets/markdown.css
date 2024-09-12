@@ -757,8 +757,8 @@
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
-  background-color: rgba(175,184,193,0.2);
-  border-radius: px;
+  background-color: #f2f4f7;
+  border-radius: 4px;
 }
 
 .markdown-body code br,
