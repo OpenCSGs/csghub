@@ -164,7 +164,7 @@
                   {{ $t('navbar.recommendation') }}
                 </el-dropdown-item>
               </a>
-              <a href="/logout">
+              <a @click="clearCookies">
                 <el-dropdown-item divided>
                   {{ $t('navbar.logout') }}
                 </el-dropdown-item>
@@ -296,7 +296,7 @@
         this.$refs.child.showDialog()
       },
       handleLocaleChange(locale) {
-        location.href = `/${locale}/settings/locale`
+        location.href = `/internal_api/${locale}/settings/locale`
       },
       async fetchUser() {
         jwtFetch(`${this.csghubServer}/api/v1/user/${this.userName}`, {
@@ -306,7 +306,14 @@
           this.userAvatar = body.data.avatar
           this.userStore.initialize(body.data)
         })
-      }
+      },
+      clearCookies() {
+        const { cookies } = useCookies()
+        cookies.keys().forEach((cookie) => {
+          cookies.remove(cookie)
+        })
+        window.location.href = '/'
+      },
     },
     mounted() {
       if (this.userName) {

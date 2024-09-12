@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
@@ -83,8 +82,9 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 				Phone:         userResp.Phone,
 				Email:         userResp.Email,
 				LoginIdentity: userResp.UUID,
-				RolesMask:     strings.Join(userResp.Roles, ","),
 			}
+
+			user.SetRoles(userResp.Roles...)
 
 			err = i.userModel.Create(ctx, user)
 			if err != nil {
@@ -92,9 +92,10 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 				ctx.Redirect(http.StatusInternalServerError, "/error/login-failed")
 				return
 			}
+		} else {
+			ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+			return
 		}
-		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
-		return
 	}
 
 	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
