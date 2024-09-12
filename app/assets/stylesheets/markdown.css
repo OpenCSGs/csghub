@@ -257,7 +257,7 @@
   line-height: 10px;
   color: #475467;
   vertical-align: middle;
-  background-color: #f6f8fa;
+  background-color: #F9FAFB;
   border: solid 1px rgba(175,184,193,0.2);
   border-bottom-color: rgba(175,184,193,0.2);
   border-radius: 6px;
@@ -583,7 +583,7 @@
 }
 
 .markdown-body table tr:nth-child(2n) {
-  background-color: #f6f8fa;
+  background-color: #F9FAFB;
 }
 
 .markdown-body table img {
@@ -744,7 +744,7 @@
   font-size: 85%;
   line-height: 1.45;
   color: #475467;
-  background-color: #f6f8fa;
+  background-color: #F9FAFB;
   border-radius: 6px;
 }
 
@@ -784,7 +784,7 @@
 
 .markdown-body .csv-data th {
   font-weight: 600;
-  background: #f6f8fa;
+  background: #F9FAFB;
   border-top: 0;
 }
 
@@ -883,12 +883,12 @@
 }
 
 .markdown-body .pl-ii {
-  color: #f6f8fa;
+  color: #F9FAFB;
   background-color: #82071e;
 }
 
 .markdown-body .pl-c2 {
-  color: #f6f8fa;
+  color: #F9FAFB ;
   background-color: #cf222e;
 }
 
