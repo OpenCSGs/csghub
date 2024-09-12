@@ -203,7 +203,7 @@
   const repetitionPenaltyRange = [
     0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0
   ]
-  const maxTokensRange = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+  const maxTokensRange = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
 
   const playgroundMode = ref('test') // test, api
 
@@ -212,7 +212,7 @@
     top_k: 10,
     temperature: 0.2,
     repetition_penalty: 1.0,
-    max_tokens: 20
+    max_tokens: 200
   })
 
   const changePlaygroundMode = (mode) => {

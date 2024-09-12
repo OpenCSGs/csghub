@@ -21,14 +21,14 @@
 
       <!-- nickname -->
       <el-form-item :label="$t('organization.orgNickName')" prop="nickname">
-        <el-input v-model="dataForm.nickname" :placeholder="$t('all.pleaseInput', {value: $t('organization.orgNickName')})"></el-input>
+        <el-input v-model="dataForm.nickname" :placeholder="$t('all.pleaseInput', {value: this.$t('organization.orgNickName')})"></el-input>
       </el-form-item>
 
       <!-- org_type -->
       <el-form-item :label="$t('organization.orgType')" prop="org_type">
         <el-select
           v-model="dataForm.org_type"
-          :placeholder="$t('all.pleaseSelect', {value: $t('organization.orgType')})"
+          :placeholder="$t('all.pleaseSelect', {value: this.$t('organization.orgType')})"
           style="width: 100%;"
         >
           <el-option
@@ -60,7 +60,6 @@
           v-model:file-list="dataForm.logo_image"
           drag
           list-type="picture"
-          :headers="{ 'X-CSRF-TOKEN': csrf_token }"
           accept="image/png, image/jpeg, image/gif, image/svg+xml"
           :data="{
             namespace: 'org-logo',
@@ -113,7 +112,6 @@
         nameRule: inject('nameRule'),
         showUpload: true,
         selectedProtocol: 'https://',
-        csrf_token: 'csrf_token', //todo pending for upload api
         dataForm: {},
         org_types: ['企业', '高校', '非营利组织', '社区组织'],
         submitting: false,

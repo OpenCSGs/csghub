@@ -90,7 +90,8 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.email"
-        :placeholder="$t('all.email')">
+        :placeholder="$t('all.email')"
+        @change="handleInputChange">
       </el-input>
     </div>
     <!-- nickname -->
@@ -101,7 +102,8 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.nickname"
-        :placeholder="$t('all.nickName')">
+        :placeholder="$t('all.nickName')"
+        @change="handleInputChange">
       </el-input>
     </div>
     <!-- homepage -->
@@ -112,7 +114,8 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.homepage"
-        :placeholder="$t('all.homepage')">
+        :placeholder="$t('all.homepage')"
+        @change="handleInputChange">
       </el-input>
     </div>
     <!-- bio -->
@@ -126,7 +129,8 @@
         clearable
         type="textarea"
         :autosize="{ minRows: 8, maxRows: 30 }"
-        :placeholder="$t('all.bio')">
+        :placeholder="$t('all.bio')"
+        @change="handleInputChange">
       </el-input>
     </div>
     <div
@@ -155,6 +159,7 @@
 
   const fileInput = ref(null)
   const canChangeUsername = cookies.get('can_change_username')
+  const emit = defineEmits(['updateHasSave'])
 
   const uploadImage = () => {
     fileInput.value.click()
@@ -183,6 +188,8 @@
   }
 
   const confirmUpdateProfile = () => {
+    emit('updateHasSave', true)
+
     if (canChangeUsername === 'true') {
       ElMessageBox.confirm(
         t('profile.edit.confirmUpdateMessage'),
@@ -257,5 +264,9 @@
       return
     }
     updateProfile(config)
+  }
+
+  const handleInputChange = () => {
+    emit('updateHasSave', false)
   }
 </script>

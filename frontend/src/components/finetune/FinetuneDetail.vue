@@ -165,7 +165,7 @@
   }
 
   const toNotebookPage = () => {
-    window.open(`https://${finetune.value.endpoint}?jwt=${jwtToken}`)
+    window.open(`${httpProtocal}://${finetune.value.endpoint}?jwt=${jwtToken}`)
   }
 
   const getDetail = async (type) => {
@@ -196,7 +196,7 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi('/space_resources').json()
+    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${finetune.value.cluster_id}&deploy_type=2`).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {

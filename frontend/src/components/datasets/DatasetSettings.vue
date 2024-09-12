@@ -211,13 +211,13 @@
           {{ $t('datasets.edit.statusText') }}
           <span class="text-black font-medium"
             >[{{
-              isPrivate ? this.$t('all.private') : this.$t('all.public')
+              isPrivate ? $t('all.private') : $t('all.public')
             }}]</span
           >
           {{ $t('datasets.edit.status') }} {{
             isPrivate
-              ? this.$t('datasets.edit.privateVis')
-              : this.$t('datasets.edit.publicVis')
+              ? $t('datasets.edit.privateVis')
+              : $t('datasets.edit.publicVis')
           }}
         </div>
       </div>
@@ -499,13 +499,13 @@
         ElMessageBox({
           title: this.$t('datasets.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, this.$t('all.changeVis')),
+            h('span', null, $t('all.changeVis')),
             h(
               'span',
               null,
               value === 'Private'
-                ? this.$t('all.private')
-                : this.$t('all.public')
+                ? $t('all.private')
+                : $t('all.public')
             ),
             h(
               'span',

@@ -201,20 +201,20 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-[#0a0d12] leading-[20px] font-medium">
           {{ $t('application_spaces.edit.changeVisibility') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('application_spaces.edit.statusText') }}
           <span class="text-black font-semibold"
-            >【{{
-              isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            >[{{
+              isPrivate ? $t('all.private') : $t('all.public')
+            }}]</span
           >
-          {{ $t('application_spaces.edit.status') }}。{{
+          {{ $t('application_spaces.edit.status') }} {{
             isPrivate
-              ? this.$t('application_spaces.edit.privateVis')
-              : this.$t('application_spaces.edit.publicVis')
+              ? $t('application_spaces.edit.privateVis')
+              : $t('application_spaces.edit.publicVis')
           }}
         </div>
       </div>
@@ -252,7 +252,6 @@
           :limit="1"
           v-model:file-list="images"
           list-type="picture-card"
-          :headers="{}"
           accept="image/png, image/jpeg, image/gif, image/svg+xml"
           :data="{ namespace: 'application_space' }"
           action="/internal_api/upload"
@@ -292,15 +291,15 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('application_spaces.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          <span class="text-black font-medium">{{ $t('application_spaces.edit.canNot') }}</span>
           {{ $t('application_spaces.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.delTips3') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('all.enterPls') }}
+          {{ $t('application_spaces.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          {{ $t('all.sureDel') }}
+          {{ $t('application_spaces.edit.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
@@ -582,7 +581,7 @@
         ElMessageBox({
           title: this.$t('application_spaces.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, this.$t('all.changeVis')),
+            h('span', null, $t('all.changeVis')),
             h(
               'span',
               null,

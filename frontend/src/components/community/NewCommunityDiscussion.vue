@@ -6,14 +6,14 @@
     </div>
     <div>
       <FormLabel
-        :labelName="this.$t('community.newDiscussion.title')"
+        :labelName="$t('community.newDiscussion.title')"
         :required="true" />
       <el-input
         v-model="title"
         :maxLength="200"
         show-word-limit
         clearable
-        :placeholder="this.$t('community.newDiscussion.create')"
+        :placeholder="$t('community.newDiscussion.create')"
         class="w-full h-[40px] text-[#606266]">
         <template #suffix>
           <span>{{ title.length }} / 200</span>
@@ -21,7 +21,7 @@
       </el-input>
     </div>
     <FormLabel
-      :labelName="this.$t('community.newDiscussion.content')"
+      :labelName="$t('community.newDiscussion.content')"
       :required="true" />
     <CommunityMDTextarea
       :desc="desc"
@@ -99,7 +99,7 @@
         const { data, error } = await useFetchApi(discussionCreateEndpoint, options).json()
         if (data.value) {
           this.createComment(data.value.data.id)
-          ElMessage.success(this.$t('community.newDiscussion.success'))
+          ElMessage.success($t('community.newDiscussion.success'))
         } else {
           ElMessage.warning(error.value.msg)
         }

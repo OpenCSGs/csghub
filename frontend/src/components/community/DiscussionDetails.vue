@@ -119,7 +119,6 @@ export default {
         return
       }
       this.createComment(this.discussionId)
-      this.$refs.mdTextarea.clearTextarea()
     },
     cancel(){
       this.$emit("toggleDetails");
@@ -139,9 +138,10 @@ export default {
       const {data, error} = await useFetchApi(discussionUpdateEndpoint, options).json()
       if (data.value) {
         this.$emit("getDiscussion")
-        ElMessage.success(this.$t('community.discussionDetail.updateSuccess'))
+        ElMessage.success($t('community.discussionDetail.updateSuccess'))
       } else {
         ElMessage.warning(error.value.msg)
+        this.editTitle()
       }
     },
     async getComment(discussionId){
@@ -170,7 +170,7 @@ export default {
       const {data, error} = await useFetchApi(commentCreateEndpoint, commentOptions).json()
       if (data.value) {
         this.getComment(this.discussionId)
-        ElMessage.success(this.$t('community.discussionDetail.addSuccess'))
+        ElMessage.success($t('community.discussionDetail.addSuccess'))
       } else {
         ElMessage.warning(error.value.msg)
       }

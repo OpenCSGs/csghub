@@ -40,6 +40,7 @@
     </el-sub-menu>
   </template>
 
+  <!-- 更多里面的内容 -->
   <el-sub-menu
     v-if="moreItems.length > 0"
     :popper-class="popperClass"
@@ -161,8 +162,9 @@
 
   const adjustMenuItems = () => {
     const menuWidth = document.querySelector('#pc-menu').offsetWidth
-    let width = moreMenuWidth + safePadding
+    let width = moreMenuWidth + safePadding // 更多按钮加上安全距离
 
+    // 超出宽度的菜单放到更多里面
     items.value.map((item, index) => {
       width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
       if (width > menuWidth) {
@@ -173,6 +175,7 @@
       }
     })
 
+    // 将更多里面的菜单放回去
     moreItems.value.map((item, index) => {
       width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
       if (width <= menuWidth) {

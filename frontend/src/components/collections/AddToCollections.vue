@@ -15,7 +15,7 @@
     </div>
     <el-dialog
       v-model="dialogVisible"
-      top="20vh"
+      top="200px"
       :style="{ borderRadius: '10px' }"
       width="450"
       class="invite_dialog"
@@ -42,7 +42,7 @@
               </p>
               <el-select
                 v-model="collectionsIdsInput"
-                :placeholder="this.$t('all.select')"
+                :placeholder="$t('all.select')"
                 filterable
                 size="large"
                 class="w-full"
@@ -146,15 +146,9 @@
     }
   }
 
-  watch(
-    () => userStore.isLoggedIn,
-    (isLoggedIn, _) => {
-      if(isLoggedIn){
-        isLogged.value = true
-        fetchCollectionsList()
-      }
-    }
-  )
+  watch(() => props.userName, () => {
+    fetchCollectionsList()
+  })
 </script>
 <style scoped>
   @media (max-width: 768px) {

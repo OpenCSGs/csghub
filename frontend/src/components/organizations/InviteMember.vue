@@ -47,7 +47,7 @@
               </p>
               <el-select
                 v-model="userRoleInput"
-                :placeholder="this.$t('all.select')"
+                :placeholder="$t('all.select')"
                 size="large"
                 class="w-full"
               >
@@ -77,8 +77,8 @@
                     height="16"
                     width="16"
                   />
-                  {{ user.name }}
-                  <el-icon><Close @click="removeUser(user.name)" /></el-icon>
+                  {{ user.username }}
+                  <el-icon><Close @click="removeUser(user.username)" /></el-icon>
                 </span>
               </div>
               <input
@@ -94,14 +94,16 @@
               <p
                 v-for="user in userList"
                 @click="selectUser(user)"
-                class="flex gap-[8px] items-center cursor-pointer p-[10px]"
+                class="flex gap-[8px] items-center  p-[10px]"
+                :class="user.invited ? 'cursor-not-allowed' : 'cursor-pointer'"
               >
-                <img
-                  :src="user.avatar"
+                <img  
+                  :src="user.avatar || 'https://cdn.casbin.org/img/casbin.svg'"
                   height="16"
                   width="16"
                 />
-                {{ user.name }}
+                {{ user.username }}
+                <span>{{ user.invited ? $t('organization.invite.invited') : '' }}</span>
               </p>
             </div>
           </div>
@@ -130,8 +132,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import csrfFetch from '../../packs/csrfFetch.js'
+  import { ref, onMounted } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -148,6 +149,7 @@
   const userNameInput = ref('')
   const userRoleInput = ref('read')
   const selectedUsers = ref([])
+  const membersList = ref([])
   const userList = ref([])
   const shouldShowUserList = ref(false)
   const roleMappings = [
@@ -167,16 +169,30 @@
 
   const removeUser = (username) => {
     selectedUsers.value = selectedUsers.value.filter(
-      (item) => item.name !== username
+      (item) => item.username !== username
     )
   }
 
+  const fetchOrgMemberList = async () => {
+    const orgMemberListEndpoint = `/organization/${props.orgName}/members`
+    const { data, error } = await useFetchApi(orgMemberListEndpoint).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      membersList.value = body.data.data
+    }
+  }
+
   const selectUser = (newUser) => {
+    if(newUser.invited){
+      return
+    }
     const findUser = selectedUsers.value.find(
-      (user) => user.name === newUser.name
+      (user) => user.username === newUser.username
     )
     if (!findUser) {
-      selectedUsers.value.push({ name: newUser.name, avatar: newUser.avatar })
+      selectedUsers.value.push({ username: newUser.username, avatar: newUser.avatar || 'https://cdn.casbin.org/img/casbin.svg' })
     }
     userNameInput.value = ''
     shouldShowUserList.value = false
@@ -185,36 +201,29 @@
   const showUserList = (e) => {
     if (e.target.value) {
       getUsers(userNameInput.value)
-        .then((data) => {
-          shouldShowUserList.value = data.users.length > 0
-          userList.value = data.users.slice(0, 6)
-        })
-        .catch((err) => {
-          ElMessage({
-            message: err.message,
-            type: 'warning'
-          })
-        })
     } else {
       shouldShowUserList.value = false
     }
   }
 
   async function getUsers(username) {
-    const usersEndpoint = `/internal_api/users?name=${username}`
+    const usersEndpoint = `/users?search=${username}`
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const response = await csrfFetch(usersEndpoint, options)
-    if (!response.ok) {
-      return response.json().then((data) => {
-        throw new Error(data.message)
-      })
+    const {data, error} = await useFetchApi(usersEndpoint, options).json()
+    if (data.value) {
+      shouldShowUserList.value = data.value.data.total > 0
+      // Add invited
+      userList.value = data.value.data.data.slice(0, 6).map(user => ({
+        ...user,
+        invited: membersList.value.find(member => member.username === user.username) !== undefined
+      }));
     } else {
-      return response.json()
+      ElMessage.warning(error.value.msg)
     }
   }
 
@@ -222,6 +231,8 @@
     inviteNewMember()
       .then(() => {
         emit('resetMemberList', selectedUsers.value, userRoleInput.value)
+        selectedUsers.value = []
+        fetchOrgMemberList()
         dialogVisible.value = false
       })
       .catch((err) => {
@@ -240,7 +251,7 @@
       },
       body: JSON.stringify({
         role: userRoleInput.value,
-        users: selectedUsers.value.map((user) => user.name).join(',')
+        users: selectedUsers.value.map((user) => user.username).join(',')
       })
     }
     const { error } = await useFetchApi(inviteNewMemberEndpoint, options).post().json()
@@ -254,6 +265,9 @@
       return true
     }
   }
+  onMounted(() => {
+    fetchOrgMemberList()
+  })
 </script>
 
 <style>

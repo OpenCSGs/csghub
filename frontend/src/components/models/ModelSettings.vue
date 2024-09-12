@@ -209,13 +209,13 @@
           {{ $t('models.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
-              isPrivate ? this.$t('all.private') : this.$t('all.public')
+              isPrivate ? $t('all.private') : $t('all.public')
             }}]</span
           >
           {{ $t('models.edit.status') }} {{
             isPrivate
-              ? this.$t('models.edit.privateVis')
-              : this.$t('models.edit.publicVis')
+              ? $t('models.edit.privateVis')
+              : $t('models.edit.publicVis')
           }}
         </div>
       </div>
@@ -490,7 +490,7 @@
         ElMessageBox({
           title: this.$t('models.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, this.$t('all.changeVis')),
+            h('span', null, $t('all.changeVis')),
             h(
               'span',
               null,

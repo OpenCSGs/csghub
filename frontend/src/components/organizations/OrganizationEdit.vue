@@ -15,12 +15,12 @@
         </el-input>
       </el-form-item>
       <el-form-item :label="$t('organization.orgNickName')" prop="nickname">
-        <el-input v-model="organization.nickname" :placeholder="$t('all.pleaseInput', {value: $t('organization.orgNickName')})"></el-input>
+        <el-input v-model="organization.nickname" :placeholder="$t('all.pleaseInput', {value: this.$t('organization.orgNickName')})"></el-input>
       </el-form-item>
       <el-form-item :label="$t('organization.orgType')" prop="org_type">
         <el-select
           v-model="organization.org_type"
-          :placeholder="$t('all.pleaseSelect', {value: $t('organization.orgType')})"
+          :placeholder="$t('all.pleaseSelect', {value: this.$t('organization.orgType')})"
           style="width: 100%;"
         >
           <el-option
@@ -49,7 +49,6 @@
           v-model:file-list="logo_images"
           drag
           list-type="picture"
-          :headers="{ 'X-CSRF-TOKEN': csrf_token }"
           accept="image/png, image/jpeg, image/gif, image/svg+xml"
           :data="{
             namespace: 'org-logo',
@@ -100,7 +99,6 @@
   const organization = ref(Object.assign({}, props.organizationRaw))
   const nameRule = inject('nameRule')
   const selectedProtocol = ref('https://')
-  const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
   const org_types = ['企业', '高校', '非营利组织', '社区组织']
   const dataFormRef = ref(null)
 

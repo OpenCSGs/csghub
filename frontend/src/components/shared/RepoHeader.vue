@@ -170,9 +170,9 @@
         height="16"
         class="flex-shrink-0"
       />
-      <span class="md:ml-0 text-[#344054] font-normal hover:text-[#344054]">
+      <a :href="`/models/${props.path}`" class="md:ml-0 text-[#344054] font-normal hover:text-[#223B99]">
         {{ path }}
-      </span>
+      </a>
       <SvgIcon
         name="finetune_cpu_icon"
         width="16"

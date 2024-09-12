@@ -38,7 +38,7 @@
               <el-select
                 v-model="typeInput"
                 @change="typeChange"
-                :placeholder="this.$t('all.select')"
+                :placeholder="$t('all.select')"
                 size="large"
                 class="w-full"
               >
@@ -57,7 +57,7 @@
               v-model="repoIdsInput"
               filterable
               remote
-              :placeholder="this.$t('all.select')"
+              :placeholder="$t('all.select')"
               size="large"
               class="w-full"
               :remote-method="repoInputChange"
