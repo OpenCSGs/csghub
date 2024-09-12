@@ -13,7 +13,7 @@ type User struct {
 	Email         string `bun:",notnull,unique" json:"email"`
 	LoginIdentity string `bun:",pk,notnull" json:"login_identity"`
 	Gender        string `bun:"," json:"gender"`
-	RolesMask     string `bun:"," json:"roles_mask"`
+	RolesMask     int    `bun:"," json:"roles_mask"`
 	Phone         string `bun:"," json:"phone"`
 	SessionIP     string `bun:"," json:"session_ip"`
 

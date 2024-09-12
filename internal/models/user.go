@@ -2,7 +2,6 @@ package models
 
 import (
 	"context"
-	"strings"
 
 	"opencsg.com/portal/pkg/database"
 )
@@ -24,15 +23,74 @@ type User struct {
 	Email         string `bun:",notnull,unique" json:"email"`
 	LoginIdentity string `bun:",pk,notnull" json:"login_identity"`
 	Gender        string `bun:"," json:"gender"`
-	RolesMask     string `bun:"," json:"roles_mask"`
+	RolesMask     int    `bun:"," json:"roles_mask"`
 	Phone         string `bun:"," json:"phone"`
 	SessionIP     string `bun:"," json:"session_ip"`
 
 	times
 }
 
+const (
+	RoleSuperUser    = 1 << iota // 1
+	RoleAdmin                    // 2
+	RolePersonalUser             // 4
+	RoleCompanyUser              // 8
+)
+
+func (u *User) Roles() []string {
+	var roles []string
+	if u.RolesMask&RoleSuperUser != 0 {
+		roles = append(roles, "super_user")
+	}
+	if u.RolesMask&RoleAdmin != 0 {
+		roles = append(roles, "admin")
+	}
+	if u.RolesMask&RolePersonalUser != 0 {
+		roles = append(roles, "personal_user")
+	}
+	if u.RolesMask&RoleCompanyUser != 0 {
+		roles = append(roles, "company_user")
+	}
+	return roles
+}
+
+func (u *User) HasRole(role string) bool {
+	switch role {
+	case "super_user":
+		return u.RolesMask&RoleSuperUser != 0
+	case "admin":
+		return u.RolesMask&RoleAdmin != 0
+	case "personal_user":
+		return u.RolesMask&RolePersonalUser != 0
+	case "company_user":
+		return u.RolesMask&RoleCompanyUser != 0
+	default:
+		return false
+	}
+}
+
 func (u *User) IsAdmin() bool {
-	return strings.Contains(u.RolesMask, "admin") || strings.Contains(u.RolesMask, "super_user")
+	return u.HasRole("admin") || u.HasRole("super_user")
+}
+
+func (u *User) IsSuperUser() bool {
+	return u.HasRole("super_user")
+}
+
+func (u *User) SetRoles(roles ...string) {
+	u.RolesMask = 0
+	for _, role := range roles {
+		switch role {
+		case "super_user":
+			u.RolesMask |= RoleSuperUser
+		case "admin":
+			u.RolesMask |= RoleAdmin
+		case "personal_user":
+			u.RolesMask |= RolePersonalUser
+		case "company_user":
+			u.RolesMask |= RoleCompanyUser
+		}
+	}
 }
 
 func (s *UserStore) FindByLoginIdentity(ctx context.Context, login_identity string) (user User, err error) {

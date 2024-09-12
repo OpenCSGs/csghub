@@ -2,6 +2,7 @@ package renderHandlers
 
 import (
 	"github.com/gin-gonic/gin"
+	"opencsg.com/portal/internal/models"
 )
 
 type AdminHandler interface {
@@ -16,5 +17,9 @@ func NewAdminHandler() AdminHandler {
 }
 
 func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
-	renderTemplate(ctx, "admin_index", nil)
+	currentUser := ctx.MustGet("currentUser").(*models.User)
+	data := map[string]interface{}{
+		"roles": currentUser.Roles(),
+	}
+	renderTemplate(ctx, "admin_index", data)
 }
