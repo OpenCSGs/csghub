@@ -60,10 +60,9 @@
               clearable
               v-model="dataForm.model_id"
               :fetch-suggestions="fetchModels"
-              :placeholder="
-                t('all.pleaseInput', { value: t('finetune.new.modelId') })
-              "
-              @change="updateRuntimeFramework" />
+              :placeholder="t('all.pleaseInput', { value: t('finetune.new.modelId') })"
+              @select="updateRuntimeFramework"
+            />
           </el-form-item>
         </div>
 
@@ -253,23 +252,23 @@
       if (!dataForm.value.resource_id) {
         dataForm.value.runtime_framework_id = ''
       } else {
-        fetchFrameworks()
+        updateRuntimeFramework()
       }
     }
   }
 
-  const fetchFrameworks = async () => {
-    try {
-      const { data } = await useFetchApi(
-        `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`
-      ).json()
-      if (data.value) {
-        const body = data.value
-        finetuneFrameworks.value = body.data
-        dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
-      }
-    } catch (err) {
-      console.log(err)
+  const updateRuntimeFramework = async () => {
+    if (!dataForm.value.model_id) return
+    const { data, error } = await useFetchApi(
+      `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`
+    ).json()
+    if (error.value) {
+      dataForm.value.runtime_framework_id = ''
+      finetuneframeworks.value = []
+    } else {
+      const body = data.value
+      finetuneframeworks.value = body.data
+      dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
     }
   }
 
@@ -306,7 +305,7 @@
   }
 
   const fetchModels = async (query, cb) => {
-    const { data, error } = await useFetchApi(`/runtime_framework/models?search=${query}`).json()
+    const { data, error } = await useFetchApi(`/runtime_framework/models?search=${query}&deploy_type=2`).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {

@@ -55,15 +55,14 @@
           <el-form-item
             :label="t('endpoints.new.modelId')"
             class="w-full"
-            prop="model_path">
+            prop="model_id">
             <el-autocomplete
               clearable
-              v-model="dataForm.model_path"
+              v-model="dataForm.model_id"
               :fetch-suggestions="fetchModels"
-              :placeholder="
-                t('all.pleaseInput', { value: t('endpoints.new.modelId') })
-              "
-              @change="updateRuntimeFramework" />
+              :placeholder="t('all.pleaseInput', { value: t('endpoints.new.modelId') })"
+              @select="updateRuntimeFramework"
+            />
           </el-form-item>
         </div>
         <div class="w-full flex md:flex-col gap-[16px] items-center">
@@ -213,7 +212,7 @@
   const nameRule = inject('nameRule')
   const dataFormRef = ref(null)
   const dataForm = ref({
-    model_path: searchParams.get('model_id') || '',
+    model_id: searchParams.get('model_id') || '',
     visibility: 'public',
     min_replica: 1,
     max_replica: 1
@@ -266,7 +265,7 @@
       // 保险起见最后一步还是加上最终的正则吧
       { pattern: nameRule, message: t('rule.nameRule'), trigger: 'blur' }
     ],
-    model_path: [
+    model_id: [
       {
         required: true,
         message: t('all.pleaseInput', { value: t('endpoints.new.modelId') }),
@@ -337,7 +336,7 @@
 
   const fetchModels = async (query, cb) => {
     const { data, error } = await useFetchApi(
-      `/runtime_framework/models?search=${query}`
+      `/runtime_framework/models?search=${query}&deploy_type=1`
     ).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -351,8 +350,9 @@
   }
 
   const updateRuntimeFramework = async () => {
+    if (!dataForm.value.model_id) return
     const { data, error } = await useFetchApi(
-      `/models/${dataForm.value.model_path}/runtime_framework?deploy_type=1`
+      `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=1`
     ).json()
     if (error.value) {
       dataForm.value.endpoint_framework = ''
@@ -414,7 +414,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
-    const uploadEndpoint = `/models/${dataForm.value.model_path}/run`
+    const uploadEndpoint = `/models/${dataForm.value.model_id}/run`
     const { data, error } = await useFetchApi(uploadEndpoint, options).post().json()
     if (data.value) {
       ElMessage({
@@ -422,7 +422,7 @@
         type: 'success'
       })
       const res = data.value
-      window.location.href = `/endpoints/${dataForm.value.model_path}/${res.data.deploy_id}`
+      window.location.href = `/endpoints/${dataForm.value.model_id}/${res.data.deploy_id}`
     } else {
       ElMessage({
         message: t('endpoints.new.createFail') + `: ${error.value.msg}`,
