@@ -274,7 +274,7 @@
       taskTags.value = tempTaskTags
       frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework')
       languageTags.value = data.value.data.filter(tag => tag.category === 'language')
-      licenseTags.value = data.value.data.filter(tag => tag.category === 'license')
+      licenseTags.value = data.value.data.filter(tag => tag.category === 'license' && tag.scope === props.repoType)
     }
   }
 
