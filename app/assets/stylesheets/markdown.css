@@ -196,11 +196,47 @@
 
 .markdown-body table {
   border-spacing: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
   display: block;
   width: max-content;
   max-width: 100%;
   overflow: auto;
+  border-radius: 8px;
+  border: 0.5px solid #D0D5DD;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #EAECF0;
+  border-top: none;
+  border-left: none;
+}
+
+.markdown-body table tr:first-child th,
+.markdown-body table tr:first-child td {
+  border-top: 1px solid #EAECF0;
+}
+
+.markdown-body table tr th:first-child,
+.markdown-body table tr td:first-child {
+  border-left: 1px solid #EAECF0;
+}
+
+.markdown-body table tr:first-child th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.markdown-body table tr:first-child th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.markdown-body table tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.markdown-body table tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
 }
 
 .markdown-body td,
