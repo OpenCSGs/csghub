@@ -49,7 +49,7 @@
 
 .markdown-body a {
   background-color: transparent;
-  color: #0969da;
+  color: #3250BD;
   text-decoration: none;
 }
 
@@ -73,7 +73,6 @@
   font-weight: 600;
   padding-bottom: .3em;
   font-size: 2em;
-  border-bottom: 1px solid hsla(210,18%,87%,1);
 }
 
 .markdown-body mark {
@@ -124,7 +123,6 @@
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
-  border-bottom: 1px solid hsla(210,18%,87%,1);
   height: .25em;
   padding: 0;
   margin: 24px 0;
@@ -222,7 +220,7 @@
 .markdown-body [role=button]:focus,
 .markdown-body input[type=radio]:focus,
 .markdown-body input[type=checkbox]:focus {
-  outline: 2px solid #0969da;
+  outline: 2px solid #3250BD;
   outline-offset: -2px;
   box-shadow: none;
 }
@@ -238,7 +236,7 @@
 .markdown-body [role=button]:focus-visible,
 .markdown-body input[type=radio]:focus-visible,
 .markdown-body input[type=checkbox]:focus-visible {
-  outline: 2px solid #0969da;
+  outline: 2px solid #3250BD;
   outline-offset: -2px;
   box-shadow: none;
 }
@@ -282,7 +280,6 @@
   font-weight: 600;
   padding-bottom: .3em;
   font-size: 1.5em;
-  border-bottom: 1px solid hsla(210,18%,87%,1);
 }
 
 .markdown-body h3 {
@@ -826,7 +823,7 @@
   left: -24px;
   pointer-events: none;
   content: "";
-  border: 2px solid #0969da;
+  border: 2px solid #3250BD;
   border-radius: 6px;
 }
 
@@ -1043,11 +1040,11 @@
 }
 
 .markdown-body .markdown-alert.markdown-alert-note {
-  border-left-color: #0969da;
+  border-left-color: #3250BD;
 }
 
 .markdown-body .markdown-alert.markdown-alert-note .markdown-alert-title {
-  color: #0969da;
+  color: #3250BD;
 }
 
 .markdown-body .markdown-alert.markdown-alert-important {
