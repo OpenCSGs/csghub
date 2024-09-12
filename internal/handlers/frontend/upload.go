@@ -59,8 +59,8 @@ func (i *UploadHandlerImpl) Create(c *gin.Context) {
 		}
 	}
 
-	namespace = c.Param("namespace")
-	if namespace == "" {
+	namespace, ok := c.GetPostForm("namespace")
+	if namespace == "" || !ok {
 		namespace = "comment"
 	}
 
@@ -71,16 +71,9 @@ func (i *UploadHandlerImpl) Create(c *gin.Context) {
 		return
 	}
 
-	objectKey, err = i.S3.Upload(c, namespace, reader)
+	url, objectKey, err = i.S3.Upload(c, namespace, reader)
 	if err != nil {
 		slog.Error("failed to upload file", slog.Any("error", err))
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	url = i.S3.Download(c, objectKey)
-	if err != nil {
-		slog.Error("failed to get file download url", slog.Any("error", err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

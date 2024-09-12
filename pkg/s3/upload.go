@@ -9,10 +9,11 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
-func (c *Client) Upload(ctx context.Context, t string, reader io.ReadCloser) (string, error) {
+func (c *Client) Upload(ctx context.Context, t string, reader io.ReadCloser) (string, string, error) {
 	objectKey := getObjectKeyByType(t)
-	_, err := c.Client.PutObject(ctx, c.Bucket, objectKey, reader, -1, minio.PutObjectOptions{})
-	return objectKey, err
+	info, err := c.Client.PutObject(ctx, c.Bucket, objectKey, reader, -1, minio.PutObjectOptions{})
+
+	return info.Location, objectKey, err
 }
 
 func getObjectKeyByType(t string) string {
