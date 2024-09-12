@@ -15,7 +15,7 @@
     </div>
     <el-dialog
       v-model="dialogVisible"
-      top="20vh"
+      top="200px"
       :style="{ borderRadius: '10px' }"
       width="450"
       class="invite_dialog"
