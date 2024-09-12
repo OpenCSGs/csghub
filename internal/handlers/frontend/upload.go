@@ -1,9 +1,9 @@
 package frontendHandlers
 
 import (
+	"log/slog"
 	"mime/multipart"
 	"net/http"
-	"net/url"
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
@@ -36,7 +36,7 @@ func (i *UploadHandlerImpl) Create(c *gin.Context) {
 		file      *multipart.FileHeader
 		namespace string
 		objectKey string
-		url       *url.URL
+		url       string
 		err       error
 	)
 	currentUser := jwt.GetCurrentUser(c)
@@ -59,28 +59,24 @@ func (i *UploadHandlerImpl) Create(c *gin.Context) {
 		}
 	}
 
-	namespace = c.Param("namespace")
-	if namespace == "" {
+	namespace, ok := c.GetPostForm("namespace")
+	if namespace == "" || !ok {
 		namespace = "comment"
 	}
 
 	reader, err := file.Open()
 	if err != nil {
+		slog.Error("failed to open file", slog.Any("error", err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	objectKey, err = i.S3.Upload(c, namespace, reader)
+	url, objectKey, err = i.S3.Upload(c, namespace, reader)
 	if err != nil {
+		slog.Error("failed to upload file", slog.Any("error", err))
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	url, err = i.S3.Download(c, objectKey)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"url": url.String(), "code": objectKey})
+	c.JSON(http.StatusOK, gin.H{"url": url, "code": objectKey})
 }

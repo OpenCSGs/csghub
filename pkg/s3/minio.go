@@ -16,6 +16,7 @@ func NewMinio(cfg *config.Config) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &Client{
 		Client: *minioClient,
 		Bucket: cfg.S3.Bucket,
