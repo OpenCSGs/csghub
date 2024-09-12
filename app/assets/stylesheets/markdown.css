@@ -126,7 +126,7 @@
   height: .25em;
   padding: 0;
   margin: 24px 0;
-  background-color: #d0d7de;
+  background-color: #D0D5DD;
   border: 0;
 }
 
@@ -313,7 +313,7 @@
   margin: 0;
   padding: 0 1em;
   color: #656d76;
-  border-left: .25em solid #d0d7de;
+  border-left: .25em solid #D0D5DD;
 }
 
 .markdown-body ul,
