@@ -352,23 +352,46 @@
   border-left: .25em solid #D0D5DD;
 }
 
-.markdown-body ul,
-.markdown-body ol {
-  margin-top: 0;
-  margin-bottom: 0;
+.markdown-body ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   padding-left: 2em;
+  list-style-type: disc; /* Sets list item marker to a bullet (•) */
 }
 
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
+.markdown-body ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 2em;
+  list-style-type: decimal; /* Sets list item marker to numbers (1, 2, 3, ...) */
+}
+
+.markdown-body ul ul {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  list-style-type: square;
+}
+
+
+.markdown-body ol ul {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  list-style-type: circle;
+}
+
+.markdown-body ul ol,
+.markdown-body ol ul,
+.markdown-body ol ol {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  list-style-type: lower-alpha;
 }
 
 .markdown-body ul ul ol,
 .markdown-body ul ol ol,
 .markdown-body ol ul ol,
 .markdown-body ol ol ol {
-  list-style-type: lower-alpha;
+  list-style-type: lower-roman;
 }
 
 .markdown-body dd {
