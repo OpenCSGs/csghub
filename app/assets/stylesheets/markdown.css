@@ -4,7 +4,7 @@
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
-  color: #1F2328;
+  color: #475467;
   background-color: #ffffff;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
   font-size: 16px;
@@ -49,7 +49,7 @@
 
 .markdown-body a {
   background-color: transparent;
-  color: #0969da;
+  color: #3250BD;
   text-decoration: none;
 }
 
@@ -73,12 +73,11 @@
   font-weight: 600;
   padding-bottom: .3em;
   font-size: 2em;
-  border-bottom: 1px solid hsla(210,18%,87%,1);
 }
 
 .markdown-body mark {
   background-color: #fff8c5;
-  color: #1F2328;
+  color: #475467;
 }
 
 .markdown-body small {
@@ -124,7 +123,6 @@
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
-  border-bottom: 1px solid hsla(210,18%,87%,1);
   height: .25em;
   padding: 0;
   margin: 24px 0;
@@ -222,7 +220,7 @@
 .markdown-body [role=button]:focus,
 .markdown-body input[type=radio]:focus,
 .markdown-body input[type=checkbox]:focus {
-  outline: 2px solid #0969da;
+  outline: 2px solid #3250BD;
   outline-offset: -2px;
   box-shadow: none;
 }
@@ -238,7 +236,7 @@
 .markdown-body [role=button]:focus-visible,
 .markdown-body input[type=radio]:focus-visible,
 .markdown-body input[type=checkbox]:focus-visible {
-  outline: 2px solid #0969da;
+  outline: 2px solid #3250BD;
   outline-offset: -2px;
   box-shadow: none;
 }
@@ -257,7 +255,7 @@
   padding: 3px 5px;
   font: 11px ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
   line-height: 10px;
-  color: #1F2328;
+  color: #475467;
   vertical-align: middle;
   background-color: #f6f8fa;
   border: solid 1px rgba(175,184,193,0.2);
@@ -276,13 +274,13 @@
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
+  color: #344054;
 }
 
 .markdown-body h2 {
   font-weight: 600;
   padding-bottom: .3em;
   font-size: 1.5em;
-  border-bottom: 1px solid hsla(210,18%,87%,1);
 }
 
 .markdown-body h3 {
@@ -439,7 +437,7 @@
 .markdown-body h4 .octicon-link,
 .markdown-body h5 .octicon-link,
 .markdown-body h6 .octicon-link {
-  color: #1F2328;
+  color: #344054;
   vertical-align: middle;
   visibility: hidden;
 }
@@ -572,7 +570,7 @@
 .markdown-body table th,
 .markdown-body table td {
   padding: 6px 13px;
-  border: 1px solid #d0d7de;
+  border: 1px solid #D0D5DD;
 }
 
 .markdown-body table td>:last-child {
@@ -618,7 +616,7 @@
   padding: 7px;
   margin: 13px 0 0;
   overflow: hidden;
-  border: 1px solid #d0d7de;
+  border: 1px solid #D0D5DD;
 }
 
 .markdown-body span.frame span img {
@@ -630,7 +628,7 @@
   display: block;
   padding: 5px 0 0;
   clear: both;
-  color: #1F2328;
+  color: #475467;
 }
 
 .markdown-body span.align-center {
@@ -745,7 +743,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  color: #1F2328;
+  color: #475467;
   background-color: #f6f8fa;
   border-radius: 6px;
 }
@@ -801,7 +799,7 @@
 .markdown-body .footnotes {
   font-size: 12px;
   color: #656d76;
-  border-top: 1px solid #d0d7de;
+  border-top: 1px solid #D0D5DD;
 }
 
 .markdown-body .footnotes ol {
@@ -826,12 +824,12 @@
   left: -24px;
   pointer-events: none;
   content: "";
-  border: 2px solid #0969da;
+  border: 2px solid #3250BD;
   border-radius: 6px;
 }
 
 .markdown-body .footnotes li:target {
-  color: #1F2328;
+  color: #475467;
 }
 
 .markdown-body .footnotes .data-footnote-backref g-emoji {
@@ -1024,7 +1022,7 @@
   padding: 8px 16px;
   margin-bottom: 16px;
   color: inherit;
-  border-left: .25em solid #d0d7de;
+  border-left: .25em solid #D0D5DD;
 }
 
 .markdown-body .markdown-alert>:first-child {
@@ -1043,11 +1041,11 @@
 }
 
 .markdown-body .markdown-alert.markdown-alert-note {
-  border-left-color: #0969da;
+  border-left-color: #3250BD;
 }
 
 .markdown-body .markdown-alert.markdown-alert-note .markdown-alert-title {
-  color: #0969da;
+  color: #3250BD;
 }
 
 .markdown-body .markdown-alert.markdown-alert-important {
