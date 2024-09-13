@@ -15,12 +15,12 @@
         </el-input>
       </el-form-item>
       <el-form-item :label="$t('organization.orgNickName')" prop="nickname">
-        <el-input v-model="organization.nickname" :placeholder="$t('all.pleaseInput', {value: this.$t('organization.orgNickName')})"></el-input>
+        <el-input v-model="organization.nickname" :placeholder="$t('all.pleaseInput', {value: $t('organization.orgNickName')})"></el-input>
       </el-form-item>
       <el-form-item :label="$t('organization.orgType')" prop="org_type">
         <el-select
           v-model="organization.org_type"
-          :placeholder="$t('all.pleaseSelect', {value: this.$t('organization.orgType')})"
+          :placeholder="$t('all.pleaseSelect', {value: $t('organization.orgType')})"
           style="width: 100%;"
         >
           <el-option
