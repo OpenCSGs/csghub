@@ -146,6 +146,10 @@
     }
   }
 
+  watch(() => userStore.isLoggedIn, () => {
+    isLogged.value = userStore.isLoggedIn
+  })
+
   watch(() => props.userName, () => {
     fetchCollectionsList()
   })
