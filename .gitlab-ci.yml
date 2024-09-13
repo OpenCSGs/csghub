@@ -25,7 +25,7 @@ csghub-build:
   services:
     - docker:24.0.6-dind
   tags:
-    - linux-medium-amd64
+    - external
   rules:
     - <<: *if-csghub-staging-original-repo
   variables:
@@ -38,7 +38,7 @@ csghub-build:
 csghub-deploy:
   stage: deploy
   tags:
-    - linux-medium-amd64
+    - external
   rules:
     - <<: *if-csghub-staging-original-repo
   before_script:
