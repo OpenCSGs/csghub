@@ -5,8 +5,6 @@ include:
 
 variables:
   GIT_DEPTH: 100
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
 
 stages:
   - test
@@ -32,6 +30,8 @@ csghub-build:
     - <<: *if-csghub-staging-original-repo
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: ""
   script:
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN
     - docker build -t $IMAGE_TAG .
