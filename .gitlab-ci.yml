@@ -58,7 +58,7 @@ csghub-deploy:
         ssh root@$OPEN_PORTAL_STAGING_HOST "/bin/bash -s" << EOT
           export DEPLOY_IMAGE_TAG=$IMAGE_TAG
           cd /root/open_portal/
-          docker compose -f docker_compose_staging.yml pull
+          docker compose -f docker_compose_staging.yml pull go-web
           docker compose -f docker_compose_staging.yml up -d --force-recreate go-web
           docker image prune -f
         EOT
