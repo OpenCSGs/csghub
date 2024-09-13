@@ -43,6 +43,8 @@ csghub-deploy:
     - external
   rules:
     - <<: *if-csghub-staging-original-repo
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -54,6 +56,7 @@ csghub-deploy:
   script:
     - |
         ssh root@$OPEN_PORTAL_STAGING_HOST "/bin/bash -s" << EOT
+          export DEPLOY_IMAGE_TAG=$IMAGE_TAG
           cd /root/open_portal/
           docker compose -f docker_compose_staging.yml pull
           docker compose -f docker_compose_staging.yml up -d --force-recreate go-web
