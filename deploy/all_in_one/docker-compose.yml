@@ -12,7 +12,8 @@ services:
       - ./nginx/tmpdata:/var/nginx/client_body_temp
     privileged: true
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.250
     restart: always
 
   redis:
@@ -22,7 +23,8 @@ services:
     volumes:
       - redis:/data
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.249
     healthcheck:
       test: redis-cli ping
       interval: 1s
@@ -40,7 +42,7 @@ services:
     privileged: true
     networks:
       opencsg:
-        ipv4_address: 172.25.0.25
+        ipv4_address: 192.168.100.248
 
   registry:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/registry:2
@@ -50,7 +52,8 @@ services:
       - registry:/var/lib/registry
       - ./auth:/auth
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.247 
     environment:
       REGISTRY_AUTH: "htpasswd"
       REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
@@ -61,11 +64,12 @@ services:
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "sdfa23Sh!322"
-      POSTGRES_MULTIPLE_DATABASES: "starhub_server,gitea,casdoor"
+      POSTGRES_MULTIPLE_DATABASES: "starhub_server,casdoor"
     ports:
       - "5433:5432"
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.246
     healthcheck:
       test: pg_isready -U postgres -h 127.0.0.1
       interval: 5s
@@ -105,7 +109,8 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.245
     depends_on:
       - postgres
 
@@ -113,18 +118,20 @@ services:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
     depends_on:
       - postgres
-      - gitea
+      - redis
+      - gitaly
+      - gitlab-shell 
+      - natsmaster
     environment:
-      STARHUB_SERVER_GITSERVER_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}/gitserver
       STARHUB_SERVER_FRONTEND_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
       STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
       STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
-      STARHUB_SERVER_GITSERVER_HOST: http://gitea:3001
-      STARHUB_SERVER_GITSERVER_USERNAME: root
-      STARHUB_SERVER_GITSERVER_PASSWORD: password123
-      STARHUB_SERVER_GITSERVER_WEBHOOK_URL: http://csghub_server:8080/api/v1/callback/git
-      GITEA_USERNAME: root
-      GITEA_PASSWORD: password123
+      STARHUB_SERVER_REDIS_ENDPOINT: redis:6379
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
+      STARHUB_SERVER_SSH_DOMAIN: ssh://git@${SERVER_DOMAIN}:2222
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: sdfa23Sh!322
       POSTGRES_DB: starhub_server
@@ -137,8 +144,8 @@ services:
       STARHUB_SERVER_S3_REGION: cn-beijing
       STARHUB_SERVER_SPACE_BUILDER_ENDPOINT: http://space_builder:8080
       STARHUB_SERVER_SPACE_RUNNER_ENDPOINT: http://csghub_server_runner:8082
-      STARHUB_SERVER_PUBLIC_ROOT_DOMAIN: ""
-      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT} #space.lwf.internal:30446
+      STARHUB_SERVER_PUBLIC_ROOT_DOMAIN: "" # should be a domain name,such as: ${SPACE_APP_EXTERNAL_DOMAIN}:${SERVER_PORT}
+      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT} #space.lwf.internal:30446, only used for fetch namespace
       STARHUB_SERVER_MODEL_DOWNLOAD_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_PORT}
       STARHUB_SERVER_SAAS: false
       STARHUB_SERVER_MIRRORSERVER_ENABLE: false
@@ -160,9 +167,9 @@ services:
       - "8080:8080"
     restart: always
     networks:
-      - opencsg
-    volumes:
-      - ./gitlog:/starhub-bin/logs:r
+      opencsg:
+        ipv4_address: 192.168.100.244
+
 
   csghub_server_runner:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
@@ -180,9 +187,10 @@ services:
       - "8082:8082"
     restart: always
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.243
     dns:
-      - "172.25.0.25"
+      - "192.168.100.248"
     volumes:
       - ./.kube:/root/.kube:r
 
@@ -196,11 +204,10 @@ services:
       STARHUB_SERVER_SPACE_SESSION_SECRET_KEY: c8f771f2a178089b99172cbbd7e3b01d
       STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
       STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
-      STARHUB_SERVER_GITSERVER_HOST: http://gitea:3001
-      STARHUB_SERVER_GITSERVER_URL: http://gitea:3001
-      STARHUB_SERVER_GITSERVER_USERNAME: root
-      STARHUB_SERVER_GITSERVER_PASSWORD: password123
-      STARHUB_SERVER_GITSERVER_WEBHOOK_URL: http://csghub_server:8080/api/v1/callback/git
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
       STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT}
       STARHUB_SERVER_SAAS: false
       STARHUB_SERVER_MIRRORSERVER_ENABLE: false
@@ -208,9 +215,10 @@ services:
     ports:
       - "8083:8083"
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.242
     dns:
-      - "172.25.0.25"
+      - "192.168.100.248"
     restart: always
 
   space_builder:
@@ -227,61 +235,49 @@ services:
       - "8085:8080"
     restart: always
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.241
     volumes:
       - ./space_data:/opt/data:rw
 
-  gitea:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_git:v0.7.0
-    depends_on:
-      - postgres
+
+  gitlab-shell:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gitlab-shell:v16.4.6
+    command:
+      ["bash", "-c", "exec /usr/bin/env SSH_DAEMON=gitlab-sshd /scripts/process-wrapper"]
     environment:
-      - GITEA_ROOT_URL=http://${SERVER_DOMAIN}:${SERVER_PORT}/gitserver
-      - GITEA_DOMAIN=${SERVER_DOMAIN}:${SERVER_PORT}/gitserver
-      - GITEA_SSH_DOMAIN=${SERVER_DOMAIN}
-      - GITEA_HTTP_PORT=3001
-      - GITEA_SSH_LISTEN_PORT=2222
-      - GITEA_ADMIN_USER=root
-      - GITEA_ADMIN_PASSWORD=password123
-      - GITEA_ADMIN_EMAIL=root@opencsg.com
-      - GITEA_DATABASE_TYPE=postgres
-      - GITEA_DATABASE_HOST=postgres
-      - GITEA_DATABASE_PORT_NUMBER=5432
-      - GITEA_DATABASE_NAME=gitea
-      - GITEA_DATABASE_USERNAME=postgres
-      - GITEA_DATABASE_PASSWORD=sdfa23Sh!322
-      - GITEA_DATABASE_SSL_MODE=disable
-      - GITEA_APP_NAME=git
-      - GITEA_SMTP_ENABLED=false
-      - BITNAMI_DEBUG=true
-      - GITEA_LFS_START_SERVER=true
-      - GITEA_LFS_ROOT_PATH=/opt/bitnami/gitea/data/lfs
-      - GITEA_LFS_STORAGE_TYPE=minio
-      - GITEA_LFS_MINIO_ACCESS_KEY_ID=admin
-      - GITEA_LFS_MINIO_SECRET_ACCESS_KEY=Password_123
-      - GITEA_LFS_MINIO_ENDPOINT=minio:9000
-      - GITEA_LFS_MINIO_BUCKET=opencsg-server-lfs
-      - GITEA_LFS_MINIO_LOCATION=cn-beijing
-      - GITEA_LFS_MINIO_USE_SSL=false
-      - GITEA_SERVICE_DEFAULT_ALLOW_CREATE_ORGANIZATION=true
-      - GITEA_SERVICE_DISABLE_REGISTRATION=false
-      - GITEA_LOG_MODE=file
-      - GITEA_LOG_ROOT_PATH=/bitnami/logs
+      - SSH_DAEMON=gitlab-sshd
     ports:
-      - "3001:3001"
-      - "2222:2222"
-    healthcheck:
-      test: curl -fSs 127.0.0.1:3001/api/healthz || exit 1
-      interval: 5s
-      timeout: 10s
-      retries: 3
-    networks:
-      - opencsg
-    privileged: true
+      - '2222:2222'
+    user: "root"
     restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.240
     volumes:
-      - ./gitdata:/bitnami/gitea
-      - ./gitlog:/bitnami/logs
+      - ./data/gitlab-shell/config.yml:/srv/gitlab-shell/config.yml
+      - ./data/gitlab-shell/.gitlab_shell_secret:/srv/gitlab-shell/.gitlab_shell_secret
+      - ./data/gitlab-shell/keys:/srv/gitlab-shell/keys
+      - ./data/gitlab-shell/logs:/srv/gitlab-shell/logs
+
+  gitaly:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gitaly:v16.4.6
+    command:
+      ["bash", "-c", "mkdir -p /home/git/repositories && rm -rf /srv/gitlab-shell/hooks/* && touch /srv/gitlab-shell/.gitlab_shell_secret && exec /usr/bin/env GITALY_CONFIG_FILE=/home/gitaly.config.toml /scripts/process-wrapper"]
+    environment:
+      - GITALY_CONFIG_FILE=/home/gitaly.config.toml
+    ports:
+      - '8075:8075'
+    user: "root"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.239
+    volumes:
+      - ./data/data/gitaly/git/repositories:/home/git/repositories
+      - ./data/gitaly/gitaly.config.toml:/home/gitaly.config.toml
+      - ./data/gitaly/logs:/var/log/gitaly
+
 
   minio:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/bitnami/minio:2023
@@ -295,8 +291,10 @@ services:
       MINIO_SCHEME: http
     volumes:
       - minio_data:/bitnami/minio/data
+    restart: always
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.238
 
   natsmaster:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_nats:2.10.16
@@ -309,7 +307,8 @@ services:
       - ./nats/nats-server.conf:/nats-server.conf
       - ./nats/jetstream:/data/jetstream
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.237
 
   account_server:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
@@ -333,7 +332,8 @@ services:
       - "8086:8086"
     restart: always
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.236
 
   user_server:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
@@ -343,7 +343,6 @@ services:
       - launch
     depends_on:
       - postgres
-      - gitea
     environment:
       STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN}
       STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
@@ -351,9 +350,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: sdfa23Sh!322
       POSTGRES_DB: starhub_server
-      STARHUB_SERVER_GITSERVER_HOST: http://gitea:3001
-      STARHUB_SERVER_GITSERVER_USERNAME: root
-      STARHUB_SERVER_GITSERVER_PASSWORD: password123
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
       STARHUB_SERVER_CASDOOR_CLIENT_ID: d554744494d93c21a6ab
       STARHUB_SERVER_CASDOOR_CLIENT_SECRET: 2d942276879382c66363ef6303e0d66d37e5d98d
       STARHUB_SERVER_CASDOOR_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}
@@ -367,7 +367,8 @@ services:
       - "8088:8088"
     restart: always
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.235
     volumes:
       - ./casdoor:/starhub-bin/casdoor:r
 
@@ -379,7 +380,8 @@ services:
     depends_on:
       - postgres
     networks:
-      - opencsg
+      opencsg:
+        ipv4_address: 192.168.100.234 
     environment:
       RUNNING_IN_DOCKER: "true"
     volumes:
@@ -395,7 +397,7 @@ services:
     privileged: true
     networks:
       opencsg:
-        ipv4_address: 172.25.0.26
+        ipv4_address: 192.168.100.233
     restart: always
 
 networks:
@@ -403,7 +405,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: "172.25.0.0/16"
+        - subnet: "192.168.100.0/24"
 
 volumes:
   redis:

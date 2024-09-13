@@ -7,4 +7,4 @@ $ORIGIN space.app.internal.
         86400      ; Minimum TTL
 )
 
-*   3600 IN A  172.25.0.26
+*   3600 IN A  192.168.100.233
