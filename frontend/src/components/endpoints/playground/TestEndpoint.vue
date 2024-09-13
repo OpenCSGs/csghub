@@ -57,6 +57,11 @@
         </div>
       </div>
     </div>
+
+    <div class="flex mt-[8px]"> 
+      <SvgIcon name="exclamation_point" class="place-self-start" /> 
+      <p class="ml-[4px] text-[12px] leading-[18px] text-[#667085]">{{ $t('widgets.liabilityExemption') }}</p>
+    </div>
   </div>
 </template>
 
@@ -126,7 +131,7 @@
       ? props.form
       : {
           temperature: 0.2,
-          max_tokens: 128,
+          max_tokens: 200,
           top_k: 10,
           top_p: 0.95,
           repetition_penalty: 1.0

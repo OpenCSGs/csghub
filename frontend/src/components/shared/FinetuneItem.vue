@@ -12,6 +12,7 @@
         {{ repo.deploy_name }}
       </div>
       <div class="flex gap-2">
+        <AppPayMode :payMode="repo.pay_mode"/>
         <AppStatus
           :appStatus="repo.status || 'NoAppFile'"
           :spaceResource="repo.hardware"
@@ -32,6 +33,7 @@
 <script setup>
   import { computed } from 'vue'
   import AppStatus from '../application_spaces/AppStatus.vue'
+  import AppPayMode from '../application_spaces/AppPayMode.vue'
 
   const props = defineProps({
     repo: Object,

@@ -63,10 +63,14 @@
 </template>
 
 <script setup>
-  import { ref, computed, watch } from 'vue';
+  import { ref, computed, watch, onMounted } from 'vue';
   import useUserStore from '../../stores/UserStore.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import { useCookies } from "vue3-cookies";
+
+  const { cookies } = useCookies()
+  const isLoggedIn = cookies.get('login_identity')
 
   const userStore = useUserStore()
 
@@ -76,6 +80,12 @@
 
   watch(() => userStore.username, () => {
     if (!isCurrentUser.value) {
+      fetchUserInfo()
+    }
+  })
+
+  onMounted(() => {
+    if (!isLoggedIn) {
       fetchUserInfo()
     }
   })

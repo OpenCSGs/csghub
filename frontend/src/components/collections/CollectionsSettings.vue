@@ -117,9 +117,9 @@
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('collections.edit.statusText') }}
           <span class="text-black font-semibold"
-            >【{{ visibility ? $t('all.private') : $t('all.public') }}】</span
+            >[{{ visibility ? $t('all.private') : $t('all.public') }}]</span
           >
-          {{ $t('collections.edit.status') }}{{
+          {{ $t('collections.edit.status') }} {{
             visibility ? $t('collections.edit.privateVis') : $t('collections.edit.publicVis')
           }}
         </div>

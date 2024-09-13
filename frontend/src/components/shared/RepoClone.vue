@@ -1,7 +1,8 @@
 <template>
   <div
-    class="flex items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
+    class="flex flex-wrap items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
   >
+    <AddToCollections v-if="showAddToCollections" :repoId="repo.repository_id" :userName="userName" />
     <!-- multi-source sync button -->
     <el-button
       v-if="showSyncButton"
@@ -89,7 +90,7 @@
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
-              <a href="https://opencsg.com/settings/access-token" target="_blank" class="underline">access token</a>
+              <a href="/settings/access-token" target="_blank" class="underline">access token</a>
               as git password/credential
             </div>
             <div
@@ -113,7 +114,7 @@
             ></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
-              :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"
+              :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"
             ></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -126,14 +127,15 @@
           >
             <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-              <a href="https://opencsg.com/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
+              <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
             </div>
             <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
             <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
             <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
-              :content="getMarkdownCode('  GIT_LFS_SKIP_SMUDGE=1', 'bash')"
+              :setDefaultText="true"
+              :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"
             ></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -170,7 +172,8 @@
   import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from "element-plus"
-
+  import AddToCollections from '../collections/AddToCollections.vue'
+  
   const { cookies } = useCookies()
 
   const props = defineProps({
@@ -180,7 +183,8 @@
     admin: Boolean,
     repo: Object,
     enableEndpoint: Boolean,
-    enableFinetune: Boolean
+    enableFinetune: Boolean,
+    showAddToCollections: Boolean
   })
 
   const httpCloneUrl = ref('')
@@ -196,20 +200,20 @@
     httpCloneUrl.value = props.repo.repository.http_clone_url
     httpCloneProtocol.value = url.protocol
     sshCloneUrl.value = props.repo.repository.ssh_clone_url
-
+// no space
     httpsCloneCode.value = `
-  git lfs install
-  git clone ${httpCloneUrl.value}
+git lfs install
+git clone ${httpCloneUrl.value}
 `
-
+    // no space
     sshCloneCode.value = `
-  git lfs install
-  git clone ${sshCloneUrl.value}
+git lfs install
+git clone ${sshCloneUrl.value}
 `
-
+  // no space
   httpsCloneCodeWithToken.value = `
-  git lfs install
-  git clone ${httpCloneProtocol.value}//${
+git lfs install
+git clone ${httpCloneProtocol.value}//${
     currentUser.value
   }:${accessToken.value}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
@@ -239,9 +243,10 @@
   }
 
   watch(accessToken, async (newAccessToken) => {
+    // no space
     httpsCloneCodeWithToken.value = `
-  git lfs install
-  git clone ${httpCloneProtocol.value}//${
+git lfs install
+git clone ${httpCloneProtocol.value}//${
     currentUser.value
   }:${newAccessToken}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `

@@ -8,7 +8,7 @@
           {{ $t('codes.codeName') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('codes.codeNickName') }}
+          {{ $t('codes.codeNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
@@ -86,14 +86,14 @@
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('codes.edit.statusText') }}
           <span class="text-black font-semibold"
-            >【{{
-              isPrivate ? this.$t('all.private') : this.$t('all.public')
-            }}】</span
+            >[{{
+              isPrivate ? $t('all.private') : $t('all.public')
+            }}]</span
           >
-          {{ $t('codes.edit.status') }}。{{
+          {{ $t('codes.edit.status') }} {{
             isPrivate
-              ? this.$t('codes.edit.privateVis')
-              : this.$t('codes.edit.publicVis')
+              ? $t('codes.edit.privateVis')
+              : $t('codes.edit.publicVis')
           }}
         </div>
       </div>
@@ -126,15 +126,15 @@
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
           {{ $t('codes.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
+          <span class="text-black font-medium">{{ $t('codes.edit.canNot') }}</span>
           {{ $t('codes.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('codes.edit.delTips3') }}
         </div>
         <div class="text-[14px] text-[#475467] leading-[20px]">
-          {{ $t('all.enterPls') }}
+          {{ $t('codes.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
-          {{ $t('all.sureDel') }}
+          {{ $t('codes.edit.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
@@ -245,7 +245,7 @@
         ElMessageBox({
           title: this.$t('codes.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, this.$t('all.changeVis')),
+            h('span', null, $t('all.changeVis')),
             h(
               'span',
               null,

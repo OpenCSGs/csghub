@@ -129,7 +129,7 @@
       },
 
       confirmRefreshAccessToken() {
-        ElMessageBox.confirm(this.$t('accessToken.refreshWarning'), 'Warning', {
+        ElMessageBox.confirm($t('accessToken.refreshWarning'), 'Warning', {
           confirmButtonText: this.$t('accessToken.confirm'),
           cancelButtonText: this.$t('all.cancel'),
           type: 'warning'
