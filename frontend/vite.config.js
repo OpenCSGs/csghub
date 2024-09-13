@@ -4,21 +4,23 @@ import fs from 'fs'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  build: {
-    rollupOptions: {
-      input: getHtmlEntryFiles('src'),
+export default defineConfig((configEnv) => {
+  return {
+    plugins: [vue()],
+    build: {
+      rollupOptions: {
+        input: getHtmlEntryFiles('src')
+      },
+      emptyOutDir: true,
+      sourcemap: configEnv.mode === 'development'
     },
-    emptyOutDir: true,
-		sourcemap: true
-  },
-  resolve: {
-    alias: {
-      vue: 'vue/dist/vue.esm-bundler.js',
-			'@': path.resolve(__dirname, 'src'),
-    },
-  },
+    resolve: {
+      alias: {
+        'vue': 'vue/dist/vue.esm-bundler.js',
+        '@': path.resolve(__dirname, 'src')
+      }
+    }
+  }
 })
 
 function getHtmlEntryFiles(srcDir) {
