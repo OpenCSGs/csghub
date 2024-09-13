@@ -6,4 +6,4 @@ ADD . /myapp
 
 RUN go mod tidy
 RUN cd frontend && yarn install && yarn build
-RUN	go build -o /usr/local/bin/csghub-portal ./cmd/csghub-portal
+RUN go build -o /usr/local/bin/csghub-portal ./cmd/csghub-portal
