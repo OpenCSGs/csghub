@@ -264,10 +264,10 @@
     ).json()
     if (error.value) {
       dataForm.value.runtime_framework_id = ''
-      finetuneframeworks.value = []
+      finetuneFrameworks.value = []
     } else {
       const body = data.value
-      finetuneframeworks.value = body.data
+      finetuneFrameworks.value = body.data
       dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
     }
   }
