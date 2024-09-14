@@ -43,7 +43,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.username"
-        :disabled="canChangeUsername === 'false'"
+        :disabled="canChangeUsername !== 'true'"
         :placeholder="this.$t('all.userName')">
       </el-input>
       <p class="text-gray-500 text-[12px] italic pt-1">
