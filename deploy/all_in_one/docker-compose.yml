@@ -1,0 +1,418 @@
+version: '2.4'
+
+services:
+  nginx:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/public/nginx:latest
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - ${SERVER_CASDOOR_PORT}:${SERVER_CASDOOR_PORT}
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/tmpdata:/var/nginx/client_body_temp
+    privileged: true
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.250
+    restart: always
+
+  redis:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/redis:7.2.5
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.249
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  coredns:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/coredns/coredns:1.11.1
+    ports:
+      - "1053:53/udp"
+      - "1053:53/tcp"
+    command: "-conf /root/Corefile"
+    volumes:
+      - ./coredns/:/root/:r
+    privileged: true
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.248
+
+  registry:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/registry:2
+    ports:
+      - "5000:5000"
+    volumes:
+      - registry:/var/lib/registry
+      - ./auth:/auth
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.247 
+    environment:
+      REGISTRY_AUTH: "htpasswd"
+      REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
+      REGISTRY_AUTH_HTPASSWD_PATH: "/auth/htpasswd"
+
+  postgres:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gradescope/postgresql-multiple-databases:14.4
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "sdfa23Sh!322"
+      POSTGRES_MULTIPLE_DATABASES: "starhub_server,casdoor"
+    ports:
+      - "5433:5432"
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.246
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+      interval: 5s
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  csghub_portal:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:latest
+    restart: always
+    command: >
+      bash -c "bundle exec rails assets:precompile && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails db:seed && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./log:/myapp/log
+    environment:
+      DATABASE_URL: postgresql://postgres:sdfa23Sh!322@postgres:5432/open_portal_db
+      ASSET_HOST: http://127.0.0.1:3000
+      RAILS_MASTER_KEY: 64f15f995b044427e43fe4897370fd66
+      RAILS_SERVE_STATIC_FILES: 'false'
+      STARHUB_BASE_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
+      STARHUB_INNER_BASE_URL: http://csghub_server:8080
+      LOGIN_URL: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/login/oauth/authorize?client_id=d554744494d93c21a6ab&response_type=code&redirect_uri=http://${SERVER_DOMAIN}:${SERVER_PORT}/api/v1/callback/casdoor&scope=read&state=casdoor
+      SIGNUP_URL: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/signup/CSGHub
+      OIDC_IDENTIFIER: d554744494d93c21a6ab
+      OIDC_SECRET: 2d942276879382c66363ef6303e0d66d37e5d98d
+      OIDC_REDIRECT_URI: http://${SERVER_DOMAIN}:${SERVER_PORT}/oidc/callback
+      OIDC_AUTHORIZATION_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/login/oauth/authorize
+      OIDC_TOKEN_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/api/login/oauth/access_token
+      OIDC_USERINFO_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/api/userinfo
+      STARHUB_TOKEN: ${HUB_SERVER_API_TOKEN}
+      BUCKET_NAME: opencsg-portal-storage
+      ENDPOINT: http://${SERVER_DOMAIN}:9000
+      ACCESS_ID: admin
+      ACCESS_SECRET: Password_123
+      REGION: cn-beijing
+      ON_PREMISE: false
+      FORCE_PATH_STYLE: true
+    ports:
+      - "3000:3000"
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.245
+    depends_on:
+      - postgres
+
+  csghub_server:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    depends_on:
+      - postgres
+      - redis
+      - gitaly
+      - gitlab-shell 
+      - natsmaster
+    environment:
+      STARHUB_SERVER_FRONTEND_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      STARHUB_SERVER_REDIS_ENDPOINT: redis:6379
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
+      STARHUB_SERVER_SSH_DOMAIN: ssh://git@${SERVER_DOMAIN}:2222
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sdfa23Sh!322
+      POSTGRES_DB: starhub_server
+      GIN_MODE: release
+      STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN}
+      STARHUB_SERVER_S3_ACCESS_KEY_ID: admin
+      STARHUB_SERVER_S3_ACCESS_KEY_SECRET: Password_123
+      STARHUB_SERVER_S3_ENDPOINT: ${SERVER_DOMAIN}:9000 # used to generate download links for lfs files
+      STARHUB_SERVER_S3_BUCKET: opencsg-server-lfs
+      STARHUB_SERVER_S3_REGION: cn-beijing
+      STARHUB_SERVER_SPACE_BUILDER_ENDPOINT: http://space_builder:8080
+      STARHUB_SERVER_SPACE_RUNNER_ENDPOINT: http://csghub_server_runner:8082
+      STARHUB_SERVER_PUBLIC_ROOT_DOMAIN: "" # should be a domain name,such as: ${SPACE_APP_EXTERNAL_DOMAIN}:${SERVER_PORT}
+      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT} #space.lwf.internal:30446, only used for fetch namespace
+      STARHUB_SERVER_MODEL_DOWNLOAD_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_PORT}
+      STARHUB_SERVER_SAAS: false
+      STARHUB_SERVER_MIRRORSERVER_ENABLE: false
+      STARHUB_SERVER_CASDOOR_CLIENT_ID: d554744494d93c21a6ab
+      STARHUB_SERVER_CASDOOR_CLIENT_SECRET: 2d942276879382c66363ef6303e0d66d37e5d98d
+      STARHUB_SERVER_CASDOOR_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}
+      STARHUB_SERVER_CASDOOR_CERTIFICATE: /starhub-bin/casdoor/token_jwt_key.pem
+      STARHUB_SERVER_CASDOOR_ORGANIZATION_NAME: OpenCSG
+      STARHUB_SERVER_CASDOOR_APPLICATION_NAME: CSGHub
+      STARHUB_JWT_SIGNING_KEY: e2kk6awudc3620ed9a
+      OPENCSG_ACCOUNTING_NATS_URL: nats://natsadmin:gALqqbP6SpftVdFzrU2URJ8k1G@natsmaster:4222
+      OPENCSG_ACCOUNTING_SERVER_HOST: http://account_server
+      OPENCSG_ACCOUNTING_SERVER_PORT: 8086
+      OPENCSG_USER_SERVER_HOST: http://user_server
+      OPENCSG_USER_SERVER_PORT: 8088
+      STARHUB_SERVER_S3_ENABLE_SSL: false
+      STARHUB_SERVER_PUBLIC_DOMAIN: http://${SERVER_DOMAIN}:${SERVER_PORT}
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.244
+
+
+  csghub_server_runner:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    entrypoint:
+      - /starhub-bin/starhub
+      - deploy
+      - runner
+    environment:
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      STARHUB_SERVER_DOCKER_REG_BASE: ${DOCKER_REGISTRY_SERVER}/${DOCKER_REGISTRY_NS}/
+      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT}
+      STARHUB_SERVER_DOCKER_IMAGE_PULL_SECRET: ${DOCKER_REGISTRY_SECRET} #space-registry-credential
+    ports:
+      - "8082:8082"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.243
+    dns:
+      - "192.168.100.248"
+    volumes:
+      - ./.kube:/root/.kube:r
+
+  csghub_server_proxy:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    entrypoint:
+      - /starhub-bin/starhub
+      - start
+      - rproxy
+    environment:
+      STARHUB_SERVER_SPACE_SESSION_SECRET_KEY: c8f771f2a178089b99172cbbd7e3b01d
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
+      STARHUB_SERVER_INTERNAL_ROOT_DOMAIN: ${SPACE_APP_NS}.${SPACE_APP_INTERNAL_DOMAIN}:${SPACE_APP_INTERNAL_DOMAIN_PORT}
+      STARHUB_SERVER_SAAS: false
+      STARHUB_SERVER_MIRRORSERVER_ENABLE: false
+      STARHUB_JWT_SIGNING_KEY: e2kk6awudc3620ed9a
+    ports:
+      - "8083:8083"
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.242
+    dns:
+      - "192.168.100.248"
+    restart: always
+
+  space_builder:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:latest
+    environment:
+      - REDIS_ENDPOINT=redis:6379
+      - SPACE_DATA_PATH=/opt/data
+      - DOCKER_HOST=${SPACE_BUILDER_SERVER}
+      - REGISTRY_ADDRESS=${DOCKER_REGISTRY_SERVER}
+      - REGISTRY_USERNAME=${DOCKER_REGISTRY_USERNAME}
+      - REGISTRY_PASSWORD=${DOCKER_REGISTRY_PASSWD}
+      - REGISTRY_NAMESPACE=${DOCKER_REGISTRY_NS} #opencsg_space
+    ports:
+      - "8085:8080"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.241
+    volumes:
+      - ./space_data:/opt/data:rw
+
+
+  gitlab-shell:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gitlab-shell:v16.4.6
+    command:
+      ["bash", "-c", "exec /usr/bin/env SSH_DAEMON=gitlab-sshd /scripts/process-wrapper"]
+    environment:
+      - SSH_DAEMON=gitlab-sshd
+    ports:
+      - '2222:2222'
+    user: "root"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.240
+    volumes:
+      - ./data/gitlab-shell/config.yml:/srv/gitlab-shell/config.yml
+      - ./data/gitlab-shell/.gitlab_shell_secret:/srv/gitlab-shell/.gitlab_shell_secret
+      - ./data/gitlab-shell/keys:/srv/gitlab-shell/keys
+      - ./data/gitlab-shell/logs:/srv/gitlab-shell/logs
+
+  gitaly:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gitaly:v16.4.6
+    command:
+      ["bash", "-c", "mkdir -p /home/git/repositories && rm -rf /srv/gitlab-shell/hooks/* && touch /srv/gitlab-shell/.gitlab_shell_secret && exec /usr/bin/env GITALY_CONFIG_FILE=/home/gitaly.config.toml /scripts/process-wrapper"]
+    environment:
+      - GITALY_CONFIG_FILE=/home/gitaly.config.toml
+    ports:
+      - '8075:8075'
+    user: "root"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.239
+    volumes:
+      - ./data/data/gitaly/git/repositories:/home/git/repositories
+      - ./data/gitaly/gitaly.config.toml:/home/gitaly.config.toml
+      - ./data/gitaly/logs:/var/log/gitaly
+
+
+  minio:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/bitnami/minio:2023
+    ports:
+      - "9000:9000" # api
+      - "9001:9001" # console
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: Password_123
+      MINIO_DEFAULT_BUCKETS: opencsg-server-lfs:public,opencsg-portal-storage:public
+      MINIO_SCHEME: http
+    volumes:
+      - minio_data:/bitnami/minio/data
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.238
+
+  natsmaster:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_nats:2.10.16
+    ports:
+      - "4222:4222" # api
+      - "6222:6222" # cluster
+      - "8222:8222" # monitor
+    restart: always
+    volumes:
+      - ./nats/nats-server.conf:/nats-server.conf
+      - ./nats/jetstream:/data/jetstream
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.237
+
+  account_server:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    entrypoint:
+      - /starhub-bin/starhub
+      - accounting
+      - launch
+    depends_on:
+      - natsmaster
+    environment:
+      STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN}
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      OPENCSG_ACCOUNTING_SERVER_PORT: 8086
+      OPENCSG_ACCOUNTING_NATS_URL: nats://natsadmin:gALqqbP6SpftVdFzrU2URJ8k1G@natsmaster:4222
+      OPENCSG_ACCOUNTING_FEE_EVENT_SUBJECT: "accounting.fee.>"
+      OPENCSG_ACCOUNTING_NOTIFY_NOBALANCE_SUBJECT: "accounting.notify.nobalance"
+      OPENCSG_ACCOUNTING_MSG_FETCH_TIMEOUTINSEC: 5
+      OPENCSG_ACCOUNTING_CHARGING_ENABLE: true
+      GIN_MODE: release
+    ports:
+      - "8086:8086"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.236
+
+  user_server:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    entrypoint:
+      - /starhub-bin/starhub
+      - user
+      - launch
+    depends_on:
+      - postgres
+    environment:
+      STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN}
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sdfa23Sh!322
+      POSTGRES_DB: starhub_server
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
+      STARHUB_SERVER_CASDOOR_CLIENT_ID: d554744494d93c21a6ab
+      STARHUB_SERVER_CASDOOR_CLIENT_SECRET: 2d942276879382c66363ef6303e0d66d37e5d98d
+      STARHUB_SERVER_CASDOOR_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}
+      STARHUB_SERVER_CASDOOR_CERTIFICATE: /starhub-bin/casdoor/token_jwt_key.pem
+      STARHUB_SERVER_CASDOOR_ORGANIZATION_NAME: OpenCSG
+      STARHUB_SERVER_CASDOOR_APPLICATION_NAME: CSGHub
+      STARHUB_JWT_SIGNING_KEY: e2kk6awudc3620ed9a
+      OPENCSG_USER_SERVER_PORT: 8088
+      OPENCSG_USER_SERVER_SIGNIN_SUCCESS_REDIRECT_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}/server/callback
+    ports:
+      - "8088:8088"
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.235
+    volumes:
+      - ./casdoor:/starhub-bin/casdoor:r
+
+  casdoor:
+    restart: always
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/casbin/casdoor:v1.571.0
+    ports:
+      - "8087:8000"
+    depends_on:
+      - postgres
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.234 
+    environment:
+      RUNNING_IN_DOCKER: "true"
+    volumes:
+      - ./casdoor/conf:/conf/
+
+  server_proxy_nginx:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/public/nginx:latest
+    ports:
+      - "8090:80"
+    volumes:
+      - ./rproxy_nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./rproxy_nginx/logs:/var/log/nginx
+    privileged: true
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.233
+    restart: always
+
+networks:
+  opencsg:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.100.0/24"
+
+volumes:
+  redis:
+    driver: local
+  minio_data:
+    driver: local
+  pgdata:
+    driver: local
+  registry:
+    driver: local
