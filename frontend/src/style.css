@@ -127,7 +127,7 @@ img, video {
   }
 
   .error_page_bg {
-    background-image: url('../images/error_page_bg.png');
+    background-image: url('../public/images/error_page_bg.png');
     background-position: top;
   }
 }
