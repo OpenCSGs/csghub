@@ -7,7 +7,7 @@ zh:
       home: '回到首页'
     unauthorized:
       title: '暂无权限'
-      desc: '请联系管理员授权'
+      desc: '请联系管理员授权开通权限'
     login_failed:
       title: '登录失败'
       default_msg: '未知登录错误，请联系管理员'
