@@ -7,8 +7,7 @@
 * csghub-server
 * nginx
 * postgresql
-* gitaly
-* gitlab-shell
+* gitea-server
 * minio
 * casdoor
 * account server
@@ -19,12 +18,12 @@
 **注意：**
 1. CSGHhub v0.4.0支持了space功能，v0.7.0支持了模型微调、推理等功能。而space，模型微调以及推理等都需要Kubernetes以及其他相关环境和配置，而基于compose部署不包括Kubernetes部分，因此这里的一键部署功能`不包含space，模型微调和推理功能`
 1. 可以使用CSGHub的[helm chart](https://github.com/OpenCSGs/CSGHub-helm)来安装完整版CSGHub实例。
-
+1. 该部署脚本使用gitea作为Git Server后端，从**CSGHub v0.9.0版本开始，将不再提供后续支持和维护，请悉知**
 
 ### 前置条件
 * 硬件
 
-最小配置: 2c CPU/8GB 内存/50GB 硬盘
+最小配置: 2c CPU/6GB 内存/50GB 硬盘
 
 推荐配置: 4c CPU/16GB 内存/500GB 硬盘
 
@@ -48,7 +47,9 @@ docker engine（>=5:20.10.24）
 1. 确保主机的`31001`对外端口正常，这是用于提供用户注册登录的casdoor服务使用的。
 1. 可通过主机的`9001`端口访问minio console，如果不需要访问minio console，该端口可关闭。
 1. 默认只支持http协议的CSGHub服务，如果要https协议，需要自行更改相关配置。
+1. 不要随意更改和删除`gitdata`和`gitlog`两个文件夹。这是两个运行时文件夹，会mount到相关容器服务中，文件夹的owner必须是`1001`,如果更改为其他或者删除掉这两个目录，会导致相关服务启动报错。
 1. 彻底清除CSGHub服务命令如下
 ```
 docker compose -f docker-compose.yml down -v
+rm -rf gitdata gitlog
 ```
