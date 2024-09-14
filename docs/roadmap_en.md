@@ -1,0 +1,26 @@
+### RoadMap
+- **Asset Management**
+  - [x] Model Management: Supports both Git protocol and web interface, enabling branch version control and access control.
+  - [x] Dataset Management: Supports both Git protocol and web interface, enabling branch version control and access control.
+  - [x] Large File Support: Supports Git Large File Storage (LFS) protocol and Object Storage Service (OSS) storage.
+  - [x] Code Repos: Built-in code repo management functionality, allowing for the association of code with models, datasets, and Space applications.
+  - [x] Multiple Sources Sync: Supports configuration and enabling of remote repositories for automatic data synchronization, with support for remote sources like OpenCSG ChuanShen Community and Huggingface.
+  - [x] Online Edit: Models, datasets, and code repos can be uploaded, downloaded, edited, or deleted through a web interface, with support for committing changes.
+  - [x] DataSet Online Viewer: A dataset web viewing tool that supports viewing metadata and TopN data of datasets in various formats.
+- **LLM Capability Enhancement**
+  - [x] Dataset Preview: Supports the functionality of previewing dataset data.
+  - [x] OneClick Fine-Tuning: Supports integration with OpenCSG llm-finetune, enabling one-click initiation of model fine-tuning training.
+  - [x] OneClick Inference: Supports integration with OpenCSG llm-inference, enabling one-click initiation of model inference services.
+  - [ ] Data Format Convert: Conversion of mainstream model and dataset formats, with support for configuring automated format conversion rules.
+  - [ ] Asset Copilot: Implements an Asset Management Copilot, supporting natural language queries and management of assets via Chatbot or API interface.
+- **Applications and Enterprise Features**
+  - [x] Access Control: Supports setting permissions for private and public projects, accommodating both organizational and individual accounts.
+  - [x] App Space: Supports hosting Gradio/Streamlit applications and publishing them to the Space application area.
+  - [x] Fine-grained Access Control: Fine-grained permission and access control settings tailored for enterprise architecture.
+- **Security and Compliance**
+  - [x] Git Adaptation: Supports integration with Gitea Server.
+  - [x] Security Design: Features interface authentication mechanisms and supports private deployment.
+  - [ ] Generic GitServer Adaptor: A universal GitServer adapter that supports a variety of mainstream Git repository backends through an adaptor pattern.
+  - [x] Asset Metadata: An asset metadata management mechanism, supporting custom metadata types and corresponding AutoTag rules.
+  - [ ] Compliance Traceability: Traceability and verification of model and license compliance.
+  - [ ] Data Integrity Verification: Verification of data integrity.
