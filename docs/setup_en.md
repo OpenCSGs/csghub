@@ -179,10 +179,27 @@ make run-backend
 
 ### Starting via VS Code
 
-1. Start server: Select the "portal" configuration and press F5 or click "Run and Debug".
-2. Initialize database: Select the "init" configuration and run.
-3. Execute database migrations: Select the "migrate" configuration and run.
-4. Rollback database migrations: Select the "rollback" configuration and run.
+1. Create .env file:
+   - In the project root directory, locate the `.env.example` file.
+   - Copy `.env.example` and rename the copy to `.env`.
+   - Open the `.env` file and fill in all necessary environment variables according to your environment configuration.
+
+   ```shell
+   cp .env.example .env
+   ```
+
+2. Edit .env file:
+   - Open the `.env` file with a text editor.
+   - Fill in or modify each configuration item according to your development environment and requirements.
+   - Ensure all necessary environment variables are correctly set.
+
+3. In VS Code, open the "Run and Debug" view (usually the play button icon in the sidebar).
+
+4. In the top dropdown menu, you can choose one of the following configurations:
+   - "portal": Start the main server
+   - "init": Initialize the database
+   - "migrate": Execute database migration
+   - "rollback": Rollback database migration
 
 ### Compiling the Project via Command Line
 
