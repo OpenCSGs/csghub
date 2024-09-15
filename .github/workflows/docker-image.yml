@@ -4,6 +4,13 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Tags to build and push'
+        required: true
+        type: string
+        default: 'latest'
 
 jobs:
   build:
