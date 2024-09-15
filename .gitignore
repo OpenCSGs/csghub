@@ -22,7 +22,12 @@ go.work
 go.work.sum
 
 # env file
+.env
 .envrc
+
+# DO NOT ignore .env on below folders
+!deploy/all_in_one/.env
+!deploy/all_in_one_gitea/.env
 
 # tmp
 tmp
