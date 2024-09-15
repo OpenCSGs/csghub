@@ -1,4 +1,8 @@
 **[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md) ∙ [日本語](/docs/readme_ja.md)  ∙ [한국어](/docs/readme_kr.md)**
+
+> [!WARNING]
+CSGHub Portal 将 web 框架从 Rails 迁移到 Gin。如果你之前在使用我们的 Rails 版本，你可能需要参考我们的新文档[migrate to Gin](/docs/migrate_to_gin_version_portal_en.md)来了解如何迁移到Gin版本。
+
 ## CSGHub说明文档
 
 CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户治理LLM和LLM应用生命周期中涉及到的资产(数据集、模型文件、代码等)。基于CSGHub，用户可以通过Web界面、Git命令行或者自然语言Chatbot等方式，实现对模型文件、数据集、代码等资产的操作，包括上传、下载、存储、校验和分发；同时平台提供微服务子模块和标准化API，便于用户与自有系统集成。
