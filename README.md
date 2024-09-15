@@ -1,4 +1,8 @@
 **[简体中文](/docs/readme_cn.md) ∙ [English](/docs/readme_en.md) ∙ [日本語](/docs/readme_ja.md) ∙ [한국어](/docs/readme_kr.md)**
+
+> [!IMPORTANT]
+> CSGHub Portal has migrated the web framework from Rails to Gin. If you're using our Rails version before, you may need to refer to our new documents to see how to migrate to Gin version.
+
 ## CSGHub README
 
 CSGHub is an open source, trustworthy large model asset management platform that can assist users in governing the assets involved in the lifecycle of LLM and LLM applications (datasets, model files, codes, etc).
