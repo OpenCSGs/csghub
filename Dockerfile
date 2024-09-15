@@ -1,4 +1,4 @@
-FROM git-devops.opencsg.com:5050/product/community/csghub-portal/go-node AS build
+FROM opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/go-node AS build
 RUN mkdir /myapp
 WORKDIR /myapp
 ADD . /myapp
