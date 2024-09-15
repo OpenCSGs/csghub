@@ -30,3 +30,9 @@ tmp
 
 # DS_Store
 **/.DS_Store
+
+csghub-portal
+
+.vscode/settings.json
+
+cmd/csghub-portal/__debug_*
