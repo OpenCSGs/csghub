@@ -12,6 +12,7 @@ You can try the free SaaS version of CSGHub through the OpenCSG Community offici
 <img src="/docs/images/project_intro.jpg" width='800' />
 </kdb>
 ### UPDATES
+- [2024.09.15] v0.9.0 CSGHub portal been migrated to the Go version, git server support Gitaly and use it as default, collections function been added, new resource console page, running space endpoint finetune do not need domain anymore other UX optimization and bug fix.
 - [2024.08.15] v0.8.0 Big release to introduce a standalone `user_server` service and move user, org, token management from `CSGHub` to backend server `CSGHub-server`, introduce a standalone `starhub_server_runner service` for uniformed deployment of Application Space, Mode Inference and Finetune. Resource management enchanced, multiple k8s clusters in different regions are not supported.
 - [2024.07.15] v0.7.0 Big release to support `Multiple Resource Sync` for models and datasets, One-Click Fintune, Resource Usage Metering.
 - [2024.06.21] v0.6.1 bug fix and user experience enhancement.
@@ -75,7 +76,7 @@ If you want to dive deep into CSGHub Server detail or wish to integrate the Serv
 <img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### QUICK START
-You can refer to [here](/deploy/all_in_one/README.md)quickly deploy a basic csghub instance. 
+You can refer to [here](/deploy/all_in_one/README.md)quickly deploy a basic csghub instance.
 
 #### Tech docs in detail
 - [setup development env](/docs/setup_en.md)
