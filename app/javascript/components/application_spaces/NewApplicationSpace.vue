@@ -256,6 +256,25 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item
+          :label="t('endpoints.new.cluster')"
+          class="w-full"
+          prop="endpoint_cluster">
+          <el-select
+            v-model="dataForm.endpoint_cluster"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.cluster') })
+            "
+            size="large"
+            style="width: 100%"
+            @change="fetchSpaceResources">
+            <el-option
+              v-for="item in endpointClusters"
+              :key="item.cluster_id"
+              :label="item.region"
+              :value="item.cluster_id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item
           class="w-full !mb-0"
           :label="$t('application_spaces.new.cloudResource')"
         >
@@ -420,6 +439,19 @@
   }
 
   const spaceResources = ref([])
+  const endpointClusters = ref([])
+
+  const fetchClusters = async () => {
+    const { data, error } = await useFetchApi('/cluster').json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      dataForm.value.endpoint_cluster = body.data[0]?.cluster_id || ''
+      endpointClusters.value = body.data
+      fetchSpaceResources()
+    }
+  }
 
   const fetchSpaceResources = async () => {
     const { data, error } = await useFetchApi('/space_resources').json()
@@ -484,6 +516,7 @@
       cover_image_url: dataForm.value.cover_image,
       hardware: dataForm.value.cloud_resource,
       resource_id: dataForm.value.cloud_resource,
+      cluster_id: dataForm.value.endpoint_cluster,
       private: dataForm.value.visibility === 'private'
     }
     const options = {
@@ -507,7 +540,7 @@
   }
 
   onMounted(() => {
-    fetchSpaceResources()
+    fetchClusters()
   })
 </script>
 
