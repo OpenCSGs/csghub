@@ -146,9 +146,9 @@ CSGHub默认安装使用的是一个insecure registry（即上面提到的: 110.
 
 配置前请确认配置文件`/etc/containerd/config.toml`是否存在，如果不存在可以通过如下命令进行创建。
 
-        ```shell
-        mkdir -p /etc/containerd/ && containerd config default >/etc/containerd/config.toml
-        ```
+   ```shell
+   mkdir -p /etc/containerd/ && containerd config default >/etc/containerd/config.toml
+   ```
 
 1. 配置 config_path
 
@@ -186,4 +186,4 @@ CSGHub默认安装使用的是一个insecure registry（即上面提到的: 110.
    EOF
    ```
 
-*注意：此配置直接生效，无须重启*
+注意：此配置直接生效，无须重启
