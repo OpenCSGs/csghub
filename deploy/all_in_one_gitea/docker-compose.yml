@@ -73,7 +73,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   csghub_portal:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:v0.8.1
     restart: always
     command: >
       bash -c "bundle exec rails assets:precompile && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails db:seed && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -110,7 +110,7 @@ services:
       - postgres
 
   csghub_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.8.0
     depends_on:
       - postgres
       - gitea
@@ -165,7 +165,7 @@ services:
       - ./gitlog:/starhub-bin/logs:r
 
   csghub_server_runner:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.8.0
     entrypoint:
       - /starhub-bin/starhub
       - deploy
@@ -187,7 +187,7 @@ services:
       - ./.kube:/root/.kube:r
 
   csghub_server_proxy:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.8.0
     entrypoint:
       - /starhub-bin/starhub
       - start
@@ -214,7 +214,7 @@ services:
     restart: always
 
   space_builder:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:v0.8.0
     environment:
       - REDIS_ENDPOINT=redis:6379
       - SPACE_DATA_PATH=/opt/data
@@ -312,7 +312,7 @@ services:
       - opencsg
 
   account_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.8.0
     entrypoint:
       - /starhub-bin/starhub
       - accounting
@@ -336,7 +336,7 @@ services:
       - opencsg
 
   user_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.8.0
     entrypoint:
       - /starhub-bin/starhub
       - user

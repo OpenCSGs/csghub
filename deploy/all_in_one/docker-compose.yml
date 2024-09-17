@@ -64,7 +64,7 @@ services:
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "sdfa23Sh!322"
-      POSTGRES_MULTIPLE_DATABASES: "starhub_server,casdoor"
+      POSTGRES_MULTIPLE_DATABASES: "starhub_server,open_portal_db,casdoor"
     ports:
       - "5433:5432"
     networks:
@@ -77,45 +77,36 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   csghub_portal:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:v0.9.0
     restart: always
-    command: >
-      bash -c "bundle exec rails assets:precompile && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails db:seed && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - postgres
+    command:
+      ["bash", "-c", "./csghub-portal migration init && ./csghub-portal migration migrate && ./csghub-portal start server "]
+    environment:
+      CSGHUB_PORTAL_ON_PREMISE: false
+      CSGHUB_PORTAL_SENSITIVE_CHECK: false
+      CSGHUB_PORTAL_STARHUB_BASE_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
+      CSGHUB_PORTAL_STARHUB_API_KEY: ${HUB_SERVER_API_TOKEN}
+      CSGHUB_PORTAL_ENABLE_HTTPS: false
+      CSGHUB_PORTAL_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/open_portal_db?sslmode=disable
+      CSGHUB_PORTAL_LOGIN_URL: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/login/oauth/authorize?client_id=d554744494d93c21a6ab&response_type=code&redirect_uri=http://${SERVER_DOMAIN}:${SERVER_PORT}/api/v1/callback/casdoor&scope=read&state=casdoor
+      CSGHUB_PORTAL_S3_ENABLE_SSL: false
+      CSGHUB_PORTAL_S3_REGION: cn-beijing
+      CSGHUB_PORTAL_S3_ACCESS_KEY_ID: admin
+      CSGHUB_PORTAL_S3_ACCESS_KEY_SECRET: Password_123
+      CSGHUB_PORTAL_S3_BUCKET: opencsg-portal-storage
+      CSGHUB_PORTAL_S3_ENDPOINT: ${SERVER_DOMAIN}:9000
     volumes:
       - ./log:/myapp/log
-    environment:
-      DATABASE_URL: postgresql://postgres:sdfa23Sh!322@postgres:5432/open_portal_db
-      ASSET_HOST: http://127.0.0.1:3000
-      RAILS_MASTER_KEY: 64f15f995b044427e43fe4897370fd66
-      RAILS_SERVE_STATIC_FILES: 'false'
-      STARHUB_BASE_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
-      STARHUB_INNER_BASE_URL: http://csghub_server:8080
-      LOGIN_URL: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/login/oauth/authorize?client_id=d554744494d93c21a6ab&response_type=code&redirect_uri=http://${SERVER_DOMAIN}:${SERVER_PORT}/api/v1/callback/casdoor&scope=read&state=casdoor
-      SIGNUP_URL: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/signup/CSGHub
-      OIDC_IDENTIFIER: d554744494d93c21a6ab
-      OIDC_SECRET: 2d942276879382c66363ef6303e0d66d37e5d98d
-      OIDC_REDIRECT_URI: http://${SERVER_DOMAIN}:${SERVER_PORT}/oidc/callback
-      OIDC_AUTHORIZATION_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/login/oauth/authorize
-      OIDC_TOKEN_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/api/login/oauth/access_token
-      OIDC_USERINFO_ENDPOINT: http://${SERVER_DOMAIN}:${SERVER_CASDOOR_PORT}/api/userinfo
-      STARHUB_TOKEN: ${HUB_SERVER_API_TOKEN}
-      BUCKET_NAME: opencsg-portal-storage
-      ENDPOINT: http://${SERVER_DOMAIN}:9000
-      ACCESS_ID: admin
-      ACCESS_SECRET: Password_123
-      REGION: cn-beijing
-      ON_PREMISE: false
-      FORCE_PATH_STYLE: true
     ports:
-      - "3000:3000"
+      - "8081:8090"
     networks:
       opencsg:
         ipv4_address: 192.168.100.245
-    depends_on:
-      - postgres
 
   csghub_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.0
     depends_on:
       - postgres
       - redis
@@ -172,7 +163,7 @@ services:
 
 
   csghub_server_runner:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.0
     entrypoint:
       - /starhub-bin/starhub
       - deploy
@@ -195,7 +186,7 @@ services:
       - ./.kube:/root/.kube:r
 
   csghub_server_proxy:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.0
     entrypoint:
       - /starhub-bin/starhub
       - start
@@ -222,7 +213,7 @@ services:
     restart: always
 
   space_builder:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:v0.9.0
     environment:
       - REDIS_ENDPOINT=redis:6379
       - SPACE_DATA_PATH=/opt/data
@@ -311,7 +302,7 @@ services:
         ipv4_address: 192.168.100.237
 
   account_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.0
     entrypoint:
       - /starhub-bin/starhub
       - accounting
@@ -336,7 +327,7 @@ services:
         ipv4_address: 192.168.100.236
 
   user_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.0
     entrypoint:
       - /starhub-bin/starhub
       - user
