@@ -489,7 +489,7 @@
       },
 
       async stopSpace() {
-        stopUrl = `/spaces/${this.path}/stop`
+        const stopUrl = `/spaces/${this.path}/stop`
         const { response, error } = await useFetchApi(stopUrl).post().json()
 
         if (response.value.ok) {
@@ -511,7 +511,7 @@
       },
 
       async restartSpace() {
-        restartUrl = `/spaces/${this.path}/run`
+        const restartUrl = `/spaces/${this.path}/run`
         const { response, error } = await useFetchApi(restartUrl).post().json()
 
         if (response.value.ok) {
