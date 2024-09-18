@@ -13,7 +13,7 @@ CSGHub is committed to bringing users an asset management platform that is nativ
 
 You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com/models <br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 <kbd>
-<img src="/docs/images/project_intro.jpg" width='800' />
+<img src="/docs/images/project_intro.png" width='800' />
 </kdb>
 ### UPDATES
 - [2024.09.15] v0.9.0 CSGHub portal been migrated to the Go version, git server support Gitaly and use it as default, collections function been added, new resource console page, running space endpoint finetune do not need domain anymore other UX optimization and bug fix.

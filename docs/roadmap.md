@@ -23,7 +23,7 @@
 ##### 安全合规
   - [x] Git适配：支持Gitea Server
   - [x] 安全设计：接口鉴权机制、支持私有化部署
-  - [ ] GitServer适配器: 通用GitServer适配器，通过Adaptor模式实现对多种主流Git仓库后端的支持。
+  - [x] GitServer适配器: 通用GitServer适配器，通过Adaptor模式实现对多种主流Git仓库后端的支持。
   - [x] 资产元数据: 资产元数据管理机制， 支持自定义元数据类型和对应的AutoTag规则。
   - [ ] 合规性验证: 模型和License合规性溯源与验证
   - [ ] 完整性校验：数据的完整性校验机制
