@@ -7,7 +7,7 @@ CSGHub는 대규모 모델에 원천적으로 설계된, 온프레미스 배포 
 
 OpenCSG 커뮤니티를 통해 SaaS 버전 기능을 체험할 수 있습니다：https://opencsg.com <br>또한 [쾌속사용](#快速使用) 섹션의 지침에 따라 로컬 서비스를 빠르게 시작하여 CSGHub의 모든 기능을 탐색할 수 있습니다.
 <kbd>
-<img src="/docs/images/project_intro.jpg" width='800'>
+<img src="/docs/images/project_intro.png" width='800'>
 </kdb>
 ### 업데이트
 - [2024.09.15] v0.9.0 CSGHub 포털이 Go 버전으로 마이그레이션되었습니다. Git 서버는 Gitaly를 지원하며 기본적으로 사용합니다. 컬렉션 기능이 추가되었고, 새로운 리소스 콘솔 페이지가 도입되었습니다. 런스페이스 엔드포인트의 미세 조정에는 더 이상 도메인이 필요하지 않습니다. 기타 사용자 경험 최적화 및 버그 수정도 이루어졌습니다.

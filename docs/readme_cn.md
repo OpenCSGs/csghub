@@ -11,7 +11,7 @@ CSGHub致力于为用户带来针对大模型原生设计的、可私有化部�
 
 您可以通过OpenCSG传神社区体验SaaS版功能：https://opencsg.com <br>也可以参照[快速使用](#快速使用)部分的说明文档，快速启动本地服务来探索CSGHub的所有功能。
 <kbd>
-<img src="/docs/images/project_intro.jpg" width='800'>
+<img src="/docs/images/project_intro.png" width='800'>
 </kdb>
 ### 更新
 - [2024.09.15] v0.9.0 CSGHub Portal 已经迁移到 Go 版本；git 服务器支持 Gitaly 并默认使用它；添加了集合功能，新的资源控制台页面；运行空间、推理和微调不再需要域名；其他用户体验优化和 bug 修复。

@@ -20,7 +20,7 @@
 - **Security and Compliance**
   - [x] Git Adaptation: Supports integration with Gitea Server.
   - [x] Security Design: Features interface authentication mechanisms and supports private deployment.
-  - [ ] Generic GitServer Adaptor: A universal GitServer adapter that supports a variety of mainstream Git repository backends through an adaptor pattern.
+  - [x] Generic GitServer Adaptor: A universal GitServer adapter that supports a variety of mainstream Git repository backends through an adaptor pattern.
   - [x] Asset Metadata: An asset metadata management mechanism, supporting custom metadata types and corresponding AutoTag rules.
   - [ ] Compliance Traceability: Traceability and verification of model and license compliance.
   - [ ] Data Integrity Verification: Verification of data integrity.

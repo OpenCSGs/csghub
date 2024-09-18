@@ -9,7 +9,7 @@ CSGHub is committed to bringing users an asset management platform that is nativ
 
 You can try the free SaaS version of CSGHub through the OpenCSG Community official website.https://opencsg.com<br>You can also jump to the [Quick Start](#quick-start) section to quickly launch your local instance and explore all the features of CSGHub.
 <kbd>
-<img src="/docs/images/project_intro.jpg" width='800' />
+<img src="/docs/images/project_intro.png" width='800' />
 </kdb>
 ### UPDATES
 - [2024.08.15] v0.8.0 Big release to introduce a standalone `user_server` service and move user, org, token management from `CSGHub` to backend server `CSGHub-server`, introduce a standalone `starhub_server_runner service` for uniformed deployment of Application Space, Mode Inference and Finetune. Resource management enchanced, multiple k8s clusters in different regions are not supported.
