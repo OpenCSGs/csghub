@@ -65,6 +65,6 @@ INSERT INTO runtime_frameworks (id, frame_name, frame_version, frame_image, fram
 -- Name: runtime_frameworks_id_seq; Type: SEQUENCE SET;  Owner: postgres
 --
 
-SELECT pg_catalog.setval('runtime_frameworks_id_seq', 4, true);
+SELECT pg_catalog.setval('runtime_frameworks_id_seq', 6, true);
 
 
