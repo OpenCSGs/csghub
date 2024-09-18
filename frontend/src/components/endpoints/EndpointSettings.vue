@@ -379,7 +379,7 @@
   })
 
   const stopEndpoint = async () => {
-    stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
+    const stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
     const { response, error } = await useFetchApi(stopUrl).put().json()
 
     if (!error.value) {
