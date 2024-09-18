@@ -10,9 +10,7 @@ CSGHub是一个开源、可信的大模型资产管理平台，可帮助用户�
 CSGHub致力于为用户带来针对大模型原生设计的、可私有化部署离线运行的资产管理平台。CSGHub提供类似私有化的Huggingface功能，以类似OpenStack Glance管理虚拟机镜像、Harbor管理容器镜像以及Sonatype Nexus管理制品的方式，实现对LLM资产的管理。
 
 您可以通过OpenCSG传神社区体验SaaS版功能：https://opencsg.com <br>也可以参照[快速使用](#快速使用)部分的说明文档，快速启动本地服务来探索CSGHub的所有功能。
-<kbd>
 <img src="/docs/images/project_intro.png" width='800'>
-</kdb>
 ### 更新
 - [2024.09.15] v0.9.0 CSGHub Portal 已经迁移到 Go 版本；git 服务器支持 Gitaly 并默认使用它；添加了集合功能，新的资源控制台页面；运行空间、推理和微调不再需要域名；其他用户体验优化和 bug 修复。
 - [2024.08.15] v0.8.0 重大更新：用户、组织和 Token 管理从 `CSGHub` 项目迁移到后端服务 `CSGHub-server` 项目，独立出新的`user`服务。模型推理、微调和应用空间的部署和管理统一到新的服务`starhub_server_runner service`。资源管理增强，支持多 k8s 集群，支持跨地域.
