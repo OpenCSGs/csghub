@@ -185,6 +185,21 @@ services:
     volumes:
       - ./.kube:/root/.kube:r
 
+  csghub_db_init:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/governmentpaas/psql:329
+    depends_on:
+      - postgres
+      - csghub_server_runner
+    environment:
+      PGPASSWORD: "sdfa23Sh!322"
+    volumes:
+      - ./init-scripts:/scripts
+    entrypoint: ["sh", "-c", "until nc -zv csghub_server 8080 ; do echo 'sleep 10s...'; sleep 10; done; echo 'begin to do db init scripts'; until pg_isready -h postgres -p 5432; do sleep 5; done; psql -h postgres -U postgres -d starhub_server -f /scripts/init.sql"]
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.232
+
+
   csghub_server_proxy:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.0
     entrypoint:
