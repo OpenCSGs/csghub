@@ -2,6 +2,7 @@ package renderHandlers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/internal/models"
@@ -19,6 +20,12 @@ const (
 func CreateTemplateData(ctx *gin.Context, extraData map[string]interface{}) gin.H {
 	config := getConfig(ctx)
 	currentUser, isLoggedIn := getCurrentUserInfo(ctx)
+	currentPath := ctx.Request.URL.Path
+
+	currentTheme := "white"
+	if strings.Contains(currentPath, "codesouler") {
+		currentTheme = "black"
+	}
 
 	data := gin.H{
 		"csghubServer":    config.ServerBaseUrl,
@@ -26,6 +33,7 @@ func CreateTemplateData(ctx *gin.Context, extraData map[string]interface{}) gin.
 		"enableHttps":     config.EnableHttps,
 		"currentUser":     currentUser,
 		"isLoggedIn":      isLoggedIn,
+		"currentTheme":    currentTheme,
 		"metaTitle":       DEFAULT_META_TITLE,
 		"metaKeywords":    DEFAULT_META_KEYWORDS,
 		"metaDescription": DEFAULT_META_DESCRIPTION,
