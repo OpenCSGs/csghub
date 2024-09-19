@@ -13,6 +13,8 @@ export const profile = {
     gitToken: "Access Token",
     sshKey: "SSH Keys",
     billing: "账单",
+    warningTip: "提示",
+    warningTipDesc: "确认在未保存的状态下离开设置页面？",
   },
   edit: {
     title: "个人资料设置",
