@@ -6,7 +6,7 @@ import (
 )
 
 func registerAdminRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
-	adminRoute := engine.Group("/admin")
+	adminRoute := engine.Group("/admin_panel")
 	adminRoute.Use(middleware.AuthenticateAdminUser())
 	adminRoute.GET("", handlersRegistry.RenderHandler.AdminHandler.Index)
 	adminRoute.GET("/*path", handlersRegistry.RenderHandler.AdminHandler.Index)

@@ -15,7 +15,7 @@
   })
 
   const fetchSystemConfig = async () => {
-    const res = await csrfFetch('/internal_api/admin/system_config')
+    const res = await csrfFetch('/internal_api/admin_panel/system_config')
     if (res.ok) {
       body = await res.json()
       Object.keys(systemConfigs.value).forEach((key) => {
@@ -32,7 +32,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-    const res = await csrfFetch('/internal_api/admin/system_config/1', options)
+    const res = await csrfFetch('/internal_api/admin_panel/system_config/1', options)
     if (res.ok) {
       ElMessage({
         message: '更新成功！',

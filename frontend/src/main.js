@@ -137,12 +137,12 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 const routes = [
-  { path: '/admin/', component: AdminDashboard },
-  { path: '/admin/email_sending', component: AdminEmailSending },
-  { path: '/admin/users', component: AdminUserList },
-  { path: '/admin/users/:id', component: AdminUserDetail },
-  { path: '/admin/sync', component: AdminSyncSetting },
-  { path: '/admin/system_config', component: AdminSystemConfig },
+  { path: '/admin_panel/', component: AdminDashboard },
+  { path: '/admin_panel/email_sending', component: AdminEmailSending },
+  { path: '/admin_panel/users', component: AdminUserList },
+  { path: '/admin_panel/users/:id', component: AdminUserDetail },
+  { path: '/admin_panel/sync', component: AdminSyncSetting },
+  { path: '/admin_panel/system_config', component: AdminSystemConfig },
 ]
 
 const router = createRouter({
