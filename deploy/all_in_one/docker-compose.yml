@@ -366,6 +366,7 @@ services:
       OPENCSG_USER_SERVER_SIGNIN_SUCCESS_REDIRECT_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}/server/callback
     ports:
       - "8088:8088"
+    restart: always
     networks:
       - opencsg
     volumes:
