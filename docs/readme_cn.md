@@ -1,7 +1,7 @@
 **[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md) ∙ [日本語](/docs/readme_ja.md)  ∙ [한국어](/docs/readme_kr.md)**
 
 > [!WARNING]
-CSGHub Portal 将 web 框架从 Rails 迁移到 Gin。如果你之前在使用我们的 Rails 版本，你可能需要参考我们的新文档[migrate to Gin](/docs/migrate_to_gin_version_portal_en.md)来了解如何迁移到Gin版本。
+CSGHub Portal 将 web 框架从 Rails 迁移到 Gin。如果你之前在使用我们的 Rails 版本，你可能需要参考我们的新文档[迁移到 Gin 版本](/docs/migrate_to_gin_version_portal_cn.md)来了解如何迁移到Gin版本。
 
 ## CSGHub说明文档
 
