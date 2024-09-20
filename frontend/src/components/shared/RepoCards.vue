@@ -265,16 +265,16 @@
       })
     } else {
       let tempTaskTags = {}
-      const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
+      const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType && tag.built_in === true)
       tagFields[props.repoType].forEach((field) => {
         const fieldTags = allTaskTags.filter(tag => tag.group === field)
         tempTaskTags[field] = fieldTags
       })
 
       taskTags.value = tempTaskTags
-      frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework')
-      languageTags.value = data.value.data.filter(tag => tag.category === 'language')
-      licenseTags.value = data.value.data.filter(tag => tag.category === 'license' && tag.scope === props.repoType)
+      frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework' && tag.scope === props.repoType && tag.built_in === true)
+      languageTags.value = data.value.data.filter(tag => tag.category === 'language' && tag.scope === props.repoType && tag.built_in === true)
+      licenseTags.value = data.value.data.filter(tag => tag.category === 'license' && tag.scope === props.repoType && tag.built_in === true)
     }
   }
 
