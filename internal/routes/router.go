@@ -3,8 +3,11 @@ package routes
 import (
 	"html/template"
 	"io/fs"
+	"log"
+	"log/slog"
 	"net/http"
 	"os"
+	"runtime/debug"
 	"strings"
 
 	"github.com/gin-contrib/multitemplate"
@@ -19,8 +22,6 @@ import (
 	"opencsg.com/portal/pkg/types"
 )
 
-// 全局配置结构体
-
 type HandlersRegistry struct {
 	FrontendHandlers *frontendHandlers.FrontendHandlerRegistry
 	RenderHandler    *renderHandlers.RenderHandlerRegistry
@@ -30,14 +31,31 @@ type HandlersRegistry struct {
 
 func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	g := gin.New()
-	// 设置信任网络 []string
-	// nil 为不计算，避免性能消耗，上线应当设置
 	_ = g.SetTrustedProxies(nil)
 
 	userModel := models.NewUserStore()
 
-	// 注册中间件
-	g.Use(gin.Recovery())
+	f, err := os.OpenFile("app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatalf("Can not open log file：%v", err)
+	}
+
+	lh := slog.NewJSONHandler(f, &slog.HandlerOptions{
+		AddSource: false,
+		Level:     slog.LevelInfo,
+	})
+	l := slog.New(lh)
+
+	slog.SetDefault(l)
+
+	g.Use(gin.CustomRecovery(func(c *gin.Context, recovered interface{}) {
+		if err, ok := recovered.(string); ok {
+			stackTrace := string(debug.Stack())
+			// use slog track error and backtrace
+			slog.Error("App Error", "error", err, "stack", stackTrace)
+		}
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}))
 	g.Use(middleware.AuthMiddleware(userModel))
 	g.Use(middleware.Log())
 
@@ -65,7 +83,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	return g, nil
 }
 
-// 中间件：注入全局配置
+// register global const
 func injectConfig(config types.GlobalConfig) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("Config", config)
@@ -76,20 +94,17 @@ func injectConfig(config types.GlobalConfig) gin.HandlerFunc {
 func createRender() multitemplate.Renderer {
 	viewsFS, err := fs.Sub(frontend.Dist, "dist/src/views")
 	if err != nil {
-		// 处理错误，例如 panic 或日志记录
 		panic(err)
 	}
 
 	r := multitemplate.NewRenderer()
 
-	// 定义基础布局文件
 	layouts := []string{
 		"layouts/base.html",
 		"layouts/navbar.html",
 		"layouts/footer.html",
 	}
 
-	// 定义页面和对应的模板文件
 	pages := map[string]string{
 		"errors_404":          "errors/404.html",
 		"errors_401":          "errors/unauthorized.html",
@@ -128,7 +143,6 @@ func createRender() multitemplate.Renderer {
 		"settings_ssh_keys":              "settings/ssh_keys.html",
 	}
 
-	// 动态添加模板
 	for name, page := range pages {
 		files := make([]string, len(layouts)+1)
 		copy(files, layouts)
@@ -165,13 +179,11 @@ func createRender() multitemplate.Renderer {
 }
 
 func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
-	// 创建全局配置实例
 	var globalConfig = types.GlobalConfig{
 		ServerBaseUrl: handlersRegistry.Config.StarhubServer.BaseURL,
 		OnPremise:     handlersRegistry.Config.OnPremise,
 		EnableHttps:   handlersRegistry.Config.EnableHttps,
 	}
-	// 使用中间件注入全局配置
 	engine.Use(injectConfig(globalConfig))
 
 	registerErrorRoutes(engine, handlersRegistry)
