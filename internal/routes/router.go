@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"path/filepath"
 	"runtime/debug"
 	"strings"
 
@@ -35,7 +36,13 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 
 	userModel := models.NewUserStore()
 
-	f, err := os.OpenFile("app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	logFilePath := "./log/app.log"
+	err := os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
+	if err != nil {
+		log.Fatalf("Failed to create directory: %v", err)
+	}
+
+	f, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatalf("Can not open log file：%v", err)
 	}
