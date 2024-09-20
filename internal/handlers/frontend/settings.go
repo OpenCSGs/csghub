@@ -9,7 +9,8 @@ import (
 )
 
 type SettingsHandler interface {
-	SetLocale(ctx *gin.Context)
+	SetZhLocale(ctx *gin.Context)
+	SetEnLocale(ctx *gin.Context)
 }
 
 type SettingsHandlerImpl struct {
@@ -22,23 +23,14 @@ func NewSettingsHandler(svcCtx *svc.ServiceContext) SettingsHandler {
 	}
 }
 
-func (i *SettingsHandlerImpl) SetLocale(ctx *gin.Context) {
-	configureLocale(ctx)
+func (i *SettingsHandlerImpl) SetZhLocale(ctx *gin.Context) {
+	setLocaleCookie(ctx, "zh")
 	ctx.Redirect(http.StatusFound, ctx.Request.Referer())
 }
 
-func configureLocale(ctx *gin.Context) {
-	locale := getLocale(ctx)
-	setLocaleCookie(ctx, locale)
-}
-
-func getLocale(ctx *gin.Context) string {
-	// 查询参数
-	if locale := ctx.Param(enum.LocaleQueryKey); locale != "" {
-		return locale
-	}
-
-	return enum.DefaultLocale
+func (i *SettingsHandlerImpl) SetEnLocale(ctx *gin.Context) {
+	setLocaleCookie(ctx, "en")
+	ctx.Redirect(http.StatusFound, ctx.Request.Referer())
 }
 
 func setLocaleCookie(ctx *gin.Context, locale string) {
