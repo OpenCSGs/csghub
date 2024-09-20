@@ -40,3 +40,4 @@ csghub-portal
 .vscode/settings.json
 
 cmd/csghub-portal/__debug_*
+app.log
