@@ -119,6 +119,7 @@ services:
       STARHUB_SERVER_FRONTEND_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
       STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
       STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      STARHUB_SERVER_REDIS_ENDPOINT: redis:6379
       STARHUB_SERVER_GITSERVER_HOST: http://gitea:3001
       STARHUB_SERVER_GITSERVER_USERNAME: root
       STARHUB_SERVER_GITSERVER_PASSWORD: password123
@@ -267,6 +268,7 @@ services:
       - GITEA_SERVICE_DISABLE_REGISTRATION=false
       - GITEA_LOG_MODE=file
       - GITEA_LOG_ROOT_PATH=/bitnami/logs
+      - GITEA_GIT_EXTRA_HEADER=true
     ports:
       - "3001:3001"
       - "2222:2222"
