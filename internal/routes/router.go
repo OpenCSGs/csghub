@@ -215,12 +215,15 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	internal_api := g.Group("/internal_api")
 
 	internal_api.GET("/ping", handlersRegistry.FrontendHandlers.PingHandler.Ping)
-	internal_api.GET("/:locale/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetLocale)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
 	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
 
 	resolve_group := g.Group("")
 	resolve_group.GET("/:repo_type/:namespace/:name/resolve/:branch/*path", handlersRegistry.FrontendHandlers.ResolveHandler.Resolve)
+
+	locale_group := g.Group("")
+	locale_group.GET("/zh/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetZhLocale)
+	locale_group.GET("/en/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetEnLocale)
 }
 
 func setupNotFoundRouter(engine *gin.Engine) {

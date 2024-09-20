@@ -296,7 +296,7 @@
         this.$refs.child.showDialog()
       },
       handleLocaleChange(locale) {
-        location.href = `/internal_api/${locale}/settings/locale`
+        location.href = `/${locale}/settings/locale`
       },
       async fetchUser() {
         jwtFetch(`${this.csghubServer}/api/v1/user/${this.userName}`, {
