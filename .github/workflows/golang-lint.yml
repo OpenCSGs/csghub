@@ -1,0 +1,22 @@
+name: Go Lint
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint Go Code
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '^1.18'
+
+    #- name: Run golangci-lint
+    #  uses: golangci/golangci-lint-action@v2
+    #  with:
+    #    version: v1.43

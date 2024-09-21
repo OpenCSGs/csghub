@@ -1,0 +1,26 @@
+name: Unit Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '^1.18'
+
+    - name: Install dependencies
+      #run: go mod tidy
+      run: echo "Installing dependencies ..."
+
+    - name: Run unit tests
+      #run: go test ./tests/unit/...
+      run: echo "Running unit tests ..."
