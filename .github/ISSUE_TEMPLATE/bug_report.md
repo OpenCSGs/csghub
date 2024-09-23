@@ -1,13 +1,13 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report in English to help us improve
 title: ''
 labels: ''
 assignees: ''
 
 ---
 <!--
-Please remember to submit your issue in English to ensure it's addressed promptly and efficiently.
+Please submit your issue in English to ensure it's addressed promptly and efficiently.
 -->
 **Describe the bug**
 A clear and concise description of what the bug is.
