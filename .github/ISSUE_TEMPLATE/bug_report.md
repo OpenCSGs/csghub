@@ -6,7 +6,9 @@ labels: ''
 assignees: ''
 
 ---
-
+<!--
+Please remember to submit your issue in English to ensure it's addressed promptly and efficiently.
+-->
 **Describe the bug**
 A clear and concise description of what the bug is.
 

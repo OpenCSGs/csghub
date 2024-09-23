@@ -1,8 +1,11 @@
 ---
 name: Feature enhancement request
-about: Suggest an idea for this project
+about: Suggest an idea in English for this project
 
 ---
+<!--
+Please submit the Pull Requests in English to ensure smooth communication and quicker review process.
+-->
 
 /kind feature
 
