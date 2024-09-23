@@ -72,7 +72,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("user_token", ctx.Param("jwt"), cookieMaxAge, "/", "", false, false)
+	ctx.SetCookie("user_token", jwtToken, cookieMaxAge, "/", "", false, false)
 	ctx.SetCookie("can_change_username", fmt.Sprintf("%v", userResp.CanChangeUserName), cookieMaxAge, "/", "", false, false)
 
 	dbUser, err := i.userModel.FindByLoginIdentity(ctx, userResp.UUID)
