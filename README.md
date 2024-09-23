@@ -11,18 +11,26 @@ CSGHub is an open-source platform designed for managing Large Language Models (L
 
 Additionally, CSGHub features microservice submodules and standardized OpenAPIs for seamless integration with existing systems. It aims to provide a user-friendly management platform specifically for LLM, which can be deployed On-Premise for secure, offline operation. Essentially, CSGHub serves as a private, on-premise version of Huggingface. 
 
+![CSGHub](./docs/images/csghub_framework.png)
+
 For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
 
-## Quick Start
+### Quick Start
 
-For a quick try, explore CSGHub's free SaaS version at the [OpenCSG website](https://opencsg.com/models).
+- For a quick try, explore CSGHub's free SaaS version at the [OpenCSG website](https://opencsg.com/models).
 
-For a hands-on experience, refer to the [installation guide](/deploy/all_in_one/README.md) to quickly deploy a basic CSGHub local instance.
+- For a hands-on experience, refer to the [installation guide](/deploy/all_in_one/README.md) to quickly deploy a basic CSGHub local instance.
 
-If you wish to install CSGHub on Kubernetes, please refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/CSGHub-helm).
+- If you wish to install CSGHub on Kubernetes, please refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/CSGHub-helm).
 
+### Roadmap
 
-## Meetings & Contributing
+Discover the [roadmap](/docs/roadmap_en.md) outlining CSGHub's future direction.
+
+### Relase Notes
+Refer to [release notes](./docs/release_notes.md) for information on feature improvements.
+
+### Meetings & Contributing
 
 We warmly invite you to explore the [OpenCSG Community](https://github.com/OpenCSGs/community), where you'll find comprehensive guides on becoming a vital part of the project.
 
@@ -30,10 +38,3 @@ We warmly invite you to explore the [OpenCSG Community](https://github.com/OpenC
 - Refer to the [contribution guide](https://github.com/OpenCSGs/community/blob/main/guidelines/CONTRIBUTING_en.md) for strategies on how to contribute to the project.
 - [Contact us](https://github.com/OpenCSGs/community?tab=readme-ov-file#questions-and-issues) for any questions or issues, ensuring you're always supported throughout your journey with OpenCSG.
 - Consult the [development guide](/docs/setup_en.md) for setting up the development environment.
-
-## Roadmap
-
-Discover the [roadmap](/docs/roadmap_en.md) outlining CSGHub's future direction.
-
-## Relase Notes
-Refer to [release notes](./docs/release_notes.md) for information on feature improvements.
