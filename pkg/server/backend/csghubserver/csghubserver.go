@@ -2,6 +2,7 @@ package csghubserver
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -34,10 +35,16 @@ func NewCsgHubServer(ctx context.Context, baseURL, apiKey string) (*CsgHubServer
 	if apiKey == "" {
 		return nil, fmt.Errorf("api key not set in environment")
 	}
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
 	return &CsgHubServer{
 		baseURL: baseURL,
 		httpClient: &http.Client{
-			Timeout: time.Second * 5,
+			Timeout:   time.Second * 5,
+			Transport: tr,
 		},
 		apiKey: apiKey,
 		ctx:    ctx,
