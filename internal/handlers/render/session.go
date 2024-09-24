@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"runtime/debug"
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
@@ -60,7 +61,9 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	}
 	userResp, _, err := i.Server.VerifyJWTToken(jwtToken)
 	if err != nil {
-		ctx.Redirect(http.StatusFound, "/error/login-failed")
+		stackTrace := string(debug.Stack())
+		slog.Error("Login Error", "error", "verify jwt token failed", "jwt", jwtToken, slog.Any("error", err), "stack", stackTrace)
+		ctx.Redirect(http.StatusFound, "/errors/login-failed")
 		return
 	}
 
