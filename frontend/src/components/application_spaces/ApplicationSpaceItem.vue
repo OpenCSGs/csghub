@@ -11,6 +11,7 @@
         </h3>
         <div class="flex gap-2">
           <span
+            v-if="getComputed.visibility"
             class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-[#344054] text-[12px]"
             >{{ getComputed.visibility }}</span
           >
@@ -121,7 +122,7 @@
         : props.repo.name
     const path = props.repo.path.split('/')[0] + '/' + displayName
 
-    const visibility = props.repo.private ? t('all.private') : t('all.public')
+    const visibility = props.repo.private ? t('all.private') : ''
 
     let taskTag = (props.repo.tags || []).find((tag) => tag.category === 'task')
     if (locale.value === 'en') {

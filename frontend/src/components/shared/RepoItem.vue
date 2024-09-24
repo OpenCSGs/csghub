@@ -50,9 +50,10 @@
         {{$t('all.lastTime')}}：{{ repo.updated_at.substring(0, 10) }}
       </div>
 
-      <span> <SvgIcon name="vertical_divider" /> </span>
-
-      <span class="whitespace-nowrap">{{ getComputed.visibility }}</span>
+      <template v-if="getComputed.visibility">
+        <span> <SvgIcon name="vertical_divider" /> </span>
+        <span class="visibility-label">{{ getComputed.visibility }}</span>
+      </template>
 
       <span> <SvgIcon name="vertical_divider" /> </span>
 
@@ -121,7 +122,7 @@
     const displayName = props.repo.nickname !== undefined && props.repo.nickname.trim().length > 0 ? props.repo.nickname : props.repo.name
     const path = props.repo.path.split('/')[0] + '/' + displayName
 
-    const visibility = props.repo.private ? t('all.private')  : t('all.public')
+    const visibility = props.repo.private ? t('all.private') : ''
     const showDescription = props.cardType === 'index' || !!props.repo.description?.trim()
 
     let taskTag = (props.repo.tags || []).find(tag => tag.category === "task")
