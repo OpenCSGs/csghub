@@ -24,9 +24,10 @@
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
+        v-if="repoDetailStore.isPrivate"
         class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded"
       >
-        {{ repoDetailStore.isPrivate ? $t('all.private') : $t('all.public') }}
+        {{ $t('all.private') }}
       </div>
       <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
@@ -54,9 +55,10 @@
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
+        v-if="repoDetailStore.isPrivate"
         class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded"
       >
-        {{ repoDetailStore.isPrivate ? $t('all.private') : $t('all.public') }}
+        {{ $t('all.private') }}
       </div>
       <AppStatus
         v-if="appStatus"
@@ -100,9 +102,10 @@
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
+        v-if="repoDetailStore.isPrivate"
         class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded"
       >
-        {{ repoDetailStore.isPrivate ? $t('all.private') : $t('all.public') }}
+        {{ $t('all.private') }}
       </div>
       <div
         class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
