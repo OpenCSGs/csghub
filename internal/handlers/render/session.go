@@ -88,8 +88,8 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 
 			err = i.userModel.Create(ctx, user)
 			if err != nil {
-				slog.Error("failed to create user", slog.Any("error", err))
-				ctx.Redirect(http.StatusInternalServerError, "/error/login-failed")
+				slog.Error("Login Error", "error", "create user failed", slog.Any("error", err), "uuid", userResp.UUID)
+				ctx.Redirect(http.StatusFound, "/errors/login-failed")
 				return
 			}
 		} else {
@@ -105,8 +105,8 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	user.SessionIP = ctx.ClientIP()
 	err = i.userModel.Update(ctx, user)
 	if err != nil {
-		slog.Error("failed to set user session ip", slog.Any("error", err))
-		ctx.Redirect(http.StatusInternalServerError, "/error/login-failed")
+		slog.Error("Login Error", "error", "failed to set user session ip", slog.Any("error", err), "session_ip", user.SessionIP)
+		ctx.Redirect(http.StatusFound, "/errors/login-failed")
 		return
 	}
 
