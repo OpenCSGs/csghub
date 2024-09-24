@@ -25,7 +25,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded"
+        class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
@@ -56,7 +56,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded"
+        class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
@@ -103,7 +103,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded"
+        class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>

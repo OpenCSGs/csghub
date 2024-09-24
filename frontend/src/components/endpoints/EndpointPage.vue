@@ -21,7 +21,7 @@
         {{ $t('endpoints.detail.parameters') }}
       </p>
       <p class="flex items-center gap-[8px] w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
-        <div v-if="private" class="border border-[#DCDFE6] px-3 py-[2px] text-center text-xs text-[#606266] font-medium rounded">
+        <div v-if="private" class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded">
           {{ $t("all.private") }}
         </div>
         <div class="flex gap-[4px]">
