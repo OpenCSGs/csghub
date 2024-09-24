@@ -53,6 +53,12 @@ func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header
 }
 
 func (c *CsgHubServer) getResponse(method, path string, header http.Header, body io.Reader) ([]byte, *http.Response, error) {
+	bodyString := ""
+	if body != nil {
+		bodyData, _ := io.ReadAll(body)
+		bodyString = string(bodyData)
+	}
+	slog.Info("CsghubServer API Key Request", method, path, headersToString(header), bodyString)
 	resp, err := c.doRequest(method, path, header, body)
 	if err != nil {
 		return nil, resp, err
@@ -72,6 +78,16 @@ func (c *CsgHubServer) getResponse(method, path string, header http.Header, body
 	}
 
 	return data, resp, nil
+}
+
+func headersToString(headers http.Header) string {
+	var result string
+	for key, values := range headers {
+		for _, value := range values {
+			result += fmt.Sprintf("%s: %s\n", key, value)
+		}
+	}
+	return result
 }
 
 // Converts a response for a HTTP status code indicating an error condition
