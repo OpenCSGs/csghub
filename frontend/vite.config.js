@@ -9,10 +9,27 @@ export default defineConfig((configEnv) => {
     plugins: [vue()],
     build: {
       rollupOptions: {
-        input: getHtmlEntryFiles('src')
+        input: getHtmlEntryFiles('src'),
+				output: {
+					manualChunks(id) {
+						if (id.includes('node_modules')) {
+							return 'vendor';
+						}
+						if (id.includes('src/components')) {
+							return 'components';
+						}
+					}
+        }
       },
       emptyOutDir: true,
-      sourcemap: configEnv.mode === 'development'
+      sourcemap: configEnv.mode === 'development',
+			minify: 'terser',
+			terserOptions: {
+        compress: {
+          drop_console: true, // Remove console logs
+          drop_debugger: true // Remove debugger statements
+        }
+      }
     },
     resolve: {
       alias: {
