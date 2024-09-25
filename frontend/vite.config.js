@@ -9,10 +9,27 @@ export default defineConfig((configEnv) => {
     plugins: [vue()],
     build: {
       rollupOptions: {
-        input: getHtmlEntryFiles('src')
+        input: getHtmlEntryFiles('src'),
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor'
+            }
+            if (id.includes('src/components')) {
+              return 'components'
+            }
+          }
+        }
       },
       emptyOutDir: true,
-      sourcemap: configEnv.mode === 'development'
+      sourcemap: configEnv.mode === 'development',
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true, // Remove console logs
+          drop_debugger: true // Remove debugger statements
+        }
+      }
     },
     resolve: {
       alias: {
@@ -24,27 +41,27 @@ export default defineConfig((configEnv) => {
 })
 
 function getHtmlEntryFiles(srcDir) {
-	const entry = {};
+  const entry = {}
 
-	function traverseDir(currentDir) {
-	  const files = fs.readdirSync(currentDir);
+  function traverseDir(currentDir) {
+    const files = fs.readdirSync(currentDir)
 
-	  files.forEach((file) => {
-		const filePath = path.join(currentDir, file);
-		const isDirectory = fs.statSync(filePath).isDirectory();
+    files.forEach((file) => {
+      const filePath = path.join(currentDir, file)
+      const isDirectory = fs.statSync(filePath).isDirectory()
 
-		if (isDirectory) {
-		  // If it's a directory, recursively traverse it
-		  traverseDir(filePath);
-		} else if (path.extname(file) === '.html') {
-		  // If it's an HTML file, add it to the entry object
-		  const name = path.relative(srcDir, filePath).replace(/\..*$/, '');
-		  entry[name] = filePath;
-		}
-	  });
-	}
+      if (isDirectory) {
+        // If it's a directory, recursively traverse it
+        traverseDir(filePath)
+      } else if (path.extname(file) === '.html') {
+        // If it's an HTML file, add it to the entry object
+        const name = path.relative(srcDir, filePath).replace(/\..*$/, '')
+        entry[name] = filePath
+      }
+    })
+  }
 
-	traverseDir(srcDir);
+  traverseDir(srcDir)
 
-	return entry;
+  return entry
 }
