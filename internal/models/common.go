@@ -28,6 +28,9 @@ type times struct {
 
 func (t *times) BeforeAppendModel(ctx context.Context, query schema.Query) error {
 	switch query.(type) {
+	case *bun.InsertQuery:
+		t.CreatedAt = time.Now()
+		t.UpdatedAt = time.Now()
 	case *bun.UpdateQuery:
 		//q := query.(*bun.UpdateQuery)
 		//m := q.GetModel().Value()
