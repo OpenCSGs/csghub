@@ -2,9 +2,11 @@ package csghubserver
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"sync"
 	"time"
@@ -34,10 +36,16 @@ func NewCsgHubServer(ctx context.Context, baseURL, apiKey string) (*CsgHubServer
 	if apiKey == "" {
 		return nil, fmt.Errorf("api key not set in environment")
 	}
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
 	return &CsgHubServer{
 		baseURL: baseURL,
 		httpClient: &http.Client{
-			Timeout: time.Second * 5,
+			Timeout:   time.Second * 5,
+			Transport: tr,
 		},
 		apiKey: apiKey,
 		ctx:    ctx,
@@ -53,6 +61,12 @@ func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header
 }
 
 func (c *CsgHubServer) getResponse(method, path string, header http.Header, body io.Reader) ([]byte, *http.Response, error) {
+	bodyString := ""
+	if body != nil {
+		bodyData, _ := io.ReadAll(body)
+		bodyString = string(bodyData)
+	}
+	slog.Info("CsghubServer API Key Request", method, path, headersToString(header), bodyString)
 	resp, err := c.doRequest(method, path, header, body)
 	if err != nil {
 		return nil, resp, err
@@ -72,6 +86,16 @@ func (c *CsgHubServer) getResponse(method, path string, header http.Header, body
 	}
 
 	return data, resp, nil
+}
+
+func headersToString(headers http.Header) string {
+	var result string
+	for key, values := range headers {
+		for _, value := range values {
+			result += fmt.Sprintf("%s: %s\n", key, value)
+		}
+	}
+	return result
 }
 
 // Converts a response for a HTTP status code indicating an error condition

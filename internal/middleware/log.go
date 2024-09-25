@@ -10,6 +10,11 @@ import (
 
 func Log() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		if ctx.Request.Method == "OPTIONS" || ctx.Request.Method == "HEAD" {
+			ctx.Next()
+			return
+		}
+
 		startTime := time.Now()
 
 		ctx.Next()
