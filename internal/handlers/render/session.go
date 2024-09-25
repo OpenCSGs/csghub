@@ -93,7 +93,8 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 
 			err = i.userModel.Create(ctx, user)
 			if err != nil {
-				slog.Error("Login Error", "error", "create user failed", slog.Any("error", err), "uuid", userResp.UUID)
+				stackTrace := string(debug.Stack())
+				slog.Error("Login Error", "error", "create user failed", slog.Any("error", err), "uuid", userResp.UUID, "stack", stackTrace)
 				ctx.Redirect(http.StatusFound, "/errors/login-failed")
 				return
 			}
