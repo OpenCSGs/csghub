@@ -1,7 +1,7 @@
 export const admin = {
   dashboard: {
     title: 'Admin Dashboard',
-    intro: 'This is the admin pannel, admin users can do the system settings here.'
+    intro: 'This is the admin panel, admin users can do the system settings here.'
   },
   syncSetting: {
     title: 'Sync Setting',
