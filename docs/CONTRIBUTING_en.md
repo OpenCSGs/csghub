@@ -45,6 +45,6 @@ For an overview of the labeling system we use to tag issues and pull requests, p
 Local Development
 ----------------------
 
-You can develop CSGHub using [Docker Compose](docs/all_in_one_readme_en.md) or your [local environment](docs/setup_en.md).
+You can develop CSGHub using [Docker Compose](all_in_one_readme_en.md) or your [local environment](setup_en.md).
 
 Thank you for contributing to the CSGHub project! We look forward to your involvement and suggestions.
