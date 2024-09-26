@@ -51,6 +51,7 @@
     <h3 class="mb-5">{{ $t('admin.syncSetting.queues') }}</h3>
 
     <el-table
+      v-if="queues.length > 0"
       :data="queues"
       style="width: 100%"
     >
@@ -117,7 +118,7 @@
   }
 
   const createSyncSetting = async () => {
-    const createEndpoint = '/sync/client_settings'
+    const createEndpoint = '/sync/client_setting'
     const {data, error} = await useFetchApi(createEndpoint, {
       method: 'POST',
       headers: {
@@ -133,7 +134,7 @@
   }
 
   const fetchSyncSettings = async () => {
-    const settingsEndpoint = '/sync/client_settings'
+    const settingsEndpoint = '/sync/client_setting'
     const {data, _} = await useFetchApi(settingsEndpoint, {
       method: 'GET',
       headers: {
