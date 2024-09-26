@@ -84,7 +84,7 @@ services:
     command:
       ["bash", "-c", "./csghub-portal migration init && ./csghub-portal migration migrate && ./csghub-portal start server "]
     environment:
-      CSGHUB_PORTAL_ON_PREMISE: false
+      CSGHUB_PORTAL_ON_PREMISE: true
       CSGHUB_PORTAL_SENSITIVE_CHECK: false
       CSGHUB_PORTAL_STARHUB_BASE_URL: http://${SERVER_DOMAIN}:${SERVER_PORT}
       CSGHUB_PORTAL_STARHUB_API_KEY: ${HUB_SERVER_API_TOKEN}
@@ -153,6 +153,7 @@ services:
       OPENCSG_USER_SERVER_PORT: 8088
       STARHUB_SERVER_S3_ENABLE_SSL: false
       STARHUB_SERVER_PUBLIC_DOMAIN: http://${SERVER_DOMAIN}:${SERVER_PORT}
+      STARHUB_SERVER_MULTI_SYNC_ENABLED: false
     ports:
       - "8080:8080"
     restart: always
@@ -404,6 +405,54 @@ services:
       opencsg:
         ipv4_address: 192.168.100.233
     restart: always
+
+  mirror-repo-sync:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    entrypoint:
+      - /starhub-bin/starhub
+      - mirror
+      - repo-sync
+    depends_on:
+      - redis
+      - gitaly
+      - postgres
+    environment:
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      STARHUB_SERVER_REDIS_ENDPOINT: redis:6379
+      STARHUB_SERVER_GITSERVER_TYPE: gitaly
+      STARHUB_SERVER_GITALY_SERVER_SOCKET: tcp://gitaly:8075
+      STARHUB_SERVER_GITALY_STORGE: default
+      STARHUB_SERVER_GITALY_TOKEN: abc123secret
+      STARHUB_SERVER_GITALY_JWT_SECRET: signing-key
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.231
+
+  mirror-lfs-sync:
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    entrypoint:
+      - /starhub-bin/starhub
+      - mirror
+      - lfs-sync
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
+      STARHUB_DATABASE_TIMEZONE: Asia/Shanghai
+      STARHUB_SERVER_REDIS_ENDPOINT: redis:6379
+      STARHUB_SERVER_S3_ACCESS_KEY_ID: admin
+      STARHUB_SERVER_S3_ACCESS_KEY_SECRET: Password_123
+      STARHUB_SERVER_S3_ENDPOINT: ${SERVER_DOMAIN}:9000
+      STARHUB_SERVER_S3_BUCKET: opencsg-server-lfs
+      STARHUB_SERVER_S3_REGION: cn-beijing
+      STARHUB_SERVER_S3_ENABLE_SSL: false
+    restart: always
+    networks:
+      opencsg:
+        ipv4_address: 192.168.100.230
 
 networks:
   opencsg:
