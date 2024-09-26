@@ -89,8 +89,6 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 				LoginIdentity: userResp.UUID,
 			}
 
-			user.SetRoles(userResp.Roles...)
-
 			err = i.userModel.Create(ctx, user)
 			if err != nil {
 				stackTrace := string(debug.Stack())
@@ -103,6 +101,8 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 			return
 		}
 	}
+
+	user.SetRoles(userResp.Roles...)
 
 	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
 	ctx.SetCookie("current_user", user.Name, cookieMaxAge, "/", "", false, false)
