@@ -269,6 +269,12 @@
       {
         required: true,
         message: t('all.pleaseInput', { value: t('endpoints.new.modelId') }),
+        trigger: 'change'
+      },
+      // 确保字符串中包含一个 /，但不能出现在首位或末尾
+      {
+        pattern: /^(?!\/)[a-zA-Z0-9-_\.]+\/[a-zA-Z0-9-_\.]+(?<!\/)$/,
+        message: t('all.inputFormatError'),
         trigger: 'blur'
       }
     ],

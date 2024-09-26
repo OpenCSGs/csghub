@@ -72,6 +72,7 @@ export const all = {
   lfsTips2: "如果您不想下载LFS文件的内容，请在环境变量中添加",
   pleaseSelect: "请选择{value}",
   pleaseInput: "请输入{value}",
+  inputFormatError: "输入格式不正确",
   languages: "语言",
   previous:"上一页",
   next:"下一页",
