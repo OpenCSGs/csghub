@@ -8,5 +8,6 @@ RUN cd frontend && yarn install && yarn build
 RUN go build -o csghub-portal ./cmd/csghub-portal
 
 FROM bitnami/minideb:latest
+RUN apt update && apt install -y ca-certificates && update-ca-certificates
 WORKDIR /myapp
 COPY --from=build /myapp/csghub-portal /myapp/csghub-portal

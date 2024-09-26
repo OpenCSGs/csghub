@@ -1,14 +1,6 @@
 ## CSGHub Core Functions
 In the era of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. `CSGHub` is an open-source project designed to address these issues.
 
-`CSGHub`'s core funtions（update reguarly）：
-- **Unified Management of LLM Assets**: A one-stop Hub for unified management of model files, datasets, and large-scale model application codes.
-- **Development Ecosystem Compatibility**: Supports both HTTPS and SSH protocols for Git commands and web interface operations, ensuring convenient usage for different users.
-- **Large Model Capability Expansion**: Natively supports version management, model format conversion, automatic data processing, and dataset preview functions.
-- **Permissions and Security**: Supports integration with corporate user systems, setting of asset visibility, and zero-trust authentication interface design for both external and internal users, maximizing security.
-- **Support for Private Deployment**: Independent of internet and cloud vendors, enabling one-click initiation of private deployment.
-- **Native Design for Large Models**: Supports natural language interaction, one-click model deployment, and asset management for Agent and Copilot App.
-
 ### CSGHub Tech Design
 The technical design of `CSGHub` are as follows:
 - `CSGHub` integrates multiple technologies including Git Servers, Git LFS (Large File Storage) protocol, and Object Storage Service (OSS), providing a reliable data storage layer, a flexible infrastructure access layer, and extensive support for development tools.
