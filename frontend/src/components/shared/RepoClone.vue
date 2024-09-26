@@ -173,7 +173,9 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from "element-plus"
   import AddToCollections from '../collections/AddToCollections.vue'
+  import useUserStore from '../../stores/UserStore'
 
+  const userStore = useUserStore()
   const { cookies } = useCookies()
 
   const props = defineProps({
@@ -226,7 +228,7 @@ git clone ${httpCloneProtocol.value}//${
   const accessToken = ref('')
 
   const showSyncButton = computed(() =>
-    props.admin &&
+    userStore.roles.includes('admin') &&
     props.repo.source === 'opencsg' &&
     ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
