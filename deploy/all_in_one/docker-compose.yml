@@ -53,7 +53,7 @@ services:
       - ./auth:/auth
     networks:
       opencsg:
-        ipv4_address: 192.168.100.247 
+        ipv4_address: 192.168.100.247
     environment:
       REGISTRY_AUTH: "htpasswd"
       REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
@@ -77,7 +77,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   csghub_portal:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:v0.9.2
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:v0.9.3
     restart: always
     depends_on:
       - postgres
@@ -106,12 +106,12 @@ services:
         ipv4_address: 192.168.100.245
 
   csghub_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
     depends_on:
       - postgres
       - redis
       - gitaly
-      - gitlab-shell 
+      - gitlab-shell
       - natsmaster
     environment:
       STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
@@ -162,7 +162,7 @@ services:
 
 
   csghub_server_runner:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
     entrypoint:
       - /starhub-bin/starhub
       - deploy
@@ -200,7 +200,7 @@ services:
 
 
   csghub_server_proxy:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
     entrypoint:
       - /starhub-bin/starhub
       - start
@@ -316,7 +316,7 @@ services:
         ipv4_address: 192.168.100.237
 
   account_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
     entrypoint:
       - /starhub-bin/starhub
       - accounting
@@ -341,7 +341,7 @@ services:
         ipv4_address: 192.168.100.236
 
   user_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
     entrypoint:
       - /starhub-bin/starhub
       - user
@@ -386,7 +386,7 @@ services:
       - postgres
     networks:
       opencsg:
-        ipv4_address: 192.168.100.234 
+        ipv4_address: 192.168.100.234
     environment:
       RUNNING_IN_DOCKER: "true"
     volumes:
