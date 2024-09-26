@@ -29,20 +29,7 @@
               class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-[#FFF] cursor-pointer"
               @click="copyToken"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-              >
-                <path
-                  d="M9.43088 4.66699H9.63366C10.7538 4.66699 11.3138 4.66699 11.7416 4.88498C12.118 5.07673 12.4239 5.38269 12.6157 5.75901C12.8337 6.18683 12.8337 6.74689 12.8337 7.86699V9.63366C12.8337 10.7538 12.8337 11.3138 12.6157 11.7416C12.4239 12.118 12.118 12.4239 11.7416 12.6157C11.3138 12.8337 10.7538 12.8337 9.63366 12.8337H7.86699C6.74689 12.8337 6.18683 12.8337 5.75901 12.6157C5.38269 12.4239 5.07673 12.118 4.88498 11.7416C4.66699 11.3138 4.66699 10.7538 4.66699 9.63366V9.43088M4.36699 9.33366H6.13366C7.25376 9.33366 7.81382 9.33366 8.24164 9.11567C8.61796 8.92393 8.92393 8.61796 9.11567 8.24164C9.33366 7.81382 9.33366 7.25377 9.33366 6.13366V4.36699C9.33366 3.24689 9.33366 2.68683 9.11567 2.25901C8.92393 1.88269 8.61796 1.57673 8.24164 1.38498C7.81382 1.16699 7.25377 1.16699 6.13366 1.16699H4.36699C3.24689 1.16699 2.68683 1.16699 2.25901 1.38498C1.88269 1.57673 1.57673 1.88269 1.38498 2.25901C1.16699 2.68683 1.16699 3.24689 1.16699 4.36699V6.13366C1.16699 7.25376 1.16699 7.81382 1.38498 8.24164C1.57673 8.61796 1.88269 8.92393 2.25901 9.11567C2.68683 9.33366 3.24689 9.33366 4.36699 9.33366Z"
-                  stroke="#606266"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <SvgIcon name="copy" />
             </div>
           </div>
         </div>
@@ -129,20 +116,18 @@
       },
 
       confirmRefreshAccessToken() {
-        ElMessageBox.confirm($t('accessToken.refreshWarning'), 'Warning', {
+        ElMessageBox.confirm(this.$t('accessToken.refreshWarning'), 'Warning', {
           confirmButtonText: this.$t('accessToken.confirm'),
           cancelButtonText: this.$t('all.cancel'),
           type: 'warning'
+        }).then(() => {
+          this.refreshAccessToken()
+        }).catch(() => {
+          ElMessage({
+            message: this.$t('accessToken.cancelInfo'),
+            type: 'info'
+          })
         })
-          .then(() => {
-            this.refreshAccessToken()
-          })
-          .catch(() => {
-            ElMessage({
-              message: this.$t('accessToken.cancelInfo'),
-              type: 'info'
-            })
-          })
       },
 
       async refreshAccessToken() {
@@ -154,6 +139,7 @@
         } else {
           const body = data.value
           this.theAccessToken = body.data.token
+          ElMessage({ message: data.value.msg, type: 'success' })
         }
       }
     }
