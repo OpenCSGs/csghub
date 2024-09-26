@@ -8,7 +8,7 @@
       type="warning">
     </el-alert>
     <div class="font-semibold text-[20px] leading-[28px]">
-      {{ $t('profile.edit.title') }}
+      {{ $t('profile.accountSetting') }}
     </div>
     <!-- avatar -->
     <div>

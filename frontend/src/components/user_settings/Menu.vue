@@ -16,7 +16,7 @@
              class="p-[16px] hover:bg-[#F9FAFB] border-[#DCDFE6] text-[16px] text-[#606266] leading-[24px] cursor-pointer"
              :class="menuClass('/settings/profile')"
           >
-              {{ $t('profile.menu.profile')}}
+              {{ $t('profile.accountSetting')}}
           </a>
 
           <!-- <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-[#DCDFE6] text-[18px] text-[#606266] leading-[26px] opacity-40"
