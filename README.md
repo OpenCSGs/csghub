@@ -13,6 +13,15 @@ Additionally, CSGHub features microservice submodules and standardized OpenAPIs 
 
 ![CSGHub](./docs/images/csghub_framework.png)
 
+
+### Key Features
+- **Unified Management of LLM Assets**: A one-stop Hub for unified management of model files, datasets, and large-scale model application codes.
+- **Development Ecosystem Compatibility**: Supports both HTTPS and SSH protocols for Git commands and web interface operations, ensuring convenient usage for different users.
+- **Large Model Capability Expansion**: Natively supports version management, model format conversion, automatic data processing, and dataset preview functions.
+- **Permissions and Security**: Supports integration with corporate user systems, setting of asset visibility, and zero-trust authentication interface design for both external and internal users, maximizing security.
+- **Support for Private Deployment**: Independent of internet and cloud vendors, enabling one-click initiation of private deployment.
+- **Native Design for Large Models**: Supports natural language interaction, one-click model deployment, and asset management for Agent and Copilot App.
+
 For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
 
 ### Quick Start
