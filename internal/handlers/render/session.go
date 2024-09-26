@@ -57,7 +57,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	jwtToken := ctx.Query("jwt")
 	if jwtToken == "" {
 		slog.Error("Login Error", "error", "jwt is blank")
-		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+		ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 		return
 	}
 	userResp, _, err := i.Server.VerifyJWTToken(jwtToken)
@@ -70,7 +70,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 
 	if userResp == nil {
 		slog.Error("Login Error", "error", "verify jwt token failed", "jwt", jwtToken)
-		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+		ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 		return
 	}
 
@@ -99,7 +99,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 				return
 			}
 		} else {
-			ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+			ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 			return
 		}
 	}
