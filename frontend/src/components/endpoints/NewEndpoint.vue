@@ -269,6 +269,12 @@
       {
         required: true,
         message: t('all.pleaseInput', { value: t('endpoints.new.modelId') }),
+        trigger: 'change'
+      },
+      // Make sure to include a / in the string, but not at the beginning or end
+      {
+        pattern: /^(?!\/)[a-zA-Z0-9-_\.]+\/[a-zA-Z0-9-_\.]+(?<!\/)$/,
+        message: t('all.inputFormatError'),
         trigger: 'blur'
       }
     ],
