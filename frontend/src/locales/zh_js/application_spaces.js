@@ -77,7 +77,8 @@ export const application_spaces = {
     failedFetchResources: "获取资源失败",
     license: "许可证",
     createFail: "应用空间创建失败",
-    spaceEnName: "应用空间英文名称"
+    spaceEnName: "应用空间英文名称",
+    cluster: "区域",
   },
   edit: {
     cloudResource: '空间云资源',
