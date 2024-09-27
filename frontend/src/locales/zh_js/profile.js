@@ -1,11 +1,10 @@
 export const profile = {
-  editProfile: "编辑个人信息",
+  accountSetting: "账号设置",
   myCollect: "我的收藏",
   settings: "设置",
   interests: "兴趣",
   organization: "组织机构",
   menu: {
-    profile: "个人资料",
     accountInformation: "账户信息",
     accessToken: "Access Token",
     starshipAccessToken: "Starship API Key",
@@ -17,7 +16,6 @@ export const profile = {
     warningTipDesc: "确认在未保存的状态下离开设置页面？",
   },
   edit: {
-    title: "个人资料设置",
     uploadAvatar: "上传头像",
     removeAvatar: "移除头像",
     updateSuccess: "profile 已更新",

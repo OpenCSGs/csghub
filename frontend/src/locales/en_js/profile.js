@@ -1,11 +1,10 @@
 export const profile = {
-  editProfile: "Edit Profile",
+  accountSetting: "Settings",
   myCollect: "My Favorite",
   settings: "Settings",
   interests: "Interests",
   organization: "Organization",
   menu: {
-    profile: "Profile",
     accountInformation: "Account Information",
     accessToken: "Access Token",
     starshipAccessToken: "Starship API Key",
@@ -17,7 +16,6 @@ export const profile = {
     warningTipDesc: "Are you sure to leave the Settings page unsaved?",
   },
   edit: {
-    title: "Profile Edit",
     uploadAvatar: "Upload Avatar",
     removeAvatar: "Remove Avatar",
     updateSuccess: "Profile updated successfully",
