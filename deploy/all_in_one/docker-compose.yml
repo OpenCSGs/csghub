@@ -77,7 +77,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   csghub_portal:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_portal:v0.9.2
     restart: always
     depends_on:
       - postgres
@@ -106,7 +106,7 @@ services:
         ipv4_address: 192.168.100.245
 
   csghub_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     depends_on:
       - postgres
       - redis
@@ -163,7 +163,7 @@ services:
 
 
   csghub_server_runner:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     entrypoint:
       - /starhub-bin/starhub
       - deploy
@@ -201,7 +201,7 @@ services:
 
 
   csghub_server_proxy:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     entrypoint:
       - /starhub-bin/starhub
       - start
@@ -228,7 +228,7 @@ services:
     restart: always
 
   space_builder:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub-space-builder:v0.9.2
     environment:
       - REDIS_ENDPOINT=redis:6379
       - SPACE_DATA_PATH=/opt/data
@@ -317,7 +317,7 @@ services:
         ipv4_address: 192.168.100.237
 
   account_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     entrypoint:
       - /starhub-bin/starhub
       - accounting
@@ -342,7 +342,7 @@ services:
         ipv4_address: 192.168.100.236
 
   user_server:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     entrypoint:
       - /starhub-bin/starhub
       - user
@@ -407,7 +407,7 @@ services:
     restart: always
 
   mirror-repo-sync:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     entrypoint:
       - /starhub-bin/starhub
       - mirror
@@ -431,7 +431,7 @@ services:
         ipv4_address: 192.168.100.231
 
   mirror-lfs-sync:
-    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.3
+    image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:v0.9.2
     entrypoint:
       - /starhub-bin/starhub
       - mirror
