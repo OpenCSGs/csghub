@@ -256,6 +256,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item
+<<<<<<< Updated upstream
           :label="t('endpoints.new.cluster')"
           class="w-full"
           prop="space_cluster">
@@ -278,30 +279,25 @@
           class="w-full !mb-0"
           :label="$t('application_spaces.new.cloudResource')"
         >
+=======
+          :label="t('application_spaces.new.cluster')"
+          class="w-full"
+          prop="space_cluster">
+>>>>>>> Stashed changes
           <el-select
-            v-model="dataForm.cloud_resource"
+            v-model="dataForm.space_cluster"
             :placeholder="
-              t('all.pleaseSelect', {
-                value: t('application_spaces.new.cloudResource')
-              })
+              t('all.pleaseSelect', { value: t('application_spaces.new.cluster') })
             "
             size="large"
             style="width: 100%"
-          >
+            @change="fetchSpaceResources">
             <el-option
-              v-for="item in spaceResources"
-              :key="item.name"
-              :label="item.name"
-              :value="item.id"
-              :disabled="!item.is_available"
-            />
+              v-for="item in spaceClusters"
+              :key="item.cluster_id"
+              :label="item.region"
+              :value="item.cluster_id" />
           </el-select>
-          <p class="text-[#475467] mt-[8px] font-light">
-            {{ $t('application_spaces.new.cloudResourceDesc1') }}
-          </p>
-          <p class="text-[#475467] font-light">
-            {{ $t('application_spaces.new.cloudResourceDesc2') }}
-          </p>
         </el-form-item>
         <el-divider class="my-[18px]" />
         <el-form-item class="w-full">
