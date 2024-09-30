@@ -59,6 +59,24 @@ INSERT INTO runtime_frameworks (id, frame_name, frame_version, frame_image, fram
 INSERT INTO runtime_frameworks (id, frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('3', 'TGI', '2.1', 'tgi:2.1', '', 1, 8000, 1);
 INSERT INTO runtime_frameworks (id, frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('2', 'LLaMA-Factory', '1.11', 'llama-factory:1.18-cuda12.1-devel-ubuntu22.04-py310-torch2.1.2', '', 1, 8000, 2);
 
+-- for nim
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama3-8b-instruct', 'latest', 'nvcr.io/nim/meta/llama3-8b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama3-70b-instruct', 'latest', 'nvcr.io/nim/meta/llama3-70b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-3-swallow-70b-instruct-v0.1', 'latest', 'nvcr.io/nim/tokyotech-llm/llama-3-swallow-70b-instruct-v0.1:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-3-taiwan-70b-instruct', 'latest', 'nvcr.io/nim/yentinglin/llama-3-taiwan-70b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-2-7b-chat', 'latest', 'nvcr.io/nim/meta/llama-2-7b-chat:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-2-70b-chat', 'latest', 'nvcr.io/nim/meta/llama-2-70b-chat:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-2-13b-chat', 'latest', 'nvcr.io/nim/meta/llama-2-13b-chat:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-3.1-8b-base', 'latest', 'nvcr.io/nim/meta/llama-3.1-8b-base:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-3.1-405b-instruct', 'latest', 'nvcr.io/nim/meta/llama-3.1-405b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama3-70b-instruct', 'latest', 'nvcr.io/nim/meta/llama3-70b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-3.1-8b-instruct', 'latest', 'nvcr.io/nim/meta/llama-3.1-8b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-llama-3.1-70b-instruct', 'latest', 'nvcr.io/nim/meta/llama-3.1-70b-instruct:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-mistral-7b-instruct-v0.3', 'latest', 'nvcr.io/nim/mistralai/mistral-7b-instruct-v0.3:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-mixtral-8x7b-instruct-v01', 'latest', 'nvcr.io/nim/mistralai/mixtral-8x7b-instruct-v01:latest', '', 1, 8000, 1);
+INSERT INTO runtime_frameworks (frame_name, frame_version, frame_image, frame_cpu_image, enabled, container_port, type) VALUES ('NIM-mixtral-8x22b-instruct-v01', 'latest', 'nvcr.io/nim/mistralai/mixtral-8x22b-instruct-v01:latest', '', 1, 8000, 1);
+
+
 --
 -- Init data runtime frameworks architecture
 --
