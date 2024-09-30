@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev_build": "vite build -w -m development",
+    "dev_build": "NODE_ENV=development vite build -w -m development",
     "build": "vite build",
     "preview": "vite preview"
   },
