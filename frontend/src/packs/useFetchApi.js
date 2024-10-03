@@ -21,6 +21,9 @@ const popupReloginDialog = () => {
   .catch(() => {
     window.location.href = "/logout"
   })
+  .finally(() => {
+    clearCookies()
+  })
 }
 
 const useFetchApi = createFetch({
@@ -57,5 +60,12 @@ const useFetchApi = createFetch({
     }
   }
 })
+
+const clearCookies = () => {
+  cookies.keys().forEach((cookie) => {
+    cookies.remove(cookie)
+  })
+  window.location.href = '/'
+}
 
 export default useFetchApi
