@@ -1,7 +1,7 @@
 <template>
   <div class="border-t border-[#EBEEF5] p-[16px]">
-    <h3 class="text-[16px] text-[#344054] font-[500] mb-[16px]">{{ $t('widgets.onlineDemo') }}</h3>
-    <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('widgets.testInput') }}</p>
+    <h3 class="text-[16px] text-gray-700 font-[500] mb-[16px]">{{ $t('widgets.onlineDemo') }}</h3>
+    <p class="text-gray-700 text-[14px] mb-[6px]">{{ $t('widgets.testInput') }}</p>
     <el-input
       v-model="textInput"
       :rows="3"
@@ -17,7 +17,7 @@
         <span class="text-[14px]">参数调整</span>
       </div>
       <div class="flex justify-center items-center gap-[8px]">
-        <p class="text-[16px] text-[#667085]"> {{ `${$t('widgets.testInput')}: ${textInputLength}` }} / 1000 </p>
+        <p class="text-[16px] text-gray-500"> {{ `${$t('widgets.testInput')}: ${textInputLength}` }} / 1000 </p>
         <button v-if="loading"
                 class="flex px-[12px] py-[8px] justify-center items-center gap-[4px] rounded-lg border border-gray-300 bg-gray-300 shadow-sm text-white text-[14px] font-[500]"
                 @click="sendInferenceTest"
@@ -33,15 +33,15 @@
         </button>
       </div>
     </div>
-    <p class="text-[#344054] text-[14px] mb-[6px]">{{ $t('widgets.testOutput') }}</p>
+    <p class="text-gray-700 text-[14px] mb-[6px]">{{ $t('widgets.testOutput') }}</p>
     <div class="h-[130px] p-[10px] border markdown-body rounded-md border-gray-300 bg-white shadow-xs overflow-scroll"
          v-loading="loading"
          v-html="renderMarkdown(textOutput)"
     ></div>
-    <p v-if="timeSpend != 0" class="text-[#667085] text-[14px] mt-[16px]">{{ `${$t('widgets.timeCost')}: ${timeSpend}` }} ms</p>
+    <p v-if="timeSpend != 0" class="text-gray-500 text-[14px] mt-[16px]">{{ `${$t('widgets.timeCost')}: ${timeSpend}` }} ms</p>
     <div> 
       <SvgIcon name="exclamation_point" /> 
-      <p class="ml-[4px] text-[12px] leading-[18px] text-[#667085]">{{ $t('widgets.liabilityExemption') }}</p>
+      <p class="ml-[4px] text-[12px] leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
     </div>
   </div>
 </template>

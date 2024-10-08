@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
         :private="applicationSpace.private"
@@ -59,12 +59,12 @@
             <p class="font-[600] text-[16px] text-black">{{ $t('application_spaces.errorPage.log') }}</p>
           </div>
           <div class="flex gap-4 items-center">
-            <span class="text-[14px] text-[#667085] cursor-pointer"
+            <span class="text-[14px] text-gray-500 cursor-pointer"
                   data-value="build"
                   @click="toggleActiveTab"
                   :class="isBuildLogTab ? 'active-tab' : ''"
             >{{ $t('application_spaces.errorPage.build') }}</span>
-            <span class="text-[14px] text-[#667085] cursor-pointer"
+            <span class="text-[14px] text-gray-500 cursor-pointer"
                   data-value="container"
                   @click="toggleActiveTab"
                   :class="isBuildLogTab ? '' : 'active-tab'"

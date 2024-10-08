@@ -1,17 +1,17 @@
 <template>
-  <div class="flex rounded-2xl border border-[#EAECF0] my-6 md:m-5 md:flex-col">
-    <div class="border-r border-[#EAECF0] w-[320px] md:w-full md:border-none">
+  <div class="flex rounded-2xl border border-gray-200 my-6 md:m-5 md:flex-col">
+    <div class="border-r border-gray-200 w-[320px] md:w-full md:border-none">
       <div
-        class="p-4 flex items-center justify-between border-b border-[#EAECF0]"
+        class="p-4 flex items-center justify-between border-b border-gray-200"
       >
         <div
-          class="flex items-center gap-2 text-base text-[#344054] font-medium"
+          class="flex items-center gap-2 text-base text-gray-700 font-medium"
         >
           <SvgIcon name="playground" />
           {{ $t('endpoints.playground.title') }}
         </div>
         <div
-          class="h-11 p-1 bg-[#f8f9fb] rounded-[10px] border border-[#eaecf0] items-center gap-1 inline-flex"
+          class="h-11 p-1 bg-[#f8f9fb] rounded-[10px] border border-gray-200 items-center gap-1 inline-flex"
         >
           <div
             class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"

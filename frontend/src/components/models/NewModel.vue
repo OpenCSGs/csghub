@@ -7,7 +7,7 @@
         width="37"
       />
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">
+    <h3 class="text-gray-700 text-xl font-semibold mt-6 mb-3">
       {{ t('models.newModel.title') }}
     </h3>
     <p class="text-[#606266] text-base font-medium md:text-center">
@@ -137,7 +137,7 @@
           />
         </el-form-item>
         <p
-          class="mb-[18px] rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded bg-brand-25] text-brand-500] text-[13px] py-[9px] px-4"
         >
           {{ t('models.newModel.tips') }}
         </p>
@@ -145,7 +145,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]"
+              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600] !rounded-[8px] !border-[1px] !border-brand-600]"
               @click="handleSubmit"
             >
               {{ t('models.newModel.createModel') }}

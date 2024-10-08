@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-[#DCDFE6] rounded-[4px] bg-[#F5F7FA]">
+  <div class="border border-gray-200 rounded-[4px] bg-[#F5F7FA]">
     <div class="flex text-[14px] leading-[22px]">
       <div
         class="px-[20px] py-[9px] whitespace-nowrap border-r"

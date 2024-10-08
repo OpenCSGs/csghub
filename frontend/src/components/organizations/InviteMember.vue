@@ -20,7 +20,7 @@
       <template #header>
         <div class="flex justify-between">
           <div
-            class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-[#EAECF0]"
+            class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-gray-200"
           >
             <SvgIcon name="invite_org_member" />
           </div>
@@ -32,17 +32,17 @@
       </template>
       <!-- dialog content -->
       <div class="relative">
-        <div class="text-[18px] leading-[28px] text-[#101828]">
+        <div class="text-[18px] leading-[28px] text-gray-900]">
           {{ $t('organization.invite.inviteNew') }}
         </div>
-        <span class="text-[14px] leading-[20px] text-[#475467] font-light"
+        <span class="text-[14px] leading-[20px] text-gray-600] font-light"
           >{{ $t('organization.invite.inviteDesc') }}
           <span class="font-bold">{{ orgName }}</span></span
         >
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-[#344054] text-[14px] mb-[6px]">
+              <p class="text-gray-700 text-[14px] mb-[6px]">
                 {{ $t('all.role') }}
               </p>
               <el-select
@@ -59,7 +59,7 @@
                 />
               </el-select>
             </div>
-            <p class="text-[#344054] text-[14px] mb-[6px]">
+            <p class="text-gray-700 text-[14px] mb-[6px]">
               {{ $t('all.userName') }}
             </p>
             <div

@@ -2,7 +2,7 @@
   <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0">
     <div
       v-if="repoType !== 'space'"
-      class="w-[30%] min-w-[360px] border-r border-[#EAECF0] pr-6 xl:pl-[20px] mlg:hidden"
+      class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 xl:pl-[20px] mlg:hidden"
     >
       <TagSidebar
         :taskTags="taskTags"
@@ -19,7 +19,7 @@
       <div
         :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] mlg:pl-0' : ''}`"
       >
-        <h3 class="text-lg font-normal text-[#101828] flex items-center gap-2">
+        <h3 class="text-lg font-normal text-gray-900] flex items-center gap-2">
           <SvgIcon
             v-if="repoType === 'model'"
             name="models"

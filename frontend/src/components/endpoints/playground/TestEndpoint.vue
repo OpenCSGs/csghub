@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-[77px] w-full p-4 bg-white border-b border-[#eaecf0] items-center gap-2 inline-flex rounded-tr-2xl"
+    class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl"
   >
     <SvgIcon name="playground_test" />
     <div class="text-[#344053] text-base font-medium leading-normal">
@@ -40,10 +40,10 @@
       ></el-input>
 
       <div
-        class="h-[34px] px-3 py-2 rounded-lg shadow border border-[#eaecf0] justify-center items-center gap-1 inline-flex flex-shrink-0"
+        class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
         :class="
           canSendMessage
-            ? 'bg-[#3250bd] cursor-pointer'
+            ? 'bg-brand-600] cursor-pointer'
             : 'bg-[#f2f3f6] cursor-not-allowed'
         "
         @click="handleSendMessage"
@@ -60,7 +60,7 @@
 
     <div class="flex mt-[8px]"> 
       <SvgIcon name="exclamation_point" class="place-self-start" /> 
-      <p class="ml-[4px] text-[12px] leading-[18px] text-[#667085]">{{ $t('widgets.liabilityExemption') }}</p>
+      <p class="ml-[4px] text-[12px] leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
     </div>
   </div>
 </template>

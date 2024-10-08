@@ -1,22 +1,22 @@
 <template>
   <div
-    class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('codes.codeName') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('codes.codeNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('codes.namespaceCodeName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-[8px] bg-gray-50 px-[14px] py-[10px] border">
           {{ codePath }}
         </div>
       </div>
@@ -27,10 +27,10 @@
     <!-- 更新别名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('codes.codeNickName') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('codes.edit.tips') }}
         </div>
       </div>
@@ -53,10 +53,10 @@
     <!-- 更新简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('codes.codeDesc') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('codes.edit.tips2') }}
         </div>
       </div>
@@ -80,10 +80,10 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('codes.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('codes.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -98,7 +98,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('codes.edit.codeVisibility') }}
         </p>
         <el-select
@@ -121,24 +121,24 @@
     <!-- 删除 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('codes.edit.delCode') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('codes.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('codes.edit.canNot') }}</span>
           {{ $t('codes.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('codes.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('codes.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('codes.edit.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">{{ $t('codes.codeName') }}</p>
+        <p class="text-gray-700 text-[14px]">{{ $t('codes.codeName') }}</p>
         <el-input
           v-model="delDesc"
           clearable
@@ -148,11 +148,11 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === codePath
-                ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
-                : 'bg-[#F2F4F7]'
+                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave">
@@ -327,13 +327,13 @@
         if (this.delDesc !== '') {
           document
             .getElementById('confirmDelete')
-            .classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
+            .classList.replace('bg-error-600]', 'bg-error-700]')
         }
       },
       handleMouseLeave() {
         document
           .getElementById('confirmDelete')
-          .classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
+          .classList.replace('bg-error-700]', 'bg-error-600]')
       }
     }
   }

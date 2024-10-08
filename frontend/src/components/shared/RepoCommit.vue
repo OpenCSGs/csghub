@@ -15,7 +15,7 @@
             }}
           </div>
         </div>
-        <div class="flex items-center text-sm text-[#344054]" v-if="commit.id">
+        <div class="flex items-center text-sm text-gray-700" v-if="commit.id">
           <el-button-group class="ml-2 min-w-[107px]">
             <el-button type="default" size="small">
               {{ commit.id.slice(0, 7) }}

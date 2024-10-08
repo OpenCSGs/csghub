@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="deployFailed"
-    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs">
+    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-gray-300] rounded-[12px] shadow-xs">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -26,14 +26,14 @@
       </defs>
     </svg>
     <div>
-      <h3 class="text-[#475467] text-[14px] font-[500]">
+      <h3 class="text-gray-600] text-[14px] font-[500]">
         {{ $t('application_spaces.errorPage.errorAlert') }}
       </h3>
-      <p class="text-[#475467] text-[14px]">
+      <p class="text-gray-600] text-[14px]">
         {{ $t('application_spaces.errorPage.errorAlertDesc') }}
       </p>
       <p
-        class="text-[#223B99] font-[400] text-[12px] mt-[12px] cursor-pointer"
+        class="text-brand-700] font-[400] text-[12px] mt-[12px] cursor-pointer"
         @click="showErrorLogs">
         {{ $t('application_spaces.errorPage.showErrorLogs') }}
       </p>
@@ -41,19 +41,19 @@
   </div>
 
   <div
-    class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- cloud resource -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.edit.cloudResource') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.edit.cloudResourceDesc') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('application_spaces.edit.currentCloudResource') }}
         </p>
         <el-select
@@ -78,7 +78,7 @@
     <!-- 暂停 Space -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.stopSpace') }}
         </div>
       </div>
@@ -106,7 +106,7 @@
     <!-- 重启 Space -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.restartSpace') }}
         </div>
       </div>
@@ -125,19 +125,19 @@
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.name') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.nameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('application_spaces.namespaceName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-[8px] bg-gray-50 px-[14px] py-[10px] border">
           {{ applicationSpacePath }}
         </div>
       </div>
@@ -148,10 +148,10 @@
     <!-- 更新应用空间别名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.nickname') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.edit.tips') }}
         </div>
       </div>
@@ -174,10 +174,10 @@
     <!-- 更新应用空间简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.desc') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.edit.tips2') }}
         </div>
       </div>
@@ -204,7 +204,7 @@
         <div class="text-[14px] text-[#0a0d12] leading-[20px] font-medium">
           {{ $t('application_spaces.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -219,7 +219,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('application_spaces.edit.visibility') }}
         </p>
         <el-select
@@ -242,7 +242,7 @@
     <!-- cover image -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.edit.replaceCoverImage') }}
         </div>
       </div>
@@ -286,24 +286,24 @@
     <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.edit.del') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('application_spaces.edit.canNot') }}</span>
           {{ $t('application_spaces.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('application_spaces.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('application_spaces.namespaceName') }}
         </p>
         <el-input
@@ -315,11 +315,11 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === applicationSpacePath
-                ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
-                : 'bg-[#F2F4F7]'
+                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave">
@@ -676,14 +676,14 @@
         if (this.delDesc !== '') {
           document
             .getElementById('confirmDelete')
-            .classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
+            .classList.replace('bg-error-600]', 'bg-error-700]')
         }
       },
 
       handleMouseLeave() {
         document
           .getElementById('confirmDelete')
-          .classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
+          .classList.replace('bg-error-700]', 'bg-error-600]')
       },
 
       showErrorLogs() {

@@ -11,7 +11,7 @@
             <img :src="organizationData.avatar ? organizationData.avatar : '/images/default_org.png'" class="h-[60px] w-[60px] rounded-[50%]" />
           </span>
           <div>
-            <h3 class="text-[24px] text-[#303133] font-[600]"> {{ (organizationData.nickname && organizationData.nickname.trim()) || organizationData.name }}</h3>
+            <h3 class="text-[24px] text-gray-700 font-[600]"> {{ (organizationData.nickname && organizationData.nickname.trim()) || organizationData.name }}</h3>
             <p class="text-[16px]"> @{{ organizationData.name }} </p>
           </div>
         </div>
@@ -24,38 +24,38 @@
               </div>
             </template>
             <div>
-              <a :href="`/models/new?orgName=${organizationData.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+              <a :href="`/models/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F9F1F0]">
                   <SvgIcon name="models" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-[#344054]">
+                <div class="text-[14px] leading-[20px] text-gray-700">
                   <div>{{ $t('models.title') }}</div>
                   <div class="font-light">{{ $t('models.tips') }}</div>
                 </div>
               </a>
-              <a :href="`/datasets/new?orgName=${organizationData.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+              <a :href="`/datasets/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#E7EFF7]">
                   <SvgIcon name="datasets" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-[#344054]">
+                <div class="text-[14px] leading-[20px] text-gray-700">
                   <div>{{ $t('datasets.title') }}</div>
                   <div class="font-light">{{ $t('datasets.tips') }}</div>
                 </div>
               </a>
-              <a :href="`/spaces/new?orgName=${organizationData.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+              <a :href="`/spaces/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F5F2FB]">
                   <SvgIcon name="spaces" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-[#344054]">
+                <div class="text-[14px] leading-[20px] text-gray-700">
                   <div>{{ $t('spaces.title') }}</div>
                   <div class="font-light">{{ $t('spaces.tips') }}</div>
                 </div>
               </a>
-              <a  :href="`/codes/new?orgName=${organizationData.name}`" class="hover:bg-[#F9FAFB] cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+              <a  :href="`/codes/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
                 <div class="px-2 py-2 bg-[#F3F4F6]">
                   <SvgIcon name="codes" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-[#344054]">
+                <div class="text-[14px] leading-[20px] text-gray-700">
                   <div>{{ $t('codes.title') }}</div>
                   <div class="font-light">{{ $t('codes.tips')}}</div>
                 </div>
@@ -75,7 +75,7 @@
         <div class="max-w-[320px] lg:max-w-none pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>
-            <span class="text-[#303133] text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
+            <span class="text-gray-700 text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
           </h3>
 
           <InviteMember :orgName="organizationData.name"

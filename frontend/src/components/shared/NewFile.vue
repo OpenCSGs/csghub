@@ -20,7 +20,7 @@
     />
     <el-radio-group
       v-model="new_branch"
-      class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0"
+      class="my-4 py-4 border border-gray-200 border-l-0 border-r-0"
     >
       <el-radio
         label="main"

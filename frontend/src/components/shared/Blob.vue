@@ -39,7 +39,7 @@
         <!-- Todo 暂时先隐藏 -->
         <a
           href="#"
-          class="ml-4 items-center px-4 py-[5px] border border-[#DCDFE6] rounded-[100px] hidden"
+          class="ml-4 items-center px-4 py-[5px] border border-gray-200 rounded-[100px] hidden"
         >
           <SvgIcon
             name="commits"
@@ -51,7 +51,7 @@
     </div>
     <div
       v-if="lastCommit"
-      class="flex items-center justify-between mt-4 px-3 py-2 border border-[#DCDFE6] bg-[#F5F7FA] rounded-t-[4px]"
+      class="flex items-center justify-between mt-4 px-3 py-2 border border-gray-200 bg-[#F5F7FA] rounded-t-[4px]"
     >
       <div class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
@@ -62,7 +62,7 @@
           />
           <a
             href="#"
-            class="text-[#303133] hover:underline"
+            class="text-gray-700 hover:underline"
             >{{ lastCommit.author_name }}</a
           >
         </div>
@@ -73,7 +73,7 @@
         >
         <a
           href="#"
-          class="rounded border border-[#DCDFE6] text-xs text-[#606266] px-3 py-[2px] hover:underline"
+          class="rounded border border-gray-200 text-xs text-[#606266] px-3 py-[2px] hover:underline"
         >
           {{ lastCommit.id?.substring(0, 7) }}
         </a>
@@ -96,10 +96,10 @@
     </div>
     <div
       v-if="!lfs"
-      class="border border-t-0 border-[#DCDFE6] rounded-b"
+      class="border border-t-0 border-gray-200 rounded-b"
     >
       <div
-        class="text-xs text-[#303133] px-4 py-2 flex items-center justify-between border-b border-[#DCDFE6]"
+        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-between border-b border-gray-200"
       >
         <div class="flex items-center gap-4">
           <div
@@ -134,15 +134,15 @@
     </div>
     <div
       v-else
-      class="border border-t-0 border-[#DCDFE6] rounded-b"
+      class="border border-t-0 border-gray-200 rounded-b"
     >
       <div
-        class="text-xs text-[#303133] px-4 py-2 flex items-center justify-end border-b border-[#DCDFE6]"
+        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-end border-b border-gray-200"
       >
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div
-        class="flex items-center justify-center px-4 py-10 border-b border-[#DCDFE6] font-medium text-[#667085] text-[14px] whitespace-pre-wrap"
+        class="flex items-center justify-center px-4 py-10 border-b border-gray-200 font-medium text-gray-500 text-[14px] whitespace-pre-wrap"
       >
         <p>
           {{ $t('shared.lfs1') }}
@@ -189,7 +189,7 @@
           >
         </div>
         <div
-          class="flex items-center mt-[4px] text-[#667085] text-[12px] font-light"
+          class="flex items-center mt-[4px] text-gray-500 text-[12px] font-light"
         >
           <p>{{ $t('shared.lfs10') }}</p>
           <a

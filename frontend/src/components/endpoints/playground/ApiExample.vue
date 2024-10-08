@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-[77px] w-full p-4 bg-white border-b border-[#eaecf0] items-center gap-2 inline-flex rounded-tr-2xl"
+    class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl"
   >
     <SvgIcon name="playground_api" />
     <div class="text-[#344053] text-base font-medium leading-normal">
@@ -55,7 +55,7 @@
       />
     </div>
     <div
-      class="rounded-xl border border-[#eaecf0] px-4 py-6 mt-4 relative group"
+      class="rounded-xl border border-gray-200 px-4 py-6 mt-4 relative group"
     >
       <CodeViewer
         :content="codeContent"

@@ -63,7 +63,7 @@
           <div>
             <div class="el-upload__text">
               <p>
-                <span class="text-[#223B99] font-[500]">
+                <span class="text-brand-700] font-[500]">
                   {{ $t('components.upload.click_to_upload') }}
                 </span>
                 {{ $t('components.upload.or_drag_file') }}
@@ -76,7 +76,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button class="!text-center !h-[48px] !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]" @click="handleSubmit">{{ $t('all.saveSetting') }}</el-button>
+        <el-button class="!text-center !h-[48px] !text-[16px] !text-white !bg-brand-600] !rounded-[8px] !border-[1px] !border-brand-600]" @click="handleSubmit">{{ $t('all.saveSetting') }}</el-button>
       </el-form-item>
     </el-form>
   </div>

@@ -8,7 +8,7 @@
     >
     </Menu>
     <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l min-h-[calc(100vh-153px)]">
-      <h3 class="text-[#303133] text-[20px] font-[600]">SSH Keys</h3>
+      <h3 class="text-gray-700 text-[20px] font-[600]">SSH Keys</h3>
       <button
         @click="centerDialogVisible = true"
         class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] mt-[32px] w-[160px]"
@@ -17,7 +17,7 @@
       </button>
       <div
         v-if="theSshKeys.length === 0"
-        class="mt-[16px] rounded-sm w-full bg-[#F0F3FF] py-[9px] px-[16px] text-[#4D6AD6]"
+        class="mt-[16px] rounded-sm w-full bg-brand-25] py-[9px] px-[16px] text-brand-500]"
       >
         {{ $t('sshKey.noKeyTips') }}
       </div>
@@ -44,7 +44,7 @@
           ref="formRef"
         >
           <div class="mb-[16px]">
-            <p class="text-[#303133] text-[14px] mb-[8px]">
+            <p class="text-gray-700 text-[14px] mb-[8px]">
               {{ $t('sshKey.sshKeyName') }} <span class="text-red-400">*</span>
             </p>
             <el-input
@@ -54,7 +54,7 @@
             />
           </div>
           <div>
-            <p class="text-[#303133] text-[14px] mb-[8px]">
+            <p class="text-gray-700 text-[14px] mb-[8px]">
               {{ $t('sshKey.sshKeyContent')
               }}<span class="text-red-400">*</span>
             </p>

@@ -2,14 +2,14 @@
   <div class="sm:w-[100%] sm:mt-[36px] pt-4 pb-8 px-2">
     <!-- models -->
     <div>
-      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="models"
           width="18"
           height="18"
         />
         <span>{{ $t('organization.model') }}</span>
-        <span class="text-[#98A2B3] text-[16px] leading-[24px]">{{ models.length }}</span>
+        <span class="text-gray-400] text-[16px] leading-[24px]">{{ models.length }}</span>
       </h3>
       <div
         v-if="hasModels"
@@ -35,14 +35,14 @@
 
     <!-- datasets -->
     <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="datasets"
           width="18"
           height="18"
         />
         <span>{{ $t('organization.dataset') }}</span>
-        <span class="text-[#98A2B3] text-[16px] leading-[24px]">{{ datasets.length }}</span>
+        <span class="text-gray-400] text-[16px] leading-[24px]">{{ datasets.length }}</span>
       </h3>
       <div
         v-if="hasDatasets"
@@ -68,14 +68,14 @@
 
     <!-- code repo -->
     <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="codes"
           width="18"
           height="18"
         />
         <span>{{ $t('organization.code') }}</span>
-        <span class="text-[#98A2B3] text-[16px] leading-[24px]">{{ codes.length }}</span>
+        <span class="text-gray-400] text-[16px] leading-[24px]">{{ codes.length }}</span>
       </h3>
       <div
         v-if="hasCodes"
@@ -101,14 +101,14 @@
 
     <!-- spaces -->
     <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="spaces"
           width="18"
           height="18"
         />
         <span>{{ $t('organization.space') }}</span>
-        <span class="text-[#98A2B3] text-[16px] leading-[24px]">{{ spaces.length }}</span>
+        <span class="text-gray-400] text-[16px] leading-[24px]">{{ spaces.length }}</span>
       </h3>
       <div
         v-if="hasSpaces"

@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="repo"
-    class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-[#EBEEF5]"
+    class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-[#EBEEF5]"
   >
     <div class="mx-auto max-w-[1280px]">
       <repo-header

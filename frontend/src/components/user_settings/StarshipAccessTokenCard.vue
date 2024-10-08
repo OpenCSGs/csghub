@@ -3,7 +3,7 @@
     class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px] flex flex-col gap-[8px]"
   >
     <div class="flex justify-between">
-      <h3 class="text-[#303133] text-[16px] font-[500]">
+      <h3 class="text-gray-700 text-[16px] font-[500]">
         {{ tokenName }}
       </h3>
       <el-button

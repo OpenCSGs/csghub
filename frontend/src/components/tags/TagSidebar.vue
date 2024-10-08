@@ -1,34 +1,34 @@
 <template>
   <div class="flex bg-[#fff] flex-col pt-[32px] pb-[60px]">
     <div class="flex">
-      <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+      <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Task"
-            :class="activeNavItem === 'Task' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'Task' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
         {{ $t('all.tasks') }}
       </span>
       <span v-show="type === 'model'"
-            class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+            class="mr-[4px] py-[8px] px-[12px] text-[14px] text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Framework"
-            :class="activeNavItem === 'Framework' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'Framework' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
       {{ $t('all.framework') }}
       </span>
 
       <span v-show="type === 'model' || type === 'dataset'"
-            class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+            class="mr-[4px] py-[8px] px-[12px] text-[14px] text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Language"
-            :class="activeNavItem === 'Language' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'Language' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
       {{ $t('all.languages') }}
       </span>
 
-      <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-[#667085] cursor-pointer hover:bg-gray-50"
+      <span class="mr-[4px] py-[8px] px-[12px] text-[14px] text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="License"
-            :class="activeNavItem === 'License' ? 'text-[#344054] active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'License' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
             @click="changeActiveItem"
       >
       License
@@ -103,7 +103,7 @@
         />
         <div class="flex gap-[8px] flex-wrap">
           <span v-for="languageTag in theLanguageTags"
-                class="text-[14px] text-[#303133] px-[8px] py-[4px] rounded-[4px] cursor-pointer flex items-center gap-[4px]"
+                class="text-[14px] text-gray-700 px-[8px] py-[4px] rounded-[4px] cursor-pointer flex items-center gap-[4px]"
                 :data-tag_name="languageTag.name"
                 :style="setLanguageTagColor(languageTag.name)"
                 @click="setActiveLanguageTag(languageTag.name)"
@@ -124,7 +124,7 @@
           @input = "filterLicenseTags"
         />
         <div class="flex gap-[8px] flex-wrap">
-          <span v-for="licenseTag in theLicenseTags" class="text-[14px] text-[#303133] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center gap-[4px] border border-gray-200"
+          <span v-for="licenseTag in theLicenseTags" class="text-[14px] text-gray-700 px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center gap-[4px] border border-gray-200"
                 :data-tag_name="licenseTag.name"
                 :style="setLicenseTagColor(licenseTag.name)"
                 @click="setActiveLicenseTag"

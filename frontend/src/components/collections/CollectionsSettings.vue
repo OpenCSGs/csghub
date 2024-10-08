@@ -1,14 +1,14 @@
 <template>
   <div
-    class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
+    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
     <!-- collection name -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.cnName') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600] font-light leading-[20px]">
           {{ $t('collections.edit.cnNameTips') }}
         </div>
       </div>
@@ -31,10 +31,10 @@
     <!-- collection desc -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.desc') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600] font-light leading-[20px]">
           {{ $t('collections.edit.descTips') }}
         </div>
       </div>
@@ -57,10 +57,10 @@
     <!-- theme -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.theme') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600] font-light leading-[20px]">
           {{ $t('collections.edit.upDateTheme') }}
         </div>
       </div>
@@ -86,8 +86,8 @@
     <!-- add project -->
     <!-- <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">增加项目</div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">增加更多项目到集合</div>
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">增加项目</div>
+        <div class="text-[14px] text-gray-600] font-light leading-[20px]">增加更多项目到集合</div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <el-select
@@ -111,10 +111,10 @@
     <!-- Change Visibility -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('collections.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{ visibility ? $t('all.private') : $t('all.public') }}]</span
@@ -125,7 +125,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">{{ $t('collections.edit.collectionVisibility') }}</p>
+        <p class="text-gray-700 text-[14px]">{{ $t('collections.edit.collectionVisibility') }}</p>
         <el-select
           v-model="visibility"
           @change="changeVisibility"
@@ -147,11 +147,11 @@
     <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.delCollection') }}
         </div>
         
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('collections.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('collections.edit.canNot') }}</span>
           {{ $t('collections.edit.delTips2') }}
@@ -159,7 +159,7 @@
           {{ $t('collections.edit.delTips3') }}
         </div>
 
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600] leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">
             {{ `${collection.username}/${collection.name}` }}
@@ -168,7 +168,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">{{ $t('collections.collectionName') }}</p>
+        <p class="text-gray-700 text-[14px]">{{ $t('collections.collectionName') }}</p>
         <el-input
           v-model="delDesc"
           clearable
@@ -179,11 +179,11 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === `${collection.username}/${collection.name}`
-                ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
-                : 'bg-[#F2F4F7]'
+                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave"
@@ -284,12 +284,12 @@
 
   const handleMouseOver = () => {
     if (delDesc.value !== '') {
-      document.getElementById('confirmDelete').classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
+      document.getElementById('confirmDelete').classList.replace('bg-error-600]', 'bg-error-700]')
     }
   }
 
   const handleMouseLeave = () => {
-    document.getElementById('confirmDelete').classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
+    document.getElementById('confirmDelete').classList.replace('bg-error-700]', 'bg-error-600]')
   }
 
   const clickDelete = () => {

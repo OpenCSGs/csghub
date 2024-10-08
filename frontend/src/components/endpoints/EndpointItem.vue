@@ -1,11 +1,11 @@
 <template>
   <a
     :href="`/endpoints/${endpoint.model_id}/${endpoint.deploy_id}`"
-    class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md border border-gray-200 rounded-xl pt-4 w-full"
+    class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-xl pt-4 w-full"
   >
     <div class="flex justify-between items-center mb-2 px-4">
       <div class="w-full flex items-center justify-between">
-        <h3 class="flex-1 text-[#344054] text-md font-normal leading-6 truncate mr-[8px]">
+        <h3 class="flex-1 text-gray-700 text-md font-normal leading-6 truncate mr-[8px]">
           {{ endpoint.deploy_name }}
         </h3>
         <div class="flex gap-2">
@@ -21,9 +21,9 @@
       <span>·</span>
       <span>8x Intel Sanpppp</span>
     </div>
-    <div class="rounded-b-xl border-t text-sm leading-snug text-[#667085] bg-[#F9FBFA] flex justify-between">
+    <div class="rounded-b-xl border-t text-sm leading-snug text-gray-500 bg-[#F9FBFA] flex justify-between">
       <div class="px-4 py-2">{{ theEndpoint }}</div>
-      <div @click="copyUrl" v-if="endpoint.status === 'Running'" class="bg-[#ffffff] border-l rounded-br-xl p-2">
+      <div @click="copyUrl" v-if="endpoint.status === 'Running'" class="bg-white border-l rounded-br-xl p-2">
         <SvgIcon name="copy" />
       </div>
     </div>

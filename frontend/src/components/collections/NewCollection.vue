@@ -3,7 +3,7 @@
     <div>
       <SvgIcon name="new_collection" />
     </div>
-    <h3 class="text-[#303133] text-xl font-medium mt-6 mb-2">
+    <h3 class="text-gray-700 text-xl font-medium mt-6 mb-2">
       {{ $t('collections.newCollection.title') }}
     </h3>
     <p class="text-[#606266] text-base font-normal md:text-center">
@@ -20,7 +20,7 @@
         <!-- First row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
           <div>
-            <p class="text-[#303133] text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
+            <p class="text-gray-700 text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
             <el-form-item prop="owner">
               <el-select
                 v-model="dataForm.owner"
@@ -42,7 +42,7 @@
             <p class="text-[#909399] text-xl font-light">/</p>
           </div>
           <div class="flex-1">
-            <p class="text-[#303133] text-sm mb-2">
+            <p class="text-gray-700 text-sm mb-2">
               {{ $t('collections.newCollection.collectionName') }}
             </p>
             <el-form-item prop="title">
@@ -61,7 +61,7 @@
         <!-- Second row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
           <div class="flex-1">
-            <p class="text-[#303133] text-sm mb-2">
+            <p class="text-gray-700 text-sm mb-2">
               {{ $t('collections.newCollection.collectionNickName') }}
             </p>
             <el-form-item prop="collectionNickName">
@@ -73,7 +73,7 @@
             </el-form-item>
           </div>
           <div class="">
-            <p class="text-[#303133] text-sm mb-2">
+            <p class="text-gray-700 text-sm mb-2">
               {{ $t('collections.newCollection.selectTheme') }}
             </p>
             <el-form-item prop="colorName">
@@ -102,7 +102,7 @@
         <!-- Third row -->
         <div class="w-full flex sm:flex-col mb-9">
           <div class="flex-1">
-            <p class="text-[#303133] text-sm mb-2">
+            <p class="text-gray-700 text-sm mb-2">
               {{ $t('collections.newCollection.collectionDesc') }}
             </p>
             <el-form-item prop="collectionDesc">
@@ -129,7 +129,7 @@
       <div class="flex justify-end w-full">
         <el-form-item>
           <button
-            class="bg-[#3250BD] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-[#98A2B3] disabled:bg-[#F2F4F7] disabled:border-[#EAECF0]"
+            class="bg-brand-600] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-gray-400] disabled:bg-gray-100 disabled:border-gray-200"
             @click="createCollection"
           >
             {{ $t('collections.newCollection.createCollection') }}

@@ -1,7 +1,7 @@
 <template>
   <div class="error_page_bg h-[calc(100vh-80px)] min-h-[500px] flex items-center justify-center m-auto">
     <div class="flex flex-col items-center">
-      <div class="flex flex-col gap-[24px] items-center text-center mt-[24px] px-[16px] text-[#303133]">
+      <div class="flex flex-col gap-[24px] items-center text-center mt-[24px] px-[16px] text-gray-700">
         <div class="rounded-lg border border-gray-200 bg-white shadow-xs p-[14px]">
           <svg-icon name="login_failed"></svg-icon>
         </div>
@@ -14,7 +14,7 @@
             </button>
           </a>
           <a href="/login">
-            <button class="text-[18px] text-white flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded border border-gray-400 bg-[#3250BD] shadow-sm">
+            <button class="text-[18px] text-white flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded border border-gray-400 bg-brand-600] shadow-sm">
               {{ $t('errors_page.login_failed.relogin') }}
             </button>
           </a>

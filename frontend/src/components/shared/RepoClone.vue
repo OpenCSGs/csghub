@@ -37,7 +37,7 @@
 
     <!-- finetune deploy button -->
     <div
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-gray-300] shadow-sm hover:bg-slate-50 cursor-pointer"
       v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
       @click="handleButtonClick"
     >
@@ -51,7 +51,7 @@
     <!-- repo download clone button -->
     <div
       v-if="!!httpCloneUrl"
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-sm hover:bg-blue-800 cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-brand-600] shadow-sm hover:bg-blue-800 cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
       <SvgIcon
@@ -68,7 +68,7 @@
       class="md:!w-[80%]"
     >
       <div class="rounded-t border-t border-x border-[#EBEEF5] mt-4">
-        <div class="flex items-center px-3 py-2 bg-[#F5F7FA] text-[#303133]">
+        <div class="flex items-center px-3 py-2 bg-[#F5F7FA] text-gray-700">
           <SvgIcon
             name="clone"
             class="mr-1"
@@ -85,9 +85,9 @@
           name="https"
         >
           <div
-            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
               <a href="/settings/access-token" target="_blank" class="underline">access token</a>
@@ -123,9 +123,9 @@
           name="ssh"
         >
           <div
-            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500 mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
@@ -145,9 +145,9 @@
           name="sdk"
         >
           <div
-            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-white text-gray-700 break-all"
           >
-          <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+          <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
             <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
             Use
             <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a>
