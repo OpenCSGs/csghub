@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto max-w-[1280px]">
       <repo-header
         :name="finetune.deploy_name"
@@ -20,7 +20,7 @@
       v-show="activeName == 'page' && finetune.endpoint"
       color="#3250BD"
       style="border-radius: 8px !important"
-      class="absolute top-0 right-0 z-10 cursor-pointer text-[#fff]"
+      class="absolute top-0 right-0 z-10 cursor-pointer text-white"
       @click="toNotebookPage"
       >{{ $t('finetune.detail.notebook') }}</el-button
     >
@@ -46,9 +46,9 @@
           </iframe>
           <div
             v-else
-            class="flex items-center justify-start border border-[#D0D5DD] p-[16px] rounded-xl shadow-sm"
+            class="flex items-center justify-start border border-gray-300 p-[16px] rounded-xl shadow-sm"
           >
-            <div class="border border-[#D0D5DD] p-[10px] rounded-lg">
+            <div class="border border-gray-300 p-[10px] rounded-lg">
               <SvgIcon
                 name="finetune_tip"
                 width="20"
@@ -56,10 +56,10 @@
               />
             </div>
             <div class="ml-[16px]">
-              <p class="text-[#344054] text-sm font-medium mb-[4px]">
+              <p class="text-gray-700 text-sm font-medium mb-[4px]">
                 {{ $t('finetune.detail.noDataTip1') }}
               </p>
-              <p class="text-[#475467] text-sm font-light">
+              <p class="text-gray-600 text-sm font-light">
                 {{ $t('finetune.detail.noDataTip2') }}
               </p>
             </div>

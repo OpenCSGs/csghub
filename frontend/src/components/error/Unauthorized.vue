@@ -4,7 +4,7 @@
 
     <div class="h-[calc(100vh-80px)] min-h-[500px] flex items-center justify-center m-auto">
       <div class="flex flex-col items-center" style="position: relative; display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 40px;">
-        <div class="Badge h-14 px-3.5 py-3.5 bg-white rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] border border-[#EAECF0] justify-start items-center gap-1.5 inline-flex">
+        <div class="Badge h-14 px-3.5 py-3.5 bg-white rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] border border-gray-200 justify-start items-center gap-1.5 inline-flex">
           <div class="flex items-center justify-center w-7 h-7">
             <img src="/images/icons/lock-01.svg" alt="Lock" />
           </div>

@@ -1,12 +1,12 @@
 <template>
   <a :href="detailLink"
      :class="`${repoType}-card`"
-     class="focus:outline focus:outline-4 focus:outline-[#EAECF0] hover:shadow-md p-4 mlg:w-full border border-[#EAECF0] rounded-lg flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
+     class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-lg flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
      :style="isCollection ? 'width:100%' : ''"
   >
     <div class="flex items-center justify-between mb-1 w-[399px] lg:w-full">
       <div :class="`${repoType}-path`"
-           class="text-md text-[#344054] font-normal text-ellipsis overflow-hidden whitespace-nowrap"
+           class="text-md text-gray-700 font-normal text-ellipsis overflow-hidden whitespace-nowrap"
       >
         {{ getComputed.path }}
       </div>
@@ -29,13 +29,13 @@
     </div>
 
     <p v-if="getComputed.showDescription"
-      class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-1 text-[#667085] text-sm overflow-hidden text-ellipsis line-clamp-2 text-left"
+      class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] mb-1 text-gray-500 text-sm overflow-hidden text-ellipsis line-clamp-2 text-left"
       :class="isCollection ? 'hidden' : ''"
      >
       {{ repo.description }}
     </p>
 
-    <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-[#667085]">
+    <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-gray-500">
       <span v-if="getComputed.taskTag"
             class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
       >

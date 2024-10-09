@@ -17,7 +17,7 @@
 * registry
 
 **注意：**
-1. CSGHhub v0.4.0支持了应用空间（即space）功能，v0.7.0支持了模型微调、推理等功能。而应用空间，模型微调以及推理等都需要Kubernetes以及其相关Knative组件的配置，基于compose部署不包括Kubernetes平台以及相关依赖Knative组件部署（这部分安装配置详见[Knative安装配置](https://opencsg.com/docs/csghub/101/helm/installation)），如果没有做对接Kubernetes平台，这里部署的CSGHub实例将`不包含应用空间，模型微调和推理`功能。
+1. CSGHub v0.4.0支持了应用空间（即space）功能，v0.7.0支持了模型微调、推理等功能。而应用空间，模型微调以及推理等都需要Kubernetes以及其相关Knative组件的配置，基于compose部署不包括Kubernetes平台以及相关依赖Knative组件部署（这部分安装配置详见[Knative安装配置](https://opencsg.com/docs/csghub/101/helm/installation)），如果没有做对接Kubernetes平台，这里部署的CSGHub实例将`不包含应用空间，模型微调和推理`功能。
 1. 可以使用CSGHub的[helm chart](https://github.com/OpenCSGs/CSGHub-helm)来安装完整版CSGHub实例，具体安装步骤可参见[CSGHub Helm Chart安装文档](https://opencsg.com/docs/csghub/101/helm/summary)
 
 

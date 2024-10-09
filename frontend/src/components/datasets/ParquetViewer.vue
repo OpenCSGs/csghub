@@ -7,7 +7,7 @@
           width="13px"
           height="13px"
         />
-        <p class="ml-[8px] text-[#101828] text-[18px] leading-[28px]">{{ $t('all.parquet') }}</p>
+        <p class="ml-[8px] text-gray-900 text-[18px] leading-[28px]">{{ $t('all.parquet') }}</p>
       </div>
       <!-- <div class="flex items-center justify-center">
         <SvgIcon
@@ -16,7 +16,7 @@
           height="10px"
           class="cursor-pointer"
         />
-        <p class="ml-[8px] text-[#667085] text-[14px] leading-[20px]">Auto-converted to Parquet</p>
+        <p class="ml-[8px] text-gray-500 text-[14px] leading-[20px]">Auto-converted to Parquet</p>
       </div>
       <div class="flex items-center justify-center cursor-pointer px-[12px] py-[2px] border rounded-[4px]">
         <SvgIcon
@@ -24,7 +24,7 @@
           width="10px"
           height="6px"
         />
-        <p class="ml-[8px] text-[12px] leading-[18px] text-[#667085]">
+        <p class="ml-[8px] text-[12px] leading-[18px] text-gray-500">
           API
         </p>
       </div>
@@ -34,12 +34,12 @@
           width="10px"
           height="6px"
         />
-        <p class="ml-[8px] text-[12px] leading-[18px] text-[#667085]">
+        <p class="ml-[8px] text-[12px] leading-[18px] text-gray-500">
           Go to dataset viewer
         </p>
       </div> -->
     </div>
-    <div class="flex justify-between gap-[16px] text-[#344054] text-[14px] leading-[20px]">
+    <div class="flex justify-between gap-[16px] text-gray-700 text-[14px] leading-[20px]">
       <div class="flex flex-col gap-[8px]">
         <p>Subset</p>
         <el-select

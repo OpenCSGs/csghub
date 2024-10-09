@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-[16px] flex-wrap mb-[16px] text-lg text-[#606266] font-semibold md:px-5"
+    class="flex flex-col gap-[16px] flex-wrap mb-[16px] text-lg text-gray-500 font-semibold md:px-5"
   >
     <!-- dataset repo -->
     <div
@@ -12,7 +12,7 @@
         width="16"
         height="16"
       />
-      <span class="text-[#A8ABB2] text-[18px] font-medium"
+      <span class="text-gray-500 text-[18px] font-medium"
         >Dataset:</span
       >
       <el-avatar
@@ -20,17 +20,17 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words text-[#344053] font-medium">{{
+      <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded"
+        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
@@ -51,12 +51,12 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words text-[#344053] font-medium">{{
+      <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded"
+        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
@@ -78,7 +78,7 @@
         height="16"
         class="flex-shrink-0"
       />
-      <span class="max-w-full break-words text-[#344053] font-medium">{{
+      <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <AppStatus
@@ -98,17 +98,17 @@
         :src="avatar"
         class="flex-shrink-0"
       ></el-avatar>
-      <span class="max-w-full break-words text-[#344053] font-medium">{{
+      <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-[#D0D5DD] bg-white px-3 py-[2px] text-center text-xs text-[#344054] font-medium rounded"
+        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-[4px] border border-[#DCDFE6] pl-3 pr-1 py-[2px] text-center text-xs text-[#606266] font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
@@ -140,14 +140,14 @@
       v-if="repoType !== 'finetune'"
     >
       <a
-        class="md:ml-0 hover:text-[#223B99] text-[#667084] font-normal"
+        class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
         :href="ownerUrl"
       >
         {{ path?.split('/')[0] }}
       </a>
       <div>/</div>
       <a
-        class="max-w-full break-words hover:text-[#223B99] text-[#344053] font-normal"
+        class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
         href="#"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
@@ -173,7 +173,7 @@
         height="16"
         class="flex-shrink-0"
       />
-      <a :href="`/models/${props.path}`" class="md:ml-0 text-[#344054] font-normal hover:text-[#223B99]">
+      <a :href="`/models/${props.path}`" class="md:ml-0 text-gray-700 font-normal hover:text-brand-700">
         {{ path }}
       </a>
       <SvgIcon
@@ -182,10 +182,10 @@
         height="16"
         class="flex-shrink-0 ml-6 md:ml-0"
       />
-      <span class="text-[#344054] font-normal">{{ resourceName }}</span>
+      <span class="text-gray-700 font-normal">{{ resourceName }}</span>
     </div>
   </div>
-  <div class="leading-[24px] pb-[16px] text-[#344054] md:px-5">{{ desc }}</div>
+  <div class="leading-[24px] pb-[16px] text-gray-700 md:px-5">{{ desc }}</div>
 
   <!-- repo tags -->
   <header-tags

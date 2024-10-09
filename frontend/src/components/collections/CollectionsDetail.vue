@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full bg-[#FCFCFD] pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+    class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
   >
     <div class="mx-auto max-w-[1280px]">
       <repo-header
@@ -52,7 +52,7 @@
               class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5"
             >
               <div
-                class="border border-[#EAECF0] rounded-[10px] p-3 max-w-[max-content] mb-4"
+                class="border border-gray-200 rounded-[10px] p-3 max-w-[max-content] mb-4"
               >
                 <SvgIcon
                   name="collections"
@@ -63,7 +63,7 @@
                 {{ $t('collections.details.emptyCollection') }}
               </div>
               <div
-                class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
+                class="max-w-[300px] text-gray-600 text-[14px] text-center leading-[20px] font-light mb-6"
                 :class="canManage ? '' : 'hidden'"
               >
                 {{ $t('collections.details.tips') }}

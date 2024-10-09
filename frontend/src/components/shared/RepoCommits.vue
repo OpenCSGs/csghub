@@ -17,18 +17,18 @@
     <div class="flex items-center gap-2 my-4">
       <SvgIcon name="commits" />
       {{ t('all.commits') }}
-      <div class="flex-1 border-b border-[#DCDFE6]"></div>
+      <div class="flex-1 border-b border-gray-200"></div>
     </div>
-    <div class="rounded border border-[#EBEEF5] px-4">
+    <div class="rounded border border-gray-200 px-4">
       <div v-for="commit in commits"
            :key="commit.id"
-           class="py-4 border-b border-[#DCDFE6] last-of-type:border-none text-[#344054]">
+           class="py-4 border-b border-gray-200 last-of-type:border-none text-gray-700">
         <div class="mb-2 flex items-center">
           <a :href="`/${repoType}s/${namespacePath}/commit/${commit.id}`" class="truncate" :title="commit.message">
             {{ commit.message }}
           </a>
           <el-button-group class="ml-2 min-w-[107px]">
-            <el-button plain type="default" size="small" class="!cursor-default hover:!text-[#344054] hover:!border-[#dcdfe6]">
+            <el-button plain type="default" size="small" class="!cursor-default hover:!text-gray-700 hover:!border-gray-200">
               {{ commit.id.slice(0, 7) }}
             </el-button>
             <el-button type="default" size="small" @click="copyCommitId(commit.id)">
@@ -41,7 +41,7 @@
             <el-avatar :icon="UserFilled" :size="24" class="mr-2" />
             <span>{{ commit.committer_name }}</span>
           </div>
-          <div class="text-[#606266] text-sm">
+          <div class="text-gray-500 text-sm">
             {{ format(beiJingTimeParser(commit.committer_date), locale == 'en' ? 'en_US' : 'zh_CN') }}
           </div>
         </div>

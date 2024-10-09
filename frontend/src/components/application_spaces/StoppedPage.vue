@@ -1,26 +1,26 @@
 <template>
   <div class="h-[50vh] py-[32px] flex flex-col items-center justify-center sm:px-[20px]">
     <p v-if="appStatus === 'Stopped'"
-       class="text-[#6B7280] text-[16px]"
+       class="text-gray-700 text-[16px]"
     >
        {{ $t('application_spaces.stoppedDesc') }}
    </p>
 
     <p v-if="appStatus === 'Sleeping'"
-       class="text-[#6B7280] text-[16px]"
+       class="text-gray-700 text-[16px]"
     >
        {{ $t('application_spaces.sleepingDesc') }}
     </p>
 
     <button v-if="isStopped && canWrite"
-            class="border border-[#3250BD] bg-[#3250BD] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
+            class="border border-brand-600 bg-brand-600 rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
             @click="startSpace"
     >
       {{ $t('application_spaces.restart') }}
     </button>
 
     <button v-if="isSleeping"
-            class="border border-[#3250BD] bg-[#3250BD] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
+            class="border border-brand-600 bg-brand-600 rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
             @click="wakeupSpace"
     >
       {{ $t('application_spaces.wakeup') }}

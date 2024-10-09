@@ -1,22 +1,22 @@
 <template>
   <div
-    class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelName') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.modelNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('models.namespaceModelName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-[8px] bg-gray-50 px-[14px] py-[10px] border">
           {{ modelPath }}
         </div>
       </div>
@@ -27,10 +27,10 @@
     <!-- 更新模型别名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelNickName') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips') }}
         </div>
       </div>
@@ -53,10 +53,10 @@
     <!-- 更新模型简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelDesc') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips2') }}
         </div>
       </div>
@@ -80,17 +80,17 @@
     <!-- 模型标签 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelTag') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips3') }}
         </div>
       </div>
       <div
         class="flex flex-col gap-[6px]"
         ref="tagListContainer">
-        <p class="text-[#344054] text-[14px]">{{ $t('models.modelTag') }}</p>
+        <p class="text-gray-700 text-[14px]">{{ $t('models.modelTag') }}</p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
           <div
             class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
@@ -138,17 +138,17 @@
     <!-- 行业标签 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelIndustryTag') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips3') }}
         </div>
       </div>
       <div
         class="flex flex-col gap-[6px]"
         ref="IndustryTagListContainer">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('models.modelIndustryTag') }}
         </p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
@@ -202,10 +202,10 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -220,7 +220,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('models.edit.modelVisibility') }}
         </p>
         <el-select
@@ -243,24 +243,24 @@
     <!-- 删除模型 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.edit.delModel') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('models.edit.canNot') }}</span>
           {{ $t('models.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('models.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('all.sureDel') }}
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">{{ $t('models.modelName') }}</p>
+        <p class="text-gray-700 text-[14px]">{{ $t('models.modelName') }}</p>
         <el-input
           v-model="delDesc"
           clearable
@@ -270,11 +270,11 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === modelPath
-                ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
-                : 'bg-[#F2F4F7]'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
+                : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave">
@@ -656,13 +656,13 @@
         if (this.delDesc !== '') {
           document
             .getElementById('confirmDelete')
-            .classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
+            .classList.replace('bg-error-600', 'bg-error-700')
         }
       },
       handleMouseLeave() {
         document
           .getElementById('confirmDelete')
-          .classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
+          .classList.replace('bg-error-700', 'bg-error-600')
       }
     }
   }

@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-4 my-[30px] md:px-5">
     <div class="flex items-center gap-[10px]">
       <div class="whitespace-nowrap">{{ repoName }}</div>
-      <div class="text-[#909399]">/</div>
+      <div class="text-gray-500">/</div>
       <el-input
         v-model="fileName"
         :maxLength="200"
@@ -10,7 +10,7 @@
         clearable
         :placeholder="$t('repo.edit.fileName')"
         @input="handleFileNameChange"
-        class="w-full h-[40px] text-[#606266]"
+        class="w-full h-[40px] text-gray-500"
       />
     </div>
     <code-editor
@@ -20,7 +20,7 @@
     />
     <el-radio-group
       v-model="new_branch"
-      class="my-4 py-4 border border-[#DCDFE6] border-l-0 border-r-0"
+      class="my-4 py-4 border border-gray-200 border-l-0 border-r-0"
     >
       <el-radio
         label="main"
@@ -36,7 +36,7 @@
         show-word-limit
         clearable
         :placeholder="commitTitlePlaceholder"
-        class="w-full h-[40px] text-[#606266]"
+        class="w-full h-[40px] text-gray-500"
       />
     </div>
     <CommunityMDTextarea

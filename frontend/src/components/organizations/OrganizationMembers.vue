@@ -1,20 +1,20 @@
 <template>
   <div class="flex flex-col gap-[32px] p-[16px] pt-[24px]">
-    <div class="text-[20px] text-[#344054] font-[500] leading-[30px]">
+    <div class="text-[20px] text-gray-700 font-[500] leading-[30px]">
       <div class="py-[16px]">
         {{ $t('organization.orgMembers') }}
       </div>
       <div
-        class="flex flex-col items-start rounded-[12px] border border-[1px] border-[#EAECF0] shadow-sm"
+        class="flex flex-col items-start rounded-[12px] border border-[1px] border-gray-200 shadow-sm"
       >
         <div
-          class="px-[24px] py-[20px] w-full flex justify-between border-b border-[#EAECF0]"
+          class="px-[24px] py-[20px] w-full flex justify-between border-b border-gray-200"
         >
           <div class="flex flex-col gap-[4px]">
-            <div class="text-[18px] font-[500] leading-[28px] text-[#101828]">
+            <div class="text-[18px] font-[500] leading-[28px] text-gray-900">
               {{ $t('organization.members.title') }}
             </div>
-            <div class="text-[14px] font-[300] leading-[20px] text-[#475467]">
+            <div class="text-[14px] font-[300] leading-[20px] text-gray-600">
               {{ $t('organization.members.description') }}
             </div>
           </div>
@@ -35,7 +35,7 @@
           >
             <el-table-column
               :label="$t('organization.members.username')"
-              label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-[#475467]"
+              label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-gray-600"
             >
               <template #default="scope">
                 <div class="flex gap-[12px] items-center pl-3">
@@ -45,13 +45,13 @@
                   ></el-avatar>
                   <div class="flex flex-col">
                     <div
-                      class="text-[14px] font-[400] leading-[20px] text-[#101828]"
+                      class="text-[14px] font-[400] leading-[20px] text-gray-900"
                       v-if="!!scope.row.nickname"
                     >
                       {{ scope.row.nickname }}
                     </div>
                     <div
-                      class="text-[14px] font-[300] leading-[20px] text-[#475467]"
+                      class="text-[14px] font-[300] leading-[20px] text-gray-600"
                       v-if="!!scope.row.name"
                     >
                       @{{ scope.row.name }}
@@ -62,11 +62,11 @@
             </el-table-column>
             <el-table-column
               :label="$t('organization.members.role')"
-              label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+              label-class-name="text-[12px] font-[400] leading-[18px] text-gray-600"
             >
               <template #default="scope">
                 <div
-                  class="text-[14px] font-[400] leading-[20px] text-[#101828]"
+                  class="text-[14px] font-[400] leading-[20px] text-gray-900"
                 >
                   {{ scope.row.role }}
                 </div>
@@ -75,11 +75,11 @@
             <!-- 上次登录时间 -->
             <el-table-column
               :label="$t('organization.members.last_login_at')"
-              label-class-name="text-[12px] font-[400] leading-[18px] text-[#475467]"
+              label-class-name="text-[12px] font-[400] leading-[18px] text-gray-600"
             >
               <template #default="scope">
                 <div
-                  class="text-[14px] font-[400] leading-[20px] text-[#101828]"
+                  class="text-[14px] font-[400] leading-[20px] text-gray-900"
                 >
                   {{ formatDate(scope.row.last_login_at) }}
                 </div>
