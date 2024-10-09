@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px] flex flex-col gap-[8px]"
+    class="bg-gray-100 p-[12px] rounded-[8px] mt-[16px] flex flex-col gap-[8px]"
   >
     <div class="flex justify-between">
       <h3 class="text-gray-700 text-[16px] font-[500]">
@@ -20,7 +20,7 @@
         onfocus="this.blur()"
       />
       <div
-        class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-[#FFF] cursor-pointer"
+        class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-white cursor-pointer"
         @click="copyToken"
       >
         <SvgIcon name="copy" />

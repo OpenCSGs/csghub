@@ -20,7 +20,7 @@
       v-show="activeName == 'page' && finetune.endpoint"
       color="#3250BD"
       style="border-radius: 8px !important"
-      class="absolute top-0 right-0 z-10 cursor-pointer text-[#fff]"
+      class="absolute top-0 right-0 z-10 cursor-pointer text-white"
       @click="toNotebookPage"
       >{{ $t('finetune.detail.notebook') }}</el-button
     >

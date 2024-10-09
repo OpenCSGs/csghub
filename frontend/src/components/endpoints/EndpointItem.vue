@@ -14,14 +14,14 @@
         </div>
       </div>
     </div>
-    <div class="flex  gap-2 text-sm leading-snug text-[#606266] mb-3 px-4">
+    <div class="flex  gap-2 text-sm leading-snug text-gray-500 mb-3 px-4">
       <span>image segmentation</span>
       <span>·</span>
       <span>{{ endpoint.provider }}</span>
       <span>·</span>
       <span>8x Intel Sanpppp</span>
     </div>
-    <div class="rounded-b-xl border-t text-sm leading-snug text-gray-500 bg-[#F9FBFA] flex justify-between">
+    <div class="rounded-b-xl border-t text-sm leading-snug text-gray-500 bg-gray-50 flex justify-between">
       <div class="px-4 py-2">{{ theEndpoint }}</div>
       <div @click="copyUrl" v-if="endpoint.status === 'Running'" class="bg-white border-l rounded-br-xl p-2">
         <SvgIcon name="copy" />

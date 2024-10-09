@@ -54,7 +54,7 @@
       >
         <template #reference>
           <p
-            class="max-w-full h-[36px] text-[#606266] text-sm overflow-hidden text-ellipsis line-clamp-2"
+            class="max-w-full h-[36px] text-gray-500 text-sm overflow-hidden text-ellipsis line-clamp-2"
           >
             {{ repo.description }}
           </p>

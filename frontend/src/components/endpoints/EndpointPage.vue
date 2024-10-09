@@ -4,7 +4,7 @@
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
         {{ $t('endpoints.detail.endpointUrl') }}
       </p>
-      <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
+      <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
         {{ appEndpoint }}
       </p>
     </div>
@@ -12,7 +12,7 @@
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
         {{ $t('endpoints.detail.modelId') }}
       </p>
-      <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
+      <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
         {{ modelId }}
       </p>
     </div>
@@ -20,7 +20,7 @@
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
         {{ $t('endpoints.detail.parameters') }}
       </p>
-      <p class="flex items-center gap-[8px] w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
+      <p class="flex items-center gap-[8px] w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
         <div v-if="private" class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded">
           {{ $t("all.private") }}
         </div>
@@ -35,7 +35,7 @@
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
         <span>{{ $t('endpoints.detail.cloudResource')}}</span>
       </p>
-      <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-[#909399] text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
+      <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
         {{ hardware }}
       </p>
     </div>
@@ -44,10 +44,10 @@
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
         {{ $t('endpoints.detail.endpointStatus') }}
       </p>
-      <p class="w-[420px] lg:w-[370px] mlg:w-full leading-[18px] text-[#909399] text-xs text-left">
+      <p class="w-[420px] lg:w-[370px] mlg:w-full leading-[18px] text-gray-500 text-xs text-left">
         <p v-for="(replica, index) in replicaList" :key="index">
           <span class="text-gray-700 font-medium mr-2">{{ replica.name }}:</span>
-          <span class="text-[#909399] font-medium">{{ replica.status }}</span>
+          <span class="text-gray-500 font-medium">{{ replica.status }}</span>
         </p>
       </p>
     </div>

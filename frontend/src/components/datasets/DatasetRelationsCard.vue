@@ -1,5 +1,5 @@
 <template>
-  <div class="p-[16px] border-t border-[#EBEEF5]">
+  <div class="p-[16px] border-t border-gray-200">
     <h3 class="flex items-center gap-[8px]">
       <SvgIcon name="datasets" width="18px" height="18px" />
       <span class="font-[500] text-gray-700 text-[16px] leading-[24px]">

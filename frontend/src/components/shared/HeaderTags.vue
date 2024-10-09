@@ -21,7 +21,7 @@
     <!-- Framework -->
     <div
       v-if="frameworkTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       {{ $t('all.framework') }}:
     </div>
@@ -48,7 +48,7 @@
     <!-- Language -->
     <div
       v-if="languageTags.length"
-      class="flex items-center text-sm text-[#909399]"
+      class="flex items-center text-sm text-gray-500"
     >
       {{ $t('all.languages') }}:
     </div>
@@ -56,7 +56,7 @@
       v-for="tag in theLanguageTags.theTags"
       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
       :style="`color: ${tag.color}`"
-      class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-success-25"
+      class="text-sm text-success-700 px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-success-25"
     >
       <SvgIcon name="language_tag" />
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
@@ -70,7 +70,7 @@
     <!-- industryTags -->
     <div
       v-if="industryTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       {{ $t('all.industry') }}:
     </div>
@@ -89,7 +89,7 @@
     <!-- Other -->
     <div
       v-if="otherTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       {{ $t('all.others') }}:
     </div>
@@ -108,14 +108,14 @@
     <!-- License -->
     <div
       v-if="licenseTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       License:
     </div>
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="text-[14px] text-gray-500 px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 

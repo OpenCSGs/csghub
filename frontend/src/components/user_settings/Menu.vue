@@ -7,25 +7,25 @@
             <div class="text-[18px] leading-[28px] font-semibold">
               {{ userStore.nickname || userStore.username }}
             </div>
-            <div class="text-[16px] text-[#909399] leading-[24px] font-light">@{{ userStore.username }}</div>
+            <div class="text-[16px] text-gray-500 leading-[24px] font-light">@{{ userStore.username }}</div>
           </div>
         </div>
         <div class="flex flex-col">
           <!-- profile -->
           <a href="/settings/profile"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
              :class="menuClass('/settings/profile')"
           >
               {{ $t('profile.menu.profile')}}
           </a>
 
-          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-gray-200 text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <!-- <div class="p-[16px] hover:bg-gray-100 border-b border-gray-200 text-[18px] text-gray-500 leading-[26px] opacity-40"
                :class="menuClass('/settings/account')"
           >
             {{ $t('profile.menu.accountInformation')}}
           </div> -->
 
-          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] border-b border-gray-200 text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <!-- <div class="p-[16px] hover:bg-gray-100 border-b border-gray-200 text-[18px] text-gray-500 leading-[26px] opacity-40"
                :class="menuClass('/settings/accessTokens')"
           >
             {{ $t('profile.menu.accessToken')}}
@@ -34,7 +34,7 @@
           <!-- access token -->
           <a v-if="hasEmail"
              href="/settings/access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
              :class="menuClass('/settings/access-token')"
           >
             {{ $t('profile.menu.gitToken')}}
@@ -43,7 +43,7 @@
           <!-- starship api key -->
           <a v-if="hasEmail"
              href="/settings/starship-access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
              :class="menuClass('/settings/starship-access-token')"
           >
             {{ $t('profile.menu.starshipAccessToken')}}
@@ -52,7 +52,7 @@
           <!-- sync access token -->
           <a v-if="hasEmail"
              href="/settings/sync-access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
              :class="menuClass('/settings/sync-access-token')"
           >
             {{ $t('profile.menu.syncAccessToken')}}
@@ -61,13 +61,13 @@
           <!-- ssh key -->
           <a v-if="hasEmail"
              href="/settings/ssh-keys"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-[#606266] leading-[24px] cursor-pointer"
+             class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
              :class="menuClass('/settings/ssh-keys')"
           >
             {{ $t('profile.menu.sshKey')}}
           </a>
 
-          <!-- <div class="p-[16px] hover:bg-[#EBEDF0] text-[18px] text-[#606266] leading-[26px] opacity-40"
+          <!-- <div class="p-[16px] hover:bg-gray-100 text-[18px] text-gray-500 leading-[26px] opacity-40"
                :class="menuClass('/settings/billing')"
           >
             {{ $t('profile.menu.billing')}}

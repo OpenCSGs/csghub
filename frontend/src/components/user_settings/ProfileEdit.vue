@@ -25,12 +25,12 @@
           @change="uploadAvatar" />
         <div
           @click="uploadImage"
-          class="text-[14px] border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
+          class="text-[14px] border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-brand-600">
           {{ $t('profile.edit.uploadAvatar') }}
         </div>
         <div
           @click="removeImage"
-          class="text-[14px] border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-[#606266] cursor-pointer bg-white">
+          class="text-[14px] border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-[8px] text-gray-500 cursor-pointer bg-white">
           {{ $t('profile.edit.removeAvatar') }}
         </div>
       </div>
@@ -135,7 +135,7 @@
     </div>
     <div
       @click="confirmUpdateProfile"
-      class="w-[111px] text-[14px] border border-gray-200 px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-[#409EFF]">
+      class="w-[111px] text-[14px] border border-gray-200 px-[16px] py-[5px] leading-[22px] text-center rounded-[8px] text-white cursor-pointer bg-brand-600">
       {{ $t('all.save') }}
     </div>
   </div>

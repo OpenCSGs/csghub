@@ -3,7 +3,7 @@
     class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl"
   >
     <SvgIcon name="playground_api" />
-    <div class="text-[#344053] text-base font-medium leading-normal">
+    <div class="text-gray-700 text-base font-medium leading-normal">
       {{ $t('endpoints.playground.api') }}
     </div>
   </div>
@@ -12,11 +12,11 @@
     <div class="h-[34px] w-full justify-between items-center inline-flex">
       <div class="justify-start items-center gap-4 flex">
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-[#cfd4dc] rounded cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded cursor-pointer"
           :class="
             codeExtension === 'py'
-              ? 'bg-[#0f1728] text-white'
-              : 'bg-[#fff] text-[#344053]'
+              ? 'bg-gray-900 text-white'
+              : 'bg-white text-gray-700'
           "
           @click="changeLanguage('py')"
         >
@@ -24,11 +24,11 @@
           Python
         </div>
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-[#cfd4dc] rounded cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded cursor-pointer"
           :class="
             codeExtension === 'js'
-              ? 'bg-[#0f1728] text-white'
-              : 'bg-[#fff] text-[#344053]'
+              ? 'bg-gray-900 text-white'
+              : 'bg-white text-gray-700'
           "
           @click="changeLanguage('js')"
         >
@@ -36,11 +36,11 @@
           JavaScript
         </div>
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-[#cfd4dc] rounded cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded cursor-pointer"
           :class="
             codeExtension === 'bash'
-              ? 'bg-[#0f1728] text-white'
-              : 'bg-[#fff] text-[#344053]'
+              ? 'bg-gray-900 text-white'
+              : 'bg-white text-gray-700'
           "
           @click="changeLanguage('bash')"
         >
@@ -62,7 +62,7 @@
         :extension="codeExtension"
       />
       <div
-        class="absolute bg-white text-xs text-[#344053] right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer items-center gap-1 hidden group-hover:flex"
+        class="absolute bg-white text-xs text-gray-700 right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer items-center gap-1 hidden group-hover:flex"
         @click="copyCode"
       >
         <SvgIcon name="copy" />

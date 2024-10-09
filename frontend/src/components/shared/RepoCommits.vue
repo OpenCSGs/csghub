@@ -19,7 +19,7 @@
       {{ t('all.commits') }}
       <div class="flex-1 border-b border-gray-200"></div>
     </div>
-    <div class="rounded border border-[#EBEEF5] px-4">
+    <div class="rounded border border-gray-200 px-4">
       <div v-for="commit in commits"
            :key="commit.id"
            class="py-4 border-b border-gray-200 last-of-type:border-none text-gray-700">
@@ -41,7 +41,7 @@
             <el-avatar :icon="UserFilled" :size="24" class="mr-2" />
             <span>{{ commit.committer_name }}</span>
           </div>
-          <div class="text-[#606266] text-sm">
+          <div class="text-gray-500 text-sm">
             {{ format(beiJingTimeParser(commit.committer_date), locale == 'en' ? 'en_US' : 'zh_CN') }}
           </div>
         </div>

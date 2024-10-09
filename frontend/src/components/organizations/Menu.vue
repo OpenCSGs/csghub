@@ -17,7 +17,7 @@
             </a>
           </div>
           <div
-            class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-[#909399] leading-[24px]"
+            class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-gray-500 leading-[24px]"
             :title="homepage"
           >
             {{ homepage }}
@@ -30,7 +30,7 @@
       <div class="flex flex-col">
         <a
           :href="`/organizations/${this.name}/edit`"
-          class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-gray-500 leading-[24px] cursor-pointer"
+          class="py-[8px] px-[12px] hover:bg-gray-50 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
           :class="menuClass(`/organizations/${this.name}/edit`)"
         >
           {{ $t('organization.orgInfo') }}
@@ -40,7 +40,7 @@
       <div class="flex flex-col">
         <a
           :href="`/organizations/${this.name}/members`"
-          class="py-[8px] px-[12px] hover:bg-[#FAFAFA] text-[16px] text-gray-500 leading-[24px] cursor-pointer"
+          class="py-[8px] px-[12px] hover:bg-gray-50 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
           :class="menuClass(`/organizations/${this.name}/members`)"
         >
           {{ $t('organization.orgMembers') }}
@@ -64,7 +64,7 @@
     methods: {
       menuClass(menuPath) {
         if (menuPath === window.location.pathname) {
-          return 'text-gray-700 font-semibold bg-[#FAFAFA] rounded-[6px]'
+          return 'text-gray-700 font-semibold bg-gray-50 rounded-[6px]'
         } else {
           return ''
         }

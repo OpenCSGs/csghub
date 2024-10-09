@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="py-[16px] bg-[#FAFCFF]">
+    <div class="py-[16px] bg-gray-25">
       <div class="max-w-[1280px] m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
           <span v-if="organizationData.verified" class="relative">
@@ -25,7 +25,7 @@
             </template>
             <div>
               <a :href="`/models/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-[#F9F1F0]">
+                <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="models" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-gray-700">
@@ -34,7 +34,7 @@
                 </div>
               </a>
               <a :href="`/datasets/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-[#E7EFF7]">
+                <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="datasets" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-gray-700">
@@ -43,7 +43,7 @@
                 </div>
               </a>
               <a :href="`/spaces/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-[#F5F2FB]">
+                <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="spaces" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-gray-700">
@@ -52,7 +52,7 @@
                 </div>
               </a>
               <a  :href="`/codes/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-[#F3F4F6]">
+                <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="codes" />
                 </div>
                 <div class="text-[14px] leading-[20px] text-gray-700">
@@ -70,12 +70,12 @@
       </div>
     </div>
 
-    <div class="bg-[#fff]">
+    <div class="bg-white">
       <div class="flex justify-center lg:flex-col rounded-[8px] max-w-[1280px] m-auto bg-white">
         <div class="max-w-[320px] lg:max-w-none pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>
-            <span class="text-gray-700 text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-[#A8ABB2] text-[20px]">{{ membersList.length }} </span></span>
+            <span class="text-gray-700 text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-gray-500 text-[20px]">{{ membersList.length }} </span></span>
           </h3>
 
           <InviteMember :orgName="organizationData.name"

@@ -15,7 +15,7 @@
           <h3 class="mb-[4px] text-gray-700 text-[20px] font-semibold">
             {{ $t('accessToken.starshipTitle') }}
           </h3>
-          <p class="text-[#606266] text-[14px]">
+          <p class="text-gray-500 text-[14px]">
             {{ $t('accessToken.starshipDesc') }}
           </p>
         </div>
@@ -29,7 +29,7 @@
 
       <button
         @click="centerDialogVisible = true"
-        class="rounded-[4px] border bg-[#FFF] py-[5px] px-[16px] text-[#606266] text-[14px] font-[500] w-[160px]"
+        class="rounded-[4px] border bg-white py-[5px] px-[16px] text-gray-500 text-[14px] font-[500] w-[160px]"
       >
         {{ $t('accessToken.starshipAddToken') }}
       </button>

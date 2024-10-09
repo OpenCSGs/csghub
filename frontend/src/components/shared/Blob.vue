@@ -27,7 +27,7 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="flex items-center text-sm text-[#606266]">
+      <div class="flex items-center text-sm text-gray-500">
         <div class="flex items-center py-[1px] md:hidden">
           <el-avatar
             :size="24"
@@ -51,7 +51,7 @@
     </div>
     <div
       v-if="lastCommit"
-      class="flex items-center justify-between mt-4 px-3 py-2 border border-gray-200 bg-[#F5F7FA] rounded-t-[4px]"
+      class="flex items-center justify-between mt-4 px-3 py-2 border border-gray-200 bg-gray-100 rounded-t-[4px]"
     >
       <div class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
@@ -68,18 +68,18 @@
         </div>
         <a
           href="#"
-          class="mr-2 text-[#606266] truncate hover:underline"
+          class="mr-2 text-gray-500 truncate hover:underline"
           >{{ lastCommit.message }}</a
         >
         <a
           href="#"
-          class="rounded border border-gray-200 text-xs text-[#606266] px-3 py-[2px] hover:underline"
+          class="rounded border border-gray-200 text-xs text-gray-500 px-3 py-[2px] hover:underline"
         >
           {{ lastCommit.id?.substring(0, 7) }}
         </a>
       </div>
       <div
-        class="text-[#909399] text-sm cursor-pointer flex-shrink-0 md:hidden"
+        class="text-gray-500 text-sm cursor-pointer flex-shrink-0 md:hidden"
       >
         <el-popover
           width="158"
@@ -103,7 +103,7 @@
       >
         <div class="flex items-center gap-4">
           <div
-            class="bg-[#F0F2F5] px-3 py-[2px] flex items-center justify-center rounded"
+            class="bg-gray-500 px-3 py-[2px] flex items-center justify-center rounded"
           >
             {{ $t('shared.preview') }}
           </div>

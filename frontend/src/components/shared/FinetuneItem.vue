@@ -21,7 +21,7 @@
     </div>
 
     <div
-      class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-[#909399]"
+      class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-[8px] text-xs text-gray-500"
     >
       <div class="overflow-hidden text-ellipsis whitespace-nowrap">
         {{ repo.model_id }} {{ repo.updated_at.substring(0, 10) }}

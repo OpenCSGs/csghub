@@ -6,7 +6,7 @@
         <h3 class="text-gray-600 text-[14px] font-[500]">
           {{ $t('application_spaces.streamlitGuide.notice') }}
         </h3>
-        <p class="text-[#A07731] text-[14px]">
+        <p class="text-gray-600 text-[14px]">
           {{ $t('application_spaces.gradioGuide.noticeDesc') }}
         </p>
       </div>

@@ -14,7 +14,7 @@
                  @change="saveTitle"
                  @blur="isEdit=false">
         </div>
-        <div class="text-[#606266] flex gap-[8px] text-[14px] leading-[22px]">
+        <div class="text-gray-500 flex gap-[8px] text-[14px] leading-[22px]">
           <div>{{userName}}</div>
           <div>·</div>
           <div>{{time}}</div>
@@ -23,8 +23,8 @@
         </div>
       </div>
     </div>
-    <div class="border border-[#EBEEF5] border-b-[2px] rounded-[4px]" v-for="comment in commentData" :key="comment.id">
-      <div class="flex justify-between gap-[4px] border-b border-[#EBEEF5] items-center px-[12px] py-[9px] bg-[#F5F7FA]">
+    <div class="border border-gray-200 border-b-[2px] rounded-[4px]" v-for="comment in commentData" :key="comment.id">
+      <div class="flex justify-between gap-[4px] border-b border-gray-200 items-center px-[12px] py-[9px] bg-gray-100">
         <div class="flex items-center gap-[8px]">
           <el-avatar :size="24" :src="comment.user.avatar"></el-avatar>
           {{comment.user.name}} {{comment.time}}

@@ -14,7 +14,7 @@
         show-word-limit
         clearable
         :placeholder="$t('community.newDiscussion.create')"
-        class="w-full h-[40px] text-[#606266]">
+        class="w-full h-[40px] text-gray-500">
         <template #suffix>
           <span>{{ title.length }} / 200</span>
         </template>

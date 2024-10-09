@@ -11,19 +11,19 @@
           {{ $t('endpoints.playground.title') }}
         </div>
         <div
-          class="h-11 p-1 bg-[#f8f9fb] rounded-[10px] border border-gray-200 items-center gap-1 inline-flex"
+          class="h-11 p-1 bg-gray-50 rounded-[10px] border border-gray-200 items-center gap-1 inline-flex"
         >
           <div
             class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"
             :class="
-              playgroundMode === 'test' ? 'bg-white shadow' : 'bg-[#f8f9fb]'
+              playgroundMode === 'test' ? 'bg-white shadow' : 'bg-gray-50'
             "
             @click="changePlaygroundMode('test')"
           >
             <div
-              class="text-[#344053] text-sm font-medium"
+              class="text-gray-700 text-sm font-medium"
               :class="
-                playgroundMode === 'test' ? 'text-[#344053]' : 'text-[#667084]'
+                playgroundMode === 'test' ? 'text-gray-700' : 'text-gray-500'
               "
             >
               Test
@@ -32,14 +32,14 @@
           <div
             class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"
             :class="
-              playgroundMode === 'api' ? 'bg-white shadow' : 'bg-[#f8f9fb]'
+              playgroundMode === 'api' ? 'bg-white shadow' : 'bg-gray-50'
             "
             @click="changePlaygroundMode('api')"
           >
             <div
-              class="text-[#667084] text-sm font-medium"
+              class="text-gray-500 text-sm font-medium"
               :class="
-                playgroundMode === 'api' ? 'text-[#344053]' : 'text-[#667084]'
+                playgroundMode === 'api' ? 'text-gray-700' : 'text-gray-500'
               "
             >
               API
@@ -49,7 +49,7 @@
       </div>
 
       <div class="p-4">
-        <div class="text-[#344053] text-base font-medium leading-normal mb-4">
+        <div class="text-gray-700 text-base font-medium leading-normal mb-4">
           {{ $t('endpoints.playground.parameters') }}
         </div>
         <el-form
@@ -143,7 +143,7 @@
       <div class="px-4 mb-4 flex justify-between items-center">
         <div class="items-center gap-1.5 flex cursor-not-allowed">
           <SvgIcon name="json" />
-          <div class="text-[#98a1b2] text-xs leading-[18px]">
+          <div class="text-gray-400 text-xs leading-[18px]">
             {{ $t('endpoints.playground.json') }}
           </div>
         </div>
@@ -152,7 +152,7 @@
           @click="dialogVisible = true"
         >
           <SvgIcon name="fullscreen" />
-          <div class="text-[#475466] text-xs leading-[18px]">
+          <div class="text-gray-700 text-xs leading-[18px]">
             {{ $t('endpoints.playground.maximum') }}
           </div>
         </div>

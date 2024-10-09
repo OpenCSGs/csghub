@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-[#fff] flex-col pt-[32px] pb-[60px]">
+  <div class="flex bg-white flex-col pt-[32px] pb-[60px]">
     <div class="flex">
       <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-[14px] text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Task"
@@ -47,7 +47,7 @@
         />
         <div class="">
           <div v-for="(value, key) in theTaskTags">
-            <h3 class="text-[#909399] text-[12px] my-[16px]">{{ $t(`tags.${key}`) }}</h3>
+            <h3 class="text-gray-500 text-[12px] my-[16px]">{{ $t(`tags.${key}`) }}</h3>
             <div class="flex gap-[8px] flex-wrap">
               <tag-item v-for="tag in value" :tag="tag" :active="activeTaskTag === tag.name" @handleTagClick="setActiveTaskTag" />
             </div>

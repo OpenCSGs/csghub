@@ -1,8 +1,8 @@
 <template>
-  <div class="mt-[16px] rounded-lg bg-[#F5F7FA] p-[12px] w-[480px] lg:w-full">
+  <div class="mt-[16px] rounded-lg bg-gray-100 p-[12px] w-[480px] lg:w-full">
     <div class="flex items-center pb-[16px] pt-[2px] border-b-2 md:block relative">
       <p class="font-medium text-base break-words mr-[8px]">{{ theSshKeyName }}</p>
-      <p class="text-[#606266] text-[13px] md:pl-0 md:mt-[4px]"> {{ passedTime }}</p>
+      <p class="text-gray-500 text-[13px] md:pl-0 md:mt-[4px]"> {{ passedTime }}</p>
       <div @click="deleteDialogVisible = true"
            class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded border-2 text-right">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +12,7 @@
         </svg>
       </div>
     </div>
-    <div class="pt-[16px]"><p class="break-all text-[#606266] text-sm">{{ theSshKey }}</p></div>
+    <div class="pt-[16px]"><p class="break-all text-gray-500 text-sm">{{ theSshKey }}</p></div>
   </div>
   <el-dialog v-model="deleteDialogVisible" :title="$t('sshKey.delKeyName', {value: sshKeyName})" width="30%" class="dialogWidth"
              style="border-radius: 0.5rem;" left>

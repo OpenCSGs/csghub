@@ -10,10 +10,10 @@
     <h3 class="text-gray-700 text-xl font-semibold mt-6 mb-3">
       {{ t('application_spaces.new.title') }}
     </h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">
+    <p class="text-gray-500 text-base font-medium md:text-center">
       {{ t('application_spaces.new.subTitle1') }}
     </p>
-    <p class="text-[#606266] text-base font-medium md:text-center">
+    <p class="text-gray-500 text-base font-medium md:text-center">
       {{ $t('application_spaces.new.subTitle2') }}
     </p>
     <div class="mt-9">

@@ -1,15 +1,15 @@
 <template>
   <div class="min-h-[300px] py-8 md:px-5">
-    <div class="rounded-lg border border-[#e5e7eb] min-h-[100px] mb-4">
+    <div class="rounded-lg border border-gray-200 min-h-[100px] mb-4">
       <div
-        class="flex justify-between gap-[4px] border-b border-[#e5e7eb] items-center px-[12px] py-[9px] bg-[#F5F7FA] rounded-t-lg"
+        class="flex justify-between gap-[4px] border-b border-gray-200 items-center px-[12px] py-[9px] bg-gray-100 rounded-t-lg"
       >
         <div class="flex items-center">
           <div class="flex items-center mr-2">
             <el-avatar :icon="UserFilled" :size="24" class="mr-2" />
             <span>{{ commit.committer_name }}</span>
           </div>
-          <div class="text-[#606266] text-sm">
+          <div class="text-gray-500 text-sm">
             {{
               format(beiJingTimeParser(commit.committer_date), locale == "en" ? "en_US" : "zh_CN")
             }}

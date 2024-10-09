@@ -6,7 +6,7 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-2">
       {{ $t('collections.newCollection.title') }}
     </h3>
-    <p class="text-[#606266] text-base font-normal md:text-center">
+    <p class="text-gray-500 text-base font-normal md:text-center">
       {{ $t('collections.newCollection.titleDesc') }}
     </p>
     <div class="mt-9">
@@ -39,7 +39,7 @@
           </div>
           <div class="md:hidden">
             <p class="h-8"></p>
-            <p class="text-[#909399] text-xl font-light">/</p>
+            <p class="text-gray-500 text-xl font-light">/</p>
           </div>
           <div class="flex-1">
             <p class="text-gray-700 text-sm mb-2">
