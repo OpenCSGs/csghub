@@ -77,7 +77,8 @@ export const application_spaces = {
     failedFetchResources: "Failed to fetch resources",
     license: "License",
     createFail: "Application Space creation failed",
-    spaceEnName: "Space name"
+    spaceEnName: "Space name",
+    cluster: "Region",
   },
   edit: {
     cloudResource: 'Cloud resource',

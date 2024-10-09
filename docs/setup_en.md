@@ -1,5 +1,11 @@
 ## Installation and Startup Guide
 
+> [!WARNING]
+`CSGHub` Portal has migrated the web framework from Rails to Gin. If you're using our Rails version before, you may need to refer to our new documents [migrate to Gin](/docs/migrate_to_gin_version_portal_en.md) to see how to migrate to Gin version.
+
+### Acknowledgements
+This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
+
 ### Installing Go
 
 1. Visit the [Go official download page](https://golang.org/dl/).
@@ -115,7 +121,7 @@ go mod tidy
 Air is a tool that allows live reloading of Go applications. Install it using the following command:
 
 ```shell
-go install github.com/cosmtrek/air@latest
+go install github.com/air-verse/air@latest
 ```
 
 ### Getting Frontend Dependencies

@@ -15,7 +15,7 @@
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
 
-    
+
     <!-- endpoint deploy button -->
     <DeployDropdown
       v-if="isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
@@ -173,7 +173,9 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from "element-plus"
   import AddToCollections from '../collections/AddToCollections.vue'
-  
+  import useUserStore from '../../stores/UserStore'
+
+  const userStore = useUserStore()
   const { cookies } = useCookies()
 
   const props = defineProps({
@@ -226,7 +228,7 @@ git clone ${httpCloneProtocol.value}//${
   const accessToken = ref('')
 
   const showSyncButton = computed(() =>
-    props.admin &&
+    userStore.roles.includes('admin') &&
     props.repo.source === 'opencsg' &&
     ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
@@ -330,7 +332,6 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
 
   const fetchUserToken = async() => {
     if (!currentUser.value) return
-    if (!props.userName) return
 
     const { data } = await useFetchApi(
       `/user/${currentUser.value}/tokens?app=git`
@@ -343,7 +344,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     }
   }
 
-  watch(() => cloneRepositoryVisible.value, () => {
+  watch(cloneRepositoryVisible, () => {
     if (cloneRepositoryVisible.value && !accessToken.value) {
       fetchUserToken()
     }

@@ -13,7 +13,7 @@ export const navbar = {
   newOrganization: "New Organization",
   logout: "Logout",
   register: "Register",
-  loginRegister: "Login/Registe",
+  loginRegister: "Login/Register",
   login: "Login",
   newCollection: "New Collection",
   emailMissing: 'Please provide your email address before proceeding',

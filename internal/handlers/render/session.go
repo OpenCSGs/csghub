@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"runtime/debug"
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
@@ -55,21 +56,25 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	var user *models.User
 	jwtToken := ctx.Query("jwt")
 	if jwtToken == "" {
-		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+		slog.Error("Login Error", "error", "jwt is blank")
+		ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 		return
 	}
 	userResp, _, err := i.Server.VerifyJWTToken(jwtToken)
 	if err != nil {
-		ctx.Redirect(http.StatusFound, "/error/login-failed")
+		stackTrace := string(debug.Stack())
+		slog.Error("Login Error", "error", "verify jwt token failed", "jwt", jwtToken, slog.Any("error", err), "stack", stackTrace)
+		ctx.Redirect(http.StatusFound, "/errors/login-failed")
 		return
 	}
 
 	if userResp == nil {
-		ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+		slog.Error("Login Error", "error", "verify jwt token failed", "jwt", jwtToken)
+		ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 		return
 	}
 
-	ctx.SetCookie("user_token", ctx.Param("jwt"), cookieMaxAge, "/", "", false, false)
+	ctx.SetCookie("user_token", jwtToken, cookieMaxAge, "/", "", false, false)
 	ctx.SetCookie("can_change_username", fmt.Sprintf("%v", userResp.CanChangeUserName), cookieMaxAge, "/", "", false, false)
 
 	dbUser, err := i.userModel.FindByLoginIdentity(ctx, userResp.UUID)
@@ -84,19 +89,20 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 				LoginIdentity: userResp.UUID,
 			}
 
-			user.SetRoles(userResp.Roles...)
-
 			err = i.userModel.Create(ctx, user)
 			if err != nil {
-				slog.Error("failed to create user", slog.Any("error", err))
-				ctx.Redirect(http.StatusInternalServerError, "/error/login-failed")
+				stackTrace := string(debug.Stack())
+				slog.Error("Login Error", "error", "create user failed", slog.Any("error", err), "uuid", userResp.UUID, "stack", stackTrace)
+				ctx.Redirect(http.StatusFound, "/errors/login-failed")
 				return
 			}
 		} else {
-			ctx.Redirect(http.StatusFound, "/error/login-failed?error_msg='invalid jwt token'")
+			ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 			return
 		}
 	}
+
+	user.SetRoles(userResp.Roles...)
 
 	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
 	ctx.SetCookie("current_user", user.Name, cookieMaxAge, "/", "", false, false)
@@ -105,8 +111,8 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	user.SessionIP = ctx.ClientIP()
 	err = i.userModel.Update(ctx, user)
 	if err != nil {
-		slog.Error("failed to set user session ip", slog.Any("error", err))
-		ctx.Redirect(http.StatusInternalServerError, "/error/login-failed")
+		slog.Error("Login Error", "error", "failed to set user session ip", slog.Any("error", err), "session_ip", user.SessionIP)
+		ctx.Redirect(http.StatusFound, "/errors/login-failed")
 		return
 	}
 

@@ -117,7 +117,7 @@ go mod tidy
 Air 是一个允许 Go 应用程序实时重载的工具。使用以下命令安装：
 
 ```shell
-go install github.com/cosmtrek/air@latest
+go install github.com/air-verse/air@latest
 ```
 
 ### 获取前端依赖项
