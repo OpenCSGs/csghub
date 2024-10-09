@@ -121,7 +121,7 @@ go mod tidy
 Air is a tool that allows live reloading of Go applications. Install it using the following command:
 
 ```shell
-go install github.com/cosmtrek/air@latest
+go install github.com/air-verse/air@latest
 ```
 
 ### Getting Frontend Dependencies
