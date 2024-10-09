@@ -13,7 +13,7 @@
           />
           <span> {{ $t('collections.collection') }} </span>
         </div>
-        <div class="text-[16px] leading-[24px] text-[#667085]">{{ $t('collections.title') }}</div>
+        <div class="text-[16px] leading-[24px] text-gray-500">{{ $t('collections.title') }}</div>
       </div>
       <div class="xl:mt-[16px]">
         <ElInput
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div
-      class="flex gap-1 max-w-[max-content] px-2 rounded-[16px] border border-[#D5D9EB] text-[14px] leading-[20px] bg-[#F8F9FC] text-[#363F72]"
+      class="flex gap-1 max-w-[max-content] px-2 rounded-[16px] border border-gray-300 text-[14px] leading-[20px] bg-gray-25 text-brand-900"
     >
       <SvgIcon width="12px" height="12px" name="star" />
       {{ $t('collections.hot') }}
@@ -63,25 +63,25 @@
         />
       </div>
       <div class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5">
-        <div class="border border-[#EAECF0] rounded-[10px] p-3 max-w-[max-content] mb-4">
+        <div class="border border-gray-200 rounded-[10px] p-3 max-w-[max-content] mb-4">
           <SvgIcon name="search" />
         </div>
         <div class="test-[16px] leading-[24px]">{{ $t('collections.noData') }}</div>
         <div
-          class="max-w-[300px] text-[#475467] text-[14px] text-center leading-[20px] font-light mb-6"
+          class="max-w-[300px] text-gray-600 text-[14px] text-center leading-[20px] font-light mb-6"
         >
           {{ $t('collections.noDataDesc') }}
         </div>
         <div class="flex gap-3">
           <div
-            class="flex px-4 py-[10px] border border-[#D0D5DD] justify-center items-center gap-1 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+            class="flex px-4 py-[10px] border border-gray-300 justify-center items-center gap-1 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
             @click="resetInput"
           >
             {{ $t('collections.cleanSearch') }}
           </div>
           <a
             href="/collections/new"
-            class="flex px-4 py-[10px] text-[#FFFFFF] border border-[#3250BD] justify-center items-center gap-[6px] rounded-lg bg-[#3250BD] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+            class="flex px-4 py-[10px] text-white border border-brand-600 justify-center items-center gap-[6px] rounded-lg bg-brand-600 shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
           >
             <SvgIcon name="plus" />
             {{ $t('collections.newCollection.title') }}

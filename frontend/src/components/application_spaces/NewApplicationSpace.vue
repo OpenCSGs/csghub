@@ -7,13 +7,13 @@
         height="36"
       />
     </div>
-    <h3 class="text-[#303133] text-xl font-semibold mt-6 mb-3">
+    <h3 class="text-gray-700 text-xl font-semibold mt-6 mb-3">
       {{ t('application_spaces.new.title') }}
     </h3>
-    <p class="text-[#606266] text-base font-medium md:text-center">
+    <p class="text-gray-500 text-base font-medium md:text-center">
       {{ t('application_spaces.new.subTitle1') }}
     </p>
-    <p class="text-[#606266] text-base font-medium md:text-center">
+    <p class="text-gray-500 text-base font-medium md:text-center">
       {{ $t('application_spaces.new.subTitle2') }}
     </p>
     <div class="mt-9">
@@ -178,7 +178,7 @@
           :label="$t('application_spaces.new.sdk')"
           prop="sdk"
         >
-          <p class="text-[#475467] mb-[24px] font-light">
+          <p class="text-gray-600 mb-[24px] font-light">
             {{ $t('application_spaces.new.sdkDesc') }}
           </p>
           <el-radio-group
@@ -296,10 +296,10 @@
               :disabled="!item.is_available"
             />
           </el-select>
-          <p class="text-[#475467] mt-[8px] font-light">
+          <p class="text-gray-600 mt-[8px] font-light">
             {{ $t('application_spaces.new.cloudResourceDesc1') }}
           </p>
-          <p class="text-[#475467] font-light">
+          <p class="text-gray-600 font-light">
             {{ $t('application_spaces.new.cloudResourceDesc2') }}
           </p>
         </el-form-item>
@@ -312,7 +312,7 @@
           /> 
         </el-form-item>
         <p
-          class="mb-[18px] rounded bg-[#F0F3FF] text-[#4D6AD6] text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('application_spaces.new.notes') }}
         </p>
@@ -320,7 +320,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-[#3250BD] !rounded-[8px] !border-[1px] !border-[#3250BD]"
+              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-[8px] !border-[1px] !border-brand-600"
               @click="handleSubmit"
             >
               {{ t('application_spaces.new.create') }}

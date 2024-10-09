@@ -2,7 +2,7 @@
   <div class="sm:w-[100%] sm:mt-[36px]">
     <!-- collections -->
     <div>
-      <h3 class="text-[20px] text-[#303133] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon name="collections" width="18" height="18" />
         <span>{{ $t("collections.collection") }}</span>
       </h3>
@@ -21,7 +21,7 @@
 
     <!-- models -->
     <div>
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon name="models" width="18" height="18" />
         <span>{{ $t("organization.model") }}</span>
       </h3>
@@ -37,7 +37,7 @@
 
     <!-- datasets -->
     <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon name="datasets" width="18" height="18" />
         <span>{{ $t("organization.dataset") }}</span>
       </h3>
@@ -57,7 +57,7 @@
 
     <!-- code repo -->
     <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon name="codes" width="18" height="18" />
         <span>{{ $t("organization.code") }}</span>
       </h3>
@@ -73,7 +73,7 @@
 
     <!-- spaces -->
     <div class="mt-[32px]">
-      <h3 class="text-[20px] text-[#344054] flex items-center gap-[8px]">
+      <h3 class="text-[20px] text-gray-700 flex items-center gap-[8px]">
         <SvgIcon name="spaces" width="18" height="18" />
         <span>{{ $t("organization.space") }}</span>
       </h3>

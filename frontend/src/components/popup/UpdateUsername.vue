@@ -17,7 +17,7 @@
             {{ $t('profile.edit.confirmUpdateMessage')}}
           </p>
         </div>
-        <p class="text-[#303133] text-[14px] mb-[8px] mt-[8px]">
+        <p class="text-gray-700 text-[14px] mb-[8px] mt-[8px]">
           {{ $t('profile.edit.internalUsername') }}
           <span class="text-red-400">*</span>
         </p>
