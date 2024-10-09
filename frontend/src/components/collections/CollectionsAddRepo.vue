@@ -3,7 +3,7 @@
     <div
       v-if="canManage"
       @click="dialogVisible = true"
-      class="flex px-4 py-[5px] text-white border border-brand-600] justify-center items-center gap-[6px] rounded-lg bg-brand-600] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      class="flex px-4 py-[5px] text-white border border-brand-600 justify-center items-center gap-[6px] rounded-lg bg-brand-600 shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
     >
       <SvgIcon name="plus" />
       {{ $t('collections.edit.add') }}
@@ -75,13 +75,13 @@
       <template #footer>
         <span class="flex justify-between gap-3 px-5">
           <div
-            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-[#F0F2F5] text-center py-[10px] px-4 border border-gray-300] cursor-pointer shadow-xs rounded-[8px]"
+            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-[#F0F2F5] text-center py-[10px] px-4 border border-gray-300 cursor-pointer shadow-xs rounded-[8px]"
             @click="dialogVisible = false"
           >
             {{ $t('all.cancel') }}
           </div>
           <div
-            class="w-[50%] hover:bg-brand-700] hover:border-brand-700] active:outline active:outline-4 active:outline-[#D4DbF5] text-white text-center py-[10px] px-4 border border-brand-600] bg-brand-600] cursor-pointer shadow-xs rounded-[8px]"
+            class="w-[50%] hover:bg-brand-700 hover:border-brand-700 active:outline active:outline-4 active:outline-[#D4DbF5] text-white text-center py-[10px] px-4 border border-brand-600 bg-brand-600 cursor-pointer shadow-xs rounded-[8px]"
             @click="confirmAddRepo"
           >
             {{ $t('all.confirm') }}

@@ -32,10 +32,10 @@
       </template>
       <!-- dialog content -->
       <div class="relative">
-        <div class="text-[18px] leading-[28px] text-gray-900]">
+        <div class="text-[18px] leading-[28px] text-gray-900">
           {{ $t('organization.invite.inviteNew') }}
         </div>
-        <span class="text-[14px] leading-[20px] text-gray-600] font-light"
+        <span class="text-[14px] leading-[20px] text-gray-600 font-light"
           >{{ $t('organization.invite.inviteDesc') }}
           <span class="font-bold">{{ orgName }}</span></span
         >

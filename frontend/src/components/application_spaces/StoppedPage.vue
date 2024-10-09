@@ -13,14 +13,14 @@
     </p>
 
     <button v-if="isStopped && canWrite"
-            class="border border-brand-600] bg-brand-600] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
+            class="border border-brand-600 bg-brand-600 rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
             @click="startSpace"
     >
       {{ $t('application_spaces.restart') }}
     </button>
 
     <button v-if="isSleeping"
-            class="border border-brand-600] bg-brand-600] rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
+            class="border border-brand-600 bg-brand-600 rounded-[8px] shadow-xs px-[16px] py-[10px] text-white font-[500] text-[16px] leading-[24px] mt-[24px]"
             @click="wakeupSpace"
     >
       {{ $t('application_spaces.wakeup') }}

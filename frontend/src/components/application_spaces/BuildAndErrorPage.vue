@@ -11,7 +11,7 @@
     >
        {{ $t('application_spaces.errorDesc') }}
        <p v-if="canWrite"
-          class="text-brand-700] font-[400] text-[12px] mt-[12px] cursor-pointer"
+          class="text-brand-700 font-[400] text-[12px] mt-[12px] cursor-pointer"
           @click="showLogs"
        >
          {{ $t('application_spaces.errorPage.showErrorLogs') }}

@@ -43,7 +43,7 @@
         class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
         :class="
           canSendMessage
-            ? 'bg-brand-600] cursor-pointer'
+            ? 'bg-brand-600 cursor-pointer'
             : 'bg-[#f2f3f6] cursor-not-allowed'
         "
         @click="handleSendMessage"

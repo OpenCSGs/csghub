@@ -8,15 +8,15 @@
   >
     <template #header="{ close }">
       <div class="flex justify-between">
-        <div class="px-[12px] py-[12px] rounded-full bg-brand-100] border-[8px] border-brand-50]">
+        <div class="px-[12px] py-[12px] rounded-full bg-brand-100 border-[8px] border-brand-50">
           <SvgIcon name="edit_org_member_role" />
         </div>
         <img src="/images/invite_bg.png" class="w-[200px] absolute top-1 left-1" />
       </div>
     </template>
     <div class="flex justify-center flex-col m-auto w-full relative">
-      <div class="text-[18px] leading-[28px] text-gray-900]">{{ $t('organization.edit.role') }}</div>
-      <div class="text-[14px] leading-[20px] text-gray-600] font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
+      <div class="text-[18px] leading-[28px] text-gray-900">{{ $t('organization.edit.role') }}</div>
+      <div class="text-[14px] leading-[20px] text-gray-600 font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
       <el-form
       :model="dataForm"
       :rules="rules"

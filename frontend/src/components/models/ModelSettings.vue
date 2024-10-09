@@ -7,7 +7,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelName') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.modelNameTips') }}
         </div>
       </div>
@@ -30,7 +30,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelNickName') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips') }}
         </div>
       </div>
@@ -56,7 +56,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelDesc') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips2') }}
         </div>
       </div>
@@ -83,7 +83,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelTag') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips3') }}
         </div>
       </div>
@@ -141,7 +141,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.modelIndustryTag') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.tips3') }}
         </div>
       </div>
@@ -205,7 +205,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -246,14 +246,14 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('models.edit.delModel') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('models.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('models.edit.canNot') }}</span>
           {{ $t('models.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('models.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('all.sureDel') }}
@@ -270,10 +270,10 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === modelPath
-                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
                 : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
@@ -656,13 +656,13 @@
         if (this.delDesc !== '') {
           document
             .getElementById('confirmDelete')
-            .classList.replace('bg-error-600]', 'bg-error-700]')
+            .classList.replace('bg-error-600', 'bg-error-700')
         }
       },
       handleMouseLeave() {
         document
           .getElementById('confirmDelete')
-          .classList.replace('bg-error-700]', 'bg-error-600]')
+          .classList.replace('bg-error-700', 'bg-error-600')
       }
     }
   }

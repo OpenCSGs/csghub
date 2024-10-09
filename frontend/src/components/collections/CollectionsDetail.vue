@@ -63,7 +63,7 @@
                 {{ $t('collections.details.emptyCollection') }}
               </div>
               <div
-                class="max-w-[300px] text-gray-600] text-[14px] text-center leading-[20px] font-light mb-6"
+                class="max-w-[300px] text-gray-600 text-[14px] text-center leading-[20px] font-light mb-6"
                 :class="canManage ? '' : 'hidden'"
               >
                 {{ $t('collections.details.tips') }}

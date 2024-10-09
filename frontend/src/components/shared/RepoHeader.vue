@@ -25,7 +25,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300] bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
+        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
@@ -56,7 +56,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300] bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
+        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
@@ -103,7 +103,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300] bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
+        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
       >
         {{ $t('all.private') }}
       </div>
@@ -140,14 +140,14 @@
       v-if="repoType !== 'finetune'"
     >
       <a
-        class="md:ml-0 hover:text-brand-700] text-[#667084] font-normal"
+        class="md:ml-0 hover:text-brand-700 text-[#667084] font-normal"
         :href="ownerUrl"
       >
         {{ path?.split('/')[0] }}
       </a>
       <div>/</div>
       <a
-        class="max-w-full break-words hover:text-brand-700] text-[#344053] font-normal"
+        class="max-w-full break-words hover:text-brand-700 text-[#344053] font-normal"
         href="#"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
@@ -173,7 +173,7 @@
         height="16"
         class="flex-shrink-0"
       />
-      <a :href="`/models/${props.path}`" class="md:ml-0 text-gray-700 font-normal hover:text-brand-700]">
+      <a :href="`/models/${props.path}`" class="md:ml-0 text-gray-700 font-normal hover:text-brand-700">
         {{ path }}
       </a>
       <SvgIcon

@@ -7,12 +7,12 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetName') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.datasetNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[14px] text-gray-600]">
+        <p class="text-[14px] text-gray-600">
           {{ $t('datasets.namespaceDatasetName') }}
         </p>
         <div
@@ -30,7 +30,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetNickName') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips') }}
         </div>
       </div>
@@ -56,7 +56,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetDesc') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips2') }}
         </div>
       </div>
@@ -83,7 +83,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetTag') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips3') }}
         </div>
       </div>
@@ -143,7 +143,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetIndustryTag') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips4') }}
         </div>
       </div>
@@ -207,7 +207,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.edit.changeVisibility') }}
         </div>
-        <div class="max-w-[864px] text-[14px] text-gray-600] leading-[20px]">
+        <div class="max-w-[864px] text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.statusText') }}
           <span class="text-black font-medium"
             >[{{
@@ -222,7 +222,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[14px] text-gray-600]">
+        <p class="text-[14px] text-gray-600">
           {{ $t('datasets.edit.datasetVisibility') }}
         </p>
         <el-select
@@ -249,14 +249,14 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.edit.delDataset') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('datasets.edit.canNot') }}</span>
           {{ $t('datasets.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.sureDel') }}
@@ -264,7 +264,7 @@
       </div>
 
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[14px] text-gray-600]">
+        <p class="text-[14px] text-gray-600">
           {{ $t('datasets.datasetName') }}
         </p>
         <el-input
@@ -276,10 +276,10 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === datasetPath
-                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
                 : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
@@ -663,14 +663,14 @@
         if (this.delDesc !== '') {
           document
             .getElementById('confirmDelete')
-            .classList.replace('bg-error-600]', 'bg-error-700]')
+            .classList.replace('bg-error-600', 'bg-error-700')
         }
       },
 
       handleMouseLeave() {
         document
           .getElementById('confirmDelete')
-          .classList.replace('bg-error-700]', 'bg-error-600]')
+          .classList.replace('bg-error-700', 'bg-error-600')
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="deployFailed"
-    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-gray-300] rounded-[12px] shadow-xs">
+    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-gray-300 rounded-[12px] shadow-xs">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -26,14 +26,14 @@
       </defs>
     </svg>
     <div>
-      <h3 class="text-gray-600] text-[14px] font-[500]">
+      <h3 class="text-gray-600 text-[14px] font-[500]">
         {{ $t('application_spaces.errorPage.errorAlert') }}
       </h3>
-      <p class="text-gray-600] text-[14px]">
+      <p class="text-gray-600 text-[14px]">
         {{ $t('application_spaces.errorPage.errorAlertDesc') }}
       </p>
       <p
-        class="text-brand-700] font-[400] text-[12px] mt-[12px] cursor-pointer"
+        class="text-brand-700 font-[400] text-[12px] mt-[12px] cursor-pointer"
         @click="showErrorLogs">
         {{ $t('application_spaces.errorPage.showErrorLogs') }}
       </p>
@@ -48,7 +48,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.edit.cloudResource') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.edit.cloudResourceDesc') }}
         </div>
       </div>
@@ -128,7 +128,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.name') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.nameTips') }}
         </div>
       </div>
@@ -151,7 +151,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.nickname') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.edit.tips') }}
         </div>
       </div>
@@ -177,7 +177,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.desc') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.edit.tips2') }}
         </div>
       </div>
@@ -204,7 +204,7 @@
         <div class="text-[14px] text-[#0a0d12] leading-[20px] font-medium">
           {{ $t('application_spaces.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -289,14 +289,14 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('application_spaces.edit.del') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('application_spaces.edit.canNot') }}</span>
           {{ $t('application_spaces.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('application_spaces.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.sureDel') }}
@@ -315,10 +315,10 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === applicationSpacePath
-                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
                 : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
@@ -676,14 +676,14 @@
         if (this.delDesc !== '') {
           document
             .getElementById('confirmDelete')
-            .classList.replace('bg-error-600]', 'bg-error-700]')
+            .classList.replace('bg-error-600', 'bg-error-700')
         }
       },
 
       handleMouseLeave() {
         document
           .getElementById('confirmDelete')
-          .classList.replace('bg-error-700]', 'bg-error-600]')
+          .classList.replace('bg-error-700', 'bg-error-600')
       },
 
       showErrorLogs() {

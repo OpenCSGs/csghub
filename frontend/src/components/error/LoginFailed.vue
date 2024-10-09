@@ -14,7 +14,7 @@
             </button>
           </a>
           <a href="/login">
-            <button class="text-[18px] text-white flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded border border-gray-400 bg-brand-600] shadow-sm">
+            <button class="text-[18px] text-white flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded border border-gray-400 bg-brand-600 shadow-sm">
               {{ $t('errors_page.login_failed.relogin') }}
             </button>
           </a>

@@ -11,7 +11,7 @@
       border
     >
       {{ t('all.public') }}
-      <p class="whitespace-normal text-gray-600] font-light">
+      <p class="whitespace-normal text-gray-600 font-light">
         {{ props.publicDesc }}
       </p>
     </el-radio>
@@ -22,7 +22,7 @@
       border
     >
       {{ t('all.private') }}
-      <p class="whitespace-normal text-gray-600] font-light">
+      <p class="whitespace-normal text-gray-600 font-light">
         {{ props.privateDesc }}
       </p>
     </el-radio>

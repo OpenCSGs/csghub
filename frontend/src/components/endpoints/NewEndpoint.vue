@@ -145,10 +145,10 @@
               :value="item.id"
               :disabled="!item.is_available" />
           </el-select>
-          <p class="text-gray-600] mt-2 font-light">
+          <p class="text-gray-600 mt-2 font-light">
             {{ t('endpoints.new.resourceTip1') }}
           </p>
-          <p class="text-gray-600] font-light">
+          <p class="text-gray-600 font-light">
             {{ t('endpoints.new.resourceTip2') }}
           </p>
         </el-form-item>
@@ -184,7 +184,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600] !rounded-[8px] !border-[1px] !border-brand-600]"
+              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-[8px] !border-[1px] !border-brand-600"
               @click="handleSubmit">
               {{ t('endpoints.new.createEndpoint') }}
             </el-button>

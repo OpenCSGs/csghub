@@ -8,7 +8,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.cnName') }}
         </div>
-        <div class="text-[14px] text-gray-600] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('collections.edit.cnNameTips') }}
         </div>
       </div>
@@ -34,7 +34,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.desc') }}
         </div>
-        <div class="text-[14px] text-gray-600] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('collections.edit.descTips') }}
         </div>
       </div>
@@ -60,7 +60,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.theme') }}
         </div>
-        <div class="text-[14px] text-gray-600] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('collections.edit.upDateTheme') }}
         </div>
       </div>
@@ -87,7 +87,7 @@
     <!-- <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">增加项目</div>
-        <div class="text-[14px] text-gray-600] font-light leading-[20px]">增加更多项目到集合</div>
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">增加更多项目到集合</div>
       </div>
       <div class="flex flex-col gap-[6px]">
         <el-select
@@ -114,7 +114,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('collections.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{ visibility ? $t('all.private') : $t('all.public') }}]</span
@@ -151,7 +151,7 @@
           {{ $t('collections.edit.delCollection') }}
         </div>
         
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('collections.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('collections.edit.canNot') }}</span>
           {{ $t('collections.edit.delTips2') }}
@@ -159,7 +159,7 @@
           {{ $t('collections.edit.delTips3') }}
         </div>
 
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">
             {{ `${collection.username}/${collection.name}` }}
@@ -179,10 +179,10 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === `${collection.username}/${collection.name}`
-                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
                 : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
@@ -284,12 +284,12 @@
 
   const handleMouseOver = () => {
     if (delDesc.value !== '') {
-      document.getElementById('confirmDelete').classList.replace('bg-error-600]', 'bg-error-700]')
+      document.getElementById('confirmDelete').classList.replace('bg-error-600', 'bg-error-700')
     }
   }
 
   const handleMouseLeave = () => {
-    document.getElementById('confirmDelete').classList.replace('bg-error-700]', 'bg-error-600]')
+    document.getElementById('confirmDelete').classList.replace('bg-error-700', 'bg-error-600')
   }
 
   const clickDelete = () => {

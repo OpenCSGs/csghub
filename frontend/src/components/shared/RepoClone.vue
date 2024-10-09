@@ -37,7 +37,7 @@
 
     <!-- finetune deploy button -->
     <div
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-gray-300] shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-gray-300 shadow-sm hover:bg-slate-50 cursor-pointer"
       v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
       @click="handleButtonClick"
     >
@@ -51,7 +51,7 @@
     <!-- repo download clone button -->
     <div
       v-if="!!httpCloneUrl"
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-brand-600] shadow-sm hover:bg-blue-800 cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-brand-600 shadow-sm hover:bg-blue-800 cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
       <SvgIcon

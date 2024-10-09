@@ -7,7 +7,7 @@
           width="13px"
           height="13px"
         />
-        <p class="ml-[8px] text-gray-900] text-[18px] leading-[28px]">{{ $t('all.parquet') }}</p>
+        <p class="ml-[8px] text-gray-900 text-[18px] leading-[28px]">{{ $t('all.parquet') }}</p>
       </div>
       <!-- <div class="flex items-center justify-center">
         <SvgIcon

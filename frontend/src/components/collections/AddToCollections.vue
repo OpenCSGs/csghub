@@ -4,7 +4,7 @@
   >
     <div
       @click="openAddCollections"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-gray-300] justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-gray-300 justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
     >
       <SvgIcon
         name="collections"
@@ -23,7 +23,7 @@
       <template #header="{ close }">
         <div class="flex justify-between">
           <div
-            class="rounded-full px-[12px] py-[12px] rounded-[10px] border-[2px] bg-[#DCFAE6] border-[8px] border-[#ECFDF3]"
+            class="rounded-full px-[12px] py-[12px] rounded-[10px] border-[2px] bg-success-100 border-[8px] border-success-50"
           >
             <SvgIcon name="check_circle" />
           </div>
@@ -61,13 +61,13 @@
       <template #footer>
         <span class="flex justify-between gap-3 px-5">
           <div
-            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-[#F0F2F5] text-center py-[10px] px-4 border border-gray-300] cursor-pointer shadow-xs rounded-[8px]"
+            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-[#F0F2F5] text-center py-[10px] px-4 border border-gray-300 cursor-pointer shadow-xs rounded-[8px]"
             @click="cancelAddCollections"
           >
             {{ $t('all.cancel') }}
           </div>
           <div
-            class="w-[50%] hover:bg-brand-700] hover:border-brand-700] active:outline active:outline-4 active:outline-[#D4DbF5] text-white text-center py-[10px] px-4 border border-brand-600] bg-brand-600] cursor-pointer shadow-xs rounded-[8px]"
+            class="w-[50%] hover:bg-brand-700 hover:border-brand-700 active:outline active:outline-4 active:outline-[#D4DbF5] text-white text-center py-[10px] px-4 border border-brand-600 bg-brand-600 cursor-pointer shadow-xs rounded-[8px]"
             @click="confirmAddCollections"
           >
             {{ $t('all.confirm') }}

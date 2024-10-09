@@ -50,7 +50,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('endpoints.settings.resource') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('endpoints.settings.resourceTip') }}
         </div>
       </div>
@@ -178,7 +178,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('endpoints.settings.changeVisibility') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('endpoints.settings.statusText') }}
           <span class="text-black font-semibold"
             >【{{
@@ -222,7 +222,7 @@
         <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('endpoints.settings.deleteEndpoint') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('endpoints.settings.delTips') }}
           <span class="text-black font-medium">{{ $t('all.canNot') }}</span>
           {{ $t('endpoints.settings.delTips2') }}
@@ -231,7 +231,7 @@
           }}</span>
           {{ $t('endpoints.settings.delTips3') }}
         </div>
-        <div class="text-[14px] text-gray-600] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">
             {{ `${endpointName}/${endpointId}` }}
@@ -253,10 +253,10 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === `${endpointName}/${endpointId}`
-                ? 'bg-error-600] text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600] hover:text-white'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
                 : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
@@ -531,14 +531,14 @@
     if (delDesc.value !== '') {
       document
         .getElementById('confirmDelete')
-        .classList.replace('bg-error-600]', 'bg-error-700]')
+        .classList.replace('bg-error-600', 'bg-error-700')
     }
   }
 
   const handleMouseLeave = () => {
     document
       .getElementById('confirmDelete')
-      .classList.replace('bg-error-700]', 'bg-error-600]')
+      .classList.replace('bg-error-700', 'bg-error-600')
   }
 
   const clickDelete = () => {

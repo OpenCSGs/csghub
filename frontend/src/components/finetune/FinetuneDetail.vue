@@ -46,9 +46,9 @@
           </iframe>
           <div
             v-else
-            class="flex items-center justify-start border border-gray-300] p-[16px] rounded-xl shadow-sm"
+            class="flex items-center justify-start border border-gray-300 p-[16px] rounded-xl shadow-sm"
           >
-            <div class="border border-gray-300] p-[10px] rounded-lg">
+            <div class="border border-gray-300 p-[10px] rounded-lg">
               <SvgIcon
                 name="finetune_tip"
                 width="20"
@@ -59,7 +59,7 @@
               <p class="text-gray-700 text-sm font-medium mb-[4px]">
                 {{ $t('finetune.detail.noDataTip1') }}
               </p>
-              <p class="text-gray-600] text-sm font-light">
+              <p class="text-gray-600 text-sm font-light">
                 {{ $t('finetune.detail.noDataTip2') }}
               </p>
             </div>

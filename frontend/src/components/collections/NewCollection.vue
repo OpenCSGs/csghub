@@ -129,7 +129,7 @@
       <div class="flex justify-end w-full">
         <el-form-item>
           <button
-            class="bg-brand-600] w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-gray-400] disabled:bg-gray-100 disabled:border-gray-200"
+            class="bg-brand-600 w-[118px] h-9 rounded-lg text-white flex items-center justify-center border disabled:text-gray-400 disabled:bg-gray-100 disabled:border-gray-200"
             @click="createCollection"
           >
             {{ $t('collections.newCollection.createCollection') }}

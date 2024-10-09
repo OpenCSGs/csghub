@@ -18,7 +18,7 @@
         </div>
         <div
           :title="collection.description"
-          class="overflow-hidden text-ellipsis line-clamp-2 text-[14px] leading-[20px] font-light text-gray-600] mb-2"
+          class="overflow-hidden text-ellipsis line-clamp-2 text-[14px] leading-[20px] font-light text-gray-600 mb-2"
         >
           {{ collection.description }}
         </div>

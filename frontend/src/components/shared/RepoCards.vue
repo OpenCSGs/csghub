@@ -19,7 +19,7 @@
       <div
         :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] mlg:pl-0' : ''}`"
       >
-        <h3 class="text-lg font-normal text-gray-900] flex items-center gap-2">
+        <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
           <SvgIcon
             v-if="repoType === 'model'"
             name="models"

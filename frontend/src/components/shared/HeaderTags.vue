@@ -56,7 +56,7 @@
       v-for="tag in theLanguageTags.theTags"
       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
       :style="`color: ${tag.color}`"
-      class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
+      class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-success-25"
     >
       <SvgIcon name="language_tag" />
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
@@ -115,7 +115,7 @@
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-gray-300] gap-1"
+      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 
