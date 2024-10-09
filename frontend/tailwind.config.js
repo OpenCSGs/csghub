@@ -9,7 +9,6 @@ export default {
     extend: {
       colors: {
         'white': '#FFFFFF',
-        
         'gray-25': '#FCFCFD',
         'gray-50': '#F9FAFB',
         'gray-100': '#F2F4F7',
@@ -23,7 +22,6 @@ export default {
         'gray-900': '#101828',
         'gray-950': '#0C111D',  
         'brand-25': '#F0F3FF',
-
         'brand-50': '#CED8FF',
         'brand-100': '#ACBDFF',
         'brand-200': '#99AFFF',
@@ -35,7 +33,6 @@ export default {
         'brand-800': '#17308F',
         'brand-900': '#25367A',
         'brand-950': '#0E1B4E',
-
         'error-25': '#FFFBFA',
         'error-50': '#FEF3F2',
         'error-100': '#FEE4E2',
@@ -47,7 +44,6 @@ export default {
         'error-700': '#B42318',
         'error-800': '#912018',
         'error-900': '#7A271A',
-
         'success-25': '#F6FEF9',
         'success-50': '#ECFEF5',
         'success-100': '#D1FADF',
@@ -60,7 +56,6 @@ export default {
         'success-800': '#0C4830',
         'success-900': '#0A3927', 
         'success-950': '#062219',
-
         'warning-25': '#FFFBFA',
         'warning-50': '#FEF3F2',
         'warning-100': '#FEE4E2',
@@ -73,7 +68,6 @@ export default {
         'warning-800': '#912018',
         'warning-900': '#7A271A',
         'warning-950': '#4C150E',
-
         'success-25': '#F6FEF9',
         'success-50': '#ECFDF3',
         'success-100': '#DCFAE6',
@@ -86,9 +80,6 @@ export default {
         'success-800': '#085D3A',
         'success-900': '#074D31',
         'success-950': '#053321',
-
-
-        
       },
     },
     screens: {
