@@ -133,7 +133,7 @@ services:
       STARHUB_SERVER_API_TOKEN: ${HUB_SERVER_API_TOKEN}
       STARHUB_SERVER_S3_ACCESS_KEY_ID: admin
       STARHUB_SERVER_S3_ACCESS_KEY_SECRET: Password_123
-      STARHUB_SERVER_S3_ENDPOINT: ${SERVER_DOMAIN}:9000 # used to generate download links for lfs files
+      STARHUB_SERVER_S3_ENDPOINT: ${SERVER_INTERNAL_DOMAIN:-${SERVER_DOMAIN}}:9000 # used to generate download links for lfs files
       STARHUB_SERVER_S3_BUCKET: opencsg-server-lfs
       STARHUB_SERVER_S3_REGION: cn-beijing
       STARHUB_SERVER_SPACE_BUILDER_ENDPOINT: http://space_builder:8080
