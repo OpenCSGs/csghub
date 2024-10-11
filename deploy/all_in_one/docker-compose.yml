@@ -193,6 +193,7 @@ services:
     depends_on:
       - postgres
       - csghub_server_runner
+      - csghub_server
     environment:
       PGPASSWORD: "sdfa23Sh!322"
     volumes:
