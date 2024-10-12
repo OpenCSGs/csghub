@@ -1,5 +1,5 @@
-$ORIGIN space.app.internal.
-@ 3600 IN SOA ns1.space.app.internal. admin.space.app.internal. (
+$ORIGIN space._CSGHUB_SPACE_DOMAIN.
+@ 3600 IN SOA ns1.space._CSGHUB_SPACE_DOMAIN. admin.space._CSGHUB_SPACE_DOMAIN. (
         2022042401 ; Serial
         3600       ; Refresh
         1800       ; Retry

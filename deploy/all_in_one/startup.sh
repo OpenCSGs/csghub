@@ -42,6 +42,7 @@ function checkOS(){
 nginx_conf=${CURRENT_DIR}/nginx/nginx.conf
 casdoor_init_data_conf=${CURRENT_DIR}/casdoor/conf/init_data.json
 gitaly_keys_folder=${CURRENT_DIR}/data/gitlab-shell/keys
+core_dns=${CURRENT_DIR}/coredns/db.space.internal
 
 source ${CURRENT_DIR}/.env
 
@@ -62,6 +63,10 @@ sed -i "s/_CSGHUB_DOMAINPORT/${SERVER_PORT}/g" ${nginx_conf}
 echo "replace domain name and port in casdoor's init_data.json"
 sed -i "s/_CSGHUB_DOMAINNAME/${SERVER_DOMAIN}/g" ${casdoor_init_data_conf}
 sed -i "s/_CSGHUB_DOMAINPORT/${SERVER_PORT}/g" ${casdoor_init_data_conf}
+
+echo "replace domain name in coredns and rproxy nginx.conf"
+sed -i "s/_CSGHUB_SPACE_DOMAIN/${SPACE_APP_INTERNAL_DOMAIN}/g" ${core_dns}
+sed -i "s/_CSGHUB_SPACE_DOMAIN/${SPACE_APP_INTERNAL_DOMAIN}/g" ${rproxy_nginx_conf}
 
  if [ "$KNATIVE_GATEWAY_HOST" != "" ]; then
     echo "start to configure knative gateway"
