@@ -451,7 +451,7 @@
   }
 
   const fetchSpaceResources = async () => {
-    const { data, error } = await useFetchApi('/space_resources').json()
+    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${dataForm.value.space_cluster}`).json()
 
     if (error.value) {
       ElMessage({
