@@ -36,7 +36,7 @@
         <span>{{ $t('endpoints.detail.cloudResource')}}</span>
       </p>
       <p class="w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
-        {{ hardware }}
+        {{ resource.name }}
       </p>
     </div>
 
