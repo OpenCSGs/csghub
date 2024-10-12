@@ -501,7 +501,6 @@
         options: categories[category],
       }));
       spaceResources.value = options
-      console.log(spaceResources.value);
     }
   }
 
