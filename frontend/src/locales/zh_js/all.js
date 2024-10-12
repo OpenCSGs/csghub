@@ -84,5 +84,11 @@ export const all = {
   sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token",
   public: "公开",
   private: "私有",
-  parquet: "数据集预览"
+  parquet: "数据集预览",
+  free: "免费",
+  minutePay: "按需付费",
+  yearMonthPay: "包年包月",
+  hourUnit:'元/时',
+  monthUnit:'元/月',
+  yearUnit:'元/年'
 }

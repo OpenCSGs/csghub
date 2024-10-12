@@ -84,5 +84,11 @@ export const all = {
   sdkTips: "Please register first and then obtain the Token from OpenCSG's account page",
   public: "Public",
   private: "Private",
-  parquet: "Dataset Preview"
+  parquet: "Dataset Preview",
+  free: "Free",
+  minutePay: "Pay-as-you-go",
+  yearMonthPay: "Yearly Subscription",
+  hourUnit:'¥/hour',
+  monthUnit:'¥/month',
+  yearUnit:'¥/year'
 }

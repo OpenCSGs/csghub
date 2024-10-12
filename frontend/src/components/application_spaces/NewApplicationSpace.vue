@@ -367,6 +367,12 @@
     visibility: 'public',
     sdk: 'gradio'
   })
+  const payModeMapping = {
+    "free": t('all.free'),
+    "minute": t('all.minutePay'),
+    "month": t('all.yearMonthPay'),
+    "year": t('all.yearMonthPay')
+  };
   const loading = ref(false)
 
   const rules = ref({
@@ -466,11 +472,36 @@
       })
     } else {
       const body = data.value
+      const allResources = body.data
       const firstAvailableResource = body.data.find(
         (item) => item.is_available
       )
       dataForm.value.cloud_resource = firstAvailableResource?.id || ''
-      spaceResources.value = body.data
+      const categories = {};
+      // Category data
+      allResources.forEach(item => {
+        const category = payModeMapping[item.pay_mode] || "Others"
+        if (!categories[category]) {
+          categories[category] = [];
+        }
+        if(item.pay_mode == "minute"){
+          item.label = `${item.name} ${item.price / 100}${t('all.hourUnit')}`
+        }else if(item.pay_mode == "month"){
+          item.label = `${item.name} ${item.price / 100}${t('all.monthUnit')}`
+        }else if(item.pay_mode == "year"){
+          item.label = `${item.name} ${item.price / 100}${t('all.yearUnit')}`
+        }else{
+          item.label = item.name
+        }
+        categories[category].push(item);
+      });
+      // Generate formatted options
+      const options = Object.keys(categories).map(category => ({
+        label: category,
+        options: categories[category],
+      }));
+      spaceResources.value = options
+      console.log(spaceResources.value);
     }
   }
 
