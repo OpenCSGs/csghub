@@ -169,6 +169,7 @@ services:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
     depends_on:
       - postgres
+      - csghub_server
     entrypoint:
       - /starhub-bin/starhub
       - deploy
