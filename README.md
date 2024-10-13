@@ -28,9 +28,9 @@ For further information, please see the [detailed introduction](./docs/detailed_
 
 - For a quick try, explore CSGHub's free SaaS version at the [OpenCSG website](https://opencsg.com/models).
 
-- For a hands-on experience, refer to the [installation guide](/deploy/all_in_one/README.md) to quickly deploy a basic CSGHub local instance.
+- For a hands-on experience, refer to the [installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/compose/csghub) to quickly deploy a basic CSGHub local instance.
 
-- If you wish to install CSGHub on Kubernetes, please refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/CSGHub-helm).
+- If you wish to install CSGHub on Kubernetes, please refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart).
 
 ### Roadmap
 
