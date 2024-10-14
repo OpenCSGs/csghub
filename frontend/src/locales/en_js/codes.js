@@ -8,7 +8,7 @@ export const codes = {
   namespaceCodeName: "Code name",
   codeNickName: "Code alias",
   codeDesc: "Code description",
-  codesUsedToTrain: 'Codes used to train',
+  associated: 'Associated Codes',
   newCode: {
     title: "Create New Code Repository",
     titleDesc: "The repository contains all code files and revision history.",
