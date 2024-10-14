@@ -75,7 +75,7 @@ CSGHub由Portal和Server两部分服务组成，本项目代码部分对应CSGHu
 <img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### 快速使用
-请参考[部署帮助文档](https://github.com/OpenCSGs/csghub-installer/tree/main/compose/csghub)部署一个基本功能的CSGHub实例.
+请参考[部署帮助文档](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)部署一个基本功能的CSGHub实例.
 
 ### 详细技术文档
 - [开发环境搭建](/docs/setup.md)
