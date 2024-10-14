@@ -56,7 +56,7 @@
           :modelId="modelId"
           :private="private"
           :endpointReplica="endpointReplica"
-          :clusterId="clusterId"
+          :clusterId="repoDetail.cluster_id"
           :sku="sku"
           :replicaList="replicaList"
         />
@@ -233,6 +233,7 @@
           :framework="repoDetail.runtime_framework"
           :maxReplica="repoDetail.max_replica"
           :minReplica="repoDetail.min_replica"
+          :clusterId="repoDetail.cluster_id"
         />
       </template>
     </tab-container>
@@ -281,7 +282,6 @@
     sdk: String,
     userName: String,
     commitId: String,
-    clusterId: String,
     sku: String,
     modelId: String,
     private: Boolean,

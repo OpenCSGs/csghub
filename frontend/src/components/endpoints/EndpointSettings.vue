@@ -293,7 +293,8 @@
     cloudResource: String,
     framework: String,
     maxReplica: Number,
-    minReplica: Number
+    minReplica: Number,
+    clusterId: String
   })
 
   const { t } = useI18n()
@@ -380,6 +381,12 @@
     }
   })
 
+  watch(() => props.clusterId, () => {
+    if (props.clusterId) {
+      fetchResources()
+    }
+  })
+
   const stopEndpoint = async () => {
     const stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
     const { response, error } = await useFetchApi(stopUrl).put().json()
@@ -441,7 +448,7 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi('/space_resources').json()
+    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${props.clusterId}`).json()
 
     if (error.value) {
       ElMessage({
@@ -553,8 +560,4 @@
       })
     }
   }
-
-  onMounted(() => {
-    fetchResources()
-  })
 </script>
