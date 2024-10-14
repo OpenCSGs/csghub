@@ -25,7 +25,8 @@
       :settingsVisibility="canManage"
       :can-write="canWrite"
       repo-type="endpoint"
-      :hardware="endpoint.hardware"
+      :clusterId="endpoint.cluster_id"
+      :sku="endpoint.sku"
       :modelId="endpoint.model_id"
       :private="endpoint.private"
       :endpointReplica="endpoint.actual_replica"
@@ -96,7 +97,6 @@
   const ownerUrl = computed(() => {
     const { namespace } = modelInfo.value
     if (!namespace) return ''
-    
     const baseUrl = namespace.Type === 'user' ? '/profile/' : '/organizations/'
     return baseUrl + namespace.Path
   })

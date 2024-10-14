@@ -293,7 +293,8 @@
     cloudResource: String,
     framework: String,
     maxReplica: Number,
-    minReplica: Number
+    minReplica: Number,
+    clusterId: String
   })
 
   const { t } = useI18n()
@@ -359,8 +360,10 @@
         return !!framework.frame_npu_image
       } else if (currentResource.value.type === 'gpu') {
         return !!framework.frame_image
-      } else {
+      } else if (currentResource.value.type === 'cpu') {
         return !!framework.frame_cpu_image
+      } else {
+        return true
       }
     })
   })
@@ -375,6 +378,12 @@
   watch(() => props.modelId, () => {
     if (props.modelId) {
       fetchFrameworks()
+    }
+  })
+
+  watch(() => props.clusterId, () => {
+    if (props.clusterId) {
+      fetchResources()
     }
   })
 
@@ -439,7 +448,7 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi('/space_resources').json()
+    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${props.clusterId}`).json()
 
     if (error.value) {
       ElMessage({
@@ -551,8 +560,4 @@
       })
     }
   }
-
-  onMounted(() => {
-    fetchResources()
-  })
 </script>
