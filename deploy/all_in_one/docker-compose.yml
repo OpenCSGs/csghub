@@ -3,6 +3,11 @@ version: '2.4'
 services:
   nginx:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/public/nginx:latest
+    depends_on:
+      - csghub_server
+      - csghub_server_proxy
+      - casdoor
+      - csghub_portal
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
       - ${SERVER_CASDOOR_PORT}:${SERVER_CASDOOR_PORT}
@@ -53,7 +58,7 @@ services:
       - ./auth:/auth
     networks:
       opencsg:
-        ipv4_address: 192.168.100.247 
+        ipv4_address: 192.168.100.247
     environment:
       REGISTRY_AUTH: "htpasswd"
       REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
@@ -81,8 +86,7 @@ services:
     restart: always
     depends_on:
       - postgres
-    command:
-      ["bash", "-c", "./csghub-portal migration init && ./csghub-portal migration migrate && ./csghub-portal start server "]
+    command: [ "bash", "-c", "./csghub-portal migration init && ./csghub-portal migration migrate && ./csghub-portal start server " ]
     environment:
       CSGHUB_PORTAL_ON_PREMISE: true
       CSGHUB_PORTAL_SENSITIVE_CHECK: false
@@ -111,7 +115,7 @@ services:
       - postgres
       - redis
       - gitaly
-      - gitlab-shell 
+      - gitlab-shell
       - natsmaster
     environment:
       STARHUB_DATABASE_DSN: postgresql://postgres:sdfa23Sh!322@postgres:5432/starhub_server?sslmode=disable
@@ -161,9 +165,11 @@ services:
       opencsg:
         ipv4_address: 192.168.100.244
 
-
   csghub_server_runner:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    depends_on:
+      - postgres
+      - csghub_server
     entrypoint:
       - /starhub-bin/starhub
       - deploy
@@ -190,18 +196,20 @@ services:
     depends_on:
       - postgres
       - csghub_server_runner
+      - csghub_server
     environment:
       PGPASSWORD: "sdfa23Sh!322"
     volumes:
       - ./init-scripts:/scripts
-    entrypoint: ["sh", "-c", "until nc -zv csghub_server 8080 ; do echo 'sleep 10s...'; sleep 10; done; echo 'begin to do db init scripts'; until pg_isready -h postgres -p 5432; do sleep 5; done; psql -h postgres -U postgres -d starhub_server -f /scripts/init.sql"]
+    entrypoint: [ "sh", "-c", "until nc -zv csghub_server 8080 ; do echo 'sleep 10s...'; sleep 10; done; echo 'begin to do db init scripts'; until pg_isready -h postgres -p 5432; do sleep 5; done; psql -h postgres -U postgres -d starhub_server -f /scripts/init.sql" ]
     networks:
       opencsg:
         ipv4_address: 192.168.100.232
 
-
   csghub_server_proxy:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
+    depends_on:
+      - csghub_server
     entrypoint:
       - /starhub-bin/starhub
       - start
@@ -247,11 +255,9 @@ services:
     volumes:
       - ./space_data:/opt/data:rw
 
-
   gitlab-shell:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gitlab-shell:v16.4.6
-    command:
-      ["bash", "-c", "exec /usr/bin/env SSH_DAEMON=gitlab-sshd /scripts/process-wrapper"]
+    command: [ "bash", "-c", "exec /usr/bin/env SSH_DAEMON=gitlab-sshd /scripts/process-wrapper" ]
     environment:
       - SSH_DAEMON=gitlab-sshd
     ports:
@@ -269,8 +275,7 @@ services:
 
   gitaly:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/gitaly:v16.4.6
-    command:
-      ["bash", "-c", "mkdir -p /home/git/repositories && rm -rf /srv/gitlab-shell/hooks/* && touch /srv/gitlab-shell/.gitlab_shell_secret && exec /usr/bin/env GITALY_CONFIG_FILE=/home/gitaly.config.toml /scripts/process-wrapper"]
+    command: [ "bash", "-c", "mkdir -p /home/git/repositories && rm -rf /srv/gitlab-shell/hooks/* && touch /srv/gitlab-shell/.gitlab_shell_secret && exec /usr/bin/env GITALY_CONFIG_FILE=/home/gitaly.config.toml /scripts/process-wrapper" ]
     environment:
       - GITALY_CONFIG_FILE=/home/gitaly.config.toml
     ports:
@@ -284,7 +289,6 @@ services:
       - ./data/data/gitaly/git/repositories:/home/git/repositories
       - ./data/gitaly/gitaly.config.toml:/home/gitaly.config.toml
       - ./data/gitaly/logs:/var/log/gitaly
-
 
   minio:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/bitnami/minio:2023
@@ -392,8 +396,7 @@ services:
       - ./casdoor/conf:/conf/
     networks:
       opencsg:
-        ipv4_address: 192.168.100.234 
-
+        ipv4_address: 192.168.100.234
 
   server_proxy_nginx:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/public/nginx:latest
@@ -407,7 +410,6 @@ services:
       opencsg:
         ipv4_address: 192.168.100.233
     restart: always
-
 
   mirror-repo-sync:
     image: opencsg-registry.cn-beijing.cr.aliyuncs.com/opencsg_public/csghub_server:latest
@@ -456,7 +458,6 @@ services:
     networks:
       opencsg:
         ipv4_address: 192.168.100.230
-        
 
 networks:
   opencsg:

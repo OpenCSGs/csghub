@@ -9,13 +9,13 @@
     <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l min-h-[calc(100vh-153px)]">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
-          <h3 class="mb-[4px] text-[#303133] text-[20px] font-semibold">
+          <h3 class="mb-[4px] text-gray-700 text-[20px] font-semibold">
             {{ $t('accessToken.title') }}
           </h3>
-          <p class="text-[#606266] text-[14px]">{{ $t('accessToken.desc') }}</p>
+          <p class="text-gray-500 text-[14px]">{{ $t('accessToken.desc') }}</p>
         </div>
-        <div class="bg-[#F5F7FA] p-[12px] rounded-[8px] mt-[16px]">
-          <h3 class="text-[#303133] text-[16px] font-[500] mb-[16px]">
+        <div class="bg-gray-100 p-[12px] rounded-[8px] mt-[16px]">
+          <h3 class="text-gray-700 text-[16px] font-[500] mb-[16px]">
             access token
           </h3>
           <div class="flex items-center">
@@ -26,7 +26,7 @@
               onfocus="this.blur()"
             />
             <div
-              class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-[#FFF] cursor-pointer"
+              class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-white cursor-pointer"
               @click="copyToken"
             >
               <SvgIcon name="copy" />

@@ -1,6 +1,6 @@
 <template>
   <div class="sm:px-[20px]">
-    <div class="flex gap-[8px] mt-[32px] p-[16px] border border-[#D0D5DD] rounded-[12px] shadow-xs">
+    <div class="flex gap-[8px] mt-[32px] p-[16px] border border-gray-300 rounded-[12px] shadow-xs">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <g clip-path="url(#clip0_8790_36855)">
           <path d="M6.24984 9.99984L8.74984 12.4998L13.7498 7.49984M18.3332 9.99984C18.3332 14.6022 14.6022 18.3332 9.99984 18.3332C5.39746 18.3332 1.6665 14.6022 1.6665 9.99984C1.6665 5.39746 5.39746 1.6665 9.99984 1.6665C14.6022 1.6665 18.3332 5.39746 18.3332 9.99984Z" stroke="#079455" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -12,11 +12,11 @@
         </defs>
       </svg>
       <div>
-        <h3 class="text-[#475467] text-[14px] font-[500]">{{ $t('application_spaces.gradioGuide.notice') }}</h3>
-        <p class="text-[#A07731] text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
+        <h3 class="text-gray-600 text-[14px] font-[500]">{{ $t('application_spaces.gradioGuide.notice') }}</h3>
+        <p class="text-gray-600 text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
       </div>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}</h3>
+    <h3 class="my-[24px] text-gray-600 font-[500]">1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}</h3>
     <div>
       <p class="">
         <span class="px-[12px] py-[8px] cursor-pointer"
@@ -46,21 +46,21 @@
         <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
       </div>
     </div>
-    <h3 class="my-[24px] text-[#475467] font-[500]">2. {{ $t('application_spaces.gradioGuide.createTitle') }}</h3>
+    <h3 class="my-[24px] text-gray-600 font-[500]">2. {{ $t('application_spaces.gradioGuide.createTitle') }}</h3>
     <markdown-viewer :content="appPyCodeMarkdown"></markdown-viewer>
-    <h3 class="my-[24px] text-[#475467] font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
+    <h3 class="my-[24px] text-gray-600 font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
     <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
-    <p class="text-[#667085] text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
-    <div class="text-[16px] text-[#667085] border border-[#D0D5DD] rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
+    <p class="text-gray-500 text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
+    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
-        <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
+        <h3 class="text-gray-900"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes1') }}</p>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes2') }}</p>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes3') }}</p>
       </div>
       <br />
       <div>
-        <h3 class="text-[#101828]"> {{ $t('application_spaces.gradioGuide.docNotesTitle') }} </h3>
+        <h3 class="text-gray-900"> {{ $t('application_spaces.gradioGuide.docNotesTitle') }} </h3>
         <a href="https://opencsg.com/docs/Space/space_intro" target="_blank">{{ $t('application_spaces.gradioGuide.docNotes1') }}</a>
       </div>
     </div>

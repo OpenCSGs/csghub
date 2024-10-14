@@ -1,14 +1,14 @@
 <template>
   <div
-    class="border border-[#DCDFE6] rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
+    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
     <!-- 英文名称 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('finetune.detail.settings.enName') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.enNameTip1') }}
         </div>
       </div>
@@ -27,10 +27,10 @@
     <!-- 别名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('finetune.detail.settings.cnName') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.cnNameTip1') }}
         </div>
       </div>
@@ -49,7 +49,7 @@
     <!-- 暂停 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('endpoints.settings.stopEndpoint') }}
         </div>
       </div>
@@ -70,7 +70,7 @@
     <!-- 重启 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('endpoints.settings.restartEndpoint') }}
         </div>
       </div>
@@ -90,18 +90,18 @@
     <!-- 区域 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('finetune.detail.settings.region') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.regionTip1') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.regionTip2') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('finetune.detail.settings.regionTip3') }}
         </p>
         <el-select
@@ -125,18 +125,18 @@
     <!-- 空间云资源 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('finetune.detail.settings.resources') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.resourcesTip1') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.resourcesTip2') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('finetune.detail.settings.resourcesTip3') }}
         </p>
         <el-select
@@ -162,17 +162,17 @@
     <!-- 删除 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
           {{ $t('finetune.detail.settings.delete') }}
         </div>
-        <div class="text-[14px] text-[#475467] font-light leading-[20px]">
+        <div class="text-[14px] text-gray-600 font-light leading-[20px]">
           {{ $t('finetune.detail.settings.deleteTip1') }}
           <span class="text-black font-medium break-words">{{
             props.modelId
           }}</span>
           {{ $t('finetune.detail.settings.deleteTip2') }}
         </div>
-        <div class="text-[14px] text-[#475467] leading-[20px]">
+        <div class="text-[14px] text-gray-600 leading-[20px]">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">
             {{ `${finetuneName}/${finetuneId}` }}
@@ -181,7 +181,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[#344054] text-[14px]">
+        <p class="text-gray-700 text-[14px]">
           {{ $t('finetune.detail.settings.finetuneName') }}
         </p>
         <el-input
@@ -194,11 +194,11 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
             :class="
               delDesc === `${finetuneName}/${finetuneId}`
-                ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
-                : 'bg-[#F2F4F7]'
+                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
+                : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
             @mouseleave="handleMouseLeave"
@@ -375,14 +375,14 @@
     if (delDesc.value !== '') {
       document
         .getElementById('confirmDelete')
-        .classList.replace('bg-[#D92D20]', 'bg-[#B42318]')
+        .classList.replace('bg-error-600', 'bg-error-700')
     }
   }
 
   const handleMouseLeave = () => {
     document
       .getElementById('confirmDelete')
-      .classList.replace('bg-[#B42318]', 'bg-[#D92D20]')
+      .classList.replace('bg-error-700', 'bg-error-600')
   }
 
   const clickDelete = () => {

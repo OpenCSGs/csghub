@@ -7,18 +7,18 @@
       :style="generateGradientStyle(collection.theme)"
     >
       <div
-        class="active:outline active:outline-4 active:outline-[#EAECF0] hover:shadow-md px-4 pt-4 pb-2 w-full rounded-[12px] border border-[#EAECF0] cursor-pointer"
+        class="active:outline active:outline-4 active:outline-gray-200 hover:shadow-md px-4 pt-4 pb-2 w-full rounded-[12px] border border-gray-200 cursor-pointer"
         @click="goCollectionDetails(collection.id)"
       >
         <div class="flex justify-between">
-          <div class="text-[14px] leading-[20px] text-[#344054] text-ellipsis overflow-hidden whitespace-nowrap">
+          <div class="text-[14px] leading-[20px] text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap">
             {{ collection.nickname || collection.name }}
           </div>
           <SvgIcon name="chevron_right" />
         </div>
         <div
           :title="collection.description"
-          class="overflow-hidden text-ellipsis line-clamp-2 text-[14px] leading-[20px] font-light text-[#475467] mb-2"
+          class="overflow-hidden text-ellipsis line-clamp-2 text-[14px] leading-[20px] font-light text-gray-600 mb-2"
         >
           {{ collection.description }}
         </div>

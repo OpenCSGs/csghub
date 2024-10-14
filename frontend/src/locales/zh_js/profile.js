@@ -1,7 +1,6 @@
 export const profile = {
   accountSetting: "账号设置",
   myCollect: "我的收藏",
-  settings: "设置",
   interests: "兴趣",
   organization: "组织机构",
   menu: {

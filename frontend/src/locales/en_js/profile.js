@@ -1,7 +1,6 @@
 export const profile = {
   accountSetting: "Settings",
   myCollect: "My Favorite",
-  settings: "Settings",
   interests: "Interests",
   organization: "Organization",
   menu: {

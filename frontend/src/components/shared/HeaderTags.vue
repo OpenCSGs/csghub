@@ -3,7 +3,7 @@
     <!-- Task -->
     <div
       v-if="taskTags.length"
-      class="text-[#344054] text-[14px] text-medium"
+      class="text-gray-700 text-[14px] text-medium"
     >
       {{ $t('all.tasks') }}:
     </div>
@@ -21,14 +21,14 @@
     <!-- Framework -->
     <div
       v-if="frameworkTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       {{ $t('all.framework') }}:
     </div>
     <a
       v-for="tag in theFrameworkTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
-      class="text-[#344054]"
+      class="text-gray-700"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
       <TensorFlow v-if="tag.name.toLowerCase() === 'tensorflow'" />
@@ -48,7 +48,7 @@
     <!-- Language -->
     <div
       v-if="languageTags.length"
-      class="flex items-center text-sm text-[#909399]"
+      class="flex items-center text-sm text-gray-500"
     >
       {{ $t('all.languages') }}:
     </div>
@@ -56,7 +56,7 @@
       v-for="tag in theLanguageTags.theTags"
       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
       :style="`color: ${tag.color}`"
-      class="text-sm text-[#087443] px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-[#F6FEF9]"
+      class="text-sm text-success-700 px-[8px] py-[4px] rounded cursor-pointer flex items-center gap-1 bg-success-25"
     >
       <SvgIcon name="language_tag" />
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
@@ -70,13 +70,13 @@
     <!-- industryTags -->
     <div
       v-if="industryTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       {{ $t('all.industry') }}:
     </div>
     <div
       v-for="tag in theIndustryTags.theTags"
-      class="text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
+      class="text-sm text-gray-700 px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </div>
@@ -89,13 +89,13 @@
     <!-- Other -->
     <div
       v-if="otherTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       {{ $t('all.others') }}:
     </div>
     <div
       v-for="tag in theOtherTags.theTags"
-      class="bg-white text-sm text-[#303133] px-[8px] py-[4px] rounded flex items-center border gap-1"
+      class="bg-white text-sm text-gray-700 px-[8px] py-[4px] rounded flex items-center border gap-1"
     >
       {{ tag.name }}
     </div>
@@ -108,18 +108,18 @@
     <!-- License -->
     <div
       v-if="licenseTags.length"
-      class="text-sm text-[#909399]"
+      class="text-sm text-gray-500"
     >
       License:
     </div>
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-[14px] text-[#909399] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-[#D0D5DD] gap-1"
+      class="text-[14px] text-gray-500 px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 
-      <p class="text-[#344054]">{{ tag.name }}</p>
+      <p class="text-gray-700">{{ tag.name }}</p>
     </a>
     <MoreTags
       v-if="theLicenseTags.moreTags"

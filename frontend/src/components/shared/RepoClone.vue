@@ -37,7 +37,7 @@
 
     <!-- finetune deploy button -->
     <div
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#FFF] border border-[#D0D5DD] shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-white border border-gray-300 shadow-sm hover:bg-slate-50 cursor-pointer"
       v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
       @click="handleButtonClick"
     >
@@ -51,14 +51,14 @@
     <!-- repo download clone button -->
     <div
       v-if="!!httpCloneUrl"
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-sm hover:bg-blue-800 cursor-pointer"
+      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-brand-600 shadow-sm hover:bg-blue-800 cursor-pointer"
       @click="cloneRepositoryVisible = true"
     >
       <SvgIcon
         name="download"
         class="mr-0"
       />
-      <div class="text-[#fff] text-sm">{{ $t(downloadButtonKey) }}</div>
+      <div class="text-white text-sm">{{ $t(downloadButtonKey) }}</div>
     </div>
 
     <!-- clone dialog -->
@@ -67,8 +67,8 @@
       title=""
       class="md:!w-[80%]"
     >
-      <div class="rounded-t border-t border-x border-[#EBEEF5] mt-4">
-        <div class="flex items-center px-3 py-2 bg-[#F5F7FA] text-[#303133]">
+      <div class="rounded-t border-t border-x border-gray-200 mt-4">
+        <div class="flex items-center px-3 py-2 bg-gray-100 text-gray-700">
           <SvgIcon
             name="clone"
             class="mr-1"
@@ -78,16 +78,16 @@
       </div>
       <el-tabs
         v-model="activeCloneType"
-        class="border border-[#EBEEF5] mb-8 clone-tabs"
+        class="border border-gray-200 mb-8 clone-tabs"
       >
         <el-tab-pane
           label="HTTPS"
           name="https"
         >
           <div
-            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+            class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
               <a href="/settings/access-token" target="_blank" class="underline">access token</a>
@@ -103,7 +103,7 @@
                 size="large"
               />
             </div>
-            <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
+            <div class="text-gray-500"># {{ $t('all.lfsTips') }}</div>
             <markdown-viewer
               v-if="useToken"
               :content="httpsCloneCodeWithTokenMarkdown"
@@ -112,7 +112,7 @@
               v-else
               :content="httpsCloneCodeMarkdown"
             ></markdown-viewer>
-            <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
+            <div class="text-gray-500"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
               :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"
             ></markdown-viewer>
@@ -123,16 +123,16 @@
           name="ssh"
         >
           <div
-            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+            class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085] mb-[8px]">
+            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500 mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
             </div>
-            <div class="text-[#909399]"># {{ $t('all.lfsTips') }}</div>
+            <div class="text-gray-500"># {{ $t('all.lfsTips') }}</div>
             <markdown-viewer :content="sshCloneCodeMarkdown"></markdown-viewer>
-            <div class="text-[#909399]"># {{ $t('all.lfsTips2') }}</div>
+            <div class="text-gray-500"># {{ $t('all.lfsTips2') }}</div>
             <markdown-viewer
               :setDefaultText="true"
               :content="getMarkdownCode('GIT_LFS_SKIP_SMUDGE=1', 'bash')"
@@ -145,15 +145,15 @@
           name="sdk"
         >
           <div
-            class="flex flex-col gap-1 px-3 py-2 border-t border-[#EBEEF5] bg-[#ffffff] text-[#303133] break-all"
+            class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-          <div class="flex gap-[8px] text-[14px] leading-[20px] text-[#667085]">
+          <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
             <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
             Use
             <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a>
             to download
             </div>
-            <div class="text-[#909399] mt-[8px]"># {{ $t('all.sdkTips') }}</div>
+            <div class="text-gray-500 mt-[8px]"># {{ $t('all.sdkTips') }}</div>
             <markdown-viewer
               :content="cmdCloneCodeMarkdown"
             ></markdown-viewer>

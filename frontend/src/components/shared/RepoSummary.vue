@@ -1,6 +1,6 @@
 <template>
   <div class="flex md:px-5 md:flex-col-reverse min-h-[calc(100vh-341px)]">
-    <div class="max-w-[60%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-[#EBEEF5] md:border-t-0">
+    <div class="max-w-[60%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-gray-200 md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
       <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
       <markdown-viewer
@@ -10,10 +10,10 @@
       >
       </markdown-viewer>
     </div>
-    <div class="w-[40%] sm:w-[100%] border-l border-[#EBEEF5] md:border-l-0 md:border-b md:w-full md:pl-0">
+    <div class="w-[40%] sm:w-[100%] border-l border-gray-200 md:border-l-0 md:border-b md:w-full md:pl-0">
       <div class="p-[16px]">
-        <div class="text-[#606266] text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
-        <div class="text-[#303133] text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
+        <div class="text-gray-500 text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
+        <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 
       <TestEndpoint

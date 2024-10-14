@@ -1,6 +1,6 @@
 <template>
-  <span class="text-[14px] text-[#344054] px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center gap-[3px] border border-[#D0D5DD]"
-        :class="{ 'bg-[#4D6AD6]': active, 'text-white': active, 'border-[#4D6AD6]': active }"
+  <span class="text-[14px] text-gray-700 px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center gap-[3px] border border-gray-300"
+        :class="{ 'bg-brand-500': active, 'text-white': active, 'border-brand-500': active }"
         @click="emit('handleTagClick', tag)">
     <img :src="'/images/tags/' + tag.name + '.svg'"
          class="w-[14px] h-[14px]"

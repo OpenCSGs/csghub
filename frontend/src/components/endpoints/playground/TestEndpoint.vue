@@ -1,22 +1,22 @@
 <template>
   <div
-    class="h-[77px] w-full p-4 bg-white border-b border-[#eaecf0] items-center gap-2 inline-flex rounded-tr-2xl"
+    class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl"
   >
     <SvgIcon name="playground_test" />
-    <div class="text-[#344053] text-base font-medium leading-normal">
+    <div class="text-gray-700 text-base font-medium leading-normal">
       {{ $t('endpoints.playground.test') }}
     </div>
   </div>
 
   <div class="p-4">
     <div
-      class="text-[#344053] text-sm font-medium leading-tight mb-4 flex items-center gap-2"
+      class="text-gray-700 text-sm font-medium leading-tight mb-4 flex items-center gap-2"
     >
       <SvgIcon name="text_generation" />
       {{ $t('endpoints.playground.generation') }}
     </div>
     <div
-      class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border border-[#cfd4dc] text-[#0f1728] text-base font-light leading-normal mb-4 overflow-auto"
+      class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border  border-gray-300 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
     >
       <MarkdownViewer :content="anwserContent" />
     </div>
@@ -24,8 +24,8 @@
       class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border relative"
       :class="
         inputFocus
-          ? 'border-[#6483f8] [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
-          : 'border-[#cfd4dc]'
+          ? 'border-brand-300 [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
+          : ' border-gray-300'
       "
       v-loading="loading"
     >
@@ -40,17 +40,17 @@
       ></el-input>
 
       <div
-        class="h-[34px] px-3 py-2 rounded-lg shadow border border-[#eaecf0] justify-center items-center gap-1 inline-flex flex-shrink-0"
+        class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
         :class="
           canSendMessage
-            ? 'bg-[#3250bd] cursor-pointer'
+            ? 'bg-brand-600 cursor-pointer'
             : 'bg-[#f2f3f6] cursor-not-allowed'
         "
         @click="handleSendMessage"
       >
         <div
           class="text-xs font-normal flex items-center justify-center gap-1"
-          :class="canSendMessage ? 'text-[#fff]' : 'text-[#98a1b2]'"
+          :class="canSendMessage ? 'text-white' : 'text-gray-400'"
         >
           <SvgIcon name="send_message" />
           {{ $t('endpoints.playground.send') }}
@@ -60,7 +60,7 @@
 
     <div class="flex mt-[8px]"> 
       <SvgIcon name="exclamation_point" class="place-self-start" /> 
-      <p class="ml-[4px] text-[12px] leading-[18px] text-[#667085]">{{ $t('widgets.liabilityExemption') }}</p>
+      <p class="ml-[4px] text-[12px] leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
     </div>
   </div>
 </template>
