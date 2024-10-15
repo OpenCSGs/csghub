@@ -10,7 +10,7 @@ export const datasets = {
   datasetTag: "Dataset tags",
   datasetIndustryTag: "Industry tags",
   tips:"Easy Dataset Hosting",
-  datasetsUsedToTrain: "Dataset used to train",
+  associated: "Associated Datasets",
   newDataset: {
     title: "Create New Dataset Repository",
     titleDesc: "The repository contains all model files and revision history.",

@@ -8,7 +8,7 @@ export const codes = {
   namespaceCodeName: "命名空间/代码仓库名称",
   codeNickName: "代码仓库别名",
   codeDesc: "代码仓库简介",
-  codesUsedToTrain: '关联代码',
+  associated: '关联代码',
   newCode: {
     title: "新建代码仓库",
     titleDesc: "仓库包含所有的代码文件和修订的历史记录",
