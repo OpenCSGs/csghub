@@ -8,10 +8,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/config"
-	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/pkg/server"
 	"opencsg.com/portal/pkg/server/backend"
 	"opencsg.com/portal/pkg/server/types"
+	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 // ContentTypeFormatMapping is a map of file extensions to MIME types
@@ -126,9 +126,9 @@ func (i *ResolveHandlerImpl) getFileContent(ctx *gin.Context) (string, error) {
 
 func buildDownloadReq(ctx *gin.Context) types.DownloadReq {
 	userName := ""
-	currentUser, _ := ctx.Get("currentUser")
+	currentUser := jwt.GetCurrentUser(ctx)
 	if currentUser != nil {
-		userName = currentUser.(*models.User).Name
+		userName = currentUser.Name
 	}
 
 	return types.DownloadReq{

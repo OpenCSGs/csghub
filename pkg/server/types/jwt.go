@@ -32,8 +32,8 @@ type Organization struct {
 }
 
 type CreateJWTReq struct {
-	UUID        string `json:"uuid"`
-	CurrentUser string `json:"current_user"`
+	UUID string `json:"uuid"`
+	// CurrentUser string `json:"current_user"`
 }
 
 type CreateJWTResp struct {

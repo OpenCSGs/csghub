@@ -31,7 +31,7 @@ func (c *CsgHubServer) CreateJWTToken(req types.CreateJWTReq) (*types.CreateJWTR
 	}
 	resp, err := c.getParsedResponse(
 		"POST",
-		fmt.Sprintf("/jwt/token?current_user=%s", req.CurrentUser),
+		fmt.Sprintf("/jwt/token?current_user_uuid=%s", req.UUID),
 		nil,
 		bytes.NewReader(body),
 		checkResp,

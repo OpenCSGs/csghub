@@ -37,8 +37,8 @@ func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
 	}
 
 	r, _, err := i.Server.CreateJWTToken(types.CreateJWTReq{
-		UUID:        currentUser.LoginIdentity,
-		CurrentUser: currentUser.Name,
+		UUID: currentUser.LoginIdentity,
+		// CurrentUser: currentUser.Name,
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
