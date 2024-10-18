@@ -1,12 +1,13 @@
-## Installation and Startup Guide
+# Installation and Startup Guide
 
 > [!WARNING]
 `CSGHub` Portal has migrated the web framework from Rails to Gin. If you're using our Rails version before, you may need to refer to our new documents [migrate to Gin](/docs/migrate_to_gin_version_portal_en.md) to see how to migrate to Gin version.
 
-### Acknowledgements
+## Acknowledgements
+
 This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Apache Arrow, DuckDB and GoGin, whose open source contributions are deeply appreciated!
 
-### Installing Go
+## Installing Go
 
 1. Visit the [Go official download page](https://golang.org/dl/).
 
@@ -22,7 +23,7 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
 
    If the installation is successful, you will see the Go version information.
 
-### Installing Node.js and Yarn
+## Installing Node.js and Yarn
 
 1. Visit the [Node.js official website](https://nodejs.org/).
 
@@ -47,7 +48,7 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
    yarn --version
    ```
 
-### Setting up Go Path
+## Setting up Go Path
 
 1. Determine your workspace: Choose a directory as your Go workspace, e.g., `~/go`.
 
@@ -74,7 +75,7 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
 
    The output should be your workspace directory, e.g., `/home/username/go`.
 
-### Setting Environment Variables (Recommended using direnv)
+## Setting Environment Variables (Recommended using direnv)
 
 1. Install direnv: Follow the instructions in the [direnv official documentation](https://direnv.net/) to install.
 
@@ -108,7 +109,7 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
    direnv allow .
    ```
 
-### Getting Go Dependencies
+## Getting Go Dependencies
 
 To install necessary Go modules, run:
 
@@ -116,7 +117,7 @@ To install necessary Go modules, run:
 go mod tidy
 ```
 
-### Installing Air for Live Reloading
+## Installing Air for Live Reloading
 
 Air is a tool that allows live reloading of Go applications. Install it using the following command:
 
@@ -124,7 +125,7 @@ Air is a tool that allows live reloading of Go applications. Install it using th
 go install github.com/air-verse/air@latest
 ```
 
-### Getting Frontend Dependencies
+## Getting Frontend Dependencies
 
 Open the `frontend` directory and use Yarn to install dependencies:
 
@@ -133,7 +134,7 @@ cd frontend
 yarn install
 ```
 
-### Setting up the Database
+## Setting up the Database
 
 1. Create database: Create a new database in your database management system. PostgreSQL is recommended, and you can use the following command:
 
@@ -157,9 +158,9 @@ yarn install
    go run cmd/csghub-portal/main.go migration migrate
    ```
 
-## Startup
+# Startup
 
-### Starting Both Frontend and Backend Services
+## Starting Both Frontend and Backend Services
 
 To start both frontend and backend services simultaneously, run the following command:
 
@@ -167,7 +168,7 @@ To start both frontend and backend services simultaneously, run the following co
 make
 ```
 
-### Starting Frontend Service Separately
+## Starting Frontend Service Separately
 
 If you only want to start the frontend service, run the following command:
 
@@ -175,7 +176,7 @@ If you only want to start the frontend service, run the following command:
 make run-frontend
 ```
 
-### Starting Go Service Separately
+## Starting Go Service Separately
 
 If you only want to start the Go service, run the following command:
 
@@ -183,7 +184,7 @@ If you only want to start the Go service, run the following command:
 make run-backend
 ```
 
-### Starting via VS Code
+## Starting via VS Code
 
 1. Create .env file:
    - In the project root directory, locate the `.env.example` file.
@@ -207,7 +208,7 @@ make run-backend
    - "migrate": Execute database migration
    - "rollback": Rollback database migration
 
-### Compiling the Project via Command Line
+## Compiling the Project via Command Line
 
 1. Compile the project:
 
@@ -221,7 +222,7 @@ make run-backend
    ./csghub-portal start server
    ```
 
-### Accessing the Application
+## Accessing the Application
 
 When both services are running, open your web browser and visit:
 
