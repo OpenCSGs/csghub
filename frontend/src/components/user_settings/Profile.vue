@@ -7,7 +7,7 @@
     <!-- nickname -->
     <div class="text-[24px] leading-[32px] font-semibold">
       {{ isCurrentUser ? userStore.nickname : nickname }}
-    </div>
+    </div> 
     <!-- name -->
     <div class="text-[16px] text-gray-500 max-w-[max-content] leading-[24px] mb-[16px]">
       @{{ isCurrentUser ? userStore.username : username }}
@@ -15,7 +15,7 @@
     <!-- profile settings -->
     <div v-if="isCurrentUser" class="flex xl:flex-col md:flex-row gap-3">
       <a href="/settings/profile" class="px-[12px] py-[5px] lg:w-[200px] md:w-auto text-center border border-gray-200 rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-gray-200 hover:text-gray-700">
-        {{ $t('profile.accountSetting')}}
+        {{ $t('profile.editProfile')}}
       </a>
     </div>
     <!-- roles -->
