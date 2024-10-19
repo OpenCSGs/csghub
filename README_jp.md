@@ -3,7 +3,7 @@
 [![OpenCSG Slackに参加](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)  
 [![OpenCSG Discordに参加](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)  
 
-**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
+**[English](README.md) ∙ [简体中文](README_zh.md) ∙ [한국어](README_kr.md)**
 
 ## CSGHub
 
@@ -26,7 +26,8 @@ CSGHubは、大規模言語モデル（LLM）の資産管理のために設計�
 
 ### クイックスタート
 
-- **探索したい方**：[OpenCSGのウェブサイト](https://opencsg.com/models)で、CSGHubの無料SaaS版を試用できます。[クイックスタートガイド](https://opencsg.com/docs/en/intro)を参考にして、CSGHub SaaSインターフェースを使い、LLMやデータセットの管理とLLMアプリケーションのデプロイをお試しください。
+- **探索したい方**：[OpenCSGのウェブサイト](https://opencsg.com/models)で、CSGHubの無料SaaS版を試用できます。[クイックスタートガイド](./docs/csghub_saas_en.md)を参考にして、CSGHub SaaSインターフェースを使い、LLMやデータセットの管理とLLMアプリケーションのデプロイをお試しください。
+詳細については、[OpenCSG ドキュメントセンター](https://opencsg.com/docs/en/intro)をご参照ください。
 
 - **実践を希望する方**：CSGHubの基本的なローカルインスタンスを迅速にデプロイするには、[インストールガイド](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)をご参照ください。
 

@@ -3,7 +3,7 @@
 [![加入 OpenCSG Slack](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 [![加入 OpenCSG Discord](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)
 
-**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
+**[English](README.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
 
 ## CSGHub
 
@@ -26,9 +26,10 @@ CSGHub 是一个开源平台，专为管理大语言模型（LLM）资产而设�
 
 ### 快速开始
 
-- **想要探索的用户**：可在 [OpenCSG 网站](https://opencsg.com/models)上体验 CSGHub 的免费 SaaS 版本。参考该[快速开始指南](https://opencsg.com/docs/intro)，通过 CSGHub SaaS 界面管理大模型和数据集，部署大模型应用。
-
-- **想要实践的用户**：请参考[安装指南](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)快速部署 CSGHub 的本地实例。
+- **想要快速探索的用户**：可在 [OpenCSG 网站](https://opencsg.com/models)上体验 CSGHub 的免费 SaaS 版本。参考该[快速开始指南](./docs/csghub_saas_zh.md)，通过 CSGHub SaaS 界面管理大模型和数据集，部署大模型应用。
+更多信息与高级教程请参阅 [OpenCSG 文档中心](https://opencsg.com/docs/intro)。
+ 
+- **想要进一步实践的用户**：请参考[安装指南](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)快速部署 CSGHub 的本地实例。
 
 - **需要在 Kubernetes 上部署的用户**：请参考 [Helm Chart 安装指南](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)进行部署。
 
