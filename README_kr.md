@@ -3,7 +3,7 @@
 [![OpenCSG Slack에 참여하기](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)  
 [![OpenCSG Discord에 참여하기](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)  
 
-**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
+**[English](README.md) ∙ [简体中文](README_zh.md) ∙ [日本語](README_jp.md)**
 
 ## CSGHub
 
@@ -26,7 +26,8 @@ CSGHub에 대한 자세한 내용은 [상세 소개](./docs/detailed_intro_en.md
 
 ### 빠른 시작
 
-- **탐색을 원하는 사용자**: [OpenCSG 웹사이트](https://opencsg.com/models)에서 CSGHub의 무료 SaaS 버전을 사용해 보세요. [간단한 빠른 시작 가이드](https://opencsg.com/docs/en/intro)를 참조하여 CSGHub SaaS 인터페이스로 LLM과 데이터셋을 관리하고 LLM 애플리케이션을 배포해 보세요.
+- **탐색을 원하는 사용자**: [OpenCSG 웹사이트](https://opencsg.com/models)에서 CSGHub의 무료 SaaS 버전을 사용해 보세요. [간단한 빠른 시작 가이드](./docs/csghub_saas_en.md)를 참조하여 CSGHub SaaS 인터페이스로 LLM과 데이터셋을 관리하고 LLM 애플리케이션을 배포해 보세요.
+자세한 정보는 [OpenCSG 문서 센터](https://opencsg.com/docs/en/intro)를 참조하세요.
 
 - **실습을 원하는 사용자**: [설치 가이드](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)를 따라 CSGHub의 기본 로컬 인스턴스를 신속하게 배포해 보세요.
 
