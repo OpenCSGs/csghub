@@ -9,7 +9,7 @@ import (
 	"opencsg.com/portal/pkg/utils/jwt"
 )
 
-// AuthMiddleware 验证用户登录状态的中间件
+// check user login status and save the current user to context
 func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		loginIdentity, err := c.Cookie("login_identity")
@@ -18,7 +18,7 @@ func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 			return
 		}
 
-		// 每次请求从 csghub server 后台获取用户的信息
+		// get user info from csghub server
 		userResp, _, err := csghubServer.GetUserInfo(loginIdentity)
 		user := &models.User{
 			Name:          userResp.Data.Username,
