@@ -41,3 +41,4 @@ csghub-portal
 
 cmd/csghub-portal/__debug_*
 app.log
+node_modules
