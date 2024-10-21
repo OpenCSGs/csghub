@@ -67,6 +67,7 @@
     repoName: String,
     namespacePath: String,
     currentPath: String,
+    currentBranch: String
   })
 
   const originalCodeContent = ref('')
@@ -115,8 +116,8 @@
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),
-      branch: 'main',
-      new_branch: 'main',
+      branch: props.currentBranch,
+      new_branch: props.currentBranch,
       sha: sha.value
     }
     const option = {
@@ -137,7 +138,7 @@
   }
 
   const redirectToFilePreview = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${fileName.value}`
+    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
   }
 
   const cancel = () => {

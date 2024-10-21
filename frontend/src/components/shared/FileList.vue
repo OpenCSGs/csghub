@@ -31,10 +31,10 @@
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <a :href="`/${prefixPath}/${namespacePath}/main/new`">
+              <a :href="`/${prefixPath}/${namespacePath}/${currentBranch}/new`">
                 <el-dropdown-item>{{ $t('all.createNewFile') }}</el-dropdown-item>
               </a>
-              <a :href="`/${prefixPath}/${namespacePath}/main/upload`">
+              <a :href="`/${prefixPath}/${namespacePath}/${currentBranch}/upload`">
                 <el-dropdown-item>{{ $t('all.uploadFile') }}</el-dropdown-item>
               </a>
             </el-dropdown-menu>

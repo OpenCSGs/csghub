@@ -137,6 +137,7 @@ func buildDownloadReq(ctx *gin.Context) types.DownloadReq {
 		Name:        ctx.Param("name"),
 		FilePath:    strings.TrimPrefix(ctx.Param("path"), "/"),
 		CurrentUser: userName,
+		Ref:         ctx.Param("branch"),
 	}
 }
 

@@ -77,7 +77,7 @@
     const { data } = await useFetchApi(url).json()
 
     if (data.value) {
-      const content = resolveContent(`${props.repoType}s`, data.value.data.content, props.namespacePath)
+      const content = resolveContent(`${props.repoType}s`, data.value.data.content, props.namespacePath, props.currentBranch)
       readmeContent.value = content
     }
     loading.value = false
