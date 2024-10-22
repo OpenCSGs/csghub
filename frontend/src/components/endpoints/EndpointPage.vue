@@ -20,7 +20,7 @@
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
         {{ $t('endpoints.detail.parameters') }}
       </p>
-      <p class="flex items-center gap-[8px] w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
+      <div class="flex items-center gap-[8px] w-[390px] lg:w-[370px] mlg:w-full h-[35px] leading-[18px] text-gray-500 text-xs overflow-hidden text-ellipsis line-clamp-2 text-left">
         <div v-if="private" class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded">
           {{ $t("all.private") }}
         </div>
@@ -29,7 +29,7 @@
           <span>:</span>
           <span>{{ endpointReplica }}</span>
         </div>
-      </p>
+      </div>
     </div>
     <div class="flex flex-col gap-[8px] focus:outline focus:outline-4 focus:outline-gray-200 p-4 mlg:w-full border border-gray-200 rounded-xl">
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
