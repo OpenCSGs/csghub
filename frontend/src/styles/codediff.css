@@ -57,7 +57,7 @@
 
 .d2h-file-wrapper {
   border: 1px solid #ddd;
-  border-radius: 3px;
+  border-radius: var(--border-radius-xs);
   margin-bottom: 1em
 }
 
@@ -70,7 +70,7 @@
   justify-content: flex-end;
   align-items: center;
   border: 1px solid #ddd;
-  border-radius: 3px;
+  border-radius: var(--border-radius-xs);
   padding: 4px 8px
 }
 
@@ -151,7 +151,7 @@
 .d2h-code-line ins,
 .d2h-code-side-line del,
 .d2h-code-side-line ins {
-  border-radius: .2em;
+  border-radius: var(--border-radius-xs);
   display: inline-block;
   margin-top: -1px;
   -webkit-text-decoration: none;
@@ -476,7 +476,7 @@
 
 .d2h-file-list-wrapper {
   margin-bottom: 1rem;
-  border-radius: .5rem;
+  border-radius: var(--border-radius-md);
   border-width: 1px;
   --tw-border-opacity: 1;
   padding: 0
@@ -568,7 +568,7 @@
 
 .d2h-lines-added,
 .d2h-lines-deleted {
-  border-radius: .25rem;
+  border-radius: var(--border-radius-xs);
   border-width: 1px;
   padding-left: .375rem;
   padding-right: .375rem;
@@ -666,7 +666,7 @@
 }
 
 .d2h-file-wrapper {
-  border-radius: .5rem;
+  border-radius: var(--border-radius-md);
   --tw-border-opacity: 1;
 }
 
@@ -717,7 +717,7 @@
 
 .d2h-tag {
   margin-left: .5rem;
-  border-radius: .25rem;
+  border-radius: var(--border-radius-xs);
   --tw-bg-opacity: 1;
   padding-left: .25rem;
   padding-right: .25rem;

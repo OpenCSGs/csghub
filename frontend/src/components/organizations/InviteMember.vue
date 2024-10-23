@@ -283,7 +283,7 @@
     right: 0;
     width: 8px; /* 滚动条宽度 */
     background-color: #ccc; /* 滚动条颜色 */
-    border-radius: 4px; /* 滚动条圆角 */
+    border-radius: var(--border-radius-xs); /* 滚动条圆角 */
   }
 
   .InviteMember .scroll-container .content {
@@ -296,6 +296,6 @@
 
   .InviteMember .scroll-container::-webkit-scrollbar-thumb {
     background-color: #888; /* 滚动条thumb颜色 */
-    border-radius: 4px; /* 滚动条thumb圆角 */
+    border-radius: var(--border-radius-xs); /* 滚动条thumb圆角 */
   }
 </style>

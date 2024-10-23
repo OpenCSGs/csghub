@@ -204,7 +204,7 @@
   }
 
   .active-tab {
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     background: #E5E7EB;
     padding: 6px;
   }

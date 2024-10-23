@@ -35,7 +35,7 @@
         :title="$t('sshKey.addSshKey')"
         width="30%"
         class="dialogWidth"
-        style="border-radius: 0.5rem"
+        style="border-radius: var(--border-radius-md)"
         left
       >
         <el-form

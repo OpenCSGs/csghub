@@ -170,7 +170,7 @@
     /* 滚动条宽度 */
     background-color: #ccc;
     /* 滚动条颜色 */
-    border-radius: 4px;
+    border-radius: var(--border-radius-xs);
     /* 滚动条圆角 */
   }
 
@@ -187,7 +187,7 @@
   .AddRepoToCollections .scroll-container::-webkit-scrollbar-thumb {
     background-color: #888;
     /* 滚动条thumb颜色 */
-    border-radius: 4px;
+    border-radius: var(--border-radius-xs);
     /* 滚动条thumb圆角 */
   }
 </style>

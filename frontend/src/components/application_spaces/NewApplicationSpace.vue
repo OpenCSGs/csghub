@@ -581,7 +581,7 @@
   }
 
   :deep(.el-input .el-input__wrapper) {
-    border-radius: 8px;
+    border-radius: var(--border-radius-md);
   }
   :deep(.sdk-container .el-radio.is-bordered.el-radio--large .el-radio__inner) {
     display: none;

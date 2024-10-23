@@ -6,7 +6,7 @@
     class="dialogWidth"
     :close-on-click-modal="false"
     :show-close="false"
-    style="border-radius: 0.5rem"
+    style="border-radius: var(--border-radius-md)"
     left
   >
     <el-form :model="formData" :rules="formRules" ref="formRef">

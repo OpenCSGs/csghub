@@ -39,7 +39,7 @@ watch(() => props.currentPage, (newPage) => {
 </script>
 <style scoped>
 :deep(.btn-prev) {
-  border-radius: 6px 0 0 6px;
+  border-radius: var(--border-radius-sm) 0 0 6px;
   margin: 0 !important;
   background: #ffffff !important;
   border: 1px solid #d0d5dd;

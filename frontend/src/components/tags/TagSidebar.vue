@@ -380,6 +380,6 @@
 <style scoped>
   .active-type {
     box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
   }
 </style>

@@ -41,7 +41,7 @@
       :title="$t('accessToken.starshipAddToken')"
       width="35%"
       class="dialogWidth"
-      style="border-radius: 0.5rem"
+      style="border-radius: var(--border-radius-md)"
       left
     >
       <el-form

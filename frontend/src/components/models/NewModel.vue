@@ -326,6 +326,6 @@
   }
 
   :deep(.el-input .el-input__wrapper) {
-    border-radius: 8px;
+    border-radius: var(--border-radius-md);
   }
 </style>

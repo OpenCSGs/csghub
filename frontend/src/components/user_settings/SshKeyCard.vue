@@ -15,7 +15,7 @@
     <div class="pt-[16px]"><p class="break-all text-gray-500 text-sm">{{ theSshKey }}</p></div>
   </div>
   <el-dialog v-model="deleteDialogVisible" :title="$t('sshKey.delKeyName', {value: sshKeyName})" width="30%" class="dialogWidth"
-             style="border-radius: 0.5rem;" left>
+             style="border-radius: var(--border-radius-md);" left>
     <div class="flex items-center justify-center h-[108px]">
       <p>{{ $t('sshKey.sureDelKey') }}</p>
     </div>

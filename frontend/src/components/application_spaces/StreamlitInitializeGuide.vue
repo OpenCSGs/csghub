@@ -141,7 +141,7 @@
 
 <style scoped>
   .active-tab {
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     background: var(--Gray-50, #F9FAFB);
   }
 </style>
