@@ -16,7 +16,7 @@ Additionally, CSGHub features microservice submodules and standardized OpenAPIs 
 ### Key Features
 
 - **Unified Management of LLM Assets**:  
-  Provides a one-stop management solution for models, datasets, and code, supporting storage, version control, modifications, and queries. Comprehensive prompt library management and optimization features enhance model performance. Supports uploading and downloading large files, along with online editing and preview on the Web, improving development and collaboration efficiency.
+  Provides a one-stop management solution for models, datasets, and code, supporting storage, version control, modifications, and queries. Supports uploading and downloading large files, along with online editing and preview on the Web, improving development and collaboration efficiency.
 
 - **Flexible and Compatible Development Ecosystem**:  
   Supports both HTTPS and SSH protocols, enabling users to operate through Git commands or a web interface. The platform integrates popular SDKs such as Gradio and Streamlit, simplifying AI application development. It also offers one-click model inference and fine-tuning services with automatic environment optimization to ensure efficient deployment and operation.
