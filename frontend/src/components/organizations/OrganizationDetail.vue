@@ -106,12 +106,13 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
   import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import useUserStore from '../../stores/UserStore'
 
   const props = defineProps({
     name: String
@@ -126,6 +127,8 @@
   const membersList = ref([])
 
   const { cookies } = useCookies()
+
+  const userStore = useUserStore()
 
   const role = ref('')
 
@@ -154,7 +157,7 @@
     }
   }
   const currentUserRole = async () => {
-    const orgIsAdminEndpoint = `/organization/${props.name}/members/${cookies.get('current_user')}`
+    const orgIsAdminEndpoint = `/organization/${props.name}/members/${userStore.username}`
     const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -164,9 +167,12 @@
     }
   }
 
+  watch(() => userStore.username, () => {
+    currentUserRole()
+  })
+
   onMounted(() => {
     fetchOrgDetail()
     fetchOrgMemberList()
-    currentUserRole()
   })
 </script>
