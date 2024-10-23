@@ -53,7 +53,7 @@ func NewCsgHubServer(ctx context.Context, baseURL, apiKey string) (*CsgHubServer
 	}, nil
 }
 
-func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header, body io.Reader, obj interface{}) (*http.Response, error) {
+func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header, body []byte, obj interface{}) (*http.Response, error) {
 	data, resp, err := c.getResponse(method, path, header, body)
 	if err != nil {
 		return resp, err
