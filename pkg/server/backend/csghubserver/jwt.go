@@ -1,7 +1,6 @@
 package csghubserver
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -33,7 +32,7 @@ func (c *CsgHubServer) CreateJWTToken(req types.CreateJWTReq) (*types.CreateJWTR
 		"POST",
 		fmt.Sprintf("/jwt/token?current_user_uuid=%s", req.UUID),
 		nil,
-		bytes.NewReader(body),
+		body,
 		checkResp,
 	)
 	return checkResp, resp, err

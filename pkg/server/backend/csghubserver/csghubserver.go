@@ -1,6 +1,7 @@
 package csghubserver
 
 import (
+	"bytes"
 	"context"
 	"crypto/tls"
 	"encoding/json"
@@ -52,7 +53,7 @@ func NewCsgHubServer(ctx context.Context, baseURL, apiKey string) (*CsgHubServer
 	}, nil
 }
 
-func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header, body io.Reader, obj interface{}) (*http.Response, error) {
+func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header, body []byte, obj interface{}) (*http.Response, error) {
 	data, resp, err := c.getResponse(method, path, header, body)
 	if err != nil {
 		return resp, err
@@ -60,14 +61,9 @@ func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header
 	return resp, json.Unmarshal(data, obj)
 }
 
-func (c *CsgHubServer) getResponse(method, path string, header http.Header, body io.Reader) ([]byte, *http.Response, error) {
-	bodyString := ""
-	if body != nil {
-		bodyData, _ := io.ReadAll(body)
-		bodyString = string(bodyData)
-	}
-	slog.Info("CsghubServer API Key Request", method, path, headersToString(header), bodyString)
-	resp, err := c.doRequest(method, path, header, body)
+func (c *CsgHubServer) getResponse(method, path string, header http.Header, body []byte) ([]byte, *http.Response, error) {
+	slog.Info("Server Request", method, path, headersToString(header), string(body))
+	resp, err := c.doRequest(method, path, header, bytes.NewReader(body))
 	if err != nil {
 		return nil, resp, err
 	}

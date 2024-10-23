@@ -1,7 +1,6 @@
 package csghubserver
 
 import (
-	"bytes"
 	"encoding/json"
 	"net/http"
 
@@ -19,7 +18,7 @@ func (c *CsgHubServer) ImageSecureCheck(req types.ImageSensitiveCheckReq) (*type
 		"POST",
 		"/sensitive/image",
 		nil,
-		bytes.NewReader(body),
+		body,
 		checkResp,
 	)
 	return checkResp, resp, err
