@@ -36,7 +36,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 
 	csghubServer, err := server.NewServer(svcCtx.Config)
 	if err != nil {
-		log.Fatalf("failed to create server: %w", err)
+		log.Fatalf("failed to create server: %v", err)
 	}
 
 	logFilePath := "./log/app.log"
@@ -67,6 +67,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}))
 	g.Use(middleware.AuthMiddleware(csghubServer))
+	// This will track all request to portal go server
 	g.Use(middleware.Log())
 
 	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
