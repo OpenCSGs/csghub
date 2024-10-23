@@ -15,12 +15,32 @@ Additionally, CSGHub features microservice submodules and standardized OpenAPIs 
 
 ### Key Features
 
-- **Unified Management of LLM Assets**: A one-stop Hub for unified management of model files, datasets, and large-scale model application codes.
-- **Development Ecosystem Compatibility**: Supports both HTTPS and SSH protocols for Git commands and web interface operations, ensuring convenient usage for different users.
-- **Large Model Capability Expansion**: Natively supports version management, model format conversion, automatic data processing, and dataset preview functions.
-- **Permissions and Security**: Supports integration with corporate user systems, setting of asset visibility, and zero-trust authentication interface design for both external and internal users, maximizing security.
-- **Support for Private Deployment**: Independent of internet and cloud vendors, enabling one-click initiation of private deployment.
-- **Native Design for Large Models**: Supports natural language interaction, one-click model deployment, and asset management for Agent and Copilot App.
+- **Unified Management of LLM Assets**:  
+  Provides a one-stop management solution for models, datasets, and code, supporting storage, version control, modifications, and queries. Comprehensive prompt library management and optimization features enhance model performance. Supports uploading and downloading large files, along with online editing and preview on the Web, improving development and collaboration efficiency.
+
+- **Flexible and Compatible Development Ecosystem**:  
+  Supports both HTTPS and SSH protocols, enabling users to operate through Git commands or a web interface. The platform integrates popular SDKs such as Gradio and Streamlit, simplifying AI application development. It also offers one-click model inference and fine-tuning services with automatic environment optimization to ensure efficient deployment and operation.
+
+- **Extended Capabilities for LLMs**:  
+  Offers comprehensive version management, model format conversion, and automated data processing. Supports conversion tools for common data formats like CSV and JSON, and allows Web-based preview of Parquet datasets for quick data inspection.
+
+- **Space and Asset Management Assistant (Copilot)**:  
+  Users can demonstrate model capabilities, build prototypes, and manage applications flexibly through the Space. The Copilot assistant simplifies asset management and offers a private version to support on-premises deployment for enterprises.
+
+- **Multi-Source Data Synchronization and Recommendation**:  
+  Integrated with the OpenCSG community, allowing synchronization of community models and datasets. Provides personalized recommendations based on business scenarios, assisting enterprises in developing AI solutions tailored to their needs.
+
+- **Comprehensive Permissions and Security Control**:  
+  Supports integration with enterprise user systems, asset visibility settings, and internal-external interface authentication mechanisms. Ensures compliance through license verification and traceability, guaranteeing models adhere to legal requirements.
+
+- **Support for On-Premises Deployment**:  
+  Enables one-click on-premises deployment without relying on cloud services, ensuring enterprises retain full control and security over their data.
+
+- **End-to-End Data Processing and Intelligent Annotation System**:  
+  Provides customizable data processing pipelines for complex data cleaning and transformation tasks, leveraging parallel processing to accelerate workflows. Includes an intelligent annotation system, supporting multi-user collaboration and review to ensure data quality.
+
+- **High Availability and Disaster Recovery Design**:  
+  Adopts a high-availability architecture with load balancing and resource scheduling to ensure stability under high concurrency. Supports disaster recovery with redundant backups and snapshot technology, ensuring business continuity.
 
 For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
 
