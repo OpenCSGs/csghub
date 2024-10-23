@@ -21,6 +21,7 @@ const (
 
 type SessionHandler interface {
 	Login(ctx *gin.Context)
+	Logout(ctx *gin.Context)
 	SignUp(ctx *gin.Context)
 	Create(ctx *gin.Context)
 }
@@ -45,6 +46,26 @@ func NewSessionHandler(config *config.Config) (SessionHandler, error) {
 
 func (i *SessionHandlerImpl) Login(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, i.Config.LoginURL)
+}
+
+func (i *SessionHandlerImpl) Logout(ctx *gin.Context) {
+	cookies := ctx.Request.Cookies()
+	paramRedirectPath := ctx.Query("redirect_to")
+
+	// Loop through the cookies and remove them
+	for _, cookie := range cookies {
+		ctx.SetCookie(cookie.Name, "", -1, "/", "localhost", false, true)
+		ctx.SetCookie(cookie.Name, "", -1, "/", "opencsg.com", false, true)
+		ctx.SetCookie(cookie.Name, "", -1, "/", "stg.opencsg.com", false, true)
+		ctx.SetCookie(cookie.Name, "", -1, "/", ".opencsg-stg.com", false, true)
+		ctx.SetCookie(cookie.Name, "", -1, "/", ".opencsg.com", false, true)
+	}
+
+	if paramRedirectPath == "" {
+		ctx.Redirect(http.StatusFound, "/")
+	} else {
+		ctx.Redirect(http.StatusFound, paramRedirectPath)
+	}
 }
 
 func (i *SessionHandlerImpl) SignUp(ctx *gin.Context) {
