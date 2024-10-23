@@ -1,9 +1,9 @@
 import { atob_utf8 } from './utils'
 
-const relativePathToResolvePath = (repoType, content, namespacePath) => {
+const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch) => {
   if (!content) return content
 
-  const prefix = `/${repoType}/${namespacePath}/resolve/main/`
+  const prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
 
   // Handle markdown format image
   content = content.replace(
@@ -29,7 +29,7 @@ const relativePathToResolvePath = (repoType, content, namespacePath) => {
   return content
 }
 
-const resolveContent = (repoType, encodedContent, namespacePath) => {
+const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) => {
   const requestUrl = new URL(window.location.href)
   const fileExtension = requestUrl.pathname.split('.').pop()
 
@@ -43,7 +43,8 @@ const resolveContent = (repoType, encodedContent, namespacePath) => {
       content = relativePathToResolvePath(
         repoType,
         parsedBlobContent,
-        namespacePath
+        namespacePath,
+        currentBranch
       )
     } catch (error) {
       console.log(error)

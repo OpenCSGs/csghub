@@ -10,7 +10,7 @@ import (
 func (c *CsgHubServer) DownloadFile(req types.DownloadReq) ([]byte, *http.Response, error) {
 	data, resp, err := c.getResponse(
 		"GET",
-		fmt.Sprintf("/%s/%s/%s/resolve/%s?current_user=%s", req.RepoType, req.Namespace, req.Name, req.FilePath, req.CurrentUser),
+		fmt.Sprintf("/%s/%s/%s/resolve/%s?current_user=%s&ref=%s", req.RepoType, req.Namespace, req.Name, req.FilePath, req.CurrentUser, req.Ref),
 		nil,
 		nil,
 	)
@@ -21,7 +21,7 @@ func (c *CsgHubServer) DownloadFileRaw(req types.DownloadReq) (*types.DownloadFi
 	s := new(types.DownloadFileRawResp)
 	resp, err := c.getParsedResponse(
 		"GET",
-		fmt.Sprintf("/%s/%s/%s/raw/%s?current_user=%s", req.RepoType, req.Namespace, req.Name, req.FilePath, req.CurrentUser),
+		fmt.Sprintf("/%s/%s/%s/raw/%s?current_user=%s&ref=%s", req.RepoType, req.Namespace, req.Name, req.FilePath, req.CurrentUser, req.Ref),
 		nil,
 		nil,
 		s,

@@ -15,6 +15,7 @@ type DownloadReq struct {
 	Name        string   `json:"name"`
 	FilePath    string   `json:"file_path"`
 	CurrentUser string   `json:"current_user"`
+	Ref         string   `json:"ref"`
 }
 
 type DownloadFileRawResp struct {

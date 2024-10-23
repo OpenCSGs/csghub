@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
@@ -67,6 +67,7 @@
 
   const loading = ref(true)
   const readmeContent = ref('')
+  const rawReadmeContent = ref('')
   const relations = ref({})
   const endpoint = ref({})
   const datasetInfo = ref(null)
@@ -77,8 +78,8 @@
     const { data } = await useFetchApi(url).json()
 
     if (data.value) {
-      const content = resolveContent(`${props.repoType}s`, data.value.data.content, props.namespacePath)
-      readmeContent.value = content
+      rawReadmeContent.value = data.value.data.content
+      resolveReadmeContent()
     }
     loading.value = false
   }
@@ -137,6 +138,13 @@
       endpoint.value = data.value.data
     }
   }
+
+  const resolveReadmeContent = () => {
+    const content = resolveContent(`${props.repoType}s`, rawReadmeContent.value, props.namespacePath, props.currentBranch)
+    readmeContent.value = content
+  }
+
+  watch(() => props.currentBranch, resolveReadmeContent)
 
   onMounted(() => {
     fetchData()

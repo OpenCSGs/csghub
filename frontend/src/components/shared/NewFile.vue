@@ -64,7 +64,8 @@
   const props = defineProps({
     originalCodeContent: String,
     repoName: String,
-    namespacePath: String
+    namespacePath: String,
+    currentBranch: String
   })
 
   const codeContent = ref(props.originalCodeContent)
@@ -110,8 +111,8 @@
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),
-      branch: 'main',
-      new_branch: 'main'
+      branch: props.currentBranch,
+      new_branch: props.currentBranch
     }
     const option = {
       headers: {
@@ -130,11 +131,11 @@
   }
 
   const redirectToFilePreview = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/main/${fileName.value}`
+    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
   }
 
   const cancel = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+    window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
   }
 </script>
 
