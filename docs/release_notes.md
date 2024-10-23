@@ -1,7 +1,7 @@
 # Release Notes
 
 - **[2024.09.15] v0.9.0**
-  `CSGHub` portal been migrated to the Go version, git server support Gitaly and use it as default, collections function been added, new resource console page, running space endpoint finetune do not need domain anymore other UX optimization and bug fix.
+  `CSGHub` portal has been migrated to the Go version, with Gitaly support enabled by default on the Git server. New features include the 'Collections' feature and the Resource Console page. Running spaces, model inference, and fine-tuning endpoints no longer requires a domain name. Additionally, various user experience improvements and bug fixes have been implemented.
 - **[2024.08.15] v0.8.0**
   Big release to introduce a standalone `user_server` service and move user, org, token management from `CSGHub` to backend server `CSGHub-server`, introduce a standalone `starhub_server_runner service` for uniformed deployment of Application Space, Mode Inference and Finetune. Resource management enchanced, multiple k8s clusters in different regions are not supported.
 - **[2024.07.15] v0.7.0**

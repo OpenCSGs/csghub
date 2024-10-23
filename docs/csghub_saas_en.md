@@ -71,13 +71,13 @@ After logging in to the platform, click on your avatar and you will see the `New
   1. Download via **HTTP**:
     ```
     git lfs install
-    git clone https://portal.opencsg.com/models/demo/test_model.git
+    git clone https://opencsg.com/models/demo/test_model.git
     ```
 
   2. Download via **SSH**:
     ```
     git lfs install
-    git clone git@hub.opencsg.com:models_demo/test_model.git
+    git clone git@hub.opencsg.com/models/demo/test_model.git
     ```
 
 - **Download via SDK:**

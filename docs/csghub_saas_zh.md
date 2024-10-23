@@ -71,13 +71,13 @@
   - 1. 您可以通过 **HTTP** 下载：
     ```
     git lfs install
-    git clone https://portal.opencsg.com/models/demo/test_model.git
+    git clone https://opencsg.com/models/demo/test_model.git
     ```
 
   - 2. 也可以通过 **SSH** 下载：
     ```
     git lfs install
-    git clone git@hub.opencsg.com:models_demo/test_model.git
+    git clone git@hub.opencsg.com/models/demo/test_model.git
     ```
 
 - **使用 SDK 下载：**
