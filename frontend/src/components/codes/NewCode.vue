@@ -133,7 +133,7 @@
           />
         </el-form-item>
         <p
-          class="mb-[18px] rounded bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('codes.newCode.tips') }}
         </p>
@@ -141,7 +141,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-[8px] !border-[1px] !border-brand-600"
+              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
               @click="handleSubmit"
             >
               {{ t('codes.newCode.createCode') }}

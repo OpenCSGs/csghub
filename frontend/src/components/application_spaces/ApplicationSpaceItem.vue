@@ -36,7 +36,7 @@
     >
       <img
         :src="coverImageUrl"
-        class="w-full h-[144px] object-cover rounded cursor-pointer hover:opacity-50"
+        class="w-full h-[144px] object-cover rounded-sm cursor-pointer hover:opacity-50"
       />
     </div>
     <div v-if="!isCollection">

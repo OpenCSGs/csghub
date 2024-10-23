@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-[8px] w-[260px] p-[20px] border rounded-[10px] bg-[#F4F4F6]"
+    class="flex flex-col gap-[8px] w-[260px] p-[20px] border rounded-lg bg-[#F4F4F6]"
   >
     <RouterLink
       to="/admin_panel/"

@@ -18,7 +18,7 @@
       <template #header="{ close }">
         <div class="flex justify-between">
           <div
-            class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-gray-200"
+            class="px-[12px] py-[12px] rounded-lg border-[2px] border-gray-200"
           >
             <SvgIcon name="collections" />
           </div>
@@ -75,13 +75,13 @@
       <template #footer>
         <span class="flex justify-between gap-3 px-5">
           <div
-            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-gray-500 text-center py-[10px] px-4 border border-gray-300 cursor-pointer shadow-xs rounded-[8px]"
+            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-gray-500 text-center py-[10px] px-4 border border-gray-300 cursor-pointer shadow-xs rounded-md"
             @click="dialogVisible = false"
           >
             {{ $t('all.cancel') }}
           </div>
           <div
-            class="w-[50%] hover:bg-brand-700 hover:border-brand-700 active:outline active:outline-4 active:outline-brand-600 text-white text-center py-[10px] px-4 border border-brand-600 bg-brand-600 cursor-pointer shadow-xs rounded-[8px]"
+            class="w-[50%] hover:bg-brand-700 hover:border-brand-700 active:outline active:outline-4 active:outline-brand-600 text-white text-center py-[10px] px-4 border border-brand-600 bg-brand-600 cursor-pointer shadow-xs rounded-md"
             @click="confirmAddRepo"
           >
             {{ $t('all.confirm') }}

@@ -52,7 +52,7 @@
               class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5"
             >
               <div
-                class="border border-gray-200 rounded-[10px] p-3 max-w-[max-content] mb-4"
+                class="border border-gray-200 rounded-lg p-3 max-w-[max-content] mb-4"
               >
                 <SvgIcon
                   name="collections"

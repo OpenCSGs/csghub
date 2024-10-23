@@ -8,7 +8,7 @@
         <span>{{item.type=='change status'?'changed discussion status to '+ item.state:item.type=='change title'?'changed discussion title from '+ item.title_from +' to ' + item.title_to:''}}</span>
         <span>{{formatDate(item.date,'zh_CN')}}</span>
       </div>
-      <div v-else class="border border-gray-200 border-b-[2px] rounded-[4px]">
+      <div v-else class="border border-gray-200 border-b-[2px] rounded-xs">
         <div class="flex justify-between gap-[4px] border-b border-gray-200 items-center px-[12px] py-[9px] bg-gray-100">
           <div class="flex items-center gap-[8px]">
             <el-avatar :size="24" :src="avatar"></el-avatar>

@@ -20,7 +20,7 @@
       <template #header>
         <div class="flex justify-between">
           <div
-            class="px-[12px] py-[12px] rounded-[10px] border-[2px] border-gray-200"
+            class="px-[12px] py-[12px] rounded-lg border-[2px] border-gray-200"
           >
             <SvgIcon name="invite_org_member" />
           </div>
@@ -63,14 +63,14 @@
               {{ $t('all.userName') }}
             </p>
             <div
-              class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]"
+              class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]"
             >
               <div
                 class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto"
               >
                 <span
                   v-for="user in selectedUsers"
-                  class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]"
+                  class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]"
                 >
                   <img
                     :src="user.avatar"

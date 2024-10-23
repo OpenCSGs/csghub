@@ -186,7 +186,7 @@
             class="!grid grid-cols-4 w-full gap-[24px]"
           >
             <el-radio
-              class="rounded-[8px] !border-[2px] !h-[120px] flex justify-center"
+              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               label="gradio"
               size="large"
               border
@@ -198,7 +198,7 @@
               <p class="font-semibold text-[16px]">Gradio</p>
             </el-radio>
             <el-radio
-              class="rounded-[8px] !border-[2px] !h-[120px] flex justify-center"
+              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               label="streamlit"
               size="large"
               border
@@ -211,7 +211,7 @@
             </el-radio>
             <el-radio
               v-if="isAdmin"
-              class="rounded-[8px] !border-[2px] !h-[120px] flex justify-center"
+              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
               label="nginx"
               border
@@ -226,7 +226,7 @@
             </el-radio>
             <el-radio
               v-if="!isAdmin"
-              class="rounded-[8px] !border-[2px] !h-[120px] flex justify-center"
+              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
               label="docker"
               disabled
@@ -241,7 +241,7 @@
             </el-radio>
             <el-radio
               disabled
-              class="rounded-[8px] !border-[2px] !h-[120px] flex justify-center"
+              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               label="static"
               size="large"
               border
@@ -312,7 +312,7 @@
           /> 
         </el-form-item>
         <p
-          class="mb-[18px] rounded bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('application_spaces.new.notes') }}
         </p>
@@ -320,7 +320,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-[8px] !border-[1px] !border-brand-600"
+              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
               @click="handleSubmit"
             >
               {{ t('application_spaces.new.create') }}

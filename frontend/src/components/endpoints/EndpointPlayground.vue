@@ -11,7 +11,7 @@
           {{ $t('endpoints.playground.title') }}
         </div>
         <div
-          class="h-11 p-1 bg-gray-50 rounded-[10px] border border-gray-200 items-center gap-1 inline-flex"
+          class="h-11 p-1 bg-gray-50 rounded-lg border border-gray-200 items-center gap-1 inline-flex"
         >
           <div
             class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"

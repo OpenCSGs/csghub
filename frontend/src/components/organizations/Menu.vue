@@ -1,6 +1,6 @@
 <template>
   <div class="border-r border-gray-200">
-    <div class="w-[294px] rounded-[8px] mx-[24px] py-[24px]">
+    <div class="w-[294px] rounded-md mx-[24px] py-[24px]">
       <div class="flex p-[16px] pt-[16px]">
         <el-avatar
           :size="60"
@@ -64,7 +64,7 @@
     methods: {
       menuClass(menuPath) {
         if (menuPath === window.location.pathname) {
-          return 'text-gray-700 font-semibold bg-gray-50 rounded-[6px]'
+          return 'text-gray-700 font-semibold bg-gray-50 rounded-sm'
         } else {
           return ''
         }

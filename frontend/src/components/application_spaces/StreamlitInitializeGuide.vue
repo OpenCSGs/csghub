@@ -1,6 +1,6 @@
 <template>
   <div class="sm:px-[20px]">
-    <div class="flex gap-[8px] mt-[32px] p-[16px] border border-gray-300 rounded-[12px] shadow-xs">
+    <div class="flex gap-[8px] mt-[32px] p-[16px] border border-gray-300 rounded-xl shadow-xs">
       <SvgIcon name="spaces"/>
       <div>
         <h3 class="text-gray-600 text-[14px] font-[500]">
@@ -55,7 +55,7 @@
     <p class="text-gray-500 text-[16px] font-[400] my-[24px]">
       {{ $t('application_spaces.gradioGuide.successNotes') }}
     </p>
-    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
+    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-md shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
         <h3 class="text-gray-900"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes1') }}</p>

@@ -41,7 +41,7 @@
       </div>
     </div>
     <div
-      class="flex gap-1 max-w-[max-content] px-2 rounded-[16px] border border-gray-300 text-[14px] leading-[20px] bg-gray-25 text-brand-900"
+      class="flex gap-1 max-w-[max-content] px-2 rounded-2xl border border-gray-300 text-[14px] leading-[20px] bg-gray-25 text-brand-900"
     >
       <SvgIcon width="12px" height="12px" name="star" />
       {{ $t('collections.hot') }}
@@ -63,7 +63,7 @@
         />
       </div>
       <div class="flex flex-col justify-center items-center relative pt-[220px] md:pt-5">
-        <div class="border border-gray-200 rounded-[10px] p-3 max-w-[max-content] mb-4">
+        <div class="border border-gray-200 rounded-lg p-3 max-w-[max-content] mb-4">
           <SvgIcon name="search" />
         </div>
         <div class="test-[16px] leading-[24px]">{{ $t('collections.noData') }}</div>
