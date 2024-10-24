@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col border rounded-[8px] p-[16px] gap-[16px]">
+  <div class="flex flex-col border rounded-md p-[16px] gap-[16px]">
     <div class="flex justify-between gap-[16px]">
       <div class="flex w-[181px] h-[28px]">
         <SvgIcon
@@ -18,7 +18,7 @@
         />
         <p class="ml-[8px] text-gray-500 text-[14px] leading-[20px]">Auto-converted to Parquet</p>
       </div>
-      <div class="flex items-center justify-center cursor-pointer px-[12px] py-[2px] border rounded-[4px]">
+      <div class="flex items-center justify-center cursor-pointer px-[12px] py-[2px] border rounded-xs">
         <SvgIcon
           name="parquet_api"
           width="10px"
@@ -28,7 +28,7 @@
           API
         </p>
       </div>
-      <div class="flex items-center justify-center cursor-pointer px-[12px] py-[2px] border rounded-[4px]">
+      <div class="flex items-center justify-center cursor-pointer px-[12px] py-[2px] border rounded-xs">
         <SvgIcon
           name="parquet_api"
           width="10px"

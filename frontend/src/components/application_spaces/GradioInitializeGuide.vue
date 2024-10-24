@@ -1,6 +1,6 @@
 <template>
   <div class="sm:px-[20px]">
-    <div class="flex gap-[8px] mt-[32px] p-[16px] border border-gray-300 rounded-[12px] shadow-xs">
+    <div class="flex gap-[8px] mt-[32px] p-[16px] border border-gray-300 rounded-xl shadow-xs">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
         <g clip-path="url(#clip0_8790_36855)">
           <path d="M6.24984 9.99984L8.74984 12.4998L13.7498 7.49984M18.3332 9.99984C18.3332 14.6022 14.6022 18.3332 9.99984 18.3332C5.39746 18.3332 1.6665 14.6022 1.6665 9.99984C1.6665 5.39746 5.39746 1.6665 9.99984 1.6665C14.6022 1.6665 18.3332 5.39746 18.3332 9.99984Z" stroke="#079455" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -51,7 +51,7 @@
     <h3 class="my-[24px] text-gray-600 font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
     <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
     <p class="text-gray-500 text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
-    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-[8px] shadow-xs py-[12px] px-[14px] mb-[32px]">
+    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-md shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
         <h3 class="text-gray-900"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes1') }}</p>
@@ -138,7 +138,7 @@
 
 <style scoped>
   .active-tab {
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     background: var(--Gray-50, #F9FAFB);
   }
 </style>

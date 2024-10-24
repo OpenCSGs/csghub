@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center md:flex-col px-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
+    class="flex justify-center md:flex-col px-[24px] rounded-md md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
@@ -14,7 +14,7 @@
           </h3>
           <p class="text-gray-500 text-[14px]">{{ $t('accessToken.desc') }}</p>
         </div>
-        <div class="bg-gray-100 p-[12px] rounded-[8px] mt-[16px]">
+        <div class="bg-gray-100 p-[12px] rounded-md mt-[16px]">
           <h3 class="text-gray-700 text-[16px] font-[500] mb-[16px]">
             access token
           </h3>
@@ -26,7 +26,7 @@
               onfocus="this.blur()"
             />
             <div
-              class="ml-[8px] px-[16px] py-[8px] border rounded-[4px] bg-white cursor-pointer"
+              class="ml-[8px] px-[16px] py-[8px] border rounded-xs bg-white cursor-pointer"
               @click="copyToken"
             >
               <SvgIcon name="copy" />

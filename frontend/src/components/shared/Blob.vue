@@ -39,7 +39,7 @@
         <!-- Todo 暂时先隐藏 -->
         <a
           href="#"
-          class="ml-4 items-center px-4 py-[5px] border border-gray-200 rounded-[100px] hidden"
+          class="ml-4 items-center px-4 py-[5px] border border-gray-200 rounded-full hidden"
         >
           <SvgIcon
             name="commits"

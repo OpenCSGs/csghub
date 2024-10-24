@@ -5,7 +5,7 @@
         {{ $t('organization.orgMembers') }}
       </div>
       <div
-        class="flex flex-col items-start rounded-[12px] border border-[1px] border-gray-200 shadow-sm"
+        class="flex flex-col items-start rounded-xl border border-[1px] border-gray-200 shadow-sm"
       >
         <div
           class="px-[24px] py-[20px] w-full flex justify-between border-b border-gray-200"

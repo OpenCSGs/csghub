@@ -15,7 +15,7 @@
           style="width: 120px" />
         <el-button
           :loading="billingLoading"
-          class="flex gap-1 border border-gray-300 rounded-[8px] py-1 px-2 cursor-pointer"
+          class="flex gap-1 border border-gray-300 rounded-md py-1 px-2 cursor-pointer"
           @click="fetchDetails(1)">
           {{ $t('billing.refresh') }}
         </el-button>

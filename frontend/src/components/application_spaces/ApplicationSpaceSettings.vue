@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="deployFailed"
-    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-gray-300 rounded-[12px] shadow-xs">
+    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-gray-300 rounded-xl shadow-xs">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -41,7 +41,7 @@
   </div>
 
   <div
-    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- cloud resource -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -137,7 +137,7 @@
           {{ $t('application_spaces.namespaceName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-[8px] bg-gray-50 px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-[14px] py-[10px] border">
           {{ applicationSpacePath }}
         </div>
       </div>
@@ -315,7 +315,7 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-md"
             :class="
               delDesc === applicationSpacePath
                 ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'

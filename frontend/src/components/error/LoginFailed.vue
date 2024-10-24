@@ -9,12 +9,12 @@
         <p class="text-[20px] font-[300]">{{ $t('errors_page.login_failed.default_msg') }}</p>
         <div class="flex gap-[12px] mt-[24px]">
           <a href="/">
-            <button class="text-[18px] flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded border border-gray-400 bg-white shadow-sm">
+            <button class="text-[18px] flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded-sm border border-gray-400 bg-white shadow-sm">
               {{ $t('errors_page.login_failed.back_to_homepage') }}
             </button>
           </a>
           <a href="/login">
-            <button class="text-[18px] text-white flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded border border-gray-400 bg-brand-600 shadow-sm">
+            <button class="text-[18px] text-white flex px-[22px] py-[16px] items-center justify-center gap-[8px] rounded-sm border border-gray-400 bg-brand-600 shadow-sm">
               {{ $t('errors_page.login_failed.relogin') }}
             </button>
           </a>

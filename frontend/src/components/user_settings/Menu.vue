@@ -1,6 +1,6 @@
 <template>
     <div class="pt-6">
-      <div class="w-[294px] rounded-[8px] mx-[24px]">
+      <div class="w-[294px] rounded-md mx-[24px]">
         <div @click="clickProfile" class="flex p-[16px] cursor-pointer">
           <el-avatar :size="60" :src="userStore.avatar"> </el-avatar>
           <div class="ml-[10px]">

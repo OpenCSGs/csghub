@@ -19,7 +19,7 @@
     <el-button
       v-show="activeName == 'page' && finetune.endpoint"
       color="#3250BD"
-      style="border-radius: 8px !important"
+      style="border-radius: var(--border-radius-md) !important"
       class="absolute top-0 right-0 z-10 cursor-pointer text-white"
       @click="toNotebookPage"
       >{{ $t('finetune.detail.notebook') }}</el-button
@@ -272,7 +272,7 @@
   }
 
   .active-tab {
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     background: #e5e7eb;
     padding: 6px;
   }

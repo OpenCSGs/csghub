@@ -14,7 +14,7 @@
     font-weight: var(--el-menu-item-font-weight);
   };
   .el-menu--popup {
-    border-radius: 12px;
+    border-radius: var(--border-radius-xl);
     padding: 12px 0;
   };
   .el-popper.is-light {

@@ -348,7 +348,7 @@
   /* 默认尺寸（可以认为是 md 尺寸） */
   padding: 10px 16px;
   font-size: 14px;
-  border-radius: 10px;
+  border-radius: var(--border-radius-lg);
 }
 
 /* sm size button */
@@ -361,7 +361,7 @@
 .btn-link-color.btn-sm {
   padding: 8px 14px;
   font-size: 12px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
 }
 
 /* lg size button */
@@ -374,7 +374,7 @@
 .btn-link-color.btn-lg {
   padding: 10px 18px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
 }
 
 /* xl size button */
@@ -387,7 +387,7 @@
 .btn-link-color.btn-xl {
   padding: 12px 20px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
 }
 
 /* 2xl size button */
@@ -400,5 +400,5 @@
 .btn-link-color.btn-2xl {
   padding: 16px 24px;
   font-size: 18px;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
 }
