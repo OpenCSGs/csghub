@@ -47,5 +47,5 @@ func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
 
 	c.SetCookie("user_token", r.Data.Token, 3600*24*7, "/", "", false, false)
 
-	c.JSON(http.StatusOK, gin.H{"message": "Token set successfully"})
+	c.JSON(http.StatusOK, gin.H{"jwt_token": r.Data.Token})
 }
