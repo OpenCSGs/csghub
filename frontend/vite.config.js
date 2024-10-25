@@ -26,8 +26,8 @@ export default defineConfig((configEnv) => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: true, // Remove console logs
-          drop_debugger: true // Remove debugger statements
+          drop_console: configEnv.mode !== 'development', // Remove console logs
+          drop_debugger: configEnv.mode !== 'development' // Remove debugger statements
         }
       }
     },
