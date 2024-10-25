@@ -17,19 +17,22 @@ const refreshJWT = async () => {
       if (currentTime >= expireTime) {
         // user token expired, refresh token
         console.log('refresh jwt')
-        await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+        const res = await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+        res.json().then(data => { console.log(data.message) })
       } else {
         // if user token will expire soon, refresh
         // if user token will not expire soon, do nothing
         const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
         if (differenceInMinutes < 120) {
           console.log('refresh jwt')
-          await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+          const res = await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+          res.json().then(data => { console.log(data.message) })
         }
       }
     } else {
       console.log('refresh jwt')
-      await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+      const res = await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+      res.json().then(data => { console.log(data.message) })
     }
   }
 }
