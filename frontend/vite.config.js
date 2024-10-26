@@ -14,9 +14,6 @@ export default defineConfig((configEnv) => {
           manualChunks(id) {
             // console.log('Processing:', id);
             if (id.includes('node_modules')) {
-              if (id.includes('node_modules/@ckeditor/')) {
-                return 'ckeditor';
-              }
               if (id.includes('lodash')) {
                 return 'lodash';
               }
