@@ -12,7 +12,20 @@ export default defineConfig((configEnv) => {
         input: getHtmlEntryFiles('src'),
         output: {
           manualChunks(id) {
+            // console.log('Processing:', id);
             if (id.includes('node_modules')) {
+              if (id.includes('node_modules/@ckeditor/')) {
+                return 'ckeditor';
+              }
+              if (id.includes('lodash')) {
+                return 'lodash';
+              }
+              if (id.includes('element-plus')) {
+                return 'element-plus';
+              }
+              if (id.includes('highlight.js')) {
+                return 'highlightjs';
+              }
               return 'vendor'
             }
             if (id.includes('src/components')) {
