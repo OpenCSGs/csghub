@@ -113,7 +113,7 @@
           >
             <SvgIcon name="edit" />
             <a
-              :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`"
+              :href="`/${prefixPath}/${namespacePath}/edit/${currentBranch}/${currentPath}`"
               >{{ $t('shared.edit') }}</a
             >
           </div>
@@ -296,7 +296,8 @@
     content.value = resolveContent(
       prefixPath,
       data.content,
-      props.namespacePath
+      props.namespacePath,
+      props.currentBranch
     )
     lastCommit.value = data.commit
     size.value = data.size

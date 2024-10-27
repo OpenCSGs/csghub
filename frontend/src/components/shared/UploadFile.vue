@@ -65,7 +65,8 @@ import useFetchApi from '../../packs/useFetchApi'
 
 const props = defineProps({
   repoName: String,
-  namespacePath: String
+  namespacePath: String,
+  currentBranch: String
 })
 
 const { t } = useI18n();
@@ -104,7 +105,7 @@ const handleRemove = (file, fileList) => {
 }
 
 const cancel = () => {
-  window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+  window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
 }
 
 const buildCommitMessage = () => {
@@ -123,7 +124,7 @@ const appendFilesToFormData = (formData, files) => {
 
 const syncUploadFile = async () => {
   const formData = new FormData()
-  formData.append('branch', 'main')
+  formData.append('branch', props.currentBranch)
   formData.append('message', buildCommitMessage())
 
   appendFilesToFormData(formData, filesList.value)
@@ -140,7 +141,7 @@ const syncUploadFile = async () => {
       ElMessage({ message: error.value.msg, type: 'error' })
     } else {
       filesList.value = []
-      window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
     }
   } catch (error) {
     console.error(error)

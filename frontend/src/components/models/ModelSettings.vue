@@ -578,8 +578,8 @@
         const bodyData = {
           content: btoa_utf8(newContent),
           message: 'Update README.md',
-          branch: 'main',
-          new_branch: 'main',
+          branch: this.default_branch,
+          new_branch: this.default_branch,
           sha: this.readmeSha
         }
         const option = {
