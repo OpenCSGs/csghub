@@ -499,13 +499,13 @@
         ElMessageBox({
           title: this.$t('datasets.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, $t('all.changeVis')),
+            h('span', null, this.$t('all.changeVis')),
             h(
               'span',
               null,
               value === 'Private'
-                ? $t('all.private')
-                : $t('all.public')
+                ? this.$t('all.private')
+                : this.$t('all.public')
             ),
             h(
               'span',
