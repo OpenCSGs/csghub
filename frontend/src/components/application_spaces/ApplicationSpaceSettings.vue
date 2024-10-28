@@ -581,7 +581,7 @@
         ElMessageBox({
           title: this.$t('application_spaces.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, $t('all.changeVis')),
+            h('span', null, this.$t('all.changeVis')),
             h(
               'span',
               null,
