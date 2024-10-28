@@ -12,7 +12,17 @@ export default defineConfig((configEnv) => {
         input: getHtmlEntryFiles('src'),
         output: {
           manualChunks(id) {
+            // console.log('Processing:', id);
             if (id.includes('node_modules')) {
+              if (id.includes('lodash')) {
+                return 'lodash';
+              }
+              if (id.includes('element-plus')) {
+                return 'element-plus';
+              }
+              if (id.includes('highlight.js')) {
+                return 'highlightjs';
+              }
               return 'vendor'
             }
             if (id.includes('src/components')) {
@@ -26,8 +36,8 @@ export default defineConfig((configEnv) => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: true, // Remove console logs
-          drop_debugger: true // Remove debugger statements
+          drop_console: configEnv.mode !== 'development', // Remove console logs
+          drop_debugger: configEnv.mode !== 'development' // Remove debugger statements
         }
       }
     },
