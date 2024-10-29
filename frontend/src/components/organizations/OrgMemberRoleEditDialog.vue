@@ -111,8 +111,6 @@
             const url = `/organization/${this.organization.name}/members/${this.formDataRaw.username}`
             try {
               const { data, error } = await useFetchApi(url, options).put().json()
-              console.log(error)
-              console.log(data)
               if (error.value) {
                 this.$message.error(response.error.msg)
                 this.loading = false
