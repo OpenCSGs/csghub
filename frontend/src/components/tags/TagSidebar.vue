@@ -139,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, watch, onMounted, computed } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import PyTorch from './frameworks/PyTorch.vue'
   import TensorFlow from './frameworks/TensorFlow.vue'
@@ -149,7 +149,6 @@
   import PaddlePaddle from './frameworks/PaddlePaddle.vue'
   import Joblib from './frameworks/Joblib.vue'
   import GGUF from './frameworks/GGUF.vue'
-  import { useCookies } from "vue3-cookies"
   import TagItem from './TagItem.vue'
 
   const props = defineProps({
@@ -162,23 +161,28 @@
     selectedTagType: String
   })
 
-  const { cookies } = useCookies()
-
   const emit = defineEmits(['resetTags'])
 
   const activeNavItem = ref('Task')
 
-  const theTaskTags = computed(() => {
-    return props.taskTags
+  const theTaskTags = ref({})
+  watch(() => props.taskTags, (newValue) => {
+    theTaskTags.value = newValue
   })
-  const theFrameworkTags = computed(() => {
-    return props.frameworkTags
+
+  const theFrameworkTags = ref([])
+  watch(() => props.frameworkTags, (newValue) => {
+    theFrameworkTags.value = newValue
   })
-  const theLanguageTags = computed(() => {
-    return props.languageTags
+
+  const theLanguageTags = ref([])
+  watch(() => props.languageTags, (newValue) => {
+    theLanguageTags.value = newValue
   })
-  const theLicenseTags = computed(() => {
-    return props.licenseTags
+
+  const theLicenseTags = ref([])
+  watch(() => props.licenseTags, (newValue) => {
+    theLicenseTags.value = newValue
   })
 
   const activeTaskTag = ref('')
@@ -259,14 +263,6 @@
     emitTag()
   }
 
-  const setTagColor = (tagName, tagFieldColor) => {
-    if(activeTaskTag.value === tagName) {
-      return `color: white; background-color: ${tagFieldColor}`
-    } else {
-      return `color: ${tagFieldColor}; background-color: #d3d3d354`
-    }
-  }
-
   const setLanguageTagColor = (tagName) => {
     if (activeLanguageTag.value === tagName) {
       return "color: white; background-color: #0DAF66"
@@ -312,20 +308,24 @@
   }
 
   const removeNotMatchedFrameworkTags = (tags, regex) => {
-    const matchedTags = tags.filter((tag) => regex.test(tag.zh_name) || regex.test(tag.name))
+    const matchedTags = tags.filter((tag) => regex.test(tag.show_name) || regex.test(tag.name))
     return matchedTags
   }
 
   const frameworkTagExist = (tagName) => {
-    const result = props.frameworkTags.find(ftag => ftag.name.toLowerCase() === tagName.toLowerCase())
+    const result = theFrameworkTags.value.find(ftag => ftag.name.toLowerCase() === tagName.toLowerCase())
     return result
   }
 
   const removeNotMatchedTags = (json, regex) => {
     const newJson = {}
-    for (const [field, { color, zh_name, tags }] of Object.entries(json)) {
-      const matchedTags = tags.filter((tag) => regex.test(tag.zh_name) || regex.test(tag.name.replace(/-/g, ' ')))
-      newJson[field] = { color, zh_name, tags: matchedTags }
+    for (const [field, items] of Object.entries(json)) {
+      newJson[field] = []
+      for (const { show_name, name } of items) {
+        if (regex.test(show_name) || regex.test(name)) {
+          newJson[field].push({ show_name: show_name, name: name })
+        }
+      }
     }
     return newJson
   }
