@@ -340,7 +340,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rexml (3.2.6)
+    rexml (3.3.9)
     rmmseg-cpp-new (0.3.1)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
@@ -375,7 +375,7 @@ GEM
       tilt
     selectize-rails (0.12.6)
     selenium-webdriver (4.10.0)
-      rexml (~> 3.2, >= 3.2.5)
+      rexml (~> 3.3, >= 3.3.9)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     shoulda-matchers (5.3.0)
