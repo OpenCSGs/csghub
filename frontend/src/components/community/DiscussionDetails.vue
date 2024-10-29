@@ -138,7 +138,7 @@ export default {
       const {data, error} = await useFetchApi(discussionUpdateEndpoint, options).json()
       if (data.value) {
         this.$emit("getDiscussion")
-        ElMessage.success($t('community.discussionDetail.updateSuccess'))
+        ElMessage.success(this.$t('community.discussionDetail.updateSuccess'))
       } else {
         ElMessage.warning(error.value.msg)
         this.editTitle()
@@ -170,7 +170,7 @@ export default {
       const {data, error} = await useFetchApi(commentCreateEndpoint, commentOptions).json()
       if (data.value) {
         this.getComment(this.discussionId)
-        ElMessage.success($t('community.discussionDetail.addSuccess'))
+        ElMessage.success(this.$t('community.discussionDetail.addSuccess'))
       } else {
         ElMessage.warning(error.value.msg)
       }
