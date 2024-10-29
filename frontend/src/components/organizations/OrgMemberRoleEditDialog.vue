@@ -110,18 +110,21 @@
             }
             const url = `/organization/${this.organization.name}/members/${this.formDataRaw.username}`
             try {
-              const { error } = await useFetchApi(url, options).put().json()
+              const { data, error } = await useFetchApi(url, options).put().json()
+              console.log(error)
+              console.log(data)
               if (error.value) {
                 this.$message.error(response.error.msg)
                 this.loading = false
                 return
               } else {
-                this.$message.success($t('organization.members.editRoleSuccess'))
+                this.$message.success(this.$t('organization.members.editRoleSuccess'))
                 this.loading = false
                 this.$emit('close')
                 this.$emit('submit')
               }
             } catch (error) {
+              console.log(error)
               this.$message.error(error.msg)
             }
           }
