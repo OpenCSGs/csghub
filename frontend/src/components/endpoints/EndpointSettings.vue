@@ -516,7 +516,7 @@
   }
 
   const restartEndpoint = async () => {
-    startUrl = `/models/${props.modelId}/run/${props.endpointId}/start`
+    const startUrl = `/models/${props.modelId}/run/${props.endpointId}/start`
     const { response, error } = await useFetchApi(startUrl).put().json()
 
     if (!error.value) {
