@@ -12,7 +12,7 @@
     <div class="h-[34px] w-full justify-between items-center inline-flex">
       <div class="justify-start items-center gap-4 flex">
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded-sm cursor-pointer"
           :class="
             codeExtension === 'py'
               ? 'bg-gray-900 text-white'
@@ -24,7 +24,7 @@
           Python
         </div>
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded-sm cursor-pointer"
           :class="
             codeExtension === 'js'
               ? 'bg-gray-900 text-white'
@@ -36,7 +36,7 @@
           JavaScript
         </div>
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded-sm cursor-pointer"
           :class="
             codeExtension === 'bash'
               ? 'bg-gray-900 text-white'

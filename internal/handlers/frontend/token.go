@@ -37,8 +37,8 @@ func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
 	}
 
 	r, _, err := i.Server.CreateJWTToken(types.CreateJWTReq{
-		UUID:        currentUser.LoginIdentity,
-		CurrentUser: currentUser.Name,
+		UUID: currentUser.LoginIdentity,
+		// CurrentUser: currentUser.Name,
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -47,5 +47,5 @@ func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
 
 	c.SetCookie("user_token", r.Data.Token, 3600*24*7, "/", "", false, false)
 
-	c.JSON(http.StatusOK, gin.H{"message": "Token set successfully"})
+	c.JSON(http.StatusOK, gin.H{"jwt_token": r.Data.Token})
 }

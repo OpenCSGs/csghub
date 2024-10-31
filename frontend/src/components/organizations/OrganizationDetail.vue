@@ -18,7 +18,7 @@
         <div class="flex gap-[10px]">
           <el-popover placement="bottom-start" :width="300" trigger="click">
             <template #reference>
-              <div v-if="role === 'admin' || role ==='write'" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-[8px] px-[12px] py-[8px]">
+              <div v-if="role === 'admin' || role ==='write'" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-md px-[12px] py-[8px]">
                 <SvgIcon name="create_org_repo"/>
                 {{ $t('organization.create') }}
               </div>
@@ -62,7 +62,7 @@
               </a>
             </div>
           </el-popover>
-          <a v-if="role === 'write' || role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-[8px] px-[12px] py-[8px]">
+          <a v-if="role === 'write' || role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-md px-[12px] py-[8px]">
             <SvgIcon name="invite_org_member" />
             {{ $t('organization.orgSetting') }}
           </a>
@@ -71,7 +71,7 @@
     </div>
 
     <div class="bg-white">
-      <div class="flex justify-center lg:flex-col rounded-[8px] max-w-[1280px] m-auto bg-white">
+      <div class="flex justify-center lg:flex-col rounded-md max-w-[1280px] m-auto bg-white">
         <div class="max-w-[320px] lg:max-w-none pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>
@@ -106,12 +106,13 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
   import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import useUserStore from '../../stores/UserStore'
 
   const props = defineProps({
     name: String
@@ -126,6 +127,8 @@
   const membersList = ref([])
 
   const { cookies } = useCookies()
+
+  const userStore = useUserStore()
 
   const role = ref('')
 
@@ -154,7 +157,7 @@
     }
   }
   const currentUserRole = async () => {
-    const orgIsAdminEndpoint = `/organization/${props.name}/members/${cookies.get('current_user')}`
+    const orgIsAdminEndpoint = `/organization/${props.name}/members/${userStore.username}`
     const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -164,9 +167,12 @@
     }
   }
 
+  watch(() => userStore.username, () => {
+    currentUserRole()
+  })
+
   onMounted(() => {
     fetchOrgDetail()
     fetchOrgMemberList()
-    currentUserRole()
   })
 </script>

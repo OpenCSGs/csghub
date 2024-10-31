@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-[6px] border border-warning-200 bg-warning-50 rounded-[6px] py-[2px] px-[8px]">
+  <div class="flex items-center gap-[6px] border border-warning-200 bg-warning-50 rounded-sm py-[2px] px-[8px]">
     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
       <circle cx="4" cy="4" r="3" fill="#F79009"/>
     </svg>

@@ -228,6 +228,6 @@
   }
 
   :deep(.el-loading-mask) {
-    border-radius: 8px;
+    border-radius: var(--border-radius-md);
   }
 </style>

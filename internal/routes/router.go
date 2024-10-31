@@ -18,8 +18,8 @@ import (
 	frontendHandlers "opencsg.com/portal/internal/handlers/frontend"
 	renderHandlers "opencsg.com/portal/internal/handlers/render"
 	"opencsg.com/portal/internal/middleware"
-	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/internal/svc"
+	"opencsg.com/portal/pkg/server"
 	"opencsg.com/portal/pkg/types"
 )
 
@@ -34,10 +34,13 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 	g := gin.New()
 	_ = g.SetTrustedProxies(nil)
 
-	userModel := models.NewUserStore()
+	csghubServer, err := server.NewServer(svcCtx.Config)
+	if err != nil {
+		log.Fatalf("failed to create server: %v", err)
+	}
 
 	logFilePath := "./log/app.log"
-	err := os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
+	err = os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
 	if err != nil {
 		log.Fatalf("Failed to create directory: %v", err)
 	}
@@ -63,7 +66,8 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		}
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}))
-	g.Use(middleware.AuthMiddleware(userModel))
+	g.Use(middleware.AuthMiddleware(csghubServer))
+	// This will track all request to portal go server
 	g.Use(middleware.Log())
 
 	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)

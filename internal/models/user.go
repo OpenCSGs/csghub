@@ -18,9 +18,9 @@ func NewUserStore() *UserStore {
 
 type User struct {
 	ID            int64  `bun:",pk,autoincrement" json:"id"`
-	Nickname      string `bun:",notnull" json:"nickname"`
-	Name          string `bun:",notnull,unique" json:"name"`
-	Email         string `bun:",notnull,unique" json:"email"`
+	Nickname      string `bun:"," json:"nickname"`
+	Name          string `bun:"," json:"name"`
+	Email         string `bun:"," json:"email"`
 	LoginIdentity string `bun:",pk,notnull" json:"login_identity"`
 	Gender        string `bun:"," json:"gender"`
 	RolesMask     int    `bun:"," json:"roles_mask"`

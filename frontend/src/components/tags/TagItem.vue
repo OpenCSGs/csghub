@@ -1,5 +1,5 @@
 <template>
-  <span class="text-[14px] text-gray-700 px-[8px] py-[3px] rounded-[6px] cursor-pointer flex items-center gap-[3px] border border-gray-300"
+  <span class="text-[14px] text-gray-700 px-[8px] py-[3px] rounded-sm cursor-pointer flex items-center gap-[3px] border border-gray-300"
         :class="{ 'bg-brand-500': active, 'text-white': active, 'border-brand-500': active }"
         @click="emit('handleTagClick', tag)">
     <img :src="'/images/tags/' + tag.name + '.svg'"

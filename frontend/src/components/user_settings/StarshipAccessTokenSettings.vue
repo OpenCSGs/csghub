@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center md:flex-col px-[24px] rounded-[8px] md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
+    class="flex justify-center md:flex-col px-[24px] rounded-md md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"
@@ -29,7 +29,7 @@
 
       <button
         @click="centerDialogVisible = true"
-        class="rounded-[4px] border bg-white py-[5px] px-[16px] text-gray-500 text-[14px] font-[500] w-[160px]"
+        class="rounded-xs border bg-white py-[5px] px-[16px] text-gray-500 text-[14px] font-[500] w-[160px]"
       >
         {{ $t('accessToken.starshipAddToken') }}
       </button>
@@ -41,7 +41,7 @@
       :title="$t('accessToken.starshipAddToken')"
       width="35%"
       class="dialogWidth"
-      style="border-radius: 0.5rem"
+      style="border-radius: var(--border-radius-md)"
       left
     >
       <el-form

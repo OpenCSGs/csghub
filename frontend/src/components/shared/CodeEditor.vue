@@ -70,7 +70,7 @@ const changeTab = (tabName) => {
 
 <style scoped>
   :deep(.cm-editor) {
-    border-radius: 4px;
+    border-radius: var(--border-radius-xs);
   }
 
   :deep(.cm-gutters) {

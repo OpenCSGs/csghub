@@ -99,7 +99,7 @@
         const { data, error } = await useFetchApi(discussionCreateEndpoint, options).json()
         if (data.value) {
           this.createComment(data.value.data.id)
-          ElMessage.success($t('community.newDiscussion.success'))
+          ElMessage.success(this.$t('community.newDiscussion.success'))
         } else {
           ElMessage.warning(error.value.msg)
         }

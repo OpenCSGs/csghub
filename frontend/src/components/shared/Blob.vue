@@ -39,7 +39,7 @@
         <!-- Todo 暂时先隐藏 -->
         <a
           href="#"
-          class="ml-4 items-center px-4 py-[5px] border border-gray-200 rounded-[100px] hidden"
+          class="ml-4 items-center px-4 py-[5px] border border-gray-200 rounded-full hidden"
         >
           <SvgIcon
             name="commits"
@@ -113,7 +113,7 @@
           >
             <SvgIcon name="edit" />
             <a
-              :href="`/${prefixPath}/${namespacePath}/edit/main/${currentPath}`"
+              :href="`/${prefixPath}/${namespacePath}/edit/${currentBranch}/${currentPath}`"
               >{{ $t('shared.edit') }}</a
             >
           </div>
@@ -296,7 +296,8 @@
     content.value = resolveContent(
       prefixPath,
       data.content,
-      props.namespacePath
+      props.namespacePath,
+      props.currentBranch
     )
     lastCommit.value = data.commit
     size.value = data.size

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -16,7 +16,7 @@
           {{ $t('models.namespaceModelName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-[8px] bg-gray-50 px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-[14px] py-[10px] border">
           {{ modelPath }}
         </div>
       </div>
@@ -93,12 +93,12 @@
         <p class="text-gray-700 text-[14px]">{{ $t('models.modelTag') }}</p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]">
             <div
               class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="tag in selectedTags"
-                class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
                     ? tag.zh_name || tag.show_name || tag.name
@@ -153,12 +153,12 @@
         </p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]">
             <div
               class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="tag in selectedIndustryTags"
-                class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
                     ? tag.zh_name || tag.show_name || tag.name
@@ -270,7 +270,7 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-md"
             :class="
               delDesc === modelPath
                 ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
@@ -490,7 +490,7 @@
         ElMessageBox({
           title: this.$t('models.edit.changeVisibility'),
           message: h('p', null, [
-            h('span', null, $t('all.changeVis')),
+            h('span', null, this.$t('all.changeVis')),
             h(
               'span',
               null,
@@ -578,8 +578,8 @@
         const bodyData = {
           content: btoa_utf8(newContent),
           message: 'Update README.md',
-          branch: 'main',
-          new_branch: 'main',
+          branch: this.default_branch,
+          new_branch: this.default_branch,
           sha: this.readmeSha
         }
         const option = {

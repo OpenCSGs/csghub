@@ -4,13 +4,13 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
 	"opencsg.com/portal/internal/models"
+	"opencsg.com/portal/pkg/server/backend"
 	"opencsg.com/portal/pkg/utils/jwt"
 )
 
-// AuthMiddleware 验证用户登录状态的中间件
-func AuthMiddleware(userModel *models.UserStore) gin.HandlerFunc {
+// check user login status and save the current user to context
+func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		loginIdentity, err := c.Cookie("login_identity")
 		if err != nil {
@@ -18,10 +18,19 @@ func AuthMiddleware(userModel *models.UserStore) gin.HandlerFunc {
 			return
 		}
 
-		// 使用 UserStore 查找用户
-		user, err := userModel.FindByLoginIdentity(c.Request.Context(), loginIdentity)
+		// get user info from csghub server
+		userResp, _, err := csghubServer.GetUserInfo(loginIdentity)
+		user := &models.User{
+			Name:          userResp.Data.Username,
+			Nickname:      userResp.Data.Nickname,
+			Phone:         userResp.Data.Phone,
+			Email:         userResp.Data.Email,
+			LoginIdentity: userResp.Data.UUID,
+		}
+		user.SetRoles(userResp.Data.Roles...)
+
 		if err == nil {
-			c.Set("currentUser", &user)
+			c.Set("currentUser", user)
 		}
 
 		c.Next()

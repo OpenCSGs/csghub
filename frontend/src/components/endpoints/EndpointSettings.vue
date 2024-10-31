@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-[8px] my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
+    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
   >
     <!-- 暂停 -->
     <div class="flex xl:flex-col gap-[32px]">
@@ -253,7 +253,7 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-md"
             :class="
               delDesc === `${endpointName}/${endpointId}`
                 ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
@@ -516,7 +516,7 @@
   }
 
   const restartEndpoint = async () => {
-    startUrl = `/models/${props.modelId}/run/${props.endpointId}/start`
+    const startUrl = `/models/${props.modelId}/run/${props.endpointId}/start`
     const { response, error } = await useFetchApi(startUrl).put().json()
 
     if (!error.value) {

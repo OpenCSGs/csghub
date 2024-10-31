@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-[16px] min-h-[300px] py-[32px] md:px-5">
     <div class="test-[14px]"><p>{{ repoName }}/</p></div>
-    <div class="border border-gray-200 rounded-[4px] bg-gray-100">
+    <div class="border border-gray-200 rounded-xs bg-gray-100">
       <div class="flex text-[14px] text-brand-500 leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
           {{ $t('all.uploadFile') }}
@@ -65,7 +65,8 @@ import useFetchApi from '../../packs/useFetchApi'
 
 const props = defineProps({
   repoName: String,
-  namespacePath: String
+  namespacePath: String,
+  currentBranch: String
 })
 
 const { t } = useI18n();
@@ -104,7 +105,7 @@ const handleRemove = (file, fileList) => {
 }
 
 const cancel = () => {
-  window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+  window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
 }
 
 const buildCommitMessage = () => {
@@ -123,7 +124,7 @@ const appendFilesToFormData = (formData, files) => {
 
 const syncUploadFile = async () => {
   const formData = new FormData()
-  formData.append('branch', 'main')
+  formData.append('branch', props.currentBranch)
   formData.append('message', buildCommitMessage())
 
   appendFilesToFormData(formData, filesList.value)
@@ -140,7 +141,7 @@ const syncUploadFile = async () => {
       ElMessage({ message: error.value.msg, type: 'error' })
     } else {
       filesList.value = []
-      window.location.href = `/${prefixPath}/${props.namespacePath}/files/main`
+      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
     }
   } catch (error) {
     console.error(error)

@@ -124,7 +124,7 @@ img, video {
   }
 
   .system-config-obj-box {
-    @apply w-full border border-gray-300 p-[10px] rounded-[8px] text-gray-500 focus:border-blue-300 focus:outline-none overflow-auto whitespace-nowrap;
+    @apply w-full border border-gray-300 p-[10px] rounded-md text-gray-500 focus:border-blue-300 focus:outline-none overflow-auto whitespace-nowrap;
   }
 
   .error_page_bg {

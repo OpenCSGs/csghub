@@ -32,20 +32,15 @@ const useFetchApi = createFetch({
   combination: 'chain',
   options: {
     async beforeFetch({ options }) {
-      await refreshJWT()
-
       const loginIdentity = cookies.get('login_identity')
-      const jwtToken = cookies.get('user_token')
-
-      // if user is login send the request with jwt token no matter what the status of the token
-      // and handle the error if its failed
       if (loginIdentity) {
+        await refreshJWT()
+        const jwtToken = cookies.get('user_token')
         options.headers = {
           ...options.headers,
           Authorization: `Bearer ${jwtToken}`
         }
       }
-
       return { options }
     },
     onFetchError({ data, error, response }) {

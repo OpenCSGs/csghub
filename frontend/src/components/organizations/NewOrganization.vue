@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-[16px] bg-white p-[36px] w-[655px] md:w-full border border-[1px] border-gray-200 shadow-sm">
+  <div class="rounded-2xl bg-white p-[36px] w-[655px] md:w-full border border-[1px] border-gray-200 shadow-sm">
     <h3 class="text-gray-700 text-[20px] font-[600]">{{ $t('organization.newOrganization.title') }}</h3>
     <el-form
       ref="dataFormRef"
@@ -88,7 +88,7 @@
 
       <el-form-item>
         <el-button
-          class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-brand-600 !rounded-[8px] !border-[1px] !border-brand-600"
+          class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
           @click="handleSubmit"
           :disabled="submitting"
         >

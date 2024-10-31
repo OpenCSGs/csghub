@@ -30,7 +30,7 @@
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
@@ -108,7 +108,7 @@
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >

@@ -14,7 +14,7 @@
     </div>
     <!-- profile settings -->
     <div v-if="isCurrentUser" class="flex xl:flex-col md:flex-row gap-3">
-      <a href="/settings/profile" class="px-[12px] py-[5px] lg:w-[200px] md:w-auto text-center border border-gray-200 rounded-[4px] text-[14px] leading-[22px] font-medium hover:bg-gray-200 hover:text-gray-700">
+      <a href="/settings/profile" class="px-[12px] py-[5px] lg:w-[200px] md:w-auto text-center border border-gray-200 rounded-xs text-[14px] leading-[22px] font-medium hover:bg-gray-200 hover:text-gray-700">
         {{ $t('profile.accountSetting')}}
       </a>
     </div>
