@@ -137,7 +137,7 @@
           />
         </el-form-item>
         <p
-          class="mb-[18px] rounded-sm bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('models.newModel.tips') }}
         </p>

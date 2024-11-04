@@ -312,7 +312,7 @@
           /> 
         </el-form-item>
         <p
-          class="mb-[18px] rounded-sm bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('application_spaces.new.notes') }}
         </p>
@@ -555,17 +555,17 @@
   }
 
   :deep(.el-radio__label) {
-    color: #344054 !important;
+    color: var(--gray-700) !important;
     font-weight: 400;
   }
 
   :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid #3250bd;
+    border: 2px solid var(--brand-600);
   }
 
   :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250bd;
-    border-color: #3250bd;
+    background: var(--brand-600);
+    border-color: var(--brand-600);
   }
 
   :deep(.el-select) {
@@ -590,11 +590,11 @@
     margin-right: unset;
   }
   :deep(.sdk-container .el-radio.is-disabled .el-radio__label) {
-    color: #d0d5dd !important;
+    color: var(--gray-300) !important;
   }
   :deep(.sdk-container .el-radio.is-disabled.is-bordered) {
     border-style: dashed;
-    border-color: #eaecf0 !important;
+    border-color: var(--gray-200) !important;
   }
   :deep(.el-form-item__content) {
     line-height: unset;
