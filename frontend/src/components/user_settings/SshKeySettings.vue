@@ -17,7 +17,7 @@
       </button>
       <div
         v-if="theSshKeys.length === 0"
-        class="mt-[16px] rounded-sm w-full bg-brand-25] py-[9px] px-[16px] text-brand-500"
+        class="mt-[16px] rounded-sm w-full bg-brand-25 py-[9px] px-[16px] text-brand-500"
       >
         {{ $t('sshKey.noKeyTips') }}
       </div>
