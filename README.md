@@ -49,7 +49,7 @@ For further information, please see the [detailed introduction](./docs/detailed_
 - For those looking to quickly explore, experiment with CSGHub's free SaaS version on the [OpenCSG website](https://opencsg.com/models). Refer to this [brief quick start guide](./docs/csghub_saas_en.md) to handle LLMs/datasets and deploy LLM applications with CSGHub SaaS interface.
 For more information, please refer to the [OpenCSG Documentation Center](https://opencsg.com/docs/en/intro).
 
-- For those seeking a hands-on experience, follow the [installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub) to quickly deploy a basic local instance of CSGHub.
+- For those seeking a hands-on experience, you can quickly launch CSGHub on your local environment (Linux/MacOS/Windows) using the [Docker one-click deployment guide](https://github.com/OpenCSGs/csghub-installer/tree/main/docker), which allows you to start an all-in-one container with simplified commands and instantly experience the core functionalities of CSGHub.
 
 - For those deploying on Kubernetes, refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart) for step-by-step instructions.
 
