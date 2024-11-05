@@ -555,17 +555,17 @@
   }
 
   :deep(.el-radio__label) {
-    color: #344054 !important;
+    color: var(--Gray-700) !important;
     font-weight: 400;
   }
 
   :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid #3250bd;
+    border: 2px solid var(--Brand-600);
   }
 
   :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250bd;
-    border-color: #3250bd;
+    background: var(--Brand-600);
+    border-color: var(--Brand-600);
   }
 
   :deep(.el-select) {
@@ -590,11 +590,11 @@
     margin-right: unset;
   }
   :deep(.sdk-container .el-radio.is-disabled .el-radio__label) {
-    color: #d0d5dd !important;
+    color: var(--Gray-300) !important;
   }
   :deep(.sdk-container .el-radio.is-disabled.is-bordered) {
     border-style: dashed;
-    border-color: #eaecf0 !important;
+    border-color: var(--Gray-200) !important;
   }
   :deep(.el-form-item__content) {
     line-height: unset;
