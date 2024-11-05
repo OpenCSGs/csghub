@@ -65,7 +65,7 @@
           :repo-type="repoType"
           :namespace-path="path"
           :download-count="repoDetail.downloads"
-          :currentBranch="repoDetail.default_branch"
+          :currentBranch="repoDetail.default_branch || 'main'"
           :widget-type="repoDetail.widget_type"
         />
       </template>
@@ -330,7 +330,7 @@
         location.href = summaryUrl()
         break
       case 'files':
-        location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.default_branch}`
+        location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.default_branch || 'main'}`
         break
       case 'community':
         location.href = `/${props.repoType}s/${props.path}/community`
