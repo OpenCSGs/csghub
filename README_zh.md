@@ -48,10 +48,10 @@ CSGHub 是一个开源平台，专为管理大语言模型（LLM）资产而设�
 
 - **想要快速探索的用户**：可在 [OpenCSG 网站](https://opencsg.com/models)上体验 CSGHub 的免费 SaaS 版本。参考该[快速开始指南](./docs/csghub_saas_zh.md)，通过 CSGHub SaaS 界面管理大模型和数据集，部署大模型应用。
 更多信息与高级教程请参阅 [OpenCSG 文档中心](https://opencsg.com/docs/intro)。
- 
-- **想要进一步实践的用户**：请参考[安装指南](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)快速部署 CSGHub 的本地实例。
 
-- **需要在 Kubernetes 上部署的用户**：请参考 [Helm Chart 安装指南](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)进行部署。
+- **想要进一步实践的用户**：若希望在本机环境（Linux/MacOS/Windows）上快速启动 CSGHub，可以使用 [Docker 一键部署](https://github.com/OpenCSGs/csghub-installer/tree/main/docker) CSGHub 实例，通过最简化的命令启动一个 all-in-one 的容器，即刻体验 CSGHub 核心功能。
+
+- **想要在 Kubernetes 上部署的用户**：请参考 [Helm Chart 安装指南](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)进行部署。
 
 ### 路线图
 
