@@ -103,7 +103,7 @@
       >
         <div class="flex items-center gap-4">
           <div
-            class="bg-gray-500 px-3 py-[2px] flex items-center justify-center rounded"
+            class="bg-gray-100 px-3 py-[2px] flex items-center justify-center rounded-xs"
           >
             {{ $t('shared.preview') }}
           </div>
