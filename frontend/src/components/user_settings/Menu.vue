@@ -1,6 +1,6 @@
 <template>
     <div class="pt-6">
-      <div class="w-[294px] rounded-md mx-[24px]">
+      <div class="w-[294px] rounded-md mx-[24px] sm:w-full">
         <div @click="clickProfile" class="flex p-[16px] cursor-pointer">
           <el-avatar :size="60" :src="userStore.avatar"> </el-avatar>
           <div class="ml-[10px]">
@@ -10,7 +10,7 @@
             <div class="text-[16px] text-gray-500 leading-[24px] font-light">@{{ userStore.username }}</div>
           </div>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col sm:flex-row flex-wrap">
           <!-- profile -->
           <a href="/settings/profile"
              class="p-[16px] hover:bg-gray-50 border-gray-200 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
