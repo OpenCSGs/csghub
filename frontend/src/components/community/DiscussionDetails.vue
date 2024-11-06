@@ -94,8 +94,13 @@ export default {
   },
   methods: {
     formatTime(timestamp) {
-      const parsedTime = beiJingTimeParser(timestamp);
-      return format(parsedTime, this.$i18n.locale === 'en' ? 'en_US' : 'zh_CN');
+      try {
+        const parsedTime = beiJingTimeParser(timestamp);
+        return format(parsedTime, this.$i18n.locale === 'en' ? 'en_US' : 'zh_CN');
+      } catch (error) {
+        console.error("Error formatting time:", error);
+        return timestamp; // Fallback to the original timestamp on error
+      }
     },
     editTitle() {
       this.isEdit = true

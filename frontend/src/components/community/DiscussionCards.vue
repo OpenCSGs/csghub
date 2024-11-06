@@ -61,7 +61,11 @@
     mounted() {},
     methods: {
       formatDate (date) {
-        return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
+        if (!date) {
+          console.warn("Invalid date provided to formatDate:", date);
+          return ""; // Return an empty string or a default value
+        }
+        return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
       },
       showDetails(card) {
         this.currentDiscussion = card.id
