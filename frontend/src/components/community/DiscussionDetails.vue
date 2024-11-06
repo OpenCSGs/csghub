@@ -27,7 +27,7 @@
       <div class="flex justify-between gap-[4px] border-b border-gray-200 items-center px-[12px] py-[9px] bg-gray-100">
         <div class="flex items-center gap-[8px]">
           <el-avatar :size="24" :src="comment.user.avatar"></el-avatar>
-          {{comment.user.name}} {{comment.time}}
+          {{comment.user.name}} {{formatTime(comment.created_at)}}
         </div>
         <el-dropdown>
           <div>
@@ -61,6 +61,7 @@ import { format } from 'timeago.js'
 import { ElMessage } from 'element-plus'
 import MarkdownIt from "markdown-it"
 import useFetchApi from '../../packs/useFetchApi'
+import { beiJingTimeParser } from '../../packs/utils'
 
 export default {
   props: {
@@ -92,6 +93,15 @@ export default {
     this.getComment(this.discussionId)
   },
   methods: {
+    formatTime(timestamp) {
+      try {
+        const parsedTime = beiJingTimeParser(timestamp);
+        return format(parsedTime, this.$i18n.locale === 'en' ? 'en_US' : 'zh_CN');
+      } catch (error) {
+        console.error("Error formatting time:", error);
+        return timestamp; // Fallback to the original timestamp on error
+      }
+    },
     editTitle() {
       this.isEdit = true
       this.$nextTick(() => {

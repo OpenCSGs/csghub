@@ -24,7 +24,7 @@
         :discussionId="card.id"
         :num="card.num"
         :title="card.title"
-        :time="card.time"
+        :time="formatDate(card.created_at)"
         :user="card.user.name"
         :commentNum="card.commentNum"/>
     </template>
@@ -35,6 +35,7 @@
   import EmptyCommunity from "./EmptyCommunity.vue"
   import DiscussionCard from "./DiscussionCard.vue"
   import DiscussionDetails from "./DiscussionDetails.vue"
+  import dayjs from 'dayjs'
 
   export default {
     props: {
@@ -59,12 +60,19 @@
     },
     mounted() {},
     methods: {
+      formatDate (date) {
+        if (!date) {
+          console.warn("Invalid date provided to formatDate:", date);
+          return ""; // Return an empty string or a default value
+        }
+        return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+      },
       showDetails(card) {
         this.currentDiscussion = card.id
         this.currentTitle = card.title
         this.currentUserName = card.user.name
         this.createUserId = card.user.id
-        this.currentTime = card.time
+        this.currentTime = this.formatDate(card.created_at)
         this.showDetail = true
       },
       toggleDetails() {
