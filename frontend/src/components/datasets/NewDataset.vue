@@ -322,24 +322,6 @@
     }
   }
 
-  :deep(.el-radio__input) {
-    margin-top: 10px;
-  }
-
-  :deep(.el-radio__label) {
-    color: #344054 !important;
-    font-weight: 400;
-  }
-
-  :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid #3250bd;
-  }
-
-  :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250bd;
-    border-color: #3250bd;
-  }
-
   :deep(.el-select) {
     width: 240px;
     height: 40px;
