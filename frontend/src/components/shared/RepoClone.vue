@@ -2,7 +2,7 @@
   <div
     class="flex flex-wrap items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
   >
-    <AddToCollections v-if="showAddToCollections" :repoId="repo.repository_id" :userName="userName" />
+    <AddToCollections v-if="showAddToCollections" :repoId="repo.repository_id" />
     <!-- multi-source sync button -->
     <el-button
       v-if="showSyncButton"
