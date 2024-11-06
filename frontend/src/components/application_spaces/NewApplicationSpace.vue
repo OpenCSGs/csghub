@@ -309,7 +309,7 @@
             v-model="dataForm.visibility"
             :publicDesc="t('application_spaces.new.publicDesc')"
             :privateDesc="t('application_spaces.new.privateDesc')"
-          /> 
+          />
         </el-form-item>
         <p
           class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
@@ -555,17 +555,17 @@
   }
 
   :deep(.el-radio__label) {
-    color: var(--gray-700) !important;
+    color: var(--Gray-700) !important;
     font-weight: 400;
   }
 
   :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid var(--brand-600);
+    border: 2px solid var(--Brand-600);
   }
 
   :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: var(--brand-600);
-    border-color: var(--brand-600);
+    background: var(--Brand-600);
+    border-color: var(--Brand-600);
   }
 
   :deep(.el-select) {
@@ -590,11 +590,11 @@
     margin-right: unset;
   }
   :deep(.sdk-container .el-radio.is-disabled .el-radio__label) {
-    color: var(--gray-300) !important;
+    color: var(--Gray-300) !important;
   }
   :deep(.sdk-container .el-radio.is-disabled.is-bordered) {
     border-style: dashed;
-    border-color: var(--gray-200) !important;
+    border-color: var(--Gray-200) !important;
   }
   :deep(.el-form-item__content) {
     line-height: unset;

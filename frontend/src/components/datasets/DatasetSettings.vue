@@ -230,8 +230,7 @@
           @change="changeVisibility"
           placeholder="Select"
           size="large"
-          class="!w-[512px] sm:!w-full"
-          :disabled="true">
+          class="!w-[512px] sm:!w-full">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -519,11 +518,8 @@
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel'
         })
-          .then((action) => {
-            ElMessage({
-              type: 'success',
-              message: this.$t('all.changeSuccess')
-            })
+          .then(() => {
+            this.changeVisibilityCall(value)
           })
           .catch(() => {
             ElMessage({
@@ -532,7 +528,11 @@
             })
           })
       },
-
+      changeVisibilityCall(value) {
+        const isprivateSelected = value === 'Private' ? true : false
+        const payload = { private: isprivateSelected }
+        this.updateDataset(payload)
+      },
       updateTags() {
         if (this.selectedTags.length !== 0) {
           const newSelectedTags = this.selectedTags.map((tag) => tag.name)
