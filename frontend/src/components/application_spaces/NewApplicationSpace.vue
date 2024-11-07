@@ -164,7 +164,7 @@
                 <SvgIcon name="space_upload" />
                 <div class="el-upload__text">
                   <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
-                  <div class="font-light text-[12px]">
+                  <div class="font-light text-xs">
                     {{ $t('application_spaces.new.coverImageDesc2') }}
                   </div>
                 </div>
@@ -195,7 +195,7 @@
                 name="space_gradio"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Gradio</p>
+              <p class="font-semibold text-md">Gradio</p>
             </el-radio>
             <el-radio
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
@@ -207,7 +207,7 @@
                 name="space_streamlit"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Streamlit</p>
+              <p class="font-semibold text-md">Streamlit</p>
             </el-radio>
             <el-radio
               v-if="isAdmin"
@@ -222,7 +222,7 @@
                 height="24"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Nginx</p>
+              <p class="font-semibold text-md">Nginx</p>
             </el-radio>
             <el-radio
               v-if="!isAdmin"
@@ -236,8 +236,8 @@
                 name="space_docker"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Docker</p>
-              <p class="text-[12px]">11 templates</p>
+              <p class="font-semibold text-md">Docker</p>
+              <p class="text-xs">11 templates</p>
             </el-radio>
             <el-radio
               disabled
@@ -250,8 +250,8 @@
                 name="space_static"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Static</p>
-              <p class="text-[12px]">3 templates</p>
+              <p class="font-semibold text-md">Static</p>
+              <p class="text-xs">3 templates</p>
             </el-radio>
           </el-radio-group>
         </el-form-item>
@@ -320,7 +320,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+              class="!text-center !h-9 !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
               @click="handleSubmit"
             >
               {{ t('application_spaces.new.create') }}

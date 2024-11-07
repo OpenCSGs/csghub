@@ -9,13 +9,13 @@
     <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l min-h-[calc(100vh-153px)]">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
-          <h3 class="mb-[4px] text-gray-700 text-[20px] font-semibold">
+          <h3 class="mb-[4px] text-gray-700 text-xl font-semibold">
             {{ $t('accessToken.title') }}
           </h3>
-          <p class="text-gray-500 text-[14px]">{{ $t('accessToken.desc') }}</p>
+          <p class="text-gray-500 text-sm">{{ $t('accessToken.desc') }}</p>
         </div>
         <div class="bg-gray-100 p-[12px] rounded-md mt-[16px]">
-          <h3 class="text-gray-700 text-[16px] font-[500] mb-[16px]">
+          <h3 class="text-gray-700 text-md font-[500] mb-[16px]">
             access token
           </h3>
           <div class="flex items-center">

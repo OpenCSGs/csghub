@@ -3,10 +3,10 @@
     <div class="flex gap-[8px] mt-[32px] p-[16px] border border-gray-300 rounded-xl shadow-xs">
       <SvgIcon name="spaces"/>
       <div>
-        <h3 class="text-gray-600 text-[14px] font-[500]">
+        <h3 class="text-gray-600 text-sm font-[500]">
           {{ $t('application_spaces.streamlitGuide.notice') }}
         </h3>
-        <p class="text-gray-600 text-[14px]">
+        <p class="text-gray-600 text-sm">
           {{ $t('application_spaces.gradioGuide.noticeDesc') }}
         </p>
       </div>
@@ -52,10 +52,10 @@
       3. {{ $t('application_spaces.gradioGuide.submitTitle') }}
     </h3>
     <MarkdownViewer :content="pushCodeMarkdown"></MarkdownViewer>
-    <p class="text-gray-500 text-[16px] font-[400] my-[24px]">
+    <p class="text-gray-500 text-md font-[400] my-[24px]">
       {{ $t('application_spaces.gradioGuide.successNotes') }}
     </p>
-    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-md shadow-xs py-[12px] px-[14px] mb-[32px]">
+    <div class="text-md text-gray-500 border border-gray-300 rounded-md shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
         <h3 class="text-gray-900"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes1') }}</p>

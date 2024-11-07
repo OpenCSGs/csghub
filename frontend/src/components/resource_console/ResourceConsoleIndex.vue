@@ -1,12 +1,12 @@
 <template>
   <div class="w-full sm:mt-[36px] py-9 text-gray-900">
-    <div class="text-[30px] leading-[38px mb-6">
+    <div class="text-3xl leading-[38px mb-6">
       {{ $t("resourceConsole.title") }}
     </div>
     <!-- finetunes -->
-    <h3 class="text-[18px] flex justify-between gap-[8px]">
+    <h3 class="text-lg flex justify-between gap-[8px]">
       <span>{{ $t("finetune.title") }}</span>
-      <a href="/finetune/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-[14px] leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
+      <a href="/finetune/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-sm leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
         <SvgIcon name="plus" />
         {{ $t('resourceConsole.new') }}
       </a>
@@ -22,9 +22,9 @@
       <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
     </div>
     <!-- endpoints -->
-    <h3 class="text-[18px] flex justify-between gap-[8px]">
+    <h3 class="text-lg flex justify-between gap-[8px]">
       <span>{{ $t("endpoints.title") }}</span>
-      <a  href="/endpoints/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-[14px] leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
+      <a  href="/endpoints/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-sm leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
         <SvgIcon name="plus" />
         {{ $t('resourceConsole.new') }}
       </a>
