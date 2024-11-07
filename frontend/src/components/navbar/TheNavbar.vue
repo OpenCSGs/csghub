@@ -230,7 +230,7 @@
   </el-drawer>
 
   <el-alert
-    v-if="!hasEmail && isLoggedInBoolean && userTokenValid()"
+    v-if="!hasEmail && isLoggedInBoolean"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -288,10 +288,6 @@
       }
     },
     methods: {
-      userTokenValid() {
-        const { cookies } = useCookies()
-        return cookies.get('user_token_valid') === 'true'
-      },
       showDialog() {
         this.$refs.child.showDialog()
       },
