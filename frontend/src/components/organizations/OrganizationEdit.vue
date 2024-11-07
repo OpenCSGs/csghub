@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-[32px] p-[16px] pt-[24px]">
-    <div class="font-semibold text-[20px] leading-[28px] pt-[16px]">{{ $t('organization.orgInfo') }}</div>
+    <div class="font-semibold text-xl leading-[28px] pt-[16px]">{{ $t('organization.orgInfo') }}</div>
     <el-form
       ref="dataFormRef"
       :model="organization"
@@ -76,7 +76,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button class="!text-center !h-[48px] !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600" @click="handleSubmit">{{ $t('all.saveSetting') }}</el-button>
+        <el-button class="!text-center !h-[48px] !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600" @click="handleSubmit">{{ $t('all.saveSetting') }}</el-button>
       </el-form-item>
     </el-form>
   </div>

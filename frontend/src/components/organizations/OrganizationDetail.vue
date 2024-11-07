@@ -11,8 +11,8 @@
             <img :src="organizationData.avatar ? organizationData.avatar : '/images/default_org.png'" class="h-[60px] w-[60px] rounded-[50%]" />
           </span>
           <div>
-            <h3 class="text-[24px] text-gray-700 font-[600]"> {{ (organizationData.nickname && organizationData.nickname.trim()) || organizationData.name }}</h3>
-            <p class="text-[16px]"> @{{ organizationData.name }} </p>
+            <h3 class="text-2xl text-gray-700 font-[600]"> {{ (organizationData.nickname && organizationData.nickname.trim()) || organizationData.name }}</h3>
+            <p class="text-md"> @{{ organizationData.name }} </p>
           </div>
         </div>
         <div class="flex gap-[10px]">
@@ -28,7 +28,7 @@
                 <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="models" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-gray-700">
+                <div class="text-sm leading-[20px] text-gray-700">
                   <div>{{ $t('models.title') }}</div>
                   <div class="font-light">{{ $t('models.tips') }}</div>
                 </div>
@@ -37,7 +37,7 @@
                 <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="datasets" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-gray-700">
+                <div class="text-sm leading-[20px] text-gray-700">
                   <div>{{ $t('datasets.title') }}</div>
                   <div class="font-light">{{ $t('datasets.tips') }}</div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="spaces" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-gray-700">
+                <div class="text-sm leading-[20px] text-gray-700">
                   <div>{{ $t('spaces.title') }}</div>
                   <div class="font-light">{{ $t('spaces.tips') }}</div>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="codes" />
                 </div>
-                <div class="text-[14px] leading-[20px] text-gray-700">
+                <div class="text-sm leading-[20px] text-gray-700">
                   <div>{{ $t('codes.title') }}</div>
                   <div class="font-light">{{ $t('codes.tips')}}</div>
                 </div>
@@ -75,7 +75,7 @@
         <div class="max-w-[320px] lg:max-w-none pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>
-            <span class="text-gray-700 text-[20px]">{{ $t('organization.orgTeam') }} <span class="text-gray-500 text-[20px]">{{ membersList.length }} </span></span>
+            <span class="text-gray-700 text-xl">{{ $t('organization.orgTeam') }} <span class="text-gray-500 text-xl">{{ membersList.length }} </span></span>
           </h3>
 
           <InviteMember :orgName="organizationData.name"
@@ -91,7 +91,7 @@
                   <img :src="user.avatar || 'https://cdn.casbin.org/img/casbin.svg'" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
                 </div>
                 <template #content>
-                  <span class="text-[12px] py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
+                  <span class="text-xs py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
                 </template>
               </el-tooltip>
             </a>

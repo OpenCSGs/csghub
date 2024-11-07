@@ -12,7 +12,7 @@
         width="16"
         height="16"
       />
-      <span class="text-gray-500 text-[18px] font-medium"
+      <span class="text-gray-500 text-lg font-medium"
         >Dataset:</span
       >
       <el-avatar

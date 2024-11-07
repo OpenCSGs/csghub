@@ -3,7 +3,7 @@
     <!-- Task -->
     <div
       v-if="taskTags.length"
-      class="text-gray-700 text-[14px] text-medium"
+      class="text-gray-700 text-sm text-medium"
     >
       {{ $t('all.tasks') }}:
     </div>
@@ -115,7 +115,7 @@
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-[14px] text-gray-500 px-[8px] py-[3px] rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="text-sm text-gray-500 px-[8px] py-[3px] rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 

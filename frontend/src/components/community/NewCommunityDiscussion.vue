@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-[16px]">
-    <div class="flex gap-[8px] text-[14px] leading-[22px] font-medium">
+    <div class="flex gap-[8px] text-sm leading-[22px] font-medium">
       <SvgIcon height="24px" weight="24px" name="discussions" />
       {{ $t('community.newDiscussion.new') }}
     </div>

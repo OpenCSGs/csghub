@@ -32,7 +32,7 @@
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-gray-700 text-[14px] mb-[6px]">
+              <p class="text-gray-700 text-sm mb-[6px]">
                 {{ $t('collections.edit.type') }}
               </p>
               <el-select
@@ -50,7 +50,7 @@
                 />
               </el-select>
             </div>
-            <p class="text-gray-700 text-[14px] mb-[6px]">
+            <p class="text-gray-700 text-sm mb-[6px]">
               {{ $t('collections.edit.name') }}
             </p>
             <el-select

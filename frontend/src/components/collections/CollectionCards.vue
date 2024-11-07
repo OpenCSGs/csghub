@@ -11,14 +11,14 @@
         @click="goCollectionDetails(collection.id)"
       >
         <div class="flex justify-between">
-          <div class="text-[14px] leading-[20px] text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap">
+          <div class="text-sm leading-[20px] text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap">
             {{ collection.nickname || collection.name }}
           </div>
           <SvgIcon name="chevron_right" />
         </div>
         <div
           :title="collection.description"
-          class="overflow-hidden text-ellipsis line-clamp-2 text-[14px] leading-[20px] font-light text-gray-600 mb-2"
+          class="overflow-hidden text-ellipsis line-clamp-2 text-sm leading-[20px] font-light text-gray-600 mb-2"
         >
           {{ collection.description }}
         </div>

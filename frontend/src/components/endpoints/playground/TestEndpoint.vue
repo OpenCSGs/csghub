@@ -60,7 +60,7 @@
 
     <div class="flex mt-[8px]"> 
       <SvgIcon name="exclamation_point" class="place-self-start" /> 
-      <p class="ml-[4px] text-[12px] leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
+      <p class="ml-[4px] text-xs leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
     </div>
   </div>
 </template>

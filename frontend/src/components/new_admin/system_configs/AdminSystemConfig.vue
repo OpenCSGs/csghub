@@ -1,6 +1,6 @@
 <template>
   <div class="mb-[30px]">
-    <h3 class="text-[18px] font-[500] mb-[8px]">Application ENV</h3>
+    <h3 class="text-lg font-[500] mb-[8px]">Application ENV</h3>
     <p class="text-gray-500">{{ systemConfigs.application_env }}</p>
   </div>
 </template>
