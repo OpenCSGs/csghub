@@ -78,7 +78,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, watch, onMounted } from 'vue'
+  import { ref, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
