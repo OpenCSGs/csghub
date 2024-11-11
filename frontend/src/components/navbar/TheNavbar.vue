@@ -175,11 +175,11 @@
         <!-- not logged in -->
         <template v-else>
           <div
-            class="px-[14px] py-[10px] text-[16px] font-500 leading-[24px] md:hidden btn btn-primary">
+            class="px-[14px] py-[10px] text-md font-500 leading-[24px] md:hidden btn btn-primary">
             <a href="/login">{{ $t('navbar.loginRegister') }}</a>
           </div>
           <a
-            class="hidden md:block text-[14px] font-500"
+            class="hidden md:block text-sm font-500"
             href="/login">
             {{ $t('navbar.loginRegister') }}
           </a>
@@ -230,7 +230,7 @@
   </el-drawer>
 
   <el-alert
-    v-if="!hasEmail && isLoggedInBoolean && userTokenValid()"
+    v-if="!hasEmail && isLoggedInBoolean"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -288,10 +288,6 @@
       }
     },
     methods: {
-      userTokenValid() {
-        const { cookies } = useCookies()
-        return cookies.get('user_token_valid') === 'true'
-      },
       showDialog() {
         this.$refs.child.showDialog()
       },

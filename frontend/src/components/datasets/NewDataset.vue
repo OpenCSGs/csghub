@@ -139,7 +139,7 @@
           />
         </el-form-item>
         <p
-          class="mb-[18px] rounded-sm bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('datasets.newDataset.tips') }}
         </p>
@@ -147,7 +147,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+              class="!text-center !h-9 !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
               @click="handleSubmit"
             >
               {{ t('datasets.newDataset.createDataset') }}
@@ -320,24 +320,6 @@
     @media screen and (max-width: 768px) {
       width: 100%;
     }
-  }
-
-  :deep(.el-radio__input) {
-    margin-top: 10px;
-  }
-
-  :deep(.el-radio__label) {
-    color: #344054 !important;
-    font-weight: 400;
-  }
-
-  :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid #3250bd;
-  }
-
-  :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250bd;
-    border-color: #3250bd;
   }
 
   :deep(.el-select) {

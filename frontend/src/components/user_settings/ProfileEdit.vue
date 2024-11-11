@@ -7,7 +7,7 @@
       show-icon
       type="warning">
     </el-alert>
-    <div class="font-semibold text-[20px] leading-[28px]">
+    <div class="font-semibold text-xl leading-[28px]">
       {{ $t('profile.accountSetting') }}
     </div>
     <!-- avatar -->
@@ -25,12 +25,12 @@
           @change="uploadAvatar" />
         <div
           @click="uploadImage"
-          class="text-[14px] border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-md text-white cursor-pointer bg-brand-600">
+          class="text-sm border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-md text-white cursor-pointer bg-brand-600">
           {{ $t('profile.edit.uploadAvatar') }}
         </div>
         <div
           @click="removeImage"
-          class="text-[14px] border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-md text-gray-500 cursor-pointer bg-white">
+          class="text-sm border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-md text-gray-500 cursor-pointer bg-white">
           {{ $t('profile.edit.removeAvatar') }}
         </div>
       </div>
@@ -46,7 +46,7 @@
         :disabled="canChangeUsername !== 'true'"
         :placeholder="$t('all.userName')">
       </el-input>
-      <p class="text-gray-500 text-[12px] italic pt-1">
+      <p class="text-gray-500 text-xs italic pt-1">
         {{ $t('rule.nameRule') }}
       </p>
     </div>
@@ -135,7 +135,7 @@
     </div>
     <div
       @click="confirmUpdateProfile"
-      class="w-[111px] text-[14px] border border-gray-200 px-[16px] py-[5px] leading-[22px] text-center rounded-md text-white cursor-pointer bg-brand-600">
+      class="w-[111px] text-sm border border-gray-200 px-[16px] py-[5px] leading-[22px] text-center rounded-md text-white cursor-pointer bg-brand-600">
       {{ $t('all.save') }}
     </div>
   </div>

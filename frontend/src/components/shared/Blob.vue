@@ -103,7 +103,7 @@
       >
         <div class="flex items-center gap-4">
           <div
-            class="bg-gray-500 px-3 py-[2px] flex items-center justify-center rounded"
+            class="bg-gray-100 px-3 py-[2px] flex items-center justify-center rounded-xs"
           >
             {{ $t('shared.preview') }}
           </div>
@@ -142,7 +142,7 @@
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div
-        class="flex items-center justify-center px-4 py-10 border-b border-gray-200 font-medium text-gray-500 text-[14px] whitespace-pre-wrap"
+        class="flex items-center justify-center px-4 py-10 border-b border-gray-200 font-medium text-gray-500 text-sm whitespace-pre-wrap"
       >
         <p>
           {{ $t('shared.lfs1') }}
@@ -164,17 +164,17 @@
         <p class="mb-[4px]">{{ $t('shared.lfs6') }}</p>
         <div class="flex">
           <p class="">SHA256:&nbsp;</p>
-          <p class="text-[12px] font-light">{{ sha }}</p>
+          <p class="text-xs font-light">{{ sha }}</p>
         </div>
         <div class="flex">
           <p class="">{{ $t('shared.lfs7') }}:&nbsp;</p>
-          <p class="text-[12px] font-light">
+          <p class="text-xs font-light">
             {{ formatBytes(lfsPointerSize) }}
           </p>
         </div>
         <div class="flex">
           <p>{{ $t('shared.lfs8') }}:&nbsp;</p>
-          <p class="text-[12px] font-light">{{ formatBytes(size) }}</p>
+          <p class="text-xs font-light">{{ formatBytes(size) }}</p>
         </div>
         <div class="flex items-center mt-[4px] mr-[4px]">
           <SvgIcon
@@ -184,12 +184,12 @@
           <a
             :href="`/${prefixPath}/${namespacePath}/resolve/${currentBranch}/${currentPath}`"
             target="_blank"
-            class="underline text-[12px]"
+            class="underline text-xs"
             >{{ $t('shared.lfs9') }}</a
           >
         </div>
         <div
-          class="flex items-center mt-[4px] text-gray-500 text-[12px] font-light"
+          class="flex items-center mt-[4px] text-gray-500 text-xs font-light"
         >
           <p>{{ $t('shared.lfs10') }}</p>
           <a

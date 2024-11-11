@@ -2,7 +2,7 @@
   <div
     class="w-full mt-8 mb-8 rounded-t-lg pt-9 xl:px-10 md:px-0 md:h-auto border border-gray-200">
     <div class="flex justify-between px-6 mb-5">
-      <div class="text-[18px] leading-[28px]">
+      <div class="text-lg leading-[28px]">
         {{ $t('billing.instanceBilling') }}
       </div>
       <div class="flex gap-3 items-center">
@@ -35,13 +35,13 @@
         <!-- instance ID -->
         <el-table-column
           :label="$t('billing.instanceID')"
-          label-class-name="indent-3 text-[12px] justify-center font-[400] leading-[18px] text-gray-600"
+          label-class-name="indent-3 text-xs justify-center font-[400] leading-[18px] text-gray-600"
           align="center">
           <template #default="scope">
             <div class="flex justify-center gap-[12px] items-center pl-3">
               <div class="flex flex-col">
                 <div
-                  class="text-[14px] font-[300] leading-[20px] text-gray-600"
+                  class="text-sm font-[300] leading-[20px] text-gray-600"
                   v-if="!!scope.row.customer_id">
                   #{{ scope.row.customer_id }}
                 </div>
@@ -53,10 +53,10 @@
         <!-- usage time -->
         <el-table-column
           :label="$t('billing.usageTime')"
-          label-class-name="text-[12px] font-[400] leading-[18px] text-gray-600"
+          label-class-name="text-xs font-[400] leading-[18px] text-gray-600"
           align="center">
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-gray-600">
+            <div class="text-sm font-[400] leading-[20px] text-gray-600">
               {{ scope.row.value }}
             </div>
           </template>
@@ -65,10 +65,10 @@
         <!-- created_at -->
         <el-table-column
           :label="$t('billing.createTime')"
-          label-class-name="text-[12px] font-[400] leading-[18px] text-gray-600"
+          label-class-name="text-xs font-[400] leading-[18px] text-gray-600"
           align="center">
           <template #default="scope">
-            <div class="text-[14px] font-[400] leading-[20px] text-gray-600">
+            <div class="text-sm font-[400] leading-[20px] text-gray-600">
               {{ formatDateTime(scope.row.created_at) }}
             </div>
           </template>

@@ -2,7 +2,7 @@
   <div class="p-[16px] border-t border-gray-200">
     <h3 class="flex items-center gap-[8px]">
       <SvgIcon name="datasets" width="18px" height="18px" />
-      <span class="font-medium text-gray-700 text-[16px] leading-[24px]">
+      <span class="font-medium text-gray-700 text-md leading-[24px]">
         {{ $t('datasets.associated') }}
       </span>
       <span class="text-gray-500"> {{ datasets.length }} </span>

@@ -102,12 +102,12 @@
     <div class="px-[16px] py-[24px] flex flex-col gap-[12px]">
       <a
         href="/signup"
-        class="hidden md:block btn btn-primary w-full px-[16px] py-[10px] text-[16px] font-500 leading-24 text-center">
+        class="hidden md:block btn btn-primary w-full px-[16px] py-[10px] text-md font-500 leading-24 text-center">
         {{ $t('navbar.register') }}
       </a>
       <a
         href="/login"
-        class="hidden md:block btn btn-outline text-black w-full px-[16px] py-[10px] text-[16px] font-500 leading-24 text-center">
+        class="hidden md:block btn btn-outline text-black w-full px-[16px] py-[10px] text-md font-500 leading-24 text-center">
         {{ $t('navbar.login') }}
       </a>
     </div>

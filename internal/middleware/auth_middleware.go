@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,16 +21,17 @@ func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 
 		// get user info from csghub server
 		userResp, _, err := csghubServer.GetUserInfo(loginIdentity)
-		user := &models.User{
-			Name:          userResp.Data.Username,
-			Nickname:      userResp.Data.Nickname,
-			Phone:         userResp.Data.Phone,
-			Email:         userResp.Data.Email,
-			LoginIdentity: userResp.Data.UUID,
-		}
-		user.SetRoles(userResp.Data.Roles...)
+		slog.Info("- Current User Info -", userResp.Data)
 
 		if err == nil {
+			user := &models.User{
+				Name:          userResp.Data.Username,
+				Nickname:      userResp.Data.Nickname,
+				Phone:         userResp.Data.Phone,
+				Email:         userResp.Data.Email,
+				LoginIdentity: userResp.Data.UUID,
+			}
+			user.SetRoles(userResp.Data.Roles...)
 			c.Set("currentUser", user)
 		}
 

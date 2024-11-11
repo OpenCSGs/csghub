@@ -10,27 +10,27 @@
         <div class="ml-[10px]">
           <div
             :title="nickName"
-            class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[24px] leading-[32px] font-semibold"
+            class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-2xl leading-[32px] font-semibold"
           >
             <a :href="`/organizations/${name}`">
               {{ nickName || name }}
             </a>
           </div>
           <div
-            class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-[16px] text-gray-500 leading-[24px]"
+            class="max-w-[190px] text-ellipsis overflow-hidden whitespace-nowrap text-md text-gray-500 leading-[24px]"
             :title="homepage"
           >
             {{ homepage }}
           </div>
         </div>
       </div>
-      <div class="p-[16px] text-[20px] leading-[30px] text-gray-700">
+      <div class="p-[16px] text-xl leading-[30px] text-gray-700">
         {{ $t('organization.orgSetting') }}
       </div>
       <div class="flex flex-col">
         <a
           :href="`/organizations/${this.name}/edit`"
-          class="py-[8px] px-[12px] hover:bg-gray-50 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
+          class="py-[8px] px-[12px] hover:bg-gray-50 text-md text-gray-500 leading-[24px] cursor-pointer"
           :class="menuClass(`/organizations/${this.name}/edit`)"
         >
           {{ $t('organization.orgInfo') }}
@@ -40,7 +40,7 @@
       <div class="flex flex-col">
         <a
           :href="`/organizations/${this.name}/members`"
-          class="py-[8px] px-[12px] hover:bg-gray-50 text-[16px] text-gray-500 leading-[24px] cursor-pointer"
+          class="py-[8px] px-[12px] hover:bg-gray-50 text-md text-gray-500 leading-[24px] cursor-pointer"
           :class="menuClass(`/organizations/${this.name}/members`)"
         >
           {{ $t('organization.orgMembers') }}

@@ -16,6 +16,7 @@ type User struct {
 	RolesMask     int    `bun:"," json:"roles_mask"`
 	Phone         string `bun:"," json:"phone"`
 	SessionIP     string `bun:"," json:"session_ip"`
+	Avatar        string `bun:"," json:"avatar"`
 
 	times
 }

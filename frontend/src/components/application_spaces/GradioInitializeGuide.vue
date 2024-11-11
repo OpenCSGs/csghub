@@ -12,8 +12,8 @@
         </defs>
       </svg>
       <div>
-        <h3 class="text-gray-600 text-[14px] font-[500]">{{ $t('application_spaces.gradioGuide.notice') }}</h3>
-        <p class="text-gray-600 text-[14px]">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
+        <h3 class="text-gray-600 text-sm font-[500]">{{ $t('application_spaces.gradioGuide.notice') }}</h3>
+        <p class="text-gray-600 text-sm">{{ $t('application_spaces.gradioGuide.noticeDesc') }}</p>
       </div>
     </div>
     <h3 class="my-[24px] text-gray-600 font-[500]">1. {{ $t('application_spaces.gradioGuide.cloneTitle') }}</h3>
@@ -50,8 +50,8 @@
     <markdown-viewer :content="appPyCodeMarkdown"></markdown-viewer>
     <h3 class="my-[24px] text-gray-600 font-[500]">3. {{ $t('application_spaces.gradioGuide.submitTitle') }}</h3>
     <markdown-viewer :content="pushCodeMarkdown"></markdown-viewer>
-    <p class="text-gray-500 text-[16px] font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
-    <div class="text-[16px] text-gray-500 border border-gray-300 rounded-md shadow-xs py-[12px] px-[14px] mb-[32px]">
+    <p class="text-gray-500 text-md font-[400] my-[24px]">{{ $t('application_spaces.gradioGuide.successNotes') }}</p>
+    <div class="text-md text-gray-500 border border-gray-300 rounded-md shadow-xs py-[12px] px-[14px] mb-[32px]">
       <div>
         <h3 class="text-gray-900"> {{ $t('application_spaces.gradioGuide.dependencyNotesTitle') }} </h3>
         <p>{{ $t('application_spaces.gradioGuide.dependencyNotes1') }}</p>

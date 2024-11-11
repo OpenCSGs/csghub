@@ -164,7 +164,7 @@
                 <SvgIcon name="space_upload" />
                 <div class="el-upload__text">
                   <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
-                  <div class="font-light text-[12px]">
+                  <div class="font-light text-xs">
                     {{ $t('application_spaces.new.coverImageDesc2') }}
                   </div>
                 </div>
@@ -195,7 +195,7 @@
                 name="space_gradio"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Gradio</p>
+              <p class="font-semibold text-md">Gradio</p>
             </el-radio>
             <el-radio
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
@@ -207,7 +207,7 @@
                 name="space_streamlit"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Streamlit</p>
+              <p class="font-semibold text-md">Streamlit</p>
             </el-radio>
             <el-radio
               v-if="isAdmin"
@@ -222,7 +222,7 @@
                 height="24"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Nginx</p>
+              <p class="font-semibold text-md">Nginx</p>
             </el-radio>
             <el-radio
               v-if="!isAdmin"
@@ -236,8 +236,8 @@
                 name="space_docker"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Docker</p>
-              <p class="text-[12px]">11 templates</p>
+              <p class="font-semibold text-md">Docker</p>
+              <p class="text-xs">11 templates</p>
             </el-radio>
             <el-radio
               disabled
@@ -250,8 +250,8 @@
                 name="space_static"
                 class="m-auto"
               />
-              <p class="font-semibold text-[16px]">Static</p>
-              <p class="text-[12px]">3 templates</p>
+              <p class="font-semibold text-md">Static</p>
+              <p class="text-xs">3 templates</p>
             </el-radio>
           </el-radio-group>
         </el-form-item>
@@ -309,10 +309,10 @@
             v-model="dataForm.visibility"
             :publicDesc="t('application_spaces.new.publicDesc')"
             :privateDesc="t('application_spaces.new.privateDesc')"
-          /> 
+          />
         </el-form-item>
         <p
-          class="mb-[18px] rounded-sm bg-brand-25] text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('application_spaces.new.notes') }}
         </p>
@@ -320,7 +320,7 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="!text-center !h-9 !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+              class="!text-center !h-9 !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
               @click="handleSubmit"
             >
               {{ t('application_spaces.new.create') }}
@@ -555,17 +555,17 @@
   }
 
   :deep(.el-radio__label) {
-    color: #344054 !important;
+    color: var(--Gray-700) !important;
     font-weight: 400;
   }
 
   :deep(.el-radio.is-bordered.is-checked) {
-    border: 2px solid #3250bd;
+    border: 2px solid var(--Brand-600);
   }
 
   :deep(.el-radio__input.is-checked .el-radio__inner) {
-    background: #3250bd;
-    border-color: #3250bd;
+    background: var(--Brand-600);
+    border-color: var(--Brand-600);
   }
 
   :deep(.el-select) {
@@ -590,11 +590,11 @@
     margin-right: unset;
   }
   :deep(.sdk-container .el-radio.is-disabled .el-radio__label) {
-    color: #d0d5dd !important;
+    color: var(--Gray-300) !important;
   }
   :deep(.sdk-container .el-radio.is-disabled.is-bordered) {
     border-style: dashed;
-    border-color: #eaecf0 !important;
+    border-color: var(--Gray-200) !important;
   }
   :deep(.el-form-item__content) {
     line-height: unset;

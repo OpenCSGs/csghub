@@ -4,15 +4,15 @@
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetName') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.datasetNameTips') }}
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[14px] text-gray-600">
+        <p class="text-sm text-gray-600">
           {{ $t('datasets.namespaceDatasetName') }}
         </p>
         <div
@@ -27,10 +27,10 @@
     <!-- 更新数据集别名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetNickName') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips') }}
         </div>
       </div>
@@ -53,10 +53,10 @@
     <!-- 更新数据集简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetDesc') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips2') }}
         </div>
       </div>
@@ -80,17 +80,17 @@
     <!-- 数据集标签 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetTag') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips3') }}
         </div>
       </div>
       <div
         class="flex flex-col gap-[6px]"
         ref="tagListContainer">
-        <p class="text-gray-700 text-[14px]">
+        <p class="text-gray-700 text-sm">
           {{ $t('datasets.datasetTag') }}
         </p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
@@ -140,17 +140,17 @@
     <!-- 行业标签 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.datasetIndustryTag') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.tips4') }}
         </div>
       </div>
       <div
         class="flex flex-col gap-[6px]"
         ref="IndustryTagListContainer">
-        <p class="text-gray-700 text-[14px]">
+        <p class="text-gray-700 text-sm">
           {{ $t('datasets.datasetIndustryTag') }}
         </p>
         <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
@@ -204,10 +204,10 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.edit.changeVisibility') }}
         </div>
-        <div class="max-w-[864px] text-[14px] text-gray-600 leading-[20px]">
+        <div class="max-w-[864px] text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.statusText') }}
           <span class="text-black font-medium"
             >[{{
@@ -222,7 +222,7 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <p class="text-[14px] text-gray-600">
+        <p class="text-sm text-gray-600">
           {{ $t('datasets.edit.datasetVisibility') }}
         </p>
         <el-select
@@ -230,8 +230,7 @@
           @change="changeVisibility"
           placeholder="Select"
           size="large"
-          class="!w-[512px] sm:!w-full"
-          :disabled="true">
+          class="!w-[512px] sm:!w-full">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -246,17 +245,17 @@
     <!-- 数据集删除 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-[14px] text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('datasets.edit.delDataset') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('datasets.edit.canNot') }}</span>
           {{ $t('datasets.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.delTips3') }}
         </div>
-        <div class="text-[14px] text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('datasets.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.sureDel') }}
@@ -264,7 +263,7 @@
       </div>
 
       <div class="flex flex-col gap-[8px]">
-        <p class="text-[14px] text-gray-600">
+        <p class="text-sm text-gray-600">
           {{ $t('datasets.datasetName') }}
         </p>
         <el-input
@@ -276,7 +275,7 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-[14px] leading-[20px] rounded-md"
+            class="text-gray-400 py-[8px] px-[12px] text-sm leading-[20px] rounded-md"
             :class="
               delDesc === datasetPath
                 ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
@@ -519,11 +518,8 @@
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel'
         })
-          .then((action) => {
-            ElMessage({
-              type: 'success',
-              message: this.$t('all.changeSuccess')
-            })
+          .then(() => {
+            this.changeVisibilityCall(value)
           })
           .catch(() => {
             ElMessage({
@@ -532,7 +528,11 @@
             })
           })
       },
-
+      changeVisibilityCall(value) {
+        const isprivateSelected = value === 'Private' ? true : false
+        const payload = { private: isprivateSelected }
+        this.updateDataset(payload)
+      },
       updateTags() {
         if (this.selectedTags.length !== 0) {
           const newSelectedTags = this.selectedTags.map((tag) => tag.name)

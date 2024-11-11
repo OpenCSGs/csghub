@@ -1,5 +1,5 @@
 <template>
-  <span class="flex gap-[4px] items-center text-[14px] border px-[8px] py-[3px] rounded-sm cursor-pointer"
+  <span class="flex gap-[4px] items-center text-sm border px-[8px] py-[3px] rounded-sm cursor-pointer"
       :style="setTagColor()"
       @click="toggleActive"
   >

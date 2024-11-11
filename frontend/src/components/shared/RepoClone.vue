@@ -87,7 +87,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
               <a href="/settings/access-token" target="_blank" class="underline">access token</a>
@@ -125,7 +125,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500 mb-[8px]">
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500 mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
@@ -147,7 +147,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-          <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
+          <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
             <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
             Use
             <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a>
