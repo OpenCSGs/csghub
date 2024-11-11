@@ -4,7 +4,7 @@
     <button
       v-if="role === 'admin'"
       @click="dialogVisible = true"
-      class="px-[12px] py-[8px] flex gap-[4px] items-center rounded-md border border-gray-300 text-[14px]"
+      class="px-[12px] py-[8px] flex gap-[4px] items-center rounded-md border border-gray-300 text-sm"
     >
       <SvgIcon name="invite_org_member" />
       <span>{{ $t('organization.invite.title') }}</span>
@@ -32,17 +32,17 @@
       </template>
       <!-- dialog content -->
       <div class="relative">
-        <div class="text-[18px] leading-[28px] text-gray-900">
+        <div class="text-lg leading-[28px] text-gray-900">
           {{ $t('organization.invite.inviteNew') }}
         </div>
-        <span class="text-[14px] leading-[20px] text-gray-600 font-light"
+        <span class="text-sm leading-[20px] text-gray-600 font-light"
           >{{ $t('organization.invite.inviteDesc') }}
           <span class="font-bold">{{ orgName }}</span></span
         >
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-gray-700 text-[14px] mb-[6px]">
+              <p class="text-gray-700 text-sm mb-[6px]">
                 {{ $t('all.role') }}
               </p>
               <el-select
@@ -59,7 +59,7 @@
                 />
               </el-select>
             </div>
-            <p class="text-gray-700 text-[14px] mb-[6px]">
+            <p class="text-gray-700 text-sm mb-[6px]">
               {{ $t('all.userName') }}
             </p>
             <div

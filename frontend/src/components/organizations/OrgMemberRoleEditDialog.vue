@@ -15,8 +15,8 @@
       </div>
     </template>
     <div class="flex justify-center flex-col m-auto w-full relative">
-      <div class="text-[18px] leading-[28px] text-gray-900">{{ $t('organization.edit.role') }}</div>
-      <div class="text-[14px] leading-[20px] text-gray-600 font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
+      <div class="text-lg leading-[28px] text-gray-900">{{ $t('organization.edit.role') }}</div>
+      <div class="text-sm leading-[20px] text-gray-600 font-light mb-5">{{ $t('organization.edit.roleTips') }}</div>
       <el-form
       :model="dataForm"
       :rules="rules"

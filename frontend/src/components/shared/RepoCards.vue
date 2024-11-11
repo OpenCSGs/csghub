@@ -46,7 +46,7 @@
           />
           <span class="capitalize">
             {{ $t(`${repoType}s`) }}
-            <span class="text-gray-400 text-[16px] italic">
+            <span class="text-gray-400 text-md italic">
               {{ totalRepos }}
             </span>
           </span>

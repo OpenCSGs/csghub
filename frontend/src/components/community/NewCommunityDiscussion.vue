@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-[16px]">
-    <div class="flex gap-[8px] text-[14px] leading-[22px] font-medium">
+    <div class="flex gap-[8px] text-sm leading-[22px] font-medium">
       <SvgIcon height="24px" weight="24px" name="discussions" />
       {{ $t('community.newDiscussion.new') }}
     </div>
@@ -26,15 +26,16 @@
     <CommunityMDTextarea
       :desc="desc"
       @inputChange="handleInputChange"></CommunityMDTextarea>
-    <div>
-      <el-button
-        type="primary"
+    <div class="flex gap-[8px]">
+      <button
+        class="btn btn-primary btn-sm"
         @click="create"
-        >{{ $t('community.newDiscussion.create') }}</el-button
-      >
-      <el-button @click="cancel">{{
+        >{{ $t('community.newDiscussion.create') }}</button>
+      <button 
+        class="btn btn-secondary-gray btn-sm"
+        @click="cancel">{{
         $t('community.newDiscussion.cancel')
-      }}</el-button>
+      }}</button>
     </div>
   </div>
 </template>

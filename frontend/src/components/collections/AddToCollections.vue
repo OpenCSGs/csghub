@@ -4,7 +4,7 @@
   >
     <div
       @click="openAddCollections"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-gray-300 justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="btn btn-secondary-gray btn-sm"
     >
       <SvgIcon
         name="collections"
@@ -37,7 +37,7 @@
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-gray-700 text-[14px] mb-[6px]">
+              <p class="text-gray-700 text-sm mb-[6px]">
                 {{ $t('collections.edit.addCollection') }}
               </p>
               <el-select

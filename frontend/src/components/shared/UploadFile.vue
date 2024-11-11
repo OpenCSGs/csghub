@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-[16px] min-h-[300px] py-[32px] md:px-5">
     <div class="test-[14px]"><p>{{ repoName }}/</p></div>
     <div class="border border-gray-200 rounded-xs bg-gray-100">
-      <div class="flex text-[14px] text-brand-500 leading-[22px]">
+      <div class="flex text-sm text-brand-500 leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
           {{ $t('all.uploadFile') }}
         </div>
@@ -45,7 +45,7 @@
     </el-radio-group>
 
     <div>
-      <p class="text-[14px] mb-[8px]">{{ $t('all.submitChange') }}</p>
+      <p class="text-sm mb-[8px]">{{ $t('all.submitChange') }}</p>
       <el-input v-model="commitTitle" :maxLength="200" show-word-limit clearable
                 :placeholder="commitTitlePlaceholder"></el-input>
     </div>

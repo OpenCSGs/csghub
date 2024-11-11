@@ -37,7 +37,7 @@
 
     <!-- finetune deploy button -->
     <div
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-white border border-gray-300 shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="btn btn-secondary-gray btn-sm"
       v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
       @click="handleButtonClick"
     >
@@ -51,14 +51,14 @@
     <!-- repo download clone button -->
     <div
       v-if="!!httpCloneUrl"
-      class="flex px-[12px] py-[5px] justify-center items-center gap-1 rounded-lg bg-brand-600 shadow-sm hover:bg-blue-800 cursor-pointer"
+      class="btn btn-primary btn-sm"
       @click="cloneRepositoryVisible = true"
     >
       <SvgIcon
         name="download"
         class="mr-0"
       />
-      <div class="text-white text-sm">{{ $t(downloadButtonKey) }}</div>
+      <div>{{ $t(downloadButtonKey) }}</div>
     </div>
 
     <!-- clone dialog -->
@@ -87,7 +87,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               Use
               <a href="/settings/access-token" target="_blank" class="underline">access token</a>
@@ -125,7 +125,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500 mb-[8px]">
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500 mb-[8px]">
               <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
               <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
               to clone private repos
@@ -147,7 +147,7 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-          <div class="flex gap-[8px] text-[14px] leading-[20px] text-gray-500">
+          <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
             <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
             Use
             <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a>

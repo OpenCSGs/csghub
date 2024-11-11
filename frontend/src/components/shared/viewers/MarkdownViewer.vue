@@ -45,7 +45,7 @@
 
       const copyButtonFragment = `
         <clipboard-copy value="${escapeHtml(str)}"
-                        class="copy-button p-1 h-fit hidden group-hover:block hover:bg-gray-500 rounded-sm cursor-pointer"
+                        class="copy-button p-1 h-fit hidden group-hover:block hover:bg-gray-100 rounded-sm cursor-pointer"
         >${copyIcon}</clipboard-copy>`
 
       if (lang && hljs.getLanguage(lang)) {

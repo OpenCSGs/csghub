@@ -5,7 +5,7 @@
     <!-- header -->
     <div class="flex w-full justify-between mb-[12px] md:flex-col">
       <div class="flex flex-col">
-        <div class="flex gap-2 text-[20px] leading-[30px]">
+        <div class="flex gap-2 text-xl leading-[30px]">
           <SvgIcon
             name="collections"
             width="18"
@@ -13,7 +13,7 @@
           />
           <span> {{ $t('collections.collection') }} </span>
         </div>
-        <div class="text-[16px] leading-[24px] text-gray-500">{{ $t('collections.title') }}</div>
+        <div class="text-md leading-[24px] text-gray-500">{{ $t('collections.title') }}</div>
       </div>
       <div class="xl:mt-[16px]">
         <ElInput
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div
-      class="flex gap-1 max-w-[max-content] px-2 rounded-2xl border border-gray-300 text-[14px] leading-[20px] bg-gray-25 text-brand-900"
+      class="flex gap-1 max-w-[max-content] px-2 rounded-2xl border border-gray-300 text-sm leading-[20px] bg-gray-25 text-brand-900"
     >
       <SvgIcon width="12px" height="12px" name="star" />
       {{ $t('collections.hot') }}
@@ -68,7 +68,7 @@
         </div>
         <div class="test-[16px] leading-[24px]">{{ $t('collections.noData') }}</div>
         <div
-          class="max-w-[300px] text-gray-600 text-[14px] text-center leading-[20px] font-light mb-6"
+          class="max-w-[300px] text-gray-600 text-sm text-center leading-[20px] font-light mb-6"
         >
           {{ $t('collections.noDataDesc') }}
         </div>

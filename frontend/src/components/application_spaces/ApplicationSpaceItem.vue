@@ -12,7 +12,7 @@
         <div class="flex gap-2">
           <span
             v-if="getComputed.visibility"
-            class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-gray-700 text-[12px]"
+            class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-gray-700 text-xs"
             >{{ getComputed.visibility }}</span
           >
           <AppStatus

@@ -11,7 +11,7 @@
       <h3 class="text-gray-700 text-xl font-[600]">SSH Keys</h3>
       <button
         @click="centerDialogVisible = true"
-        class="rounded-xs border bg-white py-[5px] px-[16px] text-gray-500 text-[14px] font-[500] mt-[32px] w-[160px]"
+        class="rounded-xs border bg-white py-[5px] px-[16px] text-gray-500 text-sm font-[500] mt-[32px] w-[160px]"
       >
         {{ $t('sshKey.addSshKey') }}
       </button>
@@ -44,7 +44,7 @@
           ref="formRef"
         >
           <div class="mb-[16px]">
-            <p class="text-gray-700 text-[14px] mb-[8px]">
+            <p class="text-gray-700 text-sm mb-[8px]">
               {{ $t('sshKey.sshKeyName') }} <span class="text-red-400">*</span>
             </p>
             <el-input
@@ -54,7 +54,7 @@
             />
           </div>
           <div>
-            <p class="text-gray-700 text-[14px] mb-[8px]">
+            <p class="text-gray-700 text-sm mb-[8px]">
               {{ $t('sshKey.sshKeyContent')
               }}<span class="text-red-400">*</span>
             </p>

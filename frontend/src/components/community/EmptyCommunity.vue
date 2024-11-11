@@ -3,14 +3,14 @@
     <div class="flex justify-center">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path opacity="0.12" d="M12 17.5997C12 16.1062 12 15.3595 12.2906 14.789C12.5463 14.2873 12.9543 13.8793 13.456 13.6237C14.0265 13.333 14.7732 13.333 16.2667 13.333H25.0667C26.5601 13.333 27.3069 13.333 27.8773 13.6237C28.3791 13.8793 28.787 14.2873 29.0427 14.789C29.3333 15.3595 29.3333 16.1062 29.3333 17.5997V27.1512C29.3333 28.4757 27.747 29.1555 26.7879 28.2421C25.8541 27.3528 24.6141 26.8568 23.3247 26.8568H16.2667C14.7732 26.8568 14.0265 26.8568 13.456 26.5662C12.9543 26.3105 12.5463 25.9026 12.2906 25.4008C12 24.8304 12 24.0836 12 22.5902V17.5997Z" fill="#4D6AD6"/><path d="M12 18.667H9.66663C9.3371 18.667 9.17233 18.667 9.01189 18.6799C8.36734 18.7319 7.74499 18.9393 7.19818 19.2845C7.06206 19.3704 6.93025 19.4693 6.66663 19.667V19.667C5.98472 20.1784 5.64377 20.4341 5.38373 20.534C4.2864 20.9555 3.06397 20.3443 2.74275 19.2135C2.66663 18.9456 2.66663 18.5194 2.66663 17.667V9.06699C2.66663 6.82678 2.66663 5.70668 3.1026 4.85103C3.48609 4.09838 4.09802 3.48646 4.85066 3.10297C5.70631 2.66699 6.82642 2.66699 9.06663 2.66699H17.6C19.8402 2.66699 20.9603 2.66699 21.8159 3.10297C22.5686 3.48646 23.1805 4.09838 23.564 4.85103C24 5.70668 24 6.82678 24 9.06699V9.33366V10.0003M26.7878 28.2427V28.2427C27.747 29.1562 29.3333 28.4763 29.3333 27.1518V17.6003C29.3333 16.1069 29.3333 15.3601 29.0426 14.7897C28.787 14.2879 28.379 13.88 27.8773 13.6243C27.3068 13.3337 26.5601 13.3337 25.0666 13.3337H16.2666C14.7732 13.3337 14.0264 13.3337 13.456 13.6243C12.9542 13.88 12.5463 14.2879 12.2906 14.7897C12 15.3601 12 16.1069 12 17.6003V22.5908C12 24.0843 12 24.831 12.2906 25.4014C12.5463 25.9032 12.9542 26.3112 13.456 26.5668C14.0264 26.8575 14.7732 26.8575 16.2666 26.8575H23.3246C24.6141 26.8575 25.8541 27.3535 26.7878 28.2427Z" stroke="#4D6AD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
-    <div class="flex justify-center text-[20px] text-gray-700 leading-[28px] font-semibold">{{ $t('community.empty.welcome') }}</div>
-    <div class="flex justify-center text-[14px] text-gray-700 leading-[22px]">
+    <div class="flex justify-center text-xl text-gray-700 leading-[28px] font-semibold">{{ $t('community.empty.welcome') }}</div>
+    <div class="flex justify-center text-sm text-gray-700 leading-[22px]">
       <span class="max-w-[320px] text-center">
         {{ $t('community.empty.desc') }}
       </span>
     </div>
     <div class="flex justify-center">
-      <div class="cursor-pointer flex items-center gap-[8px] bg-brand-500 px-[20px] py-[9px] text-[14px] text-white font-medium leading-[22px]" @click="creatDiscussion">
+      <div class="btn btn-primary btn-md" @click="creatDiscussion">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.33337 7.99967H8.00004M12.6667 7.99967H8.00004M8.00004 7.99967V3.33301M8.00004 7.99967V12.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         {{ $t('community.empty.new') }}
       </div>

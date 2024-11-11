@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-2xl bg-white p-[36px] w-[655px] md:w-full border border-[1px] border-gray-200 shadow-sm">
-    <h3 class="text-gray-700 text-[20px] font-[600]">{{ $t('organization.newOrganization.title') }}</h3>
+    <h3 class="text-gray-700 text-xl font-[600]">{{ $t('organization.newOrganization.title') }}</h3>
     <el-form
       ref="dataFormRef"
       :model="dataForm"
@@ -15,7 +15,7 @@
           <template #prepend>{{getDomain()}}</template>
         </el-input>
         <div class="mt-[6px]">
-          <p class="text-gray-600 text-[14px] font-[300] leading-[20px]">{{ $t('organization.orgSpaceTips') }}</p>
+          <p class="text-gray-600 text-sm font-[300] leading-[20px]">{{ $t('organization.orgSpaceTips') }}</p>
         </div>
       </el-form-item>
 
@@ -88,7 +88,7 @@
 
       <el-form-item>
         <el-button
-          class="w-full !text-center !h-[48px] !text-[16px] !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+          class="w-full !text-center !h-[48px] !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
           @click="handleSubmit"
           :disabled="submitting"
         >

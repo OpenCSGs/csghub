@@ -13,18 +13,18 @@
       <div>
         <div class="flex">
           <SvgIcon name="exclamation_point" width="20px" height="20px" />
-          <p class="text-gray-500 text-[16px] ml-[8px]">
+          <p class="text-gray-500 text-md ml-[8px]">
             {{ $t('profile.edit.confirmUpdateMessage')}}
           </p>
         </div>
-        <p class="text-gray-700 text-[14px] mb-[8px] mt-[8px]">
+        <p class="text-gray-700 text-sm mb-[8px] mt-[8px]">
           {{ $t('profile.edit.internalUsername') }}
           <span class="text-red-400">*</span>
         </p>
         <el-form-item prop="username">
           <el-input v-model="formData.username" :rows="6" placeholder="请输入用户名" />
         </el-form-item>
-        <p class="text-gray-500 text-[12px] italic mt-[24px]">
+        <p class="text-gray-500 text-xs italic mt-[24px]">
           {{ $t('rule.nameRule') }}
         </p>
       </div>

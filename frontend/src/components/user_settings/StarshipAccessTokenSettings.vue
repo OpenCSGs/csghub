@@ -12,10 +12,10 @@
     <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] min-h-auto">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
-          <h3 class="mb-[4px] text-gray-700 text-[20px] font-semibold">
+          <h3 class="mb-[4px] text-gray-700 text-xl font-semibold">
             {{ $t('accessToken.starshipTitle') }}
           </h3>
-          <p class="text-gray-500 text-[14px]">
+          <p class="text-gray-500 text-sm">
             {{ $t('accessToken.starshipDesc') }}
           </p>
         </div>
@@ -29,7 +29,7 @@
 
       <button
         @click="centerDialogVisible = true"
-        class="rounded-xs border bg-white py-[5px] px-[16px] text-gray-500 text-[14px] font-[500] w-[160px]"
+        class="rounded-xs border bg-white py-[5px] px-[16px] text-gray-500 text-sm font-[500] w-[160px]"
       >
         {{ $t('accessToken.starshipAddToken') }}
       </button>
