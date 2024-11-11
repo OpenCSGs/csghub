@@ -7,7 +7,7 @@
       :name="name"
     >
     </Menu>
-    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l min-h-[calc(100vh-153px)] min-h-auto">
+    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l border-l-0 min-h-[calc(100vh-153px)] min-h-auto">
       <div class="max-w-[512px]">
         <div class="mb-[16px]">
           <h3 class="mb-[4px] text-gray-700 text-[20px] font-semibold">

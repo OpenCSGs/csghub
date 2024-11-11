@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[24px] px-6 py-10 border-l">
+  <div class="flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0">
     <el-alert
       v-if="canChangeUsername === 'true'"
       :title="$t('profile.edit.renameUsername')"
