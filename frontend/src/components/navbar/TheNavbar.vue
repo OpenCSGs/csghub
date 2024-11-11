@@ -175,8 +175,8 @@
         <!-- not logged in -->
         <template v-else>
           <div
-            class="px-[14px] py-[10px] text-md font-500 leading-[24px] md:hidden btn btn-primary">
-            <a href="/login">{{ $t('navbar.loginRegister') }}</a>
+            class="md:hidden">
+            <a href="/login" class="btn btn-primary btn-md">{{ $t('navbar.loginRegister') }}</a>
           </div>
           <a
             class="hidden md:block text-sm font-500"

@@ -10,7 +10,7 @@
       </span>
     </div>
     <div class="flex justify-center">
-      <div class="cursor-pointer flex items-center gap-[8px] bg-brand-500 px-[20px] py-[9px] text-sm text-white font-medium leading-[22px]" @click="creatDiscussion">
+      <div class="btn btn-primary btn-md" @click="creatDiscussion">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.33337 7.99967H8.00004M12.6667 7.99967H8.00004M8.00004 7.99967V3.33301M8.00004 7.99967V12.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         {{ $t('community.empty.new') }}
       </div>
