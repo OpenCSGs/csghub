@@ -26,15 +26,16 @@
     <CommunityMDTextarea
       :desc="desc"
       @inputChange="handleInputChange"></CommunityMDTextarea>
-    <div>
-      <el-button
-        type="primary"
+    <div class="flex gap-[8px]">
+      <button
+        class="btn btn-primary btn-sm"
         @click="create"
-        >{{ $t('community.newDiscussion.create') }}</el-button
-      >
-      <el-button @click="cancel">{{
+        >{{ $t('community.newDiscussion.create') }}</button>
+      <button 
+        class="btn btn-secondary-gray btn-sm"
+        @click="cancel">{{
         $t('community.newDiscussion.cancel')
-      }}</el-button>
+      }}</button>
     </div>
   </div>
 </template>

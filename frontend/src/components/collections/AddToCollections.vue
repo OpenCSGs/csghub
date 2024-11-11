@@ -4,7 +4,7 @@
   >
     <div
       @click="openAddCollections"
-      class="flex max-w-[max-content] px-3 py-[5px] text-sm leading-[20px] bg-white border border-gray-300 justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="btn btn-secondary-gray btn-sm"
     >
       <SvgIcon
         name="collections"
