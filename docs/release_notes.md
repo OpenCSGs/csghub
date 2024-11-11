@@ -1,5 +1,7 @@
 # Release Notes
 
+- **[2024.10.15] v1.0.0**
+  Big release to make multi-sync a stable function, support docker image build for ARM platform, support regions for space creation, auto generate resource type of models like Nvidia GPU，Huawei Ascend, auto build repo and runtime frameworks relation, support model inference with NIM, allow filter by subset and splits in dataset viewer, enable auto init of user git access token
 - **[2024.09.15] v0.9.0**
   `CSGHub` portal has been migrated to the Go version, with Gitaly support enabled by default on the Git server. New features include the 'Collections' feature and the Resource Console page. Running spaces, model inference, and fine-tuning endpoints no longer requires a domain name. Additionally, various user experience improvements and bug fixes have been implemented.
 - **[2024.08.15] v0.8.0**
