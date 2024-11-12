@@ -54,6 +54,6 @@ CSGHub 是一个开源平台，专为管理大语言模型（LLM）资产而设�
 我们诚邀您一起探索 [OpenCSG 社区](https://github.com/OpenCSGs/community)，在这里您将找到详细的社区指南，欢迎您成为社区的贡献者分享您的内容。
 
 - 了解如何加入[社区会议](https://github.com/OpenCSGs/community?tab=readme-ov-file#community-meeting)，与其他成员互动并分享您的想法。
-- 请参阅[贡献指南](https://github.com/OpenCSGs/community/blob/main/guidelines/CONTRIBUTING_en.md)以了解如何为项目做出贡献。
+- 请参阅[贡献指南](https://github.com/OpenCSGs/community/blob/main/guidelines/CONTRIBUTING_zh.md)以了解如何为项目做出贡献。
 - 如果有任何疑问或问题，请[联系我们](https://github.com/OpenCSGs/community?tab=readme-ov-file#questions-and-issues)以获得支持。
 - 请参考[开发指南](./docs/setup.md)设置开发环境。
