@@ -347,12 +347,15 @@
 .btn-link-color.btn-sm {
   padding: 8px 12px;
   font-size: 12px;
+  font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
   border-radius: var(--border-radius-md);
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  text-align: center;
+  justify-content: center;
 }
 
 /* md size button */
@@ -366,14 +369,16 @@
   /* 默认尺寸（可以认为是 md 尺寸） */
   padding: 10px 14px;
   font-size: var(--font-size-sm);
+  font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
   border-radius: var(--border-radius-lg);
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  text-align: center;
+  justify-content: center;
 }
-
 
 /* lg size button */
 .btn-primary.btn-lg,
@@ -385,12 +390,15 @@
 .btn-link-color.btn-lg {
   padding: 10px 16px;
   font-size: var(--font-size-md);
+  font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
   border-radius: var(--border-radius-md);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  text-align: center;
+  justify-content: center;
 }
 
 /* xl size button */
@@ -403,12 +411,15 @@
 .btn-link-color.btn-xl {
   padding: 12px 18px;
   font-size: var(--font-size-md);
+  font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
   border-radius: var(--border-radius-md);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  text-align: center;
+  justify-content: center;
 }
 
 /* 2xl size button */
@@ -421,10 +432,13 @@
 .btn-link-color.btn-2xl {
   padding: 16px 22px;
   font-size: var(--font-size-lg);
+  font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
   border-radius: var(--border-radius-md);
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  text-align: center;
+  justify-content: center;
 }

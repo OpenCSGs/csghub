@@ -99,15 +99,15 @@
 
   <template v-if="!props.isLoggedInBoolean">
     <hr />
-    <div class="px-[16px] py-[24px] flex flex-col gap-[12px]">
+    <div class="hidden md:block px-4 py-6 flex flex-col gap-3">
       <a
         href="/signup"
-        class="hidden md:block btn btn-primary w-full px-[16px] py-[10px] text-md font-500 leading-24 text-center">
+        class="btn btn-primary btn-lg">
         {{ $t('navbar.register') }}
       </a>
       <a
         href="/login"
-        class="hidden md:block btn btn-outline text-black w-full px-[16px] py-[10px] text-md font-500 leading-24 text-center">
+        class="btn btn-secondary-gray btn-lg">
         {{ $t('navbar.login') }}
       </a>
     </div>
