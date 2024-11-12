@@ -88,15 +88,14 @@
   const { t } = useI18n()
 
   const props = defineProps({
-    repoId: String,
-    userName: String
+    repoId: String
   })
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
   const isLogged =ref(false)
   const fetchCollectionsList = async () => {
-    const url = `/user/${props.userName}/collections`
+    const url = `/user/${userStore.username}/collections`
     const { data, error } = await useFetchApi(url).json()
     const json = data.value
     if (json) {
@@ -149,8 +148,7 @@
   watch(() => userStore.isLoggedIn, () => {
     isLogged.value = userStore.isLoggedIn
   })
-
-  watch(() => props.userName, () => {
+  watch(() => userStore.username, () => {
     fetchCollectionsList()
   })
 </script>
