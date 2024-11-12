@@ -7,7 +7,7 @@
       :name="name"
     >
     </Menu>
-    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] min-h-auto">
+    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] md:min-h-0">
       <h3 class="text-gray-700 text-xl font-[600]">SSH Keys</h3>
       <button
         @click="centerDialogVisible = true"
