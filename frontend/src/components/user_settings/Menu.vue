@@ -1,6 +1,6 @@
 <template>
     <div class="pt-6">
-      <div class="w-[294px] rounded-md mx-[24px]">
+      <div class="w-[294px] rounded-md mx-[24px] md:w-full md:mx-0">
         <div @click="clickProfile" class="flex p-[16px] cursor-pointer">
           <el-avatar :size="60" :src="userStore.avatar"> </el-avatar>
           <div class="ml-[10px]">
@@ -10,7 +10,7 @@
             <div class="text-md text-gray-500 leading-[24px] font-light">@{{ userStore.username }}</div>
           </div>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col md:hidden">
           <!-- profile -->
           <a href="/settings/profile"
              class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
@@ -73,6 +73,17 @@
             {{ $t('profile.menu.billing')}}
           </div> -->
         </div>
+        <!-- mobile tabs -->
+        <div class="profileTabs hidden md:block">
+          <el-tabs v-model="activeTab" @tabClick="handleTabClick">
+          <el-tab-pane :label="$t('profile.accountSetting')" name="/settings/profile"></el-tab-pane>
+          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.gitToken')" name="/settings/access-token"></el-tab-pane>
+          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.starshipAccessToken')" name="/settings/starship-access-token"></el-tab-pane>
+          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.syncAccessToken')" name="/settings/sync-access-token"></el-tab-pane>
+          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.sshKey')" name="/settings/ssh-keys"></el-tab-pane>
+        </el-tabs>
+        </div>
+    
       </div>
     </div>
     <el-dialog
@@ -113,6 +124,7 @@
     return !!userStore.email
   })
   const showDialog = ref(false)
+  const activeTab = ref(window.location.pathname)
 
   const menuClass = (menuPath) => {
     if (menuPath === window.location.pathname) {
@@ -120,6 +132,10 @@
     } else {
       return ''
     }
+  }
+
+  const handleTabClick = (tab) => {
+    location.href = tab.paneName
   }
 
   const clickProfile = () => {
@@ -134,3 +150,10 @@
     window.location.href = '/profile/' + userStore.username
   }
 </script>
+<style>
+ .profileTabs .el-tabs__nav-scroll {
+    @media screen and (max-width: 768px) {
+      padding-left: 0px !important;
+    }
+  }
+</style>
