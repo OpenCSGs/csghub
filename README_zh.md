@@ -25,7 +25,12 @@ CSGHub 是一个开源平台，专为管理大语言模型（LLM）资产而设�
 - 一站式数据处理与智能标注系统  
 - 高可用与灾难恢复设计  
 
-详细信息请参见 [CSGHub 详细介绍](./docs/detailed_intro_en.md)。
+详细信息请参见 [CSGHub 详细介绍](./docs/detailed_intro_zh.md)。
+
+### 演示视频
+
+为了帮助用户尽快熟悉 CSGHub，我们制作了一个演示视频，重点介绍其主要功能。您也可以在 [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU) 或 [Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/) 上观看。  
+<video width="658" height="432" src="https://github.com/user-attachments/assets/04f9fa17-9294-44c1-8c4a-4d7b9a5c66fa"></video>
 
 ### 快速开始
 

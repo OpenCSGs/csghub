@@ -27,6 +27,11 @@ CSGHubは、大規模言語モデル（LLM）の資産管理のために設計�
 
 詳細については、CSGHubの[詳細紹介](./docs/detailed_intro_en.md)をご覧ください。
 
+### デモ動画
+
+CSGHub の主要な機能と使い方を素早く理解していただくために、デモ動画を作成しました。下記または [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/) でご覧いただけます。  
+<video width="658" height="432" src="https://github.com/user-attachments/assets/04f9fa17-9294-44c1-8c4a-4d7b9a5c66fa"></video>
+
 ### クイックスタート
 
 - **探索したい方**：[OpenCSGのウェブサイト](https://opencsg.com)で、CSGHubの無料SaaS版を試用できます。[クイックスタートガイド](./docs/csghub_saas_en.md)を参考にして、CSGHub SaaSインターフェースを使い、LLMやデータセットの管理とLLMアプリケーションのデプロイをお試しください。

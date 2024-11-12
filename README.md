@@ -27,6 +27,11 @@ Additionally, CSGHub features microservice submodules and standardized OpenAPIs 
 
 For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
 
+### Demo Video
+
+To help users get up to speed with CSGHub, we have created a demo video that highlights its key features and how it works. You can watch it below or on [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/).  
+<video width="658" height="432" src="https://github.com/user-attachments/assets/04f9fa17-9294-44c1-8c4a-4d7b9a5c66fa"></video>
+
 ### Quick Start
 
 - For those looking to quickly explore, experiment with CSGHub's free SaaS version on the [OpenCSG website](https://opencsg.com). Refer to this [brief quick start guide](./docs/csghub_saas_en.md) to handle LLMs/datasets and deploy LLM applications with CSGHub SaaS interface.
