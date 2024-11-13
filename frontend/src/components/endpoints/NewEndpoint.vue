@@ -422,18 +422,18 @@
     }
     const uploadEndpoint = `/models/${dataForm.value.model_id}/run`
     const { data, error } = await useFetchApi(uploadEndpoint, options).post().json()
-    if (data.value) {
+    if (error.value) {
+      ElMessage({
+        message: t('endpoints.new.createFail') + `: ${error.value.msg}`,
+        type: 'error'
+      })
+    } else {
       ElMessage({
         message: t('endpoints.new.createSuccess'),
         type: 'success'
       })
       const res = data.value
       window.location.href = `/endpoints/${dataForm.value.model_id}/${res.data.deploy_id}`
-    } else {
-      ElMessage({
-        message: t('endpoints.new.createFail') + `: ${error.value.msg}`,
-        type: 'error'
-      })
     }
   }
 
