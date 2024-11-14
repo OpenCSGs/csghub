@@ -73,17 +73,17 @@ export default {
     },
 
     fontSize: {
-      'xs': ['12px', '18px'],
-      'sm': ['14px', '22px'],
-      'md': ['16px', '24px'],
-      'lg': ['18px', '28px'],
-      'xl': ['20px', '30px'],
-      '2xl': ['24px', '32px'],
-      '3xl': ['30px', '38px'],
-      '4xl': ['36px', '44px'],
-      '5xl': ['48px', '60px'],  
-      '6xl': ['60px', '72px'],
-      '7xl': ['72px', '90px'],
+      'xs': ['0.75rem', '1.125rem'],    // 12px, 18px
+      'sm': ['0.875rem', '1.375rem'],   // 14px, 22px
+      'md': ['1rem', '1.5rem'],         // 16px, 24px
+      'lg': ['1.125rem', '1.75rem'],    // 18px, 28px
+      'xl': ['1.25rem', '1.875rem'],    // 20px, 30px
+      '2xl': ['1.5rem', '2rem'],        // 24px, 32px
+      '3xl': ['1.875rem', '2.375rem'],  // 30px, 38px
+      '4xl': ['2.25rem', '2.75rem'],    // 36px, 44px
+      '5xl': ['3rem', '3.75rem'],       // 48px, 60px
+      '6xl': ['3.75rem', '4.5rem'],     // 60px, 72px
+      '7xl': ['4.5rem', '5.625rem'],    // 72px, 90px
     },
 
     fontWeight: {
