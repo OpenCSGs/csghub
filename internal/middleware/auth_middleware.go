@@ -21,9 +21,9 @@ func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 
 		// get user info from csghub server
 		userResp, _, err := csghubServer.GetUserInfo(loginIdentity)
-		slog.Info("- Current User Info -", userResp.Data)
 
 		if err == nil {
+			slog.Info("- Current User Info -", slog.Any("userResp.Data", userResp.Data))
 			user := &models.User{
 				Name:          userResp.Data.Username,
 				Nickname:      userResp.Data.Nickname,
