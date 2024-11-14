@@ -158,7 +158,7 @@
       }
     ).json()
     if (data.value) {
-      queues.value = data.value.data.data
+      queues.value = data.value.data.data || []
       total.value = data.value.data.total
     } else {
       ElMessage.warning(error.value.msg)

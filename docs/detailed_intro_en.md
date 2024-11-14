@@ -1,27 +1,77 @@
-## CSGHub Core Functions
-In the era of LLM, data and models are increasingly becoming the most important digital assets for businesses and individual users. However, there are currently issues such as fragmented management tools, limited management methods, and localization, which not only pose potential threats to secure operations but also might hinder the updating and iteration of enterprise-scale models. If you believe that large models will become a major driving force in the upcoming revolution, you may also be considering how to manage core assets — models, data, and large model application code — more efficiently and securely. `CSGHub` is an open-source project designed to address these issues.
+# CSGHub: In-Depth Overview of Features and Architecture  
 
-### CSGHub Tech Design
-The technical design of `CSGHub` are as follows:
-- `CSGHub` integrates multiple technologies including Git Servers, Git LFS (Large File Storage) protocol, and Object Storage Service (OSS), providing a reliable data storage layer, a flexible infrastructure access layer, and extensive support for development tools.
-- Utilizing a service-oriented architecture, `CSGHub` offers backend services through `CSGHub` Server and a management interface via `CSGHub` Web Service. Ordinary users can quickly initiate services using Docker compose or Kubernetes Helm Chart for enterprise-level asset management. Users with in-house development capabilities can utilize `CSGHub` Server for secondary development to integrate management functions into external systems or to customize advanced features.
-- Leveraging outstanding open-source projects like Apache Arrow and DuckDB, `CSGHub` supports previewing of Parquet data file formats, facilitating localized dataset management for researchers and common users.
-- `CSGHub` provides an intuitive web interface and permission design for enterprise organization structure. Users can realize version control management, online browsing and downloading through the web UI, as well as set the visibility scope of datasets and model files to realize data security isolation, and can also initiate topic discussions on models and datasets.
+As Large Language Models (LLMs) become increasingly central to digital transformation, organizations face growing challenges in managing these sophisticated LLM assets. They often struggle with scattered tools, limited management options, and security concerns. CSGHub is an open-source platform designed to address these challenges, making LLM assets management straightforward and secure.  
 
-Our R&D team has been focusing on AI + DevOps for a long time, and we hope to solve the pain points in the development process of large models through the `CSGHub` project. We encourage everyone to contribute high-quality development and operation and maintenance documents, and work together to improve the platform, so that large models assets can be more traceable and efficient.
+## CSGHub Key Features  
 
-### CSGHub Demo Video
-In order to help users to quickly understand the features and usage of `CSGHub`, we have recorded a demo video. You can watch this video to get a quick understanding of the main features and operation procedures of this program.
-- `CSGHub` Demo video is as below，you can also check it at [YouTube](https://www.youtube.com/watch?v=SFDISpqowXs) or [Bilibili](https://www.bilibili.com/video/BV1wk4y1X7G7/)
-<video width="658" height="432" src="https://github-production-user-asset-6210df.s3.amazonaws.com/3232817/296556812-205d07f2-de9d-4a7f-b3f5-83514a71453e.mp4"></video>
+- **Unified LLMs Management:**  
+  - Full lifecycle management for models, datasets, and code  
+  - Support for large file operations and web-based collaboration  
+  - Integrated version control and asset tracking  
 
-### Architecture
-`CSGHub` is made with two typical parts: Portal and Server. This repo corresponds to `CSGHub` Portal, while `CSGHub` Server is another high-performance backend project implemented with Golang.
+- **Extensible Development Framework:**  
+  - Full support for HTTPS and SSH protocols  
+  - Seamless integration with popular SDK (Gradio, Streamlit)  
+  - Automated environment optimization for model deployment  
+  - One-click inference and fine-tuning capabilities  
 
-If you want to dive deep into `CSGHub` Server detail or wish to integrate the Server with your own frontend system or more, you can check the [`CSGHub` Server open-source project](https://github.com/OpenCSGs/`CSGHub`-server).
+- **Advanced Model Capabilities and Optimization:**  
+  - Keep track of all model versions automatically  
+  - Built-in model format conversion and data processing utilities  
+  - Support for various data format conversion (CSV, JSON, Parquet)  
+  - Web-based data preview capabilities  
 
-#### CSGHub Portal Architecture
-<img src="/docs/images/portal_tech_graph.png" width='800'>
+- **Space and Asset Management Assistant (Copilot):**  
+  - Quickly build and showcase AI applications  
+  - Flexible asset management through Copilot assistant  
+  - Enterprise-ready on-premises deployment option  
 
-#### CSGHub Server Architecture
-<img src="/docs/images/server_tech_graph.png" width='800'>
+- **Multi-Source Data Synchronization and Recommendation:**  
+  - Integration with the OpenCSG community  
+  - Support for synchronizing models and datasets in the community  
+  - Scenario-based solution suggestions  
+
+- **Enterprise-Level Security and Access Control:**  
+  - Support for integration with enterprise user systems  
+  - Asset visibility settings  
+  - License tracking and validation  
+
+- **On-Premises Deployment Solutions:**  
+  - One-click on-premises deployment  
+  - Cloud-independent operation  
+  - Full control over data  
+
+- **E2E Data Processing and Intelligent Annotation System:**  
+  - Customizable data processing pipelines  
+  - Speed up processing with parallel computing  
+  - Collaborate on data annotation tasks  
+
+- **Resilient High-Availability Architecture:**  
+  - Support for high-availability architecture  
+  - Support for load balancing and resource scheduling to ensure stability  
+  - Support for disaster recovery to ensure business continuity  
+
+## CSGHub Tech Design  
+
+We have built CSGHub on proven technologies to make it both powerful and reliable:  
+
+- CSGHub integrates Git server with Git LFS protocol and Object Storage Service to create a reliable storage system. This integration provides flexible access to development tools while maintaining comprehensive data management capabilities.  
+- Built on a service-oriented architecture, CSGHub features a backend server (CSGHub Server) and web interface (CSGHub Portal) for seamless management. Users can quickly deploy services with Docker Compose or Kubernetes Helm Chart, while developers can extend functionality through the CSGHub Server for custom integrations and advanced features.  
+- By leveraging Apache Arrow and DuckDB, CSGHub makes dataset management straightforward for both researchers and common users, offering convenient Parquet file preview functionality for local datasets.  
+- The platform features a clean web interface with enterprise-ready permissions system. Users can easily manage version control, browse files online, configure access settings, and participate in discussions about models and datasets.  
+
+Our R&D team focuses on AI + DevOps, aiming to address the challenges in LLM development through the CSGHub project. We welcome your contributions to enrich the documentation and strengthen the platform's capabilities.  
+
+## CSGHub Architecture  
+
+This repository contains the CSGHub Portal code, while CSGHub Server is developed as a separate high-performance backend project in Golang.  
+
+To understand the details of CSGHub Server or learn how to integrate it with your own frontend system, check out the [CSGHub Server open-source project](https://github.com/OpenCSGs/csghub-server).  
+
+### CSGHub Portal Architecture  
+
+<img src="images/portal_tech_graph.png" width='800'>
+
+### CSGHub Server Architecture  
+
+<img src="images/server_tech_graph.png" width='800'>
