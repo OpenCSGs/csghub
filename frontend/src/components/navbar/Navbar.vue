@@ -273,7 +273,7 @@
         userAvatar: this.avatar,
         userStore: useUserStore(),
         csghubServer: inject('csghubServer'),
-        hasEmail: true
+        hasEmail: false
       }
     },
     components: {
