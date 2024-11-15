@@ -18,7 +18,7 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import en from './locales/en.js'
 import zh from './locales/zh.js'
 
-import Navbar from "./components/navbar/TheNavbar.vue"
+import Navbar from "./components/navbar/Navbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
 import RepoDetail from "./components/shared/RepoDetail.vue"
