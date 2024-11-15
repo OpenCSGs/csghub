@@ -285,6 +285,9 @@
     watch: {
       initialized(_) {
         this.hasEmail = !!this.email
+      },
+      email(newEmail, _) {
+        this.hasEmail = !!newEmail
       }
     },
     methods: {
