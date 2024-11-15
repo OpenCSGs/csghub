@@ -34,12 +34,12 @@ CSGHub の主要な機能と使い方を素早く理解していただくため�
 
 ### クイックスタート
 
-- **探索したい方**：[OpenCSGのウェブサイト](https://opencsg.com)で、CSGHubの無料SaaS版を試用できます。[クイックスタートガイド](./docs/csghub_saas_en.md)を参考にして、CSGHub SaaSインターフェースを使い、LLMやデータセットの管理とLLMアプリケーションのデプロイをお試しください。
+- **探索したい方：** [OpenCSGのウェブサイト](https://opencsg.com)で、CSGHubの無料SaaS版を試用できます。[クイックスタートガイド](./docs/csghub_saas_en.md)を参考にして、CSGHub SaaSインターフェースを使い、LLMやデータセットの管理とLLMアプリケーションのデプロイをお試しください。
 詳細については、[OpenCSG ドキュメントセンター](https://opencsg.com/docs/en/intro)をご参照ください。
 
-- **さらに実践を希望するユーザーへ**：ローカル環境（Linux/MacOS/Windows）で CSGHub を迅速に起動したい場合は、[Docker ワンクリックデプロイ](https://github.com/OpenCSGs/csghub-installer/tree/main/docker)を使用して CSGHub インスタンスをセットアップできます。簡単なコマンドでオールインワンコンテナを起動し、CSGHub のコア機能をすぐに体験することができます。
+- **さらに実践を希望するユーザーへ：** ローカル環境（Linux/MacOS/Windows）で CSGHub を迅速に起動したい場合は、[Docker ワンクリックデプロイ](https://github.com/OpenCSGs/csghub-installer/tree/main/docker)を使用して CSGHub インスタンスをセットアップできます。簡単なコマンドでオールインワンコンテナを起動し、CSGHub のコア機能をすぐに体験することができます。
 
-- **Kubernetesでのデプロイを希望する方**：KubernetesクラスタでのCSGHubのデプロイについては、[Helm Chartインストールガイド](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)をご覧ください。
+- **Kubernetesでのデプロイを希望する方：** KubernetesクラスタでのCSGHubのデプロイについては、[Helm Chartインストールガイド](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)をご覧ください。
 
 ### ロードマップ
 
