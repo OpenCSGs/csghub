@@ -273,16 +273,19 @@
         userAvatar: this.avatar,
         userStore: useUserStore(),
         csghubServer: inject('csghubServer'),
-        hasEmail: false
+        hasEmail: true
       }
     },
     components: {
       MenuItems
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username']),
+      ...mapState(useUserStore, ['email', 'username', 'initialized']),
     },
     watch: {
+      initialized(_) {
+        this.hasEmail = !!this.email
+      },
       email(newEmail, _) {
         this.hasEmail = !!newEmail
       }

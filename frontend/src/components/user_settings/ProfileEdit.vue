@@ -245,6 +245,7 @@
         ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
         ElMessage.success(t('profile.edit.updateSuccess'))
+        userStore.email = params.email
         if (config.relogin) {
           window.location.href = '/logout'
         }
