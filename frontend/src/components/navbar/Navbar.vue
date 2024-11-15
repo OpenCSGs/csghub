@@ -295,7 +295,7 @@
         location.href = `/${locale}/settings/locale`
       },
       async fetchUser() {
-        const {data, _} = await useFetchApi(`${this.csghubServer}/api/v1/user/${this.uuid}?type=uuid`).json()
+        const {data, _} = await useFetchApi(`/user/${this.uuid}?type=uuid`).json()
         if (data.value) {
           this.userAvatar = data.value.data.avatar
           this.userStore.initialize(data.value.data)

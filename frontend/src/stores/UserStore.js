@@ -17,19 +17,19 @@ const useUserStore = defineStore('User', () => {
   const isLoggedIn = computed(() => username.value !== '')
 
   async function initialize(initialData) {
-    username.value = initialData.username
-    nickname.value = initialData.nickname
-    email.value = initialData.email
-    phone.value = initialData.phone
-    avatar.value = initialData.avatar
-    uuid.value = initialData.uuid
-    homepage.value = initialData.homepage
-    bio.value = initialData.bio
-    roles.value = initialData.roles
+    username.value = initialData.username || ''
+    nickname.value = initialData.nickname || ''
+    email.value = initialData.email || ''
+    phone.value = initialData.phone || ''
+    avatar.value = initialData.avatar || ''
+    uuid.value = initialData.uuid || ''
+    homepage.value = initialData.homepage || ''
+    bio.value = initialData.bio || ''
+    roles.value = initialData.roles || []
     if (initialData.orgs) {
       orgs.value = initialData.orgs
     }
-    lastLoginTime.value = initialData.lastLoginTime
+    lastLoginTime.value = initialData.lastLoginTime || ''
   }
 
   return {
