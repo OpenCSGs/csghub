@@ -13,4 +13,5 @@ type Server interface {
 	DownloadFileRaw(req types.DownloadReq) (*types.DownloadFileRawResp, *http.Response, error)
 	DownloadFile(req types.DownloadReq) ([]byte, *http.Response, error)
 	GetUserInfo(uuid string) (*types.VerifyJWTTokenResp, *http.Response, error)
+	GetUserInfoByUsername(username string) (*types.VerifyJWTTokenResp, *http.Response, error)
 }

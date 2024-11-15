@@ -96,12 +96,12 @@
           <!-- avatar dropdown menu -->
           <template #dropdown>
             <el-dropdown-menu>
-              <a :href="userProfile">
+              <a :href="`/profile/${username}`">
                 <el-dropdown-item>
                   {{ $t('navbar.profile') }}
                 </el-dropdown-item>
               </a>
-              <a :href="`/profile/likes/${this.userName}`">
+              <a :href="`/profile/likes/${username}`">
                 <el-dropdown-item>
                   {{ $t('profile.myCollect') }}
                 </el-dropdown-item>
@@ -241,7 +241,7 @@
   import MenuItems from './MenuItems.vue'
   import useUserStore from '../../stores/UserStore.js'
   import { inject } from 'vue'
-  import jwtFetch from '../../packs/jwtFetch.js'
+  import useFetchApi from '../../packs/useFetchApi.js'
   import { mapState } from 'pinia'
   import { useCookies } from "vue3-cookies"
 
@@ -255,6 +255,7 @@
       phone: String,
       isLoggedIn: String,
       userName: String,
+      uuid: String,
       userId: String,
       canCreateDailyPaper: Boolean,
       starcloudUrl: String
@@ -268,7 +269,6 @@
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
         isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
-        userProfile: `/profile/${this.userName}`,
         mobileMenuVisibility: false,
         userAvatar: this.avatar,
         userStore: useUserStore(),
@@ -280,7 +280,7 @@
       MenuItems
     },
     computed: {
-      ...mapState(useUserStore, ['email']),
+      ...mapState(useUserStore, ['email', 'username']),
     },
     watch: {
       email(newEmail, _) {
@@ -295,13 +295,11 @@
         location.href = `/${locale}/settings/locale`
       },
       async fetchUser() {
-        jwtFetch(`${this.csghubServer}/api/v1/user/${this.userName}`, {
-          method: 'GET',
-        }).then((res) => res.json())
-          .then((body) => {
-          this.userAvatar = body.data.avatar
-          this.userStore.initialize(body.data)
-        })
+        const {data, _} = await useFetchApi(`${this.csghubServer}/api/v1/user/${this.uuid}?type=uuid`).json()
+        if (data.value) {
+          this.userAvatar = data.value.data.avatar
+          this.userStore.initialize(data.value.data)
+        }
       },
       clearCookies() {
         const { cookies } = useCookies()
@@ -312,9 +310,7 @@
       },
     },
     mounted() {
-      if (this.userName) {
-        this.fetchUser()
-      }
+      this.fetchUser()
     }
   }
 </script>

@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/internal/svc"
+	"opencsg.com/portal/pkg/server"
 )
 
 type ProfileHandler interface {
@@ -27,9 +28,10 @@ func NewProfileHandler(svcCtx *svc.ServiceContext) ProfileHandler {
 
 func (i *ProfileHandlerImpl) Detail(ctx *gin.Context) {
 	user_id := ctx.Param("user_id")
-	user, err := i.userModel.FindyByName(ctx.Request.Context(), user_id)
 
-	if user.ID == 0 || err != nil {
+	user := i.retrieveUserInfoByUsername(user_id)
+
+	if user == nil {
 		ctx.Redirect(http.StatusFound, "/errors/not-found")
 		return
 	}
@@ -43,16 +45,36 @@ func (i *ProfileHandlerImpl) Detail(ctx *gin.Context) {
 
 func (i *ProfileHandlerImpl) Likes(ctx *gin.Context) {
 	user_id := ctx.Param("user_id")
-	user, err := i.userModel.FindyByName(ctx.Request.Context(), user_id)
 
-	if user.ID == 0 || err != nil {
-		ctx.Redirect(http.StatusFound, "/errors/not-found")
-		return
-	}
+	user := i.retrieveUserInfoByUsername(user_id)
 
 	data := map[string]interface{}{
 		"initiator": "likes",
 		"user":      user,
 	}
 	renderTemplate(ctx, "profile_likes", data)
+}
+
+func (i *ProfileHandlerImpl) retrieveUserInfoByUsername(username string) *models.User {
+	csghubServer, err := server.NewServer(i.svcCtx.Config)
+	if err != nil {
+		return nil
+	}
+	userResp, _, err := csghubServer.GetUserInfoByUsername(username)
+
+	var user *models.User
+
+	if err == nil {
+		user = &models.User{
+			Name:          userResp.Data.Username,
+			Nickname:      userResp.Data.Nickname,
+			Phone:         userResp.Data.Phone,
+			Email:         userResp.Data.Email,
+			LoginIdentity: userResp.Data.UUID,
+		}
+		user.SetRoles(userResp.Data.Roles...)
+	} else {
+		return nil
+	}
+	return user
 }
