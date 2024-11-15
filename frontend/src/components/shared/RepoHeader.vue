@@ -141,11 +141,13 @@
     >
       <a
         class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
+        v-if="repoType !== 'endpoint'"
         :href="ownerUrl"
       >
         {{ path?.split('/')[0] }}
       </a>
-      <div>/</div>
+      <div v-if="repoType !== 'endpoint'"
+      >/</div>
       <a
         class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
         href="#"
@@ -248,7 +250,11 @@
   )
 
   const copyName = () => {
-    copyToClipboard(props.path)
+    if (props.repoType === 'endpoint') {
+      copyToClipboard(props.name)
+    } else {
+      copyToClipboard(props.path)
+    }
   }
 
   const showSpaceLogs = () => {
