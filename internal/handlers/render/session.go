@@ -121,6 +121,18 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 			ctx.Redirect(http.StatusFound, "/errors/login-failed?error_msg='invalid jwt token'")
 			return
 		}
+	} else {
+		user.Name = userResp.Username
+		user.Nickname = userResp.Nickname
+		user.Phone = userResp.Phone
+		user.Email = userResp.Email
+		err = i.userModel.Update(ctx, user)
+		if err != nil {
+			stackTrace := string(debug.Stack())
+			slog.Error("Login Error", "error", "update user failed", slog.Any("error", err), "uuid", userResp.UUID, "stack", stackTrace)
+			ctx.Redirect(http.StatusFound, "/errors/login-failed")
+			return
+		}
 	}
 
 	user.SetRoles(userResp.Roles...)
