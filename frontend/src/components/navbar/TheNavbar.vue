@@ -310,7 +310,9 @@
       },
     },
     mounted() {
-      this.fetchUser()
+      if (this.uuid) {
+        this.fetchUser()
+      }
     }
   }
 </script>
