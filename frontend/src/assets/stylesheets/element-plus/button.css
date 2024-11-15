@@ -347,6 +347,7 @@
 .btn-link-color.btn-sm {
   padding: 8px 12px;
   font-size: 12px;
+  line-height: 18px;
   font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -368,7 +369,8 @@
 .btn-link-color.btn-md {
   /* 默认尺寸（可以认为是 md 尺寸） */
   padding: 10px 14px;
-  font-size: var(--font-size-sm);
+  font-size: 14px;
+  line-height: 22px;
   font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -389,7 +391,8 @@
 .btn-link-gray.btn-lg,
 .btn-link-color.btn-lg {
   padding: 10px 16px;
-  font-size: var(--font-size-md);
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -410,7 +413,8 @@
 .btn-link-gray.btn-xl,
 .btn-link-color.btn-xl {
   padding: 12px 18px;
-  font-size: var(--font-size-md);
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -431,7 +435,8 @@
 .btn-link-gray.btn-2xl,
 .btn-link-color.btn-2xl {
   padding: 16px 22px;
-  font-size: var(--font-size-lg);
+  font-size: 18px;
+  line-height: 28px;
   font-weight: 400;
   transform: scale(1);
   -webkit-transform: scale(1);

@@ -76,7 +76,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button class="!text-center !h-[48px] !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600" @click="handleSubmit">{{ $t('all.saveSetting') }}</el-button>
+        <button class="btn btn-primary btn-md" @click="handleSubmit">{{ $t('all.saveSetting') }}</button>
       </el-form-item>
     </el-form>
   </div>

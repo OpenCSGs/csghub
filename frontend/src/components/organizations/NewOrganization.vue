@@ -87,13 +87,14 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button
-          class="w-full !text-center !h-[48px] !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+        <button
+          class="btn btn-primary btn-md"
+          style="width: 100%;"
           @click="handleSubmit"
           :disabled="submitting"
         >
           {{ $t('organization.newOrganization.createOrg') }}
-        </el-button>
+        </button>
       </el-form-item>
     </el-form>
   </div>
