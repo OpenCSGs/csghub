@@ -13,6 +13,7 @@ const useUserStore = defineStore('User', () => {
   const roles = ref('')
   const orgs = ref([])
   const lastLoginTime = ref('')
+  const initialized = ref(false)
 
   const isLoggedIn = computed(() => username.value !== '')
 
@@ -30,6 +31,7 @@ const useUserStore = defineStore('User', () => {
       orgs.value = initialData.orgs
     }
     lastLoginTime.value = initialData.lastLoginTime || ''
+    initialized.value = true
   }
 
   return {
@@ -45,7 +47,8 @@ const useUserStore = defineStore('User', () => {
     bio,
     roles,
     orgs,
-    lastLoginTime
+    lastLoginTime,
+    initialized
   }
 })
 
