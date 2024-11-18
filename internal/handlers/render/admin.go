@@ -2,7 +2,7 @@ package renderHandlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"opencsg.com/portal/internal/models"
+	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 type AdminHandler interface {
@@ -10,14 +10,17 @@ type AdminHandler interface {
 }
 
 type AdminHandlerImpl struct {
+	jwtUtils jwt.JwtUtils
 }
 
 func NewAdminHandler() AdminHandler {
-	return &AdminHandlerImpl{}
+	return &AdminHandlerImpl{
+		jwtUtils: jwt.NewJwtUtils(),
+	}
 }
 
 func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
-	currentUser := ctx.MustGet("currentUser").(*models.User)
+	currentUser := i.jwtUtils.GetCurrentUser(ctx)
 	data := map[string]interface{}{
 		"roles": currentUser.Roles(),
 	}
