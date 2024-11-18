@@ -18,13 +18,14 @@
         <div class="flex gap-[10px]">
           <el-popover placement="bottom-start" :width="300" trigger="click">
             <template #reference>
-              <div v-if="role === 'admin' || role ==='write'" :href="`/organizations/${organizationData.name}/edit`" class="flex cursor-pointer gap-[10px] border border-gray-300 items-center rounded-md px-[12px] py-[8px]">
+              <div v-if="role === 'admin' || role ==='write'" :href="`/organizations/${organizationData.name}/edit`" class="btn btn-secondary-gray btn-md">
                 <SvgIcon name="create_org_repo"/>
                 {{ $t('organization.create') }}
               </div>
             </template>
             <div>
               <a :href="`/models/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
+
                 <div class="px-2 py-2 bg-gray-50">
                   <SvgIcon name="models" />
                 </div>
@@ -62,8 +63,7 @@
               </a>
             </div>
           </el-popover>
-          <a v-if="role === 'write' || role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="flex gap-[10px] border border-gray-300 rounded-md px-[12px] py-[8px]">
-            <SvgIcon name="invite_org_member" />
+          <a v-if="role === 'write' || role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="btn btn-secondary-gray btn-md">
             {{ $t('organization.orgSetting') }}
           </a>
         </div>

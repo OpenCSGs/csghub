@@ -4,9 +4,9 @@
     <button
       v-if="role === 'admin'"
       @click="dialogVisible = true"
-      class="px-[12px] py-[8px] flex gap-[4px] items-center rounded-md border border-gray-300 text-sm"
+      class="btn btn-secondary-gray btn-md"
     >
-      <SvgIcon name="invite_org_member" />
+      <SvgIcon name="invite_org_member"/>
       <span>{{ $t('organization.invite.title') }}</span>
     </button>
     <!-- invite dialog -->
@@ -110,21 +110,18 @@
         </div>
       </div>
       <template #footer>
-        <span class="flex justify-between">
-          <el-button
-            class="w-[50%]"
-            size="large"
+        <span class="flex justify-between px-4 gap-2">
+          <button
+            class="btn btn-secondary-gray btn-md flex-1"
             @click="dialogVisible = false"
-            >{{ $t('all.cancel') }}</el-button
+            >{{ $t('all.cancel') }}</button
           >
-          <el-button
-            class="w-[50%]"
-            size="large"
-            type="primary"
+          <button
+            class="btn btn-primary btn-md flex-1"
             @click="confirmInviteNewMember"
           >
             {{ $t('all.confirm') }}
-          </el-button>
+          </button>
         </span>
       </template>
     </el-dialog>
