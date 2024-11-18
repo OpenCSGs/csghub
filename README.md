@@ -56,4 +56,4 @@ We warmly invite you to explore the [OpenCSG Community](https://github.com/OpenC
 - The process for joining [community meetings](https://github.com/OpenCSGs/community?tab=readme-ov-file#community-meeting), where you can engage with fellow members and share your ideas.
 - Refer to the [contribution guide](https://github.com/OpenCSGs/community/blob/main/guidelines/CONTRIBUTING_en.md) for strategies on how to contribute to the project.
 - [Contact us](https://github.com/OpenCSGs/community?tab=readme-ov-file#questions-and-issues) for any questions or issues, ensuring you're always supported throughout your journey with OpenCSG.
-- Consult the [development guide](./docs/setup_en.md) for setting up the development environment.
+- Refer to the [development guide](./docs/setup_en.md) for instructions on setting up the development environment.

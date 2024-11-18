@@ -1,8 +1,8 @@
-# Migrate to Gin
+# Migrating to Gin
 
-Let's assume that you already have a Rails version Portal deployed before.
+To start, let's assume you have a Rails version of the CSGHub Portal already deployed.
 
-## Pull the latest repo with Gin version as default
+## Pull the Latest Code for the Gin Version
 
 ```bash
 git fetch origin
@@ -11,10 +11,16 @@ git reset --hard origin/main
 
 By doing this, you will use the remote latest main branch to overwrite your local main branch. You also fetch the 'rails-main' branch to local in which you can see the old Rails version code.
 
-## Deploy your Gin server
-Please refer to [Setup](setup_en.md) to deploy your Gin server. Yes, you should deloy a new server by default Gin will use 8090 port.
+This command resets your local `main` branch to match the remote `main` branch. Additionally, it pulls a branch called `rails-main` that contains the old Rails version code.
 
-### DB config
-You can setup the DB url by ENV variable: CSGHUB_PORTAL_DATABASE_DSN. And you can use the same database used by your Rails server, as we have completed the compatibility considerations.
+## Deploying the Gin Server
 
-One thing to note is the default database URL which is: "postgresql://postgres:postgres@localhost:5432/starhub_portal?sslmode=disable" which may have a different database name to your Rails server, you may need to update it which running it locally.
+Refer to [this document](https://github.com/OpenCSGs/csghub/blob/main/docs/setup_en.md) to deploy your Gin server. By default, Gin runs on port `8090`.
+
+### DB Config
+
+You can setup the database URL through the ENV variable `CSGHUB_PORTAL_DATABASE_DSN`. It's possible to use the same database as the Rails version since compatibility has already been addressed.
+
+Note that the default database URL is:  
+`postgresql://postgres:postgres@localhost:5432/starhub_portal?sslmode=disable`  
+This may differ from the database name used by your Rails server, you may need to update the URL for local use.
