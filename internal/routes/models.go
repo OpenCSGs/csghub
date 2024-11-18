@@ -20,7 +20,7 @@ func registerModelRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	}
 
 	authenticatedRoutes := modelRoutes.Group("")
-	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	authenticatedRoutes.Use(middleware.Instance.CheckCurrentUser())
 	{
 		authenticatedRoutes.GET("/new", modelHandler.New)
 		authenticatedRoutes.GET("/:namespace/:model_name/:branch/new", modelHandler.NewFile)

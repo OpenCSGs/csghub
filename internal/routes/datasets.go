@@ -14,7 +14,7 @@ func registerDatasetRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	}
 
 	authenticatedRoutes := datasetRoutes.Group("")
-	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	authenticatedRoutes.Use(middleware.Instance.CheckCurrentUser())
 	{
 		authenticatedRoutes.GET("/:namespace/:dataset_name", datasetHandler.Detail)
 		authenticatedRoutes.GET("/:namespace/:dataset_name/files/:branch/*path", datasetHandler.Files)

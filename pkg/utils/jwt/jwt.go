@@ -20,6 +20,7 @@ func (j *JwtUtilsImpl) GetCurrentUser(ctx *gin.Context) *models.User {
 	if user, exists := ctx.Get("currentUser"); exists {
 		return user.(*models.User)
 	} else {
-		return &models.User{}
+		// return &models.User{}
+		return nil
 	}
 }

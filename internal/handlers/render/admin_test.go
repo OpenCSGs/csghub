@@ -11,6 +11,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	mockjwt "opencsg.com/portal/_mocks/opencsg.com/portal/pkg/utils/jwt"
 	"opencsg.com/portal/internal/models"
+	"opencsg.com/portal/pkg/types"
+	// Add this line if missing
 )
 
 func TestAdminHandlerImpl_Index(t *testing.T) {
@@ -20,7 +22,9 @@ func TestAdminHandlerImpl_Index(t *testing.T) {
 	}
 
 	mockJwtUtils := mockjwt.NewMockJwtUtils(t)
-	mockJwtUtils.EXPECT().GetCurrentUser(mock.Anything).Return(&models.User{})
+	var user = &models.User{}
+	user.SetRoles("admin")
+	mockJwtUtils.EXPECT().GetCurrentUser(mock.Anything).Return(user)
 
 	// Define test cases
 	tests := []struct {
@@ -37,8 +41,14 @@ func TestAdminHandlerImpl_Index(t *testing.T) {
 			},
 			args: args{
 				ctx: func() *gin.Context {
+					var globalConfig = types.GlobalConfig{
+						ServerBaseUrl: "",
+						OnPremise:     true,
+						EnableHttps:   true,
+					}
 					w := httptest.NewRecorder()
 					ctx, _ := gin.CreateTestContext(w)
+					ctx.Set("Config", globalConfig)
 					return ctx
 				}(),
 			},

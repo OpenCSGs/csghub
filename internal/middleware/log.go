@@ -6,10 +6,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"opencsg.com/portal/pkg/utils/jwt"
 )
 
-func Log() gin.HandlerFunc {
+func (l *MiddlewareImpl) Log() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		if ctx.Request.Method == "OPTIONS" || ctx.Request.Method == "HEAD" {
 			ctx.Next()
@@ -20,7 +19,7 @@ func Log() gin.HandlerFunc {
 
 		ctx.Next()
 		var username string
-		user := jwt.GetCurrentUser(ctx)
+		user := l.jwtUtils.GetCurrentUser(ctx)
 		if user != nil {
 			username = user.Name
 		}

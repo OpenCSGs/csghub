@@ -16,7 +16,7 @@ const (
 )
 
 // 辅助函数：创建模板数据
-func CreateTemplateData(ctx *gin.Context, extraData map[string]interface{}) gin.H {
+func createTemplateData(ctx *gin.Context, extraData map[string]interface{}) gin.H {
 	config := getConfig(ctx)
 	currentUser, isLoggedIn := getCurrentUserInfo(ctx)
 
@@ -43,7 +43,8 @@ func getConfig(ctx *gin.Context) types.GlobalConfig {
 }
 
 func getCurrentUserInfo(ctx *gin.Context) (models.User, bool) {
-	currentUser := jwt.GetCurrentUser(ctx)
+	var jwtUtils = jwt.NewJwtUtils()
+	currentUser := jwtUtils.GetCurrentUser(ctx)
 	if currentUser != nil {
 		return *currentUser, true
 	}
@@ -51,5 +52,5 @@ func getCurrentUserInfo(ctx *gin.Context) (models.User, bool) {
 }
 
 func renderTemplate(ctx *gin.Context, templateName string, data map[string]interface{}) {
-	ctx.HTML(http.StatusOK, templateName, CreateTemplateData(ctx, data))
+	ctx.HTML(http.StatusOK, templateName, createTemplateData(ctx, data))
 }

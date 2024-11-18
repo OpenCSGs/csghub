@@ -14,7 +14,7 @@ func registerSpaceRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	}
 
 	authenticatedRoutes := spaceRoutes.Group("")
-	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	authenticatedRoutes.Use(middleware.Instance.CheckCurrentUser())
 	{
 		authenticatedRoutes.GET("/new", spaceHandler.New)
 		authenticatedRoutes.GET("/:namespace/:space_name/:branch/new", spaceHandler.NewFile)
