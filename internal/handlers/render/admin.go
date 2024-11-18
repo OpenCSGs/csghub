@@ -10,12 +10,14 @@ type AdminHandler interface {
 }
 
 type AdminHandlerImpl struct {
-	jwtUtils jwt.JwtUtils
+	jwtUtils           jwt.JwtUtils
+	renderBaseInstance RenderBase
 }
 
 func NewAdminHandler() AdminHandler {
 	return &AdminHandlerImpl{
-		jwtUtils: jwt.NewJwtUtils(),
+		jwtUtils:           jwt.NewJwtUtils(),
+		renderBaseInstance: RenderBaseInstance,
 	}
 }
 
@@ -24,5 +26,5 @@ func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
 	data := map[string]interface{}{
 		"roles": currentUser.Roles(),
 	}
-	renderTemplate(ctx, "admin_index", data)
+	i.renderBaseInstance.RenderTemplate(ctx, "admin_index", data)
 }

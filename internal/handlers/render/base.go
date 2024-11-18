@@ -15,7 +15,26 @@ const (
 	DEFAULT_META_DESCRIPTION = "OpenCSG愿景： 让大模型赋能每一个人,大模型驱动全民，推动技术创新，OpenCSG——平台有各个领域的大模型，提供模型探索体验、推理、训练、部署和应用的一站式服务，共建模型开源社区，发现、学习、定制和分享心仪的模型。"
 )
 
-// 辅助函数：创建模板数据
+type RenderBase interface {
+	RenderTemplate(ctx *gin.Context, templateName string, data map[string]interface{})
+}
+
+type RenderBaseImpl struct {
+	jwtUtils jwt.JwtUtils
+}
+
+func NewRenderBase() RenderBase {
+	return &RenderBaseImpl{
+		jwtUtils: jwt.NewJwtUtils(),
+	}
+}
+
+var RenderBaseInstance = NewRenderBase()
+
+func (i *RenderBaseImpl) RenderTemplate(ctx *gin.Context, templateName string, data map[string]interface{}) {
+	ctx.HTML(http.StatusOK, templateName, createTemplateData(ctx, data))
+}
+
 func createTemplateData(ctx *gin.Context, extraData map[string]interface{}) gin.H {
 	config := getConfig(ctx)
 	currentUser, isLoggedIn := getCurrentUserInfo(ctx)
@@ -49,8 +68,4 @@ func getCurrentUserInfo(ctx *gin.Context) (models.User, bool) {
 		return *currentUser, true
 	}
 	return models.User{}, false
-}
-
-func renderTemplate(ctx *gin.Context, templateName string, data map[string]interface{}) {
-	ctx.HTML(http.StatusOK, templateName, createTemplateData(ctx, data))
 }

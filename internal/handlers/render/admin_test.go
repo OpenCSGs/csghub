@@ -6,10 +6,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 
+	mockRenderBase "opencsg.com/portal/_mocks/opencsg.com/portal/handlers/render"
+	mockjwt "opencsg.com/portal/_mocks/opencsg.com/portal/pkg/utils/jwt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	mockjwt "opencsg.com/portal/_mocks/opencsg.com/portal/pkg/utils/jwt"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/pkg/types"
 	// Add this line if missing
@@ -26,6 +28,9 @@ func TestAdminHandlerImpl_Index(t *testing.T) {
 	user.SetRoles("admin")
 	mockJwtUtils.EXPECT().GetCurrentUser(mock.Anything).Return(user)
 
+	mockRenderBaseInterface := mockRenderBase.NewMockRenderBase(t)
+	mockRenderBaseInterface.EXPECT().RenderTemplate(mock.Anything, mock.Anything, mock.Anything).Return()
+
 	// Define test cases
 	tests := []struct {
 		name    string
@@ -37,7 +42,8 @@ func TestAdminHandlerImpl_Index(t *testing.T) {
 		{
 			name: "Valid currentUser and roles",
 			i: &AdminHandlerImpl{
-				jwtUtils: mockJwtUtils,
+				jwtUtils:           mockJwtUtils,
+				renderBaseInstance: mockRenderBaseInterface,
 			},
 			args: args{
 				ctx: func() *gin.Context {

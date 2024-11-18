@@ -20,11 +20,11 @@ func NewCollectionsHandler() CollectionsHandler {
 }
 
 func (i *CollectionsHandlerImpl) Index(ctx *gin.Context) {
-	renderTemplate(ctx, "collections_index", nil)
+	RenderBaseInstance.RenderTemplate(ctx, "collections_index", nil)
 }
 
 func (i *CollectionsHandlerImpl) New(ctx *gin.Context) {
-	renderTemplate(ctx, "collections_new", nil)
+	RenderBaseInstance.RenderTemplate(ctx, "collections_new", nil)
 }
 
 func (i *CollectionsHandlerImpl) Show(ctx *gin.Context) {
@@ -32,5 +32,5 @@ func (i *CollectionsHandlerImpl) Show(ctx *gin.Context) {
 		"collectionsId": ctx.Param("collections_id"),
 		"path":          strings.TrimPrefix(ctx.Param("path"), "/"),
 	}
-	renderTemplate(ctx, "collections_show", data)
+	RenderBaseInstance.RenderTemplate(ctx, "collections_show", data)
 }
