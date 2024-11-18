@@ -1,0 +1,7 @@
+with-expecter: true
+dir: "_mocks/{{.PackagePath}}"
+packages:
+    opencsg.com/portal/pkg/utils/jwt:
+        config:
+        interfaces:
+            AdminHandler:
