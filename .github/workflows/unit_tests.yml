@@ -3,6 +3,12 @@ name: Unit Tests
 on:
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch name'
+        required: true
+        default: 'main'
 
 jobs:
   unit-tests:
@@ -18,9 +24,11 @@ jobs:
         go-version: '^1.22'
 
     - name: Install dependencies
-      #run: go mod tidy
-      run: echo "Installing dependencies ..."
+      run: |
+        echo "Installing dependencies ..."
+        go mod tidy
 
     - name: Run unit tests
-      #run: go test ./tests/unit/...
-      run: echo "Running unit tests ..."
+      run: |
+        echo "Running unit tests ..."
+        go test -v -cover ./...
