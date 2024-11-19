@@ -175,7 +175,7 @@
         height="16"
         class="flex-shrink-0"
       />
-      <a :href="`/models/${props.path}`" class="md:ml-0 text-gray-700 font-normal hover:text-brand-700">
+      <a :href="`/models/${props.path}`" class="md:ml-0 text-gray-700 text-md font-normal hover:text-brand-700">
         {{ path }}
       </a>
       <SvgIcon
@@ -184,7 +184,7 @@
         height="16"
         class="flex-shrink-0 ml-6 md:ml-0"
       />
-      <span class="text-gray-700 font-normal">{{ resourceName }}</span>
+      <span class="text-gray-700 font-normal text-md">{{ resourceName }}</span>
     </div>
   </div>
   <div class="leading-[24px] pb-[16px] text-gray-700 md:px-5">{{ desc }}</div>
