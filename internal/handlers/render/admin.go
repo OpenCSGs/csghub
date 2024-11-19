@@ -1,6 +1,8 @@
 package renderHandlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/pkg/utils/jwt"
 )
@@ -23,8 +25,12 @@ func NewAdminHandler() AdminHandler {
 
 func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
 	currentUser := i.jwtUtils.GetCurrentUser(ctx)
-	data := map[string]interface{}{
-		"roles": currentUser.Roles(),
+	if currentUser == nil {
+		ctx.Redirect(http.StatusFound, "/errors/unauthorized")
+	} else {
+		data := map[string]interface{}{
+			"roles": currentUser.Roles(),
+		}
+		i.renderBaseInstance.RenderTemplate(ctx, "admin_index", data)
 	}
-	i.renderBaseInstance.RenderTemplate(ctx, "admin_index", data)
 }
