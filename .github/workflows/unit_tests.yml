@@ -6,10 +6,10 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      environment:
-        type: environment
-      message:
+      branch:
+        description: 'Branch name'
         required: true
+        default: 'main'
 
 jobs:
   unit-tests:
