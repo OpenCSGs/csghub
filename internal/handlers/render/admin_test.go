@@ -52,6 +52,8 @@ func TestAdminHandlerImpl_Index_validCurrentUser(t *testing.T) {
 					w := httptest.NewRecorder()
 					ctx, _ := gin.CreateTestContext(w)
 					ctx.Set("Config", globalConfig)
+					req, _ := http.NewRequest("GET", "/admin_panel", nil)
+					ctx.Request = req
 					return ctx
 				}(),
 			},
@@ -72,13 +74,7 @@ func TestAdminHandlerImpl_Index_validCurrentUser(t *testing.T) {
 			// Call the method under test
 			tt.i.Index(tt.args.ctx)
 
-			if tt.name == "Valid currentUser and roles" {
-				// Check if the correct status code is returned
-				assert.Equal(t, http.StatusOK, tt.args.ctx.Writer.Status())
-			}
-			if tt.name == "nil currentUser" {
-				assert.Equal(t, http.StatusFound, tt.args.ctx.Writer.Status())
-			}
+			assert.Equal(t, http.StatusOK, tt.args.ctx.Writer.Status())
 		})
 	}
 }
@@ -103,10 +99,9 @@ func TestAdminHandlerImpl_Index_nilCurrentUser(t *testing.T) {
 		{
 			name: "Valid currentUser and roles",
 			setup: func() {
-				var user = &models.User{}
-				user.SetRoles("admin")
-				mockJwtUtils.EXPECT().GetCurrentUser(mock.Anything).Return(user)
-				mockBase.EXPECT().RenderTemplate(mock.Anything, mock.Anything, mock.Anything).Return()
+				// var user = &models.User{}
+				// user.SetRoles("admin")
+				mockJwtUtils.EXPECT().GetCurrentUser(mock.Anything).Return(nil)
 			},
 			args: args{
 				ctx: func() *gin.Context {
@@ -118,6 +113,8 @@ func TestAdminHandlerImpl_Index_nilCurrentUser(t *testing.T) {
 					w := httptest.NewRecorder()
 					ctx, _ := gin.CreateTestContext(w)
 					ctx.Set("Config", globalConfig)
+					req, _ := http.NewRequest("GET", "/admin_panel", nil)
+					ctx.Request = req
 					return ctx
 				}(),
 			},
@@ -138,13 +135,7 @@ func TestAdminHandlerImpl_Index_nilCurrentUser(t *testing.T) {
 			// Call the method under test
 			tt.i.Index(tt.args.ctx)
 
-			if tt.name == "Valid currentUser and roles" {
-				// Check if the correct status code is returned
-				assert.Equal(t, http.StatusOK, tt.args.ctx.Writer.Status())
-			}
-			if tt.name == "nil currentUser" {
-				assert.Equal(t, http.StatusFound, tt.args.ctx.Writer.Status())
-			}
+			assert.Equal(t, http.StatusFound, tt.args.ctx.Writer.Status())
 		})
 	}
 }
