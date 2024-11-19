@@ -54,7 +54,7 @@ func (i *SessionHandlerImpl) Logout(ctx *gin.Context) {
 
 	// Loop through the cookies and remove them
 	for _, cookie := range cookies {
-		ctx.SetCookie(cookie.Name, "", -1, "/", "localhost", false, false)
+		ctx.SetCookie(cookie.Name, "", -1, "/", "", false, false)
 	}
 
 	if paramRedirectPath == "" {
