@@ -17,5 +17,9 @@ export const shared = {
   preview: "预览",
   edit: "编辑",
   likes: "收藏",
-  hasLikes: "已收藏"
+  hasLikes: "已收藏",
+  tooLargeFile: "文件过大无法显示，您可以查看",
+  tooLargeFile2: "原始版本",
+  tooLargeFile3:""
+
 }

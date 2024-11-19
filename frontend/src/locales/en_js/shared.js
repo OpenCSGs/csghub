@@ -17,5 +17,8 @@ export const shared = {
   preview: "Preview",
   edit: "Edit",
   likes: "Likes",
-  hasLikes: "Liked"
+  hasLikes: "Liked",
+  tooLargeFile:"File too large to display,you can check the",
+  tooLargeFile2:"raw version",
+  tooLargeFile3:"instead"
 }
