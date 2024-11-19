@@ -97,7 +97,7 @@
                         min-width="180" />
       </el-table>
       <CsgPagination
-        perPage="4"
+        :perPage="perPage"
         :currentPage="currentPage"
         @currentChange="reloadRows"
         :total="totalRows"
@@ -121,6 +121,7 @@
   const previewData = ref({ columns: [], rows: [], total: 0 })
   const currentPage = ref(1)
   const totalRows = computed(() => { return previewData.value.total });
+  const perPage = ref(4)
   const nameFilterInput = ref('')
   // 默认subset和split的值
   const splits = ref(props.datasetInfo[0].splits)
@@ -129,7 +130,7 @@
   const numSplits = ref(splits.value[0]?.num_examples || 0)
 
   const tableData = computed(() => {
-    const rows = previewData.value?.rows.slice(0, 4) || []
+    const rows = previewData.value?.rows.slice(0, perPage.value) || []
     const columns = previewData.value?.columns || []
     return rows.map(row => {
       const obj = {}
@@ -170,7 +171,7 @@
     }
     let url = `datasets/${props.namespacePath}/dataviewer/rows`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
-    url = url + `&per=4`
+    url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
 
     url = url + `&namespace=${props.namespacePath.split('/')[0]}`
