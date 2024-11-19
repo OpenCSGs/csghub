@@ -20,5 +20,5 @@ export const shared = {
   hasLikes: "Liked",
   tooLargeFile:"File too large to display,you can check the",
   tooLargeFile2:"raw version",
-  tooLargeFile3:"instead"
+  tooLargeFile3:" instead"
 }

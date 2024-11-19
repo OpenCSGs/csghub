@@ -132,7 +132,7 @@
         />
       </div>
     </div>
-    <div v-else-if="!lfs && previewCode === 1 ">
+    <div v-else-if="!lfs && previewCode === 1 " class="border border-t-0 border-gray-200 rounded-b">
       <div
         class="text-xs text-gray-700 px-4 py-2 flex items-center justify-end border-b border-gray-200"
       >
@@ -255,7 +255,7 @@
   const lfsRelativePath = ref('')
   const path = ref('')
   const lfs = ref(false)
-  const previewCode =ref(0)
+  const previewCode = ref(0)
   const size = ref(0)
   const content = ref('')
   const lastCommit = ref({})
