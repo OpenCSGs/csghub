@@ -259,13 +259,16 @@
     const url = `/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
 
     try {
-      const { data, error } = await useFetchApi(url).json()
+      const { response, data, error } = await useFetchApi(url).json()
 
-      if (error.value) {
+      if (data.value) {
+        files.value = data.value.data
+      } else if (response.value.status === 403) {
+        location.href = '/errors/unauthorized'
+      } else if (response.value.status === 404) {
         location.href = '/errors/not-found'
       } else {
-        const json = data.value
-        files.value = json.data
+        ElMessage.warning(error.value.msg)
       }
     } catch (error) {
       console.log(error)

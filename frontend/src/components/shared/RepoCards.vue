@@ -245,14 +245,11 @@
 
   async function loadRepos(url) {
     const { error, data } = await useFetchApi(url).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
+    if (data.value) {
       reposData.value = data.value.data
       totalRepos.value = data.value.total
+    } else {
+      ElMessage.warning(error.value.msg || t('all.fetchError'))
     }
   }
 
