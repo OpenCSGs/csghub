@@ -43,14 +43,9 @@ const useFetchApi = createFetch({
       }
       return { options }
     },
-    onFetchError({ data, error, response }) {
+    onFetchError({ response }) {
       if (response.status === 401) {
         popupReloginDialog()
-      } else if (response.status === 404) {
-        window.location.href = "/errors/not-found"
-      } else {
-        console.log('Fetch Error:', data || error)
-        return { error: data || error }
       }
     }
   }
