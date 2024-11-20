@@ -1,5 +1,7 @@
 # Release Notes
 
+- **[2024.11.15] v1.1.0**
+  Enhanced mirror features with updated branch handling and callbacks for tagging, info updates, and scans. Admin dashboard improvements include user account deletion, excluding owners of organizations or resources, and mirror progress tracking. Added ms-swift fine-tuning support and new prompt-type repo for prompt management and dataset optimization. Changed user info retrieval to backend service. Bug fixes for organizational access, repo settings, repo tags filter, and collection addition. Repo now supports non-default branches. Improved multi-source sync and added comment timestamps for community topics. Logout support via /logout included.
 - **[2024.10.15] v1.0.0**
   Big release to make multi-sync a stable function, support docker image build for ARM platform, support regions for space creation, auto generate resource type of models like Nvidia GPU，Huawei Ascend, auto build repo and runtime frameworks relation, support model inference with NIM, allow filter by subset and splits in dataset viewer, enable auto init of user git access token
 - **[2024.09.15] v0.9.0**
