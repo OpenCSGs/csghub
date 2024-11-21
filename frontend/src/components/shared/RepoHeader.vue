@@ -25,12 +25,12 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
+        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
       >
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
@@ -56,7 +56,7 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
+        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
       >
         {{ $t('all.private') }}
       </div>
@@ -103,12 +103,12 @@
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300 bg-white px-3 py-[2px] text-center text-xs text-gray-700 font-medium rounded"
+        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
       >
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-[4px] border border-gray-200 pl-3 pr-1 py-[2px] text-center text-xs text-gray-500 font-medium rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
         :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
