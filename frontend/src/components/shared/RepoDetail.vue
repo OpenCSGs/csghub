@@ -89,6 +89,7 @@
     try {
       const { response, data, error } = await useFetchApi(url).json()
 
+      // redirect unauthorized page
       const hasPermission = usePermissionCheck(response.value)
       if (!hasPermission) return
 
@@ -100,8 +101,11 @@
         }
         repoDetailStore.initialize(json.data)
         ownerUrl.value = getOwnerUrl(json.data)
-      } else {
-        ElMessage({ message: error.value.msg, type: 'warning' })
+      } else if (response.value.status === 404 ) {
+        window.location.href = '/errors/not-found'
+      }
+      else {
+        ElMessage.warning(error.value.msg)
       }
     } catch (error) {
       console.error(error)
