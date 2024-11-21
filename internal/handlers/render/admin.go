@@ -7,6 +7,7 @@ import (
 
 type AdminHandler interface {
 	Index(ctx *gin.Context)
+	IndexNext(ctx *gin.Context)
 }
 
 type AdminHandlerImpl struct {
@@ -22,4 +23,12 @@ func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
 		"roles": currentUser.Roles(),
 	}
 	renderTemplate(ctx, "admin_index", data)
+}
+
+func (i *AdminHandlerImpl) IndexNext(ctx *gin.Context) {
+	currentUser := ctx.MustGet("currentUser").(*models.User)
+	data := map[string]interface{}{
+		"roles": currentUser.Roles(),
+	}
+	renderTemplate(ctx, "admin_next", data)
 }

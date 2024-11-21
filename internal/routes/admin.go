@@ -10,4 +10,9 @@ func registerAdminRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry)
 	adminRoute.Use(middleware.AuthenticateAdminUser())
 	adminRoute.GET("", handlersRegistry.RenderHandler.AdminHandler.Index)
 	adminRoute.GET("/*path", handlersRegistry.RenderHandler.AdminHandler.Index)
+
+	adminNextRoute := engine.Group("/admin_next")
+	adminNextRoute.Use(middleware.AuthenticateAdminUser())
+	adminNextRoute.GET("", handlersRegistry.RenderHandler.AdminHandler.IndexNext)
+	adminNextRoute.GET("/*path", handlersRegistry.RenderHandler.AdminHandler.IndexNext)
 }
