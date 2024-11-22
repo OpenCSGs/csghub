@@ -1,9 +1,11 @@
 import AdminDashboard from "../../../components/new_admin/AdminDashboard.vue";
-import AdminEmailSending from "../../../components/new_admin/AdminEmailSending.vue";
-import AdminUserList from "../../../components/new_admin/users/AdminUserList.vue";
-import AdminUserDetail from "../../../components/new_admin/users/AdminUserDetail.vue";
+import AdminUserList from "../users/AdminUserList.vue";
+import AdminUserDetail from "../users/AdminUserDetail.vue";
 import AdminSystemConfig from "../sync/AdminSyncSetting.vue";
 import { Setting, User, Connection } from "@element-plus/icons-vue";
+
+
+// parent menu name
 export const PARENT_NAME = {
   BASE_CONFIG: "基础配置",
 };

@@ -73,7 +73,7 @@ defineProps({
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100%;
     background-color: white;
     min-width: 0;
     width: 100%;

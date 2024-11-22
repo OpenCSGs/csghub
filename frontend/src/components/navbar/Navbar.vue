@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white sticky top-0 z-[999]">
+  <div class="bg-white sticky top-0 z-[999] csg-navbar">
     <div
       class="flex text-gray-700 justify-between items-center max-w-[1320px] px-[20px] m-auto h-[80px] sm:h-[60px] gap-[40px]">
       <!-- pc logo -->
