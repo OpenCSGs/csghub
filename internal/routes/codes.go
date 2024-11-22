@@ -20,7 +20,7 @@ func registerCodeRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	}
 
 	authenticatedRoutes := codeRoutes.Group("")
-	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	authenticatedRoutes.Use(middleware.Instance.CheckCurrentUser())
 	{
 		authenticatedRoutes.GET("/new", codeHandler.New)
 		authenticatedRoutes.GET("/:namespace/:code_name/:branch/new", codeHandler.NewFile)

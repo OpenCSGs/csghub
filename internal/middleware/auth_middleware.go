@@ -7,11 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/pkg/server/backend"
-	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 // check user login status and save the current user to context
-func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
+func (a *MiddlewareImpl) AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		loginIdentity, err := c.Cookie("login_identity")
 		if err != nil {
@@ -39,9 +38,9 @@ func AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 	}
 }
 
-func CheckCurrentUser() gin.HandlerFunc {
+func (a *MiddlewareImpl) CheckCurrentUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		currentUser := jwt.GetCurrentUser(ctx)
+		currentUser := a.jwtUtils.GetCurrentUser(ctx)
 		if currentUser == nil {
 			ctx.Redirect(http.StatusFound, "/login")
 			ctx.Abort()
@@ -51,9 +50,9 @@ func CheckCurrentUser() gin.HandlerFunc {
 	}
 }
 
-func AuthenticateAdminUser() gin.HandlerFunc {
+func (a *MiddlewareImpl) AuthenticateAdminUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		currentUser := jwt.GetCurrentUser(ctx)
+		currentUser := a.jwtUtils.GetCurrentUser(ctx)
 		if currentUser == nil {
 			ctx.Redirect(http.StatusFound, "/login")
 			ctx.Abort()

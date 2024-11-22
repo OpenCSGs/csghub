@@ -66,7 +66,7 @@ func init() {
 }
 
 func (b *BaseHandlerImpl) List(ctx *gin.Context) {
-	renderTemplate(ctx, b.resourceType+"_index", nil)
+	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_index", nil)
 }
 
 func (b *BaseHandlerImpl) Detail(ctx *gin.Context) {
@@ -119,7 +119,7 @@ func (b *BaseHandlerImpl) Community(ctx *gin.Context) {
 }
 
 func (b *BaseHandlerImpl) New(ctx *gin.Context) {
-	renderTemplate(ctx, b.resourceType+"_new", map[string]interface{}{"licenses": DefaultLicensesJSON})
+	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_new", map[string]interface{}{"licenses": DefaultLicensesJSON})
 }
 
 func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab string, extraData ...map[string]interface{}) {
@@ -139,7 +139,7 @@ func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab st
 		}
 	}
 
-	renderTemplate(ctx, b.resourceType+"_show", data)
+	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_show", data)
 }
 
 func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[string]interface{}) {

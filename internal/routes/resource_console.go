@@ -7,6 +7,6 @@ import (
 
 func registerResourceConsoleRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	resourceConsoleRoutes := engine.Group("")
-	resourceConsoleRoutes.Use(middleware.CheckCurrentUser())
+	resourceConsoleRoutes.Use(middleware.Instance.CheckCurrentUser())
 	resourceConsoleRoutes.GET("/resource-console", handlersRegistry.RenderHandler.ResourceConsoleHandler.Index)
 }

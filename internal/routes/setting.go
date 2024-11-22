@@ -8,7 +8,7 @@ import (
 func registerSettingRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	settingRoute := engine.Group("/settings")
 
-	settingRoute.Use(middleware.CheckCurrentUser())
+	settingRoute.Use(middleware.Instance.CheckCurrentUser())
 
 	settingRoute.GET("/profile", handlersRegistry.RenderHandler.SettingHandler.Profile)
 	settingRoute.GET("/access-token", handlersRegistry.RenderHandler.SettingHandler.AccessToken)
