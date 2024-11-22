@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import ApplicationPage from "../../application_spaces/ApplicationPage.vue";
 
@@ -15,7 +15,6 @@ describe("ApplicationPage", () => {
 
   it("mount correctly", () => {
     const wrapper = mount(ApplicationPage);
-    const ist = wrapper.exists()
     expect(wrapper.exists()).toBe(true);
   });
 
