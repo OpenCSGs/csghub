@@ -25,7 +25,7 @@ func registerModelRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		authenticatedRoutes.GET("/new", modelHandler.New)
 		authenticatedRoutes.GET("/:namespace/:model_name/:branch/new", modelHandler.NewFile)
 		authenticatedRoutes.GET("/:namespace/:model_name/:branch/upload", modelHandler.UploadFile)
-		authenticatedRoutes.GET("/:namespace/:model_name/edit/:branch/:path", modelHandler.EditFile)
+		authenticatedRoutes.GET("/:namespace/:model_name/edit/:branch/*path", modelHandler.EditFile)
 		authenticatedRoutes.GET("/:namespace/:model_name/settings", modelHandler.Settings)
 	}
 }

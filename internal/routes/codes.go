@@ -25,7 +25,7 @@ func registerCodeRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		authenticatedRoutes.GET("/new", codeHandler.New)
 		authenticatedRoutes.GET("/:namespace/:code_name/:branch/new", codeHandler.NewFile)
 		authenticatedRoutes.GET("/:namespace/:code_name/:branch/upload", codeHandler.UploadFile)
-		authenticatedRoutes.GET("/:namespace/:code_name/edit/:branch/:path", codeHandler.EditFile)
+		authenticatedRoutes.GET("/:namespace/:code_name/edit/:branch/*path", codeHandler.EditFile)
 		authenticatedRoutes.GET("/:namespace/:code_name/settings", codeHandler.Settings)
 	}
 }
