@@ -33,17 +33,14 @@ function getHtmlEntryFiles(srcDir) {
 const DEV_CONFIG = {
   plugins: [vue()],
   optimizeDeps: {
-    noTreeShake: true,
-    disabled: false,
+    disabled: true,
   },
   build: {
-    treeshake: false,
     emptyOutDir: false,
     reportCompressedSize: false,
     chunkSizeWarningLimit: 5000,
     rollupOptions: {
       treeshake: false,
-      maxParallelFileOps: 3,
       input: getHtmlEntryFiles("src"),
       output: {
         manualChunks(id) {
@@ -67,11 +64,10 @@ const DEV_CONFIG = {
     },
     modulePreload: false,
     cssCodeSplit: false,
-    sourcemap: false,
+    sourcemap: true,
     minify: false,
-    brotliSize: false,
     watch: {
-      ignored: ["node_modules/**", "dist/**"],
+      exclude: "node_modules/**",
     },
   },
   resolve: {
@@ -111,7 +107,6 @@ const PROD_CONFIG = {
       },
     },
     emptyOutDir: true,
-    sourcemap: false,
     minify: "terser",
     terserOptions: {
       compress: {
@@ -131,6 +126,7 @@ const PROD_CONFIG = {
 // https://vitejs.dev/config/
 export default defineConfig((configEnv) => {
   const isDev = configEnv.mode === "development";
-  // 将生产和开发 配置区分，生产注重代码质量和包体积，开发注重编译速度
+  // Production: optimize for code quality and bundle size
+  // Development: optimize for build speed
   return isDev ? DEV_CONFIG : PROD_CONFIG;
 });
