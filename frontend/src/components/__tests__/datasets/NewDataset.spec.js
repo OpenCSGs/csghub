@@ -51,7 +51,6 @@ describe("NewDataset", () => {
         provide: {
           nameRule: /^[a-zA-Z][a-zA-Z0-9-_.]*[a-zA-Z0-9]$/
         },
-        // plugins: [ElementPlus],
       },
       props: {
         licenses: [['MIT', 'MIT License']]
@@ -72,7 +71,6 @@ describe("NewDataset", () => {
 
   describe("form validation", () => {
     it("validates required fields", async() => {
-      // await wrapper.find('form').trigger('submit');
       await wrapper.find('button').trigger('click');
 
       await new Promise((resolve) => setTimeout(resolve, 300))
