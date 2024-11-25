@@ -296,19 +296,16 @@
       body: JSON.stringify(params)
     }
     const newEndpoint = '/datasets'
-    const { data, error } = await useFetchApi(newEndpoint, options).post().json()
+    const postres = await useFetchApi(newEndpoint, options).post()
+    const { data, error } = await postres.json()
+    // const { data, error } = await useFetchApi(newEndpoint, options).post().json()
     if (data.value) {
-      ElMessage({
-        message: t('datasets.newDataset.createSuccess'),
-        type: 'success'
-      })
+      console.log('xxxxx')
+      ElMessage.success(t('datasets.newDataset.createSuccess'))
       const res = data.value
       window.location.href = `/datasets/${res.data.path}`
     } else {
-      ElMessage({
-        message: error.value.msg,
-        type: 'error'
-      })
+      ElMessage.error(error.value.msg)
     }
   }
 </script>
