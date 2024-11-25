@@ -1,7 +1,9 @@
+[![Unit Tests](https://github.com/OpenCSGs/csghub/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/OpenCSGs/csghub/actions/workflows/unit_tests.yml)
 
 [![Join WeChat Slack](https://img.shields.io/badge/wechat-join_chat-white.svg?logo=wechat&style=social)](./docs/images/wechat-assistant-new.png)
 [![Join OpenCSG Slack](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
 [![Join OpenCSG Discord](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)
+[![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20CSGHub%20Guru-006BFF?style=social)](https://gurubase.io/g/csghub)
 
 **[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
 
@@ -15,21 +17,21 @@ Additionally, CSGHub features microservice submodules and standardized OpenAPIs 
 
 ### Key Features
 
-- Unified LLMs Management  
-- Extensible Development Framework  
-- Advanced Model Capabilities and Optimization  
-- Space and Asset Management Assistant (Copilot)  
-- Multi-Source Data Synchronization and Recommendation  
-- Enterprise-Level Security and Access Control  
-- On-Premises Deployment Solutions  
-- E2E Data Processing and Intelligent Annotation System  
-- Resilient High-Availability Architecture  
+- Unified LLMs Management
+- Extensible Development Framework
+- Advanced Model Capabilities and Optimization
+- Space and Asset Management Assistant (Copilot)
+- Multi-Source Data Synchronization and Recommendation
+- Enterprise-Level Security and Access Control
+- On-Premises Deployment Solutions
+- E2E Data Processing and Intelligent Annotation System
+- Resilient High-Availability Architecture
 
 For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
 
 ### Demo Video
 
-To help users get up to speed with CSGHub, we have created a demo video that highlights its key features and how it works. You can watch it below or on [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/).  
+To help users get up to speed with CSGHub, we have created a demo video that highlights its key features and how it works. You can watch it below or on [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/).
 <video width="658" height="432" src="https://github.com/user-attachments/assets/04f9fa17-9294-44c1-8c4a-4d7b9a5c66fa"></video>
 
 ### Quick Start

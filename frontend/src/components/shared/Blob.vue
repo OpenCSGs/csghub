@@ -95,7 +95,7 @@
       </div>
     </div>
     <div
-      v-if="!lfs"
+      v-if="!lfs && previewCode !== 1"
       class="border border-t-0 border-gray-200 rounded-b"
     >
       <div
@@ -130,6 +130,26 @@
           :extension="fileType"
           :content="content"
         />
+      </div>
+    </div>
+    <div v-else-if="!lfs && previewCode === 1 " class="border border-t-0 border-gray-200 rounded-b">
+      <div
+        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-end border-b border-gray-200"
+      >
+        <div>{{ formatBytes(size) }}</div>
+      </div>
+      <div
+        class="flex items-center justify-center px-4 py-10 border-b border-gray-200 font-medium text-gray-500 text-sm whitespace-pre-wrap"
+      >
+        <p>
+          {{ $t('shared.tooLargeFile') }}
+          <span
+            class="underline cursor-pointer"
+            @click="normalFileDownload"
+            >{{ $t('shared.tooLargeFile2') }}
+          </span>
+          {{ $t('shared.tooLargeFile3') }}
+        </p>
       </div>
     </div>
     <div
@@ -233,7 +253,9 @@
   const sha = ref('')
   const lfsPointerSize = ref(0)
   const lfsRelativePath = ref('')
+  const path = ref('')
   const lfs = ref(false)
+  const previewCode = ref(0)
   const size = ref(0)
   const content = ref('')
   const lastCommit = ref({})
@@ -302,6 +324,8 @@
     lastCommit.value = data.commit
     size.value = data.size
     lfs.value = data.lfs
+    path.value = data.path
+    previewCode.value = data.preview_code ?? ''
     lfsRelativePath.value = data.lfs_relative_path
     lfsPointerSize.value = data.lfs_pointer_size
   }
@@ -341,6 +365,26 @@
       } else {
         const { data: downloadUrl } = data.value
         createAndClickAnchor(downloadUrl, props.currentPath)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const normalFileDownload = async () => {
+    const url = `/${prefixPath}/${props.namespacePath}/download/${path.value}?ref=${props.currentBranch}`
+
+    try {
+      const { data, error } = await useFetchApi(url).blob()
+
+      if (error.value) {
+        ElMessage({
+          message: error.value.msg,
+          type: 'warning'
+        })
+      } else {
+        const downloadUrl = window.URL.createObjectURL(data.value)
+        createAndClickAnchor(downloadUrl, path.value)
       }
     } catch (error) {
       console.error(error)

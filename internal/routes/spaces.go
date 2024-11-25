@@ -14,12 +14,12 @@ func registerSpaceRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	}
 
 	authenticatedRoutes := spaceRoutes.Group("")
-	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	authenticatedRoutes.Use(middleware.Instance.CheckCurrentUser())
 	{
 		authenticatedRoutes.GET("/new", spaceHandler.New)
 		authenticatedRoutes.GET("/:namespace/:space_name/:branch/new", spaceHandler.NewFile)
 		authenticatedRoutes.GET("/:namespace/:space_name/:branch/upload", spaceHandler.UploadFile)
-		authenticatedRoutes.GET("/:namespace/:space_name/edit/:branch/:path", spaceHandler.EditFile)
+		authenticatedRoutes.GET("/:namespace/:space_name/edit/:branch/*path", spaceHandler.EditFile)
 		authenticatedRoutes.GET("/:namespace/:space_name/settings", spaceHandler.Settings)
 		authenticatedRoutes.GET("/:namespace/:space_name/billing", spaceHandler.Billing)
 		authenticatedRoutes.GET("/:namespace/:space_name", spaceHandler.Detail)

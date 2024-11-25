@@ -37,5 +37,14 @@
       "envFile": "${workspaceFolder}/.env",
       "args": ["migration", "rollback"]
     },
+    {
+      "name": "Test Current File",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${fileDirname}",
+      "env": {},
+      "showLog": true
+    }
   ]
 }

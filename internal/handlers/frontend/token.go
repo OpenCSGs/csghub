@@ -16,7 +16,8 @@ type TokenHandler interface {
 }
 
 type TokenHandlerImpl struct {
-	Server backend.Server
+	Server   backend.Server
+	jwtUtils jwt.JwtUtils
 }
 
 func NewTokenHandler(config *config.Config) (TokenHandler, error) {
@@ -25,12 +26,13 @@ func NewTokenHandler(config *config.Config) (TokenHandler, error) {
 		return nil, err
 	}
 	return &TokenHandlerImpl{
-		Server: server,
+		Server:   server,
+		jwtUtils: jwt.NewJwtUtils(),
 	}, nil
 }
 
 func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
-	currentUser := jwt.GetCurrentUser(c)
+	currentUser := i.jwtUtils.GetCurrentUser(c)
 	if currentUser == nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
 		return

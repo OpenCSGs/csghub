@@ -87,6 +87,7 @@
                 stripe
                 max-height="420"
                 @row-click="toggleRow"
+                v-loading="previewLoading"
                 class="w-full rounded-md mb-4"
                 row-class-name="row-item-clamp cursor-pointer"
                 cell-class-name="!align-top">
@@ -97,7 +98,7 @@
                         min-width="180" />
       </el-table>
       <CsgPagination
-        perPage="4"
+        :perPage="perPage"
         :currentPage="currentPage"
         @currentChange="reloadRows"
         :total="totalRows"
@@ -118,9 +119,12 @@
     namespacePath: String
   })
 
+  const previewLoading = ref(false)
+
   const previewData = ref({ columns: [], rows: [], total: 0 })
   const currentPage = ref(1)
   const totalRows = computed(() => { return previewData.value.total });
+  const perPage = ref(4)
   const nameFilterInput = ref('')
   // 默认subset和split的值
   const splits = ref(props.datasetInfo[0].splits)
@@ -129,15 +133,19 @@
   const numSplits = ref(splits.value[0]?.num_examples || 0)
 
   const tableData = computed(() => {
-    const rows = previewData.value?.rows.slice(0, 4) || []
-    const columns = previewData.value?.columns || []
-    return rows.map(row => {
-      const obj = {}
-      for (let i = 0; i < columns.length; i++) {
-        obj[columns[i]] = row[i]
-      }
-      return obj
-    })
+    if (!previewData.value?.rows || !previewData.value?.columns) {
+      return []
+    }
+
+    const { rows, columns, columns_type = [] } = previewData.value
+
+    return rows.map(row =>
+      columns.reduce((obj, column, index) => {
+        const value = row[index]
+        obj[column] = columns_type[index] === 'string' ? value : JSON.stringify(value, null, 2)
+        return obj
+      }, {})
+    )
   })
 
   const toggleRow = (_row, _column, event) => {
@@ -170,7 +178,7 @@
     }
     let url = `datasets/${props.namespacePath}/dataviewer/rows`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
-    url = url + `&per=4`
+    url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
 
     url = url + `&namespace=${props.namespacePath.split('/')[0]}`
@@ -180,6 +188,7 @@
   }
 
   async function loadRows(url) {
+    previewLoading.value = true
     const { error, data } = await useFetchApi(url).json()
     if (!data.value) {
       ElMessage({
@@ -189,6 +198,7 @@
     } else {
       previewData.value = data.value.data
     }
+    previewLoading.value = false
   }
 
   onMounted(() => {
