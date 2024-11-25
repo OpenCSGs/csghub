@@ -1,9 +1,9 @@
 <template>
-  <div class="flex items-center flex-wrap gap-2 mb-4 md:mb-[30px] md:px-5">
+  <div class="flex items-center flex-wrap gap-4 mb-4 md:mb-[30px] md:px-5">
     <!-- Task -->
     <div
       v-if="taskTags.length"
-      class="text-gray-700 text-sm font-regular"
+      class="text-sm font-regular text-gray-700"
     >
       {{ $t('all.tasks') }}:
     </div>
@@ -11,6 +11,7 @@
       v-for="tag in theTaskTags.theTags"
       :tag="tag"
       @handleTagClick="searchByTag"
+      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
     />
     <MoreTags
       v-if="theTaskTags.moreTags"
@@ -28,7 +29,7 @@
     <a
       v-for="tag in theFrameworkTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
-      class="text-sm text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
       <TensorFlow v-if="tag.name.toLowerCase() === 'tensorflow'" />
@@ -56,7 +57,7 @@
       v-for="tag in theLanguageTags.theTags"
       :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
       :style="`color: ${tag.color}`"
-      class="text-sm text-success-700 px-2 py-1 rounded-sm cursor-pointer flex items-center gap-1 bg-success-25"
+      class="text-sm text-success-700 px-2 py-1 rounded-sm cursor-pointer flex items-center gap-1 bg-success-50"
     >
       <SvgIcon name="language_tag" />
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
@@ -76,7 +77,7 @@
     </div>
     <div
       v-for="tag in theIndustryTags.theTags"
-      class="text-sm text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </div>
@@ -115,7 +116,7 @@
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 
