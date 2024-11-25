@@ -298,9 +298,8 @@
     const newEndpoint = '/datasets'
     const postres = await useFetchApi(newEndpoint, options).post()
     const { data, error } = await postres.json()
-    // const { data, error } = await useFetchApi(newEndpoint, options).post().json()
+
     if (data.value) {
-      console.log('xxxxx')
       ElMessage.success(t('datasets.newDataset.createSuccess'))
       const res = data.value
       window.location.href = `/datasets/${res.data.path}`
