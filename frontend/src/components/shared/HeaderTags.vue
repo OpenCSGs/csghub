@@ -1,9 +1,9 @@
 <template>
-  <div class="flex items-center flex-wrap gap-4 mb-4 md:mb-[30px] md:px-5">
+  <div class="flex items-center flex-wrap gap-3 mb-4 md:mb-8 md:px-5">
     <!-- Task -->
     <div
       v-if="taskTags.length"
-      class="text-sm font-regular text-gray-700"
+      class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.tasks') }}:
     </div>
@@ -11,7 +11,7 @@
       v-for="tag in theTaskTags.theTags"
       :tag="tag"
       @handleTagClick="searchByTag"
-      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     />
     <MoreTags
       v-if="theTaskTags.moreTags"
@@ -22,14 +22,14 @@
     <!-- Framework -->
     <div
       v-if="frameworkTags.length"
-      class="text-sm font-regular text-gray-700"
+      class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.framework') }}:
     </div>
     <a
       v-for="tag in theFrameworkTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
-      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="text-sm font-normal text-gray-700 rounded-sm cursor-pointer flex items-center gap-1"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
       <TensorFlow v-if="tag.name.toLowerCase() === 'tensorflow'" />
@@ -49,7 +49,7 @@
     <!-- Language -->
     <div
       v-if="languageTags.length"
-      class="flex items-center text-sm font-regular text-gray-700"
+      class="flex items-center text-sm font-normal text-gray-700"
     >
       {{ $t('all.languages') }}:
     </div>
@@ -71,13 +71,13 @@
     <!-- industryTags -->
     <div
       v-if="industryTags.length"
-      class="text-sm font-regular text-gray-700"
+      class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.industry') }}:
     </div>
     <div
       v-for="tag in theIndustryTags.theTags"
-      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
     </div>
@@ -90,13 +90,13 @@
     <!-- Other -->
     <div
       v-if="otherTags.length"
-      class="text-sm font-regular text-gray-700"
+      class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.others') }}:
     </div>
     <div
       v-for="tag in theOtherTags.theTags"
-      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       {{ tag.name }}
     </div>
@@ -109,14 +109,14 @@
     <!-- License -->
     <div
       v-if="licenseTags.length"
-      class="text-sm font-regular text-gray-700"
+      class="text-sm font-normal text-gray-700"
     >
       License:
     </div>
     <a
       v-for="tag in theLicenseTags.theTags"
       :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
-      class="bg-white text-sm font-regular text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-2xl cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       <SvgIcon name="repo_header_license_icon" />
       License: 
