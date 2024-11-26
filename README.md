@@ -43,7 +43,7 @@ For more information, please refer to the [OpenCSG Documentation Center](https:/
 
 - For those deploying on Kubernetes, refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart) for step-by-step instructions.
 
-### Quick try
+### Quick Try
 [![one-click deployment on Ali marketplace](https://img.alicdn.com/imgextra/i1/O1CN01YT0adL1pi2znO6BAJ_!!6000000005393-55-tps-208-40.svg)](https://market.aliyun.com/products/56014009/cmgj00068499.html?#sku=yuncode6249900001)
 
 ### Roadmap
