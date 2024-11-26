@@ -1,50 +1,51 @@
 <template>
-  <div>
-    <el-card>
-      <template #header>
-        <div class="card-header">
+  <Container title="用户详情" subtitle="" :breadcrumbs="[{ text: '用户管理' }]">
+    <Card :title="`User #${user.username}`">
+      <!-- <template #header>
+        <div class="flex items-start gap-4 p-10 self-stretch">
           <span>User Detail</span>
         </div>
-      </template>
-      <ul class="max-w-[480px]">
-        <li class="flex justify-between mb-4">
-          <label>Uuid</label>
+      </template> -->
+      <ul class="">
+        <li class="flex mb-4">
+          <label class="w-[15%]">Uuid</label>
           <p>{{ user.uuid }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Name</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Name</label>
           <p>{{ user.username }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Nickname</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Nickname</label>
           <p>{{ user.nickname }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Avatar</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Avatar</label>
           <p>{{ user.avatar }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Email</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Email</label>
           <p>{{ user.email }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Phone</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Phone</label>
           <p>{{ user.phone }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Roles</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Roles</label>
           <p>{{ user.roles }}</p>
         </li>
-        <li class="flex justify-between mb-4">
-          <label>Created At</label>
+        <li class="flex mb-4">
+          <label class="w-[15%]">Created At</label>
           <p>{{ dayjs(user.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
         </li>
       </ul>
       <template #footer>
-        <el-button @click="dialogFormVisible = true">Edit</el-button>
+        <button class="btn-primary btn-md" @click="dialogFormVisible = true">Edit</button>
       </template>
-    </el-card>
+    </Card>
 
+    <!-- user edit dialog -->
     <el-dialog
       v-model="dialogFormVisible"
       :title="`${user.username}`"
@@ -84,10 +85,11 @@
         </div>
       </template>
     </el-dialog>
-  </div>
+  </Container>
 </template>
 
 <script setup>
+  import { Container, Pagination, Table, Card } from '../admin_component'
   import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
   import useFetchApi from '../../../packs/useFetchApi'

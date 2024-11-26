@@ -1,7 +1,8 @@
 import AdminDashboard from "../../../components/new_admin/AdminDashboard.vue";
 import AdminUserList from "../users/AdminUserList.vue";
 import AdminUserDetail from "../users/AdminUserDetail.vue";
-import AdminSystemConfig from "../sync/AdminSyncSetting.vue";
+import AdminSystemConfig from "../system_configs/AdminSystemConfig.vue";
+import AdminSyncSetting from "../sync/AdminSyncSetting.vue";
 import { Setting, User, Connection } from "@element-plus/icons-vue";
 
 
@@ -22,7 +23,7 @@ export const MENU_SETTING = [
     name: "Dashboard",
     // this property use for find the parent name
     parentName: PARENT_NAME.BASE_CONFIG,
-    icon: "admin-menu-setting",
+    icon: "admin-menu-dashboard",
     type: "item",
   },
   {
@@ -50,7 +51,7 @@ export const MENU_SETTING = [
   },
   {
     path: `${BASE_URL}/sync`,
-    component: AdminSystemConfig,
+    component: AdminSyncSetting,
     name: "多源同步",
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-cloud",

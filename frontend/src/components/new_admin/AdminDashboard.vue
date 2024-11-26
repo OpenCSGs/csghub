@@ -1,3 +1,13 @@
 <template>
-  <div> {{ $t('admin.dashboard.intro') }} </div>
+  <div class="p-9">{{ $t('admin.dashboard.intro') }}</div>
 </template>
+
+<script setup>
+  import { onMounted } from 'vue'
+
+  const emit = defineEmits(['showAdminMenu'])
+
+  onMounted(() => {
+    emit('showAdminMenu')
+  })
+</script>
