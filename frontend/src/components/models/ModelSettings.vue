@@ -1,17 +1,17 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="my-8 md:my-0 md:border-none px-8 py-6">
     <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelName') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.modelNameTips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('models.namespaceModelName') }}
         </p>
@@ -25,25 +25,25 @@
     <el-divider />
 
     <!-- 更新模型别名 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelNickName') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.edit.tips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theModelNickname"
           clearable
           size="large"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <button
           @click="updateNickname"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
+          class="btn btn-secondary-gray btn-sm w-fit"
+          >{{ $t('all.update') }}</button
         >
       </div>
     </div>
@@ -51,26 +51,26 @@
     <el-divider />
 
     <!-- 更新模型简介 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelDesc') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.edit.tips2') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theModelDesc"
           clearable
           size="large"
           type="textarea"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <button
           @click="updateModelDesc"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
+          class="btn btn-secondary-gray btn-sm w-fit"
+          >{{ $t('all.update') }}</button
         >
       </div>
     </div>
@@ -78,27 +78,27 @@
     <el-divider />
 
     <!-- 模型标签 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelTag') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.edit.tips3') }}
         </div>
       </div>
       <div
-        class="flex flex-col gap-[6px]"
+        class="flex flex-col gap-1.5"
         ref="tagListContainer">
         <p class="text-gray-700 text-sm">{{ $t('models.modelTag') }}</p>
-        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+        <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-[6px]">
             <div
-              class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="tag in selectedTags"
-                class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center gap-[5px] border rounded-md border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
                     ? tag.zh_name || tag.show_name || tag.name
@@ -108,7 +108,7 @@
               </span>
             </div>
             <input
-              class="w-full max-h-[36px] outline-none"
+              class="w-full max-h-8 outline-none"
               v-model="tagInput"
               @input="showTagList" />
           </div>
@@ -118,16 +118,16 @@
             <p
               v-for="tag in theTagList"
               @click="selectTag(tag)"
-              class="flex gap-[8px] items-center cursor-pointer p-[10px]">
+              class="flex gap-2 items-center cursor-pointer p-[10px]">
               {{
                 this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
               }}
             </p>
           </div>
-          <el-button
+          <button
             @click="updateTags"
-            class="w-[100px]"
-            >{{ $t('all.update') }}</el-button
+            class="btn btn-secondary-gray btn-sm w-fit"
+            >{{ $t('all.update') }}</button
           >
         </div>
       </div>
@@ -136,29 +136,29 @@
     <el-divider />
 
     <!-- 行业标签 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelIndustryTag') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.edit.tips3') }}
         </div>
       </div>
       <div
-        class="flex flex-col gap-[6px]"
+        class="flex flex-col gap-1.5"
         ref="IndustryTagListContainer">
         <p class="text-gray-700 text-sm">
           {{ $t('models.modelIndustryTag') }}
         </p>
-        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+        <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-[6px]">
             <div
-              class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="tag in selectedIndustryTags"
-                class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center gap-[5px] border rounded-md border-gray-300 px-[5px] py-[2px]">
                 {{
                   this.$i18n.locale === 'zh'
                     ? tag.zh_name || tag.show_name || tag.name
@@ -170,7 +170,7 @@
               </span>
             </div>
             <input
-              class="w-full max-h-[36px] outline-none"
+              class="w-full max-h-8 outline-none"
               v-model="industryTagInput"
               @input="showIndustryTagList" />
           </div>
@@ -180,7 +180,7 @@
             <p
               v-for="tag in theIndustryTagsList"
               @click="selectIndustryTag(tag)"
-              class="flex gap-[8px] items-center cursor-pointer p-[10px]">
+              class="flex gap-2 items-center cursor-pointer p-[10px]">
               {{
                 this.$i18n.locale === 'zh'
                   ? tag.show_name || tag.name
@@ -188,10 +188,10 @@
               }}
             </p>
           </div>
-          <el-button
+          <button
             @click="updateIndustryTags"
-            class="w-[100px]"
-            >{{ $t('all.update') }}</el-button
+            class="btn btn-secondary-gray btn-sm w-fit"
+            >{{ $t('all.update') }}</button
           >
         </div>
       </div>
@@ -200,14 +200,14 @@
     <el-divider />
 
     <!-- 修改可见性 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.edit.changeVisibility') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.edit.statusText') }}
-          <span class="text-black font-semibold"
+          <span class="text-gray-700 font-medium"
             >[{{
               isPrivate ? $t('all.private') : $t('all.public')
             }}]</span
@@ -219,7 +219,7 @@
           }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('models.edit.modelVisibility') }}
         </p>
@@ -241,25 +241,25 @@
     <el-divider />
 
     <!-- 删除模型 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col gap-1.5">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.edit.delModel') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('models.edit.delTips') }}
-          <span class="text-black font-medium">{{ $t('models.edit.canNot') }}</span>
+          <span class="text-gray-700 font-medium">{{ $t('models.edit.canNot') }}</span>
           {{ $t('models.edit.delTips2') }}
-          <span class="text-black font-medium break-words">{{ path }}</span>
+          <span class="text-gray-700 font-medium break-words">{{ path }}</span>
           {{ $t('models.edit.delTips3') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm font-light text-gray-600 leading-5">
           {{ $t('all.enterPls') }}
-          <span class="text-black font-medium break-words">{{ path }}</span>
+          <span class="text-gray-700 font-medium break-words">{{ path }}</span>
           {{ $t('all.sureDel') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[8px]">
+      <div class="flex flex-col gap-2">
         <p class="text-gray-700 text-sm">{{ $t('models.modelName') }}</p>
         <el-input
           v-model="delDesc"
@@ -270,7 +270,7 @@
           <div
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-sm leading-[20px] rounded-md"
+            class="text-gray-400 py-[8px] px-[12px] text-sm leading-5 rounded-md"
             :class="
               delDesc === modelPath
                 ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
