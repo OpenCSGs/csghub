@@ -1,5 +1,5 @@
 <template>
-  <Container :title="测试" :subtitle="测试" :breadcrumbs="[{ text: '123' }]">
+  <Container title="多源同步" :breadcrumbs="[{ text: '多源同步' }]">
     <div>
       <h3 class="mb-5">{{ $t('admin.syncSetting.title') }}</h3>
       <el-alert v-if="form.default" :title="$t('admin.syncSetting.defaultTokenAlert')" type="warning" show-icon
@@ -19,7 +19,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">{{ $t(submitKey) }}</el-button>
+          <el-button plain class="btn-primary btn-md" @click="onSubmit">{{ $t(submitKey) }}</el-button>
         </el-form-item>
       </el-form>
 

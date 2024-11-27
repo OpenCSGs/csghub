@@ -8,36 +8,36 @@
       </template> -->
       <ul class="">
         <li class="flex mb-4">
-          <label class="w-[15%]">Uuid</label>
-          <p>{{ user.uuid }}</p>
+          <label class="admin-field-label">Uuid</label>
+          <p class="admin-field">{{ user.uuid }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Name</label>
-          <p>{{ user.username }}</p>
+          <label class="admin-field-label">Name</label>
+          <p class="admin-field">{{ user.username }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Nickname</label>
-          <p>{{ user.nickname }}</p>
+          <label class="admin-field-label">Nickname</label>
+          <p class="admin-field">{{ user.nickname }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Avatar</label>
-          <p>{{ user.avatar }}</p>
+          <label class="admin-field-label">Avatar</label>
+          <p class="admin-field">{{ user.avatar }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Email</label>
-          <p>{{ user.email }}</p>
+          <label class="admin-field-label">Email</label>
+          <p class="admin-field">{{ user.email }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Phone</label>
-          <p>{{ user.phone }}</p>
+          <label class="admin-field-label">Phone</label>
+          <p class="admin-field">{{ user.phone }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Roles</label>
-          <p>{{ user.roles }}</p>
+          <label class="admin-field-label">Roles</label>
+          <p class="admin-field">{{ user.roles }}</p>
         </li>
         <li class="flex mb-4">
-          <label class="w-[15%]">Created At</label>
-          <p>{{ dayjs(user.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
+          <label class="admin-field-label">Created At</label>
+          <p class="admin-field">{{ dayjs(user.created_at).format('YYYY-MM-DD HH:mm:ss') }}</p>
         </li>
       </ul>
       <template #footer>
