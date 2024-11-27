@@ -4,7 +4,7 @@
   >
     <div
       @click="openAddCollections"
-      class="flex max-w-[max-content] px-3 py-[5px] text-[14px] leading-[20px] bg-white border border-gray-300 justify-center items-center gap-[6px] rounded-lg shadow-sm hover:bg-slate-50 cursor-pointer"
+      class="btn btn-secondary-gray btn-sm"
     >
       <SvgIcon
         name="collections"
@@ -37,7 +37,7 @@
         <div class="mt-[20px]">
           <div>
             <div class="mb-[20px]">
-              <p class="text-gray-700 text-[14px] mb-[6px]">
+              <p class="text-gray-700 text-sm mb-[6px]">
                 {{ $t('collections.edit.addCollection') }}
               </p>
               <el-select
@@ -88,15 +88,14 @@
   const { t } = useI18n()
 
   const props = defineProps({
-    repoId: String,
-    userName: String
+    repoId: String
   })
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
   const isLogged =ref(false)
   const fetchCollectionsList = async () => {
-    const url = `/user/${props.userName}/collections`
+    const url = `/user/${userStore.username}/collections`
     const { data, error } = await useFetchApi(url).json()
     const json = data.value
     if (json) {
@@ -105,7 +104,7 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
-  
+
   const openAddCollections = () => {
     if(isLogged.value){
       dialogVisible.value = true
@@ -149,8 +148,7 @@
   watch(() => userStore.isLoggedIn, () => {
     isLogged.value = userStore.isLoggedIn
   })
-
-  watch(() => props.userName, () => {
+  watch(() => userStore.username, () => {
     fetchCollectionsList()
   })
 </script>
