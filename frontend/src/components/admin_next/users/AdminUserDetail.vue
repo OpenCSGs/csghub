@@ -41,7 +41,7 @@
         </li>
       </ul>
       <template #footer>
-        <button class="btn-primary btn-md" @click="dialogFormVisible = true">Edit</button>
+        <el-button plain class="btn-primary btn-md" @click="dialogFormVisible = true">Edit</el-button>
       </template>
     </Card>
 
