@@ -7,10 +7,10 @@
         width="37"
       />
     </div>
-    <h3 class="text-gray-700 text-xl font-semibold mt-6 mb-3">
+    <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('codes.newCode.title') }}
     </h3>
-    <p class="text-gray-500 text-base font-medium md:text-center">
+    <p class="text-gray-500 text-md font-regular md:text-center">
       {{ t('codes.newCode.titleDesc') }}
     </p>
     <div class="mt-9">
@@ -133,19 +133,19 @@
           />
         </el-form-item>
         <p
-          class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-md bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('codes.newCode.tips') }}
         </p>
         <div class="flex justify-end">
           <el-form-item>
-            <el-button
+            <button
               :loading="loading"
-              class="!text-center !h-9 !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+              class="btn btn-primary btn-md"
               @click="handleSubmit"
             >
               {{ t('codes.newCode.createCode') }}
-            </el-button>
+            </button>
           </el-form-item>
         </div>
       </el-form>
