@@ -68,7 +68,7 @@
           class="pl-1">
           <!-- verified_company_user/company_user/user -->
           <span
-            v-if="JSON.parse(companyVerified.toLowerCase())"
+            v-if="companyVerified"
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
@@ -77,7 +77,7 @@
             <SvgIcon name="verified_company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
           </span>
           <span
-            v-else-if="JSON.parse(isCompanyUser.toLowerCase())"
+            v-else-if="isCompanyUser"
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
@@ -248,31 +248,26 @@
   export default {
     props: {
       logo: String,
-      avatar: String,
-      starChainUrl: String,
-      isCompanyUser: String,
-      companyVerified: String,
-      phone: String,
-      isLoggedIn: String,
-      userName: String,
-      uuid: String,
-      userId: String,
-      canCreateDailyPaper: Boolean,
-      starcloudUrl: String
+      isLoggedIn: String
     },
     data() {
       const classParam = new URLSearchParams(window.location.search).get(
         'class'
       )
+      const { cookies } = useCookies()
       return {
         activeIndex: classParam
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
-        isLoggedInBoolean: JSON.parse(this.isLoggedIn.toLowerCase()),
+        isLoggedInBoolean: !!cookies.get('login_identity'),
         mobileMenuVisibility: false,
         userAvatar: this.avatar,
         userStore: useUserStore(),
+        isCompanyUser: false,
+        companyVerified: false,
+        canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
+        uuid: cookies.get('login_identity'),
         hasEmail: true
       }
     },

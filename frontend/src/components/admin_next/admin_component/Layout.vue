@@ -28,7 +28,6 @@
     ElAside,
     ElMain
   } from 'element-plus'
-  import AdminNavbar from './Navbar.vue'
   import { Navbar } from './index'
   import AdminMenu from './Menu.vue'
 
