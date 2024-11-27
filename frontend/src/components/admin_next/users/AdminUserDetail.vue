@@ -41,14 +41,14 @@
         </li>
       </ul>
       <template #footer>
-        <el-button plain class="btn-primary btn-md" @click="dialogFormVisible = true">Edit</el-button>
+        <PlainButton class="btn btn-primary btn-md" name="Edit" @click="dialogFormVisible = true" />
       </template>
     </Card>
 
     <!-- user edit dialog -->
     <el-dialog
       v-model="dialogFormVisible"
-      :title="`${user.username}`"
+      :title="`User #${user.username}`"
       width="500"
     >
       <el-form :model="form">
@@ -74,14 +74,9 @@
         </el-form-item>
       </el-form>
       <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button
-            type="primary"
-            @click="submitUserForm"
-          >
-            Confirm
-          </el-button>
+        <div class="dialog-footer flex justify-end gap-2">
+          <PlainButton class="btn btn-secondary-gray btn-md" name="Cancel" @click="dialogFormVisible = false" />
+          <PlainButton class="btn btn-primary btn-md" name="Confirm" @click="submitUserForm" />
         </div>
       </template>
     </el-dialog>
@@ -95,6 +90,7 @@
   import useFetchApi from '../../../packs/useFetchApi'
   import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
+  import PlainButton from '../../shared/PlainButton.vue'
 
   const route = useRoute()
 
@@ -137,3 +133,15 @@
     fetchUser()
   })
 </script>
+
+<style scoped>
+  :deep(.el-form-item__label) {
+    line-height: 32px;
+  }
+  :deep(.el-dialog__body) {
+    padding: 0 !important;
+  }
+  :deep(.el-dialog__header) {
+    padding-bottom: 47px;
+  }
+</style>

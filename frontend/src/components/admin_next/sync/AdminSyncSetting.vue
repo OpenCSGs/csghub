@@ -19,7 +19,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button plain class="btn-primary btn-md" @click="onSubmit">{{ $t(submitKey) }}</el-button>
+          <div class="btn btn-primary btn-md" @click="onSubmit">{{ $t(submitKey) }}</div>
         </el-form-item>
       </el-form>
 
