@@ -1,5 +1,5 @@
 <template>
-  <Container title="用户详情" subtitle="" :showBack="true" :breadcrumbs="[{ text: '用户管理', to: '/admin_next/users' }, {text: `User #${user.uuid}`}]">
+  <Container :title="$t('admin.users.userDetailTitle')" subtitle="" :showBack="true" :breadcrumbs="[{ text: $t('admin.users.title'), to: '/admin_next/users' }, {text: `User #${user.uuid}`}]">
     <Card :title="`User #${user.username}`">
       <ul class="">
         <li class="flex mb-4">
@@ -70,8 +70,8 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer flex justify-end gap-2">
-          <PlainButton class="btn btn-secondary-gray btn-md" name="Cancel" @click="dialogFormVisible = false" />
-          <PlainButton class="btn btn-primary btn-md" name="Confirm" @click="submitUserForm" />
+          <PlainButton class="btn btn-secondary-gray btn-md" :name="$t('admin.users.editCancelBtn')" @click="dialogFormVisible = false" />
+          <PlainButton class="btn btn-primary btn-md" :name="$t('admin.users.editConfirmBtn')" @click="submitUserForm" />
         </div>
       </template>
     </el-dialog>

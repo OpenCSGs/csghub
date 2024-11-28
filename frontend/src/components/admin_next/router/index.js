@@ -15,7 +15,7 @@ const adminLocale = cookies.get('locale') === 'en' ? admin_en : admin_zh
 
 // parent menu name
 export const PARENT_NAME = {
-  BASE_CONFIG: "基础配置",
+  BASE_CONFIG: adminLocale.baseConfigTitle,
 };
 
 // use for parent menu render
@@ -27,7 +27,7 @@ export const MENU_SETTING = [
   {
     path: BASE_URL,
     component: AdminDashboard,
-    name: "Dashboard",
+    name: adminLocale.dashboard.title,
     // this property use for find the parent name
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-dashboard",
@@ -36,7 +36,7 @@ export const MENU_SETTING = [
   {
     path: `${BASE_URL}/system_config`,
     component: AdminSystemConfig,
-    name: "系统配置",
+    name: adminLocale.systemConfig.title,
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-settings",
     type: "item",
@@ -44,7 +44,7 @@ export const MENU_SETTING = [
   {
     path: `${BASE_URL}/users`,
     component: AdminUserList,
-    name: "用户管理",
+    name: adminLocale.users.title,
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-users",
     type: "item",

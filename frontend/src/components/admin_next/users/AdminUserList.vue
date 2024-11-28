@@ -1,11 +1,11 @@
 <template>
-  <Container title="用户管理" subtitle="" :breadcrumbs="[{ text: '用户管理' }]">
+  <Container :title="$t('admin.users.title')" subtitle="" :breadcrumbs="[{ text: $t('admin.users.title') }]">
     <!-- search & filter -->
     <div class="flex items-center gap-3 w-full">
       <el-input v-model="keyword" placeholder="Name, Email, Phone" size="large" :prefix-icon="Search"
         @input="searchUsers" />
     </div>
-    <Table title="用户列表" :data="users" size="small" :border="false" class="custom-table">
+    <Table :title="$t('admin.users.userList')" :data="users" size="small" :border="false" class="custom-table">
       <el-table-column prop="username" label="Name" />
       <el-table-column prop="nickname" label="Nickname" />
       <el-table-column prop="email" label="Email" />
@@ -13,7 +13,7 @@
       <el-table-column label="Operations">
         <template #default="scope">
           <el-button size="small" @click="showDetail(scope.row)">
-            详情
+            {{ $t('admin.users.userDetailBtn') }}
           </el-button>
         </template>
       </el-table-column>
