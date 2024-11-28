@@ -37,9 +37,9 @@ func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
 }
 
 func (i *AdminHandlerImpl) IndexNext(ctx *gin.Context) {
-	currentUser := ctx.MustGet("currentUser").(*models.User)
+	currentUser := i.jwtUtils.GetCurrentUser(ctx)
 	data := map[string]interface{}{
 		"roles": currentUser.Roles(),
 	}
-	renderTemplate(ctx, "admin_next", data)
+	i.renderBaseInstance.RenderTemplate(ctx, "admin_next", data)
 }
