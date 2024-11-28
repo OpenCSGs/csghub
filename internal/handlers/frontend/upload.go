@@ -18,7 +18,8 @@ type UploadHandler interface {
 }
 
 type UploadHandlerImpl struct {
-	S3 *s3.Client
+	S3       *s3.Client
+	jwtUtils jwt.JwtUtils
 }
 
 func NewUploadHandler(config *config.Config) (UploadHandler, error) {
@@ -27,7 +28,8 @@ func NewUploadHandler(config *config.Config) (UploadHandler, error) {
 		return nil, err
 	}
 	return &UploadHandlerImpl{
-		S3: s3,
+		S3:       s3,
+		jwtUtils: jwt.NewJwtUtils(),
 	}, nil
 }
 
@@ -39,7 +41,7 @@ func (i *UploadHandlerImpl) Create(c *gin.Context) {
 		url       string
 		err       error
 	)
-	currentUser := jwt.GetCurrentUser(c)
+	currentUser := i.jwtUtils.GetCurrentUser(c)
 	if currentUser == nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
 		return

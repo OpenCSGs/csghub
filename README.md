@@ -1,3 +1,4 @@
+[![Unit Tests](https://github.com/OpenCSGs/csghub/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/OpenCSGs/csghub/actions/workflows/unit_tests.yml)
 
 [![Join WeChat Slack](https://img.shields.io/badge/wechat-join_chat-white.svg?logo=wechat&style=social)](./docs/images/wechat-assistant-new.png)
 [![Join OpenCSG Slack](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)
@@ -16,21 +17,21 @@ Additionally, CSGHub features microservice submodules and standardized OpenAPIs 
 
 ### Key Features
 
-- Unified LLMs Management  
-- Extensible Development Framework  
-- Advanced Model Capabilities and Optimization  
-- Space and Asset Management Assistant (Copilot)  
-- Multi-Source Data Synchronization and Recommendation  
-- Enterprise-Level Security and Access Control  
-- On-Premises Deployment Solutions  
-- E2E Data Processing and Intelligent Annotation System  
-- Resilient High-Availability Architecture  
+- Unified LLMs Management
+- Extensible Development Framework
+- Advanced Model Capabilities and Optimization
+- Space and Asset Management Assistant (Copilot)
+- Multi-Source Data Synchronization and Recommendation
+- Enterprise-Level Security and Access Control
+- On-Premises Deployment Solutions
+- E2E Data Processing and Intelligent Annotation System
+- Resilient High-Availability Architecture
 
 For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
 
 ### Demo Video
 
-To help users get up to speed with CSGHub, we have created a demo video that highlights its key features and how it works. You can watch it below or on [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/).  
+To help users get up to speed with CSGHub, we have created a demo video that highlights its key features and how it works. You can watch it below or on [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/).
 <video width="658" height="432" src="https://github.com/user-attachments/assets/04f9fa17-9294-44c1-8c4a-4d7b9a5c66fa"></video>
 
 ### Quick Start
@@ -41,6 +42,9 @@ For more information, please refer to the [OpenCSG Documentation Center](https:/
 - For those seeking a hands-on experience, you can quickly launch CSGHub on your local environment (Linux/MacOS/Windows) using the [Docker one-click deployment guide](https://github.com/OpenCSGs/csghub-installer/tree/main/docker), which allows you to start an all-in-one container with simplified commands and instantly experience the core functionalities of CSGHub.
 
 - For those deploying on Kubernetes, refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart) for step-by-step instructions.
+
+### Quick Try
+[![one-click deployment on Ali marketplace](https://img.alicdn.com/imgextra/i1/O1CN01YT0adL1pi2znO6BAJ_!!6000000005393-55-tps-208-40.svg)](https://market.aliyun.com/products/56014009/cmgj00068499.html?source=5176.29345612&userCode=swc743za)
 
 ### Roadmap
 

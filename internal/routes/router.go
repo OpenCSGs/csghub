@@ -66,9 +66,9 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		}
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}))
-	g.Use(middleware.AuthMiddleware(csghubServer))
+	g.Use(middleware.Instance.AuthMiddleware(csghubServer))
 	// This will track all request to portal go server
-	g.Use(middleware.Log())
+	g.Use(middleware.Instance.Log())
 
 	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
 	if err != nil {

@@ -41,9 +41,8 @@ export const collections = {
     delTips: 'This action',
     delTips2: 'cannot be undone and will permanently delete the collection',
     delTips3: 'and all its files.',
+    removeTips: 'This action cannot be undone, this will permanently remove.',
     canNot: "cannot",
-    removeTips2: 'be undone and will permanently delete the collection',
-    removeTips3: 'and all its collections.',
     privateInfo: ', only the creator or organization admin can make submissions',
     publicInfo: ', visible to anyone on the internet.'
   },

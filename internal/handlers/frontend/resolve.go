@@ -41,7 +41,8 @@ type ResolveHandler interface {
 }
 
 type ResolveHandlerImpl struct {
-	Server backend.Server
+	Server   backend.Server
+	jwtUtils jwt.JwtUtils
 }
 
 func NewResolveHandler(config *config.Config) (ResolveHandler, error) {
@@ -50,7 +51,8 @@ func NewResolveHandler(config *config.Config) (ResolveHandler, error) {
 		return nil, fmt.Errorf("failed to create server: %w", err)
 	}
 	return &ResolveHandlerImpl{
-		Server: server,
+		Server:   server,
+		jwtUtils: jwt.NewJwtUtils(),
 	}, nil
 }
 
@@ -101,7 +103,7 @@ func (i *ResolveHandlerImpl) renderTextData(ctx *gin.Context, getContentFunc fun
 }
 
 func (i *ResolveHandlerImpl) downloadResolveFile(ctx *gin.Context) ([]byte, error) {
-	req := buildDownloadReq(ctx)
+	req := i.buildDownloadReq(ctx)
 	data, resp, err := i.Server.DownloadFile(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download file: %w", err)
@@ -113,7 +115,7 @@ func (i *ResolveHandlerImpl) downloadResolveFile(ctx *gin.Context) ([]byte, erro
 }
 
 func (i *ResolveHandlerImpl) getFileContent(ctx *gin.Context) (string, error) {
-	req := buildDownloadReq(ctx)
+	req := i.buildDownloadReq(ctx)
 	rawResp, resp, err := i.Server.DownloadFileRaw(req)
 	if err != nil {
 		return "", fmt.Errorf("failed to get file content: %w", err)
@@ -124,9 +126,9 @@ func (i *ResolveHandlerImpl) getFileContent(ctx *gin.Context) (string, error) {
 	return rawResp.Data, nil
 }
 
-func buildDownloadReq(ctx *gin.Context) types.DownloadReq {
+func (i *ResolveHandlerImpl) buildDownloadReq(ctx *gin.Context) types.DownloadReq {
 	userName := ""
-	currentUser := jwt.GetCurrentUser(ctx)
+	currentUser := i.jwtUtils.GetCurrentUser(ctx)
 	if currentUser != nil {
 		userName = currentUser.Name
 	}

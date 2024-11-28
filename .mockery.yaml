@@ -1,0 +1,11 @@
+with-expecter: true
+dir: "_mocks/{{.PackagePath}}"
+packages:
+    opencsg.com/portal/pkg/utils/jwt:
+        config:
+        interfaces:
+            AdminHandler:
+    opencsg.com/portal/internal/handlers/render/base:
+        config:
+        interfaces:
+            RenderBase:

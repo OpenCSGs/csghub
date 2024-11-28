@@ -134,7 +134,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	user.SetRoles(userResp.Roles...)
 
 	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
-	ctx.SetCookie("current_user", user.Name, cookieMaxAge, "/", "", false, false)
+	ctx.SetCookie("current_user", userResp.Username, cookieMaxAge, "/", "", false, false)
 	ctx.SetCookie("admin_user", fmt.Sprintf("%t", user.IsAdmin()), cookieMaxAge, "/", "", false, false)
 
 	user.SessionIP = ctx.ClientIP()

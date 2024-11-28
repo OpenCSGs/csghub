@@ -14,7 +14,7 @@ func registerDatasetRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 	}
 
 	authenticatedRoutes := datasetRoutes.Group("")
-	authenticatedRoutes.Use(middleware.CheckCurrentUser())
+	authenticatedRoutes.Use(middleware.Instance.CheckCurrentUser())
 	{
 		authenticatedRoutes.GET("/:namespace/:dataset_name", datasetHandler.Detail)
 		authenticatedRoutes.GET("/:namespace/:dataset_name/files/:branch/*path", datasetHandler.Files)
@@ -25,7 +25,7 @@ func registerDatasetRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		authenticatedRoutes.GET("/new", datasetHandler.New)
 		authenticatedRoutes.GET("/:namespace/:dataset_name/:branch/new", datasetHandler.NewFile)
 		authenticatedRoutes.GET("/:namespace/:dataset_name/:branch/upload", datasetHandler.UploadFile)
-		authenticatedRoutes.GET("/:namespace/:dataset_name/edit/:branch/:path", datasetHandler.EditFile)
+		authenticatedRoutes.GET("/:namespace/:dataset_name/edit/:branch/*path", datasetHandler.EditFile)
 		authenticatedRoutes.GET("/:namespace/:dataset_name/settings", datasetHandler.Settings)
 	}
 }
