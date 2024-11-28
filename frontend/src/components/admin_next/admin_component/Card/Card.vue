@@ -1,6 +1,6 @@
 <template>
   <div
-    class="next-table bg-white rounded-xl shadow border border-[#eaecf0] mt-[24px] overflow-hidden">
+    class="bg-white rounded-xl shadow border border-[#eaecf0] overflow-hidden">
     <!-- card header -->
     <slot name="header">
       <div

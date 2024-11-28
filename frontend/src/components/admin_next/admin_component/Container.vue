@@ -15,7 +15,7 @@
           <template
             v-for="(item, index) in breadcrumbs"
             :key="index">
-            <el-breadcrumb-item :to="item.to">{{
+            <el-breadcrumb-item :to="item.to" :class="item.to ? text-brand-700 : ''">{{
               item.text
             }}</el-breadcrumb-item>
           </template>
@@ -87,6 +87,10 @@
 </script>
 
 <style scoped>
+  :deep(.el-breadcrumb__inner.is-link) {
+    @apply text-brand-700;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -100,7 +104,7 @@
   .header-section {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    @apply gap-5;
   }
 
   .header-section.with-padding {

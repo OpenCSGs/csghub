@@ -1,6 +1,6 @@
 <template>
   <div
-    class="next-table bg-white rounded-xl shadow border border-[#eaecf0] mt-[24px] overflow-hidden">
+    class="next-table bg-white rounded-xl shadow border border-[#eaecf0] mt-8 overflow-hidden">
     <slot name="header">
       <div
         v-if="title"

@@ -1,5 +1,5 @@
 <template>
-  <Container title="用户详情" subtitle="" :breadcrumbs="[{ text: '用户管理' }]">
+  <Container title="用户详情" subtitle="" :breadcrumbs="[{ text: '用户管理', to: '/admin_next/users' }, {text: `User #${user.uuid}`}]">
     <Card :title="`User #${user.username}`">
       <!-- <template #header>
         <div class="flex items-start gap-4 p-10 self-stretch">
