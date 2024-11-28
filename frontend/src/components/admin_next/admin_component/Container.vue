@@ -7,7 +7,7 @@
       <!-- breadcrumb -->
       <div class="breadcrumb-wrapper">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/admin_next', replace: true }">
+          <el-breadcrumb-item :to="{ path: ADMIN_BASE_PATH, replace: true }">
             <el-icon>
               <House />
             </el-icon>

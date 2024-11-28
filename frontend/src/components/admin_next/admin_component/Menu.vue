@@ -38,7 +38,7 @@
 
       <!-- 折叠按钮 -->
       <div
-        v-if="activeIndex !== '/admin_next'"
+        v-if="activeIndex !== ADMIN_BASE_PATH"
         class="collapse-btn"
         @click="emit('hideAdminMenu')">
         <SvgIcon

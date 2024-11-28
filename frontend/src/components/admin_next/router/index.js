@@ -1,4 +1,4 @@
-import AdminDashboard from "../../../components/new_admin/AdminDashboard.vue";
+import AdminDashboard from "../dashboard/AdminDashboard.vue";
 import AdminUserList from "../users/AdminUserList.vue";
 import AdminUserDetail from "../users/AdminUserDetail.vue";
 import AdminSystemConfig from "../system_configs/AdminSystemConfig.vue";
@@ -21,7 +21,7 @@ export const PARENT_NAME = {
 // use for parent menu render
 export const PARENT_NAME_LIST = [PARENT_NAME.BASE_CONFIG];
 
-const BASE_URL = "/admin_next";
+const BASE_URL = ADMIN_BASE_PATH;
 
 export const MENU_SETTING = [
   {
@@ -79,7 +79,7 @@ export const menuRenderList = PARENT_NAME_LIST.reduce((acc, item) => {
 
 export const ROUTERS = [
   {
-    path: "/admin_next",
+    path: ADMIN_BASE_PATH,
     children: MENU_SETTING,
   },
 ];

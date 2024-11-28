@@ -54,7 +54,7 @@ const searchUsers = () => {
 }
 
 const showDetail = (row) => {
-  window.location.href = `/admin_next/users/${row.username}`
+  window.location.href = `${ADMIN_BASE_PATH}/users/${row.username}`
 }
 
 onMounted(() => {
