@@ -36,7 +36,7 @@
         </li>
       </ul>
       <template #footer>
-        <PlainButton class="btn btn-primary btn-md" name="Edit" @click="dialogFormVisible = true" />
+        <CsgButton class="btn btn-primary btn-md" name="Edit" @click="dialogFormVisible = true" />
       </template>
     </Card>
 
@@ -70,8 +70,8 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer flex justify-end gap-2">
-          <PlainButton class="btn btn-secondary-gray btn-md" :name="$t('admin.users.editCancelBtn')" @click="dialogFormVisible = false" />
-          <PlainButton class="btn btn-primary btn-md" :name="$t('admin.users.editConfirmBtn')" @click="submitUserForm" />
+          <CsgButton class="btn btn-secondary-gray btn-md" :name="$t('admin.users.editCancelBtn')" @click="dialogFormVisible = false" />
+          <CsgButton class="btn btn-primary btn-md" :name="$t('admin.users.editConfirmBtn')" @click="submitUserForm" />
         </div>
       </template>
     </el-dialog>
@@ -85,7 +85,6 @@
   import useFetchApi from '../../../packs/useFetchApi'
   import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
-  import PlainButton from '../../shared/PlainButton.vue'
 
   const route = useRoute()
 

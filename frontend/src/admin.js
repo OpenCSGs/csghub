@@ -17,6 +17,7 @@ import en from "./locales/en.js";
 import zh from "./locales/zh.js";
 
 import SvgIcon from "./components/shared/SvgIcon.vue";
+import CsgButton from "./components/shared/CsgButton.vue"
 // import FlashMessage from "./components/shared/FlashMessage.vue";
 
 import AdminLayout from "./components/admin_next/admin_component/Layout.vue";
@@ -46,6 +47,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 app.component("SvgIcon", SvgIcon);
+app.component("CsgButton", CsgButton)
 // app.component("FlashMessage", FlashMessage);
 
 app.provide("defaultTags", DEFAULT_TAGS);

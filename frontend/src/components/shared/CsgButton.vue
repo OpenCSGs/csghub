@@ -1,7 +1,7 @@
 <template>
   <button
     :class="class"
-    type="button"
+    :type="btnType"
   >
    {{ name }}
   </button>
@@ -10,9 +10,13 @@
 <script setup>
   const props = defineProps({
     name: String,
+    btnType: {
+      type: String,
+      default: "button"
+    },
     class:{
       type: String,
-      default: "auto",
+      default: "",
     },
   });
 </script>

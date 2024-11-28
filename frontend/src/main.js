@@ -41,7 +41,7 @@ import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
-import PlainButton from "./components/shared/PlainButton.vue"
+import CsgButton from "./components/shared/CsgButton.vue"
 import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
@@ -152,7 +152,7 @@ const router = createRouter({
 })
 
 app.component('SvgIcon', SvgIcon)
-app.component('PlainButton', PlainButton)
+app.component('CsgButton', CsgButton)
 app.component('FlashMessage', FlashMessage)
 app.use(ElementPlus)
 app.use(i18n)
