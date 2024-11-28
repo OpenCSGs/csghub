@@ -4,6 +4,13 @@ import AdminUserDetail from "../users/AdminUserDetail.vue";
 import AdminSystemConfig from "../system_configs/AdminSystemConfig.vue";
 import AdminSyncSetting from "../sync/AdminSyncSetting.vue";
 import { Setting, User, Connection } from "@element-plus/icons-vue";
+import { useCookies } from 'vue3-cookies'
+
+const { cookies } = useCookies()
+import { admin as admin_en } from "../../../locales/en_js/admin.js"
+import { admin as admin_zh } from "../../../locales/zh_js/admin.js"
+
+const adminLocale = cookies.get('locale') === 'en' ? admin_en : admin_zh
 
 
 // parent menu name
@@ -52,7 +59,7 @@ export const MENU_SETTING = [
   {
     path: `${BASE_URL}/sync`,
     component: AdminSyncSetting,
-    name: "多源同步",
+    name: adminLocale.syncSetting.title,
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-cloud",
     type: "item",

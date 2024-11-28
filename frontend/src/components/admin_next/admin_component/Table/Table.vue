@@ -10,7 +10,7 @@
         </h2>
       </div>
     </slot>
-    <!-- 支持所有属性传给ElTable -->
+    <!-- support all attrs pass to ElTable -->
     <ElTable
       size="small"
       :border="false"

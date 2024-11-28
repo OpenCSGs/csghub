@@ -1,7 +1,7 @@
 <template>
-  <Container title="多源同步" :breadcrumbs="[{ text: '多源同步' }]">
+  <Container :title="$t('admin.syncSetting.title')" :breadcrumbs="[{ text: $t('admin.syncSetting.title') }]">
     <div>
-      <h3 class="mb-5">{{ $t('admin.syncSetting.title') }}</h3>
+      <h3 class="mb-5">{{ $t('admin.syncSetting.settingTitle') }}</h3>
       <el-alert v-if="form.default" :title="$t('admin.syncSetting.defaultTokenAlert')" type="warning" show-icon
         class="!mb-5" />
       <el-form :model="form" label-width="auto" label-position="left" style="max-width: 400px">

@@ -42,14 +42,3 @@
     isCollapse.value = true
   }
 </script>
-
-<style scoped>
-  /* .admin-layout {
-    height: 100vh;
-  } */
-
-  /* :deep(.el-header) {
-    padding: 0;
-  } */
-
-</style>

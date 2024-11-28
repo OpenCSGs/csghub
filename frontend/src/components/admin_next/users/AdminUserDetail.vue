@@ -1,11 +1,6 @@
 <template>
-  <Container title="用户详情" subtitle="" :breadcrumbs="[{ text: '用户管理', to: '/admin_next/users' }, {text: `User #${user.uuid}`}]">
+  <Container title="用户详情" subtitle="" :showBack="true" :breadcrumbs="[{ text: '用户管理', to: '/admin_next/users' }, {text: `User #${user.uuid}`}]">
     <Card :title="`User #${user.username}`">
-      <!-- <template #header>
-        <div class="flex items-start gap-4 p-10 self-stretch">
-          <span>User Detail</span>
-        </div>
-      </template> -->
       <ul class="">
         <li class="flex mb-4">
           <label class="admin-field-label">Uuid</label>
@@ -136,7 +131,7 @@
 
 <style scoped>
   :deep(.el-form-item__label) {
-    line-height: 32px;
+    line-height: 32px !important;
   }
   :deep(.el-dialog__body) {
     padding: 0 !important;

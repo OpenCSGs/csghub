@@ -21,9 +21,12 @@ import SvgIcon from "./components/shared/SvgIcon.vue";
 
 import AdminLayout from "./components/admin_next/admin_component/Layout.vue";
 
+const { cookies } = useCookies()
+const defaultLanguage = ['zh', 'zh-cn', 'zh-CN', 'zh-tw'].includes(navigator.language) ? 'zh' : 'en';
+
 const i18n = createI18n({
   legacy: false,
-  locale: "en",
+  locale: cookies.get('locale') || defaultLanguage,
   messages: {
     en,
     zh,

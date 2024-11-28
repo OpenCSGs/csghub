@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <!-- 头部区域 -->
+    <!-- header part -->
     <section
       class="header-section"
       :class="{ 'with-padding': withPadding }">
-      <!-- 面包屑 -->
+      <!-- breadcrumb -->
       <div class="breadcrumb-wrapper">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/admin_next', replace: true }">
@@ -22,9 +22,9 @@
         </el-breadcrumb>
       </div>
 
-      <!-- 标题区域 -->
+      <!-- title -->
       <div class="title-section">
-        <!-- 返回按钮 -->
+        <!-- return -->
         <el-icon
           v-if="showBack"
           class="back-icon"
@@ -41,7 +41,7 @@
           </p>
         </div>
 
-        <!-- 右侧操作 -->
+        <!-- header actions -->
         <div
           v-if="$slots.headerActions"
           class="header-actions">
@@ -50,7 +50,7 @@
       </div>
     </section>
 
-    <!-- 内容区域 -->
+    <!-- content -->
     <section
       class="content-section overflow-hidden"
       :class="{ 'with-padding': withPadding }">

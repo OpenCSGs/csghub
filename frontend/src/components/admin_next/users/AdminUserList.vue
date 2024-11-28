@@ -1,6 +1,6 @@
 <template>
   <Container title="用户管理" subtitle="" :breadcrumbs="[{ text: '用户管理' }]">
-    <!-- 搜索和筛选 -->
+    <!-- search & filter -->
     <div class="flex items-center gap-3 w-full">
       <el-input v-model="keyword" placeholder="Name, Email, Phone" size="large" :prefix-icon="Search"
         @input="searchUsers" />

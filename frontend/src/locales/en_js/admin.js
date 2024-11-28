@@ -4,7 +4,8 @@ export const admin = {
     intro: 'This is the admin panel, admin users can do the system settings here.'
   },
   syncSetting: {
-    title: 'Sync Setting',
+    title: 'Multi-Sync',
+    settingTitle: 'Sync Setting',
     concurrent: 'Concurrent Task',
     bandwidth: 'Bandwidth Limit (MB)',
     submit: 'Submit',
