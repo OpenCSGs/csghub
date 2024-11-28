@@ -7,7 +7,7 @@
       <!-- breadcrumb -->
       <div class="breadcrumb-wrapper">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: ADMIN_BASE_PATH, replace: true }">
+          <el-breadcrumb-item :to="{ path: BASE_URL, replace: true }">
             <el-icon>
               <House />
             </el-icon>
@@ -61,6 +61,7 @@
 
 <script setup>
   import { House, ArrowLeft } from '@element-plus/icons-vue'
+  import { BASE_URL } from '../router';
 
   defineProps({
     title: {

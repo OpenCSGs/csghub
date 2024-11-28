@@ -86,7 +86,7 @@
   }
 
   const showDetail = (row) => {
-    window.location.href = `${ADMIN_BASE_PATH}/users/${row.username}`
+    window.location.href = `/admin_panel/users/${row.username}`
   }
 
   onMounted(() => {

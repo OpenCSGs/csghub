@@ -38,7 +38,7 @@
 
       <!-- 折叠按钮 -->
       <div
-        v-if="activeIndex !== ADMIN_BASE_PATH"
+        v-if="activeIndex !== BASE_URL"
         class="collapse-btn"
         @click="emit('hideAdminMenu')">
         <SvgIcon
@@ -55,6 +55,7 @@
   import { menuRenderList } from '../router'
   import { useRoute } from 'vue-router'
   import SvgIcon from '../../shared/SvgIcon.vue'
+  import { BASE_URL } from '../router'
 
   const props = defineProps({
     isCollapse: Boolean

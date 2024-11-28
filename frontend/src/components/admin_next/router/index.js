@@ -21,7 +21,7 @@ export const PARENT_NAME = {
 // use for parent menu render
 export const PARENT_NAME_LIST = [PARENT_NAME.BASE_CONFIG];
 
-const BASE_URL = ADMIN_BASE_PATH;
+export const BASE_URL = '/admin_panel';
 
 export const MENU_SETTING = [
   {
@@ -79,7 +79,7 @@ export const menuRenderList = PARENT_NAME_LIST.reduce((acc, item) => {
 
 export const ROUTERS = [
   {
-    path: ADMIN_BASE_PATH,
+    path: BASE_URL,
     children: MENU_SETTING,
   },
 ];

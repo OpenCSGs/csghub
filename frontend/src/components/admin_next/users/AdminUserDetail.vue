@@ -1,5 +1,5 @@
 <template>
-  <Container :title="$t('admin.users.userDetailTitle')" subtitle="" :showBack="true" :breadcrumbs="[{ text: $t('admin.users.title'), to: `${ADMIN_BASE_PATH}/users` }, {text: `User #${user.uuid}`}]">
+  <Container :title="$t('admin.users.userDetailTitle')" subtitle="" :showBack="true" :breadcrumbs="[{ text: $t('admin.users.title'), to: `${BASE_URL}/users` }, {text: `User #${user.uuid}`}]">
     <Card :title="`User #${user.username}`">
       <ul class="">
         <li class="flex mb-4">
@@ -85,6 +85,7 @@
   import useFetchApi from '../../../packs/useFetchApi'
   import dayjs from 'dayjs'
   import { ElMessage } from 'element-plus'
+  import { BASE_URL } from '../router'
 
   const route = useRoute()
 
