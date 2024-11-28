@@ -15,6 +15,19 @@
       {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
     </el-button>
 
+    <!-- evaluation button -->
+    <div
+      class="btn btn-secondary-gray btn-sm"
+      v-if="repoType === 'model' && enableEvaluation && !!httpCloneUrl"
+      @click="toNewEvaluatePage"
+    >
+      <SvgIcon
+        name="evaluation_new"
+        class="mr-0"
+        width="12"
+      />
+      <div>{{ $t('evaluation.new.title') }}</div>
+    </div>
 
     <!-- endpoint deploy button -->
     <DeployDropdown
@@ -45,7 +58,7 @@
         name="model_finetune_create"
         class="mr-0"
       />
-      <div class="text-sm">{{ $t('finetune.title') }}</div>
+      <div>{{ $t('finetune.title') }}</div>
     </div>
 
     <!-- repo download clone button -->
@@ -183,7 +196,8 @@
     repo: Object,
     enableEndpoint: Boolean,
     enableFinetune: Boolean,
-    showAddToCollections: Boolean
+    enableEvaluation: Boolean,
+    showAddToCollections: Boolean,
   })
 
   const httpCloneUrl = ref('')
@@ -384,6 +398,14 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   }
   const toLoginPage = () => {
     window.location.href = '/login'
+  }
+
+  const toNewEvaluatePage = () => {
+    if (isLoggedIn.value) {
+      window.location.href = `/evaluations/new?model_id=${props.namespacePath}`
+    } else {
+      toLoginPage()
+    }
   }
 
   onMounted(() => {

@@ -154,6 +154,8 @@ func createRender() multitemplate.Renderer {
 		"settings_ssh_keys":              "settings/ssh_keys.html",
 		"prompts_index":                  "prompts/index.html",
 		"prompts_assistant":              "prompts/assistant.html",
+		"evaluations_new":                "evaluations/new.html",
+		"evaluations_show":               "evaluations/show.html",
 	}
 
 	for name, page := range pages {
@@ -223,6 +225,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerResourceConsoleRoutes(engine, handlersRegistry)
 	registerAdminRoutes(engine, handlersRegistry)
 	registerPromptsRoutes(engine, handlersRegistry)
+	registerEvaluationRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

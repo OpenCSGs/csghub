@@ -1,8 +1,9 @@
 <template>
   <div>
-    <el-dropdown>
-      <el-button type="default" class="!rounded-lg">
-        {{ t("all.deploy") }}
+    <el-dropdown class="h-9">
+      <el-button plain type="default" class="btn btn-secondary-gray btn-sm !h-full">
+        <SvgIcon name="deploy" class="mr-1" />
+        <div class="text-gray-700">{{ t("all.deploy") }}</div>
         <el-icon class="ml-1 el-icon--right">
           <arrow-down />
         </el-icon>
