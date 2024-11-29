@@ -20,7 +20,7 @@ export default {
         'gray-700': '#344054',
         'gray-800': '#182230',
         'gray-900': '#101828',
-        'gray-950': '#0C111D',  
+        'gray-950': '#0C111D',
         'brand-25': '#F0F3FF',
         'brand-50': '#CED8FF',
         'brand-100': '#ACBDFF',
@@ -51,7 +51,7 @@ export default {
         'warning-200': '#FEDF89',
         'warning-300': '#FEC84B',
         'warning-400': '#FDB022',
-        'warning-500': '#F79009', 
+        'warning-500': '#F79009',
         'warning-600': '#DC6803',
         'warning-700': '#B54708',
         'warning-800': '#93370D',
@@ -113,6 +113,7 @@ export default {
     },
 
     screens: {
+      '3xl': {'min': '1536px'},
       '2xl': {'max': '1536px'},
       'xl': {'max': '1280px'},
       'lg': {'max': '1024px'},

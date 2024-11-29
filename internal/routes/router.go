@@ -186,6 +186,14 @@ func createRender() multitemplate.Renderer {
 		r.Add(name, tmpl)
 	}
 
+	// admin new version
+	adminNextLayouts := "admin/admin_next.html"
+	tmpl, err := template.ParseFS(viewsFS, adminNextLayouts)
+	if err != nil {
+		panic(err)
+	}
+	r.Add("admin_next", tmpl)
+
 	return r
 }
 
