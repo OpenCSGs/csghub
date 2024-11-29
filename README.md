@@ -5,7 +5,7 @@
 [![Join OpenCSG Discord](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)
 [![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20CSGHub%20Guru-006BFF?style=social)](https://gurubase.io/g/csghub)
 
-**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
+**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md) ∙ [Español](README_es.md)**
 
 ## CSGHub
 
