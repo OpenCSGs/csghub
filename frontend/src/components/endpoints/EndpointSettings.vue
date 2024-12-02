@@ -277,11 +277,9 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { useCookies } from 'vue3-cookies'
+  import useUserStore from '../../stores/UserStore.js'
 
-  const { cookies } = useCookies()
-  const currentUser = cookies.get('current_user')
-
+  const userStore = useUserStore()
   const repoDetailStore = useRepoDetailStore()
 
   const props = defineProps({
@@ -509,7 +507,7 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${currentUser}`
+        window.location.href = `/profile/${userStore.username}`
       }, 500)
       return true
     }

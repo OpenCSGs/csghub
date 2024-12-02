@@ -48,7 +48,9 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useFetchApi from '../../packs/useFetchApi'
+  import useUserStore from '../../stores/UserStore.js'
 
+  const userStore = useUserStore()
   const { cookies } = useCookies()
 
   const props = defineProps({
@@ -61,9 +63,10 @@
     endpointId: Number
   })
 
-  const currentUser = cookies.get('current_user')
+  const canWrite = computed(() => {
+    return userStore.username === props.namespace
+  })
 
-  const canWrite = ref(currentUser === props.namespace)
   // only owner can view endpoint detail, so just set true
   const canManage = ref(true)
 

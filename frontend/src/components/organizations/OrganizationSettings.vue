@@ -33,16 +33,15 @@
   import OrganizationMembers from './OrganizationMembers.vue'
   import useFetchApi from "../../packs/useFetchApi"
   import { ref, onMounted } from 'vue'
-  import { useCookies } from 'vue3-cookies'
   import { ElMessage } from 'element-plus'
+  import useUserStore from '../../stores/UserStore'
 
   const props = defineProps({
     name: String,
     action: String
   })
-  
-  const { cookies } = useCookies()
-  const current_user = cookies.get('current_user')
+
+  const userStore = useUserStore()
 
   const organization = ref({
     name: props.name,
@@ -54,6 +53,13 @@
   })
 
   const role =ref('')
+
+  watch(
+    () => userStore.username,
+    () => {
+      currentUserRole()
+    }
+  )
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `/organization/${props.name}`
@@ -84,9 +90,9 @@
       organization.value.logo = logo
     }
   }
-  
+
   const currentUserRole = async () => {
-    const orgIsAdminEndpoint = `/organization/${props.name}/members/${current_user}`
+    const orgIsAdminEndpoint = `/organization/${props.name}/members/${userStore.username}`
     const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
 
     if (error.value) {
@@ -99,6 +105,8 @@
 
   onMounted(() => {
     fetchOrgDetail()
-    currentUserRole()
+    if (userStore.initialized) {
+      currentUserRole()
+    }
   })
 </script>
