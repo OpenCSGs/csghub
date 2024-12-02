@@ -26,6 +26,7 @@ import { resourceConsole } from './zh_js/resource_console';
 import { tags } from './zh_js/tags';
 import { languages } from './zh_js/languages';
 import { errors_page } from './zh_js/error';
+import { prompts } from './zh_js/prompts';
 
 export default {
   all,
@@ -55,5 +56,6 @@ export default {
   resourceConsole,
   tags,
   languages,
-  errors_page
+  errors_page,
+  prompts
 };
