@@ -53,6 +53,8 @@ import Unauthorized from "./components/error/Unauthorized.vue"
 import LoginFailed from "./components/error/LoginFailed.vue"
 import FlashMessage from "./components/shared/FlashMessage.vue"
 import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
+import PromptsHub from "./components/prompts/PromptsHub.vue"
+import PromptsAssistantHub from "./components/prompts/PromptsAssistantHub.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -107,7 +109,9 @@ const app = createApp({
     Unauthorized,
     LoginFailed,
     FlashMessage,
-    ResourceConsoleIndex
+    ResourceConsoleIndex,
+    PromptsHub,
+    PromptsAssistantHub
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

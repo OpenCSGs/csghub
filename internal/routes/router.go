@@ -152,6 +152,8 @@ func createRender() multitemplate.Renderer {
 		"settings_starship_access_token": "settings/starship_access_token.html",
 		"settings_sync_access_token":     "settings/sync_access_token.html",
 		"settings_ssh_keys":              "settings/ssh_keys.html",
+		"prompts_index":                  "prompts/index.html",
+		"prompts_assistant":              "prompts/assistant.html",
 	}
 
 	for name, page := range pages {
@@ -212,6 +214,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerSettingRoutes(engine, handlersRegistry)
 	registerResourceConsoleRoutes(engine, handlersRegistry)
 	registerAdminRoutes(engine, handlersRegistry)
+	registerPromptsRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {
