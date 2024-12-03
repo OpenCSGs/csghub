@@ -32,10 +32,10 @@
           <SvgIcon name="prompts_pipe" />
         </span>
       </template>
-      <div v-if="promptsDetails.source" class="flex gap-1 hover:underline hover:text-[#3250BD]">
+      <a :href="`https://${promptsDetails.source}`" target="_blank" rel="noopener noreferrer" v-if="promptsDetails.source" class="flex gap-1 hover:underline hover:text-[#3250BD]">
         <SvgIcon name="prompts_source" />
         <span>{{ promptsDetails.source }}</span>
-      </div>
+      </a>
     </div>
     <div class="border border-[#EAECF0] min-h-[400px] md:h-auto rounded-lg">
       <div
