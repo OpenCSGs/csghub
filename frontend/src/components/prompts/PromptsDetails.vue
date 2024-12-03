@@ -42,28 +42,28 @@
         class="text-base font-medium flex md:gap-[16px] justify-between items-center py-3 px-5 border-b rounded-t-lg bg-[#F9FAFB]"
       >
         {{ $t('prompts.promptContent') }}
-        <div class="flex gap-[12px]">
+        <div class="flex gap-[12px] sm:gap-5">
           <span
             v-if="promptsDetails.can_manage"
-            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] gap-1"
+            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] sm:h-auto sm:w-auto justify-center items-center text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 sm:px-0 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] sm:bg-transparent sm:border-none gap-1"
             @click="dialogVisible = true"
           >
-            <SvgIcon name="delete" />
+            <SvgIcon width="12px" name="delete" />
             {{ $t('prompts.del') }}
           </span>
           <span
             v-if="promptsDetails.can_manage"
-            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] gap-1"
+            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] sm:h-auto sm:w-auto justify-center items-center text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 sm:px-0 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] sm:bg-transparent sm:border-none gap-1"
             @click="changeCurrentComponent('editPrompt')"
           >
-            <SvgIcon name="edit" />
+            <SvgIcon width="12px" name="edit" />
             {{ $t('prompts.edit') }}
           </span>
           <span
-            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] gap-1"
+            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] sm:h-auto sm:w-auto justify-center items-center text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 sm:px-0 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] sm:bg-transparent sm:border-none gap-1"
             @click="copyContent"
           >
-            <SvgIcon name="copy" />
+            <SvgIcon width="12px" name="copy" />
             {{ $t('prompts.copy') }}
           </span>
         </div>

@@ -10,7 +10,7 @@ export const prompts = {
   promptLibrary: "提示词库",
   optimizationAssistant: "优化助手",
   modelComparison: "模型对比",
-  promptContent: "词库内容",
+  promptContent: "内容",
   copy:"复制",
   edit:"编辑",
   title:'标题',

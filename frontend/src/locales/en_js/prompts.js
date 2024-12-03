@@ -10,7 +10,7 @@ export const prompts = {
   promptLibrary: "Prompt Library",
   optimizationAssistant: "Prompt Optimizer",
   modelComparison: "Model Arena",
-  promptContent: "Prompt Content",
+  promptContent: "Content",
   copy: "Copy",
   edit: "Edit",
   title:'Title',
