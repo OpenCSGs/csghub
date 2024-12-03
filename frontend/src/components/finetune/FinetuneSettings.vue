@@ -216,10 +216,7 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
-  import { useCookies } from 'vue3-cookies'
-
-  const { cookies } = useCookies()
-  const currentUser = cookies.get('current_user')
+  import useUserStore from '../../stores/UserStore'
 
   const props = defineProps({
     finetune: Object,
@@ -233,6 +230,7 @@
     clusterId: String
   })
 
+  const userStore = useUserStore()
   const statusVal = ref(props.appStatus == 'Running')
   const { t } = useI18n()
   const delDesc = ref('')
@@ -366,7 +364,7 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${currentUser}`
+        window.location.href = `/profile/${userStore.username}`
       }, 500)
     }
   }

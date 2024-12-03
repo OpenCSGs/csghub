@@ -134,7 +134,6 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 	user.SetRoles(userResp.Roles...)
 
 	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
-	ctx.SetCookie("current_user", userResp.Username, cookieMaxAge, "/", "", false, false)
 
 	user.SessionIP = ctx.ClientIP()
 	err = i.userModel.Update(ctx, user)

@@ -95,7 +95,7 @@
             </div>
             <div
               class="mb-[4px]"
-              v-if="currentUser"
+              v-if="userStore.username"
             >
               <el-checkbox
                 v-model="useToken"
@@ -169,18 +169,15 @@
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
   import SvgIcon from './SvgIcon.vue'
-  import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from "element-plus"
   import AddToCollections from '../collections/AddToCollections.vue'
   import useUserStore from '../../stores/UserStore'
 
   const userStore = useUserStore()
-  const { cookies } = useCookies()
 
   const props = defineProps({
     repoType: String,
-    userName: String,
     namespacePath: String,
     admin: Boolean,
     repo: Object,
@@ -196,7 +193,11 @@
   const httpsCloneCode = ref('')
   const sshCloneCode = ref('')
   const httpsCloneCodeWithToken = ref('')
-  const isLoggedIn =ref(false)
+
+  const isLoggedIn = computed(() => {
+    return !!userStore.username
+  })
+
   watch(() => props.repo, () => {
     const url = new URL(props.repo.repository.http_clone_url)
     httpCloneUrl.value = props.repo.repository.http_clone_url
@@ -216,7 +217,7 @@ git clone ${sshCloneUrl.value}
   httpsCloneCodeWithToken.value = `
 git lfs install
 git clone ${httpCloneProtocol.value}//${
-    currentUser.value
+    userStore.username
   }:${accessToken.value}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
   })
@@ -224,8 +225,14 @@ git clone ${httpCloneProtocol.value}//${
   const activeCloneType = ref('https')
   const cloneRepositoryVisible = ref(false)
   const useToken = ref(false)
-  const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
+
+  watch(
+    () => userStore.username,
+    () => {
+      fetchUserToken()
+    }
+  )
 
   const showSyncButton = computed(() =>
     userStore.roles.includes('admin') &&
@@ -249,7 +256,7 @@ git clone ${httpCloneProtocol.value}//${
     httpsCloneCodeWithToken.value = `
 git lfs install
 git clone ${httpCloneProtocol.value}//${
-    currentUser.value
+    userStore.username
   }:${newAccessToken}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
   })
@@ -331,10 +338,10 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   }
 
   const fetchUserToken = async() => {
-    if (!currentUser.value) return
+    if (!userStore.username) return
 
     const { data } = await useFetchApi(
-      `/user/${currentUser.value}/tokens?app=git`
+      `/user/${userStore.username}/tokens?app=git`
     ).json()
     if (data.value) {
       const body = data.value
@@ -380,6 +387,8 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
   }
 
   onMounted(() => {
-    isLoggedIn.value = !!currentUser.value;
+    if (userStore.initialized) {
+      fetchUserToken()
+    }
   })
 </script>
