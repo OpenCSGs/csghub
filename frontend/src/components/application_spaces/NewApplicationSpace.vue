@@ -210,7 +210,7 @@
               <p class="font-semibold text-md">Streamlit</p>
             </el-radio>
             <el-radio
-              v-if="isAdmin"
+              v-if="userStore.isAdmin"
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
               label="nginx"
@@ -225,7 +225,7 @@
               <p class="font-semibold text-md">Nginx</p>
             </el-radio>
             <el-radio
-              v-if="!isAdmin"
+              v-if="!userStore.isAdmin"
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
               label="docker"
@@ -338,22 +338,18 @@
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore'
-  import { useCookies } from 'vue3-cookies'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
 
-  const userStore = useUserStore()
+  const props = defineProps({
+    licenses: Array
+  })
 
-  const { cookies } = useCookies()
+  const userStore = useUserStore()
   const dataFormRef = ref(null)
   const imageUploaded = ref(false)
   const images = ref([])
   const { t } = useI18n()
   const nameRule = inject('nameRule')
-  const isAdmin = cookies.isKey('admin_user')
-
-  const props = defineProps({
-    licenses: Array
-  })
 
   const dataForm = ref({
     owner: '',
