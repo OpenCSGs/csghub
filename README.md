@@ -5,7 +5,7 @@
 [![Join OpenCSG Discord](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)
 [![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20CSGHub%20Guru-006BFF?style=social)](https://gurubase.io/g/csghub)
 
-**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md)**
+**[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md) ∙ [Español](README_es.md)**
 
 ## CSGHub
 
@@ -42,6 +42,9 @@ For more information, please refer to the [OpenCSG Documentation Center](https:/
 - For those seeking a hands-on experience, you can quickly launch CSGHub on your local environment (Linux/MacOS/Windows) using the [Docker one-click deployment guide](https://github.com/OpenCSGs/csghub-installer/tree/main/docker), which allows you to start an all-in-one container with simplified commands and instantly experience the core functionalities of CSGHub.
 
 - For those deploying on Kubernetes, refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart) for step-by-step instructions.
+
+### Quick Try
+[![one-click deployment on Ali marketplace](https://img.alicdn.com/imgextra/i1/O1CN01YT0adL1pi2znO6BAJ_!!6000000005393-55-tps-208-40.svg)](https://market.aliyun.com/products/56014009/cmgj00068499.html?source=5176.29345612&userCode=swc743za)
 
 ### Roadmap
 

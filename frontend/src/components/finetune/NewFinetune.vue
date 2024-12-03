@@ -6,10 +6,10 @@
         width="36"
         height="36" />
     </div>
-    <h3 class="text-gray-700 text-xl font-semibold mt-6 mb-3">
+    <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('finetune.new.title') }}
     </h3>
-    <p class="text-gray-500 text-base font-medium md:text-center">
+    <p class="text-gray-500 text-md font-regular md:text-center">
       {{ t('finetune.new.desc') }}
     </p>
     <div class="mt-9 w-full">
@@ -143,12 +143,12 @@
 
         <div class="flex justify-end">
           <el-form-item>
-            <el-button
+            <button
               :loading="loading"
-              class="!text-center !h-9 !text-md !text-white !bg-brand-600 !rounded-md !border-[1px] !border-brand-600"
+              class="btn btn-primary btn-md"
               @click="handleSubmit">
               {{ t('finetune.new.createFinetune') }}
-            </el-button>
+            </button>
           </el-form-item>
         </div>
       </el-form>

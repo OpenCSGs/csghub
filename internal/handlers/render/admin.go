@@ -9,6 +9,7 @@ import (
 
 type AdminHandler interface {
 	Index(ctx *gin.Context)
+	IndexNext(ctx *gin.Context)
 }
 
 type AdminHandlerImpl struct {
@@ -33,4 +34,12 @@ func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
 		}
 		i.renderBaseInstance.RenderTemplate(ctx, "admin_index", data)
 	}
+}
+
+func (i *AdminHandlerImpl) IndexNext(ctx *gin.Context) {
+	currentUser := i.jwtUtils.GetCurrentUser(ctx)
+	data := map[string]interface{}{
+		"roles": currentUser.Roles(),
+	}
+	i.renderBaseInstance.RenderTemplate(ctx, "admin_next", data)
 }
