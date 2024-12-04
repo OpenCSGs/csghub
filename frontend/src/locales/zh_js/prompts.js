@@ -1,4 +1,5 @@
 export const prompts = {
+  source:"来源",
   relationModel: "关联模型：",
   relationPrompts: "关联提示词库",
   openUp: "展开",

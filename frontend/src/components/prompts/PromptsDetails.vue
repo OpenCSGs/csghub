@@ -17,25 +17,28 @@
   >
     <div class="text-2xl mb-3 font-medium">{{ promptsDetails.title }}</div>
     <div
-      class="mb-5 flex flex-wrap gap-3 items-center text-[12px] leading-[18px] font-normal"
+      class="mb-5 flex flex-wrap gap-3 items-center md:flex-col md:items-start text-[12px] leading-[18px] font-normal"
     >
-      <template
-        v-for="(tag, index) in promptsDetails.tags"
-        :key="tag"
-      >
-        <PromptsTags :tag="tag" />
-        <!-- 添加分隔符，避免在最后一个标签后添加 -->
-        <span
-          v-if="index < promptsDetails.tags.length - 1"
-          class="mx-1"
+      <div class="flex flex-wrap gap-3 items-center">
+        <template
+          v-for="(tag, index) in promptsDetails.tags"
+          :key="tag"
         >
-          <SvgIcon name="prompts_pipe" />
-        </span>
-      </template>
-      <a :href="`https://${promptsDetails.source}`" target="_blank" rel="noopener noreferrer" v-if="promptsDetails.source" class="flex gap-1 hover:underline hover:text-[#3250BD]">
+          <PromptsTags :tag="tag" />
+          <!-- 添加分隔符，避免在最后一个标签后添加 -->
+          <span
+            v-if="index < promptsDetails.tags.length - 1"
+            class="mx-1"
+          >
+            <SvgIcon name="prompts_pipe" />
+          </span>
+        </template>
+      </div>
+      <!-- prompts source -->
+      <div v-if="promptsDetails.source" class="flex gap-1 ml-3 md:ml-0">
         <SvgIcon name="prompts_source" />
-        <span>{{ promptsDetails.source }}</span>
-      </a>
+        <span>{{ $t('prompts.source') }}：{{ promptsDetails.source }}</span>
+      </div>
     </div>
     <div class="border border-[#EAECF0] min-h-[400px] md:h-auto rounded-lg">
       <div

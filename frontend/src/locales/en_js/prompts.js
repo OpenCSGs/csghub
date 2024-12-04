@@ -1,4 +1,5 @@
 export const prompts = {
+  source:"Source",
   relationModel: "Correlation model:",
   relationPrompts: "Correlation prompts",
   openUp: "Open up",
