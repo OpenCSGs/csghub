@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white sticky top-0 z-[999] csg-navbar">
+  <div class="border-b sticky top-0 z-[999] csg-navbar bg-white border-gray-200">
     <div
-      class="page-responsive-width flex text-gray-700 justify-between items-center h-[80px] sm:h-[60px] gap-[40px]">
+      class="page-responsive-width flex text-gray-700 justify-between items-center h-[80px] sm:h-[60px] gap-[40px] px-[20px]">
       <!-- pc logo -->
       <div class="flex">
         <a href="/">
