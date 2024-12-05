@@ -131,4 +131,16 @@ img, video {
     background-image: url('../public/images/error_page_bg.png');
     background-position: top;
   }
+
+  .page-responsive-width {
+    @apply 3xl:w-[1536px] 2xl:w-[1280px] xl:w-[1024px] lg:w-[826px] md:w-[640px] sm:w-auto m-auto;
+  }
+
+  .admin-field-label {
+    @apply w-[280px] text-sm text-gray-700;
+  }
+
+  .admin-field {
+    @apply text-sm text-gray-600;
+  }
 }

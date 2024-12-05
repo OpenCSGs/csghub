@@ -37,6 +37,11 @@
                             :datasets="relations['datasets']"
       />
 
+      <PromptRelationsCard v-if="relations['prompts'] && relations['prompts'].length !== 0"
+                          :namespacePath="namespacePath"
+                          :prompts="relations['prompts']"
+      />
+
       <ModelRelationsCard v-if="relations['models'] && relations['models'].length !== 0"
                           :namespacePath="namespacePath"
                           :models="relations['models']"
@@ -50,6 +55,7 @@
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
+  import PromptRelationsCard from '../prompts/PromptRelationsCard.vue';
   import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
   import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';

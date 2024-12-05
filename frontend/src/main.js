@@ -41,6 +41,7 @@ import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
+import CsgButton from "./components/shared/CsgButton.vue"
 import NewCollection from "./components/collections/NewCollection.vue"
 import NewEndpoint from "./components/endpoints/NewEndpoint.vue"
 import NewFinetune from "./components/finetune/NewFinetune.vue"
@@ -53,6 +54,8 @@ import Unauthorized from "./components/error/Unauthorized.vue"
 import LoginFailed from "./components/error/LoginFailed.vue"
 import FlashMessage from "./components/shared/FlashMessage.vue"
 import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
+import PromptsHub from "./components/prompts/PromptsHub.vue"
+import PromptsAssistantHub from "./components/prompts/PromptsAssistantHub.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -107,7 +110,9 @@ const app = createApp({
     Unauthorized,
     LoginFailed,
     FlashMessage,
-    ResourceConsoleIndex
+    ResourceConsoleIndex,
+    PromptsHub,
+    PromptsAssistantHub
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
@@ -151,6 +156,7 @@ const router = createRouter({
 })
 
 app.component('SvgIcon', SvgIcon)
+app.component('CsgButton', CsgButton)
 app.component('FlashMessage', FlashMessage)
 app.use(ElementPlus)
 app.use(i18n)

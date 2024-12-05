@@ -21,6 +21,7 @@ type RenderHandlerRegistry struct {
 	SettingHandler         SettingHandler
 	AdminHandler           AdminHandler
 	ResourceConsoleHandler ResourceConsoleHandler
+	PromptsHandler         PromptsHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, error) {
@@ -32,6 +33,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 	endpointHandler := NewEndpointHandler()
 	finetuneHandler := NewFinetuneHandler()
 	resourceConsoleHandler := NewResourceConsoleHandler()
+	promptsHandler := NewPromptsHandler()
 	sessionHandler, err := NewSessionHandler(svcCtx.Config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create session handler: %w", err)
@@ -56,5 +58,6 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 		SettingHandler:         settingHandler,
 		AdminHandler:           adminHandler,
 		ResourceConsoleHandler: resourceConsoleHandler,
+		PromptsHandler:         promptsHandler,
 	}, nil
 }

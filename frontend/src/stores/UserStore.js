@@ -10,12 +10,14 @@ const useUserStore = defineStore('User', () => {
   const uuid = ref('')
   const homepage = ref('')
   const bio = ref('')
-  const roles = ref('')
+  const roles = ref([])
   const orgs = ref([])
   const lastLoginTime = ref('')
   const initialized = ref(false)
 
   const isLoggedIn = computed(() => username.value !== '')
+  const isAdmin = computed(() => roles.value.includes('admin') || roles.value.includes('super_user'))
+  const isSuperUser = computed(() => roles.value.includes('super_user'))
 
   async function initialize(initialData) {
     username.value = initialData.username || ''
@@ -48,7 +50,9 @@ const useUserStore = defineStore('User', () => {
     roles,
     orgs,
     lastLoginTime,
-    initialized
+    initialized,
+    isAdmin,
+    isSuperUser
   }
 })
 

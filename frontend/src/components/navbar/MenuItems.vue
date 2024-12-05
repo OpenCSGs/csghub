@@ -222,6 +222,12 @@
       class: menuItemClass,
       style: 'border:none',
     },
+    {
+      title: t('prompts.promptLibrary'),
+      index: '/prompts/library',
+      class: menuItemClass,
+      style: 'border:none',
+    }
   ])
 </script>
 

@@ -5,24 +5,24 @@
     @change="$emit('update:value', $event)"
   >
     <el-radio
-      class="w-full !border-[1px] mr-0 mb-[32px] !rounded-xl !h-auto !items-start !p-4"
+      class="w-full !border-[1px] mr-0 mb-[32px] !rounded-md !h-auto !items-start !p-4"
       label="public"
       size="large"
       border
     >
       {{ t('all.public') }}
-      <p class="whitespace-normal text-gray-600 font-light">
+      <p class="whitespace-normal text-gray-600 text-sm font-light">
         {{ props.publicDesc }}
       </p>
     </el-radio>
     <el-radio
-      class="w-full !border-[1px] mr-0 !rounded-xl !h-auto !items-start !p-4"
+      class="w-full !border-[1px] mr-0 !rounded-md !h-auto !items-start !p-4"
       label="private"
       size="large"
       border
     >
       {{ t('all.private') }}
-      <p class="whitespace-normal text-gray-600 font-light">
+      <p class="whitespace-normal text-gray-600 text-sm font-light">
         {{ props.privateDesc }}
       </p>
     </el-radio>

@@ -76,8 +76,8 @@
   import { ref, computed, onMounted, watch } from 'vue'
   import CodeViewer from '../../shared/viewers/CodeViewer.vue'
   import { copyToClipboard } from '../../../packs/clipboard'
-  import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../../packs/useFetchApi'
+  import useUserStore from '../../../stores/UserStore'
 
   const props = defineProps({
     modelId: String,
@@ -86,9 +86,7 @@
     private: Boolean
   })
 
-  const { cookies } = useCookies()
-  const currentUser = ref(cookies.get('current_user'))
-
+  const userStore = useUserStore()
   const codeExtension = ref('py') // py, js, bash
   const codeContent = ref('')
   const useToken = ref(props.private)
@@ -271,11 +269,18 @@ ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
     }
   )
 
+  watch(
+    () => userStore.username,
+    () => {
+      fetchUserToken()
+    }
+  )
+
   const fetchUserToken = async () => {
-    if (!currentUser.value) return
+    if (!userStore.username) return
 
     const { data } = await useFetchApi(
-      `/user/${currentUser.value}/tokens?app=git`
+      `/user/${userStore.username}/tokens?app=git`
     ).json()
 
     if (data.value) {
@@ -289,7 +294,9 @@ ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
 
   onMounted(() => {
     setCodeContent()
-    fetchUserToken()
+    if (userStore.initialized) {
+      fetchUserToken()
+    }
   })
 </script>
 

@@ -213,7 +213,7 @@
   }
 
   const updateProfile = async (config={}) => {
-    const currentUsername = cookies.get('current_user')
+    const currentUsername = userStore.username
     const profileUpdateEndpoint = `/user/${currentUsername}`
     let params = {
       avatar: profileData.value.avatar,

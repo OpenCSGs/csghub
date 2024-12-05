@@ -44,3 +44,5 @@ csghub-portal
 
 cmd/csghub-portal/__debug_*
 app.log
+
+frontend/coverage
