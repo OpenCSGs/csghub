@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import ApplicationPage from "../../application_spaces/ApplicationPage.vue";
 
-// 模拟 vue3-cookies
+// mock vue3-cookies
 vi.mock("vue3-cookies", () => ({
   useCookies: () => ({
     cookies: {
