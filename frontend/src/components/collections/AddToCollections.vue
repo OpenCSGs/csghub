@@ -23,7 +23,7 @@
       <template #header="{ close }">
         <div class="flex justify-between">
           <div
-            class="rounded-full px-[12px] py-[12px] rounded-lg border-[2px] bg-success-100 border-[8px] border-success-50"
+            class="rounded-full px-3 py-3 rounded-full border-[2px] bg-success-100 border-[8px] border-success-50"
           >
             <SvgIcon name="check_circle" />
           </div>
@@ -34,10 +34,10 @@
         </div>
       </template>
       <div class="relative">
-        <div class="mt-[20px]">
+        <div class="mt-5">
           <div>
-            <div class="mb-[20px]">
-              <p class="text-gray-700 text-sm mb-[6px]">
+            <div class="mb-5">
+              <p class="text-gray-700 text-sm mb-1.5">
                 {{ $t('collections.edit.addCollection') }}
               </p>
               <el-select
@@ -61,13 +61,13 @@
       <template #footer>
         <span class="flex justify-between gap-3 px-5">
           <div
-            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-gray-500 text-center py-[10px] px-4 border border-gray-300 cursor-pointer shadow-xs rounded-md"
+            class="w-full btn btn-secondary-gray btn-md"
             @click="cancelAddCollections"
           >
             {{ $t('all.cancel') }}
           </div>
           <div
-            class="w-[50%] hover:bg-brand-700 hover:border-brand-700 active:outline active:outline-4 active:outline-brand-600 text-white text-center py-[10px] px-4 border border-brand-600 bg-brand-600 cursor-pointer shadow-xs rounded-md"
+            class="w-full btn btn-primary btn-md"
             @click="confirmAddCollections"
           >
             {{ $t('all.confirm') }}
@@ -93,22 +93,22 @@
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
-  const isLogged =ref(false)
+  const isLogged = ref(false)
   const fetchCollectionsList = async () => {
     const url = `/user/${userStore.username}/collections`
     const { data, error } = await useFetchApi(url).json()
     const json = data.value
     if (json) {
       collectionsList.value = json.data
-    }else{
+    } else {
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
   
   const openAddCollections = () => {
-    if(isLogged.value){
+    if(isLogged.value) {
       dialogVisible.value = true
-    }else{
+    } else {
       window.location.href = '/login'
     }
   }
@@ -133,14 +133,14 @@
     const options = { body: JSON.stringify(addRepoData) }
     const url = `/collections/${collectionsIdsInput.value}/repos`
     const { data, error } = await useFetchApi(url, options).post().json()
-    if(data.value){
+    if(data.value) {
       dialogVisible.value = false
       ElMessage({
         message: t('all.addSuccess'),
         type: 'success'
       })
       collectionsIdsInput.value = ''
-    }else{
+    } else{
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
