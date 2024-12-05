@@ -1,8 +1,8 @@
 <template>
-  <div class="flex gap-[24px] max-w-[1280px] m-auto min-h-[calc(100vh-153px)] md:min-h-0">
+  <div class="flex gap-[24px] page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
     <div
       v-if="repoType !== 'space'"
-      class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 xl:pl-[20px] mlg:hidden"
+      class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden"
     >
       <TagSidebar
         :taskTags="taskTags"
@@ -15,9 +15,9 @@
         :type="repoType"
       />
     </div>
-    <div class="pt-[32px] w-full xl:pr-[20px] mlg:px-[20px]">
+    <div class="pt-[32px] w-full">
       <div
-        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] mlg:pl-0' : ''}`"
+        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] md:pl-0' : ''}`"
       >
         <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
           <SvgIcon
@@ -93,7 +93,7 @@
       </div>
       <div
         v-if="repoType === 'space'"
-        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] mlg:pl-0"
+        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] md:pl-0"
       >
         <application-space-item
           v-for="repo in reposData"

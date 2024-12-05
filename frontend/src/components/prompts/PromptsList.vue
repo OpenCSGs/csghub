@@ -89,22 +89,22 @@
       </div>
     </div>
     <div class="flex xl:flex-col gap-4 justify-between !text-[16px] !leading-[24px]">
-      <div class="flex mlg:flex-col gap-4 flex-wrap">
+      <div class="flex md:flex-col gap-4 flex-wrap">
         <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] mlg:!w-full inputResponsive"
+          class="!w-[320px] md:!w-full inputResponsive"
           size="large"
           :placeholder="$t('prompts.placeholder')"
           :prefix-icon="Search"
           @change="filterChange"
         />
-        <div class="flex gap-4 mlg:justify-between">
+        <div class="flex gap-4 md:justify-between">
           <el-select
             v-model="langFilterInput"
             @change="filterChange"
             :placeholder="$t('prompts.placeholderLang')"
             size="large"
-            class="!w-[180px] mlg:!w-1/2"
+            class="!w-[180px] md:!w-1/2"
           >
             <el-option
               v-for="item in langOptions"
@@ -118,7 +118,7 @@
             @change="filterChange"
             :placeholder="$t('prompts.placeholderTag')"
             size="large"
-            class="!w-[180px] mlg:!w-1/2"
+            class="!w-[180px] md:!w-1/2"
           >
             <el-option
               v-for="item in tagOptions"
@@ -170,7 +170,7 @@
       <div class="mt-[16px] text-[#101828]">{{ $t('prompts.noPrompt') }}</div>
       <div
         v-if="repo.can_manage"
-        @click="changeCurrentComponent('newPrompt')" 
+        @click="changeCurrentComponent('newPrompt')"
         class="flex mt-[24px] px-[16px] py-[10px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-sm hover:bg-blue-800 cursor-pointer"
       >
         <SvgIcon
@@ -178,7 +178,7 @@
           class="mr-0"
         />
         <div class="text-[#fff] text-sm">{{ $t('prompts.newPrompt') }}</div>
-      </div>      
+      </div>
     </div>
     <CsgPagination
       :perPage="perPage"
@@ -222,7 +222,7 @@
   const changeCurrentComponent = (currentComponent) => {
     emit('changeCurrentComponent', currentComponent)
   }
-  
+
   const setPromptsDetails = (promptsDetails, currentComponent = null) => {
     emit('setPromptsDetails', promptsDetails, currentComponent)
   }
