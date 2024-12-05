@@ -3,7 +3,7 @@
     <div
       v-if="canManage"
       @click="dialogVisible = true"
-      class="flex px-4 py-[5px] text-white border border-brand-600 justify-center items-center gap-[6px] rounded-lg bg-brand-600 shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
+      class="flex px-4 py-[5px] text-white border border-brand-600 justify-center items-center gap-1.5 rounded-lg bg-brand-600 shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
     >
       <SvgIcon name="plus" />
       {{ $t('collections.edit.add') }}
@@ -18,7 +18,7 @@
       <template #header="{ close }">
         <div class="flex justify-between">
           <div
-            class="px-[12px] py-[12px] rounded-lg border-[2px] border-gray-200"
+            class="px-4 py-4 rounded-lg border-[1px] border-gray-200 shadow-sm"
           >
             <SvgIcon name="collections" />
           </div>
@@ -29,10 +29,10 @@
         </div>
       </template>
       <div class="relative">
-        <div class="mt-[20px]">
+        <div class="mt-5">
           <div>
-            <div class="mb-[20px]">
-              <p class="text-gray-700 text-sm mb-[6px]">
+            <div class="mb-5">
+              <p class="text-gray-700 text-sm mb-1.5">
                 {{ $t('collections.edit.type') }}
               </p>
               <el-select
@@ -50,7 +50,7 @@
                 />
               </el-select>
             </div>
-            <p class="text-gray-700 text-sm mb-[6px]">
+            <p class="text-gray-700 text-sm mb-1.5">
               {{ $t('collections.edit.name') }}
             </p>
             <el-select
@@ -75,13 +75,13 @@
       <template #footer>
         <span class="flex justify-between gap-3 px-5">
           <div
-            class="w-[50%] active:outline active:outline-4 active:outline-gray-200 hover:bg-gray-500 text-center py-[10px] px-4 border border-gray-300 cursor-pointer shadow-xs rounded-md"
+            class="w-full btn btn-secondary-gray btn-md"
             @click="dialogVisible = false"
           >
             {{ $t('all.cancel') }}
           </div>
           <div
-            class="w-[50%] hover:bg-brand-700 hover:border-brand-700 active:outline active:outline-4 active:outline-brand-600 text-white text-center py-[10px] px-4 border border-brand-600 bg-brand-600 cursor-pointer shadow-xs rounded-md"
+            class="w-full btn btn-primary btn-md"
             @click="confirmAddRepo"
           >
             {{ $t('all.confirm') }}
