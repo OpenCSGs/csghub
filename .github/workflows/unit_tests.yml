@@ -41,7 +41,13 @@ jobs:
         echo "Installing dependencies ..."
         go mod tidy
 
-    - name: Run unit tests
+    - name: Run Go unit tests
       run: |
-        echo "Running unit tests ..."
+        echo "Running go unit tests ..."
         go test -v -cover ./...
+
+    - name: Run Vue unit tests
+      run: |
+        echo "Running vue unit tests ..."
+        cd 'frontend'
+        yarn test
