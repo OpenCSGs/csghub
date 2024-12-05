@@ -1,7 +1,7 @@
 <template>
   <a :href="detailLink"
      :class="`${repoType}-card`"
-     class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-sm p-4 mlg:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
+     class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-sm p-4 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
      :style="isCollection ? 'width:100%' : ''"
   >
     <div class="flex items-center justify-between mb-1 w-full">
@@ -97,9 +97,9 @@
 
   const sourceIcon = computed(() => {
     if (props.repo.source !== 'opencsg') return ''
-    
-    return props.repo.sync_status === 'completed' 
-      ? 'repo_opencsg_completed' 
+
+    return props.repo.sync_status === 'completed'
+      ? 'repo_opencsg_completed'
       : 'repo_opencsg_sync'
   })
 

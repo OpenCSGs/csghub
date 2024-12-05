@@ -1,6 +1,6 @@
 <template>
   <div class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
-    <div class="mx-auto max-w-[1280px]">
+    <div class="mx-auto page-responsive-width">
       <repo-header
         :private="endpoint.private"
         :name="endpoint.deploy_name"
@@ -14,7 +14,7 @@
       />
     </div>
   </div>
-  <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
+  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
       :repo-detail="endpoint"
       :appStatus="appStatus"

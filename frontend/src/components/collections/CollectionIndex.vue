@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col relative gap-[24px] w-full max-w-[1280px] m-auto min-h-[calc(100vh-275px)] md:min-h-0 px-4"
+    class="flex flex-col relative gap-[24px] w-full page-responsive-width m-auto min-h-[calc(100vh-275px)] md:min-h-0 px-4"
   >
     <!-- header -->
     <div class="flex w-full justify-between mb-[12px] md:flex-col">

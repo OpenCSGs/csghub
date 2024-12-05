@@ -3,7 +3,7 @@
     v-if="repo"
     class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-gray-200"
   >
-    <div class="mx-auto max-w-[1280px]">
+    <div class="mx-auto page-responsive-width">
       <repo-header
         :license="repo.license"
         :name="repo.name"
@@ -20,7 +20,7 @@
       />
     </div>
   </div>
-  <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
+  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
       :repo-detail="repo"
       :current-branch="currentBranch"
