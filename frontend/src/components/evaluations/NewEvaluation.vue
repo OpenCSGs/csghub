@@ -105,6 +105,7 @@
           :label="t('evaluation.new.dataset')"
           class="w-full"
           prop="evaluation_dataset"
+          v-loading="fetchDatasetsLoading"
         >
           <el-cascader
             v-model="dataForm.evaluation_dataset"
@@ -248,6 +249,7 @@
   const { t } = useI18n()
   const models = ref([])
   const fetchModelsLoading = ref(false)
+  const fetchDatasetsLoading = ref(false)
   const dataFormRef = ref(null)
   const dataForm = ref({
     model_id: searchParams.get('model_id') || '',
@@ -302,6 +304,7 @@
   })
 
   const fetchDatasetOptions = async (framework) => {
+    fetchDatasetsLoading.value = true
     try {
       const { data: tagsData } = await useFetchApi(
         '/tags?scope=dataset&category=evaluation'
@@ -334,6 +337,8 @@
     } catch (error) {
       console.error('Error fetching dataset options:', error)
       ElMessage.error('Failed to load dataset options')
+    } finally {
+      fetchDatasetsLoading.value = false
     }
   }
 
@@ -428,8 +433,12 @@
   }
 
   watch(
-    () => selectedFrameworkName.value,
+    () => dataForm.value.evaluation_framework,
     async () => {
+      selectedFrameworkName.value =
+        evaluationFrameworks.value.find(
+          (framework) => framework.id === dataForm.value.evaluation_framework
+        )?.frame_name || ''
       await fetchDatasetOptions(selectedFrameworkName.value)
     }
   )
@@ -493,7 +502,7 @@
     width: 100%;
   }
 
-  .evaluation-cascader .el-cascader-menu:first-of-type{
+  .evaluation-cascader .el-cascader-menu:first-of-type {
     width: auto;
   }
 
