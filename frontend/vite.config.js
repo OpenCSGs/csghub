@@ -36,9 +36,6 @@ const DEV_CONFIG = {
     disabled: true,
   },
   build: {
-    emptyOutDir: false,
-    reportCompressedSize: false,
-    chunkSizeWarningLimit: 5000,
     rollupOptions: {
       treeshake: false,
       input: getHtmlEntryFiles("src"),
@@ -62,6 +59,9 @@ const DEV_CONFIG = {
         },
       },
     },
+    emptyOutDir: false,
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 5000,
     modulePreload: false,
     cssCodeSplit: false,
     sourcemap: true,
