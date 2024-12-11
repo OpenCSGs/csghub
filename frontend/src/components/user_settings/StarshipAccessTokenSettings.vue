@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center md:flex-col px-[24px] rounded-md md:px-[50px] sm:px-[20px] max-w-[1280px] m-auto bg-white"
+    class="flex justify-center md:flex-col px-[24px] rounded-md md:px-[50px] sm:px-[20px] page-responsive-width m-auto bg-white"
   >
     <Menu
       class="max-w-[411px] md:mb-[24px]"

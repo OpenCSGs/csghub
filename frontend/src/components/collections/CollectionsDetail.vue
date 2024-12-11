@@ -2,7 +2,7 @@
   <div
     class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
   >
-    <div class="mx-auto max-w-[1280px]">
+    <div class="mx-auto page-responsive-width">
       <repo-header
         v-if="collectionData"
         :avatar="collectionData.avatar"
@@ -17,7 +17,7 @@
       />
     </div>
   </div>
-  <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0 relative">
+  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative">
     <div
       class="max-w-[max-content] px-2 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
     >

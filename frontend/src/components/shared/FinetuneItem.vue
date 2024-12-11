@@ -2,7 +2,7 @@
   <a
     :href="detailLink"
     :class="`${repoType}-card  hover:active-${repoType}-card `"
-    class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 mlg:w-full border border-gray-200 rounded-xl"
+    class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 md:w-full border border-gray-200 rounded-xl"
   >
     <div class="flex items-center justify-between mb-1">
       <div

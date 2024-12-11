@@ -11,6 +11,9 @@
 # Test binary, built with `go test -c`
 *.test
 
+# Coverage
+coverage/
+
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
@@ -41,3 +44,5 @@ csghub-portal
 
 cmd/csghub-portal/__debug_*
 app.log
+
+frontend/coverage

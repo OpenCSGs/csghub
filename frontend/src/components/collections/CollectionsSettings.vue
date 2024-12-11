@@ -150,7 +150,7 @@
         <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.delCollection') }}
         </div>
-        
+
         <div class="text-sm text-gray-600 leading-[20px]">
           {{ $t('collections.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('collections.edit.canNot') }}</span>
@@ -201,9 +201,9 @@
   import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
-  import { useCookies } from 'vue3-cookies'
+  import useUserStore from '../../stores/UserStore'
 
-  const { cookies } = useCookies()
+  const userStore = useUserStore()
 
   const props = defineProps({
     collection: Object,
@@ -211,8 +211,6 @@
     collectionsId: String
   })
   const { t } = useI18n()
-
-  const currentUser = cookies.get('current_user')
 
   const delDesc = ref('')
   const collectionName = ref(props.collection.name)
@@ -313,7 +311,9 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${currentUser}`
+        // userStore will be initialized when loading navbar
+        // delete will trigger manually, so we don't need to check if userStore initialized or not
+        window.location.href = `/profile/${userStore.username}`
       }, 500)
     }
   }

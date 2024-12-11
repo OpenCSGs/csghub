@@ -23,19 +23,19 @@ func (i *OrganizationHandlerImpl) Edit(ctx *gin.Context) {
 		"action": "edit",
 		"name":   ctx.Param("id"),
 	}
-	renderTemplate(ctx, "organizations_settings", data)
+	RenderBaseInstance.RenderTemplate(ctx, "organizations_settings", data)
 }
 
 func (i *OrganizationHandlerImpl) New(ctx *gin.Context) {
 	data := map[string]interface{}{}
-	renderTemplate(ctx, "organizations_new", data)
+	RenderBaseInstance.RenderTemplate(ctx, "organizations_new", data)
 }
 
 func (i *OrganizationHandlerImpl) Show(ctx *gin.Context) {
 	data := map[string]interface{}{
 		"name": ctx.Param("id"),
 	}
-	renderTemplate(ctx, "organizations_show", data)
+	RenderBaseInstance.RenderTemplate(ctx, "organizations_show", data)
 }
 
 func (i *OrganizationHandlerImpl) Members(ctx *gin.Context) {
@@ -43,5 +43,5 @@ func (i *OrganizationHandlerImpl) Members(ctx *gin.Context) {
 		"action": "members",
 		"name":   ctx.Param("id"),
 	}
-	renderTemplate(ctx, "organizations_settings", data)
+	RenderBaseInstance.RenderTemplate(ctx, "organizations_settings", data)
 }

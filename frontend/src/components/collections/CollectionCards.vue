@@ -29,7 +29,7 @@
           ></CollectionCard>
           <div
             v-if="!collection.repositories"
-            class="p-4 mlg:w-full border border-gray-200 rounded-xl flex justify-center items-center"
+            class="p-4 md:w-full border border-gray-200 rounded-xl flex justify-center items-center"
           >
             {{ $t('all.noData') }}
           </div>

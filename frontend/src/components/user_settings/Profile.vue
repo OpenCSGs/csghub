@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[400px] pl-[20px] pr-[40px] md:px-0 sm:px-0 sm:w-full py-[36px]">
+  <div class="max-w-[400px] pr-10 lg:px-0 sm:px-0 sm:w-full py-9">
     <!-- avatar -->
     <div>
       <el-avatar :size="160" :src="isCurrentUser ? userStore.avatar : avatar"></el-avatar>

@@ -16,5 +16,5 @@ func NewResourceConsoleHandler() *ResourceConsoleHandlerImpl {
 }
 
 func (i *ResourceConsoleHandlerImpl) Index(ctx *gin.Context) {
-	renderTemplate(ctx, "resource_console_index", nil)
+	RenderBaseInstance.RenderTemplate(ctx, "resource_console_index", nil)
 }

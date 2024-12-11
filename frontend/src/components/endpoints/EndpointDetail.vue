@@ -1,6 +1,6 @@
 <template>
   <div class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
-    <div class="mx-auto max-w-[1280px]">
+    <div class="mx-auto page-responsive-width">
       <repo-header
         :private="endpoint.private"
         :name="endpoint.deploy_name"
@@ -14,7 +14,7 @@
       />
     </div>
   </div>
-  <div class="mx-auto max-w-[1280px] mt-[-40px] xl:px-10 md:px-0">
+  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
       :repo-detail="endpoint"
       :appStatus="appStatus"
@@ -48,7 +48,9 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useFetchApi from '../../packs/useFetchApi'
+  import useUserStore from '../../stores/UserStore.js'
 
+  const userStore = useUserStore()
   const { cookies } = useCookies()
 
   const props = defineProps({
@@ -61,9 +63,10 @@
     endpointId: Number
   })
 
-  const currentUser = cookies.get('current_user')
+  const canWrite = computed(() => {
+    return userStore.username === props.namespace
+  })
 
-  const canWrite = ref(currentUser === props.namespace)
   // only owner can view endpoint detail, so just set true
   const canManage = ref(true)
 

@@ -87,6 +87,7 @@
                 stripe
                 max-height="420"
                 @row-click="toggleRow"
+                v-loading="previewLoading"
                 class="w-full rounded-md mb-4"
                 row-class-name="row-item-clamp cursor-pointer"
                 cell-class-name="!align-top">
@@ -118,6 +119,8 @@
     namespacePath: String
   })
 
+  const previewLoading = ref(false)
+
   const previewData = ref({ columns: [], rows: [], total: 0 })
   const currentPage = ref(1)
   const totalRows = computed(() => { return previewData.value.total });
@@ -130,15 +133,19 @@
   const numSplits = ref(splits.value[0]?.num_examples || 0)
 
   const tableData = computed(() => {
-    const rows = previewData.value?.rows.slice(0, perPage.value) || []
-    const columns = previewData.value?.columns || []
-    return rows.map(row => {
-      const obj = {}
-      for (let i = 0; i < columns.length; i++) {
-        obj[columns[i]] = row[i]
-      }
-      return obj
-    })
+    if (!previewData.value?.rows || !previewData.value?.columns) {
+      return []
+    }
+
+    const { rows, columns, columns_type = [] } = previewData.value
+
+    return rows.map(row =>
+      columns.reduce((obj, column, index) => {
+        const value = row[index]
+        obj[column] = columns_type[index] === 'string' ? value : JSON.stringify(value, null, 2)
+        return obj
+      }, {})
+    )
   })
 
   const toggleRow = (_row, _column, event) => {
@@ -181,6 +188,7 @@
   }
 
   async function loadRows(url) {
+    previewLoading.value = true
     const { error, data } = await useFetchApi(url).json()
     if (!data.value) {
       ElMessage({
@@ -190,6 +198,7 @@
     } else {
       previewData.value = data.value.data
     }
+    previewLoading.value = false
   }
 
   onMounted(() => {

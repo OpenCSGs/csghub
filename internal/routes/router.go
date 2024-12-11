@@ -66,9 +66,9 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		}
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}))
-	g.Use(middleware.AuthMiddleware(csghubServer))
+	g.Use(middleware.Instance.AuthMiddleware(csghubServer))
 	// This will track all request to portal go server
-	g.Use(middleware.Log())
+	g.Use(middleware.Instance.Log())
 
 	frontendHandlers, err := frontendHandlers.NewHandlersRegistry(svcCtx)
 	if err != nil {
@@ -152,6 +152,8 @@ func createRender() multitemplate.Renderer {
 		"settings_starship_access_token": "settings/starship_access_token.html",
 		"settings_sync_access_token":     "settings/sync_access_token.html",
 		"settings_ssh_keys":              "settings/ssh_keys.html",
+		"prompts_index":                  "prompts/index.html",
+		"prompts_assistant":              "prompts/assistant.html",
 	}
 
 	for name, page := range pages {
@@ -186,6 +188,14 @@ func createRender() multitemplate.Renderer {
 		r.Add(name, tmpl)
 	}
 
+	// admin new version
+	adminNextLayouts := "admin/admin_next.html"
+	tmpl, err := template.ParseFS(viewsFS, adminNextLayouts)
+	if err != nil {
+		panic(err)
+	}
+	r.Add("admin_next", tmpl)
+
 	return r
 }
 
@@ -212,6 +222,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerSettingRoutes(engine, handlersRegistry)
 	registerResourceConsoleRoutes(engine, handlersRegistry)
 	registerAdminRoutes(engine, handlersRegistry)
+	registerPromptsRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

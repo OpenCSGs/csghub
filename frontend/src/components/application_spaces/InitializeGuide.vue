@@ -1,48 +1,53 @@
 <template>
-  <GradioInitializeGuide v-show="sdk == 'gradio'"
-                         :http-clone-url="httpCloneUrl"
-                         :ssh-clone-url="sshCloneUrl"
-                         :user-name="userName"
-                         :user-token="accessToken"
-                         :sdk="sdk" />
+  <GradioInitializeGuide
+    v-show="sdk == 'gradio'"
+    :http-clone-url="httpCloneUrl"
+    :ssh-clone-url="sshCloneUrl"
+    :user-name="userStore.username"
+    :user-token="accessToken"
+    :sdk="sdk" />
 
-  <StreamlitInitializeGuide v-show="sdk == 'streamlit'"
-                            :http-clone-url="httpCloneUrl"
-                            :ssh-clone-url="sshCloneUrl"
-                            :user-name="userName"
-                            :user-token="accessToken"
-                            :sdk="sdk" />
+  <StreamlitInitializeGuide
+    v-show="sdk == 'streamlit'"
+    :http-clone-url="httpCloneUrl"
+    :ssh-clone-url="sshCloneUrl"
+    :user-name="userStore.username"
+    :user-token="accessToken"
+    :sdk="sdk" />
 </template>
 
 <script setup>
   import GradioInitializeGuide from './GradioInitializeGuide.vue'
   import StreamlitInitializeGuide from './StreamlitInitializeGuide.vue'
   import useFetchApi from '../../packs/useFetchApi'
-  import { useCookies } from 'vue3-cookies'
-  import { ref, onMounted } from 'vue'
+  import useUserStore from '../../stores/UserStore'
+  import { ref, onMounted, watch } from 'vue'
+  import { ElMessage } from 'element-plus'
+
+  const userStore = useUserStore()
 
   const props = defineProps({
     httpCloneUrl: String,
     sshCloneUrl: String,
-    sdk: String,
-    userName: String
+    sdk: String
   })
 
-  const { cookies } = useCookies()
-
-  const currentUser = ref(cookies.get('current_user'))
   const accessToken = ref('')
+
+  watch(
+    () => userStore.username,
+    () => {
+      fetchUserToken()
+    }
+  )
 
   const fetchUserToken = async () => {
     const { data, error } = await useFetchApi(
-      `/user/${currentUser.value}/tokens?app=git`
+      `/user/${userStore.username}/tokens?app=git`
     ).json()
 
     if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
+      ElMessage.warning('error.value.msg')
     } else {
       const tokens = data.value.data
       accessToken.value = tokens[0]?.token || ''
@@ -50,7 +55,7 @@
   }
 
   onMounted(() => {
-    if (currentUser.value) {
+    if (userStore.initialized) {
       fetchUserToken()
     }
   })

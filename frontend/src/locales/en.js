@@ -26,6 +26,7 @@ import { resourceConsole } from './en_js/resource_console';
 import { tags } from './en_js/tags';
 import { languages } from './en_js/languages';
 import { errors_page } from './en_js/error';
+import { prompts } from './en_js/prompts';
 
 export default {
   all,
@@ -55,5 +56,6 @@ export default {
   resourceConsole,
   tags,
   languages,
-  errors_page
+  errors_page,
+  prompts
 };

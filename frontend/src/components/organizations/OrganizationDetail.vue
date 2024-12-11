@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="py-[16px] bg-gray-25">
-      <div class="max-w-[1280px] m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
+      <div class="page-responsive-width m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
           <span v-if="organizationData.verified" class="relative">
             <img :src="organizationData.avatar ? organizationData.avatar : '/images/default_org.png'" class="h-[60px] w-[60px] rounded-[50%]" />
@@ -71,7 +71,7 @@
     </div>
 
     <div class="bg-white">
-      <div class="flex justify-center lg:flex-col rounded-md max-w-[1280px] m-auto bg-white">
+      <div class="flex justify-center lg:flex-col rounded-md page-responsive-width m-auto bg-white">
         <div class="max-w-[320px] lg:max-w-none pl-[16px] pr-[32px] pt-[36px]">
           <h3 class="flex items-center gap-[8px]">
             <SvgIcon name="team_org"/>

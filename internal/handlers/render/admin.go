@@ -1,25 +1,45 @@
 package renderHandlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
-	"opencsg.com/portal/internal/models"
+	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 type AdminHandler interface {
 	Index(ctx *gin.Context)
+	IndexNext(ctx *gin.Context)
 }
 
 type AdminHandlerImpl struct {
+	jwtUtils           jwt.JwtUtils
+	renderBaseInstance RenderBase
 }
 
 func NewAdminHandler() AdminHandler {
-	return &AdminHandlerImpl{}
+	return &AdminHandlerImpl{
+		jwtUtils:           jwt.NewJwtUtils(),
+		renderBaseInstance: RenderBaseInstance,
+	}
 }
 
 func (i *AdminHandlerImpl) Index(ctx *gin.Context) {
-	currentUser := ctx.MustGet("currentUser").(*models.User)
+	currentUser := i.jwtUtils.GetCurrentUser(ctx)
+	if currentUser == nil {
+		ctx.Redirect(http.StatusFound, "/errors/unauthorized")
+	} else {
+		data := map[string]interface{}{
+			"roles": currentUser.Roles(),
+		}
+		i.renderBaseInstance.RenderTemplate(ctx, "admin_index", data)
+	}
+}
+
+func (i *AdminHandlerImpl) IndexNext(ctx *gin.Context) {
+	currentUser := i.jwtUtils.GetCurrentUser(ctx)
 	data := map[string]interface{}{
 		"roles": currentUser.Roles(),
 	}
-	renderTemplate(ctx, "admin_index", data)
+	i.renderBaseInstance.RenderTemplate(ctx, "admin_next", data)
 }

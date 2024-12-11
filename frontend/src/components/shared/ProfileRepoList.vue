@@ -7,8 +7,8 @@
         <span>{{ $t("collections.collection") }}</span>
       </h3>
       <div v-if="hasCollections" class="mb-4 mt-[16px]">
-        <CollectionCards 
-          v-if="collections.data.length > 0" 
+        <CollectionCards
+          v-if="collections.data.length > 0"
           :collections="collections.data"
         />
       </div>
@@ -95,20 +95,12 @@
   import CollectionCards from "../collections/CollectionCards.vue"
   import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
   import ViewMore from "./ViewMore.vue"
-  import { useI18n } from "vue-i18n"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
-  import { useCookies } from 'vue3-cookies'
-  const { cookies } = useCookies()
+
   const props = defineProps({
     name: String,
     initiator: String
-  })
-
-  const { t } = useI18n()
-  const current_user = cookies.get('current_user')
-  const isCurrentUser = computed(() => {
-    return props.name === current_user
   })
 
   const collections = ref([])
@@ -205,7 +197,7 @@
     const params = new URLSearchParams()
     params.append("per", total)
     params.append("page", 1)
-    
+
     try {
       const { data, error } = await useFetchApi(`${url}?${params}`).json()
 
