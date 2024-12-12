@@ -46,7 +46,6 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
-  import { usePermissionCheck } from '../../packs/usePermissionCheck'
   import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
@@ -89,8 +88,11 @@
     try {
       const { response, data, error } = await useFetchApi(url).json()
 
-      const hasPermission = usePermissionCheck(response.value)
-      if (!hasPermission) return
+      // redirect unauthorized page
+      if (response.value.status === 403) {
+        window.location.href = '/errors/unauthorized'
+        return
+      }
 
       const json = data.value
       if (json) {
@@ -100,8 +102,11 @@
         }
         repoDetailStore.initialize(json.data)
         ownerUrl.value = getOwnerUrl(json.data)
-      } else {
-        ElMessage({ message: error.value.msg, type: 'warning' })
+      } else if (response.value.status === 404 ) {
+        window.location.href = '/errors/not-found'
+      }
+      else {
+        ElMessage.warning(error.value.msg)
       }
     } catch (error) {
       console.error(error)

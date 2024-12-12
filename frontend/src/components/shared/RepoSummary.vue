@@ -62,6 +62,7 @@
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     namespacePath: String,
@@ -117,7 +118,7 @@
         type: 'warning'
       })
     } else {
-      datasetInfo.value = data.value.data.dataset_info 
+      datasetInfo.value = data.value.data.dataset_info
     }
   }
 
