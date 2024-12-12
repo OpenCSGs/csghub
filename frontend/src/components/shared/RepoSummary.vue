@@ -16,12 +16,6 @@
         <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 
-      <TestEndpoint
-        v-if="widgetType === 'generation' && endpoint?.status === 'Running'"
-        :appEndpoint="appEndpoint"
-        :modelId="namespacePath"
-      />
-
       <SpaceRelationsCard v-if="relations['spaces'] && relations['spaces'].length !== 0"
                           :namespacePath="namespacePath"
                           :spaces="relations['spaces']"
@@ -59,7 +53,6 @@
   import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
   import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';
-  import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
 
@@ -117,7 +110,7 @@
         type: 'warning'
       })
     } else {
-      datasetInfo.value = data.value.data.dataset_info 
+      datasetInfo.value = data.value.data.dataset_info
     }
   }
 
@@ -128,12 +121,6 @@
       relations.value = data.value.data
     }
   }
-
-  const appEndpoint = computed(() => {
-    if (!endpoint.value) return ''
-
-    return `https://${endpoint.value.proxy_endpoint}`
-  })
 
   const fetchEndpoint = async () => {
     const url = `/models/${props.namespacePath}/serverless`
