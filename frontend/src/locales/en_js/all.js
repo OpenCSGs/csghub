@@ -83,6 +83,5 @@ export const all = {
   more:"More",
   sdkTips: "Please register first and then obtain the Token from OpenCSG's account page",
   public: "Public",
-  private: "Private",
-  parquet: "Dataset Preview"
+  private: "Private"
 }
