@@ -96,6 +96,15 @@
           <!-- avatar dropdown menu -->
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item>
+                <div class="flex flex-row items-center gap-2">
+                  <el-avatar :size="40" :src="userAvatar"></el-avatar>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-medium text-gray-700">{{ nickname }}</span>
+                    <span class="text-sm font-light  text-gray-600">@{{ username }}</span>
+                  </div>
+                </div>
+              </el-dropdown-item divided>  
               <a :href="`/profile/${username}`">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -257,7 +266,7 @@
             {{ $t('navbar.loginRegister') }}
           </a>
         </template>
-        <div class="flex md:block hidden">
+        <div class="hidden md:block">
           <div class="w-[40px] h-[40px]">
             <SvgIcon
               v-if="!mobileMenuVisibility"
@@ -286,7 +295,7 @@
     <el-menu
       :default-active="activeIndex"
       :ellipsis="false"
-      class="w-full flex flex-col gap-2 justify-center gap-4 pt-16"
+      class="w-full flex flex-col justify-center gap-4 pt-16"
       unique-opened
       style="
         --el-menu-base-level-padding: 12px;
@@ -348,7 +357,7 @@
       MenuItems
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username', 'initialized']),
+      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized']),
     },
     watch: {
       initialized(_) {
