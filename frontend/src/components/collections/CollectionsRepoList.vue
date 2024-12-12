@@ -1,7 +1,7 @@
 <template>
   <div class="sm:w-[100%] sm:mt-[36px] pt-4 pb-8 px-2">
     <!-- models -->
-    <div>
+    <div v-if="hasModels">
       <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="models"
@@ -12,7 +12,6 @@
         <span class="text-gray-400 text-md leading-[24px]">{{ models.length }}</span>
       </h3>
       <div
-        v-if="hasModels"
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="model in models">
@@ -25,16 +24,10 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="flex flex-wrap gap-4 mb-4 mt-[16px]"
-      >
-        {{ $t('all.noData') }}
-      </div>
     </div>
 
     <!-- datasets -->
-    <div class="mt-[32px]">
+    <div class="mt-[32px]" v-if="hasDatasets">
       <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="datasets"
@@ -45,7 +38,6 @@
         <span class="text-gray-400 text-md leading-[24px]">{{ datasets.length }}</span>
       </h3>
       <div
-        v-if="hasDatasets"
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="dataset in datasets">
@@ -58,16 +50,10 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="flex flex-wrap gap-4 mb-4 mt-[16px]"
-      >
-        {{ $t('all.noData') }}
-      </div>
     </div>
 
     <!-- code repo -->
-    <div class="mt-[32px]">
+    <div class="mt-[32px]" v-if="hasCodes">
       <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="codes"
@@ -78,7 +64,6 @@
         <span class="text-gray-400 text-md leading-[24px]">{{ codes.length }}</span>
       </h3>
       <div
-        v-if="hasCodes"
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="code in codes">
@@ -91,16 +76,10 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="flex flex-wrap gap-4 mb-4 mt-[16px]"
-      >
-        {{ $t('all.noData') }}
-      </div>
     </div>
 
     <!-- spaces -->
-    <div class="mt-[32px]">
+    <div class="mt-[32px]" v-if="hasSpaces">
       <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">
         <SvgIcon
           name="spaces"
@@ -111,7 +90,6 @@
         <span class="text-gray-400 text-md leading-[24px]">{{ spaces.length }}</span>
       </h3>
       <div
-        v-if="hasSpaces"
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
         <div class="flex gap-2" v-for="space in spaces">
@@ -124,12 +102,6 @@
             <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(space.id)" name="trash" />
           </div>
         </div>
-      </div>
-      <div
-        v-else
-        class="flex flex-wrap gap-4 mb-4 mt-[16px]"
-      >
-        {{ $t('all.noData') }}
       </div>
     </div>
   </div>
