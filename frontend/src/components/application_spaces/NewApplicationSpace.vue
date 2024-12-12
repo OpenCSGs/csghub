@@ -210,21 +210,6 @@
               <p class="font-semibold text-md">Streamlit</p>
             </el-radio>
             <el-radio
-              v-if="userStore.isAdmin"
-              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
-              size="large"
-              label="nginx"
-              border
-            >
-              <SvgIcon
-                name="space_nginx"
-                width="24"
-                height="24"
-                class="m-auto"
-              />
-              <p class="font-semibold text-md">Nginx</p>
-            </el-radio>
-            <el-radio
               v-if="!userStore.isAdmin"
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
