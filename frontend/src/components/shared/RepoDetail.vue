@@ -46,7 +46,6 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
-  import { usePermissionCheck } from '../../packs/usePermissionCheck'
   import useFetchApi from '../../packs/useFetchApi'
 
   const props = defineProps({
@@ -90,8 +89,10 @@
       const { response, data, error } = await useFetchApi(url).json()
 
       // redirect unauthorized page
-      const hasPermission = usePermissionCheck(response.value)
-      if (!hasPermission) return
+      if (response.value.status === 403) {
+        window.location.href = '/errors/unauthorized'
+        return
+      }
 
       const json = data.value
       if (json) {
