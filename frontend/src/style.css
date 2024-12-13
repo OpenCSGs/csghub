@@ -133,7 +133,7 @@ img, video {
   }
 
   .page-responsive-width {
-    @apply 3xl:w-[1536px] 2xl:w-[1280px] xl:w-[1024px] lg:w-[768px] md:w-[640px] sm:w-auto mx-auto;
+    @apply 3xl:w-[1536px] 2xl:w-[1280px] xl:w-[1024px] lg:w-[768px] md:w-[640px] sm:w-full mx-auto;
   }
 
   .admin-field-label {
