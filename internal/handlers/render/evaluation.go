@@ -23,7 +23,7 @@ func (i *EvaluationHandlerImpl) New(ctx *gin.Context) {
 	data := map[string]interface{}{
 		"isSmallFooter": i.isSmallFooter,
 	}
-	renderTemplate(ctx, "evaluations_new", data)
+	RenderBaseInstance.RenderTemplate(ctx, "evaluations_new", data)
 }
 
 func (i *EvaluationHandlerImpl) Show(ctx *gin.Context) {
@@ -31,5 +31,5 @@ func (i *EvaluationHandlerImpl) Show(ctx *gin.Context) {
 		"evaluationId":  ctx.Param("id"),
 		"isSmallFooter": i.isSmallFooter,
 	}
-	renderTemplate(ctx, "evaluations_show", data)
+	RenderBaseInstance.RenderTemplate(ctx, "evaluations_show", data)
 }
