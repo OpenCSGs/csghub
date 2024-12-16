@@ -27,6 +27,7 @@ import { tags } from './zh_js/tags';
 import { languages } from './zh_js/languages';
 import { errors_page } from './zh_js/error';
 import { prompts } from './zh_js/prompts';
+import { evaluation } from './zh_js/evaluation';
 
 export default {
   all,
@@ -57,5 +58,6 @@ export default {
   tags,
   languages,
   errors_page,
-  prompts
+  prompts,
+  evaluation,
 };

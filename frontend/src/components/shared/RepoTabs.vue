@@ -13,6 +13,7 @@
         :repo="repoDetail"
         :enableEndpoint="repoDetail.enable_inference"
         :enableFinetune="repoDetail.enable_finetune"
+        :enableEvaluation="repoDetail.enable_evaluation"
       />
     </div>
     <tab-container

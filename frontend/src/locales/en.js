@@ -27,6 +27,7 @@ import { tags } from './en_js/tags';
 import { languages } from './en_js/languages';
 import { errors_page } from './en_js/error';
 import { prompts } from './en_js/prompts';
+import { evaluation } from './en_js/evaluation';
 
 export default {
   all,
@@ -57,5 +58,6 @@ export default {
   tags,
   languages,
   errors_page,
-  prompts
+  prompts,
+  evaluation,
 };

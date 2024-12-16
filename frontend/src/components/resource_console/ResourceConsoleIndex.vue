@@ -43,6 +43,18 @@
       ></view-more>
       <el-skeleton class="pr-6" v-if="endpointsLoading" :rows="2" animated />
     </div>
+
+    <!-- evaluations -->
+    <h3 class="text-[18px] flex justify-between gap-[8px]">
+      <span>{{ $t("evaluation.list.title") }}</span>
+      <a href="/evaluations/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-[14px] leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
+        <SvgIcon name="plus" />
+        {{ $t('evaluation.list.new') }}
+      </a>
+    </h3>
+    <div class="mt-[18px] w-full">
+      <EvaluationTable :evaluations="evaluations" />
+    </div>
   </div>
 </template>
 
@@ -52,6 +64,7 @@
   import FinetuneItem from "../shared/FinetuneItem.vue"
   import ViewMore from "../shared/ViewMore.vue"
   import EndpointItem from "../endpoints/EndpointItem.vue"
+  import EvaluationTable from "./EvaluationTable.vue"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
   const userStore = useUserStore()
