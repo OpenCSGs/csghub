@@ -100,6 +100,8 @@
         }
         repoDetailStore.initialize(json.data)
         ownerUrl.value = getOwnerUrl(json.data)
+      } else if (response.value.status === 500) {
+        window.location.href = "/errors/not-found"
       } else {
         ElMessage({ message: error.value.msg, type: 'warning' })
       }
