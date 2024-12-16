@@ -19,18 +19,6 @@
               {{ $t('profile.accountSetting')}}
           </a>
 
-          <!-- <div class="p-[16px] hover:bg-gray-100 border-b border-gray-200 text-lg text-gray-500 leading-[26px] opacity-40"
-               :class="menuClass('/settings/account')"
-          >
-            {{ $t('profile.menu.accountInformation')}}
-          </div> -->
-
-          <!-- <div class="p-[16px] hover:bg-gray-100 border-b border-gray-200 text-lg text-gray-500 leading-[26px] opacity-40"
-               :class="menuClass('/settings/accessTokens')"
-          >
-            {{ $t('profile.menu.accessToken')}}
-          </div> -->
-
           <!-- access token -->
           <a v-if="hasEmail"
              href="/settings/access-token"
@@ -38,24 +26,6 @@
              :class="menuClass('/settings/access-token')"
           >
             {{ $t('profile.menu.gitToken')}}
-          </a>
-
-          <!-- starship api key -->
-          <a v-if="hasEmail"
-             href="/settings/starship-access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/starship-access-token')"
-          >
-            {{ $t('profile.menu.starshipAccessToken')}}
-          </a>
-
-          <!-- sync access token -->
-          <a v-if="hasEmail"
-             href="/settings/sync-access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/sync-access-token')"
-          >
-            {{ $t('profile.menu.syncAccessToken')}}
           </a>
 
           <!-- ssh key -->
@@ -67,11 +37,6 @@
             {{ $t('profile.menu.sshKey')}}
           </a>
 
-          <!-- <div class="p-[16px] hover:bg-gray-100 text-lg text-gray-500 leading-[26px] opacity-40"
-               :class="menuClass('/settings/billing')"
-          >
-            {{ $t('profile.menu.billing')}}
-          </div> -->
         </div>
         <!-- mobile tabs -->
         <div class="profileTabs hidden md:block">
@@ -83,7 +48,7 @@
           <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.sshKey')" name="/settings/ssh-keys"></el-tab-pane>
         </el-tabs>
         </div>
-    
+
       </div>
     </div>
     <el-dialog
@@ -91,7 +56,7 @@
       width="350"
       :style="{ borderRadius: '10px' }"
     >
-      <template #header> 
+      <template #header>
         {{ $t('profile.menu.warningTip') }}
       </template>
       <div class="flex justify-center flex-col m-auto w-full relative">

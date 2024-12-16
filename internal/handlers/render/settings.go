@@ -8,8 +8,6 @@ import (
 type SettingHandler interface {
 	Profile(ctx *gin.Context)
 	AccessToken(ctx *gin.Context)
-	StarshipAccessToken(ctx *gin.Context)
-	SyncAccessToken(ctx *gin.Context)
 	SSHKeys(ctx *gin.Context)
 }
 
@@ -30,14 +28,6 @@ func (i *SettingHandlerImpl) Profile(ctx *gin.Context) {
 
 func (i *SettingHandlerImpl) AccessToken(ctx *gin.Context) {
 	RenderBaseInstance.RenderTemplate(ctx, "settings_access_token", nil)
-}
-
-func (i *SettingHandlerImpl) StarshipAccessToken(ctx *gin.Context) {
-	RenderBaseInstance.RenderTemplate(ctx, "settings_starship_access_token", nil)
-}
-
-func (i *SettingHandlerImpl) SyncAccessToken(ctx *gin.Context) {
-	RenderBaseInstance.RenderTemplate(ctx, "settings_sync_access_token", nil)
 }
 
 func (i *SettingHandlerImpl) SSHKeys(ctx *gin.Context) {
