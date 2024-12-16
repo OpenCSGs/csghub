@@ -27,8 +27,6 @@ import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
 import ProfileSettings from "./components/user_settings/ProfileSettings.vue"
 import NewOrganization from "./components/organizations/NewOrganization.vue"
 import AccessTokenSettings from "./components/user_settings/AccessTokenSettings.vue"
-import StarshipAccessTokenSettings from "./components/user_settings/StarshipAccessTokenSettings.vue"
-import SyncAccessTokenSettings from "./components/user_settings/SyncAccessTokenSettings.vue"
 import SshKeySettings from "./components/user_settings/SshKeySettings.vue"
 import NewModel from "./components/models/NewModel.vue"
 import TagSidebar from "./components/tags/TagSidebar.vue"
@@ -55,7 +53,6 @@ import LoginFailed from "./components/error/LoginFailed.vue"
 import FlashMessage from "./components/shared/FlashMessage.vue"
 import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
 import PromptsHub from "./components/prompts/PromptsHub.vue"
-import PromptsAssistantHub from "./components/prompts/PromptsAssistantHub.vue"
 import NewEvaluation from "./components/evaluations/NewEvaluation.vue"
 import EvaluationDetail from "./components/evaluations/EvaluationDetail.vue"
 
@@ -102,8 +99,6 @@ const app = createApp({
     NewEndpoint,
     NewFinetune,
     finetuneDetail,
-    StarshipAccessTokenSettings,
-    SyncAccessTokenSettings,
     ApplicationSpaceDetail,
     EndpointDetail,
     CollectionIndex,
@@ -114,7 +109,6 @@ const app = createApp({
     FlashMessage,
     ResourceConsoleIndex,
     PromptsHub,
-    PromptsAssistantHub,
     NewEvaluation,
     EvaluationDetail,
   },
