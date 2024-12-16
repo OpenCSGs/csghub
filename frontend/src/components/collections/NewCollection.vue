@@ -19,44 +19,36 @@
       >
         <!-- First row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
-          <div>
-            <p class="text-gray-700 text-sm mb-2">{{ $t('collections.newCollection.owner') }}</p>
-            <el-form-item prop="owner">
-              <el-select
-                v-model="dataForm.owner"
-                :placeholder="$t('all.select')"
-                size="large"
-                style="width: 312px"
-              >
-                <el-option
-                  v-for="item in namespaces()"
-                  :key="item"
-                  :label="item"
-                  :value="item"
-                />
-              </el-select>
-            </el-form-item>
-          </div>
+          <el-form-item class="flex-1" :label="t('collections.newCollection.owner')" prop="owner">
+            <el-select
+              v-model="dataForm.owner"
+              :placeholder="$t('all.select')"
+              size="large"
+              style="width: 312px"
+            >
+              <el-option
+                v-for="item in namespaces()"
+                :key="item"
+                :label="item"
+                :value="item"
+              />
+            </el-select>
+          </el-form-item>
           <div class="md:hidden">
             <p class="h-8"></p>
             <p class="text-gray-500 text-xl font-light">/</p>
           </div>
-          <div class="flex-1">
-            <p class="text-gray-700 text-sm mb-2">
-              {{ $t('collections.newCollection.collectionName') }}
-            </p>
-            <el-form-item prop="title">
-              <el-input
-                v-model="dataForm.title"
-                :placeholder="$t('rule.collectionNameRule')"
-                style="width: 312px"
-              >
-                <template #suffix>
-                  <InputTip :content="$t('collections.newCollection.tip')" />
-                </template>
-              </el-input>
-            </el-form-item>
-          </div>
+          <el-form-item class="flex-1" :label="t('collections.newCollection.collectionName')" prop="title">
+            <el-input
+              v-model="dataForm.title"
+              :placeholder="$t('rule.collectionNameRule')"
+              style="width: 312px"
+            >
+              <template #suffix>
+                <InputTip :content="$t('collections.newCollection.tip')" />
+              </template>
+            </el-input>
+          </el-form-item>
         </div>
         <!-- Second row -->
         <div class="w-full flex sm:flex-col gap-2 mb-9 md:gap-9">
