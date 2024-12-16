@@ -24,7 +24,7 @@
               v-model="dataForm.owner"
               :placeholder="$t('all.select')"
               size="large"
-              style="width: 312px"
+              class="!w-full"
             >
               <el-option
                 v-for="item in namespaces()"
@@ -42,7 +42,7 @@
             <el-input
               v-model="dataForm.title"
               :placeholder="$t('rule.collectionNameRule')"
-              style="width: 312px"
+              class="!w-full"
             >
               <template #suffix>
                 <InputTip :content="$t('collections.newCollection.tip')" />
@@ -60,11 +60,11 @@
               <el-input
                 v-model="dataForm.collectionNickName"
                 :placeholder="$t('all.inputNickNamePlc')"
-                style="width: 312px"
+                class="!w-full"
               />
             </el-form-item>
           </div>
-          <div class="">
+          <div class="flex-1">
             <p class="text-gray-700 text-sm mb-2">
               {{ $t('collections.newCollection.selectTheme') }}
             </p>
@@ -73,7 +73,7 @@
                 v-model="dataForm.colorName"
                 :placeholder="$t('all.select')"
                 size="large"
-                style="width: 312px"
+                class="!w-full"
               >
                 <el-option
                   v-for="item in colorNameList"
