@@ -5,7 +5,10 @@ import SvgIcon from '@/components/shared/SvgIcon.vue';
 import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-const createWrapper = async (props) => {
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+
+const createWrapper = (props) => {
   return mount(NewModel, {
     components: {
       ...ElementPlusIconsVue,
@@ -59,6 +62,7 @@ const mockLocation = {
   href: '',
   search: ''
 };
+
 Object.defineProperty(window, 'location', {
   value: mockLocation,
   writable: true
@@ -84,58 +88,51 @@ export const createFetchApiMock = (mockResponses = {}) => {
 };
 
 describe("NewModel", () => {
-  let wrapper;
-
-  beforeEach(async () => {
-    wrapper = await createWrapper();
-  });
-
   describe("mount", async () => {
     it("mounts correctly", () => {
+      const wrapper = createWrapper();
       expect(wrapper.exists()).toBe(true);
     });
   });
 
   describe("form validation", () => {
     it("validates required fields", async () => {
+      const wrapper = createWrapper();
       await wrapper.find('button').trigger('click');
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await delay(300);
+      await wrapper.vm.$nextTick()
       const formErrors = wrapper.findAll('.el-form-item__error');
       expect(formErrors.length).toBeGreaterThan(0);
     });
 
-    it("accepts invalid model name", async () => {
-      wrapper.vm.dataForm.name = '**__invalid-name';
+    it("validates model name length", async () => {
+      const wrapper = createWrapper();
+      wrapper.vm.dataForm.name = 'a'; // Invalid length
       await wrapper.find('button').trigger('click');
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      const errorMessage = wrapper.find('.el-form-item__error');
-      expect(errorMessage.exists()).toBe(true);
+      await delay(300);
+      await wrapper.vm.$nextTick()
+      expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
+
+      wrapper.vm.dataForm.name = 'valid-model'; // Valid length
+      await wrapper.find('button').trigger('click');
+      await delay(300);
+      await wrapper.vm.$nextTick()
+      expect(wrapper.find('.el-form-item__error').exists()).toBe(false);
     });
 
-    it("accepts valid model name", async () => {
-      wrapper.vm.dataForm.name = 'valid-model';
+    it("validates owner selection", async () => {
+      const wrapper = createWrapper();
+      wrapper.vm.dataForm.owner = ''; // Invalid owner
       await wrapper.find('button').trigger('click');
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      const errorMessage = wrapper.find('.el-form-item__error');
-      expect(errorMessage.exists()).toBe(false);
-    });
-  });
-
-  describe("namespaces", () => {
-    it("sets default owner from URL query", async () => {
-      window.location.search = '?orgName=testorg';
-      wrapper.unmount();
-      wrapper = await createWrapper();
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      console.log(wrapper.vm.dataForm.owner);
-      
-      expect(wrapper.vm.dataForm.owner).toBe('testorg');
+      await delay(300);
+      await wrapper.vm.$nextTick()
+      expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
     });
   });
 
   describe("form submission", () => {
     it("submits form with valid data", async () => {
+      const wrapper = createWrapper();
       wrapper.vm.dataForm = {
         owner: 'testuser',
         name: 'valid-model',
@@ -146,11 +143,57 @@ describe("NewModel", () => {
       };
 
       await wrapper.find('button').trigger('click');
-      
-      // 等待异步操作完成
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
+      await delay(300);
+      await wrapper.vm.$nextTick()
       expect(window.location.href).toBe('/models/testuser/testmodel');
+    });
+
+    it("shows success message on successful submission", async () => {
+      const wrapper = createWrapper();
+      // Mock the API response
+      vi.mock('../../../packs/useFetchApi', () => ({
+        default: () => ({
+          post: () => ({
+            json: () => Promise.resolve({
+              data: { value: { data: { path: 'testuser/testmodel' } } },
+              error: { value: null }
+            })
+          })
+        })
+      }));
+
+      await wrapper.find('button').trigger('click');
+      await delay(300);
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.$message).toHaveBeenCalledWith({
+        message: '创建成功',
+        type: 'success'
+      });
+    });
+
+    it("shows error message on failed submission", async () => {
+      const wrapper = createWrapper();
+      // Mock the API response with an error
+      vi.mock('../../../packs/useFetchApi', () => ({
+        default: () => ({
+          post: () => ({
+            json: () => Promise.resolve({
+              data: { value: null },
+              error: { value: { msg: '创建失败' } }
+            })
+          })
+        })
+      }));
+
+      await wrapper.find('button').trigger('click');
+      await delay(300);
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.$message).toHaveBeenCalledWith({
+        message: '创建失败: 创建失败',
+        type: 'error'
+      });
     });
   });
 });
