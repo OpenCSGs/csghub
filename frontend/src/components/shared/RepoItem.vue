@@ -37,7 +37,7 @@
 
     <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-2 text-xs text-gray-500">
       <span v-if="getComputed.taskTag"
-            class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
+            class="w-fit xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
       >
             {{ getComputed.taskTag }}
       </span>
