@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-[16px]">
     <div class="flex justify-between">
-        <div @click="showDetail?showDetail=!showDetail:changeFlag('new')" class="px-[16px] py-[5px] border bg-gray-25 rounded-xs hover:bg-gray-100 text-gray-500 text-sm leading-[22px] cursor-pointer ">
+        <div @click="showDetail?showDetail=!showDetail:changeFlag('new')" class="btn btn-secondary-gray btn-sm w-fit ">
           {{ showDetail? $t('community.discussion.back'):$t('community.discussion.new') }}
         </div>
         <!-- <div class="hover:bg-gray-100 cursor-pointer flex items-center gap-[8px] px-[16px] py-[5px] rounded-xs text-gray-500 text-sm leading-[22px]">
