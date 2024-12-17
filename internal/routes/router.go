@@ -154,7 +154,6 @@ func createRender() multitemplate.Renderer {
 		"settings_sync_access_token":     "settings/sync_access_token.html",
 		"settings_ssh_keys":              "settings/ssh_keys.html",
 		"prompts_index":                  "prompts/index.html",
-		"prompts_assistant":              "prompts/assistant.html",
 		"evaluations_new":                "evaluations/new.html",
 		"evaluations_show":               "evaluations/show.html",
 	}
