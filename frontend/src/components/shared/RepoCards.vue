@@ -9,8 +9,8 @@
         :frameworkTags="frameworkTags"
         :languageTags="languageTags"
         :licenseTags="licenseTags"
-        :selectedTag="props.selectedTag"
-        :selectedTagType="props.selectedTagType"
+        :selectedTag="selectedTag"
+        :selectedTagType="selectedTagType"
         @resetTags="resetTags"
         :type="repoType"
       />
@@ -134,10 +134,20 @@
   import UpdateUsername from '../popup/UpdateUsername.vue'
 
   const props = defineProps({
-    selectedTag: String,
-    selectedTagType: String,
     repoType: String
   })
+
+  const getQueryParams = () => {
+    const { searchParams } = new URL(window.location.href)
+    return {
+      tag: searchParams.get('tag') ?? '',
+      tagType: searchParams.get('tag_type') ?? ''
+    }
+  }
+
+  const { tag, tagType } = getQueryParams()
+  const selectedTag = ref(tag)
+  const selectedTagType = ref(tagType)
 
   const tagFields = {
     model: [
