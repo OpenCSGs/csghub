@@ -125,8 +125,11 @@ describe("NewModel", () => {
     it("sets default owner from URL query", async () => {
       window.location.search = '?orgName=testorg';
       wrapper.unmount();
-      wrapper = createWrapper();
-      await wrapper.vm.$nextTick();
+      wrapper = await createWrapper();
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      console.log(wrapper.vm.dataForm.owner);
+      
       expect(wrapper.vm.dataForm.owner).toBe('testorg');
     });
   });
@@ -143,10 +146,9 @@ describe("NewModel", () => {
       };
 
       await wrapper.find('button').trigger('click');
-      await wrapper.vm.$nextTick();
       
       // 等待异步操作完成
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await new Promise(resolve => setTimeout(resolve, 100));
       
       expect(window.location.href).toBe('/models/testuser/testmodel');
     });
