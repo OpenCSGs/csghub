@@ -1,6 +1,6 @@
 <template>
   <div
-    class="my-8 md:my-0 md:border-none px-8 py-6">
+    class="my-8 md:my-0 md:border-none py-6">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">

@@ -11,7 +11,7 @@
       <h3 class="text-gray-700 text-xl font-[600]">SSH Keys</h3>
       <button
         @click="centerDialogVisible = true"
-        class="rounded-xs border bg-white py-[5px] px-[16px] text-gray-500 text-sm font-[500] mt-[32px] w-[160px]"
+        class="btn btn-secondary-gray btn-md w-fit"
       >
         {{ $t('sshKey.addSshKey') }}
       </button>
