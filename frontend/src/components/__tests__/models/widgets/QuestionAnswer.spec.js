@@ -10,12 +10,12 @@ vi.mock("../../../packs/csrfFetch", () => {
             case '/predict':
                 return Promise.resolve({
                     ok: true,
-                    json: () => Promise.resolve({ result: "推理结果" })
+                    json: () => Promise.resolve({ result: "get result" })
                 });
             case '/internal_api/models/test/model/predict':
                 return Promise.resolve({
                     ok: true,
-                    json: () => Promise.resolve({ result: "推理结果" })
+                    json: () => Promise.resolve({ result: "get result" })
                 });
             default:
                 return Promise.resolve({ ok: false, json: () => Promise.resolve({ message: "推理失败" }) });
@@ -50,17 +50,17 @@ describe("QuestionAnswer", () => {
 
     it("calculates text input length correctly", async () => {
         const wrapper = createWrapper();
-        const inputText = "测试输入";
+        const inputText = "test input";
         await wrapper.vm.countTextLength(inputText);
         expect(wrapper.vm.textInputLength).toBe(inputText.length);
     });
 
     it.skip("sends inference test and receives result", async () => {
         const wrapper = createWrapper();
-        await wrapper.setData({ textInput: "测试内容" });
+        await wrapper.setData({ textInput: "test input" });
         await wrapper.vm.sendInferenceTest();
 
-        expect(wrapper.vm.textOutput).toBe("推理结果");
+        expect(wrapper.vm.textOutput).toBe("get result");
         expect(wrapper.vm.loading).toBe(false);
     });
 
@@ -71,10 +71,10 @@ describe("QuestionAnswer", () => {
         });
 
         const wrapper = createWrapper();
-        await wrapper.setData({ textInput: "测试内容" });
+        await wrapper.setData({ textInput: "test input" });
         await wrapper.vm.sendInferenceTest();
 
-        expect(ElMessage).toHaveBeenCalledWith({ message: '推理失败', type: "warning" });
+        expect(ElMessage).toHaveBeenCalledWith({ message: 'test error', type: "warning" });
         expect(wrapper.vm.loading).toBe(false);
     });
 
