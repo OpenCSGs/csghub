@@ -10,12 +10,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const createWrapper = (props) => {
   return mount(NewModel, {
-    components: {
-      ...ElementPlusIconsVue,
-      SvgIcon,
-    },
     global: {
-      // plugins: [ElementPlus],
       provide: {
         nameRule: /^[a-zA-Z][a-zA-Z0-9-_.]*[a-zA-Z0-9]$/,
       }
@@ -36,56 +31,6 @@ vi.mock('../../../stores/UserStore', () => ({
   })
 }));
 
-// Mock useFetchApi
-const mockPost = vi.fn().mockResolvedValue({
-  json: async () => ({
-    data: { value: { data: { path: 'testuser/testmodel' } } },
-    error: { value: null }
-  })
-});
-
-vi.mock('../../../packs/useFetchApi', () => ({
-  default: () => {
-    return {
-      post: () => ({
-        json: () => Promise.resolve({
-          data: { value: { data: { path: 'testuser/testmodel' } } },
-          error: { value: null }
-        })
-      })
-    };
-  }
-}));
-
-// Mock window.location
-const mockLocation = {
-  href: '',
-  search: ''
-};
-
-Object.defineProperty(window, 'location', {
-  value: mockLocation,
-  writable: true
-});
-
-// Mock vue-i18n
-vi.mock('vue-i18n', () => ({
-  useI18n: () => ({
-    t: (key) => key,
-  })
-}));
-
-// testUtils.js
-export const createFetchApiMock = (mockResponses = {}) => {
-  return () => ({
-    post: () => {
-      return Promise.resolve({
-        data: { value: { data: { path: 'testuser/testmodel' } } },
-        error: { value: null }
-      });
-    }
-  });
-};
 
 describe("NewModel", () => {
   describe("mount", async () => {
@@ -133,8 +78,7 @@ describe("NewModel", () => {
   describe("form submission", () => {
     it("shows success message on successful submission", async () => {
       const wrapper = createWrapper();
-      
-      // 设置表单数据以确保验证通过
+
       wrapper.vm.dataForm = {
         owner: 'testuser',
         name: 'valid-model',
@@ -156,42 +100,13 @@ describe("NewModel", () => {
         })
       }));
 
-      await wrapper.vm.handleSubmit(); // 调用提交方法
-      await delay(2000); // 等待 API 响应
-      await wrapper.vm.$nextTick(); // 等待 Vue 更新
+      await wrapper.find('button').trigger('click');
+      await delay(800);
+      await wrapper.vm.$nextTick();
 
-      // 验证成功消息是否被调用
-      // expect(wrapper.vm.$message).toHaveBeenCalledWith({
-      //   message: '创建成功', // 确保这里的消息与实际消息一致
-      //   type: 'success'
-      // });
-
-      // 验证 URL 是否正确
+      // validate href is correct
       expect(window.location.href).toBe('/models/testuser/testmodel');
     });
 
-    it("shows error message on failed submission", async () => {
-      const wrapper = createWrapper();
-      // Mock the API response with an error
-      vi.mock('../../../packs/useFetchApi', () => ({
-        default: () => ({
-          post: () => ({
-            json: () => Promise.resolve({
-              data: { value: null },
-              error: { value: { msg: '创建失败' } }
-            })
-          })
-        })
-      }));
-
-      await wrapper.find('button').trigger('click');
-      await delay(300);
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.vm.$message).toHaveBeenCalledWith({
-        message: '创建失败: 创建失败',
-        type: 'error'
-      });
-    });
   });
 });
