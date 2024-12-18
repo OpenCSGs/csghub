@@ -12,7 +12,7 @@
     </div>
     <!-- avatar -->
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">用户头像</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.userAvatar') }}</div>
       <el-avatar
         :size="120"
         :src="profileData.avatar">
