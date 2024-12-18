@@ -295,7 +295,7 @@
       body: JSON.stringify(params)
     }
     const newEndpoint = '/datasets'
-    const postres = await useFetchApi(newEndpoint, options).post()
+    const postres = await useFetchApi(newEndpoint, options).post().json()
     const { data, error } = await postres.json()
 
     if (data.value) {
