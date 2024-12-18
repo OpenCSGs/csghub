@@ -220,13 +220,12 @@
             {{ t('all.cancel') }}
           </a>
           <el-form-item>
-            <button
-              :disabled="submitLoading"
+            <CsgButton
               class="btn btn-primary rounded-md text-sm font-medium flex items-center justify-center px-[14px] h-[42px]"
+              :disabled="submitLoading"
+              :name="t('evaluation.new.createEvaluation')"
               @click="handleSubmit"
-            >
-              {{ t('evaluation.new.createEvaluation') }}
-            </button>
+            />
           </el-form-item>
         </div>
       </el-form>
