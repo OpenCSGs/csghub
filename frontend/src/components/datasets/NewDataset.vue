@@ -295,8 +295,7 @@
       body: JSON.stringify(params)
     }
     const newEndpoint = '/datasets'
-    const postres = await useFetchApi(newEndpoint, options).post().json()
-    const { data, error } = await postres.json()
+    const { data, error } = await useFetchApi(newEndpoint, options).post().json()
 
     if (data.value) {
       ElMessage.success(t('datasets.newDataset.createSuccess'))
