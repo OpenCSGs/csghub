@@ -15,6 +15,7 @@ export const profile = {
     warningTipDesc: "Are you sure to leave the Settings page unsaved?",
   },
   edit: {
+    userAvatar: "User Avatar",
     uploadAvatar: "Upload Avatar",
     removeAvatar: "Remove Avatar",
     updateSuccess: "Profile updated successfully",

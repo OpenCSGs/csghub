@@ -15,6 +15,7 @@ export const profile = {
     warningTipDesc: "确认在未保存的状态下离开设置页面？",
   },
   edit: {
+    userAvatar: "用户头像",
     uploadAvatar: "上传头像",
     removeAvatar: "移除头像",
     updateSuccess: "profile 已更新",
