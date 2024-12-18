@@ -29,7 +29,6 @@ function getHtmlEntryFiles(srcDir) {
   return entry;
 }
 
-// 开发环境打包配置
 const DEV_CONFIG = {
   plugins: [vue()],
   optimizeDeps: {
@@ -75,12 +74,10 @@ const DEV_CONFIG = {
       vue: "vue/dist/vue.esm-bundler.js",
       "@": path.resolve(__dirname, "src"),
     },
-    // 优化模块解析
     dedupe: ["vue"],
   },
 };
 
-// 生产环境打包配置
 const PROD_CONFIG = {
   plugins: [vue()],
   build: {

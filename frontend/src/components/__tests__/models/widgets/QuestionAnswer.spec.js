@@ -23,7 +23,6 @@ vi.mock("../../../packs/csrfFetch", () => {
     });
 });
 
-// 创建挂载函数
 const createWrapper = (props = {}) => {
     return mount(QuestionAnswer, {
         props: {

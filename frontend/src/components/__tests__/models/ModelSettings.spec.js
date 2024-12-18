@@ -28,7 +28,7 @@ vi.mock('../../../packs/useFetchApi', () => ({
       })
     }),
     json: () => {
-      // 根据不同的 URL 返回不同的模拟数据
+      // different url return different data
       if (url === '/tags') {
         return Promise.resolve({
           data: {
@@ -43,7 +43,7 @@ vi.mock('../../../packs/useFetchApi', () => ({
           error: { value: null }
         })
       }
-      // 默认返回空数据
+      // return empty data
       return Promise.resolve({
         data: { value: null },
         error: { value: null }
