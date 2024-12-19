@@ -12,7 +12,7 @@
     </div>
     <!-- avatar -->
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">用户头像</div>
+      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.userAvatar') }}</div>
       <el-avatar
         :size="120"
         :src="profileData.avatar">
@@ -25,12 +25,12 @@
           @change="uploadAvatar" />
         <div
           @click="uploadImage"
-          class="text-sm border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-md text-white cursor-pointer bg-brand-600">
+          class="btn btn-primary btn-sm">
           {{ $t('profile.edit.uploadAvatar') }}
         </div>
         <div
           @click="removeImage"
-          class="text-sm border border-gray-200 px-[20px] py-[9px] leading-[22px] text-center rounded-md text-gray-500 cursor-pointer bg-white">
+          class="btn btn-secondary-gray btn-sm">
           {{ $t('profile.edit.removeAvatar') }}
         </div>
       </div>
@@ -135,7 +135,7 @@
     </div>
     <div
       @click="confirmUpdateProfile"
-      class="w-[111px] text-sm border border-gray-200 px-[16px] py-[5px] leading-[22px] text-center rounded-md text-white cursor-pointer bg-brand-600">
+      class="btn btn-primary btn-md w-fit">
       {{ $t('all.save') }}
     </div>
   </div>

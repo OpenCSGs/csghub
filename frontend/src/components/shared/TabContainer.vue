@@ -137,12 +137,12 @@
   /* 修改选项卡中的文字大小 */
   .el-tabs__item {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   .el-tabs__item.is-top {
     color: #667085;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   .el-tabs {
@@ -150,12 +150,16 @@
   }
 
   .el-tabs__nav-wrap:after {
-    height: 1px;
+    height: 0px;
   }
 
   .el-tabs__nav-scroll {
     @media screen and (max-width: 768px) {
       padding-left: 20px;
     }
+  }
+
+  .el-tabs__content {
+    border: none;
   }
 </style>

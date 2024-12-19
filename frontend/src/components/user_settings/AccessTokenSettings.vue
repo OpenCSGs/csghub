@@ -34,11 +34,11 @@
           </div>
         </div>
         <div class="my-[16px]">
-          <el-button
+          <button
             type="default"
             @click="confirmRefreshAccessToken"
-            class="h-[30px] mb-[16px]"
-            >{{ $t('accessToken.refresh') }}</el-button
+            class="btn btn-secondary-gray btn-md"
+            >{{ $t('accessToken.refresh') }}</button
           >
         </div>
       </div>

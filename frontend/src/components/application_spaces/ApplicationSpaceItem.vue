@@ -66,7 +66,7 @@
       v-if="getComputed.taskTag"
       class="flex gap-2 my-2 overflow-x-auto no-scrollbar"
     >
-      <span class="max-w-[80px] xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+      <span class="w-fit xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
         {{ getComputed.taskTag }}
       </span>
       <span>

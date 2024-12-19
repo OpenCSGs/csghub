@@ -1,34 +1,34 @@
 <template>
   <div class="flex bg-white flex-col pt-[32px] pb-[60px]">
-    <div class="flex">
-      <span v-show="type !== 'code' && type !== 'space'" class="mr-[4px] py-[8px] px-[12px] text-sm text-gray-500 cursor-pointer hover:bg-gray-50"
+    <div class="flex gap-1">
+      <span v-show="type !== 'code' && type !== 'space'" class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Task"
-            :class="activeNavItem === 'Task' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'Task' ? 'py-2 px-3 text-gray-700 text-sm font-medium bg-gray-50' : ''"
             @click="changeActiveItem"
       >
         {{ $t('all.tasks') }}
       </span>
       <span v-show="type === 'model'"
-            class="mr-[4px] py-[8px] px-[12px] text-sm text-gray-500 cursor-pointer hover:bg-gray-50"
+            class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Framework"
-            :class="activeNavItem === 'Framework' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'Framework' ? 'py-2 px-3 text-gray-700 text-sm font-medium bg-gray-50' : ''"
             @click="changeActiveItem"
       >
       {{ $t('all.framework') }}
       </span>
 
       <span v-show="type === 'model' || type === 'dataset'"
-            class="mr-[4px] py-[8px] px-[12px] text-sm text-gray-500 cursor-pointer hover:bg-gray-50"
+            class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="Language"
-            :class="activeNavItem === 'Language' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'Language' ? 'py-2 px-3 text-gray-700 text-sm font-medium bg-gray-50' : ''"
             @click="changeActiveItem"
       >
       {{ $t('all.languages') }}
       </span>
 
-      <span class="mr-[4px] py-[8px] px-[12px] text-sm text-gray-500 cursor-pointer hover:bg-gray-50"
+      <span class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
             data-type="License"
-            :class="activeNavItem === 'License' ? 'text-gray-700 active-type font-[600] shadow-outline-gray-400 shadow-outline-4' : ''"
+            :class="activeNavItem === 'License' ? 'py-2 px-3 text-gray-700 text-sm font-medium bg-gray-50' : ''"
             @click="changeActiveItem"
       >
       License
@@ -95,7 +95,7 @@
       <div v-show="showLanguage">
         <el-input
           v-model="LanguageTagFilterInput"
-          class="mt-[28px] mb-[16px]"
+          class="mt-7 mb-4"
           size="large"
           :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
@@ -103,7 +103,7 @@
         />
         <div class="flex gap-[8px] flex-wrap">
           <span v-for="languageTag in theLanguageTags"
-                class="text-sm text-gray-700 px-[8px] py-[4px] rounded-xs cursor-pointer flex items-center gap-[4px]"
+                class="text-sm text-gray-700 px-2 py-1 rounded-xs cursor-pointer flex items-center gap-1"
                 :data-tag_name="languageTag.name"
                 :style="setLanguageTagColor(languageTag.name)"
                 @click="setActiveLanguageTag(languageTag.name)"
@@ -117,13 +117,13 @@
       <div v-show="showLicense">
         <el-input
           v-model="licenseTagFilterInput"
-          class="mt-[28px] mb-[16px]"
+          class="mt-7 mb-4"
           size="large"
           :placeholder="$t('all.filterTags')"
           :prefix-icon="Search"
           @input = "filterLicenseTags"
         />
-        <div class="flex gap-[8px] flex-wrap">
+        <div class="flex gap-1 flex-wrap">
           <span v-for="licenseTag in theLicenseTags" class="text-sm text-gray-700 px-[8px] py-[3px] rounded-sm cursor-pointer flex items-center gap-[4px] border border-gray-200"
                 :data-tag_name="licenseTag.name"
                 :style="setLicenseTagColor(licenseTag.name)"

@@ -1,6 +1,7 @@
 import { config } from '@vue/test-utils';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+import CsgButton from '@/components/shared/CsgButton.vue';  
 import SvgIcon from '@/components/shared/SvgIcon.vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { createI18n } from 'vue-i18n';
@@ -23,6 +24,7 @@ config.global.plugins = [ElementPlus, i18n, pinia];
 // register global components
 config.global.components = {
     SvgIcon,
+    CsgButton,
     ...ElementPlusIconsVue
 };
 

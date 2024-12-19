@@ -318,13 +318,12 @@
         </p>
         <div class="flex justify-end">
           <el-form-item>
-            <button
+            <CsgButton
               :loading="loading"
-              class="btn btn-primary btn-md"
               @click="handleSubmit"
-            >
-              {{ t('application_spaces.new.create') }}
-            </button>
+              class="btn btn-primary btn-md"
+              :name="t('application_spaces.new.create')"
+            />
           </el-form-item>
         </div>
       </el-form>

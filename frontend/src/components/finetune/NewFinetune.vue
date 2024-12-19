@@ -143,12 +143,12 @@
 
         <div class="flex justify-end">
           <el-form-item>
-            <button
+            <CsgButton
               :loading="loading"
               class="btn btn-primary btn-md"
-              @click="handleSubmit">
-              {{ t('finetune.new.createFinetune') }}
-            </button>
+              :name="t('finetune.new.createFinetune')"
+              @click="handleSubmit"
+            />
           </el-form-item>
         </div>
       </el-form>
