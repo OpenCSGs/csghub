@@ -1,6 +1,6 @@
 :root {
   /* 所有的input 添加 */
-  .el-textarea__inner, .el-input__wrapper, .el-select__wrapper, .el-cascader {
+  .el-textarea__inner, .el-input__wrapper:not(.el-input-group--prepend *), .el-select__wrapper:not(.el-input-group--prepend *), .el-cascader {
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);-radius: var(--border-radius-md);
   }
