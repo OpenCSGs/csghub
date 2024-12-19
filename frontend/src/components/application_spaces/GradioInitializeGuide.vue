@@ -93,7 +93,7 @@
   })
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
-    const httpsCloneCodeWithToken = `  git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
+    const httpsCloneCodeWithToken = `git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
     return getMarkdownCode(httpsCloneCodeWithToken, 'bash')
   })
 
@@ -102,28 +102,25 @@
     return getMarkdownCode(sshCloneCode, 'bash')
   })
 
-  const appPyCode = `
-  import gradio as gr
+  const appPyCode = `import gradio as gr
 
-  def greet(name):
+def greet(name):
     return "Hello " + name + "!!"
 
-  iface = gr.Interface(fn=greet, inputs="text", outputs="text")
-  iface.launch()
-  `
+iface = gr.Interface(fn=greet, inputs="text", outputs="text")
+iface.launch()`
 
   const appPyCodeMarkdown = computed(() => {
     return getMarkdownCode(appPyCode, 'python', true)
   })
 
-  const pushCode = `
-  $ git add app.py
-  $ git commit -m "Add application file"
-  $ git push
-  `
+  const pushCode = `git add app.py
+  git commit -m "Add application file"
+  git push`
 
   const pushCodeMarkdown = computed(() => {
-    return getMarkdownCode(pushCode, 'bash', true)
+    return getMarkdownCode(pushCode, 'bash', true) + 
+    '{data-clipboard-text="git add app.py && git commit -m \'Add application file\' && git push"}'
   })
 
   const toggleActiveTab = (event) => {
