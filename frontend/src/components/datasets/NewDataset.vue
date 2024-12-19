@@ -149,7 +149,7 @@
               :loading="loading"
               class="btn btn-primary btn-md"
               :name="t('datasets.newDataset.createDataset')"
-              @click="createDataset"
+              @click="handleSubmit"
             />
           </el-form-item>
         </div>

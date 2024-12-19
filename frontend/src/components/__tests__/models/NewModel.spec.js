@@ -23,6 +23,13 @@ const createWrapper = (props) => {
 };
 
 
+async function triggerFormButton(wrapper) {
+  const button = wrapper.findComponent({ name: 'CsgButton' })
+  await button.trigger('click');
+  await delay(300);
+  await wrapper.vm.$nextTick()
+}
+
 // Mock stores
 vi.mock('../../../stores/UserStore', () => ({
   default: () => ({
@@ -31,6 +38,7 @@ vi.mock('../../../stores/UserStore', () => ({
   })
 }));
 
+const buttonClass = '.btn.btn-primary'
 
 describe("NewModel", () => {
   describe("mount", async () => {
@@ -43,9 +51,7 @@ describe("NewModel", () => {
   describe("form validation", () => {
     it("validates required fields", async () => {
       const wrapper = createWrapper();
-      await wrapper.find('button').trigger('click');
-      await delay(300);
-      await wrapper.vm.$nextTick()
+      await triggerFormButton(wrapper);
       const formErrors = wrapper.findAll('.el-form-item__error');
       expect(formErrors.length).toBeGreaterThan(0);
     });
@@ -53,24 +59,18 @@ describe("NewModel", () => {
     it("validates model name length", async () => {
       const wrapper = createWrapper();
       wrapper.vm.dataForm.name = 'a'; // Invalid length
-      await wrapper.find('button').trigger('click');
-      await delay(300);
-      await wrapper.vm.$nextTick()
+      await triggerFormButton(wrapper);
       expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
 
       wrapper.vm.dataForm.name = 'valid-model'; // Valid length
-      await wrapper.find('button').trigger('click');
-      await delay(300);
-      await wrapper.vm.$nextTick()
+      await triggerFormButton(wrapper);
       expect(wrapper.find('.el-form-item__error').exists()).toBe(false);
     });
 
     it("validates owner selection", async () => {
       const wrapper = createWrapper();
       wrapper.vm.dataForm.owner = ''; // Invalid owner
-      await wrapper.find('button').trigger('click');
-      await delay(300);
-      await wrapper.vm.$nextTick()
+      await triggerFormButton(wrapper);
       expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
     });
   });
@@ -100,9 +100,7 @@ describe("NewModel", () => {
         })
       }));
 
-      await wrapper.find('button').trigger('click');
-      await delay(800);
-      await wrapper.vm.$nextTick();
+      await triggerFormButton(wrapper);
 
       // validate href is correct
       expect(window.location.href).toBe('/models/testuser/testmodel');
