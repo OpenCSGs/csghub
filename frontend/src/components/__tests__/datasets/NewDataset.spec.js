@@ -122,6 +122,7 @@ describe("NewDataset", () => {
       }
 
       await wrapper.find('button').trigger('click');
+      await new Promise(resolve => setTimeout(resolve, 300));
       expect(window.location.href).toBe('/datasets/testuser/testdataset');
     });
   });

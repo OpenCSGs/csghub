@@ -20,7 +20,7 @@ export default defineConfig({
     // },
     server: {
       deps: {
-        inline: ['element-plus'],
+        inline: ['element-plus', 'vue-i18n', 'pinia'],
       }
     },
   }
