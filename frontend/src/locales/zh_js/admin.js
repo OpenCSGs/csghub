@@ -1,5 +1,6 @@
 export const admin = {
   baseConfigTitle: '基础配置',
+  createSuccess: '创建成功',
   dashboard: {
     title: 'Dashboard',
     intro: '这是社区管理后台，Admin 用户可以在这里进行系统的后台设置等工作。'
@@ -25,5 +26,20 @@ export const admin = {
     editBtn: '编辑',
     editCancelBtn: '取消',
     editConfirmBtn: '确认'
-  }
+  },
+  tags: {
+    title: '标签管理',
+    newTag: '新建标签',
+    editTag: '编辑标签',
+    tagList: '标签列表',
+    tagDetailBtn: '详情',
+    tagDetailTitle: '标签详情',
+    create: '新建',
+    editBtn: '编辑',
+    editCancelBtn: '取消',
+    editConfirmBtn: '确认',
+    delete: '删除',
+    deleteConfirm: '确认删除',
+    opSuccess: '操作成功',
+  },
 }

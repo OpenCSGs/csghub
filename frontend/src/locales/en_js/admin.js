@@ -1,5 +1,6 @@
 export const admin = {
   baseConfigTitle: 'Basic Settings',
+  createSuccess: 'Create Success',
   dashboard: {
     title: 'Admin Dashboard',
     intro: 'This is the admin panel, admin users can do the system settings here.'
@@ -25,5 +26,20 @@ export const admin = {
     editBtn: 'Edit',
     editCancelBtn: 'Cancel',
     editConfirmBtn: 'Confirm'
+  },
+  tags: {
+    title: 'Tag Management',
+    newTag: 'Create Tag',
+    editTag: 'Edit Tag',
+    tagList: 'Tags List',
+    tagDetailBtn: 'Detail',
+    tagDetailTitle: 'Tag Detail',
+    create: 'Create',
+    editBtn: 'Edit',
+    editCancelBtn: 'Cancel',
+    editConfirmBtn: 'Confirm',
+    delete: 'Delete',
+    deleteConfirm: 'Confirm Delete',
+    opSuccess: 'Operation Success',
   }
 }
