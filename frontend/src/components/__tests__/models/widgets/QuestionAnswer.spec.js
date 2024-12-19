@@ -18,7 +18,7 @@ vi.mock("../../../packs/csrfFetch", () => {
                     json: () => Promise.resolve({ result: "get result" })
                 });
             default:
-                return Promise.resolve({ ok: false, json: () => Promise.resolve({ message: "推理失败" }) });
+                return Promise.resolve({ ok: false, json: () => Promise.resolve({ message: "test error" }) });
         }
     });
 });
@@ -66,7 +66,7 @@ describe("QuestionAnswer", () => {
     it.skip("handles inference failure", async () => {
         // Mock csrfFetch to simulate failure
         vi.mock("../../../packs/csrfFetch", () => {
-            return vi.fn(() => Promise.resolve({ ok: false, json: () => Promise.resolve({ message: "推理失败" }) }));
+            return vi.fn(() => Promise.resolve({ ok: false, json: () => Promise.resolve({ message: "test error" }) }));
         });
 
         const wrapper = createWrapper();
