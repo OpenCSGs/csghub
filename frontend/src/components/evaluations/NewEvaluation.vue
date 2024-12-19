@@ -159,6 +159,7 @@
           :label="t('evaluation.new.cluster')"
           class="w-full"
           prop="evaluation_cluster"
+          data-test="cluster-select"
           v-show="dataForm.evaluation_resource_type === 'dedicated'"
         >
           <el-select
