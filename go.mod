@@ -1,6 +1,6 @@
 module opencsg.com/portal
 
-go 1.21.4
+go 1.23.3
 
 require (
 	github.com/gin-contrib/multitemplate v1.0.1
