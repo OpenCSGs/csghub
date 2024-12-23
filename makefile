@@ -1,54 +1,60 @@
 .PHONY: setup run build clean
 
-# 默认目标
+# default
 all: run
 
-# 设置项目
+# setup project
 setup: setup-go setup-frontend
 
-# 设置Go环境
+# setup go environment
 setup-go:
 	@echo "Setting up Go environment..."
 	go mod tidy
 	go install github.com/cosmtrek/air@latest
 
-# 设置前端环境
+# setup frontend environment
 setup-frontend:
 	@echo "Setting up frontend environment..."
 	cd frontend && yarn install
 
-# 运行项目
+# run project
 run:
 	@echo "Starting the application..."
 	@make -j2 run-frontend run-backend
 
-# 运行前端
+# run frontend
 run-frontend:
 	@echo "Starting frontend..."
 	cd frontend && yarn dev_build
 
-# 运行后端
+# test frontend
+test-frontend:
+	@echo "Testing frontend..."
+	cd frontend && yarn test
+
+# run backend
 run-backend:
 	@echo "Starting backend..."
 	air
 
-# 构建项目
+# build project
 build:
 	@echo "Building the project..."
 	cd frontend && yarn build
 	go build -o csghub-portal ./cmd/csghub-portal
 
-# 清理项目
+# clean project
 clean:
 	@echo "Cleaning up..."
 	rm -f csghub-portal
 
-# 帮助信息
+# help message
 help:
 	@echo "Available commands:"
 	@echo "  make setup      - Set up the project (Go and frontend)"
 	@echo "  make setup_go   - Set up the project (Go)"
 	@echo "  make setup_frontend      - Set up the project (frontend)"
+	@echo "  make test_frontend      - Test the frontend"
 	@echo "  make run        - Run the application (frontend and backend)"
 	@echo "  make build      - Build the project"
 	@echo "  make clean      - Clean up build artifacts and dependencies"
