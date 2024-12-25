@@ -9,7 +9,6 @@
         :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
         :userName="userName"
         :namespacePath="path"
-        :admin="admin"
         :repo="repoDetail"
         :enableEndpoint="repoDetail.enable_inference"
         :enableFinetune="repoDetail.enable_finetune"
@@ -289,7 +288,6 @@
     endpointReplica: Number,
     endpointName: String,
     endpointId: String,
-    admin: Boolean,
     replicaList: Array,
     path: String
   })

@@ -33,7 +33,6 @@
       :userName="userName"
       :commitId="commitId"
       :repoType="repoType"
-      :admin="admin"
       :path="`${namespace}/${repoName}`"
     />
   </div>
@@ -58,7 +57,6 @@
     actionName: String,
     userName: String,
     commitId: String,
-    admin: Boolean,
     namespace: String,
     repoName: String
   })
