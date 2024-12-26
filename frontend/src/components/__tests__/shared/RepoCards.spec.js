@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import RepoCards from "@/components/shared/RepoCards.vue";
 import RepoItem from "@/components/shared/RepoItem.vue";
@@ -60,12 +60,30 @@ vi.mock('@/packs/useFetchApi', () => ({
                                     category: 'task',
                                     scope: 'model',
                                     built_in: true,
-                                    group: 'computer_vision'
+                                    group: 'computer_vision',
+                                    name: 'computer_vision',
+                                    show_name: 'Computer Vision'
                                 },
                                 {
                                     category: 'framework',
                                     scope: 'model',
-                                    built_in: true
+                                    built_in: true,
+                                    name: 'pytorch',
+                                    show_name: 'PyTorch'
+                                },
+                                {
+                                    category: 'language',
+                                    scope: 'model',
+                                    built_in: true,
+                                    name: 'python',
+                                    show_name: 'Python'
+                                },
+                                {
+                                    category: 'license',
+                                    scope: 'model',
+                                    built_in: true,
+                                    name: 'MIT',
+                                    show_name: 'MIT License'
                                 }
                             ]
                         }
@@ -96,9 +114,6 @@ const createWrapper = (props = {}) => {
                 RepoItem,
                 TagSidebar,
                 CsgPagination
-            },
-            provide: {
-                onPremise: 'true'
             },
             stubs: {
                 'svg-icon': true,
