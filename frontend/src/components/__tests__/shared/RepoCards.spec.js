@@ -20,30 +20,56 @@ vi.mock('@/components/shared/RepoCards.vue', async (importOriginal) => {
 
 // Mock fetch API
 vi.mock('@/packs/useFetchApi', () => ({
-    default: vi.fn(() => ({
-        json: () => Promise.resolve({
-            data: {
-                value: {
-                    data: [
-                        {
-                            id: 1,
-                            name: 'Repo 1',
-                            path: 'user/repo-1',
-                            updated_at: '2024-03-20 10:00:00',
-                            downloads: 100
-                        },
-                        {
-                            id: 2,
-                            name: 'Repo 2',
-                            path: 'user/repo-2',
-                            updated_at: '2024-03-20 10:00:00',
-                            downloads: 200
+    default: vi.fn((url) => ({
+        json: () => {
+            if (url === '/tags') {
+                return Promise.resolve({
+                    data: {
+                        value: {
+                            data: [
+                                {
+                                    category: 'task',
+                                    scope: 'model',
+                                    built_in: true,
+                                    group: 'computer_vision',
+                                    name: 'computer_vision',
+                                    show_name: 'Computer Vision'
+                                },
+                                {
+                                    category: 'framework',
+                                    scope: 'model',
+                                    built_in: true,
+                                    name: 'pytorch',
+                                    show_name: 'PyTorch'
+                                },
+                                {
+                                    category: 'language',
+                                    scope: 'model',
+                                    built_in: true,
+                                    name: 'python',
+                                    show_name: 'Python'
+                                },
+                                {
+                                    category: 'license',
+                                    scope: 'model',
+                                    built_in: true,
+                                    name: 'MIT',
+                                    show_name: 'MIT License'
+                                }
+                            ]
                         }
-                    ],
-                    total: 2
-                }
+                    }
+                });
             }
-        })
+            return Promise.resolve({
+                data: {
+                    value: {
+                        data: [],
+                        total: 0
+                    }
+                }
+            });
+        }
     }))
 }));
 
@@ -75,8 +101,8 @@ vi.mock('@/packs/useFetchApi', () => ({
                                     category: 'language',
                                     scope: 'model',
                                     built_in: true,
-                                    name: 'python',
-                                    show_name: 'Python'
+                                    name: 'english',
+                                    show_name: 'English'
                                 },
                                 {
                                     category: 'license',

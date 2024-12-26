@@ -41,12 +41,10 @@ config.global.plugins = [
 
 const DEFAULT_TAGS = []
 const CSGHUB_SERVER = 'http://localhost:8080'
-const ON_PREMISE = false
 
 config.global.provide = {
     defaultTags: DEFAULT_TAGS,
     csghubServer: CSGHUB_SERVER,
-    onPremise: ON_PREMISE || false,
     nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
 };
 
