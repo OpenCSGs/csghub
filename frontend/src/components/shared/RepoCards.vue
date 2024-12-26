@@ -45,7 +45,7 @@
             height="18"
           />
           <span class="capitalize">
-            {{ $t(`${repoType}s`) }}
+            {{ $t(`${repoType}s.title`) }}
             <span class="text-gray-400 text-md italic">
               {{ totalRepos }}
             </span>
@@ -276,7 +276,7 @@
     } else {
       let tempTaskTags = {}
       const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType && tag.built_in === true)
-      tagFields[props.repoType].forEach((field) => {
+      tagFields[props.repoType]?.forEach((field) => {
         const fieldTags = allTaskTags.filter(tag => tag.group === field)
         tempTaskTags[field] = fieldTags
       })
