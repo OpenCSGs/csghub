@@ -254,7 +254,6 @@
   const props = defineProps({
     repoType: String,
     namespacePath: String,
-    admin: Boolean,
     repo: Object,
     enableEndpoint: Boolean,
     enableFinetune: Boolean,
