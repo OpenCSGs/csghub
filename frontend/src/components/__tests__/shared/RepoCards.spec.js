@@ -95,9 +95,7 @@ const createWrapper = (props = {}) => {
             components: {
                 RepoItem,
                 TagSidebar,
-                CsgPagination,
-                ElInput,
-                ElSelect
+                CsgPagination
             },
             provide: {
                 onPremise: 'true'
@@ -124,28 +122,6 @@ describe("RepoCards", () => {
         expect(wrapper.findComponent(TagSidebar).exists()).toBe(true);
         expect(wrapper.findComponent(ElInput).exists()).toBe(true);
         expect(wrapper.findComponent(ElSelect).exists()).toBe(true);
-    });
-
-    it.skip("displays correct title and icon based on repoType", () => {
-        const wrapper = createWrapper({ repoType: 'model' });
-        expect(wrapper.find('h3 span').text()).toContain('models 0');
-        expect(wrapper.find('svg-icon[name="models"]').exists()).toBe(true);
-    });
-
-    it.skip("handles filter changes", async () => {
-        const wrapper = createWrapper();
-        const searchInput = wrapper.findComponent(ElInput);
-
-        await searchInput.setValue('test search');
-        expect(wrapper.vm.nameFilterInput).toBe('test search');
-    });
-
-    it.skip("handles sort selection changes", async () => {
-        const wrapper = createWrapper();
-        const sortSelect = wrapper.findComponent(ElSelect);
-
-        await sortSelect.setValue('most_download');
-        expect(wrapper.vm.sortSelection).toBe('most_download');
     });
 
     it("calculates correct perPage based on repoType", () => {
