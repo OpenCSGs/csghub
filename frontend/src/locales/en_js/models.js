@@ -1,5 +1,5 @@
 export const models = {
-  title: "Model",
+  title: "Models",
   placeholder: "Search Models",
   downloadModel: "Download model data",
   download: "Download Model",
