@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-  import { ref, watch, onMounted } from 'vue'
+  import { ref, watch, onMounted, onUnmounted } from 'vue'
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
@@ -140,6 +140,10 @@
     if (window.innerWidth > 768) {
       initMenuItems()
     }
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
   })
 
   watch(currentScreenWidth, (newVal) => {

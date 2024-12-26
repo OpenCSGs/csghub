@@ -330,7 +330,8 @@
   export default {
     props: {
       logo: String,
-      isLoggedIn: String
+      isLoggedIn: String,
+      starChainUrl: String
     },
     data() {
       const classParam = new URLSearchParams(window.location.search).get(
