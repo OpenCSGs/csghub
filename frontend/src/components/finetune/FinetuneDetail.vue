@@ -103,7 +103,7 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import FinetuneSettings from './FinetuneSettings.vue'
-  import useFetchApi from '../../packs/useFetchApi'
+  import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
 
   const props = defineProps({
