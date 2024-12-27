@@ -6,7 +6,7 @@
       <span class="text-gray-500"> {{ spaces.length }} </span>
     </h3>
     <div class="mt-[16px] flex gap-[12px]">
-      <a v-for="space in spaces" :href="`/spaces/${space.path}`">
+      <a v-for="space in spaces" :href="`/spaces/${space.path}`" data-test="space-item">
         <p class="rounded-md border border-gray-300 bg-white py-0.5 pr-2.5 pl-1.5">
           {{ space.path }}
         </p>
