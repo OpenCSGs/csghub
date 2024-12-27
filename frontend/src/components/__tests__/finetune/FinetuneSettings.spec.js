@@ -81,7 +81,7 @@ const createWrapper = (props = {}) => {
 };
 
 describe("FinetuneSettings", () => {
-  it.only("mounts correctly", () => {
+  it("mounts correctly", () => {
     const wrapper = createWrapper();
     expect(wrapper.exists()).toBe(true);
   });
