@@ -19,7 +19,7 @@ describe("CodeRelationsCard", () => {
     expect(wrapper.vm).toBeDefined();
   });
 
-  it.skip("renders correctly with props", () => {
+  it("renders correctly with props", () => {
     const codes = [{
       id: 1,
       name: 'Code 1',

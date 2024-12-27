@@ -43,6 +43,7 @@
         <el-button
           @click="updateNickname"
           class="w-[100px]"
+          data-test="update-nickname"
           >{{ $t('all.update') }}</el-button
         >
       </div>
