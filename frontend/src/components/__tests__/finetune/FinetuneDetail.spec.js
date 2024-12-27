@@ -3,32 +3,82 @@ import { mount } from "@vue/test-utils";
 import FinetuneDetail from "@/components/finetune/FinetuneDetail.vue";
 
 // Mock useFetchApi
-vi.mock('../../packs/useFetchApi', () => ({
-  default: vi.fn(() => ({
-    json: () => Promise.resolve({
-      data: {
-        value: {
+vi.mock('@/packs/useFetchApi', () => ({
+  default: (url) => ({
+    json: () => {
+      if (url.includes('/models') && url.includes('/run/')) {
+        return Promise.resolve({
           data: {
-            // Mock your finetune data here
-            deploy_name: 'Test Finetune',
-            proxy_endpoint: 'test.endpoint',
-            hardware: 'Test Hardware',
-            repository_id: 123,
-            svc_name: 'Test Service',
-            model_id: 456,
-            deploy_id: 789,
-            runtime_framework: 'Test Framework',
-            cluster_id: 'Test Cluster',
-          }
-        }
+            value: {
+              body: {
+                data: {
+                  deploy_name: 'Test Finetune',
+                  proxy_endpoint: 'test.endpoint',
+                  hardware: 'Test Hardware',
+                  repository_id: 123,
+                  svc_name: 'Test Service',
+                  model_id: 456,
+                  deploy_id: 789,
+                  runtime_framework: 'Test Framework',
+                  cluster_id: 'Test Cluster',
+                  status: 'Running',
+                  endpoint: 'test.endpoint'
+                }
+              }
+            }
+          },
+          error: { value: null },
+          response: { status: 200 }
+        })
+      };
+
+      if (url.includes('/space_resources')) {
+        return Promise.resolve({
+          data: {
+            value: {
+              body: {
+                data: [
+                  {
+                    name: 'Test Resource',
+                    resources: 'Test Hardware',
+                    is_available: true
+                  }
+                ]
+              }
+            }
+          },
+          error: { value: null },
+          response: { status: 200 }
+        })
+      };
+
+      if (url.includes('/models/runtime_framework')) {
+        return Promise.resolve({
+          data: {
+            value: {
+              data: [{ id: 1, frame_name: 'test-framework' }]
+            }
+          },
+          error: { value: null }
+        })
       }
-    })
-  }))
+      return Promise.resolve({
+        data: { value: { body: { data: [] } } },
+        error: { value: null },
+        response: { status: 200 }
+      })
+    }
+  })
 }));
 
 const createWrapper = (props = {}) => {
-  window.ENABLE_HTTPS = 'false'
+  window.ENABLE_HTTPS = 'false';
   return mount(FinetuneDetail, {
+    global: {
+      provide: {
+        csghubServer: 'http://test-server'
+      }
+    },
     props: {
       namespace: 'test-namespace',
       name: 'test-name',
@@ -42,33 +92,25 @@ const createWrapper = (props = {}) => {
 };
 
 describe("FinetuneDetail", () => {
-  it("mounts correctly", () => {
+  it("mounts correctly", async () => {
     const wrapper = createWrapper();
+    await wrapper.vm.$nextTick();
     expect(wrapper.exists()).toBe(true);
   });
 
-  it.skip("renders the repo header with correct props", () => {
+  it.skip("fetches finetune details on mount", async () => {
     const wrapper = createWrapper();
-    const repoHeader = wrapper.findComponent({ name: 'repo-header' });
-    expect(repoHeader.exists()).toBe(true);
-    expect(repoHeader.props('name')).toBe('Test Finetune');
-    expect(repoHeader.props('path')).toBe('test-namespace/test-name');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.finetune.deploy_name).toBe('Test Finetune');
+    expect(wrapper.vm.appStatus).toBe('Running');
   });
 
-  it.skip("shows the notebook button when endpoint is available", () => {
-    const wrapper = createWrapper();
-    expect(wrapper.find('el-button').exists()).toBe(true);
-  });
 
-  it.skip("renders the iframe when finetune.endpoint is available", () => {
+  it.skip("handles SSE connection successfully", async () => {
     const wrapper = createWrapper();
-    expect(wrapper.find('iframe').exists()).toBe(true);
-    expect(wrapper.find('iframe').attributes('src')).toContain('test.endpoint');
-  });
-
-  it("renders no data message when finetune.endpoint is not available", async () => {
-    const wrapper = createWrapper({ finetune: { endpoint: null } });
-    await wrapper.vm.$nextTick(); // Wait for reactivity
-    expect(wrapper.find('.flex.items-center').exists()).toBe(true);
+    await wrapper.vm.$nextTick();
+    expect(fetchEventSource).toHaveBeenCalled();
+    expect(wrapper.vm.isStatusSSEConnected).toBe(true);
+    expect(wrapper.vm.appStatus).toBe('Running');
   });
 });

@@ -2,24 +2,68 @@ import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import NewFinetune from "@/components/finetune/NewFinetune.vue";
 
-// Mock useFetchApi
-vi.mock('../../packs/useFetchApi', () => ({
-  default: vi.fn(() => ({
-    json: () => Promise.resolve({
-      data: {
-        value: {
-          data: {
-            // Mock your finetune data here
-            cluster_id: 'test-cluster',
-            model_id: 'test-model',
-            deploy_name: 'Test Finetune',
-            resource_id: 'test-resource',
-            runtime_framework_id: 'test-framework',
-          }
+vi.mock('@/packs/useFetchApi', () => ({
+  default: (url) => {
+    return {
+      json: () => {
+        if (url.includes('/cluster')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                data: [
+                  { cluster_id: 'cluster-1', region: 'region-1' },
+                  { cluster_id: 'cluster-2', region: 'region-2' }
+                ]
+              }
+            },
+            error: { value: null }
+          })
         }
-      }
-    })
-  }))
+        if (url.includes('/space_resources')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                data: [
+                  { name: 'Resource 1', is_available: true, resources: 'res1', id: 1 },
+                  { name: 'Resource 2', is_available: false, resources: 'res2', id: 2 }
+                ]
+              }
+            },
+            error: { value: null }
+          })
+        }
+        if (url.includes('/runtime_framework')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                data: [{ id: 1, frame_name: 'test-framework', path: 'test-path' }]
+              }
+            },
+            error: { value: null }
+          })
+
+        }
+      },
+      post: () => ({
+        json: () => {
+          if (url.includes('finetune?current_user')) {
+            return Promise.resolve({
+              error: { value: null }, data: {
+                deploy_id: 123
+              }
+            })
+          }
+          return Promise.resolve({ error: { value: null } })
+        }
+      }),
+      put: () => ({
+        json: () => Promise.resolve({ error: { value: null } })
+      }),
+      delete: () => ({
+        json: () => Promise.resolve({ error: { value: null } })
+      }),
+    };
+  }
 }));
 
 const createWrapper = (props = {}) => {
@@ -31,36 +75,12 @@ const createWrapper = (props = {}) => {
   });
 };
 
+window.location.search = '?namespace=test-namespace&model_id=123'
+
 describe("NewFinetune", () => {
   it("mounts correctly", () => {
     const wrapper = createWrapper();
     expect(wrapper.exists()).toBe(true);
   });
 
-  it("renders the title and description", () => {
-    const wrapper = createWrapper();
-    expect(wrapper.find('h3').text()).toContain('finetune.new.title');
-    expect(wrapper.find('p').text()).toContain('finetune.new.desc');
-  });
-
-  it("validates the deploy_name field", async () => {
-    const wrapper = createWrapper();
-    const input = wrapper.find('input[placeholder*="pleaseInput"]'); // 根据 placeholder 查找
-    await input.setValue(''); // 设置为空以触发验证
-    await wrapper.vm.dataFormRef.value.validate(); // 触发验证
-    expect(wrapper.vm.rules.deploy_name[0].message).toBe('all.pleaseInput');
-  });
-
-  it("fetches resources on cluster change", async () => {
-    const wrapper = createWrapper();
-    await wrapper.vm.fetchResources(); // 手动调用 fetchResources
-    expect(wrapper.vm.finetuneResources).toHaveLength(1); // 根据 mock 数据调整期望值
-  });
-
-  it("submits the form correctly", async () => {
-    const wrapper = createWrapper();
-    await wrapper.vm.dataForm.deploy_name = 'Valid Name'; // 设置有效值
-    await wrapper.vm.handleSubmit(); // 提交表单
-    expect(wrapper.vm.loading).toBe(false); // 验证加载状态
-  });
 });

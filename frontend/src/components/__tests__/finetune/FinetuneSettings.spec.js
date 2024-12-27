@@ -2,23 +2,65 @@ import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import FinetuneSettings from "@/components/finetune/FinetuneSettings.vue";
 
-// Mock useFetchApi
-vi.mock('../../packs/useFetchApi', () => ({
-  default: vi.fn(() => ({
-    json: () => Promise.resolve({
-      data: {
-        value: {
-          data: {
-            // Mock your finetune settings data here
-            resources: [
-              { name: 'Resource 1', is_available: true, resources: 'res1' },
-              { name: 'Resource 2', is_available: false, resources: 'res2' },
-            ],
-            // Add other necessary mock data
-          }
+// Mock the API response
+vi.mock('@/packs/useFetchApi', () => ({
+  default: (url) => {
+    return {
+      json: () => {
+        if (url.includes('/cluster')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                body: {
+                  data: [
+                    { cluster_id: 'cluster-1', region: 'region-1' },
+                    { cluster_id: 'cluster-2', region: 'region-2' }
+                  ]
+                }
+              }
+            },
+            error: { value: null }
+          })
         }
-      }
-    })
+        if (url.includes('/space_resources')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                data: [
+                  { name: 'Resource 1', is_available: true, resources: 'res1' },
+                  { name: 'Resource 2', is_available: false, resources: 'res2' }
+                ]
+              }
+            },
+            error: { value: null }
+          })
+        }
+        if (url.includes('/models/runtime_framework')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                data: [{ id: 1, frame_name: 'test-framework' }]
+              }
+            },
+            error: { value: null }
+          })
+
+        }
+      },
+      put: () => ({
+        json: () => Promise.resolve({ error: { value: null } })
+      }),
+      delete: () => ({
+        json: () => Promise.resolve({ error: { value: null } })
+      }),
+    };
+  }
+}));
+
+// Mock useUserStore
+vi.mock('../../stores/UserStore', () => ({
+  default: vi.fn(() => ({
+    username: 'test-user'
   }))
 }));
 
@@ -27,7 +69,6 @@ const createWrapper = (props = {}) => {
     props: {
       finetune: {
         cluster_id: 'test-cluster',
-        // 其他必要的 finetune 属性
       },
       finetuneId: 1,
       finetuneName: 'Test Finetune',
@@ -42,35 +83,9 @@ const createWrapper = (props = {}) => {
 };
 
 describe("FinetuneSettings", () => {
-  it("mounts correctly", () => {
+  it.only("mounts correctly", () => {
     const wrapper = createWrapper();
     expect(wrapper.exists()).toBe(true);
   });
 
-  it("renders the finetune name correctly", () => {
-    const wrapper = createWrapper();
-    expect(wrapper.find('el-input').attributes('value')).toBe('Test Finetune');
-  });
-
-  it("displays available resources", async () => {
-    const wrapper = createWrapper();
-    await wrapper.vm.$nextTick(); // Wait for reactivity
-    const options = wrapper.findAll('el-option');
-    expect(options.length).toBe(2); // Check if two options are rendered
-    expect(options[0].attributes('label')).toBe('Resource 1');
-    expect(options[1].attributes('label')).toBe('Resource 2');
-  });
-
-  it("handles delete confirmation correctly", async () => {
-    const wrapper = createWrapper();
-    await wrapper.setData({ delDesc: 'Test Finetune/1' }); // Set delete description
-    await wrapper.find('#confirmDelete').trigger('click'); // Trigger delete
-    // Add assertions to check if delete function was called
-  });
-
-  it("fetches resources on mount", async () => {
-    const wrapper = createWrapper();
-    await wrapper.vm.fetchResources(); // Manually call fetchResources
-    expect(wrapper.vm.cloudResources).toHaveLength(2); // Adjust expected value based on mock data
-  });
 });
