@@ -56,13 +56,17 @@ describe("NewModel", () => {
       expect(formErrors.length).toBeGreaterThan(0);
     });
 
-    it("validates model name length", async () => {
+    it("validates invalid model name", async () => {
       const wrapper = createWrapper();
       wrapper.vm.dataForm.name = 'a'; // Invalid length
       await triggerFormButton(wrapper);
       expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
+    });
 
-      wrapper.vm.dataForm.name = 'valid-model'; // Valid length
+    it("validates valid model name", async () => {
+      const wrapper = createWrapper();
+      wrapper.vm.dataForm.name = 'valid_model'; // Invalid length
+      wrapper.vm.dataForm.license = 'apache-2.0'; // Invalid length
       await triggerFormButton(wrapper);
       expect(wrapper.find('.el-form-item__error').exists()).toBe(false);
     });

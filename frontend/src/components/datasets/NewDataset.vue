@@ -7,10 +7,10 @@
         width="37"
       />
     </div>
-    <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
+    <h3 class="text-gray-700 text-xl font-semibold mt-6 mb-3">
       {{ t('datasets.newDataset.title') }}
     </h3>
-    <p class="text-gray-500 text-md font-regular md:text-center">
+    <p class="text-gray-500 text-base font-medium md:text-center">
       {{ t('datasets.newDataset.titleDesc') }}
     </p>
     <div class="mt-9">
@@ -107,10 +107,10 @@
               style="width: 100%"
             >
               <el-option
-                v-for="item in licenses"
-                :key="item[0]"
-                :label="item[1]"
-                :value="item[0]"
+                v-for="item in licenseList"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
               />
             </el-select>
           </el-form-item>
@@ -136,10 +136,11 @@
             v-model="dataForm.visibility"
             :publicDesc="t('datasets.newDataset.publicDesc')"
             :privateDesc="t('datasets.newDataset.privateDesc')"
+            :canPublic="false"
           />
         </el-form-item>
         <p
-          class="mb-[18px] rounded-md bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
+          class="mb-[18px] rounded-sm bg-brand-25 text-brand-500 text-[13px] py-[9px] px-4"
         >
           {{ t('datasets.newDataset.tips') }}
         </p>
@@ -159,7 +160,7 @@
 </template>
 
 <script setup>
-  import { ref, inject } from 'vue'
+  import { ref, inject, onMounted } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -171,6 +172,7 @@
   const { t } = useI18n()
   const dataFormRef = ref(null)
   const nameRule = inject('nameRule')
+  const licenseList = ref([])
 
   // Props
   const props = defineProps({
@@ -185,9 +187,9 @@
     owner: '',
     name: '',
     nickname: '',
-    license: props.licenses[0][0],
+    license: '',
     desc: '',
-    visibility: 'public'
+    visibility: 'private'
   })
 
   const loading = ref(false)
@@ -305,6 +307,20 @@
       ElMessage.error(error.value.msg)
     }
   }
+
+  const getLicenses = async () => {
+    try {
+      const { data } = await useFetchApi(`/tags?category=license&scope=dataset`).json();
+      licenseList.value = data.value.data;
+      dataForm.value.license = licenseList.value[0]?.name||'';
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  onMounted(() => {
+    getLicenses();
+  });
 </script>
 
 <style scoped>
