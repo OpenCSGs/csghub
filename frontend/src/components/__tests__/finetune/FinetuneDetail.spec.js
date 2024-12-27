@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import FinetuneDetail from "@/components/finetune/FinetuneDetail.vue";
-
 // Mock useFetchApi
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => ({
@@ -10,20 +9,18 @@ vi.mock('@/packs/useFetchApi', () => ({
         return Promise.resolve({
           data: {
             value: {
-              body: {
-                data: {
-                  deploy_name: 'Test Finetune',
-                  proxy_endpoint: 'test.endpoint',
-                  hardware: 'Test Hardware',
-                  repository_id: 123,
-                  svc_name: 'Test Service',
-                  model_id: 456,
-                  deploy_id: 789,
-                  runtime_framework: 'Test Framework',
-                  cluster_id: 'Test Cluster',
-                  status: 'Running',
-                  endpoint: 'test.endpoint'
-                }
+              data: {
+                deploy_name: 'Test Finetune',
+                proxy_endpoint: 'test.endpoint',
+                hardware: 'Test Hardware',
+                repository_id: 123,
+                svc_name: 'Test Service',
+                model_id: '456',
+                deploy_id: 789,
+                runtime_framework: 'Test Framework',
+                cluster_id: 'Test Cluster',
+                status: 'Running',
+                endpoint: 'test.endpoint'
               }
             }
           },
@@ -36,15 +33,13 @@ vi.mock('@/packs/useFetchApi', () => ({
         return Promise.resolve({
           data: {
             value: {
-              body: {
-                data: [
-                  {
-                    name: 'Test Resource',
-                    resources: 'Test Hardware',
-                    is_available: true
-                  }
-                ]
-              }
+              data: [
+                {
+                  name: 'Test Resource',
+                  resources: 'Test Hardware',
+                  is_available: true
+                }
+              ]
             }
           },
           error: { value: null },
@@ -70,6 +65,18 @@ vi.mock('@/packs/useFetchApi', () => ({
     }
   })
 }));
+
+
+vi.mock('@microsoft/fetch-event-source', () => {
+  return {
+    fetchEventSource: vi.fn((url, options) => {
+      // Simulate the onopen and onmessage events
+      options.onopen({ ok: true, status: 200 });
+      options.onmessage({ data: JSON.stringify({ status: 'Running', details: [{ name: 'Test Resource' }] }) });
+      return { close: vi.fn() }; // Return a mock close function
+    })
+  }
+})
 
 const createWrapper = (props = {}) => {
   window.ENABLE_HTTPS = 'false';
@@ -98,7 +105,7 @@ describe("FinetuneDetail", () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it.skip("fetches finetune details on mount", async () => {
+  it("fetches finetune details on mount", async () => {
     const wrapper = createWrapper();
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.finetune.deploy_name).toBe('Test Finetune');
@@ -106,10 +113,9 @@ describe("FinetuneDetail", () => {
   });
 
 
-  it.skip("handles SSE connection successfully", async () => {
+  it("handles SSE connection successfully", async () => {
     const wrapper = createWrapper();
     await wrapper.vm.$nextTick();
-    expect(fetchEventSource).toHaveBeenCalled();
     expect(wrapper.vm.isStatusSSEConnected).toBe(true);
     expect(wrapper.vm.appStatus).toBe('Running');
   });

@@ -11,12 +11,10 @@ vi.mock('@/packs/useFetchApi', () => ({
           return Promise.resolve({
             data: {
               value: {
-                body: {
-                  data: [
-                    { cluster_id: 'cluster-1', region: 'region-1' },
-                    { cluster_id: 'cluster-2', region: 'region-2' }
-                  ]
-                }
+                data: [
+                  { cluster_id: 'cluster-1', region: 'region-1' },
+                  { cluster_id: 'cluster-2', region: 'region-2' }
+                ]
               }
             },
             error: { value: null }
