@@ -214,7 +214,7 @@
 <script setup>
   import { ref, computed, onMounted, watch } from 'vue'
   import { ElMessage } from 'element-plus'
-  import useFetchApi from '../../packs/useFetchApi'
+  import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import useUserStore from '../../stores/UserStore'
 

@@ -159,7 +159,7 @@
 <script setup>
   import { ref, onMounted, inject, computed } from 'vue'
   import { ElMessage } from 'element-plus'
-  import useFetchApi from '../../packs/useFetchApi'
+  import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
 
   const props = defineProps({

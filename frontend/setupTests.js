@@ -39,8 +39,8 @@ config.global.plugins = [
     pinia
 ];
 
-const DEFAULT_TAGS = []
-const CSGHUB_SERVER = 'http://localhost:8080'
+window.DEFAULT_TAGS = []
+window.CSGHUB_SERVER = 'http://localhost:8080'
 
 config.global.provide = {
     defaultTags: DEFAULT_TAGS,
