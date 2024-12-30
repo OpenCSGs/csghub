@@ -5,34 +5,43 @@ import {
   beforeEach,
   vi,
   afterEach,
-  afterAll
 } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Profile from '../../user_settings/Profile.vue'
-import { useCookies } from 'vue3-cookies'
+import { reactive } from 'vue'
 
 // Mock vue3-cookies
-let mockCookieGetFn = vi.fn()
-
-mockCookieGetFn.mockImplementation(
-  () => ({ cookies: {
+// let mockCookieGetFn = vi.fn()
+let { mockCookieGetFn } = vi.hoisted(() => {
+  return { mockCookieGetFn: vi.fn() }
+})
+mockCookieGetFn.mockImplementation(() => ({
+  cookies: {
     get: (key) => '123'
-  }})
-)
-
+  }
+}))
 vi.mock('vue3-cookies', () => ({
   useCookies: mockCookieGetFn
-  // useCookies: () => ({ cookies: {
-  //   get: (key) => '123'
-  // }})
 }))
 
-let userStoreData = {
+// mock, actually redefine window.location
+const mockLocation = {
+  href: 'http://localhost:3000/profile/test_user',
+  search: ''
+}
+Object.defineProperty(window, 'location', {
+  value: mockLocation,
+  writable: true
+})
+
+let userStoreData = reactive({
+  uuid: 'current_user',
   username: 'current_user',
   nickname: 'current_user',
   email: 'current_user@test.com',
   avatar: 'current_user.com',
   roles: ['admin'],
+  initialized: true,
   orgs: [
     {
       path: 'org_one',
@@ -41,7 +50,7 @@ let userStoreData = {
   ],
   lastLoginTime: '2023-09-11',
   phone: '123456'
-}
+})
 vi.mock('../../../stores/UserStore', () => ({
   default: () => userStoreData
 }))
@@ -89,6 +98,7 @@ describe('Profile', () => {
   let wrapper
 
   beforeEach(() => {
+    vi.clearAllMocks()
     wrapper = mount(Profile, {
       props: {
         name: 'test_name'
@@ -96,9 +106,63 @@ describe('Profile', () => {
     })
   })
 
-  describe("mount", () => {
-    it("mounts correctly", () => {
-      expect(wrapper.exists()).toBe(true);
+  afterEach(() => {
+    if (wrapper) {
+      wrapper.unmount()
+    }
+  })
+
+  describe('mount', () => {
+    it('mounts correctly', () => {
+      console.log('mount correctly')
+      expect(wrapper.exists()).toBe(true)
+      expect(getApiMockFn).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('logged in', () => {
+    describe('is current user', () => {
+      it('will not fetch user info from api', async () => {
+        userStoreData.username = 'test_user'
+        await wrapper.vm.$nextTick()
+        expect(getApiMockFn).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('is not current user', () => {
+      it('fetch user info from api', async () => {
+        userStoreData.username = 'not_test_user'
+        await wrapper.vm.$nextTick()
+        expect(getApiMockFn).toHaveBeenCalledTimes(1)
+      })
+    })
+
+  })
+
+  describe('without logged in', () => {
+    beforeEach(() => {
+      mockCookieGetFn.mockImplementation(() => ({
+        cookies: {
+          get: (key) => null
+        }
+      }))
+      userStoreData = {}
+      wrapper = mount(Profile, {
+        props: {
+          name: 'test_name'
+        }
+      })
+    })
+
+    it('fetchs user info from api', async () => {
+      await wrapper.vm.$nextTick()
+      expect(getApiMockFn).toHaveBeenCalledTimes(1)
+    })
+
+    it('renders user info from api', async () => {
+      await wrapper.vm.$nextTick()
+      expect(wrapper.vm.isCurrentUser).toBe(false)
+      expect(wrapper.vm.username).toBe('testuser')
     })
   })
 })

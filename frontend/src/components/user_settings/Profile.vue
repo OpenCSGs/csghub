@@ -76,7 +76,7 @@
   })
 
   watch(() => userStore.username, () => {
-    if (!isCurrentUser.value) {
+    if (userStore.initialized && !isCurrentUser.value) {
       fetchUserInfo()
     }
   })
@@ -95,6 +95,7 @@
   const email = ref('')
   const theLastLoginTime = ref('')
   const userOrgs = ref([])
+  const userRoles = ref([])
 
   const isCurrentUser = computed(() => {
     return userId === userStore.uuid || userId === userStore.username
