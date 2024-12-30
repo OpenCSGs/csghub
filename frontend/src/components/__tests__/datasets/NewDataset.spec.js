@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import NewDataset from "../../datasets/NewDataset.vue";
 
-
 // Mock stores
 vi.mock('../../../stores/UserStore', () => ({
   default: () => ({
@@ -11,15 +10,20 @@ vi.mock('../../../stores/UserStore', () => ({
   })
 }));
 
-// Mock useFetchApi
+let postApiMockFn = vi.fn().mockImplementation(
+  () => ({
+    json: () => Promise.resolve({
+      data: { value: { data: { path: 'testuser/testdataset' } } },
+      error: { value: null }
+    })
+  })
+)
+let getApiMockFn = vi.fn()
+
 vi.mock('../../../packs/useFetchApi', () => ({
   default: () => ({
-    post: () => ({
-      json: () => Promise.resolve({
-        data: { value: { data: { path: 'testuser/testdataset' } } },
-        error: { value: null }
-      })
-    })
+    json: getApiMockFn,
+    post: postApiMockFn
   })
 }));
 
@@ -44,6 +48,23 @@ describe("NewDataset", () => {
   let wrapper;
 
   beforeEach(() => {
+    getApiMockFn.mockImplementation(
+      () => Promise.resolve({
+        data: { value: { data: [{
+          "id": 92,
+          "name": "apache-2.0",
+          "category": "license",
+          "group": "",
+          "scope": "dataset",
+          "built_in": true,
+          "show_name": "",
+          "created_at": "2024-03-27T09:11:06.652752Z",
+          "updated_at": "2024-03-27T09:11:06.652752Z"
+        }]}},
+        error: { value: null }
+      })
+    )
+
     wrapper = mount(NewDataset, {
       global: {
         provide: {
@@ -51,7 +72,7 @@ describe("NewDataset", () => {
         },
       },
       props: {
-        licenses: [['MIT', 'MIT License']]
+        licenses: [['MIT License', 'MIT']]
       }
     });
   });
@@ -61,9 +82,15 @@ describe("NewDataset", () => {
       expect(wrapper.exists()).toBe(true);
     });
 
-    it("renders license options", () => {
+    it("renders license options", async () => {
+      await getApiMockFn(); // Ensure the promise is resolved
+      await wrapper.vm.$nextTick()
+
+      expect(getApiMockFn).toHaveBeenCalled();
+
+      // await getApiMockFn()
       const allSelectedItemsInString = wrapper.findAll('.el-select__selected-item').map((item) => item.text()).join(',')
-      expect(allSelectedItemsInString).toContain('MIT License')
+      expect(allSelectedItemsInString).toContain('apache-2.0')
     });
   });
 
@@ -85,6 +112,7 @@ describe("NewDataset", () => {
 
     it("accepts valid dataset name", async () => {
       wrapper.vm.dataForm.name = 'valid-name'
+      wrapper.vm.dataForm.license = 'apach-2.0'
       await wrapper.vm.$nextTick()
       expect(await validateForm()).toBe(true)
     });
