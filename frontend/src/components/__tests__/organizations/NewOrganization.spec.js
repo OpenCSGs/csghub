@@ -31,7 +31,7 @@ vi.mock('../../../stores/UserStore', () => ({
   })
 }))
 
-vi.mock('../../../packs/useFetchApi', () => ({
+vi.mock('@/packs/useFetchApi', () => ({
   default: () => ({
     post: () => ({
       json: () =>

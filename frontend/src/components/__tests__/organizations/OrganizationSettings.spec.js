@@ -5,8 +5,6 @@ import OrganizationEdit from '@/components/organizations/OrganizationEdit.vue'
 import OrganizationMembers from '@/components/organizations/OrganizationMembers.vue'
 import Menu from '@/components/organizations/Menu.vue'
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
 const createWrapper = (props) => {
   return mount(OrganizationSettings, {
     global: {
