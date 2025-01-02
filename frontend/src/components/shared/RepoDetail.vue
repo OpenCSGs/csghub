@@ -87,23 +87,42 @@
     try {
       const { response, data, error } = await useFetchApi(url).json()
 
-      const hasPermission = usePermissionCheck(response.value)
-      if (!hasPermission) return
-
-      const json = data.value
-      if (json) {
-        repo.value = json.data
-        if (json.data.tags) {
-          tags.value = buildTags(json.data.tags)
-        }
-        repoDetailStore.initialize(json.data)
-        ownerUrl.value = getOwnerUrl(json.data)
-      } else {
-        ElMessage({ message: error.value.msg, type: 'warning' })
+      if (!usePermissionCheck(response.value)) {
+        return
       }
+
+      if (!data.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
+        return
+      }
+
+      const repoData = data.value.data
+      repo.value = repoData
+
+      tags.value = handleRepoTags(repoData)
+
+      repoDetailStore.initialize(repoData)
+      ownerUrl.value = getOwnerUrl(repoData)
+
     } catch (error) {
-      console.error(error)
+      console.error('Failed to fetch repo detail:', error)
     }
+  }
+
+  const handleRepoTags = (repoData) => {
+    if (repoData.tags) {
+      return buildTags(repoData.tags)
+    }
+
+    if (props.repoType === 'code' && repoData.license) {
+      return buildTags([{
+        name: repoData.license,
+        category: 'license',
+        built_in: true
+      }])
+    }
+
+    return []
   }
 
   onMounted(() => {
