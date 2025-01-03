@@ -19,6 +19,7 @@
   import DiscussionCards from './DiscussionCards.vue'
   import NewCommunityDiscussion from './NewCommunityDiscussion.vue'
   import useFetchApi from '../../packs/useFetchApi'
+  import { ElMessage } from 'element-plus'
 
   export default {
     props: {

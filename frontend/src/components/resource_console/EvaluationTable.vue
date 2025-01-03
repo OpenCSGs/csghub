@@ -197,6 +197,7 @@
   import ErrorStatus from '../application_spaces/ErrorStatus.vue'
   import SuccessStatus from '../application_spaces/SuccessStatus.vue'
   import { useI18n } from 'vue-i18n'
+  import { ElMessage } from 'element-plus'
 
   const { locale } = useI18n()
 

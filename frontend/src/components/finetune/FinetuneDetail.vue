@@ -105,6 +105,7 @@
   import FinetuneSettings from './FinetuneSettings.vue'
   import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     namespace: String,

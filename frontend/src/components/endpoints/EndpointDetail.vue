@@ -49,6 +49,7 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
+  import { ElMessage } from 'element-plus'
 
   const userStore = useUserStore()
   const { cookies } = useCookies()
