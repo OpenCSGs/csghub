@@ -266,6 +266,7 @@
   import BillingDetail from './BillingDetail.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ref, computed, onMounted } from 'vue'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     repoDetail: Object,
