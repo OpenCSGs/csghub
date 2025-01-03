@@ -91,9 +91,6 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("user_token", jwtToken, cookieMaxAge, "/", "", false, false)
-	ctx.SetCookie("can_change_username", fmt.Sprintf("%v", userResp.CanChangeUserName), cookieMaxAge, "/", "", false, false)
-
 	dbUser, err := i.userModel.FindByLoginIdentity(ctx, userResp.UUID)
 	user = &dbUser
 	if err != nil {
@@ -131,10 +128,6 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 		}
 	}
 
-	user.SetRoles(userResp.Roles...)
-
-	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
-
 	user.SessionIP = ctx.ClientIP()
 	err = i.userModel.Update(ctx, user)
 	if err != nil {
@@ -143,5 +136,16 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Redirect(http.StatusFound, "/")
+	user.SetRoles(userResp.Roles...)
+
+	ctx.SetCookie("user_token", jwtToken, cookieMaxAge, "/", "", false, false)
+	ctx.SetCookie("can_change_username", fmt.Sprintf("%v", userResp.CanChangeUserName), cookieMaxAge, "/", "", false, false)
+	ctx.SetCookie("login_identity", user.LoginIdentity, cookieMaxAge, "/", "", false, false)
+
+	previousPath, _ := ctx.Cookie("previous_path")
+	if previousPath != "" {
+		ctx.Redirect(http.StatusFound, previousPath)
+	} else {
+		ctx.Redirect(http.StatusFound, "/")
+	}
 }

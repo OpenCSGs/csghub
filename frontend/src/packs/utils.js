@@ -1,3 +1,7 @@
+import { useCookies } from 'vue3-cookies'
+
+const { cookies } = useCookies()
+
 export const btoa_utf8 = (value) => {
   return btoa(
     String.fromCharCode(...new TextEncoder('utf-8').encode(value))
@@ -36,4 +40,9 @@ export const beiJingTimeParser = (utcTimeStr) => {
 
   const utcTime = new Date(utcTimeStr)
   return utcTime.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
+}
+
+export const ToLoginPage = () => {
+  cookies.set('previous_path', window.location.pathname)
+  window.location.href = '/login'
 }

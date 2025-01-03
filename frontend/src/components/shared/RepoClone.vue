@@ -2,10 +2,12 @@
   <div
     class="flex flex-wrap items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
   >
+    <!-- add to collection btn -->
     <AddToCollections
       v-if="showAddToCollections"
       :repoId="repo.repository_id"
     />
+
     <!-- multi-source sync button -->
     <el-button
       v-if="showSyncButton"
@@ -55,7 +57,7 @@
       <el-button
         type="default"
         class="!rounded-lg shadow-sm hover:bg-slate-50"
-        @click="toLoginPage"
+        @click="ToLoginPage"
       >
         <SvgIcon
           name="model_endpoint_create"
@@ -247,7 +249,8 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import AddToCollections from '../collections/AddToCollections.vue'
-  import useUserStore from '../../stores/UserStore'
+  import useUserStore from '../../stores/UserStore.js'
+  import { ToLoginPage } from '@/packs/utils'
 
   const userStore = useUserStore()
 
@@ -462,18 +465,15 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     if (isLoggedIn.value) {
       toFinetunePage()
     } else {
-      toLoginPage()
+      ToLoginPage()
     }
-  }
-  const toLoginPage = () => {
-    window.location.href = '/login'
   }
 
   const toNewEvaluatePage = () => {
     if (isLoggedIn.value) {
       window.location.href = `/evaluations/new?model_id=${props.namespacePath}`
     } else {
-      toLoginPage()
+      ToLoginPage()
     }
   }
 
