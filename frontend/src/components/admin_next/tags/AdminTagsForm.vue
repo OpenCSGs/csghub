@@ -34,7 +34,11 @@
         label="Category"
         prop="category"
         class="w-full">
-        <el-input v-model="dataForm.category" />
+        <el-select v-model="dataForm.category">
+          <el-option
+            label="model"
+            value="model"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item
         label="Scope"
@@ -89,6 +93,8 @@
 
   const { t } = useI18n()
   const router = useRouter()
+
+  const tagCategories = ref([])
 
   const breadcrumbsTitle = computed(() =>
     router.currentRoute.value.fullPath === '/admin_panel/tags/new'
@@ -179,7 +185,17 @@
     }
   }
 
+  const fetchTagCategories = async () => {
+    const { data, error } = await useFetchApi("/tags/categories").json()
+    if (data.value) {
+      tagCategories.value = data.value.data
+    } else {
+      ElMessage.error(`Failed to fetch tag category: ${error.value}`)
+    }
+  }
+
   onMounted(() => {
+    fetchTagCategories()
     if (breadcrumbsTitle.value == 'edit') {
       fetchTag()
     }
