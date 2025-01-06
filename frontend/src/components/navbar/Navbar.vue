@@ -257,7 +257,7 @@
         <!-- not logged in -->
         <template v-else>
           <div
-            class="md:hidden">
+            class="md:hidden min-w-[91px]">
             <a href="/login" class="btn btn-primary btn-md">{{ $t('navbar.loginRegister') }}</a>
           </div>
           <a
