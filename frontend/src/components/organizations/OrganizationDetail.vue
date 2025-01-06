@@ -109,7 +109,6 @@
   import { ref, onMounted, watch } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
-  import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
@@ -125,8 +124,6 @@
     avatar: ''
   })
   const membersList = ref([])
-
-  const { cookies } = useCookies()
 
   const userStore = useUserStore()
 
