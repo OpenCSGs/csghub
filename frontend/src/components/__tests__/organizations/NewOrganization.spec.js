@@ -2,8 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NewOrganization from '@/components/organizations/NewOrganization.vue'
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
 const createWrapper = (props) => {
   return mount(NewOrganization, {
     global: {
@@ -17,11 +15,13 @@ const createWrapper = (props) => {
   })
 }
 
-const triggerFormButton = async (wrapper) => {
+const triggerFormButton = (wrapper) => {
   const button = wrapper.findComponent({ name: 'CsgButton' })
-  await button.trigger('click')
-  await delay(500)
-  await wrapper.vm.$nextTick()
+  button.trigger('click')
+  // here in the true component button click will trigger an async request and will take some time
+  // but the test code will not wait for the async function end and will go to next step to do the check
+  // if we do not wait some time here, the test will failed
+  return new Promise((resolve) => { setTimeout(resolve, 1000) })
 }
 
 vi.mock('../../../stores/UserStore', () => ({
@@ -60,7 +60,7 @@ describe('NewOrganization', () => {
     })
   })
 
-  describe('form submission', async () => {
+  describe('form submission', () => {
     it('shows success message on successful submission', async () => {
       const wrapper = createWrapper()
       wrapper.vm.dataForm = {
@@ -73,7 +73,6 @@ describe('NewOrganization', () => {
       }
       await wrapper.vm.$nextTick()
       await triggerFormButton(wrapper)
-      await new Promise(resolve => setTimeout(resolve, 500));
       expect(window.location.href).toBe('/organizations/testorg')
     })
   })
