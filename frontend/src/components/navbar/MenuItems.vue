@@ -1,7 +1,7 @@
 <template>
   <template
     :key="item.index"
-    v-for="item in items">
+    v-for="item in allNavItems">
     <a
       v-if="!item.items"
       :href="item.index">
@@ -117,7 +117,6 @@
 <script setup>
   import { ref, watch, onMounted, onUnmounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-
   const { t } = useI18n()
 
   const props = defineProps({
@@ -126,10 +125,49 @@
     hasEmail: Boolean
   })
 
+  const rawNavItems = [
+    {
+      title: t('navbar.models'),
+      index: '/models',
+      class: menuItemClass,
+      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+    },
+    {
+      title: t('navbar.datasets'),
+      index: '/datasets',
+      class: menuItemClass,
+      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+    },
+    {
+      title: t('navbar.spaces'),
+      index: '/spaces',
+      class: menuItemClass,
+      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+    },
+    {
+      title: t('navbar.codes'),
+      index: '/codes',
+      class: menuItemClass,
+      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+    },
+    {
+      title: t('collections.collection'),
+      index: '/collections',
+      class: menuItemClass,
+      style: 'border:none',
+    },
+    {
+      title: t('prompts.promptLibrary'),
+      index: '/prompts/library',
+      class: menuItemClass,
+      style: 'border:none',
+    }
+  ]
+
+  const allNavItems = ref(rawNavItems)
+
   const moreItems = ref([])
   const currentScreenWidth = ref(window.innerWidth)
-  const safePadding = props.isLoggedInBoolean ? 63 : 100
-  const moreMenuWidth = 107
 
   const handleResize = () => {
     currentScreenWidth.value = window.innerWidth
@@ -148,91 +186,35 @@
 
   watch(currentScreenWidth, (newVal) => {
     if (window.innerWidth > 768) {
-      adjustMenuItems()
+      initMenuItems()
     }
   })
 
   const initMenuItems = () => {
-    const menuWidth = document.querySelector('#pc-menu').offsetWidth
-    let width = moreMenuWidth + safePadding
-    items.value.forEach((item, index) => {
-      width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
-      if (width > menuWidth) {
-        moreItems.value = items.value.splice(index, items.value.length - index)
-        return
-      }
-    })
-  }
+    // const menuWidth = document.querySelector('#pc-menu')?.offsetWidth
+    const menuLength = rawNavItems.length - 1
 
-  const adjustMenuItems = () => {
-    const menuWidth = document.querySelector('#pc-menu').offsetWidth
-    let width = moreMenuWidth + safePadding // 更多按钮加上安全距离
-
-    // 超出宽度的菜单放到更多里面
-    items.value.map((item, index) => {
-      width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
-      if (width > menuWidth) {
-        const removedItem = items.value.pop()
-        if (removedItem) {
-          moreItems.value.unshift(removedItem)
-        }
-      }
-    })
-
-    // 将更多里面的菜单放回去
-    moreItems.value.map((item, index) => {
-      width += document.querySelectorAll(".js-menu-item-width")[index].offsetWidth
-      if (width <= menuWidth) {
-        const removedItem = moreItems.value.shift()
-        if (removedItem) {
-          items.value.push(removedItem)
-        }
-      }
-    })
-  }
-
-  const menuItemClass = 'md:!px-[12px] md:!py-[16px] md:!h-auto js-menu-item-width'
-  const subMenuClass = 'md:!h-auto md:!py-[16px] js-menu-item-width'
-  const popperClass = 'popper-submenu'
-
-  const items = ref([
-    {
-      title: t('navbar.models'),
-      index: '/models',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('navbar.datasets'),
-      index: '/datasets',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('navbar.spaces'),
-      index: '/spaces',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('navbar.codes'),
-      index: '/codes',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('collections.collection'),
-      index: '/collections',
-      class: menuItemClass,
-      style: 'border:none',
-    },
-    {
-      title: t('prompts.promptLibrary'),
-      index: '/prompts/library',
-      class: menuItemClass,
-      style: 'border:none',
+    if (768 < window.innerWidth && window.innerWidth <= 1024) {
+      allNavItems.value = rawNavItems.slice(0, 3)
+      moreItems.value = rawNavItems.slice(3, menuLength)
     }
-  ])
+
+    if (1024 < window.innerWidth && window.innerWidth <= 1280) {
+      allNavItems.value = rawNavItems.slice(0, 5)
+      moreItems.value = rawNavItems.slice(5, menuLength)
+    }
+
+    if (window.innerWidth > 1280) {
+      allNavItems.value = rawNavItems
+      moreItems.value = []
+    }
+  }
+
+  const menuItemClass =
+    'md:!px-[12px] md:!py-[16px] md:!h-auto js-menu-item-width'
+  const subMenuClass = 'md:!h-auto md:!py-[16px] js-menu-item-width'
+  const subMenuItemClass = 'mx-[12px] md:mx-0 md:!px-[12px]'
+  const popperClass = 'popper-submenu'
 </script>
 
 <style scoped>
