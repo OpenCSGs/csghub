@@ -267,6 +267,9 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ref, computed, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     repoDetail: Object,
