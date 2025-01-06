@@ -368,7 +368,7 @@
         type: 'warning'
       })
     } else {
-      tagList.value = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
+      tagList.value = Array.isArray(data.value.data)?data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType):[]
     }
   }
 </script>
