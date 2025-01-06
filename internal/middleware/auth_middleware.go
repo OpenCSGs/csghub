@@ -42,6 +42,8 @@ func (a *MiddlewareImpl) CheckCurrentUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		currentUser := a.jwtUtils.GetCurrentUser(ctx)
 		if currentUser == nil {
+			currentPath := ctx.Request.URL.Path
+			ctx.SetCookie("previous_path", currentPath, 3600*24*7, "/", "", false, false)
 			ctx.Redirect(http.StatusFound, "/login")
 			ctx.Abort()
 			return
