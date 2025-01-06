@@ -25,41 +25,6 @@ vi.mock('../../../stores/UserStore', () => ({
 
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => ({
-    post: () => ({
-      json: () =>
-        Promise.resolve({
-          data: { value: { msg: 'Success' } },
-          error: { value: null }
-        })
-    }),
-    put: () => ({
-      json: () =>
-        Promise.resolve({
-          data: { value: { msg: 'Success' } },
-          error: { value: null }
-        })
-    }),
-    delete: () => ({
-      json: () =>
-        Promise.resolve({
-          data: { value: null },
-          error: { value: null }
-        })
-    }),
-    get: () => ({
-      json: () =>
-        Promise.resolve({
-          data: {
-            value: {
-              data: {
-                content: btoa('test content'),
-                sha: 'test-sha'
-              }
-            }
-          },
-          error: { value: null }
-        })
-    }),
     json: () => {
       console.log(url)
       if (url === '/organization/testorg') {
@@ -121,12 +86,11 @@ vi.mock('@/packs/useFetchApi', () => ({
 }))
 
 describe('OrganizationDetail', () => {
-  describe('mount', async () => {
+  describe('mount', () => {
     it('mounts correctly', async () => {
       const wrapper = createWrapper()
       expect(wrapper.exists()).toBe(true)
       await wrapper.vm.$nextTick()
-      console.log(wrapper.vm.organizationData)
       expect(wrapper.vm.organizationData).toEqual(
         expect.objectContaining({
           name: 'testorg',

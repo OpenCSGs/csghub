@@ -100,7 +100,7 @@ vi.mock('@/packs/useFetchApi', () => ({
   })
 }))
 
-describe('NewOrganization', () => {
+describe('OrganizationSettings', () => {
   describe('mount', async () => {
     it('mounts correctly', async () => {
       const wrapper = createWrapper()
