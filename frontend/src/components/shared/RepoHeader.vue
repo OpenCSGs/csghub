@@ -191,7 +191,7 @@
 
   <!-- repo tags -->
   <header-tags
-    v-if="repoType === 'model' || repoType === 'dataset'"
+    v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code'"
     :tags="tags"
     :prefix="`${repoType}s/`"
   />
