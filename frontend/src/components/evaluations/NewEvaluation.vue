@@ -194,19 +194,12 @@
             size="large"
             style="width: 100%"
           >
-            <el-option-group
-              v-for="group in evaluationResources"
-              :key="group.label"
-              :label="group.label"
-            >
-              <el-option
-                v-for="item in group.options"
-                :key="item.name"
-                :label="item.label"
-                :value="`${item.id}/${item.order_detail_id}`"
-                :disabled="!item.is_available"
-              />
-            </el-option-group>
+            <el-option
+              v-for="item in evaluationResources"
+              :key="item.name"
+              :label="item.name"
+              :value="item.id"
+              :disabled="!item.is_available" />
           </el-select>
           <p class="text-gray-600 mt-2 font-light">
             {{ t('evaluation.new.resourceTip') }}
@@ -273,13 +266,6 @@
       label: t('evaluation.new.dedicatedResource')
     }
   ])
-
-  const payModeMapping = {
-    free: t('all.free'),
-    minute: t('all.minutePay'),
-    month: t('all.yearMonthPay'),
-    year: t('all.yearMonthPay')
-  }
 
   const rules = ref({
     name: [
@@ -380,37 +366,11 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       const body = data.value
-      const allResources = body.data
       const firstAvailableResource = body.data?.find(
-        (resource) =>
-          resource.is_available && ['npu', 'gpu'].includes(resource.type)
+        (resource) => resource.is_available
       )
-      dataForm.value.cloud_resource = firstAvailableResource
-        ? `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
-        : ''
-      const categories = {}
-      allResources.forEach((item) => {
-        if (item.type === 'cpu') return
-        const category = payModeMapping[item.pay_mode] || 'Others'
-        if (!categories[category]) {
-          categories[category] = []
-        }
-        if (item.pay_mode == 'minute') {
-          item.label = `${item.name} ${item.price / 100}${t('all.hourUnit')}`
-        } else if (item.pay_mode == 'month') {
-          item.label = `${item.name} ${item.price / 100}${t('all.monthUnit')}`
-        } else if (item.pay_mode == 'year') {
-          item.label = `${item.name} ${item.price / 100}${t('all.yearUnit')}`
-        } else {
-          item.label = item.name
-        }
-        categories[category].push(item)
-      })
-      const options = Object.keys(categories).map((category) => ({
-        label: category,
-        options: categories[category]
-      }))
-      evaluationResources.value = options
+      dataForm.value.cloud_resource = firstAvailableResource?.id || ''
+      evaluationResources.value = body.data
     }
   }
 

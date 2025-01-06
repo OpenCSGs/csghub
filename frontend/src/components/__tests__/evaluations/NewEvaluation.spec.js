@@ -14,24 +14,6 @@ const MOCK_RESOURCE = {
   name: 'gpu-resource',
   type: 'gpu',
   is_available: true,
-  pay_mode: 'minute',
-  price: 1000
-}
-
-const MOCK_TRANSFORMED_RESOURCE = {
-  label: 'all.minutePay',
-  options: [
-    {
-      id: 1,
-      order_detail_id: 1,
-      name: 'gpu-resource',
-      type: 'gpu',
-      is_available: true,
-      pay_mode: 'minute',
-      price: 1000,
-      label: 'gpu-resource 10all.hourUnit'
-    }
-  ]
 }
 
 const createResponse = (data, errorMsg = null) => ({
@@ -136,7 +118,7 @@ describe('NewEvaluation', () => {
       wrapper.vm.dataForm.evaluation_cluster = MOCK_CLUSTER_ID
       await wrapper.vm.fetchResources()
       expect(wrapper.vm.evaluationResources).toEqual([
-        MOCK_TRANSFORMED_RESOURCE
+        MOCK_RESOURCE
       ])
     })
   })
