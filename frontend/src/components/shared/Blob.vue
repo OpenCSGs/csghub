@@ -235,7 +235,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { useI18n } from 'vue-i18n'
-  import { createAndClickAnchor } from '../../packs/utils'
+  import { createAndClickAnchor, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -332,7 +332,7 @@
 
   const fetchFileContent = async () => {
     try {
-      const { data } = await useFetchApi(
+      const { data, error } = await useFetchApi(
         `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
       ).json()
 
@@ -343,11 +343,12 @@
         detectFileType()
         lfsContentRegex()
       } else {
-        location.href = '/errors/not-found'
+        console.log(error.value.msg)
+        ToNotFoundPage()
       }
     } catch (err) {
       console.error(err)
-      location.href = '/errors/not-found'
+      ToNotFoundPage()
     }
   }
 

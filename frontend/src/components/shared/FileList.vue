@@ -139,7 +139,7 @@
   import { useI18n } from 'vue-i18n'
   import BranchDropdown from './BranchDropdown.vue';
   import useFetchApi from '../../packs/useFetchApi'
-  import { createAndClickAnchor, beiJingTimeParser } from '../../packs/utils'
+  import { createAndClickAnchor, beiJingTimeParser, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -264,15 +264,17 @@
       if (data.value) {
         files.value = data.value.data
       } else if (response.value.status === 403) {
-        location.href = '/errors/unauthorized'
+        console.log(error.value.msg)
+        ToUnauthorizedPage()
       } else if (response.value.status === 404) {
-        location.href = '/errors/not-found'
+        console.log(error.value.msg)
+        ToNotFoundPage()
       } else {
         ElMessage.warning(error.value.msg)
       }
     } catch (error) {
       console.log(error)
-      location.href = '/errors/not-found'
+      ToNotFoundPage()
     } finally {
       loading.value = false
     }

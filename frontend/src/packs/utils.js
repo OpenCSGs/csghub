@@ -46,3 +46,15 @@ export const ToLoginPage = () => {
   cookies.set('previous_path', window.location.pathname)
   window.location.href = '/login'
 }
+
+export const ToNotFoundPage = () => {
+  setTimeout(() => {
+    location.href = '/errors/not-found'
+  }, 1000)
+}
+
+export const ToUnauthorizedPage = () => {
+  setTimeout(() => {
+    location.href = '/errors/unauthorized'
+  }, 1000)
+}
