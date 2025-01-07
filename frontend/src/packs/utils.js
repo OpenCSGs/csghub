@@ -50,11 +50,11 @@ export const ToLoginPage = () => {
 export const ToNotFoundPage = () => {
   setTimeout(() => {
     location.href = '/errors/not-found'
-  }, 1000)
+  }, 300)
 }
 
 export const ToUnauthorizedPage = () => {
   setTimeout(() => {
     location.href = '/errors/unauthorized'
-  }, 1000)
+  }, 300)
 }

@@ -46,7 +46,7 @@
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
-  import { ToNotFoundPage, ToUnauthorizedPage } from '@/packs/utils'
+  import { ToUnauthorizedPage } from '@/packs/utils'
 
   const props = defineProps({
     defaultTab: String,
@@ -89,7 +89,6 @@
 
       // redirect unauthorized page
       if (response.value.status === 403) {
-        console.log(error.value.msg)
         ToUnauthorizedPage()
         return
       }

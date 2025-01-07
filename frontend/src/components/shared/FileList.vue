@@ -264,17 +264,14 @@
       if (data.value) {
         files.value = data.value.data
       } else if (response.value.status === 403) {
-        console.log(error.value.msg)
         ToUnauthorizedPage()
       } else if (response.value.status === 404) {
-        console.log(error.value.msg)
         ToNotFoundPage()
       } else {
         ElMessage.warning(error.value.msg)
       }
     } catch (error) {
       console.log(error)
-      ToNotFoundPage()
     } finally {
       loading.value = false
     }

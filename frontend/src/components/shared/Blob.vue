@@ -235,7 +235,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { useI18n } from 'vue-i18n'
-  import { createAndClickAnchor, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils'
+  import { createAndClickAnchor } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -344,11 +344,9 @@
         lfsContentRegex()
       } else {
         console.log(error.value.msg)
-        ToNotFoundPage()
       }
     } catch (err) {
       console.error(err)
-      ToNotFoundPage()
     }
   }
 
