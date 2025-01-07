@@ -268,7 +268,7 @@
       } else if (response.value.status === 404) {
         ToNotFoundPage()
       } else {
-        ElMessage.warning(error.value.msg)
+        ElMessage.warning(error.value ? error.value.msg : 'Failed to fetch file list')
       }
     } catch (error) {
       console.log(error)
