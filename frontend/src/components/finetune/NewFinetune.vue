@@ -143,12 +143,12 @@
 
         <div class="flex justify-end">
           <el-form-item>
-            <button
+            <CsgButton
               :loading="loading"
               class="btn btn-primary btn-md"
-              @click="handleSubmit">
-              {{ t('finetune.new.createFinetune') }}
-            </button>
+              :name="t('finetune.new.createFinetune')"
+              @click="handleSubmit"
+            />
           </el-form-item>
         </div>
       </el-form>
@@ -159,7 +159,7 @@
 <script setup>
   import { ref, onMounted, inject, computed } from 'vue'
   import { ElMessage } from 'element-plus'
-  import useFetchApi from '../../packs/useFetchApi'
+  import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
 
   const props = defineProps({

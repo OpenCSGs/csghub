@@ -9,10 +9,10 @@
         :sshCloneUrl="repoDetail.repository?.ssh_clone_url || ''"
         :userName="userName"
         :namespacePath="path"
-        :admin="admin"
         :repo="repoDetail"
         :enableEndpoint="repoDetail.enable_inference"
         :enableFinetune="repoDetail.enable_finetune"
+        :enableEvaluation="repoDetail.enable_evaluation"
       />
     </div>
     <tab-container
@@ -266,6 +266,10 @@
   import BillingDetail from './BillingDetail.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ref, computed, onMounted } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     repoDetail: Object,
@@ -288,7 +292,6 @@
     endpointReplica: Number,
     endpointName: String,
     endpointId: String,
-    admin: Boolean,
     replicaList: Array,
     path: String
   })
@@ -365,7 +368,7 @@
         type: 'warning'
       })
     } else {
-      tagList.value = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
+      tagList.value = Array.isArray(data.value.data)?data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType):[]
     }
   }
 </script>

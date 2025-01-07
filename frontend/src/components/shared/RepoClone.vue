@@ -2,7 +2,12 @@
   <div
     class="flex flex-wrap items-center gap-4 md:relative md:pl-5 md:pb-4 z-10"
   >
-    <AddToCollections v-if="showAddToCollections" :repoId="repo.repository_id" />
+    <!-- add to collection btn -->
+    <AddToCollections
+      v-if="showAddToCollections"
+      :repoId="repo.repository_id"
+    />
+
     <!-- multi-source sync button -->
     <el-button
       v-if="showSyncButton"
@@ -11,41 +16,82 @@
       :disabled="syncInprogress"
       @click="handleSyncRepo"
     >
-      <SvgIcon name="sync" class="mr-2" />
-      {{ syncInprogress ? $t("repo.source.syncing") : $t("repo.source.syncButton") }}
+      <SvgIcon
+        name="sync"
+        class="mr-2"
+      />
+      {{
+        syncInprogress
+          ? $t('repo.source.syncing')
+          : $t('repo.source.syncButton')
+      }}
     </el-button>
 
+    <!-- evaluation button -->
+    <div
+      class="btn btn-secondary-gray btn-sm modelBtn"
+      :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
+      v-if="repoType === 'model'"
+      @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
+    >
+      <SvgIcon
+        name="evaluation_new"
+        class="mr-0"
+        width="12"
+      />
+      <div>{{ $t('evaluation.new.title') }}</div>
+    </div>
 
     <!-- endpoint deploy button -->
     <DeployDropdown
-      v-if="isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
+      v-if="
+        isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl
+      "
       :modelId="namespacePath"
     />
-    <div v-if="!isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl">
-      <el-button type="default" class="!rounded-lg shadow-sm hover:bg-slate-50" @click="toLoginPage">
+    <div
+      v-else-if="
+        !isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl
+      "
+    >
+      <el-button
+        type="default"
+        class="!rounded-lg shadow-sm hover:bg-slate-50"
+        @click="ToLoginPage"
+      >
         <SvgIcon
-        name="model_endpoint_create"
-        class="mr-1"
-      />
-        {{ $t("all.deploy") }}
+          name="model_endpoint_create"
+          class="mr-1"
+        />
+        {{ $t('all.deploy') }}
         <el-icon class="ml-1 el-icon--right">
           <arrow-down />
         </el-icon>
       </el-button>
     </div>
-
+    <div
+      class="btn btn-secondary-gray btn-sm modelBtn disabled"
+      v-else-if="repoType === 'model'"
+    >
+      <SvgIcon
+        name="deploy"
+        class="mr-0"
+      />
+      <div>{{ $t('all.deploy') }}</div>
+    </div>
 
     <!-- finetune deploy button -->
     <div
-      class="btn btn-secondary-gray btn-sm"
-      v-if="repoType === 'model' && enableFinetune && !!httpCloneUrl"
-      @click="handleButtonClick"
+      class="btn btn-secondary-gray btn-sm modelBtn"
+      :class="{ disabled: !enableFinetune || !httpCloneUrl }"
+      v-if="repoType === 'model'"
+      @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
     >
       <SvgIcon
         name="model_finetune_create"
         class="mr-0"
       />
-      <div class="text-sm">{{ $t('finetune.title') }}</div>
+      <div>{{ $t('finetune.title') }}</div>
     </div>
 
     <!-- repo download clone button -->
@@ -88,9 +134,19 @@
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
             <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
-              <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
+              <SvgIcon
+                name="exclamation_point"
+                width="13"
+                height="13"
+                class="cursor-pointer"
+              />
               Use
-              <a href="/settings/access-token" target="_blank" class="underline">access token</a>
+              <a
+                href="/settings/access-token"
+                target="_blank"
+                class="underline"
+                >access token</a
+              >
               as git password/credential
             </div>
             <div
@@ -125,9 +181,21 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500 mb-[8px]">
-              <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-              <a href="/settings/ssh-keys" target="_blank" class="underline">Add your SSH public key</a>
+            <div
+              class="flex gap-[8px] text-sm leading-[20px] text-gray-500 mb-[8px]"
+            >
+              <SvgIcon
+                name="exclamation_point"
+                width="13"
+                height="13"
+                class="cursor-pointer"
+              />
+              <a
+                href="/settings/ssh-keys"
+                target="_blank"
+                class="underline"
+                >Add your SSH public key</a
+              >
               to clone private repos
             </div>
             <div class="text-gray-500"># {{ $t('all.lfsTips') }}</div>
@@ -147,16 +215,25 @@
           <div
             class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
           >
-          <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
-            <SvgIcon name="exclamation_point" width="13" height="13" class="cursor-pointer" />
-            Use
-            <a href="https://github.com/OpenCSGs/csghub-sdk" target="_blank" class="underline"> SDK </a>
-            to download
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
+              <SvgIcon
+                name="exclamation_point"
+                width="13"
+                height="13"
+                class="cursor-pointer"
+              />
+              Use
+              <a
+                href="https://github.com/OpenCSGs/csghub-sdk"
+                target="_blank"
+                class="underline"
+              >
+                SDK
+              </a>
+              to download
             </div>
             <div class="text-gray-500 mt-[8px]"># {{ $t('all.sdkTips') }}</div>
-            <markdown-viewer
-              :content="cmdCloneCodeMarkdown"
-            ></markdown-viewer>
+            <markdown-viewer :content="cmdCloneCodeMarkdown"></markdown-viewer>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -170,20 +247,21 @@
   import DeployDropdown from './DeployDropdown.vue'
   import SvgIcon from './SvgIcon.vue'
   import useFetchApi from '../../packs/useFetchApi'
-  import { ElMessage } from "element-plus"
+  import { ElMessage } from 'element-plus'
   import AddToCollections from '../collections/AddToCollections.vue'
-  import useUserStore from '../../stores/UserStore'
+  import useUserStore from '../../stores/UserStore.js'
+  import { ToLoginPage } from '@/packs/utils'
 
   const userStore = useUserStore()
 
   const props = defineProps({
     repoType: String,
     namespacePath: String,
-    admin: Boolean,
     repo: Object,
     enableEndpoint: Boolean,
     enableFinetune: Boolean,
-    showAddToCollections: Boolean
+    enableEvaluation: Boolean,
+    showAddToCollections: Boolean,
   })
 
   const httpCloneUrl = ref('')
@@ -208,19 +286,20 @@
 git lfs install
 git clone ${httpCloneUrl.value}
 `
-    // no space
-    sshCloneCode.value = `
+      // no space
+      sshCloneCode.value = `
 git lfs install
 git clone ${sshCloneUrl.value}
 `
-  // no space
-  httpsCloneCodeWithToken.value = `
+      // no space
+      httpsCloneCodeWithToken.value = `
 git lfs install
-git clone ${httpCloneProtocol.value}//${
-    userStore.username
-  }:${accessToken.value}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
+git clone ${httpCloneProtocol.value}//${userStore.username}:${
+        accessToken.value
+      }@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
-  })
+    }
+  )
 
   const activeCloneType = ref('https')
   const cloneRepositoryVisible = ref(false)
@@ -242,7 +321,9 @@ git clone ${httpCloneProtocol.value}//${
 
   // 同步按钮禁用
   const syncInprogress = computed(() => {
-    return props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
+    return (
+      props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
+    )
   })
 
   const getMarkdownCode = (code, lang, multiline = false) => {
@@ -256,8 +337,11 @@ git clone ${httpCloneProtocol.value}//${
     httpsCloneCodeWithToken.value = `
 git lfs install
 git clone ${httpCloneProtocol.value}//${
-    userStore.username
-  }:${newAccessToken}@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
+      userStore.username
+    }:${newAccessToken}@${httpCloneUrl.value.replace(
+      `${httpCloneProtocol.value}//`,
+      ''
+    )}
 `
   })
 
@@ -337,7 +421,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
   }
 
-  const fetchUserToken = async() => {
+  const fetchUserToken = async () => {
     if (!userStore.username) return
 
     const { data } = await useFetchApi(
@@ -357,33 +441,40 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     }
   })
 
-  const handleSyncRepo =  async () => {
+  const handleSyncRepo = async () => {
     const syncUrl = `/${props.repoType}s/${props.namespacePath}/mirror_from_saas`
     const { error } = await useFetchApi(syncUrl, {
       headers: {
-        "Content-Type": "application/json",
-      },
-    }).post().json()
+        'Content-Type': 'application/json'
+      }
+    })
+      .post()
+      .json()
 
     if (error.value) {
-      ElMessage({message: error.value.msg, type: "warning"})
+      ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
-      ElMessage({message: 'Sync repo success', type: "success"})
+      ElMessage({ message: 'Sync repo success', type: 'success' })
       setTimeout(() => {
         location.reload()
       }, 2000)
     }
   }
 
-  const handleButtonClick = () =>{
-    if(isLoggedIn.value){
+  const handleButtonClick = () => {
+    if (isLoggedIn.value) {
       toFinetunePage()
-    }else{
-      toLoginPage()
+    } else {
+      ToLoginPage()
     }
   }
-  const toLoginPage = () => {
-    window.location.href = '/login'
+
+  const toNewEvaluatePage = () => {
+    if (isLoggedIn.value) {
+      window.location.href = `/evaluations/new?model_id=${props.namespacePath}`
+    } else {
+      ToLoginPage()
+    }
   }
 
   onMounted(() => {
@@ -392,3 +483,15 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     }
   })
 </script>
+<style lang="less" scoped>
+  .disabled {
+    cursor: not-allowed;
+    border: solid #eaecf0;
+    color: #98a2b3;
+    &:hover {
+      border: solid #eaecf0 !important;
+      color: #98a2b3 !important;
+      background: #fff !important;
+    }
+  }
+</style>

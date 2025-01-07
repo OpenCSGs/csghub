@@ -67,6 +67,7 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}))
 	g.Use(middleware.Instance.AuthMiddleware(csghubServer))
+	g.Use(middleware.Instance.CacheControlMiddleware())
 	// This will track all request to portal go server
 	g.Use(middleware.Instance.Log())
 
@@ -153,7 +154,8 @@ func createRender() multitemplate.Renderer {
 		"settings_sync_access_token":     "settings/sync_access_token.html",
 		"settings_ssh_keys":              "settings/ssh_keys.html",
 		"prompts_index":                  "prompts/index.html",
-		"prompts_assistant":              "prompts/assistant.html",
+		"evaluations_new":                "evaluations/new.html",
+		"evaluations_show":               "evaluations/show.html",
 	}
 
 	for name, page := range pages {
@@ -223,6 +225,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerResourceConsoleRoutes(engine, handlersRegistry)
 	registerAdminRoutes(engine, handlersRegistry)
 	registerPromptsRoutes(engine, handlersRegistry)
+	registerEvaluationRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

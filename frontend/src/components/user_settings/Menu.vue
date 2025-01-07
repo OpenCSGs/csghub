@@ -1,111 +1,103 @@
 <template>
-    <div class="pt-6">
-      <div class="w-[294px] rounded-md mx-[24px] md:w-full md:mx-0">
-        <div @click="clickProfile" class="flex p-[16px] cursor-pointer">
-          <el-avatar :size="60" :src="userStore.avatar"> </el-avatar>
-          <div class="ml-[10px]">
-            <div class="text-lg leading-[28px] font-semibold">
-              {{ userStore.nickname || userStore.username }}
-            </div>
-            <div class="text-md text-gray-500 leading-[24px] font-light">@{{ userStore.username }}</div>
+  <div class="pt-6">
+    <div class="w-[294px] rounded-md mx-[24px] md:w-full md:mx-0">
+      <div
+        @click="clickProfile"
+        class="flex p-[16px] cursor-pointer"
+        id="user_settings_avatar_div">
+        <el-avatar
+          :size="60"
+          :src="userStore.avatar">
+        </el-avatar>
+        <div class="ml-[10px]">
+          <div class="text-lg leading-[28px] font-semibold">
+            {{ userStore.nickname || userStore.username }}
+          </div>
+          <div class="text-md text-gray-500 leading-[24px] font-light">
+            @{{ userStore.username }}
           </div>
         </div>
-        <div class="flex flex-col md:hidden">
-          <!-- profile -->
-          <a href="/settings/profile"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/profile')"
-          >
-              {{ $t('profile.accountSetting')}}
-          </a>
+      </div>
+      <div class="flex flex-col md:hidden">
+        <!-- profile -->
+        <a
+          href="/settings/profile"
+          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
+          :class="menuClass('/settings/profile')">
+          {{ $t('profile.accountSetting') }}
+        </a>
 
-          <!-- <div class="p-[16px] hover:bg-gray-100 border-b border-gray-200 text-lg text-gray-500 leading-[26px] opacity-40"
-               :class="menuClass('/settings/account')"
-          >
-            {{ $t('profile.menu.accountInformation')}}
-          </div> -->
+        <!-- access token -->
+        <a
+          v-if="hasEmail"
+          href="/settings/access-token"
+          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
+          :class="menuClass('/settings/access-token')">
+          {{ $t('profile.menu.gitToken') }}
+        </a>
 
-          <!-- <div class="p-[16px] hover:bg-gray-100 border-b border-gray-200 text-lg text-gray-500 leading-[26px] opacity-40"
-               :class="menuClass('/settings/accessTokens')"
-          >
-            {{ $t('profile.menu.accessToken')}}
-          </div> -->
-
-          <!-- access token -->
-          <a v-if="hasEmail"
-             href="/settings/access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/access-token')"
-          >
-            {{ $t('profile.menu.gitToken')}}
-          </a>
-
-          <!-- starship api key -->
-          <a v-if="hasEmail"
-             href="/settings/starship-access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/starship-access-token')"
-          >
-            {{ $t('profile.menu.starshipAccessToken')}}
-          </a>
-
-          <!-- sync access token -->
-          <a v-if="hasEmail"
-             href="/settings/sync-access-token"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/sync-access-token')"
-          >
-            {{ $t('profile.menu.syncAccessToken')}}
-          </a>
-
-          <!-- ssh key -->
-          <a v-if="hasEmail"
-             href="/settings/ssh-keys"
-             class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-             :class="menuClass('/settings/ssh-keys')"
-          >
-            {{ $t('profile.menu.sshKey')}}
-          </a>
-
-          <!-- <div class="p-[16px] hover:bg-gray-100 text-lg text-gray-500 leading-[26px] opacity-40"
-               :class="menuClass('/settings/billing')"
-          >
-            {{ $t('profile.menu.billing')}}
-          </div> -->
-        </div>
-        <!-- mobile tabs -->
-        <div class="profileTabs hidden md:block">
-          <el-tabs v-model="activeTab" @tabClick="handleTabClick">
-          <el-tab-pane :label="$t('profile.accountSetting')" name="/settings/profile"></el-tab-pane>
-          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.gitToken')" name="/settings/access-token"></el-tab-pane>
-          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.starshipAccessToken')" name="/settings/starship-access-token"></el-tab-pane>
-          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.syncAccessToken')" name="/settings/sync-access-token"></el-tab-pane>
-          <el-tab-pane v-if="hasEmail" :label="$t('profile.menu.sshKey')" name="/settings/ssh-keys"></el-tab-pane>
+        <!-- ssh key -->
+        <a
+          v-if="hasEmail"
+          href="/settings/ssh-keys"
+          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
+          :class="menuClass('/settings/ssh-keys')">
+          {{ $t('profile.menu.sshKey') }}
+        </a>
+      </div>
+      <!-- mobile tabs -->
+      <div class="profileTabs hidden md:block">
+        <el-tabs
+          v-model="activeTab"
+          @tabClick="handleTabClick">
+          <el-tab-pane
+            :label="$t('profile.accountSetting')"
+            name="/settings/profile"></el-tab-pane>
+          <el-tab-pane
+            v-if="hasEmail"
+            :label="$t('profile.menu.gitToken')"
+            name="/settings/access-token"></el-tab-pane>
+          <el-tab-pane
+            v-if="hasEmail"
+            :label="$t('profile.menu.sshKey')"
+            name="/settings/ssh-keys"></el-tab-pane>
         </el-tabs>
-        </div>
-    
       </div>
     </div>
-    <el-dialog
-      v-model="showDialog"
-      width="350"
-      :style="{ borderRadius: '10px' }"
-    >
-      <template #header> 
-        {{ $t('profile.menu.warningTip') }}
-      </template>
-      <div class="flex justify-center flex-col m-auto w-full relative">
-        {{ $t('profile.menu.warningTipDesc') }}
+  </div>
+
+  <el-dialog
+    v-model="showDialog"
+    width="350"
+    :style="{ borderRadius: '10px' }">
+    <template #header>
+      {{ $t('profile.menu.warningTip') }}
+    </template>
+    <div class="flex justify-center flex-col m-auto w-full relative">
+      {{ $t('profile.menu.warningTipDesc') }}
+    </div>
+    <template #footer>
+      <div class="dialog-footer flex justify-between">
+        <el-button
+          id="user_settings_dialog_cancel"
+          class="flex-1 mr-3 text-gray-700"
+          size="large"
+          @click="showDialog = false"
+          >{{ $t('organization.members.cancel') }}</el-button
+        >
+        <el-button
+          id="user_settings_dialog_confirm"
+          class="flex-1"
+          size="large"
+          color="#3250BD"
+          type="primary"
+          :loading="loading"
+          @click="handleConfirm">
+          {{ $t('organization.members.confirm') }}
+        </el-button>
       </div>
-      <template #footer>
-        <div class="dialog-footer flex justify-between">
-          <el-button class="flex-1 mr-3 text-gray-700" size="large" @click="showDialog = false">{{ $t('organization.members.cancel') }}</el-button>
-          <el-button class="flex-1" size="large" color="#3250BD" type="primary" :loading="loading" @click="handleConfirm">
-            {{ $t('organization.members.confirm') }}
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -151,7 +143,7 @@
   }
 </script>
 <style>
- .profileTabs .el-tabs__nav-scroll {
+  .profileTabs .el-tabs__nav-scroll {
     @media screen and (max-width: 768px) {
       padding-left: 0px !important;
     }

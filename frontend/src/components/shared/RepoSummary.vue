@@ -1,8 +1,7 @@
 <template>
   <div class="flex md:px-5 md:flex-col-reverse min-h-[calc(100vh-341px)]">
-    <div class="max-w-[60%] sm:max-w-[100%] pt-4 pb-10 pr-5 sm:pr-0 break-words flex-1 border-t border-gray-200 md:border-t-0">
+    <div class="max-w-[60%] sm:max-w-[100%] py-8 pr-6 sm:pr-0 break-words flex-1 md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
-      <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
       <markdown-viewer
         :content="readmeContent"
         :setDefaultText="true"
@@ -11,7 +10,7 @@
       </markdown-viewer>
     </div>
     <div class="w-[40%] sm:w-[100%] border-l border-gray-200 md:border-l-0 md:border-b md:w-full md:pl-0">
-      <div class="p-[16px]">
+      <div class="pl-6 py-8">
         <div class="text-gray-500 text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
@@ -53,7 +52,6 @@
 <script setup>
   import { ref, onMounted, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
-  import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
   import PromptRelationsCard from '../prompts/PromptRelationsCard.vue';
   import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
@@ -77,7 +75,6 @@
   const rawReadmeContent = ref('')
   const relations = ref({})
   const endpoint = ref({})
-  const datasetInfo = ref(null)
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
@@ -89,37 +86,6 @@
       resolveReadmeContent()
     }
     loading.value = false
-  }
-
-  const fetchParquetFilePath = async () => {
-    if (props.repoType !== 'dataset') { return }
-
-    const options = { path: '/' }
-    const url = `/datasets/${props.namespacePath}/tree`
-
-    const { data } = await useFetchApi(url, options).json()
-
-    if (data.value) {
-      const res_json = data.value
-      const parquetFilePath = res_json['data'].filter(file => file.path.endsWith('.parquet'))
-                              .map(file => file.path)
-                              .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))[0]
-      if (parquetFilePath) {
-        fetchCatalog()
-      }
-    }
-  }
-
-  async function fetchCatalog() {
-    const { error, data } = await useFetchApi(`datasets/${props.namespacePath}/dataviewer/catalog`).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
-      datasetInfo.value = data.value.data.dataset_info
-    }
   }
 
   const fetchRepoRelations = async () => {
@@ -155,7 +121,6 @@
 
   onMounted(() => {
     fetchData()
-    fetchParquetFilePath()
     fetchRepoRelations()
     if (props.repoType == 'model') {
       fetchEndpoint()

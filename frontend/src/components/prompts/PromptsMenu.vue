@@ -14,16 +14,6 @@
           {{ $t('prompts.promptLibrary') }}
         </div>
       </a>
-      <a
-        href="/prompts/optimization-assistant"
-        class="p-3 hover:bg-[#F9FAFB] rounded-[8px] cursor-pointer"
-        :class="menuClass('/prompts/optimization-assistant')"
-      >
-        <div class="flex gap-2">
-          <SvgIcon :name="menuIcon('/prompts/optimization-assistant')" />
-          {{ $t('prompts.optimizationAssistant') }}
-        </div>
-      </a>
       <!-- <a
         href="/prompts/library"
         class="p-3 hover:bg-[#F9FAFB] rounded-[8px] cursor-pointer"

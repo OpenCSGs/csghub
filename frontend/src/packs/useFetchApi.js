@@ -43,7 +43,13 @@ const useFetchApi = createFetch({
       }
       return { options }
     },
-    onFetchError({ response }) {
+    onFetchError({ data, error, response }) {
+      // there is case in which the fetch is error but the response is nil
+      if (!response) {
+        console.error('Fetch Error: No response received', data || error);
+        return { error: data || error };
+      }
+
       if (response.status === 401) {
         popupReloginDialog()
       }

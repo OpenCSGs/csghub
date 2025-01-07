@@ -83,6 +83,7 @@
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
   import useUserStore from '../../stores/UserStore.js'
+  import { ToLoginPage } from '@/packs/utils';
 
   const userStore = useUserStore()
   const { t } = useI18n()
@@ -104,12 +105,12 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     }
   }
-  
+
   const openAddCollections = () => {
     if(isLogged.value) {
       dialogVisible.value = true
     } else {
-      window.location.href = '/login'
+      ToLoginPage()
     }
   }
 

@@ -1,6 +1,6 @@
 export const accessToken = {
   title: "User Access Token",
-  desc: "Access Token is used to authorize you to perform Git-related operations",
+  desc: "Access tokens authenticate your identity and allow applications to perform actions based on token permissions. Do not share your Access Tokens with anyone.",
   refresh: "Refresh Access Token",
   refreshWarning:
     "After refreshing, the existing Access Token will become invalid. Are you sure you want to continue?",

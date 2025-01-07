@@ -65,6 +65,7 @@
   import { watch, ref } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import EndpointPlayground from './EndpointPlayground.vue'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     appEndpoint: String,

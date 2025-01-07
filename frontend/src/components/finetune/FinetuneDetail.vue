@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :name="finetune.deploy_name"
@@ -103,8 +103,9 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import FinetuneSettings from './FinetuneSettings.vue'
-  import useFetchApi from '../../packs/useFetchApi'
+  import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     namespace: String,

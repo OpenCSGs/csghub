@@ -88,42 +88,54 @@
   }
 
   const httpsCloneCodeMarkdown = computed(() => {
-    const httpsCloneCode = `  git clone ${props.httpCloneUrl}`
+    const httpsCloneCode = `git clone ${props.httpCloneUrl}`
     return getMarkdownCode(httpsCloneCode, 'bash')
   })
 
   const httpsCloneCodeWithTokenMarkdown = computed(() => {
-    const httpsCloneCodeWithToken = `  git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
+    const httpsCloneCodeWithToken = `git clone https://${props.userName}:${props.userToken}@${props.httpCloneUrl.replace('https://', '')}`
     return getMarkdownCode(httpsCloneCodeWithToken, 'bash')
   })
 
   const sshCloneCodeMarkdown = computed(() => {
-    const sshCloneCode = `  git clone ${props.sshCloneUrl}`
+    const sshCloneCode = `git clone ${props.sshCloneUrl}`
     return getMarkdownCode(sshCloneCode, 'bash')
   })
 
-  const appPyCode = `
-  import gradio as gr
-
-  def greet(name):
-    return "Hello " + name + "!!"
-
-  iface = gr.Interface(fn=greet, inputs="text", outputs="text")
-  iface.launch()
-  `
+  const appPyCode = [
+    'import gradio as gr',
+    '',
+    'def greet(name):',
+    '    return "Hello " + name + "!!"',
+    '',
+    'iface = gr.Interface(fn=greet, inputs="text", outputs="text")',
+    'iface.launch()'
+  ].join('\n')
 
   const appPyCodeMarkdown = computed(() => {
-    return getMarkdownCode(appPyCode, 'python', true)
+    return [
+      '',
+      '```python',
+      appPyCode,
+      '```',
+      ''
+    ].join('\n')
   })
 
-  const pushCode = `
-  $ git add app.py
-  $ git commit -m "Add application file"
-  $ git push
-  `
+  const pushCode = [
+    'git add app.py',
+    'git commit -m "Add application file"',
+    'git push'
+  ].join('\n')
 
   const pushCodeMarkdown = computed(() => {
-    return getMarkdownCode(pushCode, 'bash', true)
+    return [
+      '',
+      '```bash',
+      pushCode,
+      '```',
+      ''
+    ].join('\n')
   })
 
   const toggleActiveTab = (event) => {

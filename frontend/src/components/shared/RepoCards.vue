@@ -9,8 +9,8 @@
         :frameworkTags="frameworkTags"
         :languageTags="languageTags"
         :licenseTags="licenseTags"
-        :selectedTag="props.selectedTag"
-        :selectedTagType="props.selectedTagType"
+        :selectedTag="selectedTag"
+        :selectedTagType="selectedTagType"
         @resetTags="resetTags"
         :type="repoType"
       />
@@ -45,7 +45,7 @@
             height="18"
           />
           <span class="capitalize">
-            {{ $t(`${repoType}s`) }}
+            {{ $t(`${repoType}s.title`) }}
             <span class="text-gray-400 text-md italic">
               {{ totalRepos }}
             </span>
@@ -134,10 +134,20 @@
   import UpdateUsername from '../popup/UpdateUsername.vue'
 
   const props = defineProps({
-    selectedTag: String,
-    selectedTagType: String,
     repoType: String
   })
+
+  const getQueryParams = () => {
+    const { searchParams } = new URL(window.location.href)
+    return {
+      tag: searchParams.get('tag') ?? '',
+      tagType: searchParams.get('tag_type') ?? ''
+    }
+  }
+
+  const { tag, tagType } = getQueryParams()
+  const selectedTag = ref(tag)
+  const selectedTagType = ref(tagType)
 
   const tagFields = {
     model: [
@@ -263,7 +273,7 @@
     } else {
       let tempTaskTags = {}
       const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType && tag.built_in === true)
-      tagFields[props.repoType].forEach((field) => {
+      tagFields[props.repoType]?.forEach((field) => {
         const fieldTags = allTaskTags.filter(tag => tag.group === field)
         tempTaskTags[field] = fieldTags
       })

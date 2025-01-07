@@ -60,6 +60,7 @@
   import CodeEditor from '../shared/CodeEditor.vue'
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
   import useFetchApi from '../../packs/useFetchApi'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     originalCodeContent: String,

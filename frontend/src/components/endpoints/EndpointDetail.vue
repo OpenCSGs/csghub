@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :private="endpoint.private"
@@ -49,6 +49,7 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
+  import { ElMessage } from 'element-plus'
 
   const userStore = useUserStore()
   const { cookies } = useCookies()

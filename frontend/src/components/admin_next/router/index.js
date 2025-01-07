@@ -3,6 +3,9 @@ import AdminUserList from "../users/AdminUserList.vue";
 import AdminUserDetail from "../users/AdminUserDetail.vue";
 import AdminSystemConfig from "../system_configs/AdminSystemConfig.vue";
 import AdminSyncSetting from "../sync/AdminSyncSetting.vue";
+import AdminTagsList from "../tags/AdminTagsList.vue";
+import AdminTagsDetail from "../tags/AdminTagsDetail.vue";
+import AdminTagsForm from "../tags/AdminTagsForm.vue";
 import { Setting, User, Connection } from "@element-plus/icons-vue";
 import { useCookies } from 'vue3-cookies'
 
@@ -63,6 +66,32 @@ export const MENU_SETTING = [
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-cloud",
     type: "item",
+  },
+  {
+    path: `${BASE_URL}/tags`,
+    component: AdminTagsList,
+    name: adminLocale.tags.title,
+    parentName: PARENT_NAME.BASE_CONFIG,
+    icon: 'admin-menu-cloud',
+    type: 'item'
+  },
+  {
+    path: `${BASE_URL}/tags/new`,
+    component: AdminTagsForm,
+    name: adminLocale.tags.newTag,
+    parentName: PARENT_NAME.BASE_CONFIG
+  },
+  {
+    path: `${BASE_URL}/tags/:id/edit`,
+    component: AdminTagsForm,
+    name: adminLocale.tags.editTag,
+    parentName: PARENT_NAME.BASE_CONFIG
+  },
+  {
+    path: `${BASE_URL}/tags/:id`,
+    component: AdminTagsDetail,
+    name: adminLocale.tags.tagDetailTitle,
+    parentName: PARENT_NAME.BASE_CONFIG
   },
 ];
 

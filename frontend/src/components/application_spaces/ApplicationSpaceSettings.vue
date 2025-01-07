@@ -164,6 +164,7 @@
         <el-button
           @click="updateNickname"
           class="w-[100px]"
+          data-test="update-nickname"
           >{{ $t('all.update') }}</el-button
         >
       </div>
@@ -191,6 +192,7 @@
         <el-button
           @click="updateApplicationSpaceDesc"
           class="w-[100px]"
+          data-test="update-description"
           >{{ $t('all.update') }}</el-button
         >
       </div>

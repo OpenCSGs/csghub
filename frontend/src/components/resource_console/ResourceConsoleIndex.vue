@@ -1,39 +1,39 @@
 <template>
-  <div class="w-full sm:mt-[36px] py-9 text-gray-900">
-    <div class="text-3xl leading-[38px mb-6">
+  <div class="w-full sm:mt-9 py-9 text-gray-900">
+    <div class="text-3xl leading-9 mb-6">
       {{ $t("resourceConsole.title") }}
     </div>
     <!-- finetunes -->
-    <h3 class="text-lg flex justify-between gap-[8px]">
+    <h3 class="text-lg flex justify-between gap-2">
       <span>{{ $t("finetune.title") }}</span>
-      <a href="/finetune/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-sm leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
+      <a href="/finetune/new" class="btn btn-primary btn-md">
         <SvgIcon name="plus" />
         {{ $t('resourceConsole.new') }}
       </a>
     </h3>
-    <div class="mt-[18px]">
-      <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-8 mt-[16px]">
+    <div class="mt-4">
+      <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-8 mt-4">
         <FinetuneItem v-for="finetune in finetunes.data" :repo="finetune" repo-type="finetune" />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-8 mt-[16px]">
+      <div v-else class="flex flex-wrap gap-4 mb-8 mt-4">
         {{ $t("all.noData") }}
       </div>
       <view-more v-if="finetunes.more" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
     </div>
     <!-- endpoints -->
-    <h3 class="text-lg flex justify-between gap-[8px]">
+    <h3 class="text-lg flex justify-between gap-2">
       <span>{{ $t("endpoints.title") }}</span>
-      <a  href="/endpoints/new" class="cursor-pointer mx-[6px] flex gap-1 items-center py-2 px-3 text-sm leading-[20px] text-white bg-brand-600 border border-brand-600 rounded-md">
+      <a  href="/endpoints/new" class="btn btn-primary btn-md">
         <SvgIcon name="plus" />
         {{ $t('resourceConsole.new') }}
       </a>
     </h3>
-    <div class="mt-[18px] w-full">
-      <div v-if="hasEndpoints" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-8 mt-[16px]">
+    <div class="mt-4 w-full">
+      <div v-if="hasEndpoints" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-8 mt-4">
         <EndpointItem v-for="endpoint in endpoints.data" :endpoint="endpoint" :namespace="name" />
       </div>
-      <div v-else class="flex flex-wrap gap-4 mb-8 mt-[16px]">
+      <div v-else class="flex flex-wrap gap-4 mb-8 mt-4">
         {{ $t("all.noData") }}
       </div>
       <view-more
@@ -42,6 +42,18 @@
         @view-more-targets="viewMoreTargets"
       ></view-more>
       <el-skeleton class="pr-6" v-if="endpointsLoading" :rows="2" animated />
+    </div>
+
+    <!-- evaluations -->
+    <h3 class="text-lg flex justify-between gap-2">
+      <span>{{ $t("evaluation.list.title") }}</span>
+      <a href="/evaluations/new" class="btn btn-primary btn-md">
+        <SvgIcon name="plus" />
+        {{ $t('evaluation.list.new') }}
+      </a>
+    </h3>
+    <div class="mt-4 w-full">
+      <EvaluationTable :evaluations="evaluations" />
     </div>
   </div>
 </template>
@@ -52,6 +64,7 @@
   import FinetuneItem from "../shared/FinetuneItem.vue"
   import ViewMore from "../shared/ViewMore.vue"
   import EndpointItem from "../endpoints/EndpointItem.vue"
+  import EvaluationTable from "./EvaluationTable.vue"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
   const userStore = useUserStore()

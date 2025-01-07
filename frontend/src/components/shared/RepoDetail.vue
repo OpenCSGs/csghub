@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="repo"
-    class="w-full bg-gray-25 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto border-b border-gray-200"
+    class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
   >
     <div class="mx-auto page-responsive-width">
       <repo-header
@@ -33,7 +33,6 @@
       :userName="userName"
       :commitId="commitId"
       :repoType="repoType"
-      :admin="admin"
       :path="`${namespace}/${repoName}`"
     />
   </div>
@@ -57,7 +56,6 @@
     actionName: String,
     userName: String,
     commitId: String,
-    admin: Boolean,
     namespace: String,
     repoName: String
   })
@@ -94,23 +92,38 @@
         return
       }
 
-      const json = data.value
-      if (json) {
-        repo.value = json.data
-        if (json.data.tags) {
-          tags.value = buildTags(json.data.tags)
-        }
-        repoDetailStore.initialize(json.data)
-        ownerUrl.value = getOwnerUrl(json.data)
-      } else if (response.value.status === 404 ) {
-        window.location.href = '/errors/not-found'
+      if (!data.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
+        return
       }
-      else {
-        ElMessage.warning(error.value.msg)
-      }
+
+      const repoData = data.value.data
+      repo.value = repoData
+
+      tags.value = handleRepoTags(repoData)
+
+      repoDetailStore.initialize(repoData)
+      ownerUrl.value = getOwnerUrl(repoData)
+
     } catch (error) {
-      console.error(error)
+      console.error('Failed to fetch repo detail:', error)
     }
+  }
+
+  const handleRepoTags = (repoData) => {
+    if (repoData.tags) {
+      return buildTags(repoData.tags)
+    }
+
+    if (props.repoType === 'code' && repoData.license) {
+      return buildTags([{
+        name: repoData.license,
+        category: 'license',
+        built_in: true
+      }])
+    }
+
+    return []
   }
 
   onMounted(() => {

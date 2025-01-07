@@ -182,12 +182,12 @@
 
         <div class="flex justify-end">
           <el-form-item>
-            <button
+            <CsgButton
               :loading="loading"
               class="btn btn-primary btn-md"
-              @click="handleSubmit">
-              {{ t('endpoints.new.createEndpoint') }}
-            </button>
+              :name="t('endpoints.new.createEndpoint')"
+              @click="handleSubmit"
+            />
           </el-form-item>
         </div>
       </el-form>

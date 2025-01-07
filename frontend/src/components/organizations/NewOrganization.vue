@@ -87,14 +87,12 @@
       </el-form-item>
 
       <el-form-item>
-        <button
-          class="btn btn-primary btn-md"
-          style="width: 100%;"
+        <CsgButton
+          class="btn btn-primary btn-md w-full"
           @click="handleSubmit"
-          :disabled="submitting"
-        >
-          {{ $t('organization.newOrganization.createOrg') }}
-        </button>
+          :loading="submitting"
+          :name="$t('organization.newOrganization.createOrg')"
+        />
       </el-form-item>
     </el-form>
   </div>
@@ -237,7 +235,8 @@
     height: 44px;
   }
   :deep(.el-select__wrapper) {
-    height: 44px;
+    height: 46px;
+    box-shadow: none !important;
   }
   :deep(.el-upload--picture) {
     border: 0px;
