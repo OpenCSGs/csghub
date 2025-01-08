@@ -7,24 +7,28 @@
     ONNX
   </span>
 </template>
-<script setup lang="ts">
-  import { onMounted } from 'vue'
+<script setup>
+  import { onMounted, computed } from 'vue'
   const props = defineProps({
-    activeTag: String
+    activeTag: Array
   })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
+
+  const lowercaseActiveTag = computed(() => {
+    return props.activeTag.map(str => str.toLowerCase())
+  })
 
   const toggleActive = () => {
     emit('setActiveFrameworkTag', 'ONNX')
   }
   const setTagColor = () => {
-    if (props.activeTag?.toLowerCase() === 'onnx') {
+    if (lowercaseActiveTag.value.includes('onnx')) {
       return "color: white; background-color: #4D6AD6"
     }
   }
   const setSvgColor = () => {
-    if (props.activeTag?.toLowerCase() === 'onnx') {
+    if (lowercaseActiveTag.value.includes('onnx')) {
       return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }

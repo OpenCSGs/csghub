@@ -20,24 +20,28 @@
   JAX
   </span>
 </template>
-<script setup lang="ts">
-  import { onMounted } from 'vue'
+<script setup>
+  import { onMounted, computed } from 'vue'
   const props = defineProps({
-    activeTag: String
+    activeTag: Array
   })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
+
+  const lowercaseActiveTag = computed(() => {
+    return props.activeTag.map(str => str.toLowerCase())
+  })
 
   const toggleActive = () => {
     emit('setActiveFrameworkTag', 'JAX')
   }
   const setTagColor = () => {
-    if (props.activeTag?.toLowerCase() === 'jax') {
+    if (lowercaseActiveTag.value.includes('jax')) {
       return "color: white; background-color: #4D6AD6"
     }
   }
   const setSvgColor = () => {
-    if (props.activeTag?.toLowerCase() === 'jax') {
+    if (lowercaseActiveTag.value.includes('jax')) {
       return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }

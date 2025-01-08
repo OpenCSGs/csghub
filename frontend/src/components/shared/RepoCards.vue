@@ -177,10 +177,10 @@
   const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
-  const taskTag = ref('')
-  const frameworkTag = ref('')
-  const languageTag = ref('')
-  const licenseTag = ref('')
+  const selectedTaskTags = ref([])
+  const selectedFrameworkTags = ref([])
+  const selectedLanguageTags = ref([])
+  const selectedLicenseTags = ref([])
   const reposData = ref(Array)
   const sortOptions = [
     {
@@ -224,11 +224,11 @@
     }
   })
 
-  const resetTags = (task, framework, language, license) => {
-    taskTag.value = task
-    frameworkTag.value = framework
-    languageTag.value = language
-    licenseTag.value = license
+  const resetTags = (tasks, frameworks, languages, licenses) => {
+    selectedTaskTags.value = tasks
+    selectedFrameworkTags.value = frameworks
+    selectedLanguageTags.value = languages
+    selectedLicenseTags.value = licenses
     reloadRepos(1)
   }
 
@@ -246,20 +246,28 @@
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
 
-    if (taskTag.value) {
-      url = url + `&tag_category=task&tag_name=${taskTag.value}`
+    if (selectedTaskTags.value.length > 0) {
+      selectedTaskTags.value.forEach((tag) => {
+        url = url + `&tag_category=task&tag_name=${tag}`
+      })
     }
 
-    if (frameworkTag.value) {
-      url = url + `&tag_category=framework&tag_name=${frameworkTag.value}`
+    if (selectedFrameworkTags.value.length > 0) {
+      selectedFrameworkTags.value.forEach((tag) => {
+        url = url + `&tag_category=framework&tag_name=${tag}`
+      })
     }
 
-    if (languageTag.value) {
-      url = url + `&tag_category=language&tag_name=${languageTag.value}`
+    if (selectedLanguageTags.value.length > 0) {
+      selectedLanguageTags.value.forEach((tag) => {
+        url = url + `&tag_category=language&tag_name=${tag}`
+      })
     }
 
-    if (licenseTag.value) {
-      url = url + `&tag_category=license&tag_name=${licenseTag.value}`
+    if (selectedLicenseTags.value.length > 0) {
+      selectedLicenseTags.value.forEach((tag) => {
+        url = url + `&tag_category=license&tag_name=${tag}`
+      })
     }
 
     // url = url + `&task_tag=${taskTag.value}`
