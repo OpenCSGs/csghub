@@ -38,6 +38,7 @@
         <el-select
           v-model="dataForm.scope"
           size="large"
+          @change="resetCategory"
           placeholder="scope name">
           <el-option
             label="model"
@@ -209,6 +210,10 @@
     } else {
       ElMessage.error(`Failed to fetch tag category: ${error.value}`)
     }
+  }
+
+  const resetCategory = () => {
+    dataForm.value.category = ''
   }
 
   onMounted(() => {
