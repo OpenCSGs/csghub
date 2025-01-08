@@ -7,6 +7,7 @@
     ONNX
   </span>
 </template>
+
 <script setup>
   import { onMounted, computed } from 'vue'
   const props = defineProps({
