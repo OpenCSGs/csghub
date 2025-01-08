@@ -52,11 +52,6 @@ const useFetchApi = createFetch({
 
       if (response.status === 401) {
         popupReloginDialog()
-      } else if (response.status === 404) {
-        window.location.href = "/errors/not-found"
-      } else {
-        console.log('Fetch Error:', data || error)
-        return { error: data || error }
       }
     }
   }

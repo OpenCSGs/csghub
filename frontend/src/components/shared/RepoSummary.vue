@@ -60,6 +60,7 @@
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
+  import { ElMessage } from 'element-plus'
 
   const props = defineProps({
     namespacePath: String,

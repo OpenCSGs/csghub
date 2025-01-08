@@ -45,8 +45,8 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
-  import { usePermissionCheck } from '../../packs/usePermissionCheck'
   import useFetchApi from '../../packs/useFetchApi'
+  import { ToUnauthorizedPage } from '@/packs/utils'
 
   const props = defineProps({
     defaultTab: String,
@@ -87,7 +87,9 @@
     try {
       const { response, data, error } = await useFetchApi(url).json()
 
-      if (!usePermissionCheck(response.value)) {
+      // redirect unauthorized page
+      if (response.value.status === 403) {
+        ToUnauthorizedPage()
         return
       }
 

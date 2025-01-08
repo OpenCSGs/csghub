@@ -139,7 +139,7 @@
   import { useI18n } from 'vue-i18n'
   import BranchDropdown from './BranchDropdown.vue';
   import useFetchApi from '../../packs/useFetchApi'
-  import { createAndClickAnchor, beiJingTimeParser } from '../../packs/utils'
+  import { createAndClickAnchor, beiJingTimeParser, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils'
 
   const props = defineProps({
     branches: Object,
@@ -259,17 +259,19 @@
     const url = `/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
 
     try {
-      const { data, error } = await useFetchApi(url).json()
+      const { response, data, error } = await useFetchApi(url).json()
 
-      if (error.value) {
-        location.href = '/errors/not-found'
+      if (data.value) {
+        files.value = data.value.data
+      } else if (response.value.status === 403) {
+        ToUnauthorizedPage()
+      } else if (response.value.status === 404) {
+        ToNotFoundPage()
       } else {
-        const json = data.value
-        files.value = json.data
+        ElMessage.warning(error.value ? error.value.msg : 'Failed to fetch file list')
       }
     } catch (error) {
       console.log(error)
-      location.href = '/errors/not-found'
     } finally {
       loading.value = false
     }

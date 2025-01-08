@@ -52,10 +52,10 @@
 
     const { data, error } = await useFetchApi(url).json()
 
-    if (!error.value) {
+    if (data.value) {
       branches.value = data.value.data
     } else {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+      ElMessage.warning(error.value.msg)
     }
   }
 

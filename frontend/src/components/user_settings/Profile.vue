@@ -106,12 +106,8 @@
   const hasLastLoginTime = computed(() => isCurrentUser.value ? !!userStore.lastLoginTime : !!theLastLoginTime.value)
   const hasOrg = computed(() => isCurrentUser.value ? !!userStore.orgs : !!userOrgs.value)
   const fetchUserInfo = async () => {
-    const { data, error } = await useFetchApi(
-      `/user/${props.name}`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value, type: 'warning' })
-    } else {
+    const { data, error } = await useFetchApi(`/user/${props.name}`).json()
+    if (data.value) {
       const body = data.value
       avatar.value = body.data.avatar
       username.value = body.data.username
@@ -120,6 +116,8 @@
       email.value = body.data.email
       theLastLoginTime.value = body.data.last_login_at
       userOrgs.value = body.data.orgs
+    } else {
+      ElMessage.warning(error.value.msg)
     }
   }
 </script>

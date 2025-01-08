@@ -332,7 +332,7 @@
 
   const fetchFileContent = async () => {
     try {
-      const { data } = await useFetchApi(
+      const { data, error } = await useFetchApi(
         `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
       ).json()
 
@@ -343,11 +343,10 @@
         detectFileType()
         lfsContentRegex()
       } else {
-        location.href = '/errors/not-found'
+        console.log(error.value.msg)
       }
     } catch (err) {
       console.error(err)
-      location.href = '/errors/not-found'
     }
   }
 
