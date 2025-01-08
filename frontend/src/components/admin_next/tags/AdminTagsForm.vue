@@ -30,12 +30,7 @@
         class="w-full">
         <el-input v-model="dataForm.show_name" />
       </el-form-item>
-      <el-form-item
-        label="Category"
-        prop="category"
-        class="w-full">
-        <el-input v-model="dataForm.category" />
-      </el-form-item>
+      <!-- tag scope -->
       <el-form-item
         label="Scope"
         prop="scope"
@@ -43,6 +38,7 @@
         <el-select
           v-model="dataForm.scope"
           size="large"
+          @change="resetCategory"
           placeholder="scope name">
           <el-option
             label="model"
@@ -50,6 +46,24 @@
           <el-option
             label="dataset"
             value="dataset"></el-option>
+          <el-option
+            label="code"
+            value="code"></el-option>
+          <el-option
+            label="space"
+            value="space"></el-option>
+        </el-select>
+      </el-form-item>
+      <!-- tag category -->
+      <el-form-item
+        label="Category"
+        prop="category"
+        class="w-full">
+        <el-select v-model="dataForm.category">
+          <el-option
+            v-for="c in avaliableCategories"
+            :label="c.name"
+            :value="c.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -90,6 +104,8 @@
   const { t } = useI18n()
   const router = useRouter()
 
+  const tagCategories = ref([])
+
   const breadcrumbsTitle = computed(() =>
     router.currentRoute.value.fullPath === '/admin_panel/tags/new'
       ? 'new'
@@ -109,6 +125,14 @@
     name: [{ required: true, message: 'name is required', trigger: 'blur' }],
     scope: [{ required: true, message: 'scope is required', trigger: 'change' }]
   }
+
+  const avaliableCategories = computed(() => {
+    if (dataForm.value.scope === '') {
+      return []
+    } else {
+      return tagCategories.value.filter((c) => c.scope === dataForm.value.scope)
+    }
+  })
 
   const handleSubmit = () => {
     dataFormRef.value.validate((valid) => {
@@ -179,7 +203,21 @@
     }
   }
 
+  const fetchTagCategories = async () => {
+    const { data, error } = await useFetchApi("/tags/categories").json()
+    if (data.value) {
+      tagCategories.value = data.value.data
+    } else {
+      ElMessage.error(`Failed to fetch tag category: ${error.value}`)
+    }
+  }
+
+  const resetCategory = () => {
+    dataForm.value.category = ''
+  }
+
   onMounted(() => {
+    fetchTagCategories()
     if (breadcrumbsTitle.value == 'edit') {
       fetchTag()
     }
