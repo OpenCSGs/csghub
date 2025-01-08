@@ -245,10 +245,27 @@
     url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
-    url = url + `&task_tag=${taskTag.value}`
-    url = url + `&framework_tag=${frameworkTag.value}`
-    url = url + `&language_tag=${languageTag.value}`
-    url = url + `&license_tag=${licenseTag.value}`
+
+    if (taskTag.value) {
+      url = url + `&tag_category=task&tag_name=${taskTag.value}`
+    }
+
+    if (frameworkTag.value) {
+      url = url + `&tag_category=framework&tag_name=${frameworkTag.value}`
+    }
+
+    if (languageTag.value) {
+      url = url + `&tag_category=language&tag_name=${languageTag.value}`
+    }
+
+    if (licenseTag.value) {
+      url = url + `&tag_category=license&tag_name=${licenseTag.value}`
+    }
+
+    // url = url + `&task_tag=${taskTag.value}`
+    // url = url + `&framework_tag=${frameworkTag.value}`
+    // url = url + `&language_tag=${languageTag.value}`
+    // url = url + `&license_tag=${licenseTag.value}`
     url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }
