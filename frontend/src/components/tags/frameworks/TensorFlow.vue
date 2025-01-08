@@ -7,10 +7,16 @@
     TensorFlow
   </span>
 </template>
-<script setup lang="ts">
-  import { onMounted } from 'vue'
+
+<script setup>
+  import { onMounted, computed } from 'vue'
+
   const props = defineProps({
-    activeTag: String
+    activeTag: Array
+  })
+
+  const lowercaseActiveTag = computed(() => {
+    return props.activeTag.map(str => str.toLowerCase())
   })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
@@ -19,12 +25,12 @@
     emit('setActiveFrameworkTag', 'TensorFlow')
   }
   const setTagColor = () => {
-    if (props.activeTag?.toLowerCase() === 'tensorflow') {
+    if (lowercaseActiveTag.value.includes('tensorflow')) {
       return "color: white; background-color: #4D6AD6"
     }
   }
   const setSvgColor = () => {
-    if (props.activeTag?.toLowerCase() === 'tensorflow') {
+    if (lowercaseActiveTag.value.includes('tensorflow')) {
       return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }

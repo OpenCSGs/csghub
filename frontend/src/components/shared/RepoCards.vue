@@ -177,10 +177,10 @@
   const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
-  const taskTag = ref('')
-  const frameworkTag = ref('')
-  const languageTag = ref('')
-  const licenseTag = ref('')
+  const selectedTaskTags = ref([])
+  const selectedFrameworkTags = ref([])
+  const selectedLanguageTags = ref([])
+  const selectedLicenseTags = ref([])
   const reposData = ref(Array)
   const sortOptions = [
     {
@@ -224,11 +224,11 @@
     }
   })
 
-  const resetTags = (task, framework, language, license) => {
-    taskTag.value = task
-    frameworkTag.value = framework
-    languageTag.value = language
-    licenseTag.value = license
+  const resetTags = (tasks, frameworks, languages, licenses) => {
+    selectedTaskTags.value = tasks
+    selectedFrameworkTags.value = frameworks
+    selectedLanguageTags.value = languages
+    selectedLicenseTags.value = licenses
     reloadRepos(1)
   }
 
@@ -245,10 +245,39 @@
     url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
-    url = url + `&task_tag=${taskTag.value}`
-    url = url + `&framework_tag=${frameworkTag.value}`
-    url = url + `&language_tag=${languageTag.value}`
-    url = url + `&license_tag=${licenseTag.value}`
+
+    if (selectedTaskTags.value.length > 0) {
+      selectedTaskTags.value.forEach((tag) => {
+        if (tag === undefined) { return }
+        url = url + `&tag_category=task&tag_name=${tag}`
+      })
+    }
+
+    if (selectedFrameworkTags.value.length > 0) {
+      selectedFrameworkTags.value.forEach((tag) => {
+        if (tag === undefined) { return }
+        url = url + `&tag_category=framework&tag_name=${tag}`
+      })
+    }
+
+    if (selectedLanguageTags.value.length > 0) {
+      selectedLanguageTags.value.forEach((tag) => {
+        if (tag === undefined) { return }
+        url = url + `&tag_category=language&tag_name=${tag}`
+      })
+    }
+
+    if (selectedLicenseTags.value.length > 0) {
+      selectedLicenseTags.value.forEach((tag) => {
+        if (tag === undefined) { return }
+        url = url + `&tag_category=license&tag_name=${tag}`
+      })
+    }
+
+    // url = url + `&task_tag=${taskTag.value}`
+    // url = url + `&framework_tag=${frameworkTag.value}`
+    // url = url + `&language_tag=${languageTag.value}`
+    // url = url + `&license_tag=${licenseTag.value}`
     url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }

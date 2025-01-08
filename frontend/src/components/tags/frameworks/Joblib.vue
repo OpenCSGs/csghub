@@ -9,10 +9,15 @@
   Joblib
   </span>
 </template>
-<script setup lang="ts">
-  import { onMounted } from 'vue'
+
+<script setup>
+  import { onMounted, computed } from 'vue'
   const props = defineProps({
-    activeTag: String
+    activeTag: Array
+  })
+
+  const lowercaseActiveTag = computed(() => {
+    return props.activeTag.map(str => str.toLowerCase())
   })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
@@ -21,12 +26,12 @@
     emit('setActiveFrameworkTag', 'Joblib')
   }
   const setTagColor = () => {
-    if (props.activeTag?.toLowerCase() === 'joblib') {
+    if (lowercaseActiveTag.value.includes('joblib')) {
       return "color: white; background-color: #4D6AD6"
     }
   }
   const setSvgColor = () => {
-    if (props.activeTag?.toLowerCase() === 'joblib') {
+    if (lowercaseActiveTag.value.includes('joblib')) {
       return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
     }
   }
