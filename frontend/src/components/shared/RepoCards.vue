@@ -5,14 +5,10 @@
       class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden"
     >
       <TagSidebar
-        :taskTags="taskTags"
-        :frameworkTags="frameworkTags"
-        :languageTags="languageTags"
-        :licenseTags="licenseTags"
         :selectedTag="selectedTag"
         :selectedTagType="selectedTagType"
         @resetTags="resetTags"
-        :type="repoType"
+        :repoType="repoType"
       />
     </div>
     <div class="pt-[32px] w-full">
@@ -149,29 +145,8 @@
   const selectedTag = ref(tag)
   const selectedTagType = ref(tagType)
 
-  const tagFields = {
-    model: [
-      'computer_vision',
-      'natural_language_processing',
-      'audio_processing',
-      'multimodal'
-    ],
-    dataset: [
-      'text_processing',
-      'graphics',
-      'audio',
-      'video',
-      'multimodal'
-    ],
-    code: [],
-  }
-
   const onPremise = inject('onPremise', 'true')
   const { t } = useI18n()
-  const taskTags = ref({})
-  const frameworkTags = ref([])
-  const languageTags = ref([])
-  const licenseTags = ref([])
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
   const sourceSelection = ref('all')
@@ -292,32 +267,9 @@
     }
   }
 
-  async function fetchTags() {
-    const { error, data } = await useFetchApi(`/tags`).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
-      let tempTaskTags = {}
-      const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType && tag.built_in === true)
-      tagFields[props.repoType]?.forEach((field) => {
-        const fieldTags = allTaskTags.filter(tag => tag.group === field)
-        tempTaskTags[field] = fieldTags
-      })
-
-      taskTags.value = tempTaskTags
-      frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework' && tag.scope === props.repoType && tag.built_in === true)
-      languageTags.value = data.value.data.filter(tag => tag.category === 'language' && tag.scope === props.repoType && tag.built_in === true)
-      licenseTags.value = data.value.data.filter(tag => tag.category === 'license' && tag.scope === props.repoType && tag.built_in === true)
-    }
-  }
-
   onMounted(() => {
     if (props.repoType === 'space') {
       reloadRepos()
     }
-    fetchTags()
   })
 </script>

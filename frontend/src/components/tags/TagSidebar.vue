@@ -2,7 +2,7 @@
   <div class="flex bg-white flex-col pt-[32px] pb-[60px]">
     <div class="flex gap-1">
       <span
-        v-show="type !== 'code' && type !== 'space'"
+        v-show="repoType !== 'code' && repoType !== 'space'"
         class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
         data-type="Task"
         :class="
@@ -15,7 +15,7 @@
       </span>
 
       <span
-        v-show="type === 'model'"
+        v-show="repoType === 'model'"
         class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
         data-type="Framework"
         :class="
@@ -28,7 +28,7 @@
       </span>
 
       <span
-        v-show="type === 'model' || type === 'dataset'"
+        v-show="repoType === 'model' || repoType === 'dataset'"
         class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
         data-type="Language"
         :class="
@@ -208,48 +208,67 @@
   import Joblib from './frameworks/Joblib.vue'
   import GGUF from './frameworks/GGUF.vue'
   import TagItem from './TagItem.vue'
+  import useFetchApi from '../../packs/useFetchApi'
+  import { ElInput, ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
-    taskTags: Object,
-    frameworkTags: Array,
-    languageTags: Array,
-    licenseTags: Array,
-    type: String,
+    repoType: String,
     selectedTag: String,
     selectedTagType: String
   })
 
   const emit = defineEmits(['resetTags'])
 
+  const { t } = useI18n()
+
+  const tagFields = {
+    model: [
+      'computer_vision',
+      'natural_language_processing',
+      'audio_processing',
+      'multimodal'
+    ],
+    dataset: [
+      'text_processing',
+      'graphics',
+      'audio',
+      'video',
+      'multimodal'
+    ],
+    code: [],
+  }
+
+  const taskTags = ref({})
+  const frameworkTags = ref([])
+  const languageTags = ref([])
+  const licenseTags = ref([])
+
   const activeNavItem = ref('Task')
 
   const theTaskTags = ref({})
-  watch(
-    () => props.taskTags,
+  watch(taskTags,
     (newValue) => {
       theTaskTags.value = newValue
     }
   )
 
   const theFrameworkTags = ref([])
-  watch(
-    () => props.frameworkTags,
+  watch(frameworkTags,
     (newValue) => {
       theFrameworkTags.value = newValue
     }
   )
 
   const theLanguageTags = ref([])
-  watch(
-    () => props.languageTags,
+  watch(languageTags,
     (newValue) => {
       theLanguageTags.value = newValue
     }
   )
 
   const theLicenseTags = ref([])
-  watch(
-    () => props.licenseTags,
+  watch(licenseTags,
     (newValue) => {
       theLicenseTags.value = newValue
     }
@@ -359,33 +378,33 @@
 
   const filterTaskTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = props.taskTags
-    const result = removeNotMatchedTags(newTags, keywordsRegex)
+    const newTags = taskTags.value
+    const result = removeNotMatchedTaskTags(newTags, keywordsRegex)
     theTaskTags.value = result
   }
 
   const filterFrameworkTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = props.frameworkTags
-    const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
+    const newTags = frameworkTags.value
+    const result = removeNotMatchedTags(newTags, keywordsRegex)
     theFrameworkTags.value = result
   }
 
   const filterLanguageTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = props.languageTags
-    const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
+    const newTags = languageTags.value
+    const result = removeNotMatchedTags(newTags, keywordsRegex)
     theLanguageTags.value = result
   }
 
   const filterLicenseTags = (keywords) => {
     const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = props.licenseTags
-    const result = removeNotMatchedFrameworkTags(newTags, keywordsRegex)
+    const newTags = licenseTags.value
+    const result = removeNotMatchedTags(newTags, keywordsRegex)
     theLicenseTags.value = result
   }
 
-  const removeNotMatchedFrameworkTags = (tags, regex) => {
+  const removeNotMatchedTags = (tags, regex) => {
     const matchedTags = tags.filter(
       (tag) => regex.test(tag.show_name) || regex.test(tag.name)
     )
@@ -399,7 +418,7 @@
     return result
   }
 
-  const removeNotMatchedTags = (json, regex) => {
+  const removeNotMatchedTaskTags = (json, regex) => {
     const newJson = {}
     for (const [field, items] of Object.entries(json)) {
       newJson[field] = []
@@ -453,10 +472,33 @@
     return '#3B7C0F'
   }
 
+  async function fetchTags() {
+    const { error, data } = await useFetchApi(`/tags`).json()
+    if (!data.value) {
+      ElMessage({
+        message: error.value.msg || t('all.fetchError'),
+        type: 'warning'
+      })
+    } else {
+      let tempTaskTags = {}
+      const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType && tag.built_in === true)
+      tagFields[props.repoType]?.forEach((field) => {
+        const fieldTags = allTaskTags.filter(tag => tag.group === field)
+        tempTaskTags[field] = fieldTags
+      })
+
+      taskTags.value = tempTaskTags
+      frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework' && tag.scope === props.repoType && tag.built_in === true)
+      languageTags.value = data.value.data.filter(tag => tag.category === 'language' && tag.scope === props.repoType && tag.built_in === true)
+      licenseTags.value = data.value.data.filter(tag => tag.category === 'license' && tag.scope === props.repoType && tag.built_in === true)
+    }
+  }
+
   onMounted(() => {
+    fetchTags()
     emitTagFromParams()
 
-    if (props.type === 'code' || props.type === 'space') {
+    if (props.repoType === 'code' || props.repoType === 'space') {
       activeNavItem.value = 'License'
       toggleTagType()
     } else {
