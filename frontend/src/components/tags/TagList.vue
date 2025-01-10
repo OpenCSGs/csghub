@@ -1,7 +1,7 @@
 <template>
   <el-input
     v-model="taskTagFilterInput"
-    class="mt-[28px]"
+    class="mt-[28px] mb-4"
     size="large"
     :placeholder="$t('all.filterTags')"
     :prefix-icon="Search" />
@@ -17,7 +17,7 @@
             v-for="tag in value"
             :tag="tag"
             :active="activeTags['task']?.includes(tag.name)"
-            @handleTagClick="setActiveTag" />
+            @handleTagClick="handleTagClick" />
         </div>
       </div>
     </div>
@@ -26,28 +26,28 @@
   <div v-show="activeCategory === 'framework'">
     <div class="flex gap-[8px] flex-wrap">
       <PyTorch
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('PyTorch')" />
       <TensorFlow
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('TensorFlow')" />
       <Safetensors
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('Safetensors')" />
       <ONNX
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('ONNX')" />
       <JAX
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('JAX')" />
       <PaddlePaddle
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('PaddlePaddle')" />
       <Joblib
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('Joblib')" />
       <GGUF
-        @setActiveFrameworkTag="setActiveTag"
+        @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('GGUF')" />
     </div>
   </div>
@@ -58,7 +58,7 @@
         v-for="languageTag in filteredTags"
         :tag="languageTag"
         :active="activeTags['language']?.includes(languageTag.name)"
-        @handleTagClick="setActiveTag" />
+        @handleTagClick="handleTagClick" />
     </div>
   </div>
 
@@ -68,7 +68,7 @@
         v-for="licenseTag in filteredTags"
         :tag="licenseTag"
         :active="activeTags['license']?.includes(licenseTag.name)"
-        @handleTagClick="setActiveTag" />
+        @handleTagClick="handleTagClick" />
     </div>
   </div>
 </template>
@@ -100,6 +100,10 @@
   const taskTagFilterInput = ref('')
 
   const specificCategories = ['task', 'framework', 'language', 'license']
+
+  const handleTagClick = (category, tagName) => {
+    emit('setActiveTag', category, tagName)
+  }
 
   const filteredTaskTags = computed(() => {
     const keywordsRegex = new RegExp(taskTagFilterInput.value, 'i')

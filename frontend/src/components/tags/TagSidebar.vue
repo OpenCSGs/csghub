@@ -357,8 +357,14 @@
   const setActiveTag = (category, tagName) => {
     if (activeTags.value[category] === undefined) {
       activeTags.value[category] = []
-    } else if (Array.isArray(activeTags.value[category])) {
       activeTags.value[category].push(tagName)
+    } else if (Array.isArray(activeTags.value[category])) {
+      if (activeTags.value[category].includes(tagName)) {
+        const filteredTags = activeTags.value[category].filter((tag) => tag !== tagName)
+        activeTags.value[category] = filteredTags
+      } else {
+        activeTags.value[category].push(tagName)
+      }
     }
     emitTag()
   }
