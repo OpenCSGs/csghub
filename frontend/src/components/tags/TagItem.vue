@@ -4,11 +4,14 @@
     :data-tag_name="tag.name"
     :style="setTagColor()"
     @click="emit('handleTagClick', activeCategory, tag.name)">
-    {{ tag.name }}
+    {{ tagName }}
   </span>
 </template>
 
 <script setup>
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
   const props = defineProps({
     activeCategory: String,
     tag: Object,
@@ -16,6 +19,7 @@
   })
 
   const emit = defineEmits(['handleTagClick'])
+  const { locale } = useI18n()
 
   const setTagColor = () => {
     if (props.active) {
@@ -24,4 +28,8 @@
       return `color: #303133`
     }
   }
+
+  const tagName = computed(() => {
+    return locale.value === 'en' ? props.tag.name.replace(/-/g, ' ') : props.tag.show_name || props.tag.zh_name
+  })
 </script>
