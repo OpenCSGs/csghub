@@ -4,25 +4,41 @@
     subtitle=""
     :breadcrumbs="[{ text: $t('admin.tags.title') }]">
     <div class="flex items-center justify-between gap-3 w-full pt-1">
-      <el-input
-        v-model="keyword"
-        placeholder="category name"
-        size="large"
-        :prefix-icon="Search"
-        @input="fetchtags" />
+      <!-- tag scope filter -->
       <el-select
         v-model="scope"
         size="large"
         placeholder="scope name"
         clearable
-        @change="fetchtags">
+        @change="fetchtagsAndResetCategory">
         <el-option
           label="model"
           value="model"></el-option>
         <el-option
           label="dataset"
           value="dataset"></el-option>
+        <el-option
+          label="code"
+          value="code"></el-option>
+        <el-option
+          label="space"
+          value="space"></el-option>
       </el-select>
+
+      <!-- tag category filter -->
+      <el-select v-model="keyword" @change="fetchtags">
+        <el-option
+          v-for="c in avaliableCategories"
+          :label="c.name"
+          :value="c.name"></el-option>
+      </el-select>
+      <!-- <el-input
+        v-model="keyword"
+        placeholder="category name"
+        size="large"
+        :prefix-icon="Search"
+        @input="fetchtags" /> -->
+
       <router-link
         to="/admin_panel/tags/new"
         class="shrink-0">
@@ -120,6 +136,16 @@
   const total = ref(0)
   const loading = ref(false)
 
+  const tagCategories = ref([])
+
+  const avaliableCategories = computed(() => {
+    if (scope.value === '') {
+      return []
+    } else {
+      return tagCategories.value.filter((c) => c.scope === scope.value)
+    }
+  })
+
   const paginatedTags = computed(() => {
     if (!Array.isArray(tags.value) || tags.value.length === 0) {
       return []
@@ -132,6 +158,11 @@
 
   const handlePageChange = (newPage) => {
     page.value = newPage
+  }
+
+  const fetchtagsAndResetCategory = () => {
+    keyword.value = ''
+    fetchtags()
   }
 
   const fetchtags = async (current) => {
@@ -162,7 +193,17 @@
     }
   }
 
+  const fetchTagCategories = async () => {
+    const { data, error } = await useFetchApi("/tags/categories").json()
+    if (data.value) {
+      tagCategories.value = data.value.data
+    } else {
+      ElMessage.error(`Failed to fetch tag category: ${error.value}`)
+    }
+  }
+
   onMounted(() => {
+    fetchTagCategories()
     fetchtags()
   })
 </script>
