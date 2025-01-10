@@ -3,7 +3,7 @@
     class="text-sm text-gray-700 px-2 py-1 rounded-xs cursor-pointer flex items-center gap-1"
     :data-tag_name="tag.name"
     :style="setLanguageTagColor()"
-    @click="emit('handleTagClick', tag.name)">
+    @click="emit('handleTagClick', 'language', tag.name)">
     <svg
       :stroke="setSvgColor()"
       width="12"

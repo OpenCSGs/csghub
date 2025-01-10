@@ -8,8 +8,17 @@
         @changeActiveItem="changeActiveItem" />
     </div>
     <div>
+      <TagList
+        :activeCategory="activeNavItem"
+        :taskTags="tagsForCategory['task']"
+        :tags="tagsForCategory[activeNavItem]"
+        :activeTags="activeTags"
+        @setActiveTag="setActiveTag"
+      />
+
       <!-- task tags -->
-      <div v-show="showTask">
+
+      <!-- <div v-show="showTask">
         <el-input
           v-model="taskTagFilterInput"
           class="mt-[28px]"
@@ -31,9 +40,11 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
       <!-- framework tags -->
-      <div v-show="showFramework">
+
+      <!-- <div v-show="showFramework">
         <el-input
           v-model="frameworkTagFilterInput"
           class="mt-[28px] mb-[16px]"
@@ -75,9 +86,11 @@
             @setActiveFrameworkTag="setActiveFrameworkTag"
             :activeTag="activeFrameworkTag" />
         </div>
-      </div>
+      </div> -->
+
       <!-- language tags -->
-      <div v-show="showLanguage">
+
+      <!-- <div v-show="showLanguage">
         <el-input
           v-model="LanguageTagFilterInput"
           class="mt-7 mb-4"
@@ -92,9 +105,11 @@
             :active="activeLanguageTag.includes(languageTag.name)"
             @handleTagClick="setActiveLanguageTag" />
         </div>
-      </div>
+      </div> -->
 
-      <div v-show="showLicense">
+      <!-- license tags -->
+
+      <!-- <div v-show="showLicense">
         <el-input
           v-model="licenseTagFilterInput"
           class="mt-7 mb-4"
@@ -109,7 +124,8 @@
             :active="activeLicenseTag.includes(licenseTag.name)"
             @handleTagClick="setActiveLicenseTag" />
         </div>
-      </div>
+      </div> -->
+
     </div>
   </div>
 </template>
@@ -128,6 +144,7 @@
   import TaskTagItem from './TaskTagItem.vue'
   import LanguageTagItem from './LanguageTagItem.vue'
   import LicenseTagItem from './LicenseTagItem.vue'
+  import TagList from './TagList.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElInput, ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -155,220 +172,218 @@
   }
 
   const tagCategories = ref([])
+  const tagsForCategory = ref({})
 
-  const taskTags = ref({})
-  const frameworkTags = ref([])
-  const languageTags = ref([])
-  const licenseTags = ref([])
+  // const taskTags = ref({})
+  // const frameworkTags = ref([])
+  // const languageTags = ref([])
+  // const licenseTags = ref([])
 
-  const activeNavItem = ref('Task')
+  const activeNavItem = ref('task')
 
-  const theTaskTags = ref({})
-  watch(taskTags, (newValue) => {
-    theTaskTags.value = newValue
-  })
+  // const theTaskTags = ref({})
+  // watch(taskTags, (newValue) => {
+  //   theTaskTags.value = newValue
+  // })
 
-  const theFrameworkTags = ref([])
-  watch(frameworkTags, (newValue) => {
-    theFrameworkTags.value = newValue
-  })
+  // const theFrameworkTags = ref([])
+  // watch(frameworkTags, (newValue) => {
+  //   theFrameworkTags.value = newValue
+  // })
 
-  const theLanguageTags = ref([])
-  watch(languageTags, (newValue) => {
-    theLanguageTags.value = newValue
-  })
+  // const theLanguageTags = ref([])
+  // watch(languageTags, (newValue) => {
+  //   theLanguageTags.value = newValue
+  // })
 
-  const theLicenseTags = ref([])
-  watch(licenseTags, (newValue) => {
-    theLicenseTags.value = newValue
-  })
+  // const theLicenseTags = ref([])
+  // watch(licenseTags, (newValue) => {
+  //   theLicenseTags.value = newValue
+  // })
+
+  const activeTags = ref({})
 
   const activeTaskTag = ref([])
   const activeFrameworkTag = ref([])
   const activeLanguageTag = ref([])
   const activeLicenseTag = ref([])
-  const taskTagFilterInput = ref('')
-  const frameworkTagFilterInput = ref('')
-  const LanguageTagFilterInput = ref('')
-  const licenseTagFilterInput = ref('')
-  const showTask = ref(true)
-  const showFramework = ref(false)
-  const showLanguage = ref(false)
-  const showLicense = ref(false)
+
+  // const taskTagFilterInput = ref('')
+  // const frameworkTagFilterInput = ref('')
+  // const LanguageTagFilterInput = ref('')
+  // const licenseTagFilterInput = ref('')
+  // const showTask = ref(true)
+  // const showFramework = ref(false)
+  // const showLanguage = ref(false)
+  // const showLicense = ref(false)
 
   const avaliableCategories = computed(() => {
     return tagCategories.value.filter((c) => c.scope === props.repoType)
   })
 
-  const changeActiveItem = (currentType) => {
-    activeNavItem.value = currentType
-    toggleTagType()
+  const changeActiveItem = (currentCategory) => {
+    activeNavItem.value = currentCategory
+    // toggleTagType()
   }
 
-  const toggleTagType = () => {
-    if (activeNavItem.value === 'task') {
-      showTask.value = true
-      showFramework.value = false
-      showLanguage.value = false
-      showLicense.value = false
-    } else if (activeNavItem.value === 'framework') {
-      showTask.value = false
-      showFramework.value = true
-      showLanguage.value = false
-      showLicense.value = false
-    } else if (activeNavItem.value === 'language') {
-      showTask.value = false
-      showFramework.value = false
-      showLanguage.value = true
-      showLicense.value = false
-    } else if (activeNavItem.value === 'license') {
-      showTask.value = false
-      showFramework.value = false
-      showLanguage.value = false
-      showLicense.value = true
-    }
-  }
+  // const toggleTagType = () => {
+  //   if (activeNavItem.value === 'task') {
+  //     showTask.value = true
+  //     showFramework.value = false
+  //     showLanguage.value = false
+  //     showLicense.value = false
+  //   } else if (activeNavItem.value === 'framework') {
+  //     showTask.value = false
+  //     showFramework.value = true
+  //     showLanguage.value = false
+  //     showLicense.value = false
+  //   } else if (activeNavItem.value === 'language') {
+  //     showTask.value = false
+  //     showFramework.value = false
+  //     showLanguage.value = true
+  //     showLicense.value = false
+  //   } else if (activeNavItem.value === 'license') {
+  //     showTask.value = false
+  //     showFramework.value = false
+  //     showLanguage.value = false
+  //     showLicense.value = true
+  //   }
+  // }
 
-  const setActiveTaskTag = (tag) => {
-    if (activeTaskTag.value.includes(tag.name)) {
-      activeTaskTag.value = activeTaskTag.value.filter(
-        (atn) => atn !== tag.name
-      )
-    } else {
-      activeTaskTag.value.push(tag.name)
-    }
-    emitTag()
-  }
+  // const setActiveTaskTag = (tag) => {
+  //   if (activeTaskTag.value.includes(tag.name)) {
+  //     activeTaskTag.value = activeTaskTag.value.filter(
+  //       (atn) => atn !== tag.name
+  //     )
+  //   } else {
+  //     activeTaskTag.value.push(tag.name)
+  //   }
+  //   emitTag()
+  // }
 
-  const setActiveFrameworkTag = (tagName) => {
-    if (activeFrameworkTag.value.includes(tagName)) {
-      activeFrameworkTag.value = activeFrameworkTag.value.filter(
-        (atn) => atn !== tagName
-      )
-    } else {
-      activeFrameworkTag.value.push(tagName)
-    }
-    emitTag()
-  }
+  // const setActiveFrameworkTag = (tagName) => {
+  //   if (activeFrameworkTag.value.includes(tagName)) {
+  //     activeFrameworkTag.value = activeFrameworkTag.value.filter(
+  //       (atn) => atn !== tagName
+  //     )
+  //   } else {
+  //     activeFrameworkTag.value.push(tagName)
+  //   }
+  //   emitTag()
+  // }
 
-  const setActiveLanguageTag = (tagName) => {
-    if (activeLanguageTag.value.includes(tagName)) {
-      activeLanguageTag.value = activeLanguageTag.value.filter(
-        (atn) => atn !== tagName
-      )
-    } else {
-      activeLanguageTag.value.push(tagName)
-    }
-    emitTag()
-  }
-
-  const setActiveLicenseTag = (tagName) => {
-    if (activeLicenseTag.value.includes(tagName)) {
-      activeLicenseTag.value = activeLicenseTag.value.filter(
-        (atn) => atn !== tagName
-      )
-    } else {
-      activeLicenseTag.value.push(tagName)
-    }
-    emitTag()
-  }
-
-  // const setLanguageTagColor = (tagName) => {
+  // const setActiveLanguageTag = (tagName) => {
   //   if (activeLanguageTag.value.includes(tagName)) {
-  //     return 'color: white; background-color: #0DAF66'
+  //     activeLanguageTag.value = activeLanguageTag.value.filter(
+  //       (atn) => atn !== tagName
+  //     )
   //   } else {
-  //     return `color: #087443; background-color: #F6FEF9`
+  //     activeLanguageTag.value.push(tagName)
   //   }
+  //   emitTag()
   // }
 
-  // const setLicenseTagColor = (tagName) => {
+  // const setActiveLicenseTag = (tagName) => {
   //   if (activeLicenseTag.value.includes(tagName)) {
-  //     return 'color: white; background-color: #4D6AD6'
+  //     activeLicenseTag.value = activeLicenseTag.value.filter(
+  //       (atn) => atn !== tagName
+  //     )
   //   } else {
-  //     return `color: #303133`
+  //     activeLicenseTag.value.push(tagName)
   //   }
+  //   emitTag()
   // }
 
-  const filterTaskTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = taskTags.value
-    const result = removeNotMatchedTaskTags(newTags, keywordsRegex)
-    theTaskTags.value = result
-  }
+  // const filterTaskTags = (keywords) => {
+  //   const keywordsRegex = new RegExp(keywords, 'i')
+  //   const newTags = taskTags.value
+  //   const result = removeNotMatchedTaskTags(newTags, keywordsRegex)
+  //   theTaskTags.value = result
+  // }
 
-  const filterFrameworkTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = frameworkTags.value
-    const result = removeNotMatchedTags(newTags, keywordsRegex)
-    theFrameworkTags.value = result
-  }
+  // const filterFrameworkTags = (keywords) => {
+  //   const keywordsRegex = new RegExp(keywords, 'i')
+  //   const newTags = frameworkTags.value
+  //   const result = removeNotMatchedTags(newTags, keywordsRegex)
+  //   theFrameworkTags.value = result
+  // }
 
-  const filterLanguageTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = languageTags.value
-    const result = removeNotMatchedTags(newTags, keywordsRegex)
-    theLanguageTags.value = result
-  }
+  // const filterLanguageTags = (keywords) => {
+  //   const keywordsRegex = new RegExp(keywords, 'i')
+  //   const newTags = languageTags.value
+  //   const result = removeNotMatchedTags(newTags, keywordsRegex)
+  //   theLanguageTags.value = result
+  // }
 
-  const filterLicenseTags = (keywords) => {
-    const keywordsRegex = new RegExp(keywords, 'i')
-    const newTags = licenseTags.value
-    const result = removeNotMatchedTags(newTags, keywordsRegex)
-    theLicenseTags.value = result
-  }
+  // const filterLicenseTags = (keywords) => {
+  //   const keywordsRegex = new RegExp(keywords, 'i')
+  //   const newTags = licenseTags.value
+  //   const result = removeNotMatchedTags(newTags, keywordsRegex)
+  //   theLicenseTags.value = result
+  // }
 
-  const removeNotMatchedTags = (tags, regex) => {
-    const matchedTags = tags.filter(
-      (tag) => regex.test(tag.show_name) || regex.test(tag.name)
-    )
-    return matchedTags
-  }
+  // const removeNotMatchedTags = (tags, regex) => {
+  //   const matchedTags = tags.filter(
+  //     (tag) => regex.test(tag.show_name) || regex.test(tag.name)
+  //   )
+  //   return matchedTags
+  // }
 
-  const frameworkTagExist = (tagName) => {
-    const result = theFrameworkTags.value.find(
-      (ftag) => ftag.name.toLowerCase() === tagName.toLowerCase()
-    )
-    return result
-  }
+  // const frameworkTagExist = (tagName) => {
+  //   const result = theFrameworkTags.value.find(
+  //     (ftag) => ftag.name.toLowerCase() === tagName.toLowerCase()
+  //   )
+  //   return result
+  // }
 
-  const removeNotMatchedTaskTags = (json, regex) => {
-    const newJson = {}
-    for (const [field, items] of Object.entries(json)) {
-      newJson[field] = []
-      for (const { show_name, name } of items) {
-        if (regex.test(show_name) || regex.test(name)) {
-          newJson[field].push({ show_name: show_name, name: name })
-        }
-      }
-    }
-    return newJson
-  }
+  // const removeNotMatchedTaskTags = (json, regex) => {
+  //   const newJson = {}
+  //   for (const [field, items] of Object.entries(json)) {
+  //     newJson[field] = []
+  //     for (const { show_name, name } of items) {
+  //       if (regex.test(show_name) || regex.test(name)) {
+  //         newJson[field].push({ show_name: show_name, name: name })
+  //       }
+  //     }
+  //   }
+  //   return newJson
+  // }
 
   const emitTag = () => {
-    emit(
-      'resetTags',
-      activeTaskTag.value,
-      activeFrameworkTag.value,
-      activeLanguageTag.value,
-      activeLicenseTag.value
-    )
+    emit('resetTags', activeTags.value)
   }
 
-  const setTagNameFromParams = () => {
-    if (props.selectedTagType === 'Task') {
-      activeTaskTag.value.push(props.selectedTag)
-    } else if (props.selectedTagType === 'Framework') {
-      activeFrameworkTag.value.push(props.selectedTag)
-    } else if (props.selectedTagType === 'License') {
-      activeLicenseTag.value.push(props.selectedTag)
-    } else if (props.selectedTagType === 'Language') {
-      activeLanguageTag.value.push(props.selectedTag)
+
+  const setActiveTag = (category, tagName) => {
+    if (activeTags.value[category] === undefined) {
+      activeTags.value[category] = []
+    } else if (Array.isArray(activeTags.value[category])) {
+      activeTags.value[category].push(tagName)
     }
+    emitTag()
+  }
+
+
+  const setTagNameFromParams = () => {
+    if (activeTags.value[props.selectedTagType] === undefined) {
+      activeTags.value[props.selectedTagType] = []
+    } else if (Array.isArray(activeTags.value[props.selectedTagType])) {
+      activeTags.value[props.selectedTagType].push(props.selectedTag)
+    }
+    // if (props.selectedTagType === 'Task') {
+    //   activeTaskTag.value.push(props.selectedTag)
+    // } else if (props.selectedTagType === 'Framework') {
+    //   activeFrameworkTag.value.push(props.selectedTag)
+    // } else if (props.selectedTagType === 'License') {
+    //   activeLicenseTag.value.push(props.selectedTag)
+    // } else if (props.selectedTagType === 'Language') {
+    //   activeLanguageTag.value.push(props.selectedTag)
+    // }
   }
 
   const setTagTypeFromParams = () => {
     activeNavItem.value = props.selectedTagType
-    toggleTagType()
+    // toggleTagType()
   }
 
   const emitTagFromParams = () => {
@@ -397,25 +412,39 @@
         tempTaskTags[field] = fieldTags
       })
 
-      taskTags.value = tempTaskTags
-      frameworkTags.value = data.value.data.filter(
-        (tag) =>
-          tag.category === 'framework' &&
-          tag.scope === props.repoType &&
-          tag.built_in === true
-      )
-      languageTags.value = data.value.data.filter(
-        (tag) =>
-          tag.category === 'language' &&
-          tag.scope === props.repoType &&
-          tag.built_in === true
-      )
-      licenseTags.value = data.value.data.filter(
-        (tag) =>
-          tag.category === 'license' &&
-          tag.scope === props.repoType &&
-          tag.built_in === true
-      )
+      avaliableCategories.value.forEach((category) => {
+        if (category.name === 'task') {
+          tagsForCategory.value['task'] = tempTaskTags
+        } else {
+          tagsForCategory.value[category.name] = data.value.data.filter(
+            (tag) =>
+              tag.category === category.name &&
+              tag.scope === props.repoType &&
+              tag.built_in === true
+          )
+        }
+      })
+
+
+      // taskTags.value = tempTaskTags
+      // frameworkTags.value = data.value.data.filter(
+      //   (tag) =>
+      //     tag.category === 'framework' &&
+      //     tag.scope === props.repoType &&
+      //     tag.built_in === true
+      // )
+      // languageTags.value = data.value.data.filter(
+      //   (tag) =>
+      //     tag.category === 'language' &&
+      //     tag.scope === props.repoType &&
+      //     tag.built_in === true
+      // )
+      // licenseTags.value = data.value.data.filter(
+      //   (tag) =>
+      //     tag.category === 'license' &&
+      //     tag.scope === props.repoType &&
+      //     tag.built_in === true
+      // )
     }
   }
 
@@ -428,16 +457,19 @@
     }
   }
 
-  onMounted(() => {
-    fetchTags()
-    fetchTagCategories()
+  onMounted(async () => {
+    await fetchTagCategories()
+    await fetchTags()
+
+    // init selected tag from params
     emitTagFromParams()
 
+    // init initial tag category
     if (props.repoType === 'code' || props.repoType === 'space') {
-      activeNavItem.value = 'License'
-      toggleTagType()
+      activeNavItem.value = 'license'
+      // toggleTagType()
     } else {
-      activeNavItem.value = 'Task'
+      activeNavItem.value = 'task'
     }
   })
 </script>

@@ -25,28 +25,28 @@
   import { onMounted, computed } from 'vue'
 
   const props = defineProps({
-    activeTag: Array
+    active: Boolean
   })
 
-  const lowercaseActiveTag = computed(() => {
-    return props.activeTag.map(str => str.toLowerCase())
-  })
+  // const lowercaseActiveTag = computed(() => {
+  //   return props.activeTag.map(str => str.toLowerCase())
+  // })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
 
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'PaddlePaddle')
+    emit('setActiveFrameworkTag', 'framework', 'PaddlePaddle')
   }
   const setTagColor = () => {
-    if (lowercaseActiveTag.value.includes('paddlepaddle')) {
+    if (props.active) {
       return "color: white; background-color: #4D6AD6"
     }
   }
-  const setSvgColor = () => {
-    if (lowercaseActiveTag.value.includes('paddlepaddle')) {
-      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
-    }
-  }
-  onMounted(() => {
-  })
+  // const setSvgColor = () => {
+  //   if (lowercaseActiveTag.value.includes('paddlepaddle')) {
+  //     return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
+  //   }
+  // }
+  // onMounted(() => {
+  // })
 </script>

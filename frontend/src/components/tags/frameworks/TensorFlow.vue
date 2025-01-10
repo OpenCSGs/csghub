@@ -12,28 +12,28 @@
   import { onMounted, computed } from 'vue'
 
   const props = defineProps({
-    activeTag: Array
+    active: Boolean
   })
 
-  const lowercaseActiveTag = computed(() => {
-    return props.activeTag.map(str => str.toLowerCase())
-  })
+  // const lowercaseActiveTag = computed(() => {
+  //   return props.activeTag.map(str => str.toLowerCase())
+  // })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
 
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'TensorFlow')
+    emit('setActiveFrameworkTag', 'framework', 'TensorFlow')
   }
   const setTagColor = () => {
-    if (lowercaseActiveTag.value.includes('tensorflow')) {
+    if (props.active) {
       return "color: white; background-color: #4D6AD6"
     }
   }
-  const setSvgColor = () => {
-    if (lowercaseActiveTag.value.includes('tensorflow')) {
-      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
-    }
-  }
-  onMounted(() => {
-  })
+  // const setSvgColor = () => {
+  //   if (lowercaseActiveTag.value.includes('tensorflow')) {
+  //     return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
+  //   }
+  // }
+  // onMounted(() => {
+  // })
 </script>

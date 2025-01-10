@@ -3,7 +3,7 @@
     class="text-sm text-gray-700 px-[8px] py-[3px] rounded-sm cursor-pointer flex items-center gap-[4px] border border-gray-200"
     :data-tag_name="tag.name"
     :style="setLicenseTagColor()"
-    @click="emit('handleTagClick', tag.name)">
+    @click="emit('handleTagClick', 'license', tag.name)">
     <svg
       data-v-c2f76755=""
       xmlns="http://www.w3.org/2000/svg"
