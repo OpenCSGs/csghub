@@ -71,6 +71,17 @@
         @handleTagClick="handleTagClick" />
     </div>
   </div>
+
+  <div v-show="isGeneralCategory">
+    <div class="flex gap-1 flex-wrap">
+      <TagItem
+        v-for="tag in filteredTags"
+        :tag="tag"
+        :activeCategory="activeCategory"
+        :active="activeTags[activeCategory]?.includes(tag.name)"
+        @handleTagClick="handleTagClick" />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -87,6 +98,7 @@
   import TaskTagItem from './TaskTagItem.vue'
   import LanguageTagItem from './LanguageTagItem.vue'
   import LicenseTagItem from './LicenseTagItem.vue'
+  import TagItem from './TagItem.vue'
 
   const props = defineProps({
     activeCategory: String,
@@ -104,6 +116,10 @@
   const handleTagClick = (category, tagName) => {
     emit('setActiveTag', category, tagName)
   }
+
+  const isGeneralCategory = computed(() => {
+    return !specificCategories.includes(props.activeCategory)
+  })
 
   const filteredTaskTags = computed(() => {
     const keywordsRegex = new RegExp(taskTagFilterInput.value, 'i')
