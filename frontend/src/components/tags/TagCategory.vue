@@ -17,7 +17,10 @@
 
   const props = defineProps({
     name: String,
-    activeCategory: String
+    activeCategory: {
+      type: String,
+      default: ''
+    }
   })
 
   const emit = defineEmits(['changeActiveItem'])

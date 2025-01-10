@@ -34,15 +34,9 @@
 </template>
 
 <script setup>
-  import { onMounted, computed } from 'vue'
-
   const props = defineProps({
     active: Boolean
   })
-
-  // const lowercaseActiveTag = computed(() => {
-  //   return props.activeTag.map((str) => str.toLowerCase())
-  // })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
 
@@ -54,10 +48,4 @@
       return 'color: white; background-color: #4D6AD6;'
     }
   }
-  // const setSvgColor = () => {
-  //   if (lowercaseActiveTag.value.includes('pytorch')) {
-  //     return 'filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);'
-  //   }
-  // }
-  onMounted(() => {})
 </script>
