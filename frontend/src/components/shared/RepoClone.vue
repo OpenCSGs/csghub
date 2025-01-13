@@ -15,30 +15,20 @@
       :name="syncInprogress ? $t('repo.source.syncing') : $t('repo.source.syncButton')"
       class="btn btn-secondary-gray btn-sm modelBtn"
       :disabled="syncInprogress"
+      svgName="sync"
       @click="handleSyncRepo"
-    >
-      <SvgIcon
-        name="sync"
-        class="mr-2"
-      />
-    </CsgButton>
+    />
 
     <!-- evaluation button -->
     <div class="relative inline-flex">
-      <SvgIcon
-        name="evaluation_new"
-        class="absolute left-2 top-1/2 -translate-y-1/2 z-10"
-        width="16"
-      />
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
+        svgName="evaluation_new"
         v-if="repoType === 'model'"
         @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
-      >
-        {{ $t('evaluation.new.title') }}
-      </CsgButton>
+      />
     </div>
 
     <!-- endpoint deploy button -->
@@ -57,13 +47,9 @@
         type="default"
         :name="$t('all.deploy')"
         class="btn btn-secondary-gray btn-sm modelBtn"
+        svgName="model_endpoint_create"
         @click="ToLoginPage"
-      >
-        <SvgIcon
-          name="model_endpoint_create"
-          class="mr-1"
-        />
-      </CsgButton>
+      />
     </div>
     <div
       class="btn btn-secondary-gray btn-sm modelBtn disabled"
@@ -81,27 +67,19 @@
       class="btn btn-secondary-gray btn-sm modelBtn"
       :class="{ disabled: !enableFinetune || !httpCloneUrl }"
       :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
+      svgName="model_finetune_create"
       v-if="repoType === 'model'"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
-    >
-      <SvgIcon
-        name="model_finetune_create"
-        class="mr-0"
-      />
-    </CsgButton>
+    />
 
     <!-- repo download clone button -->
     <CsgButton
       v-if="!!httpCloneUrl"
       class="btn btn-primary btn-sm modelBtn"
       :name="$t(downloadButtonKey)"
+      svgName="download"
       @click="cloneRepositoryVisible = true"
-    >
-      <SvgIcon
-        name="download"
-        class="mr-0"
-      />
-    </CsgButton>
+    />
 
     <!-- clone dialog -->
     <el-dialog

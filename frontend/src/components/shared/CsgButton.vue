@@ -3,7 +3,11 @@
     :class="class"
     :type="btnType"
   >
-   {{ name }}
+    <SvgIcon
+      v-if="svgName"
+      :name="svgName"
+    />
+    {{ name }}
   </button>
 </template>
 
@@ -15,6 +19,10 @@
       default: "button"
     },
     class:{
+      type: String,
+      default: "",
+    },
+    svgName: {
       type: String,
       default: "",
     },
