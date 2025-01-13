@@ -9,10 +9,11 @@
     />
 
     <!-- multi-source sync button -->
-    <el-button
+    <CsgButton
       v-if="showSyncButton"
       type="default"
-      class="!rounded-lg"
+      :name="syncInprogress ? $t('repo.source.syncing') : $t('repo.source.syncButton')"
+      class="btn btn-secondary-gray btn-sm modelBtn"
       :disabled="syncInprogress"
       @click="handleSyncRepo"
     >
@@ -20,26 +21,24 @@
         name="sync"
         class="mr-2"
       />
-      {{
-        syncInprogress
-          ? $t('repo.source.syncing')
-          : $t('repo.source.syncButton')
-      }}
-    </el-button>
+    </CsgButton>
 
     <!-- evaluation button -->
-    <div
-      class="btn btn-secondary-gray btn-sm modelBtn"
-      :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
-      v-if="repoType === 'model'"
-      @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
-    >
+    <div class="relative inline-flex">
       <SvgIcon
         name="evaluation_new"
-        class="mr-0"
-        width="12"
+        class="absolute left-2 top-1/2 -translate-y-1/2 z-10"
+        width="16"
       />
-      <div>{{ $t('evaluation.new.title') }}</div>
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm modelBtn pl-8"
+        :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
+        :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
+        v-if="repoType === 'model'"
+        @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
+      >
+        {{ $t('evaluation.new.title') }}
+      </CsgButton>
     </div>
 
     <!-- endpoint deploy button -->
@@ -54,20 +53,17 @@
         !isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl
       "
     >
-      <el-button
+      <CsgButton
         type="default"
-        class="!rounded-lg shadow-sm hover:bg-slate-50"
+        :name="$t('all.deploy')"
+        class="btn btn-secondary-gray btn-sm modelBtn"
         @click="ToLoginPage"
       >
         <SvgIcon
           name="model_endpoint_create"
           class="mr-1"
         />
-        {{ $t('all.deploy') }}
-        <el-icon class="ml-1 el-icon--right">
-          <arrow-down />
-        </el-icon>
-      </el-button>
+      </CsgButton>
     </div>
     <div
       class="btn btn-secondary-gray btn-sm modelBtn disabled"
@@ -81,9 +77,10 @@
     </div>
 
     <!-- finetune deploy button -->
-    <div
+    <CsgButton
       class="btn btn-secondary-gray btn-sm modelBtn"
       :class="{ disabled: !enableFinetune || !httpCloneUrl }"
+      :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
       v-if="repoType === 'model'"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
     >
@@ -91,21 +88,20 @@
         name="model_finetune_create"
         class="mr-0"
       />
-      <div>{{ $t('finetune.title') }}</div>
-    </div>
+    </CsgButton>
 
     <!-- repo download clone button -->
-    <div
+    <CsgButton
       v-if="!!httpCloneUrl"
-      class="btn btn-primary btn-sm"
+      class="btn btn-primary btn-sm modelBtn"
+      :name="$t(downloadButtonKey)"
       @click="cloneRepositoryVisible = true"
     >
       <SvgIcon
         name="download"
         class="mr-0"
       />
-      <div>{{ $t(downloadButtonKey) }}</div>
-    </div>
+    </CsgButton>
 
     <!-- clone dialog -->
     <el-dialog
