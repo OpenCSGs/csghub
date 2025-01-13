@@ -92,11 +92,13 @@
   }
 
   const setTagNameFromParams = () => {
-    if (activeTags.value[props.selectedTagType] === undefined) {
-      activeTags.value[props.selectedTagType] = []
-      activeTags.value[props.selectedTagType].push(props.selectedTag)
-    } else if (Array.isArray(activeTags.value[props.selectedTagType])) {
-      activeTags.value[props.selectedTagType].push(props.selectedTag)
+    if (props.selectedTagType && props.selectedTag) {
+      if (activeTags.value[props.selectedTagType] === undefined) {
+        activeTags.value[props.selectedTagType] = []
+        activeTags.value[props.selectedTagType].push(props.selectedTag)
+      } else if (Array.isArray(activeTags.value[props.selectedTagType])) {
+        activeTags.value[props.selectedTagType].push(props.selectedTag)
+      }
     }
   }
 
