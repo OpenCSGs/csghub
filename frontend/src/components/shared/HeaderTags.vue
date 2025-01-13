@@ -5,7 +5,7 @@
       v-if="taskTags.length"
       class="text-sm font-normal text-gray-700"
     >
-      {{ $t('all.tasks') }}:
+      {{ $t('all.task') }}:
     </div>
     <tag-item
       v-for="tag in theTaskTags.theTags"
@@ -51,7 +51,7 @@
       v-if="languageTags.length"
       class="flex items-center text-sm font-normal text-gray-700"
     >
-      {{ $t('all.languages') }}:
+      {{ $t('all.language') }}:
     </div>
     <a
       v-for="tag in theLanguageTags.theTags"
