@@ -10,7 +10,7 @@
     <tag-item
       v-for="tag in theTaskTags.theTags"
       :tag="tag"
-      @handleTagClick="searchByTag"
+      @handleTagClick="searchByTag(tag)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     />
     <MoreTags

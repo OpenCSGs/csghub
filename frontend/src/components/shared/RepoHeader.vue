@@ -190,7 +190,7 @@
   <div class="leading-[24px] pb-[16px] text-gray-700 md:px-5">{{ desc }}</div>
 
   <!-- repo tags -->
-  <header-tags
+  <HeaderTags
     v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code'"
     :tags="tags"
     :prefix="`${repoType}s/`"
