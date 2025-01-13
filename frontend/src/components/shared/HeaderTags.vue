@@ -2,7 +2,7 @@
   <div class="flex items-center flex-wrap gap-3 mb-4 md:mb-8 md:px-5">
     <!-- Task -->
     <div
-      v-if="taskTags.length"
+      v-if="taskTags?.length"
       class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.tasks') }}:
@@ -21,7 +21,7 @@
     />
     <!-- Framework -->
     <div
-      v-if="frameworkTags.length"
+      v-if="frameworkTags?.length"
       class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.framework') }}:
@@ -48,7 +48,7 @@
     />
     <!-- Language -->
     <div
-      v-if="languageTags.length"
+      v-if="languageTags?.length"
       class="flex items-center text-sm font-normal text-gray-700"
     >
       {{ $t('all.languages') }}:
@@ -70,7 +70,7 @@
     />
     <!-- industryTags -->
     <div
-      v-if="industryTags.length"
+      v-if="industryTags?.length"
       class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.industry') }}:
@@ -89,7 +89,7 @@
     />
     <!-- Other -->
     <div
-      v-if="otherTags.length"
+      v-if="otherTags?.length"
       class="text-sm font-normal text-gray-700"
     >
       {{ $t('all.others') }}:
@@ -108,7 +108,7 @@
     />
     <!-- License -->
     <div
-      v-if="licenseTags.length"
+      v-if="licenseTags?.length"
       class="text-sm font-normal text-gray-700"
     >
       License:
