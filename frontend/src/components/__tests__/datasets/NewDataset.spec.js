@@ -70,28 +70,26 @@ describe("NewDataset", () => {
   });
 
   describe("form validation", () => {
+    const validateForm = () => {
+      return new Promise(resolve => {
+        wrapper.vm.$refs.dataFormRef.validate(valid => resolve(valid))
+      })
+    }
     it("validates required fields", async() => {
-      await wrapper.find('button').trigger('click');
-
-      await new Promise((resolve) => setTimeout(resolve, 300))
-      const formErrors = wrapper.findAll('.el-form-item__error');
-      expect(formErrors.length).toBeGreaterThan(0);
+      expect(await validateForm()).toBe(false)
     })
 
     it("accepts invalid dataset name", async () => {
       wrapper.vm.dataForm.name = '**__invalid-name'
-      await wrapper.find('button').trigger('click');
-      await new Promise((resolve) => setTimeout(resolve, 300))
-      const errorMessage = wrapper.find('.el-form-item__error');
-      expect(errorMessage.exists()).toBe(true);
+      await wrapper.vm.$nextTick()
+      expect(await validateForm()).toBe(false)
     });
 
     it("accepts valid dataset name", async () => {
       wrapper.vm.dataForm.name = 'valid-name'
-      await wrapper.find('button').trigger('click');
-      await new Promise((resolve) => setTimeout(resolve, 300))
-      const errorMessage = wrapper.find('.el-form-item__error');
-      expect(errorMessage.exists()).toBe(false);
+      wrapper.vm.dataForm.license = 'apach-2.0'
+      await wrapper.vm.$nextTick()
+      expect(await validateForm()).toBe(true)
     });
   })
 
@@ -127,6 +125,7 @@ describe("NewDataset", () => {
       }
 
       await wrapper.find('button').trigger('click');
+      await new Promise(resolve => setTimeout(resolve, 300));
       expect(window.location.href).toBe('/datasets/testuser/testdataset');
     });
   });

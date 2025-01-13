@@ -143,13 +143,12 @@
         </p>
         <div class="flex justify-end">
           <el-form-item>
-            <button
+            <CsgButton
               :loading="loading"
               class="btn btn-primary btn-md"
+              :name="t('models.newModel.createModel')"
               @click="handleSubmit"
-            >
-              {{ t('models.newModel.createModel') }}
-            </button>
+            />
           </el-form-item>
         </div>
       </el-form>

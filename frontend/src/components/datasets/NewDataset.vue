@@ -145,13 +145,12 @@
         </p>
         <div class="flex justify-end">
           <el-form-item>
-            <button
+            <CsgButton
               :loading="loading"
               class="btn btn-primary btn-md"
+              :name="t('datasets.newDataset.createDataset')"
               @click="handleSubmit"
-            >
-              {{ t('datasets.newDataset.createDataset') }}
-            </button>
+            />
           </el-form-item>
         </div>
       </el-form>
