@@ -26,7 +26,10 @@
       </el-select>
 
       <!-- tag category filter -->
-      <el-select v-model="keyword" @change="fetchtags">
+      <el-select
+        v-model="keyword"
+        size="large"
+        @change="fetchtags">
         <el-option
           v-for="c in avaliableCategories"
           :label="c.name"
@@ -47,6 +50,16 @@
           :name="$t('admin.tags.create')" />
       </router-link>
     </div>
+
+    <!-- new category -->
+    <p class="text-[#101828] text-md my-4 flex gap-2 items-center">
+      <p> {{ $t('admin.tags.newCategoryNotes') }} </p>
+      <CsgButton
+        :name="$t('admin.tags.newCategoryBtn')"
+        class="btn btn-primary btn-sm"
+        @click="dialogFormVisible = true" />
+    </p>
+
     <Table
       :title="$t('admin.tags.tagList')"
       :data="paginatedTags"
@@ -116,6 +129,53 @@
           @current-change="handlePageChange" />
       </template>
     </Table>
+
+    <!-- new category dialog -->
+    <el-dialog
+      v-model="dialogFormVisible"
+      title="New Category"
+      width="500"
+    >
+      <el-form :model="newCategoryForm">
+        <el-form-item label="scope">
+          <el-select
+            v-model="newCategoryForm.scope"
+            size="large"
+            placeholder="scope name">
+            <el-option
+              label="model"
+              value="model"></el-option>
+            <el-option
+              label="dataset"
+              value="dataset"></el-option>
+            <el-option
+              label="code"
+              value="code"></el-option>
+            <el-option
+              label="space"
+              value="space"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="name">
+          <el-input
+            v-model="newCategoryForm.name"
+            size="large"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="show_name">
+          <el-input
+            v-model="newCategoryForm.show_name"
+            size="large"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer flex justify-end gap-2">
+          <CsgButton class="btn btn-secondary-gray btn-md" :name="$t('admin.tags.editCancelBtn')" @click="dialogFormVisible = false" />
+          <CsgButton class="btn btn-primary btn-md" :name="$t('admin.tags.editConfirmBtn')" @click="submitCategoryForm" />
+        </div>
+      </template>
+    </el-dialog>
   </Container>
 </template>
 
@@ -137,6 +197,15 @@
   const loading = ref(false)
 
   const tagCategories = ref([])
+
+  const dialogFormVisible = ref(false)
+
+  const newCategoryForm = ref({
+    enabled: true,
+    scope: '',
+    name: '',
+    show_name: ''
+  })
 
   const avaliableCategories = computed(() => {
     if (scope.value === '') {
@@ -194,11 +263,27 @@
   }
 
   const fetchTagCategories = async () => {
-    const { data, error } = await useFetchApi("/tags/categories").json()
+    const { data, error } = await useFetchApi('/tags/categories').json()
     if (data.value) {
       tagCategories.value = data.value.data
     } else {
       ElMessage.error(`Failed to fetch tag category: ${error.value}`)
+    }
+  }
+
+  const submitCategoryForm = async () => {
+    const { data, error } = await useFetchApi(`/tags/categories`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newCategoryForm.value)
+    }).post().json()
+    if (data.value) {
+      ElMessage.success('Category created successfully')
+      dialogFormVisible.value = false
+      fetchUser()
+    } else {
+      ElMessage.error(error.value.msg)
     }
   }
 
@@ -207,3 +292,15 @@
     fetchtags()
   })
 </script>
+
+<style scoped>
+  :deep(.el-form-item__label) {
+    line-height: 32px !important;
+  }
+  :deep(.el-dialog__body) {
+    padding: 0 !important;
+  }
+  :deep(.el-dialog__header) {
+    padding-bottom: 47px;
+  }
+</style>
