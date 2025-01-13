@@ -4,6 +4,7 @@
       <TagCategory
         v-for="category in avaliableCategories"
         :name="category.name"
+        :zhName="category.show_name"
         :activeCategory="activeNavItem"
         @changeActiveItem="changeActiveItem" />
     </div>

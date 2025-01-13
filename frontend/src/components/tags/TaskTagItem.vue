@@ -23,7 +23,11 @@
   const { locale } = useI18n()
 
   const tagName = computed(() => {
-    return locale.value === 'en' ? props.tag.name.replace(/-/g, ' ') : props.tag.show_name || props.tag.zh_name
+    if (locale.value === 'en') {
+      return props.tag.name.replace(/-/g, ' ')
+    } else {
+      return props.tag.show_name || props.tag.zh_name || props.tag.name.replace(/-/g, ' ')
+    }
   })
 
   const emit = defineEmits(['handleTagClick'])

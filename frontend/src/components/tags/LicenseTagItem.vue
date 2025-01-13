@@ -18,17 +18,22 @@
         stroke-linecap="round"
         stroke-linejoin="round"></path>
     </svg>
-    {{ tag.show_name || tag.name }}
+    {{ tagName }}
   </span>
 </template>
 
 <script setup>
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
   const props = defineProps({
     tag: Object,
     active: Boolean
   })
 
   const emit = defineEmits(['handleTagClick'])
+
+  const { locale } = useI18n()
 
   const setLicenseTagColor = () => {
     if (props.active) {
@@ -37,4 +42,12 @@
       return `color: #303133`
     }
   }
+
+  const tagName = computed(() => {
+    if (locale.value === 'en') {
+      return props.tag.name.replace(/-/g, ' ')
+    } else {
+      return props.tag.show_name || props.tag.zh_name || props.tag.name.replace(/-/g, ' ')
+    }
+  })
 </script>
