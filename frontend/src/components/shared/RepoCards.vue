@@ -139,11 +139,6 @@
   const currentPage = ref(1)
   const totalRepos = ref(0)
 
-  // const selectedTaskTags = ref([])
-  // const selectedFrameworkTags = ref([])
-  // const selectedLanguageTags = ref([])
-  // const selectedLicenseTags = ref([])
-
   const activeTags = ref({})
 
   const reposData = ref(Array)
@@ -213,42 +208,6 @@
         url = url + `&tag_category=${category}&tag_name=${tag}`
       })
     }
-
-    // if (selectedTaskTags.value.length > 0) {
-    //   selectedTaskTags.value.forEach((tag) => {
-    //     if (tag === undefined) {
-    //       return
-    //     }
-    //     url = url + `&tag_category=task&tag_name=${tag}`
-    //   })
-    // }
-
-    // if (selectedFrameworkTags.value.length > 0) {
-    //   selectedFrameworkTags.value.forEach((tag) => {
-    //     if (tag === undefined) {
-    //       return
-    //     }
-    //     url = url + `&tag_category=framework&tag_name=${tag}`
-    //   })
-    // }
-
-    // if (selectedLanguageTags.value.length > 0) {
-    //   selectedLanguageTags.value.forEach((tag) => {
-    //     if (tag === undefined) {
-    //       return
-    //     }
-    //     url = url + `&tag_category=language&tag_name=${tag}`
-    //   })
-    // }
-
-    // if (selectedLicenseTags.value.length > 0) {
-    //   selectedLicenseTags.value.forEach((tag) => {
-    //     if (tag === undefined) {
-    //       return
-    //     }
-    //     url = url + `&tag_category=license&tag_name=${tag}`
-    //   })
-    // }
 
     // url = url + `&task_tag=${taskTag.value}`
     // url = url + `&framework_tag=${frameworkTag.value}`
