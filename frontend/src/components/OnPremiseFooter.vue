@@ -1,7 +1,7 @@
 <template>
   <div class="border-t border-gray-200">
     <div class="page-responsive-width m-auto py-4 mb-4 flex justify-between items-center w-full xl:px-5 sm:justify-center sm:gap-4 sm:text-[10px] sm:flex-col">
-      <p class="text-gray-700 text-base font-light">© 2024 OpenCSG. All rights reserved.</p>
+      <p class="text-gray-700 text-base font-light">© 2025 OpenCSG. All rights reserved.</p>
       <div class="flex items-center gap-6">
         <a href="https://twitter.com/OpenCsg" target="_blank">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
