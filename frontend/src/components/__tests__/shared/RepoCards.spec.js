@@ -109,12 +109,12 @@ describe("RepoCards", () => {
 
     it("handles tag selection correctly", async () => {
         const wrapper = createWrapper();
-        await wrapper.vm.resetTags(['vision'], ['pytorch'], ['python'], ['MIT']);
+        await wrapper.vm.resetTags({ "task": ['vision'], "framework": ['pytorch'], "language": ['python'], "license": ['MIT'] });
 
-        expect(wrapper.vm.selectedTaskTags).toContain('vision');
-        expect(wrapper.vm.selectedFrameworkTags).toContain('pytorch');
-        expect(wrapper.vm.selectedLanguageTags).toContain('python');
-        expect(wrapper.vm.selectedLicenseTags).toContain('MIT');
+        expect(wrapper.vm.activeTags.task).toContain('vision');
+        expect(wrapper.vm.activeTags.framework).toContain('pytorch');
+        expect(wrapper.vm.activeTags.language).toContain('python');
+        expect(wrapper.vm.activeTags.license).toContain('MIT');
     });
 
     it("loads repos on mount for space type", () => {
