@@ -147,7 +147,7 @@
               :loading="loading"
               class="btn btn-primary btn-md"
               :name="t('models.newModel.createModel')"
-              @click="createModel"
+              @click="handleSubmit"
             />
           </el-form-item>
         </div>

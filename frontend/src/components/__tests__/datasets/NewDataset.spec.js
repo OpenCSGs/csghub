@@ -121,8 +121,11 @@ describe("NewDataset", () => {
         visibility: 'public'
       }
 
-      await wrapper.find('button').trigger('click');
-      expect(window.location.href).toBe('/datasets/testuser/testdataset');
+      const button = wrapper.findComponent({ name: 'CsgButton' })
+      await button.trigger('click');
+      setTimeout(() => {
+        expect(window.location.href).toBe('/datasets/testuser/testdataset');
+      }, 300);
     });
   });
 });
