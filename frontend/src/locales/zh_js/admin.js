@@ -45,5 +45,9 @@ export const admin = {
     newCategoryBtn: "新建分类",
     editCancelBtn: '取消',
     editConfirmBtn: '确认',
+    newCategory: '新建标签分类',
+    scope: '项目类别',
+    name: '名称',
+    showName: '中文名称'
   },
 }

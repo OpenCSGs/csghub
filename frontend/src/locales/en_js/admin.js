@@ -45,5 +45,9 @@ export const admin = {
     newCategoryBtn: "New Category",
     editCancelBtn: 'Cancel',
     editConfirmBtn: 'Confirm',
+    newCategory: 'New Category',
+    scope: 'Scope',
+    name: 'Name',
+    showName: 'ZH Name'
   }
 }
