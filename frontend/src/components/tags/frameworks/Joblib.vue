@@ -11,30 +11,19 @@
 </template>
 
 <script setup>
-  import { onMounted, computed } from 'vue'
   const props = defineProps({
-    activeTag: Array
-  })
-
-  const lowercaseActiveTag = computed(() => {
-    return props.activeTag.map(str => str.toLowerCase())
+    active: Boolean
   })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
 
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'Joblib')
+    emit('setActiveFrameworkTag', 'framework', 'Joblib')
   }
+
   const setTagColor = () => {
-    if (lowercaseActiveTag.value.includes('joblib')) {
+    if (props.active) {
       return "color: white; background-color: #4D6AD6"
     }
   }
-  const setSvgColor = () => {
-    if (lowercaseActiveTag.value.includes('joblib')) {
-      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
-    }
-  }
-  onMounted(() => {
-  })
 </script>

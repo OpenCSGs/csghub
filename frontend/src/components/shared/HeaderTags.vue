@@ -5,12 +5,12 @@
       v-if="taskTags?.length"
       class="text-sm font-normal text-gray-700"
     >
-      {{ $t('all.tasks') }}:
+      {{ $t('all.task') }}:
     </div>
     <tag-item
       v-for="tag in theTaskTags.theTags"
       :tag="tag"
-      @handleTagClick="searchByTag"
+      @handleTagClick="searchByTag(tag)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     />
     <MoreTags
@@ -51,7 +51,7 @@
       v-if="languageTags?.length"
       class="flex items-center text-sm font-normal text-gray-700"
     >
-      {{ $t('all.languages') }}:
+      {{ $t('all.language') }}:
     </div>
     <a
       v-for="tag in theLanguageTags.theTags"
@@ -119,7 +119,7 @@
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-2xl cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       <SvgIcon name="repo_header_license_icon" />
-      License: 
+      License:
       <p class="text-gray-700">{{ tag.name }}</p>
     </a>
     <MoreTags
@@ -141,7 +141,7 @@
   import PaddlePaddle from '../../components/tags/frameworks/PaddlePaddle.vue'
   import GGUF from '../../components/tags/frameworks/GGUF.vue'
   import Joblib from '../../components/tags/frameworks/Joblib.vue'
-  import TagItem from '../tags/TagItem.vue'
+  import TagItem from '../tags/TaskTagItem.vue'
   import MoreTags from './MoreTags.vue'
   import { useI18n } from 'vue-i18n'
 

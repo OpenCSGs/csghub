@@ -41,5 +41,9 @@ export const admin = {
     delete: '删除',
     deleteConfirm: '确认删除',
     opSuccess: '操作成功',
+    newCategoryNotes: "如果你需要其他分类的标签，你可以新建分类，然后在分类下添加新的标签" ,
+    newCategoryBtn: "新建分类",
+    editCancelBtn: '取消',
+    editConfirmBtn: '确认',
   },
 }

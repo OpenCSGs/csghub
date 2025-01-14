@@ -21,30 +21,19 @@
   </span>
 </template>
 <script setup>
-  import { onMounted, computed } from 'vue'
   const props = defineProps({
-    activeTag: Array
+    active: Boolean
   })
 
   const emit = defineEmits(['setActiveFrameworkTag'])
 
-  const lowercaseActiveTag = computed(() => {
-    return props.activeTag.map(str => str.toLowerCase())
-  })
-
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'JAX')
+    emit('setActiveFrameworkTag', 'framework', 'JAX')
   }
+
   const setTagColor = () => {
-    if (lowercaseActiveTag.value.includes('jax')) {
+    if (props.active) {
       return "color: white; background-color: #4D6AD6"
     }
   }
-  const setSvgColor = () => {
-    if (lowercaseActiveTag.value.includes('jax')) {
-      return "filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);"
-    }
-  }
-  onMounted(() => {
-  })
 </script>

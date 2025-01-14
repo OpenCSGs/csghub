@@ -1,49 +1,41 @@
 <template>
-  <div class="flex gap-[24px] page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
+  <div
+    class="flex gap-[24px] page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
     <div
       v-if="repoType !== 'space'"
-      class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden"
-    >
+      class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden">
       <TagSidebar
-        :taskTags="taskTags"
-        :frameworkTags="frameworkTags"
-        :languageTags="languageTags"
-        :licenseTags="licenseTags"
         :selectedTag="selectedTag"
         :selectedTagType="selectedTagType"
         @resetTags="resetTags"
-        :type="repoType"
-      />
+        :repoType="repoType" />
     </div>
     <div class="pt-[32px] w-full">
       <div
-        :class="`flex xl:flex-col justify-between ${repoType === 'space' ? 'xl:pl-[20px] md:pl-0' : ''}`"
-      >
+        :class="`flex xl:flex-col justify-between ${
+          repoType === 'space' ? 'xl:pl-[20px] md:pl-0' : ''
+        }`">
         <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
           <SvgIcon
             v-if="repoType === 'model'"
             name="models"
             width="18"
-            height="18"
-          />
+            height="18" />
           <SvgIcon
             v-if="repoType === 'dataset'"
             name="datasets"
             width="18"
-            height="18"
-          />
+            height="18" />
           <SvgIcon
             v-if="repoType === 'code'"
             name="codes"
             width="18"
-            height="18"
-          />
+            height="18" />
           <SvgIcon
             v-if="repoType === 'space'"
             name="spaces"
             width="18"
-            height="18"
-          />
+            height="18" />
           <span class="capitalize">
             {{ $t(`${repoType}s.title`) }}
             <span class="text-gray-400 text-md italic">
@@ -58,14 +50,12 @@
             @change="filterChange"
             style="width: 150px"
             class="mr-4 sm:!w-[122px] sm:mr-1"
-            size="large"
-          >
+            size="large">
             <el-option
               v-for="item in sourceOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value"
-            />
+              :value="item.value" />
           </el-select>
           <ElInput
             v-model="nameFilterInput"
@@ -73,50 +63,42 @@
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change="filterChange"
-          />
+            @change="filterChange" />
           <el-select
             v-model="sortSelection"
             @change="filterChange"
             style="width: 150px"
             class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
-            size="large"
-          >
+            size="large">
             <el-option
               v-for="item in sortOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value"
-            />
+              :value="item.value" />
           </el-select>
         </div>
       </div>
       <div
         v-if="repoType === 'space'"
-        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] md:pl-0"
-      >
+        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] md:pl-0">
         <application-space-item
           v-for="repo in reposData"
           :repo="repo"
-          :repo-type="repoType"
-        />
+          :repo-type="repoType" />
       </div>
       <div
         v-else
-        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
-      >
+        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]">
         <repo-item
           v-for="repo in reposData"
           :repo="repo"
-          :repo-type="repoType"
-        />
+          :repo-type="repoType" />
       </div>
       <CsgPagination
         :perPage="perPage"
         :currentPage="currentPage"
         @currentChange="reloadRepos"
-        :total="totalRepos"
-      />
+        :total="totalRepos" />
     </div>
   </div>
   <UpdateUsername />
@@ -146,41 +128,19 @@
   }
 
   const { tag, tagType } = getQueryParams()
-  const selectedTag = ref(tag)
-  const selectedTagType = ref(tagType)
-
-  const tagFields = {
-    model: [
-      'computer_vision',
-      'natural_language_processing',
-      'audio_processing',
-      'multimodal'
-    ],
-    dataset: [
-      'text_processing',
-      'graphics',
-      'audio',
-      'video',
-      'multimodal'
-    ],
-    code: [],
-  }
+  const selectedTag = ref(tag.toLowerCase())
+  const selectedTagType = ref(tagType.toLowerCase())
 
   const onPremise = inject('onPremise', 'true')
   const { t } = useI18n()
-  const taskTags = ref({})
-  const frameworkTags = ref([])
-  const languageTags = ref([])
-  const licenseTags = ref([])
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
   const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
-  const selectedTaskTags = ref([])
-  const selectedFrameworkTags = ref([])
-  const selectedLanguageTags = ref([])
-  const selectedLicenseTags = ref([])
+
+  const activeTags = ref({})
+
   const reposData = ref(Array)
   const sortOptions = [
     {
@@ -224,11 +184,8 @@
     }
   })
 
-  const resetTags = (tasks, frameworks, languages, licenses) => {
-    selectedTaskTags.value = tasks
-    selectedFrameworkTags.value = frameworks
-    selectedLanguageTags.value = languages
-    selectedLicenseTags.value = licenses
+  const resetTags = (tags) => {
+    activeTags.value = tags
     reloadRepos(1)
   }
 
@@ -237,7 +194,7 @@
   }
 
   const reloadRepos = (childCurrent) => {
-    if(childCurrent){
+    if (childCurrent) {
       currentPage.value = childCurrent
     }
     let url = `/${props.repoType}s`
@@ -246,31 +203,9 @@
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
 
-    if (selectedTaskTags.value.length > 0) {
-      selectedTaskTags.value.forEach((tag) => {
-        if (tag === undefined) { return }
-        url = url + `&tag_category=task&tag_name=${tag}`
-      })
-    }
-
-    if (selectedFrameworkTags.value.length > 0) {
-      selectedFrameworkTags.value.forEach((tag) => {
-        if (tag === undefined) { return }
-        url = url + `&tag_category=framework&tag_name=${tag}`
-      })
-    }
-
-    if (selectedLanguageTags.value.length > 0) {
-      selectedLanguageTags.value.forEach((tag) => {
-        if (tag === undefined) { return }
-        url = url + `&tag_category=language&tag_name=${tag}`
-      })
-    }
-
-    if (selectedLicenseTags.value.length > 0) {
-      selectedLicenseTags.value.forEach((tag) => {
-        if (tag === undefined) { return }
-        url = url + `&tag_category=license&tag_name=${tag}`
+    for (let [category, tags] of Object.entries(activeTags.value)) {
+      tags.forEach((tag) => {
+        url = url + `&tag_category=${category}&tag_name=${tag}`
       })
     }
 
@@ -278,7 +213,9 @@
     // url = url + `&framework_tag=${frameworkTag.value}`
     // url = url + `&language_tag=${languageTag.value}`
     // url = url + `&license_tag=${licenseTag.value}`
-    url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
+    url =
+      url +
+      `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }
 
@@ -292,32 +229,9 @@
     }
   }
 
-  async function fetchTags() {
-    const { error, data } = await useFetchApi(`/tags`).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
-      let tempTaskTags = {}
-      const allTaskTags = data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType && tag.built_in === true)
-      tagFields[props.repoType]?.forEach((field) => {
-        const fieldTags = allTaskTags.filter(tag => tag.group === field)
-        tempTaskTags[field] = fieldTags
-      })
-
-      taskTags.value = tempTaskTags
-      frameworkTags.value = data.value.data.filter(tag => tag.category === 'framework' && tag.scope === props.repoType && tag.built_in === true)
-      languageTags.value = data.value.data.filter(tag => tag.category === 'language' && tag.scope === props.repoType && tag.built_in === true)
-      licenseTags.value = data.value.data.filter(tag => tag.category === 'license' && tag.scope === props.repoType && tag.built_in === true)
-    }
-  }
-
   onMounted(() => {
     if (props.repoType === 'space') {
       reloadRepos()
     }
-    fetchTags()
   })
 </script>
