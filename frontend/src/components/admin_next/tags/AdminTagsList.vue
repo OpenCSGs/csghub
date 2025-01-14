@@ -133,15 +133,15 @@
     <!-- new category dialog -->
     <el-dialog
       v-model="dialogFormVisible"
-      title="New Category"
+      :title="$t('admin.tags.newCategory')"
       width="500"
     >
       <el-form :model="newCategoryForm">
-        <el-form-item label="scope">
+        <el-form-item :label="$t('admin.tags.scope')">
           <el-select
             v-model="newCategoryForm.scope"
             size="large"
-            placeholder="scope name">
+            :placeholder="$t('admin.tags.scope')">
             <el-option
               label="model"
               value="model"></el-option>
@@ -156,13 +156,13 @@
               value="space"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="name">
+        <el-form-item :label="$t('admin.tags.name')">
           <el-input
             v-model="newCategoryForm.name"
             size="large"
           ></el-input>
         </el-form-item>
-        <el-form-item label="show_name">
+        <el-form-item :label="$t('admin.tags.showName')">
           <el-input
             v-model="newCategoryForm.show_name"
             size="large"
