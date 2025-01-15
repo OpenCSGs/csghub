@@ -205,7 +205,7 @@
 
     for (let [category, tags] of Object.entries(activeTags.value)) {
       tags.forEach((tag) => {
-        url = url + `&tag_category=${category}&tag_name=${tag}`
+        url = url + `&tag_category=${category}&tag_name=${tag.toLowerCase()}`
       })
     }
 
