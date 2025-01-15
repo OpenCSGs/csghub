@@ -1,13 +1,13 @@
 <template>
-  <div class="p-[16px] border-t border-gray-200">
-    <h3 class="flex items-center gap-[8px]">
+  <div class="p-4 border-t border-gray-200">
+    <h3 class="flex items-center gap-2">
       <SvgIcon name="datasets" width="18px" height="18px" />
-      <span class="font-medium text-gray-700 text-md leading-[24px]">
+      <span class="font-medium text-gray-700 text-md leading-6">
         {{ $t('datasets.associated') }}
       </span>
       <span class="text-gray-500"> {{ datasets.length }} </span>
     </h3>
-    <div class="mt-[16px] flex flex-col gap-[12px]">
+    <div class="mt-4 flex flex-col gap-3">
       <RepoItem
         v-for="dataset in datasets"
         :repo="dataset"

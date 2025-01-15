@@ -1,14 +1,15 @@
 <template>
-  <div class="p-[16px] border-t border-[#EBEEF5]">
-    <h3 class="flex items-center gap-[8px]">
+  <div class="p-4 border-t border-gray-200">
+    <h3 class="flex items-center gap-2">
       <SvgIcon
         name="prompts_relations_library"
         width="18px"
         height="18px"
       />
-      <span class="font-[500] text-[#344054] text-[16px] leading-[24px]">
+      <span class="font-medium text-gray-700 text-md leading-6">
         {{ $t('prompts.relationPrompts') }}
       </span>
+      <span class="text-gray-500"> {{ prompts.length }} </span>
     </h3>
     <div
       class="flex items-center mt-4 gap-3 w-full flex-wrap overflow-hidden"
@@ -19,7 +20,7 @@
         :href="`/prompts/library/${prompt.path}`"
       >
         <p
-          class="rounded-md text-[#344054] border border-gray-300 bg-white py-0.5 pr-2.5 pl-1.5"
+          class="rounded-sm text-gray-700 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50"
         >
           {{ prompt.path }}
         </p>
@@ -27,7 +28,7 @@
 
       <div v-if="thePrompts.more">
         <div
-          class="font-normal text-[#667085] cursor-pointer hover:text-[#3250BD]"
+          class="font-normal text-gray-500 cursor-pointer hover:text-brand-600"
           @click="thePrompts.isExpanded = !thePrompts.isExpanded"
           v-show="!thePrompts.isExpanded"
         >
@@ -37,7 +38,7 @@
           </el-icon>
         </div>
         <div
-          class="font-normal text-[#667085] cursor-pointer hover:text-[#3250BD]"
+          class="font-normal text-gray-500 cursor-pointer hover:text-brand-600"
           @click="thePrompts.isExpanded = !thePrompts.isExpanded"
           v-show="thePrompts.isExpanded"
         >
