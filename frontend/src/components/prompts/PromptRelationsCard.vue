@@ -20,7 +20,7 @@
         :href="`/prompts/library/${prompt.path}`"
       >
         <p
-          class="rounded-sm text-gray-700 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50"
+          class="rounded-sm text-sm text-gray-700 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50"
         >
           {{ prompt.path }}
         </p>

@@ -7,7 +7,7 @@
     </h3>
     <div class="mt-4 flex flex-wrap gap-3">
       <a v-for="space in spaces" :href="`/spaces/${space.path}`" data-test="space-item">
-        <p class="rounded-sm text-gray-700 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50">
+        <p class="rounded-sm text-sm text-gray-700 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50">
           {{ space.path }}
         </p>
       </a>
