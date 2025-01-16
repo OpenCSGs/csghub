@@ -154,7 +154,11 @@
               <CsgButton
                 :loading="loading"
                 :name="t('prompts.newList.createPrompts')"
-                class="btn btn-primary btn-md w-fit"
+                :class="[
+                  'btn btn-md w-fit',
+                  showButton ? 'btn-primary' : 'btn-primary opacity-50 !cursor-not-allowed'
+                ]"
+                :disabled="!showButton"
                 @click="handleSubmit"
               />
             </div>
