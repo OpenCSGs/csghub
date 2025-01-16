@@ -5,10 +5,10 @@
     :name="name"
     firstHref="/prompts/library"
     firstHrefName="prompts.promptLibrary"
-    class="sticky top-0 md:top-[60px] bg-[#FFFFFF] left-0 z-10"
+    class="sticky top-0 md:top-[60px] bg-white left-0 z-10"
   />
   <div
-    class="w-full text-[#101828] flex flex-col gap-5 p-8 md:p-1 md:px-[50px] sm:px-[20px]"
+    class="w-full text-gray-900 flex flex-col gap-5 p-8 md:p-1 md:px-12 sm:px-5"
     v-loading="loading"
   >
     <div
@@ -18,12 +18,12 @@
       <div class="text-2xl font-medium md:mt-5">
         {{ repo.nickname || repo.name }}
       </div>
-      <div class="text-sm text-[#667085]">{{ repo.description }}</div>
+      <div class="text-sm text-gray-500">{{ repo.description }}</div>
       <div
-        class="flex text-sm text-[#667085] items-center"
+        class="flex text-sm text-gray-500 items-center"
         v-if="theModels.length"
       >
-        <span class="min-w-[max-content]">
+        <span class="min-w-[max-content] text-md text-gray-700">
           {{ $t('prompts.relationModel') }}
         </span>
         <div class="flex items-center gap-3 w-full flex-wrap overflow-hidden">
@@ -32,14 +32,14 @@
             :href="`/models/${model.path}`"
           >
             <p
-              class="rounded-md text-[#344054] border border-gray-300 bg-white py-0.5 pr-2.5 pl-1.5"
+              class="rounded-md text-sm text-gray-900 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50"
             >
               {{ model.path }}
             </p>
           </a>
           <div
             v-if="models.more"
-            class="cursor-pointer hover:text-[#3250BD]"
+            class="cursor-pointer hover:text-blue-700"
           >
             <div
               @click="models.isExpanded = !models.isExpanded"
@@ -64,23 +64,24 @@
       </div>
 
       <div class="flex gap-3 items-center">
-        <div
-          class="flex gap-2 items-center text-xs leading-[18px]"
+        <a
+          class="flex gap-2 items-center text-sm text-gray-700 leading-4 hover:underline cursor-pointer"
           v-if="repo.user"
+          :href="`/profile/${repo.user.username}`"
         >
           <el-avatar
             :size="24"
             :src="repo.user.avatar || 'https://cdn.casbin.org/img/casbin.svg'"
           ></el-avatar>
           {{ repo.user.username || '' }}
-        </div>
+        </a>
         <SvgIcon
           v-if="repo.user"
           name="prompts_pipe"
         />
         <div
           v-if="repo.updated_at"
-          class="text-xs flex gap-1 leading-[18px] text-[#667085]"
+          class="text-sm flex gap-1 leading-4 text-gray-500"
         >
           <SvgIcon name="clock" />
           {{ $t('prompts.updateAt')
@@ -88,11 +89,11 @@
         </div>
       </div>
     </div>
-    <div class="flex xl:flex-col gap-4 justify-between !text-[16px] !leading-[24px]">
+    <div class="flex xl:flex-col gap-4 justify-between !text-md !leading-4">
       <div class="flex md:flex-col gap-4 flex-wrap">
         <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] md:!w-full inputResponsive"
+          class="!w-[320px] md:!w-full inputResponsive !h-[40px]"
           size="large"
           :placeholder="$t('prompts.placeholder')"
           :prefix-icon="Search"
@@ -129,25 +130,22 @@
           </el-select>
         </div>
       </div>
-      <div class="flex gap-4 !text-[#344054]">
-        <div
+      <div class="flex gap-4 !text-gray-700">
+        <CsgButton
           v-if="repo.can_manage"
-          class="flex py-[8px] px-[12px] text-[#344054] text-[16px] border-[2px] rounded-[8px] text-center cursor-pointer hover:bg-[#F9FAFB] whitespace-nowrap active:bg-white active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-[#D0D5DD] active:ring-opacity-25"
-          @click="changeCurrentComponent('newPrompt')"
-          size="large"
-        >
-          <SvgIcon name="create_org_repo" class="mr-[4px]"/>
-          {{ $t('prompts.newPrompt') }}
-        </div>
-        <div
+          :loading="loading"
+          class="btn btn-secondary-gray btn-md"
+          @click="changeCurrentComponent('newPromptsList')"
+          svgName="create_org_repo"
+          :name="$t('prompts.newPromptsList')"
+        />
+        <CsgButton
           v-if="repo.can_manage"
-          class="flex py-[8px] px-[12px] text-[#344054] text-[16px] border-[2px] rounded-[8px] text-center cursor-pointer hover:bg-[#F9FAFB] whitespace-nowrap active:bg-white active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-[#D0D5DD] active:ring-opacity-25"
+          class="btn btn-secondary-gray btn-md"
           @click="changeCurrentComponent('promptsListSettings')"
-          size="large"
-        >
-         <SvgIcon name="setting" class="mr-[4px]"/>
-         {{ $t('prompts.settings') }}
-        </div>
+          svgName="setting"
+          :name="$t('prompts.settings')"
+        />
       </div>
     </div>
     <div class="grid grid-cols-3 xl:grid-cols-1 gap-4">
@@ -163,23 +161,20 @@
     </div>
     <div
       v-if="!loading && filteredData.length === 0"
-      class="flex flex-col w-full justify-center items-center text-center h-[450px] text-[#667085] pt-5"
+      class="flex flex-col w-full justify-center items-center text-center h-[450px] text-gray-500 pt-5 gap-4"
     >
       <SvgIcon v-if="repo.can_manage" name="prompts_bg_user" class="cursor-pointer" />
       <SvgIcon v-else name="prompts_bg" />
-      <div class="mt-[16px] text-[#101828]">{{ $t('prompts.noPrompt') }}</div>
-      <div
+      <div class="mt-4 text-gray-700">{{ $t('prompts.noPrompt') }}</div>
+      <CsgButton
         v-if="repo.can_manage"
         @click="changeCurrentComponent('newPrompt')"
-        class="flex mt-[24px] px-[16px] py-[10px] justify-center items-center gap-1 rounded-lg bg-[#3250BD] shadow-sm hover:bg-blue-800 cursor-pointer"
-      >
-        <SvgIcon
-          name="create_prompt"
-          class="mr-0"
-        />
-        <div class="text-[#fff] text-sm">{{ $t('prompts.newPrompt') }}</div>
-      </div>
+        class="btn btn-primary btn-lg"
+        svgName="create_prompt"
+        :name="$t('prompts.newPrompt')"
+      />
     </div>
+    <CsgPagination
     <CsgPagination
       :perPage="perPage"
       :currentPage="currentPage"
@@ -198,6 +193,7 @@
   import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import { useLangOptions, useTagOptions } from './promptsOptions'
+import CsgButton from '../shared/CsgButton.vue'
 
   const perPage = ref(24)
   const currentPage = ref(1)
@@ -330,6 +326,35 @@
       ) !important;
     }
   }
+  
+  :deep(.el-select) {
+    --el-component-size-large: 44px !important;
+  }
+  
+  :deep(.el-select .el-input) {
+    height: 44px !important;
+  }
+  
+  :deep(.el-select .el-input__wrapper) {
+    height: 44px !important;
+    line-height: 44px !important;
+    padding: 0 16px !important;
+  }
+  
+  :deep(.el-select .el-input__inner) {
+    height: 44px !important;
+    line-height: 44px !important;
+  }
+  
+  :deep(.el-select:not(.el-select--large) .el-input__wrapper) {
+    height: 44px !important;
+  }
+  
+  :deep(.el-select__popper .el-select-dropdown__item) {
+    height: 44px !important;
+    line-height: 44px !important;
+  }
+  
   :deep(.btn-prev) {
     border-radius: 6px 0 0 6px;
     margin: 0 !important;

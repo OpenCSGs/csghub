@@ -3,37 +3,35 @@
   <PromptsBreadCrumbs 
     firstHref="/prompts/library"
     firstHrefName="prompts.promptLibrary"
-    class="sticky top-0 md:top-[60px] bg-[#FFFFFF] left-0 z-10"
+    class="sticky top-0 md:top-[60px] bg-white left-0 z-10"
   />
   <div
-    class="w-full text-[#101828] p-8 md:p-1 md:pt-10 md:px-[50px] sm:px-[20px]"
+    class="w-full text-gray-900 p-8 md:p-1 md:pt-10 md:px-12 sm:px-5"
   >
-    <div class="w-full flex md:items-start justify-between items-center mb-[30px] md:mb-[16px]">
+    <div class="w-full flex md:items-start justify-between items-center mb-8 md:mb-4">
       <div class="text-2xl font-medium md:mb-5">{{ $t('prompts.promptLibrary')}}</div>
       <div class="flex gap-4">
         <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] xl:!w-[260px] md:!w-full md:!hidden"
+          class="!w-64 xl:!w-56 md:!w-full md:!hidden"
           size="large"
           :placeholder="$t('prompts.placeholder')"
           :prefix-icon="Search"
           @change="filterChange"
         />
-        <div
+        <CsgButton
           v-if="userStore.isLoggedIn"
           :loading="loading"
-          class="flex py-[8px] px-[12px] text-[#344054] text-[16px] border-[2px] rounded-[8px] text-center cursor-pointer hover:bg-[#F9FAFB] whitespace-nowrap active:bg-white active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-[#D0D5DD] active:ring-opacity-25"
+          class="btn btn-secondary-gray btn-lg"
           @click="changeCurrentComponent('newPromptsList')"
-          size="large"
-        >
-          <SvgIcon name="create_org_repo" weight="9px" height="9px" class="mr-[4px]"/>
-          {{ $t('prompts.newPromptsList') }}
-        </div>  
+          svgName="create_org_repo"
+          :name="$t('prompts.newPromptsList')"
+        />
       </div>   
     </div>
     <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] xl:!w-[260px] md:!w-full !hidden md:!flex md:mb-[20px]"
+          class="!w-64 xl:!w-56 md:!w-full !hidden md:!flex md:mb-4"
           size="large"
           :placeholder="$t('prompts.placeholder')"
           :prefix-icon="Search"
@@ -48,7 +46,7 @@
     </div>
     <div
       v-if="!loading && promptsData.length === 0"
-      class="w-full text-center text-[#667085] pt-5"
+      class="w-full text-center text-gray-500 pt-5"
     >
       No Data
     </div>

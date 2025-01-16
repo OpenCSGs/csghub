@@ -5,38 +5,38 @@
     :name="name"
     firstHref="/prompts/library"
     firstHrefName="prompts.promptLibrary"
-    class="sticky top-0 md:top-[60px] bg-[#FFFFFF] left-0 z-10"
+    class="sticky top-0 md:top-16 bg-white left-0 z-10"
     currentComponent="promptsListSettings"
   />
   <div
-    class="w-full text-[#101828] p-8 md:p-1 md:mt-5 lg:px-[20px] mb-[94px] md:mb-[32px] md:px-[50px] sm:px-[20px]"
+    class="w-full text-gray-900 p-8 md:p-1 md:mt-5 lg:px-5 mb-24 md:mb-8 md:px-12 sm:px-5"
   >
     <div class="text-2xl mb-3 font-medium">{{ $t('prompts.listSettings.settings') }}</div>
     <div class="flex mt-9 justify-center">
       <div class="flex flex-col w-[824px] xl:w-full justify-center">
         <!-- promptsName -->
-        <div class="flex lg:flex-col justify-between gap-[32px]">
+        <div class="flex lg:flex-col justify-between gap-8">
           <div class="w-[280px] sm:w-full flex flex-col">
-            <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+            <div class="text-sm text-gray-600 leading-5 font-medium">
               {{ $t('prompts.promptsName') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('prompts.promptsNameTips') }}
             </div>
           </div>
           <div
-            class="!w-[484px] !lg:w-full rounded-[8px] bg-[#F9FAFB] px-[14px] py-[10px] border">
+            class="!w-[484px] !lg:w-full rounded-md bg-gray-50 px-4 py-2 border">
             {{ repoName }}
           </div>
         </div>
 
         <!-- Nickname -->
-        <div class="flex lg:flex-col gap-[32px] mt-[24px] justify-between">
+        <div class="flex lg:flex-col gap-8 mt-8 justify-between">
           <div class="w-[280px] lg:w-full flex flex-col">
-            <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+            <div class="text-sm text-gray-600 leading-5 font-medium">
               {{ $t('prompts.promptsNickName') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('prompts.listSettings.tips') }}
             </div>
           </div>
@@ -46,51 +46,50 @@
               clearable
               size="large"
               class="!w-[484px] lg:!w-full" />
-            <el-button
+            <CsgButton
               @click="updateNickname"
-              class="w-[100px]"
-            >
-              {{ $t('all.update') }}
-            </el-button>
+              class="btn btn-secondary-gray btn-sm w-fit"
+              :name="$t('all.update')"
+            />
           </div>
         </div>
 
         <el-divider />
         
         <!-- Desc -->
-        <div class="flex lg:flex-col gap-[32px] justify-between">
+        <div class="flex lg:flex-col gap-8 justify-between">
           <div class="w-[280px] lg:w-full flex flex-col">
-            <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+            <div class="text-sm text-gray-600 leading-5 font-medium">
               {{ $t('prompts.promptsDesc') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('prompts.listSettings.tips2') }}
             </div>
           </div>
-          <div class="flex flex-col gap-[6px]">
+          <div class="flex flex-col gap-2">
             <el-input
               v-model="promptsDesc"
               clearable
               size="large"
               type="textarea"
               class="!w-[484px] lg:!w-auto" />
-            <el-button
+            <CsgButton
               @click="updatePromptsDesc"
-              class="w-[100px]"
-              >{{ $t('all.update') }}</el-button
-            >
+              class="btn btn-secondary-gray btn-sm w-fit"
+              :name="$t('all.update')"
+            />
           </div>
         </div>
 
         <el-divider />
 
         <!-- Visibility -->
-        <div class="flex lg:flex-col gap-[32px] justify-between">
+        <div class="flex lg:flex-col gap-8 justify-between">
           <div class="w-[280px] lg:w-full flex flex-col">
-            <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+            <div class="text-sm text-gray-600 leading-5 font-medium">
               {{ $t('prompts.listSettings.changeVisibility') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('prompts.listSettings.statusText') }}
               <span class="text-black font-semibold"
                 >[{{
@@ -104,7 +103,7 @@
               }}
             </div>
           </div>
-          <div class="flex flex-col gap-[6px]">
+          <div class="flex flex-col gap-2">
             <p class="text-[#344054] text-[14px]">
               {{ $t('prompts.listSettings.promptsVisibility') }}
             </p>
@@ -126,16 +125,16 @@
         <el-divider />
 
         <!-- RelatedModel -->
-        <div class="flex lg:flex-col gap-[32px] justify-between">
+        <div class="flex lg:flex-col gap-8 justify-between">
           <div class="w-[280px] lg:w-full flex flex-col">
-            <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+            <div class="text-sm text-gray-600 leading-5 font-medium">
               {{ $t('prompts.relatedModel') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('prompts.listSettings.tips3') }}
             </div>
           </div>
-          <div class="flex flex-col gap-[6px] w-[484px] md:w-full">
+          <div class="flex flex-col gap-2 w-[484px] md:w-full">
           <div
             class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
             <div
@@ -162,36 +161,36 @@
               {{ model.path }}
             </p>
           </div>
-          <el-button
+          <CsgButton
             @click="updateRelationsModels"
-            class="w-[100px]"
-            >{{ $t('all.update') }}</el-button
-          >
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :name="$t('all.update')"
+          />
           </div>
         </div>      
 
         <el-divider />
 
         <!-- Delete -->
-        <div class="flex lg:flex-col justify-between gap-[32px]">
-          <div class="w-[280px] sm:w-full flex flex-col gap-[6px]">
-            <div class="text-[14px] text-[#344054] leading-[20px] font-medium">
+        <div class="flex lg:flex-col justify-between gap-8">
+          <div class="w-[280px] sm:w-full flex flex-col gap-2">
+            <div class="text-sm text-gray-600 leading-5 font-medium">
               {{ $t('prompts.listSettings.delPrompts') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('prompts.listSettings.delTips') }}
               <span class="text-black font-medium">{{ $t('prompts.listSettings.canNot') }}</span>
               {{ $t('prompts.listSettings.delTips2') }}
               <span class="text-black font-medium break-words">{{ promptsDetails.path }}</span>
               {{ $t('prompts.listSettings.delTips3') }}
             </div>
-            <div class="text-[14px] text-[#475467] leading-[20px]">
+            <div class="text-sm text-gray-600 leading-5">
               {{ $t('all.enterPls') }}
               <span class="text-black font-medium break-words">{{ promptsDetails.path }}</span>
               {{ $t('all.sureDel') }}
             </div>
           </div>
-          <div class="flex flex-col gap-[8px]">
+          <div class="flex flex-col gap-2">
             <p class="text-[#344054] text-[14px]">{{ $t('prompts.promptsName') }}</p>
             <el-input
               v-model="delDesc"
@@ -202,7 +201,7 @@
               <div
                 id="confirmDelete"
                 @click="clickDelete"
-                class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-[8px]"
+                class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-md"
                 :class="
                   delDesc === promptsDetails.path
                     ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
