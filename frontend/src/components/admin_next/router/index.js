@@ -6,6 +6,8 @@ import AdminSyncSetting from "../sync/AdminSyncSetting.vue";
 import AdminTagsList from "../tags/AdminTagsList.vue";
 import AdminTagsDetail from "../tags/AdminTagsDetail.vue";
 import AdminTagsForm from "../tags/AdminTagsForm.vue";
+import AdminTagCategoriesList from "../tag_categories/AdminTagCategoriesList.vue";
+import AdminTagCategoriesForm from "../tag_categories/AdminTagCategoriesForm.vue";
 import { Setting, User, Connection } from "@element-plus/icons-vue";
 import { useCookies } from 'vue3-cookies'
 
@@ -91,6 +93,26 @@ export const MENU_SETTING = [
     path: `${BASE_URL}/tags/:id`,
     component: AdminTagsDetail,
     name: adminLocale.tags.tagDetailTitle,
+    parentName: PARENT_NAME.BASE_CONFIG
+  },
+  {
+    path: `${BASE_URL}/tag_categories`,
+    component: AdminTagCategoriesList,
+    name: adminLocale.tagCategories.title,
+    parentName: PARENT_NAME.BASE_CONFIG,
+    icon: 'admin-menu-cloud',
+    type: 'item'
+  },
+  {
+    path: `${BASE_URL}/tag_categories/new`,
+    component: AdminTagCategoriesForm,
+    name: adminLocale.tagCategories.create,
+    parentName: PARENT_NAME.BASE_CONFIG
+  },
+  {
+    path: `${BASE_URL}/tag_categories/:id/edit`,
+    component: AdminTagCategoriesForm,
+    name: adminLocale.tagCategories.edit,
     parentName: PARENT_NAME.BASE_CONFIG
   },
 ];
