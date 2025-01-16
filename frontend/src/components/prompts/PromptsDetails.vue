@@ -9,15 +9,15 @@
     :filePath="filePath"
     :path="`${namespace}/${name}`"
     :pathTitle="name"
-    class="sticky top-0 md:top-[60px] bg-[#FFFFFF] left-0 z-10"
+    class="sticky top-0 md:top-15 bg-whitet-0 z-10"
   />
   <div
-    class="w-full text-[#101828] p-8 md:p-1 md:mt-5 md:px-[50px] sm:px-[20px]"
+    class="w-full text-gray-900 p-8 md:p-1 md:mt-5 md:px-12 sm:px-5"
     v-loading="loading"
   >
     <div class="text-2xl mb-3 font-medium">{{ promptsDetails.title }}</div>
     <div
-      class="mb-5 flex flex-wrap gap-3 items-center md:flex-col md:items-start text-[12px] leading-[18px] font-normal"
+      class="mb-5 flex flex-wrap gap-3 items-center md:flex-col md:items-start text-sm leading-6 font-normal"
     >
       <div class="flex flex-wrap gap-3 items-center">
         <template
@@ -40,40 +40,37 @@
         <span>{{ $t('prompts.source') }}：{{ promptsDetails.source }}</span>
       </div>
     </div>
-    <div class="border border-[#EAECF0] min-h-[400px] md:h-auto rounded-lg">
+    <div class="border border-gray-200 min-h-[400px] md:h-auto rounded-lg">
       <div
-        class="text-base font-medium flex md:gap-[16px] justify-between items-center py-3 px-5 border-b rounded-t-lg bg-[#F9FAFB]"
+        class="text-base font-medium flex md:gap-4 justify-between items-center py-3 px-5 border-b rounded-t-lg bg-gray-50"
       >
         {{ $t('prompts.promptContent') }}
-        <div class="flex gap-[12px] sm:gap-5">
-          <span
+        <div class="flex gap-3 sm:gap-5">
+          <CsgButton
             v-if="promptsDetails.can_manage"
-            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] sm:h-auto sm:w-auto justify-center items-center text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 sm:px-0 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] sm:bg-transparent sm:border-none gap-1"
+            class="btn btn-secondary-gray btn-sm w-fit"
             @click="dialogVisible = true"
-          >
-            <SvgIcon width="12px" name="delete" />
-            {{ $t('prompts.del') }}
-          </span>
-          <span
+            :name="t('prompts.del')"
+            svgName="delete"
+          />
+          <CsgButton
             v-if="promptsDetails.can_manage"
-            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] sm:h-auto sm:w-auto justify-center items-center text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 sm:px-0 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] sm:bg-transparent sm:border-none gap-1"
+            class="btn btn-secondary-gray btn-sm w-fit"
             @click="changeCurrentComponent('editPrompt')"
-          >
-            <SvgIcon width="12px" name="edit" />
-            {{ $t('prompts.edit') }}
-          </span>
-          <span
-            class="hover:bg-[#F0F3FF] h-[26px] w-[70px] sm:h-auto sm:w-auto justify-center items-center text-[12px] leading-[18px] rounded-[4px] cursor-pointer py-1 px-3 sm:px-0 text-[#475467] font-normal bg-[#FFFFFF] flex border border-[#D0D5DD] sm:bg-transparent sm:border-none gap-1"
+            :name="t('prompts.edit')"
+            svgName="edit"
+          />
+          <CsgButton
+            class="btn btn-secondary-gray btn-sm w-fit"
             @click="copyContent"
-          >
-            <SvgIcon width="12px" name="copy" />
-            {{ $t('prompts.copy') }}
-          </span>
+            :name="t('prompts.copy')"
+            svgName="copy"
+          />
         </div>
       </div>
       <div
         v-html="promptsDetails.content.replace(/\n/g, '<br>')"
-        class="text-sm leading-[22px] font-normal text-[#344054] p-5"
+        class="text-sm leading-[22px] font-normal text-gray-700 p-5"
       >
       </div>
     </div>
@@ -97,10 +94,10 @@
       </template>
       <!-- dialog content -->
       <div class="relative">
-        <div class="text-[18px] leading-[28px] text-[#101828]">
+        <div class="text-lg leading-6 text-gray-900">
           {{ $t('prompts.delTitle') }}
         </div>
-        <span class="text-[14px] leading-[20px] text-[#475467] font-light">
+        <span class="text-sm leading-6 text-gray-500 font-light">
           {{ $t('prompts.delContent') }}
         </span>
       </div>

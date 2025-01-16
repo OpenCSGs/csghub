@@ -136,21 +136,19 @@
           </el-form-item>
           <el-divider />
           <div class="flex justify-end">
-            <el-form-item>
-              <el-button
-                class="!text-center !h-9 !text-[16px] !rounded-[8px]"
+            <div class="flex gap-3">
+              <CsgButton
+                :name="t('all.cancel')"
+                class="btn btn-secondary-gray btn-md w-fit"
                 @click="cancelSubmit"
-              >
-                {{ t('all.cancel') }}
-              </el-button>
-              <el-button
+              />
+              <CsgButton
+                :name="t('all.confirm')"
                 :loading="loading"
-                :class="showButton ? '!text-center !h-9 !text-[16px] btn btn-primary !rounded-[8px]': '!text-center !h-9 !text-[16px] !bg-[#F2F4F7] !text-[#98A2B3] !rounded-[8px]'"
+                class="btn btn-primary btn-md w-fit"
                 @click="handleSubmit"
-              >
-                {{ t('all.confirm') }}
-              </el-button>
-            </el-form-item>
+              />
+            </div>
           </div>
         </div>
       </el-form>
