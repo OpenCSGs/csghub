@@ -135,9 +135,9 @@
           v-if="repo.can_manage"
           :loading="loading"
           class="btn btn-secondary-gray btn-md"
-          @click="changeCurrentComponent('newPromptsList')"
+          @click="changeCurrentComponent('newPrompt')"
           svgName="create_org_repo"
-          :name="$t('prompts.newPromptsList')"
+          :name="$t('prompts.newPrompt')"
         />
         <CsgButton
           v-if="repo.can_manage"
