@@ -7,58 +7,87 @@
 
 **[简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [한국어](README_kr.md) ∙ [Español](README_es.md)**
 
-## CSGHub
+# **CSGHub**
 
-CSGHub is an open-source platform designed for managing Large Language Models (LLM) assets, offering an efficient way to handle the entire LLM and their assets such as datasets, spaces and codes etc. It allows users to upload, download, store, verify, and distribute LLM assets via a web interface, `git` command line, a natural language Chatbot, or [CSGHub SDK](https://github.com/OpenCSGs/csghub-sdk).
-
-Additionally, CSGHub features microservice submodules and standardized OpenAPIs for seamless integration with existing systems. It aims to provide a user-friendly management platform specifically for LLM, which can be deployed On-Premise for secure, offline operation. Essentially, CSGHub serves as a private, on-premise version of Huggingface.
+## **1. Introduction**
+As Large Language Models (LLMs) gain popularity, managing these models and their associated assets (datasets, code, etc.) has become increasingly complex. **CSGHub** offers a unified, secure, and efficient solution to help teams and enterprises streamline LLM asset management while ensuring data security and control.
 
 ![CSGHub](./docs/images/csghub_framework.png)
 
-### Key Features
+**CSGHub** is a **Hybrid Huggingface Platform** that combines the features of Huggingface with enterprise-grade private deployment capabilities, offering:  
+- Support for uploading, downloading, validating, storing, and distributing models.  
+- Localized, offline deployment to meet enterprise security requirements.  
+- Flexible development frameworks and seamless integration options.  
 
-- Unified LLMs Management
-- Extensible Development Framework
-- Advanced Model Capabilities and Optimization
-- Space and Asset Management Assistant (Copilot)
-- Multi-Source Data Synchronization and Recommendation
-- Enterprise-Level Security and Access Control
-- On-Premises Deployment Solutions
-- E2E Data Processing and Intelligent Annotation System
-- Resilient High-Availability Architecture
+Whether you are a researcher, developer, or an enterprise team requiring distributed model management, **CSGHub** is the ideal choice.
 
-For further information, please see the [detailed introduction](./docs/detailed_intro_en.md) of CSGHub.
+---
 
-### Demo Video
+## **2. Key Features**
+### **🔑 Highlights**
+1. **Unified LLM Asset Management**: Centralized management and version control for models, datasets, and code.  
+2. **Flexible Development Ecosystem**: Compatible with multiple protocols and popular SDKs for AI application development.  
+3. **Advanced Model Capabilities**: Includes model format conversion and automated data processing tools.  
+4. **Application Space and Asset Management Assistant**: Showcase model capabilities and manage assets flexibly.  
+5. **Multi-Source Data Sync and Recommendations**: Integrates with the OpenCSG community for model and data synchronization.  
+6. **Comprehensive Security and Access Control**: Ensures data and model safety with enterprise system integration.  
+7. **Private Deployment Support**: One-click on-premises deployment for enterprise-level control.  
+8. **End-to-End Data Processing and Smart Annotation**: Offers customizable workflows and intelligent annotation tools.  
+9. **High Availability and Disaster Recovery**: Ensures system stability and business continuity.  
 
-To help users get up to speed with CSGHub, we have created a demo video that highlights its key features and how it works. You can watch it below or on [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)/[Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/).
+For further information, refer to [detailed introduction](./docs/detailed_intro_en.md) .
+
+### **📽️ Demo Video**
+Watch the CSGHub demo video here:  
+- [YouTube](https://www.youtube.com/watch?v=6LwGQ07qBxU)  
+- [Bilibili](https://www.bilibili.com/video/BV1ynmxY3EXz/)  
+  
 <video width="658" height="432" src="https://github.com/user-attachments/assets/04f9fa17-9294-44c1-8c4a-4d7b9a5c66fa"></video>
+---
 
-### Quick Start
+## **3. Getting Started**
+### **🖥️ SaaS Version**
+- Visit [OpenCSG Website](https://opencsg.com) to try CSGHub without deployment.  
+- Refer to [brief guide](./docs/csghub_saas_en.md) for quick start. 
+- Refer to [OpenCSG Documentation Center](https://opencsg.com/docs/intro) for guidance.  
 
-- For those looking to quickly explore, experiment with CSGHub's free SaaS version on the [OpenCSG website](https://opencsg.com). Refer to this [brief quick start guide](./docs/csghub_saas_en.md) to handle LLMs/datasets and deploy LLM applications with CSGHub SaaS interface.
-For more information, please refer to the [OpenCSG Documentation Center](https://opencsg.com/docs/en/intro).
+### **💻 Local Deployment**
+- **Option 1: Docker Deployment**  
+  Follow the [Docker Deployment Guide](https://github.com/OpenCSGs/csghub-installer/blob/main/docs/en/README_docker.md).  
 
-- For those seeking a hands-on experience, you can quickly launch CSGHub on your local environment (Linux/MacOS/Windows) using the [Docker one-click deployment guide](https://github.com/OpenCSGs/csghub-installer/tree/main/docker), which allows you to start an all-in-one container with simplified commands and instantly experience the core functionalities of CSGHub.
+- **Option 2: Kubernetes Deployment**  
+  Follow the [Helm Chart Installation Guide](https://github.com/OpenCSGs/csghub-installer/blob/main/docs/en/README_helm_chart.md).  
 
-- For those deploying on Kubernetes, refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart) for step-by-step instructions.
+### **☁️ Cloud Deployment**
+- Quickly deploy CSGHub via [Alibaba Cloud Marketplace](https://market.aliyun.com/products/56014009/cmgj00068499.html?source=5176.29345612&userCode=swc743za).  
 
-### Quick Try
-[![one-click deployment on Ali marketplace](https://img.alicdn.com/imgextra/i1/O1CN01YT0adL1pi2znO6BAJ_!!6000000005393-55-tps-208-40.svg)](https://market.aliyun.com/products/56014009/cmgj00068499.html?source=5176.29345612&userCode=swc743za)
+### **🎯 Deployment Options**
+| Method          | Use Case                                  | Documentation Link                                        |
+|------------------|-------------------------------------------|----------------------------------------------------------|
+| **SaaS Version** | Quick testing without setup               | [SaaS Guide](https://opencsg.com/docs/intro)             |
+| **Docker**       | Single-machine deployment for small teams | [Docker Guide](https://github.com/OpenCSGs/csghub-installer/blob/main/docs/en/README_docker.md) |
+| **Kubernetes**   | Enterprise-level large-scale deployment   | [K8s Guide](https://github.com/OpenCSGs/csghub-installer/blob/main/docs/en/README_helm_chart.md) |
+| **Alibaba Cloud**| One-click cloud deployment                | [Aliyun Deployment](https://market.aliyun.com/products/56014009/cmgj00068499.html?source=5176.29345612&userCode=swc743za) |
 
-### Roadmap
+---
 
-Discover the [roadmap](./docs/roadmap_en.md) outlining CSGHub's future direction.
+## **4. Roadmap & Release Notes**
+### **📈 Roadmap**
+Explore the future plans for CSGHub: [Roadmap](./docs/roadmap_en.md).  
 
-### Release Notes
+### **📋 Release Notes**
+Stay updated with the latest features and improvements: [Release Notes](./docs/release_notes.md).  
 
-Refer to [release notes](./docs/release_notes.md) for information on feature improvements.
+---
 
-### Meetings & Contributing
+## **5. Community & Support**
+### **🌍 Join the Community**
+- Visit the [OpenCSG Community](https://github.com/OpenCSGs/community) to contribute and share your work.  
+- Join [Community Meetings](https://github.com/OpenCSGs/community?tab=readme-ov-file#community-meeting) to interact with other members.  
 
-We warmly invite you to explore the [OpenCSG Community](https://github.com/OpenCSGs/community), where you'll find comprehensive guides on becoming a vital part of the project.
+### **📖 Contribution Guide**
+- See the [Contribution Guide](https://github.com/OpenCSGs/community/blob/main/guidelines/CONTRIBUTING_en.md) to learn how to contribute.  
+- Refer to the [Development Guide](./docs/setup_en.md) for setting up the development environment.  
 
-- The process for joining [community meetings](https://github.com/OpenCSGs/community?tab=readme-ov-file#community-meeting), where you can engage with fellow members and share your ideas.
-- Refer to the [contribution guide](https://github.com/OpenCSGs/community/blob/main/guidelines/CONTRIBUTING_en.md) for strategies on how to contribute to the project.
-- [Contact us](https://github.com/OpenCSGs/community?tab=readme-ov-file#questions-and-issues) for any questions or issues, ensuring you're always supported throughout your journey with OpenCSG.
-- Refer to the [development guide](./docs/setup_en.md) for instructions on setting up the development environment.
+### **📬 Contact Us**
+For questions or requests, please [Contact Us](https://github.com/OpenCSGs/community?tab=readme-ov-file#questions-and-issues).  
