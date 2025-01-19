@@ -47,6 +47,10 @@ export const admin = {
     newCategoryBtn: "New Category",
     editCancelBtn: 'Cancel',
     editConfirmBtn: 'Confirm',
+    newCategory: 'New Category',
+    scope: 'Scope',
+    name: 'Name',
+    showName: 'ZH Name'
   },
   tagCategories: {
     title: 'Tag Category Management',
@@ -62,6 +66,6 @@ export const admin = {
     name: 'Name',
     showName: 'Show Name',
     scope: 'Scope',
-    enabled: 'Enabled',
+    enabled: 'Enabled'
   }
 }
