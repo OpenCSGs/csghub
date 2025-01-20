@@ -1,5 +1,9 @@
 # Release Notes
 
+- **[2025.01.15] v1.3.0**
+  Added tag management in the admin panel, sign-in redirection, and support for filtering by multiple tags on model, dataset, and code pages. Introduced multi sync proxy configuration via server config file, SGLang support for improved inference engine performance, updated Swift image for fine-tuning, and enabled public dataset creation via API. Refactored code for better quality and added additional tests for stability.
+- **[2024.12.15] v1.2.0**
+  Resolved a security vulnerability; all users are strongly recommended to update. Added model evaluation feature for comparing AI models, supporting opencompass and LLM evaluation harness. For self-hosted Kubernetes users, manual Argo Workflow installation is required for model evaluation. Redesigned admin UI layout for better usability, standardized component styles for consistency, and improved page responsiveness for mobile and desktop. Introduced the Prompt Library for creating and managing reusable prompts in OpenCSG.
 - **[2024.11.15] v1.1.0**
   Enhanced multi-sync features with updated branch handling and callbacks for tagging, info updates, and scans. Admin dashboard improvements include user account deletion, excluding owners of organizations or resources, and mirror progress tracking. Added ms-swift fine-tuning support and new prompt-type repo for prompt management and dataset optimization. Changed user info retrieval to backend service. Bug fixes for organizational access, repo settings, repo tags filter, and collection addition. Repo now supports non-default branches. Added comment timestamps for community topics. Logout support via /logout included.
 - **[2024.10.15] v1.0.0**
