@@ -1,5 +1,6 @@
 export const navbar = {
   console:'Console',
+  adminPanel: 'Admin Panel',
   models: "Models",
   datasets: "Datasets",
   spaces: "Spaces",
