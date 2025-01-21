@@ -97,13 +97,15 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>
-                <div class="flex flex-row items-center gap-2">
-                  <el-avatar :size="40" :src="userAvatar"></el-avatar>
-                  <div class="flex flex-col">
+                <a :href="`/profile/${username}`">
+                  <div class="flex flex-row items-center gap-2">
+                    <el-avatar :size="40" :src="userAvatar"></el-avatar>
+                    <div class="flex flex-col">
                     <span class="text-sm font-medium text-gray-700">{{ nickname }}</span>
                     <span class="text-sm font-light  text-gray-600">@{{ username }}</span>
+                    </div>
                   </div>
-                </div>
+                </a>
               </el-dropdown-item>
               <el-dropdown-item divided>
                 <a :href="`/profile/${username}`">
@@ -156,6 +158,17 @@
                     </svg>
                     {{ $t('navbar.console') }}
                   </div>
+                </el-dropdown-item>
+              </a>
+              <a v-if="userStore.isAdmin"
+                  href="/admin_panel">
+                  <el-dropdown-item>
+                    <div class="flex items-center gap-2">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.421 5.08774C10.157 4.82373 10.025 4.69173 9.97551 4.53951C9.932 4.40561 9.932 4.26138 9.97551 4.12748C10.025 3.97527 10.157 3.84326 10.421 3.57925L12.3132 1.687C11.8111 1.45991 11.2537 1.3335 10.6667 1.3335C8.4576 1.3335 6.66674 3.12436 6.66674 5.3335C6.66674 5.66086 6.70606 5.97903 6.78024 6.28355C6.85968 6.60966 6.8994 6.77271 6.89235 6.87572C6.88497 6.98356 6.86889 7.04093 6.81916 7.13691C6.77165 7.22858 6.68064 7.31959 6.49862 7.50162L2.3334 11.6668C1.78112 12.2191 1.78112 13.1145 2.3334 13.6668C2.88569 14.2191 3.78112 14.2191 4.3334 13.6668L8.49862 9.50162C8.68064 9.31959 8.77165 9.22858 8.86333 9.18107C8.9593 9.13134 9.01668 9.11526 9.12452 9.10788C9.22753 9.10083 9.39058 9.14055 9.71668 9.21999C10.0212 9.29417 10.3394 9.3335 10.6667 9.3335C12.8759 9.3335 14.6667 7.54264 14.6667 5.3335C14.6667 4.74656 14.5403 4.18915 14.3132 3.687L12.421 5.57925C12.157 5.84326 12.025 5.97527 11.8727 6.02472C11.7389 6.06823 11.5946 6.06823 11.4607 6.02472C11.3085 5.97527 11.1765 5.84326 10.9125 5.57925L10.421 5.08774Z" stroke="#667085" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      {{ $t('navbar.adminPanel') }}
+                    </div>
                 </el-dropdown-item>
               </a>
               <!-- <a
