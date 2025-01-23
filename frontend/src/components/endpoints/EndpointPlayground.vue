@@ -53,6 +53,7 @@
           {{ $t('endpoints.playground.parameters') }}
         </div>
         <el-form
+          v-if="task=='text-generation'"
           :model="form"
           label-width="auto"
           label-position="top"
@@ -128,6 +129,61 @@
             </el-select>
           </el-form-item>
         </el-form>
+        <el-form
+          v-else
+          :model="formImg"
+          label-width="auto"
+          label-position="top"
+          class="max-w-[288px] md:max-w-full"
+        >
+          <el-form-item label="Height">
+            <el-input-number
+              v-model="formImg.height"
+              placeholder="number"
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item label="Width">
+            <el-input-number
+              v-model="formImg.width"
+              placeholder="number"
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item label="Num. Inference Steps">
+            <el-input-number
+              v-model="formImg.num"
+              placeholder="number"
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item label="Guidance Scale">
+            <el-input-number
+              v-model="formImg.guidance"
+              placeholder="number"
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item label="Negative Prompt">
+            <el-input-number
+              v-model="formImg.negativePrompt"
+              placeholder="number"
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item label="Seed">
+            <el-input-number
+              v-model="formImg.seed"
+              placeholder="number"
+              size="large"
+            />
+          </el-form-item>
+        </el-form>
       </div>
     </div>
 
@@ -136,9 +192,16 @@
       class="flex-1"
     >
       <TestEndpoint
+        v-if="task=='text-generation'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="form"
+      />
+      <TestWidget
+        v-else
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="formImg"
       />
       <div class="px-4 mb-4 flex justify-between items-center">
         <div class="items-center gap-1.5 flex cursor-not-allowed">
@@ -164,9 +227,17 @@
       class="flex-1 overflow-hidden"
     >
       <ApiExample
+        v-if="task=='text-generation'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="form"
+        :private="private"
+      />
+      <ApiWidget
+        v-else
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="formImg"
         :private="private"
       />
     </div>
@@ -177,10 +248,17 @@
     append-to-body
   >
     <TestEndpoint
+      v-if="task=='text-generation'"
       :appEndpoint="appEndpoint"
       :modelId="modelId"
       :form="form"
     />
+    <TestWidget
+        v-else
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="formImg"
+      />
   </el-dialog>
 </template>
 
@@ -188,11 +266,14 @@
   import { ref } from 'vue'
   import ApiExample from './playground/ApiExample.vue'
   import TestEndpoint from './playground/TestEndpoint.vue'
+  import TestWidget from './playground/TestWidget.vue'
+  import ApiWidget from './playground/ApiWidget.vue'
 
   const props = defineProps({
     appEndpoint: String,
     modelId: String,
-    private: Boolean
+    private: Boolean,
+    task: String
   })
 
   const dialogVisible = ref(false)
@@ -213,6 +294,14 @@
     temperature: 0.2,
     repetition_penalty: 1.0,
     max_tokens: 200
+  })
+  const formImg = ref({
+    height: 0,
+    width: 0,
+    num: 0,
+    guidance: 0,
+    negativePrompt: 0,
+    seed:0
   })
 
   const changePlaygroundMode = (mode) => {

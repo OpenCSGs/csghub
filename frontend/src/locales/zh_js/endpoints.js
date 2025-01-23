@@ -74,6 +74,9 @@ export const endpoints = {
     send: "发送",
     test: "推理 API",
     api: "发送请求到专属实例",
-    useToken: '使用我的 token'
+    useToken: '使用我的 token',
+    wgTit: '测试你的模型',
+    wgDec: '文生图',
+    wgBtn: '图片生成',
   }
 }

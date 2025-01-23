@@ -58,6 +58,7 @@
     :appEndpoint="appEndpoint"
     :model-id="modelId"
     :private="private"
+    :task="task"
   />
 </template>
 
@@ -75,6 +76,7 @@
     modelId: String,
     private: String,
     replicaList: Array,
+    task: String,
     endpointReplica: {
       type: Number,
       default: 0
