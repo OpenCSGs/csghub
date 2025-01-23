@@ -4,13 +4,16 @@
     <h1 class="text-[#303030] text-3xl font-medium leading-[38px]">{{ $t('models.emptyModels.title') }}</h1>
     <p class="text-gray-600 text-xl font-light leading-[38px]">{{ $t('models.emptyModels.desc') }}</p>
     <div class="flex gap-3">
-      <CsgButton :name="$t('models.emptyModels.uploadBtn')" class="btn btn-secondary-gray btn-xl" />
-      <CsgButton :name="$t('models.emptyModels.multisyncBtn')" class="btn btn-primary btn-xl" />
+      <a href="/models/new">
+        <CsgButton :name="$t('models.emptyModels.uploadBtn')" class="btn btn-secondary-gray btn-xl" />
+      </a>
+      <a href="/admin_panel/sync">
+        <CsgButton :name="$t('models.emptyModels.multisyncBtn')" class="btn btn-primary btn-xl" />
+      </a>
     </div>
   </div>
 </template>
 
 <script setup>
-import CsgButton from '../shared/CsgButton.vue';
-
+  import CsgButton from '../shared/CsgButton.vue';
 </script>
