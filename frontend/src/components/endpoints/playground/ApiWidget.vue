@@ -96,6 +96,16 @@
     codeExtension.value = ext
   }
 
+  const extraParams = computed(() => {
+    if (props.form) {
+        return Object.fromEntries(
+            Object.entries(props.form).filter(([key, value]) => value !== null && value !== '')
+        );
+    } else {
+        return {};
+    }
+});
+
   const pythonHeaders = `
 headers = {
     'Content-Type': 'application/json'
@@ -107,7 +117,8 @@ auth_token = "${accessToken.value}"
 
 headers = {
     'Authorization': f'Bearer {auth_token}',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'image/png'
 }`
   )
 
@@ -120,23 +131,8 @@ url = "${endpointUrl.value}"
 ${useToken.value ? pythonHeadersWithToken.value : pythonHeaders}
 
 data = {
-    "model": "${props.modelId}",
-    "messages": [
-        {
-            "role": "system",
-            "content": "You are a helpful assistant."
-        },
-        {
-            "role": "user",
-            "content": "What is deep learning?"
-        }
-    ],
-    "stream": True,
-    "temperature": ${props.form.temperature},
-    "max_tokens": ${props.form.max_tokens},
-    "top_k": ${props.form.top_k},
-    "top_p": ${props.form.top_p},
-    "repetition_penalty": ${props.form.repetition_penalty}
+    "inputs": "your image messages",
+    "parameters": ${extraParams.value}
 }
 
 response = requests.post(url=url, json=data, headers=headers, stream=True)
@@ -157,7 +153,8 @@ if response.status_code == 200:
 
   const jsHeaders = `
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Accept": "image/png"
   },
 `
 
@@ -165,7 +162,8 @@ if response.status_code == 200:
     () => `
   headers: {
     "Authorization": "Bearer ${accessToken.value}",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Accept": "image/png"
   },`
   )
 
@@ -175,23 +173,8 @@ if response.status_code == 200:
   method: "POST",
   ${useToken.value ? jsHeadersWithToken.value : jsHeaders}
   body: JSON.stringify({
-    model: "${props.modelId}",
-    messages: [
-      {
-        role: "system",
-        content: "You are a helpful assistant."
-      },
-      {
-        role: "user",
-        content: "What is deep learning?"
-      }
-    ],
-    stream: true,
-    temperature: ${props.form.temperature},
-    max_tokens: ${props.form.max_tokens},
-    top_k: ${props.form.top_k},
-    top_p: ${props.form.top_p},
-    repetition_penalty: ${props.form.repetition_penalty}
+    inputs: "your image messages",
+    parameters: ${extraParams.value}
   })
 })
 .then(response => response.text())
@@ -204,6 +187,7 @@ if response.status_code == 200:
 
   const curlHeadersWithToken = computed(
     () => `-H "Content-Type: application/json" \\
+    -H "Accept: image/png" \\
 -H "Authorization: Bearer ${accessToken.value}" \\`
   )
 
@@ -211,7 +195,7 @@ if response.status_code == 200:
     () => `curl -X POST \\
 "${endpointUrl.value}" \\
 ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
--d '{ "model": "${props.modelId}", "messages": [{ "role": "system", "content": "You are a helpful assistant." }, {"role": "user", "content": "What is deep learning?" }], "stream": true, "max_tokens": ${props.form.max_tokens}, "temperature": ${props.form.temperature}, "repetition_penalty": ${props.form.repetition_penalty}, "top_p": ${props.form.top_p}, "top_k": ${props.form.top_k}}'
+-d '{ "inputs": "your image messages", "parameters": ${extraParams.value}'
 `
   )
 

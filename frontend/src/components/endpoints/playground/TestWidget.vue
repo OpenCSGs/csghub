@@ -54,7 +54,7 @@
       </div>
     </div>
     <div
-      class="min-h-[180px] px-3.5 py-3 mt-[12px] bg-gray-300 rounded-lg shadow  text-gray-700 flex items-center justify-center"
+      class="min-h-[180px] px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg shadow  text-gray-700 flex items-center justify-center"
     >
       <img v-if="imageSrc" :src="imageSrc" alt="Fetched Image" />
     </div>
@@ -69,10 +69,7 @@
 
 <script setup>
   import { ref, computed } from 'vue'
-  import { fetchEventSource } from '@microsoft/fetch-event-source'
-  import { Typewriter } from '../../../packs/typewriter'
   import { useCookies } from 'vue3-cookies'
-  import { ElMessage } from 'element-plus'
 
   const { cookies } = useCookies()
 
@@ -82,7 +79,6 @@
     modelId: String
   })
 
-  const anwserContent = ref('')
   const message = ref('')
   const loading = ref(false)
   const inputFocus = ref(false)
@@ -115,31 +111,19 @@
     handleSendMessage()
   }
 
-  const typewriter = new Typewriter((str) => {
-    if (str) {
-      anwserContent.value += str
-    }
-  })
-
-  const resetAnwserContent = () => {
-    anwserContent.value = ''
-  }
-
   const canSendMessage = computed(() => {
     return !!message.value && !loading.value
   })
 
   const extraParams = computed(() => {
-    return props.form
-      ? props.form
-      : {
-          temperature: 0.2,
-          max_tokens: 200,
-          top_k: 10,
-          top_p: 0.95,
-          repetition_penalty: 1.0
-        }
-  })
+    if (props.form) {
+        return Object.fromEntries(
+            Object.entries(props.form).filter(([key, value]) => value !== null && value !== '')
+        );
+    } else {
+        return {};
+    }
+});
 
   const authHeaders = computed(() => {
     const userToken = cookies.get('user_token')
@@ -151,72 +135,38 @@
       : {}
   })
 
-  const handleSendMessage = () => {
-    if (!canSendMessage.value) return
+  const handleSendMessage = async() => {
+  const data = {
+    inputs: message.value,
+    parameters: {...extraParams.value}
+  };
 
-    loading.value = true
-
-    resetAnwserContent()
-
-    const endpoint = `${props.appEndpoint}/v1/chat/completions`
-    const payload = {
-      model: props.modelId,
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: message.value }
-      ],
-      stream: true,
-      ...extraParams.value
-    }
-    const headers = {
-      'Content-Type': 'application/json',
-      ...authHeaders.value
-    }
-
-    fetchEventSource(endpoint, {
+  try {
+    const response = await fetch(props.appEndpoint, {
       method: 'POST',
-      openWhenHidden: true,
-      headers,
-      body: JSON.stringify(payload),
-      onopen: handleOpen,
-      onmessage: handleMessage,
-      onclose: handleClose,
-      onerror: handleError
-    })
-  }
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'image/png',
+        ...authHeaders.value
+      },
+      body: JSON.stringify(data)
+    });
 
-  const handleOpen = (e) => {
-    if (e.ok) {
-      typewriter.start()
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  }
 
-  const handleMessage = (msg) => {
-    const { data } = msg
-    console.log('onmessage === ', data)
-    if (data === '[DONE]') {
-      typewriter.done()
-      loading.value = false
-      return
-    }
-    const res = JSON.parse(data)
-    const response = res?.choices[0]?.delta?.content
-    if (response) {
-      typewriter.add(response)
-    }
-  }
+    // 处理响应为 Blob（图片流）
+    const blob = await response.blob(); // 获取 Blob 对象
 
-  const handleClose = (e) => {
-    typewriter.done()
-    loading.value = false
-  }
+    // 创建一个 URL 对象并将其设置为 img 的 src
+    const imageUrl = URL.createObjectURL(blob); // 创建图片 URL
+    imageSrc.value = imageUrl; // 设置 img 的 src
 
-  const handleError = (err) => {
-    typewriter?.done()
-    loading.value = false
-    ElMessage({ type: 'error', message: `${err.msg || '出错了'}` })
-    throw err
+  } catch (error) {
+    console.error('Error fetching image:', error);
   }
+}
 </script>
 
 <style scoped>

@@ -132,6 +132,7 @@
         <el-form
           v-else
           :model="formImg"
+          :rules="rules" ref="formRef" 
           label-width="auto"
           label-position="top"
           class="max-w-[288px] md:max-w-full"
@@ -141,6 +142,7 @@
               v-model="formImg.height"
               placeholder="number"
               size="large"
+              class="w-full"
             />
           </el-form-item>
 
@@ -149,6 +151,7 @@
               v-model="formImg.width"
               placeholder="number"
               size="large"
+              class="w-full"
             />
           </el-form-item>
 
@@ -157,6 +160,7 @@
               v-model="formImg.num"
               placeholder="number"
               size="large"
+              class="w-full"
             />
           </el-form-item>
 
@@ -165,6 +169,7 @@
               v-model="formImg.guidance"
               placeholder="number"
               size="large"
+              class="w-full"
             />
           </el-form-item>
 
@@ -173,6 +178,7 @@
               v-model="formImg.negativePrompt"
               placeholder="number"
               size="large"
+              class="w-full"
             />
           </el-form-item>
 
@@ -181,6 +187,7 @@
               v-model="formImg.seed"
               placeholder="number"
               size="large"
+              class="w-full"
             />
           </el-form-item>
         </el-form>
@@ -296,13 +303,14 @@
     max_tokens: 200
   })
   const formImg = ref({
-    height: 0,
-    width: 0,
-    num: 0,
-    guidance: 0,
-    negativePrompt: 0,
-    seed:0
+    height: null,
+    width: null,
+    num_inference_steps: null,
+    guidance_scale: null,
+    negative_prompt: null,
+    seed:null
   })
+
 
   const changePlaygroundMode = (mode) => {
     playgroundMode.value = mode
