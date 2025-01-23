@@ -1,3 +1,5 @@
+import { emptyProps } from "element-plus";
+
 export const models = {
   title: "Models",
   placeholder: "Search Models",
@@ -56,4 +58,10 @@ export const models = {
     needModelDesc: "Please provide a model description first",
     needModelTag: "Please provide a model tag first",
   },
+  emptyModels: {
+    title: "Enrich the model with multi-source synchronization capabilities",
+    desc: "Multi-source synchronization can synchronize high-quality models from OpenCSG open source community and Huggingface to the project",
+    uploadBtn: "Upload Local Model",
+    multisyncBtn: "Open Multi-Sync"
+  }
 }
