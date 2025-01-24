@@ -72,6 +72,8 @@ export const admin = {
     title: 'Broadcast',
     searchPlaceholder: '',
     create: 'Create',
+    update: 'Update',
+    edit: 'Edit',
     list: 'Broadcasts',
     bc_type: "Type",
     theme: "Theme",

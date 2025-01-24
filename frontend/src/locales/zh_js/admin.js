@@ -73,6 +73,7 @@ export const admin = {
     searchPlaceholder: '',
     create: '新建广播',
     update: '更新广播',
+    edit: '编辑',
     list: '广播列表',
     bc_type: "类型",
     theme: "主题",

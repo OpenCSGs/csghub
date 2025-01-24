@@ -66,7 +66,7 @@
             @click="showDetail(scope.row)"
             class="text-brand-700"
           >
-            {{ $t('admin.edit') }}
+            {{ $t('admin.broadcasts.edit') }}
           </a>
         </template>
       </el-table-column>

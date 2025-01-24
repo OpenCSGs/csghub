@@ -122,19 +122,19 @@ export const MENU_SETTING = [
     path: `${BASE_URL}/broadcasts`,
     component: AdminBroadcastList,
     name: adminLocale.broadcasts.title,
-    parentName: PARENT_NAME.ADVANCE_CONFIG,
+    parentName: PARENT_NAME.BASE_CONFIG,
     icon: 'admin-menu-cloud',
-    type: 'menu'
+    type: 'item'
   },
   {
     path: `${BASE_URL}/broadcasts/new`,
     component: AdminBroadcastNew,
-    parentName: PARENT_NAME.ADVANCE_CONFIG,
+    parentName: PARENT_NAME.BASE_CONFIG,
   },
   {
     path: `${BASE_URL}/broadcasts/:id/edit`,
     component: AdminBroadcastEdit,
-    parentName: PARENT_NAME.ADVANCE_CONFIG,
+    parentName: PARENT_NAME.BASE_CONFIG,
   },
 ];
 

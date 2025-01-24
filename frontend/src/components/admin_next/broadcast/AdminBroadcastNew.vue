@@ -58,7 +58,7 @@
 
       <!-- status -->
       <el-form-item
-        :label="$t('admin.campaigns.status')"
+        :label="$t('admin.broadcasts.status')"
         prop="status"
         width="140"
       >
