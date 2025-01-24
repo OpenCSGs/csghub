@@ -1,7 +1,6 @@
 <template>
   <div
-    class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl"
-  >
+    class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl">
     <SvgIcon name="playground_api" />
     <div class="text-gray-700 text-base font-medium leading-normal">
       {{ $t('endpoints.playground.api') }}
@@ -12,38 +11,35 @@
     <div class="h-[34px] w-full justify-between items-center inline-flex">
       <div class="justify-start items-center gap-4 flex">
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded-sm cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-gray-300 rounded-sm cursor-pointer"
           :class="
             codeExtension === 'py'
               ? 'bg-gray-900 text-white'
               : 'bg-white text-gray-700'
           "
-          @click="changeLanguage('py')"
-        >
+          @click="changeLanguage('py')">
           <SvgIcon name="python" />
           Python
         </div>
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded-sm cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-gray-300 rounded-sm cursor-pointer"
           :class="
             codeExtension === 'js'
               ? 'bg-gray-900 text-white'
               : 'bg-white text-gray-700'
           "
-          @click="changeLanguage('js')"
-        >
+          @click="changeLanguage('js')">
           <SvgIcon name="javascript" />
           JavaScript
         </div>
         <div
-          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border  border-gray-300 rounded-sm cursor-pointer"
+          class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-gray-300 rounded-sm cursor-pointer"
           :class="
             codeExtension === 'bash'
               ? 'bg-gray-900 text-white'
               : 'bg-white text-gray-700'
           "
-          @click="changeLanguage('bash')"
-        >
+          @click="changeLanguage('bash')">
           <SvgIcon name="curl" />
           cURL
         </div>
@@ -51,20 +47,16 @@
       <el-checkbox
         v-model="useToken"
         :label="$t('endpoints.playground.useToken')"
-        size="large"
-      />
+        size="large" />
     </div>
     <div
-      class="rounded-xl border border-gray-200 px-4 py-6 mt-4 relative group"
-    >
+      class="rounded-xl border border-gray-200 px-4 py-6 mt-4 relative group">
       <CodeViewer
         :content="codeContent"
-        :extension="codeExtension"
-      />
+        :extension="codeExtension" />
       <div
         class="absolute bg-white text-xs text-gray-700 right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer items-center gap-1 hidden group-hover:flex"
-        @click="copyCode"
-      >
+        @click="copyCode">
         <SvgIcon name="copy" />
         Copy
       </div>
@@ -98,13 +90,15 @@
 
   const extraParams = computed(() => {
     if (props.form) {
-        return Object.fromEntries(
-            Object.entries(props.form).filter(([key, value]) => value !== null && value !== '')
-        );
+      return Object.fromEntries(
+        Object.entries(props.form).filter(
+          ([key, value]) => value !== null && value !== ''
+        )
+      )
     } else {
-        return {};
+      return {}
     }
-});
+  })
 
   const pythonHeaders = `
 headers = {
@@ -132,7 +126,7 @@ ${useToken.value ? pythonHeadersWithToken.value : pythonHeaders}
 
 data = {
     "inputs": "your image messages",
-    "parameters": ${extraParams.value}
+    "parameters": ${JSON.stringify(extraParams.value)}
 }
 
 response = requests.post(url=url, json=data, headers=headers, stream=True)
@@ -174,7 +168,7 @@ if response.status_code == 200:
   ${useToken.value ? jsHeadersWithToken.value : jsHeaders}
   body: JSON.stringify({
     inputs: "your image messages",
-    parameters: ${extraParams.value}
+    parameters: ${JSON.stringify(extraParams.value)}
   })
 })
 .then(response => response.text())
@@ -195,7 +189,9 @@ if response.status_code == 200:
     () => `curl -X POST \\
 "${endpointUrl.value}" \\
 ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
--d '{ "inputs": "your image messages", "parameters": ${extraParams.value}'
+-d '{ "inputs": "your image messages", "parameters": ${JSON.stringify(
+      extraParams.value
+    )}'
 `
   )
 
@@ -220,9 +216,7 @@ ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
     copyToClipboard(codeContent.value)
   }
 
-  const endpointUrl = computed(
-    () => `${props.appEndpoint}/v1/chat/completions`
-  )
+  const endpointUrl = computed(() => `${props.appEndpoint}`)
 
   watch(
     () => props.appEndpoint,

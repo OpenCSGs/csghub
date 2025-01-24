@@ -130,7 +130,7 @@
           </el-form-item>
         </el-form>
         <el-form
-          v-else
+          v-else-if="task=='text-to-image'"
           :model="formImg"
           :rules="rules" ref="formRef" 
           label-width="auto"
@@ -174,9 +174,8 @@
           </el-form-item>
 
           <el-form-item label="Negative Prompt">
-            <el-input-number
+            <el-input
               v-model="formImg.negativePrompt"
-              placeholder="number"
               size="large"
               class="w-full"
             />
@@ -205,7 +204,7 @@
         :form="form"
       />
       <TestWidget
-        v-else
+        v-else-if="task=='text-to-image'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="formImg"
@@ -241,7 +240,7 @@
         :private="private"
       />
       <ApiWidget
-        v-else
+        v-else-if="task=='text-to-image'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="formImg"
@@ -261,7 +260,7 @@
       :form="form"
     />
     <TestWidget
-        v-else
+        v-else-if="task=='text-to-image'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="formImg"
@@ -307,7 +306,7 @@
     width: null,
     num_inference_steps: null,
     guidance_scale: null,
-    negative_prompt: null,
+    negative_prompt: '',
     seed:null
   })
 
