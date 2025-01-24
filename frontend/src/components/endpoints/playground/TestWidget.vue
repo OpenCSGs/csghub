@@ -53,7 +53,7 @@
         <img
           v-if="imageSrc"
           :src="imageSrc"
-          style="max-width: 90% !important;"
+          style="max-width: 90% !important"
           alt="Fetched Image" />
       </div>
 
@@ -72,6 +72,7 @@
 <script setup>
   import { ref, computed } from 'vue'
   import { useCookies } from 'vue3-cookies'
+  import { ElMessage } from 'element-plus'
 
   const { cookies } = useCookies()
 
@@ -140,7 +141,7 @@
   })
 
   const handleSendMessage = async () => {
-    if(loading.value) return
+    if (loading.value) return
     loading.value = true
     const data = {
       inputs: message.value,
@@ -168,6 +169,10 @@
       loading.value = false
     } catch (error) {
       console.error('Error fetching image:', error)
+      ElMessage({
+        message: error.error || 'Failed to fetch image',
+        type: 'warning'
+      })
       loading.value = false
     }
   }
