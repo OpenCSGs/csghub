@@ -329,7 +329,10 @@
     :title="$t('navbar.emailMissing')"
     center
     show-icon
-    type="warning"></el-alert>
+    type="warning"
+  ></el-alert>
+
+  <Broadcast />
 </template>
 
 <script>
@@ -340,6 +343,7 @@
   import { mapState } from 'pinia'
   import { useCookies } from "vue3-cookies"
   import { ElMessage } from 'element-plus'
+  import Broadcast from './Broadcast.vue'
 
   export default {
     props: {
@@ -369,7 +373,8 @@
       }
     },
     components: {
-      MenuItems
+      MenuItems,
+      Broadcast
     },
     computed: {
       ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized']),

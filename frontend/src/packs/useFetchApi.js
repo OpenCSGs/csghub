@@ -51,7 +51,10 @@ const useFetchApi = createFetch({
       }
 
       if (response.status === 401) {
-        popupReloginDialog()
+        popupReloginDialog();
+      } else {
+        console.log("Fetch Error:", data || error);
+        return { error: data || error };
       }
     }
   }

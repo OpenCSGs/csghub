@@ -67,5 +67,17 @@ export const admin = {
     showName: 'Show Name',
     scope: 'Scope',
     enabled: 'Enabled'
-  }
+  },
+  broadcasts: {
+    title: 'Broadcast',
+    searchPlaceholder: '',
+    create: 'Create',
+    update: 'Update',
+    edit: 'Edit',
+    list: 'Broadcasts',
+    bc_type: "Type",
+    theme: "Theme",
+    status: "Status",
+    content: "Content"
+  },
 }

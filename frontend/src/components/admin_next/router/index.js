@@ -6,6 +6,9 @@ import AdminSyncSetting from "../sync/AdminSyncSetting.vue";
 import AdminTagsList from "../tags/AdminTagsList.vue";
 import AdminTagsDetail from "../tags/AdminTagsDetail.vue";
 import AdminTagsForm from "../tags/AdminTagsForm.vue";
+import AdminBroadcastList from '../broadcast/AdminBroadcastList.vue'
+import AdminBroadcastEdit from '../broadcast/AdminBroadcastEdit.vue'
+import AdminBroadcastNew from '../broadcast/AdminBroadcastNew.vue'
 import AdminTagCategoriesList from "../tag_categories/AdminTagCategoriesList.vue";
 import AdminTagCategoriesForm from "../tag_categories/AdminTagCategoriesForm.vue";
 import { Setting, User, Connection } from "@element-plus/icons-vue";
@@ -114,6 +117,24 @@ export const MENU_SETTING = [
     component: AdminTagCategoriesForm,
     name: adminLocale.tagCategories.edit,
     parentName: PARENT_NAME.BASE_CONFIG
+  },
+  {
+    path: `${BASE_URL}/broadcasts`,
+    component: AdminBroadcastList,
+    name: adminLocale.broadcasts.title,
+    parentName: PARENT_NAME.BASE_CONFIG,
+    icon: 'admin-menu-cloud',
+    type: 'item'
+  },
+  {
+    path: `${BASE_URL}/broadcasts/new`,
+    component: AdminBroadcastNew,
+    parentName: PARENT_NAME.BASE_CONFIG,
+  },
+  {
+    path: `${BASE_URL}/broadcasts/:id/edit`,
+    component: AdminBroadcastEdit,
+    parentName: PARENT_NAME.BASE_CONFIG,
   },
 ];
 
