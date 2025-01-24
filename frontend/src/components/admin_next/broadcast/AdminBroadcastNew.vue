@@ -122,7 +122,7 @@
       {
         required: true,
         message: t('all.pleaseSelect', {
-          value: t('admin.mirrors.bc_type')
+          value: t('admin.broadcasts.bc_type')
         }),
         trigger: 'blur'
       }
@@ -131,7 +131,7 @@
       {
         required: true,
         message: t('all.pleaseSelect', {
-          value: t('admin.mirrors.theme')
+          value: t('admin.broadcasts.theme')
         }),
         trigger: 'blur'
       }
@@ -159,7 +159,7 @@
     ).json()
 
     if (data.value) {
-      ElMessage.success('Mirror created successfully')
+      ElMessage.success('Broadcast created successfully')
       router.replace({ path: `/admin_panel/broadcasts` })
     } else {
       ElMessage.error(error.value.msg)

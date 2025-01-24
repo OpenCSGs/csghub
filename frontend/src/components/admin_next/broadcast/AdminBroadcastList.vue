@@ -99,10 +99,10 @@
       if (data.value) {
         broadcasts.value = data.value.data
       } else {
-        ElMessage.warning(error.value?.msg || 'Failed to fetch mirrors')
+        ElMessage.warning(error.value?.msg || 'Failed to fetch broadcasts')
       }
     } catch (error) {
-      ElMessage.error(error.value?.msg || 'Failed to fetch mirrors')
+      ElMessage.error(error.value?.msg || 'Failed to fetch broadcasts')
     } finally {
       loading.value = false
     }

@@ -124,7 +124,7 @@
       {
         required: true,
         message: t('all.pleaseSelect', {
-          value: t('admin.mirrors.bc_type')
+          value: t('admin.broadcasts.bc_type')
         }),
         trigger: 'blur'
       }
@@ -133,7 +133,7 @@
       {
         required: true,
         message: t('all.pleaseSelect', {
-          value: t('admin.mirrors.theme')
+          value: t('admin.broadcasts.theme')
         }),
         trigger: 'blur'
       }
