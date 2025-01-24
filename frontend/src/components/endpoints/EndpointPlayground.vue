@@ -315,3 +315,8 @@
     playgroundMode.value = mode
   }
 </script>
+<style scoped>
+:deep(.el-input-number){
+  width: 100% !important;
+}
+</style>
