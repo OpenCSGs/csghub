@@ -67,5 +67,16 @@ export const admin = {
     showName: '显示名称',
     scope: '范围',
     enabled: '启用'
-  }
+  },
+  broadcasts: {
+    title: '广播通知',
+    searchPlaceholder: '',
+    create: '新建广播',
+    update: '更新广播',
+    list: '广播列表',
+    bc_type: "类型",
+    theme: "主题",
+    status: "状态",
+    content: "内容"
+  },
 }
