@@ -160,8 +160,10 @@
       })
 
       if (!response.ok) {
-        console.log('Error fetching image:=====', response)
-        throw new Error(response.error || 'Failed to fetch image')
+        const errorData = await response.json();
+        console.log('Error fetching image:=====', errorData);
+        alert(JSON.stringify(errorData))
+        throw new Error(errorData.error || 'Failed to fetch image');
       }
 
       const blob = await response.blob()
