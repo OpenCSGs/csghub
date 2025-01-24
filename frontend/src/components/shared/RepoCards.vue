@@ -86,6 +86,9 @@
           :repo="repo"
           :repo-type="repoType" />
       </div>
+      <div v-else-if="repoType === 'model' && totalRepos === 0 ">
+        <EmptyModels />
+      </div>
       <div
         v-else
         class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]">
@@ -114,6 +117,7 @@
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
   import UpdateUsername from '../popup/UpdateUsername.vue'
+  import EmptyModels from '../models/EmptyModels.vue'
 
   const props = defineProps({
     repoType: String

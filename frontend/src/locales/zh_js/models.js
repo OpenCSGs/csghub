@@ -54,4 +54,10 @@ export const models = {
     needModelDesc: "请先提供模型介绍",
     needModelTag: '请先提供模型标签'
   },
+  emptyModels: {
+    title: "使用多源同步功能丰富模型",
+    desc: "多源同步可将 OpenCSG 开源社区以及 Huggingface 的优质模型同步到项目中",
+    uploadBtn: "上传本地模型",
+    multisyncBtn: "开启多源同步"
+  }
 }
