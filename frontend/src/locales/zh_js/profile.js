@@ -28,5 +28,6 @@ export const profile = {
     updateUsername: "首次登录更新内部用户名",
     username: "用户名",
     internalUsername: "内部用户名",
+    internalUsernamePlaceholder: "内部用户名"
   },
 }

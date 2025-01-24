@@ -22,7 +22,7 @@
           <span class="text-red-400">*</span>
         </p>
         <el-form-item prop="username">
-          <el-input v-model="formData.username" :rows="6" placeholder="请输入用户名" />
+          <el-input v-model="formData.username" :rows="6" :placeholder="$t('profile.edit.internalUsernamePlaceholder')" />
         </el-form-item>
         <p class="text-gray-500 text-xs italic mt-[24px]">
           {{ $t('rule.nameRule') }}
@@ -66,7 +66,7 @@
     {
       required: true,
       message: t('all.pleaseInput', {
-        value: t('models.newModel.modelName')
+        value: t('profile.edit.internalUsername')
       }),
       trigger: 'blur'
     },
