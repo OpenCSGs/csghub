@@ -13,7 +13,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-  import CsgButton from '../shared/CsgButton.vue';
-</script>
