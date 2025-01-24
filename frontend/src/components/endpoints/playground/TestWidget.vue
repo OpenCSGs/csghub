@@ -32,7 +32,6 @@
           @compositionstart="compositionStart"></el-input>
 
         <div
-          v-loading="loading"
           class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
           :class="
             canSendMessage
