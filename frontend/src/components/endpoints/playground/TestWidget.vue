@@ -32,6 +32,7 @@
           @compositionstart="compositionStart"></el-input>
 
         <div
+          v-loading="loading"
           class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
           :class="
             canSendMessage
@@ -48,10 +49,12 @@
         </div>
       </div>
       <div
+        v-loading="loading"
         class="min-h-[180px] w-full overflow-x-auto px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg shadow text-gray-700 flex items-center justify-center">
         <img
           v-if="imageSrc"
           :src="imageSrc"
+          style="max-width: 90% !important;"
           alt="Fetched Image" />
       </div>
 
@@ -138,6 +141,8 @@
   })
 
   const handleSendMessage = async () => {
+    if(loading.value) return
+    loading.value = true
     const data = {
       inputs: message.value,
       parameters: { ...extraParams.value }
@@ -158,14 +163,13 @@
         throw new Error('Network response was not ok')
       }
 
-      // 处理响应为 Blob（图片流）
-      const blob = await response.blob() // 获取 Blob 对象
-
-      // 创建一个 URL 对象并将其设置为 img 的 src
-      const imageUrl = URL.createObjectURL(blob) // 创建图片 URL
-      imageSrc.value = imageUrl // 设置 img 的 src
+      const blob = await response.blob()
+      const imageUrl = URL.createObjectURL(blob)
+      imageSrc.value = imageUrl
+      loading.value = false
     } catch (error) {
       console.error('Error fetching image:', error)
+      loading.value = false
     }
   }
 </script>
