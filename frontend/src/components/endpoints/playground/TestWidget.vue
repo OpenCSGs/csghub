@@ -161,8 +161,6 @@
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log('Error fetching image:=====', errorData);
-        alert(JSON.stringify(errorData))
         throw new Error(errorData.error || 'Failed to fetch image');
       }
 
@@ -171,7 +169,6 @@
       imageSrc.value = imageUrl
       loading.value = false
     } catch (error) {
-      console.error('Error fetching image:', error)
       ElMessage({
         message: error,
         type: 'warning'
