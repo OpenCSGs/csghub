@@ -59,13 +59,13 @@ describe("EndpointPlayground", () => {
     expect(wrapper.vm.playgroundMode).toBe('test');
   });
 
-  it("renders TestEndpoint component in 'test' mode", () => {
-    const wrapper = createWrapper();
+  it("renders TestEndpoint component in 'test' mode when task is 'text-generation'", () => {
+    const wrapper = createWrapper({ task: 'text-generation' });
     expect(wrapper.findComponent(TestEndpoint).exists()).toBe(true);
   });
 
-  it("renders ApiExample component in 'api' mode", async () => {
-    const wrapper = createWrapper();
+  it("renders ApiExample component in 'api' mode when task is 'text-generation'", async () => {
+    const wrapper = createWrapper({ task: 'text-generation' });
     await wrapper.find('.cursor-pointer').trigger('click');
     expect(wrapper.findComponent(ApiExample).exists()).toBe(true);
     expect(wrapper.findComponent(TestEndpoint).exists()).toBe(true);

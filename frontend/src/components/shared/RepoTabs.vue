@@ -58,6 +58,7 @@
           :endpointReplica="endpointReplica"
           :clusterId="repoDetail.cluster_id"
           :sku="sku"
+          :task="repoDetail.task"
           :replicaList="replicaList"
         />
         <repo-summary

@@ -74,6 +74,9 @@ export const endpoints = {
     send: "Send",
     test: "Inference API",
     api: "Send requests to endpoint",
-    useToken: 'Use my token'
+    useToken: 'Use my token',
+    wgTit: 'Test your endpoint',
+    wgDec: 'Text-to-Image',
+    wgBtn: 'Compute',
   }
 }

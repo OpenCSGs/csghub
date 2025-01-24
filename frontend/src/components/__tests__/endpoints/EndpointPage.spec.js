@@ -58,6 +58,7 @@ describe('EndpointPage.vue', () => {
     sku: 'mockSku',
     modelId: 'mockModelId',
     private: 'true',
+    task: 'text-generation',
     replicaList: [
       { name: 'Replica1', status: 'Running' },
       { name: 'Replica2', status: 'Stopped' }
@@ -76,7 +77,7 @@ describe('EndpointPage.vue', () => {
     })
   })
 
-  it('renders EndpointPlayground when appStatus is Running and appEndpoint is provided', () => {
+  it('renders EndpointPlayground when appStatus is Running and appEndpoint is provided and task is text-generation', () => {
     expect(wrapper.findComponent(EndpointPlayground).exists()).toBe(true)
   })
 
