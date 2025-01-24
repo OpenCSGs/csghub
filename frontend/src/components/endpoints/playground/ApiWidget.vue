@@ -171,7 +171,7 @@ if response.status_code == 200:
     parameters: ${JSON.stringify(extraParams.value)}
   })
 })
-.then(response => response.text())
+.then(response => response.blob())
 .then(data => {
   console.log(data)
 })`

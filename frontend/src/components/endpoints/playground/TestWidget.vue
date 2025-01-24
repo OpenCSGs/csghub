@@ -43,12 +43,12 @@
             class="text-xs font-normal flex items-center justify-center gap-1"
             :class="canSendMessage ? 'text-white' : 'text-gray-400'">
             <SvgIcon name="send_message" />
-            {{ $t('endpoints.playground.send') }}
+            {{ $t('endpoints.playground.wgBtn') }}
           </div>
         </div>
       </div>
       <div
-        class="min-h-[180px] px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg shadow text-gray-700 flex items-center justify-center">
+        class="min-h-[180px] w-full overflow-x-auto px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg shadow text-gray-700 flex items-center justify-center">
         <img
           v-if="imageSrc"
           :src="imageSrc"
