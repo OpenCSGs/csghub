@@ -160,7 +160,8 @@
       })
 
       if (!response.ok) {
-        throw new Error('Network response was not ok')
+        console.log('Error fetching image:=====', response)
+        throw new Error(response.error || 'Failed to fetch image')
       }
 
       const blob = await response.blob()
@@ -170,7 +171,7 @@
     } catch (error) {
       console.error('Error fetching image:', error)
       ElMessage({
-        message: error.error || 'Failed to fetch image',
+        message: error,
         type: 'warning'
       })
       loading.value = false
