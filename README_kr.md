@@ -39,7 +39,7 @@ CSGHub 를 빠르게 익힐 수 있도록 주요 기능과 사용 방법을 소�
 
 - **추가 실습을 원하는 사용자:** 로컬 환경(Linux/MacOS/Windows)에서 CSGHub를 빠르게 시작하고자 한다면 [Docker 원클릭 배포](https://github.com/OpenCSGs/csghub-installer/tree/main/docker)를 사용하여 CSGHub 인스턴스를 설치할 수 있습니다. 간단한 명령어로 올인원 컨테이너를 시작하여 CSGHub의 핵심 기능을 즉시 체험할 수 있습니다.
 
-- **Kubernetes에 배포하려는 사용자:** [Helm Chart 설치 가이드](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)를 참조하여 단계별 지침을 따르세요.
+- **Kubernetes에 배포하려는 사용자:** [Helm Chart 설치 가이드](https://github.com/OpenCSGs/csghub-installer/tree/main/helm)를 참조하여 단계별 지침을 따르세요.
 
 ### 로드맵
 
