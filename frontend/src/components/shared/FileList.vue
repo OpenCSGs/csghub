@@ -128,6 +128,7 @@
         </el-popover>
       </div>
     </div>
+    <p v-if="!loading && filePageCursor" class="text-brand-300 cursor-pointer my-2" @click="fetchFileListData">{{ $t('all.loadMore') }}</p>
     <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
   </div>
 </template>
@@ -157,6 +158,9 @@
   const lastCommit = ref()
   const lastCommitAvatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
   const prefixPath = document.location.pathname.split('/')[1]
+  const filePageCursor = ref('')
+  const commitList = ref([])
+  const tempCommit = ref([])
 
   const emit = defineEmits(['changeBranch'])
 
@@ -255,14 +259,48 @@
     }
   }
 
+  const fetchCommits = async () => {
+    const url = `/${prefixPath}/${props.namespacePath}/refs/${props.currentBranch}/logs_tree/${props.currentPath}?offset=${commitList.value.length}&limit=50`
+    try {
+      const { response, data, error } = await useFetchApi(url).json()
+
+      if (data.value) {
+        tempCommit.value = data.value.data?.Commits
+        commitList.value = [...commitList.value, ...tempCommit.value]
+
+        tempCommit.value.forEach(commit => {
+          const file = files.value.find(f => f.name === commit.name);
+          if (file) {
+            file.commit = commit;
+          }
+        });
+
+        if (commitList.value.length < files.value.length) {
+          fetchCommits();
+        }
+      } else if (response.value.status === 403) {
+        ToUnauthorizedPage()
+      } else if (response.value.status === 404) {
+        ToNotFoundPage()
+      } else {
+        ElMessage.warning(error.value ? error.value.msg : 'Failed to fetch commit list')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      loading.value = false
+    }
+  }
   const fetchFileListData = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/tree?path=${props.currentPath}&ref=${props.currentBranch}`
+    const url = `/${prefixPath}/${props.namespacePath}/refs/${props.currentBranch}/tree/${props.currentPath}?cursor=${filePageCursor.value}&limit=500`
 
     try {
       const { response, data, error } = await useFetchApi(url).json()
 
       if (data.value) {
-        files.value = data.value.data
+        files.value = [...files.value, ...data.value.data?.Files]
+        filePageCursor.value = data.value.data?.Cursor
+        fetchCommits()
       } else if (response.value.status === 403) {
         ToUnauthorizedPage()
       } else if (response.value.status === 404) {
