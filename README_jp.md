@@ -39,7 +39,7 @@ CSGHub の主要な機能と使い方を素早く理解していただくため�
 
 - **さらに実践を希望するユーザーへ：** ローカル環境（Linux/MacOS/Windows）で CSGHub を迅速に起動したい場合は、[Docker ワンクリックデプロイ](https://github.com/OpenCSGs/csghub-installer/tree/main/docker)を使用して CSGHub インスタンスをセットアップできます。簡単なコマンドでオールインワンコンテナを起動し、CSGHub のコア機能をすぐに体験することができます。
 
-- **Kubernetesでのデプロイを希望する方：** KubernetesクラスタでのCSGHubのデプロイについては、[Helm Chartインストールガイド](https://github.com/OpenCSGs/csghub-installer/tree/main/helm-chart)をご覧ください。
+- **Kubernetesでのデプロイを希望する方：** KubernetesクラスタでのCSGHubのデプロイについては、[Helm Chartインストールガイド](https://github.com/OpenCSGs/csghub-installer/tree/main/helm)をご覧ください。
 
 ### ロードマップ
 

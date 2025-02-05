@@ -71,7 +71,7 @@ CSGHub Server에 대해 자세히 알아보거나 Server를 자체 프론트엔�
 <img src="/docs/images/server_tech_graph.png" width='800'>
 
 ### 빠른 사용
-기본 기능을 갖춘 CSGHub 인스턴스를 배포하려면 배포 [도움말 문서](https://github.com/OpenCSGs/csghub-installer/tree/main/docker-compose/csghub)를 참조하세요.
+기본 기능을 갖춘 CSGHub 인스턴스를 배포하려면 배포 [도움말 문서](https://github.com/OpenCSGs/csghub-installer/tree/main/docker/compose)를 참조하세요.
 
 ### 상세 기술 문서
 - [개발 환경 설정](/docs/setup.md)
