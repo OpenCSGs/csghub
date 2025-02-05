@@ -25,7 +25,7 @@
   import { useStorage } from '@vueuse/core'
 
 
-  const showBanner = useStorage('show_banner', {initialied: false, show: false}, sessionStorage)
+  const showBanner = useStorage('show_banner', {initialized: false, show: false}, sessionStorage)
 
   const activeBroadcast = ref({
     theme: '',
@@ -53,12 +53,12 @@
       activeBroadcast.value.status = data.value.data.status
       activeBroadcast.value.bc_type = data.value.data.bc_type
       activeBroadcast.value.content = data.value.data.content
-      if (!showBanner.value.initialied) {
-        showBanner.value.initialied = true
+      if (!showBanner.value.initialized) {
+        showBanner.value.initialized = true
         showBanner.value.show = true
       }
     } else {
-      showBanner.value.initialied = false
+      showBanner.value.initialized = false
       showBanner.value.show = false
       ElMessage.warning(error.value.msg)
     }
