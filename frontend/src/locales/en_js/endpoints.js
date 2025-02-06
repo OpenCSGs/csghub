@@ -2,7 +2,7 @@ export const endpoints = {
   title: "Inference Endpoint",
   resourceType: 'Resource Type',
   replica: "Replica",
-  summary: 'Summary',
+  summary: 'Overview',
   detail: {
     endpointUrl: 'Inference Endpoint URL',
     modelId: 'Model ID',
