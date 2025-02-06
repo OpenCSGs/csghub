@@ -138,7 +138,7 @@
             />
             <template #empty>
               <span v-if="error">{{ error }}</span>
-              <span v-else>{{ $t('common.noData') }}</span>
+              <span v-else>{{ $t('all.noData') }}</span>
             </template>
           </el-table>
         </el-tab-pane>

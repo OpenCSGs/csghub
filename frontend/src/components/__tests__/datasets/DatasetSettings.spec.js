@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import DatasetSettings from "@/components/datasets/DatasetSettings.vue";
-import { createPinia, setActivePinia } from 'pinia';
 
 // Mock the API response
 vi.mock('../../../packs/useFetchApi', () => ({
@@ -75,7 +74,6 @@ const createWrapper = (props = {}) => {
       ...props
     },
     global: {
-      plugins: [createPinia()],
       mocks: {
         $t: (key) => key
       }
@@ -84,10 +82,6 @@ const createWrapper = (props = {}) => {
 };
 
 describe("DatasetSettings", () => {
-  beforeEach(() => {
-    setActivePinia(createPinia());
-  });
-
   it("mounts correctly", () => {
     const wrapper = createWrapper();
     expect(wrapper.vm).toBeDefined();
