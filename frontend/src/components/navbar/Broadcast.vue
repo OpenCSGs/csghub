@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showBanner" :class="bannerClass" class="min-h-[72px] w-full flex items-center py-4">
+  <div v-if="showBanner.show" :class="bannerClass" class="min-h-[72px] w-full flex items-center py-4">
     <div class="page-responsive-width flex justify-between md:gap-6 md:items-start">
       <div class="flex items-center gap-4 md:flex-col md:items-start max-w-[80%]">
         <div v-if="isLight" class="flex justify-center items-center rounded-[10px] p-3 bg-white border border-gray-200">
@@ -22,8 +22,10 @@
   import { ElMessage } from 'element-plus';
   import { computed, onMounted } from 'vue';
   import SvgIcon from '../shared/SvgIcon.vue';
+  import { useStorage } from '@vueuse/core'
 
-  const showBanner = ref(false)
+
+  const showBanner = useStorage('show_banner', {initialized: false, show: false}, sessionStorage)
 
   const activeBroadcast = ref({
     theme: '',
@@ -51,14 +53,19 @@
       activeBroadcast.value.status = data.value.data.status
       activeBroadcast.value.bc_type = data.value.data.bc_type
       activeBroadcast.value.content = data.value.data.content
-      showBanner.value = true
+      if (!showBanner.value.initialized) {
+        showBanner.value.initialized = true
+        showBanner.value.show = true
+      }
     } else {
+      showBanner.value.initialized = false
+      showBanner.value.show = false
       ElMessage.warning(error.value.msg)
     }
   }
 
   const closeBanner = () => {
-    showBanner.value = false
+    showBanner.value.show = false
   }
 
   onMounted(() => {

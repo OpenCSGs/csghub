@@ -86,7 +86,7 @@
           :repo="repo"
           :repo-type="repoType" />
       </div>
-      <div v-else-if="repoType === 'model' && totalRepos === 0 ">
+      <div v-else-if="repoType === 'model' && loading === false && totalRepos === 0">
         <EmptyModels />
       </div>
       <div
@@ -144,6 +144,7 @@
   const totalRepos = ref(0)
 
   const activeTags = ref({})
+  const loading = ref(true)
 
   const reposData = ref(Array)
   const sortOptions = [
@@ -224,12 +225,18 @@
   }
 
   async function loadRepos(url) {
-    const { error, data } = await useFetchApi(url).json()
-    if (data.value) {
-      reposData.value = data.value.data
-      totalRepos.value = data.value.total
-    } else {
-      ElMessage.warning(error.value.msg || t('all.fetchError'))
+    try {
+      const { error, data } = await useFetchApi(url).json()
+      if (data.value) {
+        reposData.value = data.value.data
+        totalRepos.value = data.value.total
+      } else {
+        ElMessage.warning(error.value.msg || t('all.fetchError'))
+      }
+    } catch(error) {
+      ElMessage.warning(error)
+    } finally {
+      loading.value = false
     }
   }
 
