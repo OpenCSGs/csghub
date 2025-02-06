@@ -160,7 +160,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="userStore.isAdmin"
+              <a v-if="isAdmin"
                   href="/admin_panel">
                   <el-dropdown-item>
                     <div class="flex items-center gap-2">
@@ -377,7 +377,7 @@
       Broadcast
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized']),
+      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin']),
     },
     watch: {
       initialized(_) {
