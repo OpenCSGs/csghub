@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dropdown>
+    <el-dropdown :max-height="300">
       <el-button type="default">
         <SvgIcon
           name="branch"
