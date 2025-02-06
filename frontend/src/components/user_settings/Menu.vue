@@ -18,12 +18,15 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col md:hidden">
+      <div class="flex flex-col gap-1 md:hidden">
         <!-- profile -->
         <a
           href="/settings/profile"
-          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-          :class="menuClass('/settings/profile')">
+          class="px-3 py-2.5 text-gray-500 text-md rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="[
+            isActiveMenu('/settings/profile') ? 'bg-gray-50 text-gray-700' : 'bg-white',
+            { 'active-link': isActiveMenu('/settings/profile') }
+          ]">
           {{ $t('profile.accountSetting') }}
         </a>
 
@@ -31,8 +34,11 @@
         <a
           v-if="hasEmail"
           href="/settings/access-token"
-          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-          :class="menuClass('/settings/access-token')">
+          class="px-3 py-2.5 text-gray-500 text-md rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="[
+            isActiveMenu('/settings/access-token') ? 'bg-gray-50 text-gray-700' : 'bg-white',
+            { 'active-link': isActiveMenu('/settings/access-token') }
+          ]">
           {{ $t('profile.menu.gitToken') }}
         </a>
 
@@ -40,8 +46,11 @@
         <a
           v-if="hasEmail"
           href="/settings/ssh-keys"
-          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
-          :class="menuClass('/settings/ssh-keys')">
+          class="px-3 py-2.5 text-gray-500 text-md rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="[
+            isActiveMenu('/settings/ssh-keys') ? 'bg-gray-50 text-gray-700' : 'bg-white',
+            { 'active-link': isActiveMenu('/settings/ssh-keys') }
+          ]">
           {{ $t('profile.menu.sshKey') }}
         </a>
       </div>
@@ -118,11 +127,15 @@
   const showDialog = ref(false)
   const activeTab = ref(window.location.pathname)
 
+  const isActiveMenu = (menuPath) => {
+    return menuPath === window.location.pathname
+  }
+
   const menuClass = (menuPath) => {
-    if (menuPath === window.location.pathname) {
-      return 'text-gray-700 font-semibold'
+    if (isActiveMenu(menuPath)) {
+      return 'text-gray-700 !bg-gray-50'
     } else {
-      return ''
+      return 'text-gray-500 !bg-white'
     }
   }
 
@@ -148,4 +161,5 @@
       padding-left: 0px !important;
     }
   }
+
 </style>
