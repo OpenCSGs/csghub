@@ -22,11 +22,8 @@
         <!-- profile -->
         <a
           href="/settings/profile"
-          class="px-3 py-2.5 text-gray-500 text-md rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
-          :class="[
-            isActiveMenu('/settings/profile') ? 'bg-gray-50 text-gray-700' : 'bg-white',
-            { 'active-link': isActiveMenu('/settings/profile') }
-          ]">
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="menuClass('/settings/profile')">
           {{ $t('profile.accountSetting') }}
         </a>
 
@@ -34,11 +31,8 @@
         <a
           v-if="hasEmail"
           href="/settings/access-token"
-          class="px-3 py-2.5 text-gray-500 text-md rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
-          :class="[
-            isActiveMenu('/settings/access-token') ? 'bg-gray-50 text-gray-700' : 'bg-white',
-            { 'active-link': isActiveMenu('/settings/access-token') }
-          ]">
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="menuClass('/settings/access-token')">
           {{ $t('profile.menu.gitToken') }}
         </a>
 
@@ -46,11 +40,8 @@
         <a
           v-if="hasEmail"
           href="/settings/ssh-keys"
-          class="px-3 py-2.5 text-gray-500 text-md rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
-          :class="[
-            isActiveMenu('/settings/ssh-keys') ? 'bg-gray-50 text-gray-700' : 'bg-white',
-            { 'active-link': isActiveMenu('/settings/ssh-keys') }
-          ]">
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="menuClass('/settings/ssh-keys')">
           {{ $t('profile.menu.sshKey') }}
         </a>
       </div>
@@ -132,11 +123,10 @@
   }
 
   const menuClass = (menuPath) => {
-    if (isActiveMenu(menuPath)) {
-      return 'text-gray-700 !bg-gray-50'
-    } else {
-      return 'text-gray-500 !bg-white'
-    }
+    return [
+      isActiveMenu(menuPath) ? 'bg-gray-50 text-gray-700' : 'bg-white',
+      { 'active-link': isActiveMenu(menuPath) }
+    ]
   }
 
   const handleTabClick = (tab) => {
