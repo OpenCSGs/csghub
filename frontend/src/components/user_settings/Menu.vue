@@ -121,7 +121,6 @@
   const menuClass = (menuPath) => {
     return [
       menuPath === window.location.pathname ? 'bg-gray-50 text-gray-700' : 'bg-white',
-      { 'active-link': menuPath === window.location.pathname }
     ]
   }
 
