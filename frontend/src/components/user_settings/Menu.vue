@@ -118,14 +118,10 @@
   const showDialog = ref(false)
   const activeTab = ref(window.location.pathname)
 
-  const isActiveMenu = (menuPath) => {
-    return menuPath === window.location.pathname
-  }
-
   const menuClass = (menuPath) => {
     return [
-      isActiveMenu(menuPath) ? 'bg-gray-50 text-gray-700' : 'bg-white',
-      { 'active-link': isActiveMenu(menuPath) }
+      menuPath === window.location.pathname ? 'bg-gray-50 text-gray-700' : 'bg-white',
+      { 'active-link': menuPath === window.location.pathname }
     ]
   }
 
