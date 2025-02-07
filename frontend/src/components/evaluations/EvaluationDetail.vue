@@ -53,7 +53,10 @@
           </div>
         </div>
 
-        <div class="mb-4">
+        <div
+          class="mb-4"
+          v-if="evaluation.task_desc"
+        >
           <span class="text-gray-500 text-base">
             {{ $t('evaluation.detail.desc') }}:
           </span>
