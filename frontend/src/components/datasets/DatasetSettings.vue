@@ -655,7 +655,7 @@
         if (error.value) {
           ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          ElMessage({ message: data.value.msg, type: 'success' })
+          ElMessage({ message: this.$t('datasets.edit.updateSuccess'), type: 'success' })
         }
       },
 

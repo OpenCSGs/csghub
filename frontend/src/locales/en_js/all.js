@@ -4,7 +4,7 @@ export const all = {
   summary: "Summary",
   files: "Files",
   community: "Community",
-  logs: "logs",
+  logs: "Logs",
   settings: "Settings",
   task: "Tasks",
   framework: "Framework",

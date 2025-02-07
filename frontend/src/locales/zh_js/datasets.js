@@ -56,6 +56,7 @@ export const datasets = {
     publicInfo: "， 任何互联网上的人都可以看到此数据集。",
     needDatasetName: "请先提供数据集别名",
     needDatasetDesc: "请先提供数据集介绍",
-    needDatasetTag: '请先提供数据集标签'
+    needDatasetTag: '请先提供数据集标签',
+    updateSuccess: '更新成功'
   },
 }

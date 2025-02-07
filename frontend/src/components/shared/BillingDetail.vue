@@ -30,6 +30,7 @@
         row-class-name="billing-table-row"
         cell-class-name="billing-table-row-cell"
         :data="billings"
+        :empty-text="$t('all.noData')"
         stripe
         style="width: 100%">
         <!-- instance ID -->
