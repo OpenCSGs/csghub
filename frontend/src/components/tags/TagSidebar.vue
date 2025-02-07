@@ -115,7 +115,7 @@
   }
 
   async function fetchTags() {
-    const { error, data } = await useFetchApi(`/tags`).json()
+    const { error, data } = await useFetchApi(`/tags?scope=${props.repoType}&built_in=true`).json()
     if (!data.value) {
       ElMessage({
         message: error.value.msg || t('all.fetchError'),
