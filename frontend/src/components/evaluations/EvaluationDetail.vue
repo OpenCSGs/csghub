@@ -1,7 +1,7 @@
 <template>
   <div class="evaluation-detail md:px-5">
     <div class="bg-gray-25 border-b border-gray-200">
-      <div class="max-w-full m-auto py-8">
+      <div class="page-responsive-width m-auto py-8">
         <div class="mb-4 flex items-center justify-between">
           <a
             href="/resource-console"
@@ -55,7 +55,7 @@
 
         <div
           class="mb-4"
-          v-if="evaluation.task_desc"
+          v-if="!!evaluation.task_desc"
         >
           <span class="text-gray-500 text-base">
             {{ $t('evaluation.detail.desc') }}:
@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <div class="max-w-full m-auto bg-white pt-4">
+    <div class="page-responsive-width m-auto bg-white pt-4">
       <el-tabs
         v-model="activeName"
         @tab-click="handleTabClick"
