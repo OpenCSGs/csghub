@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import ApplicationSpaceSettings from '@/components/application_spaces/ApplicationSpaceSettings.vue'
-import { createPinia, setActivePinia } from 'pinia'
 import { ElMessage } from 'element-plus'
 
 vi.mock('element-plus', () => ({
@@ -52,7 +51,6 @@ const createWrapper = (props = {}) => {
       ...props
     },
     global: {
-      plugins: [createPinia()],
       mocks: {
         $t: (key) => key
       }
@@ -64,7 +62,6 @@ describe('ApplicationSpaceSettings', () => {
   let wrapper
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = createWrapper()
   })
 
