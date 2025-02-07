@@ -18,11 +18,11 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col md:hidden">
+      <div class="flex flex-col gap-1 md:hidden">
         <!-- profile -->
         <a
           href="/settings/profile"
-          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
           :class="menuClass('/settings/profile')">
           {{ $t('profile.accountSetting') }}
         </a>
@@ -31,7 +31,7 @@
         <a
           v-if="hasEmail"
           href="/settings/access-token"
-          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
           :class="menuClass('/settings/access-token')">
           {{ $t('profile.menu.gitToken') }}
         </a>
@@ -40,7 +40,7 @@
         <a
           v-if="hasEmail"
           href="/settings/ssh-keys"
-          class="p-[16px] hover:bg-gray-50 border-gray-200 text-md text-gray-500 leading-[24px] cursor-pointer"
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
           :class="menuClass('/settings/ssh-keys')">
           {{ $t('profile.menu.sshKey') }}
         </a>
@@ -119,11 +119,9 @@
   const activeTab = ref(window.location.pathname)
 
   const menuClass = (menuPath) => {
-    if (menuPath === window.location.pathname) {
-      return 'text-gray-700 font-semibold'
-    } else {
-      return ''
-    }
+    return [
+      menuPath === window.location.pathname ? 'bg-gray-50 text-gray-700' : 'bg-white',
+    ]
   }
 
   const handleTabClick = (tab) => {
@@ -148,4 +146,5 @@
       padding-left: 0px !important;
     }
   }
+
 </style>
