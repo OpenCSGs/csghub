@@ -236,11 +236,23 @@
 
   const fetchtags = async (current) => {
     loading.value = true
+
+    const params = new URLSearchParams({
+      page: current || page.value,
+      per: per.value
+    });
+
+    if (keyword.value) {
+      params.append('category', keyword.value);
+    }
+    if (scope.value) {
+      params.append('scope', scope.value);
+    }
+
     const { data, error } = await useFetchApi(
-      `/tags?page=${current || page.value}&per=${per.value}&category=${
-        keyword.value
-      }&scope=${scope.value || ''}`
+      `/tags?${params.toString()}`
     ).json()
+
     if (data.value) {
       tags.value = data.value.data
       total.value = data.value.data?.length || 0
@@ -250,6 +262,7 @@
     page.value = 1
     loading.value = false
   }
+
   const deleteTag = async (tag) => {
     const { data, error } = await useFetchApi(`/tags/${tag.id}`, {
       method: 'DELETE'

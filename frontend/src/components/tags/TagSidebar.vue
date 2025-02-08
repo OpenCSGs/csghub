@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import { ref, onMounted, computed, watch } from 'vue'
   import TagList from './TagList.vue'
   import useFetchApi from '../../packs/useFetchApi'
@@ -115,7 +115,14 @@
   }
 
   async function fetchTags() {
-    const { error, data } = await useFetchApi(`/tags`).json()
+    const params = new URLSearchParams({
+      scope: props.repoType,
+      built_in: true
+    })
+    avaliableCategories.value.forEach((category) => {
+      params.append('category', category.name)
+    })
+    const { error, data } = await useFetchApi(`/tags?${params.toString()}`).json()
     if (!data.value) {
       ElMessage({
         message: error.value.msg || t('all.fetchError'),
