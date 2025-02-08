@@ -38,7 +38,8 @@ const useFetchApi = createFetch({
         const jwtToken = cookies.get('user_token')
         options.headers = {
           ...options.headers,
-          Authorization: `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`,
+          'Accept-Language': cookies.get('locale')
         }
       }
       return { options }
