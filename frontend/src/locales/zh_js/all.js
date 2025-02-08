@@ -84,5 +84,6 @@ export const all = {
   sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token",
   public: "公开",
   private: "私有",
-  loadMore:"加载更多"
+  loadMore:"加载更多",
+  viewMore: "展示更多",
 }

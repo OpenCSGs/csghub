@@ -85,4 +85,5 @@ export const all = {
   public: "Public",
   private: "Private",
   loadMore: "Load more",
+  viewMore: "View more",
 }
