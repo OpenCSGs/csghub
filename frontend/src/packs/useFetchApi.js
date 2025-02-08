@@ -26,6 +26,17 @@ const popupReloginDialog = () => {
   })
 }
 
+const acceptLanguage = () => {
+  const currentLocale = cookies.get('locale')
+  if (currentLocale === 'en') {
+    return 'en-US'
+  } else if (currentLocale === 'zh') {
+    return 'zh-CN'
+  } else {
+    return 'en-US'
+  }
+}
+
 const useFetchApi = createFetch({
   updateDataOnError: true,
   baseUrl: `${CSGHUB_SERVER}/api/v1`,
@@ -39,7 +50,7 @@ const useFetchApi = createFetch({
         options.headers = {
           ...options.headers,
           Authorization: `Bearer ${jwtToken}`,
-          'Accept-Language': cookies.get('locale')
+          'Accept-Language': acceptLanguage()
         }
       }
       return { options }
