@@ -1,12 +1,21 @@
 <template>
   <a :href="detailLink"
-     :class="`${repoType}-card`"
-     class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-sm p-4 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full"
+     :class="[
+       `${repoType}-card`,
+       repoType === 'model' ? 'bg-gradient-to-r from-[#fafefe] to-white' : '',
+       repoType === 'dataset' ? 'bg-gradient-to-r from-[#fbfaff] to-white' : '',
+       repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
+     ]"
+     class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit"
      :style="isCollection ? 'width:100%' : ''"
   >
-    <div class="flex items-center justify-between mb-1 w-full">
+    <div class="flex items-center justify-between mb-1 gap-2 w-full">
+      <SvgIcon v-if="repoType === 'model'" name="models" width="18" height="18" />
+      <SvgIcon v-if="repoType === 'dataset'" name="datasets" width="18" height="18" />
+      <SvgIcon v-if="repoType === 'code'" name="codes" width="18" height="18" />
+      <SvgIcon v-if="repoType === 'space'" name="spaces" width="18" height="18" />
       <div :class="`${repoType}-path`"
-           class="text-sm font-medium text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap"
+           class="text-sm font-medium text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap w-full"
       >
         {{ getComputed.path }}
       </div>
@@ -29,10 +38,10 @@
     </div>
 
     <p v-if="getComputed.showDescription"
-      class="w-full h-9 leading-[18px] mb-1.5 text-gray-500 text-sm overflow-hidden text-ellipsis line-clamp-2 text-left"
+      class="w-full min-h-[18px] leading-[18px] mb-1.5 text-gray-500 text-sm font-normal overflow-hidden text-ellipsis line-clamp-1 text-left"
       :class="isCollection ? 'hidden' : ''"
      >
-      {{ repo.description }}
+      {{ repo.description || '\u00A0' }}
     </p>
 
     <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-2 text-xs text-gray-500">
@@ -46,7 +55,8 @@
         <SvgIcon name="vertical_divider" />
       </span>
 
-      <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+      <div class="overflow-hidden text-ellipsis whitespace-nowrap flex gap-1 items-center">
+        <SvgIcon name="clock" />
         {{$t('all.lastTime')}}：{{ repo.updated_at.substring(0, 10) }}
       </div>
 
@@ -57,7 +67,10 @@
 
       <span> <SvgIcon name="vertical_divider" /> </span>
 
-      <span class="whitespace-nowrap">{{$t('all.downloadCount')}}：{{ repo.downloads }}</span>
+      <span class="whitespace-nowrap flex gap-1 items-center">
+        <SvgIcon name="download2" />
+        {{ repo.downloads }}
+      </span>
     </div>
   </a>
 </template>
@@ -138,17 +151,3 @@
     return { path, visibility, taskTag, showDescription }
   })
 </script>
-
-<style scoped>
-  .dataset-card:hover .dataset-path {
-    color: var(--blue-blue-5001-f-75-cb, #1F75CB);
-  }
-
-  .model-card:hover .model-path {
-    color: var(--theme-dark-red-t-red-500-ad-4-a-3-b, #AD4A3B);
-  }
-
-  .code-card:hover .code-path {
-    color: var(--blue-blue-5001-f-75-cb, #1F75CB);
-  }
-</style>
