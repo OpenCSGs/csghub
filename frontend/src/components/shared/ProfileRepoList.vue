@@ -103,11 +103,11 @@
     initiator: String
   })
 
-  const collections = ref([])
-  const models = ref([])
-  const datasets = ref([])
-  const codes = ref([])
-  const spaces = ref([])
+  const collections = ref({})
+  const models = ref({})
+  const datasets = ref({})
+  const codes = ref({})
+  const spaces = ref({})
   const collectionsLoading = ref(false)
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
