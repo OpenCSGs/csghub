@@ -103,59 +103,79 @@
     initiator: String
   })
 
-  const collections = ref([])
-  const models = ref([])
-  const datasets = ref([])
-  const codes = ref([])
-  const spaces = ref([])
+  const collections = ref({})
+  const models = ref({})
+  const datasets = ref({})
+  const codes = ref({})
+  const spaces = ref({})
   const collectionsLoading = ref(false)
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
   const codeLoading = ref(false)
   const spacesLoading = ref(false)
 
-  const hasCollections = computed(() => collections.value?.total > 0)
-  const hasModels = computed(() => models.value?.total > 0)
-  const hasDatasets = computed(() => datasets.value?.total > 0)
-  const hasCodes = computed(() => codes.value?.total > 0)
-  const hasSpaces = computed(() => spaces.value?.total > 0)
+  const collectionsPage = ref(1)
+  const modelsPage = ref(1)
+  const datasetsPage = ref(1)
+  const codesPage = ref(1)
+  const spacesPage = ref(1)
+
+  const PER_PAGE = 50
+  const INITIAL_PER_PAGE = 6
+
+  const hasCollections = computed(() => collections.value?.data?.length > 0)
+  const hasModels = computed(() => models.value?.data?.length > 0)
+  const hasDatasets = computed(() => datasets.value?.data?.length > 0)
+  const hasCodes = computed(() => codes.value?.data?.length > 0)
+  const hasSpaces = computed(() => spaces.value?.data?.length > 0)
 
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
 
-  const getProfileRepoData = async () =>{
-    const defaultTotal = 6
+  const getProfileRepoData = async () => {
     const collectionsUrl = reposUrl("collections")
     const modelsUrl = reposUrl("models")
     const datasetsUrl = reposUrl("datasets")
     const spacesUrl = reposUrl("spaces")
     const codesUrl = reposUrl("codes")
+
     const promises = [
-        fetchData(collectionsUrl, collections, defaultTotal),
-        fetchData(modelsUrl, models, defaultTotal),
-        fetchData(datasetsUrl, datasets, defaultTotal),
-        fetchData(spacesUrl, spaces, defaultTotal),
-        fetchData(codesUrl, codes, defaultTotal)
-    ];
-    await Promise.all(promises);
+      fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
+      fetchData(modelsUrl, models, INITIAL_PER_PAGE, 1),
+      fetchData(datasetsUrl, datasets, INITIAL_PER_PAGE, 1),
+      fetchData(spacesUrl, spaces, INITIAL_PER_PAGE, 1),
+      fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1)
+    ]
+    await Promise.all(promises)
   }
 
-  const viewMoreTargets = (target) => {
-    if (target === "models") {
-      modelsLoading.value = true
-      fetchMoreModels()
-    } else if (target === "datasets") {
-      datasetsLoading.value = true
-      fetchMoreDatasets()
-    } else if (target === "spaces") {
-      spacesLoading.value = true
-      fetchMoreSpaces()
-    } else if (target === "codes") {
-      codeLoading.value = true
-      fetchMoreCodes()
-    } else if (target === "collections") {
-      collectionsLoading.value = true
-      fetchMoreCollections()
+  const viewMoreTargets = async (target) => {
+    switch (target) {
+      case "collections":
+        collectionsLoading.value = true
+        await fetchMoreCollections()
+        collectionsLoading.value = false
+        break
+      case "models":
+        modelsLoading.value = true
+        await fetchMoreModels()
+        modelsLoading.value = false
+        break
+      case "datasets":
+        datasetsLoading.value = true
+        await fetchMoreDatasets()
+        datasetsLoading.value = false
+        break
+      case "spaces":
+        spacesLoading.value = true
+        await fetchMoreSpaces()
+        spacesLoading.value = false
+        break
+      case "codes":
+        codeLoading.value = true
+        await fetchMoreCodes()
+        codeLoading.value = false
+        break
     }
   }
 
@@ -169,34 +189,26 @@
     }
   }
 
-  const fetchMoreCollections = async () => {
-    const url = reposUrl("collections")
-    await fetchData(url, collections, collections.value.total)
-  }
-  const fetchMoreModels = async () => {
-    const url = reposUrl("models")
-    await fetchData(url, models, models.value.total)
+  const updatePageAndData = (response, targetRef, pageRef) => {
+    if (!targetRef.value.data || pageRef.value === 1) {
+      targetRef.value.data = []
+    }
+    targetRef.value.data = [...targetRef.value.data, ...response.data]
+    targetRef.value.total = response.total
+
+    const loadedCount = targetRef.value.data.length
+    const hasMore = loadedCount < response.total
+    targetRef.value.more = hasMore
+
+    if (hasMore) {
+      pageRef.value++
+    }
   }
 
-  const fetchMoreDatasets = async () => {
-    const url = reposUrl("datasets")
-    await fetchData(url, datasets, datasets.value.total)
-  }
-
-  const fetchMoreSpaces = async () => {
-    const url = reposUrl("spaces")
-    await fetchData(url, spaces, spaces.value.total)
-  }
-
-  const fetchMoreCodes = async () => {
-    const url = reposUrl("codes")
-    await fetchData(url, codes, codes.value.total)
-  }
-
-  const fetchData = async (url, targetRef, total, type) => {
+  const fetchData = async (url, targetRef, perPage, page) => {
     const params = new URLSearchParams()
-    params.append("per", total)
-    params.append("page", 1)
+    params.append("per", perPage)
+    params.append("page", page)
 
     try {
       const { data, error } = await useFetchApi(`${url}?${params}`).json()
@@ -206,28 +218,42 @@
           message: error.value.msg,
           type: "warning"
         })
-      } else {
-        targetRef.value = data.value
-        if(targetRef.value?.total > 6 && total === 6){
-          targetRef.value.more = true
-        }else if(total > 6){
-          targetRef.value.more = false
-        }
+        return null
       }
+
+      if (perPage === INITIAL_PER_PAGE) {
+        targetRef.value = data.value
+        targetRef.value.more = data.value.total > perPage
+      } else {
+        updatePageAndData(data.value, targetRef, getPageRef(targetRef))
+      }
+
+      return data.value
     } catch (error) {
       console.log(error)
-    } finally {
-      if (targetRef === models) {
-        modelsLoading.value = false
-      } else if (targetRef === datasets) {
-        datasetsLoading.value = false
-      } else if (targetRef === codes) {
-        codeLoading.value = false
-      } else if (targetRef === spaces) {
-        spacesLoading.value = false
-      }
+      return null
     }
   }
+
+  const getPageRef = (targetRef) => {
+    if (targetRef === collections) return collectionsPage
+    if (targetRef === models) return modelsPage
+    if (targetRef === datasets) return datasetsPage
+    if (targetRef === codes) return codesPage
+    if (targetRef === spaces) return spacesPage
+  }
+
+  const fetchMore = async (targetRef, type) => {
+    const pageRef = getPageRef(targetRef)
+    const url = reposUrl(type)
+    await fetchData(url, targetRef, PER_PAGE, pageRef.value)
+  }
+
+  const fetchMoreCollections = () => fetchMore(collections, "collections")
+  const fetchMoreModels = () => fetchMore(models, "models")
+  const fetchMoreDatasets = () => fetchMore(datasets, "datasets")
+  const fetchMoreSpaces = () => fetchMore(spaces, "spaces")
+  const fetchMoreCodes = () => fetchMore(codes, "codes")
 
   onMounted(() => {
     getProfileRepoData()
