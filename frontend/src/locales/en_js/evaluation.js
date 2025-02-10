@@ -6,6 +6,8 @@ export const evaluation = {
     modelName: "Model Name",
     evaluationDesc: "Evaluation Description",
     framework: "Framework",
+    frameworkTip1: "Learn about the",
+    frameworkTip2: "differences of evaluation frameworks",
     dataset: "Dataset Selection",
     resourceType: "Resource Type",
     sharedResource: "Shared Resource",

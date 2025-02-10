@@ -6,6 +6,8 @@ export const evaluation = {
     modelName: "模型名称",
     evaluationDesc: "评测描述",
     framework: "评测框架",
+    frameworkTip1: "了解评测框架的",
+    frameworkTip2: "区别与适用场景",
     dataset: "数据集选择",
     resourceType: "资源类型",
     sharedResource: "共享资源",
