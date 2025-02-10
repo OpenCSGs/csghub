@@ -99,6 +99,16 @@
               :value="item.id"
             />
           </el-select>
+          <p class="text-gray-600 mt-2 font-light">
+            {{ t('evaluation.new.frameworkTip1') }}
+            <a
+              href="https://opencsg.com/docs/inferencefinetune/evaluation_framework_intro"
+              target="_blank"
+              class="text-brand-600 hover:text-brand-700 hover:underline"
+            >
+              {{ t('evaluation.new.frameworkTip2') }}
+            </a>
+          </p>
         </el-form-item>
 
         <el-form-item
