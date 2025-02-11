@@ -76,7 +76,7 @@
 
 <style scoped lang="postcss">
   .menu-section-title {
-    @apply text-[16px] text-[#0f1728] font-normal leading-normal mb-4 px-5;
+    @apply text-[16px] text-[#0f1728] font-normal leading-normal mb-1 mt-5 px-5;
     font-family: 'PingFang SC', sans-serif;
   }
 

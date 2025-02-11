@@ -20,14 +20,21 @@ import { admin as admin_zh } from "../../../locales/zh_js/admin.js"
 
 const adminLocale = cookies.get('locale') === 'en' ? admin_en : admin_zh
 
-
 // parent menu name
 export const PARENT_NAME = {
   BASE_CONFIG: adminLocale.baseConfigTitle,
+  system: adminLocale.menuSystem,
+  account: adminLocale.menuAccount,
+  hub: adminLocale.menuHub
 };
 
 // use for parent menu render
-export const PARENT_NAME_LIST = [PARENT_NAME.BASE_CONFIG];
+export const PARENT_NAME_LIST = [
+  PARENT_NAME.BASE_CONFIG,
+  PARENT_NAME.system,
+  PARENT_NAME.account,
+  PARENT_NAME.hub
+]
 
 export const BASE_URL = '/admin_panel';
 
@@ -39,102 +46,102 @@ export const MENU_SETTING = [
     // this property use for find the parent name
     parentName: PARENT_NAME.BASE_CONFIG,
     icon: "admin-menu-dashboard",
-    type: "item",
+    type: "menu",
   },
   {
     path: `${BASE_URL}/system_config`,
     component: AdminSystemConfig,
     name: adminLocale.systemConfig.title,
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.system,
     icon: "admin-menu-settings",
-    type: "item",
+    type: "menu",
   },
   {
     path: `${BASE_URL}/users`,
     component: AdminUserList,
     name: adminLocale.users.title,
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.account,
     icon: "admin-menu-users",
-    type: "item",
+    type: "menu",
   },
   {
     path: `${BASE_URL}/users/:id`,
     component: AdminUserDetail,
     name: "用户详情",
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.account,
     icon: User,
   },
   {
     path: `${BASE_URL}/sync`,
     component: AdminSyncSetting,
     name: adminLocale.syncSetting.title,
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.hub,
     icon: "admin-menu-cloud",
-    type: "item",
+    type: "menu",
   },
   {
     path: `${BASE_URL}/tags`,
     component: AdminTagsList,
     name: adminLocale.tags.title,
-    parentName: PARENT_NAME.BASE_CONFIG,
-    icon: 'admin-menu-cloud',
-    type: 'item'
+    parentName: PARENT_NAME.hub,
+    icon: 'admin-menu-tag',
+    type: 'menu'
   },
   {
     path: `${BASE_URL}/tags/new`,
     component: AdminTagsForm,
     name: adminLocale.tags.newTag,
-    parentName: PARENT_NAME.BASE_CONFIG
+    parentName: PARENT_NAME.hub
   },
   {
     path: `${BASE_URL}/tags/:id/edit`,
     component: AdminTagsForm,
     name: adminLocale.tags.editTag,
-    parentName: PARENT_NAME.BASE_CONFIG
+    parentName: PARENT_NAME.hub
   },
   {
     path: `${BASE_URL}/tags/:id`,
     component: AdminTagsDetail,
     name: adminLocale.tags.tagDetailTitle,
-    parentName: PARENT_NAME.BASE_CONFIG
+    parentName: PARENT_NAME.hub
   },
   {
     path: `${BASE_URL}/tag_categories`,
     component: AdminTagCategoriesList,
     name: adminLocale.tagCategories.title,
-    parentName: PARENT_NAME.BASE_CONFIG,
-    icon: 'admin-menu-cloud',
-    type: 'item'
+    parentName: PARENT_NAME.hub,
+    icon: 'admin-menu-tag',
+    type: 'menu'
   },
   {
     path: `${BASE_URL}/tag_categories/new`,
     component: AdminTagCategoriesForm,
     name: adminLocale.tagCategories.create,
-    parentName: PARENT_NAME.BASE_CONFIG
+    parentName: PARENT_NAME.hub
   },
   {
     path: `${BASE_URL}/tag_categories/:id/edit`,
     component: AdminTagCategoriesForm,
     name: adminLocale.tagCategories.edit,
-    parentName: PARENT_NAME.BASE_CONFIG
+    parentName: PARENT_NAME.hub
   },
   {
     path: `${BASE_URL}/broadcasts`,
     component: AdminBroadcastList,
     name: adminLocale.broadcasts.title,
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.system,
     icon: 'admin-menu-cloud',
-    type: 'item'
+    type: 'menu'
   },
   {
     path: `${BASE_URL}/broadcasts/new`,
     component: AdminBroadcastNew,
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.system,
   },
   {
     path: `${BASE_URL}/broadcasts/:id/edit`,
     component: AdminBroadcastEdit,
-    parentName: PARENT_NAME.BASE_CONFIG,
+    parentName: PARENT_NAME.system,
   },
 ];
 
@@ -143,7 +150,7 @@ export const menuRenderList = PARENT_NAME_LIST.reduce((acc, item) => {
     name: item,
     type: "group",
     children: MENU_SETTING.filter(
-      (menu) => menu.type === "item" && menu.parentName === item
+      (menu) => menu.type === "menu" && menu.parentName === item
     ),
   });
   return acc;
