@@ -130,7 +130,7 @@ export const MENU_SETTING = [
     component: AdminBroadcastList,
     name: adminLocale.broadcasts.title,
     parentName: PARENT_NAME.system,
-    icon: 'admin-menu-cloud',
+    icon: 'admin-menu-broadcast',
     type: 'menu'
   },
   {
