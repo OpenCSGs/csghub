@@ -507,7 +507,7 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        window.location.href = `/profile/${userStore.username}`
+        window.location.href = '/resource-console'
       }, 500)
       return true
     }
