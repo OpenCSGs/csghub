@@ -1,5 +1,8 @@
 export const admin = {
   baseConfigTitle: 'Basic Settings',
+  menuSystem: 'System',
+  menuAccount: 'Account',
+  menuHub: 'Hub',
   createSuccess: 'Create Success',
   updateSuccess: 'Update Success',
   operations: 'Operations',
