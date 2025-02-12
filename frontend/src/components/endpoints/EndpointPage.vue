@@ -14,12 +14,12 @@
         <svg-icon name="admin-menu-model" class="w-4 h-4 mr-2" />
         {{ $t('endpoints.detail.modelId') }}
       </p>
-      <router-link 
-        :to="`/models/${modelId}`"
+      <a 
+        :href="`/models/${modelId}`"
         class="w-[390px] lg:w-[370px] md:w-full h-fit leading-[18px] text-brand-600 hover:text-brand-700 hover:underline text-sm overflow-hidden text-ellipsis line-clamp-1 text-left"
       >
         {{ modelId }}
-      </router-link>
+      </a>
     </div>
     <div class="flex flex-col gap-[8px] h-fit focus:outline focus:outline-4 focus:outline-gray-200 p-4 md:w-full border border-gray-200 rounded-xl">
       <p class="text-sm text-gray-700 font-medium text-ellipsis overflow-hidden whitespace-nowrap">
