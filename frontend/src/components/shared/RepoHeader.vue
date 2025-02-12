@@ -48,7 +48,7 @@
     >
       <el-avatar
         :size="24"
-        :src="avatar"
+        :src="userAvatar"
         class="flex-shrink-0"
       ></el-avatar>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
