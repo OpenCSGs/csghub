@@ -86,5 +86,8 @@ export const all = {
   private: "Private",
   loadMore: "Load more",
   viewMore: "View more",
-  parquet: "Dataset Preview"
+  parquet: "Dataset Preview",
+  subset: "Subset",
+  split: "Split",
+  rows: "rows",
 }

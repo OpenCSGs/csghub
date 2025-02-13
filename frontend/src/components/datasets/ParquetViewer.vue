@@ -39,15 +39,18 @@
         </p>
       </div> -->
     </div>
-    <div class="flex justify-between gap-[16px] text-gray-700 text-sm leading-[20px]">
+    <div class="flex justify-between gap-[16px] text-gray-700 text-sm leading-[20px] xl:flex-col">
       <div class="flex flex-col gap-[8px]">
-        <p>Subset</p>
+        <p>{{ $t('all.subset') }}（{{ numSubsets }}）</p>
         <el-select
           v-model="subset"
           @change="changeSubsetName"
           placeholder="Select"
           size="large"
-          class="!w-[350px] sm:!w-full">
+          class="!w-[330px] xl:!w-full">
+          <template #prefix>
+            <span>{{ showRows }} {{ $t('all.rows') }}</span>
+          </template>
           <el-option
             v-for="item in datasetInfo"
             :key="item.config_name"
@@ -56,19 +59,23 @@
         </el-select>
       </div>
       <div v-if="splits" class="flex flex-col gap-[8px]">
-        <p>Split {{ numSplits }}</p>
+        <p>{{ $t('all.split') }}（{{ numSplits }}）</p>
         <el-select
           v-model="split"
           @change="changeSplitName"
           placeholder="Select"
           size="large"
-          class="!w-[350px] sm:!w-full">
+          class="!w-[330px] xl:!w-full">
+          <template #prefix>
+            <span>{{ showRows }} {{ $t('all.rows') }}</span>
+          </template>
           <el-option
             v-for="item in splits"
             :key="item.name"
             :label="item.name"
-            :value="item.name" />
-        </el-select>   
+            :value="item.name">
+          </el-option>
+        </el-select>
       </div>
     </div>
     <!-- <div>
@@ -108,14 +115,18 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, onMounted, ref, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import { Search } from '@element-plus/icons-vue'
   import useFetchApi from '../../packs/useFetchApi'
   import CsgPagination from '../shared/CsgPagination.vue'
 
   const props = defineProps({
-    datasetInfo: Object,
+    datasetInfo: {
+      type: Array,
+      default: []
+
+    },
     namespacePath: String
   })
 
@@ -127,10 +138,24 @@
   const perPage = ref(4)
   const nameFilterInput = ref('')
   // 默认subset和split的值
-  const splits = ref(props.datasetInfo[0].splits)
-  const subset = ref(props.datasetInfo[0].config_name)
+  const splits = ref((props.datasetInfo && props.datasetInfo[0]?.splits) || [])
+  const subset = ref(props.datasetInfo && props.datasetInfo[0]?.config_name || [])
   const split = ref(splits.value[0]?.name || '')
-  const numSplits = ref(splits.value[0]?.num_examples || 0)
+  const Rows = ref(splits.value[0]?.num_examples || 0)
+
+  const numSplits = computed(() => {
+    return splits.value?.length || 0
+  })
+  const numSubsets = computed(() => {
+    return props.datasetInfo?.length || 0
+  })
+
+  watch(() => props.datasetInfo, (newValue) => {
+    splits.value = (newValue && newValue[0]?.splits) || []
+    subset.value = (newValue && newValue[0]?.config_name) || []
+    split.value = splits.value[0]?.name || ''
+    Rows.value = splits.value[0]?.num_examples || 0
+  })
 
   const tableData = computed(() => {
     if (!previewData.value?.rows || !previewData.value?.columns) {
@@ -148,22 +173,37 @@
     )
   })
 
+  const showRows = computed(() => {
+    let result = ''
+    if (Rows.value >= 1000000) {
+      result = (Rows.value / 1000000).toFixed(1) + 'M';
+    } else if (Rows.value >= 1000) {
+      result = (Rows.value / 1000).toFixed(1) + 'K';
+    } else {
+      result = Rows.value;
+    }
+
+    return result
+  })
+
   const toggleRow = (_row, _column, event) => {
     const row = event.target.closest('.el-table__row')
     row.classList.toggle('row-item-clamp')
   }
-  
+
   const changeSubsetName = (value) => {
     const filteredItem = props.datasetInfo.find(item => item.config_name === value)
-    splits.value = filteredItem ? filteredItem.data_files: null
-    split.value = splits.value[0].name || ''
-    numSplits.value = splits.value[0].num_examples || 0
+    splits.value = filteredItem ? filteredItem.splits: null
+    subset.value = filteredItem ? filteredItem.config_name: null
+    split.value = splits.value[0]?.name || ''
+    Rows.value = splits.value[0]?.num_examples || 0
     currentPage.value = 1
     reloadRows()
   }
 
   const changeSplitName = (value) => {
     currentPage.value = 1
+    Rows.value = splits.value.find(item => item.name === value).num_examples
     reloadRows()
   }
 
