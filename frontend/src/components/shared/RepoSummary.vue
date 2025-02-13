@@ -67,6 +67,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     namespacePath: String,
@@ -76,6 +77,7 @@
     repoType: String
   })
 
+  const { t } = useI18n()
   const loading = ref(true)
   const readmeContent = ref('')
   const rawReadmeContent = ref('')
