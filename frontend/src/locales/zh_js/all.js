@@ -86,5 +86,8 @@ export const all = {
   private: "私有",
   loadMore:"加载更多",
   viewMore: "展示更多",
-  parquet: "数据集预览"
+  parquet: "数据集预览",
+  subset: "子数据集",
+  split: "用途",
+  rows: "行",
 }
