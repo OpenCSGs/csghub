@@ -2,7 +2,6 @@
   <div class="flex md:px-5 md:flex-col-reverse min-h-[calc(100vh-341px)]">
     <div class="max-w-[60%] sm:max-w-[100%] py-8 pr-6 sm:pr-0 break-words flex-1 md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
-      <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
       <ParquetViewer
         v-if="datasetInfo"
         :datasetInfo="datasetInfo"
