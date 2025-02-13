@@ -15,6 +15,11 @@ export const models = {
   modelIndustryTag: "Industry tags",
   tips:" Creating and Uploading Model Files",
   modelsUsedToTrain: "Model used to train",
+  index: {
+    allFilter: "all models",
+    inferenceFilter: "support inference",
+    finetuneFilter: "support finetune"
+  },
   newModel: {
     title: "Create a new model repository",
     titleDesc: "The repository contains all model files and revision history",

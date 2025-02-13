@@ -43,13 +43,13 @@
             </span>
           </span>
         </h3>
-        <div>
+        <div class="flex gap-2">
           <el-select
             v-if="onPremise === 'true'"
             v-model="sourceSelection"
             @change="filterChange"
             style="width: 150px"
-            class="mr-4 sm:!w-[122px] sm:mr-1"
+            class="sm:!w-[122px]"
             size="large">
             <el-option
               v-for="item in sourceOptions"
@@ -59,7 +59,7 @@
           </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-240px)] sm:mr-1"
+            class="!w-[320px] xl:!w-[260px] sm:!w-[calc(100%-240px)]"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
@@ -68,10 +68,23 @@
             v-model="sortSelection"
             @change="filterChange"
             style="width: 150px"
-            class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
+            class="sm:!w-[110px]"
             size="large">
             <el-option
               v-for="item in sortOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value" />
+          </el-select>
+          <el-select
+            v-if="repoType === 'model'"
+            v-model="filterSelection"
+            @change="filterChange"
+            style="width: 150px"
+            class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
+            size="large">
+            <el-option
+              v-for="item in filterOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value" />
@@ -139,6 +152,7 @@
   const { t } = useI18n()
   const nameFilterInput = ref('')
   const sortSelection = ref('trending')
+  const filterSelection = ref('all')
   const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
@@ -164,6 +178,21 @@
       value: 'most_favorite',
       label: t('all.mostFavorite')
     }
+  ]
+
+  const filterOptions = [
+    {
+      value: 'all',
+      label: t('models.index.allFilter')
+    },
+    {
+      value: 'inference',
+      label: t('models.index.inferenceFilter')
+    },
+    {
+      value: 'finetune',
+      label: t('models.index.finetuneFilter')
+    },
   ]
 
   const sourceOptions = [
@@ -208,6 +237,14 @@
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
 
+    if (filterSelection.value === 'inference') {
+      url = url + `&tag_category=runtime_framework&tag_name=vllm`
+    }
+
+    if (filterSelection.value === 'finetune') {
+      url = url + `&tag_category=runtime_framework&tag_name=swift`
+    }
+
     for (let [category, tags] of Object.entries(activeTags.value)) {
       tags.forEach((tag) => {
         url = url + `&tag_category=${category}&tag_name=${tag.toLowerCase()}`
@@ -218,9 +255,7 @@
     // url = url + `&framework_tag=${frameworkTag.value}`
     // url = url + `&language_tag=${languageTag.value}`
     // url = url + `&license_tag=${licenseTag.value}`
-    url =
-      url +
-      `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
+    url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }
 
