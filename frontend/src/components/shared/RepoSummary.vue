@@ -4,7 +4,7 @@
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
       <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
       <ParquetViewer
-        v-if="isParquetViewerAvailable"
+        v-if="datasetInfo"
         :datasetInfo="datasetInfo"
         :namespacePath="namespacePath" />
       <markdown-viewer
@@ -67,7 +67,6 @@
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { ElMessage } from 'element-plus'
-  import useLicenseStore from '../../stores/LicenseStore'
 
   const props = defineProps({
     namespacePath: String,
@@ -83,12 +82,6 @@
   const relations = ref({})
   const endpoint = ref({})
   const datasetInfo = ref(null)
-
-  const licenseStore = useLicenseStore()
-
-  const isParquetViewerAvailable = computed(() => {
-    return (isSaas() && datasetInfo.value) || (isEE() &&  licenseStore.isLicenseActive && datasetInfo.value)
-  })
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
