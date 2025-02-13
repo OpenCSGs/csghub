@@ -43,7 +43,7 @@
             </span>
           </span>
         </h3>
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-2">
           <el-select
             v-if="onPremise === 'true'"
             v-model="sourceSelection"
@@ -57,13 +57,6 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
-          <ElInput
-            v-model="nameFilterInput"
-            class="!w-[320px] xl:!w-[260px] sm:!w-[calc(100%-240px)]"
-            size="large"
-            :placeholder="$t(`${repoType}s.placeholder`)"
-            :prefix-icon="Search"
-            @change="filterChange" />
           <el-select
             v-model="sortSelection"
             @change="filterChange"
@@ -81,7 +74,7 @@
             v-model="filterSelection"
             @change="filterChange"
             style="width: 150px"
-            class="xl:mr-[20px] sm:!w-[110px] sm:mr-0"
+            class="sm:!w-[110px]"
             size="large">
             <el-option
               v-for="item in filterOptions"
@@ -89,6 +82,13 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
+          <ElInput
+            v-model="nameFilterInput"
+            class="!w-[320px] xl:!w-[260px] sm:!w-[calc(100%-240px)]"
+            size="large"
+            :placeholder="$t(`${repoType}s.placeholder`)"
+            :prefix-icon="Search"
+            @change="filterChange" />
         </div>
       </div>
       <div
