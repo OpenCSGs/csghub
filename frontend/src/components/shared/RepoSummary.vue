@@ -2,6 +2,11 @@
   <div class="flex md:px-5 md:flex-col-reverse min-h-[calc(100vh-341px)]">
     <div class="max-w-[60%] sm:max-w-[100%] py-8 pr-6 sm:pr-0 break-words flex-1 md:border-t-0">
       <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
+      <ParquetViewer v-if="datasetInfo" :datasetInfo="datasetInfo" :namespacePath="namespacePath" />
+      <ParquetViewer
+        v-if="isParquetViewerAvailable"
+        :datasetInfo="datasetInfo"
+        :namespacePath="namespacePath" />
       <markdown-viewer
         :content="readmeContent"
         :setDefaultText="true"
@@ -52,6 +57,7 @@
 <script setup>
   import { ref, onMounted, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
+  import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
   import PromptRelationsCard from '../prompts/PromptRelationsCard.vue';
   import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
@@ -61,6 +67,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { ElMessage } from 'element-plus'
+  import useLicenseStore from '../../stores/LicenseStore'
 
   const props = defineProps({
     namespacePath: String,
@@ -75,6 +82,13 @@
   const rawReadmeContent = ref('')
   const relations = ref({})
   const endpoint = ref({})
+  const datasetInfo = ref(null)
+
+  const licenseStore = useLicenseStore()
+
+  const isParquetViewerAvailable = computed(() => {
+    return (isSaas() && datasetInfo.value) || (isEE() &&  licenseStore.isLicenseActive && datasetInfo.value)
+  })
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
@@ -86,6 +100,20 @@
       resolveReadmeContent()
     }
     loading.value = false
+  }
+
+  const fetchCatalog = async () => {
+    if (props.repoType !== 'dataset') return
+
+    const { error, data } = await useFetchApi(
+      `datasets/${props.namespacePath}/dataviewer/catalog`
+    ).json()
+
+    if (data.value) {
+      datasetInfo.value = data.value.data.dataset_info
+    } else {
+      ElMessage.warning(error.value.msg || t('all.fetchError'))
+    }
   }
 
   const fetchRepoRelations = async () => {
@@ -121,6 +149,7 @@
 
   onMounted(() => {
     fetchData()
+    fetchCatalog()
     fetchRepoRelations()
     if (props.repoType == 'model') {
       fetchEndpoint()

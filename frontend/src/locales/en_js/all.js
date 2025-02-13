@@ -86,4 +86,5 @@ export const all = {
   private: "Private",
   loadMore: "Load more",
   viewMore: "View more",
+  parquet: "Dataset Preview"
 }
