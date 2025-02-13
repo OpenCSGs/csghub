@@ -48,6 +48,8 @@ jobs:
           ${{ secrets.ACR_REGISTRY }}/opencsg_public/csghub_portal
         tags: |
           type=ref,event=tag
+        flavor: |
+          latest=false
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
