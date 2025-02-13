@@ -12,11 +12,11 @@
     </div>
     <div class="pt-[32px] w-full">
       <div
-        :class="`flex xl:flex-col justify-between ${
+        :class="`flex ${repoType === 'model' ? 'flex-col' : 'xl:flex-col'} gap-3 justify-between ${
           repoType === 'space' ? 'xl:pl-[20px] md:pl-0' : ''
         }`">
         <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
-          <SvgIcon
+          <!-- <SvgIcon
             v-if="repoType === 'model'"
             name="models"
             width="18"
@@ -35,7 +35,7 @@
             v-if="repoType === 'space'"
             name="spaces"
             width="18"
-            height="18" />
+            height="18" /> -->
           <span class="capitalize">
             {{ $t(`${repoType}s.title`) }}
             <span class="text-gray-400 text-md italic">
@@ -43,7 +43,7 @@
             </span>
           </span>
         </h3>
-        <div class="xl:mt-[16px]">
+        <div>
           <el-select
             v-if="onPremise === 'true'"
             v-model="sourceSelection"
