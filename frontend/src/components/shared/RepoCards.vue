@@ -82,7 +82,6 @@
           <ElInput
             v-model="nameFilterInput"
             class="!w-[320px] xl:!w-full"
-            size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
             @change="filterChange" />

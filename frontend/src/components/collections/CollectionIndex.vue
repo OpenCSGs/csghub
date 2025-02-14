@@ -32,8 +32,7 @@
         </el-select>
         <ElInput
           v-model="nameFilterInput"
-          class="!w-[320px] xl:!w-full"
-          size="large"
+          class="!w-[320px] xl:!w-full h-10"
           :placeholder="$t(`collections.placeholder`)"
           :prefix-icon="Search"
           @change="filterChange"
