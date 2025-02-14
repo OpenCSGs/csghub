@@ -3,7 +3,7 @@
     class="flex flex-col relative gap-[24px] w-full page-responsive-width m-auto min-h-[calc(100vh-275px)] md:min-h-0 px-4"
   >
     <!-- header -->
-    <div class="flex w-full justify-between mb-[12px] md:flex-col">
+    <div class="flex w-full justify-between mb-[12px] md:flex-col gap-2">
       <div class="flex flex-col">
         <div class="flex gap-2 text-xl leading-[30px]">
           <SvgIcon
@@ -15,15 +15,7 @@
         </div>
         <div class="text-md leading-[24px] text-gray-500">{{ $t('collections.title') }}</div>
       </div>
-      <div class="xl:mt-[16px]">
-        <ElInput
-          v-model="nameFilterInput"
-          class="!w-[320px] mr-[20px] xl:!w-[260px] sm:!w-[calc(100%-136px)]"
-          size="large"
-          :placeholder="$t(`collections.placeholder`)"
-          :prefix-icon="Search"
-          @change="filterChange"
-        />
+      <div class="flex flex-wrap items-center gap-2">
         <el-select
           v-model="sortSelection"
           @change="filterChange"
@@ -38,6 +30,13 @@
             :value="item.value"
           />
         </el-select>
+        <ElInput
+          v-model="nameFilterInput"
+          class="!w-[320px] xl:!w-full h-10"
+          :placeholder="$t(`collections.placeholder`)"
+          :prefix-icon="Search"
+          @change="filterChange"
+        />
       </div>
     </div>
     <div

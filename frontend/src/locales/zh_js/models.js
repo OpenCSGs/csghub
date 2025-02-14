@@ -1,3 +1,5 @@
+import { finetune } from "./finetune";
+
 export const models = {
   title: "模型",
   placeholder: "模型名字",
@@ -12,6 +14,12 @@ export const models = {
   modelIndustryTag: "模型行业标签",
   modelsUsedToTrain: "关联模型",
   tips:"创建并上传模型文件",
+  index: {
+    allFilter: "所有模型",
+    inferenceFilter: "支持模型推理",
+    finetuneFilter: "支持模型微调",
+    evaluationFilter: "支持模型评测"
+  },
   newModel: {
     title: "新建模型仓库",
     titleDesc: "仓库包含所有的模型文件和修订的历史记录",
