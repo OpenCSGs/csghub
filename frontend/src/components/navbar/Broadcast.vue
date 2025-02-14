@@ -60,7 +60,7 @@
     } else {
       showBanner.value.initialized = false
       showBanner.value.show = false
-      ElMessage.warning(error.value.msg)
+      console.log(error.value?.msg || "no active broadcast")
     }
   }
 
