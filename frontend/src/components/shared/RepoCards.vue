@@ -49,7 +49,6 @@
             v-model="sourceSelection"
             @change="filterChange"
             style="width: 150px"
-            class="sm:!w-[122px]"
             size="large">
             <el-option
               v-for="item in sourceOptions"
@@ -61,7 +60,6 @@
             v-model="sortSelection"
             @change="filterChange"
             style="width: 150px"
-            class="sm:!w-[110px]"
             size="large">
             <el-option
               v-for="item in sortOptions"
@@ -74,7 +72,6 @@
             v-model="filterSelection"
             @change="filterChange"
             style="width: 150px"
-            class="sm:!w-[110px]"
             size="large">
             <el-option
               v-for="item in filterOptions"
@@ -84,7 +81,7 @@
           </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] xl:!w-[260px] sm:!w-[calc(100%-240px)]"
+            class="!w-[320px] xl:!w-full"
             size="large"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
