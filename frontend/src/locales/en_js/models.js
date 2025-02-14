@@ -1,4 +1,5 @@
 import { emptyProps } from "element-plus";
+import { evaluation } from "./evaluation";
 
 export const models = {
   title: "Models",
@@ -18,7 +19,8 @@ export const models = {
   index: {
     allFilter: "all models",
     inferenceFilter: "support inference",
-    finetuneFilter: "support finetune"
+    finetuneFilter: "support finetune",
+    evaluationFilter: "support evalution"
   },
   newModel: {
     title: "Create a new model repository",

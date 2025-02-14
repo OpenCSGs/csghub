@@ -190,6 +190,10 @@
       value: 'finetune',
       label: t('models.index.finetuneFilter')
     },
+    {
+      value: 'evaluation',
+      label: t('models.index.evaluationFilter')
+    },
   ]
 
   const sourceOptions = [
@@ -240,6 +244,10 @@
 
     if (filterSelection.value === 'finetune') {
       url = url + `&tag_category=runtime_framework&tag_name=swift`
+    }
+
+    if (filterSelection.value === 'evaluation') {
+      url = url + `&tag_category=runtime_framework&tag_name=opencompass`
     }
 
     for (let [category, tags] of Object.entries(activeTags.value)) {

@@ -17,7 +17,8 @@ export const models = {
   index: {
     allFilter: "所有模型",
     inferenceFilter: "支持模型推理",
-    finetuneFilter: "支持模型微调"
+    finetuneFilter: "支持模型微调",
+    evaluationFilter: "支持模型评测"
   },
   newModel: {
     title: "新建模型仓库",
