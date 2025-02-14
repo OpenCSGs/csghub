@@ -20,7 +20,7 @@ export const models = {
     allFilter: "all models",
     inferenceFilter: "support inference",
     finetuneFilter: "support finetune",
-    evaluationFilter: "support evalution"
+    evaluationFilter: "support evaluation"
   },
   newModel: {
     title: "Create a new model repository",
