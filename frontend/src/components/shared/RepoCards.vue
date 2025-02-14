@@ -242,7 +242,7 @@
     }
 
     if (filterSelection.value === 'finetune') {
-      url = url + `&tag_category=runtime_framework&tag_name=swift`
+      url = url + `&tag_category=runtime_framework&tag_name=llama-factory`
     }
 
     if (filterSelection.value === 'evaluation') {
