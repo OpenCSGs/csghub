@@ -114,7 +114,7 @@
               v-model="dataForm.visibility"
               :publicDesc="t('collections.newCollection.publicDesc')"
               :privateDesc="t('collections.newCollection.privateDesc')"
-            /> 
+            />
           </el-form-item>
         </div>
       </el-form>
@@ -235,7 +235,6 @@
       hasCreateCollection.value = false
       ElMessage.success(t('collections.newCollection.createSuccess'))
       toCollectionDetail(data.value.data.id)
-      return data.value
     }
   }
 
