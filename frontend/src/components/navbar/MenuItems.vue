@@ -99,7 +99,7 @@
 
   <template v-if="!props.isLoggedInBoolean">
     <hr />
-    <div class="hidden md:block px-4 py-6 flex flex-col gap-3">
+    <div class="hidden md:flex px-4 py-6 flex-col gap-3">
       <a
         href="/signup"
         class="btn btn-primary btn-lg">
@@ -154,13 +154,13 @@
       title: t('collections.collection'),
       index: '/collections',
       class: menuItemClass,
-      style: 'border:none',
+      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('prompts.promptLibrary'),
       index: '/prompts/library',
       class: menuItemClass,
-      style: 'border:none',
+      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
     }
   ]
 
@@ -227,7 +227,10 @@
   }
   :deep(.popper-submenu .el-menu .el-menu-item) {
     font-size: 16px;
-    height: auto;
+    height: 46px;
     line-height: 24px;
+  }
+  :deep(.el-menu-item):hover {
+    background-color: var(--Gray-50) !important;
   }
 </style>
