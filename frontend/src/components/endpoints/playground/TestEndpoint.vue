@@ -34,7 +34,7 @@
         inputStyle="outline: none"
         @focus="handleFocus"
         @blur="handleBlur"
-        @keydown.enter="handleEnterPress"
+        @keydown.enter="handleSendMessage"
         @compositionend="compositionEnd"
         @compositionstart="compositionStart"
       ></el-input>
@@ -106,13 +106,6 @@
   const compositionStart = (event) => {
     event.preventDefault()
     compositionInput.value = true
-  }
-
-  const handleEnterPress = (event) => {
-    event.preventDefault()
-    if (compositionInput.value) return
-
-    handleSendMessage()
   }
 
   const typewriter = new Typewriter((str) => {
