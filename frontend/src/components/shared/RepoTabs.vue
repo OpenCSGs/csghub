@@ -10,14 +10,16 @@
         :userName="userName"
         :namespacePath="path"
         :repo="repoDetail"
-        :enableEndpoint="repoDetail.enableInference"
-        :enableFinetune="repoDetail.enableFinetune"
-        :enableEvaluation="repoDetail.enableEvaluation"
+        :enableEndpoint="repoDetail.enable_inference"
+        :enableFinetune="repoDetail.enable_finetune"
+        :enableEvaluation="repoDetail.enable_evaluation"
+        :syncStatus="repoDetail.sync_status"
       />
     </div>
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
+      :syncStatus="repoDetail.sync_status"
       :repoType="repoType"
       :sdk="sdk"
       :repo="repoDetail"

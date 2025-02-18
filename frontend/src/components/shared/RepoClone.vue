@@ -73,7 +73,7 @@
 
     <!-- repo download clone button -->
     <CsgButton
-      v-if="!!httpCloneUrl"
+      v-if="!!httpCloneUrl && syncStatus !== 'pending'"
       class="btn btn-primary btn-sm modelBtn"
       :name="$t(downloadButtonKey)"
       svgName="download"
@@ -238,6 +238,7 @@
     enableFinetune: Boolean,
     enableEvaluation: Boolean,
     showAddToCollections: Boolean,
+    syncStatus: String
   })
 
   const { actionLimited, isLoggedIn } = storeToRefs(userStore)
