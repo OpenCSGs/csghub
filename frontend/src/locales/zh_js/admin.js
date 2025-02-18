@@ -2,7 +2,7 @@ export const admin = {
   baseConfigTitle: '基础配置',
   menuSystem: '系统',
   menuAccount: '账号',
-  menuHub: 'Hub',
+  menuHub: '资产管理',
   createSuccess: '创建成功',
   updateSuccess: '更新成功',
   operations: '操作',
