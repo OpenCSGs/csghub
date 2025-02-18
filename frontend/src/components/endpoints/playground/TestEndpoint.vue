@@ -34,7 +34,7 @@
         inputStyle="outline: none"
         @focus="handleFocus"
         @blur="handleBlur"
-        @keydown.enter="handleEnterPress"
+        @keydown.enter="handleSendMessage"
         @compositionend="compositionEnd"
         @compositionstart="compositionStart"
       ></el-input>
@@ -58,8 +58,8 @@
       </div>
     </div>
 
-    <div class="flex mt-[8px]"> 
-      <SvgIcon name="exclamation_point" class="place-self-start" /> 
+    <div class="flex mt-[8px]">
+      <SvgIcon name="exclamation_point" class="place-self-start" />
       <p class="ml-[4px] text-xs leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
     </div>
   </div>
@@ -72,14 +72,17 @@
   import { useCookies } from 'vue3-cookies'
   import { ElMessage } from 'element-plus'
   import MarkdownViewer from '../../shared/viewers/MarkdownViewer.vue'
-
-  const { cookies } = useCookies()
+  import useUserStore from '@/stores/UserStore'
+  import { ToLoginPage } from '@/packs/utils'
 
   const props = defineProps({
     form: Object,
     appEndpoint: String,
     modelId: String
   })
+
+  const { cookies } = useCookies()
+  const userStore = useUserStore()
 
   const anwserContent = ref('')
   const message = ref('')
@@ -105,13 +108,6 @@
     compositionInput.value = true
   }
 
-  const handleEnterPress = (event) => {
-    event.preventDefault()
-    if (compositionInput.value) return
-
-    handleSendMessage()
-  }
-
   const typewriter = new Typewriter((str) => {
     if (str) {
       anwserContent.value += str
@@ -121,6 +117,8 @@
   const resetAnwserContent = () => {
     anwserContent.value = ''
   }
+
+  const isLoggedIn = computed(() => userStore.isLoggedIn)
 
   const canSendMessage = computed(() => {
     return !!message.value && !loading.value
@@ -149,6 +147,10 @@
   })
 
   const handleSendMessage = () => {
+    if (!isLoggedIn.value) {
+      ToLoginPage()
+    }
+
     if (!canSendMessage.value) return
 
     loading.value = true
