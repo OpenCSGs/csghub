@@ -10,7 +10,7 @@ setup: setup-go setup-frontend
 setup-go:
 	@echo "Setting up Go environment..."
 	go mod tidy
-	go install github.com/cosmtrek/air@latest
+	go install github.com/air-verse/air@latest
 
 # setup frontend environment
 setup-frontend:
