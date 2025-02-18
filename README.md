@@ -36,6 +36,8 @@ To help users get up to speed with CSGHub, we have created a demo video that hig
 
 ### Quick Start
 
+- For local installation, please refer to the [CSGHub Installer](https://github.com/OpenCSGs/csghub-installer/) project. We offer several installation options including [Helm](https://github.com/OpenCSGs/csghub-installer/blob/main/helm/README.md), [Docker Compose](https://github.com/OpenCSGs/csghub-installer/blob/main/helm/README.md](https://github.com/OpenCSGs/csghub-installer/blob/main/docker/compose/README.md) and [Docker All-in-One](https://github.com/OpenCSGs/csghub-installer/blob/main/docker/README.md). Please choose the option that best meets your requirements.
+
 - For those looking to quickly explore, experiment with CSGHub's free SaaS version on the [OpenCSG website](https://opencsg.com). Refer to this [brief quick start guide](./docs/csghub_saas_en.md) to handle LLMs/datasets and deploy LLM applications with CSGHub SaaS interface.
 For more information, please refer to the [OpenCSG Documentation Center](https://opencsg.com/docs/en/intro).
 
