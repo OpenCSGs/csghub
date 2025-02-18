@@ -20,6 +20,7 @@
     "diff": "^6.0.0-beta",
     "diff2html": "^3.4.48",
     "element-plus": "^2.8.0",
+    "flush-promises": "^1.0.2",
     "highlight.js": "^11.10.0",
     "jwt-decode": "^4.0.0",
     "less": "^4.2.0",
@@ -37,7 +38,8 @@
     "vue-codemirror": "^6.1.1",
     "vue-i18n": "9",
     "vue-router": "4",
-    "vue3-cookies": "^1.0.6"
+    "vue3-cookies": "^1.0.6",
+    "wait-for-expect": "^3.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
