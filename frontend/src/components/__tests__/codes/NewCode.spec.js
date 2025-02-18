@@ -1,8 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import waitFor from 'wait-for-expect'
 import NewCode from '@/components/codes/NewCode.vue'
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const createWrapper = (props) => {
   return mount(NewCode, {
@@ -21,7 +20,6 @@ const createWrapper = (props) => {
 const triggerFormButton = async (wrapper) => {
   const button = wrapper.findComponent({ name: 'CsgButton' })
   await button.trigger('click')
-  await delay(300)
   await wrapper.vm.$nextTick()
 }
 
@@ -56,26 +54,37 @@ describe('NewCode', () => {
     it('validates required fields', async () => {
       const wrapper = createWrapper()
       await triggerFormButton(wrapper)
-      const formErrors = wrapper.findAll('.el-form-item__error')
-      expect(formErrors.length).toBeGreaterThan(0)
+      await waitFor(() => {
+        expect(wrapper.find('.el-form-item__error').text()).toBe( 'Please input Code Name')
+      })
     })
 
-    it('validates code name length', async () => {
+    it('with invalid name', async () => {
       const wrapper = createWrapper()
       wrapper.vm.dataForm.name = 'a' // Invalid length
       await triggerFormButton(wrapper)
-      expect(wrapper.find('.el-form-item__error').exists()).toBe(true)
-
-      wrapper.vm.dataForm.name = 'valid-code' // Valid length
+      await waitFor(() => {
+        expect(wrapper.find('.el-form-item__error').text()).toBe( 'The length is within the range of 2 to 64 characters')
+      })
+    })
+    it('with valid name', async () => {
+      const wrapper = createWrapper()
+      wrapper.vm.dataForm.name = 'valid-code'
       await triggerFormButton(wrapper)
-      expect(wrapper.find('.el-form-item__error').exists()).toBe(false)
+      const isValid = await wrapper.vm.$refs.dataFormRef
+        .validate()
+        .catch(() => false)
+      expect(isValid).toBe(true)
     })
 
     it('validates owner selection', async () => {
       const wrapper = createWrapper()
-      wrapper.vm.dataForm.owner = '' // Invalid owner
+      wrapper.vm.dataForm.owner = ''
       await triggerFormButton(wrapper)
-      expect(wrapper.find('.el-form-item__error').exists()).toBe(true)
+
+      await waitFor(() => {
+        expect(wrapper.find('.el-form-item__error').text()).toBe('Please select Owner')
+      })
     })
   })
 
@@ -92,8 +101,9 @@ describe('NewCode', () => {
       }
 
       await triggerFormButton(wrapper)
-      await new Promise((resolve) => setTimeout(resolve, 300))
-      expect(window.location.href).toBe('/codes/testuser/testcode')
+      await waitFor(() => {
+        expect(window.location.href).toBe('/codes/testuser/testcode');
+      })
     })
   })
 })
