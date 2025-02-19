@@ -47,7 +47,13 @@ func (i *TokenHandlerImpl) RefreshToken(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("user_token", r.Data.Token, 3600*24*7, "/", "", false, false)
+	config, err := config.LoadConfig()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return 
+	}
+
+	c.SetCookie("user_token", r.Data.Token, 3600*24*7, "/", "", config.EnableHttps, false)
 
 	c.JSON(http.StatusOK, gin.H{"jwt_token": r.Data.Token})
 }
