@@ -15,10 +15,13 @@ import { Setting, User, Connection } from "@element-plus/icons-vue";
 import { useCookies } from 'vue3-cookies'
 
 const { cookies } = useCookies()
+const defaultLanguage = ['zh', 'zh-cn', 'zh-CN', 'zh-tw'].includes(navigator.language) ? 'zh' : 'en';
+
 import { admin as admin_en } from "../../../locales/en_js/admin.js"
 import { admin as admin_zh } from "../../../locales/zh_js/admin.js"
 
-const adminLocale = cookies.get('locale') === 'en' ? admin_en : admin_zh
+const locale = cookies.get('locale') || defaultLanguage
+const adminLocale = locale === 'en' ? admin_en : admin_zh
 
 // parent menu name
 export const PARENT_NAME = {
