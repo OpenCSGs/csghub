@@ -485,6 +485,7 @@
     if (data.value.data) {
       availableQuantizations.value = data.value.data
       rules.value.quantization[0].required = true
+      await nextTick()
     } else {
       console.log(error.value.msg)
     }
