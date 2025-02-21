@@ -17,6 +17,7 @@
         ref="dataFormRef"
         :model="dataForm"
         :rules="rules"
+        :validate-on-rule-change="false"
         class="w-full flex flex-col gap-[14px]"
         label-position="top">
         <div class="w-full flex md:flex-col gap-[16px] items-center">
@@ -218,7 +219,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed, nextTick } from 'vue'
+  import { ref, onMounted, inject, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
@@ -485,7 +486,6 @@
     if (data.value.data) {
       availableQuantizations.value = data.value.data
       rules.value.quantization[0].required = true
-      await nextTick()
     } else {
       console.log(error.value.msg)
     }
