@@ -145,7 +145,7 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -154,6 +154,7 @@
 
   const { cookies } = useCookies()
   const { t } = useI18n()
+  const currentUsername = ref('')
   const userStore = useUserStore()
   const profileData = ref(storeToRefs(userStore))
 
@@ -213,11 +214,10 @@
   }
 
   const updateProfile = async (config={}) => {
-    const currentUsername = userStore.username
-    const profileUpdateEndpoint = `/user/${currentUsername}`
+    const profileUpdateEndpoint = `/user/${currentUsername.value}`
     let params = {
       avatar: profileData.value.avatar,
-      username: profileData.value.username,
+      username: currentUsername.value,
       name: profileData.value.nickname,
       email: (profileData.value.email || "").trim(),
       phone: profileData.value.phone,
@@ -270,4 +270,8 @@
   const handleInputChange = () => {
     emit('updateHasSave', false)
   }
+
+  watch(() => userStore.username, () => {
+    currentUsername.value = userStore.username
+  }, { once: true })
 </script>
