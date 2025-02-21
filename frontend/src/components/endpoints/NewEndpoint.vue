@@ -482,11 +482,9 @@
   const fetchQuantizations = async () => {
     const quantizationEndpoint = `/models/${dataForm.value.model_id}/quantizations`
     const { data, error } = await useFetchApi(quantizationEndpoint).json()
-    if (data.value) {
+    if (data.value.data) {
       availableQuantizations.value = data.value.data
-      if (data.value.data.length > 0) {
-        rules.value.quantization.required = true
-      }
+      rules.value.quantization.required = true
     } else {
       console.log(error.value.msg)
     }
