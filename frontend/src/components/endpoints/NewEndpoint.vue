@@ -61,7 +61,7 @@
               v-model="dataForm.model_id"
               :fetch-suggestions="fetchModels"
               :placeholder="t('all.pleaseInput', { value: t('endpoints.new.modelId') })"
-              @select="updateRuntimeFramework"
+              @select="loadRequiredData"
             />
           </el-form-item>
         </div>
@@ -153,6 +153,7 @@
           </p>
         </el-form-item>
 
+        <!-- runtime framework -->
         <el-form-item
           :label="t('endpoints.new.framework')"
           class="w-full"
@@ -169,6 +170,26 @@
               :key="item.id"
               :label="item.frame_name"
               :value="item.id" />
+          </el-select>
+        </el-form-item>
+
+        <!-- quantization -->
+        <el-form-item
+          :label="t('endpoints.new.quantization')"
+          class="w-full"
+          prop="quantization">
+          <el-select
+            v-model="dataForm.quantization"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.quantization') })
+            "
+            size="large"
+            style="width: 100%">
+            <el-option
+              v-for="item in availableQuantizations"
+              :key="item.name"
+              :label="item.name"
+              :value="item.name" />
           </el-select>
         </el-form-item>
 
@@ -221,6 +242,7 @@
   const endpointClusters = ref([])
   const endpointResources = ref([])
   const loading = ref(false)
+  const availableQuantizations = ref([])
 
   const replicaRanges = [1, 2, 3, 4, 5]
 
@@ -304,6 +326,15 @@
         }),
         trigger: 'blur'
       }
+    ],
+    quantization: [
+      {
+        required: true,
+        message: t('all.pleaseSelect', {
+          value: t('endpoints.new.quantization')
+        }),
+        trigger: 'blur'
+      }
     ]
   })
 
@@ -353,6 +384,11 @@
       })
       cb(paths)
     }
+  }
+
+  const loadRequiredData = () => {
+    updateRuntimeFramework()
+    fetchQuantizations()
   }
 
   const updateRuntimeFramework = async () => {
@@ -434,6 +470,16 @@
         message: t('endpoints.new.createFail') + `: ${error.value.msg}`,
         type: 'error'
       })
+    }
+  }
+
+  const fetchQuantizations = async () => {
+    const quantizationEndpoint = `/models/${dataForm.value.model_id}/quantizations`
+    const { data, error } = await useFetchApi(quantizationEndpoint).json()
+    if (data.value) {
+      availableQuantizations.value = data.value.data
+    } else {
+      console.log(error.value.msg)
     }
   }
 
