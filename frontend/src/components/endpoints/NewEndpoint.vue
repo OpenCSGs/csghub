@@ -17,6 +17,7 @@
         ref="dataFormRef"
         :model="dataForm"
         :rules="rules"
+        :validate-on-rule-change="false"
         class="w-full flex flex-col gap-[14px]"
         label-position="top">
         <div class="w-full flex md:flex-col gap-[16px] items-center">
@@ -175,6 +176,7 @@
 
         <!-- quantization -->
         <el-form-item
+          v-if="availableQuantizations.length > 0"
           :label="t('endpoints.new.quantization')"
           class="w-full"
           prop="quantization">
@@ -329,7 +331,7 @@
     ],
     quantization: [
       {
-        required: true,
+        required: false,
         message: t('all.pleaseSelect', {
           value: t('endpoints.new.quantization')
         }),
@@ -450,9 +452,13 @@
       max_replica: dataForm.value.max_replica,
       runtime_framework_id: dataForm.value.endpoint_framework,
       secure_level: dataForm.value.visibility === 'public' ? 1: 2,
-      cluster_id: dataForm.value.endpoint_cluster,
-      entrypoint: dataForm.value.quantization
+      cluster_id: dataForm.value.endpoint_cluster
     }
+
+    if (availableQuantizations.value.length > 0) {
+      params.entrypoint = dataForm.value.quantization
+    }
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
@@ -477,8 +483,9 @@
   const fetchQuantizations = async () => {
     const quantizationEndpoint = `/models/${dataForm.value.model_id}/quantizations`
     const { data, error } = await useFetchApi(quantizationEndpoint).json()
-    if (data.value) {
+    if (data.value.data) {
       availableQuantizations.value = data.value.data
+      rules.value.quantization[0].required = true
     } else {
       console.log(error.value.msg)
     }
