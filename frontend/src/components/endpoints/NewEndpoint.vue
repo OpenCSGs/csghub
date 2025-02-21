@@ -327,11 +327,16 @@
         }),
         trigger: 'blur'
       }
+    ],
+    quantization: [
+      {
+        required: false,
+        message: t('all.pleaseSelect', {
+          value: t('endpoints.new.quantization')
+        }),
+        trigger: 'blur'
+      }
     ]
-  })
-
-  rules.value.quantization = computed(() => {
-    return availableQuantizations.value.length > 0 ? [{ required: true, message: t('all.pleaseSelect', { value: t('endpoints.new.quantization') }), trigger: 'blur' }] : []
   })
 
   const fetchResources = async () => {
@@ -479,6 +484,7 @@
     const { data, error } = await useFetchApi(quantizationEndpoint).json()
     if (data.value.data) {
       availableQuantizations.value = data.value.data
+      rules.value.quantization[0].required = true
     } else {
       console.log(error.value.msg)
     }
