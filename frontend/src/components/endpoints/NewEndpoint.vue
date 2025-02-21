@@ -175,6 +175,7 @@
 
         <!-- quantization -->
         <el-form-item
+          v-if="availableQuantizations.length > 0"
           :label="t('endpoints.new.quantization')"
           class="w-full"
           prop="quantization">
@@ -329,7 +330,7 @@
     ],
     quantization: [
       {
-        required: true,
+        required: false,
         message: t('all.pleaseSelect', {
           value: t('endpoints.new.quantization')
         }),
@@ -450,9 +451,13 @@
       max_replica: dataForm.value.max_replica,
       runtime_framework_id: dataForm.value.endpoint_framework,
       secure_level: dataForm.value.visibility === 'public' ? 1: 2,
-      cluster_id: dataForm.value.endpoint_cluster,
-      entrypoint: dataForm.value.quantization
+      cluster_id: dataForm.value.endpoint_cluster
     }
+
+    if (availableQuantizations.length > 0) {
+      params.entrypoint = dataForm.value.quantization
+    }
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
@@ -479,6 +484,9 @@
     const { data, error } = await useFetchApi(quantizationEndpoint).json()
     if (data.value) {
       availableQuantizations.value = data.value.data
+      if (data.value.data.length > 0) {
+        rules.value.quantization.required = true
+      }
     } else {
       console.log(error.value.msg)
     }
