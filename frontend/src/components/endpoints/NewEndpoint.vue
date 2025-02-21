@@ -454,7 +454,7 @@
       cluster_id: dataForm.value.endpoint_cluster
     }
 
-    if (availableQuantizations.length > 0) {
+    if (availableQuantizations.value.length > 0) {
       params.entrypoint = dataForm.value.quantization
     }
 
