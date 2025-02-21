@@ -484,7 +484,7 @@
     const { data, error } = await useFetchApi(quantizationEndpoint).json()
     if (data.value.data) {
       availableQuantizations.value = data.value.data
-      rules.value.quantization.required = true
+      rules.value.quantization[0].required = true
     } else {
       console.log(error.value.msg)
     }
