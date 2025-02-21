@@ -33,6 +33,7 @@ export const endpoints = {
     tip: "应用于专属实例，创建后不可更改",
     createSuccess: "专属实例创建成功",
     createFail: "专属实例创建失败",
+    quantization: "量化"
   },
   settings: {
     stop: "暂停",
