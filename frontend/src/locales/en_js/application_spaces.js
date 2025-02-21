@@ -39,6 +39,8 @@ export const application_spaces = {
   },
   errorPage: {
     log: 'Logs',
+    logDesc: 'Keep a maximum of 100,000 logs within 7 days',
+    download: 'Download logs',
     build: 'Build',
     container: 'Container',
     errorAlert: 'Application Space deploy failed',

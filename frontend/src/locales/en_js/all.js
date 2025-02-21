@@ -90,4 +90,6 @@ export const all = {
   subset: "Subset",
   split: "Split",
   rows: "rows",
+  deployLoadingText:'Deploying, please wait a moment',
+  buildLoadingText:'Building, please wait a moment',
 }

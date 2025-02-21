@@ -61,7 +61,7 @@
               </div>
               <div class="felx flex-col gap-1">
                 <p class="font-[600] text-md text-black">{{ $t('application_spaces.errorPage.log') }}</p>
-                <div class="text-gray-600 text-sm font-light">最多保存7日内10万条日志</div>
+                <div class="text-gray-600 text-sm font-light">{{ $t('application_spaces.errorPage.logDesc') }}</div>
               </div>
             </div>
             <div class="flex gap-[8px]">
@@ -71,17 +71,22 @@
               <el-icon @click="close"><CloseBold /></el-icon>
             </div>
           </div>
-          <div class="flex gap-4 items-center">
-            <span class="text-sm text-gray-500 cursor-pointer"
-                  data-value="build"
-                  @click="toggleActiveTab"
-                  :class="isBuildLogTab ? 'active-tab' : ''"
-            >{{ $t('application_spaces.errorPage.build') }}</span>
-            <span class="text-sm text-gray-500 cursor-pointer"
-                  data-value="container"
-                  @click="toggleActiveTab"
-                  :class="isBuildLogTab ? '' : 'active-tab'"
-            >{{ $t('application_spaces.errorPage.container') }}</span>
+          <div class="flex justify-between">
+            <div class="flex gap-4 items-center">
+              <span class="text-sm text-gray-500 cursor-pointer"
+                    data-value="build"
+                    @click="toggleActiveTab"
+                    :class="isBuildLogTab ? 'active-tab' : ''"
+              >{{ $t('application_spaces.errorPage.build') }}</span>
+              <span class="text-sm text-gray-500 cursor-pointer"
+                    data-value="container"
+                    @click="toggleActiveTab"
+                    :class="isBuildLogTab ? '' : 'active-tab'"
+              >{{ $t('application_spaces.errorPage.container') }}</span>
+            </div>
+            <div class="cursor-pointer text-xs text-brand-700 font-normal" @click="downloadLog">
+              {{ $t('application_spaces.errorPage.download') }}
+            </div>
           </div>
         </div>
       </template>
@@ -111,6 +116,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
+  import Loading from '../loading/loading.vue'
 
   const props = defineProps({
     repoType: String,
@@ -290,6 +296,24 @@
     }
   }
 
+  const downloadLog = () => {
+    const targetDiv = isBuildLogTab.value? buildLogDiv : containerLogDiv;
+    if (!targetDiv.value) return;
+
+    const logElements = targetDiv.value.querySelectorAll('p');
+    let logContent = '';
+    logElements.forEach((element) => {
+      logContent += element.textContent + '\n';
+    });
+
+    const blob = new Blob([logContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = isBuildLogTab.value? 'build_log.txt' : 'container_log.txt';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   const syncSpaceStatus = () => {
     fetchEventSource(`${csghubServer}/api/v1/spaces/${props.namespace}/${props.repoName}/status`, {
       openWhenHidden: true,
@@ -351,7 +375,7 @@
   }
 
   :deep(.el-drawer__header) {
-    padding: 10px 10px 24px;
+    padding: 24px;
     margin-bottom: 0;
   }
 

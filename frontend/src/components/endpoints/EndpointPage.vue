@@ -68,13 +68,16 @@
     :private="private"
     :task="task"
   />
+  <div v-else-if="['Building','Deploying','Startup'].includes(appStatus)">
+     <Loading :loadingText="$t('all.deployLoadingText')" />
+  </div>
 </template>
-
 <script setup>
   import { watch, ref } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import EndpointPlayground from './EndpointPlayground.vue'
   import { ElMessage } from 'element-plus'
+  import Loading from '../loading/loading.vue'
 
   const props = defineProps({
     appEndpoint: String,
@@ -113,3 +116,26 @@
     fetchResources()
   })
 </script>
+<style scoped>
+.loading-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.loading-spinner {
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3250BD;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

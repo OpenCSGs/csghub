@@ -90,4 +90,6 @@ export const all = {
   subset: "子数据集",
   split: "用途",
   rows: "行",
+  deployLoadingText:'部署中,请稍后',
+  buildLoadingText:'构建中,请稍后',
 }
