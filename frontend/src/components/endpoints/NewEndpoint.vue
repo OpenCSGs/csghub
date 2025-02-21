@@ -218,7 +218,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, nextTick } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
