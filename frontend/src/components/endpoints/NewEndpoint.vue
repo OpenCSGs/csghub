@@ -450,7 +450,8 @@
       max_replica: dataForm.value.max_replica,
       runtime_framework_id: dataForm.value.endpoint_framework,
       secure_level: dataForm.value.visibility === 'public' ? 1: 2,
-      cluster_id: dataForm.value.endpoint_cluster
+      cluster_id: dataForm.value.endpoint_cluster,
+      entrypoint: dataForm.value.quantization
     }
     const options = {
       headers: { 'Content-Type': 'application/json' },
@@ -485,6 +486,9 @@
 
   onMounted(() => {
     fetchClusters()
+    if (dataForm.value.model_id) {
+      fetchQuantizations()
+    }
   })
 </script>
 
