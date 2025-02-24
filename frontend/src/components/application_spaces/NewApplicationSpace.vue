@@ -225,11 +225,9 @@
               <p class="font-semibold text-md">Nginx</p>
             </el-radio>
             <el-radio
-              v-if="!userStore.isAdmin"
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
               label="docker"
-              disabled
               border
             >
               <SvgIcon
@@ -237,7 +235,7 @@
                 class="m-auto"
               />
               <p class="font-semibold text-md">Docker</p>
-              <p class="text-xs">11 templates</p>
+              <!-- <p class="text-xs">11 templates</p> -->
             </el-radio>
             <el-radio
               disabled
