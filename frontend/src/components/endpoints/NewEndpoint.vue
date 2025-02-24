@@ -189,9 +189,9 @@
             style="width: 100%">
             <el-option
               v-for="item in availableQuantizations"
-              :key="item.name"
-              :label="item.name"
-              :value="item.name" />
+              :key="item.path"
+              :label="item.path"
+              :value="item.path" />
           </el-select>
         </el-form-item>
 
