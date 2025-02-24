@@ -294,13 +294,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <div class="flex flex-wrap">
-            <div v-for="template in dockerTemplates"
-              class="border  hover:border-brand-600 peer-checked:border-brand-600 cursor-pointer py-2.5 rounded-lg w-[150px] font-medium flex justify-center items-center">
-              {{ template.name }}
-            </div>
-          </div> -->
         </div>
         <el-form-item
           :label="t('endpoints.new.cluster')"
