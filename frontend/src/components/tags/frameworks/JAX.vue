@@ -28,7 +28,7 @@
   const emit = defineEmits(['setActiveFrameworkTag'])
 
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'framework', 'JAX')
+    emit('setActiveFrameworkTag', 'framework', 'jax')
   }
 
   const setTagColor = () => {

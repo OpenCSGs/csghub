@@ -29,7 +29,7 @@
   const emit = defineEmits(['setActiveFrameworkTag'])
 
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'framework', 'PaddlePaddle')
+    emit('setActiveFrameworkTag', 'framework', 'paddlepaddle')
   }
   const setTagColor = () => {
     if (props.active) {
