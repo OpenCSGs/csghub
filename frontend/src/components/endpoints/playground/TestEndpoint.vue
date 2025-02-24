@@ -149,6 +149,7 @@
   const handleSendMessage = () => {
     if (!isLoggedIn.value) {
       ToLoginPage()
+      return
     }
 
     if (!canSendMessage.value) return
