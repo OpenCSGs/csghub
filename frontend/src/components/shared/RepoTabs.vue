@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="absolute top-0 right-0 md:relative md:right-0 flex gap-4">
+    <div class="absolute -top-1.5 right-0 xl:relative md:right-0 flex gap-4">
       <RepoClone
         v-if="repoType !== 'endpoint'"
         :showAddToCollections="showAddToCollections"
