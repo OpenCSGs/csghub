@@ -579,6 +579,13 @@
       cluster_id: dataForm.value.space_cluster,
       private: dataForm.value.visibility === 'private'
     }
+
+    if (dataForm.value.sdk === 'docker') {
+      params.template = dockerTemplate.value
+      params.variables = JSON.stringify(dockerVariables.value)
+      params.secrets = JSON.stringify(dockerSecrets.value)
+    }
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
