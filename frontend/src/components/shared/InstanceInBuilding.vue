@@ -10,7 +10,7 @@
 const props = defineProps({
   loadingText: {
     type: String,
-    default: 'Loading...' // 如果没有传入 loadingText，使用默认值
+    default: 'Loading...'
   }
 });
 </script>

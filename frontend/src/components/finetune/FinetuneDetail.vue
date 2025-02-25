@@ -69,7 +69,7 @@
                 </p>
               </div>
             </div>
-            <Loading
+            <InstanceInBuilding
               v-if="['Building', 'Deploying', 'Startup'].includes(appStatus)"
               :loadingText="$t('all.deployLoadingText')"
             />
@@ -116,7 +116,7 @@
   import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
   import { ElMessage } from 'element-plus'
-  import Loading from '../loading/loading.vue'
+  import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
 
   const props = defineProps({
     namespace: String,

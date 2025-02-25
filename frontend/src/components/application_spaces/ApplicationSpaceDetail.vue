@@ -118,7 +118,6 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
-  import Loading from '../loading/loading.vue'
 
   const props = defineProps({
     repoType: String,

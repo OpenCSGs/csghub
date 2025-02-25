@@ -14,7 +14,7 @@
         <svg-icon name="admin-menu-model" class="w-4 h-4 mr-2" />
         {{ $t('endpoints.detail.modelId') }}
       </p>
-      <a 
+      <a
         :href="`/models/${modelId}`"
         class="w-[390px] lg:w-[370px] md:w-full h-fit leading-[18px] text-brand-600 hover:text-brand-700 hover:underline text-sm overflow-hidden text-ellipsis line-clamp-1 text-left"
       >
@@ -69,7 +69,7 @@
     :task="task"
   />
   <div v-else-if="['Building','Deploying','Startup'].includes(appStatus)">
-     <Loading :loadingText="$t('all.deployLoadingText')" />
+     <InstanceInBuilding :loadingText="$t('all.deployLoadingText')" />
   </div>
 </template>
 <script setup>
@@ -77,7 +77,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import EndpointPlayground from './EndpointPlayground.vue'
   import { ElMessage } from 'element-plus'
-  import Loading from '../loading/loading.vue'
+  import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
 
   const props = defineProps({
     appEndpoint: String,
