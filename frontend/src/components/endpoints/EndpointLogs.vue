@@ -14,7 +14,7 @@
       />
     </el-select>
     <div
-      class="h-[80vh] border mt-[8px] overflow-scroll p-[8px]"
+      class="h-[80vh] border bg-gray-800 p-6 rounded-xl text-white overflow-scroll"
       ref="instanceLogDiv"
     >
     </div>
@@ -100,10 +100,28 @@
   }
 
   const appendLog = (refElem, data, refLineNum) => {
-    const node = document.createElement("p")
-    node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
+    // Create the div element
+    const divNode = document.createElement("div");
+    divNode.className = "flex";
+
+    // Create the first p element
+    const pNode1 = document.createElement("p");
+    pNode1.className = "pr-6 pt-2";
+    pNode1.innerHTML = `${refLineNum.value}:`;
+
+    // Create the second p element
+    const pNode2 = document.createElement("p");
+    pNode2.className = "pt-2";
+    pNode2.innerHTML = `${data.replace(/\\r/g, "<br>")}`;
+
+    // Append the p elements to the div element
+    divNode.appendChild(pNode1);
+    divNode.appendChild(pNode2);
+
+    // const node = document.createElement("p")
+    // node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
     if (refElem.value) {
-      refElem.value.appendChild(node)
+      refElem.value.appendChild(divNode)
       refLineNum.value = refLineNum.value + 1
     }
   }
