@@ -51,42 +51,56 @@
       :show-close="false"
     >
       <template #header="{close}">
-        <div class="flex gap-[24px] items-center">
-          <div class="flex gap-1.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M11.6663 9.16699H6.66634M8.33301 12.5003H6.66634M13.333 5.83366H6.66634M16.6663 8.75033V5.66699C16.6663 4.26686 16.6663 3.5668 16.3939 3.03202C16.1542 2.56161 15.7717 2.17916 15.3013 1.93948C14.7665 1.66699 14.0665 1.66699 12.6663 1.66699H7.33301C5.93288 1.66699 5.23281 1.66699 4.69803 1.93948C4.22763 2.17916 3.84517 2.56161 3.60549 3.03202C3.33301 3.5668 3.33301 4.26686 3.33301 5.66699V14.3337C3.33301 15.7338 3.33301 16.4339 3.60549 16.9686C3.84517 17.439 4.22763 17.8215 4.69803 18.0612C5.23281 18.3337 5.93288 18.3337 7.33301 18.3337H9.58301M18.333 18.3337L17.083 17.0837M17.9163 15.0003C17.9163 16.6112 16.6105 17.917 14.9997 17.917C13.3888 17.917 12.083 16.6112 12.083 15.0003C12.083 13.3895 13.3888 12.0837 14.9997 12.0837C16.6105 12.0837 17.9163 13.3895 17.9163 15.0003Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <p class="font-[600] text-md text-black">{{ $t('application_spaces.errorPage.log') }}</p>
+        <div class="flex flex-col gap-[24px] pt-3">
+          <div class="flex justify-between gap-1.5 pb-6 border-b">
+            <div class="flex gap-1.5">
+              <div class="flex items-center border rounded-md border-gray-200 p-[10px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M11.6663 9.16699H6.66634M8.33301 12.5003H6.66634M13.333 5.83366H6.66634M16.6663 8.75033V5.66699C16.6663 4.26686 16.6663 3.5668 16.3939 3.03202C16.1542 2.56161 15.7717 2.17916 15.3013 1.93948C14.7665 1.66699 14.0665 1.66699 12.6663 1.66699H7.33301C5.93288 1.66699 5.23281 1.66699 4.69803 1.93948C4.22763 2.17916 3.84517 2.56161 3.60549 3.03202C3.33301 3.5668 3.33301 4.26686 3.33301 5.66699V14.3337C3.33301 15.7338 3.33301 16.4339 3.60549 16.9686C3.84517 17.439 4.22763 17.8215 4.69803 18.0612C5.23281 18.3337 5.93288 18.3337 7.33301 18.3337H9.58301M18.333 18.3337L17.083 17.0837M17.9163 15.0003C17.9163 16.6112 16.6105 17.917 14.9997 17.917C13.3888 17.917 12.083 16.6112 12.083 15.0003C12.083 13.3895 13.3888 12.0837 14.9997 12.0837C16.6105 12.0837 17.9163 13.3895 17.9163 15.0003Z" stroke="#344054" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="felx flex-col gap-1">
+                <p class="font-[600] text-md text-black">{{ $t('application_spaces.errorPage.log') }}</p>
+                <div class="text-gray-600 text-sm font-light">{{ $t('application_spaces.errorPage.logDesc') }}</div>
+              </div>
+            </div>
+            <div class="flex gap-[8px]">
+              <el-icon v-if="drawerSize==='70%'"
+                      @click="toggleDrawerSize"><ArrowUp /></el-icon>
+              <el-icon v-else @click="toggleDrawerSize"><ArrowDown /></el-icon>
+              <el-icon @click="close"><CloseBold /></el-icon>
+            </div>
           </div>
-          <div class="flex gap-4 items-center">
-            <span class="text-sm text-gray-500 cursor-pointer"
-                  data-value="build"
-                  @click="toggleActiveTab"
-                  :class="isBuildLogTab ? 'active-tab' : ''"
-            >{{ $t('application_spaces.errorPage.build') }}</span>
-            <span class="text-sm text-gray-500 cursor-pointer"
-                  data-value="container"
-                  @click="toggleActiveTab"
-                  :class="isBuildLogTab ? '' : 'active-tab'"
-            >{{ $t('application_spaces.errorPage.container') }}</span>
+          <div class="flex justify-between">
+            <div class="flex gap-4 items-center">
+              <span class="text-sm text-gray-500 cursor-pointer"
+                    data-value="build"
+                    @click="toggleActiveTab"
+                    :class="isBuildLogTab ? 'active-tab' : ''"
+              >{{ $t('application_spaces.errorPage.build') }}</span>
+              <span class="text-sm text-gray-500 cursor-pointer"
+                    data-value="container"
+                    @click="toggleActiveTab"
+                    :class="isBuildLogTab ? '' : 'active-tab'"
+              >{{ $t('application_spaces.errorPage.container') }}</span>
+            </div>
+            <div class="cursor-pointer text-xs text-brand-700 font-normal" @click="downloadLog">
+              {{ $t('application_spaces.errorPage.download') }}
+            </div>
           </div>
-        </div>
-        <div class="flex gap-[8px]">
-          <el-icon v-if="drawerSize==='70%'"
-                   @click="toggleDrawerSize"><ArrowUp /></el-icon>
-          <el-icon v-else @click="toggleDrawerSize"><ArrowDown /></el-icon>
-          <el-icon @click="close"><CloseBold /></el-icon>
         </div>
       </template>
       <div v-show="isBuildLogTab"
            ref="buildLogDiv"
-           class="h-full"
+           class="h-auto bg-gray-800 p-6 rounded-xl text-white"
       >
+        <p>...</p>
       </div>
       <div v-show="!isBuildLogTab"
            ref="containerLogDiv"
-           class="h-full"
+           class="h-auto bg-gray-800 p-6 rounded-xl text-white"
       >
+        <p>...</p>
       </div>
     </el-drawer>
   </div>
@@ -275,13 +289,49 @@
   }
 
   const appendLog = (refElem, data, refLineNum) => {
-    const node = document.createElement("p")
-    node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
+    // Create the div element
+    const divNode = document.createElement("div");
+    divNode.className = "flex";
+
+    // Create the first p element
+    const pNode1 = document.createElement("p");
+    pNode1.className = "pr-6 pt-2";
+    pNode1.innerHTML = `${refLineNum.value}:`;
+
+    // Create the second p element
+    const pNode2 = document.createElement("p");
+    pNode2.className = "pt-2";
+    pNode2.innerHTML = `${data.replace(/\\r/g, "<br>")}`;
+
+    // Append the p elements to the div element
+    divNode.appendChild(pNode1);
+    divNode.appendChild(pNode2);
+
+    // const node = document.createElement("p")
+    // node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
     if (refElem.value) {
-      refElem.value.appendChild(node)
+      refElem.value.appendChild(divNode)
       refLineNum.value = refLineNum.value + 1
     }
   }
+
+  const downloadLog = () => {
+    const targetDiv = isBuildLogTab.value? buildLogDiv : containerLogDiv;
+    if (!targetDiv.value) return;
+
+    const logElements = targetDiv.value.querySelectorAll('p');
+    let logContent = '';
+    logElements.forEach((element) => {
+      logContent += element.textContent + '\n';
+    });
+
+    const blob = new Blob([logContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = isBuildLogTab.value? 'build_log.txt' : 'container_log.txt';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
 
   const syncSpaceStatus = () => {
     fetchEventSource(`${csghubServer}/api/v1/spaces/${props.namespace}/${props.repoName}/status`, {
@@ -344,8 +394,7 @@
   }
 
   :deep(.el-drawer__header) {
-    border-bottom: solid 1px lightgray;
-    padding: 10px;
+    padding: 24px;
     margin-bottom: 0;
   }
 

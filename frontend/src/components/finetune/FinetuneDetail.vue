@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div
+    class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+  >
     <div class="mx-auto page-responsive-width">
       <repo-header
         :name="finetune.deploy_name"
@@ -45,24 +47,32 @@
           >
           </iframe>
           <div
+            class="flex flex-col gap-6"
             v-else
-            class="flex items-center justify-start border border-gray-300 p-[16px] rounded-xl shadow-sm"
           >
-            <div class="border border-gray-300 p-[10px] rounded-lg">
-              <SvgIcon
-                name="finetune_tip"
-                width="20"
-                height="20"
-              />
+            <div
+              class="flex items-center justify-start border border-gray-300 p-[16px] rounded-xl shadow-sm"
+            >
+              <div class="border border-gray-300 p-[10px] rounded-lg">
+                <SvgIcon
+                  name="finetune_tip"
+                  width="20"
+                  height="20"
+                />
+              </div>
+              <div class="ml-[16px]">
+                <p class="text-gray-700 text-sm font-medium mb-[4px]">
+                  {{ $t('finetune.detail.noDataTip1') }}
+                </p>
+                <p class="text-gray-600 text-sm font-light">
+                  {{ $t('finetune.detail.noDataTip2') }}
+                </p>
+              </div>
             </div>
-            <div class="ml-[16px]">
-              <p class="text-gray-700 text-sm font-medium mb-[4px]">
-                {{ $t('finetune.detail.noDataTip1') }}
-              </p>
-              <p class="text-gray-600 text-sm font-light">
-                {{ $t('finetune.detail.noDataTip2') }}
-              </p>
-            </div>
+            <InstanceInBuilding
+              v-if="['Building', 'Deploying', 'Startup'].includes(appStatus)"
+              :loadingText="$t('all.deployLoadingText')"
+            />
           </div>
         </div>
       </el-tab-pane>
@@ -106,6 +116,7 @@
   import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
   import { ElMessage } from 'element-plus'
+  import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
 
   const props = defineProps({
     namespace: String,
@@ -184,7 +195,10 @@
           finetune.value = body.data
           appStatus.value = finetune.value.status
           fetchResources()
-          if (isStatusSSEConnected.value === false && allStatus.includes(appStatus.value)) {
+          if (
+            isStatusSSEConnected.value === false &&
+            allStatus.includes(appStatus.value)
+          ) {
             syncfinetuneStatus()
           }
         }
@@ -197,7 +211,9 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${finetune.value.cluster_id}&deploy_type=2`).json()
+    const { data, error } = await useFetchApi(
+      `/space_resources?cluster_id=${finetune.value.cluster_id}&deploy_type=2`
+    ).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
@@ -224,7 +240,11 @@
             isStatusSSEConnected.value = true
           } else if (response.status === 401) {
             refreshJWT()
-          } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+          } else if (
+            response.status >= 400 &&
+            response.status < 500 &&
+            response.status !== 429
+          ) {
             console.log('Status Server Connection Error')
             console.log(response.status)
             console.log(response.body)
@@ -237,7 +257,11 @@
           console.log(ev)
           const eventResponse = JSON.parse(ev.data)
           console.log(`SyncStatus: ${eventResponse.status}`)
-          console.log(`SyncStatus: ${eventResponse.details && eventResponse.details[0].name}`)
+          console.log(
+            `SyncStatus: ${
+              eventResponse.details && eventResponse.details[0].name
+            }`
+          )
           if (appStatus.value !== eventResponse.status) {
             appStatus.value = eventResponse.status
             if (appStatus.value == 'Running') {

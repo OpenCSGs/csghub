@@ -3,7 +3,7 @@
     <p v-if="['Building','Deploying','Startup'].includes(appStatus)"
        class="text-gray-700 text-md"
     >
-       {{ $t('application_spaces.buildDesc') }}
+       <InstanceInBuilding :loadingText="$t('application_spaces.buildDesc')"/>
     </p>
 
     <p v-if="['DeployFailed','BuildingFailed','RuntimeError'].includes(appStatus)"
@@ -21,6 +21,8 @@
 </template>
 
 <script setup>
+  import InstanceInBuilding from '../shared/InstanceInBuilding.vue';
+
   const props = defineProps({
     appStatus: String,
     canWrite: Boolean

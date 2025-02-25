@@ -39,6 +39,8 @@ export const application_spaces = {
   },
   errorPage: {
     log: '日志',
+    logDesc: '最多保存7日内10万条日志',
+    download: '下载日志',
     build: '构建',
     container: '控制台',
     errorAlert: '应用空间发布失败',
