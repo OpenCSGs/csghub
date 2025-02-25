@@ -3,7 +3,7 @@
     <el-select
       v-model="currentInstance"
       placeholder="Select"
-      style="width: 240px"
+      class="w-[240px] mb-1"
       @change="refreshInstanceLogs"
     >
       <el-option
@@ -17,6 +17,7 @@
       class="h-[80vh] border bg-gray-800 p-6 rounded-xl text-white overflow-scroll"
       ref="instanceLogDiv"
     >
+      <p>...</p>
     </div>
   </div>
 </template>
