@@ -575,8 +575,8 @@
 
     if (dataForm.value.sdk === 'docker') {
       params.template = dockerTemplate.value
-      params.variables = JSON.stringify(dockerVariables.value)
-      params.secrets = JSON.stringify(dockerSecrets.value)
+      params.variables = JSON.stringify(dockerVariables.value) === "{}" ? "" : JSON.stringify(dockerVariables.value)
+      params.secrets = JSON.stringify(dockerSecrets.value) === "{}" ? "" : JSON.stringify(dockerSecrets.value)
     }
 
     const options = {
