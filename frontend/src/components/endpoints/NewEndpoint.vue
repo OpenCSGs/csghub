@@ -17,6 +17,7 @@
         ref="dataFormRef"
         :model="dataForm"
         :rules="rules"
+        :validate-on-rule-change="false"
         class="w-full flex flex-col gap-[14px]"
         label-position="top">
         <div class="w-full flex md:flex-col gap-[16px] items-center">
@@ -61,7 +62,7 @@
               v-model="dataForm.model_id"
               :fetch-suggestions="fetchModels"
               :placeholder="t('all.pleaseInput', { value: t('endpoints.new.modelId') })"
-              @select="updateRuntimeFramework"
+              @select="loadRequiredData"
             />
           </el-form-item>
         </div>
@@ -153,6 +154,7 @@
           </p>
         </el-form-item>
 
+        <!-- runtime framework -->
         <el-form-item
           :label="t('endpoints.new.framework')"
           class="w-full"
@@ -169,6 +171,27 @@
               :key="item.id"
               :label="item.frame_name"
               :value="item.id" />
+          </el-select>
+        </el-form-item>
+
+        <!-- quantization -->
+        <el-form-item
+          v-if="availableQuantizations.length > 0"
+          :label="t('endpoints.new.quantization')"
+          class="w-full"
+          prop="quantization">
+          <el-select
+            v-model="dataForm.quantization"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.quantization') })
+            "
+            size="large"
+            style="width: 100%">
+            <el-option
+              v-for="item in availableQuantizations"
+              :key="item.path"
+              :label="item.path"
+              :value="item.path" />
           </el-select>
         </el-form-item>
 
@@ -221,6 +244,7 @@
   const endpointClusters = ref([])
   const endpointResources = ref([])
   const loading = ref(false)
+  const availableQuantizations = ref([])
 
   const replicaRanges = [1, 2, 3, 4, 5]
 
@@ -304,6 +328,15 @@
         }),
         trigger: 'blur'
       }
+    ],
+    quantization: [
+      {
+        required: false,
+        message: t('all.pleaseSelect', {
+          value: t('endpoints.new.quantization')
+        }),
+        trigger: 'blur'
+      }
     ]
   })
 
@@ -353,6 +386,11 @@
       })
       cb(paths)
     }
+  }
+
+  const loadRequiredData = () => {
+    updateRuntimeFramework()
+    fetchQuantizations()
   }
 
   const updateRuntimeFramework = async () => {
@@ -416,6 +454,11 @@
       secure_level: dataForm.value.visibility === 'public' ? 1: 2,
       cluster_id: dataForm.value.endpoint_cluster
     }
+
+    if (availableQuantizations.value.length > 0) {
+      params.entrypoint = dataForm.value.quantization
+    }
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
@@ -437,8 +480,22 @@
     }
   }
 
+  const fetchQuantizations = async () => {
+    const quantizationEndpoint = `/models/${dataForm.value.model_id}/quantizations`
+    const { data, error } = await useFetchApi(quantizationEndpoint).json()
+    if (data.value.data) {
+      availableQuantizations.value = data.value.data
+      rules.value.quantization[0].required = true
+    } else {
+      console.log(error.value.msg)
+    }
+  }
+
   onMounted(() => {
     fetchClusters()
+    if (dataForm.value.model_id) {
+      fetchQuantizations()
+    }
   })
 </script>
 

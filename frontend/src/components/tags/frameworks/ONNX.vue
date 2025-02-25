@@ -16,7 +16,7 @@
   const emit = defineEmits(['setActiveFrameworkTag'])
 
   const toggleActive = () => {
-    emit('setActiveFrameworkTag', 'framework', 'ONNX')
+    emit('setActiveFrameworkTag', 'framework', 'onnx')
   }
   const setTagColor = () => {
     if (props.active) {

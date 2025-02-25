@@ -15,7 +15,7 @@
     </div>
     <div class="w-[40%] sm:w-[100%] border-l border-gray-200 md:border-l-0 md:border-b md:w-full md:pl-0">
       <div class="pl-6 py-8">
-        <div class="text-gray-500 text-base font-medium leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
+        <div class="text-gray-700 text-base font-medium text-md leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 

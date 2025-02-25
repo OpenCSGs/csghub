@@ -225,11 +225,10 @@
               <p class="font-semibold text-md">Nginx</p>
             </el-radio>
             <el-radio
-              v-if="!userStore.isAdmin"
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
               label="docker"
-              disabled
+              @click="fetchDockerTemplates"
               border
             >
               <SvgIcon
@@ -237,7 +236,7 @@
                 class="m-auto"
               />
               <p class="font-semibold text-md">Docker</p>
-              <p class="text-xs">11 templates</p>
+              <!-- <p class="text-xs">11 templates</p> -->
             </el-radio>
             <el-radio
               disabled
@@ -255,6 +254,47 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
+        <div v-if="dataForm.sdk === 'docker'">
+          <p class="text-gray-600 mb-1.5 font-light">
+            {{ $t('application_spaces.new.chooseTemplate') }}
+          </p>
+
+          <el-radio-group
+            v-model="dockerTemplate"
+            class="flex flex-wrap gap-2 mb-6"
+          >
+            <el-radio-button v-for="template in dockerTemplates"
+              :label="template.name"
+              :value="template.name"
+              size="large"
+              border
+            />
+          </el-radio-group>
+
+          <div v-if="dockerTemplate" class="mb-6">
+            <div v-if="currentDockerTemplates.secrets">
+              <p class="text-gray-700 text-sm leading-5">{{ t('application_spaces.new.spaceSecrets') }}</p>
+              <div
+                v-for="secret in JSON.parse(currentDockerTemplates.secrets)"
+                :key="secret.name">
+                <div class="flex justify-between items-center my-2 pl-4">
+                  <label :for="secret.name" class="text-gray-600 mb-1.5 font-light text-xs w-[40%]">{{ secret.name }}</label>
+                  <el-input v-model="dockerSecrets[secret.name]" size="small"></el-input>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="currentDockerTemplates.variables">
+              <p class="text-gray-700 text-sm leading-5">{{ t('application_spaces.new.spaceVariables') }}</p>
+              <div v-for="variable in JSON.parse(currentDockerTemplates.variables)" :key="variable.name">
+                <div class="flex justify-between items-center my-2 pl-4">
+                  <label :for="variable.name" class="text-gray-600 mb-1.5 font-light text-xs w-[40%]">{{ variable.name }}</label>
+                  <el-input v-model="dockerVariables[variable.name]" size="small"></el-input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <el-form-item
           :label="t('endpoints.new.cluster')"
           class="w-full"
@@ -332,7 +372,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted, inject, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
@@ -349,6 +389,27 @@
   const images = ref([])
   const { t } = useI18n()
   const nameRule = inject('nameRule')
+  const dockerTemplates = ref([])
+  const dockerTemplate = ref('')
+  const dockerVariables = ref({})
+  const dockerSecrets = ref({})
+
+  const currentDockerTemplates = computed(() => {
+    const currentTemplate = dockerTemplates.value.find((template) => template.name === dockerTemplate.value)
+    if (currentTemplate && currentTemplate.variables) {
+      dockerVariables.value = JSON.parse(currentTemplate.variables).reduce((accumulator, current) => {
+        accumulator[current.name] = current.value
+        return accumulator
+      }, {})
+    }
+    if (currentTemplate && currentTemplate.secrets) {
+      dockerSecrets.value = JSON.parse(currentTemplate.secrets).reduce((accumulator, current) => {
+        accumulator[current.name] = current.value
+        return accumulator
+      }, {})
+    }
+    return (currentTemplate || {})
+  })
 
   const dataForm = ref({
     owner: '',
@@ -511,6 +572,13 @@
       cluster_id: dataForm.value.space_cluster,
       private: dataForm.value.visibility === 'private'
     }
+
+    if (dataForm.value.sdk === 'docker') {
+      params.template = dockerTemplate.value
+      params.variables = JSON.stringify(dockerVariables.value) === "{}" ? "" : JSON.stringify(dockerVariables.value)
+      params.secrets = JSON.stringify(dockerSecrets.value) === "{}" ? "" : JSON.stringify(dockerSecrets.value)
+    }
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
@@ -528,6 +596,19 @@
         message: t('application_spaces.new.createFail') + `: ${error.value.msg}`,
         type: 'error'
       })
+    }
+  }
+
+  const fetchDockerTemplates = async () => {
+    try {
+      const { data, error } = await useFetchApi('space_templates/docker').json()
+      if (data.value) {
+        dockerTemplates.value = data.value.data
+      } else {
+        ElMessage.warning(error.value.msg)
+      }
+    } catch (error) {
+      ElMessage.warning(error)
     }
   }
 

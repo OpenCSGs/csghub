@@ -81,6 +81,9 @@ export const application_spaces = {
     createFail: "应用空间创建失败",
     spaceEnName: "应用空间英文名称",
     cluster: "区域",
+    chooseTemplate: "选择一个模版",
+    spaceSecrets: "空间密钥",
+    spaceVariables: "空间变量"
   },
   edit: {
     cloudResource: '空间云资源',
