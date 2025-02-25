@@ -3,7 +3,7 @@
     <p v-if="['Building','Deploying','Startup'].includes(appStatus)"
        class="text-gray-700 text-md"
     >
-       <Loading :loadingText="$t('pplication_spaces.buildDesc')"/>
+       <Loading :loadingText="$t('application_spaces.buildDesc')"/>
     </p>
 
     <p v-if="['DeployFailed','BuildingFailed','RuntimeError'].includes(appStatus)"

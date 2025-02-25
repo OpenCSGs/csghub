@@ -92,13 +92,15 @@
       </template>
       <div v-show="isBuildLogTab"
            ref="buildLogDiv"
-           class="h-auto bg-black p-6 rounded-xl text-white"
+           class="h-auto bg-gray-800 p-6 rounded-xl text-white"
       >
+        <p>...</p>
       </div>
       <div v-show="!isBuildLogTab"
            ref="containerLogDiv"
-           class="h-auto bg-black p-6 rounded-xl text-white"
+           class="h-auto bg-gray-800 p-6 rounded-xl text-white"
       >
+        <p>...</p>
       </div>
     </el-drawer>
   </div>
@@ -288,10 +290,28 @@
   }
 
   const appendLog = (refElem, data, refLineNum) => {
-    const node = document.createElement("p")
-    node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
+    // Create the div element
+    const divNode = document.createElement("div");
+    divNode.className = "flex";
+
+    // Create the first p element
+    const pNode1 = document.createElement("p");
+    pNode1.className = "pr-6 pt-2";
+    pNode1.innerHTML = `${refLineNum.value}:`;
+
+    // Create the second p element
+    const pNode2 = document.createElement("p");
+    pNode2.className = "pt-2";
+    pNode2.innerHTML = `${data.replace(/\\r/g, "<br>")}`;
+
+    // Append the p elements to the div element
+    divNode.appendChild(pNode1);
+    divNode.appendChild(pNode2);
+
+    // const node = document.createElement("p")
+    // node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
     if (refElem.value) {
-      refElem.value.appendChild(node)
+      refElem.value.appendChild(divNode)
       refLineNum.value = refLineNum.value + 1
     }
   }
