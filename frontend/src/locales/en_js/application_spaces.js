@@ -79,6 +79,9 @@ export const application_spaces = {
     createFail: "Application Space creation failed",
     spaceEnName: "Space name",
     cluster: "Region",
+    chooseTemplate: "Choose a template",
+    spaceSecrets: "Space Secrets",
+    spaceVariables: "Space Variables"
   },
   edit: {
     cloudResource: 'Cloud resource',
