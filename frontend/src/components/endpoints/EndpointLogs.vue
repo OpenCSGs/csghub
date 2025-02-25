@@ -1,18 +1,23 @@
 <template>
   <div class="my-[16px]">
-    <el-select
-      v-model="currentInstance"
-      placeholder="Select"
-      class="!w-[240px] mb-1"
-      @change="refreshInstanceLogs"
-    >
-      <el-option
-        v-for="instance in instances"
-        :key="instance.name"
-        :label="instance.name"
-        :value="instance.name"
-      />
-    </el-select>
+    <div class="flex justify-between items-center">
+      <el-select
+        v-model="currentInstance"
+        placeholder="Select"
+        class="!w-[240px] mb-1"
+        @change="refreshInstanceLogs"
+      >
+        <el-option
+          v-for="instance in instances"
+          :key="instance.name"
+          :label="instance.name"
+          :value="instance.name"
+        />
+      </el-select>
+      <div class="cursor-pointer text-xs px-4 text-brand-700 font-normal" @click="downloadLog">
+        {{ $t('endpoints.logDownload') }}
+      </div>
+    </div>
     <div
       class="h-[80vh] border bg-gray-800 p-6 rounded-xl text-white overflow-scroll"
       ref="instanceLogDiv"
@@ -126,6 +131,24 @@
       refLineNum.value = refLineNum.value + 1
     }
   }
+
+  const downloadLog = () => {
+    const targetDiv = instanceLogDiv;
+    if (!targetDiv.value) return;
+
+    const logElements = targetDiv.value.querySelectorAll('p');
+    let logContent = '';
+    logElements.forEach((element) => {
+      logContent += element.textContent + '\n';
+    });
+
+    const blob = new Blob([logContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'inference_deploy_log.txt'
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
 
   const refreshInstanceLogs = (value) => {
     syncInstanceLogs(value)

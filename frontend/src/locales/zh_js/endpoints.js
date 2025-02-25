@@ -3,6 +3,7 @@ export const endpoints = {
   resourceType: '资源类型',
   replica: "弹性副本",
   summary: '概览',
+  logDownload: '下载日志',
   detail: {
     endpointUrl: '专属实例 URL',
     modelId: '模型 ID',
