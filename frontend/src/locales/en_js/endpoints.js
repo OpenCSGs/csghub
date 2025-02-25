@@ -3,6 +3,7 @@ export const endpoints = {
   resourceType: 'Resource Type',
   replica: "Replica",
   summary: 'Overview',
+  logDownload: 'Download Logs',
   detail: {
     endpointUrl: 'Inference Endpoint URL',
     modelId: 'Model ID',
