@@ -27,28 +27,28 @@
     <div class="flex gap-[8px] flex-wrap">
       <PyTorch
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('PyTorch')" />
+        :active="activeTags['framework']?.includes('pytorch')" />
       <TensorFlow
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('TensorFlow')" />
+        :active="activeTags['framework']?.includes('tensorflow')" />
       <Safetensors
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('Safetensors')" />
+        :active="activeTags['framework']?.includes('safetensors')" />
       <ONNX
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('ONNX')" />
+        :active="activeTags['framework']?.includes('onnx')" />
       <JAX
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('JAX')" />
+        :active="activeTags['framework']?.includes('jax')" />
       <PaddlePaddle
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('PaddlePaddle')" />
+        :active="activeTags['framework']?.includes('paddlepaddle')" />
       <Joblib
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('Joblib')" />
+        :active="activeTags['framework']?.includes('joblib')" />
       <GGUF
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('GGUF')" />
+        :active="activeTags['framework']?.includes('gguf')" />
     </div>
   </div>
 
