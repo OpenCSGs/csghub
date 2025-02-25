@@ -3,7 +3,7 @@
     <el-select
       v-model="currentInstance"
       placeholder="Select"
-      class="w-[240px] mb-1"
+      class="!w-[240px] mb-1"
       @change="refreshInstanceLogs"
     >
       <el-option
