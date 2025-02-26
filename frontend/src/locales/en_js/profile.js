@@ -24,9 +24,8 @@ export const profile = {
     updateCancelled: "Update Cancelled",
     username: "Username",
     updateSuccess: "Profile updated successfully",
-    confirmUpdateMessage: "After profile updated, login username not changed, and you need to login again!",
-    updateUsername: "First Login Update Internal Username",
-    internalUsername: "Internal Username",
-    internalUsernamePlaceholder: "internal username"
+    updateUsername: "First Login Update Username",
+    internalUsername: "Username",
+    internalUsernamePlaceholder: "username"
   },
 }

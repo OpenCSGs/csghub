@@ -11,12 +11,6 @@
   >
     <el-form :model="formData" :rules="formRules" ref="formRef">
       <div>
-        <div class="flex">
-          <SvgIcon name="exclamation_point" width="20px" height="20px" />
-          <p class="text-gray-500 text-md ml-[8px]">
-            {{ $t('profile.edit.confirmUpdateMessage')}}
-          </p>
-        </div>
         <p class="text-gray-700 text-sm mb-[8px] mt-[8px]">
           {{ $t('profile.edit.internalUsername') }}
           <span class="text-red-400">*</span>
