@@ -1,6 +1,6 @@
 <!-- 提示词库列表页面 -->
 <template>
-  <PromptsBreadCrumbs 
+  <PromptsBreadCrumbs
     firstHref="/prompts/library"
     firstHrefName="prompts.promptLibrary"
     class="sticky top-0 md:top-[60px] bg-white left-0 z-10"
@@ -20,14 +20,14 @@
           @change="filterChange"
         />
         <CsgButton
-          v-if="userStore.isLoggedIn"
+          v-if="hasEmail && !canChangeUsername"
           :loading="loading"
           class="btn btn-secondary-gray btn-lg"
           @click="changeCurrentComponent('newPromptsList')"
           svgName="create_org_repo"
           :name="$t('prompts.newPromptsList')"
         />
-      </div>   
+      </div>
     </div>
     <ElInput
           v-model="nameFilterInput"
@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
   import PromptsDatasetsCard from './PromptsDatasetsCard.vue'
   import PromptsBreadCrumbs from './PromptsBreadCrumbs.vue'
   import useFetchApi from '../../packs/useFetchApi'
@@ -68,14 +68,29 @@
   import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import useUserStore from '../../stores/UserStore.js'
+  import { useCookies } from 'vue3-cookies'
 
   const userStore = useUserStore()
+  const { cookies } = useCookies()
   const loading =ref(true)
   const nameFilterInput = ref('')
   const perPage = ref(16)
   const currentPage = ref(1)
   const promptsData = ref([])
   const totalPrompts = ref(0)
+
+  const isLoggedIn = computed(() => {
+    return !!userStore.username
+  })
+
+  const canChangeUsername = () => {
+    const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
+    return canChange === 'true'
+  }
+
+  const hasEmail = computed(() => {
+    return isLoggedIn && !!userStore.email
+  })
 
   const emit = defineEmits(['changeCurrentComponent'])
   const changeCurrentComponent = (currentComponent) => {
