@@ -286,7 +286,19 @@
     center
     show-icon
     type="warning"
-  ></el-alert>
+  >
+    <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
+  </el-alert>
+
+  <el-alert
+    v-if="true"
+    :title="$t('navbar.usernameNeedChange')"
+    center
+    show-icon
+    type="warning"
+  >
+    <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
+  </el-alert>
 
   <Broadcast />
 </template>
@@ -410,5 +422,20 @@
     background-color: rgb(249 250 251) !important;
     border-radius: 6px !important;
     color: #182230 !important;
+  }
+  :deep(.el-alert__icon) {
+    height: 14px !important;
+    width: 14px !important;
+  }
+  :deep(.el-alert__content) {
+    flex-direction: row;
+    font-size: 14px !important;
+    gap: 8px;
+  }
+  :deep(.el-alert__title) {
+    font-size: 14px !important;
+  }
+  :deep(.el-alert__description) {
+    font-size: 14px !important;
   }
 </style>

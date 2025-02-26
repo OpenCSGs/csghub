@@ -18,6 +18,8 @@ export const navbar = {
   login: "登录",
   newCollection: "新建合集",
   emailMissing: '体验完整功能，请提供您的电子邮件',
+  usernameNeedChange: '体验完整功能，请先更新您的用户名',
+  profileEdit: "编辑用户信息",
   more: "更多",
   setting: "账号设置",
 }
