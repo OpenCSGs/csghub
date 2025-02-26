@@ -124,7 +124,8 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a href="/resource-console">
+              <a v-if="hasEmail && !canChangeUserName"
+                href="/resource-console">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
                     <SvgIcon name="navbar-resource-console" />
@@ -281,7 +282,7 @@
   </el-drawer>
 
   <el-alert
-    v-if="!hasEmail && isLoggedInBoolean"
+    v-if="isLoggedInBoolean && (!hasEmail && !canChangeUserName)"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -291,8 +292,18 @@
   </el-alert>
 
   <el-alert
-    v-if="canChangeUserName"
+    v-if="isLoggedInBoolean && (canChangeUserName && hasEmail)"
     :title="$t('navbar.usernameNeedChange')"
+    center
+    show-icon
+    type="warning"
+  >
+    <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
+  </el-alert>
+
+  <el-alert
+    v-if="isLoggedInBoolean && (canChangeUserName && !hasEmail)"
+    :title="$t('navbar.emailAndUsernameMissing')"
     center
     show-icon
     type="warning"
