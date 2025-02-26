@@ -23,5 +23,10 @@ export const profile = {
     cancelUpdate: "取消",
     updateCancelled: "更新已取消",
     username: "用户名",
+    updateSuccess: "profile 已更新",
+    confirmUpdateMessage: "更新之后，登录用户名不变，且需要重新登录！",
+    updateUsername: "首次登录更新内部用户名",
+    internalUsername: "内部用户名",
+    internalUsernamePlaceholder: "内部用户名"
   },
 }

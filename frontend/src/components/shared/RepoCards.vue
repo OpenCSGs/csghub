@@ -113,6 +113,7 @@
         :total="totalRepos" />
     </div>
   </div>
+  <UpdateUsername />
 </template>
 <script setup>
   import { onMounted, ref, computed, inject } from 'vue'
