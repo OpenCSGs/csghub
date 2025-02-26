@@ -291,7 +291,7 @@
   </el-alert>
 
   <el-alert
-    v-if="true"
+    v-if="canChangeUserName"
     :title="$t('navbar.usernameNeedChange')"
     center
     show-icon
@@ -337,6 +337,7 @@
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
+        canChangeUsername: cookies.get('can_change_username'),
         hasEmail: true
       }
     },
@@ -345,7 +346,11 @@
       Broadcast
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin']),
+      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin', 'isLoggedIn']),
+      canChangeUserName() {
+        const canChange = this.isLoggedIn ? this.canChangeUsername : 'false'
+        return canChange === 'true'
+      }
     },
     watch: {
       initialized(_) {

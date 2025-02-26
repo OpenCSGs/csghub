@@ -1,12 +1,5 @@
 <template>
   <div class="flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0">
-    <el-alert
-      v-if="canChangeUsername === 'true'"
-      :title="$t('profile.edit.renameUsername')"
-      center
-      show-icon
-      type="warning">
-    </el-alert>
     <div class="font-semibold text-xl leading-[28px]">
       {{ $t('profile.accountSetting') }}
     </div>
