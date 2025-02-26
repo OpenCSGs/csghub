@@ -132,7 +132,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="isAdmin"
+              <a v-if="isAdmin && hasEmail && !canChangeUserName"
                   href="/admin_panel">
                   <el-dropdown-item>
                     <div class="flex items-center gap-2">
@@ -146,7 +146,7 @@
                 target="_blank">
                 <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
               </a> -->
-              <a v-if="hasEmail"
+              <a v-if="hasEmail && !canChangeUserName"
                  href="/models/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center gap-2">
@@ -155,7 +155,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="hasEmail && !canChangeUserName"
                  href="/datasets/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -164,7 +164,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="hasEmail && !canChangeUserName"
                  href="/codes/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -173,7 +173,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="hasEmail && !canChangeUserName"
                  href="/spaces/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -182,7 +182,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="hasEmail && !canChangeUserName"
                 href="/collections/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -191,7 +191,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="hasEmail && !canChangeUserName"
                  href="/organizations/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center gap-2">
