@@ -20,7 +20,8 @@
     />
 
     <!-- evaluation button -->
-    <div class="relative inline-flex">
+    <div v-if="hasEmail && !canChangeUsername"
+      class="relative inline-flex">
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
@@ -33,9 +34,7 @@
 
     <!-- endpoint deploy button -->
     <DeployDropdown
-      v-if="
-        isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl
-      "
+      v-if="hasEmail && !canChangeUsername && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
     <div
@@ -64,11 +63,11 @@
 
     <!-- finetune deploy button -->
     <CsgButton
+      v-if="hasEmail && !canChangeUsername && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
       :class="{ disabled: !enableFinetune || !httpCloneUrl }"
       :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
       svgName="model_finetune_create"
-      v-if="repoType === 'model'"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
     />
 
@@ -225,8 +224,10 @@
   import AddToCollections from '../collections/AddToCollections.vue'
   import useUserStore from '../../stores/UserStore.js'
   import { ToLoginPage } from '@/packs/utils'
+  import { useCookies } from 'vue3-cookies'
 
   const userStore = useUserStore()
+  const cookies = useCookies()
 
   const props = defineProps({
     repoType: String,
@@ -248,6 +249,15 @@
 
   const isLoggedIn = computed(() => {
     return !!userStore.username
+  })
+
+  const canChangeUsername = () => {
+    const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
+    return canChange === 'true'
+  }
+
+  const hasEmail = computed(() => {
+    return isLoggedIn && !!userStore.email
   })
 
   watch(() => props.repo, () => {
