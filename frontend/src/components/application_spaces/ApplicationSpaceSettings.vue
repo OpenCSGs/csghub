@@ -198,6 +198,30 @@
       </div>
     </div>
 
+    <!-- docker space variables -->
+    <el-divider v-if="theSdk === 'docker'"/>
+    <div v-if="theSdk === 'docker'" class="flex xl:flex-col gap-8">
+      <div class="flex items-center gap-8 mb-4">
+        <div class="w-[380px] sm:w-full flex flex-col">
+          <div class="text-sm text-gray-700 leading-[20px] font-medium">
+            {{ $t('application_spaces.edit.spaceVariables') }}
+          </div>
+          <div class="text-sm text-gray-600 leading-[20px]">
+            {{ $t('application_spaces.edit.spaceVariablesDesc') }}
+          </div>
+        </div>
+        <div class="flex flex-col gap-[6px]" v-for="(value, name) in theVariables" :key="name">
+          <div class="text-sm text-gray-600 leading-[20px]">
+            {{ name }}
+          </div>
+          <el-input v-model="theVariables[name]" size="large" class="!w-[512px] sm:!w-full" />
+          <el-button @click="updateVaribles" class="w-[100px]" data-test="update-varibles">
+            {{ $t('all.update') }}
+          </el-button>
+        </div>
+      </div>
+    </div>
+
     <el-divider />
 
     <!-- 修改可见性 -->
@@ -351,7 +375,9 @@
       default_branch: String,
       appStatus: String,
       cloudResource: String,
-      coverImage: String
+      coverImage: String,
+      sdk: String,
+      variables: Object
     },
 
     components: {},
@@ -362,6 +388,8 @@
         applicationSpacePath: this.path,
         theApplicationSpaceNickname: this.applicationSpaceNickname || '',
         theApplicationSpaceDesc: this.applicationSpaceDesc || '',
+        theSdk: this.sdk || '',
+        theVariables: this.variables || {},
         theCloudResource: /^\d+$/.test(this.cloudResource)
           ? Number(this.cloudResource)
           : this.cloudResource,
@@ -435,7 +463,10 @@
       },
       cloudResource(newResource, _) {
         this.theCloudResource = /^\d+$/.test(newResource) ? Number(newResource) : this.cloudResource
-      }
+      },
+      variables(newVariables, _) {
+        this.theVariables = newVariables
+      } 
     },
 
     emits: ['showSpaceLogs'],
@@ -651,6 +682,11 @@
 
       updateApplicationSpaceCoverImage() {
         const payload = { cover_image_url: this.uploadCoverImageUrl }
+        this.updateApplicationSpace(payload)
+      },
+
+      updateVaribles() {
+        const payload = { variables: JSON.stringify(this.theVariables) }
         this.updateApplicationSpace(payload)
       },
 

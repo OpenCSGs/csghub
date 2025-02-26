@@ -215,6 +215,8 @@
           :cloudResource="repoDetail.sku || repoDetail.hardware"
           :coverImage="repoDetail.cover_image_url"
           @showSpaceLogs="showSpaceLogs"
+          :sdk="sdk"
+          :variables="repoDetail.variables ? JSON.parse(repoDetail.variables) : {}"
         />
         <code-settings
           v-if="repoType === 'code'"

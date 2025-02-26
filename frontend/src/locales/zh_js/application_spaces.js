@@ -86,6 +86,8 @@ export const application_spaces = {
     spaceVariables: "空间变量"
   },
   edit: {
+    spaceVariables: "空间变量",
+    spaceVariablesDesc: "你可以修改空间变量",
     cloudResource: '空间云资源',
     cloudResourceDesc: '可切换到不同的空间云资源。切换到付费资源后，将根据使用时长向您收取费用。',
     currentCloudResource: '当前云资源',
