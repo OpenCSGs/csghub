@@ -1,4 +1,3 @@
-<!-- 提示词库列表页面 -->
 <template>
   <PromptsBreadCrumbs
     firstHref="/prompts/library"
