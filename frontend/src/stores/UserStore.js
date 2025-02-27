@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { useCookies } from 'vue3-cookies'
 
 const useUserStore = defineStore('User', () => {
+  const { cookies } = useCookies()
   const username = ref('')
   const nickname = ref('')
   const email = ref('')
@@ -15,9 +17,17 @@ const useUserStore = defineStore('User', () => {
   const lastLoginTime = ref('')
   const initialized = ref(false)
 
-  const isLoggedIn = computed(() => username.value !== '')
+  const canChangeUsernameCookie = ref(cookies.get('can_change_username') === 'true');
+
+  const isLoggedIn = computed(() => uuid.value !== '')
   const isAdmin = computed(() => roles.value.includes('admin') || roles.value.includes('super_user'))
   const isSuperUser = computed(() => roles.value.includes('super_user'))
+  const canChangeUsername = computed({
+    get: () => isLoggedIn.value ? canChangeUsernameCookie.value : false,
+    set: (value) => value
+  })
+  const hasEmail = computed(() => isLoggedIn.value && !!email.value )
+  const actionLimited = computed(() => isLoggedIn.value && (!hasEmail.value || canChangeUsername.value))
 
   async function initialize(initialData) {
     username.value = initialData.username || ''
@@ -36,6 +46,10 @@ const useUserStore = defineStore('User', () => {
     initialized.value = true
   }
 
+  const refreshCanChangeUsernameCookie = () => {
+    canChangeUsernameCookie.value = cookies.get('can_change_username') === 'true'
+  }
+
   return {
     username,
     nickname,
@@ -52,7 +66,11 @@ const useUserStore = defineStore('User', () => {
     lastLoginTime,
     initialized,
     isAdmin,
-    isSuperUser
+    isSuperUser,
+    canChangeUsername,
+    actionLimited,
+    hasEmail,
+    refreshCanChangeUsernameCookie
   }
 })
 

@@ -18,16 +18,14 @@ export const profile = {
     userAvatar: "用户头像",
     uploadAvatar: "上传头像",
     removeAvatar: "移除头像",
-    updateSuccess: "profile 已更新",
     confirmUpdateTitle: "更新 Profile",
-    confirmUpdateMessage: "更新之后，登录用户名不变，且需要重新登录！",
     confirmUpdate: "更新",
     cancelUpdate: "取消",
     updateCancelled: "更新已取消",
-    renameUsername: "您当前用名是系统自动生成的临时用户名，在继续使用完整的功能之前，需要更新您的用户名",
-    updateUsername: "首次登录更新内部用户名",
     username: "用户名",
-    internalUsername: "内部用户名",
-    internalUsernamePlaceholder: "内部用户名"
+    updateSuccess: "profile 已更新",
+    updateUsername: "首次登录更新用户名",
+    internalUsername: "用户名",
+    internalUsernamePlaceholder: "用户名"
   },
 }

@@ -1,4 +1,5 @@
 <template>
+  <UpdateUsername />
   <div class="border-b sticky top-0 z-[999] csg-navbar bg-white border-gray-200">
     <div
       class="page-responsive-width flex text-gray-700 justify-between items-center h-20 sm:h-15 gap-6 md:px-5">
@@ -32,7 +33,7 @@
           class="w-full el-menu-nav flex items-center gap-1"
           text-color="'var(--Gray-600)'">
           <MenuItems
-            :isLoggedInBoolean="isLoggedInBoolean"
+            :isLoggedInBoolean="isLoggedIn"
             :starChainUrl="starChainUrl"
             :hasEmail="hasEmail" />
         </el-menu>
@@ -57,7 +58,7 @@
 
         <!-- logged in avatar dropdown -->
         <el-dropdown
-          v-if="isLoggedInBoolean"
+          v-if="isLoggedIn"
           class="pl-1">
           <!-- verified_company_user/company_user/user -->
           <span
@@ -124,7 +125,8 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a href="/resource-console">
+              <a v-if="!actionLimited"
+                href="/resource-console">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
                     <SvgIcon name="navbar-resource-console" />
@@ -132,7 +134,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="isAdmin"
+              <a v-if="isAdmin && !actionLimited"
                   href="/admin_panel">
                   <el-dropdown-item>
                     <div class="flex items-center gap-2">
@@ -146,7 +148,7 @@
                 target="_blank">
                 <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
               </a> -->
-              <a v-if="hasEmail"
+              <a v-if="!actionLimited"
                  href="/models/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center gap-2">
@@ -155,7 +157,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="!actionLimited"
                  href="/datasets/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -164,7 +166,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="!actionLimited"
                  href="/codes/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -173,7 +175,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="!actionLimited"
                  href="/spaces/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -182,7 +184,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="!actionLimited"
                 href="/collections/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -191,7 +193,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail"
+              <a v-if="!actionLimited"
                  href="/organizations/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center gap-2">
@@ -221,6 +223,7 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
+
         <!-- not logged in -->
         <template v-else>
           <div
@@ -250,6 +253,7 @@
       </div>
     </div>
   </div>
+
   <!-- mobile menu -->
   <el-drawer
     :z-index="998"
@@ -273,7 +277,7 @@
       text-color="#475467"
     >
       <MenuItems
-        :isLoggedInBoolean="isLoggedInBoolean"
+        :isLoggedInBoolean="isLoggedIn"
         :starChainUrl="starChainUrl"
         :hasEmail="hasEmail"
       />
@@ -281,12 +285,34 @@
   </el-drawer>
 
   <el-alert
-    v-if="!hasEmail && isLoggedInBoolean"
+    v-if="initialized && isLoggedIn && !hasEmail && !canChangeUserName"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
     type="warning"
-  ></el-alert>
+  >
+    <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
+  </el-alert>
+
+  <el-alert
+    v-if="initialized && isLoggedIn && canChangeUserName && hasEmail"
+    :title="$t('navbar.usernameNeedChange')"
+    center
+    show-icon
+    type="warning"
+  >
+    <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
+  </el-alert>
+
+  <el-alert
+    v-if="initialized && isLoggedIn && canChangeUserName && !hasEmail"
+    :title="$t('navbar.emailAndUsernameMissing')"
+    center
+    show-icon
+    type="warning"
+  >
+    <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
+  </el-alert>
 
   <Broadcast />
 </template>
@@ -300,12 +326,11 @@
   import { useCookies } from "vue3-cookies"
   import { ElMessage } from 'element-plus'
   import Broadcast from './Broadcast.vue'
+  import UpdateUsername from '../popup/UpdateUsername.vue'
 
   export default {
     props: {
-      logo: String,
-      isLoggedIn: String,
-      starChainUrl: String
+      logo: String
     },
     data() {
       const classParam = new URLSearchParams(window.location.search).get(
@@ -316,7 +341,6 @@
         activeIndex: classParam
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
-        isLoggedInBoolean: !!cookies.get('login_identity'),
         mobileMenuVisibility: false,
         userAvatar: this.avatar,
         userStore: useUserStore(),
@@ -325,23 +349,15 @@
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
-        hasEmail: true
       }
     },
     components: {
       MenuItems,
-      Broadcast
+      Broadcast,
+      UpdateUsername
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin']),
-    },
-    watch: {
-      initialized(_) {
-        this.hasEmail = !!this.email
-      },
-      email(newEmail, _) {
-        this.hasEmail = !!newEmail
-      }
+      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin', 'isLoggedIn', 'actionLimited', 'hasEmail', 'canChangeUsername'])
     },
     methods: {
       showDialog() {
@@ -410,5 +426,20 @@
     background-color: rgb(249 250 251) !important;
     border-radius: 6px !important;
     color: #182230 !important;
+  }
+  :deep(.el-alert__icon) {
+    height: 14px !important;
+    width: 14px !important;
+  }
+  :deep(.el-alert__content) {
+    flex-direction: row;
+    font-size: 14px !important;
+    gap: 8px;
+  }
+  :deep(.el-alert__title) {
+    font-size: 14px !important;
+  }
+  :deep(.el-alert__description) {
+    font-size: 14px !important;
   }
 </style>

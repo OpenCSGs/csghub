@@ -20,7 +20,8 @@
     />
 
     <!-- evaluation button -->
-    <div class="relative inline-flex">
+    <div v-if="!actionLimited"
+      class="relative inline-flex">
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
@@ -33,9 +34,7 @@
 
     <!-- endpoint deploy button -->
     <DeployDropdown
-      v-if="
-        isLoggedIn && repoType === 'model' && enableEndpoint && !!httpCloneUrl
-      "
+      v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
     <div
@@ -64,11 +63,11 @@
 
     <!-- finetune deploy button -->
     <CsgButton
+      v-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
       :class="{ disabled: !enableFinetune || !httpCloneUrl }"
       :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
       svgName="model_finetune_create"
-      v-if="repoType === 'model'"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
     />
 
@@ -225,6 +224,7 @@
   import AddToCollections from '../collections/AddToCollections.vue'
   import useUserStore from '../../stores/UserStore.js'
   import { ToLoginPage } from '@/packs/utils'
+  import { storeToRefs } from 'pinia'
 
   const userStore = useUserStore()
 
@@ -238,6 +238,7 @@
     showAddToCollections: Boolean,
   })
 
+  const { actionLimited, isLoggedIn } = storeToRefs(userStore)
   const httpCloneUrl = ref('')
   const sshCloneUrl = ref('')
   const httpCloneProtocol = ref('https:')
@@ -245,10 +246,6 @@
   const httpsCloneCode = ref('')
   const sshCloneCode = ref('')
   const httpsCloneCodeWithToken = ref('')
-
-  const isLoggedIn = computed(() => {
-    return !!userStore.username
-  })
 
   watch(() => props.repo, () => {
     const url = new URL(props.repo.repository.http_clone_url)

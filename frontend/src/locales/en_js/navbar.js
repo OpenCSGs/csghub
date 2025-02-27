@@ -18,6 +18,9 @@ export const navbar = {
   login: "Login",
   newCollection: "New Collection",
   emailMissing: 'Please provide your email address before proceeding',
+  usernameNeedChange: 'Please update your username before proceeding',
+  emailAndUsernameMissing: 'Please update your email and username before proceeding',
+  profileEdit: "Edit Profile",
   more: "More",
   setting: "Account Settings",
 }

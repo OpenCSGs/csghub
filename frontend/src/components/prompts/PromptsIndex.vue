@@ -1,6 +1,5 @@
-<!-- 提示词库列表页面 -->
 <template>
-  <PromptsBreadCrumbs 
+  <PromptsBreadCrumbs
     firstHref="/prompts/library"
     firstHrefName="prompts.promptLibrary"
     class="sticky top-0 md:top-[60px] bg-white left-0 z-10"
@@ -20,14 +19,14 @@
           @change="filterChange"
         />
         <CsgButton
-          v-if="userStore.isLoggedIn"
+          v-if="!actionLimited"
           :loading="loading"
           class="btn btn-secondary-gray btn-lg"
           @click="changeCurrentComponent('newPromptsList')"
           svgName="create_org_repo"
           :name="$t('prompts.newPromptsList')"
         />
-      </div>   
+      </div>
     </div>
     <ElInput
           v-model="nameFilterInput"
@@ -68,6 +67,7 @@
   import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import useUserStore from '../../stores/UserStore.js'
+  import { storeToRefs } from 'pinia'
 
   const userStore = useUserStore()
   const loading =ref(true)
@@ -76,6 +76,8 @@
   const currentPage = ref(1)
   const promptsData = ref([])
   const totalPrompts = ref(0)
+
+  const { actionLimited } = storeToRefs(userStore)
 
   const emit = defineEmits(['changeCurrentComponent'])
   const changeCurrentComponent = (currentComponent) => {
