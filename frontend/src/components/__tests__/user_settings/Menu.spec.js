@@ -6,10 +6,15 @@ let userStoreData = {
   username: 'test',
   nickname: 'testn',
   email: 'test@test.com',
-  avatar: 'test_avatar.com'
+  avatar: 'test_avatar.com',
+  actionLimited: false
 }
 vi.mock('../../../stores/UserStore', () => ({
   default: () => (userStoreData)
+}))
+
+vi.mock('pinia', () => ({
+  storeToRefs: (obj) => obj
 }))
 
 describe('Menu', () => {
@@ -38,9 +43,9 @@ describe('Menu', () => {
     })
   })
 
-  describe('template render without email', () => {
+  describe('template render with user action limited', () => {
     beforeEach(() => {
-      userStoreData = { username: 'test', nickname: 'testn', avatar: 'test_avatar.com' };
+      userStoreData = { username: 'test', nickname: 'testn', avatar: 'test_avatar.com', actionLimited: true };
       wrapper = mount(Menu)
     })
     it('renders access token navbar', async () => {
