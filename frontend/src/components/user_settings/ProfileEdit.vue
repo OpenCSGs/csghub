@@ -36,7 +36,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.username"
-        :disabled="canChangeUsername"
+        :disabled="!canChangeUsername"
         :placeholder="$t('all.userName')">
       </el-input>
       <p class="text-gray-500 text-xs italic pt-1">
@@ -154,10 +154,8 @@
   const fileInput = ref(null)
   const emit = defineEmits(['updateHasSave'])
 
-  const canChangeUsername = computed(() => {
-    const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
-    return canChange === 'true'
-  })
+  const { canChangeUsername } = storeToRefs(userStore)
+  const { refreshCanChangeUsernameCookie } = userStore
 
   const uploadImage = () => {
     fileInput.value.click()
@@ -190,7 +188,7 @@
 
     if (canChangeUsername.value) {
       ElMessageBox.confirm(
-        t('profile.edit.confirmUpdateMessage'),
+        '',
         t('profile.edit.confirmUpdateTitle'),
         {
           confirmButtonText: t('profile.edit.confirmUpdate'),
@@ -198,7 +196,7 @@
           type: 'warning',
         }
       ).then(() => {
-        saveProfile({relogin: true})
+        saveProfile()
       }).catch(() => {
         ElMessage({
           type: 'info',
@@ -241,9 +239,11 @@
       if (error.value) {
         ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
-        await refreshJWT()
+        await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
         userStore.email = params.email
         userStore.username = params.username
+        cookies.set('can_change_username', 'false')
+        refreshCanChangeUsernameCookie()
         ElMessage.success(t('profile.edit.updateSuccess'))
         if (config.relogin) {
           window.location.href = '/logout'
