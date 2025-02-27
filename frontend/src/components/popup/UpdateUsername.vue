@@ -67,31 +67,31 @@
         message: t('rule.lengthLimit', { min: 2, max: 64 }),
         trigger: 'blur'
       },
-      // 以字母开头
+      // start with letter
       {
         pattern: /^[a-zA-Z]/,
         message: t('rule.startWithLetter'),
         trigger: 'blur'
       },
-      // 以数字或字母结尾
+      // Ending with a number or letter
       {
         pattern: /[a-zA-Z0-9]$/,
         message: t('rule.endWithLetterOrNumber'),
         trigger: 'blur'
       },
-      // 只能包含字母、数字与-_.
+      // Contains only letters, numbers, and -_.
       {
         pattern: /^[a-zA-Z0-9-_\.]+$/,
         message: t('rule.onlyLetterNumberAndSpecialStr'),
         trigger: 'blur'
       },
-      // 特殊字符不能并列出现
+      // Special characters cannot appear side by side
       {
         pattern: /^(?!.*[-_.]{2,}).*$/,
         message: t('rule.specialStrNotTogether'),
         trigger: 'blur'
       },
-      // 保险起见最后一步还是加上最终的正则吧
+      // It's safe to add the final reg as the last step
       { pattern: nameRule, message: t('rule.nameRule'), trigger: 'blur' }
     ]
   })
