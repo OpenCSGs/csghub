@@ -20,7 +20,7 @@
     />
 
     <!-- evaluation button -->
-    <div v-if="hasEmail && !canChangeUsername"
+    <div v-if="!actionLimited"
       class="relative inline-flex">
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
@@ -34,7 +34,7 @@
 
     <!-- endpoint deploy button -->
     <DeployDropdown
-      v-if="hasEmail && !canChangeUsername && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
+      v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
       :modelId="namespacePath"
     />
     <div
@@ -63,7 +63,7 @@
 
     <!-- finetune deploy button -->
     <CsgButton
-      v-if="hasEmail && !canChangeUsername && repoType === 'model'"
+      v-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
       :class="{ disabled: !enableFinetune || !httpCloneUrl }"
       :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
@@ -224,10 +224,9 @@
   import AddToCollections from '../collections/AddToCollections.vue'
   import useUserStore from '../../stores/UserStore.js'
   import { ToLoginPage } from '@/packs/utils'
-  import { useCookies } from 'vue3-cookies'
+  import { storeToRefs } from 'pinia'
 
   const userStore = useUserStore()
-  const cookies = useCookies()
 
   const props = defineProps({
     repoType: String,
@@ -239,6 +238,7 @@
     showAddToCollections: Boolean,
   })
 
+  const { actionLimited, isLoggedIn } = storeToRefs(userStore)
   const httpCloneUrl = ref('')
   const sshCloneUrl = ref('')
   const httpCloneProtocol = ref('https:')
@@ -246,17 +246,6 @@
   const httpsCloneCode = ref('')
   const sshCloneCode = ref('')
   const httpsCloneCodeWithToken = ref('')
-
-  const isLoggedIn = computed(() => {
-    return !!userStore.username
-  })
-
-  const canChangeUsername = computed(() => {
-    const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
-    return canChange === 'true'
-  })
-
-  const hasEmail = computed(() => isLoggedIn && !!userStore.email)
 
   watch(() => props.repo, () => {
     const url = new URL(props.repo.repository.http_clone_url)

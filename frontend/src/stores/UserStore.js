@@ -22,9 +22,12 @@ const useUserStore = defineStore('User', () => {
   const isLoggedIn = computed(() => uuid.value !== '')
   const isAdmin = computed(() => roles.value.includes('admin') || roles.value.includes('super_user'))
   const isSuperUser = computed(() => roles.value.includes('super_user'))
-  const canChangeUsername = computed(() => isLoggedIn.value ? canChangeUsernameCookie.value : false)
+  const canChangeUsername = computed({
+    get: () => isLoggedIn.value ? canChangeUsernameCookie.value : false,
+    set: (value) => value
+  })
   const hasEmail = computed(() => isLoggedIn.value && !!email.value )
-  const actionLimited = computed(() => !hasEmail.value || canChangeUsername.value)
+  const actionLimited = computed(() => isLoggedIn.value && (!hasEmail.value || canChangeUsername.value))
 
   async function initialize(initialData) {
     username.value = initialData.username || ''
@@ -66,6 +69,7 @@ const useUserStore = defineStore('User', () => {
     isSuperUser,
     canChangeUsername,
     actionLimited,
+    hasEmail,
     refreshCanChangeUsernameCookie
   }
 })

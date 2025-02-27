@@ -20,7 +20,7 @@
           @change="filterChange"
         />
         <CsgButton
-          v-if="hasEmail && !canChangeUsername"
+          v-if="!actionLimited"
           :loading="loading"
           class="btn btn-secondary-gray btn-lg"
           @click="changeCurrentComponent('newPromptsList')"
@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted } from 'vue'
   import PromptsDatasetsCard from './PromptsDatasetsCard.vue'
   import PromptsBreadCrumbs from './PromptsBreadCrumbs.vue'
   import useFetchApi from '../../packs/useFetchApi'
@@ -68,10 +68,9 @@
   import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import useUserStore from '../../stores/UserStore.js'
-  import { useCookies } from 'vue3-cookies'
+  import { storeToRefs } from 'pinia'
 
   const userStore = useUserStore()
-  const { cookies } = useCookies()
   const loading =ref(true)
   const nameFilterInput = ref('')
   const perPage = ref(16)
@@ -79,18 +78,7 @@
   const promptsData = ref([])
   const totalPrompts = ref(0)
 
-  const isLoggedIn = computed(() => {
-    return !!userStore.username
-  })
-
-  const canChangeUsername = computed(() => {
-    const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
-    return canChange === 'true'
-  })
-
-  const hasEmail = computed(() => {
-    return isLoggedIn && !!userStore.email
-  })
+  const { actionLimited } = storeToRefs(userStore)
 
   const emit = defineEmits(['changeCurrentComponent'])
   const changeCurrentComponent = (currentComponent) => {

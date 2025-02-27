@@ -285,7 +285,7 @@
   </el-drawer>
 
   <el-alert
-    v-if="!hasEmail && !canChangeUserName"
+    v-if="initialized && isLoggedIn && !hasEmail && !canChangeUserName"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -295,7 +295,7 @@
   </el-alert>
 
   <el-alert
-    v-if="canChangeUserName && hasEmail"
+    v-if="initialized && isLoggedIn && canChangeUserName && hasEmail"
     :title="$t('navbar.usernameNeedChange')"
     center
     show-icon
@@ -305,7 +305,7 @@
   </el-alert>
 
   <el-alert
-    v-if="canChangeUserName && !hasEmail"
+    v-if="initialized && isLoggedIn && canChangeUserName && !hasEmail"
     :title="$t('navbar.emailAndUsernameMissing')"
     center
     show-icon

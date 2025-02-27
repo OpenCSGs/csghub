@@ -29,7 +29,7 @@
 
         <!-- access token -->
         <a
-          v-if="hasEmail && !canChangeUserName"
+          v-if="!actionLimited"
           href="/settings/access-token"
           class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
           :class="menuClass('/settings/access-token')">
@@ -38,7 +38,7 @@
 
         <!-- ssh key -->
         <a
-          v-if="hasEmail && !canChangeUserName"
+          v-if="!actionLimited"
           href="/settings/ssh-keys"
           class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
           :class="menuClass('/settings/ssh-keys')">
@@ -54,11 +54,11 @@
             :label="$t('profile.accountSetting')"
             name="/settings/profile"></el-tab-pane>
           <el-tab-pane
-            v-if="hasEmail && !canChangeUserName"
+            v-if="!actionLimited"
             :label="$t('profile.menu.gitToken')"
             name="/settings/access-token"></el-tab-pane>
           <el-tab-pane
-            v-if="hasEmail && !canChangeUserName"
+            v-if="!actionLimited"
             :label="$t('profile.menu.sshKey')"
             name="/settings/ssh-keys"></el-tab-pane>
         </el-tabs>
@@ -101,9 +101,9 @@
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue'
-  import { useCookies } from "vue3-cookies"
+  import { ref } from 'vue'
   import useUserStore from '../../stores/UserStore'
+  import { storeToRefs } from 'pinia'
 
   const props = defineProps({
     hasSave: {
@@ -113,17 +113,10 @@
   })
 
   const userStore = useUserStore()
-  const { cookies } = useCookies()
-  const hasEmail = computed(() => {
-    return !!userStore.email
-  })
+  const { actionLimited } = storeToRefs(userStore)
+
   const showDialog = ref(false)
   const activeTab = ref(window.location.pathname)
-
-  const canChangeUserName = () => {
-    const canChange = userStore.isLoggedIn ? cookies.get('can_change_username') : 'false'
-    return canChange === 'true'
-  }
 
   const menuClass = (menuPath) => {
     return [
@@ -147,11 +140,11 @@
     window.location.href = '/profile/' + userStore.username
   }
 </script>
+
 <style>
   .profileTabs .el-tabs__nav-scroll {
     @media screen and (max-width: 768px) {
       padding-left: 0px !important;
     }
   }
-
 </style>
