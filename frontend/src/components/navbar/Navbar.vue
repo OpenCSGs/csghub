@@ -1,4 +1,5 @@
 <template>
+  <UpdateUsername />
   <div class="border-b sticky top-0 z-[999] csg-navbar bg-white border-gray-200">
     <div
       class="page-responsive-width flex text-gray-700 justify-between items-center h-20 sm:h-15 gap-6 md:px-5">
@@ -324,6 +325,7 @@
   import { useCookies } from "vue3-cookies"
   import { ElMessage } from 'element-plus'
   import Broadcast from './Broadcast.vue'
+  import UpdateUsername from '../popup/UpdateUsername.vue'
 
   export default {
     props: {
@@ -355,7 +357,8 @@
     },
     components: {
       MenuItems,
-      Broadcast
+      Broadcast,
+      UpdateUsername
     },
     computed: {
       ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin', 'isLoggedIn']),
