@@ -210,11 +210,11 @@
             {{ $t('application_spaces.edit.spaceVariablesDesc') }}
           </div>
         </div>
-        <div class="flex flex-col gap-[6px]" v-for="(value, name) in theVariables" :key="name">
-          <div class="text-sm text-gray-600 leading-[20px]">
-            {{ name }}
+        <div class="flex flex-col gap-[6px]">
+          <div v-for="(_, name) in theVariables" :key="name" class="flex items-center my-1">
+            <label :for="name" class="text-gray-600 mb-1.5 font-light text-xs w-[40%]">{{ name }}</label>
+            <el-input v-model="theVariables[name]" size="small"></el-input>
           </div>
-          <el-input v-model="theVariables[name]" size="large" class="!w-[512px] sm:!w-full" />
           <el-button @click="updateVaribles" class="w-[100px]" data-test="update-varibles">
             {{ $t('all.update') }}
           </el-button>
@@ -466,7 +466,7 @@
       },
       variables(newVariables, _) {
         this.theVariables = newVariables
-      } 
+      }
     },
 
     emits: ['showSpaceLogs'],
