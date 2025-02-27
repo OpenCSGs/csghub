@@ -251,14 +251,12 @@
     return !!userStore.username
   })
 
-  const canChangeUsername = () => {
+  const canChangeUsername = computed(() => {
     const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
     return canChange === 'true'
-  }
-
-  const hasEmail = computed(() => {
-    return isLoggedIn && !!userStore.email
   })
+
+  const hasEmail = computed(() => isLoggedIn && !!userStore.email)
 
   watch(() => props.repo, () => {
     const url = new URL(props.repo.repository.http_clone_url)
