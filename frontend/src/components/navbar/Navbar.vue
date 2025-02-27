@@ -58,11 +58,11 @@
 
         <!-- logged in avatar dropdown -->
         <el-dropdown
-          v-if="isLoggedIn"
+          v-if="cookies.get('login_identity')"
           class="pl-1">
           <!-- verified_company_user/company_user/user -->
           <span
-            v-if="companyVerified"
+            v-if="false"
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
@@ -71,7 +71,7 @@
             <SvgIcon name="verified_company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
           </span>
           <span
-            v-else-if="isCompanyUser"
+            v-else-if="false"
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
@@ -349,6 +349,7 @@
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
+        cookies: cookies
       }
     },
     components: {

@@ -6,6 +6,7 @@
     class="dialogWidth"
     :close-on-click-modal="false"
     :show-close="false"
+    :close-on-press-escape="false"
     style="border-radius: var(--border-radius-md)"
     left
   >
