@@ -33,7 +33,7 @@
           class="w-full el-menu-nav flex items-center gap-1"
           text-color="'var(--Gray-600)'">
           <MenuItems
-            :isLoggedInBoolean="isLoggedInBoolean"
+            :isLoggedInBoolean="isLoggedIn"
             :starChainUrl="starChainUrl"
             :hasEmail="hasEmail" />
         </el-menu>
@@ -58,7 +58,7 @@
 
         <!-- logged in avatar dropdown -->
         <el-dropdown
-          v-if="isLoggedInBoolean"
+          v-if="isLoggedIn"
           class="pl-1">
           <!-- verified_company_user/company_user/user -->
           <span
@@ -125,7 +125,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                 href="/resource-console">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -134,7 +134,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="isAdmin && hasEmail && !canChangeUserName"
+              <a v-if="isAdmin && !actionLimited"
                   href="/admin_panel">
                   <el-dropdown-item>
                     <div class="flex items-center gap-2">
@@ -148,7 +148,7 @@
                 target="_blank">
                 <el-dropdown-item> {{ $t('navbar.source') }} </el-dropdown-item>
               </a> -->
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                  href="/models/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center gap-2">
@@ -157,7 +157,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                  href="/datasets/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -166,7 +166,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                  href="/codes/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -175,7 +175,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                  href="/spaces/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -184,7 +184,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                 href="/collections/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
@@ -193,7 +193,7 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <a v-if="hasEmail && !canChangeUserName"
+              <a v-if="!actionLimited"
                  href="/organizations/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center gap-2">
@@ -223,6 +223,7 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
+
         <!-- not logged in -->
         <template v-else>
           <div
@@ -276,7 +277,7 @@
       text-color="#475467"
     >
       <MenuItems
-        :isLoggedInBoolean="isLoggedInBoolean"
+        :isLoggedInBoolean="isLoggedIn"
         :starChainUrl="starChainUrl"
         :hasEmail="hasEmail"
       />
@@ -284,7 +285,7 @@
   </el-drawer>
 
   <el-alert
-    v-if="isLoggedInBoolean && (!hasEmail && !canChangeUserName)"
+    v-if="!hasEmail && !canChangeUserName"
     :title="$t('navbar.emailMissing')"
     center
     show-icon
@@ -294,7 +295,7 @@
   </el-alert>
 
   <el-alert
-    v-if="isLoggedInBoolean && (canChangeUserName && hasEmail)"
+    v-if="canChangeUserName && hasEmail"
     :title="$t('navbar.usernameNeedChange')"
     center
     show-icon
@@ -304,7 +305,7 @@
   </el-alert>
 
   <el-alert
-    v-if="isLoggedInBoolean && (canChangeUserName && !hasEmail)"
+    v-if="canChangeUserName && !hasEmail"
     :title="$t('navbar.emailAndUsernameMissing')"
     center
     show-icon
@@ -329,9 +330,7 @@
 
   export default {
     props: {
-      logo: String,
-      isLoggedIn: String,
-      starChainUrl: String
+      logo: String
     },
     data() {
       const classParam = new URLSearchParams(window.location.search).get(
@@ -342,7 +341,6 @@
         activeIndex: classParam
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
-        isLoggedInBoolean: !!cookies.get('login_identity'),
         mobileMenuVisibility: false,
         userAvatar: this.avatar,
         userStore: useUserStore(),
@@ -351,8 +349,6 @@
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
-        canChangeUsername: cookies.get('can_change_username'),
-        hasEmail: true
       }
     },
     components: {
@@ -361,19 +357,7 @@
       UpdateUsername
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin', 'isLoggedIn']),
-      canChangeUserName() {
-        const canChange = this.isLoggedIn ? this.canChangeUsername : 'false'
-        return canChange === 'true'
-      }
-    },
-    watch: {
-      initialized(_) {
-        this.hasEmail = !!this.email
-      },
-      email(newEmail, _) {
-        this.hasEmail = !!newEmail
-      }
+      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin', 'isLoggedIn', 'actionLimited', 'hasEmail', 'canChangeUsername'])
     },
     methods: {
       showDialog() {
