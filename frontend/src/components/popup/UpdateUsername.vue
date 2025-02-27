@@ -41,10 +41,10 @@
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
   import useFetchApi from '../../packs/useFetchApi'
+  import refreshJWT from '@/packs/refreshJWT'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
-  const csghubServer = inject('csghubServer')
   const nameRule = inject('nameRule')
   const formData = ref({ username: '' })
   const formRef = ref(null)
@@ -116,7 +116,7 @@
 
   const updateUsername = async () => {
 
-    const profileUpdateEndpoint = `${csghubServer}/api/v1/user/${userStore.username}`
+    const profileUpdateEndpoint = `/user/${userStore.uuid}?type=uuid`
 
     const params = { new_username: formData.value.username }
 
@@ -126,13 +126,15 @@
       body: JSON.stringify(params)
     }
     try {
-      const { data, error } = await useFetchApi(profileUpdateEndpoint, options).json()
+      const { error } = await useFetchApi(profileUpdateEndpoint, options).json()
 
       if (error.value) {
         ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
+        await refreshJWT()
+        userStore.username = formData.value.username
+        cookies.set('can_change_username', 'false')
         ElMessage.success(t('profile.edit.updateSuccess'))
-        window.location.href = '/logout'
       }
     } catch (error) {
       console.error(error)

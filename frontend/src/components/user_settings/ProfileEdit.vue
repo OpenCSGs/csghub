@@ -207,7 +207,7 @@
   }
 
   const updateProfile = async (config={}) => {
-    const profileUpdateEndpoint = `/user/${currentUsername.value}`
+    const profileUpdateEndpoint = `/user/${userStore.uuid}?type=uuid`
     let params = {
       avatar: profileData.value.avatar,
       username: currentUsername.value,
