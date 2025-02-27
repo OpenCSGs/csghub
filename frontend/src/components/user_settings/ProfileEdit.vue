@@ -36,7 +36,7 @@
       <el-input
         class="max-w-[600px]"
         v-model="profileData.username"
-        :disabled="canChangeUsername !== 'true'"
+        :disabled="canChangeUsername"
         :placeholder="$t('all.userName')">
       </el-input>
       <p class="text-gray-500 text-xs italic pt-1">
@@ -138,22 +138,26 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, watch } from 'vue'
+  import { ref, computed } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
   import { useCookies } from 'vue3-cookies'
   import { isBlank } from '../../packs/utils'
+  import refreshJWT from '@/packs/refreshJWT.js'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
-  const currentUsername = ref('')
   const userStore = useUserStore()
   const profileData = ref(storeToRefs(userStore))
 
   const fileInput = ref(null)
-  const canChangeUsername = cookies.get('can_change_username')
   const emit = defineEmits(['updateHasSave'])
+
+  const canChangeUsername = computed(() => {
+    const canChange = isLoggedIn ? cookies.get('can_change_username') : 'false'
+    return canChange === 'true'
+  })
 
   const uploadImage = () => {
     fileInput.value.click()
@@ -184,7 +188,7 @@
   const confirmUpdateProfile = () => {
     emit('updateHasSave', true)
 
-    if (canChangeUsername === 'true') {
+    if (canChangeUsername.value) {
       ElMessageBox.confirm(
         t('profile.edit.confirmUpdateMessage'),
         t('profile.edit.confirmUpdateTitle'),
@@ -210,7 +214,7 @@
     const profileUpdateEndpoint = `/user/${userStore.uuid}?type=uuid`
     let params = {
       avatar: profileData.value.avatar,
-      username: currentUsername.value,
+      username: profileData.value.username,
       name: profileData.value.nickname,
       email: (profileData.value.email || "").trim(),
       phone: profileData.value.phone,
@@ -218,7 +222,7 @@
       bio: profileData.value.bio
     }
 
-    if (canChangeUsername === 'true') {
+    if (canChangeUsername.value) {
       params['new_username'] = profileData.value.username
     }
 
@@ -237,8 +241,10 @@
       if (error.value) {
         ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
-        ElMessage.success(t('profile.edit.updateSuccess'))
+        await refreshJWT()
         userStore.email = params.email
+        userStore.username = params.username
+        ElMessage.success(t('profile.edit.updateSuccess'))
         if (config.relogin) {
           window.location.href = '/logout'
         }
@@ -263,8 +269,4 @@
   const handleInputChange = () => {
     emit('updateHasSave', false)
   }
-
-  watch(() => userStore.username, () => {
-    currentUsername.value = userStore.username
-  }, { once: true })
 </script>
