@@ -86,6 +86,8 @@ export const application_spaces = {
     spaceVariables: "Space Variables"
   },
   edit: {
+    spaceVariables: "Space Variables",
+    spaceVariablesDesc: "You can modify the space variables",
     cloudResource: 'Cloud resource',
     cloudResourceDesc: 'Switch to different cloud resources. When you switch to a paid resource, you will be charged based on how long you use it',
     currentCloudResource: 'Current cloud resources',
