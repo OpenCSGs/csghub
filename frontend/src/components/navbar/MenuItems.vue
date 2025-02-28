@@ -192,16 +192,15 @@
 
   const initMenuItems = () => {
     // const menuWidth = document.querySelector('#pc-menu')?.offsetWidth
-    const menuLength = rawNavItems.length - 1
 
     if (768 < window.innerWidth && window.innerWidth <= 1024) {
       allNavItems.value = rawNavItems.slice(0, 3)
-      moreItems.value = rawNavItems.slice(3, menuLength)
+      moreItems.value = rawNavItems.slice(3)
     }
 
     if (1024 < window.innerWidth && window.innerWidth <= 1280) {
       allNavItems.value = rawNavItems.slice(0, 5)
-      moreItems.value = rawNavItems.slice(5, menuLength)
+      moreItems.value = rawNavItems.slice(5)
     }
 
     if (window.innerWidth > 1280) {
