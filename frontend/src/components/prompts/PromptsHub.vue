@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-[calc(100vh-153px)] flex md:flex-col text-[#101828] relative">
+  <div class="w-full h-[calc(100vh-153px)] flex md:flex-col text-[#101828] relative">
     <PromptsMenu />
     <PromptsLibrary
       :current-component="currentComponent"

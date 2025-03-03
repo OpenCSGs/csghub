@@ -1,7 +1,7 @@
 <!-- 提示词库根页面 -->
 <template>
-  <div class="grow text-[#101828] w-full">
-    <PromptsIndex 
+  <div class="grow text-[#101828] w-full overflow-y-auto">
+    <PromptsIndex
       v-if="theCurrentComponent === 'PromptsIndex'"
       @changeCurrentComponent="changeCurrentComponent"
     />
