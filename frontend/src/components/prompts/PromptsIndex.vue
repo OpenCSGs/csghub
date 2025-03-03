@@ -19,7 +19,7 @@
           @change="filterChange"
         />
         <CsgButton
-          v-if="!actionLimited"
+          v-if="isLoggedIn && !actionLimited"
           :loading="loading"
           class="btn btn-secondary-gray btn-lg"
           @click="changeCurrentComponent('newPromptsList')"
@@ -77,7 +77,7 @@
   const promptsData = ref([])
   const totalPrompts = ref(0)
 
-  const { actionLimited } = storeToRefs(userStore)
+  const { actionLimited, isLoggedIn } = storeToRefs(userStore)
 
   const emit = defineEmits(['changeCurrentComponent'])
   const changeCurrentComponent = (currentComponent) => {

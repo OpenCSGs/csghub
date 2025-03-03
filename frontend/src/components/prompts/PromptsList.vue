@@ -20,7 +20,7 @@
       </div>
       <div class="text-sm text-gray-500">{{ repo.description }}</div>
       <div
-        class="flex text-sm text-gray-500 items-center"
+        class="flex gap-3 text-sm text-gray-500 items-center"
         v-if="theModels.length"
       >
         <span class="min-w-[max-content] text-md text-gray-700">
@@ -326,35 +326,35 @@ import CsgButton from '../shared/CsgButton.vue'
       ) !important;
     }
   }
-  
+
   :deep(.el-select) {
     --el-component-size-large: 44px !important;
   }
-  
+
   :deep(.el-select .el-input) {
     height: 44px !important;
   }
-  
+
   :deep(.el-select .el-input__wrapper) {
     height: 44px !important;
     line-height: 44px !important;
     padding: 0 16px !important;
   }
-  
+
   :deep(.el-select .el-input__inner) {
     height: 44px !important;
     line-height: 44px !important;
   }
-  
+
   :deep(.el-select:not(.el-select--large) .el-input__wrapper) {
     height: 44px !important;
   }
-  
+
   :deep(.el-select__popper .el-select-dropdown__item) {
     height: 44px !important;
     line-height: 44px !important;
   }
-  
+
   :deep(.btn-prev) {
     border-radius: 6px 0 0 6px;
     margin: 0 !important;
