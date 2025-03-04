@@ -1,9 +1,10 @@
 import { atob_utf8 } from './utils'
 
-const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch) => {
+const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch, currentFilePath) => {
   if (!content) return content
 
-  const prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
+  // const prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
+  const prefix = currentFilePath.replace('/blob/', '/resolve/')
 
   // Handle markdown format image
   content = content.replace(
@@ -33,6 +34,10 @@ const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) 
   const requestUrl = new URL(window.location.href)
   const fileExtension = requestUrl.pathname.split('.').pop()
 
+  const pathname = requestUrl.pathname
+  const lastSlashIndex = pathname.lastIndexOf('/')
+  const pathWithoutFilename = pathname.substring(0, lastSlashIndex + 1)
+
   let content
 
   if (['jpg', 'png', 'jpeg', 'gif', 'svg'].includes(fileExtension)) {
@@ -44,7 +49,8 @@ const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) 
         repoType,
         parsedBlobContent,
         namespacePath,
-        currentBranch
+        currentBranch,
+        pathWithoutFilename
       )
     } catch (error) {
       console.log(error)
