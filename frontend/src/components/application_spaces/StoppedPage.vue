@@ -34,7 +34,6 @@
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useFetchApi from '../../packs/useFetchApi'
-import CsgButton from '../shared/CsgButton.vue';
 
   const props = defineProps({
     path: String,
