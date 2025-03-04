@@ -3,7 +3,7 @@
     class="w-[240px] md:hidden md:w-full px-5 pt-[24px] font-medium text-[#475467] border-r"
     :style="`background:linear-gradient(270deg, #FCFCFC 0%, #FFF 100%)`"
   >
-    <div class="flex flex-col fixed top-[104px] gap-1 md:flex-row text-[14px] leading-[24px]">
+    <div class="flex flex-col top-[104px] gap-1 md:flex-row text-[14px] leading-[24px]">
       <a
         href="/prompts/library"
         class="p-3 hover:bg-[#F9FAFB] rounded-[8px] cursor-pointer"
