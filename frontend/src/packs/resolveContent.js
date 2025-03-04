@@ -4,7 +4,7 @@ const relativePathToResolvePath = (repoType, content, namespacePath, currentBran
   if (!content) return content
 
   // const prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
-  const prefix = currentFilePath
+  const prefix = currentFilePath.replace('/blob/', '/resolve/')
 
   // Handle markdown format image
   content = content.replace(
