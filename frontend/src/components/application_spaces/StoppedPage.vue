@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[50vh] py-[32px] flex flex-col items-center justify-center sm:px-[20px]">
+  <div class="h-[50vh] py-8 flex flex-col items-center justify-center sm:px-5">
     <p v-if="appStatus === 'Stopped'"
        class="text-gray-700 text-md"
     >
@@ -12,19 +12,18 @@
        {{ $t('application_spaces.sleepingDesc') }}
     </p>
 
-    <button v-if="isStopped && canWrite"
-            class="border border-brand-600 bg-brand-600 rounded-md shadow-xs px-[16px] py-[10px] text-white font-[500] text-md leading-[24px] mt-[24px]"
+    <CsgButton v-if="isStopped && canWrite"
+            class="btn btn-primary btn-md mt-6"
             @click="startSpace"
-    >
-      {{ $t('application_spaces.restart') }}
-    </button>
+            :name="$t('application_spaces.restart')"
+    />
 
-    <button v-if="isSleeping"
-            class="border border-brand-600 bg-brand-600 rounded-md shadow-xs px-[16px] py-[10px] text-white font-[500] text-md leading-[24px] mt-[24px]"
+    <CsgButton v-if="isSleeping"
+            class="btn btn-primary btn-md mt-6"
             @click="wakeupSpace"
-    >
-      {{ $t('application_spaces.wakeup') }}
-    </button>
+            :name="$t('application_spaces.wakeup')"
+    />
+
   </div>
 </template>
 
@@ -35,6 +34,7 @@
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useFetchApi from '../../packs/useFetchApi'
+import CsgButton from '../shared/CsgButton.vue';
 
   const props = defineProps({
     path: String,
