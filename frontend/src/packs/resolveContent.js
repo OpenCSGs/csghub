@@ -1,10 +1,19 @@
 import { atob_utf8 } from './utils'
 
-const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch, currentFilePath) => {
+const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch, requestPath) => {
   if (!content) return content
 
-  // const prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
-  const prefix = currentFilePath.replace('/blob/', '/resolve/')
+  const repoBasePath = `/${repoType}/${namespacePath}`
+
+  let prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
+
+  // requestPath === repoBasePath means accessing repo summary page
+  // requestPath !== repoBasePath means accessing a file
+  if (requestPath !== repoBasePath) {
+    const lastSlashIndex = requestPath.lastIndexOf('/')
+    const pathWithoutFilename = requestPath.substring(0, lastSlashIndex + 1)
+    prefix = pathWithoutFilename.replace('/blob/', '/resolve/')
+  }
 
   // Handle markdown format image
   content = content.replace(
@@ -35,8 +44,6 @@ const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) 
   const fileExtension = requestUrl.pathname.split('.').pop()
 
   const pathname = requestUrl.pathname
-  const lastSlashIndex = pathname.lastIndexOf('/')
-  const pathWithoutFilename = pathname.substring(0, lastSlashIndex + 1)
 
   let content
 
@@ -50,7 +57,7 @@ const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) 
         parsedBlobContent,
         namespacePath,
         currentBranch,
-        pathWithoutFilename
+        pathname
       )
     } catch (error) {
       console.log(error)
