@@ -109,7 +109,7 @@
   }
 
   const submitUserForm = async () => {
-    const { data } = await useFetchApi(`/user/${user.value.username}`, {
+    const { data } = await useFetchApi(`/user/${user.value.uuid}`, {
       headers: {
         'Content-Type': 'application/json'
       },
