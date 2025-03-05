@@ -1,36 +1,37 @@
 <template>
-  <div class="h-[50vh] py-[32px] flex flex-col items-center justify-center sm:px-[20px]">
-    <p v-if="['Building','Deploying','Startup'].includes(appStatus)"
-       class="text-gray-700 text-md"
+  <div class="h-[50vh] py-8 flex flex-col items-center justify-center sm:px-5">
+    <p
+      v-if="['Building', 'Deploying', 'Startup'].includes(appStatus)"
+      class="text-gray-700 text-md"
     >
-       <InstanceInBuilding :loadingText="$t('application_spaces.buildDesc')"/>
+      <InstanceInBuilding :loadingText="$t('application_spaces.buildDesc')" />
     </p>
-
-    <p v-if="['DeployFailed','BuildingFailed','RuntimeError'].includes(appStatus)"
-       class="text-gray-700 text-md"
+    <p
+      v-if="['DeployFailed', 'BuildingFailed', 'RuntimeError'].includes(appStatus)"
+      class="text-gray-700 text-md"
     >
-       {{ $t('application_spaces.errorDesc') }}
-       <p v-if="canWrite"
-          class="text-brand-700 font-[400] text-xs mt-[12px] cursor-pointer"
-          @click="showLogs"
-       >
-         {{ $t('application_spaces.errorPage.showErrorLogs') }}
-       </p>
+      {{ $t('application_spaces.errorDesc') }}
     </p>
+    <CsgButton
+      v-if="canWrite"
+      class="btn btn-primary btn-md mt-6"
+      @click="showLogs"
+      :name="$t('application_spaces.errorPage.showErrorLogs')"
+    />
   </div>
 </template>
 
 <script setup>
-  import InstanceInBuilding from '../shared/InstanceInBuilding.vue';
+import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
 
-  const props = defineProps({
-    appStatus: String,
-    canWrite: Boolean
-  })
+const props = defineProps({
+  appStatus: String,
+  canWrite: Boolean
+})
 
-  const emit = defineEmits(['showSpaceLogs']);
+const emit = defineEmits(['showSpaceLogs'])
 
-  const showLogs = () => {
-    emit('showSpaceLogs')
-  }
+const showLogs = () => {
+  emit('showSpaceLogs')
+}
 </script>
