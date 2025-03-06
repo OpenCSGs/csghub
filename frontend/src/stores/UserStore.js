@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useCookies } from 'vue3-cookies'
 
+const persistKey = 'user-store'
+
 const useUserStore = defineStore('User', () => {
   const { cookies } = useCookies()
   const username = ref('')
@@ -50,6 +52,10 @@ const useUserStore = defineStore('User', () => {
     canChangeUsernameCookie.value = cookies.get('can_change_username') === 'true'
   }
 
+  const clearStore = () => {
+    localStorage.removeItem(persistKey)
+  }
+
   return {
     username,
     nickname,
@@ -70,7 +76,13 @@ const useUserStore = defineStore('User', () => {
     canChangeUsername,
     actionLimited,
     hasEmail,
-    refreshCanChangeUsernameCookie
+    refreshCanChangeUsernameCookie,
+    clearStore
+  }
+}, {
+  persist: {
+    key: persistKey,
+    storage: localStorage
   }
 })
 

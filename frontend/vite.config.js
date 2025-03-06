@@ -38,6 +38,7 @@ const DEV_CONFIG = {
     rollupOptions: {
       treeshake: false,
       input: getHtmlEntryFiles("src"),
+      external: ['pinia-plugin-persistedstate'],
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
@@ -83,6 +84,7 @@ const PROD_CONFIG = {
   build: {
     rollupOptions: {
       input: getHtmlEntryFiles("src"),
+      external: ['pinia-plugin-persistedstate'],
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {

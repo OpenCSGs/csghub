@@ -66,7 +66,7 @@
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
-              :src="userAvatar">
+              :src="avatar">
             </el-avatar>
             <SvgIcon name="verified_company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
           </span>
@@ -75,7 +75,7 @@
             class="el-dropdown-link relative">
             <el-avatar
               :size="35"
-              :src="userAvatar">
+              :src="avatar">
             </el-avatar>
             <SvgIcon name="company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
           </span>
@@ -84,7 +84,7 @@
             class="el-dropdown-link">
             <el-avatar
               :size="35"
-              :src="userAvatar">
+              :src="avatar">
             </el-avatar>
           </span>
           <!-- avatar dropdown menu -->
@@ -93,7 +93,7 @@
               <el-dropdown-item>
                 <a :href="`/profile/${username}`">
                   <div class="flex flex-row items-center gap-2">
-                    <el-avatar :size="40" :src="userAvatar"></el-avatar>
+                    <el-avatar :size="40" :src="avatar"></el-avatar>
                     <div class="flex flex-col">
                     <span class="text-sm font-medium text-gray-700">{{ nickname }}</span>
                     <span class="text-sm font-light  text-gray-600">@{{ username }}</span>
@@ -322,7 +322,7 @@
   import useUserStore from '../../stores/UserStore.js'
   import { inject } from 'vue'
   import useFetchApi from '../../packs/useFetchApi.js'
-  import { mapState } from 'pinia'
+  import { mapActions, mapState } from 'pinia'
   import { useCookies } from "vue3-cookies"
   import { ElMessage } from 'element-plus'
   import Broadcast from './Broadcast.vue'
@@ -342,7 +342,6 @@
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
         mobileMenuVisibility: false,
-        userAvatar: this.avatar,
         userStore: useUserStore(),
         isCompanyUser: false,
         companyVerified: false,
@@ -358,9 +357,10 @@
       UpdateUsername
     },
     computed: {
-      ...mapState(useUserStore, ['email', 'username', 'nickname', 'initialized','isAdmin', 'isLoggedIn', 'actionLimited', 'hasEmail', 'canChangeUsername'])
+      ...mapState(useUserStore, ['email', 'username', 'nickname', 'avatar', 'initialized','isAdmin', 'isLoggedIn', 'actionLimited', 'hasEmail', 'canChangeUsername'])
     },
     methods: {
+      ...mapActions(useUserStore, {clearUserStore: 'clearStore'}),
       showDialog() {
         this.$refs.child.showDialog()
       },
@@ -370,7 +370,6 @@
       async fetchUser() {
         const {data, error} = await useFetchApi(`/user/${this.uuid}?type=uuid`).json()
         if (data.value) {
-          this.userAvatar = data.value.data.avatar
           this.userStore.initialize(data.value.data)
         } else {
           ElMessage.warning(error.value.msg)
@@ -381,11 +380,12 @@
         cookies.keys().forEach((cookie) => {
           cookies.remove(cookie)
         })
+        this.clearUserStore()
         window.location.href = '/'
       },
     },
     mounted() {
-      if (this.uuid) {
+      if (this.uuid && !this.initialized) {
         this.fetchUser()
       }
     }
