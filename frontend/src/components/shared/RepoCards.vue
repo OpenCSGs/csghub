@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-[24px] page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
+    class="flex gap-6 page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
     <div
       v-if="repoType !== 'space'"
       class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden">
@@ -10,9 +10,9 @@
         @resetTags="resetTags"
         :repoType="repoType" />
     </div>
-    <div class="pt-[32px] w-full">
+    <div class="pt-8 w-full">
       <div
-        :class="`flex ${repoType === 'model' ? 'flex-col' : 'xl:flex-col'} gap-3 justify-between ${
+        :class="`flex flex-wrap justify-between items-center gap-2 ${
           repoType === 'space' ? 'xl:pl-[20px] md:pl-0' : ''
         }`">
         <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
@@ -38,12 +38,12 @@
             height="18" /> -->
           <span class="capitalize">
             {{ $t(`${repoType}s.title`) }}
-            <span class="text-gray-400 text-md italic">
+            <span class="text-gray-600 text-md font-normal">
               {{ totalRepos }}
             </span>
           </span>
         </h3>
-        <div class="flex flex-wrap gap-2">
+        <div class="md:w-auto flex flex-wrap gap-2">
           <el-select
             v-if="onPremise === 'true'"
             v-model="sourceSelection"
@@ -81,7 +81,7 @@
           </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="!w-[320px] xl:!w-full"
+            class="w-fit"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
             @change="filterChange" />
