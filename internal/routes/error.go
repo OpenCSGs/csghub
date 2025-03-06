@@ -8,4 +8,5 @@ func registerErrorRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistry)
 	engine.GET("/errors/not-found", handlersRegistry.RenderHandler.ErrorHandler.NotFound)
 	engine.GET("/errors/unauthorized", handlersRegistry.RenderHandler.ErrorHandler.Unauthorized)
 	engine.GET("/errors/login-failed", handlersRegistry.RenderHandler.ErrorHandler.LoginFailed)
+	engine.GET("/errors/server-error", handlersRegistry.RenderHandler.ErrorHandler.ServerError)
 }
