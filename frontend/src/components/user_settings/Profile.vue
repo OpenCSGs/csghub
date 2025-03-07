@@ -71,10 +71,6 @@
     name: String
   })
 
-  onMounted(() => {
-    fetchUserInfo()
-  })
-
   const userId = new URL(window.location.href).pathname.split('/').pop()
   const avatar = ref('')
   const username = ref('')
@@ -108,4 +104,10 @@
       ElMessage.warning(error.value.msg)
     }
   }
+
+  onMounted(() => {
+    if(!isCurrentUser.value) {
+      fetchUserInfo()
+    }
+  })
 </script>
