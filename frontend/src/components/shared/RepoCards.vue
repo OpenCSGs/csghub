@@ -191,6 +191,10 @@
       value: 'evaluation',
       label: t('models.index.evaluationFilter')
     },
+    {
+      value: 'serverless',
+      label: t('models.index.serverlessFilter')
+    }
   ]
 
   const sourceOptions = [
@@ -245,6 +249,10 @@
 
     if (filterSelection.value === 'evaluation') {
       url = url + `&tag_category=runtime_framework&tag_name=opencompass`
+    }
+
+    if (filterSelection.value === 'serverless') {
+      url = url + `&tag_category=runtime_framework&tag_name=serverless`
     }
 
     for (let [category, tags] of Object.entries(activeTags.value)) {
