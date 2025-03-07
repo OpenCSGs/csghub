@@ -96,10 +96,10 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     userLikes.value = initialData.user_likes
     widgetType.value = initialData.widget_type
     endpoint.value = initialData.endpoint
-    hardware = initialData.hardware
-    sdk = initialData.sdk
-    sku = initialData.sku
-    svcName = initialData.svc_name
+    hardware.value = initialData.hardware
+    sdk.value = initialData.sdk
+    sku.value = initialData.sku
+    svcName.value = initialData.svc_name
   }
 
   const clearStore = () => {
