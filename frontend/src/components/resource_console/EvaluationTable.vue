@@ -188,7 +188,7 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { formatDate } from '../../packs/datetimeUtils'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
@@ -258,12 +258,9 @@
     }
   }
 
-  watch(
-    () => userStore.username,
-    () => {
-      fetchEvaluations()
-    }
-  )
+  onMounted(() => {
+    fetchEvaluations()
+  })
 </script>
 
 <style lang="less">
