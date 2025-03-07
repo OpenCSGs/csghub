@@ -48,6 +48,10 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const sdk = ref('')
   const sku = ref('')
   const svcName = ref('')
+  // collection specific setatus
+  const avatar = ref('')
+  const theme = ref('')
+  const repositories = ref([])
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -100,6 +104,9 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     sdk.value = initialData.sdk
     sku.value = initialData.sku
     svcName.value = initialData.svc_name
+    avatar.value = initialData.avatar
+    theme.value = initialData.theme
+    repositories.value = initialData.repositories
   }
 
   const clearStore = () => {
@@ -152,6 +159,9 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     sdk,
     sku,
     svcName,
+    avatar,
+    theme,
+    repositories,
     clearStore
   }
 }, {

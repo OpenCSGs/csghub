@@ -3,13 +3,13 @@
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto page-responsive-width">
       <repo-header
+        :avatar="repoDetailStore.namespace?.Avatar"
         :license="repoDetailStore.license"
         :name="repoDetailStore.name"
         :nickname="repoDetailStore.nickname"
         :desc="repoDetailStore.description"
         :path="`${namespace}/${repoName}`"
         :tags="tags"
-        :avatar="repoDetailStore.namespace?.Avatar"
         :owner-url="ownerUrl"
         :repoId="repoDetailStore.repositoryId"
         :totalLikes="repoDetailStore.likes"
