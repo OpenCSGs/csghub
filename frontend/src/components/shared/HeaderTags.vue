@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue'
+  import { computed, ref, watch } from 'vue'
   import PyTorch from '../../components/tags/frameworks/PyTorch.vue'
   import TensorFlow from '../../components/tags/frameworks/TensorFlow.vue'
   import Safetensors from '../../components/tags/frameworks/Safetensors.vue'
@@ -155,28 +155,46 @@
     }
   })
 
-  const taskTags = ref([])
-  const frameworkTags = ref([])
-  const languageTags = ref([])
-  const licenseTags = ref([])
-  const industryTags = ref([])
-  const otherTags = ref([])
+  // const taskTags = ref([])
+  const taskTags = computed(() => {
+    return props.tags.task_tags
+  })
+  // const frameworkTags = ref([])
+  const frameworkTags = computed(() => {
+    return props.tags.framework_tags
+  })
+  // const languageTags = ref([])
+  const languageTags = computed(() => {
+    return props.tags.language_tags
+  })
+  // const licenseTags = ref([])
+  const licenseTags = computed(() => {
+    return props.tags.license_tags
+  })
+  // const industryTags = ref([])
+  const industryTags = computed(() => {
+    return props.tags.industry_tags
+  })
+  // const otherTags = ref([])
+  const otherTags = computed(() => {
+    return props.tags.other_tags
+  })
 
-  const theTaskTags = ref({})
-  const theFrameworkTags = ref({})
-  const theLanguageTags = ref({})
-  const theLicenseTags = ref({})
-  const theIndustryTags = ref({})
-  const theOtherTags = ref({})
+    //先定义一个生产参数的方法
+  const createTagRefs = (tagType) => {
+    const moreTags = ref(tagType.value?.length > 3)
+    const theTags = ref(tagType.value?.slice(0, 3))
+    return { moreTags, theTags }
+  }
+
+  const theTaskTags = ref(createTagRefs(taskTags))
+  const theFrameworkTags = ref(createTagRefs(frameworkTags))
+  const theLanguageTags = ref(createTagRefs(languageTags))
+  const theLicenseTags = ref(createTagRefs(licenseTags))
+  const theIndustryTags = ref(createTagRefs(industryTags))
+  const theOtherTags = ref(createTagRefs(otherTags))
 
   watch(() => props.tags, () => {
-    taskTags.value = props.tags.task_tags
-    frameworkTags.value = props.tags.framework_tags
-    languageTags.value = props.tags.language_tags
-    licenseTags.value = props.tags.license_tags
-    industryTags.value = props.tags.industry_tags
-    otherTags.value = props.tags.other_tags
-
     theTaskTags.value = createTagRefs(taskTags)
     theFrameworkTags.value = createTagRefs(frameworkTags)
     theLanguageTags.value = createTagRefs(languageTags)
@@ -184,13 +202,6 @@
     theIndustryTags.value = createTagRefs(industryTags)
     theOtherTags.value = createTagRefs(otherTags)
   })
-
-  //先定义一个生产参数的方法
-  const createTagRefs = (tagType) => {
-    const moreTags = ref(tagType.value?.length > 3)
-    const theTags = ref(tagType.value?.slice(0, 3))
-    return { moreTags, theTags }
-  }
 
   const tagGroups = {
     task: {
