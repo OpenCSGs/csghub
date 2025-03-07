@@ -5,7 +5,7 @@
       <repo-header
         :license="repoDetailStore.license"
         :name="repoDetailStore.name"
-        :nickname="applicationSpace.nickname"
+        :nickname="repoDetailStore.nickname"
         :path="`${namespace}/${repoName}`"
         :desc="repoDetailStore.description"
         :appStatus="appStatus"
@@ -169,15 +169,13 @@
 
   // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
-  const applicationSpace = ref({})
-  const { t } = useI18n()
   const { cookies } = useCookies()
   const appStatus = ref('')
   const appEndpoint = computed(() => {
     if (ENABLE_HTTPS === 'true') {
-      return `https://${applicationSpace.value.endpoint}`
+      return `https://${repoDetailStore.endpoint}`
     } else {
-      return `http://${applicationSpace.value.endpoint}`
+      return `http://${repoDetailStore.endpoint}`
     }
   })
 
@@ -254,10 +252,7 @@
 
       const repoData = data.value.data
 
-      // applicationSpace.value = repoData
       appStatus.value = repoData.status
-      // tags.value = buildTags(repoData.tags)
-      // ownerUrl.value = getOwnerUrl(repoData)
       repoDetailStore.initialize(repoData, props.repoType)
     } catch (error) {
       console.log(error)
