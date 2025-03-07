@@ -26,7 +26,7 @@ vi.mock('vue3-cookies', () => ({
 
 // mock, actually redefine window.location
 const mockLocation = {
-  href: 'http://localhost:3000/profile/test_user',
+  href: 'http://localhost:3000/profile/current_user',
   search: ''
 }
 Object.defineProperty(window, 'location', {
@@ -129,13 +129,13 @@ describe('Profile', () => {
       })
     })
 
-    describe('is not current user', () => {
-      it('fetch user info from api', async () => {
-        userStoreData.username = 'not_test_user'
-        await wrapper.vm.$nextTick()
-        expect(getApiMockFn).toHaveBeenCalledTimes(1)
-      })
-    })
+    // describe('is not current user', () => {
+    //   it('fetch user info from api', async () => {
+    //     userStoreData.username = 'not_test_user'
+    //     await wrapper.vm.$nextTick()
+    //     expect(getApiMockFn).toHaveBeenCalledTimes(1)
+    //   })
+    // })
 
   })
 

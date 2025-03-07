@@ -164,12 +164,11 @@
     }
   }
 
-  watch(() => userStore.username, () => {
-    currentUserRole()
-  })
-
   onMounted(() => {
     fetchOrgDetail()
     fetchOrgMemberList()
+    if (userStore.isLoggedIn) {
+      currentUserRole()
+    }
   })
 </script>

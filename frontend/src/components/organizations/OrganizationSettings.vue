@@ -32,7 +32,7 @@
   import OrganizationEdit from './OrganizationEdit.vue'
   import OrganizationMembers from './OrganizationMembers.vue'
   import useFetchApi from "../../packs/useFetchApi"
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
 
@@ -53,13 +53,6 @@
   })
 
   const role =ref('')
-
-  watch(
-    () => userStore.username,
-    () => {
-      currentUserRole()
-    }
-  )
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `/organization/${props.name}`
@@ -105,8 +98,6 @@
 
   onMounted(() => {
     fetchOrgDetail()
-    if (userStore.initialized) {
-      currentUserRole()
-    }
+    currentUserRole()
   })
 </script>
