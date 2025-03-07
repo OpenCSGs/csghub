@@ -42,6 +42,12 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const user = ref({})
   const userLikes = ref(false)
   const widgetType = ref('')
+  // space specific states
+  const endpoint = ref('')
+  const hardware = ref('')
+  const sdk = ref('')
+  const sku = ref('')
+  const svcName = ref('')
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -52,8 +58,9 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   }
 
   async function initialize(initialData, repositoryType) {
-    privateVisibility.value = initialData.private
+    repoType.value = repositoryType
     isInitialized.value = true
+    privateVisibility.value = initialData.private
     baseModel.value = initialData.base_model
     canManage.value = initialData.can_manage
     canWrite.value = initialData.can_write
@@ -88,7 +95,11 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     user.value = initialData.user
     userLikes.value = initialData.user_likes
     widgetType.value = initialData.widget_type
-    repoType.value = repositoryType
+    endpoint.value = initialData.endpoint
+    hardware = initialData.hardware
+    sdk = initialData.sdk
+    sku = initialData.sku
+    svcName = initialData.svc_name
   }
 
   const clearStore = () => {
@@ -136,6 +147,11 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     userLikes,
     widgetType,
     repoType,
+    endpoint,
+    hardware,
+    sdk,
+    sku,
+    svcName,
     clearStore
   }
 }, {
