@@ -48,10 +48,21 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const sdk = ref('')
   const sku = ref('')
   const svcName = ref('')
-  // collection specific setatus
+  // collection specific states
   const avatar = ref('')
   const theme = ref('')
   const repositories = ref([])
+  // finetune specific states
+  const clusterId = ref('')
+  const deployId = ref(0)
+  const deployName = ref('')
+  const imageId = ref('')
+  const maxReplica = ref(1)
+  const minReplica = ref(1)
+  const modelId = ref('')
+  const proxyEndpoint = ref('')
+  const runtimeFramework = ref('')
+  const secureLevel = ref(0)
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -107,6 +118,16 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     avatar.value = initialData.avatar
     theme.value = initialData.theme
     repositories.value = initialData.repositories
+    clusterId.value = initialData.cluster_id
+    deployId.value = initialData.deploy_id
+    deployName.value = initialData.deploy_name
+    imageId.value = initialData.image_id
+    maxReplica.value = initialData.max_replica
+    minReplica.value = initialData.min_replica
+    modelId.value = initialData.model_id
+    proxyEndpoint.value = initialData.proxy_endpoint
+    runtimeFramework.value = initialData.runtime_framework
+    secureLevel.value = initialData.secure_level
   }
 
   const clearStore = () => {
@@ -162,6 +183,16 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     avatar,
     theme,
     repositories,
+    clusterId,
+    deployId,
+    deployName,
+    imageId,
+    maxReplica,
+    minReplica,
+    modelId,
+    proxyEndpoint,
+    runtimeFramework,
+    secureLevel,
     clearStore
   }
 }, {

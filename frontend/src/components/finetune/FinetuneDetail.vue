@@ -4,13 +4,13 @@
   >
     <div class="mx-auto page-responsive-width">
       <repo-header
-        :name="finetune.deploy_name"
+        :name="repoDetailStore.deployName"
         :path="`${namespace}/${name}`"
-        :appStatus="appStatus"
-        :space-resource="finetune.hardware"
+        :appStatus="repoDetailStore.status"
+        :space-resource="repoDetailStore.hardware"
         :resource-name="finetuneResource"
         repo-type="finetune"
-        :repoId="finetune.repository_id"
+        :repoId="repoDetailStore.repositoryId"
       />
     </div>
   </div>
@@ -19,7 +19,7 @@
     v-loading="dataLoading"
   >
     <el-button
-      v-show="activeName == 'page' && finetune.endpoint"
+      v-show="activeName == 'page' && repoDetailStore.endpoint"
       color="#3250BD"
       style="border-radius: var(--border-radius-md) !important"
       class="absolute top-0 right-0 z-10 cursor-pointer text-white"
@@ -38,8 +38,8 @@
       >
         <div class="pt-[24px]">
           <iframe
-            v-if="finetune.endpoint"
-            :src="`${httpProtocal}://${finetune.proxy_endpoint}?jwt=${jwtToken}`"
+            v-if="repoDetailStore.endpoint"
+            :src="`${httpProtocal}://${repoDetailStore.proxyEndpoint}?jwt=${jwtToken}`"
             width="100%"
             height="700"
             frameborder="0"
@@ -70,7 +70,7 @@
               </div>
             </div>
             <InstanceInBuilding
-              v-if="['Building', 'Deploying', 'Startup'].includes(appStatus)"
+              v-if="['Building', 'Deploying', 'Startup'].includes(repoDetailStore.status)"
               :loadingText="$t('all.deployLoadingText')"
             />
           </div>
@@ -82,7 +82,7 @@
       >
         <BillingDetail
           type="finetune"
-          :instanceName="finetune.svc_name"
+          :instanceName="repoDetailStore.svcName"
         ></BillingDetail>
       </el-tab-pane>
       <el-tab-pane
@@ -90,15 +90,15 @@
         name="setting"
       >
         <FinetuneSettings
-          :finetune="finetune"
-          :finetuneId="finetune.deploy_id"
-          :finetuneName="finetune.deploy_name"
-          :appStatus="appStatus"
-          :modelId="finetune.model_id"
+          :finetune="repoDetailStore"
+          :finetuneId="repoDetailStore.deployId"
+          :finetuneName="repoDetailStore.deployName"
+          :appStatus="repoDetailStore.status"
+          :modelId="repoDetailStore.modelId"
           :userName="userName"
-          :cloudResource="finetune.hardware"
-          :framework="finetune.runtime_framework"
-          :clusterId="finetune.cluster_id"
+          :cloudResource="repoDetailStore.hardware"
+          :framework="repoDetailStore.runtimeFramework"
+          :clusterId="repoDetailStore.clusterId"
         />
       </el-tab-pane>
     </el-tabs>
@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, onBeforeMount } from 'vue'
+  import { ref, inject, onBeforeMount, computed } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
@@ -117,6 +117,7 @@
   import BillingDetail from '../shared/BillingDetail.vue'
   import { ElMessage } from 'element-plus'
   import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
+  import { storeToRefs } from 'pinia'
 
   const props = defineProps({
     namespace: String,
@@ -127,17 +128,13 @@
     path: String
   })
 
-  const finetune = ref({})
+  const repoDetailStore = useRepoDetailStore()
+  const { isInitialized } = storeToRefs(repoDetailStore)
 
   const activeName = ref('page')
   const dataLoading = ref(true)
-
   const finetuneResources = ref([])
   const finetuneResource = ref('')
-
-  const repoDetailStore = useRepoDetailStore()
-  repoDetailStore.initialize(finetune.value)
-
   const allStatus = [
     'Building',
     'Deploying',
@@ -149,16 +146,19 @@
     'DeployFailed',
     'RuntimeError'
   ]
-
   const { cookies } = useCookies()
   const jwtToken = cookies.get('user_token')
-  const appStatus = ref('')
-
+  // const appStatus = ref('')
   const isStatusSSEConnected = ref(false)
-
   const csghubServer = inject('csghubServer')
-
   const httpProtocal = ENABLE_HTTPS === 'true' ? 'https' : 'http'
+
+  const isSameRepo = computed(() => {
+    return (
+      props.finetuneId === repoDetailStore.deployId &&
+      repoDetailStore.repoType === 'finetune'
+    )
+  })
 
   const handleTabLeave = (tab) => {
     tabChange(tab)
@@ -177,7 +177,7 @@
   }
 
   const toNotebookPage = () => {
-    window.open(`${httpProtocal}://${finetune.value.endpoint}?jwt=${jwtToken}`)
+    window.open(`${httpProtocal}://${repoDetailStore.endpoint}?jwt=${jwtToken}`)
   }
 
   const getDetail = async (type) => {
@@ -192,12 +192,11 @@
       if (data.value) {
         const body = data.value
         if (body.data) {
-          finetune.value = body.data
-          appStatus.value = finetune.value.status
+          repoDetailStore.initialize(body.data, 'finetune')
           fetchResources()
           if (
             isStatusSSEConnected.value === false &&
-            allStatus.includes(appStatus.value)
+            allStatus.includes(repoDetailStore.status)
           ) {
             syncfinetuneStatus()
           }
@@ -212,7 +211,7 @@
 
   const fetchResources = async () => {
     const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${finetune.value.cluster_id}&deploy_type=2`
+      `/space_resources?cluster_id=${repoDetailStore.clusterId}&deploy_type=2`
     ).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -220,7 +219,7 @@
       const body = data.value
       finetuneResources.value = body.data
       const obj = body.data.find((item) => {
-        return item.resources === finetune.value.hardware
+        return item.resources === repoDetailStore.hardware
       })
       finetuneResource.value = obj?.name
     }
@@ -228,7 +227,7 @@
 
   const syncfinetuneStatus = () => {
     fetchEventSource(
-      `${csghubServer}/api/v1/models/${finetune.value.model_id}/run/${finetune.value.deploy_id}/status`,
+      `${csghubServer}/api/v1/models/${repoDetailStore.modelId}/run/${repoDetailStore.deployId}/status`,
       {
         openWhenHidden: true,
         headers: {
@@ -262,9 +261,9 @@
               eventResponse.details && eventResponse.details[0].name
             }`
           )
-          if (appStatus.value !== eventResponse.status) {
-            appStatus.value = eventResponse.status
-            if (appStatus.value == 'Running') {
+          if (repoDetailStore.status !== eventResponse.status) {
+            repoDetailStore.status = eventResponse.status
+            if (repoDetailStore.status == 'Running') {
               getDetail('reload')
             }
           }
@@ -281,7 +280,10 @@
     if (props.path) {
       activeName.value = props.path
     }
-    getDetail()
+
+    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
+      getDetail()
+    }
   })
 </script>
 
