@@ -8,7 +8,7 @@
         :nickname="repoDetailStore.nickname"
         :path="`${namespace}/${repoName}`"
         :desc="repoDetailStore.description"
-        :appStatus="appStatus"
+        :appStatus="repoDetailStore.status"
         :space-resource="repoDetailStore.hardware"
         :avatar="repoDetailStore.namespace?.Avatar"
         :tags="tags"
@@ -24,7 +24,7 @@
   <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
       :repo-detail="repoDetailStore"
-      :appStatus="appStatus"
+      :appStatus="repoDetailStore.status"
       :sdk="repoDetailStore.sdk"
       :appEndpoint="appEndpoint"
       :current-branch="currentBranch"
@@ -170,7 +170,6 @@
   // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const { cookies } = useCookies()
-  const appStatus = ref('')
   const appEndpoint = computed(() => {
     if (ENABLE_HTTPS === 'true') {
       return `https://${repoDetailStore.endpoint}`
@@ -252,7 +251,6 @@
 
       const repoData = data.value.data
 
-      appStatus.value = repoData.status
       repoDetailStore.initialize(repoData, props.repoType)
     } catch (error) {
       console.log(error)
@@ -396,7 +394,7 @@
         },
         onmessage(ev) {
           console.log(`SyncStatus: ${ev.data}`)
-          if (appStatus.value !== ev.data) {
+          if (repoDetailStore.status !== ev.data) {
             if (ev.data === 'Building') {
               if (buildLogDiv.value) {
                 buildLogDiv.value.innerHTML = ''
@@ -407,7 +405,7 @@
                 containerLogLineNum.value = 0
               }
             }
-            appStatus.value = ev.data
+            repoDetailStore.status = ev.data
           }
         },
         onerror(err) {
@@ -423,7 +421,7 @@
       fetchRepoDetail()
     }
 
-    console.log(`Space 初始状态：${appStatus.value}`)
+    console.log(`Space 初始状态：${repoDetailStore.status}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
