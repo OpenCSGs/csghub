@@ -153,10 +153,10 @@
     const url = `/collections/${props.collectionsId}`
     const { data, error } = await useFetchApi(url).json()
     if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+      ElMessage.warning(error.value.msg)
     } else {
-      const res = data.value
-      repoDetailStore.initialize(res.data, 'collection')
+      const repoData = data.value.data
+      repoDetailStore.initialize(repoData, 'collection')
     }
   }
   onBeforeMount(() => {
