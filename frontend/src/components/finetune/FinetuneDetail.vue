@@ -155,7 +155,7 @@
 
   const isSameRepo = computed(() => {
     return (
-      props.finetuneId === repoDetailStore.deployId &&
+    Number(props.finetuneId) === repoDetailStore.deployId &&
       repoDetailStore.repoType === 'finetune'
     )
   })

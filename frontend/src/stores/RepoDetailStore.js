@@ -43,6 +43,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const userLikes = ref(false)
   const widgetType = ref('')
   // space specific states
+  const coverImageUrl = ref('')
   const endpoint = ref('')
   const hardware = ref('')
   const sdk = ref('')
@@ -63,6 +64,10 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const proxyEndpoint = ref('')
   const runtimeFramework = ref('')
   const secureLevel = ref(0)
+  // endpoint specific states
+  const gitBranch = ref('')
+  const task = ref('')
+  const actualReplica = ref(0)
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -110,6 +115,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     user.value = initialData.user
     userLikes.value = initialData.user_likes
     widgetType.value = initialData.widget_type
+    coverImageUrl.value = initialData.cover_image_url
     endpoint.value = initialData.endpoint
     hardware.value = initialData.hardware
     sdk.value = initialData.sdk
@@ -128,6 +134,9 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     proxyEndpoint.value = initialData.proxy_endpoint
     runtimeFramework.value = initialData.runtime_framework
     secureLevel.value = initialData.secure_level
+    gitBranch.value = initialData.git_branch
+    task.value = initialData.task
+    actualReplica.value = initialData.actual_replica
   }
 
   const clearStore = () => {
@@ -174,6 +183,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     user,
     userLikes,
     widgetType,
+    coverImageUrl,
     repoType,
     endpoint,
     hardware,
@@ -193,6 +203,9 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     proxyEndpoint,
     runtimeFramework,
     secureLevel,
+    gitBranch,
+    task,
+    actualReplica,
     clearStore
   }
 }, {

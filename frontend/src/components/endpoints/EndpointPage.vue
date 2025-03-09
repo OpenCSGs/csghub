@@ -73,7 +73,7 @@
   </div>
 </template>
 <script setup>
-  import { watch, ref } from 'vue'
+  import { watch, ref, onMounted } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import EndpointPlayground from './EndpointPlayground.vue'
   import { ElMessage } from 'element-plus'
@@ -112,10 +112,11 @@
     }
   }
 
-  watch(() => props.clusterId, () => {
+  onMounted(() => {
     fetchResources()
   })
 </script>
+
 <style scoped>
 .loading-container {
   display: flex;
