@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed, nextTick } from 'vue'
+  import { ref, onMounted, inject, computed, nextTick, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from 'vue3-cookies'
@@ -236,7 +236,6 @@
       syncSpaceLogs()
     }
   }
-
 
   const fetchRepoDetail = async () => {
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
@@ -426,6 +425,8 @@
       syncSpaceStatus()
     }
   })
+
+  provide('fetchRepoDetail', fetchRepoDetail)
 </script>
 
 <style scoped>

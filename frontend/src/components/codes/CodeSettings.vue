@@ -214,6 +214,7 @@
       }
     },
     mounted() {},
+    inject: ['fetchRepoDetail'],
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
       clickDelete() {
@@ -320,6 +321,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
+          this.fetchRepoDetail()
           ElMessage({ message: data.value.msg, type: 'success' })
         }
       },

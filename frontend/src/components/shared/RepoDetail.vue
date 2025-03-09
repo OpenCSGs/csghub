@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
+  import { onMounted, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
@@ -138,6 +138,8 @@
       fetchRepoDetail()
     }
   })
+
+  provide('fetchRepoDetail', fetchRepoDetail)
 </script>
 
 <style scoped>

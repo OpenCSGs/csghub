@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, onBeforeMount, computed } from 'vue'
+  import { ref, inject, onBeforeMount, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
@@ -180,7 +180,7 @@
     window.open(`${httpProtocal}://${repoDetailStore.endpoint}?jwt=${jwtToken}`)
   }
 
-  const getDetail = async (type) => {
+  const fetchRepoDetail = async (type) => {
     if (type != 'reload') {
       dataLoading.value = true
     }
@@ -264,7 +264,7 @@
           if (repoDetailStore.status !== eventResponse.status) {
             repoDetailStore.status = eventResponse.status
             if (repoDetailStore.status == 'Running') {
-              getDetail('reload')
+              fetchRepoDetail('reload')
             }
           }
         },
@@ -282,9 +282,11 @@
     }
 
     if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
-      getDetail()
+      fetchRepoDetail()
     }
   })
+
+  provide('fetchRepoDetail', fetchRepoDetail)
 </script>
 
 <style scoped>

@@ -468,13 +468,11 @@
         this.theVariables = newVariables
       }
     },
-
     emits: ['showSpaceLogs'],
-
     mounted() {
       this.fetchSpaceResources()
     },
-
+    inject: ['fetchRepoDetail'],
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
 
@@ -706,6 +704,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
+          this.fetchRepoDetail()
           ElMessage({ message: data.value.msg, type: 'success' })
         }
       },

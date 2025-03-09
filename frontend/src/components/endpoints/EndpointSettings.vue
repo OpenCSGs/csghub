@@ -271,7 +271,7 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, onMounted, watchEffect, watch } from 'vue'
+  import { h, ref, computed, onMounted, watchEffect, watch, inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useFetchApi from '../../packs/useFetchApi'
@@ -293,6 +293,7 @@
     clusterId: String
   })
 
+  const fetchRepoDetail = inject('fetchRepoDetail')
   const { t } = useI18n()
   const delDesc = ref('')
   const cloudResources = ref([])
@@ -491,6 +492,7 @@
       if (payload.hasOwnProperty('private')) {
         repoDetailStore.updateVisibility(payload.private)
       }
+      fetchRepoDetail()
       ElMessage({ message: data.value.msg, type: 'success' })
     }
   }

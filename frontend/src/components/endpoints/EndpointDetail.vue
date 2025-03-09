@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
@@ -198,6 +198,8 @@
       syncEndpointStatus()
     }
   })
+
+  provide('fetchRepoDetail', fetchRepoDetail)
 </script>
 
 <style scoped>
