@@ -18,7 +18,8 @@ export const models = {
     allFilter: "所有模型",
     inferenceFilter: "支持模型推理",
     finetuneFilter: "支持模型微调",
-    evaluationFilter: "支持模型评测"
+    evaluationFilter: "支持模型评测",
+    serverlessFilter: "公共推理实例"
   },
   newModel: {
     title: "新建模型仓库",
