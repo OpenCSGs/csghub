@@ -280,7 +280,7 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
   const useToken = ref(false)
   const accessToken = ref('')
 
-  const showSyncButton = computed(
+  const showSyncButton = computed(() =>
     userStore.roles.includes('admin') &&
     props.repo.source === 'opencsg' &&
     ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
