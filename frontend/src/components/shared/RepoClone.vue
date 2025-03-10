@@ -225,8 +225,10 @@
   import useUserStore from '../../stores/UserStore.js'
   import { ToLoginPage } from '@/packs/utils'
   import { storeToRefs } from 'pinia'
+  import useRepoDetailStore from '@/stores/RepoDetailStore'
 
   const userStore = useUserStore()
+  const repoDetailStore = useRepoDetailStore()
 
   const props = defineProps({
     repoType: String,
@@ -239,55 +241,51 @@
   })
 
   const { actionLimited, isLoggedIn } = storeToRefs(userStore)
-  const httpCloneUrl = ref('')
-  const sshCloneUrl = ref('')
-  const httpCloneProtocol = ref('https:')
+  const httpCloneUrl = computed(() => {
+    return repoDetailStore.repository.http_clone_url
+  })
+  const sshCloneUrl = computed(() => {
+    return repoDetailStore.repository.ssh_clone_url
+  })
+  const httpCloneProtocol = computed(() => {
+    const url = new URL(repoDetailStore.repository.http_clone_url)
+    return url.protocol
+  })
 
-  const httpsCloneCode = ref('')
-  const sshCloneCode = ref('')
-  const httpsCloneCodeWithToken = ref('')
-
-  watch(() => props.repo, () => {
-    const url = new URL(props.repo.repository.http_clone_url)
-    httpCloneUrl.value = props.repo.repository.http_clone_url
-    httpCloneProtocol.value = url.protocol
-    sshCloneUrl.value = props.repo.repository.ssh_clone_url
-// no space
-    httpsCloneCode.value = `
+  const httpsCloneCode = computed(() => {
+    return `
 git lfs install
 git clone ${httpCloneUrl.value}
 `
-      // no space
-      sshCloneCode.value = `
+  })
+
+  const sshCloneCode = computed(() => {
+    return `
 git lfs install
 git clone ${sshCloneUrl.value}
 `
-      // no space
-      httpsCloneCodeWithToken.value = `
+  })
+
+  const httpsCloneCodeWithToken = computed(() => {
+    return `
 git lfs install
 git clone ${httpCloneProtocol.value}//${userStore.username}:${
         accessToken.value
       }@${httpCloneUrl.value.replace(`${httpCloneProtocol.value}//`, '')}
 `
-    }
-  )
+  })
 
   const activeCloneType = ref('https')
   const cloneRepositoryVisible = ref(false)
   const useToken = ref(false)
   const accessToken = ref('')
 
-  watch(
-    () => userStore.username,
-    () => {
-      fetchUserToken()
-    }
-  )
-
-  const showSyncButton = computed(() =>
-    userStore.roles.includes('admin') &&
-    props.repo.source === 'opencsg' &&
-    ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
+  const showSyncButton = computed(
+    () =>
+      isEE() &&
+      userStore.isAdmin &&
+      props.repo.source === 'opencsg' &&
+      ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
 
   // 同步按钮禁用
@@ -454,6 +452,7 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
     }
   })
 </script>
+
 <style lang="less" scoped>
   .disabled {
     cursor: not-allowed;
