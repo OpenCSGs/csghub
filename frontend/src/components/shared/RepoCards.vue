@@ -252,7 +252,7 @@
     }
 
     if (filterSelection.value === 'serverless') {
-      url = url + `&tag_category=runtime_framework&tag_name=serverless`
+      url = url + `&list_serverless=true`
     }
 
     for (let [category, tags] of Object.entries(activeTags.value)) {
