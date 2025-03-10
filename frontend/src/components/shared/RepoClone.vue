@@ -281,11 +281,9 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
   const accessToken = ref('')
 
   const showSyncButton = computed(
-    () =>
-      isEE() &&
-      userStore.isAdmin &&
-      props.repo.source === 'opencsg' &&
-      ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
+    userStore.roles.includes('admin') &&
+    props.repo.source === 'opencsg' &&
+    ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
 
   // 同步按钮禁用
