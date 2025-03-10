@@ -468,13 +468,11 @@
         this.theVariables = newVariables
       }
     },
-
     emits: ['showSpaceLogs'],
-
     mounted() {
       this.fetchSpaceResources()
     },
-
+    inject: ['fetchRepoDetail'],
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
 
@@ -701,12 +699,13 @@
           options
         ).put().json()
         if (error.value) {
-          ElMessage({ message: error.value.msg, type: 'warning' })
+          ElMessage.warning(error.value.msg)
         } else {
+          ElMessage.success(data.value.msg)
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          ElMessage({ message: data.value.msg, type: 'success' })
+          await this.fetchRepoDetail()
         }
       },
 

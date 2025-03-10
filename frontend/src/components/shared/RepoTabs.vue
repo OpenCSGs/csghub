@@ -10,9 +10,9 @@
         :userName="userName"
         :namespacePath="path"
         :repo="repoDetail"
-        :enableEndpoint="repoDetail.enable_inference"
-        :enableFinetune="repoDetail.enable_finetune"
-        :enableEvaluation="repoDetail.enable_evaluation"
+        :enableEndpoint="repoDetail.enableInference"
+        :enableFinetune="repoDetail.enableFinetune"
+        :enableEvaluation="repoDetail.enableEvaluation"
       />
     </div>
     <tab-container
@@ -56,7 +56,7 @@
           :modelId="modelId"
           :private="private"
           :endpointReplica="endpointReplica"
-          :clusterId="repoDetail.cluster_id"
+          :clusterId="repoDetail.clusterId"
           :sku="sku"
           :task="repoDetail.task"
           :replicaList="replicaList"
@@ -66,8 +66,8 @@
           :repo-type="repoType"
           :namespace-path="path"
           :download-count="repoDetail.downloads"
-          :currentBranch="repoDetail.default_branch || 'main'"
-          :widget-type="repoDetail.widget_type"
+          :currentBranch="repoDetail.defaultBranch || 'main'"
+          :widget-type="repoDetail.widgetType"
         />
       </template>
 
@@ -158,8 +158,8 @@
       >
         <EndpointLogs
           :instances="repoDetail.instances"
-          :modelId="repoDetail.model_id"
-          :deployId="repoDetail.deploy_id"
+          :modelId="repoDetail.modelId"
+          :deployId="repoDetail.deployId"
         />
       </template>
 
@@ -178,7 +178,7 @@
       >
         <BillingDetail
           :type="repoType"
-          :instanceName="repoDetail.svc_name"
+          :instanceName="repoDetail.svcName"
         ></BillingDetail>
       </template>
 
@@ -192,7 +192,7 @@
           :path="path"
           :model-nickname="repoDetail.nickname"
           :model-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
+          :default_branch="repoDetail.defaultBranch"
           :tag-list="tagList"
           :tags="tags"
         />
@@ -201,7 +201,7 @@
           :path="path"
           :dataset-nickname="repoDetail.nickname"
           :dataset-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
+          :default_branch="repoDetail.defaultBranch"
           :tag-list="tagList"
           :tags="tags"
         />
@@ -210,10 +210,10 @@
           :path="path"
           :application-space-nickname="repoDetail.nickname"
           :application-space-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
+          :default_branch="repoDetail.defaultBranch"
           :appStatus="appStatus"
           :cloudResource="repoDetail.sku || repoDetail.hardware"
-          :coverImage="repoDetail.cover_image_url"
+          :coverImage="repoDetail.coverImageUrl"
           @showSpaceLogs="showSpaceLogs"
           :sdk="sdk"
           :variables="repoDetail.variables ? JSON.parse(repoDetail.variables) : {}"
@@ -223,7 +223,7 @@
           :path="path"
           :code-nickname="repoDetail.nickname"
           :code-desc="repoDetail.description"
-          :default_branch="repoDetail.default_branch"
+          :default_branch="repoDetail.defaultBranch"
         />
         <EndpointSettings
           v-if="repoType === 'endpoint'"
@@ -233,10 +233,10 @@
           :modelId="modelId"
           :userName="userName"
           :cloudResource="repoDetail.sku || repoDetail.hardware"
-          :framework="repoDetail.runtime_framework"
-          :maxReplica="repoDetail.max_replica"
-          :minReplica="repoDetail.min_replica"
-          :clusterId="repoDetail.cluster_id"
+          :framework="repoDetail.runtimeFramework"
+          :maxReplica="repoDetail.maxReplica"
+          :minReplica="repoDetail.minReplica"
+          :clusterId="repoDetail.clusterId"
         />
       </template>
     </tab-container>
@@ -295,6 +295,7 @@
     endpointReplica: Number,
     endpointName: String,
     endpointId: String,
+    deployId: String,
     replicaList: Array,
     path: String
   })
@@ -324,7 +325,7 @@
 
   const summaryUrl = () => {
     if (props.repoType === 'endpoint') {
-      return `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}`
+      return `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}`
     } else {
       return `/${props.repoType}s/${props.path}`
     }
@@ -336,24 +337,24 @@
         location.href = summaryUrl()
         break
       case 'files':
-        location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.default_branch || 'main'}`
+        location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
         break
       case 'community':
         location.href = `/${props.repoType}s/${props.path}/community`
         break
       case 'settings':
         if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}/settings`
+          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/settings`
         } else {
           location.href = `/${props.repoType}s/${props.path}/settings`
         }
         break
       case 'logs':
-        location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}/logs`
+        location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/logs`
         break
       case 'billing':
         if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deploy_id}/billing`
+          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/billing`
         } else {
           location.href = `/${props.repoType}s/${props.path}/billing`
         }

@@ -271,15 +271,13 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, onMounted, watchEffect, watch } from 'vue'
+  import { h, ref, computed, onMounted, watchEffect, watch, inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import useUserStore from '../../stores/UserStore.js'
 
-  const userStore = useUserStore()
   const repoDetailStore = useRepoDetailStore()
 
   const props = defineProps({
@@ -295,6 +293,7 @@
     clusterId: String
   })
 
+  const fetchRepoDetail = inject('fetchRepoDetail')
   const { t } = useI18n()
   const delDesc = ref('')
   const cloudResources = ref([])
@@ -373,17 +372,17 @@
     currentMinReplica.value = props.minReplica
   })
 
-  watch(() => props.modelId, () => {
-    if (props.modelId) {
-      fetchFrameworks()
-    }
-  })
+  // watch(() => props.modelId, () => {
+  //   if (props.modelId) {
+  //     fetchFrameworks()
+  //   }
+  // })
 
-  watch(() => props.clusterId, () => {
-    if (props.clusterId) {
-      fetchResources()
-    }
-  })
+  // watch(() => props.clusterId, () => {
+  //   if (props.clusterId) {
+  //     fetchResources()
+  //   }
+  // })
 
   const stopEndpoint = async () => {
     const stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
@@ -493,6 +492,7 @@
       if (payload.hasOwnProperty('private')) {
         repoDetailStore.updateVisibility(payload.private)
       }
+      fetchRepoDetail()
       ElMessage({ message: data.value.msg, type: 'success' })
     }
   }
@@ -558,4 +558,9 @@
       })
     }
   }
+
+  onMounted(() => {
+    fetchFrameworks()
+    fetchResources()
+  })
 </script>

@@ -5,7 +5,10 @@ import { createPinia, setActivePinia } from 'pinia'
 import { ElMessage } from 'element-plus'
 
 vi.mock('element-plus', () => ({
-  ElMessage: vi.fn()
+  ElMessage: {
+    success: vi.fn(),
+    warning: vi.fn()
+  }
 }))
 
 // Mock the API response
@@ -27,6 +30,8 @@ vi.mock('../../../packs/useFetchApi', () => ({
   })
 }))
 
+const mockFetchRepoDetail = vi.fn()
+
 const createWrapper = (props = {}) => {
   return mount(CodeSettings, {
     props: {
@@ -35,6 +40,11 @@ const createWrapper = (props = {}) => {
       codeDesc: 'Test Description',
       default_branch: 'main',
       ...props
+    },
+    global: {
+      provide: {
+        fetchRepoDetail: mockFetchRepoDetail
+      }
     }
   })
 }
@@ -56,15 +66,15 @@ describe('CodeSettings', () => {
 
   it('updates code nickname when button is clicked', async () => {
     const wrapper = createWrapper()
-    await wrapper.setData({ codeNickname: 'New Name' })
+    await wrapper.setData({ theCodeNickname: 'New Name' })
     await wrapper.find('button[data-test="update-nickname"]').trigger('click')
-    expect(ElMessage).toHaveBeenCalled()
+    expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 
   it('shows warning when trying to update empty nickname', async () => {
     const wrapper = createWrapper()
-    await wrapper.setData({ codeNickname: '' })
+    await wrapper.setData({ theCodeNickname: '' })
     await wrapper.find('button[data-test="update-nickname"]').trigger('click')
-    expect(ElMessage).toHaveBeenCalled()
+    expect(ElMessage.success).toHaveBeenCalled()
   })
 })

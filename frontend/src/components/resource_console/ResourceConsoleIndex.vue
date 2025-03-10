@@ -68,18 +68,17 @@
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
 
-  const userStore = useUserStore()
   const props = defineProps({
     name: String
   })
 
+  const userStore = useUserStore()
   const defaultTotal = 6
   const endpoints = ref([])
   const finetunes = ref([])
 
   const endpointsLoading = ref(false)
   const finetunesLoading = ref(false)
-
 
   const hasEndpoints = computed(() => endpoints.value?.total > 0)
   const hasFinetune = computed(() => finetunes.value?.total > 0)
@@ -91,10 +90,10 @@
     const endpointsUrl = reposUrl("endpoints")
     promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));
     const finetunesUrl = reposUrl("finetunes")
-    promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));  
+    promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
     await Promise.all(promises);
   }
-  
+
   const reposUrl = (type) => {
     if (type === "endpoints") {
       return `${csghubServer}/api/v1/user/${userStore.username}/run/model`

@@ -4,7 +4,10 @@ import ApplicationSpaceSettings from '@/components/application_spaces/Applicatio
 import { ElMessage } from 'element-plus'
 
 vi.mock('element-plus', () => ({
-  ElMessage: vi.fn()
+  ElMessage: {
+    success: vi.fn(),
+    warning: vi.fn()
+  }
 }))
 
 vi.mock('../../../packs/useFetchApi', () => ({
@@ -40,6 +43,8 @@ vi.mock('../../../packs/useFetchApi', () => ({
   })
 }))
 
+const mockFetchRepoDetail = vi.fn()
+
 const createWrapper = (props = {}) => {
   return mount(ApplicationSpaceSettings, {
     props: {
@@ -53,6 +58,9 @@ const createWrapper = (props = {}) => {
     global: {
       mocks: {
         $t: (key) => key
+      },
+      provide: {
+        fetchRepoDetail: mockFetchRepoDetail
       }
     }
   })
@@ -75,15 +83,15 @@ describe('ApplicationSpaceSettings', () => {
 
   it('updates application space nickname when button is clicked', async () => {
     const wrapper = createWrapper()
-    await wrapper.setData({ applicationSpaceNickname: 'New Name' })
+    await wrapper.setData({ theApplicationSpaceNickname: 'New Name' })
     await wrapper.find('button[data-test="update-nickname"]').trigger('click')
-    expect(ElMessage).toHaveBeenCalled()
+    expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 
   it('update application space description when button is clicked', async () => {
     const wrapper = createWrapper()
-    await wrapper.setData({ applicationSpaceDesc: 'New Description' })
+    await wrapper.setData({ theApplicationSpaceDesc: 'New Description' })
     await wrapper.find('button[data-test="update-description"]').trigger('click')
-    expect(ElMessage).toHaveBeenCalled()
+    expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 })

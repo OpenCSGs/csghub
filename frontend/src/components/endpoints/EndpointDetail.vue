@@ -2,22 +2,21 @@
   <div class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
     <div class="mx-auto page-responsive-width">
       <repo-header
-        :private="endpoint.private"
-        :name="endpoint.deploy_name"
-        :path="endpoint.model_id"
-        :appStatus="appStatus"
-        :space-resource="endpoint.hardware"
+        :name="repoDetailStore.deployName"
+        :path="repoDetailStore.modelId"
+        :appStatus="repoDetailStore.status"
+        :space-resource="repoDetailStore.hardware"
         :avatar="avatar"
         :owner-url="ownerUrl"
         repo-type="endpoint"
-        :repoId="endpoint.repository_id"
+        :repoId="repoDetailStore.repositoryId"
       />
     </div>
   </div>
   <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
-      :repo-detail="endpoint"
-      :appStatus="appStatus"
+      :repo-detail="repoDetailStore"
+      :appStatus="repoDetailStore.status"
       :appEndpoint="appEndpoint"
       :current-path="currentPath"
       :default-tab="defaultTab"
@@ -25,13 +24,14 @@
       :settingsVisibility="canManage"
       :can-write="canWrite"
       repo-type="endpoint"
-      :clusterId="endpoint.cluster_id"
-      :sku="endpoint.sku"
-      :modelId="endpoint.model_id"
-      :private="endpoint.private"
-      :endpointReplica="endpoint.actual_replica"
-      :endpointName="endpoint.deploy_name"
-      :endpointId="endpoint.deploy_id"
+      :clusterId="repoDetailStore.clusterId"
+      :sku="repoDetailStore.sku"
+      :modelId="repoDetailStore.modelId"
+      :private="repoDetailStore.privateVisibility"
+      :endpointReplica="repoDetailStore.actualReplica"
+      :endpointName="repoDetailStore.deployName"
+      :endpointId="repoDetailStore.deployId"
+      :deployId="repoDetailStore.deployId"
       :userName="namespace"
       :replicaList="replicaList"
       :path="`${namespace}/${modelName}`"
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, watch, computed } from 'vue'
+  import { ref, onMounted, inject, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from "vue3-cookies";
@@ -50,9 +50,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore.js'
   import { ElMessage } from 'element-plus'
-
-  const userStore = useUserStore()
-  const { cookies } = useCookies()
+  import { storeToRefs } from 'pinia';
 
   const props = defineProps({
     currentPath: String,
@@ -64,39 +62,44 @@
     endpointId: Number
   })
 
-  const canWrite = computed(() => {
-    return userStore.username === props.namespace
-  })
+  const repoDetailStore = useRepoDetailStore()
+  const userStore = useUserStore()
+  const { isInitialized } = storeToRefs(repoDetailStore)
+  const { cookies } = useCookies()
 
   // only owner can view endpoint detail, so just set true
   const canManage = ref(true)
 
-  const csghubServer = inject('csghubServer')
-
-  const repoDetailStore = useRepoDetailStore()
-
-  const endpoint = ref({})
-  const modelInfo = ref({})
-
-  // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
-
-  const appStatus = ref('')
-  const appEndpoint = ref('')
-
-  watch(endpoint, (newVal) => {
-    const endpointUrl = newVal.endpoint
-    if (endpointUrl) {
-      if(ENABLE_HTTPS === 'true') {
-        appEndpoint.value = `https://${endpointUrl}`
-      } else {
-        appEndpoint.value = `http://${endpointUrl}`
-      }
-    }
+  const canWrite = computed(() => {
+    return userStore.username === props.namespace
+  })
+  const isSameRepo = computed(() => {
+    return (
+      Number(props.endpointId) === repoDetailStore.deployId &&
+      repoDetailStore.repoType === 'endpoint'
+    )
   })
 
+  const csghubServer = inject('csghubServer')
+  // const endpoint = ref({})
+  const modelInfo = ref({})
+  // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
   const isStatusSSEConnected = ref(false)
-
   const replicaList = ref([])
+
+
+  const appEndpoint = computed(() => {
+    const endpointUrl = repoDetailStore.endpoint
+    if (endpointUrl) {
+      if(ENABLE_HTTPS === 'true') {
+        return `https://${endpointUrl}`
+      } else {
+        return `http://${endpointUrl}`
+      }
+    } else {
+      return ''
+    }
+  })
 
   const ownerUrl = computed(() => {
     const { namespace } = modelInfo.value
@@ -131,9 +134,7 @@
 
       if (data.value) {
         const json = data.value
-        endpoint.value = json.data
-        appStatus.value = json.data.status
-        repoDetailStore.initialize(json.data)
+        repoDetailStore.initialize(json.data, 'endpoint')
       } else {
         ElMessage({ message: error.value.msg, type: 'warning' })
       }
@@ -169,11 +170,11 @@
         const eventResponse = JSON.parse(ev.data)
         console.log(`SyncStatus: ${eventResponse.status}`)
         console.log(`SyncStatus: ${eventResponse.details && eventResponse.details[0].name}`)
-        if (appStatus.value !== eventResponse.status) {
+        if (repoDetailStore.status !== eventResponse.status) {
           if (eventResponse.status == 'Running') {
             fetchRepoDetail()
           }
-          appStatus.value = eventResponse.status
+          repoDetailStore.status = eventResponse.status
         }
         if (eventResponse.details) {
           replicaList.value = eventResponse.details
@@ -187,13 +188,18 @@
   }
 
   onMounted(() => {
-    fetchRepoDetail()
+    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
+      fetchRepoDetail()
+    }
     fetchModelDetail()
-    console.log(`Endpoint 初始状态：${appStatus.value}`)
+
+    console.log(`Endpoint 初始状态：${repoDetailStore.status}`)
     if (isStatusSSEConnected.value === false) {
       syncEndpointStatus()
     }
   })
+
+  provide('fetchRepoDetail', fetchRepoDetail)
 </script>
 
 <style scoped>

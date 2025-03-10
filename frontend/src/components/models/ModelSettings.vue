@@ -362,6 +362,7 @@
       // 组件销毁前移除事件监听
       document.removeEventListener('click', this.collapseTagList)
     },
+    inject: ['fetchRepoDetail'],
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
       async getIndustryTags() {
@@ -648,6 +649,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
+          this.fetchRepoDetail()
           ElMessage({ message: 'Success', type: 'success' })
         }
       },

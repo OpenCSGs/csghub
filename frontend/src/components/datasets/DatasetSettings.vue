@@ -369,6 +369,7 @@
       // 组件销毁前移除事件监听
       document.removeEventListener('click', this.collapseTagList)
     },
+    inject: ['fetchRepoDetail'],
     methods: {
       async getIndustryTags() {
         const { data, error } = await useFetchApi('/tags').json()
@@ -651,11 +652,12 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const { data, error } = await useFetchApi(datasetUpdateEndpoint, options).put().json()
+        const { _, error } = await useFetchApi(datasetUpdateEndpoint, options).put().json()
         if (error.value) {
-          ElMessage({ message: error.value.msg, type: 'warning' })
+          ElMessage.warning(error.value.msg)
         } else {
-          ElMessage({ message: this.$t('datasets.edit.updateSuccess'), type: 'success' })
+          this.fetchRepoDetail()
+          ElMessage.success(this.$t('datasets.edit.updateSuccess'))
         }
       },
 

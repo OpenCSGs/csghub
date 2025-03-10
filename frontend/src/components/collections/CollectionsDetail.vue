@@ -4,15 +4,14 @@
   >
     <div class="mx-auto page-responsive-width">
       <repo-header
-        v-if="collectionData"
-        :avatar="collectionData.avatar"
-        :name="collectionData.name"
-        :nickname="collectionData.nickname"
-        :path="`${collectionData.namespace || collectionData.username}/${collectionData.name}`"
-        :hasLike="!!collectionData.user_likes"
-        :desc="collectionData.description"
-        :totalLikes="collectionData.likes"
-        :repo-id="collectionData.id"
+        :avatar="repoDetailStore.avatar"
+        :name="repoDetailStore.name"
+        :nickname="repoDetailStore.nickname"
+        :path="`${repoDetailStore.namespace || repoDetailStore.username}/${repoDetailStore.name}`"
+        :hasLike="!!repoDetailStore.userLikes"
+        :desc="repoDetailStore.description"
+        :totalLikes="repoDetailStore.likes"
+        :repo-id="repoDetailStore.id"
         repo-type="collections"
       />
     </div>
@@ -23,7 +22,7 @@
     >
       <CollectionsAddRepo
         v-if="showRepoList"
-        :canManage="canManage"
+        :canManage="repoDetailStore.canManage"
         :collectionsId="collectionsId"
       />
     </div>
@@ -64,13 +63,13 @@
               </div>
               <div
                 class="max-w-[300px] text-gray-600 text-sm text-center leading-[20px] font-light mb-6"
-                :class="canManage ? '' : 'hidden'"
+                :class="repoDetailStore.canManage ? '' : 'hidden'"
               >
                 {{ $t('collections.details.tips') }}
               </div>
               <div class="flex gap-3">
                 <CollectionsAddRepo
-                  :canManage="canManage"
+                  :canManage="repoDetailStore.canManage"
                   :collectionsId="collectionsId"
                 />
               </div>
@@ -79,19 +78,18 @@
         </div>
         <CollectionsRepoList
           v-if="showRepoList"
-          :repositories="collectionData.repositories"
+          :repositories="repoDetailStore.repositories"
           :collectionsId="collectionsId"
-          :canManage="canManage"
+          :canManage="repoDetailStore.canManage"
         />
       </el-tab-pane>
       <el-tab-pane
         :label="$t('collections.details.tabSettings')"
         name="setting"
-        v-if="canManage"
+        v-if="repoDetailStore.canManage"
       >
         <CollectionsSettings
-          v-if="collectionData"
-          :collection="collectionData"
+          :collection="repoDetailStore"
           :collectionsId="collectionsId"
           :userName:="userName"
         />
@@ -107,10 +105,11 @@
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
   import { ElMessage } from 'element-plus'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  const repoDetailStore = useRepoDetailStore()
   import useFetchApi from '../../packs/useFetchApi'
+  import { storeToRefs } from 'pinia'
 
-  const collectionData = ref()
+  const repoDetailStore = useRepoDetailStore()
+  const { isInitialized } = storeToRefs(repoDetailStore)
 
   const props = defineProps({
     userName: String,
@@ -120,16 +119,15 @@
 
   const activeName = ref('page')
 
-  const canManage = computed(() => {
-    if (collectionData.value) {
-      return collectionData.value.can_manage
-    } else {
-      return false
-    }
+  const showRepoList = computed(() => {
+    return repoDetailStore.repositories?.length > 0
   })
 
-  const showRepoList = computed(() => {
-    return collectionData.value?.repositories?.length > 0
+  const isSameRepo = computed(() => {
+    return (
+      Number(props.collectionsId) === repoDetailStore.id &&
+      repoDetailStore.repoType === 'collection'
+    )
   })
 
   const handleTabLeave = (tab) => {
@@ -155,17 +153,18 @@
     const url = `/collections/${props.collectionsId}`
     const { data, error } = await useFetchApi(url).json()
     if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+      ElMessage.warning(error.value.msg)
     } else {
-      const res = data.value
-      repoDetailStore.initialize(res.data)
-      collectionData.value = res.data || []
+      const repoData = data.value.data
+      repoDetailStore.initialize(repoData, 'collection')
     }
   }
   onBeforeMount(() => {
     if (props.path) {
       activeName.value = props.path
     }
-    fetchCollectionDetail()
+    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
+      fetchCollectionDetail()
+    }
   })
 </script>
