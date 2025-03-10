@@ -7,7 +7,7 @@ vi.mock('@/packs/useFetchApi', () => ({
   default: (url, options) => {
     return {
       json: () => {
-        if (url.includes('/models/runtime_framework')) {
+        if (url.includes('/runtime_framework')) {
           return Promise.resolve({
             data: {
               value: {
@@ -30,7 +30,7 @@ vi.mock('@/packs/useFetchApi', () => ({
             error: { value: null }
           })
         }
-        if (url.includes('/models/run')) {
+        if (url.includes('/run')) {
           return Promise.resolve({
             data: {
               value: { msg: 'Success' }

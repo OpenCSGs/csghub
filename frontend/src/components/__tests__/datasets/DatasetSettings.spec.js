@@ -25,7 +25,7 @@ vi.mock('../../../packs/useFetchApi', () => ({
     }),
     get: () => ({
       json: () => Promise.resolve({
-        data: { 
+        data: {
           value: {
             data: {
               content: btoa('test content'),
@@ -58,6 +58,8 @@ vi.mock('../../../packs/useFetchApi', () => ({
   })
 }));
 
+const mockFetchRepoDetail = vi.fn()
+
 const createWrapper = (props = {}) => {
   return mount(DatasetSettings, {
     props: {
@@ -76,6 +78,9 @@ const createWrapper = (props = {}) => {
     global: {
       mocks: {
         $t: (key) => key
+      },
+      provide: {
+        fetchRepoDetail: mockFetchRepoDetail
       }
     }
   });
@@ -141,4 +146,4 @@ describe("DatasetSettings", () => {
     const deleteButton = wrapper.find('#confirmDelete');
     expect(deleteButton.classes()).toContain('bg-error-600');
   });
-}); 
+});

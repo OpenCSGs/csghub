@@ -220,10 +220,7 @@
       clickDelete() {
         if (this.delDesc === this.codePath) {
           this.deleteCode().catch((err) => {
-            ElMessage({
-              message: err.message,
-              type: 'warning'
-            })
+            ElMessage.warning(err.message)
           })
         }
       },
@@ -233,9 +230,9 @@
         const { error } = await useFetchApi(codeDeleteEndpoint).delete().json()
 
         if (error.value) {
-          ElMessage({ message: error.value.msg, type: 'warning' })
+          ElMessage.warning(error.value.msg)
         } else {
-          ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
+          ElMessage.success(this.$t('all.delSuccess'))
           setTimeout(() => {
             window.location.href = '/codes'
           }, 500)
@@ -271,10 +268,7 @@
             this.changeVisibilityCall(value)
           })
           .catch(() => {
-            ElMessage({
-              type: 'warning',
-              message: this.$t('all.changeCancel')
-            })
+            ElMessage.warning(this.$t('all.changeCancel'))
           })
       },
 
@@ -289,10 +283,7 @@
           const payload = { nickname: this.theCodeNickname }
           this.updateCode(payload)
         } else {
-          ElMessage({
-            message: this.$t('codes.edit.needCodeName'),
-            type: 'warning'
-          })
+          ElMessage.warning(this.$t('codes.edit.needCodeName'))
         }
       },
 
@@ -301,10 +292,7 @@
           const payload = { description: this.theCodeDesc }
           this.updateCode(payload)
         } else {
-          ElMessage({
-            message: this.$t('codes.edit.needCodeDesc'),
-            type: 'warning'
-          })
+          ElMessage.warning(this.$t('codes.edit.needCodeDesc'))
         }
       },
 
@@ -314,15 +302,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         }
-        const { data, error } = await useFetchApi(codeUpdateEndpoint, options).put().json()
+        const { _, error } = await useFetchApi(codeUpdateEndpoint, options).put().json()
         if (error.value) {
-          ElMessage({ message: error.value.msg, type: 'warning' })
+          ElMessage.warning(error.value.msg)
         } else {
+          ElMessage.success('Success')
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
           this.fetchRepoDetail()
-          ElMessage({ message: data.value.msg, type: 'success' })
         }
       },
 

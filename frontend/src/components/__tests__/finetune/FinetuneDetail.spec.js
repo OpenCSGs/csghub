@@ -108,15 +108,14 @@ describe("FinetuneDetail", () => {
   it("fetches finetune details on mount", async () => {
     const wrapper = createWrapper();
     await wrapper.vm.$nextTick();
-    expect(wrapper.vm.finetune.deploy_name).toBe('Test Finetune');
-    expect(wrapper.vm.appStatus).toBe('Running');
+    expect(wrapper.vm.repoDetailStore.deployName).toBe('Test Finetune');
+    expect(wrapper.vm.repoDetailStore.status).toBe('Running');
   });
 
 
   it("handles SSE connection successfully", async () => {
     const wrapper = createWrapper();
     await wrapper.vm.$nextTick();
-    expect(wrapper.vm.isStatusSSEConnected).toBe(true);
-    expect(wrapper.vm.appStatus).toBe('Running');
+    expect(wrapper.vm.repoDetailStore.status).toBe('Running');
   });
 });
