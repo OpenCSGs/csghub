@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-  import { computed, ref, watch, inject } from "vue"
+  import { computed, ref, onMounted, inject } from "vue"
   import useUserStore from '../../stores/UserStore.js'
   import FinetuneItem from "../shared/FinetuneItem.vue"
   import ViewMore from "../shared/ViewMore.vue"
@@ -67,6 +67,7 @@
   import EvaluationTable from "./EvaluationTable.vue"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
+
   const userStore = useUserStore()
   const props = defineProps({
     name: String
@@ -158,7 +159,7 @@
     }
   }
 
-  watch(() => userStore.username, () => {
+  onMounted(() => {
     getRepoData()
   })
 </script>

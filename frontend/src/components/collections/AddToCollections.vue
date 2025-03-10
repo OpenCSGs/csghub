@@ -78,7 +78,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, watch } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi';
@@ -94,7 +94,6 @@
   const dialogVisible = ref(false)
   const collectionsList = ref([])
   const collectionsIdsInput = ref('')
-  const isLogged = ref(false)
   const fetchCollectionsList = async () => {
     const url = `/user/${userStore.username}/collections`
     const { data, error } = await useFetchApi(url).json()
@@ -107,7 +106,7 @@
   }
 
   const openAddCollections = () => {
-    if(isLogged.value) {
+    if(userStore.isLoggedIn) {
       dialogVisible.value = true
     } else {
       ToLoginPage()
@@ -146,11 +145,10 @@
     }
   }
 
-  watch(() => userStore.isLoggedIn, () => {
-    isLogged.value = userStore.isLoggedIn
-  })
-  watch(() => userStore.username, () => {
-    fetchCollectionsList()
+  onMounted(() => {
+    if (userStore.isLoggedIn) {
+      fetchCollectionsList()
+    }
   })
 </script>
 <style scoped>
