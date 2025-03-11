@@ -11,6 +11,7 @@
         :resource-name="finetuneResource"
         repo-type="finetune"
         :repoId="repoDetailStore.repositoryId"
+        :deployId="repoDetailStore.deployId"
       />
     </div>
   </div>

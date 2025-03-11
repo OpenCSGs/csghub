@@ -150,7 +150,7 @@
       >/</div>
       <a
         class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
-        href="#"
+        :href="repoUrl"
       >
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
       </a>
@@ -224,6 +224,8 @@
     spaceResource: String,
     canWrite: Boolean,
     repoId: Number,
+    deployId: Number,
+    collectionsId: Number,
     totalLikes: {
       type: Number,
       default: 0
@@ -308,4 +310,14 @@
       likesNumber.value -= 1
     }
   }
+
+  const repoUrl = computed(() => {
+    if (props.repoType === 'endpoint' || props.repoType === 'finetune') {
+      return `/${props.repoType}s/${props.path}/${props.deployId}`
+    } else if (props.repoType === 'collections') {
+      return `/collections/${props.collectionsId}`
+    } else {
+      return `/${props.repoType}s/${props.path}` 
+    }
+  })
 </script>
