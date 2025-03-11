@@ -156,6 +156,7 @@
       </a>
       <div
         class="cursor-pointer"
+        data-test="copy-name"
         @click="copyName"
       >
         <SvgIcon

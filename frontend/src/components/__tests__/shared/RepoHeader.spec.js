@@ -158,7 +158,7 @@ describe('RepoHeader', () => {
 
   it('copies repo path when copy button is clicked', async () => {
     const wrapper = createWrapper()
-    await wrapper.find('.cursor-pointer:has([name="copy"])').trigger('click')
+    await wrapper.find('.cursor-pointer[data-test="copy-name"]').trigger('click')
     expect(copyToClipboard).toHaveBeenCalledWith('owner/repo')
   })
 
