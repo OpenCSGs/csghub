@@ -132,7 +132,7 @@
   const { isInitialized } = storeToRefs(repoDetailStore)
 
   const activeName = ref('page')
-  const dataLoading = ref(true)
+  const dataLoading = ref(false)
   const finetuneResources = ref([])
   const finetuneResource = ref('')
   const allStatus = [
@@ -180,10 +180,8 @@
     window.open(`${httpProtocal}://${repoDetailStore.endpoint}?jwt=${jwtToken}`)
   }
 
-  const fetchRepoDetail = async (type) => {
-    if (type != 'reload') {
-      dataLoading.value = true
-    }
+  const fetchRepoDetail = async () => {
+    dataLoading.value = true
 
     try {
       const { data } = await useFetchApi(
@@ -193,7 +191,6 @@
         const body = data.value
         if (body.data) {
           repoDetailStore.initialize(body.data, 'finetune')
-          fetchResources()
           if (
             isStatusSSEConnected.value === false &&
             allStatus.includes(repoDetailStore.status)
@@ -264,7 +261,7 @@
           if (repoDetailStore.status !== eventResponse.status) {
             repoDetailStore.status = eventResponse.status
             if (repoDetailStore.status == 'Running') {
-              fetchRepoDetail('reload')
+              fetchRepoDetail()
             }
           }
         },
@@ -284,6 +281,8 @@
     if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
       fetchRepoDetail()
     }
+
+    fetchResources()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)
