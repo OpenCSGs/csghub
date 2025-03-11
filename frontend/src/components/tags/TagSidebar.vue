@@ -122,13 +122,8 @@
     avaliableCategories.value.forEach((category) => {
       params.append('category', category.name)
     })
-    const { error, data } = await useFetchApi(`/tags?${params.toString()}`).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
+    const { _, data } = await useFetchApi(`/tags?${params.toString()}`).json()
+    if (data.value?.data) {
       let tempTaskTags = {}
       const allTaskTags = data.value.data.filter(
         (tag) =>
