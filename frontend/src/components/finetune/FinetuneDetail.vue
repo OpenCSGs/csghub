@@ -193,13 +193,6 @@
         const body = data.value
         if (body.data) {
           repoDetailStore.initialize(body.data, 'finetune')
-          fetchResources()
-          if (
-            isStatusSSEConnected.value === false &&
-            allStatus.includes(repoDetailStore.status)
-          ) {
-            syncfinetuneStatus()
-          }
         }
       }
     } catch (err) {
@@ -283,6 +276,15 @@
 
     if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
       fetchRepoDetail()
+    }
+
+    fetchResources()
+
+    if (
+      isStatusSSEConnected.value === false &&
+      allStatus.includes(repoDetailStore.status)
+    ) {
+      syncfinetuneStatus()
     }
   })
 

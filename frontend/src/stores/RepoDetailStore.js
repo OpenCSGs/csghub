@@ -68,6 +68,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const gitBranch = ref('')
   const task = ref('')
   const actualReplica = ref(0)
+  const instances = ref([])
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -137,6 +138,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     gitBranch.value = initialData.git_branch
     task.value = initialData.task
     actualReplica.value = initialData.actual_replica
+    instances.value = initialData.instances
   }
 
   const clearStore = () => {
@@ -206,6 +208,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     gitBranch,
     task,
     actualReplica,
+    instances,
     clearStore
   }
 }, {

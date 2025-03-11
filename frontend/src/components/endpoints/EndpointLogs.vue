@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, watch, nextTick } from 'vue'
+  import { ref, inject, nextTick, computed, onMounted } from 'vue'
   import refreshJWT from '../../packs/refreshJWT.js'
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useCookies } from "vue3-cookies";
@@ -41,22 +41,13 @@
 
   const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
-
   const instanceLogDiv = ref(null)
   const instanceLogLineNum = ref(0)
-
-  const currentInstance = ref('')
-
-  watch(() => props.instances, (newInstances) => {
-    if (newInstances && newInstances.length !== 0) {
-      currentInstance.value = newInstances[0].name
-      if (isLogsSSEConnected.value === false) {
-        syncInstanceLogs(currentInstance.value)
-      }
-    }
-  })
-
   const isLogsSSEConnected = ref(false)
+
+  const currentInstance = computed(() => {
+    return props.instances ? props.instances[0]?.name : ''
+  })
 
   const syncInstanceLogs = (instanceName) => {
     fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${instanceName}`, {
@@ -153,4 +144,10 @@
   const refreshInstanceLogs = (value) => {
     syncInstanceLogs(value)
   }
+
+  onMounted(() => {
+    if (!!currentInstance && isLogsSSEConnected.value === false) {
+      syncInstanceLogs(currentInstance.value)
+    }
+  })
 </script>
