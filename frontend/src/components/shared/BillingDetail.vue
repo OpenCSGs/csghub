@@ -87,7 +87,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, watch } from 'vue'
+  import { ref, computed, watch, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import {
@@ -136,16 +136,15 @@
     return tempScene
   })
 
-  // props instanceName is from Endpoint Detail async data
-  // so we need to watch it here
-  watch(
-    [() => props.instanceName, () => userStore.uuid],
-    (newInsName, newUuid) => {
-      if (newInsName && newUuid) {
-        fetchDetails()
-      }
+  const canFetchBillingDetail = computed(() => {
+    return props.instanceName && userStore.uuid
+  })
+
+  watch(canFetchBillingDetail, (newValue) => {
+    if (newValue) {
+      fetchDetails()
     }
-  )
+  })
 
   const disabledDate = (date) => {
     return isFutureDate(date)
@@ -214,6 +213,12 @@
     }
     billingLoading.value = false
   }
+
+  onMounted(() => {
+    if(canFetchBillingDetail.value) {
+      fetchDetails()
+    }
+  })
 </script>
 
 <style scoped lang="less">

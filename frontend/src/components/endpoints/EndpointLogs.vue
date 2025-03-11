@@ -146,7 +146,7 @@
   }
 
   onMounted(() => {
-    if (!!currentInstance && isLogsSSEConnected.value === false) {
+    if (!!currentInstance.value && isLogsSSEConnected.value === false) {
       syncInstanceLogs(currentInstance.value)
     }
   })
