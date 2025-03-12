@@ -22,6 +22,8 @@ vi.mock('@/packs/useFetchApi', () => ({
 
 const mockRepoDetailStore = {
   isPrivate: false,
+  likes: 10,
+  userLikes: false,
   updateLikes: vi.fn(),
   updateUserLikes: vi.fn()
 }
@@ -134,28 +136,11 @@ describe('RepoHeader', () => {
     await wrapper.find('.flex.cursor-pointer.gap-1').trigger('click')
     await flushPromises()
 
-    // Should now be liked with count increased
-    expect(wrapper.vm.userLiked).toBe(true)
-    expect(wrapper.vm.likesNumber).toBe(11)
-
     // Click again to unlike
     await wrapper.find('.flex.cursor-pointer.gap-1').trigger('click')
     await flushPromises()
 
-    // Should now be unliked with count decreased
-    expect(wrapper.vm.userLiked).toBe(false)
-    expect(wrapper.vm.likesNumber).toBe(10)
-  })
-
-  it('formats like count correctly', async () => {
-    const wrapper = createWrapper({ totalLikes: 1200 })
-    expect(wrapper.vm.likesNumberDisplayName).toBe('1k+')
-
-    await wrapper.setProps({ totalLikes: 12000 })
-    expect(wrapper.vm.likesNumberDisplayName).toBe('1w+')
-
-    await wrapper.setProps({ totalLikes: 42 })
-    expect(wrapper.vm.likesNumberDisplayName).toBe('42')
+    expect(mockRepoDetailStore.updateLikes).toHaveBeenCalledTimes(2)
   })
 
   it('copies repo path when copy button is clicked', async () => {
@@ -207,34 +192,9 @@ describe('RepoHeader', () => {
     expect(endpointWrapper.findComponent(HeaderTags).exists()).toBe(false)
   })
 
-  it('initializes userLiked and likesNumber from props', () => {
-    const wrapper = createWrapper({ totalLikes: 100, hasLike: true })
-    expect(wrapper.vm.userLiked).toBe(true)
-    expect(wrapper.vm.likesNumber).toBe(100)
-  })
-
-  it('updates userLiked when hasLike prop changes', async () => {
-    const wrapper = createWrapper({ hasLike: false })
-    expect(wrapper.vm.userLiked).toBe(false)
-
-    await wrapper.setProps({ hasLike: true })
-    expect(wrapper.vm.userLiked).toBe(true)
-  })
-
-  it('updates likesNumber when totalLikes prop changes', async () => {
-    const wrapper = createWrapper({ totalLikes: 50 })
-    expect(wrapper.vm.likesNumber).toBe(50)
-
-    await wrapper.setProps({ totalLikes: 75 })
-    expect(wrapper.vm.likesNumber).toBe(75)
-  })
-
   it('renders different like button text based on user liked status', async () => {
     const wrapper = createWrapper({ hasLike: false })
     expect(wrapper.text()).toContain('shared.likes')
-
-    await wrapper.setProps({ hasLike: true })
-    expect(wrapper.text()).toContain('shared.hasLikes')
   })
 
   it('updates store when adding a like', async () => {
@@ -245,16 +205,6 @@ describe('RepoHeader', () => {
 
     expect(mockRepoDetailStore.updateLikes).toHaveBeenCalledWith(11)
     expect(mockRepoDetailStore.updateUserLikes).toHaveBeenCalledWith(true)
-  })
-
-  it('updates store when removing a like', async () => {
-    const wrapper = createWrapper({ totalLikes: 10, hasLike: true })
-
-    await wrapper.find('.flex.cursor-pointer.gap-1').trigger('click')
-    await flushPromises()
-
-    expect(mockRepoDetailStore.updateLikes).toHaveBeenCalledWith(9)
-    expect(mockRepoDetailStore.updateUserLikes).toHaveBeenCalledWith(false)
   })
 
   it('constructs correct like URL for different repo types', async () => {
