@@ -31,10 +31,10 @@
       </div>
       <div
         class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
+        :class="repoDetailStore.userLikes === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
-        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        {{ repoDetailStore.userLikes === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">
           {{ likesNumberDisplayName }}
         </div>
@@ -109,10 +109,10 @@
       </div>
       <div
         class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="userLiked === true ? 'text-gray-400 border-gray-200' : ''"
+        :class="repoDetailStore.userLikes === true ? 'text-gray-400 border-gray-200' : ''"
         @click="clickLike"
       >
-        {{ userLiked === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        {{ repoDetailStore.userLikes === false ? $t('shared.likes') : $t('shared.hasLikes') }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">
           {{ likesNumberDisplayName }}
         </div>
@@ -235,23 +235,6 @@
     resourceName: String
   })
 
-  const userLiked = ref(props.hasLike)
-  const likesNumber = ref(props.totalLikes)
-
-  watch(
-    () => props.hasLike,
-    (newVal) => {
-      userLiked.value = newVal
-    }
-  )
-
-  watch(
-    () => props.totalLikes,
-    (newVal) => {
-      likesNumber.value = newVal
-    }
-  )
-
   const copyName = () => {
     if (props.repoType === 'endpoint') {
       copyToClipboard(props.name)
@@ -265,12 +248,13 @@
   }
 
   const likesNumberDisplayName = computed(() => {
-    if (likesNumber.value > 9999) {
+    const likesNumber = repoDetailStore.likes
+    if (likesNumber > 9999) {
       return '1w+'
-    } else if (likesNumber.value > 999) {
+    } else if (likesNumber > 999) {
       return '1k+'
     } else {
-      return likesNumber.value.toString()
+      return likesNumber.toString()
     }
   })
 
@@ -283,7 +267,7 @@
   })
 
   const clickLike = () => {
-    userLiked.value === true ? removeLike() : addLike()
+    repoDetailStore.userLikes === true ? removeLike() : addLike()
   }
 
   const addLike = async () => {
@@ -294,8 +278,8 @@
         message: error.value.msg
       })
     } else {
-      userLiked.value = true
-      likesNumber.value += 1
+      repoDetailStore.updateLikes(repoDetailStore.likes + 1)
+      repoDetailStore.updateUserLikes(true)
     }
   }
 
@@ -307,8 +291,8 @@
         message: error.value.msg
       })
     } else {
-      userLiked.value = false
-      likesNumber.value -= 1
+      repoDetailStore.updateLikes(repoDetailStore.likes - 1)
+      repoDetailStore.updateUserLikes(false)
     }
   }
 
