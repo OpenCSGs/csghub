@@ -296,6 +296,8 @@
     } else {
       userLiked.value = true
       likesNumber.value += 1
+      repoDetailStore.updateLikes(likesNumber.value)
+      repoDetailStore.updateUserLikes(true)
     }
   }
 
@@ -309,6 +311,8 @@
     } else {
       userLiked.value = false
       likesNumber.value -= 1
+      repoDetailStore.updateLikes(likesNumber.value)
+      repoDetailStore.updateUserLikes(false)
     }
   }
 

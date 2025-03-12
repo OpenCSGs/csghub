@@ -78,6 +78,14 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     privateVisibility.value = input
   }
 
+  const updateLikes = (input) => {
+    likes.value = input
+  }
+
+  const updateUserLikes = (input) => {
+    userLikes.value = input
+  }
+
   async function initialize(initialData, repositoryType) {
     repoType.value = repositoryType
     isInitialized.value = true
@@ -149,6 +157,8 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     privateVisibility,
     isPrivate,
     updateVisibility,
+    updateLikes,
+    updateUserLikes,
     initialize,
     isInitialized,
     baseModel,
