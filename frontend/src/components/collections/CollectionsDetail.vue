@@ -12,6 +12,7 @@
         :desc="repoDetailStore.description"
         :totalLikes="repoDetailStore.likes"
         :repo-id="repoDetailStore.id"
+        :collectionsId="collectionsId"
         repo-type="collections"
       />
     </div>

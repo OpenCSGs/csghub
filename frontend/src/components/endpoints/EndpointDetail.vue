@@ -10,6 +10,7 @@
         :owner-url="ownerUrl"
         repo-type="endpoint"
         :repoId="repoDetailStore.repositoryId"
+        :deployId="repoDetailStore.deployId"
       />
     </div>
   </div>
