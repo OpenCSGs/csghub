@@ -66,9 +66,9 @@
       v-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
       :disabled="!enableFinetune || !httpCloneUrl"
-      :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
+      :name="$t('finetune.title')"
       svgName="model_finetune_create"
-      @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
+      @click="handleButtonClick"
     />
 
     <!-- repo download clone button -->

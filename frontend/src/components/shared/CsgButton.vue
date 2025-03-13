@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="customClass"
+    :class="className"
     :type="btnType"
     :disabled="loading || disabled"
     :data-disabled="loading || disabled"
@@ -26,7 +26,7 @@
       type: String,
       default: "button"
     },
-    customClass:{
+    class: {
       type: String,
       default: "",
     },
@@ -44,22 +44,25 @@
     }
   });
 
+  // Map the reserved keyword 'class' to a regular variable 'className'
+  const className = computed(() => props.class);
+
   // Check if the class contains disabled class
   const isDisabledClass = computed(() => {
-    return props.customClass.includes('disabled');
+    return props.class.includes('disabled');
   });
 
   // Calculate icon size based on button size
   const getIconSizeClass = computed(() => {
-    if (props.customClass.includes('btn-2xl')) {
+    if (props.class.includes('btn-2xl')) {
       return 'w-6 h-6'; // 24px
-    } else if (props.customClass.includes('btn-xl')) {
+    } else if (props.class.includes('btn-xl')) {
       return 'w-[18px] h-[18px]'; // 18px
-    } else if (props.customClass.includes('btn-lg')) {
+    } else if (props.class.includes('btn-lg')) {
       return 'w-4 h-4'; // 16px
-    } else if (props.customClass.includes('btn-md')) {
+    } else if (props.class.includes('btn-md')) {
       return 'w-3.5 h-3.5'; // 14px
-    } else if (props.customClass.includes('btn-sm')) {
+    } else if (props.class.includes('btn-sm')) {
       return 'w-3 h-3'; // 12px
     } else {
       return 'w-4 h-4'; // Default size
