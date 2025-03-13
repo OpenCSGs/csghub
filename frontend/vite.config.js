@@ -31,9 +31,6 @@ function getHtmlEntryFiles(srcDir) {
 
 const DEV_CONFIG = {
   plugins: [vue()],
-  optimizeDeps: {
-    disabled: true,
-  },
   build: {
     rollupOptions: {
       treeshake: false,

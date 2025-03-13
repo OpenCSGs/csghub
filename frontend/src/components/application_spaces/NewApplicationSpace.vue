@@ -187,7 +187,7 @@
           >
             <el-radio
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
-              label="gradio"
+              value="gradio"
               size="large"
               border
             >
@@ -199,7 +199,7 @@
             </el-radio>
             <el-radio
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
-              label="streamlit"
+              value="streamlit"
               size="large"
               border
             >
@@ -213,7 +213,7 @@
               v-if="userStore.isAdmin"
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
-              label="nginx"
+              value="nginx"
               border
             >
               <SvgIcon
@@ -227,7 +227,8 @@
             <el-radio
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               size="large"
-              label="docker"
+              value="docker"
+              id="sdk-docker"
               @click="fetchDockerTemplates"
               border
             >
@@ -241,7 +242,7 @@
             <el-radio
               disabled
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
-              label="static"
+              value="static"
               size="large"
               border
             >
@@ -601,7 +602,7 @@
 
   const fetchDockerTemplates = async () => {
     try {
-      const { data, error } = await useFetchApi('space_templates/docker').json()
+      const { data, error } = await useFetchApi('/space_templates/docker').json()
       if (data.value) {
         dockerTemplates.value = data.value.data
       } else {

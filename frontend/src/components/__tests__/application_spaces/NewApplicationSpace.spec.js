@@ -39,6 +39,23 @@ const mockApiResponses = {
   '/cluster': createResponse([{ cluster_id: '1', region: 'region1' }]),
   [`/space_resources?cluster_id=1`]: createResponse([
     { id: 1, name: 'testcloud', is_available: true }
+  ]),
+  '/space_templates/docker': createResponse([
+    {
+        "id": 1,
+        "type": "docker",
+        "name": "ChatUI",
+        "show_name": "ChatUI",
+        "enable": true,
+        "path": "model_chatui",
+        "dev_mode": false,
+        "port": 8080,
+        "secrets": "",
+        "variables": "[{ \"name\": \"MODEL_NAME\", \"value\": \"Qwen/Qwen2-0.5B-Instruct\", \"type\": \"string\", \"description\": \"model id to be used on csghub\" }]",
+        "description": "A web-based chat UI that supports model.",
+        "created_at": "2025-02-22T09:53:27.656306Z",
+        "updated_at": "2025-02-22T09:53:27.656306Z"
+    }
   ])
 }
 
@@ -54,9 +71,14 @@ vi.mock('../../../packs/useFetchApi', () => ({
 
 describe('NewApplicationSpace', () => {
   describe('mount', async () => {
-    it('mounts correctly', () => {
+    it('mounts correctly', async () => {
       const wrapper = createWrapper()
+      await wrapper.vm.$nextTick()
       expect(wrapper.exists()).toBe(true)
+      expect(wrapper.vm.dataForm.space_cluster).toEqual('1')
+      // need to wait because cloud_resource update is happening in nested async call
+      await wrapper.vm.$nextTick()
+      expect(wrapper.vm.dataForm.cloud_resource).toEqual(1)
     })
   })
 
@@ -75,7 +97,7 @@ describe('NewApplicationSpace', () => {
       wrapper.vm.dataForm.name = 'a' // Invalid length
       await triggerFormButton(wrapper)
       await waitFor(() => {
-        expect(wrapper.find('.el-form-item__error').exists()).toBe(true)
+        expect(wrapper.find('.el-form-item__error').text()).toEqual('The length is within the range of 2 to 64 characters')
       })
 
       wrapper.vm.dataForm.name = 'valid-space' // Valid length
@@ -90,7 +112,18 @@ describe('NewApplicationSpace', () => {
       wrapper.vm.dataForm.owner = '' // Invalid owner
       await triggerFormButton(wrapper)
       await waitFor(() => {
-        expect(wrapper.find('.el-form-item__error').exists()).toBe(true)
+        expect(wrapper.find('.el-form-item__error').text()).toEqual('Please select Owner')
+      })
+    })
+  })
+
+  describe('when select docker sdk', async () => {
+    it('fetchs the docker templates', async () => {
+      const wrapper = createWrapper()
+      const dockerRadio = wrapper.find('#sdk-docker')
+      await dockerRadio.trigger('click')
+      await waitFor(() => {
+        expect(wrapper.vm.dockerTemplates[0].name).toEqual('ChatUI')
       })
     })
   })

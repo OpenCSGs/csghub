@@ -23,7 +23,7 @@
       class="my-4 py-4 border border-gray-200 border-l-0 border-r-0"
     >
       <el-radio
-        label="main"
+        value="main"
         size="large"
         >{{ $t('repo.edit.main') }}</el-radio
       >
