@@ -138,7 +138,7 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, computed } from 'vue'
+  import { ref, onMounted } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -149,7 +149,32 @@
   const { cookies } = useCookies()
   const { t } = useI18n()
   const userStore = useUserStore()
+
+  const originalProfileData = ref({})
+
+  onMounted(() => {
+    originalProfileData.value = {
+      avatar: userStore.avatar,
+      username: userStore.username,
+      nickname: userStore.nickname,
+      email: userStore.email,
+      phone: userStore.phone,
+      homepage: userStore.homepage,
+      bio: userStore.bio
+    }
+  })
+
   const profileData = ref(storeToRefs(userStore))
+
+  const restoreOriginalData = () => {
+    profileData.value.avatar = originalProfileData.value.avatar
+    profileData.value.username = originalProfileData.value.username
+    profileData.value.nickname = originalProfileData.value.nickname
+    profileData.value.email = originalProfileData.value.email
+    profileData.value.phone = originalProfileData.value.phone
+    profileData.value.homepage = originalProfileData.value.homepage
+    profileData.value.bio = originalProfileData.value.bio
+  }
 
   const fileInput = ref(null)
   const emit = defineEmits(['updateHasSave'])
@@ -237,6 +262,7 @@
     try {
       const { error } = await useFetchApi(profileUpdateEndpoint, options).put().json()
       if (error.value) {
+        restoreOriginalData()
         ElMessage({ message: error.value.msg, type: 'warning' })
       } else {
         await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
