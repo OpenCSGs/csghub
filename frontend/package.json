@@ -37,7 +37,7 @@
     "uuid": "^10.0.0",
     "vue": "^3.4.35",
     "vue-codemirror": "^6.1.1",
-    "vue-i18n": "9",
+    "vue-i18n": "10",
     "vue-router": "4",
     "vue3-cookies": "^1.0.6",
     "wait-for-expect": "^3.0.2"
