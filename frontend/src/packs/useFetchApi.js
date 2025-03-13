@@ -37,6 +37,11 @@ const acceptLanguage = () => {
   }
 }
 
+// the return of useFetchApi will be an object which has attributes like: data, error, response
+// data.value will be the truely response body, so if we have a response like:
+// {"msg":"OK","data":null}
+// data.value will be {"msg":"OK","data":null}
+// data.value.data will be null, you should becareful to use data.value.data to get the truely data
 const useFetchApi = createFetch({
   updateDataOnError: true,
   baseUrl: `${CSGHUB_SERVER}/api/v1`,
@@ -55,6 +60,12 @@ const useFetchApi = createFetch({
       }
       return { options }
     },
+    // This callback is triggered for any non-2xx status code.
+    // For known server errors (e.g., 401), the data will contain the server's error message,
+    // such as {"msg":"unknown user, please login first"}.
+    // For unknown server errors (e.g., 500), the data will be undefined,
+    // and the error will contain the error information.
+    // There are cases where the fetch fails but no response is received.
     onFetchError({ data, error, response }) {
       // there is case in which the fetch is error but the response is nil
       if (!response) {
