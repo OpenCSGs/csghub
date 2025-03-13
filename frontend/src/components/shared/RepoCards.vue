@@ -81,7 +81,7 @@
           </el-select>
           <ElInput
             v-model="nameFilterInput"
-            class="w-fit"
+            class="!w-[320px] xl:!w-full"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
             @change="filterChange" />
