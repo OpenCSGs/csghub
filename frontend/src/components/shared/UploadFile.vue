@@ -41,7 +41,7 @@
     </div>
 
     <el-radio-group v-model="new_branch" class="my-4 py-4 border border-gray-200 border-l-0 border-r-0">
-      <el-radio label="main" size="large">{{ $t('shared.commitToMain') }}</el-radio>
+      <el-radio value="main" size="large">{{ $t('shared.commitToMain') }}</el-radio>
     </el-radio-group>
 
     <div>
