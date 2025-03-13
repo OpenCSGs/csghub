@@ -4,6 +4,9 @@
     :height="height"
     :src="`/images/${path}/${name}.svg`"
     onerror="this.style.display='none'"
+    :style="{ 
+      filter: applyColorFilter ? 'grayscale(100%) opacity(0.5)' : 'none'
+    }"
   />
 </template>
 
@@ -22,5 +25,9 @@
       type: String,
       default: "icons",
     },
+    applyColorFilter: {
+      type: Boolean,
+      default: false
+    }
   });
 </script>

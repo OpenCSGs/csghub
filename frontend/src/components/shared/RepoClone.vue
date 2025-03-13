@@ -20,17 +20,15 @@
     />
 
     <!-- evaluation button -->
-    <div v-if="!actionLimited"
-      class="relative inline-flex">
-      <CsgButton
-        class="btn btn-secondary-gray btn-sm modelBtn pl-8"
-        :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
-        :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
-        svgName="evaluation_new"
-        v-if="repoType === 'model'"
-        @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
-      />
-    </div>
+    <CsgButton
+      v-if="!actionLimited && repoType === 'model'"
+      type="default"
+      :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
+      class="btn btn-secondary-gray btn-sm modelBtn pl-8"
+      :disabled="!enableEvaluation || !httpCloneUrl"
+      svgName="evaluation_new"
+      @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
+    />
 
     <!-- endpoint deploy button -->
     <DeployDropdown
@@ -51,12 +49,14 @@
       />
     </div>
     <div
-      class="btn btn-secondary-gray btn-sm modelBtn disabled"
+      class="btn btn-secondary-gray btn-sm modelBtn"
+      :class="{ disabled: isButtonDisabled }"
       v-else-if="repoType === 'model'"
     >
       <SvgIcon
         name="deploy"
-        class="mr-0"
+        class="fill-current text-inherit mr-0"
+        style="color: inherit !important; fill: currentColor !important;"
       />
       <div>{{ $t('all.deploy') }}</div>
     </div>
@@ -65,7 +65,7 @@
     <CsgButton
       v-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
-      :class="{ disabled: !enableFinetune || !httpCloneUrl }"
+      :disabled="!enableFinetune || !httpCloneUrl"
       :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
       svgName="model_finetune_create"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
@@ -290,7 +290,7 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
     ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
   )
 
-  // 同步按钮禁用
+  // Sync button disabled
   const syncInprogress = computed(() => {
     return (
       props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
@@ -453,16 +453,35 @@ result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, toke
       fetchUserToken()
     }
   })
+
+  const isButtonDisabled = ref(true); // or false，depends on your need
 </script>
 <style lang="less" scoped>
   .disabled {
     cursor: not-allowed;
     border: solid #eaecf0;
     color: #98a2b3;
+    
+    /* Ensure SVG colors follow text colors */
+    :deep(svg),
+    :deep(img[src*=".svg"]) {
+      fill: currentColor;
+      color: inherit;
+      opacity: 0.5;
+    }
+    
     &:hover {
       border: solid #eaecf0 !important;
       color: #98a2b3 !important;
       background: #fff !important;
+      
+      /* Ensure SVG colors also follow in hover state */
+      :deep(svg),
+      :deep(img[src*=".svg"]) {
+        fill: currentColor;
+        color: inherit;
+        opacity: 0.5;
+      }
     }
   }
 </style>
