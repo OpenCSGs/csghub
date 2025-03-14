@@ -12,19 +12,19 @@
 
         <h1 id="error-Header" class="text-6xl font-medium mb-6 text-gray-900">
           {{ $t('errors_page.unauthorized.title') }}
-        </h1>    
+        </h1>
 
         <p id="error-Description" class="text-xl font-light mb-12 text-gray-600">
           {{ $t('errors_page.unauthorized.desc') }}
         </p>
 
         <div id="error-button" class="flex gap-5">
-          <a href="javascript:history.back();" 
+          <a href="javascript:history.back();"
              class="btn btn-secondary bg-white px-6 py-4 font-medium text-gray-700 border border-gray-300 hover:bg-gray-50">
             {{ $t('errors_page.not_found.back') }}
           </a>
 
-          <a href="/" 
+          <a href="/"
              class="btn btn-primary bg-brand-600 px-6 py-4 font-medium text-white hover:bg-brand-700">
             {{ $t('errors_page.not_found.home') }}
           </a>
@@ -34,7 +34,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-
-</script>

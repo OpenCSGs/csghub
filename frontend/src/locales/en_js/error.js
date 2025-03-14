@@ -3,7 +3,7 @@ export const errors_page = {
     title: 'Page not found',
     desc: 'Sorry, OpenCSG could not find this web page. This web page may have been removed due to a product update, or your URL is incorrect.',
     back: 'Back',
-    home: 'To homepage',  
+    home: 'To homepage',
   },
   unauthorized: {
     title: 'Unauthorized',
@@ -15,4 +15,7 @@ export const errors_page = {
     back_to_homepage: 'To homepage',
     relogin: 'Relogin',
   },
+  serverError: {
+    title: 'Server Error {errorCode}'
+  }
 }
