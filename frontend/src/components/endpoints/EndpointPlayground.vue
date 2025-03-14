@@ -209,6 +209,12 @@
         :modelId="modelId"
         :form="formImg"
       />
+      <TestExtraction
+        v-else-if="task=='feature-extraction'"
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="formImg"
+      />
       <div class="px-4 mb-4 flex justify-between items-center">
         <div class="items-center gap-1.5 flex cursor-not-allowed">
           <SvgIcon name="json" />
@@ -246,6 +252,13 @@
         :form="formImg"
         :private="private"
       />
+      <ApiExtraction
+        v-else-if="task=='feature-extraction'"
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="formImg"
+        :private="private"
+      />
     </div>
   </div>
   <el-dialog
@@ -265,6 +278,13 @@
         :modelId="modelId"
         :form="formImg"
       />
+      <TestExtraction
+        v-else-if="task=='feature-extraction'"
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="formImg"
+        :private="private"
+      />
   </el-dialog>
 </template>
 
@@ -274,6 +294,8 @@
   import TestEndpoint from './playground/TestEndpoint.vue'
   import TestWidget from './playground/TestWidget.vue'
   import ApiWidget from './playground/ApiWidget.vue'
+  import TestExtraction from './playground/TestExtraction.vue'
+  import ApiExtraction from './playground/ApiExtraction.vue'
 
   const props = defineProps({
     appEndpoint: String,
