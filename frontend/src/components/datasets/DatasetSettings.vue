@@ -600,6 +600,7 @@
         }
         const { error } = await useFetchApi(updateReadmeEndpoint, option).put().json()
         if (!error.value) {
+          this.fetchRepoDetail()
           ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         } else {
           ElMessage({ message: error.value.msg, type: 'warning' })
@@ -618,6 +619,7 @@
         if (error.value) {
           ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
+          this.fetchRepoDetail()
           ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
         }
       },
