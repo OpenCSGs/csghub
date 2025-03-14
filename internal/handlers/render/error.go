@@ -8,6 +8,7 @@ type ErrorHandler interface {
 	NotFound(ctx *gin.Context)
 	Unauthorized(ctx *gin.Context)
 	LoginFailed(ctx *gin.Context)
+	ServerError(ctx *gin.Context)
 }
 
 type ErrorHandlerImpl struct {
@@ -27,4 +28,8 @@ func (e *ErrorHandlerImpl) Unauthorized(ctx *gin.Context) {
 
 func (e *ErrorHandlerImpl) LoginFailed(ctx *gin.Context) {
 	RenderBaseInstance.RenderTemplate(ctx, "errors_login_failed", nil)
+}
+
+func (e *ErrorHandlerImpl) ServerError(ctx *gin.Context) {
+	RenderBaseInstance.RenderTemplate(ctx, "errors_server_error", nil)
 }

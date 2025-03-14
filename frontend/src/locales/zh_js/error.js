@@ -15,4 +15,7 @@ export const errors_page = {
     back_to_homepage: '回到首页',
     relogin: '重新登录',
   },
+  serverError: {
+    title: '服务器错误 {errorCode}'
+  }
 }

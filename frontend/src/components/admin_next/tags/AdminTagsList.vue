@@ -52,13 +52,13 @@
     </div>
 
     <!-- new category -->
-    <p class="text-[#101828] text-md my-4 flex gap-2 items-center">
+    <div class="text-[#101828] text-md my-4 flex gap-2 items-center">
       <p> {{ $t('admin.tags.newCategoryNotes') }} </p>
       <CsgButton
         :name="$t('admin.tags.newCategoryBtn')"
         class="btn btn-primary btn-sm"
         @click="dialogFormVisible = true" />
-    </p>
+    </div>
 
     <Table
       :title="$t('admin.tags.tagList')"

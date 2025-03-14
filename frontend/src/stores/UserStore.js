@@ -56,6 +56,10 @@ const useUserStore = defineStore('User', () => {
     localStorage.removeItem(persistKey)
   }
 
+  const updateInitalized = (initializedData) => {
+    initialized.value = initializedData
+  }
+
   return {
     username,
     nickname,
@@ -77,7 +81,8 @@ const useUserStore = defineStore('User', () => {
     actionLimited,
     hasEmail,
     refreshCanChangeUsernameCookie,
-    clearStore
+    clearStore,
+    updateInitalized,
   }
 }, {
   persist: {

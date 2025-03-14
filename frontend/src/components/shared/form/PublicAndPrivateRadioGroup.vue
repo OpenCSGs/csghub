@@ -6,7 +6,7 @@
   >
     <el-radio
       class="w-full !border-[1px] mr-0 mb-[32px] !rounded-md !h-auto !items-start !p-4"
-      label="public"
+      value="public"
       size="large"
       border
     >
@@ -17,7 +17,7 @@
     </el-radio>
     <el-radio
       class="w-full !border-[1px] mr-0 !rounded-md !h-auto !items-start !p-4"
-      label="private"
+      value="private"
       size="large"
       border
     >

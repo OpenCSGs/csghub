@@ -121,6 +121,7 @@ func createRender() multitemplate.Renderer {
 		"errors_404":          "errors/404.html",
 		"errors_401":          "errors/unauthorized.html",
 		"errors_login_failed": "errors/login_failed.html",
+		"errors_server_error": "errors/server_error.html",
 
 		"index":                          "home/index.html",
 		"models_index":                   "models/index.html",
