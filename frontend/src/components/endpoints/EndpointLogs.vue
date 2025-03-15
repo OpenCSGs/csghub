@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, nextTick, computed, onMounted } from 'vue'
+  import { ref, inject, nextTick, computed, onMounted, watch } from 'vue'
   import refreshJWT from '../../packs/refreshJWT.js'
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useCookies } from "vue3-cookies";
@@ -50,6 +50,17 @@
     return repoDetailStore.activeInstance
   })
 
+  watch([() => props.modelId, () => props.deployId], () => {
+    if (currentInstance.value && isLogsSSEConnected.value === false) {
+      syncInstanceLogs(currentInstance.value)
+    }
+  })
+
+  watch(() => repoDetailStore.status, () => {
+    if (currentInstance.value && isLogsSSEConnected.value === false) {
+      syncInstanceLogs(currentInstance.value)
+    }
+  })
 
   const syncInstanceLogs = (instanceName) => {
     fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${instanceName}`, {

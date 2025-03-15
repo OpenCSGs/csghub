@@ -389,6 +389,8 @@
     const { response, error } = await useFetchApi(stopUrl).put().json()
 
     if (!error.value) {
+      // after stop, all instance will be turn off
+      repoDetailStore.activeInstance = ''
       ElMessage({
         message: t('endpoints.settings.toggleStatusSuccess'),
         type: 'success'
