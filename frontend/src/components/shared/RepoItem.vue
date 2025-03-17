@@ -19,22 +19,11 @@
       >
         {{ getComputed.path }}
       </div>
-      <div class="flex gap-1">
-        <el-tooltip
-          effect="light"
-          :content="$t('repo.source.needSync')"
-          placement="top"
-        >
-          <SvgIcon v-if="!!needSyncIcon" :name="needSyncIcon" />
-        </el-tooltip>
-        <el-tooltip
-          effect="light"
-          :content="syncTooltip"
-          placement="top"
-        >
-          <SvgIcon v-if="!!sourceIcon && !needSyncIcon" :name="sourceIcon" />
-        </el-tooltip>
-      </div>
+      <RepoItemSyncIcon
+        :source="repo.source"
+        :syncStatus="repo.sync_status"
+        :httpCloneUrl="repo.repository && repo.repository.http_clone_url"
+      />
     </div>
 
     <p v-if="getComputed.showDescription"
@@ -78,6 +67,7 @@
 <script setup>
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import RepoItemSyncIcon from './RepoItemSyncIcon.vue'
 
   const props = defineProps({
     repo: Object,
@@ -106,31 +96,6 @@
       default:
         return ''
     }
-  })
-
-  const sourceIcon = computed(() => {
-    if (props.repo.source !== 'opencsg') return ''
-
-    return props.repo.sync_status === 'completed'
-      ? 'repo_opencsg_completed'
-      : 'repo_opencsg_sync'
-  })
-
-  const needSyncIcon = computed(() => {
-    if (props.repo.source !== 'opencsg') return ''
-
-    return props.repo.sync_status !== 'completed'
-      && !!props.repo.repository.http_clone_url
-      ? 'repo_opencsg_need_sync'
-      : ''
-  })
-
-  const syncTooltip = computed(() => {
-    if (props.repo.source !== 'opencsg') return ''
-
-    return props.repo.sync_status === 'completed'
-      ? t('repo.source.syncCompleted')
-      : t('repo.source.remoteResource')
   })
 
   const getComputed = computed(() => {
