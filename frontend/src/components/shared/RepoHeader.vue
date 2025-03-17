@@ -23,6 +23,12 @@
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
+      <RepoHeaderSourceIcon
+        v-if="repoDetailStore.source"
+        :repoType="repoType"
+        :source="repoSource"
+        :sourcePath="repoSourcePath"
+      />
       <div
         v-if="repoDetailStore.isPrivate"
         class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
@@ -101,6 +107,12 @@
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
+      <RepoHeaderSourceIcon
+        v-if="repoDetailStore.source"
+        :repoType="repoType"
+        :source="repoSource"
+        :sourcePath="repoSourcePath"
+      />
       <div
         v-if="repoDetailStore.isPrivate"
         class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
@@ -206,6 +218,7 @@
   import { ref, computed, watch } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import RepoHeaderSourceIcon from './RepoHeaderSourceIcon.vue'
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -303,6 +316,28 @@
       return `/collections/${props.collectionsId}`
     } else {
       return `/${props.repoType}s/${props.path}` 
+    }
+  })
+
+  const repoSource = computed(() => {
+    if (repoDetailStore.hfPath) {
+      return 'HuggingFace'
+    } else if (repoDetailStore.msPath) {
+      return 'ModelScope'
+    } else {
+      return 'OpenCSG'
+    }
+  })
+
+  const repoSourcePath = computed(() => {
+    if (repoDetailStore.hfPath) {
+      return repoDetailStore.hfPath
+    } else if (repoDetailStore.msPath) {
+      return repoDetailStore.msPath
+    } else if (repoDetailStore.csgPath) {
+      return repoDetailStore.csgPath
+    } else {
+      return repoDetailStore.path?.replace('CSG_', '')
     }
   })
 </script>

@@ -16,5 +16,6 @@ export const repo = {
     remoteResource: "OpenCSG Remote Resource",
     syncCompleted: "Local version matches remote source version",
     needSync: "Remote has pending sync versions",
+    from: "Mirror from",
   }
 }
