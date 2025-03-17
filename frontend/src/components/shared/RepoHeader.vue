@@ -18,7 +18,7 @@
         nickname.trim() === '' ? name : nickname
       }}</span>
       <RepoHeaderSourceIcon
-        v-if="repoDetailStore.source"
+        v-if="repoDetailStore.source !== 'local'"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
