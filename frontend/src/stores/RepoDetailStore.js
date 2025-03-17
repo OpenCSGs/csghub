@@ -69,6 +69,8 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const task = ref('')
   const actualReplica = ref(0)
   const instances = ref([])
+  const activeInstance = ref('')
+  const failedReason = ref('')
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -219,6 +221,8 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     task,
     actualReplica,
     instances,
+    activeInstance,
+    failedReason,
     clearStore
   }
 }, {

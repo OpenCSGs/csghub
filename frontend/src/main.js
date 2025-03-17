@@ -51,6 +51,7 @@ import CollectionsDetail from "./components/collections/CollectionsDetail.vue"
 import NotFound from "./components/error/NotFound.vue"
 import Unauthorized from "./components/error/Unauthorized.vue"
 import LoginFailed from "./components/error/LoginFailed.vue"
+import ServerError from "./components/error/ServerError.vue"
 import FlashMessage from "./components/shared/FlashMessage.vue"
 import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleIndex.vue"
 import PromptsHub from "./components/prompts/PromptsHub.vue"
@@ -108,6 +109,7 @@ const app = createApp({
     NotFound,
     Unauthorized,
     LoginFailed,
+    ServerError,
     FlashMessage,
     ResourceConsoleIndex,
     PromptsHub,

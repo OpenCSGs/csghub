@@ -28,10 +28,11 @@
 </template>
 
 <script setup>
-  import { ref, inject, nextTick, computed, onMounted } from 'vue'
+  import { ref, inject, nextTick, computed, onMounted, watch } from 'vue'
   import refreshJWT from '../../packs/refreshJWT.js'
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useCookies } from "vue3-cookies";
+  import useRepoDetailStore from '../../stores/RepoDetailStore.js'
 
   const props = defineProps({
     instances: Array,
@@ -39,14 +40,26 @@
     deployId: Number
   })
 
+  const repoDetailStore = useRepoDetailStore()
   const csghubServer = inject('csghubServer')
   const { cookies } = useCookies()
   const instanceLogDiv = ref(null)
   const instanceLogLineNum = ref(0)
   const isLogsSSEConnected = ref(false)
-
   const currentInstance = computed(() => {
-    return props.instances ? props.instances[0]?.name : ''
+    return repoDetailStore.activeInstance
+  })
+
+  watch([() => props.modelId, () => props.deployId], () => {
+    if (currentInstance.value && isLogsSSEConnected.value === false) {
+      syncInstanceLogs(currentInstance.value)
+    }
+  })
+
+  watch(() => repoDetailStore.status, () => {
+    if (currentInstance.value && isLogsSSEConnected.value === false) {
+      syncInstanceLogs(currentInstance.value)
+    }
   })
 
   const syncInstanceLogs = (instanceName) => {
@@ -146,7 +159,7 @@
   }
 
   onMounted(() => {
-    if (!!currentInstance.value && isLogsSSEConnected.value === false) {
+    if (currentInstance.value && isLogsSSEConnected.value === false) {
       syncInstanceLogs(currentInstance.value)
     }
   })

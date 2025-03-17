@@ -242,14 +242,14 @@
 
   const { actionLimited, isLoggedIn } = storeToRefs(userStore)
   const httpCloneUrl = computed(() => {
-    return repoDetailStore.repository.http_clone_url
+    return repoDetailStore.repository.http_clone_url || ""
   })
   const sshCloneUrl = computed(() => {
     return repoDetailStore.repository.ssh_clone_url
   })
   const httpCloneProtocol = computed(() => {
-    const url = new URL(repoDetailStore.repository.http_clone_url)
-    return url.protocol
+    const url = repoDetailStore.repository.http_clone_url
+    return url ? new URL(url).protocol : 'https'
   })
 
   const httpsCloneCode = computed(() => {

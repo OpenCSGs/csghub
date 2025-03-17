@@ -138,7 +138,7 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, computed } from 'vue'
+  import { ref, watch } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -149,7 +149,16 @@
   const { cookies } = useCookies()
   const { t } = useI18n()
   const userStore = useUserStore()
+
   const profileData = ref(storeToRefs(userStore))
+
+  watch(
+    () => profileData.value,
+    () => {
+      userStore.updateInitalized(false)
+    },
+    { deep: true }
+  )
 
   const fileInput = ref(null)
   const emit = defineEmits(['updateHasSave'])
