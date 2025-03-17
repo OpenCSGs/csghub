@@ -238,7 +238,11 @@
   })
 
   const failedReason = computed(() => {
-    return t(`all.instanceDeploy.${repoDetailStore.failedReason}`)
+    if (repoDetailStore.failedReason === '') {
+      return t(`all.instanceDeploy.deployFailed`)
+    } else {
+      return t(`all.instanceDeploy.${repoDetailStore.failedReason}`)
+    }
   })
 
   const copyName = () => {
