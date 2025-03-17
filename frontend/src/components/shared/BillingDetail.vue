@@ -137,7 +137,7 @@
   })
 
   const canFetchBillingDetail = computed(() => {
-    return props.instanceName && userStore.uuid
+    return userStore.uuid && props.instanceName
   })
 
   watch(canFetchBillingDetail, (newValue) => {

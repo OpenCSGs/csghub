@@ -248,7 +248,7 @@
   }
 
   const likesNumberDisplayName = computed(() => {
-    const likesNumber = repoDetailStore.likes
+    const likesNumber = repoDetailStore.likes || 0
     if (likesNumber > 9999) {
       return '1w+'
     } else if (likesNumber > 999) {
@@ -302,7 +302,7 @@
     } else if (props.repoType === 'collections') {
       return `/collections/${props.collectionsId}`
     } else {
-      return `/${props.repoType}s/${props.path}` 
+      return `/${props.repoType}s/${props.path}`
     }
   })
 </script>

@@ -88,7 +88,6 @@
   const isStatusSSEConnected = ref(false)
   const replicaList = ref([])
 
-
   const appEndpoint = computed(() => {
     const endpointUrl = repoDetailStore.endpoint
     if (endpointUrl) {
@@ -172,11 +171,14 @@
         console.log(`SyncStatus: ${eventResponse.status}`)
         console.log(`SyncStatus: ${eventResponse.details && eventResponse.details[0].name}`)
         if (repoDetailStore.status !== eventResponse.status) {
-          if (eventResponse.status == 'Running') {
-            fetchRepoDetail()
-          }
           repoDetailStore.status = eventResponse.status
+          fetchRepoDetail()
         }
+
+        if (eventResponse.details && eventResponse.details[0].name) {
+          repoDetailStore.activeInstance = eventResponse.details[0].name
+        }
+
         if (eventResponse.details) {
           replicaList.value = eventResponse.details
         }
