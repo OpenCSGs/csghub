@@ -182,6 +182,7 @@
         if (eventResponse.details) {
           replicaList.value = eventResponse.details
         }
+        repoDetailStore.failedReason = eventResponse.reason
       },
       onerror(err) {
         console.log('Status Server Error:')

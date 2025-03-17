@@ -1,40 +1,40 @@
 <template>
   <div
-    class="flex flex-col gap-[16px] flex-wrap mb-[16px] text-lg text-gray-500 font-semibold md:px-5"
-  >
+    class="flex flex-col gap-[16px] flex-wrap mb-[16px] text-lg text-gray-500 font-semibold md:px-5">
     <!-- dataset repo -->
     <div
       v-if="repoType === 'dataset'"
-      class="w-full flex flex-wrap gap-2 items-center md:w-full md:mb-1"
-    >
+      class="w-full flex flex-wrap gap-2 items-center md:w-full md:mb-1">
       <SvgIcon
         name="repoheader_dataset"
         width="16"
-        height="16"
-      />
-      <span class="text-gray-500 text-lg font-medium"
-        >Dataset:</span
-      >
+        height="16" />
+      <span class="text-gray-500 text-lg font-medium">Dataset:</span>
       <el-avatar
         :size="24"
         :src="avatar"
-        class="flex-shrink-0"
-      ></el-avatar>
+        class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
-      >
+        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm">
         {{ $t('all.private') }}
       </div>
       <div
         class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="repoDetailStore.userLikes === true ? 'text-gray-400 border-gray-200' : ''"
-        @click="clickLike"
-      >
-        {{ repoDetailStore.userLikes === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        :class="
+          repoDetailStore.userLikes === true
+            ? 'text-gray-400 border-gray-200'
+            : ''
+        "
+        @click="clickLike">
+        {{
+          repoDetailStore.userLikes === false
+            ? $t('shared.likes')
+            : $t('shared.hasLikes')
+        }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">
           {{ likesNumberDisplayName }}
         </div>
@@ -44,75 +44,86 @@
     <!-- endpoint -->
     <div
       v-else-if="repoType === 'endpoint'"
-      class="flex flex-wrap w-full gap-2 items-center"
-    >
+      class="flex flex-wrap w-full gap-2 items-center">
       <el-avatar
         :size="24"
         :src="avatar"
-        class="flex-shrink-0"
-      ></el-avatar>
+        class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
-      >
+        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm">
         {{ $t('all.private') }}
       </div>
       <AppStatus
         v-if="appStatus"
         :appStatus="appStatus"
-        :spaceResource="spaceResource"
-      />
+        :spaceResource="spaceResource" />
+      <el-tooltip :content="failedReason" placement="top">
+        <SvgIcon
+          v-if="appStatus === 'DeployFailed'"
+          name="instance_deploy_failed_tips"
+          width="16"
+          height="16" />
+      </el-tooltip>
     </div>
 
     <!-- finetune -->
     <div
       v-else-if="repoType === 'finetune'"
-      class="flex flex-wrap w-full gap-2 items-center"
-    >
+      class="flex flex-wrap w-full gap-2 items-center">
       <SvgIcon
         name="model_finetune_create"
         width="16"
         height="16"
-        class="flex-shrink-0"
-      />
+        class="flex-shrink-0" />
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <AppStatus
         v-if="appStatus"
         :appStatus="appStatus"
-        :spaceResource="spaceResource"
-      />
+        :spaceResource="spaceResource" />
+      <el-tooltip :content="failedReason" placement="top">
+        <SvgIcon
+          v-if="appStatus === 'DeployFailed'"
+          name="instance_deploy_failed_tips"
+          width="16"
+          height="16" />
+      </el-tooltip>
     </div>
 
     <!-- other repo -->
     <div
       v-else
-      class="flex flex-wrap w-full gap-2 items-center"
-    >
+      class="flex flex-wrap w-full gap-2 items-center">
       <el-avatar
         :size="24"
         :src="avatar"
-        class="flex-shrink-0"
-      ></el-avatar>
+        class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
       <div
         v-if="repoDetailStore.isPrivate"
-        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm"
-      >
+        class="border border-gray-300 bg-white px-2 py-[3px] text-center text-xs font-normal text-gray-700 rounded-sm">
         {{ $t('all.private') }}
       </div>
       <div
         class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="repoDetailStore.userLikes === true ? 'text-gray-400 border-gray-200' : ''"
-        @click="clickLike"
-      >
-        {{ repoDetailStore.userLikes === false ? $t('shared.likes') : $t('shared.hasLikes') }}
+        :class="
+          repoDetailStore.userLikes === true
+            ? 'text-gray-400 border-gray-200'
+            : ''
+        "
+        @click="clickLike">
+        {{
+          repoDetailStore.userLikes === false
+            ? $t('shared.likes')
+            : $t('shared.hasLikes')
+        }}
         <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">
           {{ likesNumberDisplayName }}
         </div>
@@ -120,71 +131,61 @@
       <AppStatus
         v-if="appStatus"
         :appStatus="appStatus"
-        :spaceResource="spaceResource"
-      />
+        :spaceResource="spaceResource" />
       <p
         v-if="canWrite"
         class="cursor-pointer"
-        @click="showSpaceLogs"
-      >
+        @click="showSpaceLogs">
         <SvgIcon
           name="instance_logs"
           width="16"
-          height="16"
-        />
+          height="16" />
       </p>
     </div>
 
     <div
       class="flex gap-1 items-center"
-      v-if="repoType !== 'finetune'"
-    >
+      v-if="repoType !== 'finetune'">
       <a
         class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
         v-if="repoType !== 'endpoint'"
-        :href="ownerUrl"
-      >
+        :href="ownerUrl">
         {{ path?.split('/')[0] }}
       </a>
-      <div v-if="repoType !== 'endpoint'"
-      >/</div>
+      <div v-if="repoType !== 'endpoint'">/</div>
       <a
         class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
-        :href="repoUrl"
-      >
+        :href="repoUrl">
         {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
       </a>
       <div
         class="cursor-pointer"
         data-test="copy-name"
-        @click="copyName"
-      >
+        @click="copyName">
         <SvgIcon
           name="copy"
           width="16"
-          height="16"
-        />
+          height="16" />
       </div>
     </div>
     <div
       v-else
-      class="flex gap-[8px] items-center"
-    >
+      class="flex gap-[8px] items-center">
       <SvgIcon
         name="finetune_name_icon"
         width="16"
         height="16"
-        class="flex-shrink-0"
-      />
-      <a :href="`/models/${props.path}`" class="md:ml-0 text-gray-700 text-md font-normal hover:text-brand-700">
+        class="flex-shrink-0" />
+      <a
+        :href="`/models/${props.path}`"
+        class="md:ml-0 text-gray-700 text-md font-normal hover:text-brand-700">
         {{ path }}
       </a>
       <SvgIcon
         name="finetune_cpu_icon"
         width="16"
         height="16"
-        class="flex-shrink-0 ml-6 md:ml-0"
-      />
+        class="flex-shrink-0 ml-6 md:ml-0" />
       <span class="text-gray-700 font-normal text-md">{{ resourceName }}</span>
     </div>
   </div>
@@ -194,8 +195,7 @@
   <HeaderTags
     v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code'"
     :tags="tags"
-    :prefix="`${repoType}s/`"
-  />
+    :prefix="`${repoType}s/`" />
 </template>
 
 <script setup>
@@ -206,7 +206,9 @@
   import { ref, computed, watch } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n()
   const repoDetailStore = useRepoDetailStore()
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
@@ -235,6 +237,10 @@
     resourceName: String
   })
 
+  const failedReason = computed(() => {
+    return t(`all.instanceDeploy.${repoDetailStore.failedReason}`)
+  })
+
   const copyName = () => {
     if (props.repoType === 'endpoint') {
       copyToClipboard(props.name)
@@ -259,9 +265,9 @@
   })
 
   const likeUrl = computed(() => {
-    if(props.repoType === 'collections'){
+    if (props.repoType === 'collections') {
       return `/user/${props.name}/likes/collections/${props.repoId}`
-    }else{
+    } else {
       return `/user/${props.name}/likes/${props.repoId}`
     }
   })

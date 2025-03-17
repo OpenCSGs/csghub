@@ -92,4 +92,9 @@ export const all = {
   rows: "行",
   deployLoadingText:'部署中,请稍后',
   buildLoadingText:'构建中,请稍后',
+  instanceDeploy: {
+    Error: '运行脚本出错，模型不全，或者推理引擎参数报错',
+    OOMKilled: '资源不足',
+    CrashLoopBackOff: '容器崩溃'
+  }
 }

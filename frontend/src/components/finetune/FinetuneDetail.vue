@@ -259,6 +259,7 @@
               fetchRepoDetail()
             }
           }
+          repoDetailStore.failedReason = eventResponse.reason
         },
         onerror(err) {
           console.log('Status Server Error:')
