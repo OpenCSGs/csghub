@@ -106,7 +106,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     hfPath.value = initialData.hf_path
     id.value = initialData.id
     license.value = initialData.license
-    likes.value = initialData.likes
+    likes.value = initialData.likes || initialData.like_count || 0
     mirrorLastUpdatedAt.value = initialData.mirror_last_updated_at
     msPath.value = initialData.ms_path
     name.value = initialData.name
