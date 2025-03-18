@@ -5,7 +5,7 @@
     <!-- add to collection btn -->
     <AddToCollections
       v-if="showAddToCollections"
-      :repoId="repo.repository_id"
+      :repoId="repoDetailStore.repositoryId"
     />
 
     <!-- multi-source sync button -->
