@@ -18,7 +18,7 @@
         nickname.trim() === '' ? name : nickname
       }}</span>
       <RepoHeaderSourceIcon
-        v-if="repoDetailStore.source !== 'local'"
+        v-if="!!repoSource"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
@@ -113,7 +113,7 @@
         nickname.trim() === '' ? name : nickname
       }}</span>
       <RepoHeaderSourceIcon
-        v-if="repoDetailStore.source !== 'local'"
+        v-if="!!repoSource"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
@@ -335,7 +335,7 @@
     } else if (repoDetailStore.msPath) {
       return 'ModelScope'
     } else {
-      return 'OpenCSG'
+      return ''
     }
   })
 

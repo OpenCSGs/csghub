@@ -265,24 +265,4 @@ describe('RepoHeader Source Display', () => {
       wrapper.findComponent({ name: 'RepoHeaderSourceIcon' }).props('source')
     ).toBe('HuggingFace')
   })
-
-  it('displays OpenCSG source with cleaned path', async () => {
-    mockRepoDetailStore.hfPath = null
-    mockRepoDetailStore.csgPath = 'cleaned_path'
-
-    const wrapper = createWrapper()
-    const sourceIcon = wrapper.findComponent({ name: 'RepoHeaderSourceIcon' })
-
-    expect(sourceIcon.props('source')).toBe('OpenCSG')
-    expect(sourceIcon.props('sourcePath')).toBe('cleaned_path')
-  })
-
-  it('handles CSG_ prefixed path correctly', async () => {
-    mockRepoDetailStore.hfPath = null
-    mockRepoDetailStore.msPath = null
-    mockRepoDetailStore.csgPath = null
-
-    const wrapper = createWrapper()
-    expect(wrapper.vm.repoSourcePath).toBe('123')
-  })
 })
