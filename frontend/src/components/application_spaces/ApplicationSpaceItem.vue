@@ -41,7 +41,7 @@
     </div>
     <div v-if="!isCollection">
       <div
-        class="h-[36px]"
+        class="h-11 text-gray-500 text-sm overflow-hidden"
         v-if="!repo.description"
       ></div>
       <el-popover
