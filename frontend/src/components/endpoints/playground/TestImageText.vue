@@ -24,11 +24,11 @@
           class="w-[70%] px-3.5 py-2.5 bg-blue-800 rounded-lg inline-flex items-center gap-2 overflow-hidden"
         >
           <div
-            v-if="imageUrl"
+            v-if="questionImage"
             class="w-[40px] h-[40px] border border-gray-300"
           >
             <img
-              :src="imageUrl"
+              :src="questionImage"
               class="w-full h-full object-cover"
             />
           </div>
@@ -59,8 +59,14 @@
       <el-upload
         class="mr-2 flex"
         :show-file-list="false"
-        :before-upload="handleImageUpload"
-        accept="image/*"
+        :before-upload="handleBeforeUpload"
+        :on-success="handleUploadSuccess"
+        accept="image/png, image/jpeg"
+        action="/internal_api/upload"
+        :data="{
+          namespace: 'comment',
+          file_max_size: 1024*1024
+        }"
         :limit="1"
       >
         <div
@@ -157,7 +163,10 @@
   const compositionInput = ref(false)
   const imageUrl = ref('')
   const question = ref('')
+  const questionImage = ref('')
   const uploadRef = ref(null)
+
+  const SIZE_LIMIT_FOR_BASE64 = 100 * 1024 // 100 KB
 
   const handleFocus = () => {
     inputFocus.value = true
@@ -186,6 +195,7 @@
   const resetAnwserContent = () => {
     anwserContent.value = ''
     question.value = ''
+    questionImage.value = ''
   }
 
   const isLoggedIn = computed(() => userStore.isLoggedIn)
@@ -264,6 +274,7 @@
   const handleOpen = (e) => {
     if (e.ok) {
       question.value = message.value
+      questionImage.value = imageUrl.value
       typewriter.start()
     }
   }
@@ -301,17 +312,27 @@
     uploadRef.value.click()
   }
 
-  const handleImageUpload = (file) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => {
-      imageUrl.value = reader.result
-    }
-    return false
-  }
-
   const clearImage = () => {
     imageUrl.value = ''
+  }
+
+  const handleBeforeUpload = (file) => {
+    if (file.size <= SIZE_LIMIT_FOR_BASE64) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        imageUrl.value = reader.result
+      }
+
+      return false
+    }
+
+    return true
+  }
+
+  const handleUploadSuccess = (res) => {
+    imageUrl.value = res.url
   }
 </script>
 
