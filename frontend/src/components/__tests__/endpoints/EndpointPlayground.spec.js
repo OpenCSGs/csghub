@@ -3,6 +3,12 @@ import { mount } from "@vue/test-utils";
 import EndpointPlayground from "@/components/endpoints/EndpointPlayground.vue";
 import TestEndpoint from "@/components/endpoints/playground/TestEndpoint.vue";
 import ApiExample from "@/components/endpoints/playground/ApiExample.vue";
+import TestImageText from "@/components/endpoints/playground/TestImageText.vue";
+import ApiImageText from "@/components/endpoints/playground/ApiImageText.vue";
+import TestExtraction from "@/components/endpoints/playground/TestExtraction.vue";
+import ApiExtraction from "@/components/endpoints/playground/ApiExtraction.vue";
+import TestWidget from "@/components/endpoints/playground/TestWidget.vue";
+import ApiWidget from "@/components/endpoints/playground/ApiWidget.vue";
 
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => ({
@@ -69,6 +75,42 @@ describe("EndpointPlayground", () => {
     await wrapper.find('.cursor-pointer').trigger('click');
     expect(wrapper.findComponent(ApiExample).exists()).toBe(true);
     expect(wrapper.findComponent(TestEndpoint).exists()).toBe(true);
+  });
+
+  it("renders TestImageText component in 'test' mode when task is 'image-text-to-text'", () => {
+    const wrapper = createWrapper({ task: 'image-text-to-text' });
+    expect(wrapper.findComponent(TestImageText).exists()).toBe(true);
+  });
+
+  it("renders ApiImageText component in 'api' mode when task is 'image-text-to-text'", async () => {
+    const wrapper = createWrapper({ task: 'image-text-to-text' });
+    await wrapper.find('.cursor-pointer').trigger('click');
+    expect(wrapper.findComponent(ApiImageText).exists()).toBe(true);
+    expect(wrapper.findComponent(TestImageText).exists()).toBe(true);
+  });
+
+  it("renders TestExtraction component in 'test' mode when task is 'feature-extraction'", () => {
+    const wrapper = createWrapper({ task: 'feature-extraction' });
+    expect(wrapper.findComponent(TestExtraction).exists()).toBe(true);
+  });
+
+  it("renders ApiExtraction component in 'api' mode when task is 'feature-extraction'", async () => {
+    const wrapper = createWrapper({ task: 'feature-extraction' });
+    await wrapper.find('.cursor-pointer').trigger('click');
+    expect(wrapper.findComponent(ApiExtraction).exists()).toBe(true);
+    expect(wrapper.findComponent(TestExtraction).exists()).toBe(true);
+  });
+
+  it("renders TestWidget component in 'test' mode when task is 'text-to-image'", () => {
+    const wrapper = createWrapper({ task: 'text-to-image' });
+    expect(wrapper.findComponent(TestWidget).exists()).toBe(true);
+  });
+
+  it("renders ApiWidget component in 'api' mode when task is 'text-to-image'", async () => {
+    const wrapper = createWrapper({ task: 'text-to-image' });
+    await wrapper.find('.cursor-pointer').trigger('click');
+    expect(wrapper.findComponent(ApiWidget).exists()).toBe(true);
+    expect(wrapper.findComponent(TestWidget).exists()).toBe(true);
   });
 
   it("toggles dialog visibility when fullscreen button is clicked", async () => {

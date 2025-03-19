@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown-body overflow-auto" v-html="mdParser.render(markdownContent)"></div>
+  <div class="markdown-body overflow-auto" :class="props.class" v-html="mdParser.render(markdownContent)"></div>
 </template>
 
 <script setup>
@@ -17,7 +17,8 @@
   const { t } = useI18n();
   const props = defineProps({
     content: String,
-    setDefaultText: Boolean
+    setDefaultText: Boolean,
+    class: String,
   })
 
   const defaultText = t('all.defaultText')
