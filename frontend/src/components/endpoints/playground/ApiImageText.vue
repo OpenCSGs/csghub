@@ -129,7 +129,7 @@ data = {
         {
             "role": "user",
             "content": [
-                {"type":"image_url", "image_url":{"url":"https://opencsg.com/images/OpenCSG_logo.svg"}},
+                {"type":"image_url", "image_url":{"url":"https://opencsg.com/images/landing_boosting_models.png"}},
                 {"type":"text", "text":"Describe this image."}
             ]
         }
@@ -187,7 +187,7 @@ if response.status_code == 200:
       {
         role: "user",
         content: [
-          {"type":"image_url", "image_url":{"url":"https://opencsg.com/images/OpenCSG_logo.svg"}},
+          {"type":"image_url", "image_url":{"url":"https://opencsg.com/images/landing_boosting_models.png"}},
           {"type":"text", "text":"Describe this image."}
         ]
       }
@@ -217,7 +217,7 @@ if response.status_code == 200:
     () => `curl -X POST \\
 "${endpointUrl.value}" \\
 ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
--d '{ "model": "${props.modelId}", "messages": [{ "role": "system", "content": "You are a helpful assistant." }, {"role": "user", "content": [{"type":"image_url", "image_url":{"url":"https://opencsg.com/images/OpenCSG_logo.svg"}},{"type":"text", "text":"Describe this image."}]}], "stream": true, "max_tokens": ${props.form.max_tokens}, "temperature": ${props.form.temperature}, "repetition_penalty": ${props.form.repetition_penalty}, "top_p": ${props.form.top_p}, "top_k": ${props.form.top_k}}'
+-d '{ "model": "${props.modelId}", "messages": [{ "role": "system", "content": "You are a helpful assistant." }, {"role": "user", "content": [{"type":"image_url", "image_url":{"url":"https://opencsg.com/images/landing_boosting_models.png"}},{"type":"text", "text":"Describe this image."}]}], "stream": true, "max_tokens": ${props.form.max_tokens}, "temperature": ${props.form.temperature}, "repetition_penalty": ${props.form.repetition_penalty}, "top_p": ${props.form.top_p}, "top_k": ${props.form.top_k}}'
 `
   )
 
