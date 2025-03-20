@@ -65,7 +65,7 @@
         action="/internal_api/upload"
         :data="{
           namespace: 'comment',
-          file_max_size: 1024*1024
+          file_max_size: 1024 * 1024
         }"
         :limit="1"
       >
@@ -304,7 +304,7 @@
   const handleError = (err) => {
     typewriter?.done()
     loading.value = false
-    ElMessage({ type: 'error', message: `${err.msg || '出错了'}` })
+    ElMessage({ type: 'error', message: `${err.msg || 'send message error'}` })
     throw err
   }
 
