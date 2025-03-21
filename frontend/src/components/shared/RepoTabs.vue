@@ -187,7 +187,7 @@
         v-if="settingsVisibility"
         #settings
       >
-        <model-settings
+        <ModelSettings
           v-if="repoType === 'model'"
           :path="path"
           :model-nickname="repoDetail.nickname"
@@ -196,7 +196,7 @@
           :tag-list="tagList"
           :tags="tags"
         />
-        <dataset-settings
+        <DatasetSettings
           v-if="repoType === 'dataset'"
           :path="path"
           :dataset-nickname="repoDetail.nickname"
@@ -231,8 +231,7 @@
           :endpointId="endpointId"
           :appStatus="appStatus"
           :modelId="modelId"
-          :userName="userName"
-          :cloudResource="repoDetail.sku || repoDetail.hardware"
+          :cloudResourceSku="repoDetail.sku"
           :framework="repoDetail.runtimeFramework"
           :maxReplica="repoDetail.maxReplica"
           :minReplica="repoDetail.minReplica"

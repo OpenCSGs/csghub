@@ -99,7 +99,9 @@
   } from '../../packs/datetimeUtils'
   import CsgPagination from '../shared/CsgPagination.vue'
   import useUserStore from '../../stores/UserStore'
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n()
   const userStore = useUserStore()
 
   const props = defineProps({
@@ -202,10 +204,7 @@
     const { data, error } = await useFetchApi(url).json()
 
     if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
+      ElMessage.warning(error.value.msg || t('finetune.settings.fetchBillingError'))
     } else {
       const body = data.value
       billings.value = body.data.data
