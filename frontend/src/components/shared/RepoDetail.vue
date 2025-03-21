@@ -130,7 +130,7 @@
       ])
     }
 
-    return []
+    return {}
   }
 
   onMounted(() => {

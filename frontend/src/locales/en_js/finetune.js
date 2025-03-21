@@ -49,5 +49,8 @@ export const finetune = {
       deleteTip2: 'the fine-tune model.',
       finetuneName: 'Finetune Instance Name'
     }
+  },
+  settings: {
+    fetchBillingError: 'Failed to obtain billing information'
   }
 }

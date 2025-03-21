@@ -38,6 +38,7 @@
         <el-input
           v-model="cnName"
           clearable
+          disabled
           size="large"
           class="!w-[512px] sm:!w-full"
         />
@@ -150,7 +151,7 @@
             v-for="item in cloudResources"
             :key="item.name"
             :label="item.name"
-            :value="item.resources"
+            :value="item.id"
             :disabled="!item.is_available"
           />
         </el-select>
@@ -216,7 +217,6 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
-  import useUserStore from '../../stores/UserStore'
 
   const props = defineProps({
     finetune: Object,
@@ -224,47 +224,25 @@
     finetuneName: String,
     appStatus: String,
     modelId: String,
-    userName: String,
-    cloudResource: String,
     framework: String,
-    clusterId: String
   })
 
-  const userStore = useUserStore()
-  const statusVal = ref(props.appStatus == 'Running')
   const { t } = useI18n()
   const delDesc = ref('')
-  const currentResource = ref(props.cloudResource)
   const cloudResources = ref([])
   const currentFrameworkId = ref('')
   const cnName = ref('')
-  const currentCid = ref(props.finetune.cluster_id)
-
   const finetuneClusters = ref([])
-
   const frameworks = ref([])
 
-  watch(
-    () => props.appStatus,
-    (newVal, oldVal) => {
-      statusVal.value = newVal == 'Running'
-    }
-  )
-  watch(
-    () => props.cloudResource,
-    (newVal, oldVal) => {
-      currentResource.value = newVal
-    }
-  )
-  watch(
-    () => props.clusterId,
-    (newVal, oldVal) => {
-      currentCid.value = newVal
-      if (newVal) {
-        fetchResources()
-      }
-    }
-  )
+  const currentResource = computed(() => {
+    return Number(props.finetune.sku)
+  })
+
+  const currentCid = computed(() => {
+    return props.finetune.clusterId
+  })
+
   const initialized = computed(() => {
     return [
       'Building',
@@ -285,6 +263,12 @@
 
   const isStopped = computed(() => {
     return ['Stopped'].includes(props.appStatus)
+  })
+
+  watch(currentCid, (newVal) => {
+    if (newVal) {
+      fetchResources()
+    }
   })
 
   const changeStatus = async (type) => {
@@ -397,5 +381,8 @@
   onMounted(() => {
     fetchFrameworks()
     fetchClusters()
+    if (currentCid.value) {
+      fetchResources()
+    }
   })
 </script>

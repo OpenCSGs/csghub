@@ -342,7 +342,9 @@
     },
     mounted() {
       // 监听全局点击事件
-      this.getSelectTags()
+      if (Object.keys(this.tags).length > 0) {
+        this.getSelectTags()
+      }
       document.addEventListener('click', this.collapseTagList)
       this.getIndustryTags()
       this.fetchReadme()
@@ -356,6 +358,9 @@
       },
       tagList(newTagList, _) {
         this.theTagList = newTagList
+      },
+      tags(_) {
+        this.getSelectTags()
       }
     },
     beforeDestroy() {

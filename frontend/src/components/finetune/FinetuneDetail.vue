@@ -3,7 +3,7 @@
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
   >
     <div class="mx-auto page-responsive-width">
-      <repo-header
+      <RepoHeader
         :name="repoDetailStore.deployName"
         :path="`${namespace}/${name}`"
         :appStatus="repoDetailStore.status"
@@ -37,7 +37,7 @@
         :label="$t('finetune.detail.tab1')"
         name="page"
       >
-        <div class="pt-[24px]">
+        <div  v-if="activeName === 'page'" class="pt-[24px]">
           <iframe
             v-if="repoDetailStore.endpoint"
             :src="`${httpProtocal}://${repoDetailStore.proxyEndpoint}?jwt=${jwtToken}`"
@@ -82,6 +82,7 @@
         name="billing"
       >
         <BillingDetail
+          v-if="activeName === 'billing'"
           type="finetune"
           :instanceName="repoDetailStore.svcName"
         ></BillingDetail>
@@ -91,15 +92,13 @@
         name="setting"
       >
         <FinetuneSettings
+          v-if="activeName === 'setting'"
           :finetune="repoDetailStore"
           :finetuneId="repoDetailStore.deployId"
           :finetuneName="repoDetailStore.deployName"
           :appStatus="repoDetailStore.status"
           :modelId="repoDetailStore.modelId"
-          :userName="userName"
-          :cloudResource="repoDetailStore.hardware"
           :framework="repoDetailStore.runtimeFramework"
-          :clusterId="repoDetailStore.clusterId"
         />
       </el-tab-pane>
     </el-tabs>
@@ -107,7 +106,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, onBeforeMount, computed, provide } from 'vue'
+  import { ref, inject, onBeforeMount, computed, provide, watch } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
@@ -161,6 +160,18 @@
     )
   })
 
+  watch(() => repoDetailStore.clusterId, (newVal) => {
+    if (newVal) {
+      fetchResources()
+    }
+  })
+
+  watch(() => [repoDetailStore.deployId, repoDetailStore.modelId], (newVal1, newVal2) => {
+    if (newVal1 && newVal2) {
+      syncfinetuneStatus()
+    }
+  })
+
   const handleTabLeave = (tab) => {
     tabChange(tab)
     return false
@@ -211,7 +222,7 @@
       const body = data.value
       finetuneResources.value = body.data
       const obj = body.data.find((item) => {
-        return item.resources === repoDetailStore.hardware
+        return item.id === Number(repoDetailStore.sku)
       })
       finetuneResource.value = obj?.name
     }
@@ -278,11 +289,15 @@
       fetchRepoDetail()
     }
 
-    fetchResources()
+    if (repoDetailStore.clusterId) {
+      fetchResources()
+    }
 
     if (
       isStatusSSEConnected.value === false &&
-      allStatus.includes(repoDetailStore.status)
+      allStatus.includes(repoDetailStore.status) &&
+      repoDetailStore.modelId &&
+      repoDetailStore.deployId
     ) {
       syncfinetuneStatus()
     }

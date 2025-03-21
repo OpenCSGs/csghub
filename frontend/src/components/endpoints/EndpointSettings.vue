@@ -1,7 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
-  >
+    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
     <!-- 暂停 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -14,8 +13,7 @@
           <el-button
             @click="stopEndpoint"
             class="w-[100px]"
-            :disabled="!initialized || isStopped"
-          >
+            :disabled="!initialized || isStopped">
             {{ $t('endpoints.settings.stop') }}
           </el-button>
         </div>
@@ -35,8 +33,7 @@
         <el-button
           @click="restartEndpoint"
           class="w-[100px]"
-          :disabled="notInitialized"
-        >
+          :disabled="notInitialized">
           {{ $t('endpoints.settings.restart') }}
         </el-button>
       </div>
@@ -64,15 +61,13 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateCloudResource"
-          :disabled="!isStopped"
-        >
+          :disabled="!isStopped">
           <el-option
             v-for="item in cloudResources"
             :key="item.name"
             :label="item.name"
             :value="item.id"
-            :disabled="!item.is_available"
-          />
+            :disabled="!item.is_available" />
         </el-select>
       </div>
     </div>
@@ -96,14 +91,12 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateFramework"
-          :disabled="!isStopped"
-        >
+          :disabled="!isStopped">
           <el-option
             v-for="item in filterFrameworks"
             :key="item.id"
             :label="item.frame_name"
-            :value="item.id"
-          />
+            :value="item.id" />
         </el-select>
       </div>
     </div>
@@ -127,14 +120,12 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateMaxReplica"
-          :disabled="!isStopped"
-        >
+          :disabled="!isStopped">
           <el-option
             v-for="item in replicaRanges"
             :key="item"
             :label="item"
-            :value="item"
-          />
+            :value="item" />
         </el-select>
       </div>
     </div>
@@ -158,14 +149,12 @@
           size="large"
           class="!w-[512px] sm:!w-full"
           @change="updateMinReplica"
-          :disabled="!isStopped"
-        >
+          :disabled="!isStopped">
           <el-option
             v-for="item in replicaRanges"
             :key="item"
             :label="item"
-            :value="item"
-          />
+            :value="item" />
         </el-select>
       </div>
     </div>
@@ -202,14 +191,12 @@
           placeholder="Select"
           size="large"
           class="!w-[512px] sm:!w-full"
-          :disabled="!isStopped"
-        >
+          :disabled="!isStopped">
           <el-option
             v-for="item in visibilityOptions"
             :key="item.value"
             :label="item.label"
-            :value="item.value"
-          />
+            :value="item.value" />
         </el-select>
       </div>
     </div>
@@ -247,8 +234,7 @@
           v-model="delDesc"
           clearable
           size="large"
-          class="!w-[512px] sm:!w-full"
-        />
+          class="!w-[512px] sm:!w-full" />
         <div class="flex">
           <div
             id="confirmDelete"
@@ -260,8 +246,7 @@
                 : 'bg-gray-100'
             "
             @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave"
-          >
+            @mouseleave="handleMouseLeave">
             {{ $t('endpoints.settings.confirmDel') }}
           </div>
         </div>
@@ -285,8 +270,7 @@
     endpointName: String,
     appStatus: String,
     modelId: String,
-    userName: String,
-    cloudResource: String,
+    cloudResourceSku: String,
     framework: String,
     maxReplica: Number,
     minReplica: Number,
@@ -307,11 +291,36 @@
   const currentFrameworkId = ref(null)
   const currentMinReplica = ref(null)
   const currentMaxReplica = ref(null)
-  const visibilityName = ref('Public')
 
-  watch(() => repoDetailStore.privateVisibility, (newVal) => {
-    visibilityName.value = newVal ? 'Private' : 'Public'
+  const visibilityName = computed(() => {
+    return repoDetailStore.privateVisibility? 'Private' : 'Public'
   })
+
+  const currentHardware = computed(() => {
+    if (repoDetailStore.hardware) {
+      return JSON.parse(repoDetailStore.hardware)
+    } else {
+      return {}
+    }
+  })
+
+  watch(
+    () => props.clusterId,
+    (newVal) => {
+      if (newVal) {
+        fetchResources()
+      }
+    }
+  )
+
+  watch(
+    () => props.modelId,
+    (newVal) => {
+      if (newVal) {
+        fetchFrameworks()
+      }
+    }
+  )
 
   const initialized = computed(() => {
     return [
@@ -350,39 +359,41 @@
   }
 
   const filterFrameworks = computed(() => {
-    if (!currentResource.value) return []
+    if (!currentHardware.value) return []
+    if (frameworks.value.length === 0) return []
 
-    return frameworks.value.filter((framework) => {
-      if (currentResource.value.type === 'npu') {
-        return !!framework.frame_npu_image
-      } else if (currentResource.value.type === 'gpu') {
-        return !!framework.frame_image
-      } else if (currentResource.value.type === 'cpu') {
-        return !!framework.frame_cpu_image
+    let npuResults = frameworks.value.filter((framework) => {
+      if (currentHardware.value.hasOwnProperty('npu')) {
+        return !!framework.frame_npu_image?.trim()
       } else {
-        return true
+        return false
       }
     })
+
+    let gpuResults = frameworks.value.filter((framework) => {
+      if (currentHardware.value.hasOwnProperty('gpu')) {
+        return !!framework.frame_image?.trim()
+      } else {
+        return false
+      }
+    })
+
+    let cpuResults = frameworks.value.filter((framework) => {
+      if (currentHardware.value.hasOwnProperty('cpu')) {
+        return !!framework.frame_cpu_image?.trim()
+      } else {
+        return false
+      }
+    })
+
+    return [...new Set([ ...cpuResults, ...gpuResults, ...npuResults])]
   })
 
-  // fetchFrameworks 的定义需要放到前面，不然找不到定义
   watchEffect(() => {
-    currentResource.value = /^\d+$/.test(props.cloudResource) ? Number(props.cloudResource) : props.cloudResource
+    currentResource.value = Number(props.cloudResourceSku)
     currentMaxReplica.value = props.maxReplica
     currentMinReplica.value = props.minReplica
   })
-
-  // watch(() => props.modelId, () => {
-  //   if (props.modelId) {
-  //     fetchFrameworks()
-  //   }
-  // })
-
-  // watch(() => props.clusterId, () => {
-  //   if (props.clusterId) {
-  //     fetchResources()
-  //   }
-  // })
 
   const stopEndpoint = async () => {
     const stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
@@ -447,7 +458,9 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${props.clusterId}`).json()
+    const { data, error } = await useFetchApi(
+      `/space_resources?cluster_id=${props.clusterId}`
+    ).json()
 
     if (error.value) {
       ElMessage({
@@ -486,7 +499,9 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }
-    const { data, error } = await useFetchApi(endpointUpdateEndpoint, options).put().json()
+    const { data, error } = await useFetchApi(endpointUpdateEndpoint, options)
+      .put()
+      .json()
 
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -562,7 +577,11 @@
   }
 
   onMounted(() => {
-    fetchFrameworks()
-    fetchResources()
+    if (props.clusterId) {
+      fetchResources()
+    }
+    if (props.modelId) {
+      fetchFrameworks()
+    }
   })
 </script>
