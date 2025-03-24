@@ -80,5 +80,6 @@ export const endpoints = {
     wgTit: '测试你的模型',
     wgDec: '文生图',
     wgBtn: '图片生成',
+    imageText: '图文生成',
   }
 }

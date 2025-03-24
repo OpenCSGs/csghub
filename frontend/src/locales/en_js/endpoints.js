@@ -80,5 +80,6 @@ export const endpoints = {
     wgTit: 'Test your endpoint',
     wgDec: 'Text-to-Image',
     wgBtn: 'Compute',
+    imageText: 'Image text to text'
   }
 }

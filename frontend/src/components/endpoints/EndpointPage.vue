@@ -62,7 +62,7 @@
   </div>
 
   <EndpointPlayground
-    v-if="appStatus === 'Running' && !!appEndpoint &&['text-generation','text-to-image','feature-extraction'].includes(task)"
+    v-if="appStatus === 'Running' && !!appEndpoint &&['text-generation','text-to-image','feature-extraction', 'image-text-to-text'].includes(task)"
     :appEndpoint="appEndpoint"
     :model-id="modelId"
     :private="private"

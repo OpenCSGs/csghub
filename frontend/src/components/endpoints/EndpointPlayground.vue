@@ -53,7 +53,7 @@
           {{ $t('endpoints.playground.parameters') }}
         </div>
         <el-form
-          v-if="task=='text-generation'"
+          v-if="['text-generation', 'image-text-to-text'].includes(task)"
           :model="form"
           label-width="auto"
           label-position="top"
@@ -215,6 +215,12 @@
         :modelId="modelId"
         :form="formImg"
       />
+      <TestImageText
+        v-else-if="task=='image-text-to-text'"
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="form"
+      />
       <div class="px-4 mb-4 flex justify-between items-center">
         <div class="items-center gap-1.5 flex cursor-not-allowed">
           <SvgIcon name="json" />
@@ -259,6 +265,13 @@
         :form="formImg"
         :private="private"
       />
+      <ApiImageText
+        v-else-if="task=='image-text-to-text'"
+        :appEndpoint="appEndpoint"
+        :modelId="modelId"
+        :form="form"
+        :private="private"
+      />
     </div>
   </div>
   <el-dialog
@@ -273,18 +286,24 @@
       :form="form"
     />
     <TestWidget
-        v-else-if="task=='text-to-image'"
-        :appEndpoint="appEndpoint"
-        :modelId="modelId"
-        :form="formImg"
-      />
-      <TestExtraction
-        v-else-if="task=='feature-extraction'"
-        :appEndpoint="appEndpoint"
-        :modelId="modelId"
-        :form="formImg"
-        :private="private"
-      />
+      v-else-if="task=='text-to-image'"
+      :appEndpoint="appEndpoint"
+      :modelId="modelId"
+      :form="formImg"
+    />
+    <TestExtraction
+      v-else-if="task=='feature-extraction'"
+      :appEndpoint="appEndpoint"
+      :modelId="modelId"
+      :form="formImg"
+      :private="private"
+    />
+    <TestImageText
+      v-else-if="task=='image-text-to-text'"
+      :appEndpoint="appEndpoint"
+      :modelId="modelId"
+      :form="form"
+    />
   </el-dialog>
 </template>
 
@@ -296,6 +315,8 @@
   import ApiWidget from './playground/ApiWidget.vue'
   import TestExtraction from './playground/TestExtraction.vue'
   import ApiExtraction from './playground/ApiExtraction.vue'
+  import TestImageText from './playground/TestImageText.vue'
+  import ApiImageText from './playground/ApiImageText.vue'
 
   const props = defineProps({
     appEndpoint: String,
