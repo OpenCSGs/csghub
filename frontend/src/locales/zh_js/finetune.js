@@ -49,5 +49,8 @@ export const finetune = {
       deleteTip2: '模型微调。',
       finetuneName: '微调实例名称'
     }
+  },
+  settings: {
+    fetchBillingError: '获取计费信息失败'
   }
 }
