@@ -327,6 +327,7 @@
   import { ElMessage } from 'element-plus'
   import Broadcast from './Broadcast.vue'
   import UpdateUsername from '../popup/UpdateUsername.vue'
+  import { logout } from '@/packs/auth'
 
   export default {
     props: {
@@ -376,11 +377,7 @@
         }
       },
       clearCookies() {
-        const { cookies } = useCookies()
-        cookies.keys().forEach((cookie) => {
-          cookies.remove(cookie)
-        })
-        this.clearUserStore()
+        logout()
         window.location.href = '/'
       },
     },
