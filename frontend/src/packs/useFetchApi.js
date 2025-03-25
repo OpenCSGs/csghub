@@ -6,7 +6,9 @@ import refreshJWT from './refreshJWT'
 import { user_sessions as sessions_en } from "../locales/en_js/user_sessions.js"
 import { user_sessions as sessions_zh } from "../locales/zh_js/user_sessions.js"
 
-const { cookies } = useCookies()
+import { logout } from "./auth"
+
+const { cookies } = useCookies();
 
 const popupReloginDialog = () => {
   const sessionLocale = cookies.get('locale') === 'en' ? sessions_en : sessions_zh
@@ -15,16 +17,16 @@ const popupReloginDialog = () => {
     confirmButtonText: sessionLocale.reLogin,
     cancelButtonText: sessionLocale.cancelLogin,
   })
-  .then(() => {
-    window.location.href = "/logout?redirect_to=/login"
-  })
-  .catch(() => {
-    window.location.href = "/logout"
-  })
-  .finally(() => {
-    clearCookies()
-  })
-}
+    .then(() => {
+      window.location.href = "/logout?redirect_to=/login";
+    })
+    .catch(() => {
+      window.location.href = "/logout";
+    })
+    .finally(() => {
+      logout()
+    });
+};
 
 const acceptLanguage = () => {
   const currentLocale = cookies.get('locale')
@@ -83,11 +85,4 @@ const useFetchApi = createFetch({
   }
 })
 
-const clearCookies = () => {
-  cookies.keys().forEach((cookie) => {
-    cookies.remove(cookie)
-  })
-  window.location.href = '/'
-}
-
-export default useFetchApi
+export default useFetchApi;
