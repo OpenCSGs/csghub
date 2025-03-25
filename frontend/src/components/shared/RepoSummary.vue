@@ -19,11 +19,31 @@
         <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 
-      <TestEndpoint
-        v-if="widgetType === 'generation' && endpoint?.status === 'Running'"
-        :appEndpoint="appEndpoint"
-        :modelId="namespacePath"
-      />
+      <div v-if="widgetType === 'generation' && endpoint?.status === 'Running'">
+        <TestEndpoint
+          :appEndpoint="appEndpoint"
+          :modelId="namespacePath"
+        />
+        <div class="px-4 mb-4 flex justify-between items-center">
+          <div 
+            class="items-center gap-1.5 flex cursor-pointer"
+            @click="dialogVisibleCode = true" >
+            <SvgIcon name="json" />
+            <div class="text-gray-400 text-xs leading-[18px]">
+              view code
+            </div>
+          </div>
+          <div
+            class="items-center gap-1.5 flex cursor-pointer"
+            @click="dialogVisible = true"
+          >
+            <SvgIcon name="fullscreen" />
+            <div class="text-gray-700 text-xs leading-[18px]">
+              {{ $t('endpoints.playground.maximum') }}
+            </div>
+          </div>
+        </div>
+      </div>
 
       <SpaceRelationsCard v-if="relations['spaces'] && relations['spaces'].length !== 0"
                           :namespacePath="namespacePath"
@@ -51,6 +71,27 @@
       />
     </div>
   </div>
+  <el-dialog
+    v-model="dialogVisible"
+    fullscreen
+    append-to-body
+  >
+    <TestEndpoint
+      v-if="widgetType === 'generation' && endpoint?.status === 'Running'"
+      :appEndpoint="appEndpoint"
+      :modelId="namespacePath"
+    />
+  </el-dialog>
+  <el-dialog
+    v-model="dialogVisibleCode"
+    fullscreen
+    append-to-body
+  >
+    <RepoSummaryApiExample
+      :appEndpoint="appEndpoint"
+      :modelId="namespacePath"
+    />
+  </el-dialog>
 </template>
 
 <script setup>
@@ -63,6 +104,7 @@
   import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
   import ModelRelationsCard from '../models/ModelRelationsCard.vue';
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
+  import RepoSummaryApiExample from './RepoSummaryApiExample.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { ElMessage } from 'element-plus'
