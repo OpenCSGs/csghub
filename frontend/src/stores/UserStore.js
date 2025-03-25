@@ -18,6 +18,7 @@ const useUserStore = defineStore('User', () => {
   const orgs = ref([])
   const lastLoginTime = ref('')
   const initialized = ref(false)
+  const timestamp = ref(Date.now())
 
   const canChangeUsernameCookie = ref(cookies.get('can_change_username') === 'true');
 
@@ -83,11 +84,11 @@ const useUserStore = defineStore('User', () => {
     refreshCanChangeUsernameCookie,
     clearStore,
     updateInitalized,
+    timestamp
   }
 }, {
   persist: {
-    key: persistKey,
-    storage: localStorage
+    key: persistKey
   }
 })
 

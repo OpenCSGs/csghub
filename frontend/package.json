@@ -29,7 +29,6 @@
     "micromatch": "^4.0.8",
     "parse-md": "^3.0.3",
     "pinia": "^2.2.2",
-    "pinia-plugin-persistedstate": "^4.2.0",
     "terser": "^5.33.0",
     "timeago.js": "^4.0.2",
     "tippy.js": "^6.3.7",
