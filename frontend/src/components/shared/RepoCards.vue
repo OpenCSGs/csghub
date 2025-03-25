@@ -67,6 +67,21 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
+
+          <el-select
+            v-if="repoType === 'space'"
+            :placeholder="$t('spaces.sdkPlaceholder')"
+            v-model="searchSdk"
+            @change="filterChange"
+            style="width: 150px"
+            size="large">
+            <el-option
+              v-for="item in sdkList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value" />
+          </el-select>
+
           <el-select
             v-if="repoType === 'model'"
             v-model="filterSelection"
@@ -150,6 +165,7 @@
   const sourceSelection = ref('all')
   const currentPage = ref(1)
   const totalRepos = ref(0)
+  const searchSdk = ref('')
 
   const activeTags = ref({})
   const loading = ref(true)
@@ -173,6 +189,26 @@
       label: t('all.mostFavorite')
     }
   ]
+  const sdkList = [{
+    value: '',
+    label: t('all.all')
+  },
+  {
+    value: 'gradio',
+    label: 'Gradio'
+  },
+  {
+    value: 'streamlit',
+    label: 'Streamlit'
+  },
+  {
+    value: 'nginx',
+    label: 'Nginx'
+  },
+  {
+    value: 'docker',
+    label: 'Docker'
+  }]
 
   const filterOptions = [
     {
@@ -238,6 +274,9 @@
     url = url + `&per=${perPage.value}`
     url = url + `&search=${nameFilterInput.value}`
     url = url + `&sort=${sortSelection.value}`
+    if(props.repoType === 'space'){
+      url+= `&sdk=${searchSdk.value}`;
+    }
 
     if (filterSelection.value === 'inference') {
       url = url + `&tag_category=runtime_framework&tag_name=vllm`
