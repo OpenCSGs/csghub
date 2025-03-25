@@ -34,7 +34,8 @@ export const endpoints = {
     dedicated: "Dedicated endpoint",
     tip: "Applied to the endpoint, cannot be changed after creation",
     createFail: "Failed to create endpoint",
-    quantization: "Quantization"
+    quantization: "Quantization",
+    engineArgs: "Framework Variables",
   },
   settings: {
     stop: "Stop",

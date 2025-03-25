@@ -101,6 +101,21 @@
       </div>
     </div>
 
+    <div v-if="Object.keys(variables).length > 0" class="w-[925px] mt-4 xl:w-full">
+      <EngineArgs
+        :engineArgs="engineArgs"
+        :disabled="!isStopped"
+      />
+      <div class="flex justify-end">
+        <CsgButton
+          :name="$t('all.update')"
+          class="btn btn-primary btn-sm"
+          @click="updateArgs"
+          :disabled="!isStopped"
+        />
+      </div>
+    </div>
+
     <el-divider />
 
     <!-- max replica -->
@@ -262,6 +277,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
+  import EngineArgs from './EngineArgs.vue'
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -274,7 +290,8 @@
     framework: String,
     maxReplica: Number,
     minReplica: Number,
-    clusterId: String
+    clusterId: String,
+    variables: Object,
   })
 
   const fetchRepoDetail = inject('fetchRepoDetail')
@@ -291,6 +308,7 @@
   const currentFrameworkId = ref(null)
   const currentMinReplica = ref(null)
   const currentMaxReplica = ref(null)
+  const engineArgs = ref(props.variables)
 
   const visibilityName = computed(() => {
     return repoDetailStore.privateVisibility? 'Private' : 'Public'
@@ -490,6 +508,11 @@
 
   const updateMinReplica = (value) => {
     const payload = { min_replica: value }
+    updateEndpoint(payload)
+  }
+
+  const updateArgs = () => {
+    const payload = { engine_args: JSON.stringify(engineArgs.value) }
     updateEndpoint(payload)
   }
 

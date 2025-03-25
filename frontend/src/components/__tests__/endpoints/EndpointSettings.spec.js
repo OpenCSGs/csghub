@@ -78,6 +78,7 @@ const createWrapper = (props = {}) => {
       maxReplica: 1,
       minReplica: 1,
       clusterId: 'test-cluster-id',
+      variables: {},
       ...props
     }
   });

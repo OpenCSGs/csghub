@@ -4,7 +4,8 @@
       <SvgIcon
         name="endpoint"
         width="36"
-        height="36" />
+        height="36"
+      />
     </div>
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('endpoints.new.title') }}
@@ -19,18 +20,21 @@
         :rules="rules"
         :validate-on-rule-change="false"
         class="w-full flex flex-col gap-[14px]"
-        label-position="top">
+        label-position="top"
+      >
         <div class="w-full flex md:flex-col gap-[16px] items-center">
           <el-form-item
             class="w-full"
             :label="t('endpoints.new.name')"
-            prop="name">
+            prop="name"
+          >
             <el-input
               v-model="dataForm.name"
               :placeholder="
                 t('all.pleaseInput', { value: t('endpoints.new.name') })
               "
-              input-style="width: 100%">
+              input-style="width: 100%"
+            >
               <template #suffix>
                 <el-tooltip
                   class="item"
@@ -46,7 +50,8 @@
                     <li>${t('rule.specialStrNotTogether')}</li>
                   </ul>
                   `"
-                  placement="top">
+                  placement="top"
+                >
                   <el-icon><Warning /></el-icon>
                 </el-tooltip>
               </template>
@@ -56,12 +61,15 @@
           <el-form-item
             :label="t('endpoints.new.modelId')"
             class="w-full"
-            prop="model_id">
+            prop="model_id"
+          >
             <el-autocomplete
               clearable
               v-model="dataForm.model_id"
               :fetch-suggestions="fetchModels"
-              :placeholder="t('all.pleaseInput', { value: t('endpoints.new.modelId') })"
+              :placeholder="
+                t('all.pleaseInput', { value: t('endpoints.new.modelId') })
+              "
               @select="loadRequiredData"
             />
           </el-form-item>
@@ -70,40 +78,46 @@
           <el-form-item
             :label="t('endpoints.new.minReplica')"
             class="w-full"
-            prop="min_replica">
+            prop="min_replica"
+          >
             <el-select
               v-model="dataForm.min_replica"
               :placeholder="
                 t('all.pleaseSelect', { value: t('endpoints.new.minReplica') })
               "
               size="large"
-              style="width: 100%">
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in replicaRanges"
                 :disabled="item > dataForm.max_replica"
                 :key="item"
                 :label="item"
-                :value="item" />
+                :value="item"
+              />
             </el-select>
           </el-form-item>
 
           <el-form-item
             :label="t('endpoints.new.maxReplica')"
             class="w-full"
-            prop="max_replica">
+            prop="max_replica"
+          >
             <el-select
               v-model="dataForm.max_replica"
               :placeholder="
                 t('all.pleaseSelect', { value: t('endpoints.new.maxReplica') })
               "
               size="large"
-              style="width: 100%">
+              style="width: 100%"
+            >
               <el-option
                 v-for="item in replicaRanges"
                 :disabled="item < dataForm.min_replica"
                 :key="item"
                 :label="item"
-                :value="item" />
+                :value="item"
+              />
             </el-select>
           </el-form-item>
         </div>
@@ -111,7 +125,8 @@
         <el-form-item
           :label="t('endpoints.new.cluster')"
           class="w-full"
-          prop="endpoint_cluster">
+          prop="endpoint_cluster"
+        >
           <el-select
             v-model="dataForm.endpoint_cluster"
             :placeholder="
@@ -119,19 +134,22 @@
             "
             size="large"
             style="width: 100%"
-            @change="fetchResources">
+            @change="fetchResources"
+          >
             <el-option
               v-for="item in endpointClusters"
               :key="item.cluster_id"
               :label="item.region"
-              :value="item.cluster_id" />
+              :value="item.cluster_id"
+            />
           </el-select>
         </el-form-item>
 
         <el-form-item
           :label="t('endpoints.new.resource')"
           class="w-full"
-          prop="cloud_resource">
+          prop="cloud_resource"
+        >
           <el-select
             v-model="dataForm.cloud_resource"
             :placeholder="
@@ -158,40 +176,53 @@
         <el-form-item
           :label="t('endpoints.new.framework')"
           class="w-full"
-          prop="endpoint_framework">
+          prop="endpoint_framework"
+        >
           <el-select
             v-model="dataForm.endpoint_framework"
+            @change="setCurrentEngineArgs"
             :placeholder="
               t('all.pleaseSelect', { value: t('endpoints.new.framework') })
             "
             size="large"
-            style="width: 100%">
+            style="width: 100%"
+          >
             <el-option
               v-for="item in filterFrameworks"
               :key="item.id"
               :label="item.frame_name"
-              :value="item.id" />
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
+
+        <EngineArgs
+          v-if="Object.keys(currentEngineArgs).length > 0"
+          :engineArgs="currentEngineArgs"
+          @update:changedArgs="updateChangedEngineArgs"
+        />
 
         <!-- quantization -->
         <el-form-item
           v-if="availableQuantizations.length > 0"
           :label="t('endpoints.new.quantization')"
           class="w-full"
-          prop="quantization">
+          prop="quantization"
+        >
           <el-select
             v-model="dataForm.quantization"
             :placeholder="
               t('all.pleaseSelect', { value: t('endpoints.new.quantization') })
             "
             size="large"
-            style="width: 100%">
+            style="width: 100%"
+          >
             <el-option
               v-for="item in availableQuantizations"
               :key="item.path"
               :label="item.path"
-              :value="item.path" />
+              :value="item.path"
+            />
           </el-select>
         </el-form-item>
 
@@ -224,6 +255,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
+  import EngineArgs from './EngineArgs.vue'
 
   const props = defineProps({
     namespace: String
@@ -245,6 +277,8 @@
   const endpointResources = ref([])
   const loading = ref(false)
   const availableQuantizations = ref([])
+  const currentEngineArgs = ref({})
+  const changedEngineArgs = ref({})
 
   const replicaRanges = [1, 2, 3, 4, 5]
 
@@ -405,6 +439,7 @@
       const body = data.value
       endpointFrameworks.value = body.data
       dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
+      setCurrentEngineArgs(dataForm.value.endpoint_framework)
     }
   }
 
@@ -427,6 +462,23 @@
       }
     })
   })
+
+  const updateChangedEngineArgs = (changes) => {
+    changedEngineArgs.value = changes
+  }
+
+  const setCurrentEngineArgs = (frameworkId) => {
+    if (!frameworkId) return
+    const currentFramework = endpointFrameworks.value.find(
+      (framework) => framework.id === frameworkId
+    )
+    const engineArgs = JSON.parse(currentFramework.engine_args || '[]')
+    currentEngineArgs.value = engineArgs.reduce((obj, item) => {
+      obj[item.name] = item.value
+      return obj
+    }, {})
+    changedEngineArgs.value = {}
+  }
 
   const handleSubmit = () => {
     loading.value = true
@@ -459,12 +511,18 @@
       params.entrypoint = dataForm.value.quantization
     }
 
+    if (Object.keys(changedEngineArgs.value).length > 0) {
+      params.engine_args = JSON.stringify(changedEngineArgs.value)
+    }
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
     }
     const uploadEndpoint = `/models/${dataForm.value.model_id}/run`
-    const { data, error } = await useFetchApi(uploadEndpoint, options).post().json()
+    const { data, error } = await useFetchApi(uploadEndpoint, options)
+      .post()
+      .json()
     if (data.value) {
       ElMessage({
         message: t('endpoints.new.createSuccess'),
@@ -483,11 +541,11 @@
   const fetchQuantizations = async () => {
     const quantizationEndpoint = `/models/${dataForm.value.model_id}/quantizations`
     const { data, error } = await useFetchApi(quantizationEndpoint).json()
-    if (data.value.data) {
+    if (error.value) {
+      console.log(error.value.msg)
+    } else if (data.value.data) {
       availableQuantizations.value = data.value.data
       rules.value.quantization[0].required = true
-    } else {
-      console.log(error.value.msg)
     }
   }
 
