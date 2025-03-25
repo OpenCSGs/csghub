@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 import { useCookies } from "vue3-cookies"
 import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { customPersistPlugin } from "./packs/persistPinia"
 import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -70,7 +70,7 @@ import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystem
 
 
 const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
+pinia.use(customPersistPlugin)
 
 const app = createApp({
   components: {

@@ -2,6 +2,7 @@ import { createApp, h } from "vue";
 import { createI18n } from "vue-i18n";
 import { useCookies } from "vue3-cookies";
 import { createPinia } from "pinia";
+import { customPersistPlugin } from "./packs/persistPinia";
 import ElementPlus from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { ROUTERS } from "./components/admin_next/router";
@@ -35,6 +36,7 @@ const i18n = createI18n({
 });
 
 const pinia = createPinia();
+pinia.use(customPersistPlugin)
 
 const router = createRouter({
   history: createWebHistory(),

@@ -5,6 +5,7 @@ const persistKey = 'repo-detail-store'
 
 const useRepoDetailStore = defineStore('repoDetail', () => {
   // states
+  const timestamp = ref(Date.now())
   const isInitialized = ref(false)
   const repoType = ref('')
   const privateVisibility = ref(null)
@@ -158,6 +159,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   }
 
   return {
+    timestamp,
     privateVisibility,
     isPrivate,
     updateVisibility,
@@ -230,8 +232,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   }
 }, {
   persist: {
-    key: persistKey,
-    storage: localStorage
+    key: persistKey
   }
 })
 
