@@ -1,4 +1,5 @@
 export const all = {
+  all:'All',
   defaultText: "```\nREADME file is empty, please download the file and add description content.\n```",
   tip: "tip",
   summary: "Summary",

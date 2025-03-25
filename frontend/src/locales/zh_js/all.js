@@ -1,4 +1,5 @@
 export const all = {
+  all:'全部应用',
   defaultText: "```\nREADME文件内容为空，请下载文件，补充描述内容。\n```",
   tip: "提示",
   summary: "介绍",
