@@ -26,10 +26,10 @@
         />
         <div class="px-4 mb-4 flex justify-between items-center">
           <div 
-            class="items-center gap-1.5 flex cursor-pointer"
+            class="items-center rounded-md gap-1.5 flex cursor-pointer py-2 px-3 btn-tertiary-gray"
             @click="dialogVisibleCode = true" >
             <SvgIcon name="json" />
-            <div class="text-gray-400 text-xs leading-[18px]">
+            <div class="text-gray-600 text-xs leading-[18px]">
               view code
             </div>
           </div>
@@ -84,7 +84,7 @@
   </el-dialog>
   <el-dialog
     v-model="dialogVisibleCode"
-    fullscreen
+    :width="dialogWidth"
     append-to-body
   >
     <RepoSummaryApiExample
@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed, watch } from 'vue'
+  import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
@@ -119,12 +119,30 @@
   })
 
   const { t } = useI18n()
+
+  const dialogVisible = ref(false)
+  const dialogVisibleCode = ref(false)
+  const dialogWidth = ref('800');
+  
   const loading = ref(true)
   const readmeContent = ref('')
   const rawReadmeContent = ref('')
   const relations = ref({})
   const endpoint = ref({})
   const datasetInfo = ref(null)
+
+  const handleResize = () => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth <= 640) {
+      dialogWidth.value = '100%';
+    } else if (windowWidth <= 768) {
+      dialogWidth.value = '500';
+    } else if (windowWidth <= 1024) {
+      dialogWidth.value = '700';
+    } else {
+      dialogWidth.value = '800';
+    }
+  };
 
   const fetchData = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
@@ -190,5 +208,11 @@
     if (props.repoType == 'model') {
       fetchEndpoint()
     }
+    window.addEventListener('resize', handleResize);
+    handleResize();
   })
+
+  onBeforeUnmount(() => {
+    window.removeEventListener('resize', handleResize);
+});
 </script>

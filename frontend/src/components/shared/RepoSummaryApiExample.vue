@@ -8,7 +8,7 @@
   </div>
 
   <div class="p-4">
-    <div class="h-[34px] w-full justify-between items-center inline-flex">
+    <div class="h-[34px] w-full justify-between items-center inline-flex md:flex-wrap md:mb-4">
       <div class="justify-start items-center gap-4 flex">
         <div
           class="text-center text-xs font-normal leading-[18px] flex items-center gap-1 px-2 py-[3px] border border-gray-300 rounded-sm cursor-pointer"
