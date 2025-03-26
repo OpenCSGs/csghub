@@ -18,8 +18,8 @@ export const application_spaces = {
   stop: "暂停",
   stopSpace: "暂停应用空间",
   toggleStatusSuccess: '更新成功，请等待 Space 状态切换',
-  sendRequest: '发送请求到空间',
-  endpointUrl: '空间 URL',
+  sendRequest: 'API 调用示例',
+  endpointUrl: 'SSE 服务 URL',
   mcpSpaceType: '应用空间类型：MCP',
   gradioGuide: {
     notice: '开始使用您的 gradio 应用空间！',
