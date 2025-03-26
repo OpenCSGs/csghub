@@ -10,10 +10,6 @@
         width="16"
         height="16" />
       <span class="text-gray-500 text-lg font-medium">Dataset:</span>
-      <el-avatar
-        :size="24"
-        :src="avatar"
-        class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
@@ -51,10 +47,6 @@
     <div
       v-else-if="repoType === 'endpoint'"
       class="flex flex-wrap w-full gap-2 items-center">
-      <el-avatar
-        :size="24"
-        :src="avatar"
-        class="flex-shrink-0"></el-avatar>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
@@ -105,10 +97,14 @@
     <div
       v-else
       class="flex flex-wrap w-full gap-2 items-center">
-      <el-avatar
-        :size="24"
-        :src="avatar"
-        class="flex-shrink-0"></el-avatar>
+      <el-tooltip :content="$t('application_spaces.mcpSpaceType')" placement="top">
+        <SvgIcon
+          v-if="repoType === 'space' && repoDetailStore.sdk === 'mcp_server'"
+          name="space_mcp"
+          width="16"
+          height="16"
+          class="flex-shrink-0 cursor-pointer" />
+      </el-tooltip>
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
@@ -156,20 +152,33 @@
     </div>
 
     <div
-      class="flex gap-1 items-center"
+      class="flex gap-2 items-center"
       v-if="repoType !== 'finetune'">
-      <a
-        class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
+      <el-avatar
         v-if="repoType !== 'endpoint'"
-        :href="ownerUrl">
-        {{ path?.split('/')[0] }}
-      </a>
-      <div v-if="repoType !== 'endpoint'">/</div>
-      <a
-        class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
-        :href="repoUrl">
-        {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
-      </a>
+        :size="24"
+        :src="avatar"
+        class="flex-shrink-0"></el-avatar>
+      <SvgIcon
+        v-else
+        name="endpoint"
+        width="16"
+        height="16"
+        class="flex-shrink-0" />
+      <div class="flex items-center gap-0.5">
+        <a
+          class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
+          v-if="repoType !== 'endpoint'"
+          :href="ownerUrl">
+          {{ path?.split('/')[0] }}
+        </a>
+        <div class="font-normal text-gray-700" v-if="repoType !== 'endpoint'">/</div>
+        <a
+          class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
+          :href="repoUrl">
+          {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
+        </a>
+      </div>
       <div
         class="cursor-pointer"
         data-test="copy-name"
@@ -182,7 +191,7 @@
     </div>
     <div
       v-else
-      class="flex gap-[8px] items-center">
+      class="flex gap-2 items-center">
       <SvgIcon
         name="finetune_name_icon"
         width="16"

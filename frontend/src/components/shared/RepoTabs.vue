@@ -34,7 +34,11 @@
           :user-name="userName"
         />
         <ApplicationPage
-          v-else-if="repoType === 'space' && appStatus === 'Running'"
+          v-else-if="repoType === 'space' && repoDetail.sdk !== 'mcp_server' && appStatus === 'Running'"
+          :appEndpoint="appEndpoint"
+        />
+        <McpSpacePage
+          v-else-if="repoType === 'space' && repoDetail.sdk === 'mcp_server' && appStatus === 'Running'"
           :appEndpoint="appEndpoint"
         />
         <StoppedPage
@@ -266,6 +270,7 @@
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
   import BillingDetail from './BillingDetail.vue'
+  import McpSpacePage from '../application_spaces/McpSpacePage.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ref, computed, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'

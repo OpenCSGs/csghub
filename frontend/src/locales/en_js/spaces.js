@@ -3,5 +3,5 @@ export const spaces = {
   placeholder: "Search Spaces",
   tips:"Creating Interactive Machine Learning Demos",
   associated:'Associated Spaces',
-  sdkPlaceholder:'sdk type',
+  sdkPlaceholder:'Select space type',
 }

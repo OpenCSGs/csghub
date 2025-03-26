@@ -240,6 +240,18 @@
               <!-- <p class="text-xs">11 templates</p> -->
             </el-radio>
             <el-radio
+              class="rounded-md !border-[2px] !h-[120px] flex justify-center"
+              value="mcp_server"
+              size="large"
+              border
+            >
+              <SvgIcon
+                name="space_mcp"
+                class="m-auto"
+              />
+              <p class="font-semibold text-md">MCP</p>
+            </el-radio>
+            <el-radio
               disabled
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
               value="static"
