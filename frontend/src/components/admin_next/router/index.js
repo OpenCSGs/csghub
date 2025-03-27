@@ -11,6 +11,11 @@ import AdminBroadcastEdit from '../broadcast/AdminBroadcastEdit.vue'
 import AdminBroadcastNew from '../broadcast/AdminBroadcastNew.vue'
 import AdminTagCategoriesList from "../tag_categories/AdminTagCategoriesList.vue";
 import AdminTagCategoriesForm from "../tag_categories/AdminTagCategoriesForm.vue";
+import AdminModelDetail from "../models/AdminModelDetail.vue";
+import AdminModelList from "../models/AdminModelList.vue";
+import AdminModelEdit from "../models/AdminModelEdit.vue";
+import AdminServerlessForm from '../serverless/AdminServerlessForm.vue'
+import AdminServerlessDetail from '../serverless/AdminServerlessDetail.vue'
 import { Setting, User, Connection } from "@element-plus/icons-vue";
 import { useCookies } from 'vue3-cookies'
 
@@ -81,6 +86,44 @@ export const MENU_SETTING = [
     parentName: PARENT_NAME.hub,
     icon: "admin-menu-cloud",
     type: "menu",
+  },
+  {
+    path: `${BASE_URL}/models`,
+    component: AdminModelList,
+    name: adminLocale.models.title,
+    parentName: PARENT_NAME.hub,
+    icon: 'admin-menu-model',
+    type: 'menu'
+  },
+  {
+    path: `${BASE_URL}/models/:namespace/:name`,
+    component: AdminModelDetail,
+    name: adminLocale.models.modelDetails,
+    parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/models/:namespace/:name/edit`,
+    component: AdminModelEdit,
+    name: adminLocale.models.modelEdit,
+    parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/serverless/:namespace/:name/new`,
+    component: AdminServerlessForm,
+    name: adminLocale.serverless.newTitle,
+    parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/serverless/:namespace/:name/:id/edit`,
+    component: AdminServerlessForm,
+    name: adminLocale.serverless.editTitle,
+    parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/serverless/:namespace/:name/:id`,
+    component: AdminServerlessDetail,
+    name: adminLocale.serverless.detailTitle,
+    parentName: PARENT_NAME.hub
   },
   {
     path: `${BASE_URL}/tags`,
