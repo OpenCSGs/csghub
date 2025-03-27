@@ -148,7 +148,7 @@
   const fetchFileContent = async () => {
     try {
       const { data, error } = await useFetchApi(
-        `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}`
+        `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
       ).json()
 
       if (!error.value) {
