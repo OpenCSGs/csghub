@@ -16,5 +16,6 @@ export const repo = {
     remoteResource: "OpenCSG 远端资源",
     syncCompleted: "本地版本与远端源版本一致",
     needSync: "远端有待同步版本",
+    from: "镜像来自",
   }
 }
