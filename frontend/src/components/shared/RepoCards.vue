@@ -208,6 +208,10 @@
   {
     value: 'docker',
     label: 'Docker'
+  },
+  {
+    value: 'mcp_server',
+    label: 'MCP Server'
   }]
 
   const filterOptions = [

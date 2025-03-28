@@ -1,3 +1,5 @@
+import { endpoints } from "../en_js/endpoints";
+
 export const application_spaces = {
   title: "应用空间",
   placeholder: "应用空间名字",
@@ -16,6 +18,9 @@ export const application_spaces = {
   stop: "暂停",
   stopSpace: "暂停应用空间",
   toggleStatusSuccess: '更新成功，请等待 Space 状态切换',
+  sendRequest: 'API 调用示例',
+  endpointUrl: 'SSE 服务 URL',
+  mcpSpaceType: '应用空间类型：MCP',
   gradioGuide: {
     notice: '开始使用您的 gradio 应用空间！',
     noticeDesc: '应用空间创建成功！空间运行需要程序文件，请参考下面案例创建 app.py 文件。',

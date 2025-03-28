@@ -16,6 +16,9 @@ export const application_spaces = {
   stop: "Stop",
   stopSpace: "Stop the Space",
   toggleStatusSuccess: 'Updated, please wait Space status change',
+  sendRequest: 'API Call Example',
+  endpointUrl: 'SSE Server URL',
+  mcpSpaceType: 'Space type: MCP',
   gradioGuide: {
     notice: 'Get started with your grario app space!',
     noticeDesc: 'The space is created successfully! Space operation requires program files. Please refer to the following case to create the app.py file.',
