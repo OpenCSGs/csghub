@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import waitFor from 'wait-for-expect'
 import NewEndpoint from '@/components/endpoints/NewEndpoint.vue'
 
 vi.mock('vue3-cookies', () => ({
@@ -57,11 +58,34 @@ vi.mock('@/packs/useFetchApi', () => ({
             data: {
               value: {
                 data: [
-                  { id: 1, frame_name: 'test-framework', path: 'test-path', frame_cpu_image: 'ktransformers:0.2.1.post1' }
+                  {
+                    id: 1,
+                    frame_name: 'test-framework',
+                    path: 'test-path',
+                    frame_cpu_image: 'ktransformers:0.2.1.post1'
+                  }
                 ]
               }
             },
             error: { value: null }
+          })
+        }
+        if (url.includes('/quantizations')) {
+          return Promise.resolve({
+            data: {
+              value: {
+                data: [
+                  {
+                    name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+                    path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+                  },
+                  {
+                    name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+                    path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+                  }
+                ]
+              }
+            }
           })
         }
         if (url.includes('/models')) {
@@ -122,14 +146,14 @@ describe('NewEndpoint', () => {
       {
         name: 'Resource 1',
         is_available: true,
-        resources:'res1',
+        resources: 'res1',
         type: 'cpu',
         id: 1
       },
       {
         name: 'Resource 2',
         is_available: false,
-        resources:'res2',
+        resources: 'res2',
         type: 'gpu',
         id: 2
       }
@@ -141,7 +165,6 @@ describe('NewEndpoint', () => {
     expect(wrapper.vm.endpointFrameworks).toEqual([])
   })
 
-
   it('fetches clusters/respurces/runtimeframeworks', async () => {
     const wrapper = createWrapper()
     wrapper.vm.dataForm.model_id = 'model-1'
@@ -150,9 +173,30 @@ describe('NewEndpoint', () => {
     await wrapper.vm.$nextTick()
     // fetch runtime_framework is nested in fetch source, so we need to await 3 times
     expect(wrapper.vm.endpointFrameworks).toEqual([
-      { id: 1, frame_name: 'test-framework', path: 'test-path', frame_cpu_image: 'ktransformers:0.2.1.post1' }
+      {
+        id: 1,
+        frame_name: 'test-framework',
+        path: 'test-path',
+        frame_cpu_image: 'ktransformers:0.2.1.post1'
+      }
     ])
 
     expect(wrapper.vm.dataForm.endpoint_framework).toEqual(1)
+  })
+
+  it('fetches quantizations when model_id is present', async () => {
+    window.location.search = '?model_id=model-1'
+    const wrapper = createWrapper()
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.availableQuantizations).toEqual([
+      {
+        name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+        path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+      },
+      {
+        name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+        path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+      }
+    ])
   })
 })
