@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import waitFor from 'wait-for-expect'
 import NewEndpoint from '@/components/endpoints/NewEndpoint.vue'
 
 vi.mock('vue3-cookies', () => ({
@@ -185,7 +184,15 @@ describe('NewEndpoint', () => {
   })
 
   it('fetches quantizations when model_id is present', async () => {
-    window.location.search = '?model_id=model-1'
+    // Mock window.location
+    const mockLocation = {
+      href: '',
+      search: '?model_id=model-1'
+    }
+    Object.defineProperty(window, 'location', {
+      value: mockLocation,
+      writable: true
+    })
     const wrapper = createWrapper()
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.availableQuantizations).toEqual([
