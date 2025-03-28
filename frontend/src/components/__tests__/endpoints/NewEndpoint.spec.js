@@ -132,7 +132,7 @@ describe('NewEndpoint', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('fetches clusters/respurces/runtimeframeworks', async () => {
+  it('fetches clusters/respurces', async () => {
     const wrapper = createWrapper()
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.endpointClusters).toEqual([
@@ -165,7 +165,7 @@ describe('NewEndpoint', () => {
     expect(wrapper.vm.endpointFrameworks).toEqual([])
   })
 
-  it('fetches clusters/respurces/runtimeframeworks', async () => {
+  it('fetches runtimeframeworks', async () => {
     const wrapper = createWrapper()
     wrapper.vm.dataForm.model_id = 'model-1'
     await wrapper.vm.$nextTick()
