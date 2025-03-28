@@ -84,7 +84,8 @@ vi.mock('@/packs/useFetchApi', () => ({
                   }
                 ]
               }
-            }
+            },
+            error: { value: null }
           })
         }
         if (url.includes('/models')) {
