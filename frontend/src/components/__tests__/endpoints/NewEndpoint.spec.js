@@ -106,7 +106,7 @@ describe('NewEndpoint', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('fetches clusters on mount', async () => {
+  it('fetches clusters/respurces/runtimeframeworks', async () => {
     const wrapper = createWrapper()
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.endpointClusters).toEqual([
@@ -114,5 +114,39 @@ describe('NewEndpoint', () => {
       { cluster_id: 'cluster-2', region: 'region-2' }
     ])
     expect(wrapper.vm.dataForm.endpoint_cluster).toBe('cluster-1')
+
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.endpointResources).toEqual([
+      {
+        name: 'Resource 1',
+        is_available: true,
+        resources:'res1',
+        id: 1
+      },
+      {
+        name: 'Resource 2',
+        is_available: false,
+        resources:'res2',
+        id: 2
+      }
+    ])
+    expect(wrapper.vm.dataForm.cloud_resource).toEqual(1)
+
+    // without model_id will not fetch runtime_framework
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.endpointFrameworks).toEqual([])
+  })
+
+
+  it('fetches clusters/respurces/runtimeframeworks', async () => {
+    const wrapper = createWrapper()
+    wrapper.vm.dataForm.model_id = 'model-1'
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+    // fetch runtime_framework is nested in fetch source, so we need to await 3 times
+    expect(wrapper.vm.endpointFrameworks).toEqual([
+      { id: 1, frame_name: 'test-framework', path: 'test-path' }
+    ])
   })
 })
