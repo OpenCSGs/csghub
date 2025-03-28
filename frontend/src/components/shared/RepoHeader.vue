@@ -47,6 +47,11 @@
     <div
       v-else-if="repoType === 'endpoint'"
       class="flex flex-wrap w-full gap-2 items-center">
+      <SvgIcon
+        name="finetune_cpu_icon"
+        width="16"
+        height="16"
+        class="flex-shrink-0" />
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
