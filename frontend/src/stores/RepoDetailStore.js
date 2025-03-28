@@ -73,6 +73,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const activeInstance = ref('')
   const failedReason = ref('')
   const variables = ref('')
+  const engineArgs = ref('')
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -152,6 +153,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     actualReplica.value = initialData.actual_replica
     instances.value = initialData.instances
     variables.value = initialData.variables
+    engineArgs.value = initialData.engine_args
   }
 
   const clearStore = () => {
@@ -228,6 +230,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     activeInstance,
     failedReason,
     variables,
+    engineArgs,
     clearStore
   }
 }, {

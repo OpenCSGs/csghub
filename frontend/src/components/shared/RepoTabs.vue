@@ -236,6 +236,7 @@
           :maxReplica="repoDetail.maxReplica"
           :minReplica="repoDetail.minReplica"
           :clusterId="repoDetail.clusterId"
+          :variables="repoDetail.engineArgs ? JSON.parse(repoDetail.engineArgs) : {}"
         />
       </template>
     </tab-container>
