@@ -36,12 +36,14 @@ vi.mock('@/packs/useFetchApi', () => ({
                     name: 'Resource 1',
                     is_available: true,
                     resources: 'res1',
+                    type: 'cpu',
                     id: 1
                   },
                   {
                     name: 'Resource 2',
                     is_available: false,
                     resources: 'res2',
+                    type: 'gpu',
                     id: 2
                   }
                 ]
@@ -55,7 +57,7 @@ vi.mock('@/packs/useFetchApi', () => ({
             data: {
               value: {
                 data: [
-                  { id: 1, frame_name: 'test-framework', path: 'test-path' }
+                  { id: 1, frame_name: 'test-framework', path: 'test-path', frame_cpu_image: 'ktransformers:0.2.1.post1' }
                 ]
               }
             },
@@ -121,12 +123,14 @@ describe('NewEndpoint', () => {
         name: 'Resource 1',
         is_available: true,
         resources:'res1',
+        type: 'cpu',
         id: 1
       },
       {
         name: 'Resource 2',
         is_available: false,
         resources:'res2',
+        type: 'gpu',
         id: 2
       }
     ])
@@ -146,7 +150,9 @@ describe('NewEndpoint', () => {
     await wrapper.vm.$nextTick()
     // fetch runtime_framework is nested in fetch source, so we need to await 3 times
     expect(wrapper.vm.endpointFrameworks).toEqual([
-      { id: 1, frame_name: 'test-framework', path: 'test-path' }
+      { id: 1, frame_name: 'test-framework', path: 'test-path', frame_cpu_image: 'ktransformers:0.2.1.post1' }
     ])
+
+    expect(wrapper.vm.dataForm.endpoint_framework).toEqual(1)
   })
 })
