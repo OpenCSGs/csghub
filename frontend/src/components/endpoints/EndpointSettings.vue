@@ -206,7 +206,7 @@
           placeholder="Select"
           size="large"
           class="!w-[512px] sm:!w-full"
-          :disabled="!isStopped">
+        >
           <el-option
             v-for="item in visibilityOptions"
             :key="item.value"
