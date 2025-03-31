@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import NewEndpoint from '@/components/endpoints/NewEndpoint.vue'
 
 vi.mock('vue3-cookies', () => ({
@@ -168,9 +168,10 @@ describe('NewEndpoint', () => {
   it('fetches runtimeframeworks', async () => {
     const wrapper = createWrapper()
     wrapper.vm.dataForm.model_id = 'model-1'
-    await wrapper.vm.$nextTick()
-    await wrapper.vm.$nextTick()
-    await wrapper.vm.$nextTick()
+
+    // Waiting for all promises and Vue updates at once
+    await flushPromises()
+
     // fetch runtime_framework is nested in fetch source, so we need to await 3 times
     expect(wrapper.vm.endpointFrameworks).toEqual([
       {
