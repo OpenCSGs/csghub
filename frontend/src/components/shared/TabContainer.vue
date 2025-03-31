@@ -59,7 +59,7 @@
 
       <!-- repo settings -->
       <el-tab-pane
-        v-if="settingsVisibility && syncStatus !== 'pending'"
+        v-if="settingsVisibility && repo.syncStatus !== 'pending'"
         :label="$t('all.settings')"
         name="settings"
         class="min-h-[300px]"
@@ -83,7 +83,6 @@
     repoType: String,
     sdk: String,
     repo: Object,
-    syncStatus: String
   })
 
   const summaryLabel = computed(() => {
