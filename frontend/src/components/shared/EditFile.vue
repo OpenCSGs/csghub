@@ -75,6 +75,7 @@
   const sha = ref('')
 
   const fileName = ref(props.currentPath)
+  const originalFileName = props.currentPath
   const commitTitle = ref('')
   const commitDesc = ref('')
   const new_branch = ref('main')
@@ -118,7 +119,8 @@
       message: buildCommitMessage(),
       branch: props.currentBranch,
       new_branch: props.currentBranch,
-      sha: sha.value
+      sha: sha.value,
+      origin_path: originalFileName,
     }
     const option = {
       headers: {
