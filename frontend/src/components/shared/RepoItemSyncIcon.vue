@@ -50,7 +50,7 @@
   const syncTooltip = computed(() => {
     if (props.source !== 'opencsg') return ''
 
-    return props.sync_status === 'completed'
+    return props.syncStatus === 'completed'
       ? t('repo.source.syncCompleted')
       : t('repo.source.remoteResource')
   })
