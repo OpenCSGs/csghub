@@ -10,106 +10,112 @@ vi.mock('vue3-cookies', () => ({
   })
 }))
 
-vi.mock('@/packs/useFetchApi', () => ({
-  default: (url) => {
-    return {
-      json: () => {
-        if (url.includes('/cluster')) {
-          return Promise.resolve({
-            data: {
-              value: {
-                data: [
-                  { cluster_id: 'cluster-1', region: 'region-1' },
-                  { cluster_id: 'cluster-2', region: 'region-2' }
-                ]
-              }
-            },
-            error: { value: null }
-          })
-        }
-        if (url.includes('/space_resources')) {
-          return Promise.resolve({
-            data: {
-              value: {
-                data: [
-                  {
-                    name: 'Resource 1',
-                    is_available: true,
-                    resources: 'res1',
-                    type: 'cpu',
-                    id: 1
-                  },
-                  {
-                    name: 'Resource 2',
-                    is_available: false,
-                    resources: 'res2',
-                    type: 'gpu',
-                    id: 2
-                  }
-                ]
-              }
-            },
-            error: { value: null }
-          })
-        }
-        if (url.includes('/runtime_framework')) {
-          return Promise.resolve({
-            data: {
-              value: {
-                data: [
-                  {
-                    id: 1,
-                    frame_name: 'test-framework',
-                    path: 'test-path',
-                    frame_cpu_image: 'ktransformers:0.2.1.post1'
-                  }
-                ]
-              }
-            },
-            error: { value: null }
-          })
-        }
-        if (url.includes('/quantizations')) {
-          return Promise.resolve({
-            data: {
-              value: {
-                data: [
-                  {
-                    name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
-                    path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
-                  },
-                  {
-                    name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
-                    path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
-                  }
-                ]
-              }
-            },
-            error: { value: null }
-          })
-        }
-        if (url.includes('/models')) {
-          return Promise.resolve({
-            data: [
-              { model_id: 'model-1', name: 'Model 1' },
-              { model_id: 'model-2', name: 'Model 2' }
-            ]
-          })
-        }
-      },
-      post: () => ({
+let { mockFetchApi } = vi.hoisted(() => {
+  return { mockFetchApi:
+    vi.fn((url) => {
+      return {
         json: () => {
-          return Promise.resolve({ error: { value: null } })
-        }
-      }),
-      put: () => ({
-        json: () => Promise.resolve({ error: { value: null } })
-      }),
-      delete: () => ({
-        json: () => Promise.resolve({ error: { value: null } })
-      })
-    }
+          if (url.includes('/cluster')) {
+            return Promise.resolve({
+              data: {
+                value: {
+                  data: [
+                    { cluster_id: 'cluster-1', region: 'region-1' },
+                    { cluster_id: 'cluster-2', region: 'region-2' }
+                  ]
+                }
+              },
+              error: { value: null }
+            })
+          }
+          if (url.includes('/space_resources')) {
+            return Promise.resolve({
+              data: {
+                value: {
+                  data: [
+                    {
+                      name: 'Resource 1',
+                      is_available: true,
+                      resources: 'res1',
+                      type: 'cpu',
+                      id: 1
+                    },
+                    {
+                      name: 'Resource 2',
+                      is_available: false,
+                      resources: 'res2',
+                      type: 'gpu',
+                      id: 2
+                    }
+                  ]
+                }
+              },
+              error: { value: null }
+            })
+          }
+          if (url.includes('/runtime_framework')) {
+            return Promise.resolve({
+              data: {
+                value: {
+                  data: [
+                    {
+                      id: 1,
+                      frame_name: 'test-framework',
+                      path: 'test-path',
+                      frame_cpu_image: 'ktransformers:0.2.1.post1'
+                    }
+                  ]
+                }
+              },
+              error: { value: null }
+            })
+          }
+          if (url.includes('/quantizations')) {
+            return Promise.resolve({
+              data: {
+                value: {
+                  data: [
+                    {
+                      name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+                      path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+                    },
+                    {
+                      name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+                      path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+                    }
+                  ]
+                }
+              },
+              error: { value: null }
+            })
+          }
+          if (url.includes('/models')) {
+            return Promise.resolve({
+              data: [
+                { model_id: 'model-1', name: 'Model 1' },
+                { model_id: 'model-2', name: 'Model 2' }
+              ]
+            })
+          }
+        },
+        post: () => ({
+          json: () => {
+            return Promise.resolve({ error: { value: null } })
+          }
+        }),
+        put: () => ({
+          json: () => Promise.resolve({ error: { value: null } })
+        }),
+        delete: () => ({
+          json: () => Promise.resolve({ error: { value: null } })
+        })
+      }
+    })
   }
+})
+
+vi.mock('@/packs/useFetchApi', () => ({
+  default: mockFetchApi,
 }))
 
 vi.mock('element-plus', () => ({
@@ -121,7 +127,7 @@ const createWrapper = (props = {}) => {
   return mount(NewEndpoint, {
     props: {
       ...props
-    }
+    },
   })
 }
 
