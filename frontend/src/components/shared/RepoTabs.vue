@@ -13,13 +13,13 @@
         :enableEndpoint="repoDetail.enable_inference"
         :enableFinetune="repoDetail.enable_finetune"
         :enableEvaluation="repoDetail.enable_evaluation"
-        :syncStatus="repoDetail.sync_status"
+        :syncStatus="repoDetail.syncStatus"
       />
     </div>
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
-      :syncStatus="repoDetail.sync_status"
+      :syncStatus="repoDetail.syncStatus"
       :repoType="repoType"
       :sdk="sdk"
       :repo="repoDetail"

@@ -284,13 +284,13 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
   const showSyncButton = computed(() =>
     userStore.roles.includes('admin') &&
     props.repo.source === 'opencsg' &&
-    ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
+    ['pending', 'inprogress', 'failed'].includes(props.syncStatus)
   )
 
   // 同步按钮禁用
   const syncInprogress = computed(() => {
     return (
-      props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
+      props.repo.source === 'opencsg' && props.syncStatus === 'inprogress'
     )
   })
 
