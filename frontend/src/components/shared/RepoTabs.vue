@@ -10,8 +10,8 @@
         :userName="userName"
         :namespacePath="path"
         :repo="repoDetail"
-        :enableEndpoint="repoDetail.enableEndpoint"
-        :enableFinetune="repoDetail.enableInference"
+        :enableEndpoint="repoDetail.enableInference"
+        :enableFinetune="repoDetail.enableFinetune"
         :enableEvaluation="repoDetail.enableEvaluation"
       />
     </div>
