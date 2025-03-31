@@ -18,6 +18,7 @@
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
+      :syncStatus="repoDetail.syncStatus"
       :repoType="repoType"
       :sdk="sdk"
       :repo="repoDetail"
