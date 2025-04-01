@@ -197,7 +197,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, h } from 'vue'
+  import { ref, onMounted, h, inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
@@ -216,7 +216,7 @@
   const collectionName = ref(props.collection.name)
   const collectionNickname = ref(props.collection.nickname)
   const collectionDesc = ref(props.collection.description)
-  const visibility = ref(props.collection.private)
+  const visibility = ref(props.collection.privateVisibility)
   const options = ref([
     { value: true, label: t('all.private') },
     { value: false, label: t('all.public') }
@@ -228,6 +228,8 @@
     ['#ECFDF3', t('collections.color.lGreen')],
     ['#FFF4ED', t('collections.color.lOrange')]
   ])
+
+  const fetchCollectionDetail = inject('fetchCollectionDetail')
 
   const changeVisibility = (value) => {
     ElMessageBox({
@@ -275,6 +277,7 @@
     if (error.value) {
       ElMessage.warning(error.value.msg)
     } else {
+      fetchCollectionDetail()
       ElMessage.success(t('all.updateSuccess'))
       return data.value
     }

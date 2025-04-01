@@ -266,3 +266,67 @@ describe('RepoHeader Source Display', () => {
     ).toBe('HuggingFace')
   })
 })
+
+describe('Repository path display', () => {
+  it('displays owner and repo correctly for normal repositories', () => {
+    const wrapper = createWrapper({
+      path: 'owner/repo',
+      ownerUrl: '/user/owner'
+    })
+
+    const ownerLink = wrapper.find('a[href="/user/owner"]')
+    expect(ownerLink.exists()).toBe(true)
+    expect(ownerLink.text()).toBe('owner')
+
+    const repoLink = wrapper.find('a[href="/models/owner/repo"]')
+    expect(repoLink.exists()).toBe(true)
+    expect(repoLink.text()).toBe('repo')
+  })
+
+  it('handles endpoint repositories correctly', () => {
+    const wrapper = createWrapper({
+      repoType: 'endpoint',
+      name: 'endpoint-name',
+      path: 'owner/repo',
+      deployId: 789
+    })
+
+    const ownerLink = wrapper.find('.flex.items-center.gap-0\\.5 a:first-child')
+    expect(ownerLink.exists()).toBe(false)
+
+    const separator = wrapper.find('.flex.items-center.gap-0\\.5 div')
+    expect(separator.exists()).toBe(false)
+
+    const repoLink = wrapper.find('a[href="/endpoints/owner/repo/789"]')
+    expect(repoLink.exists()).toBe(true)
+    expect(repoLink.text()).toBe('endpoint-name')
+  })
+
+  it('has correct link URLs for different repo types', () => {
+    const modelWrapper = createWrapper({
+      repoType: 'model',
+      path: 'owner/repo'
+    })
+    expect(modelWrapper.find('a[href="/models/owner/repo"]').exists()).toBe(true)
+
+    const datasetWrapper = createWrapper({
+      repoType: 'dataset',
+      path: 'owner/dataset'
+    })
+    expect(datasetWrapper.find('a[href="/datasets/owner/dataset"]').exists()).toBe(true)
+
+    const finetuneWrapper = createWrapper({
+      repoType: 'finetune',
+      path: 'model-name',
+      deployId: 123
+    })
+    expect(finetuneWrapper.find('a[href="/finetunes/model-name/123"]').exists()).toBe(true)
+
+    const collectionsWrapper = createWrapper({
+      repoType: 'collections',
+      path: 'owner/collection',
+      collectionsId: 456
+    })
+    expect(collectionsWrapper.find('a[href="/collections/456"]').exists()).toBe(true)
+  })
+})
