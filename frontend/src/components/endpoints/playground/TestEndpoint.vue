@@ -18,7 +18,22 @@
     <div
       class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border  border-gray-300 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
     >
-      <MarkdownViewer :content="anwserContent" />
+      <div class="flex flex-col gap-4">
+        <template v-for="(item, index) in chatMessages" :key="index">
+          <!-- user question -->
+          <div class="flex justify-end">
+            <div class="max-w-[80%] bg-brand-600 rounded-lg px-3 py-2 question">
+              <MarkdownViewer :content="item.question" />
+            </div>
+          </div>
+          <!-- AI answer -->
+          <div class="flex justify-start">
+            <div class="max-w-[80%] bg-gray-50 rounded-lg px-3 py-2 answer">
+              <MarkdownViewer :content="item.answer" />
+            </div>
+          </div>
+        </template>
+      </div>
     </div>
     <div
       class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border relative"
@@ -32,6 +47,7 @@
       <el-input
         v-model="message"
         inputStyle="outline: none"
+        :disabled="loading"
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown.enter="handleSendMessage"
@@ -57,8 +73,29 @@
         </div>
       </div>
     </div>
+    <div class="grid grid-cols-3 gap-4 mt-4">
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+        :disabled="chatMessages.length === 0 || loading"
+        :name="$t('endpoints.playground.retry')"
+        @click="handleRetry"
+      />
 
-    <div class="flex mt-[8px]">
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+        :disabled="chatMessages.length === 0"
+        :name="$t('endpoints.playground.undo')"
+        @click="handleUndo"
+      />
+
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+        :disabled="chatMessages.length === 0"
+        :name="$t('endpoints.playground.clear')"
+        @click="handleClear"
+      />
+    </div>
+    <div class="flex mt-4">
       <SvgIcon name="exclamation_point" class="place-self-start" />
       <p class="ml-[4px] text-xs leading-[18px] text-gray-500">{{ $t('widgets.liabilityExemption') }}</p>
     </div>
@@ -89,6 +126,7 @@
   const loading = ref(false)
   const inputFocus = ref(false)
   const compositionInput = ref(false)
+  const chatMessages = ref([])
 
   const handleFocus = () => {
     inputFocus.value = true
@@ -96,6 +134,22 @@
 
   const handleBlur = () => {
     inputFocus.value = false
+  }
+
+  const handleRetry = () => {
+    if (chatMessages.value.length === 0 || loading.value) return
+    const lastMessage = chatMessages.value[chatMessages.value.length - 1]
+    message.value = lastMessage.question
+    handleSendMessage()
+  }
+
+  const handleUndo = () => {
+    if (chatMessages.value.length === 0) return
+    chatMessages.value.pop()
+  }
+
+  const handleClear = () => {
+    chatMessages.value = []
   }
 
   const compositionEnd = (event) => {
@@ -109,8 +163,10 @@
   }
 
   const typewriter = new Typewriter((str) => {
-    if (str) {
-      anwserContent.value += str
+    if (str && chatMessages.value.length > 0) {
+      // update the last message
+      const lastMessage = chatMessages.value[chatMessages.value.length - 1]
+      lastMessage.answer += str
     }
   })
 
@@ -155,8 +211,15 @@
     if (!canSendMessage.value) return
 
     loading.value = true
+    
+    const currentQuestion = message.value
+    
+    chatMessages.value.push({
+      question: currentQuestion,
+      answer: ''
+    })
 
-    resetAnwserContent()
+    message.value = ''
 
     const endpoint = `${props.appEndpoint}/v1/chat/completions`
     const payload = {
@@ -188,6 +251,7 @@
   const handleOpen = (e) => {
     if (e.ok) {
       typewriter.start()
+      message.value = ''
     }
   }
 
@@ -232,5 +296,18 @@
 
   :deep(.el-loading-mask) {
     border-radius: var(--border-radius-md);
+  }
+
+  .question {
+    .markdown-body {
+      color: #ffffff; 
+      background-color: transparent;
+    }
+  }
+
+  .answer {
+    .markdown-body {
+      background-color: transparent;
+    }
   }
 </style>
