@@ -291,7 +291,7 @@ describe('Repository path display', () => {
       deployId: 789
     })
 
-    const ownerLink = wrapper.find('.flex.items-center.gap-0\\.5 a:first-child')
+    const ownerLink = wrapper.find('.flex[data-test="owner-link"]')
     expect(ownerLink.exists()).toBe(false)
 
     const separator = wrapper.find('.flex.items-center.gap-0\\.5 div')
@@ -317,10 +317,10 @@ describe('Repository path display', () => {
 
     const finetuneWrapper = createWrapper({
       repoType: 'finetune',
-      path: 'model-name',
+      path: 'owner/repo',
       deployId: 123
     })
-    expect(finetuneWrapper.find('a[href="/finetunes/model-name/123"]').exists()).toBe(true)
+    expect(finetuneWrapper.find('a[href="/models/owner/repo"]').exists()).toBe(true)
 
     const collectionsWrapper = createWrapper({
       repoType: 'collections',
