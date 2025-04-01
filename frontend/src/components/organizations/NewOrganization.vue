@@ -173,10 +173,11 @@
         }
       },
       handleSubmit() {
-        this.$refs['dataFormRef'].validate(async (valid) => {
+        this.$refs['dataFormRef'].validate(async (valid, invalidFields) => {
           if (valid) {
             this.createOrganization()
           } else {
+            console.log('error submit!!', invalidFields)
             return false
           }
         })

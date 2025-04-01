@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NewOrganization from '@/components/organizations/NewOrganization.vue'
+import waitFor from 'wait-for-expect'
 
 const createWrapper = (props) => {
   return mount(NewOrganization, {
@@ -15,13 +16,12 @@ const createWrapper = (props) => {
   })
 }
 
-const triggerFormButton = (wrapper) => {
+const triggerFormButton = async (wrapper) => {
   const button = wrapper.findComponent({ name: 'CsgButton' })
-  button.trigger('click')
-  // here in the true component button click will trigger an async request and will take some time
-  // but the test code will not wait for the async function end and will go to next step to do the check
-  // if we do not wait some time here, the test will failed
-  return new Promise((resolve) => { setTimeout(resolve, 1000) })
+  await button.trigger('click')
+
+  // deprecate this, as we can use waitFor to wait for the async operation to complete
+  // return new Promise((resolve) => { setTimeout(resolve, 2000) })
 }
 
 vi.mock('../../../stores/UserStore', () => ({
@@ -55,8 +55,11 @@ describe('NewOrganization', () => {
     it('validates required fields', async () => {
       const wrapper = createWrapper()
       await triggerFormButton(wrapper)
-      const formErrors = wrapper.findAll('.el-form-item__error')
-      expect(formErrors.length).toBeGreaterThan(0)
+
+      await waitFor(() => {
+        const formErrors = wrapper.findAll('.el-form-item__error')
+        expect(formErrors.length).toBeGreaterThan(0)
+      })
     })
   })
 
@@ -71,9 +74,13 @@ describe('NewOrganization', () => {
         nickname: 'valid-org',
         org_type: '企业',
       }
+      // after reactive attr chnage, better to wait for next tick to maker sure the change apply to Dom
       await wrapper.vm.$nextTick()
       await triggerFormButton(wrapper)
-      expect(window.location.href).toBe('/organizations/testorg')
+
+      await waitFor(() => {
+        expect(window.location.href).toBe('/organizations/testorg')
+      })
     })
   })
 })
