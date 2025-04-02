@@ -18,6 +18,7 @@
     <tab-container
       :default-tab="defaultTab"
       :settingsVisibility="settingsVisibility"
+      :syncStatus="repoDetail.syncStatus"
       :repoType="repoType"
       :sdk="sdk"
       :repo="repoDetail"
@@ -240,7 +241,7 @@
           :maxReplica="repoDetail.maxReplica"
           :minReplica="repoDetail.minReplica"
           :clusterId="repoDetail.clusterId"
-          :variables="repoDetail.engineArgs ? JSON.parse(repoDetail.engineArgs) : {}"
+          :variables="safeJsonParse(repoDetail.engineArgs) ? JSON.parse(repoDetail.engineArgs) : {}"
         />
       </template>
     </tab-container>
@@ -276,6 +277,7 @@
   import { ref, computed, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import { safeJsonParse } from '../../packs/utils'
 
   const { t } = useI18n()
 

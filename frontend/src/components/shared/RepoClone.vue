@@ -73,7 +73,7 @@
 
     <!-- repo download clone button -->
     <CsgButton
-      v-if="!!httpCloneUrl"
+      v-if="!!httpCloneUrl && repo.syncStatus !== 'pending'"
       class="btn btn-primary btn-sm modelBtn"
       :name="$t(downloadButtonKey)"
       svgName="download"
@@ -281,15 +281,15 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
   const accessToken = ref('')
 
   const showSyncButton = computed(() =>
-    userStore.roles.includes('admin') &&
+    (userStore.roles.includes('admin') || userStore.roles.includes('super_user')) &&
     props.repo.source === 'opencsg' &&
-    ['pending', 'inprogress', 'failed'].includes(props.repo.sync_status)
+    ['pending', 'inprogress', 'failed'].includes(props.repo.syncStatus)
   )
 
   // 同步按钮禁用
   const syncInprogress = computed(() => {
     return (
-      props.repo.source === 'opencsg' && props.repo.sync_status === 'inprogress'
+      props.repo.source === 'opencsg' && props.repo.syncStatus === 'inprogress'
     )
   })
 

@@ -82,5 +82,8 @@ export const endpoints = {
     wgDec: '文生图',
     wgBtn: '图片生成',
     imageText: '图文生成',
+    retry: "重试",
+    undo: "撤销",
+    clear: "清空",
   }
 }
