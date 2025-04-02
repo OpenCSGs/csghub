@@ -164,6 +164,13 @@
     }
   }
 
+  watch(
+    () => userStore.isLoggedIn,
+    () => {
+      currentUserRole()
+    }
+  )
+
   onMounted(() => {
     fetchOrgDetail()
     fetchOrgMemberList()

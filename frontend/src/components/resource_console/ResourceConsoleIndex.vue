@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-  import { computed, ref, onMounted, inject } from "vue"
+  import { computed, ref, watch, inject, onMounted } from "vue"
   import useUserStore from '../../stores/UserStore.js'
   import FinetuneItem from "../shared/FinetuneItem.vue"
   import ViewMore from "../shared/ViewMore.vue"
@@ -158,7 +158,17 @@
     }
   }
 
+  watch(
+    () => userStore.initialized,
+    () => {
+      getRepoData()
+    }
+  )
+
   onMounted(() => {
-    getRepoData()
+    if (userStore.initialized) {
+      getRepoData()
+    }
   })
+
 </script>
