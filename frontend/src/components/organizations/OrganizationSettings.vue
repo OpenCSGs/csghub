@@ -32,7 +32,7 @@
   import OrganizationEdit from './OrganizationEdit.vue'
   import OrganizationMembers from './OrganizationMembers.vue'
   import useFetchApi from "../../packs/useFetchApi"
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
 
@@ -96,8 +96,17 @@
     }
   }
 
+  watch(
+    () => userStore.isLoggedIn,
+    () => {
+      currentUserRole()
+    }
+  )
+
   onMounted(() => {
     fetchOrgDetail()
-    currentUserRole()
+    if (userStore.isLoggedIn) {
+      currentUserRole()
+    }
   })
 </script>
