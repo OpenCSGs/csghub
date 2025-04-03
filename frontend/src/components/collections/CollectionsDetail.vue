@@ -99,7 +99,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onBeforeMount, computed } from 'vue'
+  import { ref, onBeforeMount, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import CollectionsRepoList from './CollectionsRepoList.vue'
   import CollectionsSettings from './CollectionsSettings.vue'
@@ -168,4 +168,6 @@
       fetchCollectionDetail()
     }
   })
+
+  provide('fetchCollectionDetail', fetchCollectionDetail)
 </script>
