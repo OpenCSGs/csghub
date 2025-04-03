@@ -93,4 +93,10 @@
   .markdown-body :deep(li) {
     list-style: disc;
   }
+
+  .markdown-body :deep(code::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+    background: transparent; /* Optional: just make scrollbar invisible */
+  }
 </style>
