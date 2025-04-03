@@ -47,6 +47,30 @@
           </div>
         </div>
       </div>
+
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+          :name="$t('endpoints.playground.retry')"
+          :disabled="!lastMessage || loading"
+          @click="handleRetry"
+        />
+
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+          :name="$t('endpoints.playground.undo')"
+          :disabled="!imageSrc || loading"
+          @click="handleUndo"
+        />
+
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+          :name="$t('endpoints.playground.clear')"
+          :disabled="loading"
+          @click="handleClear"
+        />
+      </div>
+
       <div
         v-loading="loading"
         class="min-h-[180px] w-full overflow-x-auto px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg shadow text-gray-700 flex items-center justify-center">
@@ -57,7 +81,7 @@
           alt="Fetched Image" />
       </div>
 
-      <div class="flex mt-[8px]">
+      <div class="flex mt-4">
         <SvgIcon
           name="exclamation_point"
           class="place-self-start" />
@@ -83,6 +107,7 @@
   })
 
   const message = ref('')
+  const lastMessage = ref('')
   const loading = ref(false)
   const inputFocus = ref(false)
   const compositionInput = ref(false)
@@ -143,6 +168,7 @@
   const handleSendMessage = async () => {
     if (loading.value) return
     loading.value = true
+    lastMessage.value = message.value
     const data = {
       inputs: message.value,
       parameters: { ...extraParams.value }
@@ -168,6 +194,7 @@
       const imageUrl = URL.createObjectURL(blob)
       imageSrc.value = imageUrl
       loading.value = false
+      message.value = ''
     } catch (error) {
       ElMessage({
         message: error,
@@ -175,6 +202,23 @@
       })
       loading.value = false
     }
+  }
+
+  const handleRetry = async () => {
+    message.value = lastMessage.value
+    imageSrc.value = ''
+    await handleSendMessage()
+  }
+
+  const handleUndo = () => {
+    message.value = ''
+    imageSrc.value = ''
+  }
+
+  const handleClear = () => {
+    message.value = ''
+    imageSrc.value = ''
+    lastMessage.value = ''
   }
 </script>
 
