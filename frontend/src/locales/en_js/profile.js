@@ -26,6 +26,8 @@ export const profile = {
     updateSuccess: "Profile updated successfully",
     updateUsername: "First Login Update Username",
     internalUsername: "Username",
-    internalUsernamePlaceholder: "username"
+    internalUsernamePlaceholder: "username",
+    emailRequired: "please input email",
+    emailValid: "please verfify your email format, example: example{'@'}domain.com",
   },
 }
