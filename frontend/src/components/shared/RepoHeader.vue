@@ -173,6 +173,7 @@
       <div class="flex items-center gap-0.5">
         <a
           class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
+          data-test="owner-link"
           v-if="repoType !== 'endpoint'"
           :href="ownerUrl">
           {{ path?.split('/')[0] }}
