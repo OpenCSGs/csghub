@@ -156,13 +156,22 @@
               t('all.pleaseSelect', { value: t('endpoints.new.resource') })
             "
             size="large"
-            style="width: 100%">
-            <el-option
-              v-for="item in endpointResources"
-              :key="item.name"
-              :label="item.name"
-              :value="item.id"
-              :disabled="!item.is_available" />
+            style="width: 100%"
+            @change="resetCurrentRuntimeFramework"
+          >
+            <el-option-group
+              v-for="group in endpointResources"
+              :key="group.label"
+              :label="group.label"
+            >
+              <el-option
+                v-for="item in group.options"
+                :key="item.name"
+                :label="item.label"
+                :value="`${item.id}/${item.order_detail_id}`"
+                :disabled="!item.is_available"
+              />
+            </el-option-group>
           </el-select>
           <p class="text-gray-600 mt-2 font-light">
             {{ t('endpoints.new.resourceTip1') }}
@@ -174,10 +183,18 @@
 
         <!-- runtime framework -->
         <el-form-item
-          :label="t('endpoints.new.framework')"
           class="w-full"
           prop="endpoint_framework"
         >
+          <template #label>
+            <div class="flex gap-2 items-center">
+              <span>{{ $t('endpoints.new.framework') }}</span>
+              <el-tooltip class="item" effect="dark" :content="t('endpoints.new.frameworkInputTip')" placement="top">
+                <SvgIcon name="input_tip" width="16" height="16" />
+              </el-tooltip>
+            </div>
+          </template>
+
           <el-select
             v-model="dataForm.endpoint_framework"
             @change="setCurrentEngineArgs"
@@ -190,7 +207,7 @@
             <el-option
               v-for="item in filterFrameworks"
               :key="item.id"
-              :label="item.frame_name"
+              :label="`${item.frame_name} (${item.compute_type})`"
               :value="item.id"
             />
           </el-select>
@@ -256,6 +273,8 @@
   import { useI18n } from 'vue-i18n'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import EngineArgs from './EngineArgs.vue'
+  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
+  import SvgIcon from '../shared/SvgIcon.vue'
 
   const props = defineProps({
     namespace: String
@@ -375,23 +394,15 @@
   })
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${dataForm.value.endpoint_cluster}`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+    const categoryResources = await fetchResourcesInCategory(dataForm.value.endpoint_cluster)
+    const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
+    endpointResources.value = categoryResources
+    if (firstAvailableResource) {
+      dataForm.value.cloud_resource = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
+      resetCurrentRuntimeFramework()
     } else {
-      const body = data.value
-      const firstAvailableResource = body.data?.find(
-        (resource) => resource.is_available
-      )
-      dataForm.value.cloud_resource = firstAvailableResource?.id || ''
-      endpointResources.value = body.data
-      if (!dataForm.value.cloud_resource) {
-        dataForm.value.endpoint_framework = ''
-      } else {
-        updateRuntimeFramework()
-      }
+      dataForm.value.cloud_resource = ''
+      dataForm.value.endpoint_framework = ''
     }
   }
 
@@ -423,12 +434,22 @@
   }
 
   const loadRequiredData = () => {
-    updateRuntimeFramework()
+    fetchRuntimeFramework()
     fetchQuantizations()
   }
 
-  const updateRuntimeFramework = async () => {
+  const resetCurrentRuntimeFramework = async () => {
+    // if we have current runtime framework
+    if (filterFrameworks.value.includes(Number(dataForm.value.endpoint_framework))) {
+      return
+    } else {
+      dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
+    }
+  }
+
+  const fetchRuntimeFramework = async () => {
     if (!dataForm.value.model_id) return
+
     const { data, error } = await useFetchApi(
       `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=1`
     ).json()
@@ -452,15 +473,7 @@
 
     if (!currentResource) return []
 
-    return endpointFrameworks.value.filter((framework) => {
-      if (currentResource.type === 'npu') {
-        return !!framework.frame_npu_image
-      } else if (currentResource.type === 'gpu') {
-        return !!framework.frame_image
-      } else {
-        return !!framework.frame_cpu_image
-      }
-    })
+    return endpointFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
   })
 
   const updateChangedEngineArgs = (changes) => {
@@ -552,6 +565,7 @@
   onMounted(() => {
     fetchClusters()
     if (dataForm.value.model_id) {
+      fetchRuntimeFramework()
       fetchQuantizations()
     }
   })

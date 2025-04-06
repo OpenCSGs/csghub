@@ -61,7 +61,7 @@
               v-model="dataForm.model_id"
               :fetch-suggestions="fetchModels"
               :placeholder="t('all.pleaseInput', { value: t('finetune.new.modelId') })"
-              @select="updateRuntimeFramework"
+              @select="fetchRuntimeFramework"
             />
           </el-form-item>
         </div>
@@ -104,6 +104,7 @@
               t('all.pleaseSelect', { value: t('finetune.new.resource') })
             "
             size="large"
+            @change="resetCurrentRuntimeFramework"
             style="width: 100%">
             <el-option
               v-for="item in finetuneResources"
@@ -123,9 +124,18 @@
         </el-form-item>
 
         <el-form-item
-          :label="t('finetune.new.framework')"
           class="w-full"
           prop="runtime_framework_id">
+
+          <template #label>
+            <div class="flex gap-2 items-center">
+              <span>{{ $t('finetune.new.framework') }}</span>
+              <el-tooltip class="item" effect="dark" :content="t('endpoints.new.frameworkInputTip')" placement="top">
+                <SvgIcon name="input_tip" width="16" height="16" />
+              </el-tooltip>
+            </div>
+          </template>
+
           <el-select
             v-model="dataForm.runtime_framework_id"
             :placeholder="
@@ -161,6 +171,7 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
+  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
 
   const props = defineProps({
     namespace: String
@@ -244,26 +255,29 @@
   })
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${dataForm.value.cluster_id}&deploy_type=2`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+    // finetune can only use none cpu resources, so passing deploy type 2, means resoruces fit for finetune
+    const categoryResources = await fetchResourcesInCategory(dataForm.value.cluster_id, 2)
+    const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
+    finetuneResources.value = categoryResources
+    if (firstAvailableResource) {
+      dataForm.value.resource_id = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
+      resetCurrentRuntimeFramework()
     } else {
-      const body = data.value
-      const allGPUResources = body.data
-      const firstAvailableResource = allGPUResources.find((item) => item.is_available)
-      dataForm.value.resource_id = firstAvailableResource?.id || ''
-      finetuneResources.value = allGPUResources
-      if (!dataForm.value.resource_id) {
-        dataForm.value.runtime_framework_id = ''
-      } else {
-        updateRuntimeFramework()
-      }
+      dataForm.value.resource_id = ''
+      dataForm.value.runtime_framework_id = ''
     }
   }
 
-  const updateRuntimeFramework = async () => {
+  const resetCurrentRuntimeFramework = async () => {
+    // if we have current runtime framework
+    if (filterFrameworks.value.includes(Number(dataForm.value.runtime_framework_id))) {
+      return
+    } else {
+      dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
+    }
+  }
+
+  const fetchRuntimeFramework = async () => {
     if (!dataForm.value.model_id) return
     const { data, error } = await useFetchApi(
       `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`
@@ -287,15 +301,7 @@
 
     if (!currentResource) return []
 
-    return finetuneFrameworks.value.filter((framework) => {
-      if (currentResource.type === 'npu') {
-        return !!framework.frame_npu_image
-      } else if (currentResource.type === 'gpu') {
-        return !!framework.frame_image
-      } else {
-        return !!framework.frame_cpu_image
-      }
-    })
+    return finetuneFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
   })
 
   const fetchClusters = async () => {
@@ -361,6 +367,9 @@
 
   onMounted(() => {
     fetchClusters()
+    if (dataForm.value.model_id) {
+      fetchRuntimeFramework()
+    }
   })
 </script>
 

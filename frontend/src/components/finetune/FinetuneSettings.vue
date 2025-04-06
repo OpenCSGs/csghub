@@ -147,13 +147,18 @@
           class="!w-[512px] sm:!w-full"
           disabled
         >
-          <el-option
-            v-for="item in cloudResources"
-            :key="item.name"
-            :label="item.name"
-            :value="item.id"
-            :disabled="!item.is_available"
-          />
+          <el-option-group
+            v-for="group in cloudResources"
+            :key="group.label"
+            :label="group.label"
+          >
+            <el-option
+              v-for="item in group.options"
+              :key="item.name"
+              :label="item.label"
+              :value="item.id"
+              :disabled="!item.is_available" />
+          </el-option-group>
         </el-select>
       </div>
     </div>
@@ -217,6 +222,7 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
+  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
 
   const props = defineProps({
     finetune: Object,
@@ -235,8 +241,14 @@
   const finetuneClusters = ref([])
   const frameworks = ref([])
 
-  const currentResource = computed(() => {
+const currentResource = computed(() => {
     return Number(props.finetune.sku)
+  })
+
+  const currentResourceDetail = computed(() => {
+    return cloudResources.value.find((resource) => {
+      return resource.id === currentResource.value
+    })
   })
 
   const currentCid = computed(() => {
@@ -299,18 +311,10 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${currentCid.value}&deploy_type=2`
-    ).json()
-    if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
-    } else {
-      const body = data.value
-      cloudResources.value = body.data
-    }
+    // finetune can only use none cpu resources, so passing deploy type 2, means resoruces fit for finetune
+    const categoryResources = await fetchResourcesInCategory(currentCid.value, 2)
+    cloudResources.value = categoryResources
+    fetchFrameworks()
   }
 
   const fetchFrameworks = async () => {
@@ -318,15 +322,12 @@
       `/models/runtime_framework?deploy_type=2`
     ).json()
     if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
+      ElMessage.warning(error.value.msg)
     } else {
       const body = data.value
-      frameworks.value = body.data
-      const currentFramework = body.data.find((framework) => {
-        return framework.frame_name === props.framework
+      frameworks.value = body.data || []
+      const currentFramework = body.data?.find((framework) => {
+        return framework.frame_name.toLowerCase() === props.framework.toLowerCase() && framework.compute_type === currentResourceDetail.value?.type
       })
       currentFrameworkId.value = currentFramework?.id || ''
     }
@@ -379,7 +380,6 @@
   }
 
   onMounted(() => {
-    fetchFrameworks()
     fetchClusters()
     if (currentCid.value) {
       fetchResources()

@@ -54,6 +54,7 @@
 
   /* element item label defaulr style */
   .el-form-item__label {
+    display: inline-flex !important;
     color: var(--Gray-700);
     line-height: 20px;
     font-weight: 400;
