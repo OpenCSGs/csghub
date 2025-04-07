@@ -44,7 +44,7 @@ const acceptLanguage = () => {
 // {"msg":"OK","data":null}
 // data.value will be {"msg":"OK","data":null}
 // data.value.data will be null, you should becareful to use data.value.data to get the truely data
-const useFetchApi = createFetch({
+export const useFetchApi = createFetch({
   updateDataOnError: true,
   baseUrl: `${CSGHUB_SERVER}/api/v1`,
   combination: 'chain',

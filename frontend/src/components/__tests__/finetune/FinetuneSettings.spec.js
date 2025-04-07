@@ -25,8 +25,8 @@ vi.mock('@/packs/useFetchApi', () => ({
             data: {
               value: {
                 data: [
-                  { name: 'Resource 1', is_available: true, resources: 'res1' },
-                  { name: 'Resource 2', is_available: false, resources: 'res2' }
+                  { id: 1, name: 'Resource 1', is_available: true, resources: 'res1' },
+                  { id: 2, name: 'Resource 2', is_available: false, resources: 'res2' }
                 ]
               }
             },
@@ -67,6 +67,7 @@ const createWrapper = (props = {}) => {
     props: {
       finetune: {
         cluster_id: 'test-cluster',
+        sku: 1,
       },
       finetuneId: 1,
       finetuneName: 'Test Finetune',

@@ -23,6 +23,7 @@
         v-loading="loading"
       >
         <div class="w-full flex md:flex-col gap-[16px] items-center">
+          <!-- evaluation name -->
           <el-form-item
             class="w-full"
             :label="t('evaluation.new.name')"
@@ -37,6 +38,7 @@
             />
           </el-form-item>
 
+          <!-- model name -->
           <el-form-item
             :label="t('evaluation.new.modelName')"
             class="w-full"
@@ -64,6 +66,7 @@
           </el-form-item>
         </div>
 
+        <!-- des -->
         <el-form-item
           class="w-full"
           :label="t('evaluation.new.evaluationDesc')"
@@ -81,36 +84,7 @@
           />
         </el-form-item>
 
-        <el-form-item
-          :label="t('evaluation.new.framework')"
-          class="w-full"
-          prop="evaluation_framework"
-        >
-          <el-select
-            v-model="dataForm.evaluation_framework"
-            :placeholder="t('all.pleaseSelect')"
-            size="large"
-            style="width: 100%"
-          >
-            <el-option
-              v-for="item in evaluationFrameworks"
-              :key="item.id"
-              :label="item.frame_name"
-              :value="item.id"
-            />
-          </el-select>
-          <p class="text-gray-600 mt-2 font-light">
-            {{ t('evaluation.new.frameworkTip1') }}
-            <a
-              href="https://opencsg.com/docs/inferencefinetune/evaluation_framework_intro"
-              target="_blank"
-              class="text-brand-600 hover:text-brand-700 hover:underline"
-            >
-              {{ t('evaluation.new.frameworkTip2') }}
-            </a>
-          </p>
-        </el-form-item>
-
+        <!-- dataset -->
         <el-form-item
           :label="t('evaluation.new.dataset')"
           class="w-full"
@@ -136,6 +110,7 @@
           />
         </el-form-item>
 
+        <!-- resource type -->
         <el-form-item
           :label="t('evaluation.new.resourceType')"
           class="w-full"
@@ -165,6 +140,7 @@
           </p>
         </el-form-item>
 
+        <!-- cluster -->
         <el-form-item
           :label="t('evaluation.new.cluster')"
           class="w-full"
@@ -190,6 +166,7 @@
           </el-select>
         </el-form-item>
 
+        <!-- resource -->
         <el-form-item
           :label="t('evaluation.new.resource')"
           class="w-full"
@@ -216,6 +193,37 @@
           </p>
         </el-form-item>
 
+        <!-- framework -->
+        <el-form-item
+          :label="t('evaluation.new.framework')"
+          class="w-full"
+          prop="evaluation_framework"
+        >
+          <el-select
+            v-model="dataForm.evaluation_framework"
+            :placeholder="t('all.pleaseSelect')"
+            size="large"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in filterFrameworks"
+              :key="item.id"
+              :label="item.frame_name"
+              :value="item.id"
+            />
+          </el-select>
+          <p class="text-gray-600 mt-2 font-light">
+            {{ t('evaluation.new.frameworkTip1') }}
+            <a
+              href="https://opencsg.com/docs/inferencefinetune/evaluation_framework_intro"
+              target="_blank"
+              class="text-brand-600 hover:text-brand-700 hover:underline"
+            >
+              {{ t('evaluation.new.frameworkTip2') }}
+            </a>
+          </p>
+        </el-form-item>
+
         <div class="flex justify-end gap-3">
           <a
             href="javascript:history.back();"
@@ -238,10 +246,11 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, onMounted, watch, computed } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
+  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
 
   const props = defineProps({
     namespace: String
@@ -369,18 +378,14 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${dataForm.value.evaluation_cluster}`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+    // evaluation can only use none cpu resources, so passing deploy type 2, means resoruces fit for finetune
+    const categoryResources = await fetchResourcesInCategory(dataForm.value.evaluation_cluster, 2)
+    const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
+    evaluationResources.value = categoryResources
+    if (firstAvailableResource) {
+      dataForm.value.cloud_resource = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
     } else {
-      const body = data.value
-      const firstAvailableResource = body.data?.find(
-        (resource) => resource.is_available
-      )
-      dataForm.value.cloud_resource = firstAvailableResource?.id || ''
-      evaluationResources.value = body.data
+      dataForm.value.cloud_resource = ''
     }
   }
 
@@ -402,6 +407,18 @@
     }
   }
 
+  const filterFrameworks = computed(() => {
+    if (!dataForm.value.cloud_resource) return evaluationFrameworks.value
+
+    const currentResource = evaluationResources.value
+      .flatMap(category => category.options)
+      .find(item => item.id == dataForm.value.cloud_resource.split('/')[0])
+
+    if (!currentResource) return []
+
+    return evaluationFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
+  })
+
   watch(
     () => dataForm.value.evaluation_framework,
     async () => {
@@ -417,6 +434,18 @@
     () => dataForm.value.model_id,
     async () => {
       await fetchRuntimeFramework()
+    }
+  )
+
+  watch(
+    () => dataForm.value.evaluation_resource_type,
+    async () => {
+      if (dataForm.value.evaluation_resource_type === 'dedicated') {
+        await fetchClusters()
+      } else {
+        evaluationResources.value = []
+        dataForm.value.cloud_resource = ''
+      }
     }
   )
 
@@ -459,7 +488,6 @@
 
   onMounted(() => {
     fetchRuntimeFramework()
-    fetchClusters()
   })
 </script>
 

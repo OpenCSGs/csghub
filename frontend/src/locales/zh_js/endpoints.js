@@ -36,6 +36,7 @@ export const endpoints = {
     createFail: "专属实例创建失败",
     quantization: "量化",
     engineArgs: "框架参数",
+    frameworkInputTip: "请首先填写模型ID",
   },
   settings: {
     stop: "暂停",
