@@ -11,7 +11,7 @@
       <div class="flex flex-col gap-[6px]">
         <div class="flex flex-col gap-[6px]">
           <CsgButton
-            @click="stopEndpoint"
+            @click="stopEndpoint"git 
             class="btn btn-secondary-gray btn-sm w-[100px]"
             :disabled="!initialized || isStopped"
             :name="$t('endpoints.settings.stop')">
