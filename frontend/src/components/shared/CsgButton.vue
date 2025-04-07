@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="class"
+    :class="btnClass"
     :type="btnType"
     :disabled="loading"
   >
@@ -14,23 +14,46 @@
 </template>
 
 <script setup>
+  import { computed } from 'vue'
+
   const props = defineProps({
     name: String,
     btnType: {
       type: String,
-      default: "button"
+      default: 'button'
     },
-    class:{
+    class: {
       type: String,
-      default: "",
+      default: ''
     },
     svgName: {
       type: String,
       default: "",
+    },
+    link: {
+      type: Boolean,
+      default: false
     },
     loading: {
       type: Boolean,
       default: false
     }
   });
+
+  const btnClass = computed(() => {
+    if (props.link) {
+      return `is-link ${props.class}`
+    }
+
+    return props.class
+  })
 </script>
+
+<style scoped>
+  .is-link {
+    border-color: transparent;
+    background: transparent;
+    padding: 2px;
+    height: auto;
+  }
+</style>
