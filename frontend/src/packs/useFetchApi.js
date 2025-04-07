@@ -2,7 +2,6 @@ import { createFetch } from '@vueuse/core'
 import { useCookies } from 'vue3-cookies'
 import { ElMessageBox } from 'element-plus'
 import refreshJWT from './refreshJWT'
-import trackPageEvent from '../packs/trackPageEvent'
 
 import { user_sessions as sessions_en } from '../locales/en_js/user_sessions.js'
 import { user_sessions as sessions_zh } from '../locales/zh_js/user_sessions.js'
@@ -63,10 +62,6 @@ const createFetchOptions = {
   // and the error will contain the error information.
   // There are cases where the fetch fails but no response is received.
   onFetchError({ data, error, response }) {
-    if (error) {
-      trackPageEvent({ id: 'api_server_err', m: 'error', v: error.message })
-    }
-
     // there is case in which the fetch is error but the response is nil
     if (!response) {
       console.error('Fetch Error: No response received', data || error)
