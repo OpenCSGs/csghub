@@ -1,4 +1,4 @@
-import { useFetchApi } from '../../../packs/useFetchApi'
+import useFetchApi from '@/packs/useFetchApi'
 import { useCookies } from 'vue3-cookies'
 import { all as all_en } from "../../../locales/en_js/all.js"
 import { all as all_zh } from "../../../locales/zh_js/all.js"
