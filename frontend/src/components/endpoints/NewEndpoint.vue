@@ -467,9 +467,9 @@
   const filterFrameworks = computed(() => {
     if (!dataForm.value.cloud_resource) return []
 
-    const currentResource = endpointResources.value.find(
-      (resource) => resource.id == dataForm.value.cloud_resource
-    )
+    const currentResource = endpointResources.value
+      .flatMap((category) => category.options)
+      .find((item) => item.id == dataForm.value.cloud_resource.split('/')[0])
 
     if (!currentResource) return []
 

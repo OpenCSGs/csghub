@@ -295,9 +295,9 @@
   const filterFrameworks = computed(() => {
     if (!dataForm.value.resource_id) return []
 
-    const currentResource = finetuneResources.value.find(
-      (resource) => resource.id == dataForm.value.resource_id
-    )
+    const currentResource = finetuneResources.value
+      .flatMap(category => category.options)
+      .find(item => item.id == dataForm.value.resource_id.split('/')[0])
 
     if (!currentResource) return []
 
