@@ -300,6 +300,7 @@
       .find(item => item.id == dataForm.value.resource_id.split('/')[0])
 
     if (!currentResource) return []
+    if (!finetuneFrameworks.value) return []
 
     return finetuneFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
   })

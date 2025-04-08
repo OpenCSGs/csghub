@@ -368,6 +368,7 @@
   const filterFrameworks = computed(() => {
     if (!currentResource.value) return []
     if (!currentResourceDetail.value) return []
+    if (!frameworks.value) return []
     return frameworks.value.filter((framework) => framework.compute_type == currentResourceDetail.value?.type)
   })
 
