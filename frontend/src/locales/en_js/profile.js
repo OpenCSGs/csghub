@@ -3,6 +3,8 @@ export const profile = {
   myCollect: "My Favorite",
   interests: "Interests",
   organization: "Organization",
+  title: "Profile",
+  likes: "My Favorites",
   menu: {
     accountInformation: "Account Information",
     accessToken: "Access Token",
