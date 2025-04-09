@@ -113,6 +113,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import useRepoDetailStore from '@/stores/RepoDetailStore'
 
   const { t } = useI18n()
   const props = defineProps({
@@ -121,6 +122,7 @@
     canManage: Boolean
   })
 
+  const repoDetailStore = useRepoDetailStore()
   const models = ref([])
   const datasets = ref([])
   const codes = ref([])
@@ -160,6 +162,7 @@
       ElMessage({ message: error.value.msg, type: 'warning' })
     }else{
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      repoDetailStore.clearStore()
       location.href = `/collections/${props.collectionsId}`
     }
   }
