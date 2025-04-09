@@ -319,7 +319,7 @@ const currentResource = computed(() => {
 
   const fetchFrameworks = async () => {
     const { data, error } = await useFetchApi(
-      `/models/runtime_framework?deploy_type=2`
+      `/models/${props.modelId}/runtime_framework?deploy_type=2`
     ).json()
     if (error.value) {
       ElMessage.warning(error.value.msg)

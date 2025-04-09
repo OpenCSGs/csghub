@@ -14,6 +14,7 @@
       ref="dataFormRef"
       :model="dataForm"
       :rules="rules"
+      :validate-on-rule-change="false"
       class="w-full flex flex-col gap-[14px]"
       label-position="top"
     >
@@ -79,13 +80,21 @@
         <el-select
           v-model="dataForm.resource_id"
           class="w-full"
+          @change="resetCurrentRuntimeFramework"
         >
-          <el-option
-            v-for="resource in resources"
-            :key="resource.id"
-            :label="resource.name"
-            :value="resource.id"
-          />
+          <el-option-group
+            v-for="group in resources"
+            :key="group.label"
+            :label="group.label"
+          >
+            <el-option
+              v-for="item in group.options"
+              :key="item.name"
+              :label="item.label"
+              :value="`${item.id}/${item.order_detail_id}`"
+              :disabled="!item.is_available"
+            />
+          </el-option-group>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -98,18 +107,11 @@
           class="w-full"
         >
           <el-option
-            v-for="framework in runtimeFrameworks"
-            :key="framework.id"
-            :label="`${framework.frame_name} (${framework.frame_version})`"
-            :value="framework.id"
-          >
-            <div class="flex flex-col">
-              <span>{{ framework.frame_name }}</span>
-              <span class="text-gray-400 text-sm"
-                >Version: {{ framework.frame_version }}</span
-              >
-            </div>
-          </el-option>
+            v-for="item in filterFrameworks"
+            :key="item.id"
+            :label="`${item.frame_name} (${item.compute_type})`"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
 
@@ -155,9 +157,9 @@
   import useFetchApi from '../../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useRoute, useRouter } from 'vue-router'
-  import { BASE_URL } from '../router'
   import { useI18n } from 'vue-i18n'
   import { watch } from 'vue'
+  import { fetchResourcesInCategory } from '@/components/shared/deploy_instance/fetchResourceInCategory'
 
   const { t } = useI18n()
   const router = useRouter()
@@ -224,30 +226,41 @@
   }
 
   const createOrUpdate = () => {
+    const params = {
+      deploy_name: dataForm.value.deploy_name,
+      resource_id: Number(dataForm.value.resource_id.split('/')[0]),
+      min_replica: dataForm.value.min_replica,
+      max_replica: dataForm.value.max_replica,
+      runtime_framework_id: dataForm.value.runtime_framework_id,
+      cluster_id: dataForm.value.cluster_id,
+      order_detail_id: Number(dataForm.value.resource_id.split('/')[1])
+    }
+
+    if (dataForm.value.quantization) {
+      params.entrypoint = dataForm.value.quantization
+    }
+
     if (route.params.id) {
-      update()
+      update(params)
     } else {
-      create()
+      create(params)
     }
   }
 
-  const create = async () => {
+  const create = async (params) => {
     const { data } = await useFetchApi(
       `/models/${route.params.namespace}/${route.params.name}/serverless`,
       {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataForm.value)
+        body: JSON.stringify(params)
       }
     )
       .post()
       .json()
     if (data.value) {
-      ElMessage({
-        message: t('admin.createSuccess'),
-        type: 'success'
-      })
+      ElMessage.success(t('admin.createSuccess'))
       router.push(
         `/admin_panel/models/${route.params.namespace}/${route.params.name}`
       )
@@ -256,14 +269,14 @@
     }
   }
 
-  const update = async () => {
+  const update = async (params) => {
     const { data } = await useFetchApi(
       `/models/${route.params.namespace}/${route.params.name}/serverless/${route.params.id}`,
       {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataForm.value)
+        body: JSON.stringify(params)
       }
     )
       .put()
@@ -282,26 +295,27 @@
   }
 
   const fetchServerless = async () => {
-    const id = route.params.id
     const { data } = await useFetchApi(
       `/models/${route.params.namespace}/${route.params.name}/serverless/${route.params.id}`
     ).json()
-    if (data.value) {
+    if (data.value?.data) {
       const result = data.value.data
+      const currentResource = resources.value.find(
+        (item) => item.id == result.sku
+      )
       const maxReplica = result.max_replica || 0
       const minReplica = result.min_replica || 0
-      const runtimeFrameworkId = runtimeFrameworks.value.find(
-        (item) => item.frame_name === result.runtime_framework
+      const runtimeFrameworkId = filterFrameworks.value.find(
+        (item) => item.frame_name.toLowerCase() === result.runtime_framework.toLowerCase() && item.compute_type === currentResource?.type
       )?.id
-      const resourceId = resources.value.find(
-        (item) => item.resources === result.hardware
-      )?.id
+      const resourceId = currentResource ? `${currentResource.id}/${currentResource.order_detail_id}` : `${result.sku}`
       dataForm.value = {
         ...result,
         max_replica: maxReplica,
         min_replica: minReplica,
         runtime_framework_id: runtimeFrameworkId,
-        resource_id: resourceId
+        resource_id: resourceId,
+        quantization: result.entrypoint
       }
     } else {
       ElMessage.error('Failed to fetch serverless')
@@ -320,19 +334,43 @@
   }
 
   const fetchResources = async () => {
-    const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${dataForm.value.cluster_id}`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+    const categoryResources = await fetchResourcesInCategory(dataForm.value.cluster_id)
+    const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
+    resources.value = categoryResources
+    if (firstAvailableResource) {
+      dataForm.value.resource_id = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
+      resetCurrentRuntimeFramework()
     } else {
-      const body = data.value
-      resources.value = body.data
+      dataForm.value.resource_id = ''
+      dataForm.value.runtime_framework_id = ''
     }
   }
 
+  const resetCurrentRuntimeFramework = async () => {
+    // if we have current runtime framework
+    if (filterFrameworks.value.includes(Number(dataForm.value.runtime_framework_id))) {
+      return
+    } else {
+      dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
+    }
+  }
+
+  const filterFrameworks = computed(() => {
+    if (!dataForm.value.resource_id) return []
+
+    const currentResource = resources.value
+      .flatMap((category) => category.options)
+      .find((item) => item.id == dataForm.value.resource_id.split('/')[0])
+
+    if (!currentResource) return []
+
+    if (!runtimeFrameworks.value) return []
+
+    return runtimeFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
+  })
+
   const fetchRuntimeFrameworks = async () => {
-    const { data } = await useFetchApi('/models/runtime_framework').json()
+    const { data } = await useFetchApi(`/models/${route.params.namespace}/${route.params.name}/runtime_framework`).json()
     if (data.value) {
       runtimeFrameworks.value = data.value.data
     } else {

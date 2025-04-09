@@ -472,6 +472,7 @@
       .find((item) => item.id == dataForm.value.cloud_resource.split('/')[0])
 
     if (!currentResource) return []
+    if (!endpointFrameworks.value) return []
 
     return endpointFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
   })
