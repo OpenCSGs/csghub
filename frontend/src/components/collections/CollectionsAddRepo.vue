@@ -96,6 +96,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import useRepoDetailStore from '@/stores/RepoDetailStore'
 
   const { t } = useI18n()
 
@@ -103,6 +104,8 @@
     collectionsId: String,
     canManage: Boolean
   })
+
+  const repoDetailStore = useRepoDetailStore()
   const dialogVisible = ref(false)
   const typeMappings = [
     {
@@ -160,6 +163,7 @@
           message: t('all.addSuccess'),
           type: 'success'
         })
+        repoDetailStore.clearStore()
         location.href = `/collections/${props.collectionsId}`
       })
       .catch((err) => {
