@@ -56,13 +56,12 @@
       </div>
       <div class="flex flex-col gap-[6px]">
         <div class="flex flex-col gap-[6px]">
-          <el-button
+          <CsgButton
             @click="changeStatus('stop')"
-            class="w-[100px]"
+            class="btn btn-secondary-gray btn-sm w-[100px]"
             :disabled="!initialized || isStopped"
-          >
-            {{ $t('endpoints.settings.stop') }}
-          </el-button>
+            :name="$t('endpoints.settings.stop')">
+          </CsgButton>
         </div>
       </div>
     </div>
@@ -76,13 +75,12 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <el-button
+        <CsgButton
           @click="changeStatus('start')"
-          class="w-[100px]"
+          class="btn btn-secondary-gray btn-sm w-[100px]"
           :disabled="notInitialized"
-        >
-          {{ $t('endpoints.settings.restart') }}
-        </el-button>
+          :name="$t('endpoints.settings.restart')">
+        </CsgButton>
       </div>
     </div>
 
