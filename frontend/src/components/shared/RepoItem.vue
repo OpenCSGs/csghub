@@ -15,9 +15,14 @@
       <SvgIcon v-if="repoType === 'code'" name="codes" width="18" height="18" />
       <SvgIcon v-if="repoType === 'space'" name="spaces" width="18" height="18" />
       <div :class="`${repoType}-path`"
-           class="text-sm font-medium text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap w-full"
+           class="text-sm font-medium text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap w-full flex items-center gap-2"
       >
-        {{ getComputed.path }}
+        <div :class="showNewTag ? 'max-w-[80%] overflow-hidden text-ellipsis' : 'w-full'">{{ getComputed.path }}</div>
+        <div v-if="showNewTag">
+          <el-tooltip :content="$t(`${repoType}s.newTips`)" placement="top">
+            <NewTag />
+          </el-tooltip>
+        </div>
       </div>
       <RepoItemSyncIcon
         :source="repo.source"
@@ -68,6 +73,8 @@
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
   import RepoItemSyncIcon from './RepoItemSyncIcon.vue'
+  import NewTag from './NewTag.vue'
+  import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
 
   const props = defineProps({
     repo: Object,
@@ -80,6 +87,10 @@
   })
 
   const { t, locale } = useI18n()
+
+  const showNewTag = computed(() => {
+    return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(props.repo.created_at) || isWithinTwoWeeks(props.repo.updated_at));
+  });
 
   const detailLink = computed(() => {
     switch (props.repoType) {

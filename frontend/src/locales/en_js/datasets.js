@@ -1,6 +1,7 @@
 export const datasets = {
   title: "Datasets",
   placeholder: "Search Datasets",
+  newTips:'Datasets added in the last two weeks',
   downloadDataset: "Download Dataset",
   datasetName: "Dataset name",
   datasetNameTips: "Applied to the dataset path, cannot be changed after creation",
