@@ -30,7 +30,7 @@
             @click="dialogVisibleCode = true" >
             <SvgIcon name="json" />
             <div class="text-gray-600 text-xs leading-[18px]">
-              view code
+              {{ $t('all.viewCode') }}
             </div>
           </div>
           <div
