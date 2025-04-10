@@ -127,14 +127,14 @@
 
       <CsgButton
         class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
-        :disabled="messageHistory.length === 0"
+        :disabled="messageHistory.length === 0 || loading"
         :name="$t('endpoints.playground.undo')"
         @click="handleUndo"
       />
 
       <CsgButton
         class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
-        :disabled="messageHistory.length === 0"
+        :disabled="messageHistory.length === 0 || loading"
         :name="$t('endpoints.playground.clear')"
         @click="handleClear"
       />
@@ -255,13 +255,13 @@
       model: props.modelId,
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
-        ...messageHistory.value.map(msg => ({
+        {
           role: 'user',
           content: [
-            ...(msg.image ? [{ type: 'image_url', image_url: { url: msg.image } }] : []),
-            { type: 'text', text: msg.content }
+            { type: 'image_url', image_url: { url: currentImage.value } },
+            { type: 'text', text: message.value }
           ]
-        }))
+        },
       ],
       stream: true,
       ...extraParams.value
