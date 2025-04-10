@@ -14,12 +14,31 @@
         </div>
       </div>
     </div>
-    <div class="flex  gap-2 text-sm leading-snug text-gray-500 mb-3 px-4">
-      <span>image segmentation</span>
-      <span>·</span>
-      <span>{{ endpoint.provider }}</span>
-      <span>·</span>
-      <span>8x Intel Sanpppp</span>
+    <div class="flex xs:flex-wrap justify-between items-start gap-2 px-4 mb-3">
+      <div class="flex items-center gap-2 text-sm leading-snug text-gray-500 w-1/2 xs:w-full">
+        <span class="flex items-center gap-1 max-w-full">
+          <img src="/images/icons/model_gray.svg" 
+               class="w-3 h-3 flex-shrink-0"
+               :style="'filter: invert(60%) sepia(9%) saturate(374%) hue-rotate(175deg) brightness(93%) contrast(92%);'"
+               alt=""
+               onerror="this.style.display='none'" />
+          <span class="truncate">{{ endpoint.model_id || '未指定模型' }}</span>
+        </span>
+      </div>
+      <div class="flex flex-row gap-2 text-sm leading-snug text-gray-500 w-1/2 xs:w-full justify-end xs:justify-start overflow-hidden">
+        <span v-if="endpoint.repo_tag" class="flex items-center gap-1 min-w-0">
+          <img :src="'/images/tags/' + endpoint.repo_tag + '.svg'"
+               class="w-3 h-3"
+               :style="'filter: invert(60%) sepia(9%) saturate(374%) hue-rotate(175deg) brightness(93%) contrast(92%);'"
+               alt=""
+               onerror="this.style.display='none'" />
+          <span class="truncate w-full">{{ endpoint.repo_tag }}</span>
+        </span>
+        <span v-if="endpoint.repo_tag && (endpoint.provider || endpoint.resource_type)" class="flex-shrink-0">·</span>
+        <span v-if="endpoint.provider" class="truncate min-w-0 max-w-[30%]">{{ endpoint.provider }}</span>
+        <span v-if="endpoint.provider && endpoint.resource_type" class="flex-shrink-0">·</span>
+        <span v-if="endpoint.resource_type" class="truncate min-w-0 max-w-[30%]">{{ endpoint.resource_type }}</span>
+      </div>
     </div>
     <div class="rounded-b-xl border-t text-sm leading-snug text-gray-500 bg-gray-50 flex justify-between">
       <div class="px-4 py-2">{{ theEndpoint }}</div>
