@@ -118,7 +118,7 @@
               />
               {{ $t('all.commandlineTips') }}
               <a
-                href="https://docs.python.org/zh-cn/3.13/using/index.html"
+                href="https://github.com/OpenCSGs/csghub-sdk?tab=readme-ov-file#use-cases-of-command-line"
                 target="_blank"
                 class="underline"
               >
@@ -127,7 +127,7 @@
             </div>
             <div class="text-gray-500 mt-[8px]">{{ $t('all.pythonTips') }} 
               <a
-                href="https://github.com/OpenCSGs/csghub-sdk?tab=readme-ov-file#use-cases-of-command-line"
+                href="https://docs.python.org/zh-cn/3.13/using/index.html"
                 target="_blank"
                 class="underline"
               >
