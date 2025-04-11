@@ -3,6 +3,8 @@ export const profile = {
   myCollect: "我的收藏",
   interests: "兴趣",
   organization: "组织机构",
+  title: "个人主页",
+  likes: "我的收藏",
   menu: {
     accountInformation: "账户信息",
     accessToken: "Access Token",
