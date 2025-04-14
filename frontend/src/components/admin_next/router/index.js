@@ -14,6 +14,8 @@ import AdminTagCategoriesForm from "../tag_categories/AdminTagCategoriesForm.vue
 import AdminModelDetail from "../models/AdminModelDetail.vue";
 import AdminModelList from "../models/AdminModelList.vue";
 import AdminModelEdit from "../models/AdminModelEdit.vue";
+
+import AdminServerlessList from '../serverless/AdminServerlessList.vue'
 import AdminServerlessForm from '../serverless/AdminServerlessForm.vue'
 import AdminServerlessDetail from '../serverless/AdminServerlessDetail.vue'
 import { Setting, User, Connection } from "@element-plus/icons-vue";
@@ -106,6 +108,14 @@ export const MENU_SETTING = [
     component: AdminModelEdit,
     name: adminLocale.models.modelEdit,
     parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/serverless`,
+    component: AdminServerlessList,
+    name: adminLocale.serverless.title,
+    parentName: PARENT_NAME.hub,
+    icon: 'admin-menu-serverless',
+    type: 'menu'
   },
   {
     path: `${BASE_URL}/serverless/:namespace/:name/new`,

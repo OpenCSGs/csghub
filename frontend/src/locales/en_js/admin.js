@@ -63,7 +63,7 @@ export const admin = {
     sync: 'Sync'
   },
   serverless: {
-    title: 'Serverless Management',
+    title: 'Serverless APIs',
     listTitle: 'Serverless List',
     detailTitle: 'Serverless Detail',
     newTitle: 'New Serverless',
