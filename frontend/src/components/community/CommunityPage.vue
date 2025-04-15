@@ -53,7 +53,8 @@
         const discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
         const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
         if (data.value) {
-          this.cards = data.value.data.discussions || []
+          const discussions = data.value.data.discussions || []
+          this.cards = discussions.sort((a, b) => b.id - a.id)
         } else {
           ElMessage({
             message: error.value.msg,
@@ -61,6 +62,9 @@
           })
         }
       }
+    },
+    mounted() {
+      this.getDiscussion()
     }
   }
 </script>
