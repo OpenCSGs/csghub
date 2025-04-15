@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed, nextTick, provide } from 'vue'
+  import { ref, onMounted, inject, computed, nextTick, provide, watch, onUnmounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import { useCookies } from 'vue3-cookies'
@@ -228,15 +228,6 @@
     }
   }
 
-  const toggleSpaceLogsDrawer = () => {
-    if (spaceLogsDrawer.value) {
-      spaceLogsDrawer.value = false
-    } else {
-      spaceLogsDrawer.value = true
-      syncSpaceLogs()
-    }
-  }
-
   const fetchRepoDetail = async () => {
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
 
@@ -256,7 +247,41 @@
     }
   }
 
+  const controller = ref(null);
+
+  const toggleSpaceLogsDrawer = () => {
+    spaceLogsDrawer.value = !spaceLogsDrawer.value;
+  }
+
+  watch(spaceLogsDrawer, (newVal) => {
+    if (newVal) {
+      syncSpaceLogs();
+    } else {
+      if (controller.value) {
+        console.log('Closing SSE logs connection');
+        controller.value.abort();
+        controller.value = null;
+        isLogsSSEConnected.value = false;
+      }
+    }
+  });
+
   const syncSpaceLogs = () => {
+    if (controller.value) {
+      controller.value.abort();
+      controller.value = null;
+    }
+    
+    if (buildLogDiv.value) {
+      buildLogDiv.value.innerHTML = '';
+      buildLogLineNum.value = 0;
+    }
+    if (containerLogDiv.value) {
+      containerLogDiv.value.innerHTML = '';
+      containerLogLineNum.value = 0;
+    }
+    controller.value = new AbortController();
+    
     fetchEventSource(
       `${csghubServer}/api/v1/spaces/${props.namespace}/${props.repoName}/logs`,
       {
@@ -264,53 +289,72 @@
         headers: {
           Authorization: `Bearer ${cookies.get('user_token')}`
         },
+        signal: controller.value.signal,
         async onopen(response) {
+          if (!spaceLogsDrawer.value) {
+            controller.value?.abort();
+            return;
+          }
+          
           if (response.ok) {
-            console.log('SSE logs server connected')
-            isLogsSSEConnected.value = true
-            if (buildLogDiv.value) {
-              buildLogDiv.value.innerHTML = ''
-              buildLogLineNum.value = 0
-            }
-            if (containerLogDiv.value) {
-              containerLogDiv.value.innerHTML = ''
-              containerLogLineNum.value = 0
-            }
+            console.log('SSE logs server connected');
+            isLogsSSEConnected.value = true;
           } else if (response.status === 401) {
-            refreshJWT()
+            refreshJWT();
           } else if (
             response.status >= 400 &&
             response.status < 500 &&
             response.status !== 429
           ) {
-            console.log('Logs Server Connection Error')
-            console.log(response.status)
-            console.log(response.body)
+            console.log('Logs Server Connection Error');
+            console.log(response.status);
+            console.log(response.body);
           } else {
-            console.log('Logs Server Unknow Error')
-            console.log(response.body)
+            console.log('Logs Server Unknown Error');
+            console.log(response.body);
           }
         },
         onmessage(ev) {
+          if (!spaceLogsDrawer.value) {
+            controller.value?.abort();
+            return;
+          }
+          
           if (ev.event === 'Build') {
-            appendLog(buildLogDiv, ev.data, buildLogLineNum)
+            appendLog(buildLogDiv, ev.data, buildLogLineNum);
             nextTick(() => {
-              scrollToBottom()
-            })
+              scrollToBottom();
+            });
           } else if (ev.event === 'Container') {
-            appendLog(containerLogDiv, ev.data, containerLogLineNum)
+            appendLog(containerLogDiv, ev.data, containerLogLineNum);
             nextTick(() => {
-              scrollToBottom()
-            })
+              scrollToBottom();
+            });
           }
         },
         onerror(err) {
-          console.log('Logs Server Error:')
-          console.log(err)
+          console.log('Logs Server Error:');
+          console.log(err);
+          
+          if (!spaceLogsDrawer.value) {
+            controller.value?.abort();
+            return;
+          }
         }
       }
-    )
+    ).catch(err => {
+      if (err.name !== 'AbortError' && spaceLogsDrawer.value) {
+        console.error('Unexpected error in logs connection:', err);
+      }
+    });
   }
+
+  onUnmounted(() => {
+    if (controller.value) {
+      controller.value.abort();
+      controller.value = null;
+    }
+  });
 
   const scrollToBottom = () => {
     const targetDiv = document.getElementsByClassName('el-drawer__body')[0]
