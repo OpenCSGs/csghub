@@ -10,7 +10,7 @@ export const application_spaces = {
   desc: "应用空间介绍",
   stoppedDesc: "此空间已被其所有者暂停。",
   sleepingDesc: "由于长时间未操作，该空间已进入休眠状态。",
-  buildDesc: "应用空间正在构建中，请稍后",
+  buildDesc: "应用空间正在打包部署，请稍后",
   errorDesc: "应用空间运行错误，请查看日志",
   restart: "重启",
   wakeup: "唤醒",
