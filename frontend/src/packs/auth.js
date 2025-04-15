@@ -10,6 +10,8 @@ const clearCookies = () => {
   const cookieKeys = cookies.keys()
 
   cookieKeys.forEach((cookieName) => {
+    if (cookieName === 'locale') return
+
     cookies.remove(cookieName)
 
     DOMAINS.forEach(({ path, domain }) => {
