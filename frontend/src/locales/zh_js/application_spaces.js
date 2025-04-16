@@ -130,7 +130,7 @@ export const application_spaces = {
     startup: '启动中',
     running: '运行中',
     sleeping: '待机中',
-    stopped: '暂停中',
+    stopped: '已暂停',
     buildingFailed: '构建失败',
     deployFailed: '部署失败',
     runtimeError: '运行报错'
