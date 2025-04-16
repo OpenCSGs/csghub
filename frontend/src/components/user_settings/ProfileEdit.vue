@@ -80,12 +80,18 @@
             fill="#F56C6C" />
         </svg>
       </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.email"
-        :placeholder="$t('all.email')"
-        @change="handleInputChange">
-      </el-input>
+      <!-- only validator email -->
+      <el-form ref="formRef" :model="form" :rules="rules" status-icon>
+        <el-form-item prop="email">
+          <el-input
+            class="max-w-[600px]"
+            v-model="form.email"
+            :placeholder="$t('all.email')"
+            @change="handleInputChange">
+          </el-input>
+        </el-form-item>
+      </el-form>
+      
     </div>
     <!-- nickname -->
     <div>
@@ -138,7 +144,7 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, watch } from 'vue'
+  import { ref, reactive, watch } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -149,8 +155,30 @@
   const { cookies } = useCookies()
   const { t } = useI18n()
   const userStore = useUserStore()
+  const formRef = ref(null)
+  const form = reactive({
+    email: ''
+  })
+
+  const validator = (rule, value, callback) => {
+    if (value === '') {
+      return callback(new Error(t('profile.edit.emailRequired')))
+    } 
+
+    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if(!pattern.test(value)) {
+      return callback(new Error(t('profile.edit.emailValid')))
+    }
+
+    callback()
+  }
+
+  const rules = {
+    email: [ { validator, trigger: 'change'} ]
+  }
 
   const profileData = ref(storeToRefs(userStore))
+  form.email = profileData.value.email
 
   watch(
     () => profileData.value,
@@ -223,7 +251,7 @@
       avatar: profileData.value.avatar,
       username: profileData.value.username,
       name: profileData.value.nickname,
-      email: (profileData.value.email || "").trim(),
+      email: (form.email || "").trim(),
       phone: profileData.value.phone,
       homepage: profileData.value.homepage,
       bio: profileData.value.bio
@@ -268,11 +296,18 @@
       ElMessage.warning("Please provide username")
       return
     }
-    if (isBlank(profileData.value.email)) {
-      ElMessage.warning("Please provide email")
-      return
-    }
-    updateProfile(config)
+    formRef.value.validate((v,error) => {
+      if(v) {
+        if (isSmsCodeValid()) {
+          updateProfile(config)
+        } else {
+          ElMessage.warning("SMS code not correct")
+        }
+      }
+      if (error) {
+        formRef.value.scrollToField('email')
+      }
+    })
   }
 
   const handleInputChange = () => {

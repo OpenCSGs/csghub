@@ -83,14 +83,14 @@
 
       <CsgButton
         class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
-        :disabled="chatMessages.length === 0"
+        :disabled="chatMessages.length === 0 || loading"
         :name="$t('endpoints.playground.undo')"
         @click="handleUndo"
       />
 
       <CsgButton
         class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
-        :disabled="chatMessages.length === 0"
+        :disabled="chatMessages.length === 0 || loading"
         :name="$t('endpoints.playground.clear')"
         @click="handleClear"
       />
@@ -219,14 +219,12 @@
       answer: ''
     })
 
-    message.value = ''
-
     const endpoint = `${props.appEndpoint}/v1/chat/completions`
     const payload = {
       model: props.modelId,
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: message.value }
+        { role: 'user', content: currentQuestion }
       ],
       stream: true,
       ...extraParams.value

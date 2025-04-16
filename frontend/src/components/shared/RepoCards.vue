@@ -81,8 +81,8 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
-
-          <el-select
+          <!-- wait server -->
+          <!-- <el-select
             v-if="repoType === 'model'"
             v-model="filterSelection"
             @change="filterChange"
@@ -93,7 +93,7 @@
               :key="item.value"
               :label="item.label"
               :value="item.value" />
-          </el-select>
+          </el-select> -->
           <ElInput
             v-model="nameFilterInput"
             class="w-fit"
@@ -283,15 +283,15 @@
     }
 
     if (filterSelection.value === 'inference') {
-      url = url + `&tag_category=runtime_framework&tag_name=vllm`
+      url = url + `&tag_category=runtime_framework&tag_group=inference`
     }
 
     if (filterSelection.value === 'finetune') {
-      url = url + `&tag_category=runtime_framework&tag_name=llama-factory`
+      url = url + `&tag_category=runtime_framework&tag_group=finetune`
     }
 
     if (filterSelection.value === 'evaluation') {
-      url = url + `&tag_category=runtime_framework&tag_name=opencompass`
+      url = url + `&tag_category=runtime_framework&tag_group=evaluation`
     }
 
     if (filterSelection.value === 'serverless') {
@@ -304,10 +304,6 @@
       })
     }
 
-    // url = url + `&task_tag=${taskTag.value}`
-    // url = url + `&framework_tag=${frameworkTag.value}`
-    // url = url + `&language_tag=${languageTag.value}`
-    // url = url + `&license_tag=${licenseTag.value}`
     url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
     loadRepos(url)
   }

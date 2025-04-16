@@ -9,7 +9,10 @@
     <el-avatar
       :src="iconSrc"
       :size="24"
-      class="cursor-pointer"
+      :class="[
+        'cursor-pointer',
+        { '!bg-white': repoType === 'model' }
+      ]"
     />
   </el-tooltip>
 </template>

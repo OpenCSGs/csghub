@@ -8,7 +8,7 @@ export const application_spaces = {
   desc: "Space description",
   stoppedDesc: "This Space has been paused by its owner.",
   sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",
-  buildDesc: "This Space is in building, please wait a while",
+  buildDesc: "Space is building and deploying",
   errorDesc: "This Space is in Error, please check the logs",
   restart: "Restart",
   wakeup: "Wakeup",

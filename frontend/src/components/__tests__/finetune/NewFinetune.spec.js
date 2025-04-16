@@ -66,6 +66,27 @@ vi.mock('@/packs/useFetchApi', () => ({
   }
 }));
 
+vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory', () => ({
+  fetchResourcesInCategory: vi.fn(() => {
+    return Promise.resolve([
+      {
+        label: 'Others',
+        options: [
+          {
+            name: 'Resource 1',
+            label: "Resource 1",
+            is_available: true,
+            resources:'res1',
+            order_detail_id: 1,
+            type: 'cpu',
+            id: 1
+          },
+        ]
+      }
+    ])
+  })
+}))
+
 const createWrapper = (props = {}) => {
   return mount(NewFinetune, {
     props: {

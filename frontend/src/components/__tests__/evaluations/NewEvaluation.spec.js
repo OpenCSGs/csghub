@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { flushPromises } from '@vue/test-utils'
 import NewEvaluation from '../../evaluations/NewEvaluation.vue'
 
 const MOCK_USERNAME = 'testuser'
@@ -14,6 +15,22 @@ const MOCK_RESOURCE = {
   name: 'gpu-resource',
   type: 'gpu',
   is_available: true,
+}
+
+const MOCK_TRANSFORMED_RESOURCE = {
+  label: 'Pay-as-you-go',
+  options: [
+    {
+      id: 1,
+      order_detail_id: 1,
+      name: 'gpu-resource',
+      type: 'gpu',
+      is_available: true,
+      pay_mode: 'minute',
+      price: 1000,
+      label: 'gpu-resource 10.00¥/hour'
+    }
+  ]
 }
 
 const createResponse = (data, errorMsg = null) => ({
@@ -54,6 +71,14 @@ vi.mock('../../../packs/useFetchApi', () => ({
   })
 }))
 
+vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory', () => ({
+  fetchResourcesInCategory: vi.fn(() => {
+    return Promise.resolve([
+      MOCK_TRANSFORMED_RESOURCE
+    ])
+  })
+}))
+
 describe('NewEvaluation', () => {
   let wrapper
 
@@ -68,9 +93,18 @@ describe('NewEvaluation', () => {
       expect(wrapper.vm.dataForm.evaluation_resource_type).toBe('shared')
     })
 
-    it('loads initial data', async () => {
+    it('do not loads cluster data', async () => {
       await wrapper.vm.$nextTick()
-      expect(wrapper.vm.evaluationClusters.length).toBeGreaterThan(0)
+      expect(wrapper.vm.evaluationClusters.length).toBe(0)
+    })
+
+    it('loads cluster data when we set resource type', async () => {
+      wrapper.vm.dataForm.evaluation_resource_type = 'dedicated'
+      await wrapper.vm.$nextTick()
+      await flushPromises() // Wait for API response to resolve
+      expect(wrapper.vm.evaluationClusters).toEqual([
+        { cluster_id: MOCK_CLUSTER_ID, region:'region1' }
+      ])
     })
   })
 
@@ -118,7 +152,7 @@ describe('NewEvaluation', () => {
       wrapper.vm.dataForm.evaluation_cluster = MOCK_CLUSTER_ID
       await wrapper.vm.fetchResources()
       expect(wrapper.vm.evaluationResources).toEqual([
-        MOCK_RESOURCE
+        MOCK_TRANSFORMED_RESOURCE
       ])
     })
   })

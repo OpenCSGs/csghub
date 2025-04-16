@@ -63,7 +63,7 @@ export const admin = {
     sync:'同步'
   },
   serverless: {
-    title: 'Serverless 管理',
+    title: '公共推理服务',
     listTitle: 'Serverless 列表',
     detailTitle: 'Serverless 详情',
     newTitle: '新建 Serverless',

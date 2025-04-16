@@ -18,33 +18,24 @@
     <div
       class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border border-gray-300 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
     >
-      <div class="flex justify-end">
-        <div
-          v-if="question"
-          class="w-[70%] px-3.5 py-2.5 bg-blue-800 rounded-lg inline-flex items-center gap-2 overflow-hidden"
-        >
-          <div
-            v-if="questionImage"
-            class="w-[40px] h-[40px] border border-gray-300"
-          >
-            <img
-              :src="questionImage"
-              class="w-full h-full object-cover"
-            />
-          </div>
-          <div class="flex-1 text-white text-base font-light">
-            {{ question }}
+      <div v-for="(message, index) in messageHistory" :key="index" class="mb-4">
+        <!-- user question -->
+        <div class="flex justify-end mb-2">
+          <div class="w-[70%] px-3.5 py-2.5 bg-blue-800 rounded-lg inline-flex items-center gap-2 overflow-hidden">
+            <div v-if="message.image" class="w-[40px] h-[40px] border border-gray-300">
+              <img :src="message.image" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex-1 text-white text-base font-light">
+              {{ message.content }}
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="w-[70%] px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-md mt-2"
-        v-if="anwserContent"
-      >
-        <MarkdownViewer
-          :content="anwserContent"
-          class="bg-gray-50"
-        />
+        <!-- AI reply -->
+        <div class="flex justify-start" v-if="message.reply">
+          <div class="w-[70%] px-3 py-2 bg-gray-50 border border-gray-200 rounded-md">
+            <MarkdownViewer :content="message.reply" class="bg-gray-50" />
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -57,6 +48,7 @@
       v-loading="loading"
     >
       <el-upload
+        v-if="!loading"
         class="mr-2 flex"
         :show-file-list="false"
         :before-upload="handleBeforeUpload"
@@ -76,11 +68,11 @@
           <img
             :src="imageUrl"
             class="w-full h-full object-cover"
-            @click="handleImagePreviewClick"
+            @click="handleImageReUploadClick"
           />
           <SvgIcon
             name="x-close"
-            class="absolute top-[-14px] right-[-14px] z-10 p-2 cursor-pointer"
+            class="absolute top-[-14px] right-[-14px] z-10 p-2"
             :title="$t('all.cancel')"
             @click="clearImage"
           />
@@ -125,7 +117,30 @@
       </div>
     </div>
 
-    <div class="flex mt-[8px]">
+    <div class="grid grid-cols-3 gap-4 mt-4">
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+        :disabled="messageHistory.length === 0 || loading"
+        :name="$t('endpoints.playground.retry')"
+        @click="handleRetry"
+      />
+
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+        :disabled="messageHistory.length === 0 || loading"
+        :name="$t('endpoints.playground.undo')"
+        @click="handleUndo"
+      />
+
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm w-full !h-[34px]"
+        :disabled="messageHistory.length === 0 || loading"
+        :name="$t('endpoints.playground.clear')"
+        @click="handleClear"
+      />
+    </div>
+
+    <div class="flex mt-4">
       <SvgIcon
         name="exclamation_point"
         class="place-self-start"
@@ -156,15 +171,14 @@
   const { cookies } = useCookies()
   const userStore = useUserStore()
 
-  const anwserContent = ref('')
+  const messageHistory = ref([])
   const message = ref('')
   const loading = ref(false)
   const inputFocus = ref(false)
   const compositionInput = ref(false)
   const imageUrl = ref('')
-  const question = ref('')
-  const questionImage = ref('')
   const uploadRef = ref(null)
+  const currentImage = ref(null)
 
   const SIZE_LIMIT_FOR_BASE64 = 100 * 1024 // 100 KB
 
@@ -188,20 +202,14 @@
 
   const typewriter = new Typewriter((str) => {
     if (str) {
-      anwserContent.value += str
+      messageHistory.value[messageHistory.value.length - 1].reply += str
     }
   })
-
-  const resetAnwserContent = () => {
-    anwserContent.value = ''
-    question.value = ''
-    questionImage.value = ''
-  }
 
   const isLoggedIn = computed(() => userStore.isLoggedIn)
 
   const canSendMessage = computed(() => {
-    return !!message.value && !loading.value
+    return (!!message.value || !!currentImage.value) && !loading.value
   })
 
   const extraParams = computed(() => {
@@ -231,12 +239,16 @@
       ToLoginPage()
       return
     }
-
+    
     if (!canSendMessage.value) return
 
     loading.value = true
 
-    resetAnwserContent()
+    messageHistory.value.push({
+      content: message.value,
+      image: currentImage.value,
+      reply: ''
+    })
 
     const endpoint = `${props.appEndpoint}/v1/chat/completions`
     const payload = {
@@ -246,10 +258,10 @@
         {
           role: 'user',
           content: [
-            { type: 'image_url', image_url: { url: imageUrl.value } },
+            { type: 'image_url', image_url: { url: currentImage.value } },
             { type: 'text', text: message.value }
           ]
-        }
+        },
       ],
       stream: true,
       ...extraParams.value
@@ -273,8 +285,6 @@
 
   const handleOpen = (e) => {
     if (e.ok) {
-      question.value = message.value
-      questionImage.value = imageUrl.value
       typewriter.start()
     }
   }
@@ -288,6 +298,12 @@
       return
     }
     const res = JSON.parse(data)
+    if(res.error) {
+      typewriter.done()
+      loading.value = false
+      ElMessage({ type: 'error', message: res.error.message })
+      return
+    }
     const response = res?.choices[0]?.delta?.content
     if (response) {
       typewriter.add(response)
@@ -298,6 +314,7 @@
     typewriter.done()
     message.value = ''
     imageUrl.value = ''
+    currentImage.value = null
     loading.value = false
   }
 
@@ -308,12 +325,13 @@
     throw err
   }
 
-  const handleImagePreviewClick = () => {
+  const handleImageReUploadClick = () => {
     uploadRef.value.click()
   }
-
+  
   const clearImage = () => {
     imageUrl.value = ''
+    currentImage.value = null
   }
 
   const handleBeforeUpload = (file) => {
@@ -323,6 +341,7 @@
 
       reader.onload = () => {
         imageUrl.value = reader.result
+        currentImage.value = reader.result
       }
 
       return false
@@ -333,6 +352,38 @@
 
   const handleUploadSuccess = (res) => {
     imageUrl.value = res.url
+    currentImage.value = res.url
+  }
+
+  const handleRetry = async () => {
+    if (messageHistory.value.length === 0 || loading.value) return
+    
+    const lastMessage = messageHistory.value[messageHistory.value.length - 1]
+    lastMessage.reply = ''
+    message.value = lastMessage.content
+    currentImage.value = lastMessage.image
+    
+    await handleSendMessage()
+  }
+
+  const handleUndo = () => {
+    if (messageHistory.value.length === 0) return
+    
+    messageHistory.value.pop()
+    message.value = ''
+    imageUrl.value = ''
+    currentImage.value = null
+  }
+
+  const handleClear = () => {
+    if (messageHistory.value.length === 0) return
+    
+    messageHistory.value = []
+    message.value = ''
+    imageUrl.value = ''
+    currentImage.value = null
+    loading.value = false
+    typewriter.done()
   }
 </script>
 

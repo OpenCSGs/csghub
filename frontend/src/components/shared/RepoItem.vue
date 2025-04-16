@@ -100,7 +100,7 @@
 
   const getComputed = computed(() => {
     const displayName = props.repo.nickname !== undefined && props.repo.nickname.trim().length > 0 ? props.repo.nickname : props.repo.name
-    const path = props.repo.path.split('/')[0] + '/' + displayName
+    const path = props.repo.hf_path || props.repo.ms_path || props.repo.csg_path || props.repo.path
 
     const visibility = props.repo.private ? t('all.private') : ''
     const showDescription = props.cardType === 'index' || !!props.repo.description?.trim()

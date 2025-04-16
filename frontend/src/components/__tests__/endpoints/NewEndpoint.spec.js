@@ -62,7 +62,8 @@ let { mockFetchApi } = vi.hoisted(() => {
                       id: 1,
                       frame_name: 'test-framework',
                       path: 'test-path',
-                      frame_cpu_image: 'ktransformers:0.2.1.post1'
+                      frame_cpu_image: 'ktransformers:0.2.1.post1',
+                      compute_type: 'cpu'
                     }
                   ]
                 }
@@ -118,6 +119,27 @@ vi.mock('@/packs/useFetchApi', () => ({
   default: mockFetchApi,
 }))
 
+vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory', () => ({
+  fetchResourcesInCategory: vi.fn(() => {
+    return Promise.resolve([
+      {
+        label: 'Others',
+        options: [
+          {
+            name: 'Resource 1',
+            label: "Resource 1",
+            is_available: true,
+            resources:'res1',
+            order_detail_id: 1,
+            type: 'cpu',
+            id: 1
+          },
+        ]
+      }
+    ])
+  })
+}))
+
 vi.mock('element-plus', () => ({
   ElMessage: vi.fn(),
   ElInput: vi.fn()
@@ -140,40 +162,41 @@ describe('NewEndpoint', () => {
 
   it('fetches clusters/respurces', async () => {
     const wrapper = createWrapper()
+    await flushPromises() // Wait for all promises to resolve
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.endpointClusters).toEqual([
       { cluster_id: 'cluster-1', region: 'region-1' },
       { cluster_id: 'cluster-2', region: 'region-2' }
     ])
     expect(wrapper.vm.dataForm.endpoint_cluster).toBe('cluster-1')
-
-    await wrapper.vm.$nextTick()
     expect(wrapper.vm.endpointResources).toEqual([
       {
-        name: 'Resource 1',
-        is_available: true,
-        resources: 'res1',
-        type: 'cpu',
-        id: 1
-      },
-      {
-        name: 'Resource 2',
-        is_available: false,
-        resources: 'res2',
-        type: 'gpu',
-        id: 2
+        "label": "Others",
+        "options": [
+          {
+            name: 'Resource 1',
+            label: "Resource 1",
+            is_available: true,
+            resources: 'res1',
+            order_detail_id: 1,
+            type: 'cpu',
+            id: 1
+          },
+        ]
       }
     ])
-    expect(wrapper.vm.dataForm.cloud_resource).toEqual(1)
-
+    expect(wrapper.vm.dataForm.cloud_resource).toEqual('1/1')
     // without model_id will not fetch runtime_framework
-    await wrapper.vm.$nextTick()
     expect(wrapper.vm.endpointFrameworks).toEqual([])
   })
 
   it('fetches runtimeframeworks', async () => {
     const wrapper = createWrapper()
+    const AutoComplete = wrapper.findComponent({ name: 'ElAutocomplete' })
     wrapper.vm.dataForm.model_id = 'model-1'
+    await wrapper.vm.$nextTick()
+    // Element Plus wrapper the element so can't use it like AutoComplete.trigger('select')
+    await AutoComplete.vm.$emit('select', 'model-1')
 
     // Waiting for all promises and Vue updates at once
     await flushPromises()
@@ -184,7 +207,8 @@ describe('NewEndpoint', () => {
         id: 1,
         frame_name: 'test-framework',
         path: 'test-path',
-        frame_cpu_image: 'ktransformers:0.2.1.post1'
+        frame_cpu_image: 'ktransformers:0.2.1.post1',
+        compute_type: 'cpu'
       }
     ])
 

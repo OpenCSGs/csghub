@@ -1,5 +1,13 @@
 <template>
   <div class="sm:w-[100%] sm:mt-[36px]">
+    <!-- title -->
+    <div class="mb-6">
+      <h1 class="text-lg font-medium text-gray-900 mb-5">
+        {{ initiator === 'likes' ? $t('profile.likes') : $t('profile.title') }}
+      </h1>
+      <div class="h-[1px] bg-gray-200"></div>
+    </div>
+
     <!-- collections -->
     <div>
       <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">

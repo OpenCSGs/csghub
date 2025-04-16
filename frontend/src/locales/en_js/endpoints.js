@@ -36,6 +36,7 @@ export const endpoints = {
     createFail: "Failed to create endpoint",
     quantization: "Quantization",
     engineArgs: "Framework Variables",
+    frameworkInputTip: "Please fill in model id first",
   },
   settings: {
     stop: "Stop",

@@ -47,9 +47,17 @@
       </div>
       <div v-if="hasOrg" class="flex gap-2 flex-wrap mt-4">
         <p v-for="org in (isCurrentUser ? userStore.orgs : userOrgs)">
-          <a :href="`/organizations/${org.path}`">
-            <img :src="org.logo ? org.logo : '/images/default_org.png'" class="rounded-[50%] h-10 w-10" />
-          </a>
+          <el-tooltip
+            :content="org.name"
+            placement="top"
+            effect="dark"
+            :show-after="200"
+            popper-class="org-tooltip"
+          >
+            <a :href="`/organizations/${org.path}`" class="hover:opacity-80 transition-opacity">
+              <img :src="org.logo ? org.logo : '/images/default_org.png'" class="rounded-[50%] h-10 w-10" />
+            </a>
+          </el-tooltip>
         </p>
       </div>
       <div v-else class="text-gray-500">
@@ -111,3 +119,11 @@
     }
   })
 </script>
+
+<style scoped>
+.org-tooltip {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+</style>

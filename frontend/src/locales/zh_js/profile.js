@@ -3,6 +3,8 @@ export const profile = {
   myCollect: "我的收藏",
   interests: "兴趣",
   organization: "组织机构",
+  title: "个人主页",
+  likes: "我的收藏",
   menu: {
     accountInformation: "账户信息",
     accessToken: "Access Token",
@@ -26,6 +28,8 @@ export const profile = {
     updateSuccess: "profile 已更新",
     updateUsername: "首次登录更新用户名",
     internalUsername: "用户名",
-    internalUsernamePlaceholder: "用户名"
+    internalUsernamePlaceholder: "用户名",
+    emailRequired: "请输入邮箱地址",
+    emailValid: "请输入有效的邮箱地址，如example{'@'}domain.com",
   },
 }

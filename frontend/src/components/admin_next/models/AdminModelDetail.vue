@@ -89,7 +89,7 @@
             :name="$t('admin.models.sync')"
             @click="syncModelMirror"
           />
-          <div v-if="model.widget_type === 'generation'">
+          <div v-if="model.enable_inference">
             <CsgButton
               v-if="hasServerless"
               class="btn btn-primary btn-md"
@@ -196,10 +196,10 @@
   }
 
   const getModelMirror = async () => {
-    const { data, error } = await useFetchApi(
+    const { data, _ } = await useFetchApi(
       `/models/${route.params.namespace}/${route.params.name}/mirror`
     ).json()
-    if (data) {
+    if (data.value?.data) {
       const body_data = data.value.data
       lastUpdatedAt.value = body_data.last_updated_at
       lastMessage.value = body_data.last_message || ' '

@@ -3,6 +3,8 @@ export const profile = {
   myCollect: "My Favorite",
   interests: "Interests",
   organization: "Organization",
+  title: "Profile",
+  likes: "My Favorites",
   menu: {
     accountInformation: "Account Information",
     accessToken: "Access Token",
@@ -26,6 +28,8 @@ export const profile = {
     updateSuccess: "Profile updated successfully",
     updateUsername: "First Login Update Username",
     internalUsername: "Username",
-    internalUsernamePlaceholder: "username"
+    internalUsernamePlaceholder: "username",
+    emailRequired: "please input email",
+    emailValid: "please verfify your email format, example: example{'@'}domain.com",
   },
 }

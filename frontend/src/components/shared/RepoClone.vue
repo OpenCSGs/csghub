@@ -100,6 +100,47 @@
         class="border border-gray-200 mb-8 clone-tabs"
       >
         <el-tab-pane
+          v-if="
+            repoType == 'model' || repoType == 'dataset' || repoType == 'space'
+          "
+          :label="$t('all.commandLine')"
+          name="commandLine"
+        >
+          <div
+            class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
+          >
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
+              <SvgIcon
+                name="exclamation_point"
+                width="13"
+                height="13"
+                class="cursor-pointer"
+              />
+              {{ $t('all.commandlineTips') }}
+              <a
+                href="https://github.com/OpenCSGs/csghub-sdk?tab=readme-ov-file#use-cases-of-command-line"
+                target="_blank"
+                class="underline"
+              >
+                {{ $t('all.documentation') }}
+              </a>
+            </div>
+            <div class="text-gray-500 mt-[8px]">{{ $t('all.pythonTips') }} 
+              <a
+                href="https://docs.python.org/zh-cn/3.13/using/index.html"
+                target="_blank"
+                class="underline"
+              >
+                {{ $t('all.installDocumentation') }}
+              </a>
+            </div>
+            <div class="text-gray-500 mt-[8px]">{{ $t('all.csghubSdkTips') }}</div>
+            <markdown-viewer :content="comandlineCodeMarkdown"></markdown-viewer>
+            <div class="text-gray-500"># {{ $t(`all.${repoType}DownloadTips`) }}</div>
+            <markdown-viewer :content="comandlineCode2Markdown"></markdown-viewer>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane
           label="HTTPS"
           name="https"
         >
@@ -275,7 +316,9 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
 `
   })
 
-  const activeCloneType = ref('https')
+  const activeCloneType = computed(() => {
+    return ['model', 'dataset', 'space'].includes(props.repoType) ? 'commandLine' : 'https';
+  })
   const cloneRepositoryVisible = ref(false)
   const useToken = ref(false)
   const accessToken = ref('')
@@ -335,6 +378,37 @@ cache_dir = '' # cache dir of download data
 result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
 `)
   }
+
+  const comandlineCode = computed(() => {
+    return `
+pip install csghub-sdk
+`
+  })
+
+  const getComandLineCloneCode = () => {
+    if (props.repoType === 'model') {
+      return ref(`
+csghub-cli download ${props.namespacePath}
+`)
+    } else if (props.repoType === 'dataset') {
+      return ref(`
+csghub-cli download ${props.namespacePath} -t dataset
+`)
+    } else if (props.repoType === 'space') {
+      return ref(`
+csghub-cli download ${props.namespacePath} -t space
+`)
+    }
+  }
+
+  const comandlineCodeMarkdown = computed(() => {
+    return getMarkdownCode(comandlineCode.value, 'bash', true)
+  })
+  
+  const comandlineCode2Markdown = computed(() => {
+    const comandlineCodeDownload = getComandLineCloneCode()
+    return getMarkdownCode(comandlineCodeDownload.value, 'bash', true)
+  })
 
   const cmdCloneCodeMarkdown = computed(() => {
     const cmdCloneCode = getCmdCloneCode()

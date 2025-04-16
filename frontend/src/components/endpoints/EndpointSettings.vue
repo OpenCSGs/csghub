@@ -10,12 +10,12 @@
       </div>
       <div class="flex flex-col gap-[6px]">
         <div class="flex flex-col gap-[6px]">
-          <el-button
-            @click="stopEndpoint"
-            class="w-[100px]"
-            :disabled="!initialized || isStopped">
-            {{ $t('endpoints.settings.stop') }}
-          </el-button>
+          <CsgButton
+            @click="stopEndpoint"git 
+            class="btn btn-secondary-gray btn-sm w-[100px]"
+            :disabled="!initialized || isStopped"
+            :name="$t('endpoints.settings.stop')">
+          </CsgButton>
         </div>
       </div>
     </div>
@@ -30,12 +30,12 @@
         </div>
       </div>
       <div class="flex flex-col gap-[6px]">
-        <el-button
+        <CsgButton
           @click="restartEndpoint"
-          class="w-[100px]"
-          :disabled="notInitialized">
-          {{ $t('endpoints.settings.restart') }}
-        </el-button>
+          class="btn btn-secondary-gray btn-sm w-[100px]"
+          :disabled="notInitialized"
+          :name="$t('endpoints.settings.restart')">
+        </CsgButton>
       </div>
     </div>
 
@@ -62,12 +62,19 @@
           class="!w-[512px] sm:!w-full"
           @change="updateCloudResource"
           :disabled="!isStopped">
-          <el-option
-            v-for="item in cloudResources"
-            :key="item.name"
-            :label="item.name"
-            :value="item.id"
-            :disabled="!item.is_available" />
+          <el-option-group
+            v-for="group in cloudResources"
+            :key="group.label"
+            :label="group.label"
+          >
+            <el-option
+              v-for="item in group.options"
+              :key="item.name"
+              :label="item.label"
+              :value="item.id"
+              :disabled="!item.is_available"
+            />
+          </el-option-group>
         </el-select>
       </div>
     </div>
@@ -271,13 +278,14 @@
 </template>
 
 <script setup>
-  import { h, ref, computed, onMounted, watchEffect, watch, inject } from 'vue'
+  import { h, ref, computed, onMounted, watchEffect, watch, inject, nextTick } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import refreshJWT from '../../packs/refreshJWT.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import EngineArgs from './EngineArgs.vue'
+  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory.js'
 
   const repoDetailStore = useRepoDetailStore()
 
@@ -314,28 +322,11 @@
     return repoDetailStore.privateVisibility? 'Private' : 'Public'
   })
 
-  const currentHardware = computed(() => {
-    if (repoDetailStore.hardware) {
-      return JSON.parse(repoDetailStore.hardware)
-    } else {
-      return {}
-    }
-  })
-
   watch(
     () => props.clusterId,
     (newVal) => {
       if (newVal) {
         fetchResources()
-      }
-    }
-  )
-
-  watch(
-    () => props.modelId,
-    (newVal) => {
-      if (newVal) {
-        fetchFrameworks()
       }
     }
   )
@@ -362,56 +353,46 @@
     return ['Stopped'].includes(props.appStatus)
   })
 
+  watchEffect(() => {
+    currentResource.value = Number(props.cloudResourceSku)
+    currentMaxReplica.value = props.maxReplica
+    currentMinReplica.value = props.minReplica
+  })
+
+  const currentResourceDetail = computed(() => {
+    return cloudResources.value
+            .flatMap((category) => category.options)
+            .find((item) => item.id == currentResource.value)
+  })
+
+  const filterFrameworks = computed(() => {
+    if (!currentResource.value) return []
+    if (!currentResourceDetail.value) return []
+    if (!frameworks.value) return []
+    return frameworks.value.filter((framework) => framework.compute_type == currentResourceDetail.value?.type)
+  })
+
   const fetchFrameworks = async () => {
     const { data } = await useFetchApi(
       `/models/${props.modelId}/runtime_framework?deploy_type=1`
     ).json()
     if (data.value) {
       const body = data.value
-      frameworks.value = body.data
-      const currentFramework = body.data.find((framework) => {
-        return framework.frame_name === props.framework
+      frameworks.value = body.data || []
+      const currentFramework = body.data?.find((framework) => {
+        return framework.frame_name.toLowerCase() === props.framework.toLowerCase() && framework.compute_type === currentResourceDetail.value?.type
       })
       currentFrameworkId.value = currentFramework?.id
     }
   }
 
-  const filterFrameworks = computed(() => {
-    if (!currentHardware.value) return []
-    if (frameworks.value.length === 0) return []
-
-    let npuResults = frameworks.value.filter((framework) => {
-      if (currentHardware.value.hasOwnProperty('npu')) {
-        return !!framework.frame_npu_image?.trim()
-      } else {
-        return false
-      }
+  const fetchResources = async () => {
+    const categoryResources = await fetchResourcesInCategory(props.clusterId)
+    cloudResources.value = categoryResources
+    nextTick(() => {
+      fetchFrameworks()
     })
-
-    let gpuResults = frameworks.value.filter((framework) => {
-      if (currentHardware.value.hasOwnProperty('gpu')) {
-        return !!framework.frame_image?.trim()
-      } else {
-        return false
-      }
-    })
-
-    let cpuResults = frameworks.value.filter((framework) => {
-      if (currentHardware.value.hasOwnProperty('cpu')) {
-        return !!framework.frame_cpu_image?.trim()
-      } else {
-        return false
-      }
-    })
-
-    return [...new Set([ ...cpuResults, ...gpuResults, ...npuResults])]
-  })
-
-  watchEffect(() => {
-    currentResource.value = Number(props.cloudResourceSku)
-    currentMaxReplica.value = props.maxReplica
-    currentMinReplica.value = props.minReplica
-  })
+  }
 
   const stopEndpoint = async () => {
     const stopUrl = `/models/${props.modelId}/run/${props.endpointId}/stop`
@@ -473,22 +454,6 @@
     visibilityName.value = value
     const payload = { secure_level: value === 'Private' ? 2 : 1 }
     updateEndpoint(payload)
-  }
-
-  const fetchResources = async () => {
-    const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${props.clusterId}`
-    ).json()
-
-    if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
-    } else {
-      const body = data.value
-      cloudResources.value = body.data
-    }
   }
 
   const updateCloudResource = (value) => {
@@ -602,9 +567,6 @@
   onMounted(() => {
     if (props.clusterId) {
       fetchResources()
-    }
-    if (props.modelId) {
-      fetchFrameworks()
     }
   })
 </script>
