@@ -457,6 +457,8 @@
         )
         if (!findTag) {
           this.selectedTags.push({ name: newTag.name, zh_name: newTag.show_name })
+          this.tagInput = ''
+          this.shouldShowTagList = false
         }
       },
 
@@ -469,6 +471,8 @@
             name: newTag.name,
             zh_name: newTag.show_name
           })
+          this.industryTagInput = ''
+          this.shouldShowIndustryTagList = false
         }
       },
 
