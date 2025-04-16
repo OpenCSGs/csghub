@@ -89,7 +89,7 @@
               style="width: 100%"
             >
               <el-option
-                v-for="item in replicaRanges"
+                v-for="item in minReplicaRanges"
                 :disabled="item > dataForm.max_replica"
                 :key="item"
                 :label="item"
@@ -267,7 +267,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
@@ -299,6 +299,7 @@
   const currentEngineArgs = ref({})
   const changedEngineArgs = ref({})
 
+  const minReplicaRanges = [0, 1, 2, 3, 4, 5]
   const replicaRanges = [1, 2, 3, 4, 5]
 
   const rules = ref({
@@ -463,6 +464,19 @@
       setCurrentEngineArgs(dataForm.value.endpoint_framework)
     }
   }
+
+  watch(() => dataForm.value.cloud_resource, (newValue) => {
+    if (newValue && endpointFrameworks.value.length > 0) {
+      if (filterFrameworks.value.length > 0) {
+        dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
+        setCurrentEngineArgs(dataForm.value.endpoint_framework)
+      } else {
+        dataForm.value.endpoint_framework = ''
+        currentEngineArgs.value = {}
+      }
+    }
+  })
+
 
   const filterFrameworks = computed(() => {
     if (!dataForm.value.cloud_resource) return []
