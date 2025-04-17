@@ -114,5 +114,13 @@ export const all = {
     Error: 'incomplete model or an incorrect inference engine parameter',
     OOMKilled: 'insufficient resources',
     CrashLoopBackOff: 'container crashes'
-  }
+  },
+  "discuss": "Discussions",
+  comments: {
+    warn: "Content cannot be empty",
+    success: "Successfully added comment"
+  },
+  show: "Show",
+  hide: "Hide",
+  copySuccess: "Copied successfully"
 }
