@@ -37,6 +37,8 @@
         class="dialogWidth"
         style="border-radius: var(--border-radius-md)"
         left
+        @close="handleDialogClose"
+        @open="handleDialogOpen"
       >
         <el-form
           :model="formData"
@@ -63,6 +65,7 @@
                 v-model="formData.theSshKey"
                 :rows="6"
                 type="textarea"
+                @input="handleSshKeyInput"
                 placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
               />
             </el-form-item>
@@ -79,9 +82,7 @@
               class="btn btn-primary btn-sm w-fit"
               :name="$t('all.add')"
               @click="submitSshKey"
-            >
-              {{ $t('all.add') }}
-            </el-button>
+            />
           </span>
         </template>
       </el-dialog>
@@ -192,6 +193,43 @@
       })
     } else {
       theSshKeys.value = data.value.data || []
+    }
+  }
+
+  const resetForm = () => {
+    theSshKeyName.value = ''
+    formData.value.theSshKey = ''
+    if (formRef.value) {
+      formRef.value.resetFields()
+    }
+  }
+
+  const handleDialogClose = () => {
+    centerDialogVisible.value = false
+    resetForm()
+  }
+
+  const handleDialogOpen = () => {
+    resetForm()
+  }
+
+  const extractHostnameFromSshKey = (sshKey) => {
+    // 匹配常见的 SSH key 格式，提取用户名和主机名
+    const regex = /(?:ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh\.com|sk-ssh-ed25519@openssh\.com)\s+[^\s]+\s+([^@]+@[^\s]+)/;
+    const match = sshKey.match(regex);
+    if (match && match[1]) {
+      return match[1];
+    }
+    return '';
+  }
+
+  const handleSshKeyInput = () => {
+    // 只有当 SSH key 名称为空时才自动填充主机名
+    if (!theSshKeyName.value) {
+      const hostname = extractHostnameFromSshKey(formData.value.theSshKey);
+      if (hostname) {
+        theSshKeyName.value = hostname;
+      }
     }
   }
 
