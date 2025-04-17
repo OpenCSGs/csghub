@@ -7,29 +7,35 @@
       :name="name"
     >
     </Menu>
-    <div class="grow flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] md:min-h-0">
-      <h3 class="text-gray-700 text-xl font-[600]">SSH Keys</h3>
-      <button
-        @click="centerDialogVisible = true"
-        class="btn btn-secondary-gray btn-md w-fit"
-      >
-        {{ $t('sshKey.addSshKey') }}
-      </button>
-      <div
-        v-if="theSshKeys.length === 0"
-        class="mt-[16px] rounded-sm w-full bg-brand-25 py-[9px] px-[16px] text-brand-500"
-      >
-        {{ $t('sshKey.noKeyTips') }}
+    <div class="grow flex flex-col gap-4 px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] md:min-h-0">
+      <div class="max-w-[512px]">
+        <div class="mb-[16px]">
+          <h3 class="mb-1 text-gray-700 text-md font-medium">SSH Keys</h3>
+          <p class="text-gray-500 text-sm font-normal">{{ $t('sshKey.desc') }}</p>
+        </div>
+        <div
+          v-if="theSshKeys.length === 0"
+          class="rounded-sm w-full bg-brand-25 py-2 px-4 text-brand-600"
+        >
+          {{ $t('sshKey.noKeyTips') }}
+        </div>
+        <ssh-key-card
+          v-for="sshkey in theSshKeys"
+          :profile-name="name"
+          :ssh-key-name="sshkey.name"
+          :ssh-key="sshkey.content"
+          :ssh-key-id="sshkey.id"
+          :create-time="sshkey.created_at"
+        >
+        </ssh-key-card>
+        <div class="mt-[16px]">
+          <CsgButton
+            @click="centerDialogVisible = true"
+            class="btn btn-primary btn-md w-fit"
+            :name="$t('sshKey.addSshKey')"
+          />
+        </div>
       </div>
-      <ssh-key-card
-        v-for="sshkey in theSshKeys"
-        :profile-name="name"
-        :ssh-key-name="sshkey.name"
-        :ssh-key="sshkey.content"
-        :ssh-key-id="sshkey.id"
-        :create-time="sshkey.created_at"
-      >
-      </ssh-key-card>
       <el-dialog
         v-model="centerDialogVisible"
         :title="$t('sshKey.addSshKey')"
