@@ -28,10 +28,11 @@
             :label="banner"
             value="banner"
           />
-          <el-option
+          <!-- Temporarily hidden, to be shown after subsequent development -->
+          <!-- <el-option
             :label="message"
             value="message"
-          />
+          /> -->
         </el-select>
       </el-form-item>
 
