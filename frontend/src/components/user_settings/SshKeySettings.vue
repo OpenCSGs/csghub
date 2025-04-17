@@ -43,6 +43,8 @@
         class="dialogWidth"
         style="border-radius: var(--border-radius-md)"
         left
+        @close="handleDialogClose"
+        @open="handleDialogOpen"
       >
         <el-form
           :model="formData"
@@ -51,7 +53,7 @@
         >
           <div class="mb-[16px]">
             <p class="text-gray-700 text-sm mb-[8px]">
-              {{ $t('sshKey.sshKeyName') }} <span class="text-red-400">*</span>
+              {{ $t('sshKey.sshKeyName') }} 
             </p>
             <el-input
               v-model="theSshKeyName"
@@ -69,6 +71,7 @@
                 v-model="formData.theSshKey"
                 :rows="6"
                 type="textarea"
+                @input="handleSshKeyInput"
                 placeholder="Starts with 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'"
               />
             </el-form-item>
@@ -76,9 +79,14 @@
         </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">Cancel</el-button>
-            <el-button
-              type="primary"
+            <CsgButton
+              class="btn btn-secondary-gray btn-sm w-fit mr-3"
+              @click="handleDialogClose"
+              :name="$t('all.cancel')"
+            />
+            <CsgButton
+              class="btn btn-primary btn-sm w-fit"
+              :name="$t('all.add')"
               @click="submitSshKey"
             >
               {{ $t('all.add') }}
@@ -132,6 +140,23 @@
       { validator: validateTheSshKey, trigger: 'blur' } // blur: 聚焦时触发验证
     ]
   })
+
+  const resetForm = () => {
+    theSshKeyName.value = ''
+    formData.value.theSshKey = ''
+    if (formRef.value) {
+      formRef.value.resetFields()
+    }
+  }
+
+  const handleDialogClose = () => {
+    centerDialogVisible.value = false
+    resetForm()
+  }
+
+  const handleDialogOpen = () => {
+    resetForm()
+  }
 
   const submitSshKey = () => {
     if (theSshKeyName.value == '') {
@@ -193,6 +218,46 @@
       })
     } else {
       theSshKeys.value = data.value.data || []
+    }
+  }
+
+  const extractHostnameFromSshKey = (sshKey) => {
+    // 匹配常见的 SSH key 格式，提取用户名和主机名
+    const regex = /(?:ssh-rsa|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|ssh-ed25519|sk-ecdsa-sha2-nistp256@openssh\.com|sk-ssh-ed25519@openssh\.com)\s+[^\s]+\s+([^@]+@[^\s]+)/;
+    const match = sshKey.match(regex);
+    if (match && match[1]) {
+      return match[1];
+    }
+    return '';
+  }
+
+  const handleSshKeyInput = () => {
+    // 只有当 SSH key 名称为空时才自动填充主机名
+    if (!theSshKeyName.value) {
+      const hostname = extractHostnameFromSshKey(formData.value.theSshKey);
+      if (hostname) {
+        theSshKeyName.value = hostname;
+      }
+    }
+  }
+
+  const addSshKey = async () => {
+    try {
+      await formRef.value.validate();
+      
+      const { error } = await useFetchApi(`/user/${props.name}/ssh_key/${theSshKeyName.value}`)
+        .post({ ssh_key: formData.value.theSshKey })
+        .json();
+
+      if (error.value) {
+        ElMessage({ message: error.value, type: "warning" });
+      } else {
+        ElMessage({ message: t('all.addSuccess'), type: "success" });
+        centerDialogVisible.value = false;
+        fetchSshKeys();
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
