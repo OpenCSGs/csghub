@@ -70,9 +70,14 @@
         </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">Cancel</el-button>
-            <el-button
-              type="primary"
+            <CsgButton
+              class="btn btn-secondary-gray btn-sm w-fit mr-3"
+              @click="centerDialogVisible = false"
+              :name="$t('all.cancel')"
+            />
+            <CsgButton
+              class="btn btn-primary btn-sm w-fit"
+              :name="$t('all.add')"
               @click="submitSshKey"
             >
               {{ $t('all.add') }}

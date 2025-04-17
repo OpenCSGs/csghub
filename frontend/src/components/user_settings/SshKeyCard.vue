@@ -16,15 +16,13 @@
   </div>
   <el-dialog v-model="deleteDialogVisible" :title="$t('sshKey.delKeyName', {value: sshKeyName})" width="30%" class="dialogWidth"
              style="border-radius: var(--border-radius-md);" left>
-    <div class="flex items-center justify-center h-[108px]">
+    <div class="flex items-start justify-start h-auto">
       <p>{{ $t('sshKey.sureDelKey') }}</p>
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="deleteDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="confirmDeleteSshKey(theSshKeyName)">
-          {{ $t('all.confirm') }}
-        </el-button>
+        <CsgButton :name="$t('all.cancel')" class="btn btn-secondary-gray btn-sm" @click="deleteDialogVisible = false" />
+        <CsgButton :name="$t('all.delete')" class="btn btn-danger btn-sm ml-[12px]" @click="confirmDeleteSshKey(theSshKeyName)" />
       </span>
     </template>
   </el-dialog>
@@ -58,14 +56,34 @@ export default {
 
   computed: {
     passedTime() {
-      const passedTimeInSeconds = (new Date() - new Date(this.theCreateTime))/1000
-      const oneHour = 60*60
+      const now = new Date()
+      const createTime = new Date(this.theCreateTime)
+      const passedTimeInSeconds = (now - createTime)/1000
+      const oneMinute = 60
+      const oneHour = oneMinute * 60
+      const oneDay = oneHour * 24
+      
+      // Show specific date if more than 30 days
+      if (passedTimeInSeconds > oneDay * 30) {
+        return this.$t('sshKey.addedOn', {
+          year: createTime.getFullYear(),
+          month: createTime.getMonth() + 1,
+          day: createTime.getDate()
+        })
+      }
+      
       if (passedTimeInSeconds < oneHour) {
-        return `不到 ${Math.ceil(passedTimeInSeconds/60)} 分钟前添加`
-      } else if (passedTimeInSeconds < oneHour*24) {
-        return `不到 ${Math.ceil(passedTimeInSeconds/oneHour)} 小时前添加`
+        return this.$t('sshKey.addedMinutesAgo', {
+          minutes: Math.ceil(passedTimeInSeconds/oneMinute)
+        })
+      } else if (passedTimeInSeconds < oneDay) {
+        return this.$t('sshKey.addedHoursAgo', {
+          hours: Math.ceil(passedTimeInSeconds/oneHour)
+        })
       } else {
-        return `不到 ${Math.ceil(passedTimeInSeconds/(oneHour*24))} 天前添加`
+        return this.$t('sshKey.addedDaysAgo', {
+          days: Math.ceil(passedTimeInSeconds/oneDay)
+        })
       }
     }
   },
