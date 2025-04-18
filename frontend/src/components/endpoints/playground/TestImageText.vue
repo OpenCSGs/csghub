@@ -14,6 +14,9 @@
     >
       <SvgIcon name="text_generation" />
       {{ $t('endpoints.playground.imageText') }}
+      <el-tooltip content="https://opencsg.com/docs/inferencefinetune/inference_tasks/image-text-to-text" placement="top" effect="dark">
+        <SvgIcon name="info"  class="w-[12px] h-[12px] cursor-pointer" @click="toDocPage"/>
+      </el-tooltip>
     </div>
     <div
       class="min-h-[180px] max-h-[480px] px-3.5 py-3 bg-white rounded-lg border border-gray-200 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
@@ -181,6 +184,10 @@
   const uploading = ref(false)
 
   const SIZE_LIMIT_FOR_BASE64 = 100 * 1024 // 100 KB
+
+  const toDocPage = () => {
+    window.open('https://opencsg.com/docs/inferencefinetune/inference_tasks/image-text-to-text', '_blank')
+  }
 
   const handleFocus = () => {
     inputFocus.value = true
