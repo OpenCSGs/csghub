@@ -43,7 +43,10 @@
         @input="fetchtags" /> -->
 
       <router-link
-        to="/admin_panel/tags/new"
+        :to="{
+          path: '/admin_panel/tags/new',
+          query: { scope: scope || '', category: keyword || '' }
+        }"
         class="shrink-0">
         <CsgButton
           class="btn btn-primary btn-md"

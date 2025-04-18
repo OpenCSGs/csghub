@@ -107,7 +107,7 @@
   const tagCategories = ref([])
 
   const breadcrumbsTitle = computed(() =>
-    router.currentRoute.value.fullPath === '/admin_panel/tags/new'
+    router.currentRoute.value.path === '/admin_panel/tags/new'
       ? 'new'
       : 'edit'
   )
@@ -220,6 +220,9 @@
     fetchTagCategories()
     if (breadcrumbsTitle.value == 'edit') {
       fetchTag()
+    } else {
+      dataForm.value.scope = router.currentRoute.value.query.scope
+      dataForm.value.category = router.currentRoute.value.query.category
     }
   })
 </script>
