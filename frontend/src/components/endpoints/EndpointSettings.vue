@@ -173,7 +173,7 @@
           @change="updateMinReplica"
           :disabled="!isStopped">
           <el-option
-            v-for="item in replicaRanges"
+            v-for="item in minReplicaRanges"
             :key="item"
             :label="item"
             :value="item" />
@@ -307,6 +307,7 @@
   const delDesc = ref('')
   const cloudResources = ref([])
   const frameworks = ref([])
+  const minReplicaRanges = [0, 1, 2, 3, 4, 5]
   const replicaRanges = [1, 2, 3, 4, 5]
   const visibilityOptions = ref([
     { value: 'Private', label: t('all.private') },
@@ -356,7 +357,7 @@
   watchEffect(() => {
     currentResource.value = Number(props.cloudResourceSku)
     currentMaxReplica.value = props.maxReplica
-    currentMinReplica.value = props.minReplica
+    currentMinReplica.value = props.minReplica||0
   })
 
   const currentResourceDetail = computed(() => {
