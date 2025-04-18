@@ -77,10 +77,10 @@
         <svg class="flex-shrink-0" v-else xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
           <path d="M8.16634 1.95817V1.95817C8.16634 3.08384 8.16634 3.64668 8.38433 4.0745C8.57608 4.45083 8.88204 4.75679 9.25836 4.94853C9.68618 5.16652 10.249 5.16652 11.3747 5.16652V5.16652M11.6663 5.90865V10.1332C11.6663 11.2533 11.6663 11.8133 11.4484 12.2412C11.2566 12.6175 10.9506 12.9234 10.5743 13.1152C10.1465 13.3332 9.58645 13.3332 8.46634 13.3332H5.53301C4.4129 13.3332 3.85285 13.3332 3.42503 13.1152C3.0487 12.9234 2.74274 12.6175 2.55099 12.2412C2.33301 11.8133 2.33301 11.2533 2.33301 10.1332V4.86651C2.33301 3.7464 2.33301 3.18635 2.55099 2.75852C2.74274 2.3822 3.0487 2.07624 3.42503 1.88449C3.85285 1.6665 4.4129 1.6665 5.53301 1.6665H7.42419C7.91337 1.6665 8.15796 1.6665 8.38814 1.72176C8.59221 1.77076 8.7873 1.85157 8.96624 1.96122C9.16808 2.08491 9.34103 2.25786 9.68693 2.60376L10.7291 3.64591C11.075 3.99182 11.2479 4.16477 11.3716 4.3666C11.4813 4.54555 11.5621 4.74063 11.6111 4.94471C11.6663 5.17488 11.6663 5.41947 11.6663 5.90865Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <a v-if="file.type === 'dir'" :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}/${file.path}`" class="ml-2 text-sm text-gray-700 hover:underline whitespace-nowrap text-ellipsis overflow-hidden">
+        <a v-if="file.type === 'dir'" :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}/${file.path}`" class="ml-2 text-sm text-gray-700 hover:underline whitespace-nowrap text-ellipsis overflow-hidden whitespace-pre">
           {{ file.name }}
         </a>
-        <a v-else-if="canPreview(file)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-gray-700 hover:underline whitespace-nowrap text-ellipsis overflow-hidden">
+        <a v-else-if="canPreview(file)" :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`" class="ml-2 text-sm text-gray-700 hover:underline whitespace-nowrap text-ellipsis overflow-hidden whitespace-pre">
           {{ file.name }}
         </a>
         <el-popover
@@ -92,7 +92,7 @@
           :content="!!lastCommit ? $t('all.notSupportPreview') : $t('all.syncNotSupportPreview')"
         >
           <template #reference>
-            <div class="ml-2 text-sm text-gray-700 hover:underline text-ellipsis overflow-hidden max-w-[280px]">{{ file.name }}</div>
+            <div class="ml-2 text-sm text-gray-700 hover:underline text-ellipsis overflow-hidden max-w-[280px] whitespace-pre">{{ file.name }}</div>
           </template>
         </el-popover>
       </div>
