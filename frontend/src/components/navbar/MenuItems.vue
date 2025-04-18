@@ -115,9 +115,15 @@
 </template>
 
 <script setup>
-  import { ref, watch, onMounted, onUnmounted } from 'vue'
+  import { ref, watch, onMounted, onUnmounted, shallowRef } from 'vue'
+  import Mcp from './menuItem/Mcp.vue'
+  import McpTools from './menuItem/McpTools.vue'
   import { useI18n } from 'vue-i18n'
+
   const { t } = useI18n()
+
+  const McpRef = shallowRef(Mcp)
+  const McpToolsRef = shallowRef(McpTools)
 
   const props = defineProps({
     isLoggedInBoolean: Boolean,
@@ -137,6 +143,36 @@
       index: '/datasets',
       class: menuItemClass,
       style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+    },
+    {
+      title: t('navbar.mcp'),
+      index: '/mcp/servers',
+      class: menuItemClass,
+      style:
+        'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      edition: ['saas', 'ee'],
+      items: [
+        {
+          title: t('navbar.mcp'),
+          index: '/mcp/servers',
+          class: subMenuItemClass,
+          style: 'height: auto;',
+          component: McpRef,
+          target: '',
+          condition: true,
+          edition: ['saas', 'ee']
+        },
+        {
+          title: t('navbar.mcpTools'),
+          index: '/mcp/servers/tools',
+          class: subMenuItemClass,
+          style: 'height: auto;',
+          component: McpToolsRef,
+          target: '',
+          condition: true,
+          edition: ['saas', 'ee']
+        }
+      ]
     },
     {
       title: t('navbar.spaces'),

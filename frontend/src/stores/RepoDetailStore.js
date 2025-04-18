@@ -76,7 +76,10 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const engineArgs = ref('')
   const username = ref('')
   const metadata = ref({})
-
+  const configuration = ref('')
+  const schema = ref('')
+  const githubPath = ref('')
+  const githubStarNum = ref(0)
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -159,6 +162,10 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     engineArgs.value = initialData.engine_args
     username.value = initialData.username
     metadata.value = initialData.metadata
+    configuration.value = initialData.configuration
+    schema.value = initialData.schema
+    githubPath.value = initialData.github_path
+    githubStarNum.value = initialData.star_num
   }
 
   const clearStore = () => {
@@ -238,6 +245,10 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     engineArgs,
     username,
     metadata,
+    configuration,
+    schema,
+    githubPath,
+    githubStarNum,
     clearStore
   }
 }, {

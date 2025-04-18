@@ -110,6 +110,12 @@
           :repo="repo"
           :repo-type="repoType" />
       </div>
+      <div
+        v-else-if="repoType === 'mcp'"
+        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
+      >
+        <McpItem v-for="repo in reposData" :mcp="repo" />
+      </div>
       <div v-else-if="repoType === 'model' && loading === false && totalRepos === 0">
         <EmptyModels />
       </div>
@@ -140,6 +146,7 @@
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
   import EmptyModels from '../models/EmptyModels.vue'
+  import McpItem from '../mcp/McpItem.vue'
 
   const props = defineProps({
     repoType: String
@@ -312,8 +319,13 @@
     try {
       const { error, data } = await useFetchApi(url).json()
       if (data.value) {
-        reposData.value = data.value.data
-        totalRepos.value = data.value.total
+        if (props.repoType === 'mcp') {
+          reposData.value = data.value.data?.data
+          totalRepos.value = data.value.data?.total
+        } else {
+          reposData.value = data.value.data
+          totalRepos.value = data.value.total
+        }
       } else {
         ElMessage.warning(error.value.msg || t('all.fetchError'))
       }

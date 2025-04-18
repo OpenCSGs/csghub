@@ -51,6 +51,8 @@ type BaseHandler interface {
 	Logs(ctx *gin.Context)
 	Community(ctx *gin.Context)
 	New(ctx *gin.Context)
+	Tools(ctx *gin.Context)
+	Schema(ctx *gin.Context)
 }
 
 type BaseHandlerImpl struct {
@@ -118,6 +120,17 @@ func (b *BaseHandlerImpl) Community(ctx *gin.Context) {
 	b.renderShow(ctx, "community", "community")
 }
 
+func (b *BaseHandlerImpl) Tools(ctx *gin.Context) {
+	data := map[string]interface{}{
+		"isSmallFooter": b.isSmallFooter,
+	}
+	RenderBaseInstance.RenderTemplate(ctx, "mcp_servers_tools", data)
+}
+
+func (b *BaseHandlerImpl) Schema(ctx *gin.Context) {
+	b.renderShow(ctx, "schema", "schema")
+}
+
 func (b *BaseHandlerImpl) New(ctx *gin.Context) {
 	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_new", map[string]interface{}{"licenses": DefaultLicensesJSON})
 }
@@ -159,5 +172,7 @@ func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[str
 		data["modelName"] = ctx.Param("model_name")
 		data["finetuneId"] = ctx.Param("finetune_id")
 		data["finetuneName"] = ctx.Param("finetune_name")
+	case "mcp_servers":
+		data["mcpServerName"] = ctx.Param("mcp_server_name")
 	}
 }

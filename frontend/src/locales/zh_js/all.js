@@ -5,6 +5,7 @@ export const all = {
   view: "查看",
   summary: "介绍",
   files: "文件",
+  schema: "协议",
   community: "讨论",
   logs: "日志",
   settings: "设置",

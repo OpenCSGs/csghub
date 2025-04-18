@@ -94,6 +94,22 @@
       <view-more v-if="spaces.more" target="spaces" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="spacesLoading" :rows="2" animated />
     </div>
+
+    <!-- mcp repo -->
+    <div class="mt-[32px]">
+      <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">
+        <SvgIcon name="space_mcp" width="18" height="18" />
+        <span>{{ $t("mcps.title") }}</span>
+      </h3>
+      <div v-if="hasMcps" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]">
+        <mcp-item v-for="mcp in mcps.data" :mcp="mcp" />
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-4 mt-[16px]">
+        {{ $t("all.noData") }}
+      </div>
+      <view-more v-if="mcps.more" target="mcps" @view-more-targets="viewMoreTargets"></view-more>
+      <el-skeleton class="pr-6" v-if="mcpsLoading" :rows="2" animated />
+    </div>
   </div>
 </template>
 
@@ -105,6 +121,7 @@
   import ViewMore from "./ViewMore.vue"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
+  import McpItem from "../mcp/McpItem.vue"
 
   const props = defineProps({
     name: String,
@@ -116,17 +133,20 @@
   const datasets = ref({})
   const codes = ref({})
   const spaces = ref({})
+  const mcps = ref({})
   const collectionsLoading = ref(false)
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
   const codeLoading = ref(false)
   const spacesLoading = ref(false)
+  const mcpsLoading = ref(false)
 
   const collectionsPage = ref(1)
   const modelsPage = ref(1)
   const datasetsPage = ref(1)
   const codesPage = ref(1)
   const spacesPage = ref(1)
+  const mcpsPage = ref(1)
 
   const PER_PAGE = 50
   const INITIAL_PER_PAGE = 6
@@ -136,6 +156,7 @@
   const hasDatasets = computed(() => datasets.value?.data?.length > 0)
   const hasCodes = computed(() => codes.value?.data?.length > 0)
   const hasSpaces = computed(() => spaces.value?.data?.length > 0)
+  const hasMcps = computed(() => mcps.value?.data?.length > 0)
 
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
@@ -146,13 +167,15 @@
     const datasetsUrl = reposUrl("datasets")
     const spacesUrl = reposUrl("spaces")
     const codesUrl = reposUrl("codes")
+    const mcpsUrl = reposUrl("mcps")
 
     const promises = [
       fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
       fetchData(modelsUrl, models, INITIAL_PER_PAGE, 1),
       fetchData(datasetsUrl, datasets, INITIAL_PER_PAGE, 1),
       fetchData(spacesUrl, spaces, INITIAL_PER_PAGE, 1),
-      fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1)
+      fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1),
+      fetchData(mcpsUrl, mcps, INITIAL_PER_PAGE, 1),
     ]
     await Promise.all(promises)
   }
@@ -184,6 +207,11 @@
         await fetchMoreCodes()
         codeLoading.value = false
         break
+      case "mcps":
+        mcpsLoading.value = true
+        await fetchMoreMcp()
+        mcpsLoading.value = false
+        break
     }
   }
 
@@ -201,11 +229,13 @@
     if (!targetRef.value.data || pageRef.value === 1) {
       targetRef.value.data = []
     }
-    targetRef.value.data = [...targetRef.value.data, ...response.data]
-    targetRef.value.total = response.total
+    const addData = targetRef === mcps ? response.data.data : response.data
+    targetRef.value.data = [...targetRef.value.data, ...addData]
+    const repoTotal = targetRef === mcps ? response.data.total : response.total
+    targetRef.value.total = repoTotal
 
     const loadedCount = targetRef.value.data.length
-    const hasMore = loadedCount < response.total
+    const hasMore = loadedCount < repoTotal
     targetRef.value.more = hasMore
 
     if (hasMore) {
@@ -230,8 +260,15 @@
       }
 
       if (perPage === INITIAL_PER_PAGE) {
-        targetRef.value = data.value
-        targetRef.value.more = data.value.total > perPage
+        if (targetRef === mcps) {
+          if (data.value.data) {
+            targetRef.value = data.value.data
+            targetRef.value.more = data.value.data.total > perPage 
+          }
+        } else {
+          targetRef.value = data.value
+          targetRef.value.more = data.value.total > perPage
+        }
       } else {
         updatePageAndData(data.value, targetRef, getPageRef(targetRef))
       }
@@ -249,6 +286,7 @@
     if (targetRef === datasets) return datasetsPage
     if (targetRef === codes) return codesPage
     if (targetRef === spaces) return spacesPage
+    if (targetRef === mcps) return mcpsPage
   }
 
   const fetchMore = async (targetRef, type) => {
@@ -262,6 +300,7 @@
   const fetchMoreDatasets = () => fetchMore(datasets, "datasets")
   const fetchMoreSpaces = () => fetchMore(spaces, "spaces")
   const fetchMoreCodes = () => fetchMore(codes, "codes")
+  const fetchMoreMcp = () => fetchMore(mcps, "mcps")
 
   onMounted(() => {
     getProfileRepoData()

@@ -260,7 +260,13 @@
   const content = ref('')
   const lastCommit = ref({})
 
-  const prefixPath = document.location.pathname.split('/')[1]
+  let prefixPath = document.location.pathname.split('/')[1]
+  let apiPrefixPath = document.location.pathname.split('/')[1]
+
+  if (prefixPath === 'mcp') {
+    prefixPath = 'mcp/servers'
+    apiPrefixPath = 'mcps'
+  }
 
   const extractNameFromPath = (path) => {
     const parts = path.split('/')
@@ -297,7 +303,7 @@
 
   const changeBranch = (branch) => {
     if (branch !== props.currentBranch) {
-      window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${branch}/${props.currentPath}`
+      window.location.href = `/${apiPrefixPath}/${props.namespacePath}/blob/${branch}/${props.currentPath}`
     }
   }
 
@@ -316,7 +322,7 @@
 
   const updateFileData = (data) => {
     content.value = resolveContent(
-      prefixPath,
+      apiPrefixPath,
       data.content,
       props.namespacePath,
       props.currentBranch
@@ -333,7 +339,7 @@
   const fetchFileContent = async () => {
     try {
       const { data, error } = await useFetchApi(
-        `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
+        `/${apiPrefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
       ).json()
 
       if (data.value) {
@@ -351,7 +357,7 @@
   }
 
   const lfsDownload = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${props.currentBranch}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${props.currentPath}`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${props.currentBranch}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${props.currentPath}`
 
     try {
       const { data, error } = await useFetchApi(url).json()
@@ -371,7 +377,7 @@
   }
 
   const normalFileDownload = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/download/${path.value}?ref=${props.currentBranch}`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${path.value}?ref=${props.currentBranch}`
 
     try {
       const { data, error } = await useFetchApi(url).blob()

@@ -5,6 +5,7 @@ export const all = {
   view: "View",
   summary: "Summary",
   files: "Files",
+  schema: "Schema",
   community: "Community",
   logs: "Logs",
   settings: "Settings",

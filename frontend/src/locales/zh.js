@@ -28,6 +28,7 @@ import { languages } from './zh_js/languages';
 import { errors_page } from './zh_js/error';
 import { prompts } from './zh_js/prompts';
 import { evaluation } from './zh_js/evaluation';
+import { mcps } from './zh_js/mcp_servers';
 
 export default {
   all,
@@ -60,4 +61,5 @@ export default {
   errors_page,
   prompts,
   evaluation,
+  mcps,
 };

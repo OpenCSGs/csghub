@@ -430,6 +430,8 @@ csghub-cli download ${props.namespacePath} -t space
         return 'codes.downloadCode'
       case 'space':
         return 'application_spaces.download'
+      case 'mcp':
+        return 'mcps.download'
       default:
         return ''
     }
