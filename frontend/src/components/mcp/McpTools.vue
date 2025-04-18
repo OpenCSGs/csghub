@@ -17,14 +17,15 @@
             {{ tools.total }} {{ $t('mcps.tools.tool') }}
           </div>
         </div>
-        <el-input
-          v-model="search"
-          :placeholder="$t('mcps.tools.searchTools')"
-          class="w-80"
-          size="large"
-          :prefix-icon="Search"
-          @change="searchTools"
-        />
+        <div>
+          <el-input
+            v-model="search"
+            :placeholder="$t('mcps.tools.searchTools')"
+            size="large"
+            :prefix-icon="Search"
+            @change="searchTools"
+          />
+        </div>
       </section>
 
       <section>
