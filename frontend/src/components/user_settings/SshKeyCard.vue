@@ -4,15 +4,31 @@
       <p class="font-medium text-base break-words mr-[8px]">{{ theSshKeyName }}</p>
       <p class="text-gray-500 text-[13px] md:pl-0 md:mt-[4px]"> {{ passedTime }}</p>
       <div @click="deleteDialogVisible = true"
-           class="flex items-center justify-center absolute top-0 right-0 w-[46px] h-[32px] bg-white rounded-sm border-2 text-right">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
+           class="flex items-center justify-center absolute top-0 right-0 btn btn-secondary-gray btn-sm">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
               d="M2.33366 2.91699L2.73981 9.82157C2.80217 10.8818 2.83336 11.4119 3.05963 11.8141C3.25882 12.1683 3.56115 12.4533 3.92637 12.6314C4.34125 12.8337 4.87226 12.8337 5.93429 12.8337H8.06636C9.12839 12.8337 9.6594 12.8337 10.0743 12.6314C10.4395 12.4533 10.7418 12.1683 10.941 11.8141C11.1673 11.4119 11.1985 10.8818 11.2608 9.82157L11.667 2.91699M2.33366 2.91699H1.16699M2.33366 2.91699H11.667M11.667 2.91699H12.8337M9.33366 2.91699L9.30372 2.82719C9.21047 2.54744 9.16385 2.40756 9.10498 2.28735C8.8112 1.68746 8.23732 1.27383 7.57531 1.18483C7.44265 1.16699 7.29521 1.16699 7.00033 1.16699V1.16699C6.70544 1.16699 6.558 1.16699 6.42535 1.18483C5.76333 1.27383 5.18946 1.68746 4.89567 2.28735C4.8368 2.40756 4.79018 2.54744 4.69693 2.82719L4.66699 2.91699M5.83366 5.83366V9.91699M8.16699 5.83366V8.16699"
-              stroke="#606266" stroke-width="0.857143" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+                stroke="#606266" stroke-width="0.857143" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
       </div>
     </div>
-    <div class="pt-[16px]"><p class="break-all text-gray-500 text-sm">{{ theSshKey }}</p></div>
+    <div class="pt-[16px]">
+      <div class="flex items-center">
+        <el-input
+          v-model="theSshKey"
+          type="password"
+          show-password
+          onfocus="this.blur()"
+          :show-copy="false"
+        />
+        <div
+          class="btn btn-secondary-gray btn-sm ml-2"
+          @click="copyKey"
+        >
+          <SvgIcon name="copy" />
+        </div>
+      </div>
+    </div>
   </div>
   <el-dialog v-model="deleteDialogVisible" :title="$t('sshKey.delKeyName', {value: sshKeyName})" width="30%" class="dialogWidth"
              style="border-radius: var(--border-radius-md);" left>
@@ -33,8 +49,13 @@
 <script>
 import {ElMessage} from "element-plus"
 import useFetchApi from '../../packs/useFetchApi'
+import SvgIcon from '../shared/SvgIcon.vue'
+import { copyToClipboard } from '../../packs/clipboard'
 
 export default {
+  components: {
+    SvgIcon
+  },
   props: {
     profileName: String,
     sshKeyName: String,
@@ -83,6 +104,9 @@ export default {
         }, 1000)
         ElMessage({message: this.$t('all.delSuccess'), type: "success"})
       }
+    },
+    copyKey() {
+      copyToClipboard(this.theSshKey)
     }
   }
 }
