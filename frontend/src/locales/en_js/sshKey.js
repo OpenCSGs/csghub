@@ -1,4 +1,5 @@
 export const sshKey = {
+  desc: "SSH keys are used to authenticate Git operations over SSH. Add your public SSH key here to connect to your repositories securely.",
   addSshKey: "Add SSH Key",
   noKeyTips: "There are currently no SSH keys added to your account",
   sshKeyName: "SSH Key Name",

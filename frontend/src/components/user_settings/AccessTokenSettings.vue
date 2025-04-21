@@ -26,7 +26,7 @@
               onfocus="this.blur()"
             />
             <div
-              class="ml-[8px] px-[16px] py-[8px] border rounded-xs bg-white cursor-pointer"
+              class="btn btn-secondary-gray btn-sm ml-2"
               @click="copyToken"
             >
               <SvgIcon name="copy" />
@@ -34,12 +34,11 @@
           </div>
         </div>
         <div class="my-[16px]">
-          <button
-            type="default"
+          <CsgButton
             @click="confirmRefreshAccessToken"
-            class="btn btn-secondary-gray btn-md"
-            >{{ $t('accessToken.refresh') }}</button
-          >
+            class="btn btn-primary btn-md w-fit"
+            :name="$t('accessToken.refresh')"
+          />
         </div>
       </div>
     </div>
