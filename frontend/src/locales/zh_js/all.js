@@ -109,6 +109,7 @@ export const all = {
   deployLoadingText:'部署中,请稍后',
   buildLoadingText:'构建中,请稍后',
   viewCode: '查看代码',
+  copy:"复制",
   instanceDeploy: {
     deployFailed: '部署失败',
     Error: '运行脚本出错，模型不全，或者推理引擎参数报错',

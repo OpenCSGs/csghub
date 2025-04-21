@@ -109,6 +109,7 @@ export const all = {
   deployLoadingText:'Deploying, please wait a moment',
   buildLoadingText:'Building, please wait a moment',
   viewCode: 'View Code',
+  copy: "Copy",
   instanceDeploy: {
     deployFailed: 'deploy failed',
     Error: 'incomplete model or an incorrect inference engine parameter',

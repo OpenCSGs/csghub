@@ -54,11 +54,13 @@
       <CodeViewer
         :content="codeContent"
         :extension="codeExtension" />
-      <div
-        class="absolute bg-white text-xs text-gray-700 right-6 top-6 px-[16px] py-[8px] border rounded-lg shadow cursor-pointer items-center gap-1 hidden group-hover:flex"
-        @click="copyCode">
-        <SvgIcon name="copy" />
-        Copy
+      <div class="hidden group-hover:flex absolute right-6 top-6">
+        <CsgButton
+          class="shadow btn btn-secondary-gray btn-sm"
+          :name="$t('all.copy')"
+          svgName="copy"
+          @click="copyCode"
+        />
       </div>
     </div>
   </div>
