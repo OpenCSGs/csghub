@@ -96,6 +96,7 @@ export const admin = {
     tagList: 'Tags List',
     tagDetailBtn: 'Detail',
     tagDetailTitle: 'Tag Detail',
+    searchPlaceholder: 'Search Tag',
     create: 'Create',
     editBtn: 'Edit',
     editCancelBtn: 'Cancel',
