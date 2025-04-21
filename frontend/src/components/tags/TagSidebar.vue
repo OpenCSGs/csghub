@@ -57,7 +57,7 @@
   const activeTags = ref({})
 
   const avaliableCategories = computed(() => {
-    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled)
+    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled && c.name !== 'publisher')
   })
 
   watch(avaliableCategories,

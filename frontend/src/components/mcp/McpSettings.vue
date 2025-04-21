@@ -68,7 +68,7 @@
           class="!w-[512px] sm:!w-full"
         />
         <button
-          @click="updateModelDesc"
+          @click="updateMcpDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
         >
           {{ $t('all.update') }}
@@ -383,6 +383,8 @@
     const findTag = selectedTags.value.find((tag) => tag.name === newTag.name)
     if (!findTag) {
       selectedTags.value.push({ name: newTag.name, zh_name: newTag.show_name })
+      tagInput.value = ''
+      shouldShowTagList.value = false
     }
   }
 
@@ -443,7 +445,7 @@
   const changeVisibilityCall = (value) => {
     const isprivateSelected = value === 'Private'
     const payload = { private: isprivateSelected }
-    updateModel(payload)
+    updateMcp(payload)
   }
 
   const updateTags = () => {
@@ -452,7 +454,7 @@
       updateTagsInReadme(newSelectedTags)
     } else {
       ElMessage({
-        message: t('mcps.edit.needModelTag'),
+        message: t('mcps.edit.needMcpTag'),
         type: 'warning'
       })
     }
@@ -512,7 +514,7 @@
   const updateNickname = () => {
     if (!!theMcpNickname.value.trim()) {
       const payload = { nickname: theMcpNickname.value }
-      updateModel(payload)
+      updateMcp(payload)
     } else {
       ElMessage({
         message: t('mcps.edit.needMcpName'),
@@ -521,10 +523,10 @@
     }
   }
 
-  const updateModelDesc = () => {
+  const updateMcpDesc = () => {
     if (!!theMcpDesc.value.trim()) {
       const payload = { description: theMcpDesc.value }
-      updateModel(payload)
+      updateMcp(payload)
     } else {
       ElMessage({
         message: t('mcps.edit.needMcpDesc'),
@@ -533,7 +535,7 @@
     }
   }
 
-  const updateModel = async (payload) => {
+  const updateMcp = async (payload) => {
     const mcpUpdateEndpoint = `/mcps/${props.path}`
     const options = {
       headers: { 'Content-Type': 'application/json' },

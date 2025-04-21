@@ -440,11 +440,7 @@
       })
     } else {
       const tagArray = Array.isArray(data.value.data) ? data.value.data : []
-      if (props.repoType === 'mcp') {
-        tagList.value = tagArray.filter(tag => tag.scope === 'mcp' && tag.category !== 'license')
-      } else {
-        tagList.value = tagArray.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
-      }
+      tagList.value = tagArray.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
     }
   }
 </script>

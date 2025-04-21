@@ -68,6 +68,64 @@
       target="language"
       @view-more-targets="viewMoreTargets"
     />
+    <!-- programLanguageTags -->
+    <div
+      v-if="programLanguageTags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      {{ $t('all.programLanguage') }}:
+    </div>
+    <a
+      v-for="tag in theProgramLanguageTags.theTags"
+      :href="`/${prefix}?tag=${tag.name}&tag_type=ProgramLanguage`"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+    </a>
+    <MoreTags
+      v-if="theProgramLanguageTags.moreTags"
+      :num="programLanguageTags.length - 3"
+      target="programLanguageTags"
+      @view-more-targets="viewMoreTargets"
+    />
+    <!-- Runmode Tags -->
+    <div
+      v-if="runmodeTags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      {{ $t('all.runmode') }}:
+    </div>
+    <div
+      v-for="tag in theRunmodeTags.theTags"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+    </div>
+    <MoreTags
+      v-if="theRunmodeTags.moreTags"
+      :num="runmodeTags.length - 3"
+      target="runmode"
+      @view-more-targets="viewMoreTargets"
+    />
+    <!-- Scene Tags -->
+    <div
+      v-if="sceneTags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      {{ $t('all.scene') }}:
+    </div>
+    <div
+      v-for="tag in theSceneTags.theTags"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+    </div>
+    <MoreTags
+      v-if="theSceneTags.moreTags"
+      :num="sceneTags.length - 3"
+      target="scene"
+      @view-more-targets="viewMoreTargets"
+    />
     <!-- industryTags -->
     <div
       v-if="industryTags?.length"
@@ -180,6 +238,18 @@
     return props.tags.other_tags
   })
 
+  const programLanguageTags = computed(() => {
+    return props.tags.program_language
+  })
+
+  const runmodeTags = computed(() => {
+    return props.tags.runmode_tags
+  })
+
+  const sceneTags = computed(() => {
+    return props.tags.scene_tags
+  })
+
     //先定义一个生产参数的方法
   const createTagRefs = (tagType) => {
     const moreTags = ref(tagType.value?.length > 3)
@@ -193,6 +263,9 @@
   const theLicenseTags = ref(createTagRefs(licenseTags))
   const theIndustryTags = ref(createTagRefs(industryTags))
   const theOtherTags = ref(createTagRefs(otherTags))
+  const theProgramLanguageTags = ref(createTagRefs(programLanguageTags))
+  const theRunmodeTags = ref(createTagRefs(runmodeTags))
+  const theSceneTags = ref(createTagRefs(sceneTags))
 
   watch(() => props.tags, () => {
     theTaskTags.value = createTagRefs(taskTags)
@@ -201,6 +274,9 @@
     theLicenseTags.value = createTagRefs(licenseTags)
     theIndustryTags.value = createTagRefs(industryTags)
     theOtherTags.value = createTagRefs(otherTags)
+    theProgramLanguageTags.value = createTagRefs(programLanguageTags)
+    theRunmodeTags.value = createTagRefs(runmodeTags)
+    theSceneTags.value = createTagRefs(sceneTags)
   })
 
   const tagGroups = {
@@ -227,6 +303,18 @@
     other: {
       source: otherTags,
       target: theOtherTags
+    },
+    program_language: {
+      source: programLanguageTags,
+      target: theProgramLanguageTags
+    },
+    runmode: {
+      source: runmodeTags,
+      target: theRunmodeTags
+    },
+    scene: {
+      source: sceneTags,
+      target: theSceneTags
     }
   }
 
@@ -239,6 +327,10 @@
   }
 
   const searchByTag = (tag) => {
-    window.location.href = `/${props.prefix}?tag=${tag.name}&tag_type=Task`
+    if (props.prefix === 'mcps/') {
+      window.location.href = `/mcp/servers?tag=${tag.name}&tag_type=Task`
+    } else {
+      window.location.href = `/${props.prefix}?tag=${tag.name}&tag_type=Task`
+    }
   }
 </script>
