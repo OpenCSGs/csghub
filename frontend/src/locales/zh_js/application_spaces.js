@@ -87,6 +87,7 @@ export const application_spaces = {
     spaceEnName: "应用空间英文名称",
     cluster: "区域",
     chooseTemplate: "选择一个模版",
+    pleaseChooseTemplate: "请选择一个模版",
     spaceSecrets: "空间密钥",
     spaceVariables: "空间变量"
   },

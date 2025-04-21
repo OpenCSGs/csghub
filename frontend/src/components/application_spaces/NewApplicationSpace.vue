@@ -184,6 +184,7 @@
           <el-radio-group
             v-model="dataForm.sdk"
             class="!grid grid-cols-4 w-full gap-[24px]"
+            @change="handleSdkChange"
           >
             <el-radio
               class="rounded-md !border-[2px] !h-[120px] flex justify-center"
@@ -268,23 +269,24 @@
           </el-radio-group>
         </el-form-item>
         <div v-if="dataForm.sdk === 'docker'">
-          <p class="text-gray-600 mb-1.5 font-light">
-            {{ $t('application_spaces.new.chooseTemplate') }}
-          </p>
+          <el-form-item
+            :label="t('application_spaces.new.chooseTemplate')"
+            class="w-full"
+            prop="dockerTemplate">
+            <el-radio-group
+              v-model="dataForm.dockerTemplate"
+              class="flex flex-wrap gap-2 mb-6"
+            >
+              <el-radio-button v-for="template in dockerTemplates"
+                :label="template.name"
+                :value="template.name"
+                size="large"
+                border
+              />
+            </el-radio-group>
+          </el-form-item>
 
-          <el-radio-group
-            v-model="dockerTemplate"
-            class="flex flex-wrap gap-2 mb-6"
-          >
-            <el-radio-button v-for="template in dockerTemplates"
-              :label="template.name"
-              :value="template.name"
-              size="large"
-              border
-            />
-          </el-radio-group>
-
-          <div v-if="dockerTemplate" class="mb-6">
+          <div v-if="dataForm.dockerTemplate" class="mb-6">
             <div v-if="currentDockerTemplates.secrets">
               <p class="text-gray-700 text-sm leading-5">{{ t('application_spaces.new.spaceSecrets') }}</p>
               <div
@@ -403,12 +405,11 @@
   const { t } = useI18n()
   const nameRule = inject('nameRule')
   const dockerTemplates = ref([])
-  const dockerTemplate = ref('')
   const dockerVariables = ref({})
   const dockerSecrets = ref({})
 
   const currentDockerTemplates = computed(() => {
-    const currentTemplate = dockerTemplates.value.find((template) => template.name === dockerTemplate.value)
+    const currentTemplate = dockerTemplates.value.find((template) => template.name === dataForm.value.dockerTemplate)
     if (currentTemplate && currentTemplate.variables) {
       dockerVariables.value = JSON.parse(currentTemplate.variables).reduce((accumulator, current) => {
         accumulator[current.name] = current.value
@@ -428,11 +429,12 @@
     owner: '',
     license: props.licenses[0][0],
     visibility: 'public',
-    sdk: 'gradio'
+    sdk: 'gradio',
+    dockerTemplate: ''
   })
   const loading = ref(false)
 
-  const rules = ref({
+  const rulesStaticObj = {
     owner: [
       {
         required: true,
@@ -493,7 +495,8 @@
         trigger: 'change'
       }
     ]
-  })
+  }
+  const rules = ref(rulesStaticObj)
 
   const namespaces = () => {
     let namespaces = userStore.orgs.map((org) => org.path)
@@ -561,14 +564,50 @@
     dataFormRef.value
       .validate(async (valid) => {
         if (valid) {
+          if(dataForm.value.sdk === 'docker' && !dataForm.value.dockerTemplate){
+            ElMessage({
+              message: t('application_spaces.new.chooseTemplate'),
+              type: 'error'
+            })
+            return false
+          }
           await createApplicationSpace()
         } else {
+          const firstErrorItem = Object.keys(rules.value).find((key) => {
+            return dataFormRef.value.fields.find(field => field.prop === key && field.validateState === 'error');
+          });
+          if (firstErrorItem) {
+            const errorField = dataFormRef.value.fields.find(field => field.prop === firstErrorItem);
+            if (errorField) {
+              const el = errorField.$el;
+              if (el && typeof el.scrollIntoView === 'function') {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              } else {
+                console.error('Error field element is not valid:', el);
+              }
+            }
+          }
           return false
         }
       })
       .finally(() => {
         loading.value = false
       })
+  }
+
+  const handleSdkChange = (e) => {
+    if(e === 'docker'){
+      rules.value = {...rulesStaticObj, dockerTemplate: [
+        {
+          required: true,
+          message: t('application_spaces.new.pleaseChooseTemplate'),
+          trigger: 'change',
+        }
+      ]}
+    } else {
+      rules.value = rulesStaticObj
+      dataForm.value.dockerTemplate = ''
+    }
   }
 
   const createApplicationSpace = async () => {
@@ -587,7 +626,7 @@
     }
 
     if (dataForm.value.sdk === 'docker') {
-      params.template = dockerTemplate.value
+      params.template = dataForm.value.dockerTemplate
       params.variables = JSON.stringify(dockerVariables.value) === "{}" ? "" : JSON.stringify(dockerVariables.value)
       params.secrets = JSON.stringify(dockerSecrets.value) === "{}" ? "" : JSON.stringify(dockerSecrets.value)
     }
