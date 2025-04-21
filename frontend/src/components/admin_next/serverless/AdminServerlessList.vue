@@ -16,12 +16,20 @@
       />
     </div> -->
     <Table
-      :title="$t('admin.serverless.listTitle')"
       :data="serverless"
       size="small"
       :border="false"
-      class="custom-table"
-    >
+      class="custom-table">
+      <template #header>
+        <div class="px-6 pt-5 pb-4 flex justify-start gap-2 items-center">
+          <h2 class="text-18 text-md text-gray-900">
+            {{ $t('admin.serverless.listTitle') }}
+          </h2>
+          <div class="px-2 py-1.5 bg-brand-50 rounded-xl outline outline-1 outline-offset-[-1px] outline-brand-200 inline-flex justify-start items-center whitespace-nowrap">
+            <span class="text-brand-700 text-xs font-normal leading-none">{{ total }} {{ $t('admin.serverless.serverlessCount') }}</span>
+          </div>
+        </div>
+      </template>
       <el-table-column :label="$t('admin.serverless.deployName')" min-width="200" show-overflow-tooltip>
         <template #default="scope">
           <a

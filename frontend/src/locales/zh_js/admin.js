@@ -45,6 +45,7 @@ export const admin = {
   users: {
     title: '用户管理',
     userList: '用户列表',
+    userCount: '位用户',
     userDetailBtn: '详情',
     userDetailTitle: '用户详情',
     editBtn: '编辑',
@@ -54,6 +55,7 @@ export const admin = {
   models: {
     title: '模型管理',
     modelList: '模型列表',
+    modelCount: '个模型',
     modelDetails: '模型详情',
     modelEdit:"编辑模型",
     modelDetailBtn: '详情',
@@ -65,6 +67,7 @@ export const admin = {
   serverless: {
     title: '公共推理服务',
     listTitle: 'Serverless 列表',
+    serverlessCount: '个 Serverless',
     detailTitle: 'Serverless 详情',
     newTitle: '新建 Serverless',
     editTitle: '编辑 Serverless',
@@ -94,6 +97,7 @@ export const admin = {
     newTag: '新建标签',
     editTag: '编辑标签',
     tagList: '标签列表',
+    tagCount: '个标签',
     tagDetailBtn: '详情',
     tagDetailTitle: '标签详情',
     create: '新建',
@@ -115,6 +119,7 @@ export const admin = {
   tagCategories: {
     title: '标签分类管理',
     listTitle: '标签分类列表',
+    categoryCount: '个标签分类',
     newTitle: '新建标签分类',
     editTitle: '编辑标签分类',
     create: '新建',
