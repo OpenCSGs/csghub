@@ -3,6 +3,7 @@ import { finetune } from "./finetune";
 export const models = {
   title: "模型",
   placeholder: "模型名字",
+  newTips:'近两周新增模型',
   downloadModel: "下载模型数据",
   download: "下载模型",
   modelName: "模型名称",
