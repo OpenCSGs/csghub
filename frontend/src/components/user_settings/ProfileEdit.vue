@@ -8,7 +8,7 @@
       <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.userAvatar') }}</div>
       <el-avatar
         :size="120"
-        :src="profileData.avatar">
+        :src="profileData.avatar.value">
       </el-avatar>
       <div class="flex gap-[12px] fileInput">
         <input
@@ -35,7 +35,7 @@
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.username"
+        v-model="profileData.username.value"
         :disabled="!canChangeUsername"
         :placeholder="$t('all.userName')">
       </el-input>
@@ -60,7 +60,7 @@
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.phone"
+        v-model="profileData.phone.value"
         disabled
         :placeholder="$t('all.phone')">
       </el-input>
@@ -91,7 +91,7 @@
           </el-input>
         </el-form-item>
       </el-form>
-      
+
     </div>
     <!-- nickname -->
     <div>
@@ -100,7 +100,7 @@
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.nickname"
+        v-model="profileData.nickname.value"
         :placeholder="$t('all.nickName')"
         @change="handleInputChange">
       </el-input>
@@ -112,7 +112,7 @@
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.homepage"
+        v-model="profileData.homepage.value"
         :placeholder="$t('all.homepage')"
         @change="handleInputChange">
       </el-input>
@@ -124,7 +124,7 @@
       </div>
       <el-input
         class="max-w-[600px]"
-        v-model="profileData.bio"
+        v-model="profileData.bio.value"
         clearable
         type="textarea"
         :autosize="{ minRows: 8, maxRows: 30 }"
@@ -150,7 +150,6 @@
   import { useI18n } from 'vue-i18n'
   import { useCookies } from 'vue3-cookies'
   import { isBlank } from '../../packs/utils'
-  import refreshJWT from '@/packs/refreshJWT.js'
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -163,7 +162,7 @@
   const validator = (rule, value, callback) => {
     if (value === '') {
       return callback(new Error(t('profile.edit.emailRequired')))
-    } 
+    }
 
     const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if(!pattern.test(value)) {
@@ -177,11 +176,11 @@
     email: [ { validator, trigger: 'change'} ]
   }
 
-  const profileData = ref(storeToRefs(userStore))
-  form.email = profileData.value.email
+  const profileData = storeToRefs(userStore)
+  form.email = profileData.email.value
 
   watch(
-    () => profileData.value,
+    () => profileData,
     () => {
       userStore.updateInitalized(false)
     },
@@ -199,8 +198,8 @@
   }
 
   const removeImage = () => {
-    fileInput.value = null
-    profileData.value.avatar = ''
+    fileInput.value.value = ''
+    profileData.avatar.value = ''
   }
 
   const uploadAvatar = async () => {
@@ -214,9 +213,9 @@
     const response = await csrfFetch(uploadEndpoint, options)
     const result = await response.json()
     if (!response.ok) {
-      ElMessage({ message: result.message, type: 'warning' })
+      ElMessage.warning(result.message)
     } else {
-      profileData.value.avatar = result.url
+      profileData.avatar.value = result.url
     }
   }
 
@@ -235,10 +234,7 @@
       ).then(() => {
         saveProfile()
       }).catch(() => {
-        ElMessage({
-          type: 'info',
-          message: t('profile.edit.updateCancelled'),
-        })
+        ElMessage.info(t('profile.edit.updateCancelled'))
       })
     } else {
       saveProfile()
@@ -248,17 +244,17 @@
   const updateProfile = async (config={}) => {
     const profileUpdateEndpoint = `/user/${userStore.uuid}?type=uuid`
     let params = {
-      avatar: profileData.value.avatar,
-      username: profileData.value.username,
-      name: profileData.value.nickname,
+      avatar: profileData.avatar.value,
+      username: profileData.username.value,
+      name: profileData.nickname.value,
       email: (form.email || "").trim(),
-      phone: profileData.value.phone,
-      homepage: profileData.value.homepage,
-      bio: profileData.value.bio
+      phone: profileData.phone.value,
+      homepage: profileData.homepage.value,
+      bio: profileData.bio.value
     }
 
     if (canChangeUsername.value) {
-      params['new_username'] = profileData.value.username
+      params['new_username'] = profileData.username.value
     }
 
     Object.keys(params).forEach(key => {
@@ -274,7 +270,7 @@
     try {
       const { error } = await useFetchApi(profileUpdateEndpoint, options).put().json()
       if (error.value) {
-        ElMessage({ message: error.value.msg, type: 'warning' })
+        ElMessage.warning(error.value.msg)
       } else {
         await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
         userStore.email = params.email
@@ -292,17 +288,13 @@
   }
 
   const saveProfile = (config={}) => {
-    if (isBlank(profileData.value.username)) {
+    if (isBlank(profileData.username.value)) {
       ElMessage.warning("Please provide username")
       return
     }
     formRef.value.validate((v,error) => {
       if(v) {
-        if (isSmsCodeValid()) {
-          updateProfile(config)
-        } else {
-          ElMessage.warning("SMS code not correct")
-        }
+        updateProfile(config)
       }
       if (error) {
         formRef.value.scrollToField('email')

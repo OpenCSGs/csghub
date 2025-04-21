@@ -1,4 +1,5 @@
 export const sshKey = {
+  desc: "SSH 密钥用于通过 SSH 进行 Git 操作的身份验证。在此添加您的公钥以安全地连接到您的代码仓库。",
   addSshKey: "添加 SSH Key",
   noKeyTips: "现在还没有添加SSH key到您的账户",
   sshKeyName: "SSH Key 名称",

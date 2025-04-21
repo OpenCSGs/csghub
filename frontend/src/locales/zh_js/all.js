@@ -110,10 +110,19 @@ export const all = {
   deployLoadingText:'部署中,请稍后',
   buildLoadingText:'构建中,请稍后',
   viewCode: '查看代码',
+  copy:"复制",
   instanceDeploy: {
     deployFailed: '部署失败',
     Error: '运行脚本出错，模型不全，或者推理引擎参数报错',
     OOMKilled: '资源不足',
     CrashLoopBackOff: '容器崩溃'
-  }
+  },
+  discuss: "讨论",
+  comments: {
+    warn: "内容不能为空",
+    success: "成功添加评论"
+  },
+  show: "显示",
+  hide: "隐藏",
+  copySuccess: "复制成功"
 }

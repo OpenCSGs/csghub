@@ -96,6 +96,7 @@ export const admin = {
     tagList: '标签列表',
     tagDetailBtn: '详情',
     tagDetailTitle: '标签详情',
+    searchPlaceholder: '搜索标签',
     create: '新建',
     editBtn: '编辑',
     editCancelBtn: '取消',

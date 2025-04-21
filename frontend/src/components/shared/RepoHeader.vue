@@ -41,6 +41,11 @@
           {{ likesNumberDisplayName }}
         </div>
       </div>
+      <div v-if="showNewTag">
+        <el-tooltip :content="$t(`${repoType}s.newTips`)" placement="top">
+          <NewTag />
+        </el-tooltip>
+      </div>
     </div>
 
     <!-- endpoint -->
@@ -154,6 +159,11 @@
           width="16"
           height="16" />
       </p>
+      <div v-if="showNewTag">
+        <el-tooltip :content="$t(`${repoType}s.newTips`)" placement="top">
+          <NewTag />
+        </el-tooltip>
+      </div>
     </div>
 
     <div
@@ -235,7 +245,8 @@
   import { ElMessage } from 'element-plus'
   import RepoHeaderSourceIcon from './RepoHeaderSourceIcon.vue'
   import { useI18n } from 'vue-i18n'
-
+  import NewTag from './NewTag.vue'
+ 
   const { t } = useI18n()
   const repoDetailStore = useRepoDetailStore()
 
@@ -262,6 +273,7 @@
       default: 0
     },
     hasLike: Boolean,
+    showNewTag: Boolean,
     resourceName: String
   })
 

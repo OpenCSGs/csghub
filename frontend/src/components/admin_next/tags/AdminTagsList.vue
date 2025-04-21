@@ -4,13 +4,24 @@
     subtitle=""
     :breadcrumbs="[{ text: $t('admin.tags.title') }]">
     <div class="flex items-center justify-between gap-3 w-full pt-1">
+      <!-- 搜索框 -->
+      <el-input
+        v-model="searchText"
+        :placeholder="$t('admin.tags.searchPlaceholder')"
+        size="large"
+        clearable
+        @input="handleSearch"
+        class="flex-1"
+      />
+
       <!-- tag scope filter -->
       <el-select
         v-model="scope"
         size="large"
         placeholder="scope name"
         clearable
-        @change="fetchtagsAndResetCategory">
+        @change="fetchtagsAndResetCategory"
+        class="flex-1">
         <el-option
           label="model"
           value="model"></el-option>
@@ -29,21 +40,19 @@
       <el-select
         v-model="keyword"
         size="large"
-        @change="fetchtags">
+        @change="fetchtags"
+        class="flex-1">
         <el-option
           v-for="c in avaliableCategories"
           :label="c.name"
           :value="c.name"></el-option>
       </el-select>
-      <!-- <el-input
-        v-model="keyword"
-        placeholder="category name"
-        size="large"
-        :prefix-icon="Search"
-        @input="fetchtags" /> -->
 
       <router-link
-        to="/admin_panel/tags/new"
+        :to="{
+          path: '/admin_panel/tags/new',
+          query: { scope: scope || '', category: keyword || '' }
+        }"
         class="shrink-0">
         <CsgButton
           class="btn btn-primary btn-md"
@@ -191,6 +200,7 @@
   const tags = ref([])
   const keyword = ref('')
   const scope = ref('')
+  const searchText = ref('')
   const page = ref(1)
   const per = ref(10)
   const total = ref(0)
@@ -248,6 +258,9 @@
     if (scope.value) {
       params.append('scope', scope.value);
     }
+    if (searchText.value) {
+      params.append('search', searchText.value);
+    }
 
     const { data, error } = await useFetchApi(
       `/tags?${params.toString()}`
@@ -298,6 +311,11 @@
     } else {
       ElMessage.error(error.value.msg)
     }
+  }
+
+  const handleSearch = () => {
+    page.value = 1
+    fetchtags()
   }
 
   onMounted(() => {

@@ -14,6 +14,7 @@
         :repoId="repoDetailStore.repositoryId"
         :totalLikes="repoDetailStore.likes"
         :hasLike="repoDetailStore.userLikes"
+        :showNewTag="showNewTag"
         :repoType="repoType" />
     </div>
   </div>
@@ -44,6 +45,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ToUnauthorizedPage } from '@/packs/utils'
   import { storeToRefs } from 'pinia'
+  import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
 
   const props = defineProps({
     defaultTab: String,
@@ -70,6 +72,9 @@
   //   industry_tags: [],
   //   other_tags: []
   // })
+  const showNewTag = computed(() => {
+    return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(repoDetailStore.createdAt) || isWithinTwoWeeks(repoDetailStore.updatedAt));
+  });
 
   const tags = computed(() => {
     return handleRepoTags(repoDetailStore)
