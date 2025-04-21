@@ -8,4 +8,8 @@ export const sshKey = {
   contentWarning: "请您填写SSH Key 内容",
   sureDelKey: "你确定要从你的帐户中删除此密钥吗？此操作无法撤消。",
   delKeyName: "删除 Key {value}",
+  addedOn: "于 {year}年{month}月{day}日添加",
+  addedMinutesAgo: "{minutes} 分钟前添加",
+  addedHoursAgo: "{hours} 小时前添加",
+  addedDaysAgo: "{days} 天前添加"
 }

@@ -88,7 +88,7 @@
               class="btn btn-primary btn-sm w-fit"
               :name="$t('all.add')"
               @click="submitSshKey"
-              />
+            />
           </span>
         </template>
       </el-dialog>

@@ -9,4 +9,8 @@ export const sshKey = {
   sureDelKey:
     "Are you sure you want to delete this key from your account? This action cannot be undone.",
   delKeyName: "Delete Key {value}",
+  addedOn: "Added on {year}/{month}/{day}",
+  addedMinutesAgo: "Added {minutes} minutes ago",
+  addedHoursAgo: "Added {hours} hours ago",
+  addedDaysAgo: "Added {days} days ago"
 }
