@@ -5,12 +5,34 @@
       <el-input v-model="keyword" placeholder="Name, Email, Phone" size="large" :prefix-icon="Search"
         @input="searchUsers" />
     </div>
-    <Table :title="$t('admin.users.userList')" :data="users" size="small" :border="false" class="custom-table">
-      <el-table-column prop="username" label="Name" />
-      <el-table-column prop="nickname" label="Nickname" />
-      <el-table-column prop="email" label="Email" />
-      <el-table-column prop="phone" label="Phone" />
-      <el-table-column label="Operations">
+    <Table
+      :data="users"
+      size="small"
+      :border="false"
+      class="custom-table">
+      <template #header>
+        <div class="px-6 pt-5 pb-4 flex justify-start gap-2 items-center">
+          <h2 class="text-18 text-md text-gray-900">
+            {{ $t('admin.users.userList') }}
+          </h2>
+          <div class="px-2 py-1.5 bg-brand-50 rounded-xl outline outline-1 outline-offset-[-1px] outline-brand-200 inline-flex justify-start items-center">
+            <span class="text-brand-700 text-xs font-normal leading-none">{{ total }} {{ $t('admin.users.userCount') }}</span>
+          </div>
+        </div>
+      </template>
+      <el-table-column
+        prop="username"
+        :label="$t('admin.name')" />
+      <el-table-column
+        prop="nickname"
+        :label="$t('admin.nickname')" />
+      <el-table-column
+        prop="email"
+        :label="$t('admin.email')" />
+      <el-table-column
+        prop="phone"
+        :label="$t('admin.phone')" />
+      <el-table-column :label="$t('admin.operations')">
         <template #default="scope">
           <el-button size="small" @click="showDetail(scope.row)">
             {{ $t('admin.users.userDetailBtn') }}

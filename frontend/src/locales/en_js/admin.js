@@ -45,6 +45,7 @@ export const admin = {
   users: {
     title: 'User Management',
     userList: 'Users List',
+    userCount: 'users',
     userDetailBtn: 'Detail',
     userDetailTitle: 'User Detail',
     editBtn: 'Edit',
@@ -54,6 +55,7 @@ export const admin = {
   models: {
     title: 'Model',
     modelList: 'Model List',
+    modelCount: 'models',
     modelDetails: 'Model Details',
     modelEdit: 'Model Edit',
     modelDetailBtn: 'Detail',
@@ -65,6 +67,7 @@ export const admin = {
   serverless: {
     title: 'Serverless APIs',
     listTitle: 'Serverless List',
+    serverlessCount: 'serverless',
     detailTitle: 'Serverless Detail',
     newTitle: 'New Serverless',
     editTitle: 'Edit Serverless',
@@ -94,6 +97,7 @@ export const admin = {
     newTag: 'Create Tag',
     editTag: 'Edit Tag',
     tagList: 'Tags List',
+    tagCount: 'tags',
     tagDetailBtn: 'Detail',
     tagDetailTitle: 'Tag Detail',
     searchPlaceholder: 'Search Tag',
@@ -116,6 +120,7 @@ export const admin = {
   tagCategories: {
     title: 'Tag Category Management',
     listTitle: 'Tag Category List',
+    categoryCount: 'tag categories',
     newTitle: 'Create Tag Category',
     editTitle: 'Edit Tag Category',
     create: 'Create',
