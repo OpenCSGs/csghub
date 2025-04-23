@@ -226,7 +226,20 @@
       <span class="text-gray-700 font-normal text-md">{{ resourceName }}</span>
     </div>
   </div>
-  <div class="leading-[24px] pb-[16px] text-gray-700 md:px-5">{{ desc }}</div>
+  <div 
+    ref="descRef"
+    class="leading-6 text-gray-700 md:px-5 break-words"
+    :class="{ 'line-clamp-3': !isExpanded }"
+  >
+    {{ desc }}
+  </div>
+  <div 
+    v-if="showExpandButton || isExpanded" 
+    class="text-brand-700 cursor-pointer md:px-5 pb-4"
+    @click="isExpanded = !isExpanded"
+  >
+    {{ isExpanded ? $t('all.lessDesc') : $t('all.moreDesc') }}
+  </div>
 
   <!-- repo tags -->
   <HeaderTags
@@ -240,7 +253,7 @@
   import AppStatus from '../application_spaces/AppStatus.vue'
   import { copyToClipboard } from '../../packs/clipboard'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
-  import { ref, computed, watch } from 'vue'
+  import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import RepoHeaderSourceIcon from './RepoHeaderSourceIcon.vue'
@@ -377,4 +390,45 @@
       return repoDetailStore.path?.replace('CSG_', '')
     }
   })
+
+  const descRef = ref(null)
+  const showExpandButton = ref(false)
+  const isExpanded = ref(false)
+
+  const checkOverflow = () => {
+    if (!descRef.value) return
+    const element = descRef.value
+    const isOverflowing = element.scrollHeight > element.clientHeight
+    showExpandButton.value = isOverflowing
+  }
+
+  let resizeObserver = null
+
+  onMounted(() => {
+    resizeObserver = new ResizeObserver(checkOverflow)
+    if (descRef.value) {
+      resizeObserver.observe(descRef.value)
+    }
+  })
+
+  onUnmounted(() => {
+    if (resizeObserver) {
+      resizeObserver.disconnect()
+    }
+  })
+
+  // 监听展开状态变化，重新检查溢出
+  watch(isExpanded, () => {
+    // 等待DOM更新后检查
+    setTimeout(checkOverflow, 0)
+  })
 </script>
+
+<style scoped>
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
