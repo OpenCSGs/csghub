@@ -27,6 +27,7 @@
           v-model="dataForm.cluster_id"
           class="w-full"
           filterable
+          :placeholder="$t('endpoints.new.serverlessSelectPlaceholder')"
         >
           <el-option
             v-for="cluster in clusters"
@@ -57,7 +58,7 @@
       >
         <el-input-number
           v-model="dataForm.max_replica"
-          :min="0"
+          :min="1"
           controls-position="right"
         />
       </el-form-item>
@@ -80,6 +81,7 @@
         <el-select
           v-model="dataForm.resource_id"
           class="w-full"
+          :placeholder="$t('endpoints.new.serverlessSelectPlaceholder')"
           @change="resetCurrentRuntimeFramework"
         >
           <el-option-group
@@ -105,6 +107,7 @@
         <el-select
           v-model="dataForm.runtime_framework_id"
           class="w-full"
+          :placeholder="$t('endpoints.new.serverlessSelectPlaceholder')"
         >
           <el-option
             v-for="item in filterFrameworks"
@@ -189,20 +192,20 @@
   const dataFormRef = ref(null)
   const rules = ref({
     cluster_id: [
-      { required: true, message: 'Cluster is required', trigger: 'blur' }
+      { required: true, message: t('endpoints.new.serverlessCluster'), trigger: 'change' }
     ],
     resource_id: [
-      { required: true, message: 'Resource is required', trigger: 'blur' }
+      { required: true, message: t('endpoints.new.serverlessResource'), trigger: 'change' }
     ],
     runtime_framework_id: [
       {
         required: true,
-        message: 'Runtime Framework is required',
-        trigger: 'blur'
+        message: t('endpoints.new.serverlessFramework'),
+        trigger: 'change'
       }
     ],
     deploy_name: [
-      { required: true, message: 'Deploy name is required', trigger: 'blur' }
+      { required: true, message: t('endpoints.new.serverlessDeploy'), trigger: 'change' }
     ],
     quantization: [
       {
@@ -210,7 +213,7 @@
         message: t('all.pleaseSelect', {
           value: t('endpoints.new.quantization')
         }),
-        trigger: 'blur'
+        trigger: 'change'
       }
     ]
   })
@@ -270,7 +273,7 @@
   }
 
   const update = async (params) => {
-    const { data } = await useFetchApi(
+    const { data, error } = await useFetchApi(
       `/models/${route.params.namespace}/${route.params.name}/serverless/${route.params.id}`,
       {
         headers: {
@@ -290,6 +293,13 @@
         `/admin_panel/serverless/${route.params.namespace}/${route.params.name}/${route.params.id}`
       )
     } else {
+      if (error.value) {
+        ElMessage({
+          message: error.value?.msg,
+          type: 'warning'
+        })
+        return
+      }
       ElMessage.error('Failed to update Serverless')
     }
   }
