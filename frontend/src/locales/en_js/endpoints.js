@@ -37,6 +37,11 @@ export const endpoints = {
     quantization: "Quantization",
     engineArgs: "Framework Variables",
     frameworkInputTip: "Please fill in model id first",
+    serverlessSelectPlaceholder: "please select",
+    serverlessCluster: "Cluster is required",
+    serverlessResource: "Resource is required",
+    serverlessFramework: "Runtime Framework is required",
+    serverlessDeploy: "Deploy name is required",
   },
   settings: {
     stop: "Stop",

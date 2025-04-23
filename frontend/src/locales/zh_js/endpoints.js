@@ -37,6 +37,11 @@ export const endpoints = {
     quantization: "量化",
     engineArgs: "框架参数",
     frameworkInputTip: "请首先填写模型ID",
+    serverlessSelectPlaceholder: "请选择",
+    serverlessCluster: "请选择集群",
+    serverlessResource: "请输入部署名称",
+    serverlessFramework: "请选择资源",
+    serverlessDeploy: "请选择运行时框架",
   },
   settings: {
     stop: "暂停",
