@@ -14,6 +14,7 @@
         :taskTags="tagsForCategory['task']"
         :tags="tagsForCategory[activeNavItem]"
         :activeTags="activeTags"
+        :repoType="repoType"
         @setActiveTag="setActiveTag"
       />
     </div>
@@ -137,7 +138,7 @@
       })
 
       avaliableCategories.value.forEach((category) => {
-        if (category.name === 'task') {
+        if (category.name === 'task' && props.repoType !== 'mcp') {
           tagsForCategory.value['task'] = tempTaskTags
         } else {
           tagsForCategory.value[category.name] = data.value.data.filter(

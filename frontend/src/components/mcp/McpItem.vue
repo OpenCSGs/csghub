@@ -81,6 +81,16 @@
     </div>
     <div class="pt-0.5 inline-flex items-center gap-4 flex-wrap content-center">
       <div
+        v-if="taskTag"
+        class="w-fit xl:max-w-full text-gray-500 text-xs font-normal overflow-hidden text-ellipsis whitespace-nowrap"
+      >
+        {{ taskTag }}
+      </div>
+
+      <div v-if="taskTag && (programLanguage || mcp.license)">
+        <SvgIcon name="vertical_divider" />
+      </div>
+      <div
         v-if="programLanguage"
         class="flex items-start"
       >
@@ -90,6 +100,9 @@
             {{ programLanguage.show_name || programLanguage.name }}
           </div>
         </div>
+      </div>
+      <div v-if="programLanguage && mcp.license">
+        <SvgIcon name="vertical_divider" />
       </div>
       <div
         v-if="mcp.license"
@@ -108,6 +121,9 @@
 
 <script setup>
   import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { locale } = useI18n()
 
   const props = defineProps({
     mcp: {
@@ -127,6 +143,16 @@
   const programLanguage = computed(() => {
     const tags = props.mcp.tags || []
     return tags.find((tag) => tag.category === 'program_language')
+  })
+
+  const taskTag = computed(() => {
+    const tags = props.mcp.tags || []
+    const taskTag = tags.find((tag) => tag.category === 'task')
+    if (locale.value === 'en') {
+      return taskTag ? taskTag['name'].replace(/-/g, ' ') : null
+    } else {
+      return taskTag ? taskTag['show_name'] : null
+    }
   })
 
   const displayPath = computed(() => {
