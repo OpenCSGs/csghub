@@ -83,6 +83,8 @@ export const all = {
   deploy: "Deploy",
   delete: "Delete",
   more:"More",
+  moreDesc: "Expand",
+  lessDesc: "Collapse",
   sdkTips: "Please register first and then obtain the Token from OpenCSG's account page",
   commandlineTips: "For more command-line options, see",
   pythonTips:"You need to install the Python environment (if not already installed). It is recommended to use Python version 3.10",

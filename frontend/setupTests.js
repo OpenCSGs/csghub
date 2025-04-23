@@ -58,3 +58,15 @@ Object.defineProperty(window, 'location', {
     value: mockLocation,
     writable: true
 });
+
+// 添加 ResizeObserver 的模拟实现
+class ResizeObserver {
+  constructor(callback) {
+    this.callback = callback
+  }
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+global.ResizeObserver = ResizeObserver

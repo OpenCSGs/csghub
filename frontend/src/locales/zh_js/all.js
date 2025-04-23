@@ -83,6 +83,8 @@ export const all = {
   deploy: "部署",
   delete: "删除",
   more:"更多",
+  moreDesc: "展开",
+  lessDesc: "收起",
   sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token",
   commandlineTips: "更多更丰富的命令行选项，可参见",
   pythonTips:"需安装Python环境(若未安装)，建议使用 Python 3.10 版本",
