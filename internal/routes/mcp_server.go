@@ -15,7 +15,7 @@ func registerMcpServerRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		mcpRoutes.GET("", mcpServerHandler.List)
 		mcpRoutes.GET("/tools", mcpServerHandler.Tools)
 		mcpRoutes.GET("/:namespace/:mcp_server_name", mcpServerHandler.Detail)
-		mcpRoutes.GET("/:namespace/:mcp_server_name/files/:branch", mcpServerHandler.Files)
+		mcpRoutes.GET("/:namespace/:mcp_server_name/files/:branch/*path", mcpServerHandler.Files)
 		mcpRoutes.GET("/:namespace/:mcp_server_name/blob/:branch/*path", mcpServerHandler.Blob)
 		mcpRoutes.GET("/:namespace/:mcp_server_name/commits", mcpServerHandler.Commits)
 		mcpRoutes.GET("/:namespace/:mcp_server_name/commit/:commit_id", mcpServerHandler.Commit)
