@@ -452,6 +452,20 @@
 
   const handleSubmit = async () => {
     submitLoading.value = true
+    dataFormRef.value
+      .validate(async (valid) => {
+        if (valid) {
+          await createEvaluation()
+        } else {
+          return false
+        }
+      })
+      .finally(() => {
+        submitLoading.value = false
+      })
+  }
+
+  const createEvaluation = async () => {
     const body = {
       task_name: dataForm.value.name,
       task_desc: dataForm.value.desc,
@@ -484,7 +498,6 @@
       window.location.href = '/resource-console'
       return false
     }
-    submitLoading.value = false
   }
 
   onMounted(() => {

@@ -167,7 +167,7 @@ describe('NewEvaluation', () => {
         evaluation_resource_type: 'shared'
       }
 
-      await wrapper.vm.handleSubmit()
+      await wrapper.vm.createEvaluation()
       expect(window.location.href).toBe('/resource-console')
     })
   })
