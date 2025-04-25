@@ -19,6 +19,14 @@
         <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
       </div>
 
+      <ModelMetadata
+        v-if="repoType == 'model' && metadata && metadata.model_params"
+        :framework="framework"
+        :data="metadata"
+        :namespacePath="namespacePath"
+        :currentBranch="currentBranch"
+      />
+      
       <div v-if="widgetType === 'generation' && endpoint?.status === 'Running'">
         <TestEndpoint
           :appEndpoint="appEndpoint"
@@ -109,13 +117,16 @@
   import resolveContent from '../../packs/resolveContent'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import ModelMetadata from '../models/ModelMetadata.vue'
 
   const props = defineProps({
     namespacePath: String,
     downloadCount: Number,
     currentBranch: String,
     widgetType: String,
-    repoType: String
+    repoType: String,
+    metadata: Object,
+    framework: String
   })
 
   const { t } = useI18n()

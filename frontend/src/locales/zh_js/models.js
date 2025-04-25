@@ -69,5 +69,10 @@ export const models = {
     desc: "多源同步可将 OpenCSG 开源社区以及 Huggingface 的优质模型同步到项目中",
     uploadBtn: "上传本地模型",
     multisyncBtn: "开启多源同步"
-  }
+  },
+  metadata: {
+    architecture: "架构",
+    modelSize: "模型大小",
+    tensorType: "Tensor 类型",
+  },
 }

@@ -73,6 +73,8 @@
           :download-count="repoDetail.downloads"
           :currentBranch="repoDetail.defaultBranch || 'main'"
           :widget-type="repoDetail.widgetType"
+          :metadata="repoDetail.metadata"
+          :framework="framework"
         />
       </template>
 
@@ -304,7 +306,30 @@
     endpointId: String,
     deployId: String,
     replicaList: Array,
-    path: String
+    path: String,
+  })
+
+  const framework = computed(() => {
+    const tags = props.repoDetail.tags || []
+    const frameworkTag = tags.find((tag) => tag.category === 'framework')
+    if (frameworkTag) {
+      if (frameworkTag.name === 'gguf') {
+        return 'GGUF'
+      } else if (frameworkTag.name === 'safetensors') {
+        return 'Safetensors'
+      }
+    }
+
+    const metadata = props.repoDetail.metadata
+    if (metadata) {
+      if (metadata.quantizations) {
+        return 'GGUF'
+      } else {
+        return 'Safetensors'
+      }
+    }
+
+    return ''
   })
 
   const tagList = ref([])

@@ -7,7 +7,7 @@
       <div class="flex">
         <a href="/">
           <img
-            :src="logo"
+            :src="logo || '/images/OpenCSG_logo.svg'"
             alt="OpenCSG Logo"
             class="w-[99px]" />
         </a>

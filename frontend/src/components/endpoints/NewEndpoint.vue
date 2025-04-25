@@ -236,9 +236,9 @@
           >
             <el-option
               v-for="item in availableQuantizations"
-              :key="item.path"
-              :label="item.path"
-              :value="item.path"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
             />
           </el-select>
         </el-form-item>
@@ -572,9 +572,18 @@
     if (error.value) {
       console.log(error.value.msg)
     } else if (data.value.data) {
-      availableQuantizations.value = data.value.data
+      availableQuantizations.value = packQuantizations(data.value.data)
       rules.value.quantization[0].required = true
     }
+  }
+
+  const packQuantizations = (quantizations) => {
+    return quantizations.map((item) => {
+      return {
+        label: `${item.name} - ${t('endpoints.gpuMemoryRequired')}${Math.round(item.size / (1024 * 1024 * 1024))} GB`,
+        value: item.path
+      }
+    })
   }
 
   onMounted(() => {

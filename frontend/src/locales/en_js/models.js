@@ -72,5 +72,10 @@ export const models = {
     desc: "Multi-source synchronization can synchronize high-quality models from OpenCSG open source community and Huggingface to the project",
     uploadBtn: "Upload Local Model",
     multisyncBtn: "Open Multi-Sync"
-  }
+  },
+  metadata: {
+    architecture: "Architecture",
+    modelSize: "Model size",
+    tensorType: "Tensor type",
+  },
 }

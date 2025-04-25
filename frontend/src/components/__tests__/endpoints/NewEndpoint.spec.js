@@ -78,11 +78,13 @@ let { mockFetchApi } = vi.hoisted(() => {
                   data: [
                     {
                       name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
-                      path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+                      path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+                      size: 752880000,
                     },
                     {
                       name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
-                      path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+                      path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
+                      size: 752880000,
                     }
                   ]
                 }
@@ -229,12 +231,12 @@ describe('NewEndpoint', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.availableQuantizations).toEqual([
       {
-        name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
-        path: 'q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+        label: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf - GPU Memory Required: 1 GB",
+        value: "q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf",
       },
       {
-        name: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf',
-        path: 'tinyllama-1.1b-chat-v1.0.Q2_K.gguf'
+        label: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf - GPU Memory Required: 1 GB",
+        value: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf",
       }
     ])
   })

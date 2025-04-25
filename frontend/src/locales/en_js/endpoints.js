@@ -4,6 +4,7 @@ export const endpoints = {
   replica: "Replica",
   summary: 'Overview',
   logDownload: 'Download Logs',
+  gpuMemoryRequired: 'GPU Memory Required: ',
   detail: {
     endpointUrl: 'Inference Endpoint URL',
     modelId: 'Model ID',

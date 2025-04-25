@@ -2,6 +2,7 @@ export const all = {
   all:'All',
   defaultText: "```\nREADME file is empty, please download the file and add description content.\n```",
   tip: "tip",
+  view: "View",
   summary: "Summary",
   files: "Files",
   community: "Community",

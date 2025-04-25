@@ -4,6 +4,7 @@ export const endpoints = {
   replica: "弹性副本",
   summary: '概览',
   logDownload: '下载日志',
+  gpuMemoryRequired: '最小显存需求：',
   detail: {
     endpointUrl: '专属实例 URL',
     modelId: '模型 ID',
