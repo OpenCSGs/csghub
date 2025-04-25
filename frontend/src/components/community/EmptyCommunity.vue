@@ -18,15 +18,31 @@
   </div>
 </template>
 <script>
+import { popupReloginDialog } from '../../packs/authDialog'
+import useUserStore from '../../stores/UserStore.js'
 export default {
   props: {},
   components: {},
   data() {
     return {};
   },
+  computed: {
+    isLoggedIn() {
+      return useUserStore().isLoggedIn
+    }
+  },
   mounted() {},
   methods: {
+    checkLogin(){
+      if(!this.isLoggedIn){
+        popupReloginDialog()
+        return false;
+      }else {
+        return true;
+      }
+    },
     creatDiscussion(){
+      if(!this.checkLogin()) return;
       this.$emit("changeFlag",'new');
     }
   },
