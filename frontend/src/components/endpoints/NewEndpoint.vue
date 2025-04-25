@@ -580,10 +580,26 @@
   const packQuantizations = (quantizations) => {
     return quantizations.map((item) => {
       return {
-        label: `${item.name} - ${t('endpoints.gpuMemoryRequired')}${Math.round(item.size / (1024 * 1024 * 1024))} GB`,
+        label: getQuantizationLabel(item),
         value: item.path
       }
     })
+  }
+
+  const MEMORY_UNITS = {
+    GB: 1024 ** 3,
+    MB: 1024 ** 2
+  }
+
+  const formatMemory = (bytes) => {
+    if (bytes >= MEMORY_UNITS.GB) {
+      return `${Math.round(bytes/MEMORY_UNITS.GB)} GB`
+    }
+    return `${Math.max(1, Math.round(bytes/MEMORY_UNITS.MB))} MB`
+  }
+
+  const getQuantizationLabel = (item) => {
+    return `${item.name} - ${t('endpoints.gpuMemoryRequired')}${formatMemory(item.size)}`
   }
 
   onMounted(() => {

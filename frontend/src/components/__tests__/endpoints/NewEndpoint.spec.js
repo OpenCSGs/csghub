@@ -231,11 +231,11 @@ describe('NewEndpoint', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.availableQuantizations).toEqual([
       {
-        label: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf - GPU Memory Required: 1 GB",
+        label: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf - GPU Memory Required: 718 MB",
         value: "q3/tinyllama-1.1b-chat-v1.0.Q2_K.gguf",
       },
       {
-        label: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf - GPU Memory Required: 1 GB",
+        label: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf - GPU Memory Required: 718 MB",
         value: "tinyllama-1.1b-chat-v1.0.Q2_K.gguf",
       }
     ])
