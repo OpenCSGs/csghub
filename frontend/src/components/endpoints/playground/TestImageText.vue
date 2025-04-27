@@ -53,11 +53,12 @@
         :show-file-list="false"
         :before-upload="handleBeforeUpload"
         :on-success="handleUploadSuccess"
+        :on-error="handleUploadError"
         accept="image/png, image/jpeg"
         action="/internal_api/upload"
         :data="{
           namespace: 'comment',
-          file_max_size: 1024 * 1024
+          file_max_size: 1024*1024
         }"
         :limit="1"
       >
@@ -83,7 +84,8 @@
             v-show="!imageUrl"
             class="w-[30px] h-[30px] border border-gray-300 rounded-md flex items-center justify-center"
           >
-            <SvgIcon name="upload-image" />
+            <SvgIcon v-if="!uploading" name="upload-image" />
+            <el-icon v-else class="is-loading"><Loading /></el-icon>
           </div>
         </template>
       </el-upload>
@@ -179,6 +181,7 @@
   const imageUrl = ref('')
   const uploadRef = ref(null)
   const currentImage = ref(null)
+  const uploading = ref(false)
 
   const SIZE_LIMIT_FOR_BASE64 = 100 * 1024 // 100 KB
 
@@ -321,7 +324,7 @@
   const handleError = (err) => {
     typewriter?.done()
     loading.value = false
-    ElMessage({ type: 'error', message: `${err.msg || 'send message error'}` })
+    ElMessage({ type: 'error', message: `${err.msg || 'An error occurred'}` })
     throw err
   }
 
@@ -332,9 +335,11 @@
   const clearImage = () => {
     imageUrl.value = ''
     currentImage.value = null
+    uploading.value = false
   }
 
   const handleBeforeUpload = (file) => {
+    uploading.value = true
     if (file.size <= SIZE_LIMIT_FOR_BASE64) {
       const reader = new FileReader()
       reader.readAsDataURL(file)
@@ -342,6 +347,12 @@
       reader.onload = () => {
         imageUrl.value = reader.result
         currentImage.value = reader.result
+        uploading.value = false
+      }
+
+      reader.onerror = () => {
+        uploading.value = false
+        ElMessage({ type: 'error', message: 'Image read failed' })
       }
 
       return false
@@ -353,6 +364,12 @@
   const handleUploadSuccess = (res) => {
     imageUrl.value = res.url
     currentImage.value = res.url
+    uploading.value = false
+  }
+
+  const handleUploadError = () => {
+    uploading.value = false
+    ElMessage({ type: 'error', message: 'Image upload failed' })
   }
 
   const handleRetry = async () => {
