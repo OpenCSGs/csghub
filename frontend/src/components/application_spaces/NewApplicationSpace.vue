@@ -656,6 +656,10 @@
       const { data, error } = await useFetchApi('/space_templates/docker').json()
       if (data.value) {
         dockerTemplates.value = data.value.data
+
+        if(dockerTemplates.value.length > 0){
+          dataForm.value.dockerTemplate = dockerTemplates.value[0].name
+        }
       } else {
         ElMessage.warning(error.value.msg)
       }
