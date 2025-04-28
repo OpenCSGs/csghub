@@ -31,9 +31,7 @@
           </div>
           <div
             class="px-3 py-2 rounded-md justify-center items-center gap-2 flex cursor-pointer hover:bg-white"
-            :class="
-              playgroundMode === 'api' ? 'bg-white shadow' : 'bg-gray-50'
-            "
+            :class="playgroundMode === 'api' ? 'bg-white shadow' : 'bg-gray-50'"
             @click="changePlaygroundMode('api')"
           >
             <div
@@ -130,9 +128,10 @@
           </el-form-item>
         </el-form>
         <el-form
-          v-else-if="task=='text-to-image'"
+          v-else-if="task == 'text-to-image'"
           :model="formImg"
-          :rules="rules" ref="formRef" 
+          :rules="rules"
+          ref="formRef"
           label-width="auto"
           label-position="top"
           class="max-w-[288px] md:max-w-full"
@@ -196,45 +195,52 @@
     <div
       v-show="playgroundMode === 'test'"
       class="flex-1"
+      :class="{ 'simulated-fullscreen': isFullscreen }"
     >
-      <TestEndpoint
-        v-if="task=='text-generation'"
-        :appEndpoint="appEndpoint"
-        :modelId="modelId"
-        :form="form"
-      />
-      <TestWidget
-        v-else-if="task=='text-to-image'"
-        :appEndpoint="appEndpoint"
-        :modelId="modelId"
-        :form="formImg"
-      />
-      <TestExtraction
-        v-else-if="task=='feature-extraction'"
-        :appEndpoint="appEndpoint"
-        :modelId="modelId"
-        :form="formImg"
-      />
-      <TestImageText
-        v-else-if="task=='image-text-to-text'"
-        :appEndpoint="appEndpoint"
-        :modelId="modelId"
-        :form="form"
-      />
-      <div class="px-4 mb-4 flex justify-between items-center">
-        <div class="items-center gap-1.5 flex cursor-not-allowed">
-          <SvgIcon name="json" />
-          <div class="text-gray-400 text-xs leading-[18px]">
-            {{ $t('endpoints.playground.json') }}
+      <div :class="{ 'page-responsive-width': isFullscreen }">
+        <TestEndpoint
+          v-if="task == 'text-generation'"
+          :appEndpoint="appEndpoint"
+          :modelId="modelId"
+          :form="form"
+        />
+        <TestWidget
+          v-else-if="task == 'text-to-image'"
+          :appEndpoint="appEndpoint"
+          :modelId="modelId"
+          :form="formImg"
+        />
+        <TestExtraction
+          v-else-if="task == 'feature-extraction'"
+          :appEndpoint="appEndpoint"
+          :modelId="modelId"
+          :form="formImg"
+        />
+        <TestImageText
+          v-else-if="task == 'image-text-to-text'"
+          :appEndpoint="appEndpoint"
+          :modelId="modelId"
+          :form="form"
+        />
+        <div class="px-4 mb-4 flex justify-between items-center">
+          <div class="items-center gap-1.5 flex cursor-not-allowed">
+            <SvgIcon name="json" />
+            <div class="text-gray-400 text-xs leading-[18px]">
+              {{ $t('endpoints.playground.json') }}
+            </div>
           </div>
-        </div>
-        <div
-          class="items-center gap-1.5 flex cursor-pointer"
-          @click="dialogVisible = true"
-        >
-          <SvgIcon name="fullscreen" />
-          <div class="text-gray-700 text-xs leading-[18px]">
-            {{ $t('endpoints.playground.maximum') }}
+          <div
+            class="items-center gap-1.5 flex cursor-pointer"
+            @click="openFullscreen"
+          >
+            <SvgIcon name="fullscreen" />
+            <div class="text-gray-700 text-xs leading-[18px]">
+              {{
+                isFullscreen
+                  ? $t('endpoints.playground.exitFullscreen')
+                  : $t('endpoints.playground.maximum')
+              }}
+            </div>
           </div>
         </div>
       </div>
@@ -245,28 +251,28 @@
       class="flex-1 overflow-hidden"
     >
       <ApiExample
-        v-if="task=='text-generation'"
+        v-if="task == 'text-generation'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="form"
         :private="private"
       />
       <ApiWidget
-        v-else-if="task=='text-to-image'"
+        v-else-if="task == 'text-to-image'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="formImg"
         :private="private"
       />
       <ApiExtraction
-        v-else-if="task=='feature-extraction'"
+        v-else-if="task == 'feature-extraction'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="formImg"
         :private="private"
       />
       <ApiImageText
-        v-else-if="task=='image-text-to-text'"
+        v-else-if="task == 'image-text-to-text'"
         :appEndpoint="appEndpoint"
         :modelId="modelId"
         :form="form"
@@ -274,41 +280,10 @@
       />
     </div>
   </div>
-  <el-dialog
-    v-model="dialogVisible"
-    fullscreen
-    append-to-body
-  >
-    <TestEndpoint
-      v-if="task=='text-generation'"
-      :appEndpoint="appEndpoint"
-      :modelId="modelId"
-      :form="form"
-    />
-    <TestWidget
-      v-else-if="task=='text-to-image'"
-      :appEndpoint="appEndpoint"
-      :modelId="modelId"
-      :form="formImg"
-    />
-    <TestExtraction
-      v-else-if="task=='feature-extraction'"
-      :appEndpoint="appEndpoint"
-      :modelId="modelId"
-      :form="formImg"
-      :private="private"
-    />
-    <TestImageText
-      v-else-if="task=='image-text-to-text'"
-      :appEndpoint="appEndpoint"
-      :modelId="modelId"
-      :form="form"
-    />
-  </el-dialog>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
   import ApiExample from './playground/ApiExample.vue'
   import TestEndpoint from './playground/TestEndpoint.vue'
   import TestWidget from './playground/TestWidget.vue'
@@ -325,6 +300,7 @@
     task: String
   })
 
+  const isFullscreen = ref(false)
   const dialogVisible = ref(false)
 
   const topPRange = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
@@ -350,16 +326,42 @@
     num_inference_steps: null,
     guidance_scale: null,
     negative_prompt: '',
-    seed:null
+    seed: null
   })
 
+  const openFullscreen = () => {
+    isFullscreen.value = !isFullscreen.value
+  }
 
+  const handleKeydown = (event) => {
+    if (event.key === 'Escape' && isFullscreen.value) {
+      isFullscreen.value = false
+    }
+  }
+
+  watch(isFullscreen, (newValue) => {
+    if (newValue) {
+      window.addEventListener('keydown', handleKeydown)
+    } else {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  })
   const changePlaygroundMode = (mode) => {
     playgroundMode.value = mode
   }
 </script>
 <style scoped>
-:deep(.el-input-number){
-  width: 100% !important;
-}
+  :deep(.el-input-number) {
+    width: 100% !important;
+  }
+  .simulated-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    z-index: 999;
+    overflow-y: auto;
+  }
 </style>
