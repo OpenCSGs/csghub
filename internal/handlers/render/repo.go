@@ -53,6 +53,7 @@ type BaseHandler interface {
 	New(ctx *gin.Context)
 	Tools(ctx *gin.Context)
 	Schema(ctx *gin.Context)
+	Deploy(ctx *gin.Context)
 }
 
 type BaseHandlerImpl struct {
@@ -129,6 +130,16 @@ func (b *BaseHandlerImpl) Tools(ctx *gin.Context) {
 
 func (b *BaseHandlerImpl) Schema(ctx *gin.Context) {
 	b.renderShow(ctx, "schema", "schema")
+}
+
+func (b *BaseHandlerImpl) Deploy(ctx *gin.Context) {
+	data := map[string]interface{}{
+		"isSmallFooter": b.isSmallFooter,
+		"licenses":      string(DefaultLicensesJSON),
+		"namespace":     ctx.Param("namespace"),
+		"mcpServerName": ctx.Param("mcp_server_name"),
+	}
+	RenderBaseInstance.RenderTemplate(ctx, "mcp_servers_deploy", data)
 }
 
 func (b *BaseHandlerImpl) New(ctx *gin.Context) {

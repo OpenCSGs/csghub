@@ -20,14 +20,13 @@
     />
 
     <!-- evaluation button -->
-    <div v-if="!actionLimited"
+    <div v-if="!actionLimited && repoType === 'model'"
       class="relative inline-flex">
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
-        v-if="repoType === 'model'"
         @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
       />
     </div>
@@ -74,10 +73,20 @@
     <!-- repo download clone button -->
     <CsgButton
       v-if="!!httpCloneUrl && repo.syncStatus !== 'pending'"
-      class="btn btn-primary btn-sm modelBtn"
+      class="btn btn-sm modelBtn"
+      :class="{'btn-primary': repoType !== 'mcp', 'btn-secondary-gray': repoType === 'mcp'}"
       :name="$t(downloadButtonKey)"
-      svgName="download"
+      :svgName="repoType === 'mcp' ? 'download_dark' : 'download'"
       @click="cloneRepositoryVisible = true"
+    />
+
+    <!-- mcp deploy button -->
+    <CsgButton
+      class="btn btn-primary btn-sm"
+      v-if="repoType === 'mcp'"
+      svgName="mcp_deploy"
+      :name="$t('mcps.deploy.deployBtn')"
+      @click="handleMcpDeploy"
     />
 
     <!-- clone dialog -->
@@ -506,6 +515,14 @@ csghub-cli download ${props.namespacePath} -t space
       setTimeout(() => {
         location.reload()
       }, 2000)
+    }
+  }
+
+  const handleMcpDeploy = () => {
+    if (isLoggedIn.value) {
+      window.location.href = `/mcp/servers/${props.repo.path}/deploy`
+    } else {
+      ToLoginPage()
     }
   }
 

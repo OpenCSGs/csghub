@@ -70,5 +70,20 @@ export const mcps = {
     inputSchemaJson: "Input Schema (JSON Schema)",
     tool: "Tool",
     searchTools: "Search Tools",
-  }
+  },
+  /*
+  ,
+  deploy: {
+    title: "新建 MCP 应用空间",
+    subTitle2: '使用 {mcpPath} 构建应用空间',
+    envDesc: '环境变量设置',
+    deployBtn: '一键部署',
+  },
+  */
+  deploy: {
+    title: "New MCP Application Space",
+    subTitle2: 'Build application space using {mcpPath}',
+    envDesc: 'Environment variable settings',
+    deployBtn: 'Deploy MCP',
+  },
 }

@@ -31,5 +31,6 @@ func registerMcpServerRoutes(engine *gin.Engine, handlers *HandlersRegistry) {
 		authenticatedRoutes.GET("/:namespace/:mcp_server_name/:branch/upload", mcpServerHandler.UploadFile)
 		authenticatedRoutes.GET("/:namespace/:mcp_server_name/edit/:branch/*path", mcpServerHandler.EditFile)
 		authenticatedRoutes.GET("/:namespace/:mcp_server_name/settings", mcpServerHandler.Settings)
+		authenticatedRoutes.GET("/:namespace/:mcp_server_name/deploy", mcpServerHandler.Deploy)
 	}
 }

@@ -59,6 +59,7 @@ import NewEvaluation from "./components/evaluations/NewEvaluation.vue"
 import EvaluationDetail from "./components/evaluations/EvaluationDetail.vue"
 import NewMcpServer from "./components/mcp/NewMcpServer.vue"
 import McpTools from "./components/mcp/McpTools.vue"
+import DeployMcpServer from "./components/mcp/DeployMcpServer.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -119,6 +120,7 @@ const app = createApp({
     EvaluationDetail,
     NewMcpServer,
     McpTools,
+    DeployMcpServer,
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

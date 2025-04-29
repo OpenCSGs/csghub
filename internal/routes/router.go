@@ -144,6 +144,7 @@ func createRender() multitemplate.Renderer {
 		"mcp_servers_show":               "mcp_servers/show.html",
 		"mcp_servers_new":                "mcp_servers/new.html",
 		"mcp_servers_tools":              "mcp_servers/tools.html",
+		"mcp_servers_deploy":             "mcp_servers/deploy.html",
 		"resource_console_index":         "resource-console/index.html",
 		"organizations_show":             "organizations/show.html",
 		"organizations_new":              "organizations/new.html",
