@@ -125,7 +125,7 @@
                 {{ $t('all.documentation') }}
               </a>
             </div>
-            <div class="text-gray-500 mt-[8px]">{{ $t('all.pythonTips') }} 
+            <div class="text-gray-500 mt-[8px]">{{ $t('all.pythonTips') }}
               <a
                 href="https://docs.python.org/zh-cn/3.13/using/index.html"
                 target="_blank"
@@ -285,6 +285,11 @@
   const httpCloneUrl = computed(() => {
     return repoDetailStore.repository.http_clone_url || ""
   })
+  const serverDomain = computed(() => {
+    if (!repoDetailStore.repository.http_clone_url) return 'https://hub.opencsg.com'
+    const url = repoDetailStore.repository.http_clone_url
+    return new URL(url).origin
+  })
   const sshCloneUrl = computed(() => {
     return repoDetailStore.repository.ssh_clone_url
   })
@@ -371,7 +376,7 @@ git clone ${httpCloneProtocol.value}//${
     return ref(`
 from pycsghub.snapshot_download import snapshot_download
 token = '' # token from opencsg.com
-endpoint = "https://hub.opencsg.com"
+endpoint = "${serverDomain.value}"
 repo_type = "${props.repoType}"
 repo_id = '${props.namespacePath}'
 cache_dir = '' # cache dir of download data
@@ -404,7 +409,7 @@ csghub-cli download ${props.namespacePath} -t space
   const comandlineCodeMarkdown = computed(() => {
     return getMarkdownCode(comandlineCode.value, 'bash', true)
   })
-  
+
   const comandlineCode2Markdown = computed(() => {
     const comandlineCodeDownload = getComandLineCloneCode()
     return getMarkdownCode(comandlineCodeDownload.value, 'bash', true)
