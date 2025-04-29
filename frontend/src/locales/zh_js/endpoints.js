@@ -80,6 +80,7 @@ export const endpoints = {
     generation: "文本生成",
     json: "JSON 输出",
     maximum: "最大化",
+    exitFullscreen:'退出全屏',
     send: "发送",
     test: "推理 API",
     api: "发送请求到专属实例",

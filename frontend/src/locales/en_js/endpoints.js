@@ -80,6 +80,7 @@ export const endpoints = {
     generation: "Text Generation",
     json: "JSON Output",
     maximum: "Maximum",
+    exitFullscreen: "Exit Fullscreen",
     send: "Send",
     test: "Inference API",
     api: "Send requests to endpoint",
