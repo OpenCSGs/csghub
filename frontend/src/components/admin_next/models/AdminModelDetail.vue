@@ -74,7 +74,7 @@
           <div class="flex gap-4">
             <CsgButton
               class="btn btn-primary btn-md"
-              name="Edit"
+              :name="$t('admin.models.modelEdit')"
               @click="redirectModelEdit"
             />
             <CsgButton
