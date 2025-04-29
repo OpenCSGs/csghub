@@ -173,7 +173,7 @@ if response.status_code == 200:
     () => `curl -X POST \\
 "${endpointUrl.value}" \\
 ${useToken.value ? curlHeadersWithToken.value : curlHeaders}
--d '{ "input": "your messages"`
+-d '{ "input": "your messages"}' --compressed`
   )
 
   const setCodeContent = () => {
