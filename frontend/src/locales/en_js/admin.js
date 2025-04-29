@@ -62,7 +62,14 @@ export const admin = {
     setWeight: 'Set weight',
     setModelWeight: 'Set model weight',
     weightPlaceholder: 'Enter weight',
-    sync: 'Sync'
+    sync: 'Sync',
+    source: {
+      modelscope: 'ModelScope',
+      huggingface: 'HuggingFace',
+      opencsg: 'OpenCSG',
+      other: 'Other',
+      userUpload: 'User Upload'
+    }
   },
   serverless: {
     title: 'Serverless APIs',

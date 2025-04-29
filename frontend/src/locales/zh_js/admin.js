@@ -57,12 +57,19 @@ export const admin = {
     modelList: '模型列表',
     modelCount: '个模型',
     modelDetails: '模型详情',
-    modelEdit:"编辑模型",
+    modelEdit: '模型编辑',
     modelDetailBtn: '详情',
-    setWeight:'设置权重',
-    setModelWeight:'设置模型权重',
-    weightPlaceholder:'请输入权重',
-    sync:'同步'
+    setWeight: '设置权重',
+    setModelWeight: '设置模型权重',
+    weightPlaceholder: '请输入权重',
+    sync: '同步',
+    source: {
+      modelscope: 'ModelScope',
+      huggingface: 'HuggingFace',
+      opencsg: 'OpenCSG',
+      other: '其他来源',
+      userUpload: '用户上传'
+    }
   },
   serverless: {
     title: '公共推理服务',

@@ -63,6 +63,19 @@
           {{ models[scope.$index].recom_op_weight || 1 }}
         </template>
       </el-table-column>
+      <el-table-column
+        :label="$t('admin.origin')"
+        scoped-slot="default"
+      >
+        <template #default="scope">
+          {{ 
+            models[scope.$index].ms_path ? $t('admin.models.source.modelscope') : 
+            models[scope.$index].hf_path ? $t('admin.models.source.huggingface') : 
+            models[scope.$index].csghub_path ? $t('admin.models.source.opencsg') : 
+            $t('admin.models.source.userUpload')
+          }}
+        </template>
+      </el-table-column>
       <el-table-column :label="$t('admin.operations')">
         <template #default="scope">
           <el-button
