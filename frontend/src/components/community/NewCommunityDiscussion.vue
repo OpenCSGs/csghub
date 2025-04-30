@@ -9,15 +9,13 @@
         :labelName="$t('community.newDiscussion.title')"
         :required="true" />
       <el-input
+        type="text"
         v-model="title"
-        :maxLength="200"
+        maxlength="200"
         show-word-limit
         clearable
         :placeholder="$t('community.newDiscussion.create')"
         class="w-full h-[40px] text-gray-500">
-        <template #suffix>
-          <span>{{ title.length }} / 200</span>
-        </template>
       </el-input>
     </div>
     <FormLabel
@@ -31,7 +29,7 @@
         class="btn btn-primary btn-sm"
         @click="create"
         >{{ $t('community.newDiscussion.create') }}</button>
-      <button 
+      <button
         class="btn btn-secondary-gray btn-sm"
         @click="cancel">{{
         $t('community.newDiscussion.cancel')
