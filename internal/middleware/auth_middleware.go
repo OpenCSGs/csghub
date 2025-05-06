@@ -3,15 +3,29 @@ package middleware
 import (
 	"log/slog"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"opencsg.com/portal/internal/models"
 	"opencsg.com/portal/pkg/server/backend"
 )
 
+var staticPrefixes = []string{
+	"/assets",
+	"/images",
+	"/favicon",
+	"/errors",
+}
+
 // check user login status and save the current user to context
 func (a *MiddlewareImpl) AuthMiddleware(csghubServer backend.Server) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// skip static files and error pages
+		if isStaticResource(c.Request.URL.Path) {
+			c.Next()
+			return
+		}
+
 		loginIdentity, err := c.Cookie("login_identity")
 		if err != nil {
 			c.Next()
@@ -67,4 +81,13 @@ func (a *MiddlewareImpl) AuthenticateAdminUser() gin.HandlerFunc {
 		}
 		ctx.Next()
 	}
+}
+
+func isStaticResource(path string) bool {
+	for _, prefix := range staticPrefixes {
+		if strings.HasPrefix(path, prefix) {
+			return true
+		}
+	}
+	return false
 }
