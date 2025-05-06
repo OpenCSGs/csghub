@@ -50,6 +50,7 @@
         this.theFlag = flag
       },
       async getDiscussion() {
+        if (this.repoPath === '') return
         const discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
         const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
         if (data.value) {
