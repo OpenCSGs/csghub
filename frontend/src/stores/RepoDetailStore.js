@@ -75,6 +75,8 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const variables = ref('')
   const engineArgs = ref('')
   const username = ref('')
+  const metadata = ref({})
+
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -156,6 +158,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     variables.value = initialData.variables
     engineArgs.value = initialData.engine_args
     username.value = initialData.username
+    metadata.value = initialData.metadata
   }
 
   const clearStore = () => {
@@ -234,6 +237,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     variables,
     engineArgs,
     username,
+    metadata,
     clearStore
   }
 }, {

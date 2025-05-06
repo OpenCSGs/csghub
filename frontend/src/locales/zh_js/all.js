@@ -2,6 +2,7 @@ export const all = {
   all:'全部应用',
   defaultText: "```\nREADME文件内容为空，请下载文件，补充描述内容。\n```",
   tip: "提示",
+  view: "查看",
   summary: "介绍",
   files: "文件",
   community: "讨论",
