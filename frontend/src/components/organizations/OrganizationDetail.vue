@@ -63,7 +63,7 @@
               </a>
             </div>
           </el-popover>
-          <a v-if="role === 'write' || role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="btn btn-secondary-gray btn-md">
+          <a v-if="role === 'admin'" :href="`/organizations/${organizationData.name}/edit`" class="btn btn-secondary-gray btn-md">
             {{ $t('organization.orgSetting') }}
           </a>
         </div>
