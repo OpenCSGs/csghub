@@ -50,10 +50,13 @@
         this.theFlag = flag
       },
       async getDiscussion() {
+        if (this.repoPath === '') return
+
         let discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
         if (this.repoType === 'mcp') {
           discussionCreateEndpoint = `/mcpserver/${this.repoPath}/discussions`
         }
+
         const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
         if (data.value) {
           const discussions = data.value.data.discussions || []
