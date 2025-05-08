@@ -40,8 +40,9 @@
 
     <div class="flex flex-nowrap overflow-hidden text-ellipsis items-center gap-2 text-xs text-gray-500">
       <span v-if="getComputed.taskTag"
-            class="w-fit xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap"
+            class="w-fit xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap flex items-center gap-1"
       >
+            <img v-if="getComputed.taskTagIconPath" :src="getComputed.taskTagIconPath" class="w-3 h-3 text-gray-500 filter-gray" alt="" />
             {{ getComputed.taskTag }}
       </span>
 
@@ -123,7 +124,28 @@
     else {
       taskTag = taskTag? taskTag["show_name"] : null
     }
+    
+    // 获取标签对应的图标路径
+    let taskTagIconPath = null
+    if (taskTag) {
+      // 英文版使用原始标签名，中文版尝试转换为对应的英文标签名
+      const tagNameForIcon = locale.value === 'en' 
+        ? taskTag.replace(/ /g, '-').toLowerCase()
+        : (props.repo.tags || []).find(tag => tag.category === "task")?.name
+      
+      if (tagNameForIcon) {
+        // 检查图标是否存在
+        const iconPath = `/images/tags/${tagNameForIcon}.svg`
+        taskTagIconPath = iconPath
+      }
+    }
 
-    return { path, visibility, taskTag, showDescription }
+    return { path, visibility, taskTag, showDescription, taskTagIconPath }
   })
 </script>
+
+<style scoped>
+.filter-gray {
+  filter: invert(56%) sepia(11%) saturate(207%) hue-rotate(176deg) brightness(93%) contrast(84%);
+}
+</style>
