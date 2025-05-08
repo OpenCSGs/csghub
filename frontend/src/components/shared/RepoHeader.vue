@@ -118,6 +118,12 @@
       <span class="max-w-full break-words text-gray-700 font-medium">{{
         nickname.trim() === '' ? name : nickname
       }}</span>
+      <SvgIcon
+        v-if="repoDetailStore.githubPath"
+        name="github-2"
+        width="24"
+        height="24"
+      />
       <RepoHeaderSourceIcon
         v-if="!!repoSource"
         :repoType="repoType"
@@ -142,10 +148,23 @@
             ? $t('shared.likes')
             : $t('shared.hasLikes')
         }}
-        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1">
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1 rounded-[3px]">
           {{ likesNumberDisplayName }}
         </div>
       </div>
+      <a
+        v-if="repoDetailStore.githubPath"
+        :href="`https://github.com/${repoDetailStore.githubPath}`"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex gap-1 border border-gray-300 bg-white px-1 py-[3px] text-center text-xs text-gray-700 rounded-sm font-normal"
+      >
+        <SvgIcon name="github" width="14" height="14" />
+        <span>Star</span>
+        <div class="min-h-[16px] min-w-[16px] bg-gray-100 px-1 rounded-[3px]">
+          {{ repoDetailStore.githubStarNum }}
+        </div>
+      </a>
       <AppStatus
         v-if="appStatus"
         :appStatus="appStatus"
@@ -243,7 +262,7 @@
 
   <!-- repo tags -->
   <HeaderTags
-    v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code'"
+    v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code' || repoType === 'mcp'"
     :tags="tags"
     :prefix="`${repoType}s/`" />
 </template>
@@ -364,6 +383,8 @@
       return `/${props.repoType}s/${props.path}/${props.deployId}`
     } else if (props.repoType === 'collections') {
       return `/collections/${props.collectionsId}`
+    } else if (props.repoType === 'mcp') {
+      return `/${props.repoType}/servers/${props.path}`
     } else {
       return `/${props.repoType}s/${props.path}`
     }

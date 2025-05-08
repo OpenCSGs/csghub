@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div v-if="!loading" class="flex items-center justify-between min-h-[36px] mt-4 px-3 py-2 border border-gray-200 bg-gray-100 rounded-t-[4px]">
+    <div v-if="!loading" class="flex items-center justify-between min-h-[36px] mt-4 px-3 py-2 border border-gray-200 bg-gray-100 rounded-t-xl">
       <div v-if="lastCommit" class="flex items-center text-sm overflow-hidden mr-2">
         <div class="flex items-center mr-2">
           <el-avatar :size="24" class="mr-2" :src="lastCommitAvatar" />
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div v-if="files" v-for="file in files" class="flex items-center justify-between px-3 py-2 border border-t-0 border-gray-200 last-of-type:rounded-b-[4px]">
+    <div v-if="files" v-for="file in files" class="flex items-center justify-between px-3 py-2 border border-t-0 border-gray-200 last-of-type:rounded-b-xl">
       <div class="flex items-center w-[31%]" :title="file.name">
         <svg class="flex-shrink-0" v-if="file.type === 'dir'" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
           <path d="M3.52949 1.229C2.5494 1.229 2.05935 1.229 1.68501 1.41974C1.35573 1.58752 1.08801 1.85524 0.920231 2.18452C0.729492 2.55887 0.729492 3.04891 0.729492 4.02901V10.0373C0.729492 11.3441 0.729492 11.9975 0.98381 12.4966C1.20751 12.9357 1.56447 13.2926 2.00351 13.5164C2.50264 13.7707 3.15604 13.7707 4.46283 13.7707H9.53783C10.8446 13.7707 11.498 13.7707 11.9971 13.5164C12.4362 13.2926 12.7931 12.9357 13.0168 12.4966C13.2712 11.9975 13.2712 11.3441 13.2712 10.0373V7.29567C13.2712 5.98888 13.2712 5.33549 13.0168 4.83636C12.7931 4.39731 12.4362 4.04036 11.9971 3.81666C11.498 3.56234 10.8446 3.56234 9.53783 3.56234H8.89755C8.58581 3.56234 8.42993 3.56234 8.2892 3.52677C8.05664 3.46799 7.84784 3.33894 7.69126 3.15722C7.59651 3.04725 7.5268 2.90784 7.38738 2.629V2.629C7.17826 2.21076 7.0737 2.00163 6.93157 1.83668C6.6967 1.56409 6.3835 1.37053 6.03465 1.28236C5.82356 1.229 5.58975 1.229 5.12213 1.229H3.52949Z" fill="#8AA2FF"/>
@@ -157,7 +157,12 @@
   const files = ref([])
   const lastCommit = ref()
   const lastCommitAvatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
-  const prefixPath = document.location.pathname.split('/')[1]
+  let prefixPath = document.location.pathname.split('/')[1]
+  let apiPrefixPath = document.location.pathname.split('/')[1]
+  if (prefixPath === 'mcp') {
+    prefixPath = 'mcp/servers'
+    apiPrefixPath = 'mcps'
+  }
   const filePageCursor = ref('')
   const commitList = ref([])
   const tempCommit = ref([])
@@ -212,7 +217,7 @@
   }
 
   const lfsFileDownload = async (file) => {
-    const url = `/${prefixPath}/${props.namespacePath}/download/${file.lfs_relative_path}?ref=${props.currentBranch}&lfs=true&lfs_path=${file.lfs_relative_path}&save_as=${file.path}`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${file.lfs_relative_path}?ref=${props.currentBranch}&lfs=true&lfs_path=${file.lfs_relative_path}&save_as=${file.path}`
 
     try {
       const { data, error } = await useFetchApi(url).json()
@@ -232,7 +237,7 @@
   }
 
   const normalFileDownload = async (file) => {
-    const url = `/${prefixPath}/${props.namespacePath}/download/${file.path}?ref=${props.currentBranch}`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${file.path}?ref=${props.currentBranch}`
 
     try {
       const { data, error } = await useFetchApi(url).blob()
@@ -260,7 +265,7 @@
   }
 
   const fetchCommits = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/refs/${props.currentBranch}/logs_tree/${props.currentPath}?offset=${commitList.value.length}&limit=50`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/refs/${props.currentBranch}/logs_tree/${props.currentPath}?offset=${commitList.value.length}&limit=50`
     try {
       const { response, data, error } = await useFetchApi(url).json()
 
@@ -292,7 +297,7 @@
     }
   }
   const fetchFileListData = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/refs/${props.currentBranch}/tree/${props.currentPath}?cursor=${filePageCursor.value}&limit=500`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/refs/${props.currentBranch}/tree/${props.currentPath}?cursor=${filePageCursor.value}&limit=500`
 
     try {
       const { response, data, error } = await useFetchApi(url).json()
@@ -316,7 +321,7 @@
   }
 
   const fetchLastCommit = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/last_commit`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/last_commit`
     try {
       const { data } = await useFetchApi(url).json()
 

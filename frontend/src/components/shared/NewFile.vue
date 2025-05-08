@@ -78,7 +78,13 @@
   const commitValid = ref(false)
   const submiting = ref(false)
 
-  const prefixPath = document.location.pathname.split('/')[1]
+  let prefixPath = document.location.pathname.split('/')[1]
+  let apiPrefixPath = document.location.pathname.split('/')[1]
+
+  if (prefixPath === 'mcp') {
+    prefixPath = 'mcp/servers'
+    apiPrefixPath = 'mcps'
+  }
 
   const handleCommentInputChange = (value) => {
     commitDesc.value = value
@@ -108,7 +114,7 @@
   const createFile = async () => {
     submiting.value = true
     // TODO: main branch for now; should support different branches
-    const createFileEndpoint = `/${prefixPath}/${props.namespacePath}/raw/${fileName.value}`
+    const createFileEndpoint = `/${apiPrefixPath}/${props.namespacePath}/raw/${fileName.value}`
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),

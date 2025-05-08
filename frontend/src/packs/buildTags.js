@@ -15,6 +15,15 @@ const handleTag = (tag, tagCategories) => {
     case 'industry':
       tagCategories.industry_tags.push(tag)
       break
+    case 'program_language':
+      tagCategories.program_language_tags.push(tag)
+      break
+    case 'runmode':
+      tagCategories.runmode_tags.push(tag)
+      break
+    case 'scene':
+      tagCategories.scene_tags.push(tag)
+      break
     default:
       tagCategories.other_tags.push(tag)
       break
@@ -30,6 +39,9 @@ export const buildTags = (tags) => {
     language_tags: [],
     license_tags: [],
     industry_tags: [],
+    program_language_tags: [],
+    runmode_tags: [],
+    scene_tags: [],
     other_tags: []
   }
 

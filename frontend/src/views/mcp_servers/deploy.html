@@ -1,0 +1,10 @@
+{{ define "content" }}
+<div class="relative w-full h-full bg-white py-[60px]">
+  <deploy-mcp-server
+    :licenses="{{ .licenses }}"
+    mcp-server-name="{{ .mcpServerName }}"
+    namespace="{{ .namespace }}"
+  >
+  </deploy-mcp-server>
+</div>
+{{ end }}

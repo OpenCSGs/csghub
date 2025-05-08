@@ -76,7 +76,13 @@ const commitTitle = ref('')
 const commitTitlePlaceholder = ref('Upload file')
 const new_branch = ref('main')
 const commitDesc = ref('')
-const prefixPath = document.location.pathname.split('/')[1]
+let prefixPath = document.location.pathname.split('/')[1]
+let apiPrefixPath = document.location.pathname.split('/')[1]
+
+if (prefixPath === 'mcp') {
+  prefixPath = 'mcp/servers'
+  apiPrefixPath = 'mcps'
+}
 
 const handleCommentInputChange = (value) => {
   commitDesc.value = value
@@ -131,7 +137,7 @@ const syncUploadFile = async () => {
 
   try {
     const { error } = await useFetchApi(
-      `/${prefixPath}/${props.namespacePath}/upload_file`,
+      `/${apiPrefixPath}/${props.namespacePath}/upload_file`,
       {
         body: formData
       }

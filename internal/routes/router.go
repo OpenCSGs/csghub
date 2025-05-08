@@ -140,6 +140,11 @@ func createRender() multitemplate.Renderer {
 		"endpoints_new":                  "endpoints/new.html",
 		"finetunes_show":                 "finetunes/show.html",
 		"finetunes_new":                  "finetunes/new.html",
+		"mcp_servers_index":              "mcp_servers/index.html",
+		"mcp_servers_show":               "mcp_servers/show.html",
+		"mcp_servers_new":                "mcp_servers/new.html",
+		"mcp_servers_tools":              "mcp_servers/tools.html",
+		"mcp_servers_deploy":             "mcp_servers/deploy.html",
 		"resource_console_index":         "resource-console/index.html",
 		"organizations_show":             "organizations/show.html",
 		"organizations_new":              "organizations/new.html",
@@ -218,6 +223,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerSpaceRoutes(engine, handlersRegistry)
 	registerEndpointRoutes(engine, handlersRegistry)
 	registerFinetuneRoutes(engine, handlersRegistry)
+	registerMcpServerRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)
 	registerOrganizationRoutes(engine, handlersRegistry)
 	registerCollectionRoutes(engine, handlersRegistry)

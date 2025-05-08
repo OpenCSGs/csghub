@@ -7,7 +7,7 @@
                         :branches="branches" />
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>
-            <a :href="`/${repoType}s/${namespacePath}/files/${currentBranch}`">
+            <a :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`">
               {{ namespacePath.split('/')[1] }}
             </a>
           </el-breadcrumb-item>
@@ -24,7 +24,7 @@
            :key="commit.id"
            class="py-4 border-b border-gray-200 last-of-type:border-none text-gray-700">
         <div class="mb-2 flex items-center">
-          <a :href="`/${repoType}s/${namespacePath}/commit/${commit.id}`" class="truncate" :title="commit.message">
+          <a :href="`/${prefixPath}/${namespacePath}/commit/${commit.id}`" class="truncate" :title="commit.message">
             {{ commit.message }}
           </a>
           <el-button-group class="ml-2 min-w-[107px]">
@@ -78,6 +78,12 @@
     namespacePath: String,
     repoType: String
   })
+
+  let prefixPath = document.location.pathname.split('/')[1]
+
+  if (prefixPath === 'mcp') {
+    prefixPath = 'mcp/servers'
+  }
 
   const copyCommitId = (commitId) => {
     copyToClipboard(commitId)

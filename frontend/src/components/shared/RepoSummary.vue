@@ -13,7 +13,7 @@
       >
       </markdown-viewer>
     </div>
-    <div class="w-[40%] sm:w-[100%] border-l border-gray-200 md:border-l-0 md:border-b md:w-full md:pl-0">
+    <div v-if="showSideSection" class="w-[40%] sm:w-[100%] border-l border-gray-200 md:border-l-0 md:border-b md:w-full md:pl-0">
       <div class="pl-6 py-8">
         <div class="text-gray-700 text-base font-medium text-md leading-[22px] md:pl-0">{{ $t('all.downloadCount') }}</div>
         <div class="text-gray-700 text-base font-semibold leading-6 mt-1 md:pl-0">{{ downloadCount }}</div>
@@ -142,6 +142,10 @@
   const endpoint = ref({})
   const datasetInfo = ref(null)
 
+  const showSideSection = computed(() => {
+    return props.repoType !== 'mcp'
+  })
+
   const handleResize = () => {
     const windowWidth = window.innerWidth;
     if (windowWidth <= 640) {
@@ -215,7 +219,9 @@
   onMounted(() => {
     fetchData()
     fetchCatalog()
-    fetchRepoRelations()
+    if (props.repoType !== 'mcp') {
+      fetchRepoRelations()
+    }
     if (props.repoType == 'model') {
       fetchEndpoint()
     }

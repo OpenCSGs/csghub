@@ -84,7 +84,10 @@
         this.$emit('changeFlag', 'show')
       },
       async createDiscussion() {
-        const discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
+        let discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
+        if (this.repoType === 'mcp') {
+          discussionCreateEndpoint = `/mcpserver/${this.repoPath}/discussions`
+        }
         const discussionJsonData = {
           title: this.title
         }

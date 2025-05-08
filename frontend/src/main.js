@@ -57,6 +57,9 @@ import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleI
 import PromptsHub from "./components/prompts/PromptsHub.vue"
 import NewEvaluation from "./components/evaluations/NewEvaluation.vue"
 import EvaluationDetail from "./components/evaluations/EvaluationDetail.vue"
+import NewMcpServer from "./components/mcp/NewMcpServer.vue"
+import McpTools from "./components/mcp/McpTools.vue"
+import DeployMcpServer from "./components/mcp/DeployMcpServer.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -115,6 +118,9 @@ const app = createApp({
     PromptsHub,
     NewEvaluation,
     EvaluationDetail,
+    NewMcpServer,
+    McpTools,
+    DeployMcpServer,
   },
   provide:{
     defaultTags: DEFAULT_TAGS,

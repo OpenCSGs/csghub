@@ -185,6 +185,15 @@
                 </el-dropdown-item>
               </a>
               <a v-if="!actionLimited"
+                 href="/mcp/servers/new">
+                <el-dropdown-item>
+                  <div class="flex items-center gap-2">
+                    <SvgIcon name="navbar-new" />
+                    {{ $t('navbar.newMcpServer') }}
+                  </div>
+                </el-dropdown-item>
+              </a>
+              <a v-if="!actionLimited"
                 href="/collections/new">
                 <el-dropdown-item>
                   <div class="flex items-center gap-2">
