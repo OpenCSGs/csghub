@@ -23,7 +23,6 @@
       <template
         :key="subItem.index"
         v-for="subItem in item.items">
-        <!-- <a :href="llmFinetune" target="_blank"></a> -->
         <a
           :href="subItem.index"
           :target="subItem.target"
@@ -33,14 +32,14 @@
             :style="subItem.style"
             :index="subItem.index">
             <!-- subItem.component -->
-              {{ item.title }}
+            <component :is="subItem.component" />
           </el-menu-item>
         </a>
       </template>
     </el-sub-menu>
   </template>
 
-  <!-- 更多里面的内容 -->
+  <!-- more -->
   <el-sub-menu
     v-if="moreItems.length > 0"
     :popper-class="popperClass"
@@ -79,7 +78,6 @@
         <template
           :key="subItem.index"
           v-for="subItem in item.items">
-          <!-- <a :href="llmFinetune" target="_blank"></a> -->
           <a
             :href="subItem.index"
             :target="subItem.target"
@@ -89,7 +87,7 @@
               :style="subItem.style"
               :index="subItem.index">
               <!-- subItem.component -->
-                {{ item.title }}
+              <component :is="subItem.component" />
             </el-menu-item>
           </a>
         </template>
@@ -150,17 +148,15 @@
       class: menuItemClass,
       style:
         'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
-      edition: ['saas', 'ee'],
       items: [
         {
-          title: t('navbar.mcp'),
+          title: t('navbar.mcpText'),
           index: '/mcp/servers',
           class: subMenuItemClass,
           style: 'height: auto;',
           component: McpRef,
           target: '',
           condition: true,
-          edition: ['saas', 'ee']
         },
         {
           title: t('navbar.mcpTools'),
@@ -170,7 +166,6 @@
           component: McpToolsRef,
           target: '',
           condition: true,
-          edition: ['saas', 'ee']
         }
       ]
     },

@@ -122,9 +122,7 @@ func (b *BaseHandlerImpl) Community(ctx *gin.Context) {
 }
 
 func (b *BaseHandlerImpl) Tools(ctx *gin.Context) {
-	data := map[string]interface{}{
-		"isSmallFooter": b.isSmallFooter,
-	}
+	data := map[string]interface{}{}
 	RenderBaseInstance.RenderTemplate(ctx, "mcp_servers_tools", data)
 }
 
@@ -134,7 +132,6 @@ func (b *BaseHandlerImpl) Schema(ctx *gin.Context) {
 
 func (b *BaseHandlerImpl) Deploy(ctx *gin.Context) {
 	data := map[string]interface{}{
-		"isSmallFooter": b.isSmallFooter,
 		"licenses":      string(DefaultLicensesJSON),
 		"namespace":     ctx.Param("namespace"),
 		"mcpServerName": ctx.Param("mcp_server_name"),
