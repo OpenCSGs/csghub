@@ -142,52 +142,46 @@
   const endpoint = ref({})
   const datasetInfo = ref(null)
 
-  const handleResize = () => {
-    const windowWidth = window.innerWidth;
-    if (windowWidth <= 640) {
-      dialogWidth.value = '100%';
-    } else if (windowWidth <= 768) {
-      dialogWidth.value = '500';
-    } else if (windowWidth <= 1024) {
-      dialogWidth.value = '700';
-    } else {
-      dialogWidth.value = '800';
-    }
+const handleResize = () => {
+  const widthMap = { 640: '100%', 768: '500', 1024: '700' };
+  dialogWidth.value = widthMap[Object.keys(widthMap).find(key => window.innerWidth <= key)] || '800';
+};
+
+const fetchData = async () => {
+  const endpoints = {
+    readme: `/${props.repoType}s/${props.namespacePath}/blob/README.md`,
+    catalog: `datasets/${props.namespacePath}/dataviewer/catalog`,
+    relations: `/${props.repoType}s/${props.namespacePath}/relations`,
   };
 
-  const fetchData = async () => {
-    const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
+  const fetchEndpointData = async (url) => {
+    const { error, data } = await useFetchApi(url).json();
+    return { error, data };
+  };
 
-    const { data } = await useFetchApi(url).json()
+  const [readmeResponse, catalogResponse, relationsResponse] = await Promise.all([
+    fetchEndpointData(endpoints.readme),
+    props.repoType === 'dataset' ? fetchEndpointData(endpoints.catalog) : null,
+    fetchEndpointData(endpoints.relations),
+  ]);
 
-    if (data.value) {
-      rawReadmeContent.value = data.value.data.content
-      resolveReadmeContent()
-    }
-    loading.value = false
+  if (readmeResponse.data?.value) {
+    rawReadmeContent.value = readmeResponse.data.value.data.content;
+    resolveReadmeContent();
   }
 
-  const fetchCatalog = async () => {
-    if (props.repoType !== 'dataset') return
-
-    const { error, data } = await useFetchApi(
-      `datasets/${props.namespacePath}/dataviewer/catalog`
-    ).json()
-
-    if (data.value) {
-      datasetInfo.value = data.value.data.dataset_info
-    } else {
-      ElMessage.warning(error.value.msg || t('all.fetchError'))
-    }
+  if (catalogResponse?.data?.value) {
+    datasetInfo.value = catalogResponse.data.value.data.dataset_info;
+  } else if (catalogResponse?.error?.value) {
+    ElMessage.warning(catalogResponse.error.value.msg || t('all.fetchError'));
   }
 
-  const fetchRepoRelations = async () => {
-    const url = `/${props.repoType}s/${props.namespacePath}/relations`
-    const { data } = await useFetchApi(url).json()
-    if (data.value) {
-      relations.value = data.value.data
-    }
+  if (relationsResponse.data?.value) {
+    relations.value = relationsResponse.data.value.data;
   }
+
+  loading.value = false;
+};
 
   const appEndpoint = computed(() => {
     if (!endpoint.value) return ''
@@ -214,8 +208,6 @@
 
   onMounted(() => {
     fetchData()
-    fetchCatalog()
-    fetchRepoRelations()
     if (props.repoType == 'model') {
       fetchEndpoint()
     }
