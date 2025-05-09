@@ -46,7 +46,24 @@
         :label="$t('admin.serverless.resource')"
         min-width="240"
         show-overflow-tooltip
-      />
+      >
+        <template #default="scope">
+          <div v-if="scope.row.hardware">
+            <div v-if="typeof scope.row.hardware === 'string'">
+              {{ formatHardware(scope.row.hardware) }}
+            </div>
+            <div v-else>
+              <template v-if="scope.row.hardware.cpu">
+                CPU: {{ scope.row.hardware.cpu.type || '' }} x {{ scope.row.hardware.cpu.num || '' }}
+              </template>
+              <template v-if="scope.row.hardware.memory">
+                <span class="ml-1">· memory: {{ scope.row.hardware.memory }}</span>
+              </template>
+            </div>
+          </div>
+          <div v-else>-</div>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="runtime_framework"
         :label="$t('admin.serverless.runtimeFramework')"
@@ -105,6 +122,29 @@
   const per = ref(10)
   const total = ref(0)
   const keyword = ref('')
+
+  const formatHardware = (hardware) => {
+    try {
+      if (typeof hardware === 'string') {
+        const hw = JSON.parse(hardware)
+        let result = []
+        
+        if (hw.cpu) {
+          const cpuInfo = `CPU: ${hw.cpu.type || ''} x ${hw.cpu.num || ''}`
+          result.push(cpuInfo.trim())
+        }
+        
+        if (hw.memory) {
+          result.push(`memory: ${hw.memory}`)
+        }
+        
+        return result.join(' · ')
+      }
+      return hardware
+    } catch (e) {
+      return hardware
+    }
+  }
 
   const fetchServerless = async (current) => {
     const { data, error } = await useFetchApi(
