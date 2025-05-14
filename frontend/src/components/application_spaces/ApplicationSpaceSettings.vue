@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="deployFailed"
-    class="flex gap-[8px] mt-[32px] mb-[24px] p-[16px] border border-gray-300 rounded-xl shadow-xs">
+    class="flex gap-2 mt-8 mb-6 p-4 border border-gray-300 rounded-xl shadow-xs">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="20"
@@ -26,14 +26,14 @@
       </defs>
     </svg>
     <div>
-      <h3 class="text-gray-600 text-sm font-[500]">
+      <h3 class="text-gray-600 text-sm font-medium">
         {{ $t('application_spaces.errorPage.errorAlert') }}
       </h3>
       <p class="text-gray-600 text-sm">
         {{ $t('application_spaces.errorPage.errorAlertDesc') }}
       </p>
       <p
-        class="text-brand-700 font-[400] text-xs mt-[12px] cursor-pointer"
+        class="text-brand-700 font-normal text-xs mt-3 cursor-pointer"
         @click="showErrorLogs">
         {{ $t('application_spaces.errorPage.showErrorLogs') }}
       </p>
@@ -41,18 +41,18 @@
   </div>
 
   <div
-    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
     <!-- cloud resource -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.edit.cloudResource') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.edit.cloudResourceDesc') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('application_spaces.edit.currentCloudResource') }}
         </p>
@@ -76,20 +76,20 @@
     <el-divider />
 
     <!-- 暂停 Space -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.stopSpace') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
-        <div class="flex flex-col gap-[6px]">
-          <el-button
+      <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5">
+          <CsgButton
             @click="stopSpace"
-            class="w-[100px]"
-            :disabled="!initialized || isSpaceStopped">
-            {{ $t('application_spaces.stop') }}
-          </el-button>
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :disabled="!initialized || isSpaceStopped"
+            :name="$t('application_spaces.stop')"
+          />
         </div>
         <!-- <el-switch
           v-model="isSpaceStopped"
@@ -106,17 +106,17 @@
     <!-- 重启 Space -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.restartSpace') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
-        <el-button
+      <div class="flex flex-col gap-1.5">
+        <CsgButton
           @click="restartSpace"
-          class="w-[100px]"
-          :disabled="notInitialized">
-          {{ $t('application_spaces.restart') }}
-        </el-button>
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :disabled="notInitialized"
+          :name="$t('application_spaces.restart')"
+        />
       </div>
     </div>
 
@@ -125,19 +125,19 @@
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.name') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.nameTips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('application_spaces.namespaceName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
           {{ applicationSpacePath }}
         </div>
       </div>
@@ -148,25 +148,25 @@
     <!-- 更新应用空间别名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.nickname') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.edit.tips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theApplicationSpaceNickname"
           clearable
           size="large"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <CsgButton
           @click="updateNickname"
-          class="w-[100px]"
+          class="btn btn-secondary-gray btn-sm w-fit"
           data-test="update-nickname"
-          >{{ $t('all.update') }}</el-button
-        >
+          :name="$t('all.update')"
+        />
       </div>
     </div>
 
@@ -175,26 +175,26 @@
     <!-- 更新应用空间简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.desc') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.edit.tips2') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theApplicationSpaceDesc"
           clearable
           size="large"
           type="textarea"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <CsgButton
           @click="updateApplicationSpaceDesc"
-          class="w-[100px]"
+          class="btn btn-secondary-gray btn-sm w-fit"
           data-test="update-description"
-          >{{ $t('all.update') }}</el-button
-        >
+          :name="$t('all.update')"
+        />
       </div>
     </div>
 
@@ -203,21 +203,24 @@
     <div v-if="theSdk === 'docker'">
       <div class="flex xl:flex-col gap-8">
         <div class="w-[380px] sm:w-full flex flex-col">
-          <div class="text-sm text-gray-700 leading-[20px] font-medium">
+          <div class="text-sm text-gray-700 leading-5 font-medium">
             {{ $t('application_spaces.edit.spaceVariables') }}
           </div>
-          <div class="text-sm text-gray-600 leading-[20px]">
+          <div class="text-sm text-gray-600 leading-5">
             {{ $t('application_spaces.edit.spaceVariablesDesc') }}
           </div>
         </div>
-        <div class="flex flex-col gap-[6px]">
-          <div v-for="(_, name) in theVariables" :key="name" class="flex gap-4 items-center mb-2">
-            <label :for="name" class="text-gray-600 font-light text-xs">{{ name }}</label>
+        <div class="flex flex-col gap-1.5">
+          <div v-for="(_, name) in theVariables" :key="name" class="flex flex-col mb-2">
+            <label :for="name" class="text-gray-700 text-sm self-start">{{ name }}</label>
             <el-input v-model="theVariables[name]" size="large" class="!w-[400px] sm:!w-full"></el-input>
           </div>
-          <el-button @click="updateVaribles" class="w-[100px]" data-test="update-varibles">
-            {{ $t('all.update') }}
-          </el-button>
+          <CsgButton
+            @click="updateVaribles"
+            class="btn btn-secondary-gray btn-sm w-fit"
+            data-test="update-varibles"
+            :name="$t('all.update')"
+          />
         </div>
       </div>
     </div>
@@ -227,15 +230,15 @@
     <div v-if="theSdk === 'mcp_server' && Object.keys(mcpEnv).length > 0">
       <div class="flex xl:flex-col gap-8">
         <div class="w-[380px] sm:w-full flex flex-col">
-          <div class="text-sm text-gray-700 leading-[20px] font-medium">
+          <div class="text-sm text-gray-700 leading-5 font-medium">
             {{ $t('mcps.deploy.envDesc') }}
           </div>
         </div>
-        <div class="flex flex-col gap-[6px]">
+        <div class="flex flex-col gap-2">
           <div v-for="(_, envKey) in mcpEnv" :key="envKey" class="mb-3">
             <label
               :for="envKey"
-              class="text-gray-600 text-sm block mb-1"
+              class="text-gray-700 text-sm block mb-1"
             >
               {{ envKey }}
             </label>
@@ -245,9 +248,12 @@
               class="!w-[400px] sm:!w-full"
             />
           </div>
-          <el-button @click="updateEnv" class="w-[100px]" data-test="update-mcp-env">
-            {{ $t('all.update') }}
-          </el-button>
+          <CsgButton
+            @click="updateEnv"
+            class="btn btn-secondary-gray btn-sm w-fit"
+            data-test="update-mcp-env"
+            :name="$t('all.update')"
+          />
         </div>
       </div>
     </div>
@@ -257,10 +263,10 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.edit.changeVisibility') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -274,7 +280,7 @@
           }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('application_spaces.edit.visibility') }}
         </p>
@@ -298,11 +304,11 @@
     <!-- cover image -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.edit.replaceCoverImage') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px] w-[400px] sm:w-[98%]">
+      <div class="flex flex-col gap-1.5 w-[400px] sm:w-[98%]">
         <el-upload
           :class="`${hideImageUploadElement ? 'hide' : 'h-auto'}`"
           :limit="1"
@@ -329,36 +335,36 @@
             </div>
           </div>
         </el-upload>
-        <el-button
+        <CsgButton
           @click="updateApplicationSpaceCoverImage"
-          class="w-[100px]">
-          {{ $t('all.update') }}
-        </el-button>
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')"
+        />
       </div>
     </div>
 
     <el-divider />
 
     <!-- 删除应用空间 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col gap-1.5">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.edit.del') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('application_spaces.edit.canNot') }}</span>
           {{ $t('application_spaces.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.delTips3') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('application_spaces.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('application_spaces.edit.sureDel') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[8px]">
+      <div class="flex flex-col gap-2">
         <p class="text-gray-700 text-sm">
           {{ $t('application_spaces.namespaceName') }}
         </p>
@@ -368,19 +374,13 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <div class="flex">
-          <div
+          <CsgButton
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-sm leading-[20px] rounded-md"
-            :class="
-              delDesc === applicationSpacePath
-                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
-                : 'bg-gray-100'
-            "
-            @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave">
-            {{ $t('application_spaces.edit.confirmDel') }}
-          </div>
+            class="btn btn-danger btn-sm w-fit"
+            :disabled="delDesc !== applicationSpacePath"
+            :name="$t('application_spaces.edit.confirmDel')"
+          />
         </div>
       </div>
     </div>
