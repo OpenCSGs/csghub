@@ -24,6 +24,17 @@
         <slot name="files"></slot>
       </el-tab-pane>
 
+      <!-- mcp schema -->
+      <el-tab-pane
+        v-if="repoType === 'mcp'"
+        :label="$t('all.schema')"
+        name="schema"
+        class="min-h-[300px]"
+        lazy
+      >
+        <slot name="schema"></slot>
+      </el-tab-pane>
+
       <!-- repo community -->
       <el-tab-pane
         v-if="repoType !== 'endpoint'"

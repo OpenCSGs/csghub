@@ -28,6 +28,7 @@ import { languages } from './en_js/languages';
 import { errors_page } from './en_js/error';
 import { prompts } from './en_js/prompts';
 import { evaluation } from './en_js/evaluation';
+import { mcps } from './en_js/mcp_servers';
 
 export default {
   all,
@@ -60,4 +61,5 @@ export default {
   errors_page,
   prompts,
   evaluation,
+  mcps,
 };

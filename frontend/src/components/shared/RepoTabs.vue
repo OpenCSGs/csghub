@@ -170,6 +170,13 @@
         />
       </template>
 
+      <!-- schema -->
+      <template #schema>
+        <McpSchema
+          :repo="repoDetail"
+        ></McpSchema>
+      </template>
+
       <!-- community -->
       <template #community>
         <community-page
@@ -245,6 +252,15 @@
           :clusterId="repoDetail.clusterId"
           :variables="safeJsonParse(repoDetail.engineArgs) ? JSON.parse(repoDetail.engineArgs) : {}"
         />
+        <McpSettings
+          v-if="repoType === 'mcp'"
+          :path="path"
+          :mcpNickname="repoDetail.nickname"
+          :mcpDesc="repoDetail.description"
+          :defaultBranch="repoDetail.defaultBranch"
+          :tagList="tagList"
+          :tags="tags"
+        />
       </template>
     </tab-container>
   </div>
@@ -263,6 +279,7 @@
   import ApplicationSpaceSettings from '../application_spaces/ApplicationSpaceSettings.vue'
   import CodeSettings from '../codes/CodeSettings.vue'
   import EndpointSettings from '../endpoints/EndpointSettings.vue'
+  import McpSettings from '../mcp/McpSettings.vue'
   import UploadFile from '../shared/UploadFile.vue'
   import NewFile from '../shared/NewFile.vue'
   import Blob from '../shared/Blob.vue'
@@ -280,6 +297,7 @@
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import { safeJsonParse } from '../../packs/utils'
+  import McpSchema from '../mcp/McpSchema.vue'
 
   const { t } = useI18n()
 
@@ -340,7 +358,7 @@
   })
 
   const showAddToCollections = computed(() => {
-    return props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
+    return props.repoType === 'mcp' || props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
   })
 
   const repoTypeClass = computed(() => {
@@ -358,6 +376,8 @@
   const summaryUrl = () => {
     if (props.repoType === 'endpoint') {
       return `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}`
+    } else if (props.repoType === 'mcp') {
+      return `/${props.repoType}/servers/${props.path}`
     } else {
       return `/${props.repoType}s/${props.path}`
     }
@@ -369,14 +389,24 @@
         location.href = summaryUrl()
         break
       case 'files':
-        location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
+        if (props.repoType === 'mcp') {
+          location.href = `/${props.repoType}/servers/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
+        } else {
+          location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
+        }
         break
       case 'community':
-        location.href = `/${props.repoType}s/${props.path}/community`
+        if (props.repoType === 'mcp') {
+          location.href = `/${props.repoType}/servers/${props.path}/community`
+        } else {
+          location.href = `/${props.repoType}s/${props.path}/community`
+        }
         break
       case 'settings':
         if (props.repoType === 'endpoint') {
           location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/settings`
+        } else if (props.repoType === 'mcp') {
+          location.href = `/${props.repoType}/servers/${props.path}/settings`
         } else {
           location.href = `/${props.repoType}s/${props.path}/settings`
         }
@@ -389,6 +419,11 @@
           location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/billing`
         } else {
           location.href = `/${props.repoType}s/${props.path}/billing`
+        }
+        break
+      case 'schema':
+        if (props.repoType === 'mcp') {
+          location.href = `/${props.repoType}/servers/${props.path}/schema`
         }
         break
       default:
@@ -404,7 +439,8 @@
         type: 'warning'
       })
     } else {
-      tagList.value = Array.isArray(data.value.data)?data.value.data.filter(tag => tag.category === 'task' && tag.scope === props.repoType):[]
+      const tagArray = Array.isArray(data.value.data) ? data.value.data : []
+      tagList.value = tagArray.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
     }
   }
 </script>

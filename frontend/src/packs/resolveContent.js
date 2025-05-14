@@ -3,7 +3,11 @@ import { atob_utf8 } from './utils'
 const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch, requestPath) => {
   if (!content) return content
 
-  const repoBasePath = `/${repoType}/${namespacePath}`
+  let repoBasePath = `/${repoType}/${namespacePath}`
+
+  if (repoType === 'mcps') {
+    repoBasePath = `/mcp/servers/${namespacePath}`
+  }
 
   let prefix = `/${repoType}/${namespacePath}/resolve/${currentBranch}/`
 
@@ -13,6 +17,9 @@ const relativePathToResolvePath = (repoType, content, namespacePath, currentBran
     const lastSlashIndex = requestPath.lastIndexOf('/')
     const pathWithoutFilename = requestPath.substring(0, lastSlashIndex + 1)
     prefix = pathWithoutFilename.replace('/blob/', '/resolve/')
+    if (repoType === 'mcps') {
+      prefix = prefix.replace('/mcp/servers', '/mcps')
+    }
   }
 
   // Handle markdown format image

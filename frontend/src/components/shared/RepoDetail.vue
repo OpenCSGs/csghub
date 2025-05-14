@@ -21,7 +21,7 @@
   <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
       :repo-detail="repoDetailStore"
-      :current-branch="currentBranch"
+      :current-branch="currentBranch || repoDetailStore.defaultBranch"
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"

@@ -3,6 +3,7 @@
         :class="{ 'bg-brand-500': active, 'text-white': active, 'border-brand-500': active }"
         @click="emit('handleTagClick', 'task', tag.name)">
     <img :src="'/images/tags/' + tag.name + '.svg'"
+         v-if="!noIcon"
          class="w-[14px] h-[14px]"
          :style="active ? 'filter: drop-shadow(1000px 0 0 white); transform: translate(-1000px);' : ''"
          alt=""
@@ -17,7 +18,11 @@
 
   const props = defineProps({
     tag: Object,
-    active: Boolean
+    active: Boolean,
+    noIcon: {
+      type: Boolean,
+      default: false
+    }
   })
 
   const { locale } = useI18n()

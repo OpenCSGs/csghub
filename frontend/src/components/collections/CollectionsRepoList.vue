@@ -104,6 +104,32 @@
         </div>
       </div>
     </div>
+
+    <!-- mcps -->
+    <div class="mt-[32px]" v-if="hasMcps">
+      <h3 class="text-xl text-gray-700 flex items-center gap-[8px]">
+        <SvgIcon
+          name="space_mcp"
+          width="18"
+          height="18"
+        />
+        <span>{{ $t('mcps.title') }}</span>
+        <span class="text-gray-400 text-md leading-[24px]">{{ mcps.length }}</span>
+      </h3>
+      <div
+        class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
+      >
+        <div class="flex gap-2" v-for="mcp in mcps">
+          <div class="flex w-full gap-2 group">
+            <mcp-item
+              :mcp="mcp"
+              :showRightIcons="false"
+            ></mcp-item>
+            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(mcp.id)" name="trash" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -113,6 +139,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import McpItem from '../mcp/McpItem.vue'
   import useRepoDetailStore from '@/stores/RepoDetailStore'
 
   const { t } = useI18n()
@@ -127,11 +154,13 @@
   const datasets = ref([])
   const codes = ref([])
   const spaces = ref([])
+  const mcps = ref([])
 
   const hasModels = computed(() => models.value?.length > 0)
   const hasDatasets = computed(() => datasets.value?.length > 0)
   const hasCodes = computed(() => codes.value?.length > 0)
   const hasSpaces = computed(() => spaces.value?.length > 0)
+  const hasMcps = computed(() => mcps.value?.length > 0)
 
  const removeRepo = async (id) => {
     try {
@@ -181,6 +210,9 @@
           break
         case 'code':
           codes.value.push(item)
+          break
+        case 'mcpserver':
+          mcps.value.push(item)
           break
       }
     })
