@@ -134,20 +134,20 @@
       title: t('navbar.models'),
       index: '/models',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('navbar.mcp'),
       index: '/mcp/servers',
       class: menuItemClass,
       style:
-        'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+        'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
       items: [
         {
           title: t('navbar.mcpText'),
@@ -173,25 +173,25 @@
       title: t('navbar.spaces'),
       index: '/spaces',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('navbar.codes'),
       index: '/codes',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('collections.collection'),
       index: '/collections',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('prompts.promptLibrary'),
       index: '/prompts/library',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     }
   ]
 
