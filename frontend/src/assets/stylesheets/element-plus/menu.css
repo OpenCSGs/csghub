@@ -1,6 +1,6 @@
 :root {
   --el-menu-hover-bg-color: var(--Gray-50);
-  --el-menu-hover-text-color: var(--Brand-400);
+  --el-menu-hover-text-color: var(--Brand-600);
   --el-menu-active-color: var(--Brand-600);
   .el-menu-item {
     padding: 8px 14px;
@@ -10,8 +10,19 @@
     font-weight: var(--el-menu-item-font-weight);
     line-height: 20px; 
   };
+  .el-menu-item:hover {
+    color: var(--Brand-600) !important;
+  };
+  .el-menu-item.is-active {
+    font-weight: 400 !important;
+  };
   .el-sub-menu .el-sub-menu__title{
     font-weight: var(--el-menu-item-font-weight);
+  };
+  .el-sub-menu__title:hover,
+  .el-tooltip__trigger:hover,
+  .el-sub-menu__title.el-tooltip__trigger:hover {
+    color: var(--Brand-600) !important;
   };
   .el-menu--popup {
     border-radius: var(--border-radius-xl);
@@ -23,12 +34,19 @@
   .el-menu--horizontal>.el-sub-menu .el-sub-menu__title:hover {
     background-color: var(--el-menu-hover-bg-color);
     border-radius: var(--el-border-radius-base);
+    color: var(--Brand-600) !important;
   };
   .el-menu--horizontal>.el-sub-menu.is-active .el-sub-menu__title {
     border: none;
+    border-bottom: none !important;
+    color: var(--Brand-600) !important;
+  };
+  .el-menu--horizontal>.el-sub-menu .el-sub-menu__title {
+    border-bottom: none !important;
   };
   .el-menu--vertical .el-sub-menu__title:hover {
     background-color: white;
+    color: var(--Brand-600) !important;
   };
   .el-menu--horizontal.el-menu {
     border: none;

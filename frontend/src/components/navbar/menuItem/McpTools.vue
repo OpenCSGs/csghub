@@ -1,12 +1,12 @@
 <template>
-  <div class="menuItem min-h-max flex md:items-center gap-[16px] py-[10px]">
-    <div class="pt-[6px] md:pt-0">
-      <SvgIcon name="space_mcp" />
+  <div class="menuItem min-h-max flex md:items-center gap-4 py-2.5">
+    <div class="pt-0.5 md:pt-0">
+      <SvgIcon name="space_mcp" width="20px" />
     </div>
     <div class="max-w-[247px] flex flex-col whitespace-normal">
-      <div class="text-[#101828] text-[16px]">{{ $t('navbar.mcpTools') }}</div>
+      <div class="text-gray-900 text-md">{{ $t('navbar.mcpTools') }}</div>
       <div
-        class="text-[14px] w-[247px] md:w-[unset] text-[#475467] font-light leading-[20px] md:hidden"
+        class="text-sm w-[247px] md:w-[unset] text-gray-600 font-light leading-5 md:hidden"
       >
         {{ $t('navbar.mcpToolsText') }}
       </div>

@@ -50,7 +50,7 @@
     <template #title>
       <SvgIcon
         name="more_menu"
-        class="p-[4px]" />
+        class="p-1" />
       {{ $t('navbar.more') }}
     </template>
 
@@ -241,15 +241,16 @@
   }
 
   const menuItemClass =
-    'md:!px-[12px] md:!py-[16px] md:!h-auto js-menu-item-width'
-  const subMenuClass = 'md:!h-auto md:!py-[16px] js-menu-item-width'
-  const subMenuItemClass = 'mx-[12px] md:mx-0 md:!px-[12px]'
+    'md:!px-3 md:!py-4 md:!h-auto js-menu-item-width'
+  const subMenuClass = 'md:!h-auto md:!py-4 js-menu-item-width'
+  const subMenuItemClass = 'mx-3 md:mx-0 md:!px-3'
   const popperClass = 'popper-submenu'
 </script>
 
 <style scoped>
   :deep(.el-sub-menu__title) {
     /* padding: 16px; */
+    color: var(--Gray-600);
   }
   :deep(.popper-submenu .el-menu) {
     min-width: 200px;
@@ -257,6 +258,7 @@
   }
   :deep(.popper-submenu .el-menu .el-menu-item) {
     font-size: 16px;
+    font-weight: 400;
     height: 46px;
     line-height: 24px;
   }
