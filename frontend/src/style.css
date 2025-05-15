@@ -143,4 +143,22 @@ img, video {
   .admin-field {
     @apply text-sm text-gray-600;
   }
+
+  .el-menu-item.is-active {
+    font-weight: 400 !important;
+  }
+
+  .el-menu-item:hover {
+    color: #3250BD !important;
+  }
+
+  .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+    border-bottom: none !important;
+  }
+
+  .el-sub-menu__title:hover,
+  .el-tooltip__trigger:hover,
+  .el-sub-menu__title.el-tooltip__trigger:hover {
+    color: #3250BD !important;
+  }
 }
