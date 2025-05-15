@@ -1,22 +1,22 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
     <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('codes.codeName') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('codes.codeNameTips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('codes.namespaceCodeName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
           {{ codePath }}
         </div>
       </div>
@@ -25,27 +25,26 @@
     <el-divider />
 
     <!-- 更新别名 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('codes.codeNickName') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('codes.edit.tips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theCodeNickname"
           clearable
           size="large"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <CsgButton
           @click="updateNickname"
-          class="w-[100px]"
+          class="btn btn-secondary-gray btn-sm w-fit"
           data-test="update-nickname"
-          >{{ $t('all.update') }}</el-button
-        >
+          :name="$t('all.update')" />
       </div>
     </div>
 
@@ -54,25 +53,24 @@
     <!-- 更新简介 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('codes.codeDesc') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('codes.edit.tips2') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theCodeDesc"
           clearable
           size="large"
           type="textarea"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <CsgButton
           @click="updateCodeDesc"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
-        >
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')" />
       </div>
     </div>
 
@@ -81,10 +79,10 @@
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('codes.edit.changeVisibility') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('codes.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{
@@ -98,7 +96,7 @@
           }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">
           {{ $t('codes.edit.codeVisibility') }}
         </p>
@@ -120,25 +118,25 @@
     <el-divider />
 
     <!-- 删除 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col gap-1.5">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('codes.edit.delCode') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('codes.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('codes.edit.canNot') }}</span>
           {{ $t('codes.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('codes.edit.delTips3') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('codes.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('codes.edit.sureDel') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[8px]">
+      <div class="flex flex-col gap-2">
         <p class="text-gray-700 text-sm">{{ $t('codes.codeName') }}</p>
         <el-input
           v-model="delDesc"
@@ -146,19 +144,12 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <div class="flex">
-          <div
+          <CsgButton
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-sm leading-[20px] rounded-md"
-            :class="
-              delDesc === codePath
-                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
-                : 'bg-gray-100'
-            "
-            @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave">
-            {{ $t('codes.edit.confirmDel') }}
-          </div>
+            class="btn btn-danger btn-sm w-fit"
+            :disabled="delDesc !== codePath"
+            :name="$t('codes.edit.confirmDel')" />
         </div>
       </div>
     </div>

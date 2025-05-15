@@ -1,22 +1,22 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]">
+    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
     <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.datasetName') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.datasetNameTips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-sm text-gray-600">
           {{ $t('datasets.namespaceDatasetName') }}
         </p>
         <div
-          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-[14px] py-[10px] border">
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
           {{ datasetPath }}
         </div>
       </div>
@@ -25,82 +25,82 @@
     <el-divider />
 
     <!-- 更新数据集别名 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.datasetNickName') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.tips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theDatasetNickname"
           clearable
           size="large"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <CsgButton
           @click="updateNickname"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
-        >
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')"
+        />
       </div>
     </div>
 
     <el-divider />
 
     <!-- 更新数据集简介 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.datasetDesc') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.tips2') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="theDatasetDesc"
           clearable
           size="large"
           type="textarea"
           class="!w-[512px] sm:!w-full" />
-        <el-button
+        <CsgButton
           @click="updateDatasetDesc"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
-        >
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')"
+        />
       </div>
     </div>
 
     <el-divider />
 
     <!-- 数据集标签 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.datasetTag') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.tips3') }}
         </div>
       </div>
       <div
-        class="flex flex-col gap-[6px]"
+        class="flex flex-col gap-1.5"
         ref="tagListContainer">
         <p class="text-gray-700 text-sm">
           {{ $t('datasets.datasetTag') }}
         </p>
-        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+        <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-1 flex-wrap items-center w-full border rounded-sm border-gray-300 min-h-[40px] p-1.5">
             <div
-              class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="tag in selectedTags"
-                class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
                 {{
                   this.$i18n.locale === 'zh'
                     ? tag.zh_name || tag.show_name || tag.name
@@ -116,21 +116,21 @@
           </div>
           <div
             v-show="shouldShowTagList"
-            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5">
             <p
               v-for="tag in theTagList"
               @click="selectTag(tag)"
-              class="flex gap-[8px] items-center cursor-pointer p-[10px]">
+              class="flex gap-2 items-center cursor-pointer p-2.5">
               {{
                 this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
               }}
             </p>
           </div>
-          <el-button
+          <CsgButton
             @click="updateTags"
-            class="w-[100px]"
-            >{{ $t('all.update') }}</el-button
-          >
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :name="$t('all.update')"
+          />
         </div>
       </div>
     </div>
@@ -138,29 +138,29 @@
     <el-divider />
 
     <!-- 行业标签 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.datasetIndustryTag') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.tips4') }}
         </div>
       </div>
       <div
-        class="flex flex-col gap-[6px]"
+        class="flex flex-col gap-1.5"
         ref="IndustryTagListContainer">
         <p class="text-gray-700 text-sm">
           {{ $t('datasets.datasetIndustryTag') }}
         </p>
-        <div class="flex flex-col gap-[6px] w-[512px] md:w-full">
+        <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-xs border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-1 flex-wrap items-center w-full border rounded-sm border-gray-300 min-h-[40px] p-1.5">
             <div
-              class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="tag in selectedIndustryTags"
-                class="flex items-center gap-[5px] border rounded-xs border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
                 {{
                   this.$i18n.locale === 'zh'
                     ? tag.zh_name || tag.show_name || tag.name
@@ -178,11 +178,11 @@
           </div>
           <div
             v-show="shouldShowIndustryTagList"
-            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5">
             <p
               v-for="tag in theIndustryTagsList"
               @click="selectIndustryTag(tag)"
-              class="flex gap-[8px] items-center cursor-pointer p-[10px]">
+              class="flex gap-2 items-center cursor-pointer p-2.5">
               {{
                 this.$i18n.locale === 'zh'
                   ? tag.show_name || tag.name
@@ -190,11 +190,11 @@
               }}
             </p>
           </div>
-          <el-button
+          <CsgButton
             @click="updateIndustryTags"
-            class="w-[100px]"
-            >{{ $t('all.update') }}</el-button
-          >
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :name="$t('all.update')"
+          />
         </div>
       </div>
     </div>
@@ -202,12 +202,12 @@
     <el-divider />
 
     <!-- 修改可见性 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.edit.changeVisibility') }}
         </div>
-        <div class="max-w-[864px] text-sm text-gray-600 leading-[20px]">
+        <div class="max-w-[864px] text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.statusText') }}
           <span class="text-black font-medium"
             >[{{
@@ -221,7 +221,7 @@
           }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-sm text-gray-600">
           {{ $t('datasets.edit.datasetVisibility') }}
         </p>
@@ -243,26 +243,26 @@
     <el-divider />
 
     <!-- 数据集删除 -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('datasets.edit.delDataset') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('datasets.edit.canNot') }}</span>
           {{ $t('datasets.edit.delTips2') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.delTips3') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('datasets.edit.enterPls') }}
           <span class="text-black font-medium break-words">{{ path }}</span>
           {{ $t('datasets.edit.sureDel') }}
         </div>
       </div>
 
-      <div class="flex flex-col gap-[8px]">
+      <div class="flex flex-col gap-2">
         <p class="text-sm text-gray-600">
           {{ $t('datasets.datasetName') }}
         </p>
@@ -272,19 +272,13 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <div class="flex">
-          <div
+          <CsgButton
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-sm leading-[20px] rounded-md"
-            :class="
-              delDesc === datasetPath
-                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
-                : 'bg-gray-100'
-            "
-            @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave">
-            {{ $t('datasets.edit.confirmDel') }}
-          </div>
+            class="btn btn-danger btn-sm w-fit"
+            :disabled="delDesc !== datasetPath"
+            :name="$t('datasets.edit.confirmDel')"
+          />
         </div>
       </div>
     </div>

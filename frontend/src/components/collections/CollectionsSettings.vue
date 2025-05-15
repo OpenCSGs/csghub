@@ -1,9 +1,9 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-[32px] md:my-0 md:border-none px-[24px] py-[24px]"
+    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6"
   >
     <!-- collection name -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.cnName') }}
@@ -12,44 +12,42 @@
           {{ $t('collections.edit.cnNameTips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="collectionNickname"
           clearable
           size="large"
           class="!w-[512px] sm:!w-full"
         />
-        <el-button
+        <CsgButton
           @click="updateCollection()"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
-        >
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')" />
       </div>
     </div>
     <el-divider />
 
     <!-- collection desc -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-[20px] font-medium">
           {{ $t('collections.edit.desc') }}
         </div>
-        <div class="text-sm text-gray-600 font-light leading-[20px]">
+        <div class="text-sm text-gray-600 font-light leading-5">
           {{ $t('collections.edit.descTips') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-input
           v-model="collectionDesc"
           clearable
           size="large"
           class="!w-[512px] sm:!w-full"
         />
-        <el-button
+        <CsgButton
           @click="updateCollection()"
-          class="w-[100px]"
-          >{{ $t('all.update') }}</el-button
-        >
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')" />
       </div>
     </div>
     <el-divider />
@@ -57,14 +55,14 @@
     <!-- theme -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('collections.edit.theme') }}
         </div>
-        <div class="text-sm text-gray-600 font-light leading-[20px]">
+        <div class="text-sm text-gray-600 font-light leading-5">
           {{ $t('collections.edit.upDateTheme') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-select
           v-model="themeColor"
           :placeholder="$t('all.select')"
@@ -89,7 +87,7 @@
         <div class="text-sm text-gray-700 leading-[20px] font-medium">增加项目</div>
         <div class="text-sm text-gray-600 font-light leading-[20px]">增加更多项目到集合</div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <el-select
           v-model="themeColor"
           :placeholder="$t('all.select')"
@@ -109,12 +107,12 @@
     <el-divider /> -->
 
     <!-- Change Visibility -->
-    <div class="flex xl:flex-col gap-[32px]">
+    <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('collections.edit.changeVisibility') }}
         </div>
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('collections.edit.statusText') }}
           <span class="text-black font-semibold"
             >[{{ visibility ? $t('all.private') : $t('all.public') }}]</span
@@ -124,7 +122,7 @@
           }}
         </div>
       </div>
-      <div class="flex flex-col gap-[6px]">
+      <div class="flex flex-col gap-1.5">
         <p class="text-gray-700 text-sm">{{ $t('collections.edit.collectionVisibility') }}</p>
         <el-select
           v-model="visibility"
@@ -145,13 +143,13 @@
     <el-divider />
 
     <!-- 删除应用空间 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col gap-[6px]">
-        <div class="text-sm text-gray-700 leading-[20px] font-medium">
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col gap-1.5">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('collections.edit.delCollection') }}
         </div>
 
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('collections.edit.delTips') }}
           <span class="text-black font-medium">{{ $t('collections.edit.canNot') }}</span>
           {{ $t('collections.edit.delTips2') }}
@@ -159,7 +157,7 @@
           {{ $t('collections.edit.delTips3') }}
         </div>
 
-        <div class="text-sm text-gray-600 leading-[20px]">
+        <div class="text-sm text-gray-600 leading-5">
           {{ $t('all.enterPls') }}
           <span class="text-black font-medium break-words">
             {{ `${collection.username}/${collection.name}` }}
@@ -167,7 +165,7 @@
           {{ $t('all.sureDel') }}
         </div>
       </div>
-      <div class="flex flex-col gap-[8px]">
+      <div class="flex flex-col gap-2">
         <p class="text-gray-700 text-sm">{{ $t('collections.collectionName') }}</p>
         <el-input
           v-model="delDesc"
@@ -176,20 +174,12 @@
           class="!w-[512px] sm:!w-full"
         />
         <div class="flex">
-          <div
+          <CsgButton
             id="confirmDelete"
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-sm leading-[20px] rounded-md"
-            :class="
-              delDesc === `${collection.username}/${collection.name}`
-                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
-                : 'bg-gray-100'
-            "
-            @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave"
-          >
-            {{ $t('endpoints.settings.confirmDel') }}
-          </div>
+            class="btn btn-danger btn-sm w-fit"
+            :disabled="delDesc !== `${collection.username}/${collection.name}`"
+            :name="$t('endpoints.settings.confirmDel')" />
         </div>
       </div>
     </div>
