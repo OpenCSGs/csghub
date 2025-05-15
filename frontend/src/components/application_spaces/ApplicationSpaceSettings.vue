@@ -222,6 +222,36 @@
       </div>
     </div>
 
+    <!-- mcp space env -->
+    <el-divider v-if="theSdk === 'mcp_server' && Object.keys(mcpEnv).length > 0"/>
+    <div v-if="theSdk === 'mcp_server' && Object.keys(mcpEnv).length > 0">
+      <div class="flex xl:flex-col gap-8">
+        <div class="w-[380px] sm:w-full flex flex-col">
+          <div class="text-sm text-gray-700 leading-[20px] font-medium">
+            {{ $t('mcps.deploy.envDesc') }}
+          </div>
+        </div>
+        <div class="flex flex-col gap-[6px]">
+          <div v-for="(_, envKey) in mcpEnv" :key="envKey" class="mb-3">
+            <label
+              :for="envKey"
+              class="text-gray-600 text-sm block mb-1"
+            >
+              {{ envKey }}
+            </label>
+            <el-input
+              v-model="mcpEnv[envKey]"
+              size="large"
+              class="!w-[400px] sm:!w-full"
+            />
+          </div>
+          <el-button @click="updateEnv" class="w-[100px]" data-test="update-mcp-env">
+            {{ $t('all.update') }}
+          </el-button>
+        </div>
+      </div>
+    </div>
+
     <el-divider />
 
     <!-- 修改可见性 -->
@@ -408,6 +438,7 @@
         ],
         uploadCoverImageUrl: '/images/default_cover_image.png',
         imageUploaded: false,
+        mcpEnv: {},
         t: useI18n()
       }
     },
@@ -471,6 +502,9 @@
     emits: ['showSpaceLogs'],
     mounted() {
       this.fetchSpaceResources()
+      if (this.theSdk === 'mcp_server') {
+        this.fetchSpaceDetail()
+      }
     },
     inject: ['fetchRepoDetail'],
     methods: {
@@ -606,6 +640,30 @@
           }, 500)
           return true
         }
+      },
+
+      async fetchSpaceDetail () {
+        const { data, error } = await useFetchApi(
+          `/spaces/${this.path}`
+        ).json()
+        if (error.value) {
+          console.log(error.value.msg)
+        } else {
+          const body = data.value
+          const envJSON = body.data.env
+          if (envJSON) {
+            try {
+              this.mcpEnv = JSON.parse(envJSON)
+            } catch (error) {
+              console.log(error)
+            }
+          }
+        }
+      },
+
+      updateEnv() {
+        const payload = { env: JSON.stringify(this.mcpEnv) }
+        this.updateApplicationSpace(payload)
       },
 
       changeVisibility(value) {
