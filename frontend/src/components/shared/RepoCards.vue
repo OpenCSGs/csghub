@@ -81,8 +81,8 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
-          <!-- wait server -->
-          <!-- <el-select
+
+          <el-select
             v-if="repoType === 'model'"
             v-model="filterSelection"
             @change="filterChange"
@@ -93,7 +93,8 @@
               :key="item.value"
               :label="item.label"
               :value="item.value" />
-          </el-select> -->
+          </el-select>
+
           <ElInput
             v-model="nameFilterInput"
             class="w-fit"
