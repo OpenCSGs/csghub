@@ -15,16 +15,12 @@
         {{ $t('endpoints.playground.wgDec') }}
       </div>
       <div
-        class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border relative"
-        :class="
-          inputFocus
-            ? 'border-brand-300 [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
-            : ' border-gray-300'
-        "
-        v-loading="loading">
+        class="flex items-center justify-between gap-2 rounded-lg relative">
         <el-input
           v-model="message"
+          class="input-with-border"
           inputStyle="outline: none"
+          :disabled="loading"
           @focus="handleFocus"
           @blur="handleBlur"
           @keydown.enter="handleEnterPress"
@@ -36,7 +32,7 @@
           :class="
             canSendMessage
               ? 'bg-brand-600 cursor-pointer'
-              : 'bg-[#f2f3f6] cursor-not-allowed'
+              : 'bg-gray-100 cursor-not-allowed'
           "
           @click="handleSendMessage">
           <div
@@ -72,13 +68,13 @@
       </div>
 
       <div
-        v-loading="loading"
-        class="min-h-[180px] w-full overflow-x-auto px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg shadow text-gray-700 flex items-center justify-center">
+        class="min-h-[180px] max-h-[480px] w-full overflow-x-auto px-3.5 py-3 mt-[12px] bg-gray-200 rounded-lg text-gray-700 flex items-center justify-center">
         <img
           v-if="imageSrc"
           :src="imageSrc"
           style="max-width: 90% !important"
           alt="Fetched Image" />
+        <el-icon v-if="loading" class="is-loading w-8 h-8 text-gray-400"><Loading /></el-icon>
       </div>
 
       <div class="flex mt-4">
@@ -97,6 +93,7 @@
   import { ref, computed } from 'vue'
   import { useCookies } from 'vue3-cookies'
   import { ElMessage } from 'element-plus'
+  import { Loading } from '@element-plus/icons-vue'
 
   const { cookies } = useCookies()
 
@@ -227,6 +224,12 @@
     border: none;
     box-shadow: none;
     padding: 0;
+  }
+
+  :deep(.input-with-border .el-input__wrapper) {
+    box-shadow: 0 0 0 1px var(--el-input-border-color, #dcdfe6) inset;
+    border-radius: 4px;
+    padding: 1px 11px;
   }
 
   :deep(.el-loading-spinner svg) {

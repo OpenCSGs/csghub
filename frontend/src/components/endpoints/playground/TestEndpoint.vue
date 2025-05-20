@@ -16,7 +16,7 @@
       {{ $t('endpoints.playground.generation') }}
     </div>
     <div
-      class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border  border-gray-300 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
+      class="max-h-[480px] min-h-[180px] px-3.5 py-3 bg-white rounded-lg border border-gray-200 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
     >
       <div class="flex flex-col gap-4">
         <template v-for="(item, index) in chatMessages" :key="index">
@@ -36,16 +36,11 @@
       </div>
     </div>
     <div
-      class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border relative"
-      :class="
-        inputFocus
-          ? 'border-brand-300 [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
-          : ' border-gray-300'
-      "
-      v-loading="loading"
+      class="flex items-center justify-between gap-2 rounded-lg relative"
     >
       <el-input
         v-model="message"
+        class="input-with-border"
         inputStyle="outline: none"
         :disabled="loading"
         @focus="handleFocus"
@@ -56,11 +51,11 @@
       ></el-input>
 
       <div
-        class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
+        class="h-[34px] px-3 py-2 rounded-lg border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
         :class="
           canSendMessage
             ? 'bg-brand-600 cursor-pointer'
-            : 'bg-[#f2f3f6] cursor-not-allowed'
+            : 'bg-gray-100 cursor-not-allowed'
         "
         @click="handleSendMessage"
       >
@@ -286,6 +281,12 @@
     border: none;
     box-shadow: none;
     padding: 0;
+  }
+
+  :deep(.input-with-border .el-input__wrapper) {
+    box-shadow: 0 0 0 1px var(--el-input-border-color, #dcdfe6) inset;
+    border-radius: 4px;
+    padding: 1px 11px;
   }
 
   :deep(.el-loading-spinner svg) {
