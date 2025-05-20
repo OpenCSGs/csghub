@@ -39,12 +39,12 @@
           size="large"
           class="!w-[512px] sm:!w-full"
         />
-        <button
+        <CsgButton
           @click="updateNickname"
           class="btn btn-secondary-gray btn-sm w-fit"
-        >
-          {{ $t('all.update') }}
-        </button>
+          :name="$t('all.update')"
+          :disabled="!theMcpNickname"
+        />
       </div>
     </div>
 
@@ -67,12 +67,12 @@
           type="textarea"
           class="!w-[512px] sm:!w-full"
         />
-        <button
+        <CsgButton
           @click="updateMcpDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
-        >
-          {{ $t('all.update') }}
-        </button>
+          :name="$t('all.update')"
+          :disabled="!theMcpDesc"
+        />
       </div>
     </div>
 
@@ -101,7 +101,7 @@
             >
               <span
                 v-for="tag in selectedTags"
-                class="flex items-center gap-[5px] border rounded-md border-gray-300 px-[5px] py-[2px]"
+                class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5"
               >
                 {{
                   $i18n.locale === 'zh'
@@ -119,22 +119,21 @@
           </div>
           <div
             v-show="shouldShowTagList"
-            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]"
+            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5"
           >
             <p
               v-for="tag in theTagList"
               @click="selectTag(tag)"
-              class="flex gap-2 items-center cursor-pointer p-[10px]"
+              class="flex gap-2 items-center cursor-pointer p-2.5"
             >
               {{ $i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name }}
             </p>
           </div>
-          <button
+          <CsgButton
             @click="updateTags"
             class="btn btn-secondary-gray btn-sm w-fit"
-          >
-            {{ $t('all.update') }}
-          </button>
+            :name="$t('all.update')"
+          />
         </div>
       </div>
     </div>
@@ -209,20 +208,12 @@
           class="!w-[512px] sm:!w-full"
         />
         <div class="flex">
-          <div
-            id="confirmDelete"
+          <CsgButton
             @click="clickDelete"
-            class="text-gray-400 py-[8px] px-[12px] text-sm leading-5 rounded-md"
-            :class="
-              delDesc === mcpPath
-                ? 'bg-error-600 text-white cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-error-600 hover:text-white'
-                : 'bg-gray-100'
-            "
-            @mouseover="handleMouseOver"
-            @mouseleave="handleMouseLeave"
-          >
-            {{ $t('mcps.edit.confirmDel') }}
-          </div>
+            class="btn btn-danger btn-sm w-fit"
+            :name="$t('mcps.edit.confirmDel')"
+            :disabled="delDesc !== mcpPath"
+          />
         </div>
       </div>
     </div>

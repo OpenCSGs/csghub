@@ -178,7 +178,6 @@
   color: var(--Gray-400);
 }
 
-
 /* btn-primary */
 .btn-primary {
   background-color: var(--Brand-600);
@@ -236,7 +235,7 @@
   color: var(--Gray-400);
   border: 1px solid var(--Gray-200);
   box-shadow: var(--shadow-xs);
-} 
+}
 
 /* btn-secondary-color */
 .btn-secondary-color {
@@ -335,10 +334,11 @@
 
 .btn-link-color[disabled] {
   color: var(--Gray-400);
-} 
+}
 
 /* sm size button */
 .btn-primary.btn-sm,
+.btn-danger.btn-sm,
 .btn-secondary-gray.btn-sm,
 .btn-secondary-color.btn-sm,
 .btn-tertiary-gray.btn-sm,
@@ -352,6 +352,29 @@
   transform: scale(1);
   -webkit-transform: scale(1);
   border-radius: var(--border-radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  justify-content: center;
+}
+
+/* md size button */
+.btn-primary.btn-md,
+.btn-danger.btn-md,
+.btn-secondary-gray.btn-md,
+.btn-secondary-color.btn-md,
+.btn-tertiary-gray.btn-md,
+.btn-tertiary-color.btn-md,
+.btn-link-gray.btn-md,
+.btn-link-color.btn-md {
+  /* 默认尺寸（可以认为是 md 尺寸） */
+  padding: 10px 14px;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  border-radius: var(--border-radius-lg);
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -378,8 +401,6 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  text-align: center;
-  justify-content: center;
 }
 
 /* lg size button */
