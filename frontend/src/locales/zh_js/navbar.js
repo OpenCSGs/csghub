@@ -1,10 +1,10 @@
 export const navbar = {
   console:'资源控制台',
-  adminPanel: '管理员面板',
+  adminPanel: '管理员后台',
   models: "模型",
   datasets: "数据集",
-  spaces: "应用空间",
-  codes: "代码仓库",
+  spaces: "应用",
+  codes: "代码",
   profile: "个人信息",
   mcp: "MCP",
   mcpText: "MCP 服务器",
