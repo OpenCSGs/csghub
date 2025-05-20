@@ -74,7 +74,6 @@
   import RepoItemSyncIcon from './RepoItemSyncIcon.vue';
   import { computed, ref, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import RepoItemSyncIcon from './RepoItemSyncIcon.vue'
   import NewTag from './NewTag.vue'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
 
