@@ -1,6 +1,11 @@
 <template>
   <UpdateUsername />
-  <div class="border-b sticky top-0 z-[999] csg-navbar bg-white border-gray-200">
+  <div
+    class="border-b sticky top-0 z-[999]"
+    :class="`bg-${theme} ${
+      theme === 'black' ? 'border-gray-950' : 'border-gray-200'
+    }`"
+  >
     <div
       class="page-responsive-width flex text-gray-700 justify-between items-center h-20 sm:h-15 gap-6 md:px-5">
       <!-- pc logo -->
@@ -65,25 +70,35 @@
             v-if="false"
             class="el-dropdown-link relative">
             <el-avatar
-              :size="35"
+              :size="36"
               :src="avatar">
             </el-avatar>
-            <SvgIcon name="verified_company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
+            <SvgIcon
+              name="verified_company"
+              height="15px"
+              width="15px"
+              class="absolute right-0 top-6"
+            />
           </span>
           <span
             v-else-if="false"
             class="el-dropdown-link relative">
             <el-avatar
-              :size="35"
+              :size="36"
               :src="avatar">
             </el-avatar>
-            <SvgIcon name="company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
+            <SvgIcon
+              name="company"
+              height="15px"
+              width="15px"
+              class="absolute right-0 top-6"
+            />
           </span>
           <span
             v-else
             class="el-dropdown-link">
             <el-avatar
-              :size="35"
+              :size="36"
               :src="avatar">
             </el-avatar>
           </span>
@@ -275,7 +290,7 @@
     <el-menu
       :default-active="activeIndex"
       :ellipsis="false"
-      class="w-full flex flex-col justify-center gap-4 pt-16"
+      class="w-full flex flex-col justify-center pt-16"
       unique-opened
       style="
         --el-menu-base-level-padding: 12px;
@@ -283,7 +298,7 @@
         --el-menu-item-font-weight: 400;
         --el-menu-item-height: auto;
       "
-      text-color="#475467"
+      text-color="gray-600"
     >
       <MenuItems
         :isLoggedInBoolean="isLoggedIn"
