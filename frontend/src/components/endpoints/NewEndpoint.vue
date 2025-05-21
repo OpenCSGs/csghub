@@ -307,7 +307,7 @@
       {
         required: true,
         message: t('all.pleaseInput', { value: t('endpoints.new.name') }),
-        trigger: 'blur'
+        trigger: 'change'
       },
       // limit 2-64 length
       {
@@ -527,12 +527,13 @@
     const params = {
       deploy_name: dataForm.value.name,
       hardware: dataForm.value.cloud_resource,
-      resource_id: dataForm.value.cloud_resource,
+      resource_id: Number(dataForm.value.cloud_resource.split('/')[0]),
       min_replica: dataForm.value.min_replica,
       max_replica: dataForm.value.max_replica,
       runtime_framework_id: dataForm.value.endpoint_framework,
-      secure_level: dataForm.value.visibility === 'public' ? 1: 2,
-      cluster_id: dataForm.value.endpoint_cluster
+      secure_level: dataForm.value.visibility === 'public' ? 1 : 2,
+      cluster_id: dataForm.value.endpoint_cluster,
+      order_detail_id: Number(dataForm.value.cloud_resource.split('/')[1])
     }
 
     if (availableQuantizations.value.length > 0) {
