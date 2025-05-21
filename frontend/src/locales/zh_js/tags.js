@@ -4,6 +4,7 @@ export const tags = {
   audio_processing: "语音处理",
   multimodal: "多模态",
   text_processing: "文本处理",
+  scientific_computing: "科学计算",
   graphics: "图像",
   audio: "音频",
   video: "视频",

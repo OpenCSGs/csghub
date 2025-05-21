@@ -46,7 +46,7 @@
       'audio_processing',
       'multimodal'
     ],
-    dataset: ['text_processing', 'graphics', 'audio', 'video', 'multimodal'],
+    dataset: ['text_processing', 'graphics', 'audio', 'video', 'multimodal', 'scientific_computing'],
     code: []
   }
 
