@@ -106,12 +106,18 @@
             size="large"
             @change="resetCurrentRuntimeFramework"
             style="width: 100%">
-            <el-option
-              v-for="item in finetuneResources"
-              :key="item.name"
-              :label="item.name"
-              :value="item.id"
-              :disabled="!item.is_available" />
+            <el-option-group
+              v-for="group in finetuneResources"
+              :key="group.label"
+              :label="group.label"
+            >
+              <el-option
+                v-for="item in group.options"
+                :key="item.name"
+                :label="item.label"
+                :value="`${item.id}/${item.order_detail_id}`"
+                :disabled="!item.is_available" />
+            </el-option-group>
           </el-select>
           <div class="flex flex-col">
             <p class="text-gray-600 mt-2 font-light">
@@ -245,7 +251,7 @@
         message: t('all.pleaseInput', { value: t('finetune.new.modelId') }),
         trigger: 'change'
       },
-      // Make sure to include a / in the string, but not at the beginning or end
+      // 确保字符串中包含一个 /，但不能出现在首位或末尾
       {
         pattern: /^(?!\/)[a-zA-Z0-9-_\.]+\/[a-zA-Z0-9-_\.]+(?<!\/)$/,
         message: t('all.inputFormatError'),
@@ -348,7 +354,11 @@
   const submitFinetuneForm = async () => {
     const options = {
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dataForm.value)
+      body: JSON.stringify({
+        ...dataForm.value,
+        order_detail_id: Number(dataForm.value.resource_id.split('/')[1]),
+        resource_id: Number(dataForm.value.resource_id.split('/')[0])
+      })
     }
     const { data, error } = await useFetchApi(
       `/models/${dataForm.value.model_id}/finetune?current_user=${
