@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import SpaceRelationsCard from '@/components/application_spaces/SpaceRelationsCard.vue'
+import ApplicationSpaceItem from '@/components/application_spaces/ApplicationSpaceItem.vue'
 
 const createWrapper = (props) => {
   return mount(SpaceRelationsCard, {
@@ -8,6 +9,14 @@ const createWrapper = (props) => {
       namespacePath: 'test/namespace',
       spaces: [],
       ...props
+    },
+    global: {
+      stubs: {
+        ApplicationSpaceItem: {
+          template: '<div class="application-space-item">{{ repo.path }}</div>',
+          props: ['repo']
+        }
+      }
     }
   })
 }
@@ -34,9 +43,13 @@ describe('SpaceRelationsCard', () => {
       }
     ]
     const wrapper = createWrapper({ spaces })
-    const items = wrapper.findAll('[data-test="space-item"]')
+    const items = wrapper.findAllComponents(ApplicationSpaceItem)
     expect(items.length).toBe(spaces.length)
-    expect(items[0].text()).toContain('user/space-1')
-    expect(items[1].text()).toContain('user/space-2')
+    
+    // 验证每个 ApplicationSpaceItem 接收到正确的 repo prop
+    items.forEach((item, index) => {
+      expect(item.props('repo')).toEqual(spaces[index])
+      expect(item.text()).toContain(spaces[index].path)
+    })
   })
 })

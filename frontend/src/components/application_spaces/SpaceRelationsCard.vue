@@ -6,16 +6,18 @@
       <span class="text-gray-500"> {{ spaces.length }} </span>
     </h3>
     <div class="mt-4 flex flex-wrap gap-3">
-      <a v-for="space in spaces" :href="`/spaces/${space.path}`" data-test="space-item">
-        <p class="rounded-sm text-sm text-gray-700 border border-gray-300 bg-white py-1 px-2 hover:bg-gray-50">
-          {{ space.path }}
-        </p>
-      </a>
+      <ApplicationSpaceItem 
+        v-for="space in spaces" 
+        :key="space.path"
+        :repo="space"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+  import ApplicationSpaceItem from './ApplicationSpaceItem.vue'
+  
   const props = defineProps({
     namespacePath: String,
     spaces: Array
