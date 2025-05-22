@@ -159,7 +159,7 @@
   })
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   .can-link {
     color: rgb(34 59 153);
     font-weight: 700;
