@@ -181,12 +181,19 @@
             size="large"
             style="width: 100%"
           >
-            <el-option
-              v-for="item in evaluationResources"
-              :key="item.name"
-              :label="item.name"
-              :value="item.id"
-              :disabled="!item.is_available" />
+            <el-option-group
+              v-for="group in evaluationResources"
+              :key="group.label"
+              :label="group.label"
+            >
+              <el-option
+                v-for="item in group.options"
+                :key="item.name"
+                :label="item.label"
+                :value="`${item.id}/${item.order_detail_id}`"
+                :disabled="!item.is_available"
+              />
+            </el-option-group>
           </el-select>
           <p class="text-gray-600 mt-2 font-light">
             {{ t('evaluation.new.resourceTip') }}
