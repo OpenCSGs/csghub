@@ -84,6 +84,7 @@ export const admin = {
     opSuccess: 'Operation Success',
     cluster: 'Cluster',
     deployName: 'Deploy Name',
+    modelId: 'Model ID',
     env: 'ENV Config',
     maxReplica: 'Max Replica',
     minReplica: 'Min Replica',
