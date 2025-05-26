@@ -18,7 +18,7 @@
       <el-select
         v-model="scope"
         size="large"
-        placeholder="scope name"
+        :placeholder="$t('admin.tags.scope')"
         clearable
         @change="fetchtagsAndResetCategory"
         class="flex-1">
@@ -40,6 +40,7 @@
       <el-select
         v-model="keyword"
         size="large"
+        :placeholder="$t('admin.tags.category')"
         @change="fetchtags"
         class="flex-1">
         <el-option

@@ -11,34 +11,12 @@
       { text: `Serverless #${route.params.id}` }
     ]"
   >
-    <Card :title="`Serverless #${route.params.id}`" :show-footer="false">
+    <Card :title="`Serverless #${route.params.id}`" :show-footer="true">
       <template #header>
         <div class="flex justify-between px-6 py-7 border-b border-gray-200">
           <h2 class="text-lg text-gray-900">
             {{ `Serverless #${route.params.id}` }}
           </h2>
-          <div class="flex gap-2">
-            <router-link
-              :to="`/admin_panel/serverless/${route.params.namespace}/${route.params.name}/${route.params.id}/edit`"
-            >
-              <CsgButton
-                class="btn btn-primary btn-sm"
-                :name="$t('admin.serverless.edit')"
-              />
-            </router-link>
-            <CsgButton
-              v-if="serverlessInfo.status && serverlessInfo.status !== 'Stopped'"
-              class="btn btn-primary btn-sm"
-              :name="$t('admin.serverless.stop')"
-              @click="stopServerless"
-            />
-            <CsgButton
-              v-if="serverlessInfo.status && serverlessInfo.status === 'Stopped'"
-              class="btn btn-primary btn-sm"
-              :name="$t('admin.serverless.restart')"
-              @click="restartServerless"
-            />
-          </div>
         </div>
       </template>
       <ul class="">
@@ -87,6 +65,32 @@
           :deployId="serverlessInfo.deploy_id"
         />
       </div>
+      <template #footer>
+        <div class="flex gap-[16px]">
+          <div class="flex gap-4">
+            <router-link
+              :to="`/admin_panel/serverless/${route.params.namespace}/${route.params.name}/${route.params.id}/edit`"
+            >
+              <CsgButton
+                class="btn btn-primary btn-md"
+                :name="$t('admin.serverless.edit')"
+              />
+            </router-link>
+            <CsgButton
+              v-if="serverlessInfo.status && serverlessInfo.status !== 'Stopped'"
+              class="btn btn-primary btn-md"
+              :name="$t('admin.serverless.stop')"
+              @click="stopServerless"
+            />
+            <CsgButton
+              v-if="serverlessInfo.status && serverlessInfo.status === 'Stopped'"
+              class="btn btn-primary btn-md"
+              :name="$t('admin.serverless.restart')"
+              @click="restartServerless"
+            />
+          </div>
+        </div>
+      </template>
     </Card>
   </Container>
 </template>

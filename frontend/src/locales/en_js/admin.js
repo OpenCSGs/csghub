@@ -16,6 +16,7 @@ export const admin = {
   sensiCheckStatus: 'SensiCheckStatus',
   createdAt: 'Created At',
   createBy: 'Created By',
+  search: 'Search',
   weight: 'Weight',
   origin: 'Origin',
   baseConfigTitle: 'Basic Settings',
@@ -101,6 +102,7 @@ export const admin = {
   },
   tags: {
     title: 'Tag Management',
+    category: 'Tag Category',
     newTag: 'Create Tag',
     editTag: 'Edit Tag',
     tagList: 'Tags List',
@@ -120,7 +122,7 @@ export const admin = {
     editCancelBtn: 'Cancel',
     editConfirmBtn: 'Confirm',
     newCategory: 'New Category',
-    scope: 'Scope',
+    scope: 'Repo Scope',
     name: 'Name',
     showName: 'ZH Name'
   },
@@ -130,6 +132,7 @@ export const admin = {
     categoryCount: 'tag categories',
     newTitle: 'Create Tag Category',
     editTitle: 'Edit Tag Category',
+    searchPlaceholder: 'Search Tag Category',
     create: 'Create',
     edit: 'Edit',
     delete: 'Delete',

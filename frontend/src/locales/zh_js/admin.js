@@ -16,6 +16,7 @@ export const admin = {
   sensiCheckStatus: '敏感性检查状态',
   createdAt: '创建时间',
   createBy:'创建者',
+  search: '搜索',
   weight:'权重',
   origin: '来源',
   baseConfigTitle: '基础配置',
@@ -101,6 +102,7 @@ export const admin = {
   },
   tags: {
     title: '标签管理',
+    category: '标签分类',
     newTag: '新建标签',
     editTag: '编辑标签',
     tagList: '标签列表',
@@ -130,6 +132,7 @@ export const admin = {
     categoryCount: '个标签分类',
     newTitle: '新建标签分类',
     editTitle: '编辑标签分类',
+    searchPlaceholder: '搜索标签分类',
     create: '新建',
     edit: '编辑',
     delete: '删除',

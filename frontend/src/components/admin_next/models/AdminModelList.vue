@@ -6,10 +6,10 @@
     :breadcrumbs="[{ text: $t('admin.models.title') }]"
   >
     <!-- search & filter -->
-    <div class="flex items-center gap-3 w-full pt-1">
+    <div class="flex items-center py-1 gap-3 w-full pt-1">
       <el-input
         v-model="keyword"
-        :placeholder="$t('admin.name') + ',' + $t('admin.owner')"
+        :placeholder="$t('admin.search') + ' ' + $t('admin.name') + ' / ' + $t('admin.owner')"
         size="large"
         :prefix-icon="Search"
         @input="searchModels"
@@ -78,12 +78,11 @@
       </el-table-column>
       <el-table-column :label="$t('admin.operations')">
         <template #default="scope">
-          <el-button
-            size="small"
+          <CsgButton
+            class="btn btn-secondary-gray btn-sm"
             @click="showDetail(models[scope.$index].path)"
-          >
-            {{ $t('admin.models.modelDetailBtn') }}
-          </el-button>
+            :name="$t('admin.models.modelDetailBtn')"
+          />
         </template>
       </el-table-column>
       <template #footer>
