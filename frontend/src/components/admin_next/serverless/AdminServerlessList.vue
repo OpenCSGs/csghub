@@ -6,14 +6,20 @@
     :breadcrumbs="[{ text: $t('admin.serverless.title') }]"
   >
     <!-- search & filter -->
-    <!-- <div class="flex items-center gap-3 w-full pt-1">
+    <!-- <div class="flex items-center py-1 gap-3 w-full pt-1">
       <el-input
         v-model="keyword"
-        :placeholder="$t('admin.name') + ',' + $t('admin.owner')"
+        :placeholder="$t('admin.search') + ' ' + $t('admin.serverless.deployName')"
         size="large"
-        :prefix-icon="Search"
+        clearable
         @input="searchServerless"
-      />
+      >
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <Search />
+          </el-icon>
+        </template>
+      </el-input>
     </div> -->
     <Table
       :data="serverless"
@@ -150,7 +156,7 @@
     const { data, error } = await useFetchApi(
       `/user/${userStore.username}/run/serverless?page=${
         current || page.value
-      }&per=${per.value}&search=${keyword.value}`
+      }&per=${per.value}&search=${keyword.value}&search_field=deploy_name`
     ).json()
     if (data.value) {
       const res_json = data.value
