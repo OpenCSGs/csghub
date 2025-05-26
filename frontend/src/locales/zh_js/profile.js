@@ -1,5 +1,8 @@
 export const profile = {
   accountSetting: "账号设置",
+  updatePassword: "更新密码",
+  keyManagement: "密钥管理",
+  rechargeBilling: "账单/充值",
   myCollect: "我的收藏",
   interests: "兴趣",
   organization: "组织机构",

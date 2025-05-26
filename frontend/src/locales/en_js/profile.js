@@ -1,5 +1,8 @@
 export const profile = {
   accountSetting: "Settings",
+  updatePassword: "Update Password",
+  keyManagement: "Key Management",
+  rechargeBilling: "Billing/Recharge",
   myCollect: "My Favorite",
   interests: "Interests",
   organization: "Organization",

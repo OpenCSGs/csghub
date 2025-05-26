@@ -27,6 +27,14 @@
           {{ $t('profile.accountSetting') }}
         </a>
 
+        <a
+          v-if="!actionLimited && casdoorResetUrl"
+          :href="casdoorResetUrl"
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="menuClass('/settings/password')">
+          {{ $t('profile.updatePassword') }}
+        </a>
+
         <!-- access token -->
         <a
           v-if="!actionLimited"
@@ -101,7 +109,8 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { computed, ref } from 'vue'
+  import useSystemConfigStore from '@/stores/SystemConfigStore'
   import useUserStore from '../../stores/UserStore'
   import { storeToRefs } from 'pinia'
 
@@ -113,7 +122,9 @@
   })
 
   const userStore = useUserStore()
+  const systemConfigStore = useSystemConfigStore()
   const { actionLimited } = storeToRefs(userStore)
+  const casdoorResetUrl = computed(() => systemConfigStore.generalConfigs.casdoor_reset_password_url)
 
   const showDialog = ref(false)
   const activeTab = ref(window.location.pathname)

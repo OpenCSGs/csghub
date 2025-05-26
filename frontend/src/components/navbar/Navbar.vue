@@ -346,12 +346,14 @@
   import useUserStore from '../../stores/UserStore.js'
   import { inject } from 'vue'
   import useFetchApi from '../../packs/useFetchApi.js'
+  import useSystemConfigStore from '@/stores/SystemConfigStore'
   import { mapActions, mapState } from 'pinia'
   import { useCookies } from "vue3-cookies"
   import { ElMessage } from 'element-plus'
   import Broadcast from './Broadcast.vue'
   import UpdateUsername from '../popup/UpdateUsername.vue'
   import { logout } from '@/packs/auth'
+  import csrfFetch from '@/packs/csrfFetch'
 
   export default {
     props: {
@@ -368,6 +370,7 @@
           : window.location.pathname,
         mobileMenuVisibility: false,
         userStore: useUserStore(),
+        systemConfigStore: useSystemConfigStore(),
         isCompanyUser: false,
         companyVerified: false,
         canCreateDailyPaper: false,
@@ -400,12 +403,24 @@
           ElMessage.warning(error.value.msg)
         }
       },
+      async fetchSystemConfig() {
+        const res = await csrfFetch('/internal_api/admin_panel/system_config')
+        if (res.ok) {
+          const body = await res.json()
+          this.systemConfigStore.initialize(body.system_configs)
+        } else {
+          console.log('Failed to fetch system config')
+        }
+      },
       clearCookies() {
         logout()
         window.location.href = '/'
       },
     },
     mounted() {
+      if (!this.systemConfigStore.initialized) {
+        this.fetchSystemConfig()
+      }
       if (this.uuid && !this.initialized) {
         this.fetchUser()
       }
