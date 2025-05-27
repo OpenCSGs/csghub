@@ -34,10 +34,10 @@
   })
 
   const showName = () => {
-    if (locale.value === 'zh') {
-      return (props.zhName || props.name)
-    } else {
+    if (locale.value === 'en') {
       return props.name
+    } else {
+      return (props.zhName || props.name)
     }
   }
 </script>
