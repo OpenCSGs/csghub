@@ -268,6 +268,7 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	locale_group := g.Group("")
 	locale_group.GET("/zh/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetZhLocale)
 	locale_group.GET("/en/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetEnLocale)
+	locale_group.GET("/zh_hant/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetZhHantLocale)
 }
 
 func setupNotFoundRouter(engine *gin.Engine) {

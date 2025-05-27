@@ -1,0 +1,23 @@
+export const footer = {
+  "about": "關於我哋",
+  "news": "新聞動態",
+  "blogs": "博客",
+  "docs": "文檔中心",
+  "join": "加入我哋",
+  "contact": "聯絡我哋",
+  "policy": "用戶協議 & 隱私政策",
+  "complaint": "舉報反饋",
+  "illegal": "違法和不良信息舉報中心",
+  "police": "京公網安備11011202004415號 ",
+  "company": "公司介紹",
+  "partner": "商務合作",
+  "resume": "簡歷投遞",
+  "pr": "媒體合作",
+  "ir": "投資關係",
+  "cookies": "Cookies政策",
+  "publish": "©2025 OpenCSG.com 版權所有",
+  "ICP": "京ICP備2023006263號-1",
+  "wx": "微信公眾號",
+  "follow":"關注OpenCSG",
+  "followText":"關注OpenCSG公眾號，隨時隨地掌握實時資訊"
+}
