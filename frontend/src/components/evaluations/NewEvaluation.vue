@@ -285,7 +285,7 @@
             <el-option
               v-for="(item ,index) in filterFrameworks"
               :key="item.id"
-              :label="item.frame_name"
+              :label="`${item.frame_name} (${item.compute_types.join(',')})`"
               :value="index"
             />
           </el-select>
@@ -299,6 +299,26 @@
               {{ t('evaluation.new.frameworkTip2') }}
             </a>
           </p>
+        </el-form-item>
+        <el-form-item
+          :label="t('endpoints.new.frameworkVersion')"
+          class="w-full"
+        >
+          <el-select
+            v-model="dataForm.evaluation_framework"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.frameworkVersion') })
+            "
+            size="large"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in frameworkVersionOptions"
+              :key="item.id"
+              :label='`${item.frame_name} ${item.driver_version}`'
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
 
         <!-- framework version -->

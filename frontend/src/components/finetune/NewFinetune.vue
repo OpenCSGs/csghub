@@ -143,17 +143,39 @@
           </template>
 
           <el-select
-            v-model="dataForm.runtime_framework_id"
+            v-model="frameworkVersion"
+            @change="resetVersions"
             :placeholder="
               t('all.pleaseSelect', { value: t('finetune.new.framework') })
             "
             size="large"
             style="width: 100%">
             <el-option
-              v-for="item in filterFrameworks"
+              v-for="(item ,index) in filterFrameworks"
               :key="item.id"
-              :label="item.frame_name"
-              :value="item.id" />
+              :label="`${item.frame_name} (${item.compute_types.join(',')})`"
+              :value="index" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          :label="t('endpoints.new.frameworkVersion')"
+          class="w-full"
+        >
+          <el-select
+            v-model="dataForm.runtime_framework_id"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.frameworkVersion') })
+            "
+            size="large"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in frameworkVersionOptions"
+              :key="item.id"
+              :label='`${item.frame_name} ${item.driver_version}`'
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
 
@@ -173,7 +195,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
@@ -185,6 +207,9 @@
 
   const searchParams = new URLSearchParams(window.location.search)
 
+
+  const frameworkVersion = ref('')
+  const frameworkVersionOptions = ref([])
 
   const dataFormRef = ref(null)
   const dataForm = ref({
@@ -276,26 +301,58 @@
 
   const resetCurrentRuntimeFramework = async () => {
     // if we have current runtime framework
-    if (filterFrameworks.value.includes(Number(dataForm.value.runtime_framework_id))) {
+    if (frameworkVersionOptions.value.includes(Number(dataForm.value.runtime_framework_id))) {
       return
     } else {
-      dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
+      dataForm.value.runtime_framework_id = frameworkVersionOptions.value[0]?.id || ''
     }
   }
 
   const fetchRuntimeFramework = async () => {
-    if (!dataForm.value.model_id) return
-    const { data, error } = await useFetchApi(
-      `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=2`
+  if (!dataForm.value.model_id) return
+  
+  try {
+    const response = await useFetchApi(
+      `/models/${dataForm.value.model_id}/runtime_framework_v2?deploy_type=2`
     ).json()
-    if (error.value) {
+    
+    if (!response) {
+      console.error('Invalid API response')
+    }
+
+    const { data, error } = response
+    
+    if (error?.value) {
+      frameworkVersionOptions.value = []
       dataForm.value.runtime_framework_id = ''
       finetuneFrameworks.value = []
     } else {
-      const body = data.value
-      finetuneFrameworks.value = body.data
-      dataForm.value.runtime_framework_id = filterFrameworks.value[0]?.id || ''
+      const body = data?.value || {}
+      finetuneFrameworks.value = body.data || []
+      
+      if(finetuneFrameworks.value.length > 0) {
+        frameworkVersionOptions.value = finetuneFrameworks.value[0].versions || []
+        dataForm.value.runtime_framework_id = frameworkVersionOptions.value[0]?.id || ''
+      } else {
+        frameworkVersionOptions.value = []
+        dataForm.value.runtime_framework_id = ''
+      }
     }
+  } catch (err) {
+    console.error('error:', err)
+    frameworkVersionOptions.value = []
+    dataForm.value.runtime_framework_id = ''
+    finetuneFrameworks.value = []
+  }
+}
+
+  const resetVersions = () => { 
+    const currentResource = finetuneResources.value
+        .flatMap(category => category.options)
+        .find(item => item.id == dataForm.value.resource_id.split('/')[0])
+
+    frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions.filter((version) => version.compute_type == currentResource.type) || []
+    dataForm.value.runtime_framework_id = frameworkVersionOptions.value[0]?.id || ''
   }
 
   const filterFrameworks = computed(() => {
@@ -308,7 +365,25 @@
     if (!currentResource) return []
     if (!finetuneFrameworks.value) return []
 
-    return finetuneFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
+    return finetuneFrameworks.value.filter((framework) => framework.compute_types.includes(currentResource.type))
+  })
+
+  watch(() => filterFrameworks.value, (newValue) => {
+    if (newValue) {
+      if (filterFrameworks.value.length > 0) {
+        frameworkVersion.value = 0
+        const currentResource = finetuneResources.value
+        .flatMap(category => category.options)
+        .find(item => item.id == dataForm.value.resource_id.split('/')[0])
+
+        frameworkVersionOptions.value = filterFrameworks.value[0].versions.filter((version) => version.compute_type == currentResource.type) || []
+        dataForm.value.runtime_framework_id = frameworkVersionOptions.value[0]?.id || ''
+      } else {
+        frameworkVersion.value = ''
+        frameworkVersionOptions.value = []
+        dataForm.value.runtime_framework_id = ''
+      }
+    }
   })
 
   const fetchClusters = async () => {
