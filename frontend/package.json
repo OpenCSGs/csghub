@@ -20,6 +20,7 @@
     "diff": "^6.0.0-beta",
     "diff2html": "^3.4.48",
     "element-plus": "^2.8.0",
+    "echarts": "^5.6.0",
     "flush-promises": "^1.0.2",
     "highlight.js": "^11.10.0",
     "jwt-decode": "^4.0.0",
