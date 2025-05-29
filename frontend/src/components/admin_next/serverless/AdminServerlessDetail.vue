@@ -28,6 +28,12 @@
         </li>
         <li class="flex mb-4">
           <label class="admin-field-label">{{
+            $t('admin.serverless.modelId')
+          }}</label>
+          <p class="admin-field can-link" @click="goToModelDetail">{{ serverlessInfo.model_id }}</p>
+        </li>
+        <li class="flex mb-4">
+          <label class="admin-field-label">{{
             $t('admin.serverless.cluster')
           }}</label>
           <p class="admin-field">{{ serverlessInfo.cluster_id }}</p>
@@ -110,6 +116,10 @@
 
   const serverlessInfo = ref({})
 
+  const goToModelDetail = () => {
+    window.open(`/models/${serverlessInfo.value.model_id}`, '_blank')
+  }
+
   const fetchServerless = async () => {
     const { data } = await useFetchApi(
       `/models/${route.params.namespace}/${route.params.name}/serverless/${route.params.id}`
@@ -152,3 +162,11 @@
     fetchServerless()
   })
 </script>
+
+<style scoped>
+  .can-link {
+    color: rgb(34 59 153);
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
