@@ -1,10 +1,11 @@
 <template>
-  <div class="my-[16px]">
-    <div class="flex justify-between items-center">
+  <div class="my-4">
+    <div class="flex justify-between items-center pb-2">
       <el-select
         v-model="currentInstance"
         placeholder="Select"
-        class="!w-[240px] mb-1"
+        class="!w-[240px] mb-1 ml-1"
+        size="large"
         @change="refreshInstanceLogs"
       >
         <el-option
@@ -14,12 +15,14 @@
           :value="instance.name"
         />
       </el-select>
-      <div class="cursor-pointer text-xs px-4 text-brand-700 font-normal" @click="downloadLog">
-        {{ $t('endpoints.logDownload') }}
-      </div>
+      <CsgButton
+        class="btn btn-primary btn-sm"
+        :name="$t('endpoints.logDownload')"
+        @click="downloadLog"
+      />
     </div>
     <div
-      class="h-[80vh] border bg-gray-800 p-6 rounded-xl text-white overflow-scroll"
+      class="h-[80vh] bg-gray-800 p-6 rounded-xl text-white overflow-auto"
       ref="instanceLogDiv"
     >
       <p>...</p>
@@ -28,11 +31,12 @@
 </template>
 
 <script setup>
-  import { ref, inject, nextTick, computed, onMounted, watch } from 'vue'
+  import { ref, inject, nextTick, computed, onMounted, watch, onUnmounted } from 'vue'
   import refreshJWT from '../../packs/refreshJWT.js'
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import { useCookies } from "vue3-cookies";
   import useRepoDetailStore from '../../stores/RepoDetailStore.js'
+  import CsgButton from '../shared/CsgButton.vue';
 
   const props = defineProps({
     instances: Array,
@@ -46,6 +50,7 @@
   const instanceLogDiv = ref(null)
   const instanceLogLineNum = ref(0)
   const isLogsSSEConnected = ref(false)
+  const shouldAutoScroll = ref(true)
   const currentInstance = computed(() => {
     return repoDetailStore.activeInstance
   })
@@ -102,9 +107,19 @@
     })
   }
 
+  const isAtBottom = () => {
+    const element = instanceLogDiv.value;
+    if (!element) return true;
+    return Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 10;
+  }
+
+  const handleScroll = () => {
+    shouldAutoScroll.value = isAtBottom();
+  }
+
   const scrollToBottom = (targetRef) => {
     const targetDiv = targetRef.value;
-    if (targetDiv) {
+    if (targetDiv && shouldAutoScroll.value) {
       targetDiv.scrollTop = targetDiv.scrollHeight;
     }
   }
@@ -161,6 +176,15 @@
   onMounted(() => {
     if (currentInstance.value && isLogsSSEConnected.value === false) {
       syncInstanceLogs(currentInstance.value)
+    }
+    if (instanceLogDiv.value) {
+      instanceLogDiv.value.addEventListener('scroll', handleScroll);
+    }
+  })
+
+  onUnmounted(() => {
+    if (instanceLogDiv.value) {
+      instanceLogDiv.value.removeEventListener('scroll', handleScroll);
     }
   })
 </script>
