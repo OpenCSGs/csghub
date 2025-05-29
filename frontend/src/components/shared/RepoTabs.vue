@@ -13,6 +13,9 @@
         :enableEndpoint="repoDetail.enableInference"
         :enableFinetune="repoDetail.enableFinetune"
         :enableEvaluation="repoDetail.enableEvaluation"
+        :syncStatus="repoDetail.syncStatus"
+        :canManage="settingsVisibility"
+        :commitId="commitId"
       />
     </div>
     <tab-container

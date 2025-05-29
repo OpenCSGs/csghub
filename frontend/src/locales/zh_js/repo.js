@@ -8,8 +8,10 @@ export const repo = {
     cancel: "取消",
   },
   source: {
-    syncButton: "同步",
+    sync: "同步",
+    syncButton: "立即同步",
     syncing: "同步中",
+    syncDiff: "同步差异",
     all: "显示所有源",
     opencsg: "OpenCSG",
     local: "本地",
@@ -17,5 +19,11 @@ export const repo = {
     syncCompleted: "本地版本与远端源版本一致",
     needSync: "远端有待同步版本",
     from: "镜像来自",
+    checkSyncDiff: "查看同步差异",
+    added: "新增",
+    removed: "删除",
+    modified: "修改",
+    syncDiffError: "同步差异获取失败",
+    nodiffs: "远端没有更新",
   }
 }

@@ -9,14 +9,13 @@
     />
 
     <!-- multi-source sync button -->
-    <CsgButton
+    <SyncDropdown
+      :syncInprogress="syncInprogress"
+      :repoType="repoType"
+      :model-path="namespacePath"
+      :commitId="commitId"
       v-if="showSyncButton"
-      type="default"
-      :name="syncInprogress ? $t('repo.source.syncing') : $t('repo.source.syncButton')"
-      class="btn btn-secondary-gray btn-sm modelBtn"
-      :disabled="syncInprogress"
-      svgName="sync"
-      @click="handleSyncRepo"
+      @syncRepo="handleSyncRepo"
     />
 
     <!-- evaluation button -->
@@ -269,6 +268,7 @@
   import { computed, ref, onMounted, watch } from 'vue'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
+  import SyncDropdown from './SyncDropdown.vue'
   import SvgIcon from './SvgIcon.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
@@ -289,6 +289,9 @@
     enableFinetune: Boolean,
     enableEvaluation: Boolean,
     showAddToCollections: Boolean,
+    canManage: Boolean,
+    syncStatus: String,
+    commitId: String
   })
 
   const { actionLimited, isLoggedIn } = storeToRefs(userStore)
