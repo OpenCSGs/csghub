@@ -48,11 +48,11 @@
       :size="drawerSize"
       :show-close="false">
       <template #header="{ close }">
-        <div class="flex flex-col gap-[24px] pt-3">
+        <div class="flex flex-col gap-6 pt-3">
           <div class="flex justify-between gap-1.5 pb-6 border-b">
             <div class="flex gap-1.5">
               <div
-                class="flex items-center border rounded-md border-gray-200 p-[10px]">
+                class="flex items-center border rounded-md border-gray-200 p-2.5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -68,7 +68,7 @@
                 </svg>
               </div>
               <div class="felx flex-col gap-1">
-                <p class="font-[600] text-md text-black">
+                <p class="font-medium text-md text-black">
                   {{ $t('application_spaces.errorPage.log') }}
                 </p>
                 <div class="text-gray-600 text-sm font-light">
@@ -76,56 +76,50 @@
                 </div>
               </div>
             </div>
-            <div class="flex gap-[8px]">
-              <el-icon
+            <div class="flex gap-2 items-center">
+              <CsgButton
+                class="btn btn-secondary-gray btn-lg"
                 v-if="drawerSize === '70%'"
                 @click="toggleDrawerSize"
-                ><ArrowUp
-              /></el-icon>
-              <el-icon
+                svgName="chevron-up" />
+              <CsgButton
+                class="btn btn-secondary-gray btn-lg" 
                 v-else
                 @click="toggleDrawerSize"
-                ><ArrowDown
-              /></el-icon>
-              <el-icon @click="close"><CloseBold /></el-icon>
+                svgName="chevron-down" />
+              <CsgButton
+                class="btn btn-secondary-gray btn-lg"
+                @click="close"
+                svgName="x-close" />
             </div>
           </div>
-          <div class="flex justify-between">
-            <div class="flex gap-4 items-center">
-              <span
-                class="text-sm text-gray-500 cursor-pointer"
-                data-value="build"
-                @click="toggleActiveTab"
-                :class="isBuildLogTab ? 'active-tab' : ''"
-                >{{ $t('application_spaces.errorPage.build') }}</span
-              >
-              <span
-                class="text-sm text-gray-500 cursor-pointer"
-                data-value="container"
-                @click="toggleActiveTab"
-                :class="isBuildLogTab ? '' : 'active-tab'"
-                >{{ $t('application_spaces.errorPage.container') }}</span
-              >
+          <div class="flex justify-between gap-4">
+            <div class="flex-1">
+              <el-tabs v-model="activeTab" class="log-tabs">
+                <el-tab-pane :label="$t('application_spaces.errorPage.build')" name="build" />
+                <el-tab-pane :label="$t('application_spaces.errorPage.container')" name="container" />
+              </el-tabs>
             </div>
-            <div
-              class="cursor-pointer text-xs text-brand-700 font-normal"
-              @click="downloadLog">
-              {{ $t('application_spaces.errorPage.download') }}
-            </div>
+            <CsgButton  
+              class="btn btn-secondary-gray btn-sm"
+              @click="downloadLog"
+              :name="$t('application_spaces.errorPage.download')" />
           </div>
         </div>
       </template>
-      <div
-        v-show="isBuildLogTab"
-        ref="buildLogDiv"
-        class="h-auto bg-gray-800 p-6 rounded-xl text-white">
-        <p>...</p>
-      </div>
-      <div
-        v-show="!isBuildLogTab"
-        ref="containerLogDiv"
-        class="h-auto bg-gray-800 p-6 rounded-xl text-white">
-        <p>...</p>
+      <div class="flex flex-col gap-4 h-full">
+        <div
+          v-show="isBuildLogTab"
+          ref="buildLogDiv"
+          class="flex-1 h-0 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white">
+          <p>...</p>
+        </div>
+        <div
+          v-show="!isBuildLogTab"
+          ref="containerLogDiv"
+          class="flex-1 h-0 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white">
+          <p>...</p>
+        </div>
       </div>
     </el-drawer>
   </div>
@@ -135,6 +129,7 @@
   import { ref, onMounted, inject, computed, nextTick, provide, watch, onUnmounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
+  import CsgButton from '../shared/CsgButton.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
   import { useI18n } from 'vue-i18n'
@@ -205,18 +200,29 @@
   const buildLogLineNum = ref(0)
   const containerLogLineNum = ref(0)
 
-  const isBuildLogTab = ref(true)
+  const activeTab = ref('build')
+  const isBuildLogTab = computed(() => activeTab.value === 'build')
+  
   const drawerSize = ref('70%')
 
   const isStatusSSEConnected = ref(false)
   const isLogsSSEConnected = ref(false)
 
-  const toggleActiveTab = (event) => {
-    const currentTarget = event.target
-    if (currentTarget.dataset.value === 'build') {
-      isBuildLogTab.value = true
-    } else {
-      isBuildLogTab.value = false
+  const isUserScrolling = ref(false)
+  const isAtBottom = ref(true)
+
+  const handleScroll = (event) => {
+    const container = event.target
+    const scrollPosition = container.scrollTop + container.clientHeight
+    const scrollHeight = container.scrollHeight
+    // 判断是否在底部，允许 5px 的误差
+    isAtBottom.value = Math.abs(scrollHeight - scrollPosition) < 5
+  }
+
+  const scrollToBottom = () => {
+    const targetDiv = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+    if (targetDiv && isAtBottom.value) {
+      targetDiv.scrollTop = targetDiv.scrollHeight
     }
   }
 
@@ -255,16 +261,50 @@
 
   watch(spaceLogsDrawer, (newVal) => {
     if (newVal) {
-      syncSpaceLogs();
+      nextTick(() => {
+        const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+        if (logContainer) {
+          logContainer.addEventListener('scroll', handleScroll)
+          // 初始打开时滚动到底部
+          logContainer.scrollTop = logContainer.scrollHeight
+          isAtBottom.value = true
+        }
+      })
+      syncSpaceLogs()
     } else {
+      const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+      if (logContainer) {
+        logContainer.removeEventListener('scroll', handleScroll)
+      }
       if (controller.value) {
-        console.log('Closing SSE logs connection');
-        controller.value.abort();
-        controller.value = null;
-        isLogsSSEConnected.value = false;
+        console.log('Closing SSE logs connection')
+        controller.value.abort()
+        controller.value = null
+        isLogsSSEConnected.value = false
       }
     }
   });
+
+  // 监听标签切换，切换时重新设置滚动
+  watch(activeTab, () => {
+    if (spaceLogsDrawer.value) {
+      nextTick(() => {
+        const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+        if (logContainer) {
+          // 移除旧容器的事件监听
+          const oldContainer = !isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+          if (oldContainer) {
+            oldContainer.removeEventListener('scroll', handleScroll)
+          }
+          // 添加新容器的事件监听
+          logContainer.addEventListener('scroll', handleScroll)
+          // 切换标签时滚动到底部
+          logContainer.scrollTop = logContainer.scrollHeight
+          isAtBottom.value = true
+        }
+      })
+    }
+  })
 
   const syncSpaceLogs = () => {
     if (controller.value) {
@@ -350,18 +390,15 @@
   }
 
   onUnmounted(() => {
+    const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+    if (logContainer) {
+      logContainer.removeEventListener('scroll', handleScroll)
+    }
     if (controller.value) {
-      controller.value.abort();
-      controller.value = null;
+      controller.value.abort()
+      controller.value = null
     }
   });
-
-  const scrollToBottom = () => {
-    const targetDiv = document.getElementsByClassName('el-drawer__body')[0]
-    if (targetDiv) {
-      targetDiv.scrollTop = targetDiv.scrollHeight
-    }
-  }
 
   const appendLog = (refElem, data, refLineNum) => {
     // Create the div element
@@ -382,11 +419,13 @@
     divNode.appendChild(pNode1)
     divNode.appendChild(pNode2)
 
-    // const node = document.createElement("p")
-    // node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
     if (refElem.value) {
       refElem.value.appendChild(divNode)
       refLineNum.value = refLineNum.value + 1
+      // 只有在用户处于底部时才自动滚动
+      nextTick(() => {
+        scrollToBottom()
+      })
     }
   }
 
