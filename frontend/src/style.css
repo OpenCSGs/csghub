@@ -148,6 +148,38 @@ img, video {
   font-weight: bold;
 }
 
+.bg-black {
+  background: #0C111D;
+  .el-menu {
+    background: #0C111D;
+  }
+}
+
+.msgListCont{
+  .el-drawer__body{
+    padding:4px 0;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  .msgListCont {
+    width: 50% !important;
+    max-width: 90% !important;
+  }
+}
+@media (max-width: 768px) {
+  .msgListCont {
+    width: 75% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .msgListCont {
+    width: 90% !important;
+  }
+}
+
 /*
   Define tailwindcss group class
 */

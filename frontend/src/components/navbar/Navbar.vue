@@ -240,6 +240,20 @@
                   </div>
                 </el-dropdown-item>
               </a>
+              <div>
+                <el-dropdown-item @click="showMsgListHandle">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <SvgIcon name="navbar-message" />
+                      {{ $t('navbar.message') }}
+                    </div>
+                    <div v-if="msgNum>0" class="flex items-center gap-[4px] py-[2px] px-[6px] border border-gray-300 rounded-sm shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] ml-[16px]">
+                      <SvgIcon name="dot-ico" class="w-[8px] h-[8px]" />
+                      {{msgNum||0}}
+                    </div>
+                  </div>
+                </el-dropdown-item>
+              </div>
               <a
                 href="/daily_papers/new"
                 v-if="canCreateDailyPaper">
@@ -351,10 +365,162 @@
   >
     <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
   </el-alert>
+
+  <el-dialog
+    v-model="hasNewMassage"
+    width="400"
+    custom-class="top-right-dialog"
+    :modal="false"
+    :close-on-click-modal="false"
+    style="top: 20px !important; right: 20px !important; margin: 0 !important; position: fixed;"
+  >
+    <template #header>
+      <div class="headerCont flex md:block items-start justify-start gap-[16px]">
+        <SvgIcon name="alert-message" class="w-[40px] h-[40px] md:mb-[12px]" />
+        <div>
+          <p class="text-gray-900 text-sm font-medium mb-[4px]">{{ newMsg.title }}</p>
+          <p class="text-gray-600 text-sm font-light line-clamp-2">{{ newMsg.content }}</p>
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <div class="flex items-center justify-start gap-[12px] text-xs">
+        <CsgButton class="btn btn-link-gray btn-md" @click="closeNewMsgMask" :name="$t('navbar.later')"/>
+        <CsgButton class="btn btn-link-color btn-md" @click="newMsgShowInfo(1,newMsg)" :name="$t('navbar.showInfo')"/>
+      </div>
+    </template>
+  </el-dialog>
+
+  <el-drawer v-model="showMsgList" :show-close="false" style="max-width: 480px;" class="msgListCont" @close="showSettings=false" @click="showSettings=false">
+    <template #header="{ close }">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-lg font-medium text-gray-900">
+          {{ $t('navbar.message') }}
+        </div>
+        <div v-if="msgNum>0" class="flex items-center gap-[4px] py-[2px] px-[6px] border border-gray-300 rounded-sm shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] ml-[16px]">
+          <SvgIcon name="dot-ico" class="w-[8px] h-[8px]" />{{msgNum||0}}
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-[12px]">
+        <div class="relative">
+          <CsgButton class="btn btn-secondary-gray btn-md" svgName='filter-lines' :name="$t('navbar.msgSettings')" @click.stop="showSettings= !showSettings"/>
+          <div class="settingsCont absolute z-10 bottom-[-11px] right-0 bg-white border-gray-200 rounded-sm" :class="{ 'hidden': !showSettings, 'block': showSettings }" @click.stop>
+            <el-checkbox-group v-model="sub_notification_type" @change="setMsgSettings">
+              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
+                <el-checkbox
+                  class="setttingCheckbox"
+                  :label="$t('navbar.comment')"
+                  value="comment"
+                  size="large"
+                />
+              </div>
+              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
+                <el-checkbox
+                  class="setttingCheckbox"
+                  :label="$t('navbar.system')"
+                  value="system"
+                  size="large"
+                />
+              </div>
+              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
+                <el-checkbox
+                  class="setttingCheckbox"
+                  :label="$t('navbar.organization')"
+                  value="organization"
+                  size="large"
+                />
+              </div>
+              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
+                <el-checkbox
+                  class="setttingCheckbox"
+                  :label="$t('navbar.asset_management')"
+                  value="asset_management"
+                  size="large"
+                />
+              </div>
+            </el-checkbox-group>
+          </div>
+        </div>
+        <CsgButton class="btn btn-secondary-gray btn-md" style="padding: 14px !important;" svgName="close" @click="close"/>
+      </div>
+      </div>
+    </template>
+    <div class="px-[16px] pb-[12px] pt-1">
+      <el-input
+        v-model="searchText"
+        class="mb-3"
+        size="large"
+        clearable
+        @change="resetList"
+        :placeholder="$t('navbar.all')" >
+        <template #prefix>
+          <el-icon><search /></el-icon>
+        </template>
+      </el-input>
+      <div class="flex items-center justify-between gap-[16px]">
+        <el-select
+            v-model="selectedFilter"
+            style="flex:1;"
+            size="large">
+            <el-option
+              v-for="item in filterOptions"
+              :key="item"
+              :label="$t(`navbar.${item}`)"
+              :value="item" />
+        </el-select>
+        <el-checkbox
+          class="unreadCheckbox"
+          v-model="onlyUnread"
+          :label="$t('navbar.onlyUnread')"
+          size="large"
+        />
+      </div>
+    </div>
+      <div class="msg-list-container h-[calc(100vh-200px)] overflow-y-auto" 
+        ref="msgListContainer"
+        @scroll="handleScroll">
+        <div
+          v-for="(item, index) in msgList" 
+          :key="index"
+          @click="newMsgShowInfo(2,item,index)"
+          class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center justify-start gap-[12px]">
+              <span class="block w-[8px] h-[8px] rounded-full" :class="item.is_read?'':'bg-brand-500'"></span>
+              <SvgIcon :name="`${item.notification_type}-message`" class="w-[40px] h-[40px]" />
+              <div class="text-sm">
+                <p class="text-gray-700 font-medium">{{ item.title }}</p>
+                <p class="text-gray-600 font-light">{{ item.click_action_url }}</p>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 font-light">{{ `${formatTime(item.created_at*1000)}` }}</p>
+          </div>
+          <p class="mt-[16px] text-gray-600 text-sm line-clamp-2">{{ item.content }}</p>
+        </div>
+        <div v-if="loading" class="py-4 text-center text-gray-500">
+          {{$t('navbar.loading')}}
+        </div>
+        <div v-if="!msgList.length" class="py-4 text-center text-gray-500">
+          {{$t('navbar.noMoreData')}}
+        </div>
+      </div>
+  </el-drawer>
+
+  <el-dialog
+    v-model="showMsgInfo"
+    width="400"
+  >
+  {{ msgInfo }}
+  </el-dialog>
+
   <Broadcast />
 </template>
 
 <script>
+  import { inject } from 'vue'
+  import { Search } from '@element-plus/icons-vue'
+  import ContactUs from '../form/ContactUs.vue'
   import MenuItems from './MenuItems.vue'
   import useUserStore from '../../stores/UserStore.js'
   import { inject } from 'vue'
@@ -365,6 +531,9 @@
   import Broadcast from './Broadcast.vue'
   import UpdateUsername from '../popup/UpdateUsername.vue'
   import { logout } from '@/packs/auth'
+  import {timeSince} from '@/packs/utils'
+  import { useI18n } from 'vue-i18n'
+  import csrfFetch from '@/packs/csrfFetch'
 
   export default {
     props: {
@@ -376,6 +545,11 @@
       )
       const { cookies } = useCookies()
       return {
+        showSettings: false,
+        showMsgList:false,
+        hasNewMassage:false,
+        isSaaS: isSaas(),
+        isEE: isEE(),
         activeIndex: classParam
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
@@ -386,13 +560,32 @@
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
-        cookies: cookies
+        cookies: cookies,
+        theme: THEME,
+        cookies: useCookies().cookies,
+        searchText:'',
+        filterOptions:['all'],
+        msgNum: 0,
+        msgList: [],
+        currentPage: 1,
+        pageSize: 10,
+        loading: false,
+        noMore: false,
+        onlyUnread: false,
+        selectedFilter:'all',
+        nextTime:0,
+        newMsg:null,
+        showMsgInfo:false,
+        msgInfo:'',
+        pollTimer:null,
+        sub_notification_type:[]
       }
     },
     components: {
       MenuItems,
       Broadcast,
-      UpdateUsername
+      UpdateUsername,
+      Search
     },
     computed: {
       ...mapState(useUserStore, ['email', 'username', 'nickname', 'avatar', 'initialized','isAdmin', 'isLoggedIn', 'actionLimited', 'hasEmail', 'canChangeUsername'])
@@ -413,20 +606,227 @@
           ElMessage.warning(error.value.msg)
         }
       },
+      formatTime(time) {
+        return timeSince(time)
+      },
+      newMsgShowInfo(type,msg,index){ 
+        if(type==2&&!msg.is_read){
+          this.setMsgRead(msg.id,index)
+        }
+        if(type==1){
+          this.closeNewMsgMask()
+        }
+        if(msg.click_action_url){
+          window.location.href=msg.click_action_url
+        }else {
+          this.msgInfo=msg.content
+          this.showMsgInfo=true
+        }
+      },
+      showMsgListHandle(){
+        this.getMsgSettings()
+        this.resetList()
+        this.showMsgList=true
+      },
+
+      async getMsgTypes() {
+        const { data, error } = await useFetchApi(
+          `/notifications/message-types`
+        ).json()
+        if (data.value) {
+          this.filterOptions=[...this.filterOptions,...data.value.data]
+        } else {
+          this.filterOptions = []
+        }
+      },
+      async getMsgSettings() {
+        const { data, error } = await useFetchApi(
+          `/notifications/setting`
+        ).json()
+        if (data.value) {
+          this.sub_notification_type = data.value.data.sub_notification_type?[...data.value.data.sub_notification_type]:[]
+        }else  {
+          this.sub_notification_type = []
+        }
+      },
+      async setMsgSettings() {
+        const options = { body: JSON.stringify({sub_notification_type:[...this.sub_notification_type]}) }
+        const { data, error } = await useFetchApi(
+          `/notifications/setting`,options
+        ).put().json()
+        if (data.value) {
+          ElMessage.success(this.$t('navbar.settingsSuccess'))
+        }else  {
+          ElMessage.warning(error.value.msg)
+        }
+      },
+      async setMsgRead(id,index) {
+        const options = { body: JSON.stringify({ids:[id]}) }
+        const { data, error } = await useFetchApi(
+          `/notifications/read`,options
+        ).put().json()
+        if (data.value) {
+          this.msgList[index].is_read = true
+        }else  {
+          ElMessage.warning(error.value.msg)
+        }
+      },
+      async getMsgNum() {
+        const { data, error } = await useFetchApi(
+          `/notifications/unread`
+        ).json()
+        if (data.value) {
+          this.msgNum = data.value.data
+        }else  {
+          this.msgNum = 0
+        }
+      },
+      closeNewMsgMask(){
+        this.hasNewMassage = false
+        this.getNewMsg()
+      },
+      async getNewMsg() {
+        if (this.pollTimer) {
+          clearTimeout(this.pollTimer)
+          this.pollTimer = null
+        }
+        this.getMsgNum()
+        const { data, error } = await useFetchApi(
+          `/notifications/poll/1`
+        ).json()
+        if (data.value) {
+          this.newMsg = data.value.data.data?.length > 0 ? data.value.data.data[0] : null
+          
+          const pollTime = new Date(data.value.data.next_poll_time).getTime()
+          const now = Date.now()
+          
+          const delay = Math.max(0, pollTime - now)
+          
+          this.pollTimer = setTimeout(() => {
+            if(!this.hasNewMassage){
+              this.getNewMsg()
+            }
+          }, delay)
+          
+          if (this.newMsg) {
+            this.hasNewMassage = true
+            this.showMsgList = false
+          }
+        } else {
+          this.pollTimer = setTimeout(() => {
+            if(!this.hasNewMassage){
+              this.getNewMsg()
+            }
+          }, 300000)
+        }
+      },
+      async getMsgList() {
+        if (this.loading || this.noMore) return
+        
+        this.loading = true
+        
+        try {
+          const params = {
+            Notification_type: this.selectedFilter=='all'?'':this.selectedFilter,
+            page: this.currentPage,
+            page_size: this.pageSize,
+            title: this.searchText,
+            unread_only: this.onlyUnread
+          }
+
+          const { data } = await useFetchApi('/notifications', {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params)
+          }).post().json()
+
+          if (data.value?.data) {
+            this.msgNum = data.value.data.unread_count
+            this.msgList = [...this.msgList, ...data.value.data.messages]
+            this.currentPage++
+            
+            if (data.value.data.messages.length < this.pageSize) {
+              this.noMore = true
+            }
+          } else {
+            this.noMore = true
+            this.msgNum = 0
+          }
+        } catch (error) {
+          console.error('获取消息失败:', error)
+        } finally {
+          this.loading = false
+        }
+      },
+
+      handleScroll(e) {
+        const container = e.target
+        const scrollThreshold = 50
+        const { scrollTop, scrollHeight, clientHeight } = container
+        
+        if (scrollTop > this.lastScrollTop && 
+            scrollHeight - (scrollTop + clientHeight) < scrollThreshold) {
+          this.getMsgList()
+        }
+        
+        this.lastScrollTop = scrollTop
+      },
+
+      resetList() {
+        this.msgList = []
+        this.currentPage = 1
+        this.noMore = false
+        this.getMsgList()
+      },
+
+      async fetchSystemConfig() {
+        const res = await csrfFetch('/internal_api/system_config')
+        if (res.ok) {
+          const body = await res.json()
+          this.systemConfigStore.initialize(body.system_configs)
+        } else {
+          console.log('Failed to fetch system config')
+        }
+      },
       clearCookies() {
         logout()
         window.location.href = '/'
       },
     },
-    mounted() {
+    async mounted() {
+      if (!this.systemConfigStore.initialized) {
+        await this.fetchSystemConfig()
+      }
       if (this.uuid && !this.initialized) {
-        this.fetchUser()
+        await this.fetchUser()
+      }
+      if (isEE()) {
+        this.licenseStore.updateLicenseActive()
+      }
+      this.$nextTick(() => {
+        if(this.isLoggedIn){
+          this.getMsgTypes()
+          this.getNewMsg()
+        }
+      })
+    },
+    beforeUnmount() {
+      if (this.pollTimer) {
+        clearTimeout(this.pollTimer);
+        this.pollTimer = null;
+      }
+    },
+    watch: {
+      onlyUnread(newVal) {
+        this.resetList()
+      },
+      selectedFilter(newVal) {
+        this.resetList()
       }
     }
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .el-menu-nav {
     border: none !important;
   }
