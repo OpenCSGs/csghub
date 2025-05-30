@@ -48,6 +48,7 @@ type BaseHandler interface {
 	EditFile(ctx *gin.Context)
 	Settings(ctx *gin.Context)
 	Billing(ctx *gin.Context)
+	Analysis(ctx *gin.Context)
 	Logs(ctx *gin.Context)
 	Community(ctx *gin.Context)
 	New(ctx *gin.Context)
@@ -111,6 +112,10 @@ func (b *BaseHandlerImpl) Settings(ctx *gin.Context) {
 
 func (b *BaseHandlerImpl) Billing(ctx *gin.Context) {
 	b.renderShow(ctx, "billing", "billing")
+}
+
+func (b *BaseHandlerImpl) Analysis(ctx *gin.Context) {
+	b.renderShow(ctx, "analysis", "analysis")
 }
 
 func (b *BaseHandlerImpl) Logs(ctx *gin.Context) {
