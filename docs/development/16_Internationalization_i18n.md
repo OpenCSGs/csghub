@@ -25,7 +25,6 @@ flowchart TD
     
     I18n --- Components["Vue Components"]
     Components --- TransMethod["$t() Translation Method"]
-</flowchart>
 ```
 
 Sources: [frontend/src/locales/en_js/all.js](), [frontend/src/locales/zh_js/all.js](), [frontend/src/locales/en_js/endpoints.js](), [frontend/src/locales/zh_js/endpoints.js]()
