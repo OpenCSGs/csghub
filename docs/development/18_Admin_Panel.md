@@ -23,9 +23,6 @@ flowchart TD
 
 The admin privileges check is performed using computed properties in the UserStore that check for the presence of admin roles:
 
-Sources:
-- [frontend/src/components/navbar/Navbar.vue:137-145]()
-- [frontend/src/stores/UserStore.js:26-27]()
 
 ## Architecture
 
@@ -62,9 +59,6 @@ graph TD
     ApiCalls --> BackendAPI["Backend Admin API"]
 ```
 
-Sources:
-- [frontend/src/admin.js:46-70]()
-- [frontend/src/components/admin_next/router/index.js:51-202]()
 
 ## Navigation Structure
 
@@ -104,9 +98,6 @@ graph TD
     Broadcasts --> BroadcastEdit["AdminBroadcastEdit (/:id/edit)"]
 ```
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:51-202]()
-- [frontend/src/components/admin_next/router/index.js:34-39]()
 
 ## Features and Components
 
@@ -116,9 +107,6 @@ The Admin Panel provides several administrative features, each implemented as a 
 
 The dashboard displays an overview of the platform and administrative information. It's the default landing page for the Admin Panel.
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:51-60]()
-- [frontend/src/main.js:64]()
 
 ### User Management
 
@@ -129,9 +117,6 @@ Allows administrators to view, edit, and manage user accounts. It includes compo
 | AdminUserList | Displays all users with search and filtering capabilities |
 | AdminUserDetail | Shows detailed information for a single user |
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:70-83]()
-- [frontend/src/main.js:66-67]()
 
 ### System Configuration
 
@@ -144,20 +129,11 @@ Provides settings for configuring system-wide behavior. In addition to general s
 | AdminBroadcastNew | Creates new broadcast messages |
 | AdminBroadcastEdit | Edits existing broadcast messages |
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:61-69]()
-- [frontend/src/components/admin_next/router/index.js:184-201]()
-- [frontend/src/main.js:68]()
 
 ### Multi-Source Sync
 
 Provides settings for synchronizing with external sources including concurrent task settings and bandwidth limit management.
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:84-91]()
-- [frontend/src/main.js:69]()
-- [frontend/src/locales/zh_js/admin.js:35-43]()
-- [frontend/src/locales/en_js/admin.js:35-43]()
 
 ### Model Management
 
@@ -169,10 +145,6 @@ Allows administrators to view, edit, and manage models, including model weight s
 | AdminModelDetail | Shows detailed information for a single model |
 | AdminModelEdit | Provides form for editing model properties |
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:92-111]()
-- [frontend/src/locales/zh_js/admin.js:54-64]()
-- [frontend/src/locales/en_js/admin.js:54-64]()
 
 ### Serverless API Management
 
@@ -184,11 +156,6 @@ Allows administrators to manage serverless API deployments, including deployment
 | AdminServerlessForm | Creates/edits serverless deployments |
 | AdminServerlessDetail | Shows details for a single deployment |
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:112-137]()
-- [frontend/src/components/admin_next/serverless/AdminServerlessList.vue:1-132]()
-- [frontend/src/locales/zh_js/admin.js:65-90]()
-- [frontend/src/locales/en_js/admin.js:65-90]()
 
 ### Tag Management
 
@@ -202,11 +169,6 @@ Allows administrators to manage tags and tag categories, which are used througho
 | AdminTagCategoriesList | Lists tag categories |
 | AdminTagCategoriesForm | Creates/edits tag categories |
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:138-163]()
-- [frontend/src/components/admin_next/router/index.js:164-183]()
-- [frontend/src/locales/zh_js/admin.js:92-130]()
-- [frontend/src/locales/en_js/admin.js:92-130]()
 
 ## Internationalization Support
 
@@ -219,11 +181,6 @@ The Admin Panel fully supports internationalization (i18n) with English and Chin
 
 The locale selection is determined by user preference stored in cookies, with a fallback to browser language detection.
 
-Sources:
-- [frontend/src/admin.js:29-39]()
-- [frontend/src/components/admin_next/router/index.js:24-31]()
-- [frontend/src/locales/en_js/admin.js:1-143]()
-- [frontend/src/locales/zh_js/admin.js:1-143]()
 
 ## State Management
 
@@ -249,10 +206,6 @@ graph TD
     UserStoreDefinition --> LocalStorage
 ```
 
-Sources:
-- [frontend/src/stores/UserStore.js:7-93]()
-- [frontend/src/admin.js:38-39]()
-- [frontend/src/packs/persistPinia.js:1-20]()
 
 ## Implementation Details
 
@@ -269,9 +222,6 @@ export const ROUTERS = [
 ];
 ```
 
-Sources:
-- [frontend/src/components/admin_next/router/index.js:34-46]()
-- [frontend/src/components/admin_next/router/index.js:215-220]()
 
 ### Admin Panel Initialization
 
@@ -283,8 +233,6 @@ const app = createApp(AdminLayout);
 app.mount("#admin");
 ```
 
-Sources:
-- [frontend/src/admin.js:46-70]()
 
 ### Component Reuse
 
@@ -296,17 +244,11 @@ The Admin Panel uses shared components for consistent UI patterns:
 - SvgIcon component for icons
 - CsgButton component for actions
 
-Sources:
-- [frontend/src/admin.js:51-52]()
-- [frontend/src/components/admin_next/serverless/AdminServerlessList.vue:86]()
 
 ## Admin Panel vs Main Application
 
 The Admin Panel is built as a separate Vue application (`admin.js`) rather than as a component within the main application (`main.js`). This separation provides better isolation and maintainability, while allowing the Admin Panel to use the same UI components and styling as the main application.
 
-Sources:
-- [frontend/src/admin.js:46-70]()
-- [frontend/src/main.js:147-152]()
 
 ## Conclusion
 

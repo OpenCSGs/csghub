@@ -33,7 +33,7 @@ graph TD
     Organization -- "owns" --> Repository
 ```
 
-Sources: [frontend/src/components/organizations/OrganizationDetail.vue:6-14](), [frontend/src/components/organizations/OrganizationSettings.vue:46-53]()
+
 
 ### 1.1 Organization Structure and Properties
 
@@ -51,7 +51,7 @@ Organizations have several key properties:
 
 Organization data is fetched from the backend API endpoint `/organization/{name}` which returns the organization details.
 
-Sources: [frontend/src/components/organizations/OrganizationDetail.vue:132-143](), [frontend/src/components/organizations/OrganizationSettings.vue:57-71]()
+
 
 ### 1.2 Organization Membership and Roles
 
@@ -83,7 +83,7 @@ graph TD
     ReadRole --> AccessRepos
 ```
 
-Sources: [frontend/src/components/organizations/OrganizationDetail.vue:21-68](), [frontend/src/components/organizations/OrganizationDetail.vue:156-165]()
+
 
 Users can have one of the following roles in an organization:
 
@@ -95,7 +95,7 @@ The current user's role in an organization is determined by calling the API endp
 
 Organization members are displayed in the organization detail view with their roles. The organization admin can invite new members through the `InviteMember` component.
 
-Sources: [frontend/src/components/organizations/OrganizationDetail.vue:81-97](), [frontend/src/components/organizations/OrganizationDetail.vue:146-155]()
+
 
 ### 1.3 Organization Repository Management
 
@@ -132,7 +132,7 @@ graph TD
     Codes --- CodeCreate
 ```
 
-Sources: [frontend/src/components/organizations/OrganizationDetail.vue:27-63]()
+
 
 Users with admin or write permissions can create repositories under the organization. The repository creation UI includes options to specify the organization as the owner. When creating a repository through the organization interface, the organization name is automatically passed as a URL parameter.
 
@@ -161,7 +161,7 @@ graph TD
     Collection --- AddToCollection
 ```
 
-Sources: [frontend/src/components/collections/AddToCollections.vue:97-106](), [frontend/src/components/collections/AddToCollections.vue:129-146]()
+
 
 ### 2.1 Collection Management
 
@@ -172,7 +172,7 @@ The key operations for collections include:
 1. **Viewing collections**: Fetching collections for a user
 2. **Adding repositories to collections**: Adding one or more repositories to a collection
 
-Sources: [frontend/src/components/collections/AddToCollections.vue:97-106]()
+
 
 ### 2.2 Adding Repositories to Collections
 
@@ -194,7 +194,7 @@ flowchart TD
     ShowSuccess --> CloseDialog["Close dialog"]
 ```
 
-Sources: [frontend/src/components/collections/AddToCollections.vue:108-146]()
+
 
 The process of adding a repository to a collection involves:
 
@@ -212,7 +212,7 @@ The data structure for adding a repository to a collection is:
 }
 ```
 
-Sources: [frontend/src/components/collections/AddToCollections.vue:130-135]()
+
 
 ### 2.3 Collection Integration
 
@@ -220,7 +220,7 @@ Collections are integrated with repository views. Users can add repositories to 
 
 Collections are displayed in user profiles, allowing users to quickly access their organized repository groups.
 
-Sources: [frontend/src/components/collections/AddToCollections.vue:1-5]()
+
 
 ## 3. Integration with User Profiles
 
@@ -249,11 +249,11 @@ graph TD
     OrgsEndpoint --> UserColls
 ```
 
-Sources: [frontend/src/components/user_settings/Profile.vue:43-66]()
+
 
 The user profile displays organization memberships, showing organization logos with tooltips containing organization names. When a user views their own profile, the organization data is retrieved from the user store, while for other users' profiles, it's fetched from the API endpoint `/user/{username}`.
 
-Sources: [frontend/src/components/user_settings/Profile.vue:100-114]()
+
 
 ## 4. Summary
 

@@ -42,8 +42,6 @@ graph TD
     Collection --> RT
 ```
 
-Sources: [frontend/src/components/shared/RepoHeader.vue:1-369](), [frontend/src/stores/RepoDetailStore.js:1-246](), [frontend/src/components/shared/RepoSummary.vue:1-261]()
-
 ## Repository Header Component
 
 The RepoHeader component is a versatile UI element that adapts its display based on the repository type. It presents critical information about a repository such as name, owner, visibility, and status.
@@ -81,8 +79,6 @@ classDiagram
     RepoHeader --> RepoDetailStore: "accesses"
 ```
 
-Sources: [frontend/src/components/shared/RepoHeader.vue:1-180](), [frontend/src/components/shared/RepoHeader.vue:228-368]()
-
 ### Type-Specific Headers
 
 The RepoHeader adapts to different repository types with conditional rendering:
@@ -92,7 +88,6 @@ The RepoHeader adapts to different repository types with conditional rendering:
 3. **Finetune Header** (lines 77-98): Displays finetune status and resource information
 4. **Other Repository Header** (lines 101-157): Handles models, code, spaces with appropriate icons
 
-Sources: [frontend/src/components/shared/RepoHeader.vue:5-157]()
 
 ### Key Features
 
@@ -103,7 +98,6 @@ Sources: [frontend/src/components/shared/RepoHeader.vue:5-157]()
 - **Path Information**: Shows owner and repository path with clickable links
 - **Copy Functionality**: Allows copying repository path with a single click
 
-Sources: [frontend/src/components/shared/RepoHeader.vue:26-43](), [frontend/src/components/shared/RepoHeader.vue:116-143](), [frontend/src/components/shared/RepoHeader.vue:185-196]()
 
 ## RepoDetailStore
 
@@ -144,7 +138,6 @@ classDiagram
     note for RepoDetailStore "Contains specific state properties for:\n- Spaces\n- Collections\n- Finetunes\n- Endpoints"
 ```
 
-Sources: [frontend/src/stores/RepoDetailStore.js:6-244]()
 
 ### Repository Types Support
 
@@ -155,7 +148,6 @@ The store includes specialized fields for various repository types:
 - **Finetune-specific**: clusterId, deployId, imageId, replicas, proxyEndpoint
 - **Endpoint-specific**: gitBranch, task, replica, instances, engineArgs
 
-Sources: [frontend/src/stores/RepoDetailStore.js:10-77](), [frontend/src/stores/RepoDetailStore.js:95-158]()
 
 ### State Management Functions
 
@@ -166,7 +158,6 @@ RepoDetailStore provides several functions to manage repository state:
 - `updateUserLikes(input)`: Updates user's like status
 - `clearStore()`: Resets the store state
 
-Sources: [frontend/src/stores/RepoDetailStore.js:83-163]()
 
 ## Repository Summary Component
 
@@ -207,7 +198,6 @@ graph TD
     RepoSummary --> ModelRelations
 ```
 
-Sources: [frontend/src/components/shared/RepoSummary.vue:1-219]()
 
 ### Key Components
 
@@ -216,7 +206,6 @@ Sources: [frontend/src/components/shared/RepoSummary.vue:1-219]()
 3. **TestEndpoint**: For model repositories with active endpoints, provides an interface for testing the model
 4. **Related Repositories**: Shows relationships between the current repository and other repositories
 
-Sources: [frontend/src/components/shared/RepoSummary.vue:5-14](), [frontend/src/components/shared/RepoSummary.vue:48-71](), [frontend/src/components/datasets/ParquetViewer.vue:1-261]()
 
 ### Data Fetching
 
@@ -226,7 +215,6 @@ RepoSummary fetches several types of data:
 - Repository relations (connected repositories)
 - Endpoint information (for models with deployments)
 
-Sources: [frontend/src/components/shared/RepoSummary.vue:147-196]()
 
 ## Integration with Repository Types
 
@@ -242,7 +230,7 @@ The Repository Detail Components adapt to different repository types to provide 
 | Finetune | Finetune icon, status display | Finetune settings | clusterId, deployId, imageId, runtimeFramework |
 | Collection | Collection icon, likes display | Collection settings, repositories list | avatar, theme, repositories |
 
-Sources: [frontend/src/components/shared/RepoHeader.vue:5-157](), [frontend/src/components/finetune/FinetuneDetail.vue:1-128](), [frontend/src/components/endpoints/EndpointDetail.vue:1-63](), [frontend/src/components/collections/CollectionsDetail.vue:1-98]()
+
 
 ### Repository Type Specific Components
 
@@ -298,7 +286,7 @@ graph TD
     RepoDetail --> CollectionTabs
 ```
 
-Sources: [frontend/src/components/finetune/FinetuneDetail.vue:30-105](), [frontend/src/components/endpoints/EndpointDetail.vue:17-39](), [frontend/src/components/collections/CollectionsDetail.vue:30-98]()
+
 
 ## Repository Status Indicators
 
@@ -318,7 +306,7 @@ Status information is displayed in the header and is kept up-to-date using Serve
    - Error states show descriptive error messages
    - Messages are internationalized with i18n translations
 
-Sources: [frontend/src/components/finetune/FinetuneDetail.vue:232-280](), [frontend/src/components/endpoints/EndpointDetail.vue:147-192](), [frontend/src/locales/en_js/all.js:112-117](), [frontend/src/locales/zh_js/all.js:112-117]()
+
 
 ### Error States Handling
 
@@ -331,7 +319,7 @@ OOMKilled: 'insufficient resources',
 CrashLoopBackOff: 'container crashes'
 ```
 
-Sources: [frontend/src/locales/en_js/all.js:112-117](), [frontend/src/components/shared/RepoHeader.vue:67-73]()
+
 
 ## Internationalization Support
 
@@ -345,7 +333,7 @@ Key localized elements include:
 - Visibility indicators (public/private)
 - Settings labels and descriptions
 
-Sources: [frontend/src/locales/en_js/all.js:1-118](), [frontend/src/locales/zh_js/all.js:1-118]()
+
 
 ## Repository Settings Integration
 
@@ -357,7 +345,7 @@ For repositories with editable settings, the components integrate with the appro
 - **Endpoint/Finetune Settings**: Shows deployment configuration and allows updating settings
 - **Security Settings**: Controls repository visibility (public/private)
 
-Sources: [frontend/src/components/collections/CollectionsSettings.vue:1-326]()
+
 
 ## Conclusion
 

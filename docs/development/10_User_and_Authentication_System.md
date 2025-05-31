@@ -48,7 +48,7 @@ flowchart TD
     AuthMiddleware --> UserModel
 ```
 
-Sources: [frontend/src/components/navbar/Navbar.vue](), [frontend/src/stores/UserStore.js](), [internal/handlers/render/session.go](), [internal/models/user.go]()
+
 
 ## 2. User Model and Database Schema
 
@@ -81,7 +81,7 @@ classDiagram
     }
 ```
 
-Sources: [internal/models/user.go:19-31](), [pkg/database/migrations/20240902082008_create_admin_photo.go:9-22]()
+
 
 ### 2.2. Role-Based Access Control
 
@@ -100,7 +100,7 @@ The `User` struct provides methods to check and manage roles:
 - `IsAdmin()`: Checks if user has admin privileges
 - `IsSuperUser()`: Checks if user has super user privileges
 
-Sources: [internal/models/user.go:33-94]()
+
 
 ## 3. Authentication Flow
 
@@ -134,7 +134,7 @@ sequenceDiagram
     Frontend->>UserStore: Initialize User Data
 ```
 
-Sources: [internal/handlers/render/session.go:71-151]()
+
 
 ### 3.1. Login Process
 
@@ -146,7 +146,7 @@ Sources: [internal/handlers/render/session.go:71-151]()
 6. User session information is stored in cookies
 7. User is redirected to the home page or a previously accessed page
 
-Sources: [internal/handlers/render/session.go:47-69](), [internal/handlers/render/session.go:71-151]()
+
 
 ### 3.2. Logout Process
 
@@ -155,7 +155,7 @@ Sources: [internal/handlers/render/session.go:47-69](), [internal/handlers/rende
 3. All cookies are removed, including login tokens
 4. User is redirected to the home page
 
-Sources: [frontend/src/components/navbar/Navbar.vue:214-222](), [frontend/src/components/navbar/Navbar.vue:379-382](), [internal/handlers/render/session.go:51-65]()
+
 
 ## 4. Session Management
 
@@ -173,7 +173,7 @@ The system uses several cookies to manage user sessions:
 | `previous_path` | Stores the last visited path for redirection after login | Session |
 | `locale` | Stores the user's language preference | Persistent |
 
-Sources: [internal/handlers/render/session.go:141-143](), [frontend/src/components/navbar/Navbar.vue:351-352]()
+
 
 ### 4.2. Frontend State Persistence
 
@@ -184,7 +184,7 @@ The frontend uses Pinia with a custom persistence plugin to maintain user state 
 3. If valid, the user state is restored; otherwise, it's cleared
 4. This persistence layer works alongside cookies to provide a seamless user experience
 
-Sources: [frontend/src/packs/persistPinia.js:1-20](), [frontend/src/stores/UserStore.js:89-93]()
+
 
 ## 5. User Store and Frontend Integration
 
@@ -218,7 +218,7 @@ flowchart TD
     ComputedProps --> |"Controls UI visibility"| Navbar
 ```
 
-Sources: [frontend/src/stores/UserStore.js:7-93](), [frontend/src/components/navbar/Navbar.vue:322-323](), [frontend/src/components/navbar/Navbar.vue:361]()
+
 
 ### 5.1. Key Features of the User Store
 
@@ -238,7 +238,7 @@ Sources: [frontend/src/stores/UserStore.js:7-93](), [frontend/src/components/nav
    - Short expiration time (2 minutes) to ensure data freshness
    - Synchronized with server on page load
 
-Sources: [frontend/src/stores/UserStore.js:7-93](), [frontend/src/packs/persistPinia.js:1-20]()
+
 
 ## 6. User Interface Components
 
@@ -254,7 +254,7 @@ The Navbar component is the main entry point for user authentication interaction
 4. Handles logout process
 5. Displays notifications for missing email or required username changes
 
-Sources: [frontend/src/components/navbar/Navbar.vue:1-443]()
+
 
 ### 6.2. Profile Management Components
 
@@ -270,7 +270,7 @@ Several components handle user profile management:
 
 These components are registered in the main application entry point and rendered based on the current route.
 
-Sources: [frontend/src/main.js:26-28](), [frontend/src/main.js:30-31]()
+
 
 ## 7. System Configuration and Initialization
 
@@ -284,7 +284,7 @@ The authentication system is initialized during application startup.
 4. Routes are initialized including authentication middleware
 5. The HTTP server is started to handle requests
 
-Sources: [cmd/csghub-portal/cmd/start/server.go:15-51](), [internal/models/common.go:15-22]()
+
 
 ### 7.2. Frontend Initialization
 
@@ -295,7 +295,7 @@ Sources: [cmd/csghub-portal/cmd/start/server.go:15-51](), [internal/models/commo
 5. Router is configured for navigation
 6. The application is mounted to the DOM
 
-Sources: [frontend/src/main.js:1-168](), [frontend/src/admin.js:1-71]()
+
 
 ## 8. Admin User Management
 
@@ -306,7 +306,7 @@ The system includes specialized admin interfaces for user management:
 3. System configuration settings
 4. Additional management features for admin users
 
-Sources: [frontend/src/main.js:61-69](), [frontend/src/components/navbar/Navbar.vue:137-145]()
+
 
 ## Summary
 

@@ -18,7 +18,7 @@ flowchart TD
     RepoCards -- "Updates search params" --> UrlParams["URL Parameters"]
 ```
 
-Sources: [frontend/src/components/shared/RepoCards.vue:1-332](). [frontend/src/components/tags/TagSidebar.vue:1-188]()
+
 
 ## Key Components
 
@@ -77,7 +77,7 @@ classDiagram
     RepoCards --> CsgPagination : uses
 ```
 
-Sources: [frontend/src/components/shared/RepoCards.vue:1-332](). [frontend/src/components/tags/TagSidebar.vue:1-188]()
+
 
 ### Repository Item Rendering
 
@@ -94,7 +94,7 @@ models, datasets, code: grid-cols-2 xl:grid-cols-1
 spaces: grid-cols-3 xl:grid-cols-2 md:grid-cols-1
 ```
 
-Sources: [frontend/src/components/shared/RepoCards.vue:105-123](). [frontend/src/components/models/EmptyModels.vue:1-15]()
+
 
 ## Filtering Capabilities
 
@@ -123,7 +123,7 @@ const sortOptions = [
    - OpenCSG
    - Local
 
-Sources: [frontend/src/components/shared/RepoCards.vue:46-83](). [frontend/src/components/shared/RepoCards.vue:174-238]()
+
 
 ### Tag-Based Filtering
 
@@ -169,7 +169,7 @@ flowchart TD
     TagSidebar -- "Selected Tags" --> RepoCards["RepoCards.vue"]
 ```
 
-Sources: [frontend/src/components/tags/TagSidebar.vue:1-188](). [frontend/src/components/tags/TagList.vue:1-159](). [frontend/src/components/tags/frameworks/PyTorch.vue:1-52](). [frontend/src/components/tags/frameworks/TensorFlow.vue:1-26]()
+
 
 ### Special Filters by Repository Type
 
@@ -182,7 +182,7 @@ Different repository types have specialized filtering options:
 2. **Spaces**:
    - SDK type (Gradio, Streamlit, Nginx, Docker, MCP Server)
 
-Sources: [frontend/src/components/shared/RepoCards.vue:71-83](). [frontend/src/components/shared/RepoCards.vue:217-238]()
+
 
 ## Implementation Details
 
@@ -204,7 +204,7 @@ url = url + `&sort=${sortSelection.value}`
 // Additional parameters based on filters
 ```
 
-Sources: [frontend/src/components/shared/RepoCards.vue:272-308](). [frontend/src/components/shared/RepoCards.vue:311-325]()
+
 
 ### Pagination
 
@@ -222,7 +222,7 @@ The pagination component tracks:
 - Total item count
 - Emits events for page changes
 
-Sources: [frontend/src/components/shared/RepoCards.vue:255-261](). [frontend/src/components/shared/RepoCards.vue:124-128]()
+
 
 ### URL Parameter Integration
 
@@ -244,7 +244,7 @@ const getQueryParams = () => {
 }
 ```
 
-Sources: [frontend/src/components/shared/RepoCards.vue:148-156](). [frontend/src/components/tags/TagSidebar.vue:94-115]()
+
 
 ## Tag System Architecture
 
@@ -283,7 +283,7 @@ flowchart TD
     end
 ```
 
-Sources: [frontend/src/components/tags/TagSidebar.vue:117-151](). [frontend/src/components/tags/TagList.vue:1-159]()
+
 
 ## Localization Support
 
@@ -296,7 +296,7 @@ The repository browsing system fully supports internationalization:
 
 This enables a consistent experience across languages while maintaining the same filtering capabilities.
 
-Sources: [frontend/src/locales/en_js/models.js:1-75](). [frontend/src/locales/zh_js/models.js:1-72]()
+
 
 ## Collections Integration
 
@@ -316,7 +316,7 @@ params.append('sort', sortSelection.value)
 const url = `/collections?${params.toString()}`
 ```
 
-Sources: [frontend/src/components/collections/CollectionIndex.vue:1-166]()
+
 
 ## Header Tags Display
 
@@ -330,7 +330,7 @@ When browsing repositories with active tag filters, the `HeaderTags` component p
 
 This component also enables quick removal of tag filters.
 
-Sources: [frontend/src/components/shared/HeaderTags.vue:1-244]()
+
 
 ## Summary
 

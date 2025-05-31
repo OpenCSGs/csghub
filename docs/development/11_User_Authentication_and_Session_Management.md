@@ -29,10 +29,6 @@ flowchart TD
     M --> D
 ```
 
-Sources:
-- [frontend/src/components/navbar/Navbar.vue:60-225]()
-- [internal/handlers/render/session.go:18-151]()
-- [frontend/src/stores/UserStore.js:1-95]()
 
 ## 2. Authentication Flow
 
@@ -69,9 +65,6 @@ sequenceDiagram
     UI->>UI: Initialize UserStore
 ```
 
-Sources:
-- [internal/handlers/render/session.go:47-49]() - Login handler
-- [internal/handlers/render/session.go:71-151]() - Session creation and JWT verification
 
 ### 2.2 JWT Token Handling
 
@@ -86,9 +79,6 @@ The token is stored in cookies:
 - `login_identity`: Contains the user's UUID
 - `can_change_username`: Indicates if the user needs to update their username
 
-Sources:
-- [internal/handlers/render/session.go:80-93]() - JWT token verification
-- [internal/handlers/render/session.go:141-143]() - Setting cookies with user information
 
 ## 3. Session Management
 
@@ -126,9 +116,6 @@ classDiagram
     SessionHandlerImpl --> UserStore : "manages user data for"
 ```
 
-Sources:
-- [internal/handlers/render/session.go:18-29]() - Cookie constants and SessionHandler interface
-- [frontend/src/stores/UserStore.js:1-95]() - Frontend session state management
 
 ### 3.2 Logout Process
 
@@ -137,9 +124,6 @@ The logout process:
 2. Clears the UserStore state using the clearStore action
 3. Redirects the user to the home page or a specified redirect path
 
-Sources:
-- [internal/handlers/render/session.go:51-65]() - Backend logout handler
-- [frontend/src/components/navbar/Navbar.vue:379-382]() - Frontend logout function
 
 ### 3.3 Session State Management
 
@@ -149,9 +133,6 @@ The frontend uses Pinia for state management with the following features:
 - **State Properties**: User details, roles, login status, and action limitations
 - **Computed Properties**: Authorization flags like `isAdmin`, `isLoggedIn`, `actionLimited`
 
-Sources:
-- [frontend/src/stores/UserStore.js:7-93]() - UserStore definition
-- [frontend/src/packs/persistPinia.js:1-20]() - State persistence implementation
 
 ## 4. User Model and Roles
 
@@ -176,9 +157,6 @@ erDiagram
     }
 ```
 
-Sources:
-- [internal/models/user.go:19-31]() - User struct definition
-- [pkg/database/migrations/20240902082008_create_admin_photo.go:9-22]() - User database migration
 
 ### 4.2 Role-Based Access Control
 
@@ -198,10 +176,6 @@ Role checks are implemented in both backend and frontend:
 
 The frontend UI adapts based on the user's roles, showing or hiding specific menu items and functionality.
 
-Sources:
-- [internal/models/user.go:33-94]() - Role definitions and helper methods
-- [frontend/src/stores/UserStore.js:26-33]() - Frontend role computation
-- [frontend/src/components/navbar/Navbar.vue:137-145]() - Admin panel access control
 
 ## 5. Frontend Implementation Details
 
@@ -223,9 +197,6 @@ The component also displays warning banners when:
 - Username needs to be changed
 - Both email and username need attention
 
-Sources:
-- [frontend/src/components/navbar/Navbar.vue:60-225]() - Avatar dropdown implementation
-- [frontend/src/components/navbar/Navbar.vue:287-315]() - Warning banners
 
 ### 5.2 User Store Integration
 
@@ -247,9 +218,6 @@ flowchart TD
     C --> I["Authorization checks"]
 ```
 
-Sources:
-- [frontend/src/main.js:72-73]() - Pinia initialization with persistence plugin
-- [frontend/src/components/navbar/Navbar.vue:371-377]() - User fetching and store initialization
 
 ## 6. Security Considerations
 
@@ -259,9 +227,6 @@ Sources:
 - Role checks are performed on both client and server sides
 - Action limitations are implemented for users with incomplete profiles
 
-Sources:
-- [internal/handlers/render/session.go:80-93]() - JWT verification process 
-- [frontend/src/packs/persistPinia.js:4-11]() - State expiration implementation
 
 ## 7. Session Initialization Process
 
@@ -272,7 +237,3 @@ The session initialization follows these steps:
    - The Navbar component makes an API call to fetch user data
    - The UserStore is initialized with the fetched data
 3. Protected routes and components check the UserStore to determine access rights
-
-Sources:
-- [frontend/src/components/navbar/Navbar.vue:384-388]() - User data fetching on component mount
-- [frontend/src/stores/UserStore.js:35-50]() - UserStore initialization logic

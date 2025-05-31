@@ -50,7 +50,7 @@ graph TD
     class A,N,NM,C1,C2,C3 primary;
 ```
 
-Sources: [frontend/src/main.js:1-167](), [frontend/src/components/navbar/Navbar.vue:1-443]()
+
 
 ### 1.2 Component Registration and Initialization
 
@@ -77,7 +77,7 @@ sequenceDiagram
     main->>app: Mount to #app element
 ```
 
-Sources: [frontend/src/main.js:75-167]()
+
 
 ## 2. Navigation System
 
@@ -119,7 +119,7 @@ graph TD
     class N,NM,US primary;
 ```
 
-Sources: [frontend/src/components/navbar/Navbar.vue:1-443](), [frontend/src/components/navbar/MenuItems.vue:1-236]()
+
 
 ### 2.2 Menu Structure and Generation
 
@@ -150,7 +150,7 @@ graph LR
     class MI,RS,SW primary;
 ```
 
-Sources: [frontend/src/components/navbar/MenuItems.vue:128-211]()
+
 
 ## 3. User State Integration with Navigation
 
@@ -205,7 +205,7 @@ graph TD
     class US,UA1,UR1,UI1 primary;
 ```
 
-Sources: [frontend/src/stores/UserStore.js:1-95]()
+
 
 ### 3.2 Navigation State Flow
 
@@ -257,7 +257,7 @@ sequenceDiagram
     end
 ```
 
-Sources: [frontend/src/components/navbar/Navbar.vue:60-315](), [frontend/src/stores/UserStore.js:25-33]()
+
 
 ## 4. Responsive Design and Styling
 
@@ -276,7 +276,7 @@ The application uses Tailwind CSS with custom breakpoints to manage responsive l
 | md         | < 768px      | Tablet portrait |
 | sm         | < 640px      | Mobile |
 
-Sources: [frontend/tailwind.config.js:115-122]()
+
 
 ### 4.2 Navigation Layout Changes
 
@@ -310,7 +310,7 @@ graph TD
     class RS,SW,M primary;
 ```
 
-Sources: [frontend/src/components/navbar/MenuItems.vue:172-210](), [frontend/src/components/navbar/Navbar.vue:258-285]()
+
 
 ## 5. Styling System and UI Components
 
@@ -353,7 +353,7 @@ graph TD
     class V,BC,MC primary;
 ```
 
-Sources: [frontend/src/assets/stylesheets/element-plus/_variables.css:1-94](), [frontend/src/assets/stylesheets/element-plus/button.css:1-449](), [frontend/src/assets/stylesheets/element-plus/menu.css:1-36]()
+
 
 ### 5.2 Responsive Width Utility
 
@@ -371,7 +371,7 @@ This class is used in the navigation component to ensure proper width at differe
 <div class="page-responsive-width flex text-gray-700 justify-between items-center h-20 sm:h-15 gap-6 md:px-5">
 ```
 
-Sources: [frontend/src/style.css:135-137](), [frontend/src/components/navbar/Navbar.vue:4-5]()
+
 
 ## 6. State Persistence
 
@@ -407,7 +407,7 @@ graph TD
     class P,PP,TC primary;
 ```
 
-Sources: [frontend/src/packs/persistPinia.js:1-20](), [frontend/src/stores/UserStore.js:89-93]()
+
 
 ## 7. Admin Navigation Integration
 
@@ -454,7 +454,7 @@ graph TD
     class A,AP,AN primary;
 ```
 
-Sources: [frontend/src/admin.js:1-71](), [frontend/src/main.js:146-152]()
+
 
 ## 8. Component Reusability
 
@@ -475,7 +475,7 @@ app.component('CsgButton', CsgButton)
 app.component('FlashMessage', FlashMessage)
 ```
 
-Sources: [frontend/src/main.js:160-162]()
+
 
 ### 8.2 Element Plus Integration
 
@@ -488,4 +488,3 @@ The navigation system extensively uses Element Plus components with custom styli
 
 These components are customized using CSS variables and custom styles to match the application's design language.
 
-Sources: [frontend/src/components/navbar/Navbar.vue:19-39](), [frontend/src/components/navbar/Navbar.vue:44-57](), [frontend/src/components/navbar/Navbar.vue:258-285]()

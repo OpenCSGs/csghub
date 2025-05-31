@@ -47,8 +47,6 @@ flowchart TB
     StarhubServer --> S3
 ```
 
-Sources: [README.md:12-14](../../frontend/src/components/navbar/Navbar.vue), [go.mod:1-19](../../go.mod), [config/config.go:14-40](../../config/config.go)
-
 ## Core Components
 
 CSGHub is built with a modular architecture consisting of several key components:
@@ -120,8 +118,6 @@ flowchart TB
     StarhubServer --> EndpointMgmt
     StarhubServer --> FinetuneMgmt
 ```
-
-Sources: [frontend/src/main.js:1-167](../../frontend/src/main.js), [config/config.go:14-40](../../config/config.go), [README.md:12-18](../../README.md)
 
 ## Repository System
 
@@ -243,8 +239,6 @@ flowchart TB
     Session --> UserStore
 ```
 
-Sources: [frontend/src/stores/UserStore.js:1-95](../../frontend/src/stores/UserStore.js), [frontend/src/components/navbar/Navbar.vue:60-222](../../frontend/src/components/navbar/Navbar.vue), [frontend/src/packs/persistPinia.js:1-20](../../frontend/src/packs/persistPinia.js)
-
 ## Resource Management
 
 CSGHub provides specialized tools for AI model deployment, fine-tuning, and evaluation:
@@ -326,8 +320,6 @@ flowchart TB
     EvalRun --> EvalResults
 ```
 
-Sources: [frontend/src/main.js:45-58](../../frontend/src/main.js), [docs/csghub_saas_en.md:90-178](../../docs/csghub_saas_en.md), [docs/csghub_saas_zh.md:90-178](../../docs/csghub_saas_zh.md)
-
 ## Internationalization
 
 CSGHub provides comprehensive internationalization support for multiple languages:
@@ -366,8 +358,6 @@ flowchart TB
     I18n --> Messages
 ```
 
-Sources: [frontend/src/main.js:132-139](../../frontend/src/main.js), [frontend/src/components/navbar/Navbar.vue:44-57](../../frontend/src/components/navbar/Navbar.vue)
-
 ## Deployment Options
 
 CSGHub can be deployed in several ways:
@@ -379,7 +369,6 @@ CSGHub can be deployed in several ways:
 | Helm | Kubernetes-based deployment | Production, scalable environments |
 | SaaS | Cloud service at opencsg.com | Immediate access without infrastructure |
 
-Sources: [README.md:39-47](../../README.md), [docs/release_notes.md:12-15](../../docs/release_notes.md)
 
 ## Version History
 
@@ -390,10 +379,6 @@ CSGHub follows a regular release cycle with version updates. Key milestones incl
 - v1.1.0 (2024.11.15): Enhanced multi-sync features, admin improvements
 - v1.0.0 (2024.10.15): Stable multi-sync function, Docker for ARM, region support
 - v0.9.0 (2024.09.15): Migrated to Go, added Collections feature
-
-For a complete history, see the [release notes](../../docs/release_notes.md).
-
-Sources: [docs/release_notes.md:3-31](../../docs/release_notes.md)
 
 ## Technical Implementation
 
@@ -449,8 +434,6 @@ flowchart TB
     Go --> S3
     Go --> Git
 ```
-
-Sources: [frontend/package.json:14-43](../../frontend/package.json), [go.mod:5-18](../../go.mod), [frontend/src/main.js:1-8](../../frontend/src/main.js)
 
 ## Conclusion
 

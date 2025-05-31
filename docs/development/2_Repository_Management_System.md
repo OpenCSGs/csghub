@@ -45,15 +45,6 @@ graph TD
     end
 ```
 
-Sources:
-- [frontend/src/components/shared/RepoHeader.vue:1-368]()
-- [frontend/src/components/shared/RepoCards.vue:1-332]()
-- [frontend/src/stores/RepoDetailStore.js:1-245]()
-- [internal/routes/models.go:1-31]()
-- [internal/routes/datasets.go:1-31]()
-- [internal/routes/codes.go:1-31]()
-- [internal/routes/spaces.go:1-32]()
-
 ## Repository Data Model
 
 All repository types share a common data model while having type-specific extensions. The state for repositories is centrally managed through the `RepoDetailStore`.
@@ -86,8 +77,6 @@ classDiagram
 
 The `RepoDetailStore` contains all properties for the currently viewed repository. It includes common properties shared by all repository types as well as type-specific properties that only apply to certain repository types.
 
-Sources:
-- [frontend/src/stores/RepoDetailStore.js:6-243]()
 
 ### Type-Specific Extensions
 
@@ -130,12 +119,6 @@ theme: "#F5F3FF"
 repositories: []
 ```
 
-Sources:
-- [frontend/src/stores/RepoDetailStore.js:9-236]()
-- [frontend/src/components/finetune/FinetuneDetail.vue:5-16]()
-- [frontend/src/components/endpoints/EndpointDetail.vue:4-16]()
-- [frontend/src/components/collections/CollectionsDetail.vue:6-17]()
-
 ## User Interface Components
 
 The Repository Management System includes several UI components that collectively provide the repository interface.
@@ -171,9 +154,6 @@ The header adapts its display based on repository type:
 - For finetunes: Shows finetune status and model information
 - For other types: Shows repository type icon and metadata
 
-Sources:
-- [frontend/src/components/shared/RepoHeader.vue:1-368]()
-- [frontend/src/components/__tests__/shared/RepoHeader.spec.js:1-332]()
 
 ### Repository Cards Browser
 
@@ -204,9 +184,6 @@ graph TD
 - Source (for on-premise installations)
 - SDK type (for spaces)
 
-Sources:
-- [frontend/src/components/shared/RepoCards.vue:1-332]()
-
 ### Repository Detail Views
 
 Each repository type has a specialized detail view that extends a common pattern:
@@ -234,11 +211,6 @@ The detail views follow a consistent pattern but adapt to each repository type:
 - Endpoint detail: Shows endpoint status, playground
 - Finetune detail: Shows training status, settings
 - Collection detail: Shows contained repositories
-
-Sources:
-- [frontend/src/components/finetune/FinetuneDetail.vue:1-325]()
-- [frontend/src/components/endpoints/EndpointDetail.vue:1-225]()
-- [frontend/src/components/collections/CollectionsDetail.vue:1-173]()
 
 ## Repository Operations
 
@@ -274,10 +246,6 @@ Key filtering options include:
 - SDK filtering via `sdk` parameter (for spaces)
 - Pagination via `page` and `per` parameters
 
-Sources:
-- [frontend/src/components/shared/RepoCards.vue:254-308]()
-- [frontend/src/locales/en_js/models.js:1-75]()
-- [frontend/src/locales/zh_js/models.js:1-72]()
 
 ### Repository Detail Display
 
@@ -306,12 +274,6 @@ sequenceDiagram
     Browser->>User: Show updated like count
 ```
 
-Sources:
-- [frontend/src/components/shared/RepoHeader.vue:307-335]()
-- [frontend/src/components/finetune/FinetuneDetail.vue:195-212]()
-- [frontend/src/components/endpoints/EndpointDetail.vue:129-144]()
-- [frontend/src/components/collections/CollectionsDetail.vue:153-162]()
-
 ### Repository Empty States
 
 The system also handles empty states, such as when no models are available:
@@ -329,9 +291,6 @@ graph TD
 
 The empty state provides guidance to users on how to add their first repositories.
 
-Sources:
-- [frontend/src/components/shared/RepoCards.vue:113-115]()
-- [frontend/src/components/models/EmptyModels.vue:1-15]()
 
 ## Backend Integration
 
@@ -365,12 +324,6 @@ The backend implements consistent route patterns across repository types:
 - Files route: `GET /{repoType}s/:namespace/:repo_name/files/:branch/*path`
 - Settings route: `GET /{repoType}s/:namespace/:repo_name/settings`
 
-Sources:
-- [internal/routes/models.go:8-31]()
-- [internal/routes/datasets.go:8-31]()
-- [internal/routes/codes.go:8-31]()
-- [internal/routes/spaces.go:8-32]()
-- [internal/handlers/render/repo.go:38-163]()
 
 ### Base Handler Implementation
 
@@ -417,12 +370,6 @@ classDiagram
 
 This design provides consistent behaviors across repository types while allowing for type-specific customizations.
 
-Sources:
-- [internal/handlers/render/repo.go:39-53]()
-- [internal/handlers/render/models.go:3-17]()
-- [internal/handlers/render/datasets.go:3-17]()
-- [internal/handlers/render/codes.go:3-17]()
-- [internal/handlers/render/spaces.go:3-17]()
 
 ## State Management
 
@@ -456,11 +403,6 @@ The store is initialized when a user navigates to a repository detail page. The 
 2. Populates common and type-specific properties
 3. Uses Pinia's persistence plugin to cache data
 
-Sources:
-- [frontend/src/stores/RepoDetailStore.js:6-243]()
-- [frontend/src/components/finetune/FinetuneDetail.vue:283-290]()
-- [frontend/src/components/endpoints/EndpointDetail.vue:195-197]()
-- [frontend/src/components/collections/CollectionsDetail.vue:167-169]()
 
 ### API Integration for State Updates
 
@@ -482,8 +424,6 @@ sequenceDiagram
 
 This pattern ensures that UI state stays synchronized with server state.
 
-Sources:
-- [frontend/src/components/shared/RepoHeader.vue:307-335]()
 
 ## Conclusion
 

@@ -56,11 +56,6 @@ flowchart TD
     Deploy --> Scaling
 ```
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:1-611]()
-- [frontend/src/components/finetune/NewFinetune.vue:1-416]()
-- [frontend/src/components/evaluations/NewEvaluation.vue:1-553]()
-- [frontend/src/components/endpoints/EngineArgs.vue:1-128]()
 
 ## Inference Endpoint System
 
@@ -114,9 +109,6 @@ sequenceDiagram
     NewEndpoint-->>User: Redirect to endpoint detail page
 ```
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:1-611]()
-- [frontend/src/components/endpoints/EngineArgs.vue:1-128]()
 
 The form allows configuration of:
 
@@ -133,9 +125,6 @@ The form allows configuration of:
 | Quantization | Optional model quantization | None |
 | Visibility | Public or private access | Public |
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:16-265]()
-- [frontend/src/locales/en_js/endpoints.js:1-90]()
 
 ### Managing Endpoints
 
@@ -175,8 +164,6 @@ graph TD
     UpdateAPI --> RefreshEndpoint["Refresh Endpoint Data"]
 ```
 
-Sources:
-- [frontend/src/components/endpoints/EndpointSettings.vue:1-573]()
 
 Key management operations include:
 
@@ -187,8 +174,6 @@ Key management operations include:
 5. **Visibility Control**: Toggle between public and private access
 6. **Deletion**: Permanently remove the endpoint
 
-Sources:
-- [frontend/src/components/endpoints/EndpointSettings.vue:24-276]()
 
 ### Endpoint Lifecycle and States
 
@@ -207,9 +192,6 @@ The endpoint goes through several states during its lifecycle:
 | RuntimeError | Error during operation | Restart, delete |
 | NoAppFile | Missing application file | Delete |
 
-Sources:
-- [frontend/src/components/endpoints/EndpointSettings.vue:334-354]()
-- [frontend/src/components/endpoints/EndpointPage.vue:1-142]()
 
 ## Fine-tuning System
 
@@ -248,8 +230,6 @@ graph TD
     CreateFinetune --> Redirect["Redirect to finetune detail page"]
 ```
 
-Sources:
-- [frontend/src/components/finetune/NewFinetune.vue:1-416]()
 
 The fine-tuning form allows configuration of:
 
@@ -261,8 +241,6 @@ The fine-tuning form allows configuration of:
 | Cloud Resource | Hardware resource (GPU required) | First available |
 | Runtime Framework | Fine-tuning framework | Model-dependent |
 
-Sources:
-- [frontend/src/components/finetune/NewFinetune.vue:16-164]()
 
 ### Managing Fine-tuning Jobs
 
@@ -274,8 +252,6 @@ The fine-tuning settings interface provides controls similar to endpoint managem
 
 Fine-tuning jobs share the same lifecycle states as endpoints (Building, Running, Stopped, etc.).
 
-Sources:
-- [frontend/src/components/finetune/FinetuneSettings.vue:1-387]()
 
 ## Model Evaluation System
 
@@ -324,8 +300,6 @@ graph TD
     SubmitEvaluation --> Redirect["Redirect to resource console"]
 ```
 
-Sources:
-- [frontend/src/components/evaluations/NewEvaluation.vue:1-553]()
 
 The evaluation form allows configuration of:
 
@@ -340,8 +314,6 @@ The evaluation form allows configuration of:
 | Cloud Resource | Hardware (for dedicated resources) | Conditional |
 | Evaluation Framework | Framework for running evaluations | Yes |
 
-Sources:
-- [frontend/src/components/evaluations/NewEvaluation.vue:16-244]()
 
 ## Shared Components and Infrastructure
 
@@ -378,9 +350,6 @@ graph TD
     useEngineArgs["getInputTypeForEngineArg()"] --> SelectInput & SwitchInput & TextInput
 ```
 
-Sources:
-- [frontend/src/components/endpoints/EngineArgs.vue:1-128]()
-- [frontend/src/packs/useEngineArgs.js:1-55]()
 
 The component intelligently selects input types based on parameter names and values:
 
@@ -390,8 +359,6 @@ The component intelligently selects input types based on parameter names and val
 | Toggle Switch | Boolean parameters | `enable-prefix-caching`, `enforce-eager` |
 | Text Input | All other parameters | Custom values, numeric settings |
 
-Sources:
-- [frontend/src/packs/useEngineArgs.js:1-55]()
 
 ### Resource and Cluster Management
 
@@ -428,12 +395,7 @@ graph TD
     
     FilterResources --> CPU & GPU & Premium
     DeployType & FinetuneType & EvalType --> FilterResources
-```
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:397-408]()
-- [frontend/src/components/finetune/NewFinetune.vue:257-269]()
-- [frontend/src/components/evaluations/NewEvaluation.vue:380-390]()
 
 Key aspects of resource management:
 
@@ -442,8 +404,6 @@ Key aspects of resource management:
 3. **Framework Compatibility**: Filtering frameworks based on selected resources
 4. **Operation Types**: Different operations (deployment, fine-tuning, evaluation) filter for appropriate resources
 
-Sources:
-- [frontend/src/components/shared/deploy_instance/fetchResourceInCategory.js]() (referenced but not shown in provided files)
 
 ## Integration with Repository System
 
@@ -453,9 +413,6 @@ The deployment and fine-tuning systems integrate with the repository management 
 2. **Dataset Selection**: Evaluations and fine-tuning use datasets from the repository
 3. **Visibility Control**: Aligns with repository visibility settings (public/private)
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:246-252]()
-- [frontend/src/components/endpoints/EndpointSettings.vue:185-224]()
 
 ## User Interface and Localization
 
@@ -485,9 +442,6 @@ graph TD
     I18n --> NewEvaluation
 ```
 
-Sources:
-- [frontend/src/locales/en_js/endpoints.js:1-90]()
-- [frontend/src/locales/zh_js/endpoints.js:1-90]()
 
 ## API Integration
 
@@ -507,12 +461,6 @@ All model operations interact with backend API endpoints:
 | Delete Fine-tune | `/models/{modelId}/finetune/{finetuneId}` | DELETE |
 | Create Evaluation | `/evaluations` | POST |
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:550-553]()
-- [frontend/src/components/endpoints/EndpointSettings.vue:398-400]()
-- [frontend/src/components/finetune/NewFinetune.vue:353-359]()
-- [frontend/src/components/finetune/FinetuneSettings.vue:285-288]()
-- [frontend/src/components/evaluations/NewEvaluation.vue:472-473]()
 
 ## Summary
 

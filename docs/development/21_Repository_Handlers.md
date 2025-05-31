@@ -98,7 +98,7 @@ classDiagram
     SpaceHandler <|.. SpaceHandlerImpl
 ```
 
-Sources: [internal/handlers/render/repo.go:39-53](), [internal/handlers/render/models.go](), [internal/handlers/render/datasets.go](), [internal/handlers/render/codes.go](), [internal/handlers/render/spaces.go]()
+
 
 ## Repository Types and Handler Implementation
 
@@ -113,7 +113,7 @@ CSGHub supports four primary repository types, each with its dedicated handler i
 
 Each specific handler implementation primarily differs in the `resourceType` field value, which is used to determine which templates to render and what type-specific data to include.
 
-Sources: [internal/handlers/render/models.go](), [internal/handlers/render/datasets.go](), [internal/handlers/render/codes.go](), [internal/handlers/render/spaces.go]()
+
 
 ## Route to Handler Mapping
 
@@ -144,7 +144,7 @@ flowchart LR
     end
 ```
 
-Sources: [internal/routes/models.go](), [internal/routes/datasets.go](), [internal/routes/codes.go](), [internal/routes/spaces.go]()
+
 
 ## Handler Method Behavior
 
@@ -168,7 +168,7 @@ The `BaseHandlerImpl` provides a default implementation for all handler methods,
 
 Most methods call a common `renderShow` helper method that prepares a data context and renders the appropriate template.
 
-Sources: [internal/handlers/render/repo.go:68-123]()
+
 
 ## Request Processing Flow
 
@@ -204,7 +204,7 @@ sequenceDiagram
     RenderBase-->>Client: HTML Response
 ```
 
-Sources: [internal/routes/models.go](), [internal/handlers/render/repo.go:125-163]()
+
 
 ## Template Rendering and Data Context
 
@@ -241,7 +241,7 @@ The `renderShow` method plays a key role in preparing the data context for templ
    RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_show", data)
    ```
 
-Sources: [internal/handlers/render/repo.go:125-143](), [internal/handlers/render/repo.go:145-163]()
+
 
 ## License Handling
 
@@ -258,7 +258,7 @@ var DefaultLicenses = [][]string{
 
 This licensing information is used when creating new repositories and is passed to the template rendering system as a JSON string.
 
-Sources: [internal/handlers/render/repo.go:12-37](), [internal/handlers/render/repo.go:122]()
+
 
 ## Extension Points
 
@@ -268,7 +268,7 @@ While the Repository Handlers system follows a common pattern, it includes sever
 2. **Method Overriding**: Specific handlers can override any base method to provide custom behavior
 3. **Template Mapping**: The template naming convention (`{resourceType}_show`) allows for resource-specific templates
 
-Sources: [internal/handlers/render/models.go:11-17](), [internal/handlers/render/datasets.go:11-17](), [internal/handlers/render/codes.go:11-17](), [internal/handlers/render/spaces.go:11-17]()
+
 
 ## Repository Handler Registration
 
@@ -293,7 +293,7 @@ flowchart TD
     SpaceRoutes --> |"handlers.RenderHandler.SpaceHandler"| SpaceHandler
 ```
 
-Sources: [internal/routes/models.go:8-10](), [internal/routes/datasets.go:8-10](), [internal/routes/codes.go:8-10](), [internal/routes/spaces.go:8-10]()
+
 
 ## Summary
 

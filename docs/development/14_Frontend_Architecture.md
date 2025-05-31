@@ -39,7 +39,7 @@ graph TB
     end
 ```
 
-Sources: [frontend/src/main.js:1-167](), [frontend/src/admin.js:1-70](), [frontend/package.json:1-55]()
+
 
 ## Core Technologies
 
@@ -54,7 +54,7 @@ The frontend application is built using the following key technologies:
 | i18n | Internationalization | English and Chinese language support |
 | Vite | Build tool | Development and production builds |
 
-Sources: [frontend/package.json:14-42](), [frontend/src/main.js:1-9]()
+
 
 ## Application Architecture
 
@@ -83,7 +83,7 @@ graph TD
     CreateAdminApp --> MountAdminApp["Mount Admin App (#admin)"]
 ```
 
-Sources: [frontend/src/main.js:75-167](), [frontend/src/admin.js:46-70]()
+
 
 ### Component Structure
 
@@ -118,7 +118,7 @@ graph TD
     AdminSystem --> AdminUserList["AdminUserList"]
 ```
 
-Sources: [frontend/src/main.js:16-69](), [frontend/src/main.js:146-158]()
+
 
 ## State Management
 
@@ -159,7 +159,7 @@ graph LR
     UserStore --> ActionLimited
 ```
 
-Sources: [frontend/src/stores/UserStore.js:1-95](), [frontend/src/packs/persistPinia.js:1-20]()
+
 
 ### State Persistence
 
@@ -169,7 +169,7 @@ A custom persistence plugin ensures that state is preserved across page reloads,
 2. On initialization, checks if stored state is still valid (within expiration window)
 3. Subscribes to store changes and updates localStorage
 
-Sources: [frontend/src/packs/persistPinia.js:1-20]()
+
 
 ## Routing and Navigation
 
@@ -212,7 +212,7 @@ graph TD
     Router --> NewOrg
 ```
 
-Sources: [frontend/src/main.js:146-158]()
+
 
 ## UI Component System
 
@@ -251,7 +251,7 @@ graph TD
     CustomComponents --> RepoCards
 ```
 
-Sources: [frontend/src/main.js:160-162](), [frontend/src/admin.js:51-52]()
+
 
 ## Internationalization (i18n)
 
@@ -276,7 +276,7 @@ graph LR
     TranslatedText --> I18n
 ```
 
-Sources: [frontend/src/main.js:132-139](), [frontend/src/admin.js:29-36]()
+
 
 ## Build and Development System
 
@@ -310,7 +310,7 @@ graph TB
     ProdConfig --> ChunkSplitting
 ```
 
-Sources: [frontend/vite.config.js:32-118]()
+
 
 ### Build Configuration
 
@@ -326,7 +326,7 @@ The build system is configured to optimize the application differently for devel
    - Console logs removed
    - Optimized chunk splitting
 
-Sources: [frontend/vite.config.js:32-76](), [frontend/vite.config.js:78-118]()
+
 
 ## API Integration
 
@@ -348,7 +348,7 @@ graph TD
     JsonResponse --> HandleResponse
 ```
 
-Sources: [frontend/src/main.js:324](), [frontend/src/navbar/Navbar.vue:372]()
+
 
 ## Authentication Flow
 
@@ -374,7 +374,7 @@ graph TB
     ClearCookies --> ClearUserStore["Clear UserStore"]
 ```
 
-Sources: [frontend/src/navbar/Navbar.vue:379-382](), [frontend/src/stores/UserStore.js:25-33]()
+
 
 ## Responsive Design
 
@@ -384,7 +384,7 @@ The frontend implements responsive design through Tailwind CSS and media queries
 2. Mobile-specific navigation for smaller screens
 3. Responsive components that adjust to container width
 
-Sources: [frontend/src/navbar/Navbar.vue:3-255](), [frontend/package.json:51]()
+
 
 ## Performance Optimizations
 
@@ -395,7 +395,7 @@ The application includes several performance optimizations:
 3. **Chunk Optimization**: Organizes code into logical chunks
 4. **CSS Optimization**: Uses Tailwind CSS for efficient styling
 
-Sources: [frontend/vite.config.js:83-101]()
+
 
 ## Security Considerations
 
@@ -406,7 +406,7 @@ The frontend implements several security best practices:
 3. Protected routes requiring authentication
 4. Input validation for user inputs
 
-Sources: [frontend/src/stores/UserStore.js:51-58]()
+
 
 ## Conclusion
 

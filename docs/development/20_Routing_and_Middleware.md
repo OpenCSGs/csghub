@@ -46,7 +46,7 @@ flowchart TB
   handlers --> rg6
 ```
 
-Sources: [internal/routes/router.go:33-96]()
+
 
 ## Router Initialization
 
@@ -77,7 +77,7 @@ sequenceDiagram
     Router-->>App: Return configured Gin engine
 ```
 
-Sources: [internal/routes/router.go:33-96]()
+
 
 ## Middleware Components
 
@@ -103,7 +103,7 @@ flowchart LR
     config --> handler["Route Handler"]
 ```
 
-Sources: [internal/routes/router.go:61-73](), [internal/routes/router.go:98-104]()
+
 
 ### Authentication Middleware
 
@@ -115,7 +115,7 @@ Key functions:
 - Attaches authenticated user information to the request context
 - Handles token refreshing for extended sessions
 
-Sources: [internal/handlers/frontend/token.go:34-59](), [internal/routes/router.go:69]()
+
 
 ## Route Groups
 
@@ -125,7 +125,7 @@ CSGHub organizes routes into distinct groups based on functionality, making the 
 
 Static routes serve frontend assets such as JavaScript, CSS, and image files directly from the filesystem.
 
-Sources: [internal/routes/router.go:232-250]()
+
 
 ### API Routes
 
@@ -137,7 +137,7 @@ API routes handle internal AJAX requests from the frontend, providing data endpo
 /internal_api/upload                - File upload handling
 ```
 
-Sources: [internal/routes/router.go:252-265]()
+
 
 ### View Routes
 
@@ -160,7 +160,7 @@ View routes render HTML templates for different parts of the application. These 
 | Resource console routes | Resource management console |
 | Admin routes | Administrative interfaces |
 
-Sources: [internal/routes/router.go:205-230]()
+
 
 ### Resolve Routes
 
@@ -170,7 +170,7 @@ Resolve routes handle repository content resolution, mapping repository paths to
 /:repo_type/:namespace/:name/resolve/:branch/*path
 ```
 
-Sources: [internal/routes/router.go:259-260]()
+
 
 ## Handler Registries
 
@@ -209,7 +209,7 @@ classDiagram
     HandlersRegistry --o RenderHandlerRegistry : contains
 ```
 
-Sources: [internal/routes/router.go:26-31](), [internal/handlers/render/registry.go:9-26]()
+
 
 ## Template Rendering
 
@@ -222,7 +222,7 @@ The template rendering process:
 4. Templates are parsed from the embedded filesystem during initialization
 5. Rendered templates are served in response to view route requests
 
-Sources: [internal/routes/router.go:106-203]()
+
 
 ## Error Handling
 
@@ -232,7 +232,7 @@ The routing system includes comprehensive error handling to provide appropriate 
 2. **404 Not Found**: Redirects to a dedicated not-found page for unmatched routes
 3. **Authentication Errors**: Redirects unauthenticated users to appropriate error pages
 
-Sources: [internal/routes/router.go:61-68](), [internal/routes/router.go:267-272]()
+
 
 ## JWT Authentication Flow
 
@@ -263,7 +263,7 @@ sequenceDiagram
     Token-->>Client: Set cookie and return token
 ```
 
-Sources: [internal/handlers/frontend/token.go:34-59](), [pkg/server/types/jwt.go:1-45]()
+
 
 ## Implementation Details
 
@@ -278,7 +278,7 @@ The router is initialized in the `Initialize` function, which sets up the Gin en
 5. Sets up the HTML renderer
 6. Registers all routes
 
-Sources: [internal/routes/router.go:33-96]()
+
 
 ### Global Configuration Injection
 
@@ -301,7 +301,7 @@ func injectConfig(config types.GlobalConfig) gin.HandlerFunc {
 }
 ```
 
-Sources: [internal/routes/router.go:98-104](), [internal/routes/router.go:206-211]()
+
 
 ## Conclusion
 

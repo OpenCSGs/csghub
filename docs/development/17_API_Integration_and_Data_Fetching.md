@@ -44,9 +44,6 @@ flowchart TD
     GinRouter --> |"routes to"| RuntimeFrameworks
 ```
 
-Sources:
-- [frontend/src/packs/useFetchApi.js:1-90]()
-- [frontend/src/packs/auth.js:1-41]()
 
 ### The useFetchApi Utility
 
@@ -79,8 +76,6 @@ sequenceDiagram
     end
 ```
 
-Sources:
-- [frontend/src/packs/useFetchApi.js:32-76]()
 
 ## Common Data Fetching Patterns
 
@@ -100,9 +95,6 @@ const fetchResources = async () => {
 }
 ```
 
-Sources:
-- [frontend/src/components/shared/deploy_instance/fetchResourceInCategory.js:1-53]()
-- [frontend/src/components/endpoints/NewEndpoint.vue:397-408]()
 
 ### Request-Response Structure
 
@@ -125,9 +117,6 @@ flowchart TD
     H --> J
 ```
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:551-566]()
-- [frontend/src/packs/useFetchApi.js:64-77]()
 
 ## Component API Integration Examples
 
@@ -161,10 +150,6 @@ flowchart TD
     D --> A
 ```
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:511-567]()
-- [frontend/src/components/finetune/NewFinetune.vue:333-367]()
-- [frontend/src/components/evaluations/NewEvaluation.vue:453-488]()
 
 ### Managing Resources (Settings/Updates)
 
@@ -184,9 +169,6 @@ Below is an example from the EndpointSettings component:
 | Update Endpoint | `/models/${modelId}/run/${endpointId}` | PUT | Modify endpoint settings |
 | Delete Endpoint | `/models/${modelId}/run/${endpointId}` | DELETE | Remove an endpoint |
 
-Sources:
-- [frontend/src/components/endpoints/EndpointSettings.vue:397-563]()
-- [frontend/src/components/finetune/FinetuneSettings.vue:284-379]()
 
 ## The API Request Lifecycle
 
@@ -228,9 +210,6 @@ sequenceDiagram
     end
 ```
 
-Sources:
-- [frontend/src/packs/useFetchApi.js:43-77]()
-- [frontend/src/components/endpoints/NewEndpoint.vue:526-566]()
 
 ## Common API Endpoints and Their Usage
 
@@ -246,11 +225,6 @@ The CSGHub frontend interacts with several key API endpoints for different opera
 | Clusters | `/cluster` | List available clusters | Multiple components |
 | Models | `/runtime_framework/models` | Search for models | Multiple components |
 
-Sources:
-- [frontend/src/components/endpoints/NewEndpoint.vue:550-551]()
-- [frontend/src/components/finetune/NewFinetune.vue:353-357]()
-- [frontend/src/components/evaluations/NewEvaluation.vue:472-473]()
-- [frontend/src/components/shared/deploy_instance/fetchResourceInCategory.js:19-20]()
 
 ## Special Feature: Engine Arguments Management
 
@@ -266,10 +240,6 @@ flowchart TD
     A -->|"includes in API request"| F["API Call with engine_args"]
 ```
 
-Sources:
-- [frontend/src/components/endpoints/EngineArgs.vue:1-127]()
-- [frontend/src/packs/useEngineArgs.js:1-55]()
-- [frontend/src/components/endpoints/NewEndpoint.vue:542-544]()
 
 This specialized system provides appropriate input controls based on parameter type and tracks changes to include only modified parameters in API requests.
 
@@ -286,10 +256,6 @@ For authentication, the system automatically:
 - Handles token expiration
 - Manages user logout
 
-Sources:
-- [frontend/src/packs/useFetchApi.js:13-30]()
-- [frontend/src/packs/useFetchApi.js:64-77]()
-- [frontend/src/packs/auth.js:28-38]()
 
 ## Summary
 

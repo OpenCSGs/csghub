@@ -33,7 +33,7 @@ flowchart TD
     class Building,Deploying,Running,Stopped,BuildingFailed,DeployFailed,RuntimeError states;
 ```
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:334-346](), [frontend/src/components/endpoints/EndpointPage.vue:64-73]()
+
 
 ## 2. Creating an Endpoint
 
@@ -67,7 +67,7 @@ sequenceDiagram
     UI->>User: Redirect to endpoint detail page
 ```
 
-Sources: [frontend/src/components/endpoints/NewEndpoint.vue:526-566]()
+
 
 ### 2.2 Required Parameters
 
@@ -85,7 +85,7 @@ When creating an endpoint, you need to specify the following parameters:
 | Visibility | Public or private access | Yes |
 | Quantization | Optional model quantization for optimization | No |
 
-Sources: [frontend/src/components/endpoints/NewEndpoint.vue:25-243]()
+
 
 ### 2.3 Endpoint Creation Form
 
@@ -109,7 +109,7 @@ To create a new endpoint, follow these steps:
 10. Choose visibility (public or private).
 11. Click "Create" to deploy the endpoint.
 
-Sources: [frontend/src/components/endpoints/NewEndpoint.vue:1-266](), [frontend/src/components/endpoints/NewEndpoint.vue:306-345]()
+
 
 ### 2.4 Engine Arguments
 
@@ -138,7 +138,7 @@ flowchart TD
     end
 ```
 
-Sources: [frontend/src/components/endpoints/EngineArgs.vue:1-127](), [frontend/src/packs/useEngineArgs.js:1-54]()
+
 
 ## 3. Managing Endpoints
 
@@ -160,7 +160,7 @@ Endpoints can be in one of several states:
 | DeployFailed | The endpoint failed during deployment |
 | RuntimeError | The endpoint encountered a runtime error |
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:334-345]()
+
 
 ### 3.2 Controlling Endpoint State
 
@@ -171,7 +171,7 @@ You can control the state of your endpoint using the following actions:
 
 These actions can be performed from the endpoint settings page.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:4-41]()
+
 
 ### 3.3 Updating Endpoint Configuration
 
@@ -199,7 +199,7 @@ flowchart LR
     Confirmation --> API
 ```
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:44-276]()
+
 
 #### 3.3.1 Updating Cloud Resources
 
@@ -210,7 +210,7 @@ You can change the hardware resources allocated to your endpoint. This is useful
 3. Select a new cloud resource from the dropdown.
 4. The change will be applied when you restart the endpoint.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:44-81]()
+
 
 #### 3.3.2 Updating Runtime Framework
 
@@ -221,7 +221,7 @@ You can change the runtime framework used by your endpoint:
 3. Select a new compatible runtime framework from the dropdown.
 4. The change will be applied when you restart the endpoint.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:84-124]()
+
 
 #### 3.3.3 Updating Engine Arguments
 
@@ -234,7 +234,7 @@ You can modify engine arguments to optimize performance:
 5. Click "Update" to save changes.
 6. The changes will be applied when you restart the endpoint.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:111-124]()
+
 
 #### 3.3.4 Updating Replica Count
 
@@ -245,7 +245,7 @@ You can adjust the minimum and maximum number of replicas for your endpoint:
 3. Select new values for minimum and maximum replicas.
 4. The changes will be applied when you restart the endpoint.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:128-182]()
+
 
 #### 3.3.5 Changing Visibility
 
@@ -257,7 +257,7 @@ You can change the visibility of your endpoint between public and private:
 4. Confirm the change in the confirmation dialog.
 5. The new visibility will be applied when you restart the endpoint.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:186-224]()
+
 
 ### 3.4 Deleting an Endpoint
 
@@ -271,7 +271,7 @@ To delete an endpoint:
 
 **Note**: Deletion is irreversible and will permanently remove the endpoint and all its files.
 
-Sources: [frontend/src/components/endpoints/EndpointSettings.vue:227-276]()
+
 
 ## 4. Viewing Endpoint Information
 
@@ -302,7 +302,7 @@ flowchart TD
     EndpointPlayground --> ImageTextToText["Image Text to Text"]
 ```
 
-Sources: [frontend/src/components/endpoints/EndpointPage.vue:1-73]()
+
 
 ## 5. Using the Endpoint Playground
 
@@ -315,7 +315,7 @@ The playground provides a user-friendly interface to:
 3. Adjust parameters for inference
 4. Test different inputs
 
-Sources: [frontend/src/components/endpoints/EndpointPage.vue:64-70](), [frontend/src/locales/en_js/endpoints.js:72-89]()
+
 
 ## 6. Endpoint API Overview
 
@@ -331,7 +331,7 @@ Key API endpoints for managing endpoints include:
 | `/models/{modelId}/run/{endpointId}/start` | PUT | Start or restart an endpoint |
 | `/models/{modelId}/run/{endpointId}` | DELETE | Delete an endpoint |
 
-Sources: [frontend/src/components/endpoints/NewEndpoint.vue:550-552](), [frontend/src/components/endpoints/EndpointSettings.vue:398-424](), [frontend/src/components/endpoints/EndpointSettings.vue:485-518]()
+
 
 ## 7. Comparison with Fine-tuning and Evaluation
 
@@ -347,4 +347,3 @@ CSGHub provides three main types of computing resources: Endpoints, Fine-tuning,
 
 For more details on fine-tuning and evaluation, see [Model Fine-tuning](#3.2) and [Model Settings and Evaluation](#3.3).
 
-Sources: [frontend/src/components/endpoints/NewEndpoint.vue](), [frontend/src/components/finetune/NewFinetune.vue](), [frontend/src/components/evaluations/NewEvaluation.vue]()

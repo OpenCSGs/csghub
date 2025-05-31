@@ -52,7 +52,7 @@ flowchart TD
     class NewFinetune,FinetuneSettings,EngineArgs component;
 ```
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:1-375](), [frontend/src/components/finetune/FinetuneSettings.vue:1-386](), [frontend/src/components/endpoints/EngineArgs.vue:1-127]()
+
 
 ### Fine-tuning Creation Process
 
@@ -83,7 +83,7 @@ sequenceDiagram
     NewFinetune->>User: Redirect to finetune detail page
 ```
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:168-367]()
+
 
 ## 2. Creating a Fine-tuning Task
 
@@ -100,7 +100,7 @@ To create a fine-tuning task, the following parameters must be specified:
 | runtime_framework_id | Framework for fine-tuning | Yes |
 | secure_level | Visibility setting (1=public, 2=private) | Yes |
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:184-191]()
+
 
 ### Model Selection Interface
 
@@ -114,7 +114,7 @@ flowchart LR
     FrameworkAPI -->|"returns"| FrameworkOptions["Compatible Frameworks"]
 ```
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:320-331]()
+
 
 ### Resource and Framework Selection
 
@@ -126,7 +126,7 @@ Resource selection follows a hierarchical process:
 
 The system filters available frameworks based on the selected resource type to ensure compatibility.
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:258-269](), [frontend/src/components/finetune/NewFinetune.vue:295-306]()
+
 
 ## 3. Managing Fine-tuning Tasks
 
@@ -146,7 +146,7 @@ stateDiagram-v2
     Failed --> [*]: Delete task
 ```
 
-Sources: [frontend/src/components/finetune/FinetuneSettings.vue:256-276]()
+
 
 ### Starting and Stopping Tasks
 
@@ -156,13 +156,13 @@ The controls become available based on the current status of the fine-tuning tas
 - Stop button is only active for initialized or running tasks
 - Start button is only active for stopped tasks
 
-Sources: [frontend/src/components/finetune/FinetuneSettings.vue:51-85](), [frontend/src/components/finetune/FinetuneSettings.vue:284-298]()
+
 
 ### Deleting Fine-tuning Tasks
 
 To delete a fine-tuning task, users must confirm by typing the full task identifier in the format `finetuneName/finetuneId`. This prevents accidental deletion of valuable fine-tuning tasks.
 
-Sources: [frontend/src/components/finetune/FinetuneSettings.vue:166-214](), [frontend/src/components/finetune/FinetuneSettings.vue:334-377]()
+
 
 ## 4. Configuration Options
 
@@ -176,7 +176,7 @@ Each resource includes:
 - Hardware type (e.g., GPU, CPU)
 - Region information
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:258-269]()
+
 
 ### Runtime Frameworks
 
@@ -186,7 +186,7 @@ Runtime frameworks define the software stack used for fine-tuning. Available fra
 
 The system dynamically updates available frameworks when users change their resource selection.
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:280-293](), [frontend/src/components/finetune/NewFinetune.vue:295-306]()
+
 
 ### Engine Arguments
 
@@ -199,7 +199,7 @@ Advanced configuration is available through engine arguments, which allow fine-g
 | Feature Toggles | enable-prefix-caching, enforce-eager | Switch |
 | Load Format | auto, pt, safetensors, etc. | Select |
 
-Sources: [frontend/src/components/endpoints/EngineArgs.vue:1-127](), [frontend/src/packs/useEngineArgs.js:1-54]()
+
 
 ## 5. API Integration Points
 
@@ -215,7 +215,7 @@ Sources: [frontend/src/components/endpoints/EngineArgs.vue:1-127](), [frontend/s
 | `/runtime_framework/models?deploy_type=2` | GET | List fine-tunable models |
 | `/models/{modelId}/runtime_framework?deploy_type=2` | GET | List frameworks for model |
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:353-366](), [frontend/src/components/finetune/FinetuneSettings.vue:284-298](), [frontend/src/components/finetune/FinetuneSettings.vue:334-352]()
+
 
 ### Fine-tuning Request Format
 
@@ -232,7 +232,7 @@ The following JSON structure is used when creating a new fine-tuning task:
 }
 ```
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:184-191](), [frontend/src/components/finetune/NewFinetune.vue:348-353]()
+
 
 ## 6. Integration with Other Systems
 
@@ -266,4 +266,3 @@ flowchart TD
 - **Endpoints**: Fine-tuned models can be deployed through the endpoint system
 - **Evaluation**: Models can be evaluated before and after fine-tuning to measure improvement
 
-Sources: [frontend/src/components/finetune/NewFinetune.vue:363-365](), [frontend/src/components/finetune/FinetuneSettings.vue:349-351]()

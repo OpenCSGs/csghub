@@ -39,10 +39,6 @@ graph TD
 
 The `ModelSettings.vue` component provides a comprehensive interface for managing model metadata and settings. It communicates with backend APIs to fetch and update model information.
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:1-286](). The main model settings component.
-- [frontend/src/components/models/ModelSettings.vue:289-681](). Logic implementation for model settings.
-
 ## 2. Model Metadata Management
 
 ### 2.1 Basic Metadata Fields
@@ -58,10 +54,6 @@ The ModelSettings component allows editing the following model metadata:
 
 Each field has its own update method that validates input and makes the necessary API calls to update the model metadata.
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:27-49](). Nickname field and update functionality.
-- [frontend/src/components/models/ModelSettings.vue:53-76](). Description field and update functionality.
-- [frontend/src/components/models/ModelSettings.vue:202-242](). Visibility settings implementation.
 
 ### 2.2 Tag Management System
 
@@ -121,12 +113,6 @@ The tag management system provides interfaces for both regular tags (stored in R
    - Updated via the updateIndustryTagsAPI() method
    - Directly linked to the model
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:80-134](). Task tags implementation.
-- [frontend/src/components/models/ModelSettings.vue:138-198](). Industry tags implementation.
-- [frontend/src/components/models/ModelSettings.vue:539-549](). updateTags() method.
-- [frontend/src/components/models/ModelSettings.vue:574-608](). updateTagsInReadme() and updateReadme() methods.
-- [frontend/src/components/models/ModelSettings.vue:609-624](). updateIndustryTagsAPI() method.
 
 ### 2.3 Visibility Controls
 
@@ -145,11 +131,6 @@ graph TD
 
 The visibility toggle interface provides a dropdown with "Public" and "Private" options. When changed, the system confirms the change with the user before updating the model visibility status.
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:202-242](). Visibility settings UI.
-- [frontend/src/components/models/ModelSettings.vue:499-532](). changeVisibility() method.
-- [frontend/src/components/models/ModelSettings.vue:534-538](). changeVisibilityCall() method.
-- [frontend/src/components/models/ModelSettings.vue:650-666](). updateModel() method.
 
 ### 2.4 Model Deletion
 
@@ -168,10 +149,6 @@ graph TD
 
 This multi-step confirmation process helps prevent accidental deletion of models.
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:244-285](). Model deletion UI.
-- [frontend/src/components/models/ModelSettings.vue:401-410](). clickDelete() method.
-- [frontend/src/components/models/ModelSettings.vue:484-497](). deleteModel() method.
 
 ## 3. Model Evaluation System
 
@@ -217,11 +194,6 @@ graph TD
 
 The evaluation table provides a unified interface for viewing and managing model evaluations across different datasets.
 
-Sources:
-- [frontend/src/components/resource_console/EvaluationTable.vue:1-142](). Evaluation table UI components.
-- [frontend/src/components/resource_console/EvaluationTable.vue:229-242](). fetchEvaluations() method.
-- [frontend/src/components/resource_console/EvaluationTable.vue:244-253](). deleteEvaluation() method.
-- [frontend/src/components/resource_console/EvaluationTable.vue:255-259](). detailEvaluation() method.
 
 ### 3.2 Evaluation Data Structure
 
@@ -240,11 +212,6 @@ Each evaluation record contains the following key information:
 
 The table displays evaluation metadata and provides actions to download results, view details, or delete evaluations.
 
-Sources:
-- [frontend/src/components/resource_console/EvaluationTable.vue:15-42](). Evaluation name and model display.
-- [frontend/src/components/resource_console/EvaluationTable.vue:44-90](). Dataset information display.
-- [frontend/src/components/resource_console/EvaluationTable.vue:92-139](). Status and actions display.
-- [frontend/src/components/resource_console/EvaluationTable.vue:190-224](). Status mapping and components.
 
 ### 3.3 Evaluation Status Workflow
 
@@ -276,10 +243,6 @@ graph LR
 
 The evaluation status determines which actions are available to the user, with completed evaluations enabling result viewing and downloading.
 
-Sources:
-- [frontend/src/components/resource_console/EvaluationTable.vue:105-122](). Status component rendering.
-- [frontend/src/components/resource_console/EvaluationTable.vue:148-176](). Action buttons based on status.
-- [frontend/src/components/resource_console/EvaluationTable.vue:190-225](). Status mapping and component selection.
 
 ## 4. Integration with Resource Console
 
@@ -306,9 +269,6 @@ graph TD
 
 The Resource Console integrates evaluations with other resource types (endpoints, finetunes) to provide a comprehensive management interface.
 
-Sources:
-- [frontend/src/components/resource_console/ResourceConsoleIndex.vue:47-57](). Evaluation section in Resource Console.
-- [frontend/src/components/resource_console/EvaluationTable.vue:1-336](). Evaluation table component.
 
 ## 5. Related UI Components
 
@@ -327,9 +287,6 @@ Status components provide visual indicators for different evaluation states:
 
 These components maintain a consistent visual language across the application.
 
-Sources:
-- [frontend/src/components/resource_console/EvaluationTable.vue:195-198](). Status component imports.
-- [frontend/src/components/resource_console/EvaluationTable.vue:218-226](). Status component mapping.
 
 ### 5.2 Pagination Component
 
@@ -344,9 +301,6 @@ graph LR
 
 This component ensures consistent pagination across the application and handles interactions with the backend API.
 
-Sources:
-- [frontend/src/components/resource_console/EvaluationTable.vue:180-186](). Pagination component in evaluation table.
-- [frontend/src/components/resource_console/EvaluationTable.vue:229-242](). Pagination-aware fetchEvaluations method.
 
 ## 6. Backend API Integration
 
@@ -364,12 +318,6 @@ Both model settings and evaluation components interact with backend APIs to fetc
 | `/models/{path}/tags/industry` | POST | Update industry tags | updateIndustryTagsAPI() |
 | `/tags` | GET | Fetch available tags | getIndustryTags() |
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:484-497](). deleteModel() implementation.
-- [frontend/src/components/models/ModelSettings.vue:565-573](). fetchReadme() implementation.
-- [frontend/src/components/models/ModelSettings.vue:586-608](). updateReadme() implementation.
-- [frontend/src/components/models/ModelSettings.vue:609-624](). updateIndustryTagsAPI() implementation.
-- [frontend/src/components/models/ModelSettings.vue:650-666](). updateModel() implementation.
 
 ### 6.2 Evaluation API Endpoints
 
@@ -379,10 +327,6 @@ Sources:
 | `/evaluations/{id}` | DELETE | Delete evaluation | deleteEvaluation() |
 | `/evaluations/{id}` | GET | View evaluation details | detailEvaluation() |
 
-Sources:
-- [frontend/src/components/resource_console/EvaluationTable.vue:229-242](). fetchEvaluations() implementation.
-- [frontend/src/components/resource_console/EvaluationTable.vue:244-253](). deleteEvaluation() implementation.
-- [frontend/src/components/resource_console/EvaluationTable.vue:255-259](). detailEvaluation() implementation.
 
 ## 7. Internationalization Support
 
@@ -394,11 +338,6 @@ Both model settings and evaluation interfaces support internationalization (i18n
 | Evaluation Table | evaluation.list.* | Translated strings for column headers and actions |
 | Status Labels | Direct mapping | statusMapping object maps English to Chinese |
 
-Sources:
-- [frontend/src/components/models/ModelSettings.vue:8-12](). i18n for model name section.
-- [frontend/src/components/resource_console/EvaluationTable.vue:211-216](). Status mapping for different languages.
-- [frontend/src/locales/en_js/finetune.js:1-56](). English translations.
-- [frontend/src/locales/zh_js/finetune.js:1-56](). Chinese translations.
 
 ## Summary
 

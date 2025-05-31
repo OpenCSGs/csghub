@@ -42,11 +42,6 @@ graph TD
     JWTToken -->|"updates"| UserStoreJS
 ```
 
-Sources:
-- [frontend/src/components/user_settings/Profile.vue]()
-- [frontend/src/components/user_settings/ProfileEdit.vue]()
-- [frontend/src/components/user_settings/Menu.vue]()
-- [frontend/src/components/popup/UpdateUsername.vue]()
 
 ### Profile Display Component
 
@@ -86,10 +81,6 @@ graph TD
     ProfileData -->|"renders"| OrganizationSection
 ```
 
-Sources:
-- [frontend/src/components/user_settings/Profile.vue:92-95]() - `isCurrentUser` computed property
-- [frontend/src/components/user_settings/Profile.vue:100-114]() - `fetchUserInfo` method
-- [frontend/src/components/user_settings/Profile.vue:43-66]() - Organization section
 
 ## 2. Profile Editing System
 
@@ -140,11 +131,6 @@ sequenceDiagram
     ProfileEditVue->>User: Show success message
 ```
 
-Sources:
-- [frontend/src/components/user_settings/ProfileEdit.vue:1-316]()
-- [frontend/src/components/user_settings/ProfileEdit.vue:248-292]() - `updateProfile` function
-- [frontend/src/components/user_settings/ProfileEdit.vue:294-311]() - `saveProfile` function
-- [frontend/src/components/user_settings/ProfileEdit.vue:163-172]() - Email validation
 
 ### Avatar Management
 
@@ -156,8 +142,6 @@ The `ProfileEdit.vue` component provides methods for avatar management:
 
 The avatar is uploaded to `/internal_api/upload` endpoint using `csrfFetch` to include CSRF protection.
 
-Sources:
-- [frontend/src/components/user_settings/ProfileEdit.vue:196-221]() - Avatar management methods
 
 ## 3. Username Management
 
@@ -182,10 +166,6 @@ The username validation includes multiple rules:
 5. Only allows letters, numbers, and specific special characters (-_.)
 6. No consecutive special characters
 
-Sources:
-- [frontend/src/components/popup/UpdateUsername.vue:1-141]()
-- [frontend/src/components/popup/UpdateUsername.vue:55-96]() - Username validation rules
-- [frontend/src/components/user_settings/ProfileEdit.vue:226-246]() - Username update confirmation
 
 ## 4. Settings Navigation
 
@@ -204,11 +184,6 @@ The menu offers different navigation options:
 2. Access tokens (`/settings/access-token`) - only for non-limited users
 3. SSH keys (`/settings/ssh-keys`) - only for non-limited users
 
-Sources:
-- [frontend/src/components/user_settings/Menu.vue:1-151]()
-- [frontend/src/components/user_settings/Menu.vue:31-46]() - Menu links
-- [frontend/src/components/user_settings/Menu.vue:51-64]() - Mobile tabs
-- [frontend/src/components/user_settings/Menu.vue:69-100]() - Confirmation dialog
 
 ## 5. Integration with Other Systems
 
@@ -260,11 +235,6 @@ graph TD
     AddToCollectionsVue -->|"displays"| CollectionCardsVue
 ```
 
-Sources:
-- [frontend/src/components/organizations/OrganizationDetail.vue]()
-- [frontend/src/components/collections/AddToCollections.vue]()
-- [frontend/src/components/resource_console/ResourceConsoleIndex.vue]()
-- [frontend/src/components/shared/ProfileRepoList.vue]()
 
 ### Organization Integration
 
@@ -273,9 +243,6 @@ Users can belong to organizations, and the profile system displays organization 
 - Organization role information (admin, write, read) affects available actions
 - Organization details are retrieved via `/organization/:name` endpoint
 
-Sources:
-- [frontend/src/components/user_settings/Profile.vue:43-66]() - Organization display section
-- [frontend/src/components/organizations/OrganizationDetail.vue:66-68]() - Organization settings link
 
 ### Collections Integration
 
@@ -284,9 +251,6 @@ The profile system allows users to add repositories to their collections:
 - The `AddToCollections.vue` component enables adding repositories to collections
 - Collection management is integrated with the user profile system via the UserStore
 
-Sources:
-- [frontend/src/components/collections/AddToCollections.vue:1-190]()
-- [frontend/src/components/shared/ProfileRepoList.vue:17-27]() - Collections section
 
 ### Resource Console Integration
 
@@ -295,9 +259,6 @@ The user profile links to the Resource Console for managing AI resources:
 - Finetunes (model training)
 - Evaluations (model testing)
 
-Sources:
-- [frontend/src/components/resource_console/ResourceConsoleIndex.vue:1-174]()
-- [frontend/src/components/resource_console/EvaluationTable.vue:1-336]()
 
 ## 6. Internationalization
 
@@ -321,11 +282,6 @@ Example of localized elements:
 - Validation messages
 - Confirmation dialogs
 
-Sources:
-- [frontend/src/locales/en_js/profile.js:1-35]()
-- [frontend/src/locales/zh_js/profile.js:1-35]()
-- [frontend/src/locales/en_js/navbar.js:8-9]() - Profile navigation items
-- [frontend/src/locales/zh_js/navbar.js:8-9]() - Profile navigation items (Chinese)
 
 ## 7. UI Components and Data Flow
 
@@ -361,9 +317,5 @@ The User Profile and Settings system uses Element Plus UI components and follows
    - After successful profile update
    - Maintains session with updated information
 
-Sources:
-- [frontend/src/components/user_settings/ProfileEdit.vue:31-105]() - Form fields
-- [frontend/src/components/user_settings/ProfileEdit.vue:248-292]() - Data submission
-- [frontend/src/components/user_settings/Profile.vue:4-14]() - Profile display
 
 The User Profile and Settings system provides a comprehensive interface for users to manage their personal information and account settings while integrating seamlessly with other components of the CSGHub platform.

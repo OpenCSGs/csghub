@@ -26,13 +26,13 @@ yarn build       # Creates a production build
 yarn preview     # Previews the production build locally
 ```
 
-Sources: [frontend/package.json:6-13]()
+
 
 ### Backend Development
 
 The backend is written in Go using the Gin web framework. The main entry point is `cmd/csghub-portal`. The Go dependencies are managed using Go modules.
 
-Sources: [go.mod:1-3](), [Dockerfile:14]()
+
 
 ## Build Configuration
 
@@ -64,7 +64,7 @@ The development build focuses on developer experience with:
 - Watch mode for immediate feedback
 - Manual chunk strategy for common libraries
 
-Sources: [frontend/vite.config.js:32-76]()
+
 
 #### Production Build Config
 
@@ -89,7 +89,7 @@ The production build optimizes for end-user performance:
 - Clean output directory
 - Optimized chunk splitting for better loading performance
 
-Sources: [frontend/vite.config.js:78-118]()
+
 
 ## Build Process
 
@@ -121,7 +121,7 @@ Vite is configured to split the code into logical chunks:
 - Component chunks for reusable UI components
 - Specialized chunks for large libraries (lodash, element-plus, highlight.js)
 
-Sources: [frontend/vite.config.js:84-101]()
+
 
 ### Backend Build Process
 
@@ -145,7 +145,7 @@ The Go build process includes:
 2. Compilation with platform-specific settings
 3. Generation of the `csghub-portal` binary
 
-Sources: [Dockerfile:9-14]()
+
 
 ## Docker Build Process
 
@@ -174,7 +174,7 @@ The Dockerfile uses:
 2. A minimal final stage with only the compiled binary
 3. Platform-specific build flags for cross-architecture support
 
-Sources: [Dockerfile:1-19]()
+
 
 ## Testing
 
@@ -185,7 +185,7 @@ The frontend uses Vitest for unit testing with the following commands:
 - `yarn test`: Run all tests in watch mode
 - `yarn coverage`: Generate test coverage reports
 
-Sources: [frontend/package.json:9-10]()
+
 
 ### Backend Testing
 
@@ -228,7 +228,7 @@ The pipeline is triggered by:
 - Pushes to the `csghub-staging` branch for staging deployments
 - Tags matching the pattern `v*.*.*` for production releases
 
-Sources: [.gitlab-ci.yml:9-12](), [.gitlab-ci.yml:15-21]()
+
 
 ### Build Stage
 
@@ -244,7 +244,7 @@ Key configuration:
 - Image tag based on branch/tag name
 - No default attestations
 
-Sources: [.gitlab-ci.yml:23-44]()
+
 
 ### Deploy Stage
 
@@ -256,7 +256,7 @@ The deployment process:
 4. Updates the running container using docker-compose
 5. Cleans up unused images
 
-Sources: [.gitlab-ci.yml:45-69]()
+
 
 ## Configuration
 
@@ -271,7 +271,7 @@ Key configuration categories:
 | Database | `CSGHUB_PORTAL_DATABASE_DSN`, `CSGHUB_PORTAL_DATABASE_DIALECT` | Database connection settings |
 | S3 Storage | `CSGHUB_PORTAL_S3_ENDPOINT`, `CSGHUB_PORTAL_S3_ACCESS_KEY_ID` | Object storage configuration |
 
-Sources: [config/config.go:14-41]()
+
 
 ### Configuration Loading
 
@@ -285,7 +285,7 @@ flowchart LR
     config --> app["Application"]
 ```
 
-Sources: [config/config.go:43-50]()
+
 
 ## Troubleshooting
 
@@ -305,7 +305,7 @@ When reporting bugs, please use the bug report template and include:
 - Deployment method (docker compose, helm chart)
 - Steps to reproduce
 
-Sources: [.github/ISSUE_TEMPLATE/bug_report.md:12-36]()
+
 
 ## Feature Requests
 
@@ -314,4 +314,3 @@ Feature enhancement requests should:
 - Explain the benefits of the feature
 - Include links to relevant documentation or design documents
 
-Sources: [.github/ISSUE_TEMPLATE/feature_request.md:12-21]()

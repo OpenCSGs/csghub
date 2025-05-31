@@ -27,7 +27,7 @@ flowchart TD
     Components --- TransMethod["$t() Translation Method"]
 ```
 
-Sources: [frontend/src/locales/en_js/all.js](), [frontend/src/locales/zh_js/all.js](), [frontend/src/locales/en_js/endpoints.js](), [frontend/src/locales/zh_js/endpoints.js]()
+
 
 ## Translation File Structure
 
@@ -60,7 +60,7 @@ graph TD
     I18nConfig --> ZHEndpoints
 ```
 
-Sources: [frontend/src/locales/en_js/all.js](), [frontend/src/locales/zh_js/all.js](), [frontend/src/locales/en_js/endpoints.js](), [frontend/src/locales/zh_js/endpoints.js]()
+
 
 ### Translation Files Content
 
@@ -103,7 +103,7 @@ export const endpoints = {
 }
 ```
 
-Sources: [frontend/src/locales/en_js/all.js:1-118](), [frontend/src/locales/zh_js/all.js:1-118](), [frontend/src/locales/en_js/endpoints.js:1-90](), [frontend/src/locales/zh_js/endpoints.js:1-90]()
+
 
 ## Using Translations in Components
 
@@ -148,7 +148,7 @@ Here's how translations are used in actual components:
 ElMessage.warning(error.value.msg || t('all.fetchError'))
 ```
 
-Sources: [frontend/src/components/endpoints/EndpointPage.vue:6-7](), [frontend/src/components/datasets/ParquetViewer.vue:10-11](), [frontend/src/components/datasets/ParquetViewer.vue:44-45]()
+
 
 ## Translation Key Organization
 
@@ -175,7 +175,7 @@ graph TD
     end
 ```
 
-Sources: [frontend/src/locales/en_js/all.js:1-118](), [frontend/src/locales/en_js/endpoints.js:1-90](), [frontend/src/components/endpoints/EndpointPage.vue:1-142]()
+
 
 ## Adding New Translations
 
@@ -196,7 +196,7 @@ The system uses consistent naming patterns for translation keys:
 | `module.section.item` | UI section items | `endpoints.detail.endpointUrl` |
 | `module.section.action` | Section-specific actions | `endpoints.settings.changeVisibility` |
 
-Sources: [frontend/src/locales/en_js/all.js:1-118](), [frontend/src/locales/en_js/endpoints.js:1-90]()
+
 
 ## Implementation in Components
 
@@ -240,7 +240,7 @@ const { t } = useI18n()
 ElMessage.warning(error.value.msg || t('all.fetchError'))
 ```
 
-Sources: [frontend/src/components/shared/RepoSummary.vue:18-19](), [frontend/src/components/shared/RepoSummary.vue:121](), [frontend/src/components/datasets/ParquetViewer.vue:236]()
+
 
 ### Dynamic Content with i18n
 
@@ -250,7 +250,7 @@ Some components like `ParquetViewer.vue` use i18n with dynamic data, combining t
 <p>{{ $t('all.subset') }}（{{ numSubsets }}）</p>
 ```
 
-Sources: [frontend/src/components/datasets/ParquetViewer.vue:44]()
+
 
 ### Loading Indicators with i18n
 
@@ -262,7 +262,7 @@ Internationalized loading messages are used in components:
 </div>
 ```
 
-Sources: [frontend/src/components/endpoints/EndpointPage.vue:71-73]()
+
 
 ## Testing i18n Implementation
 
@@ -280,7 +280,7 @@ describe("EndpointSettings", () => {
 
 When testing components that use i18n, the testing framework must include the i18n plugin setup to properly render translated content.
 
-Sources: [frontend/src/components/__tests__/endpoints/EndpointSettings.spec.js:109-114]()
+
 
 ## Conclusion
 

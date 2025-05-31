@@ -38,7 +38,7 @@ graph TD
     RC --> US["UserStore"]
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:1-82](), [frontend/src/components/shared/RepoTabs.vue:1-17]()
+
 
 ## Repository Clone Button and Dialog
 
@@ -62,7 +62,7 @@ sequenceDiagram
     CD-->>U: Display cloning instructions
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:74-82](), [frontend/src/components/shared/RepoClone.vue:84-254]()
+
 
 ### Cloning Methods
 
@@ -84,7 +84,7 @@ pip install csghub-sdk
 csghub-cli download [repository-path] [-t repository-type]
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:102-142](), [frontend/src/components/shared/RepoClone.vue:383-411]()
+
 
 #### HTTPS Tab
 
@@ -101,7 +101,7 @@ git lfs install
 git clone https://[username]:[token]@[repository-url]
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:143-189](), [frontend/src/components/shared/RepoClone.vue:296-360]()
+
 
 #### SSH Tab
 
@@ -112,7 +112,7 @@ git lfs install
 git clone [ssh-clone-url]
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:190-223](), [frontend/src/components/shared/RepoClone.vue:303-306]()
+
 
 #### SDK Tab
 
@@ -128,7 +128,7 @@ cache_dir = '' # cache dir of download data
 result = snapshot_download(repo_id, cache_dir=cache_dir, endpoint=endpoint, token=token, repo_type=repo_type)
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:224-253](), [frontend/src/components/shared/RepoClone.vue:370-379]()
+
 
 ## Repository Actions
 
@@ -141,7 +141,7 @@ The Repository Clone and Actions system provides various action buttons dependin
 | Clone/Download | Downloads repository contents | All repositories with HTTP clone URL |
 | Add to Collections | Adds repository to user's collections | Models, datasets, codes, spaces |
 
-Sources: [frontend/src/components/shared/RepoClone.vue:5-9](), [frontend/src/components/shared/RepoClone.vue:74-81]()
+
 
 ### Model-Specific Actions
 
@@ -178,7 +178,7 @@ flowchart TD
     end
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:22-72](), [frontend/src/components/shared/RepoClone.vue:461-519]()
+
 
 ### Administrative Actions
 
@@ -188,7 +188,7 @@ For administrators and super users, additional actions are available:
 |--------|-------------|------------|
 | Sync | Synchronizes repository from remote source | User is admin/super_user, repository source is 'opencsg', sync status is pending/inprogress/failed |
 
-Sources: [frontend/src/components/shared/RepoClone.vue:11-20](), [frontend/src/components/shared/RepoClone.vue:326-337](), [frontend/src/components/shared/RepoClone.vue:485-503]()
+
 
 ## Technical Implementation
 
@@ -220,7 +220,7 @@ classDiagram
     RepoTabs --> TabContainer : includes
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:258-526](), [frontend/src/components/shared/RepoTabs.vue:251-384](), [frontend/src/components/shared/TabContainer.vue:74-119]()
+
 
 ### Authentication Flow
 
@@ -249,7 +249,7 @@ sequenceDiagram
     end
 ```
 
-Sources: [frontend/src/components/shared/RepoClone.vue:168-175](), [frontend/src/components/shared/RepoClone.vue:468-519](), [frontend/src/components/shared/RepoClone.vue:479-483]()
+
 
 ### Conditional Rendering
 
@@ -260,7 +260,7 @@ The Repository Clone and Actions system adapts its interface based on various fa
 - **Repository State** - Actions may be disabled based on repository status
 - **Feature Enablement** - Actions like deployment, fine-tuning, and evaluation can be enabled/disabled
 
-Sources: [frontend/src/components/shared/RepoClone.vue:22-72](), [frontend/src/components/shared/RepoClone.vue:326-337]()
+
 
 ## Integration with Other Systems
 
@@ -273,7 +273,7 @@ The Repository Clone and Actions system integrates with several other systems in
 5. **Evaluation** - Creates evaluation jobs
 6. **Repository Detail** - Obtains repository metadata
 
-Sources: [frontend/src/components/shared/RepoClone.vue:264-270](), [frontend/src/components/shared/RepoClone.vue:36-40](), [frontend/src/components/shared/RepoClone.vue:65-72]()
+
 
 ## Summary
 

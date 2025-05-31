@@ -40,7 +40,7 @@ graph TD
     Handlers --> S3
 ```
 
-Sources: [internal/routes/router.go:33-95]()
+
 
 ## 2. Router System
 
@@ -77,7 +77,7 @@ sequenceDiagram
     Router-->>App: Return Configured Gin Engine
 ```
 
-Sources: [internal/routes/router.go:33-95]()
+
 
 ### 2.2 Route Organization
 
@@ -108,7 +108,7 @@ graph TD
     end
 ```
 
-Sources: [internal/routes/router.go:205-230](), [internal/routes/models.go](), [internal/routes/datasets.go](), [internal/routes/codes.go](), [internal/routes/spaces.go]()
+
 
 ## 3. Middleware System
 
@@ -136,7 +136,7 @@ graph LR
     Handler --> Response
 ```
 
-Sources: [internal/routes/router.go:61-72]()
+
 
 ### 3.2 Route-Specific Middleware
 
@@ -154,7 +154,7 @@ flowchart LR
     CheckUser -- "User Not Authenticated" --> Unauthorized
 ```
 
-Sources: [internal/routes/models.go:22-23](), [internal/routes/datasets.go:16-17](), [internal/routes/codes.go:22-23](), [internal/routes/spaces.go:16-17]()
+
 
 ## 4. Handler Architecture
 
@@ -197,7 +197,7 @@ classDiagram
     HandlersRegistry *-- RenderHandlerRegistry
 ```
 
-Sources: [internal/routes/router.go:26-31](), [internal/handlers/render/registry.go:9-26]()
+
 
 ### 4.2 Base Handler Pattern
 
@@ -276,7 +276,7 @@ classDiagram
     BaseHandlerImpl <|-- SpaceHandlerImpl
 ```
 
-Sources: [internal/handlers/render/repo.go:39-163](), [internal/handlers/render/models.go](), [internal/handlers/render/datasets.go](), [internal/handlers/render/codes.go](), [internal/handlers/render/spaces.go]()
+
 
 ## 5. Authentication and Session Management
 
@@ -314,7 +314,7 @@ sequenceDiagram
     CSGHub-->>User: New Token Response
 ```
 
-Sources: [internal/handlers/frontend/token.go:34-59](), [pkg/server/types/jwt.go]()
+
 
 ### 5.2 Authentication Middleware
 
@@ -329,7 +329,7 @@ Table: Authentication Middleware Components
 | `JwtUtils` | Utility for working with JWT tokens |
 | `GetCurrentUser` | Extracts user information from JWT token |
 
-Sources: [internal/routes/router.go:69](), [internal/routes/models.go:23](), [internal/handlers/frontend/token.go:35]()
+
 
 ## 6. View Rendering
 
@@ -364,7 +364,7 @@ graph TD
     end
 ```
 
-Sources: [internal/routes/router.go:106-203]()
+
 
 ## 7. Static File Serving
 
@@ -384,7 +384,7 @@ graph LR
     end
 ```
 
-Sources: [internal/routes/router.go:232-250]()
+
 
 ## 8. API Integration
 
@@ -417,7 +417,7 @@ graph TD
     end
 ```
 
-Sources: [internal/routes/router.go:252-265]()
+
 
 ## 9. Error Handling
 
@@ -442,7 +442,7 @@ flowchart TD
     Handler -- "Handler Error" --> ErrorLogging
 ```
 
-Sources: [internal/routes/router.go:61-68]()
+
 
 ## Conclusion
 
