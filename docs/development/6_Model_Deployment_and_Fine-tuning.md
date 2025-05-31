@@ -395,7 +395,7 @@ graph TD
     
     FilterResources --> CPU & GPU & Premium
     DeployType & FinetuneType & EvalType --> FilterResources
-
+```
 
 
 Key aspects of resource management:
