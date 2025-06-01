@@ -56,7 +56,7 @@
           <template #dropdown>
             <el-dropdown-menu popper-class="z-[10000]">
               <el-dropdown-item command="zh">简体中文</el-dropdown-item>
-              <el-dropdown-item command="zh_hant">繁體中文</el-dropdown-item>
+              <el-dropdown-item command="zhHant">繁體中文</el-dropdown-item>
               <el-dropdown-item command="en">English</el-dropdown-item>
             </el-dropdown-menu>
           </template>
