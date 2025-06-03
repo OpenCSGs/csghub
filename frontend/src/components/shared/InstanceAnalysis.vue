@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hasRunningInstances" class="pt-7 flex flex-col gap-4">
+  <div v-if="hasRunningInstances" class="py-7 flex flex-col gap-4">
     <!-- refresh button -->
     <div class="flex gap-2">
       <el-select
@@ -77,7 +77,10 @@
     },
     modelId: String,
     deployId: String,
-    maxReplica: Number,
+    maxReplica: {
+      type: Number,
+      default: 1
+    },
   })
 
   const { t } = useI18n()
@@ -183,7 +186,6 @@
       }
     } catch (error) {
       console.log(`Failed to fetch http count: ${error}`)
-      return
     }
     myChart.setOption({
       title: {
@@ -261,7 +263,6 @@
       }
     } catch (error) {
       console.log(`Failed to fetch http count: ${error}`)
-      return
     }
 
     myChart.setOption({
@@ -301,7 +302,6 @@
       }
     } catch (error) {
       console.log(`Failed to fetch http count: ${error}`)
-      return
     }
     myChart.setOption({
       title: {
@@ -360,7 +360,6 @@
       }
     } catch (error) {
       console.log(`Failed to fetch http count: ${error}`)
-      return
     }
     myChart.setOption({
       title: {
