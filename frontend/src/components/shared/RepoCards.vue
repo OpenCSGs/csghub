@@ -148,13 +148,10 @@
   import useFetchApi from '../../packs/useFetchApi'
   import EmptyModels from '../models/EmptyModels.vue'
   import McpItem from '../mcp/McpItem.vue'
-  import useUserStore from '../../stores/UserStore.js'
 
   const props = defineProps({
     repoType: String
   })
-
-  const userStore = useUserStore()
 
   const getQueryParams = () => {
     const { searchParams } = new URL(window.location.href)
@@ -273,11 +270,10 @@
   })
 
   const memoryPerpage = () => {
-    let resetPerpage = userStore.csgPaginationPerpage[props.repoType]
-    if(undefined === resetPerpage) {
-      resetPerpage = 1
-    }
-    return resetPerpage
+    const currentUrl = new URL(window.location.href);
+    const pageParam = currentUrl.searchParams.get('currentPage');
+    const pageNumber = parseInt(pageParam, 10);
+    return isNaN(pageNumber) || pageNumber < 1 ? 1 : pageNumber;
   }
 
   const resetTags = (tags) => {
@@ -292,9 +288,13 @@
 
   const reloadRepos = (childCurrent) => {
     if (childCurrent) {
-      userStore.updateCsgPaginationPerpage(props.repoType, childCurrent)
       currentPage.value = childCurrent
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('currentPage', childCurrent);
+      window.history.pushState({}, '', currentUrl.href);
+      console.log(currentUrl, "set currentUrl")
     }
+
     let url = `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
