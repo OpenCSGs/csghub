@@ -19,6 +19,7 @@ const useUserStore = defineStore('User', () => {
   const lastLoginTime = ref('')
   const initialized = ref(false)
   const timestamp = ref(Date.now())
+  const csgPaginationPerpage = ref({})
 
   const canChangeUsernameCookie = ref(cookies.get('can_change_username') === 'true');
 
@@ -61,6 +62,10 @@ const useUserStore = defineStore('User', () => {
     initialized.value = initializedData
   }
 
+  const updateCsgPaginationPerpage = (pageType, perpage) => {
+      csgPaginationPerpage.value[pageType] = perpage
+  }
+
   return {
     username,
     nickname,
@@ -84,7 +89,9 @@ const useUserStore = defineStore('User', () => {
     refreshCanChangeUsernameCookie,
     clearStore,
     updateInitalized,
-    timestamp
+    timestamp,
+    csgPaginationPerpage,
+    updateCsgPaginationPerpage
   }
 }, {
   persist: {

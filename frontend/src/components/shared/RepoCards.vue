@@ -148,10 +148,13 @@
   import useFetchApi from '../../packs/useFetchApi'
   import EmptyModels from '../models/EmptyModels.vue'
   import McpItem from '../mcp/McpItem.vue'
+  import useUserStore from '../../stores/UserStore.js'
 
   const props = defineProps({
     repoType: String
   })
+
+  const userStore = useUserStore()
 
   const getQueryParams = () => {
     const { searchParams } = new URL(window.location.href)
@@ -172,6 +175,7 @@
   const filterSelection = ref('all')
   const sourceSelection = ref('all')
   const currentPage = ref(1)
+
   const totalRepos = ref(0)
   const searchSdk = ref('')
 
@@ -268,9 +272,18 @@
     }
   })
 
+  const memoryPerpage = () => {
+    let resetPerpage = userStore.csgPaginationPerpage[props.repoType]
+    if(undefined === resetPerpage) {
+      resetPerpage = 1
+    }
+    return resetPerpage
+  }
+
   const resetTags = (tags) => {
     activeTags.value = tags
-    reloadRepos(1)
+    let resetPerpage = memoryPerpage()
+    reloadRepos(resetPerpage)
   }
 
   const filterChange = () => {
@@ -279,6 +292,7 @@
 
   const reloadRepos = (childCurrent) => {
     if (childCurrent) {
+      userStore.updateCsgPaginationPerpage(props.repoType, childCurrent)
       currentPage.value = childCurrent
     }
     let url = `/${props.repoType}s`
@@ -339,7 +353,8 @@
 
   onMounted(() => {
     if (props.repoType === 'space') {
-      reloadRepos()
+      let resetPerpage = memoryPerpage()
+      reloadRepos(resetPerpage)
     }
   })
 </script>
