@@ -84,7 +84,7 @@ const useUserStore = defineStore('User', () => {
     refreshCanChangeUsernameCookie,
     clearStore,
     updateInitalized,
-    timestamp,
+    timestamp
   }
 }, {
   persist: {

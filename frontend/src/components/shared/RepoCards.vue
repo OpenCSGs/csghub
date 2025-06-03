@@ -172,7 +172,6 @@
   const filterSelection = ref('all')
   const sourceSelection = ref('all')
   const currentPage = ref(1)
-
   const totalRepos = ref(0)
   const searchSdk = ref('')
 
