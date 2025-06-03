@@ -292,9 +292,7 @@
       const currentUrl = new URL(window.location.href);
       currentUrl.searchParams.set('currentPage', childCurrent);
       window.history.pushState({}, '', currentUrl.href);
-      console.log(currentUrl, "set currentUrl")
     }
-
     let url = `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
