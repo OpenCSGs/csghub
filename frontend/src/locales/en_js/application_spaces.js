@@ -87,7 +87,8 @@ export const application_spaces = {
     chooseTemplate: "Choose a template",
     pleaseChooseTemplate: "Please Choose a template",
     spaceSecrets: "Space Secrets",
-    spaceVariables: "Space Variables"
+    spaceVariables: "Space Variables",
+    driverVersion: "Driver Version"
   },
   edit: {
     spaceVariables: "Space Variables",
