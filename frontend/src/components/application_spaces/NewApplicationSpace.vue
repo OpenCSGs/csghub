@@ -342,6 +342,7 @@
             "
             size="large"
             style="width: 100%"
+            @change="resourceChange"
           >
             <el-option
               v-for="item in spaceResources"
@@ -357,6 +358,25 @@
           <p class="text-gray-600 font-light">
             {{ $t('application_spaces.new.cloudResourceDesc2') }}
           </p>
+        </el-form-item>
+        <el-form-item
+          v-if="shouldShowDriverVersion"
+          :label="$t('application_spaces.new.driverVersion')"
+          class="w-full"
+          prop="driver_version">
+          <el-select
+            v-model="dataForm.driver_version"
+            :placeholder="
+              t('all.pleaseSelect', { value: 'Driver Version' })
+            "
+            size="large"
+            style="width: 100%">
+            <el-option
+              v-for="item in driverVersionOpion"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value" />
+          </el-select>
         </el-form-item>
         <el-divider class="my-[18px]" />
         <el-form-item class="w-full">
@@ -407,7 +427,22 @@
   const dockerTemplates = ref([])
   const dockerVariables = ref({})
   const dockerSecrets = ref({})
+  const resourceType = ref('')
 
+  const shouldShowDriverVersion = computed(() => {
+    const sdk = dataForm.value.sdk;
+    return resourceType.value === 'gpu' && (sdk === 'gradio' || sdk === 'streamlit');
+  });
+  const driverVersionOpion = ref([
+    {
+      label: '11.8.0',
+      value: '11.8.0'
+    },
+    {
+      label: '12.1.0',
+      value: '12.1.0'
+    }
+  ])
   const currentDockerTemplates = computed(() => {
     const currentTemplate = dockerTemplates.value.find((template) => template.name === dataForm.value.dockerTemplate)
     if (currentTemplate && currentTemplate.variables) {
@@ -430,7 +465,8 @@
     license: props.licenses[0][0],
     visibility: 'public',
     sdk: 'gradio',
-    dockerTemplate: ''
+    dockerTemplate: '',
+    driver_version: '11.8.0'
   })
   const loading = ref(false)
 
@@ -523,7 +559,7 @@
   }
 
   const fetchSpaceResources = async () => {
-    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${dataForm.value.space_cluster}`).json()
+    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${dataForm.value.space_cluster}&deploy_type=0`).json()
 
     if (error.value) {
       ElMessage({
@@ -610,6 +646,18 @@
     }
   }
 
+  const resourceChange = (e) => {
+    handleResourceType(e)
+  }
+
+  const handleResourceType = (resourceId) => {
+    const flatResources = spaceResources.value.flatMap((group) => group.options)
+    const resource = flatResources.find((item) => item.id === resourceId)
+    if (resource) {
+      resourceType.value = resource.type
+    }
+  }
+
   const createApplicationSpace = async () => {
     const params = {
       name: dataForm.value.name,
@@ -629,6 +677,9 @@
       params.template = dataForm.value.dockerTemplate
       params.variables = JSON.stringify(dockerVariables.value) === "{}" ? "" : JSON.stringify(dockerVariables.value)
       params.secrets = JSON.stringify(dockerSecrets.value) === "{}" ? "" : JSON.stringify(dockerSecrets.value)
+    }
+    if (shouldShowDriverVersion.value) {
+      params.driver_version = dataForm.value.driver_version
     }
 
     const options = {
