@@ -1,88 +1,66 @@
 <template>
   <a
     :href="`/spaces/${repo.path}`"
-    class="xl:w-full focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-lg p-4 md:!w-full"
+    class="xl:w-full focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-lg overflow-hidden"
     :style="`width: ${itemWidth};`"
   >
-    <div class="flex justify-between items-center mb-1">
-      <div class="w-full flex items-center justify-between">
-        <h3 class="flex-1 text-gray-700 text-md font-normal leading-6 truncate mr-[8px]">
-          {{ getComputed.path }}
-        </h3>
-        <div class="flex gap-2">
-          <span
-            v-if="getComputed.visibility"
-            class="px-[8px] py-[3px] flex items-center justify-center border rounded-md text-gray-700 text-xs"
-            >{{ getComputed.visibility }}</span
-          >
+    <!-- Cover with Overlay -->
+    <div class="relative bg-gray-900 h-[150px]">
+      
+      <!-- Dark gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-gray-900/30"></div>
+      
+      <!-- Decorative overlay -->
+      <svg class="absolute left-0 top-0 w-full h-full" viewBox="0 0 412 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <path d="M411 80.5337L411 142C411 146.418 407.418 150 403 150L8.99998 150C4.5817 150 0.999987 146.418 0.999988 142L0.999998 80.5337C83.1626 15.6052 246.431 196.126 411 80.5337Z"
+            :class="['stroke-none blur-3xl', stableGradientColor]"
+          />
+        </g>
+      </svg>
+      
+      <!-- Content overlay on image -->
+      <div class="absolute inset-0 flex flex-col justify-between p-4">
+        <!-- Top section with badges -->
+        <div class="flex justify-between items-start">
           <AppStatus
             v-if="!isCollection"
             :appStatus="repo.status || 'NoAppFile'"
             :spaceResource="repo.hardware"
           />
+          <div class="flex gap-2">
+            <span
+              v-if="!isCollection && getComputed.visibility"
+              class="px-2 py-1 bg-white/60 border border-gray-200/60 rounded-md text-gray-700 text-xs backdrop-blur-sm"
+            >
+              {{ getComputed.visibility }}
+            </span>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="text-sm leading-snug text-gray-500 flex justify-between">
-      <p>
-        <span class="mr-2">{{ repo.path.split('/')[0] }}</span>
-        <span class="mr-2">·</span>
-        <span>{{ repo.updated_at.substring(0, 10) }}</span>
-      </p>
-    </div>
-    <div
-      class="my-2"
-      :class="isCollection ? 'hidden' : ''"
-    >
-      <img
-        :src="coverImageUrl"
-        class="w-full h-[144px] object-cover rounded-sm cursor-pointer hover:opacity-50"
-      />
-    </div>
-    <div v-if="!isCollection">
-      <div
-        class="h-11 text-gray-500 text-sm overflow-hidden"
-        v-if="!repo.description"
-      ></div>
-      <el-popover
-        :width="384"
-        trigger="hover"
-        placement="bottom"
-        effect="dark"
-        :content="repo.description"
-        v-else
-      >
-        <template #reference>
-          <p
-            class="max-w-full h-[36px] text-gray-500 text-sm overflow-hidden text-ellipsis line-clamp-2"
-          >
+        
+        <!-- Bottom section with title and description -->
+        <div class="text-white flex flex-col">
+          <h3 class="text-lg font-medium truncate line-clamp-1">
+            {{ getComputed.path }}
+          </h3>
+          <p v-if="repo.description" class="text-sm text-white truncate line-clamp-1">
             {{ repo.description }}
           </p>
-        </template>
-      </el-popover>
-    </div>
-
-    <div
-      v-if="getComputed.taskTag"
-      class="flex gap-2 my-2 overflow-x-auto no-scrollbar"
-    >
-      <span class="w-fit xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-        {{ getComputed.taskTag }}
-      </span>
-      <span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1"
-          height="8"
-          viewBox="0 0 1 8"
-          fill="none"
-        >
-          <path
-            d="M0.5 0V8"
-            stroke="#DCDFE6"
-          />
-        </svg>
-      </span>
+        </div>
+        <!-- Author and date section -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <!-- User avatar -->
+            <el-avatar
+              :size="24"
+              :src="avatarUrl"
+              class="flex-shrink-0"
+            ></el-avatar>
+            <span class="text-sm text-white truncate">{{ repo.path.split('/')[0] }}</span>
+          </div>
+          <span class="text-sm text-white">{{ repo.updated_at.substring(0, 10) }}</span>
+        </div>
+      </div>
     </div>
   </a>
 </template>
@@ -105,22 +83,54 @@
     return ''
   })
 
-  const coverImageUrl = computed(() => {
-    if (props.repo.cover_image_url) {
-      return props.repo.cover_image_url
-    } else {
-      return '/images/default_cover_image.png'
+  const avatarUrl = computed(() => {
+    // 首先尝试使用repo中的各种头像字段
+    if (props.repo.namespace?.Avatar) {
+      return props.repo.namespace.Avatar
     }
+    if (props.repo.user?.avatar) {
+      return props.repo.user.avatar
+    }
+    if (props.repo.avatar) {
+      return props.repo.avatar
+    }
+    
+    // 如果都没有头像数据，直接使用默认头像
+    // 这与其他组件的模式保持一致
+    return 'https://cdn.casbin.org/img/casbin.svg'
   })
 
   const { t, locale } = useI18n()
 
+  const gradientColors = [
+    'fill-amber-500',    
+    'fill-rose-500',     
+    'fill-purple-500',   
+    'fill-blue-500',     
+    'fill-emerald-500',  
+    'fill-cyan-500',     
+    'fill-indigo-500',   
+    'fill-fuchsia-500', 
+    'fill-gray-500',
+    'fill-yellow-500',
+    'fill-green-500',
+    'fill-red-500',
+    'fill-orange-500',
+    'fill-teal-500',
+    'fill-violet-500',
+    'fill-sky-500',
+  ]
+
+  const stableGradientColor = computed(() => {
+    const seed = props.repo.id || props.repo.path.length
+    return gradientColors[seed % gradientColors.length]
+  })
+
   const getComputed = computed(() => {
     const displayName =
-      props.repo.nickname !== undefined && props.repo.nickname.trim().length > 0
+      props.repo.nickname && props.repo.nickname.trim().length > 0
         ? props.repo.nickname
         : props.repo.name
-    const path = props.repo.path.split('/')[0] + '/' + displayName
 
     const visibility = props.repo.private ? t('all.private') : ''
 
@@ -130,7 +140,7 @@
     } else {
       taskTag = taskTag ? taskTag['show_name'] : null
     }
-    return { path, visibility, taskTag }
+    return { path: displayName, visibility, taskTag }
   })
 </script>
 
