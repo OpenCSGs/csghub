@@ -1,6 +1,18 @@
 import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import FinetuneDetail from "@/components/finetune/FinetuneDetail.vue";
+
+// Mock vue-router
+vi.mock('vue-router', () => ({
+  useRoute: () => ({
+    path: '/test-path',
+    query: { tab: 'page' }
+  }),
+  useRouter: () => ({
+    replace: vi.fn()
+  })
+}));
+
 // Mock useFetchApi
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => ({

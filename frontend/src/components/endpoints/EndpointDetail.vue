@@ -35,7 +35,7 @@
       :deployId="repoDetailStore.deployId"
       :userName="namespace"
       :replicaList="replicaList"
-      :path="`${namespace}/${modelName}`"
+      :path="`${namespace}/${modelName}/${endpointId}`"
     />
   </div>
 </template>
@@ -52,6 +52,7 @@
   import useUserStore from '../../stores/UserStore.js'
   import { ElMessage } from 'element-plus'
   import { storeToRefs } from 'pinia';
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     currentPath: String,
@@ -67,6 +68,7 @@
   const userStore = useUserStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
   const { cookies } = useCookies()
+  const { setRepoTab } = useRepoTabStore()
 
   // only owner can view endpoint detail, so just set true
   const canManage = ref(true)
@@ -197,10 +199,15 @@
     }
     fetchModelDetail()
 
-    console.log(`Endpoint 初始状态：${repoDetailStore.status}`)
     if (isStatusSSEConnected.value === false) {
       syncEndpointStatus()
     }
+
+    setRepoTab({
+      repoType: props.repoType,
+      namespace: props.namespace,
+      repoName: props.modelName,
+    })
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)
