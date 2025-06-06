@@ -11,6 +11,7 @@ import (
 type SettingsHandler interface {
 	SetZhLocale(ctx *gin.Context)
 	SetEnLocale(ctx *gin.Context)
+	SetZhHantLocale(ctx *gin.Context)
 }
 
 type SettingsHandlerImpl struct {
@@ -30,6 +31,11 @@ func (i *SettingsHandlerImpl) SetZhLocale(ctx *gin.Context) {
 
 func (i *SettingsHandlerImpl) SetEnLocale(ctx *gin.Context) {
 	setLocaleCookie(ctx, "en")
+	ctx.Redirect(http.StatusFound, ctx.Request.Referer())
+}
+
+func (i *SettingsHandlerImpl) SetZhHantLocale(ctx *gin.Context) {
+	setLocaleCookie(ctx, "zhHant")
 	ctx.Redirect(http.StatusFound, ctx.Request.Referer())
 }
 
