@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="`/endpoints/${endpoint.model_id}/${endpoint.deploy_id}`"
+    :href="detailLink"
     class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-xl pt-4 w-full"
   >
     <div class="flex justify-between items-center mb-2 px-4">
@@ -54,6 +54,9 @@
   import AppStatus from "../application_spaces/AppStatus.vue";
   import AppPayMode from "../application_spaces/AppPayMode.vue";
   import { copyToClipboard } from "../../packs/clipboard";
+  import { useRepoTabStore } from '@/stores/RepoTabStore'
+
+  const { setRepoTab } = useRepoTabStore()
 
   const props = defineProps({
     endpoint: Object,
@@ -71,5 +74,13 @@
     }else{
       return 'Not running'
     }
+  })
+
+  const detailLink = computed(() => {
+    setRepoTab({
+      repoType: 'endpoint',
+      tab: 'summary'
+    })
+    return `/endpoints/${props.endpoint.model_id}/${props.endpoint.deploy_id}?tab=summary`
   })
 </script>

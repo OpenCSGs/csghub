@@ -62,12 +62,15 @@ import { ref } from 'vue'
 import {ElMessage} from "element-plus"
 import { useI18n } from 'vue-i18n'
 import useFetchApi from '../../packs/useFetchApi'
+import { useRepoTabStore } from '../../stores/RepoTabStore'
 
 const props = defineProps({
   repoName: String,
   namespacePath: String,
   currentBranch: String
 })
+
+const { setRepoTab } = useRepoTabStore()
 
 const { t } = useI18n();
 const uploadRef = ref();
@@ -111,7 +114,11 @@ const handleRemove = (file, fileList) => {
 }
 
 const cancel = () => {
-  window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+  // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+  setRepoTab({
+    actionName: 'files',
+    lastPath: ''
+  })
 }
 
 const buildCommitMessage = () => {
@@ -147,7 +154,11 @@ const syncUploadFile = async () => {
       ElMessage({ message: error.value.msg, type: 'error' })
     } else {
       filesList.value = []
-      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+      // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+      setRepoTab({
+        actionName: 'files',
+        lastPath: ''
+      })
     }
   } catch (error) {
     console.error(error)

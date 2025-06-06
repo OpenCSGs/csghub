@@ -61,6 +61,7 @@
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     originalCodeContent: String,
@@ -68,6 +69,8 @@
     namespacePath: String,
     currentBranch: String
   })
+
+  const { repoTab, setRepoTab } = useRepoTabStore()
 
   const codeContent = ref(props.originalCodeContent)
   const commitTitle = ref('')
@@ -138,11 +141,19 @@
   }
 
   const redirectToFilePreview = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    setRepoTab({
+      actionName: 'blob',
+      lastPath: fileName.value
+    })
   }
 
   const cancel = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+    // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+    setRepoTab({
+      actionName: 'files',
+      lastPath: ''
+    })
   }
 </script>
 

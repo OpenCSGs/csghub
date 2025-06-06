@@ -31,6 +31,7 @@
       </div>
     </div>
     <div v-html="diffContent"></div>
+    <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
   </div>
 </template>
 
@@ -50,7 +51,7 @@
   const { t } = useI18n();
   const commit = ref({});
   const diffContent = ref("");
-
+  const loading = ref(true)
   const props = defineProps({
     namespacePath: String,
     repoType: String,
@@ -63,7 +64,9 @@
 
   const fetchCommit = async () => {
     const url = `/${props.repoType}s/${props.namespacePath}/commit/${props.commitId}`;
+    loading.value = true
     const { data, error } = await useFetchApi(url).json()
+    loading.value = false
     if (error.value) {
       ElMessage({ message: error.value, type: "warning" });
     } else {

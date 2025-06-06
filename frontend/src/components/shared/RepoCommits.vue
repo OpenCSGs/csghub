@@ -3,11 +3,10 @@
     <div class="flex items-center justify-between">
       <div class="flex items-center flex-wrap gap-4">
         <BranchDropdown @changeBranch="changeBranch"
-                        :current-branch="currentBranch"
-                        :branches="branches" />
+                        :current-branch="currentBranch" />
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>
-            <a :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`">
+            <a @click.prevent="goToFiles">
               {{ namespacePath.split('/')[1] }}
             </a>
           </el-breadcrumb-item>
@@ -24,7 +23,7 @@
            :key="commit.id"
            class="py-4 border-b border-gray-200 last-of-type:border-none text-gray-700">
         <div class="mb-2 flex items-center">
-          <a :href="`/${prefixPath}/${namespacePath}/commit/${commit.id}`" class="truncate" :title="commit.message">
+          <a @click.prevent="goToCommitDetail(commit.id)" class="truncate" :title="commit.message">
             {{ commit.message }}
           </a>
           <el-button-group class="ml-2 min-w-[107px]">
@@ -48,9 +47,11 @@
       </div>
     </div>
     <CsgPagination :perPage="perPage"
-                   :currentPage="currentPage"
-                   @currentChange="loadMoreCommits"
-                   :total="totalCommits" />
+      :currentPage="currentPage"
+      @currentChange="loadMoreCommits"
+      :total="totalCommits" />
+    
+    <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
   </div>
 </template>
 
@@ -65,20 +66,23 @@
   import BranchDropdown from './BranchDropdown.vue'
   import { ElMessage } from 'element-plus'
   import { beiJingTimeParser } from '../../packs/utils'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const { t } = useI18n()
   const commits = ref([])
   const currentPage = ref(1)
   const perPage = ref(10)
   const totalCommits = ref(0)
+  const { repoTab, setRepoTab } = useRepoTabStore()
+  const loading = ref(true)
 
   const props = defineProps({
-    branches: Object,
     currentBranch: String,
     namespacePath: String,
     repoType: String
   })
 
+  const currentBranch = ref(props.currentBranch)
   let prefixPath = document.location.pathname.split('/')[1]
 
   if (prefixPath === 'mcp') {
@@ -89,7 +93,29 @@
     copyToClipboard(commitId)
   }
 
+  const goToFiles = () => {
+    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`"
+    setRepoTab({
+      actionName: 'files',
+      lastPath: ''
+    })
+  }
+
+  const goToCommitDetail = (commitId) => {
+    // :href="`/${prefixPath}/${namespacePath}/commit/${commit.id}`"
+    setRepoTab({
+      actionName: 'commit',
+      lastPath: commitId
+    })
+  }
+
+
   const changeBranch = (branch) => {
+    currentBranch.value = branch
+    setRepoTab({
+      currentBranch: branch
+    })
+    
     const params = new URLSearchParams()
     params.append('ref', branch)
     params.append('page', 1)
@@ -99,7 +125,9 @@
   const fetchCommits = async (params = new URLSearchParams()) => {
     params.append('per', perPage.value)
     const url = `/${props.repoType}s/${props.namespacePath}/commits?${params.toString()}`
+    loading.value = true
     const { data, error } = await useFetchApi(url).json()
+    loading.value = false
     if (error.value) {
       ElMessage({message: error.value, type: "warning"})
     } else {
@@ -112,7 +140,7 @@
   const loadMoreCommits = (page) => {
     currentPage.value = page
     const params = new URLSearchParams()
-    params.append('ref', props.currentBranch)
+    params.append('ref', currentBranch.value)
     params.append('page', currentPage.value)
     fetchCommits(params)
   }

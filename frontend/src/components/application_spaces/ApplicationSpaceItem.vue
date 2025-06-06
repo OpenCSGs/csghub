@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="`/spaces/${repo.path}`"
+    :href="detailLink"
     class="xl:w-full focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-lg p-4 md:!w-full"
     :style="`width: ${itemWidth};`"
   >
@@ -91,6 +91,9 @@
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
   import AppStatus from './AppStatus.vue'
+  import { useRepoTabStore } from '@/stores/RepoTabStore'
+
+  const { setRepoTab } = useRepoTabStore()
 
   const props = defineProps({
     repo: Object,
@@ -131,6 +134,14 @@
       taskTag = taskTag ? taskTag['show_name'] : null
     }
     return { path, visibility, taskTag }
+  })
+
+  const detailLink = computed(() => {
+    setRepoTab({
+      repoType: 'space',
+      tab: 'summary',
+    })
+    return `/spaces/${props.repo.path}?tab=summary`
   })
 </script>
 

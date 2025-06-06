@@ -1,7 +1,5 @@
 <template>
   <file-list
-    :branches="branches"
-    :current-branch="currentBranch"
     :current-path="currentPath"
     :namespace-path="namespacePath"
     :can-write="canWrite"
@@ -11,10 +9,11 @@
 
 <script setup>
   import FileList from '../shared/FileList.vue'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
+  
+  const { setRepoTab, repoTab } = useRepoTabStore()
 
   const props = defineProps({
-    branches: Object,
-    currentBranch: String,
     currentPath: String,
     namespacePath: String,
     canWrite: Boolean,
@@ -22,8 +21,11 @@
   })
 
   const changeBranch = (branch) => {
-    if (branch !== props.currentBranch) {
-      window.location.href = `/${props.repoType}s/${props.namespacePath}/files/${branch}`
+    if (branch !== repoTab.currentBranch) {
+      // window.location.href = `/${props.repoType}s/${props.namespacePath}/files/${branch}`
+      setRepoTab({
+        currentBranch: branch
+      })
     }
   }
 </script>

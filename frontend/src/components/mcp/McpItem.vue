@@ -122,7 +122,9 @@
 <script setup>
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import { useRepoTabStore } from '@/stores/RepoTabStore'
 
+  const { setRepoTab } = useRepoTabStore()
   const { locale } = useI18n()
 
   const props = defineProps({
@@ -137,7 +139,11 @@
   })
 
   const mcpUrl = computed(() => {
-    return `/mcp/servers/${props.mcp.path}`
+    setRepoTab({
+      repoType: 'mcp',
+      tab: 'summary'
+    })
+    return `/mcp/servers/${props.mcp.path}?tab=summary`
   })
 
   const programLanguage = computed(() => {

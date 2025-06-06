@@ -62,7 +62,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { atob_utf8 } from '../../packs/utils'
-
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
   const props = defineProps({
     repoName: String,
     namespacePath: String,
@@ -71,6 +71,8 @@
   })
 
   const originalCodeContent = ref('')
+  const { repoTab, setRepoTab } = useRepoTabStore()
+
   const codeContent = ref('')
   const sha = ref('')
 
@@ -146,11 +148,19 @@
   }
 
   const redirectToFilePreview = () => {
-    window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    setRepoTab({
+      actionName: 'blob',
+      lastPath: fileName.value
+    })
   }
 
   const cancel = () => {
-    redirectToFilePreview()
+    // redirectToFilePreview()
+    setRepoTab({
+      actionName: 'blob',
+      lastPath: fileName.value
+    })
   }
 
   const fetchFileContent = async () => {

@@ -34,6 +34,9 @@
   import { computed } from 'vue'
   import AppStatus from '../application_spaces/AppStatus.vue'
   import AppPayMode from '../application_spaces/AppPayMode.vue'
+  import { useRepoTabStore } from '@/stores/RepoTabStore'
+
+  const { setRepoTab } = useRepoTabStore()
 
   const props = defineProps({
     repo: Object,
@@ -45,6 +48,10 @@
   })
 
   const detailLink = computed(() => {
-    return `/finetune/${props.repo.model_id}/${props.repo.deploy_name}/${props.repo.deploy_id}`
+    setRepoTab({
+      repoType: 'finetune',
+      tab: 'page'
+    })
+    return `/finetune/${props.repo.model_id}/${props.repo.deploy_name}/${props.repo.deploy_id}?tab=page`
   })
 </script>

@@ -1,6 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import EndpointDetail from "@/components/endpoints/EndpointDetail.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+
+global.ENABLE_HTTPS = 'false';
 
 vi.mock('vue3-cookies', () => ({
   useCookies: () => ({
@@ -56,6 +59,24 @@ vi.mock('@/packs/useFetchApi', () => {
               error: { value: null }
             });
           }
+          if (url.includes('/space_resources')) {
+            return Promise.resolve({
+              data: {
+                value: {
+                  data: []
+                }
+              },
+              error: { value: null }
+            });
+          }
+          return Promise.resolve({
+            data: {
+              value: {
+                data: {}
+              }
+            },
+            error: { value: null }
+          });
         })
       };
     })
@@ -82,7 +103,48 @@ vi.mock('element-plus', () => ({
   ElMessage: vi.fn()
 }));
 
+vi.mock('vue-router', () => ({
+  useRoute: () => ({
+    query: {},
+    params: {}
+  }),
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn()
+  }),
+  createRouter: vi.fn(),
+  createWebHistory: vi.fn()
+}));
+
+vi.mock('@/stores/RepoTabStore', () => ({
+  useRepoTabStore: () => ({
+    setRepoTab: vi.fn(),
+    currentTab: 'overview',
+    actionName: 'view',
+    tab: 'overview',
+    currentBranch: 'main',
+    lastPath: '',
+    repoType: 'endpoint',
+    namespace: 'test-namespace',
+    repoName: 'test-model',
+    repoTab: {
+      actionName: 'view',
+      tab: 'overview',
+      currentBranch: 'main',
+      lastPath: '',
+      repoType: 'endpoint',
+      namespace: 'test-namespace',
+      repoName: 'test-model'
+    }
+  })
+}));
+
 const createWrapper = (props = {}) => {
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: []
+  });
+
   return mount(EndpointDetail, {
     props: {
       currentPath: '/test-path',
@@ -93,6 +155,12 @@ const createWrapper = (props = {}) => {
       modelName: 'test-model',
       endpointId: 123,
       ...props
+    },
+    global: {
+      provide: {
+        csghubServer: 'http://test-server'
+      },
+      plugins: [router]
     }
   });
 };
@@ -102,11 +170,13 @@ describe("EndpointDetail", () => {
     const wrapper = createWrapper();
     await wrapper.vm.$nextTick();
     expect(wrapper.exists()).toBe(true);
+    expect(wrapper.find('.w-full').exists()).toBe(true);
   });
 
   it("fetches model detail on mount", async () => {
     const wrapper = createWrapper();
     await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick(); // 等待所有异步操作完成
     expect(wrapper.vm.modelInfo).toEqual({
       namespace: 'test-namespace',
       name: 'test-model'
