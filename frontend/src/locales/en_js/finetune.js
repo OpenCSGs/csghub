@@ -25,6 +25,7 @@ export const finetune = {
     notebook: 'Start Notebook',
     tab1: 'Overview',
     tab2: 'Settings',
+    tab3: 'Analysis',
     noDataTip1:'The fine-tuning instance is not running',
     noDataTip2:'Please wait for the deployment to succeed or go to the settings page to enable running state before trying to access the fine-tuning interface.',
     settings: {

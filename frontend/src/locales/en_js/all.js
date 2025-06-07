@@ -8,6 +8,7 @@ export const all = {
   schema: "Schema",
   community: "Community",
   logs: "Logs",
+  analysis: "Analysis",
   settings: "Settings",
   task: "Tasks",
   framework: "Framework",
