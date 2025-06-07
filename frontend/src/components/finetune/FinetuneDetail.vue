@@ -29,7 +29,7 @@
     >
     <el-tabs
       v-model="activeName"
-      class="demo-tabs"
+      class="demo-tabs finetune-repo-tabs"
       :beforeLeave="handleTabLeave"
       @tabClick="tabChange"
     >
@@ -321,5 +321,9 @@
     border-radius: var(--border-radius-sm);
     background: #e5e7eb;
     padding: 6px;
+  }
+
+  :deep(.finetune-repo-tabs .el-tabs__content) {
+    min-height: 600px;
   }
 </style>

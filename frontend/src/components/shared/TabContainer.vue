@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative repo-tabs-child">
     <el-tabs
       v-model="activeName"
       :beforeLeave="handleTabLeave"
@@ -172,5 +172,9 @@
 
   .el-tabs__content {
     border: none;
+  }
+
+  .repo-tabs-child .el-tabs__content {
+    min-height: 600px;
   }
 </style>
