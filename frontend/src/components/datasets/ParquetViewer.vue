@@ -120,7 +120,8 @@
   import { Search } from '@element-plus/icons-vue'
   import useFetchApi from '../../packs/useFetchApi'
   import CsgPagination from '../shared/CsgPagination.vue'
-
+  import { useI18n } from 'vue-i18n'
+  
   const props = defineProps({
     datasetInfo: {
       type: Array,
@@ -130,6 +131,7 @@
     namespacePath: String
   })
 
+  const { t } = useI18n()
   const previewLoading = ref(false)
 
   const previewData = ref({ columns: [], rows: [], total: 0 })
