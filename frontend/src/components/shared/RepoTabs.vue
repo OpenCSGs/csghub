@@ -169,7 +169,7 @@
         <InstanceAnalysis
           :repoType="repoType"
           :instances="repoDetail.instances"
-          :modelId="repoDetail.modelId"
+          :modelId="repoDetail.modelId || repoDetail.path"
           :deployId="repoDetail.deployId"
           :maxReplica="repoDetail.maxReplica"
         />
@@ -430,7 +430,11 @@
         }
         break
       case 'analysis':
-        location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/analysis`
+        if (props.repoType === 'endpoint') {
+          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/analysis`
+        } else if (props.repoType ==='space') {
+          location.href = `/${props.repoType}s/${props.path}/analysis`
+        }
         break
       case 'logs':
         location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/logs`

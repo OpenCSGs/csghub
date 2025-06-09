@@ -14,6 +14,17 @@
         <slot name="summary"></slot>
       </el-tab-pane>
 
+      <!-- endpoint/space analysis -->
+      <el-tab-pane
+        v-if="repoType === 'endpoint' || repoType === 'space'"
+        :label="$t('all.analysis')"
+        name="analysis"
+        class="min-h-[300px]"
+        lazy
+      >
+        <slot name="analysis"></slot>
+      </el-tab-pane>
+
       <!-- repo files -->
       <el-tab-pane
         v-if="showFiles"
@@ -44,17 +55,6 @@
         lazy
       >
         <slot name="community"></slot>
-      </el-tab-pane>
-
-      <!-- endpoint analysis -->
-      <el-tab-pane
-        v-if="repoType === 'endpoint'"
-        :label="$t('all.analysis')"
-        name="analysis"
-        class="min-h-[300px]"
-        lazy
-      >
-        <slot name="analysis"></slot>
       </el-tab-pane>
 
       <!-- endpoint logs -->
