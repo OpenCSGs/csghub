@@ -46,6 +46,17 @@
         <slot name="community"></slot>
       </el-tab-pane>
 
+      <!-- endpoint analysis -->
+      <el-tab-pane
+        v-if="repoType === 'endpoint'"
+        :label="$t('all.analysis')"
+        name="analysis"
+        class="min-h-[300px]"
+        lazy
+      >
+        <slot name="analysis"></slot>
+      </el-tab-pane>
+
       <!-- endpoint logs -->
       <el-tab-pane
         v-if="repoType === 'endpoint'"

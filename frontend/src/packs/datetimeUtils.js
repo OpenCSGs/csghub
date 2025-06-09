@@ -63,3 +63,9 @@ export const getLastDayOfMonthFromDateString = (dateString) => {
 
   return `${year}-${formattedMonth}-${lastDay}`
 }
+
+export const timestampToDatetimeStr = (timestamp) => {
+  const date = new Date(timestamp * 1000)
+  const localDateTime = date.toLocaleString()
+  return localDateTime
+}

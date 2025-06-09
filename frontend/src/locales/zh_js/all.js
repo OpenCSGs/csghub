@@ -8,6 +8,7 @@ export const all = {
   schema: "协议",
   community: "讨论",
   logs: "日志",
+  analysis: "分析",
   settings: "设置",
   task: "任务",
   framework: "框架",

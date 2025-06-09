@@ -331,7 +331,7 @@
 
     <el-divider />
 
-    <!-- cover image -->
+    <!-- cover image feature temporarily disabled
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
@@ -374,6 +374,7 @@
     </div>
 
     <el-divider />
+    -->
 
     <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-8">

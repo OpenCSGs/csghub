@@ -142,6 +142,7 @@
           />
         </el-form-item>
 
+        <!-- Cover image upload feature temporarily disabled
         <el-form-item
           class="w-full !mb-0"
           :label="$t('application_spaces.new.coverImage')"
@@ -172,6 +173,7 @@
             </el-upload>
           </div>
         </el-form-item>
+        -->
         <el-divider class="!my-[18px]" />
         <el-form-item
           class="w-full sdk-container justify-between"

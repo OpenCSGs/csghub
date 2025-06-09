@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative mb-[80px]">
     <div class="absolute -top-1.5 right-0 xl:relative md:right-0 flex gap-4">
       <RepoClone
         v-if="repoType !== 'endpoint'"
@@ -13,6 +13,9 @@
         :enableEndpoint="repoDetail.enableInference"
         :enableFinetune="repoDetail.enableFinetune"
         :enableEvaluation="repoDetail.enableEvaluation"
+        :syncStatus="repoDetail.syncStatus"
+        :canManage="settingsVisibility"
+        :commitId="commitId"
       />
     </div>
     <tab-container
@@ -304,6 +307,7 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import InstanceAnalysis from './InstanceAnalysis.vue'
   import BillingDetail from './BillingDetail.vue'
   import McpSpacePage from '../application_spaces/McpSpacePage.vue'
   import useFetchApi from '../../packs/useFetchApi'
@@ -426,11 +430,7 @@
     //     }
     //     break
     //   case 'analysis':
-    //     if (props.repoType === 'endpoint') {
-    //       location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/analysis`
-    //     } else if (props.repoType ==='space') {
-    //       location.href = `/${props.repoType}s/${props.path}/analysis`
-    //     }
+    //     location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/analysis`
     //     break
     //   case 'logs':
     //     location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/logs`

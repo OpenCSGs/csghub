@@ -78,6 +78,19 @@
         </div>
       </el-tab-pane>
       <el-tab-pane
+        :label="$t('finetune.detail.tab3')"
+        name="analysis"
+      >
+        <InstanceAnalysis
+          v-if="activeName === 'analysis'"
+          :repoType="repoDetailStore.repoType"
+          :instances="repoDetailStore.instances"
+          :modelId="repoDetailStore.modelId"
+          :deployId="repoDetailStore.deployId"
+          :maxReplica="repoDetailStore.maxReplica"
+        />
+      </el-tab-pane>
+      <el-tab-pane
         :label="$t('billing.billing')"
         name="billing"
       >
@@ -117,6 +130,7 @@
   import BillingDetail from '../shared/BillingDetail.vue'
   import { ElMessage } from 'element-plus'
   import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
+  import InstanceAnalysis from '../shared/InstanceAnalysis.vue'
   import { storeToRefs } from 'pinia'
   import { useRepoTabStore } from '@/stores/RepoTabStore'
   import { useRoute, useRouter } from 'vue-router'

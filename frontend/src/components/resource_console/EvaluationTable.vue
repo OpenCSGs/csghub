@@ -50,7 +50,7 @@
       >
         <template #default="scope">
           <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
-            {{ scope.row.datasets.length }}
+            {{ scope.row.datasets?.length }}
           </div>
         </template>
       </el-table-column>
@@ -64,12 +64,12 @@
         <template #default="scope">
           <el-tooltip
             placement="top"
-            :disabled="scope.row.datasets.length <= 2"
+            :disabled="(scope.row.datasets || []).length <= 2"
           >
             <template #content>
               <ul
                 class="list-item list-disc ml-3"
-                v-for="dataset in scope.row.datasets"
+                v-for="dataset in (scope.row.datasets || [])"
                 :key="dataset"
               >
                 <li>{{ dataset }}</li>
@@ -79,7 +79,7 @@
             <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
               <ul
                 class="list-item list-disc ml-3"
-                v-for="dataset in scope.row.datasets.slice(0, 2)"
+                v-for="dataset in scope.row.datasets?.slice(0, 2)"
                 :key="dataset"
               >
                 <li class="truncate">{{ dataset }}</li>
