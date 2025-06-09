@@ -27,7 +27,7 @@
       :appStatus="repoDetailStore.status"
       :sdk="repoDetailStore.sdk"
       :appEndpoint="appEndpoint"
-      :current-branch="currentBranch"
+      :current-branch="currentBranch || repoDetailStore.defaultBranch || 'main'"
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
@@ -139,6 +139,7 @@
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import { storeToRefs } from 'pinia'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     repoType: String,
@@ -161,7 +162,7 @@
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
-
+  const { setRepoTab } = useRepoTabStore()
   // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const { cookies } = useCookies()
@@ -248,6 +249,10 @@
       const repoData = data.value.data
 
       repoDetailStore.initialize(repoData, props.repoType)
+      
+      setRepoTab({
+        currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
+      })
     } catch (error) {
       console.log(error)
     }
@@ -503,10 +508,16 @@
       fetchRepoDetail()
     }
 
-    console.log(`Space 初始状态：${repoDetailStore.status}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
+
+    setRepoTab({
+      repoType: props.repoType,
+      namespace: props.namespace,
+      repoName: props.repoName,
+      currentBranch: props.currentBranch || repoDetailStore.defaultBranch || 'main',
+    })
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

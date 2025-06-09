@@ -1,8 +1,9 @@
 {{ define "content" }}
 <div class="bg-white">
   <finetune-detail
+    repo-type="finetune"
     namespace="{{ .namespace }}"
-    name="{{ .modelName }}"
+    model-name="{{ .modelName }}"
     finetune-name="{{ .finetuneName }}"
     finetune-id="{{ .finetuneId }}"
     path="{{ .currentPath }}"

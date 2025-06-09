@@ -5,7 +5,7 @@
     <div class="mx-auto page-responsive-width">
       <RepoHeader
         :name="repoDetailStore.deployName"
-        :path="`${namespace}/${name}`"
+        :path="`${namespace}/${modelName}`"
         :appStatus="repoDetailStore.status"
         :space-resource="repoDetailStore.hardware"
         :resource-name="finetuneResource"
@@ -30,7 +30,7 @@
     <el-tabs
       v-model="activeName"
       class="demo-tabs"
-      :beforeLeave="handleTabLeave"
+      :key="activeName"
       @tabClick="tabChange"
     >
       <el-tab-pane
@@ -132,10 +132,12 @@
   import InstanceInBuilding from '../shared/InstanceInBuilding.vue'
   import InstanceAnalysis from '../shared/InstanceAnalysis.vue'
   import { storeToRefs } from 'pinia'
+  import { useRepoTabStore } from '@/stores/RepoTabStore'
+  import { useRoute, useRouter } from 'vue-router'
 
   const props = defineProps({
     namespace: String,
-    name: String,
+    modelName: String,
     userName: String,
     finetuneName: String,
     finetuneId: Number,
@@ -144,7 +146,10 @@
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
-
+  const { repoTab, setRepoTab } = useRepoTabStore()
+  const router = useRouter()
+  const route = useRoute()
+  
   const activeName = ref('page')
   const dataLoading = ref(false)
   const finetuneResources = ref([])
@@ -186,20 +191,48 @@
     }
   })
 
-  const handleTabLeave = (tab) => {
-    tabChange(tab)
-    return false
+  const validTabs = computed(() => {
+    return ['page', 'analysis', 'billing', 'setting']
+  })
+
+  const getDefaultTab = () => {
+    return 'page'
+  }
+
+  const isValidTab = (tab) => {
+    return validTabs.value.includes(tab)
   }
 
   const tabChange = (tab) => {
-    switch (tab.paneName) {
-      case 'page':
-        location.href = `/finetune/${props.namespace}/${props.name}/${props.finetuneName}/${props.finetuneId}`
-        break
-      default:
-        location.href = `/finetune/${props.namespace}/${props.name}/${props.finetuneName}/${props.finetuneId}/${tab.paneName}`
-        break
+    let tabName = tab.paneName
+    
+    if (!isValidTab(tabName)) {
+      tabName = getDefaultTab()
+      router.replace({
+        path: `/finetune/${props.namespace}/${props.modelName}/${props.finetuneName}/${props.finetuneId}`,
+        query: {}
+      })
     }
+
+    if (tabName === repoTab.tab) return
+
+    activeName.value = tabName
+
+    setRepoTab({
+      tab: tabName,
+      repoType: 'finetune',
+      namespace: props.namespace,
+      repoName: props.modelName
+    })
+
+    router.replace({
+      path: `/finetune/${props.namespace}/${props.modelName}/${props.finetuneName}/${props.finetuneId}`,
+      query: {
+        tab: tabName
+      }
+    })
+
+    fetchRepoDetail()
   }
 
   const toNotebookPage = () => {
@@ -211,7 +244,7 @@
 
     try {
       const { data } = await useFetchApi(
-        `/models/${props.namespace}/${props.name}/run/${props.finetuneId}`
+        `/models/${props.namespace}/${props.modelName}/run/${props.finetuneId}`
       ).json()
       if (data.value) {
         const body = data.value
@@ -299,9 +332,16 @@
       activeName.value = props.path
     }
 
-    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
-      fetchRepoDetail()
+    // const urlTab = route?.query?.tab
+    const params = new URLSearchParams(window.location.search)
+    const urlTab = params.get('tab')
+    if (urlTab && isValidTab(urlTab)) {
+      tabChange({ paneName: urlTab })
+    } else {
+      tabChange({ paneName: getDefaultTab() })
     }
+
+    fetchRepoDetail()
 
     if (repoDetailStore.clusterId) {
       fetchResources()
@@ -315,6 +355,12 @@
     ) {
       syncfinetuneStatus()
     }
+
+    setRepoTab({
+      repoType: 'finetune',
+      namespace: props.namespace,
+      repoName: props.modelName,
+    })
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

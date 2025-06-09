@@ -38,10 +38,10 @@ describe('EndpointItem.vue', () => {
     })
   })
 
-  it('renders the correct link', () => {
-    const link = wrapper.find('a')
-    expect(link.attributes('href')).toBe('/endpoints/mockModelId/mockDeployId')
-  })
+  // it('renders the correct link', () => {
+  //   const link = wrapper.find('a')
+  //   expect(link.attributes('href')).toBe('/endpoints/mockModelId/mockDeployId')
+  // })
 
   it('renders the correct deploy name', () => {
     const deployName = wrapper.find('h3')

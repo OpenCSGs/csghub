@@ -19,13 +19,13 @@
       />
     </div>
     <tab-container
-      :default-tab="defaultTab"
+      :default-tab="defaultTab || 'summary'"
       :settingsVisibility="settingsVisibility"
       :syncStatus="repoDetail.syncStatus"
       :repoType="repoType"
       :sdk="sdk"
       :repo="repoDetail"
-
+      :path="path"
       @tabChange="tabChange"
     >
       <!-- summary -->
@@ -74,7 +74,7 @@
           :repo-type="repoType"
           :namespace-path="path"
           :download-count="repoDetail.downloads"
-          :currentBranch="repoDetail.defaultBranch || 'main'"
+          :currentBranch="repoTab.currentBranch ||repoDetail.defaultBranch || 'main'"
           :widget-type="repoDetail.widgetType"
           :metadata="repoDetail.metadata"
           :framework="framework"
@@ -84,22 +84,21 @@
       <!-- files -->
       <template
         #files
-        v-if="actionName === 'blob'"
+        v-if="repoTab.actionName === 'blob'"
       >
         <blob
-          :branches="branches"
-          :current-branch="currentBranch"
-          :current-path="currentPath"
+          :current-branch="repoTab.currentBranch"
+          :current-path="repoTab.lastPath"
           :namespace-path="path"
-          :can-write="canWrite"
+          :can-write="repoDetail.canWrite"
         />
       </template>
       <template
         #files
-        v-if="actionName === 'new_file'"
+        v-if="repoTab.actionName === 'new_file'"
       >
         <new-file
-          :current-branch="currentBranch"
+          :current-branch="repoTab.currentBranch"
           :repo-name="repoDetail.name"
           :namespace-path="path"
           originalCodeContent=""
@@ -107,54 +106,51 @@
       </template>
       <template
         #files
-        v-if="actionName === 'edit_file'"
+        v-if="repoTab.actionName === 'edit_file'"
       >
         <edit-file
-          :current-branch="currentBranch"
-          :current-path="currentPath"
+          :current-branch="repoTab.currentBranch"
+          :current-path="repoTab.lastPath"
           :repo-name="repoDetail.name"
           :namespace-path="path"
         />
       </template>
       <template
         #files
-        v-if="actionName === 'upload_file'"
+        v-if="repoTab.actionName === 'upload_file'"
       >
         <upload-file
-          :current-branch="currentBranch"
+          :current-branch="repoTab.currentBranch"
           :repo-name="repoDetail.name"
           :namespace-path="path"
         />
       </template>
       <template
         #files
-        v-if="actionName === 'commits'"
+        v-if="repoTab.actionName === 'commits'"
       >
         <RepoCommits
-          :branches="branches"
-          :currentBranch="currentBranch"
+          :currentBranch="repoTab.currentBranch"
           :namespacePath="path"
           :repoType="repoType"
         />
       </template>
       <template
         #files
-        v-if="actionName === 'commit'"
+        v-if="repoTab.actionName === 'commit'"
       >
         <RepoCommit
           :namespacePath="path"
           :repoType="repoType"
-          :commitId="commitId"
+          :commitId="repoTab.lastPath"
         />
       </template>
       <template
         #files
-        v-if="actionName === 'files'"
+        v-if="repoTab.actionName === 'files'"
       >
         <repo-files
-          :branches="branches"
-          :current-branch="currentBranch"
-          :current-path="currentPath"
+          :current-path="repoTab.lastPath"
           :namespace-path="path"
           :can-write="canWrite"
           :repo-type="repoType"
@@ -164,7 +160,7 @@
       <!-- analysis -->
       <template
         #analysis
-        v-if="(repoType === 'endpoint' || repoType === 'space') && actionName === 'analysis'"
+        v-if="(repoType === 'endpoint' || repoType === 'space') && repoTab.tab === 'analysis'"
       >
         <InstanceAnalysis
           :repoType="repoType"
@@ -178,7 +174,7 @@
       <!-- logs -->
       <template
         #logs
-        v-if="repoType === 'endpoint' && actionName === 'logs'"
+        v-if="repoType === 'endpoint' && repoTab.tab === 'logs'"
       >
         <EndpointLogs
           :instances="repoDetail.instances"
@@ -284,6 +280,10 @@
 </template>
 
 <script setup>
+  import { ref, computed, onMounted, watch } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import { useI18n } from 'vue-i18n'
+  import { useRouter, useRoute } from 'vue-router'
   import RepoClone from '../shared/RepoClone.vue'
   import TabContainer from '../shared/TabContainer.vue'
   import RepoSummary from '../shared/RepoSummary.vue'
@@ -311,32 +311,29 @@
   import BillingDetail from './BillingDetail.vue'
   import McpSpacePage from '../application_spaces/McpSpacePage.vue'
   import useFetchApi from '../../packs/useFetchApi'
-  import { ref, computed, onMounted } from 'vue'
-  import { ElMessage } from 'element-plus'
-  import { useI18n } from 'vue-i18n'
   import { safeJsonParse } from '../../packs/utils'
   import McpSchema from '../mcp/McpSchema.vue'
-
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
   const { t } = useI18n()
 
   const props = defineProps({
     repoDetail: Object,
-    currentBranch: String,
+    // currentBranch: String,
     currentPath: String,
     defaultTab: String,
     tags: Object,
-    actionName: String,
     settingsVisibility: Boolean,
     canWrite: Boolean,
     repoType: String,
     appStatus: String,
     appEndpoint: String,
+    actionName: String,
     sdk: String,
     userName: String,
     commitId: String,
     sku: String,
     modelId: String,
-    private: Boolean,
+    isPrivate: Boolean,
     endpointReplica: Number,
     endpointName: String,
     endpointId: String,
@@ -345,6 +342,9 @@
     path: String,
   })
 
+  const { repoTab, setRepoTab } = useRepoTabStore()
+  const router = useRouter()
+  const route = useRoute()
   const framework = computed(() => {
     const tags = props.repoDetail.tags || []
     const frameworkTag = tags.find((tag) => tag.category === 'framework')
@@ -402,58 +402,54 @@
   }
 
   const tabChange = (tab) => {
-    switch (tab) {
-      case 'summary':
-        location.href = summaryUrl()
-        break
-      case 'files':
-        if (props.repoType === 'mcp') {
-          location.href = `/${props.repoType}/servers/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
-        } else {
-          location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
-        }
-        break
-      case 'community':
-        if (props.repoType === 'mcp') {
-          location.href = `/${props.repoType}/servers/${props.path}/community`
-        } else {
-          location.href = `/${props.repoType}s/${props.path}/community`
-        }
-        break
-      case 'settings':
-        if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/settings`
-        } else if (props.repoType === 'mcp') {
-          location.href = `/${props.repoType}/servers/${props.path}/settings`
-        } else {
-          location.href = `/${props.repoType}s/${props.path}/settings`
-        }
-        break
-      case 'analysis':
-        if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/analysis`
-        } else if (props.repoType ==='space') {
-          location.href = `/${props.repoType}s/${props.path}/analysis`
-        }
-        break
-      case 'logs':
-        location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/logs`
-        break
-      case 'billing':
-        if (props.repoType === 'endpoint') {
-          location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/billing`
-        } else {
-          location.href = `/${props.repoType}s/${props.path}/billing`
-        }
-        break
-      case 'schema':
-        if (props.repoType === 'mcp') {
-          location.href = `/${props.repoType}/servers/${props.path}/schema`
-        }
-        break
-      default:
-        break
-    }
+    // switch (tab) {
+    //   case 'summary':
+    //     location.href = summaryUrl()
+    //     break
+    //   case 'files':
+    //     if (props.repoType === 'mcp') {
+    //       location.href = `/${props.repoType}/servers/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
+    //     } else {
+    //       location.href = `/${props.repoType}s/${props.path}/files/${props.repoDetail.defaultBranch || 'main'}`
+    //     }
+    //     break
+    //   case 'community':
+    //     if (props.repoType === 'mcp') {
+    //       location.href = `/${props.repoType}/servers/${props.path}/community`
+    //     } else {
+    //       location.href = `/${props.repoType}s/${props.path}/community`
+    //     }
+    //     break
+    //   case 'settings':
+    //     if (props.repoType === 'endpoint') {
+    //       location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/settings`
+    //     } else if (props.repoType === 'mcp') {
+    //       location.href = `/${props.repoType}/servers/${props.path}/settings`
+    //     } else {
+    //       location.href = `/${props.repoType}s/${props.path}/settings`
+    //     }
+    //     break
+    //   case 'analysis':
+    //     location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/analysis`
+    //     break
+    //   case 'logs':
+    //     location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/logs`
+    //     break
+    //   case 'billing':
+    //     if (props.repoType === 'endpoint') {
+    //       location.href = `/${props.repoType}s/${props.path}/${props.repoDetail.deployId}/billing`
+    //     } else {
+    //       location.href = `/${props.repoType}s/${props.path}/billing`
+    //     }
+    //     break
+    //   case 'schema':
+    //     if (props.repoType === 'mcp') {
+    //       location.href = `/${props.repoType}/servers/${props.path}/schema`
+    //     }
+    //     break
+    //   default:
+    //     break
+    // }
   }
 
   async function fetchTags() {
