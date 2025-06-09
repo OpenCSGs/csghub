@@ -60,6 +60,13 @@
 
     if (data.value) {
       branches.value = data.value.data
+      
+      const branchExists = (branches.value || []).some(branch => branch.name === props.currentBranch)
+      
+      if (!branchExists && branches.value.length > 0) {
+        const defaultBranch = branches.value[0].name
+        emit('changeBranch', defaultBranch)
+      }
     } else {
       ElMessage.warning(error.value.msg)
     }

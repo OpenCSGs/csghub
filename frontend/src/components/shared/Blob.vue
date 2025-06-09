@@ -106,7 +106,7 @@
           </div>
           <div
             v-if="canWrite && !isImage()"
-            class="flex items-center gap-1"
+            class="flex items-center gap-1 cursor-pointer"
           >
             <SvgIcon name="edit" />
             <a

@@ -74,7 +74,7 @@
           :repo-type="repoType"
           :namespace-path="path"
           :download-count="repoDetail.downloads"
-          :currentBranch="repoTab.currentBranch ||repoDetail.defaultBranch || 'main'"
+          :currentBranch="repoTab.currentBranch ||repoDetail.defaultBranch"
           :widget-type="repoDetail.widgetType"
           :metadata="repoDetail.metadata"
           :framework="framework"
@@ -87,7 +87,7 @@
         v-if="repoTab.actionName === 'blob'"
       >
         <blob
-          :current-branch="repoTab.currentBranch"
+          :current-branch="repoTab.currentBranch ||repoDetail.defaultBranch"
           :current-path="repoTab.lastPath"
           :namespace-path="path"
           :can-write="repoDetail.canWrite"
@@ -98,7 +98,7 @@
         v-if="repoTab.actionName === 'new_file'"
       >
         <new-file
-          :current-branch="repoTab.currentBranch"
+          :current-branch="repoTab.currentBranch ||repoDetail.defaultBranch"
           :repo-name="repoDetail.name"
           :namespace-path="path"
           originalCodeContent=""
@@ -109,7 +109,7 @@
         v-if="repoTab.actionName === 'edit_file'"
       >
         <edit-file
-          :current-branch="repoTab.currentBranch"
+          :current-branch="repoTab.currentBranch ||repoDetail.defaultBranch"
           :current-path="repoTab.lastPath"
           :repo-name="repoDetail.name"
           :namespace-path="path"
@@ -120,7 +120,7 @@
         v-if="repoTab.actionName === 'upload_file'"
       >
         <upload-file
-          :current-branch="repoTab.currentBranch"
+          :current-branch="repoTab.currentBranch ||repoDetail.defaultBranch"
           :repo-name="repoDetail.name"
           :namespace-path="path"
         />
@@ -130,7 +130,7 @@
         v-if="repoTab.actionName === 'commits'"
       >
         <RepoCommits
-          :currentBranch="repoTab.currentBranch"
+          :currentBranch="repoTab.currentBranch ||repoDetail.defaultBranch"
           :namespacePath="path"
           :repoType="repoType"
         />

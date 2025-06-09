@@ -10,7 +10,7 @@ export const useRepoTabStore = defineStore('repoTab', () => {
     repoName: '',
     currentPath: '',
     actionName: '',
-    currentBranch: 'master',
+    currentBranch: '',
     tab: 'summary',
     lastPath: ''
   })
