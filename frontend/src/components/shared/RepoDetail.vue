@@ -29,7 +29,7 @@
       :can-write="repoDetailStore.canWrite"
       :tags="tags"
       :userName="userName"
-      :commitId="commitId"
+      :commitId="commitId || lastCommit?.id"
       :repoType="repoType"
       :path="`${namespace}/${repoName}`" />
   </div>
@@ -62,6 +62,7 @@
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
+  const lastCommit = ref({})
 
   // const repo = ref({})
   // const tags = ref({
@@ -138,10 +139,26 @@
     return {}
   }
 
+  const fetchLastCommit = async () => {
+    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}/last_commit`
+    try {
+      const { data } = await useFetchApi(url).json()
+
+      if (data.value) {
+        const json = data.value
+        lastCommit.value = json.data
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   onMounted(() => {
     if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
       fetchRepoDetail()
     }
+
+    fetchLastCommit()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)
