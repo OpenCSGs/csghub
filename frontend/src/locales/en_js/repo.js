@@ -8,8 +8,10 @@ export const repo = {
     cancel: "Cancel",
   },
   source: {
-    syncButton: "Sync",
+    sync: "Sync",
     syncing: "Syncing",
+    syncButton: "Sync Now",
+    syncDiff: "Sync Diff",
     all: "All sources",
     opencsg: "OpenCSG",
     local: "Local",
@@ -17,5 +19,11 @@ export const repo = {
     syncCompleted: "Local version matches remote source version",
     needSync: "Remote has pending sync versions",
     from: "Mirror from",
+    checkSyncDiff: "Check Sync Diff",
+    added: "Added",
+    removed: "Removed",
+    modified: "Modified",
+    syncDiffError: "Sync Diff Error",
+    nodiffs: "No diffs from remote",
   }
 }

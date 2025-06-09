@@ -76,6 +76,7 @@
   import { useI18n } from 'vue-i18n'
   import NewTag from './NewTag.vue'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     repo: Object,
@@ -89,7 +90,7 @@
 
   const { t, locale } = useI18n()
   const taskTagIconExists = ref(false)
-
+  const { setRepoTab } = useRepoTabStore()
   const showNewTag = computed(() => {
     return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(props.repo.created_at) || isWithinTwoWeeks(props.repo.updated_at));
   });
@@ -97,13 +98,29 @@
   const detailLink = computed(() => {
     switch (props.repoType) {
       case 'model':
-        return `/models/${props.repo.path}`
+        setRepoTab({
+          repoType: 'model',
+          tab: 'summary'
+        })
+        return `/models/${props.repo.path}?tab=summary`
       case 'dataset':
-        return `/datasets/${props.repo.path}`
+        setRepoTab({
+          repoType: 'dataset',
+          tab: 'summary'
+        })
+        return `/datasets/${props.repo.path}?tab=summary`
       case 'space':
-        return `/spaces/${props.repo.path}`
+        setRepoTab({
+          repoType: 'space',
+          tab: 'summary'
+        })
+        return `/spaces/${props.repo.path}?tab=summary`
       case 'code':
-        return `/codes/${props.repo.path}`
+        setRepoTab({
+          repoType: 'code',
+          tab: 'summary'
+        })
+        return `/codes/${props.repo.path}?tab=summary`
       case 'prompt':
         return `/prompts/library/${props.repo.path}`
       default:

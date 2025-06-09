@@ -382,10 +382,10 @@
         }
       },
       collapseTagList(event) {
-        if (!this.$refs.tagListContainer.contains(event.target)) {
+        if (!this.$refs.tagListContainer?.contains(event.target)) {
           this.shouldShowTagList = false
         }
-        if (!this.$refs.IndustryTagListContainer.contains(event.target)) {
+        if (!this.$refs.IndustryTagListContainer?.contains(event.target)) {
           this.shouldShowIndustryTagList = false
         }
       },

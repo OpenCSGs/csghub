@@ -21,7 +21,7 @@
   <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
     <repo-tabs
       :repo-detail="repoDetailStore"
-      :current-branch="currentBranch || repoDetailStore.defaultBranch"
+      :current-branch="currentBranch || repoDetailStore.defaultBranch || 'main'"
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
@@ -29,14 +29,14 @@
       :can-write="repoDetailStore.canWrite"
       :tags="tags"
       :userName="userName"
-      :commitId="commitId"
+      :commitId="commitId || lastCommit?.id"
       :repoType="repoType"
       :path="`${namespace}/${repoName}`" />
   </div>
 </template>
 
 <script setup>
-  import { onMounted, computed, provide } from 'vue'
+  import { onMounted, computed, provide, ref, watch } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
@@ -46,6 +46,9 @@
   import { ToUnauthorizedPage } from '@/packs/utils'
   import { storeToRefs } from 'pinia'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
+
+  const { setRepoTab } = useRepoTabStore()
 
   const props = defineProps({
     defaultTab: String,
@@ -62,6 +65,7 @@
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
+  const lastCommit = ref({})
 
   // const repo = ref({})
   // const tags = ref({
@@ -114,6 +118,9 @@
       // repo.value = repoData
       // tags.value = handleRepoTags(repoData)
       repoDetailStore.initialize(repoData, props.repoType)
+      setRepoTab({
+        currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
+      })
       // ownerUrl.value = getOwnerUrl(repoData)
     } catch (error) {
       console.error('Failed to fetch repo detail:', error)
@@ -138,10 +145,28 @@
     return {}
   }
 
-  onMounted(() => {
-    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
-      fetchRepoDetail()
+  const fetchLastCommit = async () => {
+    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}/last_commit`
+    try {
+      const { data } = await useFetchApi(url).json()
+
+      if (data.value) {
+        const json = data.value
+        lastCommit.value = json.data
+      }
+    } catch (error) {
+      console.log(error)
     }
+  }
+
+  onMounted(() => {
+    fetchRepoDetail()
+    fetchLastCommit()
+    setRepoTab({
+      repoType: props.repoType,
+      namespace: props.namespace,
+      repoName: props.repoName,
+    })
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

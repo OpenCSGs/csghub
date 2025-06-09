@@ -2,7 +2,7 @@
   <div class="relative repo-tabs-child">
     <el-tabs
       v-model="activeName"
-      :beforeLeave="handleTabLeave"
+      :key="activeName"
       @tabClick="handleTabClick"
     >
       <!-- repo/endpoint summary -->
@@ -12,6 +12,17 @@
         lazy
       >
         <slot name="summary"></slot>
+      </el-tab-pane>
+
+      <!-- endpoint/space analysis -->
+      <el-tab-pane
+        v-if="repoType === 'endpoint' || repoType === 'space'"
+        :label="$t('all.analysis')"
+        name="analysis"
+        class="min-h-[300px]"
+        lazy
+      >
+        <slot name="analysis"></slot>
       </el-tab-pane>
 
       <!-- repo files -->
@@ -83,10 +94,14 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, watch, inject, onMounted } from 'vue'
+  import { useRouter } from 'vue-router'
   import { useI18n } from 'vue-i18n'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const { t } = useI18n()
+  const { repoTab, setRepoTab } = useRepoTabStore()
+  const router = useRouter()
 
   const props = defineProps({
     defaultTab: String,
@@ -94,7 +109,12 @@
     repoType: String,
     sdk: String,
     repo: Object,
+    syncStatus: String,
+    path: String
   })
+
+  const emit = defineEmits(['tabChange'])
+  const fetchRepoDetail = inject('fetchRepoDetail')
 
   const summaryLabel = computed(() => {
     if (props.repoType === 'space') {
@@ -113,20 +133,85 @@
     return true
   });
 
-  const activeName = ref(props.defaultTab)
+  const activeName = ref(repoTab.tab)
 
-  const emit = defineEmits(['tabChange']);
-
-  const handleTabLeave = (tab) => {
-    emit('tabChange', tab)
-    return false
-  }
+  watch(activeName, (newTab) => {
+    if (repoTab.tab !== newTab) {
+      if(['summary', 'settings'].includes(newTab)) {
+        fetchRepoDetail()
+      }
+    }
+  })
 
   const handleTabClick = (tab) => {
-    if (tab.paneName === activeName.value) {
-      emit('tabChange', tab.paneName)
-    }
+    activeName.value = tab.paneName
+    handleTabChange(tab.paneName)
+    emit('tabChange', tab.paneName)
   }
+
+  const validTabs = computed(() => {
+    const baseTabs = ['summary', 'files', 'billing', 'community', 'settings']
+    
+    if(props.repoType === 'endpoint') {
+      baseTabs.push('logs')
+    }
+    if (props.repoType === 'endpoint' || props.repoType === 'space') {
+      baseTabs.push('analysis')
+    } 
+    if (props.repoType === 'mcp') {
+      baseTabs.push('schema')
+    }
+    
+    return baseTabs
+  })
+
+  const getDefaultTab = () => {
+    return props.defaultTab || 'summary'
+  }
+
+  const isValidTab = (tab) => {
+    return validTabs.value.includes(tab)
+  }
+
+  const handleTabChange = (tab, type) => {
+    if (!isValidTab(tab)) {
+      tab = getDefaultTab()
+      router.replace({
+        path: `/${props.repoType}s/${props.path}`,
+        query: { tab }
+      })
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    const urlTab = params.get('tab')
+    if (tab === urlTab && type !== 'first') return
+
+    setRepoTab({
+      tab,
+      actionName: 'files',
+      // currentBranch: tab === 'files' ? repoTab.currentBranch : '',
+      lastPath: ''
+    })
+
+    router.replace({
+      path: props.repoType === 'mcp' ? `/${props.repoType}/servers/${props.path}` :  `/${props.repoType}s/${props.path}`,
+      query: {
+        tab
+      }
+    })
+  }
+
+  onMounted(() => {
+    // const urlTab = route.query?.tab
+    const params = new URLSearchParams(window.location.search)
+    const urlTab = params.get('tab')
+    if (urlTab && isValidTab(urlTab)) {
+      handleTabChange(urlTab, 'first')
+    } else {
+      handleTabChange(getDefaultTab())
+    }
+    activeName.value = urlTab || getDefaultTab()
+  })
 </script>
 
 <style>
