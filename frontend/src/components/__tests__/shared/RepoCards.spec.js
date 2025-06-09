@@ -100,11 +100,33 @@ describe("RepoCards", () => {
     });
 
     it("calculates correct perPage based on repoType", () => {
+        // 模拟不同窗口宽度测试space类型
+        const spaceWrapper = createWrapper({ repoType: 'space' });
+        
+        // 测试默认窗口宽度下的perPage（通常是最小值6）
+        expect(spaceWrapper.vm.perPage).toBeGreaterThanOrEqual(6);
+        expect(spaceWrapper.vm.perPage).toBeLessThanOrEqual(20);
+        
+        // 测试非space类型
         const modelWrapper = createWrapper({ repoType: 'model' });
         expect(modelWrapper.vm.perPage).toBe(16);
+    });
 
+    it("calculates correct perPage for space type at different window widths", () => {
         const spaceWrapper = createWrapper({ repoType: 'space' });
-        expect(spaceWrapper.vm.perPage).toBe(9);
+        
+        // 模拟不同窗口宽度
+        spaceWrapper.vm.windowWidth = 1600; // >= 1536
+        expect(spaceWrapper.vm.perPage).toBe(20);
+        
+        spaceWrapper.vm.windowWidth = 1400; // >= 1280
+        expect(spaceWrapper.vm.perPage).toBe(12);
+        
+        spaceWrapper.vm.windowWidth = 800; // >= 768
+        expect(spaceWrapper.vm.perPage).toBe(10);
+        
+        spaceWrapper.vm.windowWidth = 500; // < 768
+        expect(spaceWrapper.vm.perPage).toBe(6);
     });
 
     it("handles tag selection correctly", async () => {
