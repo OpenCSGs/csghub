@@ -105,7 +105,7 @@
       </div>
       <div
         v-if="repoType === 'space'"
-        class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] md:pl-0">
+        class="grid grid-cols-4 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] md:pl-0">
         <application-space-item
           v-for="repo in reposData"
           :repo="repo"
@@ -137,7 +137,7 @@
   </div>
 </template>
 <script setup>
-  import { onMounted, ref, computed, inject } from 'vue'
+  import { onMounted, ref, computed, inject, onUnmounted, nextTick } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import { ElInput, ElMessage } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
@@ -177,6 +177,12 @@
 
   const activeTags = ref({})
   const loading = ref(true)
+  const windowWidth = ref(window.innerWidth)
+
+  // 监听窗口大小变化
+  const updateWindowWidth = () => {
+    windowWidth.value = window.innerWidth
+  }
 
   const reposData = ref(Array)
   const sortOptions = [
@@ -262,7 +268,10 @@
 
   const perPage = computed(() => {
     if (props.repoType === 'space') {
-      return 9
+      if (windowWidth.value >= 1536) return 20
+      if (windowWidth.value >= 1280) return 12
+      if (windowWidth.value >= 768) return 10
+      return 6
     } else {
       return 16
     }
@@ -338,8 +347,13 @@
   }
 
   onMounted(() => {
+    window.addEventListener('resize', updateWindowWidth)
     if (props.repoType === 'space') {
       reloadRepos()
     }
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateWindowWidth)
   })
 </script>
