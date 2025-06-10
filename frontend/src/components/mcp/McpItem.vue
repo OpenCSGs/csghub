@@ -26,6 +26,12 @@
           <SvgIcon name="mcp_item_hybrid" />
         </div>
       </div> -->
+      <RepoItemSyncIcon
+        v-if="isEE()"
+        :source="mcp.source"
+        :syncStatus="mcp.sync_status"
+        :httpCloneUrl="mcp.repository && mcp.repository.http_clone_url"
+      />
     </div>
     <div class="inline-flex items-center gap-2">
       <SvgIcon
@@ -123,7 +129,8 @@
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { useRepoTabStore } from '@/stores/RepoTabStore'
-
+  import RepoItemSyncIcon from '../shared/RepoItemSyncIcon.vue'
+  import { isEE } from '../../packs/config'
   const { setRepoTab } = useRepoTabStore()
   const { locale } = useI18n()
 
