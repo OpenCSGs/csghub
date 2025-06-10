@@ -119,15 +119,14 @@
                   </div>
                 </a>
               </el-dropdown-item>
-
               <a :href="`/profile/${username}`">
-                <el-dropdown-item divided>
+                <el-dropdown-item>
                   <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-profile" />
                     {{ $t('navbar.profile') }}
                   </div>
-                </a>
-              </el-dropdown-item>
+                </el-dropdown-item>
+              </a>
               <a :href="`/profile/likes/${username}`">
                 <el-dropdown-item>
                   <div class="flex items-center w-fit gap-2">
@@ -146,14 +145,6 @@
               </a>
               <a v-if="!actionLimited"
                 href="/resource-console">
-                <el-dropdown-item>
-                  <div class="flex items-center w-fit gap-2">
-                    <SvgIcon name="navbar-datapipelines" />
-                    {{ $t('navbar.datapipelines') }}
-                  </div>
-                </el-dropdown-item>
-              </a>
-              <a v-if="!actionLimited" href="/resource-console">
                 <el-dropdown-item>
                   <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-resource-console" />
@@ -238,20 +229,6 @@
                   </div>
                 </el-dropdown-item>
               </a>
-              <div>
-                <el-dropdown-item @click="showMsgListHandle">
-                  <div class="flex items-center w-full justify-between">
-                    <div class="flex items-center w-fit gap-2">
-                      <SvgIcon name="navbar-message" />
-                      {{ $t('navbar.message') }}
-                    </div>
-                    <div v-if="msgNum>0" class="flex items-center gap-[4px] py-[2px] px-[6px] border border-gray-300 rounded-sm shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] ml-[16px]">
-                      <SvgIcon name="dot-ico" class="w-[8px] h-[8px]" />
-                      {{msgNum||0}}
-                    </div>
-                  </div>
-                </el-dropdown-item>
-              </div>
               <a
                 href="/daily_papers/new"
                 v-if="canCreateDailyPaper">
@@ -363,155 +340,6 @@
   >
     <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
   </el-alert>
-
-  <el-dialog
-    v-model="hasNewMassage"
-    width="400"
-    custom-class="top-right-dialog"
-    :modal="false"
-    :close-on-click-modal="false"
-    style="top: 20px !important; right: 20px !important; margin: 0 !important; position: fixed;"
-  >
-    <template #header>
-      <div class="headerCont flex md:block items-start justify-start gap-[16px]">
-        <SvgIcon name="alert-message" class="w-[40px] h-[40px] md:mb-[12px]" />
-        <div>
-          <p class="text-gray-900 text-sm font-medium mb-[4px]">{{ newMsg.title }}</p>
-          <p class="text-gray-600 text-sm font-light line-clamp-2">{{ newMsg.content }}</p>
-        </div>
-      </div>
-    </template>
-    <template #footer>
-      <div class="flex items-center justify-start gap-[12px] text-xs">
-        <CsgButton class="btn btn-link-gray btn-md" @click="closeNewMsgMask" :name="$t('navbar.later')"/>
-        <CsgButton class="btn btn-link-color btn-md" @click="newMsgShowInfo(1,newMsg)" :name="$t('navbar.showInfo')"/>
-      </div>
-    </template>
-  </el-dialog>
-
-  <el-drawer v-model="showMsgList" :show-close="false" style="max-width: 480px;" class="msgListCont" @close="showSettings=false" @click="showSettings=false">
-    <template #header="{ close }">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center justify-between">
-        <div class="flex items-center w-fit gap-2 text-lg font-medium text-gray-900">
-          {{ $t('navbar.message') }}
-        </div>
-        <div v-if="msgNum>0" class="flex items-center gap-[4px] py-[2px] px-[6px] border border-gray-300 rounded-sm shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] ml-[16px]">
-          <SvgIcon name="dot-ico" class="w-[8px] h-[8px]" />{{msgNum||0}}
-        </div>
-      </div>
-      <div class="flex items-center justify-end gap-[12px]">
-        <div class="relative">
-          <CsgButton class="btn btn-secondary-gray btn-md" svgName='filter-lines' :name="$t('navbar.msgSettings')" @click.stop="showSettings= !showSettings"/>
-          <div class="settingsCont absolute z-10 bottom-[-11px] right-0 bg-white border-gray-200 rounded-sm" :class="{ 'hidden': !showSettings, 'block': showSettings }" @click.stop>
-            <el-checkbox-group v-model="sub_notification_type" @change="setMsgSettings">
-              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
-                <el-checkbox
-                  class="setttingCheckbox"
-                  :label="$t('navbar.comment')"
-                  value="comment"
-                  size="large"
-                />
-              </div>
-              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
-                <el-checkbox
-                  class="setttingCheckbox"
-                  :label="$t('navbar.system')"
-                  value="system"
-                  size="large"
-                />
-              </div>
-              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
-                <el-checkbox
-                  class="setttingCheckbox"
-                  :label="$t('navbar.organization')"
-                  value="organization"
-                  size="large"
-                />
-              </div>
-              <div class="px-[16px] py-[10px] hover:bg-gray-50 cursor-pointer">
-                <el-checkbox
-                  class="setttingCheckbox"
-                  :label="$t('navbar.asset_management')"
-                  value="asset_management"
-                  size="large"
-                />
-              </div>
-            </el-checkbox-group>
-          </div>
-        </div>
-        <CsgButton class="btn btn-secondary-gray btn-md" style="padding: 14px !important;" svgName="close" @click="close"/>
-      </div>
-      </div>
-    </template>
-    <div class="px-[16px] pb-[12px] pt-1">
-      <el-input
-        v-model="searchText"
-        class="mb-3"
-        size="large"
-        clearable
-        @change="resetList"
-        :placeholder="$t('navbar.all')" >
-        <template #prefix>
-          <el-icon><search /></el-icon>
-        </template>
-      </el-input>
-      <div class="flex items-center justify-between gap-[16px]">
-        <el-select
-            v-model="selectedFilter"
-            style="flex:1;"
-            size="large">
-            <el-option
-              v-for="item in filterOptions"
-              :key="item"
-              :label="$t(`navbar.${item}`)"
-              :value="item" />
-        </el-select>
-        <el-checkbox
-          class="unreadCheckbox"
-          v-model="onlyUnread"
-          :label="$t('navbar.onlyUnread')"
-          size="large"
-        />
-      </div>
-    </div>
-      <div class="msg-list-container h-[calc(100vh-200px)] overflow-y-auto" 
-        ref="msgListContainer"
-        @scroll="handleScroll">
-        <div
-          v-for="(item, index) in msgList" 
-          :key="index"
-          @click="newMsgShowInfo(2,item,index)"
-          class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
-          <div class="flex items-start justify-between">
-            <div class="flex items-center justify-start gap-[12px]">
-              <span class="block w-[8px] h-[8px] rounded-full" :class="item.is_read?'':'bg-brand-500'"></span>
-              <SvgIcon :name="`${item.notification_type}-message`" class="w-[40px] h-[40px]" />
-              <div class="text-sm">
-                <p class="text-gray-700 font-medium">{{ item.title }}</p>
-                <p class="text-gray-600 font-light">{{ item.click_action_url }}</p>
-              </div>
-            </div>
-            <p class="text-sm text-gray-600 font-light">{{ `${formatTime(item.created_at*1000)}` }}</p>
-          </div>
-          <p class="mt-[16px] text-gray-600 text-sm line-clamp-2">{{ item.content }}</p>
-        </div>
-        <div v-if="loading" class="py-4 text-center text-gray-500">
-          {{$t('navbar.loading')}}
-        </div>
-        <div v-if="!msgList.length" class="py-4 text-center text-gray-500">
-          {{$t('navbar.noMoreData')}}
-        </div>
-      </div>
-  </el-drawer>
-
-  <el-dialog
-    v-model="showMsgInfo"
-    width="400"
-  >
-  {{ msgInfo }}
-  </el-dialog>
-
   <Broadcast />
 </template>
 
