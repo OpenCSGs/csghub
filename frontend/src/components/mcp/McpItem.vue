@@ -27,7 +27,6 @@
         </div>
       </div> -->
       <RepoItemSyncIcon
-        v-if="isEE()"
         :source="mcp.source"
         :syncStatus="mcp.sync_status"
         :httpCloneUrl="mcp.repository && mcp.repository.http_clone_url"
@@ -130,7 +129,6 @@
   import { useI18n } from 'vue-i18n'
   import { useRepoTabStore } from '@/stores/RepoTabStore'
   import RepoItemSyncIcon from '../shared/RepoItemSyncIcon.vue'
-  import { isEE } from '../../packs/config'
   const { setRepoTab } = useRepoTabStore()
   const { locale } = useI18n()
 
