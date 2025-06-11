@@ -4,12 +4,18 @@ export const community = {
     "new": "新建話題"
   },
   "discussionDetail": {
+    "editTitle": "編輯話題",
+    "deleteDiscussion": "刪除話題",
     "reply": "回覆",
     "comment": "評論",
     "cancel": "取消",
     "updateSuccess": "標題更新成功！",
     "warn": "內容不能為空",
-    "addSuccess": "添加評論成功"
+    "addSuccess": "添加評論成功",
+    "deleteTitle": "刪除話題",
+    "deleteConfirm": "確定要刪除這個話題嗎？刪除後將無法恢復。",
+    "confirmDelete": "確認刪除",
+    "deleteSuccess": "話題刪除成功！"
   },
   "MD": {
     "edit": "編輯",
