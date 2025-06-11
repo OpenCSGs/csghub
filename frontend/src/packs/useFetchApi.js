@@ -35,6 +35,8 @@ const acceptLanguage = () => {
     return 'en-US'
   } else if (currentLocale === 'zh') {
     return 'zh-CN'
+  } else if (currentLocale === 'zhHant') {
+    return 'zh-HK'
   } else {
     return 'zh-CN'
   }
