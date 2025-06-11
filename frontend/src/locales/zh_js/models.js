@@ -1,5 +1,3 @@
-import { finetune } from "./finetune";
-
 export const models = {
   title: "模型",
   placeholder: "模型名字",

@@ -18,6 +18,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import en from './locales/en.js'
 import zh from './locales/zh.js'
+import zhHant from './locales/zhHant.js'
 
 import Navbar from "./components/navbar/Navbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
@@ -140,8 +141,9 @@ const i18n = createI18n({
   locale: cookies.get('locale') || defaultLanguage,
   messages: {
     en,
-    zh
-  }
+    zh,
+    zhHant,
+  },
 });
 
 // register Element UI Icons

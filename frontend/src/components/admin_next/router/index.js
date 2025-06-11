@@ -26,9 +26,17 @@ const defaultLanguage = ['zh', 'zh-cn', 'zh-CN', 'zh-tw'].includes(navigator.lan
 
 import { admin as admin_en } from "../../../locales/en_js/admin.js"
 import { admin as admin_zh } from "../../../locales/zh_js/admin.js"
+import { admin as admin_zh_hant } from "../../../locales/zh_hant_js/admin.js"
 
 const locale = cookies.get('locale') || defaultLanguage
-const adminLocale = locale === 'en' ? admin_en : admin_zh
+let adminLocale = ''
+if (locale === 'zh') {
+  adminLocale = admin_zh
+} else if (locale === 'zhHant') {
+  adminLocale = admin_zh_hant
+} else {
+  adminLocale = admin_en
+}
 
 // parent menu name
 export const PARENT_NAME = {
