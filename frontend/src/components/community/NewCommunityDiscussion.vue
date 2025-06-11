@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col gap-[16px]">
-    <div class="flex gap-[8px] text-sm leading-[22px] font-medium">
+  <div class="flex flex-col gap-4">
+    <div class="flex gap-2 text-sm leading-5 font-medium text-gray-700">
       <SvgIcon height="24px" weight="24px" name="discussions" />
       {{ $t('community.newDiscussion.new') }}
     </div>
-    <div>
+    <div class="flex flex-col gap-1 p-1">
       <FormLabel
         :labelName="$t('community.newDiscussion.title')"
         :required="true" />
@@ -15,25 +15,28 @@
         show-word-limit
         clearable
         :placeholder="$t('community.newDiscussion.create')"
-        class="w-full h-[40px] text-gray-500">
+        class="w-full h-10 text-gray-500">
       </el-input>
     </div>
-    <FormLabel
-      :labelName="$t('community.newDiscussion.content')"
-      :required="true" />
-    <CommunityMDTextarea
-      :desc="desc"
-      @inputChange="handleInputChange"></CommunityMDTextarea>
-    <div class="flex gap-[8px]">
-      <button
+    <div class="flex flex-col gap-1 p-1">
+      <FormLabel
+        :labelName="$t('community.newDiscussion.content')"
+        :required="true" />
+      <CommunityMDTextarea
+        :desc="desc"
+        @inputChange="handleInputChange"></CommunityMDTextarea>
+    </div>
+    <div class="flex gap-2">
+      <CsgButton
         class="btn btn-primary btn-sm"
         @click="create"
-        >{{ $t('community.newDiscussion.create') }}</button>
-      <button
+        :name="$t('community.newDiscussion.create')"
+        />
+      <CsgButton
         class="btn btn-secondary-gray btn-sm"
-        @click="cancel">{{
-        $t('community.newDiscussion.cancel')
-      }}</button>
+        @click="cancel"
+        :name="$t('community.newDiscussion.cancel')"
+        />
     </div>
   </div>
 </template>
