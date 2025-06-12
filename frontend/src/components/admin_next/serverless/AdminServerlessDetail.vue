@@ -167,8 +167,8 @@
   const removeServerless = async () => {
     try {
       await ElMessageBox.confirm(
-        t('admin.systemConfig.removeTips'),
-        t('admin.systemConfig.removeTitle'),
+        t('admin.removeTips'),
+        t('admin.removeTitle'),
         {
           confirmButtonText: t('all.confirm'),
           cancelButtonText: t('all.cancel'),

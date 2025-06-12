@@ -26,6 +26,8 @@ export const admin = {
   createSuccess: 'Create Success',
   updateSuccess: 'Update Success',
   operations: 'Operations',
+  removeTips: 'This action cannot be undone, this will permanently remove.',
+  removeTitle: 'Remove',
   dashboard: {
     title: 'Admin Dashboard',
     intro: 'This is the admin panel, admin users can do the system settings here.'
