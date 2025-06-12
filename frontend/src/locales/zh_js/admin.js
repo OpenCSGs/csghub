@@ -26,6 +26,8 @@ export const admin = {
   createSuccess: '创建成功',
   updateSuccess: '更新成功',
   operations: '操作',
+  removeTips: '此操作无法撤销，这将永久移除',
+  removeTitle: '移除项目',
   dashboard: {
     title: 'Dashboard',
     intro: '这是社区管理后台，Admin 用户可以在这里进行系统的后台设置等工作。'

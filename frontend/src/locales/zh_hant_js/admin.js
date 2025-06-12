@@ -63,6 +63,8 @@ export const admin = {
   createSuccess:'建立成功',
   updateSuccess:'更新成功',
   operations: '操作',
+  removeTips: '此操作無法撤銷，這將永久移除',
+  removeTitle: '移除項目',
   verifyRejectTitle: '拒絕驗證',
   verifyRejectDescription: '請輸入拒絕驗證的原因',
   verifyReasonPlaceholder: '請輸入拒絕的原因',
