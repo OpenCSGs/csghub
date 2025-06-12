@@ -82,7 +82,7 @@
       />
       <el-table-column
         :label="$t('admin.operations')"
-        width="260px"
+        width="280px"
         fixed="right"
       >
         <template #default="scope">
@@ -96,6 +96,12 @@
               class="btn btn-primary btn-sm"
               :name="$t('admin.serverless.edit')"
               @click="shoeEdit(scope.row)"
+            />
+            <CsgButton
+              v-if="scope.row.status === 'Stopped'"
+              class="btn btn-danger btn-sm"
+              :name="$t('all.delete')"
+              @click="removeServerless(scope.row)"
             />
           </div>
         </template>
@@ -117,10 +123,12 @@
   import { Container, Pagination, Table } from '../admin_component'
   import { ref, onMounted, inject } from 'vue'
   import { Search } from '@element-plus/icons-vue'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../../packs/useFetchApi'
   import useUserStore from '@/stores/UserStore'
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n()
   const userStore = useUserStore()
 
   const serverless = ref([])
@@ -178,6 +186,45 @@
 
   const shoeEdit = (detail) => {
     window.location.href = `/admin_panel/serverless/${detail.model_id}/${detail.deploy_id}/edit`
+  }
+
+  const removeServerless = async (detail) => {
+    try {
+      await ElMessageBox.confirm(
+        t('admin.systemConfig.removeTips'),
+        t('admin.systemConfig.removeTitle'),
+        {
+          confirmButtonText: t('all.confirm'),
+          cancelButtonText: t('all.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          deleteServerless(detail)
+        })
+        .catch(() => {
+          console.log('cancel')
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  const deleteServerless = async (detail) => {
+    const [namespace, name] = detail.model_id.split('/');
+    const removeData = {
+        namespace,
+        name
+    };
+    const options = { body: JSON.stringify(removeData) }
+    const url = `/models/${detail.model_id}/serverless`
+    const { error } = await useFetchApi(url, options).delete().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      window.location.href = `/admin_panel/serverless`
+    }
   }
 
   onMounted(() => {
