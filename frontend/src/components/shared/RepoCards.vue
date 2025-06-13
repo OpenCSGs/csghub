@@ -336,6 +336,8 @@
           reposData.value = data.value.data
           if (data.value.total) {
             totalRepos.value = data.value.total
+          } else {
+            totalRepos.value = 0
           }
         }
       } else {
