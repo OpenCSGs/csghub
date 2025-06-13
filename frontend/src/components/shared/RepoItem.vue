@@ -6,7 +6,7 @@
        repoType === 'dataset' ? 'bg-gradient-to-r from-[#fbfaff] to-white' : '',
        repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
      ]"
-     class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit"
+     class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit  cursor-pointer"
      :style="isCollection ? 'width:100%' : ''"
   >
     <div class="flex items-center justify-between mb-1 gap-2 w-full">
