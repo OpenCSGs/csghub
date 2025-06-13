@@ -384,6 +384,8 @@
     }
   }
   const fetchFileListData = async () => {
+    if(!currentBranch.value) return
+    
     const url = `/${apiPrefixPath}/${props.namespacePath}/refs/${currentBranch.value}/tree/${currentPath.value}?cursor=${filePageCursor.value}&limit=500`
 
     try {
