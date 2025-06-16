@@ -3,7 +3,7 @@
     class="h-[77px] w-full p-4 bg-white border-b border-gray-200 items-center gap-2 inline-flex rounded-tr-2xl">
     <SvgIcon name="api-example" />
     <div class="text-gray-700 text-base font-medium leading-normal">
-      Inference Provider For <span class="text-gray-500">deepseek-ai/DeepSeek-R1</span>
+      Inference Provider For <span class="text-gray-700">{{ modelId }}</span>
     </div>
   </div>
 
