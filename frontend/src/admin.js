@@ -9,6 +9,7 @@ import { ROUTERS } from "./components/admin_next/router";
 
 import "element-plus/dist/index.css";
 import "./assets/stylesheets/element-plus/_variables.css";
+import "./assets/stylesheets/element-plus/index.css";
 import "./assets/stylesheets/markdown.css";
 import "./style.css";
 import { createWebHistory, createRouter } from "vue-router";
