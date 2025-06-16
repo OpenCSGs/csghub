@@ -4,6 +4,7 @@ import { useCookies } from "vue3-cookies"
 import { createPinia } from 'pinia'
 import { customPersistPlugin } from "./packs/persistPinia"
 import ElementPlus from 'element-plus'
+import Ckeditor from "@ckeditor/ckeditor5-vue";
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import 'element-plus/dist/index.css'
@@ -12,6 +13,15 @@ import './assets/stylesheets/markdown.css'
 import './style.css'
 import { createWebHistory, createRouter } from 'vue-router'
 
+import "element-plus/dist/index.css";
+import "./assets/stylesheets/element-plus/_variables.css";
+import "./assets/stylesheets/element-plus/index.css";
+import "./assets/stylesheets/markdown.css";
+import "./assets/stylesheets/ckeditor5-content.css";
+import "./assets/stylesheets/ckeditor5-editor.css";
+import "./assets/stylesheets/ckeditor5-custom.css";
+import "./style.css";
+import { createWebHistory, createRouter } from "vue-router";
 
 import HelloWorld from './components/HelloWorld.vue'
 

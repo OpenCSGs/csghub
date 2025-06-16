@@ -1,0 +1,163 @@
+/* Element Plus - MessageBox 组件样式 */
+
+:root {
+  --el-messagebox-title-color: #101828;
+  --el-messagebox-width: 400px;
+  --el-messagebox-font-size: 14px;
+  --el-messagebox-content-font-size: 14px;
+  --el-messagebox-content-color: #475467;
+  --el-messagebox-error-font-size: 12px;
+  --el-messagebox-padding-primary: 24px;
+}
+
+body .el-message-box {
+  --el-messagebox-bg-color: #ffffff;
+  
+  padding: var(--el-messagebox-padding-primary);
+  border-radius: 12px !important;
+  border: none;
+  width: var(--el-messagebox-width);
+  box-shadow: 0px 8px 8px -4px rgba(16,24,40,0.03);
+  box-shadow: 0px 20px 24px -4px rgba(16,24,40,0,0.08);
+}
+
+.el-message-box__header {
+  padding: 15px var(--el-messagebox-padding-primary);
+  border-bottom: 1px solid var(--el-messagebox-border-color);
+}
+
+.el-message-box__title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.el-message-box__content {
+  padding: var(--el-messagebox-padding-primary);
+  color: #475467;
+  font-size: var(--el-messagebox-content-font-size);
+}
+
+.el-message-box__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.el-message-box__input {
+  padding-top: 20px;
+}
+
+.el-message-box__status {
+  position: static;
+  transform: none;
+  font-size: 24px !important;
+  display: none;
+}
+
+.el-message-box__btns {
+  padding: 32px var(--el-messagebox-padding-primary) var(--el-messagebox-padding-primary);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: center;
+}
+
+.el-message-box__btns button:nth-child(2) {
+  margin-left: 10px;
+}
+
+/* 按钮基础样式 */
+.el-message-box__btns .el-button {
+  height: auto;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex: 1;
+  /* 取消按钮的默认样式 */
+  background-color: var(--Base-White) !important;
+  border: 1px solid var(--Gray-300) !important;
+  color: var(--Gray-700) !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+/* 取消按钮hover样式 */
+.el-message-box__btns .el-button:not(.el-button--primary):hover {
+  background-color: var(--Gray-50) !important;
+  border: 1px solid var(--Gray-300) !important;
+  color: var(--Gray-800) !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+/* 取消按钮focus样式 */
+.el-message-box__btns .el-button:not(.el-button--primary):focus {
+  background-color: var(--Base-White) !important;
+  border: 1px solid var(--Gray-300) !important;
+  color: var(--Gray-700) !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(152, 162, 179, 0.14) !important;
+}
+
+/* 确认按钮样式 */
+.el-message-box__btns .el-button--primary {
+  background-color: var(--Brand-600) !important;
+  border: 1px solid var(--Brand-600) !important;
+  color: var(--Base-White) !important;
+  box-shadow: var(--shadow-xs) !important;
+  outline: none !important;
+}
+
+.el-message-box__btns .el-button--primary:hover {
+  background-color: var(--Brand-700) !important;
+  border: 1px solid var(--Brand-700) !important;
+  color: var(--Base-White) !important;
+  box-shadow: var(--shadow-xs) !important;
+}
+
+/* 移除focus时的特殊样式，使其保持与默认状态一致 */
+.el-message-box__btns .el-button--primary:focus {
+  background-color: var(--Brand-600) !important;
+  border: 1px solid var(--Brand-600) !important;
+  color: var(--Base-White) !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24) !important;
+  outline: none !important;
+}
+
+
+/* 动画效果 */
+.el-message-box-fade-enter-active {
+  animation: el-message-box-fade-in .3s;
+}
+
+.el-message-box-fade-leave-active {
+  animation: el-message-box-fade-out .3s;
+}
+
+@keyframes el-message-box-fade-in {
+  0% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes el-message-box-fade-out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+}
