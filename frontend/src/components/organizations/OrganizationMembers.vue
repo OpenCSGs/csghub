@@ -163,6 +163,8 @@
   import { ref, onMounted } from 'vue'
   import { useCookies } from 'vue3-cookies'
   import { useI18n } from 'vue-i18n'
+  import useUserStore from '../../stores/UserStore'
+  const userStore = useUserStore()
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -228,12 +230,26 @@
         message: t('organization.members.deleteSuccess'),
         type: 'success'
       })
+      currentUserRole()
       fetchMembers()
     } else {
       ElMessage({
         message: error.value.msg,
         type: 'warning'
       })
+    }
+  }
+  const currentUserRole = async () => {
+    const orgIsAdminEndpoint = `/organization/${organization.value.name}/members/${userStore.username}`
+    const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
+
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      if(!body.data){
+        window.location.href = '/'
+      }
     }
   }
 
