@@ -353,8 +353,8 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' });
       setTimeout(() => {
-        window.location.href = '/prompts/library';
-      }, 500);
+        window.location.href = document.referrer || '/prompts/library'
+      }, 1000);
       return true;
     }
   }
