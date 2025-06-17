@@ -38,7 +38,7 @@
         <div class="flex items-center text-sm">
           <div class="flex items-center mr-2">
             <el-avatar :icon="UserFilled" :size="24" class="mr-2" />
-            <span>{{ commit.committer_name }}</span>
+            <span>{{ commit.author_name }}</span>
           </div>
           <div class="text-gray-500 text-sm">
             {{ format(beiJingTimeParser(commit.committer_date), locale == 'en' ? 'en_US' : 'zh_CN') }}
