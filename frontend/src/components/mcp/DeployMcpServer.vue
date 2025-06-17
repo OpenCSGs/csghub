@@ -144,38 +144,6 @@
           />
         </el-form-item>
 
-        <el-form-item
-          class="w-full !mb-0"
-          :label="$t('application_spaces.new.coverImage')"
-        >
-          <div class="flex-1">
-            <el-upload
-              :class="`${!imageUploaded ? 'h-auto' : 'hide'}`"
-              :limit="1"
-              v-model:file-list="images"
-              list-type="picture-card"
-              :headers="{}"
-              drag
-              accept="image/png, image/jpeg"
-              :data="{ namespace: 'application_space' }"
-              action="/internal_api/upload?check_image=true"
-              :before-upload="handleBeforeUpload"
-              :on-remove="handleRemoveImage"
-              :on-success="handleUploadSuccess"
-              :on-error="handleUploadError"
-            >
-              <div class="flex flex-col items-center">
-                <SvgIcon name="space_upload" />
-                <div class="el-upload__text">
-                  <div>{{ $t('application_spaces.new.coverImageDesc1') }}</div>
-                  <div class="font-light text-xs">
-                    {{ $t('application_spaces.new.coverImageDesc2') }}
-                  </div>
-                </div>
-              </div>
-            </el-upload>
-          </div>
-        </el-form-item>
         <el-divider class="!my-[18px]" />
         <el-form-item
           :label="t('application_spaces.new.cluster')"
@@ -293,8 +261,6 @@
 
   const userStore = useUserStore()
   const dataFormRef = ref(null)
-  const imageUploaded = ref(false)
-  const images = ref([])
   const { t } = useI18n()
   const nameRule = inject('nameRule')
   const mcpEnv = ref([])
@@ -477,38 +443,6 @@
     }
   }
 
-  const handleBeforeUpload = (file) => {
-    const types = ['image/png', 'image/jpeg', 'image/jpg']
-
-    if (!types.includes(file.type)) {
-      ElMessage.warning(t('all.fileTypeError'))
-      return false
-    }
-
-    if (file.size / 1024 > 2000) {
-      ElMessage.warning(t('all.fileTooLarge'))
-      return false
-    }
-
-    return true
-  }
-
-  const handleRemoveImage = () => {
-    dataForm.value.cover_image = ''
-    imageUploaded.value = false
-  }
-
-  const handleUploadSuccess = (res) => {
-    dataForm.value.cover_image = res.url
-    imageUploaded.value = true
-  }
-
-  const handleUploadError = (error) => {
-    imageUploaded.value = false
-    const e = JSON.parse(error.message)
-    ElMessage.warning(e.error)
-  }
-
   const handleSubmit = () => {
     loading.value = true
     dataFormRef.value
@@ -549,7 +483,6 @@
       namespace: dataForm.value.owner,
       license: dataForm.value.license,
       description: dataForm.value.desc,
-      cover_image_url: dataForm.value.cover_image,
       resource_id: dataForm.value.cloud_resource,
       cluster_id: dataForm.value.space_cluster,
       private: dataForm.value.visibility === 'private',
@@ -610,15 +543,8 @@
       width: 100%;
     }
   }
-  :deep(.hide .el-upload.el-upload--picture-card) {
-    display: none;
-  }
 
   :deep(.el-input .el-input__wrapper) {
     border-radius: var(--border-radius-md);
-  }
-  :deep(.el-upload--picture-card) {
-    border: 0px;
-    background-color: unset;
   }
 </style>
