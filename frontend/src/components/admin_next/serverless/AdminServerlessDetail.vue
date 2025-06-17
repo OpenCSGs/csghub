@@ -74,6 +74,12 @@
       <template #footer>
         <div class="flex gap-[16px]">
           <div class="flex gap-4">
+            <CsgButton
+              v-if="serverlessInfo.status && serverlessInfo.status === 'Stopped'"
+              class="btn btn-danger btn-sm"
+              :name="$t('all.delete')"
+              @click="removeServerless"
+            />
             <router-link
               :to="`/admin_panel/serverless/${route.params.namespace}/${route.params.name}/${route.params.id}/edit`"
             >
@@ -106,7 +112,7 @@
   import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
   import useFetchApi from '../../../packs/useFetchApi'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import AdminServerlessLogs from './AdminServerlessLogs.vue'
 
@@ -158,6 +164,43 @@
     }
   }
 
+  const removeServerless = async () => {
+    try {
+      await ElMessageBox.confirm(
+        t('admin.removeTips'),
+        t('admin.removeTitle'),
+        {
+          confirmButtonText: t('all.confirm'),
+          cancelButtonText: t('all.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          deleteServerless()
+        })
+        .catch(() => {
+          console.log('cancel')
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const deleteServerless = async () => {
+    const { namespace, name } = route.params;
+    const removeData = {
+        namespace,
+        name
+    };
+    const options = { body: JSON.stringify(removeData) }
+    const url = `/models/${route.params.namespace}/${route.params.name}/serverless`
+    const { error } = await useFetchApi(url, options).delete().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      window.location.href = `/admin_panel/serverless`
+    }
+  }
   onMounted(() => {
     fetchServerless()
   })
