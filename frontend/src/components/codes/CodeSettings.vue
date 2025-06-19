@@ -225,8 +225,8 @@
         } else {
           ElMessage.success(this.$t('all.delSuccess'))
           setTimeout(() => {
-            window.location.href = '/codes'
-          }, 500)
+            window.location.href = document.referrer || '/codes'
+          }, 1000)
           return true
         }
       },
