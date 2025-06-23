@@ -2,8 +2,8 @@
   <div class="relative repo-tabs-child">
     <el-tabs
       v-model="activeName"
-      :key="activeName"
       @tabClick="handleTabClick"
+      :before-leave="handleBeforeLeave"
     >
       <!-- repo/endpoint summary -->
       <el-tab-pane
@@ -134,6 +134,15 @@
   });
 
   const activeName = ref(repoTab.tab)
+
+  const handleBeforeLeave = (newTab, oldTab) => {
+    // 在这里记录上一个 tab 的位置
+    setRepoTab({
+      ...repoTab,
+      previousTab: oldTab
+    })
+    return true
+  }
 
   watch(activeName, (newTab) => {
     if (repoTab.tab !== newTab) {
