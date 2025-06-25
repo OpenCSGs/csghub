@@ -1,29 +1,31 @@
 <template>
   <el-input
     v-model="taskTagFilterInput"
-    class="mt-[28px] mb-4"
+    class="mt-7 mb-4"
     size="large"
     :placeholder="$t('all.filterTags')"
     :prefix-icon="Search" />
 
-  <div v-show="activeCategory === 'task' && repoType !== 'mcp'">
+  <div v-show="activeCategory === 'task' && repoType !== 'mcp' && (taskTagFilterInput === '' || hasMatchingTaskTags)">
     <div class="">
       <div v-for="(value, key) in filteredTaskTags">
-        <h3 class="text-gray-500 text-xs my-[16px]">
-          {{ $t(`tags.${key}`) }}
-        </h3>
-        <div class="flex gap-[8px] flex-wrap">
-          <TaskTagItem
-            v-for="tag in value"
-            :tag="tag"
-            :active="activeTags['task']?.includes(tag.name)"
-            @handleTagClick="handleTagClick" />
-        </div>
+        <template v-if="taskTagFilterInput === '' || value.length > 0">
+          <h3 v-if="getTranslatedTag(key)" class="text-gray-500 text-xs my-4">
+            {{ $t(`tags.${key}`) }}
+          </h3>
+          <div v-if="getTranslatedTag(key)" class="flex gap-2 flex-wrap">
+            <TaskTagItem
+              v-for="tag in value"
+              :tag="tag"
+              :active="activeTags['task']?.includes(tag.name)"
+              @handleTagClick="handleTagClick" />
+          </div>
+        </template>
       </div>
     </div>
   </div>
 
-  <div v-show="activeCategory === 'task' && repoType === 'mcp'">
+  <div v-show="activeCategory === 'task' && repoType === 'mcp' && (taskTagFilterInput === '' || filteredTags.length > 0)">
     <div class="flex gap-1 flex-wrap">
       <TaskTagItem
         v-for="tag in filteredTags"
@@ -34,8 +36,8 @@
     </div>
   </div>
 
-  <div v-show="activeCategory === 'framework'">
-    <div class="flex gap-[8px] flex-wrap">
+  <div v-show="activeCategory === 'framework' && (taskTagFilterInput === '' || filteredTags.length > 0)">
+    <div class="flex gap-2 flex-wrap">
       <PyTorch
         @setActiveFrameworkTag="handleTagClick"
         :active="activeTags['framework']?.includes('pytorch')" />
@@ -63,8 +65,8 @@
     </div>
   </div>
 
-  <div v-show="activeCategory === 'language'">
-    <div class="flex gap-[8px] flex-wrap">
+  <div v-show="activeCategory === 'language' && (taskTagFilterInput === '' || filteredTags.length > 0)">
+    <div class="flex gap-2 flex-wrap">
       <LanguageTagItem
         v-for="languageTag in filteredTags"
         :tag="languageTag"
@@ -73,7 +75,7 @@
     </div>
   </div>
 
-  <div v-show="activeCategory === 'license'">
+  <div v-show="activeCategory === 'license' && (taskTagFilterInput === '' || filteredTags.length > 0)">
     <div class="flex gap-1 flex-wrap">
       <LicenseTagItem
         v-for="licenseTag in filteredTags"
@@ -83,7 +85,7 @@
     </div>
   </div>
 
-  <div v-show="isGeneralCategory">
+  <div v-show="isGeneralCategory && (taskTagFilterInput === '' || filteredTags.length > 0)">
     <div class="flex gap-1 flex-wrap">
       <TagItem
         v-for="tag in filteredTags"
@@ -171,4 +173,17 @@
     )
     return matchedTags
   }
+
+  const getTranslatedTag = (key) => {
+      const translation = t(`tags.${key}`);
+      let ret = translation !== 'tags.' + key && translation !== '';
+      return ret;
+  }
+
+  const hasMatchingTaskTags = computed(() => {
+    if (props.repoType === 'mcp') {
+      return false;
+    }
+    return Object.values(props.taskTags).some(tags => tags.length > 0);
+  });
 </script>
