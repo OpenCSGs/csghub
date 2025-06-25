@@ -18,9 +18,7 @@
         stroke-linejoin="round" />
     </svg>
     {{
-      tag.show_name
-        ? $t(`languages.${tag.show_name}`)
-        : tag.name
+      tag.show_name || tag.name
     }}
   </span>
 </template>
