@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-white flex-col pt-[32px] pb-[60px]">
+  <div class="flex bg-white flex-col pt-8 pb-15">
     <div class="flex flex-wrap gap-1">
       <TagCategory
         v-for="category in avaliableCategories"
