@@ -99,6 +99,7 @@
 
 <script setup>
   import { ref, computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import { Search } from '@element-plus/icons-vue'
   import PyTorch from './frameworks/PyTorch.vue'
   import TensorFlow from './frameworks/TensorFlow.vue'
@@ -120,6 +121,8 @@
     tags: Array,
     repoType: String,
   })
+
+  const { t } = useI18n()
 
   const emit = defineEmits(['setActiveTag'])
 
