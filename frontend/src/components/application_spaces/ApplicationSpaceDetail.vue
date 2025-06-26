@@ -366,12 +366,18 @@
           }
           
           if (ev.event === 'Build') {
-            appendLog(buildLogDiv, ev.data, buildLogLineNum);
+            appendLog(buildLogDiv, ev.data, buildLogLineNum, buildLogBlocks, { value: lastBuildLogTime })
             nextTick(() => {
               scrollToBottom();
             });
           } else if (ev.event === 'Container') {
-            appendLog(containerLogDiv, ev.data, containerLogLineNum);
+            const lines = ev.data.split('\n');
+            lines.forEach(line => {
+              if (line.trim()) {
+                appendLog(containerLogDiv, line, containerLogLineNum, containerLogBlocks, { value: lastContainerLogTime })
+              }
+            });
+
             nextTick(() => {
               scrollToBottom();
             });
@@ -405,33 +411,88 @@
     }
   });
 
-  const appendLog = (refElem, data, refLineNum) => {
-    // Create the div element
-    const divNode = document.createElement('div')
-    divNode.className = 'flex'
+  // 日志块缓存和最后时间戳
+  const buildLogBlocks = ref([]) // [{ time: '03s', lines: ['内容1', '内容2'] }]
+  const containerLogBlocks = ref([])
+  let lastBuildLogTime = ''
+  let lastContainerLogTime = ''
 
-    // Create the first p element
-    const pNode1 = document.createElement('p')
-    pNode1.className = 'pr-6 pt-2'
-    pNode1.innerHTML = `${refLineNum.value}:`
-
-    // Create the second p element
-    const pNode2 = document.createElement('p')
-    pNode2.className = 'pt-2'
-    pNode2.innerHTML = `${data.replace(/\\r/g, '<br>')}`
-
-    // Append the p elements to the div element
-    divNode.appendChild(pNode1)
-    divNode.appendChild(pNode2)
-
-    if (refElem.value) {
-      refElem.value.appendChild(divNode)
-      refLineNum.value = refLineNum.value + 1
-      // 只有在用户处于底部时才自动滚动
-      nextTick(() => {
-        scrollToBottom()
-      })
+  const appendLog = (refElem, data, refLineNum, logBlocksRef, lastLogTimeRef) => {
+    // ANSI 转 HTML 简单实现
+    function ansiToHtml(text) {
+      const ansiMap = {
+        '0': '</span>', // reset
+        '31': '<span style="color:#e25555">', // red
+        '32': '<span style="color:#4caf50">', // green
+        '33': '<span style="color:#ffb300">', // yellow
+        '34': '<span style="color:#42a5f5">', // blue
+        '35': '<span style="color:#ab47bc">', // magenta
+        '36': '<span style="color:#26c6da">', // cyan
+        '37': '<span style="color:#bdbdbd">', // white/gray
+      };
+      return text.replace(/\x1b\[(\d+)m/g, (match, code) => ansiMap[code] || '');
     }
+    // 提取时间戳（如 [003s] 或 [0107]）
+    const timeMatch = data.match(/\[(\d+s?|\d{4})\]/)
+    let timeStr = ''
+    if (timeMatch) {
+      timeStr = timeMatch[1]
+      // 格式化为 03s 或 0107
+      if (/^\d+s$/.test(timeStr)) {
+        timeStr = timeStr.padStart(3, '0')
+      }
+    }
+    // 处理内容，去掉时间戳部分
+    let content = data.replace(/\[(\d+s?|\d{4})\]\s*/, '')
+    content = ansiToHtml(content.replace(/\\r/g, '<br>'))
+    // 合并到同一时间块
+    if (timeStr && lastLogTimeRef.value === timeStr && logBlocksRef.value.length > 0) {
+      logBlocksRef.value[logBlocksRef.value.length - 1].lines.push(content)
+    } else if (timeStr) {
+      logBlocksRef.value.push({ time: timeStr, lines: [content] })
+      lastLogTimeRef.value = timeStr
+    } else {
+      // 没有时间戳，单独作为一块
+      logBlocksRef.value.push({ time: '', lines: [content] })
+      lastLogTimeRef.value = ''
+    }
+    // 重新渲染
+    renderLogBlocks(refElem, logBlocksRef)
+    refLineNum.value = logBlocksRef.value.reduce((acc, b) => acc + b.lines.length, 0)
+    nextTick(() => {
+      scrollToBottom()
+    })
+  }
+
+  // 渲染日志块
+  function renderLogBlocks(refElem, logBlocksRef) {
+    if (!refElem.value) return
+    refElem.value.innerHTML = ''
+    let lineNum = 0
+    logBlocksRef.value.forEach(block => {
+      const blockDiv = document.createElement('div')
+      blockDiv.className = 'mb-2'
+      if (block.time) {
+        const timeDiv = document.createElement('div')
+        timeDiv.className = 'text-base text-gray-400 mb-1 flex items-center'
+        timeDiv.innerHTML = `⏱ <span class='ml-1'>${block.time}</span>`
+        blockDiv.appendChild(timeDiv)
+      }
+      block.lines.forEach(line => {
+        const lineDiv = document.createElement('div')
+        lineDiv.className = 'flex items-start'
+        // 在INFO/WARN/ERROR等类型和内容之间加4px间距
+        let lineHtml = line
+        // 匹配以INFO/WARN/ERROR/DEBUG等大写单词开头的内容，后跟内容
+        lineHtml = lineHtml.replace(/^(<span[^>]*>)*(INFO|WARN|ERROR|DEBUG|TRACE|FATAL|NOTICE|WARNING)(<\/span[^>]*>)*([\s\S]*?)(?=<|$)/, (match, p1, type, p3, rest) => {
+          return `${p1 || ''}${type}${p3 || ''}<span style='display:inline-block;width:4px'></span>${rest || ''}`
+        })
+        lineDiv.innerHTML = `<span class='mr-1 text-base text-gray-400' style='min-width:2.5em;display:inline-block;'>${lineNum}:</span><span class='mr-2 text-base'>•</span><span class='text-base'>${lineHtml}</span>`
+        blockDiv.appendChild(lineDiv)
+        lineNum++
+      })
+      refElem.value.appendChild(blockDiv)
+    })
   }
 
   const downloadLog = () => {
