@@ -314,7 +314,7 @@
     // index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`"
     const pathTmp = path.includes('/') ? path?.slice(1) : path
     setRepoTab({
-      actionName: index === breadcrumb.length - 1 ? 'blob' : 'files',
+      actionName: index === breadcrumb.value.length - 1 ? 'blob' : 'files',
       lastPath: pathTmp
     }) 
     fetchFileContent()
