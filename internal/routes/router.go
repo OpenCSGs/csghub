@@ -39,18 +39,22 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		log.Fatalf("failed to create server: %v", err)
 	}
 
-	logFilePath := "./log/app.log"
-	err = os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
-	if err != nil {
-		log.Fatalf("Failed to create directory: %v", err)
+	writer := os.Stdout
+	if svcCtx.Config.AppEnv == "development" {
+		logFilePath := "./log/app.log"
+		err = os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
+		if err != nil {
+			log.Fatalf("Failed to create directory: %v", err)
+		}
+
+		f, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		if err != nil {
+			log.Fatalf("Can not open log file：%v", err)
+		}
+		writer = f
 	}
 
-	f, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatalf("Can not open log file：%v", err)
-	}
-
-	lh := slog.NewJSONHandler(f, &slog.HandlerOptions{
+	lh := slog.NewJSONHandler(writer, &slog.HandlerOptions{
 		AddSource: false,
 		Level:     slog.LevelInfo,
 	})
