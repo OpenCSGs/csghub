@@ -4,6 +4,7 @@ export const tags = {
   audio_processing: "Audio Processing",
   multimodal: "Multimodal",
   text_processing: "Text Processing",
+  scientific_computing: "Scientific Computing",
   graphics: "Graphics",
   audio: "Audio",
   video: "Video",
