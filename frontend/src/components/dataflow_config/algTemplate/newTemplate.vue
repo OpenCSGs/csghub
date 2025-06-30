@@ -1,518 +1,757 @@
 <template>
-  <div class="text-left h-full p-[32px] overflow-auto bg-[#FFF]">
+  <div class="text-left w-full h-full pl-8 py-8 overflow-auto bg-white">
     <div class="headerMenu flex items-center justify-start mb-[20px]">
-      <SvgIcon class="w-[20px] h-[20px]" name="homeIcon" />
-      <SvgIcon class="w-[20px] h-[20px] mx-[8px]" name="homeIconDivider" />
-      <p class="text-[#344054] text-[14px] font-medium">算法模板</p>
-      <SvgIcon class="w-[20px] h-[20px] mx-[8px]" name="homeIconDivider" />
-      <p class="text-[#344054] text-[14px] font-medium">{{title}}</p>
+      <SvgIcon
+        class="w-5 h-5"
+        name="dataflow_homeIcon"
+      />
+      <SvgIcon
+        class="w-5 h-5 mx-2"
+        name="dataflow_homeIcon_divider"
+      />
+      <p
+        class="text-gray-700 text-sm font-medium cursor-pointer hover:text-brand-700"
+        @click="navigateToPage"
+      >
+        {{ t('dataPipelines.algorithmTemplate') }}
+      </p>
+      <SvgIcon
+        class="w-5 h-5 mx-2"
+        name="dataflow_homeIcon_divider"
+      />
+      <p class="text-brand-700 text-sm font-medium">{{ title }}</p>
     </div>
-    <p class="text-[#101828] text-[30px] font-medium">{{title}}</p>
-    <p class="text-[#475467] text-[16px] font-light mt-[2px]">
-      数据处理可支持用户使用不同的模型算子，针对大模型所用的数据进行处理，包括数据清洗、自动数据增强及分析等处理方式，用户可通过数据处理来获取更高质量的数据
+    <p class="text-gray-900 text-3xl font-medium">{{ title }}</p>
+    <p class="text-gray-600 text-md font-light mt-[2px]">
+      {{ t('dataPipelines.dataProcessingDescription') }}
     </p>
-    <div class="mainOption mt-[32px] flex items-center justify-between">
-      <el-form :model="form" label-width="auto" label-position="top">
-        <el-form-item label="模板名称">
-          <el-input style="width: 640px" v-model="form.git_server_url" />
+    <div class="mainOption mt-8 flex items-center justify-between">
+      <el-form
+        :model="subForm"
+        ref="ruleFormRef"
+        :rules="rules"
+        label-width="auto"
+        label-position="top"
+        class="w-[640px] sm:w-full"
+      >
+        <el-form-item
+          :label="t('dataPipelines.templateName')"
+          prop="name"
+        >
+          <el-input
+            style="width: 100%"
+            v-model="subForm.name"
+            @blur="validateTemplateNameOnBlur"
+          />
         </el-form-item>
-        <el-form-item label="模板描述">
-          <el-input style="width: 640px" :rows="5" type="textarea" :autosize="false" v-model="form.git_server_url" />
-        </el-form-item>
-        <el-form-item label="任务类型">
-          <el-select v-model="form.private_token" class="w-[640px]" :placeholder="t('common.select')">
-            <el-option :label="t('pages.option1')" value="strict" />
-            <el-option :label="t('pages.option2')" value="moderate" />
-            <el-option :label="t('pages.option3')" value="lenient" />
+        <el-form-item
+          :label="t('dataPipelines.taskType')"
+          prop="type"
+        >
+          <el-select
+            v-model="subForm.type"
+            style="width: 100%"
+            :placeholder="t('dataPipelines.toSel')"
+          >
+            <el-option
+              :label="t('dataPipelines.data_refine')"
+              value="data_refine"
+            />
+            <el-option
+              :label="t('dataPipelines.data_generation')"
+              value="data_generation"
+            />
+            <el-option
+              :label="t('dataPipelines.data_enhancement')"
+              value="data_enhancement"
+            />
           </el-select>
+        </el-form-item>
+        <el-form-item :label="t('dataPipelines.templateDescription')">
+          <el-input
+            style="width: 100%"
+            :rows="5"
+            type="textarea"
+            :autosize="false"
+            v-model="subForm.description"
+          />
         </el-form-item>
       </el-form>
     </div>
-    <div class="flex items-start justify-between border-t-[1px] border-[#EAECF0] mt-[24px] pb-[32px]">
-      <div class="leftContBox border-r-[1px] border-[#EAECF0] w-[36%] pt-[32px] pr-[32px]">
+    <div
+      class="flex items-start justify-between border-t border-gray-200 mt-6 pb-8 md:block md:border-none"
+    >
+      <div
+        class="leftContBox border-r border-gray-200 w-[50%] pt-8 pr-8 md:w-full md:border-none md:p-0 md:mb-6"
+      >
         <div class="borderBox">
-          <div class="p-[20px]">
-            <p class="text-[#101828] text-[18px] font-medium">预置算子</p>
-            <p class="text-[#475467] text-[14px] font-light mb-[12px]">目前支持多种 Mapper、Filter、Deduplicator 类型的预置算子</p>
-          <el-form :model="form" label-width="auto" label-position="top">
-            <el-form-item label="搜索预置算子">
-              <el-input style="width: 100%" v-model="form.git_server_url" />
-            </el-form-item>
-            <el-form-item label="场景">
-              <el-select v-model="form.private_token" class="w-full" :placeholder="t('common.select')">
-                <el-option :label="t('pages.option1')" value="strict" />
-                <el-option :label="t('pages.option2')" value="moderate" />
-                <el-option :label="t('pages.option3')" value="lenient" />
-              </el-select>
-            </el-form-item>
-          </el-form>  
+          <div class="p-5">
+            <p class="text-gray-900 text-lg font-medium">
+              {{ t('dataPipelines.predefinedOperator') }}
+            </p>
+            <p class="text-gray-600 text-sm font-light mb-3">
+              {{ t('dataPipelines.peratorTip') }}
+            </p>
+            <el-form
+              :model="form"
+              label-width="auto"
+              label-position="top"
+              @submit.prevent
+            >
+              <el-form-item
+                :label="`${t('dataPipelines.search')}${t(
+                  'dataPipelines.predefinedOperator'
+                )}`"
+              >
+                <el-input
+                  style="width: 100%"
+                  v-model="form.searchStr"
+                  @keyup.enter="searchListFun"
+                  @clear="searchListFun"
+                  :placeholder="`${t('dataPipelines.toInput')}${t(
+                    'dataPipelines.operatorName'
+                  )}`"
+                  clearable
+                />
+              </el-form-item>
+            </el-form>
           </div>
           <el-table
             :data="dataflowData"
             stripe
+            max-height="500"
             class="rounded tableCont"
-            :empty-text="t('common.noData')"
+            :empty-text="t('dataPipelines.noData')"
             header-cell-class-name="tableHeader noBgHeader"
           >
-            <el-table-column prop="name" label="预置算子" />
-            <el-table-column prop="type" label="场景" />
-            <el-table-column label="添加算子">
+            <el-table-column
+              prop="name"
+              :label="t('dataPipelines.predefinedOperator')"
+              min-width="120"
+            />
+            <el-table-column
+              prop="type"
+              :label="t('dataPipelines.type')"
+              min-width="100"
+            />
+            <el-table-column
+              :label="t('dataPipelines.addOperator')"
+              min-width="120"
+              fixed="right"
+            >
               <template #default="scope">
-                <el-switch v-model="scope.row.isOpen" style="--el-switch-on-color: #3250bd" @change="toggleOpen(scope.row)"/>
+                <el-switch
+                  v-model="scope.row.isOpen"
+                  style="--el-switch-on-color: #3250bd"
+                  @change="toggleOpen(scope.row)"
+                />
               </template>
             </el-table-column>
           </el-table>
         </div>
-        
       </div>
-      <div class="pt-[32px] pl-[32px] flex-1">
+      <div class="pt-8 pl-8 w-[50%] md:w-full md:p-0">
         <div class="borderBox">
-          <div class="py-[20px] px-[24px]">
-            <p class="text-[18px] text-[#101828] font-medium">我的算法模板</p>
+          <div class="py-5 px-6">
+            <p class="text-lg text-gray-900 font-medium">
+              {{ t('dataPipelines.myAlgorithmTemplate') }}
+            </p>
           </div>
           <div class="flex flex-col dragCont">
             <el-table
               :data="tableData"
+              row-key="name"
               class="rounded tableCont"
-              :empty-text="t('common.noData')"
+              :empty-text="t('dataPipelines.noData')"
               header-cell-class-name="tableHeader"
-              @row-drag-end="onRowDragEnd"
             >
-              <el-table-column width="120" label="执行顺序">
+              <el-table-column
+                min-width="180"
+                :label="t('dataPipelines.executionOrder')"
+              >
                 <template #default="{ $index }">
-                  <div class="flex items-center justify-start gap-[10px]">
+                  <div class="flex items-center justify-start gap-2.5">
                     <span>{{ $index + 1 }}</span>
-                    <div class="drag-handle" @mousedown.stop="">
-                      <SvgIcon class="w-[16px] h-[16px]" name="drag" />
+                    <div
+                      class="drag-handle"
+                      @mousedown.stop=""
+                    >
+                      <SvgIcon
+                        class="w-4 h-4"
+                        name="dataflow_drag"
+                      />
                     </div>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="type" label="算子类型" />
-              <el-table-column label="算子配置">
-            <template #default="scope">
-              <div v-if="scope.row.params.length > 0">
-                <div v-for="(item, index) in scope.row.params" :key="index" class="flex flex-col gap-[12px] typeItemCont">
-                  <el-slider
-                    v-if="item.type == 'PositiveFloat'"
-                    v-model="scope.row.params.value"
-                    :min="scope.row.params[0].value"
-                    range
-                    :max="scope.row.params[1].value"
-                  />
-                  <el-select
-                    v-if="item.type == 'STRING'"
-                    v-model="item.value"
-                    class="w-full"
-                    :placeholder="t('common.select')"
-                  >
-                    <el-option
-                      v-for="selItem in item.option_values"
-                      :key="selItem.key"
-                      :label="selItem.label"
-                      :value="selItem.key"
-                    />
-                  </el-select>
-                  <el-input v-if="item.type=='FLOAT'" type="number" step="0.01" style="width: 100%" v-model="item.value" />
-                  <el-checkbox v-if="item.type=='BOOLEAN'" v-model="item.value" :label="item.name" size="small" class="block" />
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-              <el-table-column prop="description" label="描述" />
-              <el-table-column label="效果预览">
-              <template #default="scope">
-                <p class="text-[#101828] text-[14px] line-through">{{ scope.row.samples?.before }}</p>
-                <p class="text-[#101828] text-[14px]">{{ scope.row.samples?.after }}</p>
-              </template>
-            </el-table-column>
+              <el-table-column
+                prop="name"
+                :label="t('dataPipelines.predefinedOperator')"
+                width="200"
+              />
+              <el-table-column
+                prop="type"
+                :label="t('dataPipelines.operatorType')"
+                width="200"
+              />
+              <el-table-column
+                :label="t('dataPipelines.operatorConfiguration')"
+                min-width="300"
+              >
+                <template #default="scope">
+                  <div v-if="scope.row.params.length > 0">
+                    <div
+                      v-for="(item, paramIndex) in scope.row.params"
+                      :key="paramIndex"
+                      class="flex flex-col gap-3 p-1 typeItemCont"
+                    >
+                      <div v-if="item.type == 'from_2_to_20'">
+                        <el-slider
+                          v-model="scope.row.params[0].value"
+                          size="small"
+                          :min="2"
+                          :max="scope.row.params[1].value"
+                          style="width: 98%"
+                        />
+                        <p
+                          class="text-gray-900 text-sm mt-3 mb-5"
+                        >
+                          {{ scope.row.params[0].name }}
+                        </p>
+                        <el-slider
+                          v-model="scope.row.params[1].value"
+                          size="small"
+                          :min="scope.row.params[0].value"
+                          :max="20"
+                          style="width: 98%"
+                        />
+                        <p
+                          class="text-gray-900 text-sm mt-3 mb-5"
+                        >
+                          {{ scope.row.params[1].name }}
+                        </p>
+                      </div>
+                      <div
+                        v-if="
+                          [
+                            'FLOAT',
+                            'STRING',
+                            'INTEGER',
+                            'PositiveFloat',
+                            'ClosedUnitInterval',
+                            'LIST'
+                          ].includes(item.type)
+                        "
+                      >
+                        <el-select
+                          v-if="
+                            item.type == 'STRING' &&
+                            Array.isArray(item.option_values)
+                          "
+                          v-model="item.value"
+                          class="w-full"
+                          :placeholder="item.name"
+                        >
+                          <el-option
+                            v-for="selItem in item.option_values"
+                            :key="selItem.key"
+                            :label="selItem.label"
+                            :value="selItem.key"
+                          />
+                        </el-select>
+                        <el-input
+                          v-if="
+                            item.type == 'STRING' &&
+                            !Array.isArray(item.option_values)
+                          "
+                          :placeholder="`${item.name}`"
+                          style="width: 100%"
+                          v-model="item.value"
+                        />
+                        <el-input
+                          v-if="item.type == 'FLOAT'"
+                          type="number"
+                          :step="0.01"
+                          :precision="2"
+                          style="width: 100%"
+                          v-model="item.value"
+                        />
+                        <el-input
+                          v-if="item.type == 'INTEGER'"
+                          type="number"
+                          :min="0"
+                          :precision="0"
+                          :step="1"
+                          style="width: 100%"
+                          v-model="item.value"
+                        />
+                        <el-input
+                          v-if="item.type == 'PositiveFloat'"
+                          type="number"
+                          :min="0"
+                          style="width: 100%"
+                          v-model="item.value"
+                        />
+                        <el-slider
+                          v-if="item.type == 'ClosedUnitInterval'"
+                          size="small"
+                          v-model="item.value"
+                          :min="0"
+                          :max="1"
+                          :step="0.01"
+                          style="width: 98%"
+                        />
+                        <div
+                          v-if="item.type == 'LIST'"
+                          class="flex flex-wrap gap-2 tagInputCont"
+                        >
+                          <el-tag
+                            v-for="tag in item.value"
+                            :key="tag"
+                            closable
+                            :disable-transitions="false"
+                            @close="removeTag(tag, item)"
+                          >
+                            {{ tag }}
+                          </el-tag>
+                          <el-input
+                            ref="InputRef"
+                            v-model="item.option_values"
+                            :placeholder="item.name"
+                            style="width: 100%"
+                            @keyup.enter="handleInputConfirm(item)"
+                          />
+                        </div>
+                        <p
+                          class="text-gray-900 text-sm mt-3 mb-5"
+                        >
+                          {{ item.name }}
+                        </p>
+                      </div>
+                      <el-checkbox
+                        v-if="item.type == 'BOOLEAN'"
+                        v-model="item.value"
+                        :label="item.name"
+                        class="block my-[10px]"
+                      />
+                    </div>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="description"
+                :label="t('dataPipelines.description')"
+                min-width="240"
+              />
+              <el-table-column
+                :label="t('dataPipelines.previewBefore')"
+                min-width="240"
+              >
+                <template #default="scope">
+                  <p class="text-gray-900 text-sm">
+                    {{ scope.row.samples?.before }}
+                  </p>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :label="t('dataPipelines.previewAfter')"
+                min-width="240"
+              >
+                <template #default="scope">
+                  <p class="text-gray-900 text-sm">
+                    {{ scope.row.samples?.after }}
+                  </p>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-end gap-[14px] pt-[32px] bottomBtnGroup">
-      <el-button>取消</el-button>
-      <el-button type="primary">创建完成</el-button>
+    <div
+      class="flex items-center justify-end gap-2 pt-8 bottomBtnGroup"
+    >
+      <CsgButton 
+        class="btn btn-secondary-gray btn-md whitespace-nowrap"
+        @click="geback"
+        :name="t('dataPipelines.cancel')"
+      />
+      <CsgButton
+        class="btn btn-primary btn-md whitespace-nowrap"
+        @click="subTemplate"
+        :name="t('dataPipelines.creationCompleted')"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import Sortable from 'sortablejs';
+  import { useRouter, useRoute } from 'vue-router'
+  import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import useFetchApi from '../../../packs/useFetchApi'
+  import zhOps from '../../../locales/zh_js/operator_zh.json'
+  import enOps from '../../../locales/en_js/operator_en.json'
+  import Sortable from 'sortablejs'
 
-import { useI18n } from 'vue-i18n'
+  import { useI18n } from 'vue-i18n'
 
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
+  const dataflowOps = {
+    zh: zhOps,
+    en: enOps
+  }
 
-const testData = {
-  chinese_convert_mapper: {
-    name: 'Chinese Converter',
-    description: '用于在繁体中文、简体中文和日文汉字之间进行转换。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '这是几个简体字，会被转换为繁体字',
-      after: '這是幾個簡體字，會被轉換爲繁體字',
-    },
-    params: [
-      {
-        name: '转换模式',
-        type: 'STRING',
-        option_values: [
-          {
-            key: 's2t',
-            label: '简体转繁体',
-          },
-          {
-            key: 't2s',
-            label: '繁体转简体',
-          },
-          {
-            key: 's2tw',
-            label: '简体转台湾正体',
-          },
-          {
-            key: 'tw2s',
-            label: '台湾正体转简体',
-          },
-          {
-            key: 's2hk',
-            label: '简体转香港繁体',
-          },
-          {
-            key: 'hk2s',
-            label: '香港繁体转简体',
-          },
-          {
-            key: 's2twp',
-            label: '简体转台湾正体（带标点符号）',
-          },
-          {
-            key: 'tw2sp',
-            label: '台湾正体转简体（带标点符号）',
-          },
-          {
-            key: 't2tw',
-            label: '繁体转台湾正体',
-          },
-          {
-            key: 'tw2t',
-            label: '台湾正体转繁体',
-          },
-          {
-            key: 'hk2t',
-            label: '香港繁体转繁体',
-          },
-          {
-            key: 't2hk',
-            label: '繁体转香港繁体',
-          },
-          {
-            key: 't2jp',
-            label: '繁体转日文汉字',
-          },
-          {
-            key: 'jp2t',
-            label: '日文汉字转繁体',
-          },
-        ],
-        value: 't2s',
-      },
-    ],
-  },
-  clean_copyright_mapper: {
-    name: 'Copyright Cleaner',
-    description: '用于删除文本样本开头的版权声明。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '这是一段 /* 多行注释\n注释内容copyright\n*/ 的文本。另外还有一些 // 单行注释。',
-      after: '这是一段  的文本。另外还有一些 // 单行注释。',
-    },
-    params: [],
-  },
-  clean_email_mapper: {
-    name: 'Email Cleaner',
-    description: '用于删除文本样本中的电子邮件地址。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: 'happy day euqdh@cjqi.com',
-      after: 'happy day ',
-    },
-    params: [],
-  },
-  nlpcda_zh_mapper: {
-    name: 'Chinese Augment',
-    description: '使用nlpcda库对中文文本进行简单增强。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '这里一共有5种不同的数据增强方法',
-      after: '这里一共有伍种不同的数据增强方法',
-    },
-    params: [
-      {
-        name: '替换相似单词',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '随机交换单词位置',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '随机删除字符',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '随机交换字符位置',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '替换等效数字',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-    ],
-  },
-  generate_instruction_mapper: {
-    name: 'Instruction Generator',
-    description: '用于生成新的指令文本数据。\n    ',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '',
-      after:
-        '{"messages":[{"content":"You are a helpful assistant","role":"system"},{"content":"哪种文学流派强调通过象征和暗喻探索潜意识思维?","role":"user"},{"content":"现代主义文学流派强调通过象征、暗喻以及非线性叙述等手法，深入探索人物的内心世界与潜意识思维。","role":"assistant"}]}',
-    },
-    params: [
-      {
-        name: '模型名称',
-        type: 'STRING',
-        option_values: [
-          {
-            key: 'Qwen/Qwen-7B-Chat',
-            label: 'Qwen/Qwen-7B-Chat',
-          },
-        ],
-        value: 'Qwen/Qwen-7B-Chat',
-      },
-      {
-        name: '相似度阈值',
-        type: 'FLOAT',
-        option_values: null,
-        value: 0.7,
-      },
-    ],
-  },
-};
-const isOpen = ref(true);
-const dataflowData=ref([])
-const form = ref({
-  git_server_url: '',
-  private_token: '',
-});
-const tableData = ref([]);
+  const dataflowData = ref([])
+  const dataflowDataAll = ref([])
+  const form = ref({
+    searchStr: ''
+  })
+  const subForm = ref({
+    buildin: false,
+    project_name: '',
+    name: '',
+    description: '',
+    type: 'data_refine',
+    process: []
+  })
+  const tableData = ref([])
+  const existingTemplates = ref([])
 
-const router = useRouter();
-const route = useRoute();
-const title = computed(() => {
-  return route.query.type === 'add' ? '新建算法模板' : '修改算法模板';
-});
+  const router = useRouter()
+  const route = useRoute()
+  const index = computed(() => route.query.index)
+  const isAdd = computed(() => route.query.type === 'add')
+  const title = computed(() => {
+    return route.query.type === 'add'
+      ? `${t('dataPipelines.create')}${t('dataPipelines.algorithmTemplate')}`
+      : `${t('dataPipelines.edit')}${t('dataPipelines.algorithmTemplate')}`
+  })
 
-const onEnd = (evt) => {
-  console.log('Dragging ended', evt);
-};
-const sortedData = ref([
-  { name: 'Alice', age: 25 },
-  { name: 'Bob', age: 30 },
-  { name: 'Charlie', age: 35 },
-]);
-const onRowDragEnd = (event) => {
-  const movedItem = tableData.value.splice(event.oldIndex, 1)[0];
-  tableData.value.splice(event.newIndex, 0, movedItem);
-};
+  const navigateToPage = () => {
+    router.push('/datapipelines/algTemplate')
+  }
+  const geback = () => {
+    router.go(-1)
+  }
 
-function toggleOpen(item) {
-  if (item.isOpen) {
-      // 如果 isOpen 为 true，添加到 tableData
-      tableData.value.push(item);
+  function toggleOpen(item) {
+    if (item.isOpen) {
+      tableData.value.push(item)
     } else {
-      // 如果 isOpen 为 false，从 tableData 中移除
-      tableData.value = tableData.value.filter(tableItem => tableItem.key !== item.key);
+      tableData.value = tableData.value.filter(
+        (tableItem) => tableItem.key !== item.key
+      )
     }
-}
-
-// const extractValues = (data) => {
-//   const result = [];
-
-//   // 遍历每个映射器
-//   for (const key in data) {
-//     const mapper = data[key];
-//     result.push({
-//       key: key,
-//       ...data[key],
-//     });
-//   }
-
-//   return result;
-// };
-const dataflowValues = (data) => {
-  const result = [];
-
-  // 遍历每个映射器
-  for (const key in data) {
-    const mapper = data[key];
-    result.push({
-      key: key,
-      isOpen:false,
-      ...data[key],
-    });
   }
 
-  return result;
-};
+  const handleInputConfirm = (item) => {
+    if (item.option_values) {
+      item.value.push(item.option_values)
+    }
+    item.option_values = ''
+  }
+  const removeTag = (tag, item) => {
+    item.value.splice(item.value.indexOf(tag), 1)
+  }
 
-onMounted(() => {
-  // tableData.value = extractValues(testData);
-  dataflowData.value = dataflowValues(testData);
-  
-  const tableBody = document.querySelector('.dragCont .el-table__body-wrapper tbody');
+  const getTemplatesListFun = async () => {
+    const url = '/dataflow/templates'
+    const { data } = await useFetchApi(url).get().json()
+    if (data.value) {
+      const res = data.value
+      // 保存现有模版列表用于重名验证
+      existingTemplates.value = [...res]
+      
+      if (index.value !== null && res[index.value]) {
+        subForm.value = {
+          ...subForm.value,
+          ...res[index.value]
+        }
+        tableData.value = [...res[index.value].process]
+        let ops = dataflowOps[locale.value]
+        tableData.value = tableData.value.map((item) => {
+          if (ops.hasOwnProperty(item.name)) {
+            const op = ops[item.name]
+            if (Array.isArray(op.params) && op.params.length > 0) {
+              const updatedParams = op.params.map(
+                (paramsItem, paramsIndex) => {
+                  return {
+                    ...paramsItem,
+                    value:
+                      item.params[paramsIndex]?.value ?? paramsItem.value,
+                    key: item.params[paramsIndex]?.name ?? paramsItem.name
+                  }
+                }
+              )
+              return {
+                ...item,
+                ...op,
+                params: updatedParams,
+                key: item.name
+              }
+            }
+          }
+          return {
+            ...item,
+            ...(ops.hasOwnProperty(item.name) ? ops[item.name] : item),
+            key: item.name
+          }
+        })
+      }
+    }
+    getOpsListFun()
+  }
 
-  Sortable.create(tableBody, {
-    animation: 150,
-    handle: '.drag-handle', // 拖拽手柄
-    onEnd: onRowDragEnd,
-  });
-});
+  const dataflowValues = (data) => {
+    const result = []
+    let ops = dataflowOps[locale.value]
+    for (const key in data) {
+      const mapper = data[key]
+      let updatedParams = []
+      if (Array.isArray(data[key].params) && data[key].params.length > 0) {
+        updatedParams = data[key].params.map((paramsItem, paramsIndex) => {
+          return {
+            ...paramsItem,
+            ...(ops[key]?.params[paramsIndex] || {}),
+            key: paramsItem.name
+          }
+        })
+      }
+      result.push({
+        ...(ops.hasOwnProperty(key) ? ops[key] : data[key]),
+        key: key,
+        isOpen: false,
+        params: updatedParams
+      })
+    }
 
-onBeforeUnmount(() => {});
+    return result
+  }
 
-// onMounted(() => {
-//   console.log('数据处理')
-// });
+  const getOpsListFun = async () => {
+    const url = '/dataflow/ops'
+    const { data } = await useFetchApi(url).get().json()
+    if (data.value) {
+      const res = data.value
+      dataflowDataAll.value = dataflowValues(res)
+      dataflowData.value = [...dataflowDataAll.value]
+    }
+    if (subForm.value.process.length > 0) {
+      const processNames = subForm.value.process.map((item) => item.name)
+
+      dataflowData.value.forEach((item) => {
+        if (processNames.includes(item.key)) {
+          item.isOpen = true
+        }
+      })
+    }
+  }
+  const searchListFun = async () => {
+    dataflowData.value = dataflowDataAll.value.filter((item) =>
+      item.name.includes(form.value.searchStr)
+    )
+  }
+  function overrideNameByKey(array) {
+    return array.map((item) => {
+      const newItem = {
+        ...item,
+        name: item.key
+      }
+      if (Array.isArray(item.params)) {
+        newItem.params = item.params.map((param) => {
+          return {
+            ...param,
+            name: param.key
+          }
+        })
+      }
+      return newItem
+    })
+  }
+
+  const subTemplate = async () => {
+    ruleFormRef.value.validate(async (valid, fields) => {
+      if (valid) {
+        if (tableData.value.length) {
+          let params = {
+            ...subForm.value,
+            process: overrideNameByKey(tableData.value)
+          }
+          if (isAdd.value) {
+            params.template_id = null
+          }
+          const options = {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params)
+          }
+          const url = '/dataflow/templates'
+          const { data, error } = await useFetchApi(url, options).post().json()
+          if (error.value) {
+            ElMessage({
+              message: `创建失败: ${error.value.msg}`,
+              type: 'error'
+            })
+          } else {
+            ElMessage({
+              message: '创建成功',
+              type: 'success'
+            })
+            window.location.href = '/datapipelines/algTemplate'
+          }
+        } else {
+          ElMessage({
+            message: `${t('dataPipelines.toSel')}${t(
+              'dataPipelines.predefinedOperator'
+            )}`,
+            type: 'error'
+          })
+        }
+      }
+    })
+  }
+
+  // 验证模版名称是否重复
+  const validateTemplateName = (rule, value, callback) => {
+    if (!value) {
+      callback()
+      return
+    }
+    
+    // 如果是编辑模式，排除当前编辑的模版
+    const templatesToCheck = isAdd.value 
+      ? existingTemplates.value 
+      : existingTemplates.value.filter((_, idx) => idx !== parseInt(index.value))
+    
+    const isDuplicate = templatesToCheck.some(template => template.name === value.trim())
+    
+    if (isDuplicate) {
+      callback(new Error(t('dataPipelines.templateNameExists')))
+    } else {
+      callback()
+    }
+  }
+
+  // 模版名称失焦时验证
+  const validateTemplateNameOnBlur = () => {
+    if (ruleFormRef.value) {
+      ruleFormRef.value.validateField('name')
+    }
+  }
+
+  const ruleFormRef = ref(null)
+  const rules = ref({
+    name: [
+      {
+        required: true,
+        message: `${t('dataPipelines.toInput')}${t(
+          'dataPipelines.templateName'
+        )}`,
+        trigger: 'blur'
+      },
+      {
+        validator: validateTemplateName,
+        trigger: 'blur'
+      }
+    ],
+    type: [
+      {
+        required: true,
+        message: `${t('dataPipelines.toSel')}${t('dataPipelines.taskType')}`,
+        trigger: 'change'
+      }
+    ]
+  })
+
+  onMounted(() => {
+    getTemplatesListFun()
+    const tableBody = document.querySelector(
+      '.dragCont .el-table__body-wrapper tbody'
+    )
+    Sortable.create(tableBody, {
+      animation: 300,
+      handle: '.drag-handle',
+      onEnd({ newIndex, oldIndex }) {
+        const [removedItem] = tableData.value.splice(oldIndex, 1)
+        tableData.value.splice(newIndex, 0, removedItem)
+        console.log('newIndex===', newIndex)
+        console.log('oldIndex===', oldIndex)
+        console.log('removedItem===', removedItem)
+      }
+    })
+  })
 </script>
-<style lang="scss" scoped>
-.hoverChange {
-  &:hover {
-    border: 1px solid var(--Gray-300, #d0d5dd);
-    background: var(--Gray-50, #f9fafb);
-    color: #3250bd;
+<style lang="less" scoped>
+  :deep(.tableCont) {
+    .el-button--text {
+      background: transparent !important;
+    }
   }
-  &:active {
-    border: 1px solid var(--Gray-300, #d0d5dd);
+
+  :deep(.el-form--inline) {
+    .el-form-item {
+      margin-right: 12px;
+    }
+  }
+  .borderBox {
+    border-radius: var(--spacing-lg, 12px);
+    border: var(--spacing-none, 1px) solid
+      var(--colors-gray-light-mode-200, #eaecf0);
     background: var(--Base-White, #fff);
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-    color: #3250bd;
+    overflow: hidden;
   }
-  &.delBtn {
-    &:hover,
-    &:active {
-      color: #f87171;
+  :deep(.el-table__header) {
+    background: var(--Gray-50, #f9fafb);
+  }
+  :deep(.el-table) {
+    .el-table__cell {
+      padding: 16px 24px;
     }
   }
-}
-:deep(.settingsTableBtn) {
-  .el-button {
-    padding: 0 !important;
-    margin-left: 20px !important;
-    font-size: 14px !important;
-    color: #667085 !important;
-    font-weight: 400 !important;
-    &:hover {
-      color: #3250bd !important;
+  :deep(.tableCont) {
+    .el-button--text {
+      border: none;
+    }
+    .el-table__cell {
+      font-size: 14px;
+      color: #101828;
+      font-weight: 400;
     }
   }
-}
-
-// :deep(.el-form-item__label){
-//   font-size: 14px;
-//   color: #344054;
-//   font-weight: 400;
-// }
-:deep(.tableCont) {
-  .el-button--text {
-    background: transparent !important;
-  }
-}
-
-:deep(.el-form--inline) {
-  .el-form-item {
-    margin-right: 12px;
-  }
-}
-.dataItemCont {
-  border-radius: var(--spacing-lg, 12px);
-  border: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
-  background: var(--Base-White, #fff);
-  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
-}
-.borderBox {
-  border-radius: var(--spacing-lg, 12px);
-  border: var(--spacing-none, 1px) solid var(--colors-gray-light-mode-200, #eaecf0);
-  background: var(--Base-White, #fff);
-  box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1), 0px 1px 2px 0px rgba(16, 24, 40, 0.06);
-  overflow: hidden;
-}
-:deep(.el-table__header) {
-  background: var(--Gray-50, #f9fafb);
-}
-:deep(.el-table) {
-  .el-table__cell {
-    padding: 16px 24px;
-  }
-}
-:deep(.tableCont) {
-  .el-button--text {
-    border: none;
-  }
-  .el-table__cell {
-    font-size: 14px;
+  :deep(.tableHeader) {
+    font-size: 12px !important;
+    font-weight: normal !important;
     color: #475467;
-    font-weight: 300;
+    padding: 12px 24px !important;
+    border-bottom: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
+    background: var(--Gray-50, #f9fafb) !important;
+    white-space: nowrap;
+    &.noBgHeader {
+      background: transparent !important;
+    }
   }
-}
-:deep(.tableHeader) {
-  font-size: 12px !important;
-  font-weight: normal !important;
-  color: #475467;
-  padding: 12px 24px !important;
-  border-bottom: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
-  background: var(--Gray-50, #f9fafb) !important;
-  white-space: nowrap;
-  &.noBgHeader {
-    background: transparent !important;
-  }
-}
 
-.drag-handle {
-  cursor: move; /* 拖拽句柄效果 */
-  display: inline-block;
-  width: 20px;
-  text-align: center;
-  color: #888;
-  margin-right: 10px;
-}
-.optionBtn {
-  border-radius: 8px;
-border: 1px solid #D0D5DD;
-background: #fff;
-box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-padding: 10px 14px;
-color: #344054;
-font-size: 14px;
-font-weight: 500;
-}
+  .drag-handle {
+    cursor: move;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    color: #888;
+    margin-right: 10px;
+  }
+  .optionBtn {
+    border-radius: 8px;
+    border: 1px solid #d0d5dd;
+    background: #fff;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    padding: 10px 14px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  :deep(.el-table) {
+    .el-table__cell {
+      z-index: 0 !important;
+    }
+  }
 </style>

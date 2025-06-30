@@ -29,6 +29,7 @@ import { errors_page } from './en_js/error';
 import { prompts } from './en_js/prompts';
 import { evaluation } from './en_js/evaluation';
 import { mcps } from './en_js/mcp_servers';
+import { dataPipelines } from './en_js/datapipelines';
 
 export default {
   all,
@@ -62,4 +63,5 @@ export default {
   prompts,
   evaluation,
   mcps,
+  dataPipelines,
 };

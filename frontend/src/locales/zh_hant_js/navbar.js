@@ -95,5 +95,7 @@ export const navbar = {
   profileEdit: "編輯用戶資訊",
   more: "更多",
   autohub:'AutoHub 瀏覽器助手',
-  autohubText:'提供智能對話與自動化的瀏覽器助手'
+  autohubText:'提供智能對話與自動化的瀏覽器助手',
+  dataflowText: '開啟數據集Agentic新範式',
+  datapipelines: '數據工具',
 }

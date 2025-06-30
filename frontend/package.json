@@ -30,6 +30,7 @@
     "micromatch": "^4.0.8",
     "parse-md": "^3.0.3",
     "pinia": "^2.2.2",
+    "sortablejs": "^1.15.3",
     "terser": "^5.33.0",
     "timeago.js": "^4.0.2",
     "tippy.js": "^6.3.7",
@@ -49,6 +50,7 @@
     "autoprefixer": "^10.4.20",
     "jsdom": "^25.0.1",
     "postcss": "^8.4.41",
+    "sass": "^1.79.5",
     "tailwindcss": "^3.4.13",
     "vite": "^5.4.6",
     "vitest": "^2.1.9"

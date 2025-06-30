@@ -29,6 +29,7 @@ import { errors_page } from './zh_hant_js/error';
 import { prompts } from './zh_hant_js/prompts';
 import { evaluation } from './zh_hant_js/evaluation';
 import { mcps } from './zh_hant_js/mcp_servers';
+import { dataPipelines } from './zh_hant_js/datapipelines';
 export default {
   all,
   rule,
@@ -61,4 +62,5 @@ export default {
   prompts,
   evaluation,
   mcps,
+  dataPipelines,
 };

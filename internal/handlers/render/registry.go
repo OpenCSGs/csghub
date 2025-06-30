@@ -24,6 +24,7 @@ type RenderHandlerRegistry struct {
 	PromptsHandler         PromptsHandler
 	EvaluationHandler      EvaluationHandler
 	McpServerHandler       McpServerHandler
+	DatapipelinesHandler   DatapipelinesHandler
 }
 
 func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, error) {
@@ -47,6 +48,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 	adminHandler := NewAdminHandler()
 	evaluationHandler := NewEvaluationHandler()
 	mcpServerHandler := NewMcpServerHandler()
+	DatapipelinesHandler := NewDatapipelinesHandler()
 
 	return &RenderHandlerRegistry{
 		ErrorHandler:           errorHandler,
@@ -66,5 +68,6 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 		PromptsHandler:         promptsHandler,
 		EvaluationHandler:      evaluationHandler,
 		McpServerHandler:       mcpServerHandler,
+		DatapipelinesHandler:   DatapipelinesHandler,
 	}, nil
 }

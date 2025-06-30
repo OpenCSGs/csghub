@@ -1,158 +1,441 @@
 <template>
-  <div class="text-left h-full p-[32px] overflow-auto bg-[#FFF]">
+  <div class="text-left w-full h-full pl-8 py-8 overflow-auto bg-white">
     <div class="headerMenu flex items-center justify-start mb-[20px]">
-      <SvgIcon class="w-[20px] h-[20px]" name="homeIcon" />
-      <SvgIcon class="w-[20px] h-[20px] mx-[8px]" name="homeIconDivider" />
-      <p class="text-[#344054] text-[14px] font-medium">数据处理</p>
-      <SvgIcon class="w-[20px] h-[20px] mx-[8px]" name="homeIconDivider" />
-      <p class="text-[rgb(52,64,84)] text-[14px] font-medium">处理结果</p>
+      <SvgIcon
+        class="w-5 h-5"
+        name="dataflow_homeIcon"
+      />
+      <SvgIcon
+        class="w-5 h-5 mx-2"
+        name="dataflow_homeIcon_divider"
+      />
+      <p
+        class="text-gray-700 text-sm font-medium cursor-pointer hover:text-brand-700"
+        @click="navigateToPage"
+      >
+        {{ t('dataPipelines.dataProcessing') }}
+      </p>
+      <SvgIcon
+        class="w-5 h-5 mx-2"
+        name="dataflow_homeIcon_divider"
+      />
+      <p class="text-brand-700 text-sm font-medium">
+        {{ t('dataPipelines.processingResult') }}
+      </p>
     </div>
-    <div class="flex items-center justify-start gap-[4px]">
-      <SvgIcon class="w-[24px] h-[24px]" name="backIcon" />
-      <p class="text-[#101828] text-[30px] font-medium">处理结果</p>
+    <div class="flex items-center justify-start gap-1">
+      <SvgIcon
+        class="w-6 h-6 cursor-pointer"
+        name="dataflow_backIcon"
+        @click="geback"
+      />
+      <p class="text-gray-900 text-3xl font-medium">
+        {{ t('dataPipelines.processingResult') }}
+      </p>
     </div>
-    <div class="mainOption mt-[24px] grid grid-cols-4 items-start justify-between gap-[56px]">
+    <div
+      class="mainOption my-6 grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 xs:grid-cols-1 items-start justify-between gap-14 lg:gap-3.5"
+    >
       <div>
-        <div class="flex items-center justify-start gap-[8px] mb-[16px]">
-          <p class="text-[#344054] text-[14px] font-medium">任务名称：</p>
-          <p class="text-[#475467] text-[14px] font-light">新建任务-20240903tXp</p>
+        <div class="flex items-center justify-start gap-2 mb-4">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.taskName') }}：
+          </p>
+          <p class="text-gray-600 text-sm font-light textContValueP">
+            {{ jobInfo.job_name }}
+          </p>
         </div>
-        <div class="flex items-center justify-start gap-[8px]">
-          <p class="text-[#344054] text-[14px] font-medium">创建时间：</p>
-          <p class="text-[#475467] text-[14px] font-light">2024-09-04 11:21:25</p>
+        <div class="flex items-center justify-start gap-2">  
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.createTime') }}：
+          </p>
+          <el-tooltip
+            :content="jobInfo.date_posted
+                ? convertUtcToLocalTime(jobInfo.date_posted)
+                : '-'"
+            placement="top"
+            effect="dark"
+          >
+            <p class="text-gray-600 text-sm font-light textContValueP">
+              {{
+                jobInfo.date_posted
+                  ? convertUtcToLocalTime(jobInfo.date_posted)
+                  : '-'
+              }}
+            </p>
+          </el-tooltip>
         </div>
       </div>
       <div>
-        <div class="flex items-center justify-start gap-[8px] mb-[16px]">
-          <p class="text-[#344054] text-[14px] font-medium">数据量：</p>
-          <p class="text-[#475467] text-[14px] font-light">55</p>
+        <div class="flex items-center justify-start gap-2 mb-4">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.dataAmount') }}：
+          </p>
+          <p class="text-gray-600 text-sm font-light textContValueP">
+            {{ jobInfo.data_count || 0 }}
+          </p>
         </div>
-        <div class="flex items-center justify-start gap-[8px]">
-          <p class="text-[#344054] text-[14px] font-medium">完成时间：</p>
-          <p class="text-[#475467] text-[14px] font-light">2024-09-04 11:23:24</p>
+        <div class="flex items-center justify-start gap-2">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.finishTime') }}：
+          </p>
+          <el-tooltip
+            :content="jobInfo.date_finish
+                ? convertUtcToLocalTime(jobInfo.date_finish)
+                : '-'"
+            placement="top"
+            effect="dark"
+          >
+            <p class="text-gray-600 text-sm font-light textContValueP">
+              {{
+                jobInfo.date_finish
+                  ? convertUtcToLocalTime(jobInfo.date_finish)
+                  : '-'
+              }}
+            </p>
+          </el-tooltip>
         </div>
       </div>
       <div>
-        <div class="flex items-center justify-start gap-[8px] mb-[16px]">
-          <p class="text-[#344054] text-[14px] font-medium">数据来源：</p>
-          <p class="text-[#475467] text-[14px] font-light">测试数据集>V1</p>
+        <div class="flex items-center justify-start gap-2 mb-4">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.dataSource') }}：
+          </p>
+          <el-tooltip
+            :content="`${jobInfo.repo_id || '-'}>${jobInfo.branch || '-'}`"
+            placement="top"
+            effect="dark"
+          >
+            <p class="text-sm font-light textContValueP text-brand-600 hover:underline cursor-pointer" @click="toDatasetPage(jobInfo.repo_id,jobInfo.branch)">
+              {{ `${jobInfo.repo_id || '-'}>${jobInfo.branch || '-'}` }}
+            </p>
+          </el-tooltip>
         </div>
-        <div class="flex items-center justify-start gap-[8px]">
-          <p class="text-[#344054] text-[14px] font-medium">已处理数据量：</p>
-          <p class="text-[#475467] text-[14px] font-light">55</p>
+        <div class="flex items-center justify-start gap-2">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.processedDataAmount') }}：
+          </p>
+          <p class="text-gray-600 text-sm font-light textContValueP">
+            {{ jobInfo.process_count || 0 }}
+          </p>
         </div>
       </div>
       <div>
-        <div class="flex items-center justify-start gap-[8px] mb-[16px]">
-          <p class="text-[#344054] text-[14px] font-medium">数据流向：</p>
-          <p class="text-[#475467] text-[14px] font-light">测试数据集>V4</p>
+        <div class="flex items-center justify-start gap-2 mb-4">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.dataFlow') }}：
+          </p>
+          <el-tooltip
+            :content="`${jobInfo.export_repo_id || '-'}>${jobInfo.export_branch_name || '-'}`"
+            placement="top"
+            effect="dark"
+          >
+            <p class="text-sm font-light textContValueP text-brand-600 hover:underline cursor-pointer" @click="toDatasetPage(jobInfo.export_repo_id,jobInfo.export_branch_name)">
+              {{
+                `${jobInfo.export_repo_id || '-'}>${
+                jobInfo.export_branch_name || '-'
+              }`
+              }}
+            </p>
+          </el-tooltip>
         </div>
       </div>
     </div>
-    <el-tabs v-model="activeTab" class="demo-tabs" @tab-click="handleClick">
-      <el-tab-pane label="处理详情" name="1">
+    <el-tabs
+      v-model="activeTab"
+      class="demo-tabs"
+      @tab-click="handleClick"
+    >
+      <el-tab-pane
+      v-if="taskType == 'pipeline'"
+        :label="t('dataPipelines.processInfo')"
+        name="1"
+      >
         <div class="borderBox">
           <el-table
             :data="tableData"
             class="rounded tableCont"
-            :empty-text="t('common.noData')"
+            :empty-text="t('dataPipelines.noData')"
             header-cell-class-name="tableHeader"
           >
-            <el-table-column type="index" width="120" label="执行顺序" />
-            <el-table-column prop="type" label="算子类型" />
-            <el-table-column prop="description" label="描述" />
-            <el-table-column label="算子配置">
+            <el-table-column
+              type="index"
+              min-width="120"
+              :label="t('dataPipelines.executionOrder')"
+            />
+            <el-table-column
+              prop="name"
+              :label="t('dataPipelines.operatorName')"
+              width="200"
+            />
+            <el-table-column
+              prop="type"
+              :label="t('dataPipelines.operatorType')"
+              min-width="200"
+            />
+            <el-table-column
+              prop="description"
+              :label="t('dataPipelines.description')"
+              min-width="240"
+            />
+            <el-table-column
+              :label="t('dataPipelines.operatorConfiguration')"
+              min-width="300"
+            >
               <template #default="scope">
                 <div v-if="scope.row.params.length > 0">
                   <div
-                    v-for="(item, index) in scope.row.params"
-                    :key="index"
-                    class="flex flex-col gap-[12px] typeItemCont"
+                    v-for="(item, paramIndex) in scope.row.params"
+                    :key="paramIndex"
+                    class="flex flex-col gap-3 typeItemCont"
                   >
-                    <el-slider
-                      v-if="item.type == 'PositiveFloat'"
-                      disabled
-                      v-model="scope.row.params.value"
-                      :min="scope.row.params[0].value"
-                      range
-                      :max="scope.row.params[1].value"
-                    />
-                    <el-select
-                      v-if="item.type == 'STRING'"
-                      disabled
-                      v-model="item.value"
-                      class="w-full"
-                      :placeholder="t('common.select')"
-                    >
-                      <el-option
-                        v-for="selItem in item.option_values"
-                        :key="selItem.key"
-                        :label="selItem.label"
-                        :value="selItem.key"
+                    <div v-if="item.type == 'from_2_to_20'">
+                      <el-slider
+                        disabled
+                        v-model="scope.row.params[0].value"
+                        size="small"
+                        :min="2"
+                        :max="scope.row.params[1].value"
+                        style="width: 98%"
                       />
-                    </el-select>
-                    <el-input
-                      disabled
-                      v-if="item.type == 'FLOAT'"
-                      type="number"
-                      step="0.01"
-                      style="width: 100%"
-                      v-model="item.value"
-                    />
+                      <p class="text-gray-900 text-sm mt-3 mb-5">
+                        {{ scope.row.params[0].name }}
+                      </p>
+                      <el-slider
+                        disabled
+                        v-model="scope.row.params[1].value"
+                        size="small"
+                        :min="scope.row.params[0].value"
+                        :max="20"
+                        style="width: 98%"
+                      />
+                      <p class="text-gray-900 text-sm mt-3 mb-5">
+                        {{ scope.row.params[1].name }}
+                      </p>
+                    </div>
+                    <div
+                      v-if="
+                        [
+                          'FLOAT',
+                          'STRING',
+                          'INTEGER',
+                          'PositiveFloat',
+                          'ClosedUnitInterval',
+                          'LIST'
+                        ].includes(item.type)
+                      "
+                    >
+                      <el-select
+                        v-if="
+                          item.type == 'STRING' &&
+                          Array.isArray(item.option_values)
+                        "
+                        disabled
+                        v-model="item.value"
+                        class="w-full"
+                        :placeholder="item.name"
+                      >
+                        <el-option
+                          v-for="selItem in item.option_values"
+                          :key="selItem.key"
+                          :label="selItem.label"
+                          :value="selItem.key"
+                        />
+                      </el-select>
+                      <el-input
+                        v-if="
+                          item.type == 'STRING' &&
+                          !Array.isArray(item.option_values)
+                        "
+                        disabled
+                        :placeholder="`${item.name}`"
+                        style="width: 100%"
+                        v-model="item.value"
+                      />
+                      <el-input
+                        v-if="item.type == 'FLOAT'"
+                        disabled
+                        type="number"
+                        :step="0.01"
+                        :precision="2"
+                        style="width: 100%"
+                        v-model="item.value"
+                      />
+                      <el-input
+                        v-if="item.type == 'INTEGER'"
+                        disabled
+                        type="number"
+                        :min="0"
+                        :precision="0"
+                        :step="1"
+                        style="width: 100%"
+                        v-model="item.value"
+                      />
+                      <el-input
+                        v-if="item.type == 'PositiveFloat'"
+                        disabled
+                        type="number"
+                        :min="0"
+                        style="width: 100%"
+                        v-model="item.value"
+                      />
+                      <el-slider
+                        v-if="item.type == 'ClosedUnitInterval'"
+                        disabled
+                        size="small"
+                        v-model="item.value"
+                        :min="0"
+                        :max="1"
+                        :step="0.01"
+                        style="width: 98%"
+                      />
+                      <div
+                        v-if="item.type == 'LIST'"
+                        class="flex flex-wrap gap-2 tagInputCont"
+                      >
+                        <el-tag
+                          v-for="tag in item.value"
+                          :key="tag"
+                          :disable-transitions="false"
+                        >
+                          {{ tag }}
+                        </el-tag>
+                      </div>
+                      <p class="text-gray-900 text-sm mt-3 mb-5">
+                        {{ item.name }}
+                      </p>
+                    </div>
                     <el-checkbox
-                      disabled
                       v-if="item.type == 'BOOLEAN'"
+                      disabled
                       v-model="item.value"
                       :label="item.name"
-                      size="small"
-                      class="block"
+                      class="block my-[10px]"
                     />
                   </div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="运行状态">
+            <el-table-column
+              :label="t('dataPipelines.processStatus')"
+              min-width="200"
+            >
               <template #default="scope">
-                <div class="statusBox flex items-center gap-1 px-[8px] py-[2px] statusBox1">
-                  <SvgIcon name="check" class="w-[16px] h-[16px]" />
-                  <span class="text-[12px]">已完成</span>
+                <div
+                  v-if="scope.row.status"
+                  class="statusBox flex items-center gap-1 px-2 py-1"
+                  :class="scope.row.status"
+                >
+                  <SvgIcon
+                    :name="scope.row.status"
+                    class="w-3 h-3"
+                  />
+                  <span class="text-sm">{{
+                    t(`dataPipelines.${scope.row.status}`)
+                  }}</span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="已处理数据">55条</el-table-column>
+            <el-table-column
+              :label="t('dataPipelines.processedData')"
+              min-width="200"
+            >
+              <template #default="scope">
+                <span>{{ scope.row.data_lines || 0 }}</span>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="Session处理结果" name="2">
+      <el-tab-pane
+      v-if="taskType == 'pipeline'"
+        :label="t('dataPipelines.sessionProcessedResult')"
+        name="2"
+      >
         <div class="borderBox">
           <el-table
             :data="sessionData"
             class="rounded tableCont"
-            :empty-text="t('common.noData')"
+            :empty-text="t('dataPipelines.noData')"
             header-cell-class-name="tableHeader"
           >
-            <el-table-column type="index" width="100" label="序号" />
-            <el-table-column prop="old" label="处理前Session" />
-            <el-table-column prop="type" label="处理方式" />
-            <el-table-column prop="new" label="处理后Session" />
+            <el-table-column
+              type="index"
+              min-width="100"
+              :label="t('dataPipelines.index')"
+            />
+            <el-table-column
+              prop="name"
+              :label="t('dataPipelines.operatorName')"
+              min-width="200"
+            >
+            <template #default="scope">
+                <div>
+                  {{ tableData[scope.$index].name }}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :label="t('dataPipelines.preSession')"
+              min-width="240"
+            >
+              <template #default="scope">
+                <div>
+                  {{
+                    Array.isArray(scope.row.before) &&
+                    scope.row.before.length > 0
+                      ? JSON.stringify(scope.row.before)
+                      : t('dataPipelines.noData')
+                  }}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="type"
+              :label="t('dataPipelines.processType')"
+              min-width="150"
+            >
+              <template #default="scope">
+                <div>
+                  {{ t(`dataPipelines.${scope.row.op_type}`) }}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="new"
+              :label="t('dataPipelines.afterSession')"
+              min-width="240"
+            >
+              <template #default="scope">
+                <div>
+                  {{
+                    Array.isArray(scope.row.after) && scope.row.after.length > 0
+                      ? JSON.stringify(scope.row.after)
+                      : t('dataPipelines.noData')
+                  }}
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="任务日志" name="3">
+      <el-tab-pane
+        :label="t('dataPipelines.taskLog')"
+        name="3"
+      >
         <div class="flex items-center justify-between mb-[16px]">
-          <p class="text-[#101828] font-medium text-[18px]">日志名称</p>
-          <div class="optionBtn">下载日志</div>
+          <p class="text-gray-900 font-medium text-lg invisible">
+            {{ t('dataPipelines.logName') }}
+          </p>
+          <CsgBtton
+            class="btn btn-secondary-gray btn-sm whitespace-nowrap"
+            @click="downloadTxt"
+            :name="t('dataPipelines.downloadLog')"
+          />
         </div>
         <div class="resultBox">
-          <pre class="text-[#F9FAFB] text-[16px] font-medium">
-[2024-09-02 15:00:00] INFO: 开始数据处理流程。
-[2024-09-02 15:00:01] INFO: 从文件 '/mnt/data/2602_AfRpJr42Z_2451549504.json' 加载数据。
-[2024-09-02 15:00:02] INFO: 成功加载 1000 条记录。
-[2024-09-02 15:00:03] WARNING: 发现 50 条记录的 'text' 字段为空，正在进行清洗。
-[2024-09-02 15:00:04] INFO: 清洗完成，共清理了 50 条记录。
-[2024-09-02 15:00:05] INFO: 开始转换数据为 JSONL 格式。
-[2024-09-02 15:00:06] INFO: 成功将数据保存到 '/mnt/data/2602_AfRpJr42Z_2451549504.jsonl'。
-[2024-09-02 15:00:07] INFO: 数据处理流程完成，处理时间为 7 秒。
+          <pre class="text-gray-50 text-base font-normal"
+            >{{ logData }}
           </pre>
         </div>
       </el-tab-pane>
@@ -161,357 +444,214 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n'
+  import { useRouter, useRoute } from 'vue-router'
+  import { ref, onMounted, computed } from 'vue'
+  import useFetchApi from '../../../packs/useFetchApi'
+  import { convertUtcToLocalTime } from '../../../packs/datetimeUtils'
+  import zhOps from '../../../locales/zh_js/operator_zh.json'
+  import enOps from '../../../locales/en_js/operator_en.json'
+  import { useI18n } from 'vue-i18n'
 
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
-const testData = {
-  chinese_convert_mapper: {
-    name: 'Chinese Converter',
-    description: '用于在繁体中文、简体中文和日文汉字之间进行转换。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '这是几个简体字，会被转换为繁体字',
-      after: '這是幾個簡體字，會被轉換爲繁體字',
-    },
-    params: [
-      {
-        name: '转换模式',
-        type: 'STRING',
-        option_values: [
-          {
-            key: 's2t',
-            label: '简体转繁体',
-          },
-          {
-            key: 't2s',
-            label: '繁体转简体',
-          },
-          {
-            key: 's2tw',
-            label: '简体转台湾正体',
-          },
-          {
-            key: 'tw2s',
-            label: '台湾正体转简体',
-          },
-          {
-            key: 's2hk',
-            label: '简体转香港繁体',
-          },
-          {
-            key: 'hk2s',
-            label: '香港繁体转简体',
-          },
-          {
-            key: 's2twp',
-            label: '简体转台湾正体（带标点符号）',
-          },
-          {
-            key: 'tw2sp',
-            label: '台湾正体转简体（带标点符号）',
-          },
-          {
-            key: 't2tw',
-            label: '繁体转台湾正体',
-          },
-          {
-            key: 'tw2t',
-            label: '台湾正体转繁体',
-          },
-          {
-            key: 'hk2t',
-            label: '香港繁体转繁体',
-          },
-          {
-            key: 't2hk',
-            label: '繁体转香港繁体',
-          },
-          {
-            key: 't2jp',
-            label: '繁体转日文汉字',
-          },
-          {
-            key: 'jp2t',
-            label: '日文汉字转繁体',
-          },
-        ],
-        value: 't2s',
-      },
-    ],
-  },
-  clean_copyright_mapper: {
-    name: 'Copyright Cleaner',
-    description: '用于删除文本样本开头的版权声明。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '这是一段 /* 多行注释\n注释内容copyright\n*/ 的文本。另外还有一些 // 单行注释。',
-      after: '这是一段  的文本。另外还有一些 // 单行注释。',
-    },
-    params: [],
-  },
-  clean_email_mapper: {
-    name: 'Email Cleaner',
-    description: '用于删除文本样本中的电子邮件地址。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: 'happy day euqdh@cjqi.com',
-      after: 'happy day ',
-    },
-    params: [],
-  },
-  nlpcda_zh_mapper: {
-    name: 'Chinese Augment',
-    description: '使用nlpcda库对中文文本进行简单增强。',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '这里一共有5种不同的数据增强方法',
-      after: '这里一共有伍种不同的数据增强方法',
-    },
-    params: [
-      {
-        name: '替换相似单词',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '随机交换单词位置',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '随机删除字符',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '随机交换字符位置',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-      {
-        name: '替换等效数字',
-        type: 'BOOLEAN',
-        option_values: null,
-        value: false,
-      },
-    ],
-  },
-  generate_instruction_mapper: {
-    name: 'Instruction Generator',
-    description: '用于生成新的指令文本数据。\n    ',
-    type: 'Mapper',
-    group: '',
-    samples: {
-      before: '',
-      after:
-        '{"messages":[{"content":"You are a helpful assistant","role":"system"},{"content":"哪种文学流派强调通过象征和暗喻探索潜意识思维?","role":"user"},{"content":"现代主义文学流派强调通过象征、暗喻以及非线性叙述等手法，深入探索人物的内心世界与潜意识思维。","role":"assistant"}]}',
-    },
-    params: [
-      {
-        name: '模型名称',
-        type: 'STRING',
-        option_values: [
-          {
-            key: 'Qwen/Qwen-7B-Chat',
-            label: 'Qwen/Qwen-7B-Chat',
-          },
-        ],
-        value: 'Qwen/Qwen-7B-Chat',
-      },
-      {
-        name: '相似度阈值',
-        type: 'FLOAT',
-        option_values: null,
-        value: 0.7,
-      },
-    ],
-  },
-};
-
-const activeTab = ref('1');
-const form = ref({
-  git_server_url: '',
-  private_token: '',
-});
-const tableData = ref([]);
-const sessionData = ref([
-  {
-    old: '[{"content":"You are a helpful assistant","role":"system"},{"content":"谁在文艺复兴时期绘制人体?","role":"user"},{"content":"文艺复兴时期是一个关于艺术、文化和学术的复兴运动，在这个时期，许多艺术家都绘制了人体。","role":"assistant"}]',
-    type: '替换',
-    new: '[{"content":"You are a helpful assistant","role":"system"},{"content":"谁在文艺复兴时期绘制人体?","role":"user"},{"content":"文艺复兴时期是一个关于艺术、文化和学术的复兴运动,在这个时期,许多艺术家都绘制了人体。","role":"assistant"}]',
-  },
-  {
-    old: '[{"content":"You are a helpful assistant","role":"system"},{"content":"谁在文艺复兴时期绘制人体?","role":"user"},{"content":"文艺复兴时期是一个关于艺术、文化和学术的复兴运动，在这个时期，许多艺术家都绘制了人体。","role":"assistant"}]',
-    type: '删除',
-    new: 'Session已删除',
-  },
-]);
-
-const router = useRouter();
-
-const goToNewTask = () => {
-  router.push('/newTask');
-};
-const handleClick = (tab, event) => {
-  console.log(tab, event);
-};
-const extractValues = (data) => {
-  const result = [];
-
-  // 遍历每个映射器
-  for (const key in data) {
-    const mapper = data[key];
-    result.push({
-      key: key,
-      ...data[key],
-    });
+  const dataflowOps = {
+    zh: zhOps,
+    en: enOps
   }
 
-  return result;
-};
+  const activeTab = ref('1')
+  const jobInfo = ref({})
+  const tableData = ref([])
+  const sessionData = ref([])
+  const logData = ref([])
 
-onMounted(() => {
-  console.log('数据处理');
-  tableData.value = extractValues(testData);
-  console.log('tableData.value===', tableData.value);
-});
+  const router = useRouter()
+  const route = useRoute()
+  const infoId = computed(() => {
+    return route.query.id
+  })
+  const taskType = computed(() => {
+    return route.query.type
+  })
+  const toDatasetPage = (path,branch) => {
+    if(path&&branch){
+      window.location.href=`/datasets/${path}/files/${branch}`
+    }
+  }
+  const getInfoData = async () => {
+    const url = `/dataflow/jobs/${infoId.value}`
+
+    const { data } = await useFetchApi(url).get().json()
+
+    if (data.value) {
+      jobInfo.value = data.value?.job
+      if (
+        data.value.config_content &&
+        data.value.config_content.process &&
+        Array.isArray(data.value.config_content.process)
+      ) {
+        let ops = dataflowOps[locale.value]
+        tableData.value = [...data.value.config_content.process]
+        sessionData.value = tableData.value.map((item) => item.data)
+        tableData.value = tableData.value.map((item) => {
+          if (ops.hasOwnProperty(item.name)) {
+            const op = ops[item.name]
+            if (Array.isArray(op.params) && op.params.length > 0) {
+              const updatedParams = op.params.map((paramsItem, paramsIndex) => {
+                return {
+                  ...paramsItem,
+                  value: item.params[paramsIndex]?.value ?? paramsItem.value,
+                  key: item.params[paramsIndex]?.name ?? paramsItem.name
+                }
+              })
+              return {
+                ...item,
+                ...op,
+                params: updatedParams,
+                key: item.name
+              }
+            }
+          }
+          return {
+            ...item,
+            ...(ops.hasOwnProperty(item.name) ? ops[item.name] : item),
+            key: item.name
+          }
+        })
+      }
+    }
+  }
+  const getLogData = async () => {
+    const url = `dataflow/jobs/log/${infoId.value}`
+
+    const { data } = await useFetchApi(url).get().json()
+
+    if (data.value) {
+      logData.value = data.value.session_log
+    }
+  }
+  const navigateToPage = () => {
+    router.push('/datapipelines')
+  }
+  const geback = () => {
+    router.go(-1)
+  }
+  const handleClick = (tab, event) => {
+    console.log(tab, event)
+  }
+  const downloadTxt = () => {
+    const content = logData.value
+    const blob = new Blob([content], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${jobInfo.value.job_name}.txt`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  onMounted(() => {
+    getInfoData()
+    getLogData()
+    if(taskType.value!='pipeline'){
+      activeTab.value = '3'
+    }
+  })
 </script>
-<style lang="scss" scoped>
-.hoverChange {
-  &:hover {
-    border: 1px solid var(--Gray-300, #d0d5dd);
-    background: var(--Gray-50, #f9fafb);
-    color: #3250bd;
+<style lang="less" scoped>
+  :deep(.tableCont) {
+    .el-button--text {
+      background: transparent !important;
+    }
   }
-  &:active {
-    border: 1px solid var(--Gray-300, #d0d5dd);
+  .borderBox {
+    border-radius: var(--spacing-lg, 12px);
+    border: var(--spacing-none, 1px) solid
+      var(--colors-gray-light-mode-200, #eaecf0);
     background: var(--Base-White, #fff);
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-    color: #3250bd;
+    box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1),
+      0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+    overflow: hidden;
   }
-  &.delBtn {
-    &:hover,
-    &:active {
-      color: #f87171;
+  :deep(.el-table__header) {
+    background: var(--Gray-50, #f9fafb);
+  }
+  :deep(.el-table) {
+    .el-table__cell {
+      padding: 16px 24px;
     }
   }
-}
-:deep(.settingsTableBtn) {
-  .el-button {
-    padding: 0 !important;
-    margin-left: 20px !important;
-    font-size: 14px !important;
-    color: #667085 !important;
-    font-weight: 400 !important;
-    &:hover {
-      color: #3250bd !important;
+  :deep(.tableCont) {
+    .el-button--text {
+      border: none;
+    }
+    .el-table__cell {
+      font-size: 14px;
+      color: #101828;
+      font-weight: 400;
     }
   }
-}
-
-// :deep(.el-form-item__label){
-//   font-size: 14px;
-//   color: #344054;
-//   font-weight: 400;
-// }
-:deep(.tableCont) {
-  .el-button--text {
-    background: transparent !important;
-  }
-}
-
-:deep(.el-form--inline) {
-  .el-form-item {
-    margin-right: 12px;
-  }
-}
-.dataItemCont {
-  border-radius: var(--spacing-lg, 12px);
-  border: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
-  background: var(--Base-White, #fff);
-  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
-}
-.borderBox {
-  border-radius: var(--spacing-lg, 12px);
-  border: var(--spacing-none, 1px) solid var(--colors-gray-light-mode-200, #eaecf0);
-  background: var(--Base-White, #fff);
-  box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1), 0px 1px 2px 0px rgba(16, 24, 40, 0.06);
-  overflow: hidden;
-}
-:deep(.el-table__header) {
-  background: var(--Gray-50, #f9fafb);
-}
-:deep(.el-table) {
-  .el-table__cell {
-    padding: 16px 24px;
-  }
-}
-:deep(.tableCont) {
-  .el-button--text {
-    border: none;
-  }
-  .el-table__cell {
-    font-size: 14px;
+  :deep(.tableHeader) {
+    font-size: 12px !important;
+    font-weight: normal !important;
     color: #475467;
-    font-weight: 300;
+    padding: 12px 24px !important;
+    border-bottom: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
+    background: var(--Gray-50, #f9fafb) !important;
   }
-}
-:deep(.tableHeader) {
-  font-size: 12px !important;
-  font-weight: normal !important;
-  color: #475467;
-  padding: 12px 24px !important;
-  border-bottom: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
-  background: var(--Gray-50, #f9fafb) !important;
-}
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
-}
-.statusBox {
-  font-size: 12px;
-  border-radius: 16px;
-  width: fit-content;
-  &.statusBox1 {
-    color: #067647;
-    border: 1px solid #abefc6;
-    background: #ecfdf3;
+  :deep(.el-tabs__content) {
+    padding-top: 16px !important;
   }
-}
-.optionBtn {
-  border-radius: 8px;
-  border: 1px solid #d0d5dd;
-  background: #fff;
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  padding: 10px 14px;
-  color: #344054;
-  font-size: 14px;
-  font-weight: 500;
-}
-.resultBox {
-  border-radius: 12px;
-  background: #0c111d;
-  padding: 24px;
-  height: 500px;
-  overflow-y: auto;
-  color: #f9fafb;
+  .demo-tabs > .el-tabs__content {
+    padding: 32px;
+    color: #6b778c;
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .statusBox {
+    font-size: 12px;
+    border-radius: 16px;
+    width: fit-content;
+    &.statusBox1 {
+      color: #067647;
+      border: 1px solid #abefc6;
+      background: #ecfdf3;
+    }
+  }
+  .optionBtn {
+    border-radius: 8px;
+    border: 1px solid #d0d5dd;
+    background: #fff;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    padding: 10px 14px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .resultBox {
+    border-radius: 12px;
+    background: #0c111d;
+    padding: 24px;
+    height: 500px;
+    overflow-y: auto;
+    color: #f9fafb;
 
-  font-family: 'Roboto Mono';
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-}
+    font-family: 'Roboto Mono';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .textContP {
+    white-space: nowrap;
+  }
+  .textContValueP {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+    display: inline-block;
+  }
 </style>

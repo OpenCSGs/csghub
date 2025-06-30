@@ -71,6 +71,14 @@ import AdminUserDetail from "./components/new_admin/users/AdminUserDetail.vue"
 import AdminSyncSetting from "./components/new_admin/sync/AdminSyncSetting.vue"
 import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystemConfig.vue"
 
+import DataflowIndex from "./components/dataflow_config/dataflow/index.vue"
+import DataflowInfo from "./components/dataflow_config/dataflow/info.vue"
+import DataflowMenu from "./components/dataflow_config/Menu.vue"
+import DataflowAlgTemplate from "./components/dataflow_config/algTemplate/index.vue"
+import DataflowNewTask from "./components/dataflow_config/newTask/index.vue"
+import DataflowNewTemplate from "./components/dataflow_config/algTemplate/newTemplate.vue"
+import DataflowTools from "./components/dataflow_config/tools/index.vue"
+
 
 const pinia = createPinia()
 pinia.use(customPersistPlugin)
@@ -121,6 +129,9 @@ const app = createApp({
     NewMcpServer,
     McpTools,
     DeployMcpServer,
+    DataflowIndex,
+    DataflowMenu,
+    DataflowTools,
   },
   provide:{
     defaultTags: DEFAULT_TAGS,
@@ -157,6 +168,12 @@ const routes = [
   { path: '/admin_panel/users/:id', component: AdminUserDetail },
   { path: '/admin_panel/sync', component: AdminSyncSetting },
   { path: '/admin_panel/system_config', component: AdminSystemConfig },
+  { path: '/datapipelines', component: DataflowIndex },
+  { path: '/datapipelines/dataflowInfo', component: DataflowInfo },
+  { path: '/datapipelines/algTemplate', component: DataflowAlgTemplate },
+  { path: '/datapipelines/newTask', component: DataflowNewTask },
+  { path: '/datapipelines/newTemplate', component: DataflowNewTemplate },
+  { path: '/datapipelines/tools', component: DataflowTools },
 ]
 
 const router = createRouter({

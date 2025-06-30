@@ -1,107 +1,119 @@
 <template>
-  <div class="text-left h-full p-[32px] overflow-auto bg-[#FFF]">
-    <div class="headerMenu flex items-center justify-start mb-[20px]">
-      <SvgIcon class="w-[20px] h-[20px]" name="homeIcon" />
-      <SvgIcon class="w-[20px] h-[20px] mx-[8px]" name="homeIconDivider" />
-      <p class="text-[#344054] text-[14px] font-medium">算法模板</p>
+  <div class="text-left w-full h-full pl-8 py-8 overflow-auto bg-white">
+    <div class="headerMenu flex items-center justify-start mb-5">
+      <SvgIcon
+        class="w-5 h-5"
+        name="dataflow_homeIcon"
+      />
+      <SvgIcon
+        class="w-5 h-5 mx-2"
+        name="dataflow_homeIcon_divider"
+      />
+      <p class="text-brand-600 text-sm font-medium">
+        {{ t('dataPipelines.algorithmTemplate') }}
+      </p>
     </div>
-    <p class="text-[#101828] text-[30px] font-medium">算法模板</p>
-    <p class="text-[#475467] text-[16px] font-light mt-[2px]">
-      算法模版可支持用户使用多种不同的模型算子组成工作流，完成数据清洗、自动数据增强及分析等工作。
+    <p class="text-gray-900 text-3xl font-medium">
+      {{ t('dataPipelines.algorithmTemplate') }}
     </p>
-    <div class="mainOption mt-[32px] flex items-center justify-between">
-      <el-form :inline="true" :model="form" label-width="auto" label-position="top">
-        <el-form-item label="搜索任务模板" class="mr-[12px]">
-          <el-input style="width: 330px" v-model="form.git_server_url"><template #prefix>
-        <el-icon class="el-input__icon w-[20px] h-[20px]"><search /></el-icon>
-      </template>
-    </el-input>
-        </el-form-item>
-        <el-form-item label="任务分类">
-          <el-select
-            v-model="form.private_token"
-            style="width: 330px"
-            :placeholder="t('common.select')"
-          >
-            <el-option :label="t('pages.option1')" value="strict" />
-            <el-option :label="t('pages.option2')" value="moderate" />
-            <el-option :label="t('pages.option3')" value="lenient" />
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <el-button type="primary" @click="toNewPage('add')">创建模板</el-button>
+    <p class="text-gray-600 text-md font-light mt-[2px]">
+      {{ t('dataPipelines.algorithmTemplateDescription') }}
+    </p>
+    <div class="mainOption mt-8">
+      <p class="text-gray-700 text-sm mb-1.5">
+        {{ t('dataPipelines.searchTaskTemplate') }}
+      </p>
+      <div class="flex items-center justify-between gap-3 xs:block">
+        <el-input
+          style="width: 100%"
+          v-model="form.searchStr"
+          @keyup.enter="searchListFun"
+          @clear="searchListFun"
+          :placeholder="`${t('dataPipelines.toInput')}${t(
+            'dataPipelines.taskName'
+          )}`"
+          clearable
+          ><template #prefix>
+            <el-icon class="el-input__icon w-5 h-5"
+              ><search
+            /></el-icon>
+          </template>
+        </el-input>
+        <CsgButton
+          class="btn btn-primary btn-sm whitespace-nowrap"
+          @click="toNewPage('add', null)"
+          :name="t('dataPipelines.createTemplate')"
+          :icon="true"
+        />
+      </div>
     </div>
-    <div class="grid grid-cols-3 items-start justify-between mt-[24px] gap-[20px]">
-      <div class="dataItemCont p-[16px]">
-        <div class="flex items-center justify-start gap-[8px] mb-[8px]">
-          <img src="@/assets/image/Avatar.png" class="w-[24px] h-[24px] rounded-full" />
-          <p class="text-[#101828] text-[16px] font-medium">数据清洗-通用</p>
+    <div
+      class="grid grid-cols-3 md:grid-cols-2 xs:grid-cols-1 items-start justify-between mt-6 gap-5"
+    >
+      <div
+        class="dataItemCont p-3 duration-200 ease-in-out"
+        v-for="(item, index) in templateList"
+        :key="index"
+      >
+        <div class="flex items-center justify-start gap-2 mb-2">
+          <p class="text-gray-700 text-md font-medium line-clamp-1">{{ item.name }}</p>
         </div>
-        <p class="text-[#475467] text-[14px] font-light overflow-hidden whitespace-nowrap overflow-ellipsis">通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求</p>
-        <div class="flex items-center justify-between mt-[26px]">
-          <span class="text-[#475467] text-[14px] font-normal">数据清洗</span>
-          <div class="flex items-center justify-end gap-[12px]">
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('add')">创建</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="goToNewTask">使用</span>
-          </div>
+        <div class="relative">
+          <el-tooltip
+            class="tooltip"
+            effect="dark"
+            :content="item.description"
+            placement="top"
+            popper-class="tool-tip-custom"
+            :show-after="100"
+            :enterable="false"
+          >
+            <template #content>
+              <div style="max-width: 300px; white-space: normal;">
+                {{ item.description }}
+              </div>
+            </template>
+            <p class="text-gray-600 text-sm font-light overflow-hidden line-clamp-2 tooltip">
+              {{ item.description }}
+            </p>
+          </el-tooltip>
         </div>
-      </div>
-      <div class="dataItemCont p-[16px]">
-        <div class="flex items-center justify-start gap-[8px] mb-[8px]">
-          <img src="@/assets/image/Avatar.png" class="w-[24px] h-[24px] rounded-full" />
-          <p class="text-[#101828] text-[16px] font-medium">数据清洗-通用</p>
-        </div>
-        <p class="text-[#475467] text-[14px] font-light overflow-hidden whitespace-nowrap overflow-ellipsis">通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求</p>
-        <div class="flex items-center justify-between mt-[26px]">
-          <span class="text-[#475467] text-[14px] font-normal">数据清洗</span>
-          <div class="flex items-center justify-end gap-[12px]">
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('add')">创建</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="goToNewTask">使用</span>
-          </div>
-        </div>
-      </div>
-      <div class="dataItemCont p-[16px]">
-        <div class="flex items-center justify-start gap-[8px] mb-[8px]">
-          <img src="@/assets/image/Avatar.png" class="w-[24px] h-[24px] rounded-full" />
-          <p class="text-[#101828] text-[16px] font-medium">数据清洗-通用</p>
-        </div>
-        <p class="text-[#475467] text-[14px] font-light overflow-hidden whitespace-nowrap overflow-ellipsis">通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求</p>
-        <div class="flex items-center justify-between mt-[26px]">
-          <span class="text-[#475467] text-[14px] font-normal">数据清洗</span>
-          <div class="flex items-center justify-end gap-[12px]">
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('add')">创建</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('edit')">编辑</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="goToNewTask">使用</span>
-          </div>
-        </div>
-      </div>
-      <div class="dataItemCont p-[16px]">
-        <div class="flex items-center justify-start gap-[8px] mb-[8px]">
-          <img src="@/assets/image/Avatar.png" class="w-[24px] h-[24px] rounded-full" />
-          <p class="text-[#101828] text-[16px] font-medium">数据清洗-通用</p>
-        </div>
-        <p class="text-[#475467] text-[14px] font-light overflow-hidden whitespace-nowrap overflow-ellipsis">通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求</p>
-        <div class="flex items-center justify-between mt-[26px]">
-          <span class="text-[#475467] text-[14px] font-normal">数据清洗</span>
-          <div class="flex items-center justify-end gap-[12px]">
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('add')">创建</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('edit')">编辑</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="goToNewTask">使用</span>
-          </div>
-        </div>
-      </div>
-      <div class="dataItemCont p-[16px]">
-        <div class="flex items-center justify-start gap-[8px] mb-[8px]">
-          <img src="@/assets/image/Avatar.png" class="w-[24px] h-[24px] rounded-full" />
-          <p class="text-[#101828] text-[16px] font-medium">数据清洗-通用</p>
-        </div>
-        <p class="text-[#475467] text-[14px] font-light overflow-hidden whitespace-nowrap overflow-ellipsis">通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求通过去重、去敏等多种算子，清洗数据，使数据满足使用需求</p>
-        <div class="flex items-center justify-between mt-[26px]">
-          <span class="text-[#475467] text-[14px] font-normal">数据清洗</span>
-          <div class="flex items-center justify-end gap-[12px]">
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('add')">创建</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="toNewPage('edit')">编辑</span>
-            <span class="text-[#475467] text-[14px] font-medium hover:text-[#17308F] cursor-pointer" @click="goToNewTask">使用</span>
+        <div class="flex items-center justify-between mt-1">
+          <span class="text-gray-700 text-sm font-normal">{{
+            item.type ? t(`dataPipelines.${item.type}`) : '-'
+          }}</span>
+          <div class="flex items-center justify-end gap-1">
+            <CsgButton
+              class="btn btn-link-gray btn-md whitespace-nowrap"
+              @click="toNewPage('add', index)"
+              :name="t('dataPipelines.create')"
+            />
+            <CsgButton
+              v-if="!item.buildin"
+              class="btn btn-link-gray btn-md whitespace-nowrap"
+              @click="toNewPage('edit', index)"
+              :name="t('dataPipelines.edit')"
+            />
+            <CsgButton
+              class="btn btn-link-color btn-md whitespace-nowrap"
+              @click="goToNewTask(index)"
+              :name="t('dataPipelines.apply')"
+            />
+            <el-popconfirm
+              :title="`${t('dataPipelines.deleteConfirm')}?`"
+              :confirm-button-text="t('dataPipelines.confirm')"
+              :cancel-button-text="t('dataPipelines.cancel')"
+              width="220px"
+              @confirm="handleDelete(item.template_id)"
+            >
+              <template #reference>
+                <CsgButton
+                  v-if="item.template_id"
+                  class="btn btn-link-gray btn-sm whitespace-nowrap"
+                  :name="t('dataPipelines.remove')"
+                />
+              </template>
+            </el-popconfirm>
           </div>
         </div>
       </div>
@@ -110,116 +122,110 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n'
+  import { useRouter } from 'vue-router'
+  import { ref, onMounted } from 'vue'
+  import { ElMessage } from 'element-plus'
+  import useFetchApi from '../../../packs/useFetchApi'
+  import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
 
-const form = ref({
-  git_server_url: '',
-  private_token: '',
-});
+  const form = ref({
+    searchStr: ''
+  })
+  const templateList = ref([])
+  const templateListAll = ref([])
 
-const toNewPage = (type) => {
-  router.push({ path: '/newTemplate', query: { type } });
-};
-const goToNewTask = () => {
-  router.push('/addTask');
-};
+  const toNewPage = (type, index) => {
+    router.push({ path: '/datapipelines/newTemplate', query: { type, index } })
+  }
+  const goToNewTask = (index) => {
+    router.push(`/datapipelines/newTask?type=ops&templateId=${index}`)
+  }
 
-const router = useRouter();
+  const router = useRouter()
 
-onMounted(() => {
-  console.log('算法模板')
-});
+  const getTemplatesListFun = async () => {
+    const url = '/dataflow/templates'
+
+    const { data } = await useFetchApi(url).get().json()
+
+    if (data.value) {
+      const res = data.value
+      templateListAll.value = res
+    }
+    searchListFun()
+  }
+  const searchListFun = async () => {
+    templateList.value = templateListAll.value.filter((item) =>
+      item.name.includes(form.value.searchStr)
+    )
+  }
+  const handleDelete = async (id) => {
+    const url = `/dataflow/templates/${id}`
+
+    const { data, error } = await useFetchApi(url).delete().json()
+
+    if (error.value) {
+      ElMessage({
+        message: `操作失败: ${error.value.msg}`,
+        type: 'error'
+      })
+    } else {
+      ElMessage({
+        message: '删除成功',
+        type: 'success'
+      })
+      getTemplatesListFun()
+    }
+  }
+
+  onMounted(() => {
+    getTemplatesListFun()
+  })
 </script>
-<style lang="scss" scoped>
-:deep(.tableHeader) {
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600 !important;
-  color: #344054;
-  padding: 8px 0 !important;
-}
-:deep(.drawerCont) {
-  width: 44% !important;
-  text-align: left;
-  .el-drawer__header {
-    display: block;
-    margin-bottom: 0;
+<style lang="less" scoped>
+  :deep(.el-form--inline) {
+    .el-form-item {
+      margin-right: 12px;
+    }
   }
-  .el-drawer__body {
-    overflow-x: hidden !important;
-    padding-top: 20px;
-  }
-}
-:deep(.tableCont) {
-  .el-button--text {
-    border: none;
-  }
-  .el-table__cell {
-    font-size: 14px;
-    color: #344054;
-    font-weight: 400;
-  }
-}
-.hoverChange {
-  &:hover {
-    border: 1px solid var(--Gray-300, #d0d5dd);
-    background: var(--Gray-50, #f9fafb);
-    color: #3250bd;
-  }
-  &:active {
-    border: 1px solid var(--Gray-300, #d0d5dd);
+  .dataItemCont {
+    cursor: pointer;
+    border-radius: var(--spacing-lg, 12px);
+    border: 1px solid var(--colors-gray-light-mode-200, #eaecf0);
     background: var(--Base-White, #fff);
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-    color: #3250bd;
-  }
-  &.delBtn {
-    &:hover,
-    &:active {
-      color: #f87171;
+    .hoverBtmCont {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
     }
-  }
-}
-:deep(.settingsTableBtn) {
-  .el-button {
-    padding: 0 !important;
-    margin-left: 20px !important;
-    font-size: 14px !important;
-    color: #667085 !important;
-    font-weight: 400 !important;
+    .btmCont {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
     &:hover {
-      color: #3250bd !important;
+      box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
+        0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+      .hoverBtmCont {
+        max-height: 200px;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+      }
+      .btmCont {
+        opacity: 0;
+      }
     }
   }
-}
-:deep(.el-table) {
-  .el-table__cell {
-    padding: 12px 0;
+  :global(.el-popper.tool-tip-custom) {
+    max-width: 300px !important;
+    white-space: pre-line !important;
+    word-break: break-word;
+    line-height: 1.5;
+    padding: 8px 12px;
   }
-}
-// :deep(.el-form-item__label){
-//   font-size: 14px;
-//   color: #344054;
-//   font-weight: 400;
-// }
-:deep(.tableCont) {
-  .el-button--text {
-    background: transparent !important;
-  }
-}
-
-:deep(.el-form--inline){
-  .el-form-item {
-  margin-right: 12px;  
-  }
-}
-.dataItemCont {
-  border-radius: var(--spacing-lg, 12px);
-border: 1px solid var(--colors-gray-light-mode-200, #EAECF0);
-background: var(--Base-White, #FFF);
-box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.10), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
-}
 </style>

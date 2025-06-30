@@ -1,42 +1,75 @@
 <template>
-  <el-aside style="width: auto !important" class="border-r border-[#EAECF0] bg-[#F9FAFB] mobile:hidden relative">
-    <div class="aside-box pt-[24px]" :style="{ width: isCollapse ? '80px' : '240px' }">
-      <el-scrollbar>
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical"
-          :collapse="isCollapse"
-          @open="handleOpen"
-          @close="handleClose"
-          :collapse-transition="false"
-          popper-class="menuPopperClass"
-        >
+  <el-aside
+    style="width: auto !important"
+    class="border-r border-gray-200 bg-gray-50 sm:hidden relative"
+  >
+    <div
+      class="aside-box pt-6"
+      :style="{ width: isCollapse ? '80px' : '240px' }"
+    >
+      <el-menu
+        :default-active="currentRoute"
+        class="el-menu-vertical"
+        :collapse="isCollapse"
+        :collapse-transition="false"
+      >
         <el-menu-item
-         index="1"
-              @click="handleClickMenu('/dataflow')"
-            >
-              <SvgIcon name="menuline" class="menuline w-[4px] h-[20px] mr-[4px] absolute left-0" />
-              <div class="innerBox w-full px-[12px] py-[8px]">
-                <SvgIcon name="menuIcon2" class="w-[20px] h-[20px]" />
-                <span class="sle ml-[8px]">数据处理</span>
-              </div>
-            </el-menu-item>
-            <el-menu-item
-             index="2"
-              @click="handleClickMenu('/algTemplate')"
-            >
-              <SvgIcon name="menuline" class="menuline w-[4px] h-[20px] mr-[4px] absolute left-0" />
-              <div class="innerBox w-full px-[12px] py-[8px]">
-                <SvgIcon name="menuIcon1" class="w-[20px] h-[20px]" />
-                <span class="sle ml-[8px]">算法模版</span>
-              </div>
-            </el-menu-item>
-        </el-menu>
-      </el-scrollbar>
+          index="1"
+          @click="handleClickMenu('/datapipelines')"
+        >
+          <SvgIcon
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon
+              name="dataflow_menuIcon_tlp"
+              class="w-5 h-5"
+            />
+            <span class="sle ml-2">{{
+              t('dataPipelines.dataProcessing')
+            }}</span>
+          </div>
+        </el-menu-item>
+        <el-menu-item
+          index="2"
+          @click="handleClickMenu('/datapipelines/algTemplate')"
+        >
+          <SvgIcon
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon
+              name="dataflow_menuIcon"
+              class="w-5 h-5"
+            />
+            <span class="sle ml-2">{{
+              t('dataPipelines.algorithmTemplate')
+            }}</span>
+          </div>
+        </el-menu-item>
+        <el-menu-item
+          index="3"
+          @click="handleClickMenu('/datapipelines/tools')"
+        >
+          <SvgIcon
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon
+              name="dataflow_menuIcon_tools"
+              class="w-5 h-5"
+            />
+            <span class="sle ml-2">{{ t('dataPipelines.toolsTit') }}</span>
+          </div>
+        </el-menu-item>
+      </el-menu>
     </div>
     <SvgIcon
-      :name="isCollapse ? 'alignR' : 'alignL'"
-      class="w-[20px] h-[20px] absolute bottom-[30px] right-[30px] cursor-pointer"
+      :name="isCollapse ? 'dataflow_alignR' : 'dataflow_alignL'"
+      class="w-5 h-5 absolute bottom-7.5 right-7.5 cursor-pointer"
       :class="{ alignRBtn: isCollapse }"
       @click="changeCollapse"
     />
@@ -44,187 +77,173 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
-import { useGlobalStore } from '../../stores/useGlobalStore';
-import { useRouter, useRoute } from 'vue-router';
-
-import { useI18n } from 'vue-i18n'
+  import { onMounted, onBeforeUnmount, computed, watch, ref } from 'vue'
+  import { useGlobalStore } from '../../stores/useGlobalStore'
+  import { useRouter, useRoute } from 'vue-router'
+  import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
+  const router = useRouter()
+  const route = useRoute()
+  const routes = router.getRoutes()
+  const currentRoute = ref('1')
+  const menuRoutes = {
+    '/datapipelines': '1',
+    '/datapipelines/newTask': '1',
+    '/datapipelines/dataflowInfo': '1',
+    '/datapipelines/algTemplate': '2',
+    '/datapipelines/newTemplate': '2',
+    '/datapipelines/tools': '3'
+  }
+  const handleClickMenu = (path) => {
+    router.push(path)
+  }
+  watch(
+    () => router.currentRoute.value.path,
+    (newPath) => {
+      currentRoute.value = menuRoutes[newPath] || '1'
+    }
+  )
+  const globalStore = useGlobalStore()
+  const isCollapse = computed(() => globalStore.isCollapse)
+  const changeCollapse = () => {
+    globalStore.toggleCollapse()
+  }
+  function handleResize() {
+    globalStore.setCollapse(window.innerWidth < 1280)
+  }
+  onMounted(() => {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    const currentPath = router.currentRoute.value.path
+    currentRoute.value = menuRoutes[currentPath] || '1'
+  })
 
-const user = JSON.parse(localStorage.getItem('user'));
-const isSuperUser = user && user.is_superuser;
-const router = useRouter();
-const route = useRoute();
-const routes = router.getRoutes();
-const handleClickMenu = (path) => {
-  router.push(path);
-};
-const menuRoutes = computed(() => {
-  const mainRoute = router.getRoutes().find((r) => r.path === '/' && r.name === 'main');
-  return mainRoute && mainRoute.children
-    ? mainRoute.children.map((r) => ({
-        ...r,
-        children:
-          r.children &&
-          r.children.map((sub) => ({
-            ...sub,
-            path: `${r.path}/${sub.path}`,
-          })),
-      }))
-    : [];
-});
-const getDefaultActive = () => {
-  return route.path;
-};
-const globalStore = useGlobalStore();
-const isCollapse = computed(() => globalStore.isCollapse);
-const changeCollapse = () => {
-  globalStore.toggleCollapse();
-};
-const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath);
-  router.push(keyPath);
-};
-const toPath = (path) => {
-  router.push(path);
-};
-const handleClose = (key, keyPath) => {
-  console.log(key, keyPath);
-};
-function handleResize() {
-  globalStore.setCollapse(window.innerWidth < 1280);
-}
-watch();
-
-onMounted(() => {
-  handleResize(); // 初始化侧边栏
-  window.addEventListener('resize', handleResize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
-defineExpose();
+  onBeforeUnmount(() => {
+    window.removeEventListener('resize', handleResize)
+  })
+  defineExpose()
 </script>
 
-<style scoped lang="scss">
-.sle {
-  font-weight: 500 !important;
-}
-.alignRBtn {
-  right: 50%;
-  transform: translateX(50%);
-}
-.logo {
-  padding: 16.5px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  border-bottom: 1px solid #eaecf0;
-  // margin-bottom: 12px;
-  &.closeLogo {
-    justify-content: center;
-    padding: 15.5px 20px;
-    .logo-img {
-      // padding: 2.5px 0;
-    }
+<style scoped lang="less">
+  .sle {
+    font-weight: 500 !important;
   }
-  .logo-img {
-    width: 32px;
-    // margin-right: 4px;
+  .alignRBtn {
+    right: 50%;
+    transform: translateX(50%);
   }
-  .logofull-img {
-    width: 114px;
-  }
-  .logo-text {
-    // color: var(--el-Text-color-primary, #303133);
-    color: var(--el-Text-color-primary, #1c8b7f);
-    font-size: 16px;
-    font-weight: 700;
-  }
-}
-.el-menu-vertical {
-  border: none !important;
-}
-.innerBox {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-:deep(.el-menu-item) {
-  padding: 0 20px;
-  span {
-    line-height: 24px;
-    font-weight: 500;
-  }
-}
-.menuline {
-  display: none;
-}
-:deep(.el-sub-menu.is-active) {
-  .menuline {
-    display: block;
-  }
-}
-:deep(.el-menu-item.is-active) {
-  .menuline {
-    display: block;
-  }
-  color: #3250bd;
-  .innerBox {
-    border-radius: var(--radius-8, 8px);
-    background: var(--Brand-25, #f0f3ff);
-  }
-}
-:deep(.el-menu--collapse) {
-  width: 100% !important;
-  .el-menu-item {
-    // padding: 0 10px;
-  }
-  .el-sub-menu__title {
-    position: static;
-  }
-  .innerBox,
-  .el-sub-menu__title {
-    width: auto;
-    padding: 10px !important;
-    justify-content: center;
-  }
-  span {
-    display: none !important;
-  }
-  .el-sub-menu {
+  .logo {
+    padding: 16.5px 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid #eaecf0;
+    &.closeLogo {
+      justify-content: center;
+      padding: 15.5px 20px;
+    }
+    .logo-img {
+      width: 32px;
+    }
+    .logofull-img {
+      width: 114px;
+    }
+    .logo-text {
+      color: var(--el-Text-color-primary, #1c8b7f);
+      font-size: 16px;
+      font-weight: 700;
+    }
   }
-}
-:deep(.el-sub-menu__title) {
-  padding: 0 10px 0 17px;
-  .subItemIco {
-    margin-left: 12px;
+  .el-menu-vertical {
+    border: none !important;
   }
-}
-:deep(.el-tooltip__trigger) {
-  padding-left: 22px;
-  .subItemIco {
-    margin-left: 0;
+  .innerBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
-}
-:deep(.el-menu-item) {
-  &:hover {
-    background: transparent;
+  :deep(.el-menu-item) {
+    padding: 0 20px;
+    span {
+      line-height: 24px;
+      font-weight: 500;
+    }
+  }
+  .menuline {
+    display: none;
+  }
+  :deep(.el-sub-menu.is-active) {
+    .menuline {
+      display: block;
+    }
+  }
+  :deep(.el-menu-item.is-active) {
+    .menuline {
+      display: block;
+    }
+    color: #3250bd;
+    .innerBox {
+      border-radius: var(--radius-8, 8px);
+      background: var(--Brand-25, #f0f3ff);
+    }
+  }
+  :deep(.el-menu--collapse) {
+    width: 100% !important;
+    .el-sub-menu__title {
+      position: static;
+    }
+    .innerBox,
+    .el-sub-menu__title {
+      width: auto;
+      padding: 10px !important;
+      justify-content: center;
+    }
+    span {
+      display: none !important;
+    }
+    .el-sub-menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  :deep(.el-sub-menu__title) {
+    padding: 0 10px 0 17px;
+    .subItemIco {
+      margin-left: 12px;
+    }
+  }
+  :deep(.el-tooltip__trigger) {
+    padding-left: 22px;
+    .subItemIco {
+      margin-left: 0;
+    }
+  }
+  :deep(.el-menu-item) {
+    &:hover {
+      background: transparent;
+      color: #3250bd;
+    }
+  }
+  :deep(.el-sub-menu__title) {
+    &:hover {
+      background: transparent;
+      color: #3250bd;
+    }
+  }
+  :deep(.el-menu--collapse .el-sub-menu.is-active .el-sub-menu__title) {
     color: #3250bd;
   }
-}
-:deep(.el-sub-menu__title) {
-  &:hover {
-    background: transparent;
-    color: #3250bd;
+  :deep(.el-menu) {
+    background: transparent !important;
   }
-}
-:deep(.el-menu--collapse .el-sub-menu.is-active .el-sub-menu__title) {
-  color: #3250bd;
-}
+  :deep(.el-scrollbar__view) {
+    height: 90vh !important;
+    overflow: hidden !important;
+  }
+  :deep(.aside-box) {
+    height: calc(100% - 24px);
+    overflow: hidden !important;
+  }
 </style>
