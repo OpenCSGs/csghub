@@ -28,4 +28,6 @@ export const navbar = {
   profileEdit: "Edit Profile",
   more: "More",
   setting: "Account Settings",
+  dataflowText: 'Open up a new paradigm of Agentic datasets',
+  datapipelines: 'Data Pipelines',
 }

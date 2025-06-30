@@ -196,6 +196,28 @@ func createRender() multitemplate.Renderer {
 		r.Add(name, tmpl)
 	}
 
+	datapipelinesLayouts := []string{
+		"datapipelines/layouts/base.html",
+		"layouts/navbar.html",
+		"layouts/footer.html",
+	}
+
+	datapipelinesPages := map[string]string{
+		"datapipelines_index": "datapipelines/index.html",
+	}
+
+	for name, page := range datapipelinesPages {
+		files := make([]string, len(datapipelinesLayouts)+1)
+		copy(files, datapipelinesLayouts)
+		files[len(datapipelinesLayouts)] = page
+
+		tmpl, err := template.ParseFS(viewsFS, files...)
+		if err != nil {
+			panic(err)
+		}
+		r.Add(name, tmpl)
+	}
+
 	// admin new version
 	adminNextLayouts := "admin/admin_next.html"
 	tmpl, err := template.ParseFS(viewsFS, adminNextLayouts)
@@ -233,6 +255,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerAdminRoutes(engine, handlersRegistry)
 	registerPromptsRoutes(engine, handlersRegistry)
 	registerEvaluationRoutes(engine, handlersRegistry)
+	registerDatapipelinesRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {

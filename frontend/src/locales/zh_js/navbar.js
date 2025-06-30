@@ -28,4 +28,6 @@ export const navbar = {
   profileEdit: "编辑用户信息",
   more: "更多",
   setting: "账号设置",
+  dataflowText: '开启数据集Agentic新范式',
+  datapipelines: '数据工具',
 }

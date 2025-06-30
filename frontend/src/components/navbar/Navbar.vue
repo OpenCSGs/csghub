@@ -144,6 +144,16 @@
                   </div>
                 </el-dropdown-item>
               </a>
+              <a
+                v-if="!actionLimited"
+                href="/datapipelines">
+                <el-dropdown-item>
+                  <div class="flex items-center w-fit gap-2">
+                    <SvgIcon name="navbar-datapipelines" />
+                    {{ $t('navbar.datapipelines') }}
+                  </div>
+                </el-dropdown-item>
+              </a>
               <a v-if="!actionLimited"
                 href="/resource-console">
                 <el-dropdown-item>
