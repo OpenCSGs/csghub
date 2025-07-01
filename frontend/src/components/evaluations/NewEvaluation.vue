@@ -37,10 +37,11 @@
               input-style="width: 100%"
             />
           </el-form-item>
+        </div>
 
           <!-- model name -->
           <el-form-item
-            :label="t('evaluation.new.modelName')"
+          :label="t('evaluation.new.evaluateModel')"
             class="w-full"
             prop="model_id"
           >
@@ -55,6 +56,10 @@
                 t('all.pleaseInput', { value: t('evaluation.new.modelName') })
               "
               size="large"
+              multiple
+              :multiple-limit="3"
+              @change="val => handleChangeTag(val)"
+              class="ignore-height-select"
             >
               <el-option
                 v-for="item in models"
@@ -63,9 +68,10 @@
                 :value="item.value"
               />
             </el-select>
+            <p class="text-gray-600 mt-2 font-light">
+              {{ t('evaluation.new.evaluateAtMostThreeModels') }}
+            </p>
           </el-form-item>
-        </div>
-
         <!-- des -->
         <el-form-item
           class="w-full"
@@ -84,8 +90,42 @@
           />
         </el-form-item>
 
+        <!-- dataset check -->
+        <el-form-item
+          class="w-full self-stretch inline-flex justify-start items-start gap-4 flex-wrap content-start"
+        >
+          <el-radio-group v-model="datasetCheck" class="w-full flex">
+            <div class="flex-1">
+              <el-radio value="1" size="large" class="ext-slate-700 text-sm font-normal">{{ t('evaluation.new.systemRecommendedDataset') }}</el-radio>
+              <div class="self-stretch justify-start pl-6">
+                <span class="text-slate-600 text-sm font-light">
+                  {{ t('evaluation.new.systemRecommendedDatasetTip') }}
+                </span>
+              </div>
+            </div>
+            <div>
+              <el-radio value="2" size="large" class="flex-1 text-slate-700 text-sm font-normal">{{ t('evaluation.new.customDataset') }}</el-radio>
+              <div class="self-stretch justify-start pl-6">
+                <span class="text-slate-600 text-sm font-light">
+                  {{ t('evaluation.new.customDatasetTip') }}
+                </span>
+                <span class="text-blue-800 text-sm font-light leading-snug cursor-pointer pl-1">
+                  <a 
+                    class="text-brand-600 hover:text-brand-700 hover:underline" 
+                    target="_blank"
+                    href="https://opencsg.com/docs/inferencefinetune/evaluation_with_custom_dataset"
+                  >
+                    {{ t('evaluation.new.customDatasetDocumentation') }}
+                  </a>
+                </span>
+              </div>
+            </div>
+          </el-radio-group>
+        </el-form-item>
+
         <!-- dataset -->
         <el-form-item
+          v-show="datasetCheck === '1'"
           :label="t('evaluation.new.dataset')"
           class="w-full"
           prop="evaluation_dataset"
@@ -108,6 +148,34 @@
             filterable
             style="width: 100%"
           />
+        </el-form-item>
+
+        <el-form-item
+        v-show="datasetCheck === '2'"
+          :label="t('evaluation.new.customdataset')"
+          class="w-full"
+          prop="evaluation_custom_dataset"
+          >
+            <el-select
+                filterable
+                remote
+                remote-show-suffix
+                v-model="dataForm.evaluation_custom_dataset"
+                :loading="fetchModelsLoading"
+                :remote-method="fetchCustomDatasets"
+                :placeholder="
+                  t('all.pleaseSelect', { value: t('evaluation.new.customdataset') })
+                "
+                size="large"
+                multiple
+            >
+              <el-option
+                v-for="item in models"
+                :key="item.key"
+                :label="item.value"
+                :value="item.value"
+              />
+            </el-select>
         </el-form-item>
 
         <!-- resource type -->
@@ -207,7 +275,9 @@
           prop="evaluation_framework"
         >
           <el-select
-            v-model="dataForm.evaluation_framework"
+              ref="evaluationFrameworkSelectRef"
+            v-model="frameworkVersion"
+            @change="resetVersions"
             :placeholder="t('all.pleaseSelect')"
             size="large"
             style="width: 100%"
@@ -229,6 +299,28 @@
               {{ t('evaluation.new.frameworkTip2') }}
             </a>
           </p>
+        </el-form-item>
+
+        <!-- framework version -->
+        <el-form-item
+          :label="t('endpoints.new.frameworkVersion')"
+          class="w-full"
+        >
+          <el-select
+            v-model="dataForm.evaluation_framework"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.frameworkVersion') })
+            "
+            size="large"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in frameworkVersionOptions"
+              :key="item.id"
+              :label='item.frame_version'
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
 
         <div class="flex justify-end gap-3">
@@ -271,7 +363,8 @@
   const fetchDatasetsLoading = ref(false)
   const dataFormRef = ref(null)
   const dataForm = ref({
-    model_id: searchParams.get('model_id') || '',
+    default_model_id: searchParams.get('model_id') || '',
+    model_id: searchParams.get('model_id') ? [searchParams.get('model_id')] : [],
     evaluation_resource_type: 'shared'
   })
 
@@ -282,6 +375,7 @@
   const loading = ref(false)
   const submitLoading = ref(false)
   const datasetOptions = ref([])
+  const evaluationFrameworkSelectRef = ref(null)
   const resourceTypes = ref([
     {
       value: 'shared',
@@ -308,9 +402,26 @@
         trigger: 'change'
       },
       {
-        pattern: /^(?!\/)[a-zA-Z0-9-_\.]+\/[a-zA-Z0-9-_\.]+(?<!\/)$/,
         message: t('all.inputFormatError'),
-        trigger: 'blur'
+        trigger: 'blur',
+        validator: (rule, value, callback) => {
+        if (Array.isArray(value)) {
+          if (value.length === 0) {
+            callback(new Error(t('all.pleaseInput', { value: t('evaluation.new.modelName') })))
+            return
+          }
+          
+          const isValid = value.every(item => 
+            /^(?!\/)[a-zA-Z0-9-_\.]+\/[a-zA-Z0-9-_\.]+(?<!\/)$/.test(item)
+          )
+          
+          if (!isValid) {
+            callback(new Error(t('all.inputFormatError')))
+          } else {
+            callback()
+          }
+        }
+      }
       }
     ]
   })
@@ -354,10 +465,45 @@
     }
   }
 
+  const fetchCustomDatasets = async (query) => {
+    const { data, error } = await useFetchApi(
+      `datasets?search=${query}`
+    ).json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      models.value = body.data?.map((model) => {
+        return { key: model.path, value: model.path }
+      })
+    }
+    fetchModelsLoading.value = false
+  }
+
+  const handleChangeTag = (val) => {
+    if(!dataForm.value.default_model_id) {
+      return
+    }
+
+    const isFirstModelItemExist = val.includes(dataForm.value.default_model_id)
+    if(!isFirstModelItemExist) {
+      ElMessage({ message: t('evaluation.new.doNowRemoveFirstModel'), type: 'warning' })
+      dataForm.value.model_id.unshift(dataForm.value.default_model_id)
+    }
+  }
+
+  const getSelectedEvaluationFrameworkText = () => {
+    if (evaluationFrameworkSelectRef.value) {
+      const selectedLabel = evaluationFrameworkSelectRef.value.selectedLabel
+      return selectedLabel
+    }
+    return ''
+  }
+
   const fetchModels = async (query, cb) => {
     fetchModelsLoading.value = true
     const { data, error } = await useFetchApi(
-      `/runtime_framework/models?search=${query}&deploy_type=4`
+      `/models?tag_category=runtime_framework&tag_name=${getSelectedEvaluationFrameworkText()}&search=${query}`
     ).json()
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -386,7 +532,7 @@
 
   const fetchResources = async () => {
     // evaluation can only use none cpu resources, so passing deploy type 2, means resoruces fit for finetune
-    const categoryResources = await fetchResourcesInCategory(dataForm.value.evaluation_cluster, 2)
+    const categoryResources = await fetchResourcesInCategory(dataForm.value.evaluation_cluster, 4)
     const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
     evaluationResources.value = categoryResources
     if (firstAvailableResource) {
@@ -396,22 +542,55 @@
     }
   }
 
+  const datasetCheck = ref('1')
+
   const fetchRuntimeFramework = async () => {
-    if (!dataForm.value.model_id) return
+    if (!dataForm.value.model_id || dataForm.value.model_id.length === 0) return
     const { data, error } = await useFetchApi(
-      `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=4`
+      `/models/${dataForm.value.model_id[0]}/runtime_framework_v2?deploy_type=4`
     ).json()
     if (error.value) {
       dataForm.value.evaluation_framework = ''
       evaluationFrameworks.value = []
     } else {
       const body = data.value
-      evaluationFrameworks.value = body.data
-      dataForm.value.evaluation_framework =
-        evaluationFrameworks.value[0]?.id || ''
-      selectedFrameworkName.value =
-        evaluationFrameworks.value[0]?.frame_name || ''
+      evaluationFrameworks.value = body.data || []
+      if(evaluationFrameworks.value.length){
+        frameworkVersionOptions.value = evaluationFrameworks.value[0].versions
+        dataForm.value.evaluation_framework =
+        frameworkVersionOptions.value[0]?.id || ''
+        selectedFrameworkName.value =
+        frameworkVersionOptions.value[0]?.frame_name || ''
+      }else {
+        frameworkVersionOptions.value = []
+        dataForm.value.evaluation_framework = '' 
+        selectedFrameworkName.value = ''
+        dataForm.value.default_model_id = ''
+      }
     }
+  }
+
+  const resetVersions = () => { 
+    const currentResource = evaluationResources.value
+      .flatMap(category => category.options)
+      .find(item => item.id == dataForm.value.cloud_resource.split('/')[0])
+
+      if(filterFrameworks.value.length){
+        if(currentResource&&currentResource.type){
+          frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions.filter((version) => version.compute_type == currentResource.type) || []
+        }else {
+          frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions
+        }
+        dataForm.value.evaluation_framework = frameworkVersionOptions.value[0]?.id || ''
+      }else{
+        frameworkVersionOptions.value = []
+        dataForm.value.evaluation_framework = ''
+      }
+
+    if (dataForm.value.model_id && dataForm.value.model_id.length > 1) {
+      const first_model_id = dataForm.value.model_id[0]
+      dataForm.value.model_id = [first_model_id]
+      }
   }
 
   const filterFrameworks = computed(() => {
@@ -440,7 +619,13 @@
 
   watch(
     () => dataForm.value.model_id,
-    async () => {
+    async (newVal, oldVal) => {
+      if (oldVal.length === 0 && newVal.length === 1) {
+        dataForm.value.default_model_id = newVal[0]
+      }
+
+    if((newVal.length > 0 && oldVal.length > 0 && newVal[0] !== oldVal[0]) ||
+     (newVal.length > 0 && oldVal.length === 0))
       await fetchRuntimeFramework()
     }
   )
@@ -476,10 +661,15 @@
     const body = {
       task_name: dataForm.value.name,
       task_desc: dataForm.value.desc,
-      model_id: dataForm.value.model_id,
+      model_ids: dataForm.value.model_id,
       runtime_framework_id: dataForm.value.evaluation_framework,
-      datasets: dataForm.value.evaluation_dataset,
       share_mode: dataForm.value.evaluation_resource_type === 'shared'
+    }
+
+    if (datasetCheck.value === '1') {
+      body.datasets = dataForm.value.evaluation_dataset;
+    } else if (datasetCheck.value === '2') {
+      body.custom_datasets = dataForm.value.evaluation_custom_dataset;
     }
 
     if (dataForm.value.evaluation_resource_type === 'dedicated') {
@@ -547,6 +737,10 @@
 
   :deep(.el-select) {
     height: 40px;
+  }
+
+  :deep(.ignore-height-select.el-select) {
+    height: auto !important;
   }
 
   :deep(.el-input .el-input__wrapper) {
