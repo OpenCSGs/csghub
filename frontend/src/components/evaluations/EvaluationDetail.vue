@@ -125,7 +125,8 @@
             <el-table-column
               prop="model" 
               :label="$t('evaluation.detail.model')"
-              class-name="w-72 xl:w-22.5 lg:w-22.5 md:w-22.5 sm:w-22.5 xs:w-22.5" 
+              :min-width="dynamicModelWidth + 'px'"
+              class-name="evaluation-model-column" 
               fixed="left"
             />
               <el-table-column 
@@ -138,13 +139,14 @@
                   v-for="(metricItem, index) in datasetData"
                   :key="`${datasetName}-${metricItem}-${index}`"
                   :label="metricItem.metric"
-                  class-name="min-w-72 lg:min-w-56 md:min-w-40 sm:min-w-32 xs:min-w-32" 
+                  :min-width="dynamicMinWidth + 'px'"
+                  class-name="evaluation-metric-column"
                 >
                   <template #default="{ row }">
                     <div class="line-clamp-3 break-words">
                     {{ 
                       (row.dataset[datasetName] || [])
-                        .find(item => item.metric === metricItem.metric)?.score || ''
+                        .find(item => item.metric === metricItem.metric)?.score || 0
                     }}
                     </div>
                   </template>
@@ -192,7 +194,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, computed, nextTick } from 'vue'
+  import { ref, onMounted, computed, nextTick, onBeforeUnmount } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
@@ -353,6 +355,31 @@
     window.location.href = `/evaluations/new`
   }
 
+  const dynamicMinWidth = ref(288)
+  const dynamicModelWidth = ref(320)
+  const calculateMinWidth = () => {
+    const width = window.innerWidth
+    if (width >= 1280) return { metric: 288, model: 320 }
+    if (width >= 1024) return { metric: 224, model: 260 }
+    if (width >= 768) return { metric: 160, model: 200 }
+    if (width >= 640) return { metric: 128, model: 160 }
+    return { metric: 128, model: 160 }                    
+  }
+
+  const handleResize = () => {
+    const widths = calculateMinWidth()
+    dynamicMinWidth.value = widths.metric
+    dynamicModelWidth.value = widths.model
+  }
+
+  const observeResizeEvent = () => {
+    window.addEventListener('resize', handleResize)
+  }
+
+  const unObserveResizeEvent = () => {
+    window.removeEventListener('resize', handleResize)
+  }
+
   const fetchEvaluation = async () => {
     try {
       loading.value = true
@@ -403,6 +430,12 @@
   onMounted(() => {
     fetchTags()
     fetchEvaluation()
+    handleResize()
+    observeResizeEvent()
+  })
+
+  onBeforeUnmount(() => {
+    unObserveResizeEvent()
   })
 </script>
 
