@@ -10,14 +10,14 @@ import 'element-plus/dist/index.css'
 import './assets/stylesheets/element-plus/_variables.css'
 import './assets/stylesheets/markdown.css'
 import './style.css'
-import { createWebHistory, createRouter } from 'vue-router'
-
+import { createWebHistory, createRouter } from "vue-router";
 
 import HelloWorld from './components/HelloWorld.vue'
 
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import en from './locales/en.js'
 import zh from './locales/zh.js'
+import zhHant from './locales/zhHant.js'
 
 import Navbar from "./components/navbar/Navbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
@@ -57,6 +57,9 @@ import ResourceConsoleIndex from "./components/resource_console/ResourceConsoleI
 import PromptsHub from "./components/prompts/PromptsHub.vue"
 import NewEvaluation from "./components/evaluations/NewEvaluation.vue"
 import EvaluationDetail from "./components/evaluations/EvaluationDetail.vue"
+import NewMcpServer from "./components/mcp/NewMcpServer.vue"
+import McpTools from "./components/mcp/McpTools.vue"
+import DeployMcpServer from "./components/mcp/DeployMcpServer.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -67,6 +70,14 @@ import AdminUserList from "./components/new_admin/users/AdminUserList.vue"
 import AdminUserDetail from "./components/new_admin/users/AdminUserDetail.vue"
 import AdminSyncSetting from "./components/new_admin/sync/AdminSyncSetting.vue"
 import AdminSystemConfig from "./components/new_admin/system_configs/AdminSystemConfig.vue"
+
+import DataflowIndex from "./components/dataflow_config/dataflow/index.vue"
+import DataflowInfo from "./components/dataflow_config/dataflow/info.vue"
+import DataflowMenu from "./components/dataflow_config/Menu.vue"
+import DataflowAlgTemplate from "./components/dataflow_config/algTemplate/index.vue"
+import DataflowNewTask from "./components/dataflow_config/newTask/index.vue"
+import DataflowNewTemplate from "./components/dataflow_config/algTemplate/newTemplate.vue"
+import DataflowTools from "./components/dataflow_config/tools/index.vue"
 
 
 const pinia = createPinia()
@@ -115,9 +126,14 @@ const app = createApp({
     PromptsHub,
     NewEvaluation,
     EvaluationDetail,
+    NewMcpServer,
+    McpTools,
+    DeployMcpServer,
+    DataflowIndex,
+    DataflowMenu,
+    DataflowTools,
   },
   provide:{
-    defaultTags: DEFAULT_TAGS,
     csghubServer: CSGHUB_SERVER,
     onPremise: ON_PREMISE || false,
     nameRule: /^(?=.{2,64}$)(?!.*[-_.]{2})[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]+$/
@@ -134,8 +150,9 @@ const i18n = createI18n({
   locale: cookies.get('locale') || defaultLanguage,
   messages: {
     en,
-    zh
-  }
+    zh,
+    zhHant,
+  },
 });
 
 // register Element UI Icons
@@ -150,6 +167,12 @@ const routes = [
   { path: '/admin_panel/users/:id', component: AdminUserDetail },
   { path: '/admin_panel/sync', component: AdminSyncSetting },
   { path: '/admin_panel/system_config', component: AdminSystemConfig },
+  { path: '/datapipelines', component: DataflowIndex },
+  { path: '/datapipelines/dataflowInfo', component: DataflowInfo },
+  { path: '/datapipelines/algTemplate', component: DataflowAlgTemplate },
+  { path: '/datapipelines/newTask', component: DataflowNewTask },
+  { path: '/datapipelines/newTemplate', component: DataflowNewTemplate },
+  { path: '/datapipelines/tools', component: DataflowTools },
 ]
 
 const router = createRouter({

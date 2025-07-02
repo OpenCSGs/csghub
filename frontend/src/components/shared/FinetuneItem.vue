@@ -1,8 +1,8 @@
 <template>
   <a
-    :href="detailLink"
+    @click.prevent="detailLink"
     :class="`${repoType}-card  hover:active-${repoType}-card `"
-    class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 md:w-full border border-gray-200 rounded-xl"
+    class="focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 md:w-full border border-gray-200 rounded-xl cursor-pointer"
   >
     <div class="flex items-center justify-between mb-1">
       <div
@@ -34,6 +34,9 @@
   import { computed } from 'vue'
   import AppStatus from '../application_spaces/AppStatus.vue'
   import AppPayMode from '../application_spaces/AppPayMode.vue'
+  import { useRepoTabStore } from '@/stores/RepoTabStore'
+
+  const { setRepoTab } = useRepoTabStore()
 
   const props = defineProps({
     repo: Object,
@@ -44,7 +47,12 @@
     }
   })
 
-  const detailLink = computed(() => {
-    return `/finetune/${props.repo.model_id}/${props.repo.deploy_name}/${props.repo.deploy_id}`
-  })
+  const detailLink = () => {
+    setRepoTab({
+      repoType: 'finetune',
+      tab: 'page'
+    })
+    
+    window.location.href = `/finetune/${props.repo.model_id}/${props.repo.deploy_name}/${props.repo.deploy_id}?tab=page`
+  }
 </script>

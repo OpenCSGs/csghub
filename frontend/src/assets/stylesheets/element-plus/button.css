@@ -2,7 +2,6 @@
 .btn {
   border-radius: var(--el-border-radius-base);
   border: 1px solid transparent;
-  box-shadow: var(--shadow-xs);
   cursor: pointer;
 }
 
@@ -16,15 +15,20 @@
   background-color: var(--Brand-600);
   border: 1px solid var(--Brand-600);
   color: var(--Base-White);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-primary:hover {
   background-color: var(--Brand-700);
   border: 1px solid var(--Brand-700);
   color: var(--Base-White);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-primary:focus {
+  background-color: var(--Brand-600);
+  border: 1px solid var(--Brand-600);
+  color: var(--Base-White);
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
 }
 
@@ -32,6 +36,7 @@
   background-color: var(--Gray-100);
   color: var(--Gray-400);
   border: 1px solid var(--Gray-200);
+  box-shadow: var(--shadow-xs);
 }
 
 /* btn-danger */
@@ -55,158 +60,6 @@
   background-color: var(--Gray-100);
   color: var(--Gray-400);
   border: 1px solid var(--Gray-200);
-}
-
-/* btn-outline */
-.btn-outline {
-  background-color: var(--Base-White);
-  border: 1px solid var(--Gray-300);
-  color: var(--Gray-700);
-}
-
-.btn-outline:hover {
-  background-color: var(--Gray-50);
-  border: 1px solid var(--Gray-300);
-  color: var(--Gray-800);
-}
-
-.btn-outline:focus {
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-}
-
-.btn-outline[disabled] {
-  background-color: var(--Base-White);
-  color: var(--Gray-400);
-  border: 1px solid var(--Gray-200);
-}
-
-/* btn-outline-primary */
-.btn-outline-primary {
-  background-color: var(--Base-White);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-700);
-}
-
-.btn-outline-primary:hover {
-  background-color: var(--Brand-50);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-800);
-}
-
-.btn-outline-primary:focus {
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
-}
-
-.btn-outline-primary[disabled] {
-  background-color: var(--Base-White);
-  color: var(--Gray-400);
-  border: 1px solid var(--Gray-200);
-}
-
-/* btn-outline-danger */
-.btn-outline-danger {
-  background-color: var(--Base-White);
-  border: 1px solid var(--Error-300);
-  color: var(--Error-700);
-}
-
-.btn-outline-danger:hover {
-  background-color: var(--Error-50);
-  border: 1px solid var(--Error-300);
-  color: var(--Error-800);
-}
-
-.btn-outline-danger:focus {
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
-}
-
-.btn-outline-danger[disabled] {
-  background-color: var(--Base-White);
-  color: var(--Gray-400);
-  border: 1px solid var(--Gray-200);
-}
-
-/* btn-ghost */
-.btn-ghost {
-  background-color: transparent;
-  border: 1px solid transparent;
-  color: var(--Gray-600);
-  box-shadow: none;
-}
-
-.btn-ghost:hover {
-  background-color: var(--Gray-50);
-  border: 1px solid transparent;
-  color: var(--Gray-700);
-}
-
-.btn-ghost[disabled] {
-  color: var(--Gray-400);
-}
-
-/* btn-ghost-primary */
-.btn-ghost-primary {
-  background-color: transparent;
-  border: 1px solid transparent;
-  color: var(--Brand-700);
-}
-
-.btn-ghost-primary:hover {
-  background-color: var(--Brand-50);
-  border: 1px solid transparent;
-  color: var(--Brand-800);
-}
-
-.btn-ghost-primary[disabled] {
-  color: var(--Gray-400);
-}
-
-/* btn-ghost-danger */
-.btn-ghost-danger {
-  background-color: transparent;
-  border: 1px solid transparent;
-  color: var(--Error-700);
-}
-
-.btn-ghost-danger:hover {
-  background-color: var(--Error-50);
-  border: 1px solid transparent;
-  color: var(--Error-800);
-}
-
-.btn-ghost-danger[disabled] {
-  color: var(--Gray-400);
-}
-
-
-/* btn-primary */
-.btn-primary {
-  background-color: var(--Brand-600);
-  border: 1px solid var(--Brand-600);
-  color: var(--Base-White);
-  box-shadow: var(--shadow-xs);
-}
-
-.btn-primary:hover {
-  background-color: var(--Brand-700);
-  border: 1px solid var(--Brand-700);
-  color: var(--Base-White);
-  box-shadow: var(--shadow-xs);
-}
-
-.btn-primary:focus {
-  background-color: var(--Brand-600);
-  border: 1px solid var(--Brand-600);
-  color: var(--Base-White);
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
-  border: 1px solid var(--Brand-600);
-}
-
-.btn-primary[disabled] {
-  background-color: var(--Gray-100);
-  color: var(--Gray-400);
-  border: 1px solid var(--Gray-200);
-  box-shadow: var(--shadow-xs);
 }
 
 /* btn-secondary-gray */
@@ -236,7 +89,7 @@
   color: var(--Gray-400);
   border: 1px solid var(--Gray-200);
   box-shadow: var(--shadow-xs);
-} 
+}
 
 /* btn-secondary-color */
 .btn-secondary-color {
@@ -335,10 +188,11 @@
 
 .btn-link-color[disabled] {
   color: var(--Gray-400);
-} 
+}
 
 /* sm size button */
 .btn-primary.btn-sm,
+.btn-danger.btn-sm,
 .btn-secondary-gray.btn-sm,
 .btn-secondary-color.btn-sm,
 .btn-tertiary-gray.btn-sm,
@@ -361,13 +215,13 @@
 
 /* md size button */
 .btn-primary.btn-md,
+.btn-danger.btn-md,
 .btn-secondary-gray.btn-md,
 .btn-secondary-color.btn-md,
 .btn-tertiary-gray.btn-md,
 .btn-tertiary-color.btn-md,
 .btn-link-gray.btn-md,
 .btn-link-color.btn-md {
-  /* 默认尺寸（可以认为是 md 尺寸） */
   padding: 10px 14px;
   font-size: 14px;
   line-height: 22px;

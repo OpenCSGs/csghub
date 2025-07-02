@@ -16,7 +16,7 @@
       {{ $t('endpoints.playground.imageText') }}
     </div>
     <div
-      class="min-h-[180px] px-3.5 py-3 bg-white rounded-lg shadow border border-gray-300 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
+      class="min-h-[180px] max-h-[480px] px-3.5 py-3 bg-white rounded-lg border border-gray-200 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
     >
       <div v-for="(message, index) in messageHistory" :key="index" class="mb-4">
         <!-- user question -->
@@ -39,23 +39,17 @@
       </div>
     </div>
     <div
-      class="flex items-center justify-between p-3 gap-2 rounded-lg shadow border relative"
-      :class="
-        inputFocus
-          ? 'border-brand-300 [box-shadow:rgba(16,_24,_40,_0.05)_0px_1px_2px,_rgba(77,_106,_214,_0.24)_0px_0px_0px_4px]'
-          : ' border-gray-300'
-      "
-      v-loading="loading"
+      class="flex items-center justify-between gap-2 rounded-lg relative"
     >
       <el-upload
-        v-if="!loading"
-        class="mr-2 flex"
+        class="mr-2 flex input-with-border"
         :show-file-list="false"
         :before-upload="handleBeforeUpload"
         :on-success="handleUploadSuccess"
         :on-error="handleUploadError"
         accept="image/png, image/jpeg"
         action="/internal_api/upload"
+        :disabled="loading"
         :data="{
           namespace: 'comment',
           file_max_size: 1024*1024
@@ -83,6 +77,7 @@
             ref="uploadRef"
             v-show="!imageUrl"
             class="w-[30px] h-[30px] border border-gray-300 rounded-md flex items-center justify-center"
+            :class="{'opacity-50 cursor-not-allowed': loading}"
           >
             <SvgIcon v-if="!uploading" name="upload-image" />
             <el-icon v-else class="is-loading"><Loading /></el-icon>
@@ -92,7 +87,9 @@
 
       <el-input
         v-model="message"
+        class="input-with-border"
         inputStyle="outline: none"
+        :disabled="loading"
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown.enter="handleSendMessage"
@@ -101,11 +98,11 @@
       ></el-input>
 
       <div
-        class="h-[34px] px-3 py-2 rounded-lg shadow border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
+        class="h-[34px] px-3 py-2 rounded-lg border border-gray-200 justify-center items-center gap-1 inline-flex flex-shrink-0"
         :class="
           canSendMessage
             ? 'bg-brand-600 cursor-pointer'
-            : 'bg-[#f2f3f6] cursor-not-allowed'
+            : 'bg-gray-100 cursor-not-allowed'
         "
         @click="handleSendMessage"
       >
@@ -406,9 +403,15 @@
 
 <style scoped>
   :deep(.el-input .el-input__wrapper) {
-    border: none !important;
-    box-shadow: none !important;
+    border: none;
+    box-shadow: none;
     padding: 0;
+  }
+
+  :deep(.input-with-border .el-input__wrapper) {
+    box-shadow: 0 0 0 1px var(--el-input-border-color, #dcdfe6) inset;
+    border-radius: 4px;
+    padding: 1px 11px;
   }
 
   :deep(.el-loading-spinner svg) {

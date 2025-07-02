@@ -5,12 +5,11 @@
         <BranchDropdown
           @changeBranch="changeBranch"
           :current-branch="currentBranch"
-          :branches="branches"
         />
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>
             <a
-              :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`"
+              @click.prevent="goToNamespace"
               >{{ namespacePath.split('/')[1] }}</a
             >
           </el-breadcrumb-item>
@@ -19,9 +18,7 @@
             :key="path"
           >
             <a
-              :href="`/${prefixPath}/${namespacePath}/${
-                index === breadcrumb.length - 1 ? 'blob' : 'files'
-              }/${currentBranch}${path}`"
+              @click.prevent="goToBreadcrumb(path, index)"
               >{{ extractNameFromPath(path) }}</a
             >
           </el-breadcrumb-item>
@@ -109,11 +106,11 @@
           </div>
           <div
             v-if="canWrite && !isImage()"
-            class="flex items-center gap-1"
+            class="flex items-center gap-1 cursor-pointer"
           >
             <SvgIcon name="edit" />
             <a
-              :href="`/${prefixPath}/${namespacePath}/edit/${currentBranch}/${currentPath}`"
+              @click.prevent="goToEditFile"
               >{{ $t('shared.edit') }}</a
             >
           </div>
@@ -236,9 +233,10 @@
   import resolveContent from '../../packs/resolveContent'
   import { useI18n } from 'vue-i18n'
   import { createAndClickAnchor } from '../../packs/utils'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
-    branches: Object,
+    // branches: Object,
     currentBranch: String,
     currentPath: String,
     namespacePath: String,
@@ -246,7 +244,7 @@
   })
 
   const { t } = useI18n()
-
+  const { repoTab, setRepoTab } = useRepoTabStore()
   const breadcrumb = ref([])
   const fileType = ref('')
   const version = ref('')
@@ -259,8 +257,16 @@
   const size = ref(0)
   const content = ref('')
   const lastCommit = ref({})
+  const currentBranch = ref(props.currentBranch)
+  const currentPath = ref(props.currentPath || '')
 
-  const prefixPath = document.location.pathname.split('/')[1]
+  let prefixPath = document.location.pathname.split('/')[1]
+  let apiPrefixPath = document.location.pathname.split('/')[1]
+
+  if (prefixPath === 'mcp') {
+    prefixPath = 'mcp/servers'
+    apiPrefixPath = 'mcps'
+  }
 
   const extractNameFromPath = (path) => {
     const parts = path.split('/')
@@ -268,7 +274,7 @@
   }
 
   const updateBreadcrumb = () => {
-    const breadcrumbArray = props.currentPath.split('/').filter(Boolean)
+    const breadcrumbArray = currentPath.value.split('/').filter(Boolean)
     let breadcrumbPath = ''
     breadcrumb.value = breadcrumbArray.map((item) => {
       breadcrumbPath += '/' + item
@@ -277,7 +283,7 @@
   }
 
   const detectFileType = () => {
-    const parts = props.currentPath.split('.')
+    const parts = currentPath.value.split('.')
     const extension = parts[parts.length - 1]
     fileType.value = extension
   }
@@ -295,10 +301,43 @@
     }
   }
 
+  const goToNamespace = () => {
+    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`"
+    setRepoTab({
+      actionName: 'files',
+      lastPath: ''
+    }) 
+  }
+
+  const goToBreadcrumb = (path, index) => {
+    // :href="`/${prefixPath}/${namespacePath}/${
+    // index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`"
+    const pathTmp = path.includes('/') ? path?.slice(1) : path
+    setRepoTab({
+      actionName: index === breadcrumb.length - 1 ? 'blob' : 'files',
+      lastPath: pathTmp
+    }) 
+    fetchFileContent()
+  }
+
+  const goToEditFile = () => {
+    // :href="`/${prefixPath}/${namespacePath}/edit/${currentBranch}/${currentPath}`"
+    setRepoTab({
+      actionName: 'edit_file',
+      lastPath: currentPath.value
+    })
+  }
+
   const changeBranch = (branch) => {
-    if (branch !== props.currentBranch) {
-      window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${branch}/${props.currentPath}`
-    }
+    // if (branch !== props.currentBranch) {
+    //   window.location.href = `/${apiPrefixPath}/${props.namespacePath}/blob/${branch}/${props.currentPath}`
+    // }
+    currentBranch.value = branch
+    setRepoTab({
+      currentBranch: branch,
+      actionName: 'files',
+      lastPath: ''
+    })
   }
 
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
@@ -316,10 +355,10 @@
 
   const updateFileData = (data) => {
     content.value = resolveContent(
-      prefixPath,
+      apiPrefixPath,
       data.content,
       props.namespacePath,
-      props.currentBranch
+      currentBranch.value
     )
     lastCommit.value = data.commit
     size.value = data.size
@@ -333,7 +372,7 @@
   const fetchFileContent = async () => {
     try {
       const { data, error } = await useFetchApi(
-        `/${prefixPath}/${props.namespacePath}/blob/${props.currentPath}?ref=${props.currentBranch}`
+        `/${apiPrefixPath}/${props.namespacePath}/blob/${currentPath.value}?ref=${currentBranch.value}`
       ).json()
 
       if (data.value) {
@@ -351,7 +390,7 @@
   }
 
   const lfsDownload = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${props.currentBranch}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${props.currentPath}`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${currentBranch.value}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${currentPath.value}`
 
     try {
       const { data, error } = await useFetchApi(url).json()
@@ -363,7 +402,7 @@
         })
       } else {
         const { data: downloadUrl } = data.value
-        createAndClickAnchor(downloadUrl, props.currentPath)
+        createAndClickAnchor(downloadUrl, currentPath.value)
       }
     } catch (error) {
       console.error(error)
@@ -371,7 +410,7 @@
   }
 
   const normalFileDownload = async () => {
-    const url = `/${prefixPath}/${props.namespacePath}/download/${path.value}?ref=${props.currentBranch}`
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${path.value}?ref=${currentBranch.value}`
 
     try {
       const { data, error } = await useFetchApi(url).blob()

@@ -40,7 +40,7 @@
               {{ $t('prompts.listSettings.tips') }}
             </div>
           </div>
-          <div class="flex flex-col gap-[6px]">
+          <div class="flex flex-col gap-1.5">
             <el-input
               v-model="promptsNickname"
               clearable
@@ -136,12 +136,12 @@
           </div>
           <div class="flex flex-col gap-2 w-[484px] md:w-full">
           <div
-            class="flex gap-[4px] flex-wrap items-center w-full border rounded-[4px] border-gray-300 min-h-[40px] p-[6px]">
+            class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-1.5">
             <div
-              class="scroll-container flex gap-[4px] flex-wrap max-h-[120px] overflow-y-auto">
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
               <span
                 v-for="promptsRelationsModel in promptsRelationsModels"
-                class="flex items-center gap-[5px] border rounded-[5px] border-gray-300 px-[5px] py-[2px]">
+                class="flex items-center gap-1 border rounded-md border-gray-300 px-1 py-0.5">
                 {{ promptsRelationsModel.path }}
                 <el-icon><Close @click="removeModel(promptsRelationsModel.path)" /></el-icon>
               </span>
@@ -153,11 +153,11 @@
           </div>
           <div
             v-show="shouldShowModelsList"
-            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-[4px] px-[6px]">
+            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5">
             <p
               v-for="model in showModels"
               @click="selectModel(model)"
-              class="flex gap-[8px] items-center cursor-pointer p-[10px]">
+              class="flex gap-2 items-center cursor-pointer p-2">
               {{ model.path }}
             </p>
           </div>
@@ -198,19 +198,12 @@
               size="large"
               class="!w-[484px] lg:!w-full" />
             <div class="flex">
-              <div
+              <CsgButton
                 id="confirmDelete"
                 @click="clickDelete"
-                class="text-[#98A2B3] py-[8px] px-[12px] text-[14px] leading-[20px] rounded-md"
-                :class="
-                  delDesc === promptsDetails.path
-                    ? 'bg-[#D92D20] text-[#FFFFFF] cursor-pointer active:shadow-box active:space-y-0 active:space-x-0 active:ring-4 active:ring-red-400 active:ring-opacity-25 active:bg-[#D92D20] hover:text-white'
-                    : 'bg-[#F2F4F7]'
-                "
-                @mouseover="handleMouseOver"
-                @mouseleave="handleMouseLeave">
-                {{ $t('prompts.listSettings.confirmDel') }}
-              </div>
+                class="btn btn-danger btn-sm w-fit"
+                :disabled="delDesc !== promptsDetails.path"
+                :name="$t('prompts.listSettings.confirmDel')" />
             </div>
           </div>
         </div>

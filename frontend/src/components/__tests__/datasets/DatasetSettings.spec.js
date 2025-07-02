@@ -144,6 +144,6 @@ describe("DatasetSettings", () => {
     const deleteInput = wrapper.findAll('input').at(-1);
     await deleteInput.setValue('test/dataset');
     const deleteButton = wrapper.find('#confirmDelete');
-    expect(deleteButton.classes()).toContain('bg-error-600');
+    expect(deleteButton.classes()).toContain('btn-danger');
   });
 });

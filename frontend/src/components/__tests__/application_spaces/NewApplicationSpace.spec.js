@@ -37,7 +37,7 @@ const createResponse = (data, errorMsg = null) => ({
 
 const mockApiResponses = {
   '/cluster': createResponse([{ cluster_id: '1', region: 'region1' }]),
-  [`/space_resources?cluster_id=1`]: createResponse([
+  [`/space_resources?cluster_id=1&deploy_type=0`]: createResponse([
     { id: 1, name: 'testcloud', is_available: true }
   ]),
   '/space_templates/docker': createResponse([

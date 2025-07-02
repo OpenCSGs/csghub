@@ -225,10 +225,12 @@
     .el-table__empty-block {
       border-left: 1px solid #eaecf0;
       border-right: 1px solid #eaecf0;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
     }
     .billing-table-header-row {
       .billing-table-header-cell {
-        padding: 12px 24px;
+        padding: 12px 0px;
         font-size: 12px;
         font-weight: 400;
         color: var(--gray-600);

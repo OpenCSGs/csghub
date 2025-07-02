@@ -33,7 +33,7 @@
         <div class="flex text-sm text-gray-600 gap-[4px]">
           <span>{{ $t('endpoints.detail.currentEndpointReplica')}}</span>
           <span>:</span>
-          <span>{{ endpointReplica }}</span>
+          <span>{{ endpointReplicaCount }}</span>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
   </div>
 </template>
 <script setup>
-  import { watch, ref, onMounted } from 'vue'
+  import { watch, ref, onMounted, computed } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import EndpointPlayground from './EndpointPlayground.vue'
   import { ElMessage } from 'element-plus'
@@ -93,7 +93,9 @@
       default: 0
     }
   })
-
+  const endpointReplicaCount = computed(() => {
+    return props.replicaList ? props.replicaList.length : 0;
+  });
   const resource = ref({})
 
   const fetchResources = async () => {

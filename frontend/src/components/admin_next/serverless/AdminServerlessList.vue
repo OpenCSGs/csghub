@@ -6,14 +6,20 @@
     :breadcrumbs="[{ text: $t('admin.serverless.title') }]"
   >
     <!-- search & filter -->
-    <!-- <div class="flex items-center gap-3 w-full pt-1">
+    <!-- <div class="flex items-center py-1 gap-3 w-full pt-1">
       <el-input
         v-model="keyword"
-        :placeholder="$t('admin.name') + ',' + $t('admin.owner')"
+        :placeholder="$t('admin.search') + ' ' + $t('admin.serverless.deployName')"
         size="large"
-        :prefix-icon="Search"
+        clearable
         @input="searchServerless"
-      />
+      >
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <Search />
+          </el-icon>
+        </template>
+      </el-input>
     </div> -->
     <Table
       :data="serverless"
@@ -76,7 +82,7 @@
       />
       <el-table-column
         :label="$t('admin.operations')"
-        width="260px"
+        width="280px"
         fixed="right"
       >
         <template #default="scope">
@@ -90,6 +96,12 @@
               class="btn btn-primary btn-sm"
               :name="$t('admin.serverless.edit')"
               @click="shoeEdit(scope.row)"
+            />
+            <CsgButton
+              v-if="scope.row.status === 'Stopped'"
+              class="btn btn-danger btn-sm"
+              :name="$t('all.delete')"
+              @click="removeServerless(scope.row)"
             />
           </div>
         </template>
@@ -111,10 +123,12 @@
   import { Container, Pagination, Table } from '../admin_component'
   import { ref, onMounted, inject } from 'vue'
   import { Search } from '@element-plus/icons-vue'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../../packs/useFetchApi'
   import useUserStore from '@/stores/UserStore'
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n()
   const userStore = useUserStore()
 
   const serverless = ref([])
@@ -150,7 +164,7 @@
     const { data, error } = await useFetchApi(
       `/user/${userStore.username}/run/serverless?page=${
         current || page.value
-      }&per=${per.value}&search=${keyword.value}`
+      }&per=${per.value}&search=${keyword.value}&search_field=deploy_name`
     ).json()
     if (data.value) {
       const res_json = data.value
@@ -172,6 +186,45 @@
 
   const shoeEdit = (detail) => {
     window.location.href = `/admin_panel/serverless/${detail.model_id}/${detail.deploy_id}/edit`
+  }
+
+  const removeServerless = async (detail) => {
+    try {
+      await ElMessageBox.confirm(
+        t('admin.removeTips'),
+        t('admin.removeTitle'),
+        {
+          confirmButtonText: t('all.confirm'),
+          cancelButtonText: t('all.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          deleteServerless(detail)
+        })
+        .catch(() => {
+          console.log('cancel')
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  const deleteServerless = async (detail) => {
+    const [namespace, name] = detail.model_id.split('/');
+    const removeData = {
+        namespace,
+        name
+    };
+    const options = { body: JSON.stringify(removeData) }
+    const url = `/models/${detail.model_id}/serverless`
+    const { error } = await useFetchApi(url, options).delete().json()
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      window.location.href = `/admin_panel/serverless`
+    }
   }
 
   onMounted(() => {

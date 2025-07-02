@@ -9,25 +9,23 @@
     />
 
     <!-- multi-source sync button -->
-    <CsgButton
+    <SyncDropdown
+      :syncInprogress="syncInprogress"
+      :repoType="repoType"
+      :model-path="namespacePath"
+      :commitId="commitId"
       v-if="showSyncButton"
-      type="default"
-      :name="syncInprogress ? $t('repo.source.syncing') : $t('repo.source.syncButton')"
-      class="btn btn-secondary-gray btn-sm modelBtn"
-      :disabled="syncInprogress"
-      svgName="sync"
-      @click="handleSyncRepo"
+      @syncRepo="handleSyncRepo"
     />
 
     <!-- evaluation button -->
-    <div v-if="!actionLimited"
+    <div v-if="!actionLimited && repoType === 'model'"
       class="relative inline-flex">
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
-        v-if="repoType === 'model'"
         @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
       />
     </div>
@@ -57,6 +55,7 @@
       <SvgIcon
         name="deploy"
         class="mr-0"
+        :disabled="true"
       />
       <div>{{ $t('all.deploy') }}</div>
     </div>
@@ -65,8 +64,8 @@
     <CsgButton
       v-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
-      :class="{ disabled: !enableFinetune || !httpCloneUrl }"
-      :name="enableFinetune && !!httpCloneUrl ? $t('finetune.title') : $t('finetune.title')"
+      :disabled="!enableFinetune || !httpCloneUrl"
+      :name="$t('finetune.title')"
       svgName="model_finetune_create"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
     />
@@ -74,10 +73,20 @@
     <!-- repo download clone button -->
     <CsgButton
       v-if="!!httpCloneUrl && repo.syncStatus !== 'pending'"
-      class="btn btn-primary btn-sm modelBtn"
+      class="btn btn-sm modelBtn"
+      :class="{'btn-primary': repoType !== 'mcp', 'btn-secondary-gray': repoType === 'mcp'}"
       :name="$t(downloadButtonKey)"
-      svgName="download"
+      :svgName="repoType === 'mcp' ? 'download_dark' : 'download'"
       @click="cloneRepositoryVisible = true"
+    />
+
+    <!-- mcp deploy button -->
+    <CsgButton
+      class="btn btn-primary btn-sm"
+      v-if="repoType === 'mcp'"
+      svgName="mcp_deploy"
+      :name="$t('mcps.deploy.deployBtn')"
+      @click="handleMcpDeploy"
     />
 
     <!-- clone dialog -->
@@ -259,6 +268,7 @@
   import { computed, ref, onMounted, watch } from 'vue'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
+  import SyncDropdown from './SyncDropdown.vue'
   import SvgIcon from './SvgIcon.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
@@ -279,6 +289,9 @@
     enableFinetune: Boolean,
     enableEvaluation: Boolean,
     showAddToCollections: Boolean,
+    canManage: Boolean,
+    syncStatus: String,
+    commitId: String
   })
 
   const { actionLimited, isLoggedIn } = storeToRefs(userStore)
@@ -430,6 +443,8 @@ csghub-cli download ${props.namespacePath} -t space
         return 'codes.downloadCode'
       case 'space':
         return 'application_spaces.download'
+      case 'mcp':
+        return 'mcps.download'
       default:
         return ''
     }
@@ -504,6 +519,14 @@ csghub-cli download ${props.namespacePath} -t space
       setTimeout(() => {
         location.reload()
       }, 2000)
+    }
+  }
+
+  const handleMcpDeploy = () => {
+    if (isLoggedIn.value) {
+      window.location.href = `/mcp/servers/${props.repo.path}/deploy`
+    } else {
+      ToLoginPage()
     }
   }
 

@@ -63,3 +63,25 @@ export const getLastDayOfMonthFromDateString = (dateString) => {
 
   return `${year}-${formattedMonth}-${lastDay}`
 }
+
+export const timestampToDatetimeStr = (timestamp) => {
+  const date = new Date(timestamp * 1000)
+  const localDateTime = date.toLocaleString()
+  return localDateTime
+}
+
+export const convertUtcToLocalTime = (utcString) => {
+  const utcWithZ = `${utcString}Z`;
+  const utcDate = new Date(utcWithZ);
+  if (isNaN(utcDate.getTime())) {
+      console.error("无效的日期格式:", utcString);
+      return '';
+  }
+  const year = utcDate.getFullYear();
+  const month = String(utcDate.getMonth() + 1).padStart(2, '0'); // 月份从 0 开始，需加 1
+  const day = String(utcDate.getDate()).padStart(2, '0');
+  const hours = String(utcDate.getHours()).padStart(2, '0');
+  const minutes = String(utcDate.getMinutes()).padStart(2, '0');
+  const seconds = String(utcDate.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

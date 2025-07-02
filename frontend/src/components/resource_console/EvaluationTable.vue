@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <el-table
-      class="evaluation-table"
+      class="evaluation-table rounded-xl"
       header-row-class-name="evaluation-table-header-row"
       header-cell-class-name="evaluation-table-header-cell"
       row-class-name="evaluation-table-row"
@@ -14,13 +14,13 @@
     >
       <el-table-column
         :label="$t('evaluation.list.evaluationName')"
-        label-class-name="indent-3 text-[12px] font-[400] leading-[18px] text-gray-900 truncate"
+        label-class-name="indent-3 text-sm font-normal leading-5 text-gray-600 truncate"
         width="110"
         show-overflow-tooltip
         align="left"
       >
         <template #default="scope">
-          <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
+          <div class="text-sm font-normal leading-5 text-gray-600">
             {{ scope.row.task_name }}
           </div>
         </template>
@@ -28,14 +28,14 @@
 
       <el-table-column
         :label="$t('evaluation.list.modelName')"
-        label-class-name="text-[12px] font-[400] leading-[18px] text-gray-900"
+        label-class-name="text-sm font-normal leading-5 text-gray-600"
         width="200"
         show-overflow-tooltip
         align="left"
       >
         <template #default="scope">
           <div
-            class="text-[14px] font-[400] leading-[20px] text-gray-900 truncate"
+            class="text-sm font-normal leading-5 text-gray-600 truncate"
           >
             {{ scope.row.repo_ids[0] }}
           </div>
@@ -44,12 +44,12 @@
 
       <el-table-column
         :label="$t('evaluation.list.datasetNum')"
-        label-class-name="text-[12px] font-[400] leading-[18px] text-gray-900"
+        label-class-name="text-sm font-normal leading-5 text-gray-600"
         width="120"
         align="left"
       >
         <template #default="scope">
-          <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
+          <div class="text-sm font-normal leading-5 text-gray-600">
             {{ scope.row.datasets ? scope.row.datasets.length : 0 }}
           </div>
         </template>
@@ -57,7 +57,7 @@
 
       <el-table-column
         :label="$t('evaluation.list.dataset')"
-        label-class-name="text-[12px] font-[400] leading-[18px] text-gray-900"
+        label-class-name="text-sm font-normal leading-5 text-gray-600"
         width="200"
         align="left"
       >
@@ -65,22 +65,22 @@
           <el-tooltip
             v-if="scope.row.datasets && scope.row.datasets.length > 0"
             placement="top"
-            :disabled="scope.row.datasets.length <= 2"
+            :disabled="(scope.row.datasets || []).length <= 2"
           >
             <template #content>
               <ul
                 class="list-item list-disc ml-3"
-                v-for="dataset in scope.row.datasets"
+                v-for="dataset in (scope.row.datasets || [])"
                 :key="dataset"
               >
                 <li>{{ dataset }}</li>
               </ul>
             </template>
 
-            <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
+            <div class="text-sm font-normal leading-5 text-gray-600">
               <ul
                 class="list-item list-disc ml-3"
-                v-for="dataset in scope.row.datasets.slice(0, 2)"
+                v-for="dataset in scope.row.datasets?.slice(0, 2)"
                 :key="dataset"
               >
                 <li class="truncate">{{ dataset }}</li>
@@ -93,12 +93,12 @@
 
       <el-table-column
         :label="$t('evaluation.list.creationTime')"
-        label-class-name="text-[12px] font-[400] leading-[18px] text-gray-900"
+        label-class-name="text-sm font-normal leading-5 text-gray-600"
         width="150"
         align="left"
       >
         <template #default="scope">
-          <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
+          <div class="text-sm font-normal leading-5 text-gray-600">
             {{ formatDate(scope.row.submit_time) }}
           </div>
         </template>
@@ -106,7 +106,7 @@
 
       <el-table-column
         :label="$t('evaluation.list.status')"
-        label-class-name="text-[12px] font-[400] leading-[18px] text-gray-900"
+        label-class-name="text-sm font-normal leading-5 text-gray-600"
         width="130"
         align="left"
       >
@@ -126,14 +126,14 @@
 
       <el-table-column
         :label="$t('evaluation.list.desc')"
-        label-class-name="text-[12px] font-[400] leading-[18px] text-gray-900"
+        label-class-name="text-sm font-normal leading-5 text-gray-600"
         align="left"
         width="150"
         show-overflow-tooltip
       >
         <template #default="scope">
           <div
-            class="text-[14px] font-[400] leading-[20px] text-gray-900 truncate"
+            class="text-sm font-normal leading-5 text-gray-600 truncate"
           >
             {{ scope.row.task_desc || '-' }}
           </div>
@@ -152,7 +152,7 @@
               v-if="scope.row.download_url"
               download
               :href="scope.row.download_url"
-              class="flex gap-4 text-brand-700 cursor-pointer"
+              class="flex gap-4 text-brand-700 cursor-pointer hover:text-brand-800"
               >{{ $t('evaluation.list.download') }}</a
             >
             <a
@@ -160,7 +160,7 @@
               :class="{
                 'pointer-events-none !text-brand-100': !scope.row.result_url
               }"
-              class="flex gap-4 text-brand-700 cursor-pointer"
+              class="flex gap-4 text-brand-700 cursor-pointer hover:text-brand-800"
               >{{ $t('evaluation.list.detail') }}</a
             >
             <el-popconfirm
@@ -169,7 +169,7 @@
               @confirm="deleteEvaluation(scope.row)"
             >
               <template #reference>
-                <a class="text-error-600 cursor-pointer">{{
+                <a class="text-error-600 cursor-pointer hover:text-error-700">{{
                   $t('evaluation.list.delete')
                 }}</a>
               </template>
@@ -292,16 +292,18 @@
     .el-table__empty-block {
       border-left: 1px solid #eaecf0;
       border-right: 1px solid #eaecf0;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
     }
     .evaluation-table-header-row {
       .evaluation-table-header-cell {
         padding: 12px 0;
         font-size: 12px;
         font-weight: 400;
-        color: var(--gray-600);
+        color: #475467 !important;
         &:nth-child(1) {
           border-left: 1px solid #eaecf0;
-          border-top-left-radius: 8px;
+          border-top-left-radius: 12px;
 
           .cell {
             padding-left: 12px;
@@ -309,7 +311,7 @@
         }
         &:nth-last-child(1) {
           border-right: 1px solid #eaecf0;
-          border-top-right-radius: 8px;
+          border-top-right-radius: 12px;
         }
         .cell {
           line-height: 18px;
@@ -330,6 +332,16 @@
         .cell {
           line-height: 40px;
           padding: 0 24px;
+        }
+      }
+      &:last-child {
+        .evaluation-table-row-cell {
+          &:first-child {
+            border-bottom-left-radius: 12px;
+          }
+          &:last-child {
+            border-bottom-right-radius: 12px;
+          }
         }
       }
     }

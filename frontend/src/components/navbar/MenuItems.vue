@@ -23,7 +23,6 @@
       <template
         :key="subItem.index"
         v-for="subItem in item.items">
-        <!-- <a :href="llmFinetune" target="_blank"></a> -->
         <a
           :href="subItem.index"
           :target="subItem.target"
@@ -33,14 +32,14 @@
             :style="subItem.style"
             :index="subItem.index">
             <!-- subItem.component -->
-              {{ item.title }}
+            <component :is="subItem.component" />
           </el-menu-item>
         </a>
       </template>
     </el-sub-menu>
   </template>
 
-  <!-- 更多里面的内容 -->
+  <!-- more -->
   <el-sub-menu
     v-if="moreItems.length > 0"
     :popper-class="popperClass"
@@ -51,7 +50,7 @@
     <template #title>
       <SvgIcon
         name="more_menu"
-        class="p-[4px]" />
+        class="p-1" />
       {{ $t('navbar.more') }}
     </template>
 
@@ -79,7 +78,6 @@
         <template
           :key="subItem.index"
           v-for="subItem in item.items">
-          <!-- <a :href="llmFinetune" target="_blank"></a> -->
           <a
             :href="subItem.index"
             :target="subItem.target"
@@ -89,7 +87,7 @@
               :style="subItem.style"
               :index="subItem.index">
               <!-- subItem.component -->
-                {{ item.title }}
+              <component :is="subItem.component" />
             </el-menu-item>
           </a>
         </template>
@@ -115,9 +113,15 @@
 </template>
 
 <script setup>
-  import { ref, watch, onMounted, onUnmounted } from 'vue'
+  import { ref, watch, onMounted, onUnmounted, shallowRef } from 'vue'
+  import Mcp from './menuItem/Mcp.vue'
+  import McpTools from './menuItem/McpTools.vue'
   import { useI18n } from 'vue-i18n'
+
   const { t } = useI18n()
+
+  const McpRef = shallowRef(Mcp)
+  const McpToolsRef = shallowRef(McpTools)
 
   const props = defineProps({
     isLoggedInBoolean: Boolean,
@@ -130,37 +134,64 @@
       title: t('navbar.models'),
       index: '/models',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('navbar.datasets'),
       index: '/datasets',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
+    },
+    {
+      title: t('navbar.mcp'),
+      index: '/mcp/servers',
+      class: menuItemClass,
+      style:
+        'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
+      items: [
+        {
+          title: t('navbar.mcpText'),
+          index: '/mcp/servers',
+          class: subMenuItemClass,
+          style: 'height: auto;',
+          component: McpRef,
+          target: '',
+          condition: true,
+        },
+        {
+          title: t('navbar.mcpTools'),
+          index: '/mcp/servers/tools',
+          class: subMenuItemClass,
+          style: 'height: auto;',
+          component: McpToolsRef,
+          target: '',
+          condition: true,
+        }
+      ]
     },
     {
       title: t('navbar.spaces'),
       index: '/spaces',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('navbar.codes'),
       index: '/codes',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('collections.collection'),
       index: '/collections',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('prompts.promptLibrary'),
       index: '/prompts/library',
       class: menuItemClass,
-      style: 'border:none; height: 48px; border-radius: 4px; padding: 12px 16px;',
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     }
   ]
 
@@ -210,15 +241,16 @@
   }
 
   const menuItemClass =
-    'md:!px-[12px] md:!py-[16px] md:!h-auto js-menu-item-width'
-  const subMenuClass = 'md:!h-auto md:!py-[16px] js-menu-item-width'
-  const subMenuItemClass = 'mx-[12px] md:mx-0 md:!px-[12px]'
+    'md:!px-3 md:!py-4 md:!h-auto js-menu-item-width'
+  const subMenuClass = 'md:!h-auto md:!py-4 js-menu-item-width'
+  const subMenuItemClass = 'mx-3 md:mx-0 md:!px-3'
   const popperClass = 'popper-submenu'
 </script>
 
 <style scoped>
   :deep(.el-sub-menu__title) {
     /* padding: 16px; */
+    color: var(--Gray-600);
   }
   :deep(.popper-submenu .el-menu) {
     min-width: 200px;
@@ -226,6 +258,7 @@
   }
   :deep(.popper-submenu .el-menu .el-menu-item) {
     font-size: 16px;
+    font-weight: 400;
     height: 46px;
     line-height: 24px;
   }

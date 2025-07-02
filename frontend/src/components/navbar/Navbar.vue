@@ -1,6 +1,11 @@
 <template>
   <UpdateUsername />
-  <div class="border-b sticky top-0 z-[999] csg-navbar bg-white border-gray-200">
+  <div
+    class="border-b sticky top-0 z-[999]"
+    :class="`bg-${theme} ${
+      theme === 'black' ? 'border-gray-950' : 'border-gray-200'
+    }`"
+  >
     <div
       class="page-responsive-width flex text-gray-700 justify-between items-center h-20 sm:h-15 gap-6 md:px-5">
       <!-- pc logo -->
@@ -50,7 +55,8 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu popper-class="z-[10000]">
-              <el-dropdown-item command="zh">中文</el-dropdown-item>
+              <el-dropdown-item command="zh">简体中文</el-dropdown-item>
+              <el-dropdown-item command="zhHant">繁體中文</el-dropdown-item>
               <el-dropdown-item command="en">English</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -59,59 +65,72 @@
         <!-- logged in avatar dropdown -->
         <el-dropdown
           v-if="cookies.get('login_identity')"
-          class="pl-1">
+          class="pl-1"
+          placement="bottom-start"
+          popper-class="avatar-dropdown"
+        >
           <!-- verified_company_user/company_user/user -->
           <span
             v-if="false"
             class="el-dropdown-link relative">
             <el-avatar
-              :size="35"
+              :size="36"
               :src="avatar">
             </el-avatar>
-            <SvgIcon name="verified_company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
+            <SvgIcon
+              name="verified_company"
+              height="15px"
+              width="15px"
+              class="absolute right-0 top-6"
+            />
           </span>
           <span
             v-else-if="false"
             class="el-dropdown-link relative">
             <el-avatar
-              :size="35"
+              :size="36"
               :src="avatar">
             </el-avatar>
-            <SvgIcon name="company" height="15px" width="15px" class="absolute right-0 top-[25px]" />
+            <SvgIcon
+              name="company"
+              height="15px"
+              width="15px"
+              class="absolute right-0 top-6"
+            />
           </span>
           <span
             v-else
             class="el-dropdown-link">
             <el-avatar
-              :size="35"
+              :size="36"
               :src="avatar">
             </el-avatar>
           </span>
           <!-- avatar dropdown menu -->
           <template #dropdown>
-            <el-dropdown-menu>
+            <el-dropdown-menu style="max-height: 88vh; min-height: 360px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #D0D5DD transparent;">
               <el-dropdown-item>
                 <a :href="`/profile/${username}`">
                   <div class="flex flex-row items-center gap-2">
                     <el-avatar :size="40" :src="avatar"></el-avatar>
-                    <div class="flex flex-col">
-                    <span class="text-sm font-medium text-gray-700">{{ nickname }}</span>
-                    <span class="text-sm font-light  text-gray-600">@{{ username }}</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-sm font-medium text-gray-700 truncate">{{ nickname }}</span>
+                      <span class="text-sm font-light text-gray-600 truncate">@{{ username }}</span>
                     </div>
                   </div>
                 </a>
               </el-dropdown-item>
-              <el-dropdown-item divided>
-                <a :href="`/profile/${username}`">
-                  <div class="flex items-center gap-2">
+              <a :href="`/profile/${username}`">
+                <el-dropdown-item>
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-profile" />
                     {{ $t('navbar.profile') }}
                   </div>
-                </a>
-              </el-dropdown-item>
+                </el-dropdown-item>
+              </a>
               <a :href="`/profile/likes/${username}`">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-collection" />
                     {{ $t('profile.myCollect') }}
                   </div>
@@ -119,16 +138,26 @@
               </a>
               <a href="/settings/profile">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-setting" />
                     {{ $t('navbar.setting') }}
+                  </div>
+                </el-dropdown-item>
+              </a>
+              <a
+                v-if="!actionLimited"
+                href="/datapipelines">
+                <el-dropdown-item>
+                  <div class="flex items-center w-fit gap-2">
+                    <SvgIcon name="navbar-datapipelines" />
+                    {{ $t('navbar.datapipelines') }}
                   </div>
                 </el-dropdown-item>
               </a>
               <a v-if="!actionLimited"
                 href="/resource-console">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-resource-console" />
                     {{ $t('navbar.console') }}
                   </div>
@@ -137,7 +166,7 @@
               <a v-if="isAdmin && !actionLimited"
                   href="/admin_panel">
                   <el-dropdown-item>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center w-fit gap-2">
                       <SvgIcon name="navbar-admin" />
                       {{ $t('navbar.adminPanel') }}
                     </div>
@@ -151,7 +180,7 @@
               <a v-if="!actionLimited"
                  href="/models/new">
                 <el-dropdown-item divided>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-new" />
                     {{ $t('navbar.newModel') }}
                   </div>
@@ -160,7 +189,7 @@
               <a v-if="!actionLimited"
                  href="/datasets/new">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-new" />
                     {{ $t('navbar.newDataset') }}
                   </div>
@@ -169,7 +198,7 @@
               <a v-if="!actionLimited"
                  href="/codes/new">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-new" />
                     {{ $t('navbar.newCode') }}
                   </div>
@@ -178,16 +207,25 @@
               <a v-if="!actionLimited"
                  href="/spaces/new">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-new" />
                     {{ $t('navbar.newApplicationSpace') }}
                   </div>
                 </el-dropdown-item>
               </a>
               <a v-if="!actionLimited"
+                 href="/mcp/servers/new">
+                <el-dropdown-item>
+                  <div class="flex items-center w-fit gap-2">
+                    <SvgIcon name="navbar-new" />
+                    {{ $t('navbar.newMcpServer') }}
+                  </div>
+                </el-dropdown-item>
+              </a>
+              <a v-if="!actionLimited"
                 href="/collections/new">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-new" />
                     {{ $t('navbar.newCollection') }}
                   </div>
@@ -196,7 +234,7 @@
               <a v-if="!actionLimited"
                  href="/organizations/new">
                 <el-dropdown-item divided>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-neworganization" />
                     {{ $t('navbar.newOrganization') }}
                   </div>
@@ -206,7 +244,7 @@
                 href="/daily_papers/new"
                 v-if="canCreateDailyPaper">
                 <el-dropdown-item>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-daily-paper" />
                     {{ $t('navbar.recommendation') }}
                   </div>
@@ -214,7 +252,7 @@
               </a>
               <a @click="clearCookies">
                 <el-dropdown-item divided>
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-center w-fit gap-2">
                     <SvgIcon name="navbar-logout" />
                     {{ $t('navbar.logout') }}
                   </div>
@@ -266,7 +304,7 @@
     <el-menu
       :default-active="activeIndex"
       :ellipsis="false"
-      class="w-full flex flex-col justify-center gap-4 pt-16"
+      class="w-full flex flex-col justify-center pt-16"
       unique-opened
       style="
         --el-menu-base-level-padding: 12px;
@@ -274,7 +312,7 @@
         --el-menu-item-font-weight: 400;
         --el-menu-item-height: auto;
       "
-      text-color="#475467"
+      text-color="gray-600"
     >
       <MenuItems
         :isLoggedInBoolean="isLoggedIn"
@@ -313,7 +351,6 @@
   >
     <a href="/settings/profile" class="underline text-sm"> {{ $t('navbar.profileEdit') }} </a>
   </el-alert>
-
   <Broadcast />
 </template>
 
@@ -439,5 +476,69 @@
   }
   :deep(.el-alert__description) {
     font-size: 14px !important;
+  }
+
+  :deep(.top-right-dialog) {
+    position: fixed;
+    top: 80px !important;
+    right: 20px !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+  :deep(.unreadCheckbox){
+    .el-checkbox__label{
+      font-size: 16px;
+      color: #344054;
+      margin-left: 12px;
+      font-weight: 400;
+      padding-left: 0;
+    }
+    .el-checkbox__inner{
+      width: 20px !important;
+      height: 20px !important;
+      border-radius: 6px;
+      border: 1px solid var(--Gray-300, #D0D5DD) !important;
+    }
+    .el-checkbox__inner:after{
+      height: 10px;
+      left: 6px;
+      top: 2px;
+      width: 5px;
+    }
+  }
+  :deep(.setttingCheckbox){
+    .el-checkbox__label{
+      font-size: 14px;
+      color: #344054;
+      margin-left: 8px;
+      font-weight: 400;
+    }
+    .el-checkbox__inner{
+      border-radius: 4px;
+    }
+  }
+  .settingsCont {
+    transform: translateY(100%);
+    box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  }
+  :deep(.avatar-dropdown) {
+    width: 200px !important;
+    max-height: 80vh;
+    min-height: 360px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 12px !important;
+    scrollbar-width: thin;
+    scrollbar-color: #d0d5dd transparent;
+  }
+  :deep(.avatar-dropdown)::-webkit-scrollbar {
+    width: 6px;
+  }
+  :deep(.avatar-dropdown)::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  :deep(.avatar-dropdown)::-webkit-scrollbar-thumb {
+    background-color: #d0d5dd;
+    border-radius: 3px;
   }
 </style>

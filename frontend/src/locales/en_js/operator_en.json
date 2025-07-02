@@ -1,0 +1,1573 @@
+{
+    "chinese_convert_mapper": {
+        "name": "Chinese Converter",
+        "description": "Mapper to convert Chinese between Traditional Chinese, Simplified Chinese and Japanese Kanji.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "这是几个简体字，会被转换为繁体字",
+            "after": "這是幾個簡體字，會被轉換爲繁體字"
+        },
+        "params": [
+            {
+                "name": "mode",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "s2t",
+                        "label": "s2t"
+                    },
+                    {
+                        "key": "t2s",
+                        "label": "t2s"
+                    },
+                    {
+                        "key": "s2tw",
+                        "label": "s2tw"
+                    },
+                    {
+                        "key": "tw2s",
+                        "label": "tw2s"
+                    },
+                    {
+                        "key": "s2hk",
+                        "label": "s2hk"
+                    },
+                    {
+                        "key": "hk2s",
+                        "label": "hk2s"
+                    },
+                    {
+                        "key": "s2twp",
+                        "label": "s2twp"
+                    },
+                    {
+                        "key": "tw2sp",
+                        "label": "tw2sp"
+                    },
+                    {
+                        "key": "t2tw",
+                        "label": "t2tw"
+                    },
+                    {
+                        "key": "tw2t",
+                        "label": "tw2t"
+                    },
+                    {
+                        "key": "hk2t",
+                        "label": "hk2t"
+                    },
+                    {
+                        "key": "t2hk",
+                        "label": "t2hk"
+                    },
+                    {
+                        "key": "t2jp",
+                        "label": "t2jp"
+                    },
+                    {
+                        "key": "jp2t",
+                        "label": "jp2t"
+                    }
+                ],
+                "value": "t2s"
+            }
+        ]
+    },
+    "clean_copyright_mapper": {
+        "name": "Copyright Cleaner",
+        "description": "Mapper to clean copyright comments at the beginning of the text\n    samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "这是一段 /* 多行注释\n注释内容copyright\n*/ 的文本。另外还有一些 // 单行注释。",
+            "after": "这是一段  的文本。另外还有一些 // 单行注释。"
+        },
+        "params": []
+    },
+    "clean_email_mapper": {
+        "name": "Email Cleaner",
+        "description": "Mapper to clean email in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "happy day euqdh@cjqi.com",
+            "after": "happy day "
+        },
+        "params": []
+    },
+    "clean_html_mapper": {
+        "name": "HTML Code Cleaner",
+        "description": "Mapper to clean html code in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "<a href='https://www.example.com/file.html?;name=Test' rel='noopener noreferrer' target='_blank'>Test</a>",
+            "after": "Test"
+        },
+        "params": []
+    },
+    "clean_ip_mapper": {
+        "name": "IP Cleaner",
+        "description": "Mapper to clean ipv4 and ipv6 address in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "ftp://example.com/188.46.244.216my-page.html",
+            "after": "ftp://example.com/my-page.html"
+        },
+        "params": []
+    },
+    "clean_links_mapper": {
+        "name": "Link Cleaner",
+        "description": "Mapper to clean links like http/https/ftp in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "这是个测试,https://example.com/my-page.html?param1=value1&param2=value2",
+            "after": "这是个测试,"
+        },
+        "params": []
+    },
+    "expand_macro_mapper": {
+        "name": "Expand Macro Definitions",
+        "description": "Mapper to expand macro definitions in the document body of Latex\n    samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "\\documentclass{article}\n% Recommended, but optional, packages for figures and better typesetting:\n\\usepackage{microtype}\n\\usepackage{graphicx}\n\n% Attempt to make hyperref and algorithmic work together better:\n\\newcommand{\\theHalgorithm}{\\arabic{algorithm}}\n% For theorems and such\n\\usepackage{amsmath}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% THEOREMS\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\theoremstyle{plain}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\theoremstyle{definition}\n\n\\usepackage[textsize=small]{todonotes}\n\\setuptodonotes{inline}\n\n\\usepackage{makecell}\n\\newcommand{\\cmark}{\\ding{51}\\xspace}%\n\\newcommand{\\xmark}{\\ding{55}\\xspace}%\n\n\\def \\alambic {\\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace}\n\n\\newcommand\\binke[1]{{\\color{blue} \\footnote{\\color{blue}binke: #1}} }\n\\newcommand\\Zerocost{Zero-cost}\n\\newcommand\\imagenet{ImageNet}\n\n\\begin{document}\n\n\\begin{abstract}\nThe wide\n\\end{abstract}\n\\section{Introduction}\n\\label{introduction}\nThe main contributions are summarized as follows:\n\\section{Background and Related Work}\\label{background}\n\\subsection{One-Shot NAS} In one-shot NAS\n\\section{PreNAS}\\label{method}In this\n\\subsection{One-Shot NAS with Preferred Learning}\nIn the specialization stage, the optimal architectures under given  resource constraints can be directly obtained:\n\\begin{equation}\n\\widetilde{\\mathcal{A}}^* = \\widetilde{\\mathcal{A}} .\n\\end{equation}\n\\subsection{Zero-Cost Transformer Selector}\\label{sub:layerNorm}\n\\subsection{Performance Balancing} We discuss\n\\section{Experiments}\\label{experiments}\n\\subsection{Setup}\n\\subsection{Main Results}\\label{sec:sota}\n\\subsection{Analysis and Ablation study}\\label{ablation}\n\\begin{figure}[t]\n\\vskip 0.1in\n    \\centering\n    \\subfigure[Search spaces]{\\includegraphics[width=0.36\\linewidth]{img/search_space.pdf}\\label{fg:search_space:a}}%\n    \\hfil%\n    \\subfigure[Error distributions]{\\includegraphics[width=0.58\\linewidth]{img/cumulation.pdf}\\label{fg:search_space:b}}\n    \\caption{Model quality}\n\\vskip -0.1in\n\\end{figure}\n\\paragraph{Effect of Performance Balancing} During\n\\subsection{Transfer Learning Results}\n\\subsection{CNN Results} in terms of similar FLOPs.\n\\FloatBarrier\n\\section{Conclusion}\\label{conclusion} In this\n% Acknowledgements should only appear in the accepted version.\n\\bibliography{ref}\n\\bibliographystyle{icml2023}\n\\clearpage\n\\appendix\n\\onecolumn\n\\section{Statistical}\n\\label{appendix:snipAnalysis} We analyze\n\\section{The Greedy Algorithm}\n\\label{appendix:greedy}\n\\section{Regularization \\& Data Augmentation}\\label{appendix:aug}\n\\renewcommand{\\arraystretch}{1.2}\n\\end{document}\n",
+            "after": "\\documentclass{article}\n% Recommended, but optional, packages for figures and better typesetting:\n\\usepackage{microtype}\n\\usepackage{graphicx}\n\n% Attempt to make hyperref and algorithmic work together better:\n\\newcommand{\\arabic{algorithm}}{\\arabic{algorithm}}\n% For theorems and such\n\\usepackage{amsmath}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% THEOREMS\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\theoremstyle{plain}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\theoremstyle{definition}\n\n\\usepackage[textsize=small]{todonotes}\n\\setuptodonotes{inline}\n\n\\usepackage{makecell}\n\\newcommand{\\cmark}{\\ding{51}\\xspace}%\n\\newcommand{\\xmark}{\\ding{55}\\xspace}%\n\n\\def \\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace {\\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace}\n\n\\newcommand\\binke[1]{{\\color{blue} \\footnote{\\color{blue}binke: #1}} }\n\\newcommand\\Zerocost{Zero-cost}\n\\newcommand\\imagenet{ImageNet}\n\n\\begin{document}\n\n\\begin{abstract}\nThe wide\n\\end{abstract}\n\\section{Introduction}\n\\label{introduction}\nThe main contributions are summarized as follows:\n\\section{Background and Related Work}\\label{background}\n\\subsection{One-Shot NAS} In one-shot NAS\n\\section{PreNAS}\\label{method}In this\n\\subsection{One-Shot NAS with Preferred Learning}\nIn the specialization stage, the optimal architectures under given  resource constraints can be directly obtained:\n\\begin{equation}\n\\widetilde{\\mathcal{A}}^* = \\widetilde{\\mathcal{A}} .\n\\end{equation}\n\\subsection{Zero-Cost Transformer Selector}\\label{sub:layerNorm}\n\\subsection{Performance Balancing} We discuss\n\\section{Experiments}\\label{experiments}\n\\subsection{Setup}\n\\subsection{Main Results}\\label{sec:sota}\n\\subsection{Analysis and Ablation study}\\label{ablation}\n\\begin{figure}[t]\n\\vskip 0.1in\n    \\centering\n    \\subfigure[Search spaces]{\\includegraphics[width=0.36\\linewidth]{img/search_space.pdf}\\label{fg:search_space:a}}%\n    \\hfil%\n    \\subfigure[Error distributions]{\\includegraphics[width=0.58\\linewidth]{img/cumulation.pdf}\\label{fg:search_space:b}}\n    \\caption{Model quality}\n\\vskip -0.1in\n\\end{figure}\n\\paragraph{Effect of Performance Balancing} During\n\\subsection{Transfer Learning Results}\n\\subsection{CNN Results} in terms of similar FLOPs.\n\\FloatBarrier\n\\section{Conclusion}\\label{conclusion} In this\n% Acknowledgements should only appear in the accepted version.\n\\bibliography{ref}\n\\bibliographystyle{icml2023}\n\\clearpage\n\\appendix\n\\onecolumn\n\\section{Statistical}\n\\label{appendix:snipAnalysis} We analyze\n\\section{The Greedy Algorithm}\n\\label{appendix:greedy}\n\\section{Regularization \\& Data Augmentation}\\label{appendix:aug}\n\\renewcommand{\\arraystretch}{1.2}\n\\end{document}\n"
+        },
+        "params": []
+    },
+    "generate_code_qa_pair_mapper": {
+        "name": "Convert code to QA pair",
+        "description": "Mapper to generate new instruction data based on code.\n    ",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "def hello_world():\n    print(\"Hello, World!\")\nhello_world()",
+            "after": "message:[{\"input\": \"create hello word function by python\", \"response\": \"def hello_world():\n    print(\"Hello, World!\")\nhello_world()\" }]"
+        },
+        "status": "Queued",
+        "data_lines": 0,
+        "data": {},
+        "params": [
+            {
+                "name": "hf_model",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "AIWizards/Llama2-Chinese-7b-Chat",
+                        "label": "AIWizards/Llama2-Chinese-7b-Chat"
+                    }
+                ],
+                "value": "AIWizards/Llama2-Chinese-7b-Chat"
+            },
+            {
+                "name": "prompt_template",
+                "type": "STRING",
+                "option_values": null,
+                "value": null
+            }
+        ]
+    },
+    "extract_qa_mapper": {
+        "name": "QA pair extractor",
+        "description": "\n    Mapper to extract question and answer pair from text samples.\n    Recommended model list: [\n        'alibaba-pai/pai-llama3-8b-doc2qa',\n        'alibaba-pai/pai-baichuan2-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-4b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-1b8-doc2qa',\n        'alibaba-pai/pai-qwen1_5-0b5-doc2qa'\n    ]\n    These recommended models are all trained with Chinese data\n    and are suitable for Chinese.\n    ",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "蒙古国的首都是乌兰巴托（Ulaanbaatar）",
+            "after": "Human: 请问蒙古国的首都是哪里？Assistant: 你好，根据提供的信息，蒙古国的首都是乌兰巴托（Ulaanbaatar）"
+        },
+        "params": [
+            {
+                "name": "hf_model",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "alibaba-pai/pai-qwen1_5-7b-doc2qa",
+                        "label": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
+                    }
+                ],
+                "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
+            }
+        ]
+    },
+    "fix_unicode_mapper": {
+        "name": "Unicode Corrector",
+        "description": "Mapper to fix unicode errors in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "The Mona Lisa doesnÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢t have eyebrows.",
+            "after": "The Mona Lisa doesn't have eyebrows."
+        },
+        "params": [
+            {
+                "name": "normalization",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "NFC",
+                        "label": "NFC"
+                    },
+                    {
+                        "key": "NFKC",
+                        "label": "NFKC"
+                    },
+                    {
+                        "key": "NFD",
+                        "label": "NFD"
+                    },
+                    {
+                        "key": "NFKD",
+                        "label": "NFKD"
+                    }
+                ],
+                "value": "NFC"
+            }
+        ]
+    },
+    "nlpaug_en_mapper": {
+        "name": "English Augment",
+        "description": "Mapper to simply augment samples in English based on nlpaug library.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "I am going to the park.",
+            "after": "I am proceeding to the park."
+        },
+        "params": [
+            {
+                "name": "delete_random_word",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "swap_random_word",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "spelling_error_word",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "split_random_word",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "keyboard_error_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "ocr_error_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "delete_random_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "swap_random_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "insert_random_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            }
+        ]
+    },
+    "nlpcda_zh_mapper": {
+        "name": "Chinese Augment",
+        "description": "Mapper to simply augment samples in Chinese based on nlpcda library.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "这里一共有5种不同的数据增强方法",
+            "after": "这里一共有伍种不同的数据增强方法"
+        },
+        "params": [
+            {
+                "name": "replace_similar_word",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "swap_random_word",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "delete_random_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "swap_random_char",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "replace_equivalent_num",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            }
+        ]
+    },
+    "optimize_instruction_mapper": {
+        "name": "Instruction Optimizer",
+        "description": "Mapper to optimize instruction.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "鱼香肉丝怎么做？",
+            "after": "请提供一份完整的“鱼香肉丝”食谱，包括以下详细信息：所需材料清单：请列出所有必要的主料和辅料，包括肉的种类和处理方式，以及所有蔬菜和调味料的具体量。准备工作指南：描述准备工作的具体步骤，如肉丝的腌制过程、蔬菜的切割技巧等。详细烹饪步骤：请按照烹饪的逻辑顺序，逐步解释如何将材料炒制成鱼香肉丝，包括火候控制、调味料添加的时机等详细操作。盛盘和陈设建议：给出如何将完成的鱼香肉丝装盘摆放，以及可以搭配的其他菜品或饭类推荐，以便提升整体用餐体验。附加小贴士：如有任何专业小窍门或注意事项，例如如何切肉更易入味，或特定调味料的选择建议等，也请一并提供。"
+        },
+        "params": [
+            {
+                "name": "hf_model",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "alibaba-pai/Qwen2-7B-Instruct-Refine",
+                        "label": "alibaba-pai/Qwen2-7B-Instruct-Refine"
+                    }
+                ],
+                "value": "alibaba-pai/Qwen2-7B-Instruct-Refine"
+            }
+        ]
+    },
+    "punctuation_normalization_mapper": {
+        "name": "Unicode Punctuations Normalizor",
+        "description": "Mapper to normalize unicode punctuations to English punctuations in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "，。、„”“«»１」「《》´∶：？！（）；–—．～’…━〈〉【】％►",
+            "after": ",.,\"\"\"\"\"\"\"\"\"\"'::?!();- - . ~'...-<>[]%-"
+        },
+        "params": []
+    },
+    "remove_bibliography_mapper": {
+        "name": "Bibliography Cleaner",
+        "description": "Mapper to remove bibliography at the end of documents in Latex\n    samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "%%\n%% This is file `sample-sigconf.tex\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
+            "after": "%%\n%% This is file `sample-sigconf.tex\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n"
+        },
+        "params": []
+    },
+    "remove_comments_mapper": {
+        "name": "Comments Cleaner",
+        "description": "\n    Mapper to remove comments in different kinds of documents.\n\n    Only support 'tex' for now.\n    ",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "%%\n%% This is file `sample-sigconf.tex',\n%% The first command in your LaTeX source must be the \\documentclass command.\n\\documentclass[sigconf,review,anonymous]{acmart}\n%% NOTE that a single column version is required for \n%% submission and peer review. This can be done by changing\n\\input{math_commands.tex}\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n%% The \"title\" command has an optional parameter,\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n%% By default, the full list of authors will be used in the page\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n%% Keywords. The author(s) should pick words that accurately describe\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n%% page.\n\\begin{teaserfigure}\n\\end{teaserfigure}\n%% This command processes the author and affiliation and title\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
+            "after": "\\documentclass[sigconf,review,anonymous]{acmart}\n\\input{math_commands.tex}\n\\begin{document}\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n\\begin{teaserfigure}\n\\end{teaserfigure}\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n"
+        },
+        "params": [
+            {
+                "name": "inline",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    },
+    "remove_header_mapper": {
+        "name": "Remove Header",
+        "description": "Mapper to remove headers at the beginning of documents in Latex\n    samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "%%\n%% This is file `sample-sigconf.tex',\n%% The first command in your LaTeX source must be the \\documentclass command.\n\\documentclass[sigconf,review,anonymous]{acmart}\n%% NOTE that a single column version is required for \n%% submission and peer review. This can be done by changing\n\\input{math_commands.tex}\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n%% The \"title\" command has an optional parameter,\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n%% By default, the full list of authors will be used in the page\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n%% Keywords. The author(s) should pick words that accurately describe\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n%% page.\n\\begin{teaserfigure}\n\\end{teaserfigure}\n%% This command processes the author and affiliation and title\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
+            "after": "\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n"
+        },
+        "params": [
+            {
+                "name": "drop_no_head",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    },
+    "remove_long_words_mapper": {
+        "name": "Long Words Cleaner",
+        "description": "Mapper to remove long words within a specific range.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "This paper a novel eqeqweqwewqeqwe121e1 method on LLM pretrain.",
+            "after": "This paper novel method LLM pretrain."
+        },
+        "params": [
+            {
+                "name": "min_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 1
+            },
+            {
+                "name": "max_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 9999999
+            }
+        ]
+    },
+    "remove_non_chinese_character_mapper": {
+        "name": "Non Chinese Cleaner",
+        "description": "Mapper to remove non chinese Character in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "👊    所有的非汉字a44sh都12@46h会被*&……*qb^4525去掉",
+            "after": "所有的非汉字都会被去掉"
+        },
+        "params": [
+            {
+                "name": "keep_alphabet",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "keep_number",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "keep_punc",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    },
+    "remove_repeat_sentences_mapper": {
+        "name": "Sentence De-duplication",
+        "description": "Mapper to remove repeat sentences in text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "今天天气真不错，阳光明媚，适合出去散步。小明说：“今天天气真不错，我们去海边吧。” 小红回答说：“好主意！” 但是，小李觉得：“今天天气真不错，我们去爬山吧。” 今天天气真不错，阳光明媚，适合出去散步。昨天下了一整天的雨，今天终于放晴了。昨天下了一整天的雨，今天终于放晴了。",
+            "after": "今天天气真不错，阳光明媚，适合出去散步。小明说：“今天天气真不错，我们去海边吧。” 小红回答说：“好主意！” 但是，小李觉得：“今天天气真不错，我们去爬山吧。”昨天下了一整天的雨，今天终于放晴了。"
+        },
+        "params": [
+            {
+                "name": "lowercase",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "ignore_special_character",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "min_repeat_sentence_length",
+                "type": "INTEGER",
+                "option_values": null,
+                "value": 2
+            }
+        ]
+    },
+    "remove_specific_chars_mapper": {
+        "name": "Specific Chars Cleaner",
+        "description": "Mapper to clean specific chars in text samples. now support: ◆●■►▼▲▴∆▻▷❖♡□",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "多个●■►▼这样的特殊字符可以►▼▲▴∆吗？",
+            "after": "多个这样的特殊字符可以吗？"
+        },
+        "params": [
+            {
+                "name": "chars_to_remove",
+                "type": "LIST",
+                "option_values": null,
+                "value": [
+                    "◆●■►▼▲▴∆▻▷❖♡□"
+                ]
+            }
+        ]
+    },
+    "remove_table_text_mapper": {
+        "name": "Table Texts Cleaner",
+        "description": "\n    Mapper to remove table texts from text samples.\n\n    Regular expression is used to remove tables in the range of column\n    number of tables.\n    ",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "This is a table:\n编号 分行 营运资金1 营运资金2 营运资金3 营运资金4 营运资金5\n① 北京分行 495,000,000.00 200,000,000.00 295,000,000.00 - 495,000,000.00\n② 大连分行 440,000,000.00 100,000,000.00 340,000,000.00 - 440,000,000.00\n③ 重庆分行 500,000,000.00 100,000,000.00 400,000,000.00 - 500,000,000.00\n④ 南京分行 430,000,000.00 100,000,000.00 330,000,000.00 - 430,000,000.00\n⑤ 青岛分行 500,000,000.00 - 100,159,277.60 399,840,722.40 500,000,000.00\nThe end of the table.",
+            "after": "This is a table:\nThe end of the table."
+        },
+        "params": [
+            {
+                "name": "min_col",
+                "type": "from_2_to_20",
+                "option_values": null,
+                "value": 2
+            },
+            {
+                "name": "max_col",
+                "type": "from_2_to_20",
+                "option_values": null,
+                "value": 20
+            }
+        ]
+    },
+    "remove_words_with_incorrect_substrings_mapper": {
+        "name": "Incorrect Substring Cleaner",
+        "description": "Mapper to remove words with incorrect substrings.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "请用百度www.baidu.com进行搜索",
+            "after": "请用百度www.baidu进行搜索"
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "en",
+                        "label": "en"
+                    },
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    }
+                ],
+                "value": "en"
+            },
+            {
+                "name": "tokenization",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "substrings",
+                "type": "LIST",
+                "option_values": null,
+                "value": [
+                    "http",
+                    "www",
+                    ".com",
+                    "href",
+                    "//"
+                ]
+            }
+        ]
+    },
+    "replace_content_mapper": {
+        "name": "Content Replacement",
+        "description": "Mapper to replace all content in the text that matches\n    a specific regular expression pattern with a designated\n    replacement string.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "多个●■►▼这样的特殊字符可以►▼▲▴∆吗？",
+            "after": "多个<SPEC>►▼这样的特殊字符可以►▼▲▴∆吗？"
+        },
+        "params": [
+            {
+                "name": "pattern",
+                "type": "LIST",
+                "option_values": null,
+                "value": []
+            },
+            {
+                "name": "repl",
+                "type": "LIST",
+                "option_values": null,
+                "value": []
+            }
+        ]
+    },
+    "sentence_split_mapper": {
+        "name": "Sentence Spliter",
+        "description": "Mapper to split text samples to sentences.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "Smithfield employs 3,700 people at its plant in Sioux Falls, South Dakota. The plant slaughters 19,500 pigs a day — 5 percent of U.S. pork.",
+            "after": "Smithfield employs 3,700 people at its plant in Sioux Falls, South Dakota.\nThe plant slaughters 19,500 pigs a day — 5 percent of U.S. pork."
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "en",
+                        "label": "en"
+                    },
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    }
+                ],
+                "value": "en"
+            }
+        ]
+    },
+    "whitespace_normalization_mapper": {
+        "name": "Whitespace Normalizor",
+        "description": "\n    Mapper to normalize different kinds of whitespaces to whitespace ' ' (0x20)\n    in text samples.\n\n    Different kinds of whitespaces can be found here:\n    https://en.wikipedia.org/wiki/Whitespace_character\n    ",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "hello world",
+            "after": "world hello"
+        },
+        "params": []
+    },
+    "alphanumeric_filter": {
+        "name": "Alphabet/Numeric Ratio Filter",
+        "description": "Filter to keep samples with alphabet/numeric ratio within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "emoji表情测试下😊，😸31231\n",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "tokenization",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "min_ratio",
+                "type": "FLOAT",
+                "option_values": null,
+                "value": 0.1
+            },
+            {
+                "name": "max_ratio",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 999999
+            }
+        ]
+    },
+    "average_line_length_filter": {
+        "name": "Average Line Length Filter",
+        "description": "Filter to keep samples with average line length within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "short",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "min_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "max_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 1200
+            }
+        ]
+    },
+    "character_repetition_filter": {
+        "name": "Char-Level Repetition Ratio Filter",
+        "description": "Filter to keep samples with char-level n-gram repetition ratio within a\n    specific range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Today is Sund Sund Sund Sund Sund Sunda and it's a happy day!",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "rep_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "min_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0
+            },
+            {
+                "name": "max_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.6
+            }
+        ]
+    },
+    "flagged_words_filter": {
+        "name": "Flagged-Word Ratio Filter",
+        "description": "Filter to keep samples with flagged-word ratio less than a specific max\n    value.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "基于前一步结果，除掉骂人、脏字等污秽数据和敏感词",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "en",
+                        "label": "en"
+                    },
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    }
+                ],
+                "value": "zh"
+            },
+            {
+                "name": "tokenization",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "max_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.001
+            },
+            {
+                "name": "use_words_aug",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    },
+    "language_id_score_filter": {
+        "name": "Specific Language Filter",
+        "description": "\n    Filter to keep samples in a specific language with confidence score\n    larger than a specific min value.\n    ",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Today is Sund Sund Sund Sunda and it's a happy day!\nYou know",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    },
+                    {
+                        "key": "en",
+                        "label": "en"
+                    },
+                    {
+                        "key": "fr",
+                        "label": "fr"
+                    },
+                    {
+                        "key": "de",
+                        "label": "de"
+                    }
+                ],
+                "value": "zh"
+            },
+            {
+                "name": "min_score",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.8
+            }
+        ]
+    },
+    "maximum_line_length_filter": {
+        "name": "Maximum Line Length Filter",
+        "description": "Filter to keep samples with maximum line length within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Today is Sund Sund Sund Sunda and it's a happy day!\nYou know",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "min_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "max_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 7328
+            }
+        ]
+    },
+    "perplexity_filter": {
+        "name": "Perplexity Score Filter",
+        "description": "Filter to keep samples with perplexity score less than a specific max\n    value.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Today is Sund Sund Sund Sunda and it's a happy day!\nYou know",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "en",
+                        "label": "en"
+                    },
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    }
+                ],
+                "value": "en"
+            },
+            {
+                "name": "max_ppl",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 8000
+            }
+        ]
+    },
+    "special_characters_filter": {
+        "name": "Special-Char Ratio Filter",
+        "description": "Filter to keep samples with special-char ratio within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "emoji表情测试下😊，😸31231",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "min_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0
+            },
+            {
+                "name": "max_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.842
+            }
+        ]
+    },
+    "specified_field_filter": {
+        "name": "Specified Field Information Filter",
+        "description": "\n    Filter based on specified field information.\n\n    If the specified field information in the sample is not within the\n    specified target value, the sample will be filtered.\n    ",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "{'text': '中文也是一个字算一个长度','meta': {    'suffix': '.txt',    'star': 100}}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "field_key",
+                "type": "STRING",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "target_value",
+                "type": "LIST",
+                "option_values": null,
+                "value": []
+            }
+        ]
+    },
+    "specified_numeric_field_filter": {
+        "name": "Specified Numeric Field Filter",
+        "description": "\n    Filter based on specified numeric field information.\n\n    If the specified numeric information in the sample is not within the\n    specified range, the sample will be filtered.\n    ",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "{'text': '中文也是一个字算一个长度','meta': {    'suffix': '.txt',    'star': 100}}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "field_key",
+                "type": "STRING",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "min_value",
+                "type": "FLOAT",
+                "option_values": null,
+                "value": -999999
+            },
+            {
+                "name": "max_value",
+                "type": "FLOAT",
+                "option_values": null,
+                "value": 999999
+            }
+        ]
+    },
+    "stopwords_filter": {
+        "name": "Stopword Ratio Filter",
+        "description": "Filter to keep samples with stopword ratio larger than a specific min\n    value.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "?",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "en",
+                        "label": "en"
+                    },
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    }
+                ],
+                "value": "zh"
+            },
+            {
+                "name": "tokenization",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            },
+            {
+                "name": "min_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.3
+            },
+            {
+                "name": "use_words_aug",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            }
+        ]
+    },
+    "suffix_filter": {
+        "name": "Specified Suffix Filter",
+        "description": "Filter to keep samples with specified suffix.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "{'text': '中文也是一个字算一个长度',Fields.suffix: '.txt'}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "suffixes",
+                "type": "LIST",
+                "option_values": null,
+                "value": []
+            }
+        ]
+    },
+    "text_action_filter": {
+        "name": "Texts Contain Actions Filter",
+        "description": "Filter to keep texts those contain actions in the text..",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "我有一只猫，它是一只猫",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    },
+                    {
+                        "key": "en",
+                        "label": "en"
+                    }
+                ],
+                "value": "zh"
+            },
+            {
+                "name": "min_action_num",
+                "type": "INTEGER",
+                "option_values": null,
+                "value": 1
+            }
+        ]
+    },
+    "text_entity_dependency_filter": {
+        "name": "Texts Containing Entities Filter",
+        "description": "\n    Identify the entities in the text which are independent with other token,\n    and filter them. The text containing no entities will be omitted.\n    ",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "上上下下左左右右",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    },
+                    {
+                        "key": "en",
+                        "label": "en"
+                    }
+                ],
+                "value": "zh"
+            },
+            {
+                "name": "min_dependency_num",
+                "type": "INTEGER",
+                "option_values": null,
+                "value": 1
+            },
+            {
+                "name": "any_or_all",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "all",
+                        "label": "all"
+                    },
+                    {
+                        "key": "any",
+                        "label": "any"
+                    }
+                ],
+                "value": "all"
+            }
+        ]
+    },
+    "text_length_filter": {
+        "name": "Total Text Length Filter",
+        "description": "Filter to keep samples with total text length within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Today is Sund Sund Sund Sund Sund Sunda and it's a happy day!",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "min_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "max_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 136028
+            }
+        ]
+    },
+    "token_num_filter": {
+        "name": "Total Token Number Filter",
+        "description": "Filter to keep samples with total token number within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Today is Sund Sund Sund Sund Sund Sunda and it's a happy day!",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "hf_tokenizer",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "EleutherAI/pythia-6.9b-deduped",
+                        "label": "EleutherAI/pythia-6.9b-deduped"
+                    }
+                ],
+                "value": "EleutherAI/pythia-6.9b-deduped"
+            },
+            {
+                "name": "min_num",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "max_num",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 999999
+            }
+        ]
+    },
+    "word_repetition_filter": {
+        "name": "Word-Level Repetition Ratio Filter",
+        "description": "Filter to keep samples with word-level n-gram repetition ratio within a\n    specific range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "根据算子使用使用使用使用安装方案确定",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    },
+                    {
+                        "key": "en",
+                        "label": "en"
+                    }
+                ],
+                "value": "en"
+            },
+            {
+                "name": "tokenization",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "rep_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "min_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0
+            },
+            {
+                "name": "max_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.5981
+            }
+        ]
+    },
+    "words_num_filter": {
+        "name": "Total Words Number Filter",
+        "description": "Filter to keep samples with total words number within a specific\n    range.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "根据算子使用使用使用使用安装方案确定",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "lang",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "zh",
+                        "label": "zh"
+                    },
+                    {
+                        "key": "en",
+                        "label": "en"
+                    }
+                ],
+                "value": "en"
+            },
+            {
+                "name": "tokenization",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "min_num",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 20
+            },
+            {
+                "name": "max_num",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 23305
+            }
+        ]
+    },
+    "document_deduplicator": {
+        "name": "Document Deduplicator(MD5 Hash)",
+        "description": "\n    Deduplicator to deduplicate samples at document-level using exact matching.\n\n    Using md5 hash to deduplicate samples.\n    ",
+        "type": "Deduplicator",
+        "group": "",
+        "samples": {
+            "before": "{    'text':    'This paper proposed a novel method on LLM pretraining.'},{    'text':    'This paper proposed a novel method on LLM pretraining.'}",
+            "after": "{    'text':    'This paper proposed a novel method on LLM pretraining.'},"
+        },
+        "params": [
+            {
+                "name": "lowercase",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "ignore_non_character",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    },
+    "document_minhash_deduplicator": {
+        "name": "Document Deduplicator(MinHashLSH)",
+        "description": "\n    Deduplicator to deduplicate samples at document-level using MinHashLSH.\n\n    Different from simhash, minhash is stored as bytes, so they won't be\n    kept in the final dataset.\n    ",
+        "type": "Deduplicator",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "tokenization",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "space",
+                        "label": "space"
+                    },
+                    {
+                        "key": "punctuation",
+                        "label": "punctuation"
+                    },
+                    {
+                        "key": "character",
+                        "label": "character"
+                    },
+                    {
+                        "key": "sentencepiece",
+                        "label": "sentencepiece"
+                    }
+                ],
+                "value": "character"
+            },
+            {
+                "name": "window_size",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 5
+            },
+            {
+                "name": "lowercase",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "ignore_pattern",
+                "type": "STRING",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "num_permutations",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 256
+            },
+            {
+                "name": "jaccard_threshold",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": 0.7
+            },
+            {
+                "name": "num_bands",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "num_rows_per_band",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "tokenizer_model",
+                "type": "STRING",
+                "option_values": null,
+                "value": null
+            }
+        ]
+    },
+    "document_simhash_deduplicator": {
+        "name": "Document Deduplicator(SimHash)",
+        "description": "Deduplicator to deduplicate samples at document-level using SimHash.",
+        "type": "Deduplicator",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "tokenization",
+                "type": "STRING",
+                "option_values": [
+                    {
+                        "key": "space",
+                        "label": "space"
+                    },
+                    {
+                        "key": "punctuation",
+                        "label": "punctuation"
+                    },
+                    {
+                        "key": "character",
+                        "label": "character"
+                    }
+                ],
+                "value": "character"
+            },
+            {
+                "name": "window_size",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 4
+            },
+            {
+                "name": "lowercase",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            },
+            {
+                "name": "ignore_pattern",
+                "type": "STRING",
+                "option_values": null,
+                "value": "\\p{P}"
+            },
+            {
+                "name": "num_blocks",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 10
+            },
+            {
+                "name": "hamming_distance",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 8
+            }
+        ]
+    },
+    "frequency_specified_field_selector": {
+        "name": "Sorted Frequency Selector",
+        "description": "Selector to select samples based on the sorted frequency of specified\n    field.",
+        "type": "Selector",
+        "group": "",
+        "samples": {
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "field_key",
+                "type": "STRING",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "top_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "topk",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "reverse",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    },
+    "random_selector": {
+        "name": "Random Selector",
+        "description": "Selector to random select samples. ",
+        "type": "Selector",
+        "group": "",
+        "samples": {
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "select_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "select_num",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            }
+        ]
+    },
+    "range_specified_field_selector": {
+        "name": "Sorted Range Selector",
+        "description": "Selector to select a range of samples based on the sorted\n    specified field value from smallest to largest. ",
+        "type": "Selector",
+        "group": "",
+        "samples": {
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "field_key",
+                "type": "STRING",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "lower_percentile",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "upper_percentile",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "lower_rank",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "upper_rank",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            }
+        ]
+    },
+    "topk_specified_field_selector": {
+        "name": "Top Samples Selector",
+        "description": "Selector to select top samples based on the sorted specified field\n    value.",
+        "type": "Selector",
+        "group": "",
+        "samples": {
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "field_key",
+                "type": "STRING",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "top_ratio",
+                "type": "ClosedUnitInterval",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "topk",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": null
+            },
+            {
+                "name": "reverse",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": true
+            }
+        ]
+    }
+}

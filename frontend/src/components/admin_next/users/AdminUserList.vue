@@ -2,7 +2,7 @@
   <Container :title="$t('admin.users.title')" subtitle="" :breadcrumbs="[{ text: $t('admin.users.title') }]">
     <!-- search & filter -->
     <div class="flex items-center gap-3 w-full">
-      <el-input v-model="keyword" placeholder="Name, Email, Phone" size="large" :prefix-icon="Search"
+      <el-input v-model="keyword" :placeholder="$t('admin.name') + ',' + $t('admin.email') + ',' + $t('admin.phone')" size="large" :prefix-icon="Search"
         @input="searchUsers" />
     </div>
     <Table
@@ -11,12 +11,14 @@
       :border="false"
       class="custom-table">
       <template #header>
-        <div class="px-6 pt-5 pb-4 flex justify-start gap-2 items-center">
-          <h2 class="text-18 text-md text-gray-900">
-            {{ $t('admin.users.userList') }}
-          </h2>
-          <div class="px-2 py-1.5 bg-brand-50 rounded-xl outline outline-1 outline-offset-[-1px] outline-brand-200 inline-flex justify-start items-center">
-            <span class="text-brand-700 text-xs font-normal leading-none">{{ total }} {{ $t('admin.users.userCount') }}</span>
+        <div class="flex justify-between items-center px-6 pt-5 pb-4">
+          <div class="flex justify-start gap-2 items-center">
+            <h2 class="text-18 text-md text-gray-900">
+              {{ $t('admin.users.userList') }}
+            </h2>
+            <div class="px-2 py-1.5 bg-brand-50 rounded-xl outline outline-1 outline-offset-[-1px] outline-brand-200 inline-flex justify-start items-center">
+              <span class="text-brand-700 text-xs font-normal leading-none">{{ total }} {{ $t('admin.users.userCount') }}</span>
+            </div>
           </div>
         </div>
       </template>

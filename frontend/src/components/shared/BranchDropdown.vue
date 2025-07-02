@@ -43,9 +43,15 @@
     emit('changeBranch', branch)
   }
 
-  const prefixPath = document.location.pathname.split('/')[1]
-  const namespace = document.location.pathname.split('/')[2]
-  const repoName = document.location.pathname.split('/')[3]
+  let prefixPath = document.location.pathname.split('/')[1]
+  let namespace = document.location.pathname.split('/')[2]
+  let repoName = document.location.pathname.split('/')[3]
+
+  if (prefixPath === 'mcp') {
+    prefixPath = 'mcps'
+    namespace = document.location.pathname.split('/')[3]
+    repoName = document.location.pathname.split('/')[4]
+  }
 
   const fetchBranches = async () => {
     const url = `/${prefixPath}/${namespace}/${repoName}/branches`
@@ -54,6 +60,13 @@
 
     if (data.value) {
       branches.value = data.value.data
+      
+      const branchExists = (branches.value || []).some(branch => branch.name === props.currentBranch)
+      
+      if (!branchExists && branches.value.length > 0) {
+        const defaultBranch = branches.value[0].name
+        emit('changeBranch', defaultBranch)
+      }
     } else {
       ElMessage.warning(error.value.msg)
     }

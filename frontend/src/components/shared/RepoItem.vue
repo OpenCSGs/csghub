@@ -6,7 +6,7 @@
        repoType === 'dataset' ? 'bg-gradient-to-r from-[#fbfaff] to-white' : '',
        repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
      ]"
-     class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit"
+     class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit  cursor-pointer"
      :style="isCollection ? 'width:100%' : ''"
   >
     <div class="flex items-center justify-between mb-1 gap-2 w-full">
@@ -42,7 +42,7 @@
       <span v-if="getComputed.taskTag"
             class="w-fit xl:max-w-full overflow-hidden text-ellipsis whitespace-nowrap flex items-center gap-1"
       >
-            <img v-if="getComputed.taskTagIconPath" :src="getComputed.taskTagIconPath" class="w-3 h-3 text-gray-500 filter-gray" alt="" />
+            <img v-if="getComputed.taskTagIconPath && taskTagIconExists" :src="getComputed.taskTagIconPath" class="w-3 h-3 text-gray-500 filter-gray" alt="" />
             {{ getComputed.taskTag }}
       </span>
 
@@ -71,11 +71,12 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
+  import RepoItemSyncIcon from './RepoItemSyncIcon.vue';
+  import { computed, ref, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import RepoItemSyncIcon from './RepoItemSyncIcon.vue'
   import NewTag from './NewTag.vue'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     repo: Object,
@@ -88,7 +89,8 @@
   })
 
   const { t, locale } = useI18n()
-
+  const taskTagIconExists = ref(false)
+  const { setRepoTab } = useRepoTabStore()
   const showNewTag = computed(() => {
     return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(props.repo.created_at) || isWithinTwoWeeks(props.repo.updated_at));
   });
@@ -96,13 +98,29 @@
   const detailLink = computed(() => {
     switch (props.repoType) {
       case 'model':
-        return `/models/${props.repo.path}`
+        setRepoTab({
+          repoType: 'model',
+          tab: 'summary'
+        })
+        return `/models/${props.repo.path}?tab=summary`
       case 'dataset':
-        return `/datasets/${props.repo.path}`
+        setRepoTab({
+          repoType: 'dataset',
+          tab: 'summary'
+        })
+        return `/datasets/${props.repo.path}?tab=summary`
       case 'space':
-        return `/spaces/${props.repo.path}`
+        setRepoTab({
+          repoType: 'space',
+          tab: 'summary'
+        })
+        return `/spaces/${props.repo.path}?tab=summary`
       case 'code':
-        return `/codes/${props.repo.path}`
+        setRepoTab({
+          repoType: 'code',
+          tab: 'summary'
+        })
+        return `/codes/${props.repo.path}?tab=summary`
       case 'prompt':
         return `/prompts/library/${props.repo.path}`
       default:
@@ -134,13 +152,24 @@
         : (props.repo.tags || []).find(tag => tag.category === "task")?.name
       
       if (tagNameForIcon) {
-        // 检查图标是否存在
-        const iconPath = `/images/tags/${tagNameForIcon}.svg`
-        taskTagIconPath = iconPath
+        // 设置图标路径
+        taskTagIconPath = `/images/tags/${tagNameForIcon}.svg`
+        
+        // 在计算属性中只设置路径，图标存在性检查在onMounted中进行
       }
     }
 
     return { path, visibility, taskTag, showDescription, taskTagIconPath }
+  })
+
+  onMounted(() => {
+    // 检查图标是否存在
+    if (getComputed.value.taskTagIconPath) {
+      const img = new Image()
+      img.onload = () => { taskTagIconExists.value = true }
+      img.onerror = () => { taskTagIconExists.value = false }
+      img.src = getComputed.value.taskTagIconPath
+    }
   })
 </script>
 

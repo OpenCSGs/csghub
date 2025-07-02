@@ -140,6 +140,11 @@ func createRender() multitemplate.Renderer {
 		"endpoints_new":                  "endpoints/new.html",
 		"finetunes_show":                 "finetunes/show.html",
 		"finetunes_new":                  "finetunes/new.html",
+		"mcp_servers_index":              "mcp_servers/index.html",
+		"mcp_servers_show":               "mcp_servers/show.html",
+		"mcp_servers_new":                "mcp_servers/new.html",
+		"mcp_servers_tools":              "mcp_servers/tools.html",
+		"mcp_servers_deploy":             "mcp_servers/deploy.html",
 		"resource_console_index":         "resource-console/index.html",
 		"organizations_show":             "organizations/show.html",
 		"organizations_new":              "organizations/new.html",
@@ -191,6 +196,28 @@ func createRender() multitemplate.Renderer {
 		r.Add(name, tmpl)
 	}
 
+	datapipelinesLayouts := []string{
+		"datapipelines/layouts/base.html",
+		"layouts/navbar.html",
+		"layouts/footer.html",
+	}
+
+	datapipelinesPages := map[string]string{
+		"datapipelines_index": "datapipelines/index.html",
+	}
+
+	for name, page := range datapipelinesPages {
+		files := make([]string, len(datapipelinesLayouts)+1)
+		copy(files, datapipelinesLayouts)
+		files[len(datapipelinesLayouts)] = page
+
+		tmpl, err := template.ParseFS(viewsFS, files...)
+		if err != nil {
+			panic(err)
+		}
+		r.Add(name, tmpl)
+	}
+
 	// admin new version
 	adminNextLayouts := "admin/admin_next.html"
 	tmpl, err := template.ParseFS(viewsFS, adminNextLayouts)
@@ -218,6 +245,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerSpaceRoutes(engine, handlersRegistry)
 	registerEndpointRoutes(engine, handlersRegistry)
 	registerFinetuneRoutes(engine, handlersRegistry)
+	registerMcpServerRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)
 	registerOrganizationRoutes(engine, handlersRegistry)
 	registerCollectionRoutes(engine, handlersRegistry)
@@ -227,6 +255,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerAdminRoutes(engine, handlersRegistry)
 	registerPromptsRoutes(engine, handlersRegistry)
 	registerEvaluationRoutes(engine, handlersRegistry)
+	registerDatapipelinesRoutes(engine, handlersRegistry)
 }
 
 func setupStaticRouter(engine *gin.Engine) {
@@ -262,6 +291,7 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 	locale_group := g.Group("")
 	locale_group.GET("/zh/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetZhLocale)
 	locale_group.GET("/en/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetEnLocale)
+	locale_group.GET("/zhHant/settings/locale", handlersRegistry.FrontendHandlers.SettingsHandler.SetZhHantLocale)
 }
 
 func setupNotFoundRouter(engine *gin.Engine) {

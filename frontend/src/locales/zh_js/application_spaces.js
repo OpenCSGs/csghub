@@ -1,5 +1,3 @@
-import { endpoints } from "../en_js/endpoints";
-
 export const application_spaces = {
   title: "应用空间",
   placeholder: "应用空间名字",
@@ -89,7 +87,8 @@ export const application_spaces = {
     chooseTemplate: "选择一个模版",
     pleaseChooseTemplate: "请选择一个模版",
     spaceSecrets: "空间密钥",
-    spaceVariables: "空间变量"
+    spaceVariables: "空间变量",
+    driverVersion: "驱动版本"
   },
   edit: {
     spaceVariables: "空间变量",

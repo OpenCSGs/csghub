@@ -5,6 +5,19 @@
     :breadcrumbs="[{ text: $t('admin.tagCategories.title') }]"
   >
     <div class="flex items-center justify-between gap-3 w-full pt-1">
+      <el-input
+        v-model="search"
+        :placeholder="$t('admin.tagCategories.searchPlaceholder')"
+        class="w-full"
+        size="large"
+        clearable
+      >
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <Search />
+          </el-icon>
+        </template>
+      </el-input>
       <router-link
         to="/admin_panel/tag_categories/new"
         class="shrink-0"

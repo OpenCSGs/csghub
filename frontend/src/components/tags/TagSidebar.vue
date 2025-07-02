@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-white flex-col pt-[32px] pb-[60px]">
+  <div class="flex bg-white flex-col pt-8 pb-15">
     <div class="flex flex-wrap gap-1">
       <TagCategory
         v-for="category in avaliableCategories"
@@ -14,6 +14,7 @@
         :taskTags="tagsForCategory['task']"
         :tags="tagsForCategory[activeNavItem]"
         :activeTags="activeTags"
+        :repoType="repoType"
         @setActiveTag="setActiveTag"
       />
     </div>
@@ -57,7 +58,7 @@
   const activeTags = ref({})
 
   const avaliableCategories = computed(() => {
-    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled)
+    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled && c.name !== 'publisher')
   })
 
   watch(avaliableCategories,
@@ -137,7 +138,7 @@
       })
 
       avaliableCategories.value.forEach((category) => {
-        if (category.name === 'task') {
+        if (category.name === 'task' && props.repoType !== 'mcp') {
           tagsForCategory.value['task'] = tempTaskTags
         } else {
           tagsForCategory.value[category.name] = data.value.data.filter(

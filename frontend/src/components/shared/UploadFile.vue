@@ -62,12 +62,15 @@ import { ref } from 'vue'
 import {ElMessage} from "element-plus"
 import { useI18n } from 'vue-i18n'
 import useFetchApi from '../../packs/useFetchApi'
+import { useRepoTabStore } from '../../stores/RepoTabStore'
 
 const props = defineProps({
   repoName: String,
   namespacePath: String,
   currentBranch: String
 })
+
+const { setRepoTab } = useRepoTabStore()
 
 const { t } = useI18n();
 const uploadRef = ref();
@@ -76,7 +79,13 @@ const commitTitle = ref('')
 const commitTitlePlaceholder = ref('Upload file')
 const new_branch = ref('main')
 const commitDesc = ref('')
-const prefixPath = document.location.pathname.split('/')[1]
+let prefixPath = document.location.pathname.split('/')[1]
+let apiPrefixPath = document.location.pathname.split('/')[1]
+
+if (prefixPath === 'mcp') {
+  prefixPath = 'mcp/servers'
+  apiPrefixPath = 'mcps'
+}
 
 const handleCommentInputChange = (value) => {
   commitDesc.value = value
@@ -105,7 +114,11 @@ const handleRemove = (file, fileList) => {
 }
 
 const cancel = () => {
-  window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+  // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+  setRepoTab({
+    actionName: 'files',
+    lastPath: ''
+  })
 }
 
 const buildCommitMessage = () => {
@@ -131,7 +144,7 @@ const syncUploadFile = async () => {
 
   try {
     const { error } = await useFetchApi(
-      `/${prefixPath}/${props.namespacePath}/upload_file`,
+      `/${apiPrefixPath}/${props.namespacePath}/upload_file`,
       {
         body: formData
       }
@@ -141,7 +154,11 @@ const syncUploadFile = async () => {
       ElMessage({ message: error.value.msg, type: 'error' })
     } else {
       filesList.value = []
-      window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+      // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+      setRepoTab({
+        actionName: 'files',
+        lastPath: ''
+      })
     }
   } catch (error) {
     console.error(error)

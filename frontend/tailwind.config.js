@@ -119,6 +119,7 @@ export default {
       'lg': {'max': '1024px'},
       'md': {'max': '768px'},
       'sm': {'max': '640px'},
+      'xs': {'max': '390px'},
     },
   },
   plugins: [],

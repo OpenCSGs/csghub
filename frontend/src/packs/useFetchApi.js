@@ -35,8 +35,10 @@ const acceptLanguage = () => {
     return 'en-US'
   } else if (currentLocale === 'zh') {
     return 'zh-CN'
+  } else if (currentLocale === 'zhHant') {
+    return 'zh-HK'
   } else {
-    return 'en-US'
+    return 'zh-CN'
   }
 }
 
@@ -49,6 +51,11 @@ const createFetchOptions = {
       options.headers = {
         ...options.headers,
         'Authorization': `Bearer ${jwtToken}`,
+        'Accept-Language': acceptLanguage()
+      }
+    } else {
+      options.headers = {
+        ...options.headers,
         'Accept-Language': acceptLanguage()
       }
     }

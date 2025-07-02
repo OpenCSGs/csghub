@@ -27,7 +27,7 @@
       :appStatus="repoDetailStore.status"
       :sdk="repoDetailStore.sdk"
       :appEndpoint="appEndpoint"
-      :current-branch="currentBranch"
+      :current-branch="currentBranch || repoDetailStore.defaultBranch || 'main'"
       :current-path="currentPath"
       :default-tab="defaultTab"
       :actionName="actionName"
@@ -48,11 +48,11 @@
       :size="drawerSize"
       :show-close="false">
       <template #header="{ close }">
-        <div class="flex flex-col gap-[24px] pt-3">
+        <div class="flex flex-col gap-6 pt-3">
           <div class="flex justify-between gap-1.5 pb-6 border-b">
             <div class="flex gap-1.5">
               <div
-                class="flex items-center border rounded-md border-gray-200 p-[10px]">
+                class="flex items-center border rounded-md border-gray-200 p-2.5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -68,7 +68,7 @@
                 </svg>
               </div>
               <div class="felx flex-col gap-1">
-                <p class="font-[600] text-md text-black">
+                <p class="font-medium text-md text-black">
                   {{ $t('application_spaces.errorPage.log') }}
                 </p>
                 <div class="text-gray-600 text-sm font-light">
@@ -76,56 +76,50 @@
                 </div>
               </div>
             </div>
-            <div class="flex gap-[8px]">
-              <el-icon
+            <div class="flex gap-2 items-center">
+              <CsgButton
+                class="btn btn-secondary-gray btn-lg"
                 v-if="drawerSize === '70%'"
                 @click="toggleDrawerSize"
-                ><ArrowUp
-              /></el-icon>
-              <el-icon
+                svgName="chevron-up" />
+              <CsgButton
+                class="btn btn-secondary-gray btn-lg" 
                 v-else
                 @click="toggleDrawerSize"
-                ><ArrowDown
-              /></el-icon>
-              <el-icon @click="close"><CloseBold /></el-icon>
+                svgName="chevron-down" />
+              <CsgButton
+                class="btn btn-secondary-gray btn-lg"
+                @click="close"
+                svgName="x-close" />
             </div>
           </div>
-          <div class="flex justify-between">
-            <div class="flex gap-4 items-center">
-              <span
-                class="text-sm text-gray-500 cursor-pointer"
-                data-value="build"
-                @click="toggleActiveTab"
-                :class="isBuildLogTab ? 'active-tab' : ''"
-                >{{ $t('application_spaces.errorPage.build') }}</span
-              >
-              <span
-                class="text-sm text-gray-500 cursor-pointer"
-                data-value="container"
-                @click="toggleActiveTab"
-                :class="isBuildLogTab ? '' : 'active-tab'"
-                >{{ $t('application_spaces.errorPage.container') }}</span
-              >
+          <div class="flex justify-between gap-4">
+            <div class="flex-1">
+              <el-tabs v-model="activeTab" class="log-tabs">
+                <el-tab-pane :label="$t('application_spaces.errorPage.build')" name="build" />
+                <el-tab-pane :label="$t('application_spaces.errorPage.container')" name="container" />
+              </el-tabs>
             </div>
-            <div
-              class="cursor-pointer text-xs text-brand-700 font-normal"
-              @click="downloadLog">
-              {{ $t('application_spaces.errorPage.download') }}
-            </div>
+            <CsgButton  
+              class="btn btn-secondary-gray btn-sm"
+              @click="downloadLog"
+              :name="$t('application_spaces.errorPage.download')" />
           </div>
         </div>
       </template>
-      <div
-        v-show="isBuildLogTab"
-        ref="buildLogDiv"
-        class="h-auto bg-gray-800 p-6 rounded-xl text-white">
-        <p>...</p>
-      </div>
-      <div
-        v-show="!isBuildLogTab"
-        ref="containerLogDiv"
-        class="h-auto bg-gray-800 p-6 rounded-xl text-white">
-        <p>...</p>
+      <div class="flex flex-col gap-4 h-full">
+        <div
+          v-show="isBuildLogTab"
+          ref="buildLogDiv"
+          class="flex-1 h-0 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white">
+          <p>...</p>
+        </div>
+        <div
+          v-show="!isBuildLogTab"
+          ref="containerLogDiv"
+          class="flex-1 h-0 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white">
+          <p>...</p>
+        </div>
       </div>
     </el-drawer>
   </div>
@@ -135,6 +129,7 @@
   import { ref, onMounted, inject, computed, nextTick, provide, watch, onUnmounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
+  import CsgButton from '../shared/CsgButton.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
   import { useI18n } from 'vue-i18n'
@@ -144,6 +139,7 @@
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import { storeToRefs } from 'pinia'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     repoType: String,
@@ -166,7 +162,7 @@
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
-
+  const { setRepoTab } = useRepoTabStore()
   // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const { cookies } = useCookies()
@@ -205,18 +201,29 @@
   const buildLogLineNum = ref(0)
   const containerLogLineNum = ref(0)
 
-  const isBuildLogTab = ref(true)
+  const activeTab = ref('build')
+  const isBuildLogTab = computed(() => activeTab.value === 'build')
+  
   const drawerSize = ref('70%')
 
   const isStatusSSEConnected = ref(false)
   const isLogsSSEConnected = ref(false)
 
-  const toggleActiveTab = (event) => {
-    const currentTarget = event.target
-    if (currentTarget.dataset.value === 'build') {
-      isBuildLogTab.value = true
-    } else {
-      isBuildLogTab.value = false
+  const isUserScrolling = ref(false)
+  const isAtBottom = ref(true)
+
+  const handleScroll = (event) => {
+    const container = event.target
+    const scrollPosition = container.scrollTop + container.clientHeight
+    const scrollHeight = container.scrollHeight
+    // 判断是否在底部，允许 5px 的误差
+    isAtBottom.value = Math.abs(scrollHeight - scrollPosition) < 5
+  }
+
+  const scrollToBottom = () => {
+    const targetDiv = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+    if (targetDiv && isAtBottom.value) {
+      targetDiv.scrollTop = targetDiv.scrollHeight
     }
   }
 
@@ -242,6 +249,10 @@
       const repoData = data.value.data
 
       repoDetailStore.initialize(repoData, props.repoType)
+      
+      setRepoTab({
+        currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
+      })
     } catch (error) {
       console.log(error)
     }
@@ -255,16 +266,50 @@
 
   watch(spaceLogsDrawer, (newVal) => {
     if (newVal) {
-      syncSpaceLogs();
+      nextTick(() => {
+        const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+        if (logContainer) {
+          logContainer.addEventListener('scroll', handleScroll)
+          // 初始打开时滚动到底部
+          logContainer.scrollTop = logContainer.scrollHeight
+          isAtBottom.value = true
+        }
+      })
+      syncSpaceLogs()
     } else {
+      const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+      if (logContainer) {
+        logContainer.removeEventListener('scroll', handleScroll)
+      }
       if (controller.value) {
-        console.log('Closing SSE logs connection');
-        controller.value.abort();
-        controller.value = null;
-        isLogsSSEConnected.value = false;
+        console.log('Closing SSE logs connection')
+        controller.value.abort()
+        controller.value = null
+        isLogsSSEConnected.value = false
       }
     }
   });
+
+  // 监听标签切换，切换时重新设置滚动
+  watch(activeTab, () => {
+    if (spaceLogsDrawer.value) {
+      nextTick(() => {
+        const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+        if (logContainer) {
+          // 移除旧容器的事件监听
+          const oldContainer = !isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+          if (oldContainer) {
+            oldContainer.removeEventListener('scroll', handleScroll)
+          }
+          // 添加新容器的事件监听
+          logContainer.addEventListener('scroll', handleScroll)
+          // 切换标签时滚动到底部
+          logContainer.scrollTop = logContainer.scrollHeight
+          isAtBottom.value = true
+        }
+      })
+    }
+  })
 
   const syncSpaceLogs = () => {
     if (controller.value) {
@@ -321,12 +366,18 @@
           }
           
           if (ev.event === 'Build') {
-            appendLog(buildLogDiv, ev.data, buildLogLineNum);
+            appendLog(buildLogDiv, ev.data, buildLogLineNum, buildLogBlocks, { value: lastBuildLogTime })
             nextTick(() => {
               scrollToBottom();
             });
           } else if (ev.event === 'Container') {
-            appendLog(containerLogDiv, ev.data, containerLogLineNum);
+            const lines = ev.data.split('\n');
+            lines.forEach(line => {
+              if (line.trim()) {
+                appendLog(containerLogDiv, line, containerLogLineNum, containerLogBlocks, { value: lastContainerLogTime })
+              }
+            });
+
             nextTick(() => {
               scrollToBottom();
             });
@@ -350,44 +401,98 @@
   }
 
   onUnmounted(() => {
+    const logContainer = isBuildLogTab.value ? buildLogDiv.value : containerLogDiv.value
+    if (logContainer) {
+      logContainer.removeEventListener('scroll', handleScroll)
+    }
     if (controller.value) {
-      controller.value.abort();
-      controller.value = null;
+      controller.value.abort()
+      controller.value = null
     }
   });
 
-  const scrollToBottom = () => {
-    const targetDiv = document.getElementsByClassName('el-drawer__body')[0]
-    if (targetDiv) {
-      targetDiv.scrollTop = targetDiv.scrollHeight
+  // 日志块缓存和最后时间戳
+  const buildLogBlocks = ref([]) // [{ time: '03s', lines: ['内容1', '内容2'] }]
+  const containerLogBlocks = ref([])
+  let lastBuildLogTime = ''
+  let lastContainerLogTime = ''
+
+  const appendLog = (refElem, data, refLineNum, logBlocksRef, lastLogTimeRef) => {
+    // ANSI 转 HTML 简单实现
+    function ansiToHtml(text) {
+      const ansiMap = {
+        '0': '</span>', // reset
+        '31': '<span style="color:#e25555">', // red
+        '32': '<span style="color:#4caf50">', // green
+        '33': '<span style="color:#ffb300">', // yellow
+        '34': '<span style="color:#42a5f5">', // blue
+        '35': '<span style="color:#ab47bc">', // magenta
+        '36': '<span style="color:#26c6da">', // cyan
+        '37': '<span style="color:#bdbdbd">', // white/gray
+      };
+      return text.replace(/\x1b\[(\d+)m/g, (match, code) => ansiMap[code] || '');
     }
+    // 提取时间戳（如 [003s] 或 [0107]）
+    const timeMatch = data.match(/\[(\d+s?|\d{4})\]/)
+    let timeStr = ''
+    if (timeMatch) {
+      timeStr = timeMatch[1]
+      // 格式化为 03s 或 0107
+      if (/^\d+s$/.test(timeStr)) {
+        timeStr = timeStr.padStart(3, '0')
+      }
+    }
+    // 处理内容，去掉时间戳部分
+    let content = data.replace(/\[(\d+s?|\d{4})\]\s*/, '')
+    content = ansiToHtml(content.replace(/\\r/g, '<br>'))
+    // 合并到同一时间块
+    if (timeStr && lastLogTimeRef.value === timeStr && logBlocksRef.value.length > 0) {
+      logBlocksRef.value[logBlocksRef.value.length - 1].lines.push(content)
+    } else if (timeStr) {
+      logBlocksRef.value.push({ time: timeStr, lines: [content] })
+      lastLogTimeRef.value = timeStr
+    } else {
+      // 没有时间戳，单独作为一块
+      logBlocksRef.value.push({ time: '', lines: [content] })
+      lastLogTimeRef.value = ''
+    }
+    // 重新渲染
+    renderLogBlocks(refElem, logBlocksRef)
+    refLineNum.value = logBlocksRef.value.reduce((acc, b) => acc + b.lines.length, 0)
+    nextTick(() => {
+      scrollToBottom()
+    })
   }
 
-  const appendLog = (refElem, data, refLineNum) => {
-    // Create the div element
-    const divNode = document.createElement('div')
-    divNode.className = 'flex'
-
-    // Create the first p element
-    const pNode1 = document.createElement('p')
-    pNode1.className = 'pr-6 pt-2'
-    pNode1.innerHTML = `${refLineNum.value}:`
-
-    // Create the second p element
-    const pNode2 = document.createElement('p')
-    pNode2.className = 'pt-2'
-    pNode2.innerHTML = `${data.replace(/\\r/g, '<br>')}`
-
-    // Append the p elements to the div element
-    divNode.appendChild(pNode1)
-    divNode.appendChild(pNode2)
-
-    // const node = document.createElement("p")
-    // node.innerHTML = `${refLineNum.value}: ${data.replace(/\\r/g, "<br>")}`
-    if (refElem.value) {
-      refElem.value.appendChild(divNode)
-      refLineNum.value = refLineNum.value + 1
-    }
+  // 渲染日志块
+  function renderLogBlocks(refElem, logBlocksRef) {
+    if (!refElem.value) return
+    refElem.value.innerHTML = ''
+    let lineNum = 0
+    logBlocksRef.value.forEach(block => {
+      const blockDiv = document.createElement('div')
+      blockDiv.className = 'mb-2'
+      if (block.time) {
+        const timeDiv = document.createElement('div')
+        timeDiv.className = 'text-base text-gray-400 mb-1 flex items-center'
+        timeDiv.innerHTML = `⏱ <span class='ml-1'>${block.time}</span>`
+        blockDiv.appendChild(timeDiv)
+      }
+      block.lines.forEach(line => {
+        const lineDiv = document.createElement('div')
+        lineDiv.className = 'flex items-start'
+        // 在INFO/WARN/ERROR等类型和内容之间加4px间距
+        let lineHtml = line
+        // 匹配以INFO/WARN/ERROR/DEBUG等大写单词开头的内容，后跟内容
+        lineHtml = lineHtml.replace(/^(<span[^>]*>)*(INFO|WARN|ERROR|DEBUG|TRACE|FATAL|NOTICE|WARNING)(<\/span[^>]*>)*([\s\S]*?)(?=<|$)/, (match, p1, type, p3, rest) => {
+          return `${p1 || ''}${type}${p3 || ''}<span style='display:inline-block;width:4px'></span>${rest || ''}`
+        })
+        lineDiv.innerHTML = `<span class='mr-1 text-base text-gray-400' style='min-width:2.5em;display:inline-block;'>${lineNum}:</span><span class='mr-2 text-base'>•</span><span class='text-base'>${lineHtml}</span>`
+        blockDiv.appendChild(lineDiv)
+        lineNum++
+      })
+      refElem.value.appendChild(blockDiv)
+    })
   }
 
   const downloadLog = () => {
@@ -464,10 +569,16 @@
       fetchRepoDetail()
     }
 
-    console.log(`Space 初始状态：${repoDetailStore.status}`)
     if (isStatusSSEConnected.value === false) {
       syncSpaceStatus()
     }
+
+    setRepoTab({
+      repoType: props.repoType,
+      namespace: props.namespace,
+      repoName: props.repoName,
+      currentBranch: props.currentBranch || repoDetailStore.defaultBranch || 'main',
+    })
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

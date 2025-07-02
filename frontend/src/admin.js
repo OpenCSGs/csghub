@@ -9,6 +9,7 @@ import { ROUTERS } from "./components/admin_next/router";
 
 import "element-plus/dist/index.css";
 import "./assets/stylesheets/element-plus/_variables.css";
+import "./assets/stylesheets/element-plus/index.css";
 import "./assets/stylesheets/markdown.css";
 import "./style.css";
 import { createWebHistory, createRouter } from "vue-router";
@@ -16,6 +17,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "./locales/en.js";
 import zh from "./locales/zh.js";
+import zhHant from "./locales/zhHant.js";
 
 import SvgIcon from "./components/shared/SvgIcon.vue";
 import CsgButton from "./components/shared/CsgButton.vue"
@@ -32,6 +34,7 @@ const i18n = createI18n({
   messages: {
     en,
     zh,
+    zhHant,
   },
 });
 

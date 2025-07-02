@@ -1,17 +1,20 @@
 <template>
   <div class="py-[32px] md:px-[10px]">
-    <DiscussionCards
-      v-if="theFlag == 'show'"
-      :cards="cards"
-      @getDiscussion="getDiscussion"
-      @updateDetails="updateDetails"
-      @changeFlag="changeFlag"></DiscussionCards>
-    <NewCommunityDiscussion
-      v-if="theFlag == 'new'"
-      :repoType="repoType"
-      :repoPath="repoPath"
-      @getDiscussion="getDiscussion"
-      @changeFlag="changeFlag"></NewCommunityDiscussion>
+    <template v-if="!loading">
+      <DiscussionCards
+        v-if="theFlag == 'show'"
+        :cards="cards"
+        @getDiscussion="getDiscussion"
+        @updateDetails="updateDetails"
+        @changeFlag="changeFlag"></DiscussionCards>
+      <NewCommunityDiscussion
+        v-if="theFlag == 'new'"
+        :repoType="repoType"
+        :repoPath="repoPath"
+        @getDiscussion="getDiscussion"
+        @changeFlag="changeFlag"></NewCommunityDiscussion>
+    </template>
+    <el-skeleton v-else class="mt-4" :rows="5" animated />
   </div>
 </template>
 
@@ -34,7 +37,8 @@
       return {
         theFlag: 'show',
         cards: [],
-        lastCommentId: ''
+        lastCommentId: '',
+        loading: true
       }
     },
     watch: {
@@ -51,16 +55,23 @@
       },
       async getDiscussion() {
         if (this.repoPath === '') return
-        const discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
+
+        let discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
+        if (this.repoType === 'mcp') {
+          discussionCreateEndpoint = `/mcpserver/${this.repoPath}/discussions`
+        }
+
         const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
         if (data.value) {
           const discussions = data.value.data.discussions || []
           this.cards = discussions.sort((a, b) => b.id - a.id)
+          this.loading = false
         } else {
           ElMessage({
             message: error.value.msg,
             type: 'warning'
           })
+          this.loading = false
         }
       }
     },
