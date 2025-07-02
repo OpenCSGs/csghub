@@ -114,6 +114,16 @@
               >{{ $t('shared.edit') }}</a
             >
           </div>
+          <div
+            v-if="canWrite"
+            class="flex items-center gap-1 cursor-pointer"
+          >
+            <SvgIcon name="delete" />
+            <a
+              @click.prevent="deleteFile"
+              >{{ $t('all.delete') }}</a
+            >
+          </div>
         </div>
         <div>{{ formatBytes(size) }}</div>
       </div>
@@ -228,7 +238,7 @@
   import TextViewer from './viewers/TextViewer.vue'
   import CodeViewer from './viewers/CodeViewer.vue'
   import BranchDropdown from './BranchDropdown.vue'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { useI18n } from 'vue-i18n'
@@ -427,6 +437,52 @@
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const deleteFile = async () => {
+    ElMessageBox.confirm(
+      t('shared.deleteFileConfirm'),
+      t('shared.deleteFile'),
+      {
+        confirmButtonText: t('all.confirm'),
+        cancelButtonText: t('all.cancel'),
+        type: 'warning'
+      }
+    )
+      .then(async () => {
+        const url = `/${apiPrefixPath}/${props.namespacePath}/raw/${currentPath.value}`
+        try {
+          const { error } = await useFetchApi(url, {
+            method: 'DELETE',
+            body: JSON.stringify({
+              message: `Delete ${extractNameFromPath(currentPath.value)}`,
+              content: '',
+              branch: currentBranch.value,
+              new_branch: currentBranch.value,
+              origin_path: '',
+            })
+          }).json()
+
+          if (error.value) {
+            ElMessage({
+              message: error.value.msg,
+              type: 'warning'
+            })
+          } else {
+            ElMessage({
+              message: t('all.deleteSuccess'),
+              type: 'success'
+            })
+            window.location.href = `/${prefixPath}/${props.namespacePath}?tab=files`
+          }
+        } catch (error) {
+          ElMessage({
+            message: error.message,
+            type: 'warning'
+          })
+        }
+      })
+      .catch(() => {})
   }
 
   onMounted(() => {

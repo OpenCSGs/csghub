@@ -74,7 +74,7 @@ const changeTab = (tabName) => {
   }
 
   :deep(.cm-gutters) {
-    min-height: 200px !important;
+    min-height: 600px !important;
   }
 
   :deep(.cm-focused) {
