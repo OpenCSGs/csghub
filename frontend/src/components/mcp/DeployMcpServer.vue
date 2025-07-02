@@ -362,7 +362,7 @@
 
   const fetchSpaceResources = async () => {
     const { data, error } = await useFetchApi(
-      `/space_resources?cluster_id=${dataForm.value.space_cluster}`
+      `/space_resources?cluster_id=${dataForm.value.space_cluster}&deploy_type=0`
     ).json()
 
     if (error.value) {

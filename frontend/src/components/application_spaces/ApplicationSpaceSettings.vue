@@ -475,7 +475,7 @@
     },
 
     computed: {
-      ...mapState(useRepoDetailStore, ['isPrivate']),
+      ...mapState(useRepoDetailStore, ['isPrivate', 'clusterId']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
       hideImageUploadElement() {
         return this.imageUploaded || this.images.length !== 0
@@ -572,7 +572,7 @@
       },
 
       async fetchSpaceResources() {
-        const { data, error } = await useFetchApi('/space_resources').json()
+        const { data, error } = await useFetchApi(`/space_resources?cluster_id=${this.clusterId}&deploy_type=0`).json()
 
         if (!data.value) {
           ElMessage({
