@@ -1,19 +1,19 @@
 <template>
-  <div class="pt-6">
-    <div class="w-[294px] rounded-md mx-[24px] md:w-full md:mx-0">
+  <div class="z-20 bg-white border-b border-gray-100">
+    <div class="sticky top-14 pt-6 w-72 rounded-md mx-6 md:w-full md:mx-0">
       <div
         @click="clickProfile"
-        class="flex p-[16px] cursor-pointer"
+        class="flex p-4 cursor-pointer"
         id="user_settings_avatar_div">
         <el-avatar
           :size="60"
           :src="userStore.avatar">
         </el-avatar>
-        <div class="ml-[10px]">
-          <div class="text-lg leading-[28px] font-semibold">
+        <div class="ml-2">
+          <div class="text-lg leading-7 font-semibold">
             {{ userStore.nickname || userStore.username }}
           </div>
-          <div class="text-md text-gray-500 leading-[24px] font-light">
+          <div class="text-md text-gray-500 leading-6 font-light">
             @{{ userStore.username }}
           </div>
         </div>
