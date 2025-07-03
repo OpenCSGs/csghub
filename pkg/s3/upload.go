@@ -20,7 +20,7 @@ func (c *Client) Upload(ctx context.Context, t string, reader io.ReadCloser) (st
 func (c *Client) GetTempURL(ctx context.Context, objectKey string, expiry time.Duration) (string, error) {
 	url, err := c.Client.PresignedGetObject(ctx, c.Bucket, objectKey, expiry, nil)
 	if err != nil {
-		return "", fmt.Errorf("生成预签名 URL 失败: %v", err)
+		return "", fmt.Errorf("Failed to generate predesigned url: %v", err)
 	}
 
 	return url.String(), nil
