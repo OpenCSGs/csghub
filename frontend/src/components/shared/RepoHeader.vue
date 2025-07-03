@@ -125,7 +125,7 @@
         height="24"
       />
       <RepoHeaderSourceIcon
-        v-if="!!repoSource"
+        v-if="!isEE() && !!repoSource"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
@@ -184,7 +184,17 @@
         </el-tooltip>
       </div>
     </div>
-
+    <div v-if="isEE() && !!repoSource && repoSourcePath" class="flex flex-wrap w-full gap-1 items-center">
+      <SvgIcon
+        :name="iconSrc"
+        width="24"
+        height="24"
+        class="flex-shrink-0 cursor-pointer" />
+      <div class="text-center text-gray-500 text-md font-normal leading-normal"> {{ $t('all.mirrorSource') }}: </div>
+      <a :href='sourceUrl' target='_blank' class='text-slate-700 text-md font-normal leading-normal hover:underline hover:text-brand-700' rel='noopener noreferrer'> 
+        {{ repoSourcePath }}
+      </a>
+    </div>
     <div
       class="flex gap-2 items-center"
       v-if="repoType !== 'finetune'">
@@ -387,6 +397,34 @@
       return `/${props.repoType}/servers/${props.path}`
     } else {
       return `/${props.repoType}s/${props.path}`
+    }
+  })
+
+  const iconSrc = computed(() => {
+    if (repoSource.value === 'HuggingFace') {
+      return 'repo_source_huggingface'
+    } else if (repoSource.value === 'ModelScope') {
+      return 'repo_source_modelscope'
+    } else {
+      return 'repo_source_opencsg'
+    }
+  })
+
+  const sourceUrl = computed(() => {
+    if (!repoSourcePath.value) {
+      return '';
+    }
+
+    if (repoSource.value === 'HuggingFace') {
+      if (props.repoType === 'model') {
+        return `https://huggingface.co/${repoSourcePath.value}`
+      } else {
+        return `https://huggingface.co/${props.repoType}s/${repoSourcePath.value}`
+      }
+    } else if (repoSource.value === 'ModelScope') {
+      return `https://modelscope.cn/${props.repoType}s/${repoSourcePath.value}`
+    } else {
+      return `https://opencsg.com/${props.repoType}s/${repoSourcePath.value}`
     }
   })
 
