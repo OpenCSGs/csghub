@@ -23,6 +23,23 @@ func NewMinio(cfg *config.Config) (*Client, error) {
 	}, nil
 }
 
+func NewPrivateMinio(cfg *config.Config) (*Client, error) {
+	minioClient, err := minio.New(cfg.PrivateS3.Endpoint, &minio.Options{
+		Creds:        credentials.NewStaticV4(cfg.PrivateS3.AccessKeyID, cfg.PrivateS3.AccessKeySecret, ""),
+		Secure:       cfg.PrivateS3.EnableSSL,
+		BucketLookup: minio.BucketLookupAuto,
+		Region:       cfg.PrivateS3.Region,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &Client{
+		Client: *minioClient,
+		Bucket: cfg.PrivateS3.Bucket,
+	}, nil
+}
+
 type Client struct {
 	minio.Client
 	Bucket string

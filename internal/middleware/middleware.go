@@ -12,6 +12,8 @@ type Middleware interface {
 	AuthenticateAdminUser() gin.HandlerFunc
 	Log() gin.HandlerFunc
 	CacheControlMiddleware() gin.HandlerFunc
+	ApiCheckCurrentUser() gin.HandlerFunc
+	CheckLicenseActive() gin.HandlerFunc
 }
 
 type MiddlewareImpl struct {
