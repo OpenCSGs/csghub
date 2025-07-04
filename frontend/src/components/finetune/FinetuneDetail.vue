@@ -210,7 +210,7 @@
       tabName = getDefaultTab()
       router.replace({
         path: `/finetune/${props.namespace}/${props.modelName}/${props.finetuneName}/${props.finetuneId}`,
-        query: {}
+        query: { tab: tabName }
       })
     }
 

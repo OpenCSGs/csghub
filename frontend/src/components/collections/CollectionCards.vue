@@ -55,6 +55,6 @@
   }
 
   const goCollectionDetails = (collection_id) => {
-    location.href = `/collections/${collection_id}`
+    location.href = `/collections/${collection_id}?tab=page`
   }
 </script>
