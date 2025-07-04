@@ -102,10 +102,10 @@
       </el-tab-pane>
       <el-tab-pane
         :label="$t('finetune.detail.tab2')"
-        name="setting"
+        name="settings"
       >
         <FinetuneSettings
-          v-if="activeName === 'setting'"
+          v-if="activeName === 'settings'"
           :finetune="repoDetailStore"
           :finetuneId="repoDetailStore.deployId"
           :finetuneName="repoDetailStore.deployName"
@@ -192,7 +192,7 @@
   })
 
   const validTabs = computed(() => {
-    return ['page', 'analysis', 'billing', 'setting']
+    return ['page', 'analysis', 'billing', 'settings']
   })
 
   const getDefaultTab = () => {
