@@ -283,7 +283,9 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 
 	internal_api.GET("/ping", handlersRegistry.FrontendHandlers.PingHandler.Ping)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
-	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
+	internal_api.POST("/upload", middleware.Instance.ApiCheckCurrentUser(), handlersRegistry.FrontendHandlers.UploadHandler.Create)
+	internal_api.POST("/private_upload", middleware.Instance.ApiCheckCurrentUser(), handlersRegistry.FrontendHandlers.UploadHandler.PrivateCreate)
+	internal_api.GET("/oss_temp_url", middleware.Instance.ApiCheckCurrentUser(), handlersRegistry.FrontendHandlers.UploadHandler.GetUrlByObjectKey)
 
 	resolve_group := g.Group("")
 	resolve_group.GET("/:repo_type/:namespace/:name/resolve/:branch/*path", handlersRegistry.FrontendHandlers.ResolveHandler.Resolve)
