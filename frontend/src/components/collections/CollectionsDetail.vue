@@ -30,14 +30,13 @@
     <el-tabs
       v-model="activeName"
       class="demo-tabs"
-      :beforeLeave="handleTabLeave"
       @tabClick="tabChange"
     >
       <el-tab-pane
         :label="$t('collections.details.tabProject')"
         name="page"
       >
-        <div class="pt-[24px] px-2">
+        <div class="pt-[24px] px-2" v-if="activeName === 'page'">
           <div
             class="h-[520px] md:h-auto pt-[24px]"
             v-if="!showRepoList"
@@ -78,7 +77,7 @@
           </div>
         </div>
         <CollectionsRepoList
-          v-if="showRepoList"
+          v-if="showRepoList && activeName === 'page'"
           :repositories="repoDetailStore.repositories"
           :collectionsId="collectionsId"
           :canManage="repoDetailStore.canManage"
@@ -90,6 +89,7 @@
         v-if="repoDetailStore.canManage"
       >
         <CollectionsSettings
+          v-if="activeName === 'setting'"
           :collection="repoDetailStore"
           :collectionsId="collectionsId"
           :userName:="userName"
@@ -108,9 +108,12 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useFetchApi from '../../packs/useFetchApi'
   import { storeToRefs } from 'pinia'
+  import { useRoute, useRouter } from 'vue-router'
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
+  const router = useRouter()
+  const route = useRoute()
 
   const props = defineProps({
     userName: String,
@@ -131,23 +134,43 @@
     )
   })
 
-  const handleTabLeave = (tab) => {
-    tabChange(tab)
-    return false
+  const validTabs = computed(() => {
+    const tabs = ['page']
+    if (repoDetailStore.canManage) {
+      tabs.push('setting')
+    }
+    return tabs
+  })
+
+  const getDefaultTab = () => {
+    return 'page'
+  }
+
+  const isValidTab = (tab) => {
+    return validTabs.value.includes(tab)
   }
 
   const tabChange = (tab) => {
-    switch (tab.paneName) {
-      case 'page':
-        location.href = `/collections/${props.collectionsId}`
-        break
-      case 'setting':
-        location.href = `/collections/${props.collectionsId}/setting`
-        break
-      default:
-        location.href = `/collections/${props.collectionsId}/${tab.paneName}`
-        break
+    let tabName = tab.paneName
+    
+    if (!isValidTab(tabName)) {
+      tabName = getDefaultTab()
+      router.replace({
+        path: `/collections/${props.collectionsId}`,
+        query: { tab: tabName }
+      })
     }
+
+    activeName.value = tabName
+
+    router.replace({
+      path: `/collections/${props.collectionsId}`,
+      query: {
+        tab: tabName
+      }
+    })
+
+    fetchCollectionDetail()
   }
 
   const fetchCollectionDetail = async () => {
@@ -160,13 +183,22 @@
       repoDetailStore.initialize(repoData, 'collection')
     }
   }
+  
   onBeforeMount(() => {
     if (props.path) {
       activeName.value = props.path
     }
-    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
-      fetchCollectionDetail()
+
+    // 处理URL query参数中的tab
+    const params = new URLSearchParams(window.location.search)
+    const urlTab = params.get('tab')
+    if (urlTab && isValidTab(urlTab)) {
+      tabChange({ paneName: urlTab })
+    } else {
+      tabChange({ paneName: getDefaultTab() })
     }
+
+    fetchCollectionDetail()
   })
 
   provide('fetchCollectionDetail', fetchCollectionDetail)
