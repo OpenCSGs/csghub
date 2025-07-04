@@ -1,6 +1,12 @@
 import { atob_utf8 } from './utils'
 
-const relativePathToResolvePath = (repoType, content, namespacePath, currentBranch, requestPath) => {
+const relativePathToResolvePath = (
+  repoType,
+  content,
+  namespacePath,
+  currentBranch,
+  requestPath
+) => {
   if (!content) return content
 
   let repoBasePath = `/${repoType}/${namespacePath}`
@@ -26,7 +32,10 @@ const relativePathToResolvePath = (repoType, content, namespacePath, currentBran
   content = content.replace(
     /\!\[(.*?)\]\((.*?)\)/g,
     (match, altText, imagePath) => {
-      if (imagePath.startsWith('http') || imagePath.startsWith(`/${repoType}/`)) {
+      if (
+        imagePath.startsWith('http') ||
+        imagePath.startsWith(`/${repoType}/`)
+      ) {
         return match
       } else {
         return `![${altText}](${prefix}${imagePath})`
@@ -46,16 +55,18 @@ const relativePathToResolvePath = (repoType, content, namespacePath, currentBran
   return content
 }
 
-const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) => {
-  const requestUrl = new URL(window.location.href)
-  const fileExtension = requestUrl.pathname.split('.').pop()
-
-  const pathname = requestUrl.pathname
-
+const resolveContent = (
+  repoType,
+  encodedContent,
+  namespacePath,
+  currentBranch,
+  currentPath,
+  fileExtension
+) => {
   let content
 
   if (['jpg', 'png', 'jpeg', 'gif', 'svg'].includes(fileExtension)) {
-    content = `<img src='${requestUrl.href.replace('blob', 'resolve')}'>`
+    content = `<img src='/${repoType}/${namespacePath}/resolve/${currentBranch}/${currentPath}'/>`
   } else {
     const parsedBlobContent = atob_utf8(encodedContent)
     try {
@@ -64,7 +75,7 @@ const resolveContent = (repoType, encodedContent, namespacePath, currentBranch) 
         parsedBlobContent,
         namespacePath,
         currentBranch,
-        pathname
+        currentPath
       )
     } catch (error) {
       console.log(error)
