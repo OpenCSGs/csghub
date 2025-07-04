@@ -85,11 +85,11 @@
       </el-tab-pane>
       <el-tab-pane
         :label="$t('collections.details.tabSettings')"
-        name="setting"
+        name="settings"
         v-if="repoDetailStore.canManage"
       >
         <CollectionsSettings
-          v-if="activeName === 'setting'"
+          v-if="activeName === 'settings'"
           :collection="repoDetailStore"
           :collectionsId="collectionsId"
           :userName:="userName"
@@ -137,7 +137,7 @@
   const validTabs = computed(() => {
     const tabs = ['page']
     if (repoDetailStore.canManage) {
-      tabs.push('setting')
+      tabs.push('settings')
     }
     return tabs
   })
