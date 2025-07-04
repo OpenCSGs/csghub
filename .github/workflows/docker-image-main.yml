@@ -37,7 +37,7 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         images: |
-          opencsg/csghub-portal
+          opencsghq/csghub-portal
           ${{ secrets.ACR_REGISTRY }}/opencsg_public/csghub_portal
         tags: |
           type=raw,value=latest
