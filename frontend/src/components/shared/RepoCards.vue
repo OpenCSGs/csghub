@@ -334,7 +334,11 @@
           totalRepos.value = data.value.data?.total
         } else {
           reposData.value = data.value.data
-          totalRepos.value = data.value.total
+          if (data.value.total) {
+            totalRepos.value = data.value.total
+          } else {
+            totalRepos.value = 0
+          }
         }
       } else {
         ElMessage.warning(error.value.msg || t('all.fetchError'))
