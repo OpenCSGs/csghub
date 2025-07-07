@@ -368,7 +368,9 @@
       apiPrefixPath,
       data.content,
       props.namespacePath,
-      currentBranch.value
+      currentBranch.value,
+      currentPath.value,
+      fileType.value
     )
     lastCommit.value = data.commit
     size.value = data.size
@@ -387,9 +389,9 @@
 
       if (data.value) {
         const result = data.value
-        updateFileData(result.data)
         updateBreadcrumb()
         detectFileType()
+        updateFileData(result.data)
         lfsContentRegex()
       } else {
         console.log(error.value.msg)

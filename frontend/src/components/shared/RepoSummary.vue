@@ -210,7 +210,16 @@
   }
 
   const resolveReadmeContent = () => {
-    const content = resolveContent(`${props.repoType}s`, rawReadmeContent.value, props.namespacePath, props.currentBranch)
+    const requestUrl = new URL(window.location.href)
+    const pathname = requestUrl.pathname
+    const content = resolveContent(
+      `${props.repoType}s`,
+      rawReadmeContent.value,
+      props.namespacePath,
+      props.currentBranch,
+      pathname,
+      'md'
+    )
     readmeContent.value = content
   }
 
