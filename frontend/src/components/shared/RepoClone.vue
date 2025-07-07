@@ -404,19 +404,19 @@ pip install csghub-sdk
   })
 
   const getComandLineCloneCode = () => {
-    if (props.repoType === 'model') {
-      return ref(`
-csghub-cli download ${props.namespacePath}
-`)
-    } else if (props.repoType === 'dataset') {
-      return ref(`
-csghub-cli download ${props.namespacePath} -t dataset
-`)
+    const revision =
+      repoDetailStore.defaultBranch && repoDetailStore.defaultBranch !== 'main'
+        ? ` --revision ${repoDetailStore.defaultBranch}`
+        : ''
+    let typeFlag = ''
+    if (props.repoType === 'dataset') {
+      typeFlag = ' -t dataset'
     } else if (props.repoType === 'space') {
-      return ref(`
-csghub-cli download ${props.namespacePath} -t space
-`)
+      typeFlag = ' -t space'
     }
+    return ref(`
+csghub-cli download ${props.namespacePath}${typeFlag}${revision}
+`)
   }
 
   const comandlineCodeMarkdown = computed(() => {
