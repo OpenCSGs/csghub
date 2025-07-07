@@ -63,6 +63,7 @@
       >
         <template #default="scope">
           <el-tooltip
+            v-if="scope.row.datasets && scope.row.datasets.length > 0"
             placement="top"
             :disabled="(scope.row.datasets || []).length <= 2"
           >
@@ -86,6 +87,7 @@
               </ul>
             </div>
           </el-tooltip>
+          <div v-else>-</div>
         </template>
       </el-table-column>
 
@@ -133,7 +135,7 @@
           <div
             class="text-sm font-normal leading-5 text-gray-600 truncate"
           >
-            {{ scope.row.task_desc }}
+            {{ scope.row.task_desc || '-' }}
           </div>
         </template>
       </el-table-column>
