@@ -283,10 +283,10 @@
             style="width: 100%"
           >
             <el-option
-              v-for="item in filterFrameworks"
+              v-for="(item ,index) in filterFrameworks"
               :key="item.id"
               :label="item.frame_name"
-              :value="item.id"
+              :value="index"
             />
           </el-select>
           <p class="text-gray-600 mt-2 font-light">
@@ -355,6 +355,8 @@
     namespace: String
   })
 
+  const frameworkVersion = ref('')
+  const frameworkVersionOptions = ref([])
   const searchParams = new URLSearchParams(window.location.search)
 
   const { t } = useI18n()
@@ -550,6 +552,7 @@
       `/models/${dataForm.value.model_id[0]}/runtime_framework_v2?deploy_type=4`
     ).json()
     if (error.value) {
+      frameworkVersionOptions.value = []
       dataForm.value.evaluation_framework = ''
       evaluationFrameworks.value = []
     } else {
@@ -603,14 +606,37 @@
     if (!currentResource) return []
     if (!evaluationFrameworks.value) return []
 
-    return evaluationFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
+    return evaluationFrameworks.value.filter((framework) => framework.compute_types.includes(currentResource.type))
+  })
+
+  watch(() => filterFrameworks.value, (newValue) => {
+    if (newValue) {
+      if (filterFrameworks.value.length > 0) {
+        frameworkVersion.value = 0
+        const currentResource = evaluationResources.value
+        .flatMap(category => category.options)
+        .find(item => item.id == dataForm.value.cloud_resource.split('/')[0])
+
+        if(!currentResource){
+          frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions
+          dataForm.value.evaluation_framework = frameworkVersionOptions.value[0]?.id || ''
+        }else {
+          frameworkVersionOptions.value = filterFrameworks.value[0].versions.filter((version) => version.compute_type == currentResource.type) || []
+          dataForm.value.evaluation_framework = frameworkVersionOptions.value[0]?.id || ''
+        }
+      } else {
+        frameworkVersion.value = ''
+        frameworkVersionOptions.value = []
+        dataForm.value.evaluation_framework = ''
+      }
+    }
   })
 
   watch(
     () => dataForm.value.evaluation_framework,
     async () => {
       selectedFrameworkName.value =
-        evaluationFrameworks.value.find(
+      frameworkVersionOptions.value.find(
           (framework) => framework.id === dataForm.value.evaluation_framework
         )?.frame_name || ''
       await fetchDatasetOptions(selectedFrameworkName.value)
