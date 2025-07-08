@@ -484,8 +484,8 @@
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
-            window.location.href = '/models'
-          }, 500)
+            window.location.href = document.referrer || '/models'
+          }, 1000)
           return true
         }
       },
