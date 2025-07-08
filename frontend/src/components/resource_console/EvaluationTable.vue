@@ -30,15 +30,34 @@
         :label="$t('evaluation.list.modelName')"
         label-class-name="text-sm font-normal leading-5 text-gray-600"
         width="200"
-        show-overflow-tooltip
         align="left"
       >
         <template #default="scope">
-          <div
-            class="text-sm font-normal leading-5 text-gray-600 truncate"
+          <el-tooltip
+            v-if="scope.row.repo_ids && scope.row.repo_ids.length > 0"
+            placement="top"
           >
-            {{ scope.row.repo_ids[0] }}
+            <template #content>
+              <ul
+                class="list-item list-disc ml-3"
+                v-for="repo_id in (scope.row.repo_ids || [])"
+                :key="repo_id"
+              >
+                <li>{{ repo_id }}</li>
+              </ul>
+            </template>
+
+            <div class="text-[14px] font-[400] leading-[20px] text-gray-900">
+              <ul
+                class="list-item list-disc ml-3"
+                v-for="repo_id in scope.row.repo_ids?.slice(0, 2)"
+                :key="repo_id"
+              >
+                <li class="truncate">{{ repo_id }}</li>
+              </ul>
           </div>
+          </el-tooltip>
+          <div v-else>-</div>
         </template>
       </el-table-column>
 
@@ -65,7 +84,6 @@
           <el-tooltip
             v-if="scope.row.datasets && scope.row.datasets.length > 0"
             placement="top"
-            :disabled="(scope.row.datasets || []).length <= 2"
           >
             <template #content>
               <ul
@@ -158,9 +176,9 @@
             <a
               @click="detailEvaluation(scope.row)"
               :class="{
-                'pointer-events-none !text-brand-100': !scope.row.result_url
+                'pointer-events-none !text-brand-100': scope.row.status !== 'Failed' && scope.row.status !== 'Succeeded'
               }"
-              class="flex gap-4 text-brand-700 cursor-pointer hover:text-brand-800"
+              class="flex gap-4 text-brand-700 cursor-pointer"
               >{{ $t('evaluation.list.detail') }}</a
             >
             <el-popconfirm
@@ -255,9 +273,7 @@
   }
 
   const detailEvaluation = (evaluation) => {
-    if (evaluation.result_url) {
-      location.href = `/evaluations/${evaluation.id}`
-    }
+    location.href = `/evaluations/${evaluation.id}`
   }
 
   watch(
