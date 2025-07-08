@@ -161,7 +161,7 @@
               </a>
 
               <a
-                v-if="!actionLimited && (isSaaS || (isEE && isLicenseActive))"
+                v-if="!actionLimited"
                 href="/datapipelines">
                 <el-dropdown-item>
                   <div class="flex items-center w-fit gap-2">
@@ -332,8 +332,6 @@
       </div>
     </div>
   </div>
-  <!-- contact dialog -->
-  <ContactUs ref="child" />
   <!-- mobile menu -->
   <el-drawer
     :z-index="998"
@@ -714,15 +712,11 @@
 <script>
   import { inject } from 'vue'
   import { Search } from '@element-plus/icons-vue'
-  import ContactUs from '../form/ContactUs.vue'
   import MenuItems from './MenuItems.vue'
   import useUserStore from '../../stores/UserStore.js'
-  import useSystemConfigStore from '@/stores/SystemConfigStore'
-  import useLicenseStore from '../../stores/LicenseStore.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { mapActions, mapState } from 'pinia'
   import { useCookies } from 'vue3-cookies'
-  import { isEE, isSaas } from '../../packs/config.js'
   import { ElMessage } from 'element-plus'
   import Broadcast from './Broadcast.vue'
   import UpdateUsername from '../popup/UpdateUsername.vue'
@@ -751,21 +745,16 @@
         showSettings: false,
         showMsgList: false,
         hasNewMassage: false,
-        isSaaS: isSaas(),
-        isEE: isEE(),
         activeIndex: classParam
           ? `${window.location.pathname}?class=${classParam}`
           : window.location.pathname,
         mobileMenuVisibility: false,
         userStore: useUserStore(),
-        systemConfigStore: useSystemConfigStore(),
-        licenseStore: useLicenseStore(),
         isCompanyUser: false,
         companyVerified: false,
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
-        theme: THEME,
         cookies: useCookies().cookies,
         searchText: '',
         filterOptions: ['all'],
@@ -839,7 +828,6 @@
       }
     },
     components: {
-      ContactUs,
       MenuItems,
       Broadcast,
       UpdateUsername,
@@ -858,7 +846,6 @@
         'hasEmail',
         'canChangeUsername'
       ]),
-      ...mapState(useLicenseStore, ['isLicenseActive']),
       showBroadcast() {
         return !window.location.pathname.includes('/lead_forms')
       }
@@ -1104,7 +1091,6 @@
         const res = await csrfFetch('/internal_api/system_config')
         if (res.ok) {
           const body = await res.json()
-          this.systemConfigStore.initialize(body.system_configs)
         } else {
           console.log('Failed to fetch system config')
         }
@@ -1115,14 +1101,8 @@
       }
     },
     async mounted() {
-      if (!this.systemConfigStore.initialized) {
-        await this.fetchSystemConfig()
-      }
       if (this.uuid && !this.initialized) {
         await this.fetchUser()
-      }
-      if (isEE()) {
-        this.licenseStore.updateLicenseActive()
       }
       this.$nextTick(() => {
         if (this.isLoggedIn) {
