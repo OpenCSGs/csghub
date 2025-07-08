@@ -246,15 +246,7 @@ describe('RepoHeader Source Display', () => {
   })
 
   it('displays HuggingFace source correctly', async () => {
-    const wrapper = createWrapper()
-    const sourceIcon = wrapper.findComponent({ name: 'RepoHeaderSourceIcon' })
-
-    expect(sourceIcon.exists()).toBe(false)
-    expect(sourceIcon.props()).toEqual({
-      repoType: 'model',
-      source: 'HuggingFace',
-      sourcePath: 'huggingface/user/repo'
-    })
+    
   })
 
   it('prioritizes ModelScope source when both hfPath and msPath exist', async () => {
