@@ -78,11 +78,26 @@
             </p>
           </el-tooltip>
         </div>
-        <div class="flex items-center justify-between mt-1">
-          <span class="text-gray-700 text-sm font-normal">{{
+        <div class="flex items-center justify-between mt-1 gap-4">
+          <span class="text-gray-700 text-sm font-normal line-clamp-1 w-full truncate overflow-hidden text-ellipsis">{{
             item.type ? t(`dataPipelines.${item.type}`) : '-'
           }}</span>
-          <div class="flex items-center justify-end gap-1">
+          <div class="flex items-center justify-end gap-2">
+            <el-popconfirm
+              :title="`${t('dataPipelines.deleteConfirm')}?`"
+              :confirm-button-text="t('dataPipelines.confirm')"
+              :cancel-button-text="t('dataPipelines.cancel')"
+              width="220px"
+              @confirm="handleDelete(item.template_id)"
+            >
+              <template #reference>
+                <CsgButton
+                  v-if="item.template_id"
+                  class="btn btn-link-gray btn-md whitespace-nowrap"
+                  :name="t('dataPipelines.remove')"
+                />
+              </template>
+            </el-popconfirm>
             <CsgButton
               class="btn btn-link-gray btn-md whitespace-nowrap"
               @click="toNewPage('add', index)"
@@ -99,21 +114,6 @@
               @click="goToNewTask(index)"
               :name="t('dataPipelines.apply')"
             />
-            <el-popconfirm
-              :title="`${t('dataPipelines.deleteConfirm')}?`"
-              :confirm-button-text="t('dataPipelines.confirm')"
-              :cancel-button-text="t('dataPipelines.cancel')"
-              width="220px"
-              @confirm="handleDelete(item.template_id)"
-            >
-              <template #reference>
-                <CsgButton
-                  v-if="item.template_id"
-                  class="btn btn-link-gray btn-sm whitespace-nowrap"
-                  :name="t('dataPipelines.remove')"
-                />
-              </template>
-            </el-popconfirm>
           </div>
         </div>
       </div>

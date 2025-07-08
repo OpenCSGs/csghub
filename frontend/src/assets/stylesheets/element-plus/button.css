@@ -196,9 +196,7 @@
 .btn-secondary-gray.btn-sm,
 .btn-secondary-color.btn-sm,
 .btn-tertiary-gray.btn-sm,
-.btn-tertiary-color.btn-sm,
-.btn-link-gray.btn-sm,
-.btn-link-color.btn-sm {
+.btn-tertiary-color.btn-sm {
   padding: 8px 12px;
   font-size: 12px;
   line-height: 18px;
@@ -213,15 +211,26 @@
   justify-content: center;
 }
 
+.btn-link-gray.btn-sm,
+.btn-link-color.btn-sm {
+  padding: 0;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+}
+
 /* md size button */
 .btn-primary.btn-md,
 .btn-danger.btn-md,
 .btn-secondary-gray.btn-md,
 .btn-secondary-color.btn-md,
 .btn-tertiary-gray.btn-md,
-.btn-tertiary-color.btn-md,
-.btn-link-gray.btn-md,
-.btn-link-color.btn-md {
+.btn-tertiary-color.btn-md {
   padding: 10px 14px;
   font-size: 14px;
   line-height: 22px;
@@ -236,14 +245,25 @@
   justify-content: center;
 }
 
+.btn-link-gray.btn-md,
+.btn-link-color.btn-md {
+  padding: 0;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+}
+
 /* lg size button */
 .btn-primary.btn-lg,
 .btn-secondary-gray.btn-lg,
 .btn-secondary-color.btn-lg,
 .btn-tertiary-gray.btn-lg,
-.btn-tertiary-color.btn-lg,
-.btn-link-gray.btn-lg,
-.btn-link-color.btn-lg {
+.btn-tertiary-color.btn-lg {
   padding: 10px 16px;
   font-size: 16px;
   line-height: 24px;
@@ -258,14 +278,25 @@
   justify-content: center;
 }
 
+.btn-link-gray.btn-lg,
+.btn-link-color.btn-lg {
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+}
+
 /* xl size button */
 .btn-primary.btn-xl,
 .btn-secondary-gray.btn-xl,
 .btn-secondary-color.btn-xl,
 .btn-tertiary-gray.btn-xl,
-.btn-tertiary-color.btn-xl,
-.btn-link-gray.btn-xl,
-.btn-link-color.btn-xl {
+.btn-tertiary-color.btn-xl {
   padding: 12px 18px;
   font-size: 16px;
   line-height: 24px;
@@ -280,14 +311,25 @@
   justify-content: center;
 }
 
+.btn-link-gray.btn-xl,
+.btn-link-color.btn-xl {
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+}
+
 /* 2xl size button */
 .btn-primary.btn-2xl,
 .btn-secondary-gray.btn-2xl,
 .btn-secondary-color.btn-2xl,
 .btn-tertiary-gray.btn-2xl,
-.btn-tertiary-color.btn-2xl,
-.btn-link-gray.btn-2xl,
-.btn-link-color.btn-2xl {
+.btn-tertiary-color.btn-2xl {
   padding: 16px 22px;
   font-size: 18px;
   line-height: 28px;
@@ -301,3 +343,17 @@
   text-align: center;
   justify-content: center;
 }
+
+.btn-link-gray.btn-2xl,
+.btn-link-color.btn-2xl {
+  padding: 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+}
+
