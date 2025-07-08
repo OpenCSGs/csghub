@@ -125,7 +125,7 @@
         height="24"
       />
       <RepoHeaderSourceIcon
-        v-if="!isEE() && !!repoSource"
+        v-if="!!!repoSource"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
@@ -184,7 +184,7 @@
         </el-tooltip>
       </div>
     </div>
-    <div v-if="isEE() && !!repoSource && repoSourcePath" class="flex flex-wrap w-full gap-1 items-center">
+    <div v-if="!!repoSource && repoSourcePath" class="flex flex-wrap w-full gap-1 items-center">
       <SvgIcon
         :name="iconSrc"
         width="24"
