@@ -90,6 +90,7 @@ export const all = {
   delete: "Delete",
   more:"More",
   moreDesc: "Expand",
+  mirrorSource: "Mirror Source",
   lessDesc: "Collapse",
   sdkTips: "Please register first and then obtain the Token from OpenCSG's account page",
   commandlineTips: "For more command-line options, see",

@@ -90,6 +90,7 @@ export const all = {
   delete: "删除",
   more:"更多",
   moreDesc: "展开",
+  mirrorSource: "镜像源",
   lessDesc: "收起",
   sdkTips: "请先注册，然后从 OpenCSG 的账号页面获取 Token",
   commandlineTips: "更多更丰富的命令行选项，可参见",
