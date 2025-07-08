@@ -125,7 +125,7 @@
         height="24"
       />
       <RepoHeaderSourceIcon
-        v-if="!!!repoSource"
+        v-if="!!repoSource && false"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
