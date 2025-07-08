@@ -25,16 +25,7 @@
           >
         </div>
 
-        <div class="flex items-center gap-5 mb-4">
-          <div class="flex items-center">
-            <div class="text-gray-500 text-base mr-1">
-              {{ $t('evaluation.detail.creationTime') }}:
-            </div>
-            <div class="text-gray-700 text-base">
-              {{ formatDate(evaluation.submit_time) }}
-            </div>
-          </div>
-          <SvgIcon name="vertical_divider" />
+        <div class="flex flex-wrap items-center gap-5 mb-4">
           <div class="flex items-center">
             <div class="text-gray-500 text-base mr-1">
               {{ $t('evaluation.detail.evaluationModel') }}:
@@ -45,10 +36,28 @@
             >
               <a
                 :href="`/models/${evaluation.repo_ids[0]}`"
-                class="text-brand-700 underline"
+                class="text-brand-700 hover:underline"
               >
                 {{ evaluation.repo_ids[0].split('/')[1] }}
               </a>
+            </div>
+          </div>
+          <SvgIcon name="vertical_divider" />
+          <div class="flex items-center">
+            <div class="text-gray-500 text-base mr-1">
+              {{ $t('evaluation.detail.evaluationResource') }}:
+            </div>
+            <div class="text-gray-700 text-base">
+              {{ evaluation.resource_name }}
+            </div>
+          </div>
+          <SvgIcon name="vertical_divider" />
+          <div class="flex items-center">
+            <div class="text-gray-500 text-base mr-1">
+              {{ $t('evaluation.detail.creationTime') }}:
+            </div>
+            <div class="text-gray-700 text-base">
+              {{ formatDate(evaluation.submit_time) }}
             </div>
           </div>
         </div>
