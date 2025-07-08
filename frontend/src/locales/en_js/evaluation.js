@@ -25,6 +25,7 @@ export const evaluation = {
   detail: {
     creationTime: "Creation Time",
     evaluationModel: "Evaluation Model",
+    evaluationResource: "Evaluation Resource",
     desc: "Description",
     dataset: "Dataset",
     metrics: "Metrics",

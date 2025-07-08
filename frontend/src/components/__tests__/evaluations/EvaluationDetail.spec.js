@@ -39,9 +39,12 @@ describe('EvaluationDetail', () => {
   })
 
   it('renders evaluation details correctly', async () => {
-    const dateElement = wrapper.find('.text-gray-700.text-base')
+    const allGrayTextElements = wrapper.findAll('.text-gray-700.text-base')
+    const dateElement = allGrayTextElements.find(el =>
+      el.text() === '2021-10-01'
+    )
     expect(wrapper.find('.text-2xl').text()).toBe('task1')
-    expect(dateElement.text()).toBe('2021-10-01')
+    expect(dateElement?.text()).toBe('2021-10-01')
     expect(wrapper.text()).includes('desc1')
   })
 

@@ -25,6 +25,7 @@ export const evaluation = {
   detail: {
     creationTime: "创建时间",
     evaluationModel: "评测模型",
+    evaluationResource: "评测资源",
     desc: "评测描述",
     dataset: "数据集",
     metrics: "指标",
