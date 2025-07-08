@@ -452,6 +452,7 @@
         font-size: 14px;
         color: var(--gray-900);
       }
+    }
 
   .evaluation-table
     .evaluation-table-header-row
