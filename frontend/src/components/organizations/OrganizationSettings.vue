@@ -93,6 +93,9 @@
     } else {
       const body = data.value
       role.value = body.data
+      if(!role.value){
+        window.location.href = '/'
+      }
     }
   }
 

@@ -86,6 +86,8 @@
   import { ref, inject, computed, onMounted, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
+  import useUserStore from '../../stores/UserStore'
+  const userStore = useUserStore()
 
   const props = defineProps({
     organizationRaw: {
@@ -218,8 +220,32 @@
       })
     }
   }
+  const currentUserRole = async () => {
+    const orgIsAdminEndpoint = `/organization/${props.name}/members/${userStore.username}`
+    const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
 
-  onMounted(() => {})
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      if(!body.data){
+        window.location.href = '/'
+      }
+    }
+  }
+
+  watch(
+    () => userStore.isLoggedIn,
+    () => {
+      currentUserRole()
+    }
+  )
+
+  onMounted(() => {
+    if (userStore.isLoggedIn) {
+      currentUserRole()
+    }
+  })
 </script>
 
 <style scoped>

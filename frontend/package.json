@@ -17,6 +17,7 @@
     "@microsoft/fetch-event-source": "^2.0.1",
     "@vueuse/core": "^10.11.1",
     "codemirror": "^6.0.1",
+    "dayjs": "^1.11.13",
     "diff": "^6.0.0-beta",
     "diff2html": "^3.4.48",
     "element-plus": "^2.8.0",

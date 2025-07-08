@@ -1,6 +1,25 @@
-import { useCookies } from 'vue3-cookies'
+import useFetchApi from "@/packs/useFetchApi";
+import { useCookies } from "vue3-cookies";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en';
 
 const { cookies } = useCookies()
+
+const defaultLanguage = ["zh", "zh-cn", "zh-CN", "zh-tw"].includes(
+  navigator.language
+)
+  ? "zh"
+  : "en";
+
+const lan = cookies.get('locale') || defaultLanguage;
+dayjs.extend(relativeTime);
+dayjs.locale(lan=='en'?'en':'zh-cn');
+
+export function timeSince(dateString) {
+  return dayjs(dateString).fromNow();
+}
 
 export const btoa_utf8 = (value) => {
   return btoa(
