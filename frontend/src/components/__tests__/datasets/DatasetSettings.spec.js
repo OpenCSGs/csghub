@@ -143,7 +143,8 @@ describe("DatasetSettings", () => {
     const wrapper = createWrapper();
     const deleteInput = wrapper.findAll('input').at(-1);
     await deleteInput.setValue('test/dataset');
-    const deleteButton = wrapper.find('#confirmDelete');
+    const deleteButtonComponent = wrapper.findComponent('[data-test="confirm-delete"]');
+    const deleteButton = deleteButtonComponent.find('button');
     expect(deleteButton.classes()).toContain('btn-danger');
   });
 });

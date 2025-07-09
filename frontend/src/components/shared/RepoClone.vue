@@ -24,6 +24,7 @@
       <CsgButton
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
+        :tooltipContent="repo.disableEvaluationReason"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
         @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
@@ -49,15 +50,21 @@
       />
     </div>
     <div
-      class="btn btn-secondary-gray btn-sm modelBtn disabled"
       v-else-if="repoType === 'model'"
     >
-      <SvgIcon
-        name="deploy"
-        class="mr-0"
-        :disabled="true"
-      />
-      <div>{{ $t('all.deploy') }}</div>
+      <el-tooltip
+        :content="repo.disableInferenceReason"
+        placement="top"
+      >
+        <div class="flex gap-1 btn btn-secondary-gray btn-sm modelBtn disabled">
+          <SvgIcon
+            name="deploy"
+            class="mr-0"
+            :disabled="true"
+          />
+          <div class="text-gray-400">{{ $t('all.deploy') }}</div>
+        </div>
+      </el-tooltip>
     </div>
 
     <!-- finetune deploy button -->
@@ -67,6 +74,7 @@
       :disabled="!enableFinetune || !httpCloneUrl"
       :name="$t('finetune.title')"
       svgName="model_finetune_create"
+      :tooltipContent="repo.disableFinetuneReason"
       @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
     />
 
