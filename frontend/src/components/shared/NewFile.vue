@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4 my-[30px] md:px-5">
     <div class="flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ repoName }}</div>
+      <div class="whitespace-nowrap">{{ repoName + repoTab.lastPath }}</div>
       <div class="text-gray-500">/</div>
       <el-input
         v-model="fileName"
@@ -117,7 +117,7 @@
   const createFile = async () => {
     submiting.value = true
     // TODO: main branch for now; should support different branches
-    const createFileEndpoint = `/${apiPrefixPath}/${props.namespacePath}/raw/${fileName.value}`
+    const createFileEndpoint = `/${apiPrefixPath}/${props.namespacePath}/raw${repoTab.lastPath}/${fileName.value}`
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),
@@ -144,7 +144,7 @@
     // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
     setRepoTab({
       actionName: 'blob',
-      lastPath: fileName.value
+      lastPath: repoTab.lastPath + '/' + fileName.value
     })
   }
 
