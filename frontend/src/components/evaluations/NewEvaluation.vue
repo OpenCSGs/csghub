@@ -168,6 +168,7 @@
                 "
                 size="large"
                 multiple
+                class="ignore-height-select"
             >
               <el-option
                 v-for="item in models"
@@ -763,6 +764,10 @@
 
   :deep(.el-select) {
     height: 40px;
+  }
+
+  :deep(.ignore-height-select.el-select) {
+    height: auto !important;
   }
 
   :deep(.ignore-height-select.el-select) {
