@@ -67,14 +67,14 @@ describe('CodeSettings', () => {
   it('updates code nickname when button is clicked', async () => {
     const wrapper = createWrapper()
     await wrapper.setData({ theCodeNickname: 'New Name' })
-    await wrapper.find('button[data-test="update-nickname"]').trigger('click')
+    await wrapper.find('[data-test="update-nickname"]').trigger('click')
     expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 
   it('shows warning when trying to update empty nickname', async () => {
     const wrapper = createWrapper()
     await wrapper.setData({ theCodeNickname: '' })
-    await wrapper.find('button[data-test="update-nickname"]').trigger('click')
+    await wrapper.find('[data-test="update-nickname"]').trigger('click')
     expect(ElMessage.success).toHaveBeenCalled()
   })
 })
