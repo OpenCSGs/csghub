@@ -1,7 +1,7 @@
 {
     "chinese_convert_mapper": {
-        "name": "汉字转换",
-        "description": "用于在繁体中文、简体中文和日文汉字之间进行转换。",
+        "name": "漢字轉換",
+        "description": "用於在繁體中文、簡體中文和日文漢字之間進行轉換。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -10,64 +10,64 @@
         },
         "params": [
             {
-                "name": "转换模式",
+                "name": "轉換模式",
                 "type": "STRING",
                 "option_values": [
                     {
                         "key": "s2t",
-                        "label": "简体转繁体"
+                        "label": "簡體轉繁體"
                     },
                     {
                         "key": "t2s",
-                        "label": "繁体转简体"
+                        "label": "繁體轉簡體"
                     },
                     {
                         "key": "s2tw",
-                        "label": "简体转台湾正体"
+                        "label": "簡體轉臺灣正體"
                     },
                     {
                         "key": "tw2s",
-                        "label": "台湾正体转简体"
+                        "label": "臺灣正體轉簡體"
                     },
                     {
                         "key": "s2hk",
-                        "label": "简体转香港繁体"
+                        "label": "簡體轉香港繁體"
                     },
                     {
                         "key": "hk2s",
-                        "label": "香港繁体转简体"
+                        "label": "香港繁體轉簡體"
                     },
                     {
                         "key": "s2twp",
-                        "label": "简体转台湾正体（带标点符号）"
+                        "label": "簡體轉臺灣正體（帶標點符號）"
                     },
                     {
                         "key": "tw2sp",
-                        "label": "台湾正体转简体（带标点符号）"
+                        "label": "臺灣正體轉簡體（帶標點符號）"
                     },
                     {
                         "key": "t2tw",
-                        "label": "繁体转台湾正体"
+                        "label": "繁體轉臺灣正體"
                     },
                     {
                         "key": "tw2t",
-                        "label": "台湾正体转繁体"
+                        "label": "臺灣正體轉繁體"
                     },
                     {
                         "key": "hk2t",
-                        "label": "香港繁体转繁体"
+                        "label": "香港繁體轉繁體"
                     },
                     {
                         "key": "t2hk",
-                        "label": "繁体转香港繁体"
+                        "label": "繁體轉香港繁體"
                     },
                     {
                         "key": "t2jp",
-                        "label": "繁体转日文汉字"
+                        "label": "繁體轉日文漢字"
                     },
                     {
                         "key": "jp2t",
-                        "label": "日文汉字转繁体"
+                        "label": "日文漢字轉繁體"
                     }
                 ],
                 "value": "t2s"
@@ -75,19 +75,19 @@
         ]
     },
     "clean_copyright_mapper": {
-        "name": "版权信息清理",
-        "description": "用于删除文本样本开头的版权声明。",
+        "name": "版權資訊清理",
+        "description": "用於刪除文本樣本開頭的版權聲明。",
         "type": "Mapper",
         "group": "",
         "samples": {
             "before": "这是一段 /* 多行注释\n注释内容copyright\n*/ 的文本。另外还有一些 // 单行注释。",
-            "after": "这是一段  的文本。另外还有一些 // 单行注释。"
+            "after": "这是一段  的文本。另外还有一些 // 单行注释。"
         },
         "params": []
     },
     "clean_email_mapper": {
-        "name": "邮箱后缀清理",
-        "description": "用于删除文本样本中的电子邮件地址。",
+        "name": "郵箱尾碼清理",
+        "description": "用於刪除文本樣本中的電子郵件地址。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -97,8 +97,8 @@
         "params": []
     },
     "clean_html_mapper": {
-        "name": "HTML代码清理",
-        "description": "用于删除文本样本中的HTML代码。",
+        "name": "HTML代碼清理",
+        "description": "用於刪除文本樣本中的HTML代碼。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -108,8 +108,8 @@
         "params": []
     },
     "clean_ip_mapper": {
-        "name": "IP地址清理",
-        "description": "用于删除文本样本中的ipv4和ipv6地址。",
+        "name": "IP位址清理",
+        "description": "用於刪除文本樣本中的ipv4和ipv6位址。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -119,8 +119,8 @@
         "params": []
     },
     "clean_links_mapper": {
-        "name": "链接地址清理",
-        "description": "用于删除文本样本中的http/https/ftp等链接。",
+        "name": "連結位址清理",
+        "description": "用於刪除文本樣本中的http/https/ftp等連結。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -130,30 +130,30 @@
         "params": []
     },
     "expand_macro_mapper": {
-        "name": "宏定义扩展",
-        "description": "用于扩展LaTeX文档中定义的宏。",
+        "name": "宏定義擴展",
+        "description": "用於擴展LaTeX文檔中定義的宏。",
         "type": "Mapper",
         "group": "",
         "samples": {
-            "before": "\\documentclass{article}\n% Recommended, but optional, packages for figures and better typesetting:\n\\usepackage{microtype}\n\\usepackage{graphicx}\n\n% Attempt to make hyperref and algorithmic work together better:\n\\newcommand{\\theHalgorithm}{\\arabic{algorithm}}\n% For theorems and such\n\\usepackage{amsmath}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% THEOREMS\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\theoremstyle{plain}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\theoremstyle{definition}\n\n\\usepackage[textsize=small]{todonotes}\n\\setuptodonotes{inline}\n\n\\usepackage{makecell}\n\\newcommand{\\cmark}{\\ding{51}\\xspace}%\n\\newcommand{\\xmark}{\\ding{55}\\xspace}%\n\n\\def \\alambic {\\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace}\n\n\\newcommand\\binke[1]{{\\color{blue} \\footnote{\\color{blue}binke: #1}} }\n\\newcommand\\Zerocost{Zero-cost}\n\\newcommand\\imagenet{ImageNet}\n\n\\begin{document}\n\n\\begin{abstract}\nThe wide\n\\end{abstract}\n\\section{Introduction}\n\\label{introduction}\nThe main contributions are summarized as follows:\n\\section{Background and Related Work}\\label{background}\n\\subsection{One-Shot NAS} In one-shot NAS\n\\section{PreNAS}\\label{method}In this\n\\subsection{One-Shot NAS with Preferred Learning}\nIn the specialization stage, the optimal architectures under given  resource constraints can be directly obtained:\n\\begin{equation}\n\\widetilde{\\mathcal{A}}^* = \\widetilde{\\mathcal{A}} .\n\\end{equation}\n\\subsection{Zero-Cost Transformer Selector}\\label{sub:layerNorm}\n\\subsection{Performance Balancing} We discuss\n\\section{Experiments}\\label{experiments}\n\\subsection{Setup}\n\\subsection{Main Results}\\label{sec:sota}\n\\subsection{Analysis and Ablation study}\\label{ablation}\n\\begin{figure}[t]\n\\vskip 0.1in\n    \\centering\n    \\subfigure[Search spaces]{\\includegraphics[width=0.36\\linewidth]{img/search_space.pdf}\\label{fg:search_space:a}}%\n    \\hfil%\n    \\subfigure[Error distributions]{\\includegraphics[width=0.58\\linewidth]{img/cumulation.pdf}\\label{fg:search_space:b}}\n    \\caption{Model quality}\n\\vskip -0.1in\n\\end{figure}\n\\paragraph{Effect of Performance Balancing} During\n\\subsection{Transfer Learning Results}\n\\subsection{CNN Results} in terms of similar FLOPs.\n\\FloatBarrier\n\\section{Conclusion}\\label{conclusion} In this\n% Acknowledgements should only appear in the accepted version.\n\\bibliography{ref}\n\\bibliographystyle{icml2023}\n\\clearpage\n\\appendix\n\\onecolumn\n\\section{Statistical}\n\\label{appendix:snipAnalysis} We analyze\n\\section{The Greedy Algorithm}\n\\label{appendix:greedy}\n\\section{Regularization \\& Data Augmentation}\\label{appendix:aug}\n\\renewcommand{\\arraystretch}{1.2}\n\\end{document}\n",
-            "after": "\\documentclass{article}\n% Recommended, but optional, packages for figures and better typesetting:\n\\usepackage{microtype}\n\\usepackage{graphicx}\n\n% Attempt to make hyperref and algorithmic work together better:\n\\newcommand{\\arabic{algorithm}}{\\arabic{algorithm}}\n% For theorems and such\n\\usepackage{amsmath}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% THEOREMS\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\theoremstyle{plain}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\theoremstyle{definition}\n\n\\usepackage[textsize=small]{todonotes}\n\\setuptodonotes{inline}\n\n\\usepackage{makecell}\n\\newcommand{\\cmark}{\\ding{51}\\xspace}%\n\\newcommand{\\xmark}{\\ding{55}\\xspace}%\n\n\\def \\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace {\\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace}\n\n\\newcommand\\binke[1]{{\\color{blue} \\footnote{\\color{blue}binke: #1}} }\n\\newcommand\\Zerocost{Zero-cost}\n\\newcommand\\imagenet{ImageNet}\n\n\\begin{document}\n\n\\begin{abstract}\nThe wide\n\\end{abstract}\n\\section{Introduction}\n\\label{introduction}\nThe main contributions are summarized as follows:\n\\section{Background and Related Work}\\label{background}\n\\subsection{One-Shot NAS} In one-shot NAS\n\\section{PreNAS}\\label{method}In this\n\\subsection{One-Shot NAS with Preferred Learning}\nIn the specialization stage, the optimal architectures under given  resource constraints can be directly obtained:\n\\begin{equation}\n\\widetilde{\\mathcal{A}}^* = \\widetilde{\\mathcal{A}} .\n\\end{equation}\n\\subsection{Zero-Cost Transformer Selector}\\label{sub:layerNorm}\n\\subsection{Performance Balancing} We discuss\n\\section{Experiments}\\label{experiments}\n\\subsection{Setup}\n\\subsection{Main Results}\\label{sec:sota}\n\\subsection{Analysis and Ablation study}\\label{ablation}\n\\begin{figure}[t]\n\\vskip 0.1in\n    \\centering\n    \\subfigure[Search spaces]{\\includegraphics[width=0.36\\linewidth]{img/search_space.pdf}\\label{fg:search_space:a}}%\n    \\hfil%\n    \\subfigure[Error distributions]{\\includegraphics[width=0.58\\linewidth]{img/cumulation.pdf}\\label{fg:search_space:b}}\n    \\caption{Model quality}\n\\vskip -0.1in\n\\end{figure}\n\\paragraph{Effect of Performance Balancing} During\n\\subsection{Transfer Learning Results}\n\\subsection{CNN Results} in terms of similar FLOPs.\n\\FloatBarrier\n\\section{Conclusion}\\label{conclusion} In this\n% Acknowledgements should only appear in the accepted version.\n\\bibliography{ref}\n\\bibliographystyle{icml2023}\n\\clearpage\n\\appendix\n\\onecolumn\n\\section{Statistical}\n\\label{appendix:snipAnalysis} We analyze\n\\section{The Greedy Algorithm}\n\\label{appendix:greedy}\n\\section{Regularization \\& Data Augmentation}\\label{appendix:aug}\n\\renewcommand{\\arraystretch}{1.2}\n\\end{document}\n"
+            "before": "\\documentclass{article}\n% Recommended, but optional, packages for figures and better typesetting:\n\\usepackage{microtype}\n\\usepackage{graphicx}\n\n% Attempt to make hyperref and algorithmic work together better:\n\\newcommand{\\theHalgorithm}{\\arabic{algorithm}}\n% For theorems and such\n\\usepackage{amsmath}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% THEOREMS\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\theoremstyle{plain}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\theoremstyle{definition}\n\n\\usepackage[textsize=small]{todonotes}\n\\setuptodonotes{inline}\n\n\\usepackage{makecell}\n\\newcommand{\\cmark}{\\ding{51}\\xspace}%\n\\newcommand{\\xmark}{\\ding{55}\\xspace}%\n\n\\def \\alambic {\\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace}\n\n\\newcommand\\binke[1]{{\\color{blue} \\footnote{\\color{blue}binke: #1}} }\n\\newcommand\\Zerocost{Zero-cost}\n\\newcommand\\imagenet{ImageNet}\n\n\\begin{document}\n\n\\begin{abstract}\nThe wide\n\\end{abstract}\n\\section{Introduction}\n\\label{introduction}\nThe main contributions are summarized as follows:\n\\section{Background and Related Work}\\label{background}\n\\subsection{One-Shot NAS} In one-shot NAS\n\\section{PreNAS}\\label{method}In this\n\\subsection{One-Shot NAS with Preferred Learning}\nIn the specialization stage, the optimal architectures under given  resource constraints can be directly obtained:\n\\begin{equation}\n\\widetilde{\\mathcal{A}}^* = \\widetilde{\\mathcal{A}} .\n\\end{equation}\n\\subsection{Zero-Cost Transformer Selector}\\label{sub:layerNorm}\n\\subsection{Performance Balancing} We discuss\n\\section{Experiments}\\label{experiments}\n\\subsection{Setup}\n\\subsection{Main Results}\\label{sec:sota}\n\\subsection{Analysis and Ablation study}\\label{ablation}\n\\begin{figure}[t]\n\\vskip 0.1in\n    \\centering\n    \\subfigure[Search spaces]{\\includegraphics[width=0.36\\linewidth]{img/search_space.pdf}\\label{fg:search_space:a}}%\n    \\hfil%\n    \\subfigure[Error distributions]{\\includegraphics[width=0.58\\linewidth]{img/cumulation.pdf}\\label{fg:search_space:b}}\n    \\caption{Model quality}\n\\vskip -0.1in\n\\end{figure}\n\\paragraph{Effect of Performance Balancing} During\n\\subsection{Transfer Learning Results}\n\\subsection{CNN Results} in terms of similar FLOPs.\n\\FloatBarrier\n\\section{Conclusion}\\label{conclusion} In this\n% Acknowledgements should only appear in the accepted version.\n\\bibliography{ref}\n\\bibliographystyle{icml2023}\n\\clearpage\n\\appendix\n\\onecolumn\n\\section{Statistical}\n\\label{appendix:snipAnalysis} We analyze\n\\section{The Greedy Algorithm}\n\\label{appendix:greedy}\n\\section{Regularization \\& Data Augmentation}\\label{appendix:aug}\n\\renewcommand{\\arraystretch}{1.2}\n\\end{document}\n",
+            "after": "\\documentclass{article}\n% Recommended, but optional, packages for figures and better typesetting:\n\\usepackage{microtype}\n\\usepackage{graphicx}\n\n% Attempt to make hyperref and algorithmic work together better:\n\\newcommand{\\arabic{algorithm}}{\\arabic{algorithm}}\n% For theorems and such\n\\usepackage{amsmath}\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% THEOREMS\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\\theoremstyle{plain}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\theoremstyle{definition}\n\n\\usepackage[textsize=small]{todonotes}\n\\setuptodonotes{inline}\n\n\\usepackage{makecell}\n\\newcommand{\\cmark}{\\ding{51}\\xspace}%\n\\newcommand{\\xmark}{\\ding{55}\\xspace}%\n\n\\def \\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace {\\includegraphics[height=1.52ex]{img/alembic-crop.pdf}\\xspace}\n\n\\newcommand\\binke[1]{{\\color{blue} \\footnote{\\color{blue}binke: #1}} }\n\\newcommand\\Zerocost{Zero-cost}\n\\newcommand\\imagenet{ImageNet}\n\n\\begin{document}\n\n\\begin{abstract}\nThe wide\n\\end{abstract}\n\\section{Introduction}\n\\label{introduction}\nThe main contributions are summarized as follows:\n\\section{Background and Related Work}\\label{background}\n\\subsection{One-Shot NAS} In one-shot NAS\n\\section{PreNAS}\\label{method}In this\n\\subsection{One-Shot NAS with Preferred Learning}\nIn the specialization stage, the optimal architectures under given  resource constraints can be directly obtained:\n\\begin{equation}\n\\widetilde{\\mathcal{A}}^* = \\widetilde{\\mathcal{A}} .\n\\end{equation}\n\\subsection{Zero-Cost Transformer Selector}\\label{sub:layerNorm}\n\\subsection{Performance Balancing} We discuss\n\\section{Experiments}\\label{experiments}\n\\subsection{Setup}\n\\subsection{Main Results}\\label{sec:sota}\n\\subsection{Analysis and Ablation study}\\label{ablation}\n\\begin{figure}[t]\n\\vskip 0.1in\n    \\centering\n    \\subfigure[Search spaces]{\\includegraphics[width=0.36\\linewidth]{img/search_space.pdf}\\label{fg:search_space:a}}%\n    \\hfil%\n    \\subfigure[Error distributions]{\\includegraphics[width=0.58\\linewidth]{img/cumulation.pdf}\\label{fg:search_space:b}}\n    \\caption{Model quality}\n\\vskip -0.1in\n\\end{figure}\n\\paragraph{Effect of Performance Balancing} During\n\\subsection{Transfer Learning Results}\n\\subsection{CNN Results} in terms of similar FLOPs.\n\\FloatBarrier\n\\section{Conclusion}\\label{conclusion} In this\n% Acknowledgements should only appear in the accepted version.\n\\bibliography{ref}\n\\bibliographystyle{icml2023}\n\\clearpage\n\\appendix\n\\onecolumn\n\\section{Statistical}\n\\label{appendix:snipAnalysis} We analyze\n\\section{The Greedy Algorithm}\n\\label{appendix:greedy}\n\\section{Regularization \\& Data Augmentation}\\label{appendix:aug}\n\\renewcommand{\\arraystretch}{1.2}\n\\end{document}\n"
         },
         "params": []
     },
     "generate_code_qa_pair_mapper": {
-        "name": "代码转换成QA对数据集",
-        "description": "基于代码生成新的指令数据的转换器\n    ",
+        "name": "代碼轉換成QA對資料集",
+        "description": "基於代碼生成新的指令資料的轉換器\n    ",
         "type": "Mapper",
         "group": "",
         "samples": {
-            "before": "def hello_world():\n    print(\"Hello, World!\")\nhello_world()",
-            "after": "message:[{\"input\": \"create hello word function by python\", \"response\": \"def hello_world():\n    print(\"Hello, World!\")\nhello_world()\" }]"
+            "before": "def hello_world():\n    print(\"Hello, World!\")\nhello_world()",
+            "after": "message:[{\"input\": \"create hello word function by python\", \"response\": \"def hello_world():\n    print(\"Hello, World!\")\nhello_world()\" }]"
         },
         "data_lines": 0,
         "data": {},
         "params": [
             {
-                "name": "模型名称",
+                "name": "模型名稱",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -172,8 +172,8 @@
         ]
     },
     "extract_qa_mapper": {
-        "name": "问答对提取",
-        "description": "\n    用于从文本样本中提取问答对。\n    推荐的模型列表： [\n        'alibaba-pai/pai-llama3-8b-doc2qa',\n        'alibaba-pai/pai-baichuan2-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-4b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-1b8-doc2qa',\n        'alibaba-pai/pai-qwen1_5-0b5-doc2qa'\n    ]\n    这些推荐的模型均使用中文数据进行训练，适用于中文场景。\n    ",
+        "name": "問答對提取",
+        "description": "\n    用於從文本樣本中提取問答對。\n    推薦的模型列表： [\n        'alibaba-pai/pai-llama3-8b-doc2qa',\n        'alibaba-pai/pai-baichuan2-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-4b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-1b8-doc2qa',\n        'alibaba-pai/pai-qwen1_5-0b5-doc2qa'\n    ]\n    這些推薦的模型均使用中文資料進行訓練，適用於中文場景。\n    ",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -182,7 +182,7 @@
         },
         "params": [
             {
-                "name": "模型名称",
+                "name": "模型名稱",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -195,8 +195,8 @@
         ]
     },
     "fix_unicode_mapper": {
-        "name": "Unicode错误修正",
-        "description": "用于修正文本样本中Unicode错误。",
+        "name": "Unicode錯誤修正",
+        "description": "用於修正文本樣本中Unicode錯誤。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -205,24 +205,24 @@
         },
         "params": [
             {
-                "name": "标准化",
+                "name": "標準化",
                 "type": "STRING",
                 "option_values": [
                     {
                         "key": "NFC",
-                        "label": "组合规范化形式"
+                        "label": "組合規範化形式"
                     },
                     {
                         "key": "NFKC",
-                        "label": "兼容性组合规范化形式"
+                        "label": "相容性組合規範化形式"
                     },
                     {
                         "key": "NFD",
-                        "label": "分解规范化形式"
+                        "label": "分解規範化形式"
                     },
                     {
                         "key": "NFKD",
-                        "label": "兼容性分解规范化形式"
+                        "label": "相容性分解規範化形式"
                     }
                 ],
                 "value": "NFC"
@@ -230,8 +230,8 @@
         ]
     },
     "nlpaug_en_mapper": {
-        "name": "英文语义增强",
-        "description": "使用nlpaug库对英语文本进行简单增强。",
+        "name": "英文語義增強",
+        "description": "使用nlpaug庫對英語文本進行簡單增強。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -240,55 +240,55 @@
         },
         "params": [
             {
-                "name": "随机删除单词",
+                "name": "隨機刪除單詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机交换单词位置",
+                "name": "隨機交換單詞位置",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "单词拼写错误",
+                "name": "單詞拼寫錯誤",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机拆分单词",
+                "name": "隨機拆分單詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "键盘输入错误字符",
+                "name": "鍵盤輸入錯誤字元",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "光学字符识别错误",
+                "name": "光學字元識別錯誤",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机删除字符",
+                "name": "隨機刪除字元",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机交换字符位置",
+                "name": "隨機交換字元位置",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机插入字符",
+                "name": "隨機插入字元",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
@@ -296,8 +296,8 @@
         ]
     },
     "nlpcda_zh_mapper": {
-        "name": "汉语语义增强",
-        "description": "使用nlpcda库对中文文本进行简单增强。",
+        "name": "漢語語義增強",
+        "description": "使用nlpcda庫對中文文本進行簡單增強。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -306,31 +306,31 @@
         },
         "params": [
             {
-                "name": "替换相似单词",
+                "name": "替換相似單詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机交换单词位置",
+                "name": "隨機交換單詞位置",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机删除字符",
+                "name": "隨機刪除字元",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "随机交换字符位置",
+                "name": "隨機交換字元位置",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "替换等效数字",
+                "name": "替換等效數字",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
@@ -338,8 +338,8 @@
         ]
     },
     "optimize_instruction_mapper": {
-        "name": "优化Instruction",
-        "description": "用于优化指令",
+        "name": "優化Instruction",
+        "description": "用於優化指令",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -348,7 +348,7 @@
         },
         "params": [
             {
-                "name": "模型名称",
+                "name": "模型名稱",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -361,8 +361,8 @@
         ]
     },
     "punctuation_normalization_mapper": {
-        "name": "Unicode标点规范化",
-        "description": "用于将文本样本中的Unicode标点符号标准化为英文标点符号。",
+        "name": "Unicode標點規範化",
+        "description": "用於將文本樣本中的Unicode標點符號標準化為英文標點符號。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -372,8 +372,8 @@
         "params": []
     },
     "remove_bibliography_mapper": {
-        "name": "移除参考书目信息",
-        "description": "用于删除LaTeX文档末尾的参考文献。",
+        "name": "移除參考書目資訊",
+        "description": "用於刪除LaTeX文檔末尾的參考文獻。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -383,17 +383,17 @@
         "params": []
     },
     "remove_comments_mapper": {
-        "name": "移除评论信息",
-        "description": "\n    用于删除不同类型文档中的注释。目前仅支持'tex'格式。\n    ",
+        "name": "移除評論資訊",
+        "description": "\n    用於刪除不同類型文檔中的註釋。目前僅支援'tex'格式。\n    ",
         "type": "Mapper",
         "group": "",
         "samples": {
-            "before": "%%\n%% This is file `sample-sigconf.tex',\n%% The first command in your LaTeX source must be the \\documentclass command.\n\\documentclass[sigconf,review,anonymous]{acmart}\n%% NOTE that a single column version is required for \n%% submission and peer review. This can be done by changing\n\\input{math_commands.tex}\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n%% The \"title\" command has an optional parameter,\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n%% By default, the full list of authors will be used in the page\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n%% Keywords. The author(s) should pick words that accurately describe\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n%% page.\n\\begin{teaserfigure}\n\\end{teaserfigure}\n%% This command processes the author and affiliation and title\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
-            "after": "\\documentclass[sigconf,review,anonymous]{acmart}\n\\input{math_commands.tex}\n\\begin{document}\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n\\begin{teaserfigure}\n\\end{teaserfigure}\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n"
+            "before": "%%\n%% This is file `sample-sigconf.tex',\n%% The first command in your LaTeX source must be the \\documentclass command.\n\\documentclass[sigconf,review,anonymous]{acmart}\n%% NOTE that a single column version is required for \n%% submission and peer review. This can be done by changing\n\\input{math_commands.tex}\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n%% The \"title\" command has an optional parameter,\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n%% By default, the full list of authors will be used in the page\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n%% Keywords. The author(s) should pick words that accurately describe\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n%% page.\n\\begin{teaserfigure}\n\\end{teaserfigure}\n%% This command processes the author and affiliation and title\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
+            "after": "\\documentclass[sigconf,review,anonymous]{acmart}\n\\input{math_commands.tex}\n\\begin{document}\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n\\begin{teaserfigure}\n\\end{teaserfigure}\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n"
         },
         "params": [
             {
-                "name": "内联",
+                "name": "內聯",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -407,17 +407,17 @@
         ]
     },
     "remove_header_mapper": {
-        "name": "移除文件头",
-        "description": "用于移除LaTeX文档开头的标题。",
+        "name": "移除檔案頭",
+        "description": "用於移除LaTeX文檔開頭的標題。",
         "type": "Mapper",
         "group": "",
         "samples": {
-            "before": "%%\n%% This is file `sample-sigconf.tex',\n%% The first command in your LaTeX source must be the \\documentclass command.\n\\documentclass[sigconf,review,anonymous]{acmart}\n%% NOTE that a single column version is required for \n%% submission and peer review. This can be done by changing\n\\input{math_commands.tex}\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n%% The \"title\" command has an optional parameter,\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n%% By default, the full list of authors will be used in the page\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n%% Keywords. The author(s) should pick words that accurately describe\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n%% page.\n\\begin{teaserfigure}\n\\end{teaserfigure}\n%% This command processes the author and affiliation and title\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
+            "before": "%%\n%% This is file `sample-sigconf.tex',\n%% The first command in your LaTeX source must be the \\documentclass command.\n\\documentclass[sigconf,review,anonymous]{acmart}\n%% NOTE that a single column version is required for \n%% submission and peer review. This can be done by changing\n\\input{math_commands.tex}\n%% end of the preamble, start of the body of the document source.\n\\begin{document}\n%% The \"title\" command has an optional parameter,\n\\title{Hierarchical Cross Contrastive Learning of Visual Representations}\n%%\n%% The \"author\" command and its associated commands are used to define\n%% the authors and their affiliations.\n\\author{Hesen Chen}\n\\affiliation{%\n  \\institution{Alibaba Group}\n  \\city{Beijing}\n  \\country{China}}\n\\email{hesen.chs@alibaba-inc.com}\n%% By default, the full list of authors will be used in the page\n\\begin{abstract}The rapid\n\\end{abstract}\n\\begin{CCSXML}\n\\ccsdesc[500]{Computing methodologies~Image representations}\n%% Keywords. The author(s) should pick words that accurately describe\n\\keywords{self-supervised,  ontrastive Learning, hierarchical projection, cross-level}\n%% page.\n\\begin{teaserfigure}\n\\end{teaserfigure}\n%% This command processes the author and affiliation and title\n\\maketitle\n\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n",
             "after": "\\section{Introduction}\n\\begin{itemize}\n\\end{itemize}\n\\section{Related Work}\n\\label{gen_inst} Self-supervised\n\\section{Method}\n\\label{method}In this section,\n\\subsection{Framework} kkk\n\\subsection{Cross Contrastive Loss}\nSince $\\sZ^n$ are extracted\n\\subsection{Implementation details}\n\\textbf{Image augmentations} We use\n\\textbf{Architecture} We use\n\\textbf{Optimization} We adapt \n\\section{Experiments}\n\\label{experiments}In this section\n\\subsection{Linear and Semi-Supervised Evaluations on ImageNet}\n\\textbf{Linear evaluation on ImageNet} We firs\n\\textbf{Semi-supervised learning on ImageNet} We simply\n\\subsection{Transfer to other datasets and tasks}\n\\textbf{Image classification with fixed features} We follow\n\\section{Ablations} We present\n\\subsection{Influence of hierarchical projection head and cross contrastive loss} get out\n\\subsection{Levels and depth of projector network}\n\\end{center}\n\\caption{\\label{figure3} \\textbf{Different way of cross-correlation on 3 level hierarchical projection head.} '=' denotes stop gradient.}\n\\end{figure}\n\\subsection{Analyze of} In this\n\\textbf{Similarity between} Using SimSiam\n\\textbf{Feature similarity} We extracted\n\\section{Conclusion}\nWe propose HCCL\n\\clearpage\n\\bibliographystyle{ACM-Reference-Format}\n\\bibliography{sample-base}\n\\end{document}\n\\endinput\n%%\n%% End of file `sample-sigconf.tex'.\n"
         },
         "params": [
             {
-                "name": "删除无标题部分",
+                "name": "刪除無標題部分",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -425,8 +425,8 @@
         ]
     },
     "remove_long_words_mapper": {
-        "name": "移除长字符串",
-        "description": "用于删除长度超出指定范围的单词。",
+        "name": "移除長字串",
+        "description": "用於刪除長度超出指定範圍的單詞。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -435,13 +435,13 @@
         },
         "params": [
             {
-                "name": "最小长度",
+                "name": "最小長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 1
             },
             {
-                "name": "最大长度",
+                "name": "最大長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 9999999
@@ -449,12 +449,12 @@
         ]
     },
     "remove_non_chinese_character_mapper": {
-        "name": "移除非中文字符",
-        "description": "用于删除文本样本中的非中文字符。",
+        "name": "移除非中文字元",
+        "description": "用於刪除文本樣本中的非中文字元。",
         "type": "Mapper",
         "group": "",
         "samples": {
-            "before": "👊    所有的非汉字a44sh都12@46h会被*&……*qb^4525去掉",
+            "before": "👊    所有的非汉字a44sh都12@46h会被*&……*qb^4525去掉",
             "after": "所有的非汉字都会被去掉"
         },
         "params": [
@@ -465,13 +465,13 @@
                 "value": true
             },
             {
-                "name": "保留数字",
+                "name": "保留數字",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
             },
             {
-                "name": "保留标点符号",
+                "name": "保留標點符號",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -480,7 +480,7 @@
     },
     "remove_repeat_sentences_mapper": {
         "name": "句子去重",
-        "description": "用于删除文本样本中重复的句子。",
+        "description": "用於刪除文本樣本中重複的句子。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -489,19 +489,19 @@
         },
         "params": [
             {
-                "name": "小写",
+                "name": "小寫",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "忽略特殊字符",
+                "name": "忽略特殊字元",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "最小重复句子长度",
+                "name": "最小重複句子長度",
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 2
@@ -509,8 +509,8 @@
         ]
     },
     "remove_specific_chars_mapper": {
-        "name": "特殊字符清理",
-        "description": "用于删除文本样本中的特定字符。现在支持的字符有：◆●■►▼▲▴∆▻▷❖♡□",
+        "name": "特殊字元清理",
+        "description": "用於刪除文本樣本中的特定字元。現在支援的字元有：◆●■►▼▲▴∆▻▷❖♡□",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -519,7 +519,7 @@
         },
         "params": [
             {
-                "name": "需要移除的字符",
+                "name": "需要移除的字元",
                 "type": "LIST",
                 "option_values": null,
                 "value": [
@@ -529,8 +529,8 @@
         ]
     },
     "remove_table_text_mapper": {
-        "name": "表格内容清理",
-        "description": "\n    用于从文本样本中删除表格内容。\n\n    使用正则表达式在表格列数范围内删除表格。\n    ",
+        "name": "表格內容清理",
+        "description": "\n    用於從文本樣本中刪除表格內容。\n\n    使用規則運算式在表格欄位數範圍內刪除表格。\n    ",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -539,13 +539,13 @@
         },
         "params": [
             {
-                "name": "最小列数",
+                "name": "最小列數",
                 "type": "from_2_to_20",
                 "option_values": null,
                 "value": 2
             },
             {
-                "name": "最大列数",
+                "name": "最大列數",
                 "type": "from_2_to_20",
                 "option_values": null,
                 "value": 20
@@ -553,8 +553,8 @@
         ]
     },
     "remove_words_with_incorrect_substrings_mapper": {
-        "name": "子字符串清理",
-        "description": "用于删除包含错误子字符串的单词。",
+        "name": "子字串清理",
+        "description": "用於刪除包含錯誤子字串的單詞。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -563,7 +563,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -578,13 +578,13 @@
                 "value": "en"
             },
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
             },
             {
-                "name": "子字符串",
+                "name": "子字串",
                 "type": "LIST",
                 "option_values": null,
                 "value": [
@@ -598,8 +598,8 @@
         ]
     },
     "replace_content_mapper": {
-        "name": "文本替换",
-        "description": "用于将文本中与特定正则表达式模式匹配的所有内容替换为指定替换字符串。",
+        "name": "文本替換",
+        "description": "用於將文本中與特定規則運算式模式匹配的所有內容替換為指定替換字串。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -608,13 +608,13 @@
         },
         "params": [
             {
-                "name": "正则表达式模式列表",
+                "name": "規則運算式模式列表",
                 "type": "LIST",
                 "option_values": null,
                 "value": []
             },
             {
-                "name": "替换字符串",
+                "name": "替換字串",
                 "type": "LIST",
                 "option_values": null,
                 "value": []
@@ -623,7 +623,7 @@
     },
     "sentence_split_mapper": {
         "name": "句子分割",
-        "description": "用于将文本样本拆分为句子。",
+        "description": "用於將文本樣本拆分為句子。",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -632,7 +632,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -649,8 +649,8 @@
         ]
     },
     "whitespace_normalization_mapper": {
-        "name": "空白规范化",
-        "description": "\n    用于将文本样本中不同类型的空白字符标准化为空格字符' '（0x20）。\n\n    不同类型的空白字符可以在以下网页中找到：\n    https://en.wikipedia.org/wiki/Whitespace_character\n    ",
+        "name": "空白規範化",
+        "description": "\n    用於將文本樣本中不同類型的空白字元標準化為空格字元' '（0x20）。\n\n    不同類型的空白字元可以在以下網頁中找到：\n    https://en.wikipedia.org/wiki/Whitespace_character\n    ",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -660,8 +660,8 @@
         "params": []
     },
     "alphanumeric_filter": {
-        "name": "字母/数字占比过滤",
-        "description": "用于保留字母/数字比例在特定范围内的样本。",
+        "name": "字母/數字佔比過濾",
+        "description": "用於保留字母/數字比例在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -670,7 +670,7 @@
         },
         "params": [
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
@@ -690,8 +690,8 @@
         ]
     },
     "average_line_length_filter": {
-        "name": "平均行长度范围过滤",
-        "description": "用于保留平均行长度在特定范围内的样本。",
+        "name": "平均行長度範圍過濾",
+        "description": "用於保留平均行長度在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -700,13 +700,13 @@
         },
         "params": [
             {
-                "name": "最小长度",
+                "name": "最小長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
             },
             {
-                "name": "最大长度",
+                "name": "最大長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 1200
@@ -714,8 +714,8 @@
         ]
     },
     "character_repetition_filter": {
-        "name": "字符级重复率范围过滤",
-        "description": "用于保留字符级n-gram重复率在特定范围内的样本。",
+        "name": "字元級重複率範圍過濾",
+        "description": "用於保留字元級n-gram重複率在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -724,7 +724,7 @@
         },
         "params": [
             {
-                "name": "重复长度",
+                "name": "重複長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
@@ -744,8 +744,8 @@
         ]
     },
     "flagged_words_filter": {
-        "name": "标记词比例过滤",
-        "description": "用于保留标记词汇比例小于指定最大值的样本。",
+        "name": "標記詞比例過濾",
+        "description": "用於保留標記詞彙比例小於指定最大值的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -754,7 +754,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -769,7 +769,7 @@
                 "value": "zh"
             },
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -781,7 +781,7 @@
                 "value": 0.001
             },
             {
-                "name": "词汇增强",
+                "name": "詞彙增強",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -789,8 +789,8 @@
         ]
     },
     "language_id_score_filter": {
-        "name": "特定语言置信度过滤",
-        "description": "\n    用于保留特定语言且语言置信度评分大于指定最小值的样本。\n    ",
+        "name": "特定語言可信度過濾",
+        "description": "\n    用於保留特定語言且語言可信度評分大於指定最小值的樣本。\n    ",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -799,7 +799,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -812,17 +812,17 @@
                     },
                     {
                         "key": "fr",
-                        "label": "法语"
+                        "label": "法語"
                     },
                     {
                         "key": "de",
-                        "label": "德语"
+                        "label": "德語"
                     }
                 ],
                 "value": "zh"
             },
             {
-                "name": "最小分数",
+                "name": "最小分數",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
                 "value": 0.8
@@ -830,8 +830,8 @@
         ]
     },
     "maximum_line_length_filter": {
-        "name": "最大行长度范围过滤",
-        "description": "用于保留最大行长度在特定范围内的样本。",
+        "name": "最大行長度範圍過濾",
+        "description": "用於保留最大行長度在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -840,13 +840,13 @@
         },
         "params": [
             {
-                "name": "最小长度",
+                "name": "最小長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
             },
             {
-                "name": "最大长度",
+                "name": "最大長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 7328
@@ -854,8 +854,8 @@
         ]
     },
     "perplexity_filter": {
-        "name": "困惑度范围过滤",
-        "description": "用于保留困惑度评分小于指定最大值的样本。",
+        "name": "困惑度範圍過濾",
+        "description": "用於保留困惑度評分小於指定最大值的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -864,7 +864,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -887,8 +887,8 @@
         ]
     },
     "special_characters_filter": {
-        "name": "特殊字符比例过滤",
-        "description": "用于保留特殊字符比例在特定范围内的样本。",
+        "name": "特殊字元比例過濾",
+        "description": "用於保留特殊字元比例在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -911,23 +911,23 @@
         ]
     },
     "specified_field_filter": {
-        "name": "字段信息过滤",
-        "description": "\n    基于指定字段信息进行过滤。如果样本中的指定字段信息不在设定的目标值范围内，该样本将被过滤。\n    ",
+        "name": "欄位資訊過濾",
+        "description": "\n    基於指定欄位資訊進行過濾。如果樣本中的指定欄位資訊不在設定的目標值範圍內，該樣本將被過濾。\n    ",
         "type": "Filter",
         "group": "",
         "samples": {
-            "before": "{'text': '中文也是一个字算一个长度','meta': {    'suffix': '.txt',    'star': 100}}",
+            "before": "{'text': '中文也是一个字算一个长度','meta': {    'suffix': '.txt',    'star': 100}}",
             "after": ""
         },
         "params": [
             {
-                "name": "字段名称",
+                "name": "欄位名稱",
                 "type": "STRING",
                 "option_values": null,
                 "value": ""
             },
             {
-                "name": "目标值",
+                "name": "目標值",
                 "type": "LIST",
                 "option_values": null,
                 "value": []
@@ -935,17 +935,17 @@
         ]
     },
     "specified_numeric_field_filter": {
-        "name": "数值字段范围过滤",
-        "description": "\n    基于指定的数值字段信息进行过滤。如果样本中的指定数值信息不在设定的范围内，该样本将被过滤。\n    ",
+        "name": "數值欄位範圍過濾",
+        "description": "\n    基於指定的數值欄位資訊進行過濾。如果樣本中的指定數值資訊不在設定的範圍內，該樣本將被過濾。\n    ",
         "type": "Filter",
         "group": "",
         "samples": {
-            "before": "{'text': '中文也是一个字算一个长度','meta': {    'suffix': '.txt',    'star': 100}}",
+            "before": "{'text': '中文也是一个字算一个长度','meta': {    'suffix': '.txt',    'star': 100}}",
             "after": ""
         },
         "params": [
             {
-                "name": "字段名称",
+                "name": "欄位名稱",
                 "type": "STRING",
                 "option_values": null,
                 "value": ""
@@ -965,8 +965,8 @@
         ]
     },
     "stopwords_filter": {
-        "name": "停用词比例过滤",
-        "description": "用于保留停用词比例大于指定最小值的样本。",
+        "name": "停用詞比例過濾",
+        "description": "用於保留停用詞比例大於指定最小值的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -975,7 +975,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -990,7 +990,7 @@
                 "value": "zh"
             },
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
@@ -1002,7 +1002,7 @@
                 "value": 0.3
             },
             {
-                "name": "词汇增强",
+                "name": "詞彙增強",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": false
@@ -1010,8 +1010,8 @@
         ]
     },
     "suffix_filter": {
-        "name": "特殊后缀过滤",
-        "description": "用于保留具有指定后缀的样本。",
+        "name": "特殊尾碼過濾",
+        "description": "用於保留具有指定尾碼的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1020,7 +1020,7 @@
         },
         "params": [
             {
-                "name": "后缀",
+                "name": "尾碼",
                 "type": "LIST",
                 "option_values": null,
                 "value": []
@@ -1028,8 +1028,8 @@
         ]
     },
     "text_action_filter": {
-        "name": "动作文本过滤",
-        "description": "用于保留包含动作的文本。",
+        "name": "動作文本過濾",
+        "description": "用於保留包含動作的文本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1038,7 +1038,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1053,7 +1053,7 @@
                 "value": "zh"
             },
             {
-                "name": "最小动作数量",
+                "name": "最小動作數量",
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 1
@@ -1061,8 +1061,8 @@
         ]
     },
     "text_entity_dependency_filter": {
-        "name": "实体文本过滤",
-        "description": "\n    识别文本中独立的实体，并对其进行过滤。不包含实体的文本将被忽略。\n    ",
+        "name": "實體文本過濾",
+        "description": "\n    識別文本中獨立的實體，並對其进行過濾。不包含實體的文本將被忽略。\n    ",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1071,7 +1071,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1086,7 +1086,7 @@
                 "value": "zh"
             },
             {
-                "name": "最小依赖数量",
+                "name": "最小依賴數量",
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 1
@@ -1109,8 +1109,8 @@
         ]
     },
     "text_length_filter": {
-        "name": "文本长度范围过滤",
-        "description": "用于保留总文本长度在特定范围内的样本。",
+        "name": "文本長度範圍過濾",
+        "description": "用於保留總文本長度在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1119,13 +1119,13 @@
         },
         "params": [
             {
-                "name": "最小长度",
+                "name": "最小長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
             },
             {
-                "name": "最大长度",
+                "name": "最大長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 136028
@@ -1133,8 +1133,8 @@
         ]
     },
     "token_num_filter": {
-        "name": "token数量范围过滤",
-        "description": "用于保留token数量在特定范围内的样本。",
+        "name": "token數量範圍過濾",
+        "description": "用於保留token數量在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1143,7 +1143,7 @@
         },
         "params": [
             {
-                "name": "分词器模型",
+                "name": "分詞器模型",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1154,13 +1154,13 @@
                 "value": "EleutherAI/pythia-6.9b-deduped"
             },
             {
-                "name": "最小数量",
+                "name": "最小數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
             },
             {
-                "name": "最大数量",
+                "name": "最大數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 999999
@@ -1168,8 +1168,8 @@
         ]
     },
     "word_repetition_filter": {
-        "name": "词级重复率范围过滤",
-        "description": "用于保留单词级n-gram重复比率在特定范围内的样本。",
+        "name": "詞級重複率範圍過濾",
+        "description": "用於保留單詞級n-gram重複比率在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1178,7 +1178,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1193,13 +1193,13 @@
                 "value": "en"
             },
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
             },
             {
-                "name": "重复长度",
+                "name": "重複長度",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
@@ -1219,8 +1219,8 @@
         ]
     },
     "words_num_filter": {
-        "name": "单词数量范围过滤",
-        "description": "用于保留总词数在特定范围内的样本。",
+        "name": "單詞數量範圍過濾",
+        "description": "用於保留總詞數在特定範圍內的樣本。",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1229,7 +1229,7 @@
         },
         "params": [
             {
-                "name": "语言",
+                "name": "語言",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1244,19 +1244,19 @@
                 "value": "en"
             },
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
             },
             {
-                "name": "最小数量",
+                "name": "最小數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 20
             },
             {
-                "name": "最大数量",
+                "name": "最大數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 23305
@@ -1264,23 +1264,23 @@
         ]
     },
     "document_deduplicator": {
-        "name": "文档去重（MD5）",
-        "description": "\n    用于通过精确匹配在文档级别对样本去重。使用MD5哈希值进行样本去重。\n    ",
+        "name": "文檔去重（MD5）",
+        "description": "\n    用於透過精確比對在文檔級別對樣本去重。使用MD5雜湊值進行樣本去重。\n    ",
         "type": "Deduplicator",
         "group": "",
         "samples": {
-            "before": "{    'text':    'This paper proposed a novel method on LLM pretraining.'},{    'text':    'This paper proposed a novel method on LLM pretraining.'}",
-            "after": "{    'text':    'This paper proposed a novel method on LLM pretraining.'},"
+            "before": "{    'text':    'This paper proposed a novel method on LLM pretraining.'},{    'text':    'This paper proposed a novel method on LLM pretraining.'}",
+            "after": "{    'text':    'This paper proposed a novel method on LLM pretraining.'},"
         },
         "params": [
             {
-                "name": "小写",
+                "name": "小寫",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
             },
             {
-                "name": "忽略非字符",
+                "name": "忽略非字元",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -1288,8 +1288,8 @@
         ]
     },
     "document_minhash_deduplicator": {
-        "name": "文档去重（MinHashLSH）",
-        "description": "\n    用于通过MinHashLSH在文档级对样本去重。与SimHash不同，MinHash以字节形式存储，因此不会保留在最终数据集中。\n    ",
+        "name": "文檔去重（MinHashLSH）",
+        "description": "\n    用於透過MinHashLSH在文檔級對樣本去重。與SimHash不同，MinHash以位元組形式儲存，因此不會保留在最終資料集中。\n    ",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1298,7 +1298,7 @@
         },
         "params": [
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1307,11 +1307,11 @@
                     },
                     {
                         "key": "punctuation",
-                        "label": "标点符号"
+                        "label": "標點符號"
                     },
                     {
                         "key": "character",
-                        "label": "字符"
+                        "label": "字元"
                     },
                     {
                         "key": "sentencepiece",
@@ -1321,13 +1321,13 @@
                 "value": "character"
             },
             {
-                "name": "窗口大小",
+                "name": "視窗大小",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 5
             },
             {
-                "name": "小写",
+                "name": "小寫",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -1339,31 +1339,31 @@
                 "value": null
             },
             {
-                "name": "排列数量",
+                "name": "排列數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 256
             },
             {
-                "name": "jaccard 阈值",
+                "name": "jaccard 閾值",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
                 "value": 0.7
             },
             {
-                "name": "频带数量",
+                "name": "頻帶數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": null
             },
             {
-                "name": "每个频带的行数",
+                "name": "每個頻帶的行數",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": null
             },
             {
-                "name": "分词模型",
+                "name": "分詞模型",
                 "type": "STRING",
                 "option_values": null,
                 "value": null
@@ -1371,8 +1371,8 @@
         ]
     },
     "document_simhash_deduplicator": {
-        "name": "文档去重（SimHash）",
-        "description": "用于在文档级别使用SimHash对样本进行去重。",
+        "name": "文檔去重（SimHash）",
+        "description": "用於在文檔級別使用SimHash對樣本進行去重。",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1381,7 +1381,7 @@
         },
         "params": [
             {
-                "name": "分词",
+                "name": "分詞",
                 "type": "STRING",
                 "option_values": [
                     {
@@ -1390,23 +1390,23 @@
                     },
                     {
                         "key": "punctuation",
-                        "label": "标点符号"
+                        "label": "標點符號"
                     },
                     {
                         "key": "character",
-                        "label": "字符"
+                        "label": "字元"
                     }
                 ],
                 "value": "character"
             },
             {
-                "name": "窗口大小",
+                "name": "視窗大小",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 4
             },
             {
-                "name": "小写",
+                "name": "小寫",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true
@@ -1418,13 +1418,13 @@
                 "value": "\\p{P}"
             },
             {
-                "name": "块数量",
+                "name": "塊數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10
             },
             {
-                "name": "汉明距离",
+                "name": "漢明距離",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 8
@@ -1432,17 +1432,17 @@
         ]
     },
     "frequency_specified_field_selector": {
-        "name": "排序频率选择器",
-        "description": "用于根据指定字段的排序频率选择样本。",
+        "name": "排序頻率選擇器",
+        "description": "用於根據指定欄位的排序頻率選擇樣本。",
         "type": "Selector",
         "group": "",
         "samples": {
-            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
             "after": ""
         },
         "params": [
             {
-                "name": "字段名称",
+                "name": "欄位名稱",
                 "type": "STRING",
                 "option_values": null,
                 "value": ""
@@ -1454,7 +1454,7 @@
                 "value": null
             },
             {
-                "name": "前k个",
+                "name": "前k個",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": null
@@ -1468,23 +1468,23 @@
         ]
     },
     "random_selector": {
-        "name": "随机样本选择器",
-        "description": "用于随机对样本进行选择。",
+        "name": "隨機樣本選擇器",
+        "description": "用於隨機對樣本進行選擇。",
         "type": "Selector",
         "group": "",
         "samples": {
-            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
             "after": ""
         },
         "params": [
             {
-                "name": "选择比率",
+                "name": "選擇比率",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
                 "value": null
             },
             {
-                "name": "选择数量",
+                "name": "選擇數量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": null
@@ -1492,17 +1492,17 @@
         ]
     },
     "range_specified_field_selector": {
-        "name": "排序范围选择器",
-        "description": "用于根据指定字段值从小到大的排序范围选择样本。",
+        "name": "排序範圍選擇器",
+        "description": "用於根據指定欄位值由小到大的排序範圍選擇樣本。",
         "type": "Selector",
         "group": "",
         "samples": {
-            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
             "after": ""
         },
         "params": [
             {
-                "name": "字段名称",
+                "name": "欄位名稱",
                 "type": "STRING",
                 "option_values": null,
                 "value": ""
@@ -1534,17 +1534,17 @@
         ]
     },
     "topk_specified_field_selector": {
-        "name": "前部样本的选择器",
-        "description": "根据排序后的指定字段值选择前几名样本。",
+        "name": "前部樣本的選擇器",
+        "description": "根據排序後的指定欄位值選擇前幾名樣本。",
         "type": "Selector",
         "group": "",
         "samples": {
-            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
+            "before": "{'text': '，。、„”“«»１」「《》´∶：？！','count': None,'meta': {    'suffix': '.html',    'key1': {        'key2': {            'count': 18        },        'count': 48    }}}",
             "after": ""
         },
         "params": [
             {
-                "name": "字段名称",
+                "name": "欄位名稱",
                 "type": "STRING",
                 "option_values": null,
                 "value": ""
@@ -1556,7 +1556,7 @@
                 "value": null
             },
             {
-                "name": "前k个",
+                "name": "前k個",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": null
