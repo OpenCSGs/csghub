@@ -38,7 +38,7 @@ jobs:
       with:
         images: |
           opencsghq/csghub-portal
-          ${{ secrets.ACR_REGISTRY }}/opencsg_public/csghub_portal
+          ${{ secrets.ACR_REGISTRY }}/opencsghq/csghub-portal
         tags: |
           type=raw,value=latest
 
