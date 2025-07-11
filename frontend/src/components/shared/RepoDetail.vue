@@ -43,7 +43,7 @@
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
-  import { ToUnauthorizedPage } from '@/packs/utils'
+  import { ToNotFoundPage, ToUnauthorizedPage } from '@/packs/utils'
   import { storeToRefs } from 'pinia'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
@@ -108,6 +108,11 @@
       // redirect unauthorized page
       if (response.value.status === 403) {
         ToUnauthorizedPage()
+        return
+      }
+      // redirect not found page
+      if (response.value.status === 404) {
+        ToNotFoundPage()
         return
       }
       if (!data.value) {
