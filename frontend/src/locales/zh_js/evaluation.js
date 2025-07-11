@@ -44,7 +44,8 @@ export const evaluation = {
     download: "下载评测结果",
     evaluationFailed: "评测失败",
     return: "返回",
-    recreate: "重新创建"
+    recreate: "重新创建",
+    invalidDataset: "数据集已删除或失效"
   },
   list: {
     title: "模型评测",

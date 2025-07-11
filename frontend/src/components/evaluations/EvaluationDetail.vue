@@ -85,7 +85,7 @@
               class="flex items-center gap-4"
               v-if="category.datasets.length"
             >
-              <div
+              <div v-if="!isCustomDataset"
                 class="border border-gray-300 rounded-sm flex items-center gap-1 px-[6px] py-[2px]"
               >
                 <SvgIcon name="dot_black" />
@@ -96,7 +96,24 @@
                   v-for="(dataset, index) in category.datasets"
                   :key="dataset"
                 >
-                  <div class="text-gray-700 text-base">{{ dataset }}</div>
+                  <span :class="dataset.url ? 'dataset-item-valid' : 'dataset-item-invalid'">
+                    <el-tooltip
+                      :disabled="dataset.url"
+                      class="datasetTooltip"
+                      effect="dark"
+                      :content="$t('evaluation.detail.invalidDataset')"
+                      placement="top"
+                    >
+                      <a
+                        class="text-md font-normal leading-normal"
+                        :href="dataset.url"
+                        :target="dataset.url ? '_blank' : ''"
+                        :class="dataset.url ? 'text-gray-700' : 'text-gray-400 cursor-not-allowed'"
+                      >
+                        {{ dataset.repoDatasetName }}
+                      </a>
+                    </el-tooltip>
+                  </span>
                   <SvgIcon
                     v-if="index < category.datasets.length - 1"
                     name="vertical_divider"
@@ -227,16 +244,39 @@
   const error = ref('')
   const categories = ref([])
   const evaluationSucceed = ref(true)
+  const isCustomDataset = ref(false)
 
   const groupedDatasets = computed(() => {
+    if(isCustomDataset.value) {
+      return [{
+        name: 'Custom',
+        datasets: evaluation.value.datasets.map((d) =>
+          {
+             return showDataset(d)
+          })
+      }]
+    }
+    else {
     return categories.value.map((category) => ({
       name: locale.value === 'en' ? category.name : category.show_name,
       datasets:
         evaluation.value.datasets
           ?.filter((d) => d.tags && Array.isArray(d.tags) && d.tags.some((t) => t.name === category.name))
-          .map((d) => d.repo_id.split('/')[1]) || []
+            .map((d) => 
+            {
+              return showDataset(d)
+            }
+          ) || []
     }))
+    }
   })
+
+  const showDataset = (d) => {
+    return {
+      repoDatasetName: d.repo_id.split('/')[1] || [],
+      url: d.deleted ? null : `/datasets/${d.repo_id}?tab=summary`
+    }
+  }
 
   const datasets = computed(() => {
     if (!evaluationResult.value) return []
@@ -419,6 +459,10 @@
 
       evaluation.value = data.value.data
 
+      if(evaluation.value.datasets && evaluation.value.datasets.length > 0 && !evaluation.value.datasets[0].tags) {
+        isCustomDataset.value = true
+      }
+
       if (evaluation.value.result_url) {
         const result = await fetch(evaluation.value.result_url)
         evaluationResult.value = await result.json()
@@ -542,5 +586,15 @@
     .evaluation-table-row:nth-last-child(1)
     .evaluation-table-row-cell:nth-last-child(1) {
     border-bottom-right-radius: 12px;
+  }
+
+  .dataset-item-invalid :deep(.el-tooltip__trigger:hover) {
+    color: #98A2B3 !important;
+    background-color: transparent !important;
+  }
+
+  .dataset-item-valid :deep(.el-tooltip__trigger:hover) {
+    color: #223B99 !important;
+    background-color: transparent !important;
   }
 </style>
