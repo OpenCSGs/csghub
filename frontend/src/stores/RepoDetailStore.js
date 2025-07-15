@@ -18,8 +18,11 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const description = ref('')
   const downloads = ref(0)
   const enableEvaluation = ref(false)
+  const disableEvaluationReason= ref('')
   const enableFinetune = ref(false)
+  const disableFinetuneReason= ref('')
   const enableInference = ref(false)
+  const disableInferenceReason= ref('')
   const hfPath = ref('')
   const id = ref(0)
   const license = ref('')
@@ -110,8 +113,11 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     description.value = initialData.description
     downloads.value = initialData.downloads
     enableEvaluation.value = initialData.enable_evaluation
+    disableEvaluationReason.value = initialData.disable_evaluation_reason || ''
     enableFinetune.value = initialData.enable_finetune
+    disableFinetuneReason.value = initialData.disable_finetune_reason || ''
     enableInference.value = initialData.enable_inference
+    disableInferenceReason.value = initialData.disable_inference_reason || ''
     hfPath.value = initialData.hf_path
     id.value = initialData.id
     license.value = initialData.license
@@ -190,8 +196,11 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     description,
     downloads,
     enableEvaluation,
+    disableEvaluationReason,
     enableFinetune,
+    disableFinetuneReason,
     enableInference,
+    disableInferenceReason,
     hfPath,
     id,
     license,
