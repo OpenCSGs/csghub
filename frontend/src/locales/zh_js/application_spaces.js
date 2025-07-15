@@ -118,7 +118,8 @@ export const application_spaces = {
     publicInfo: "， 任何互联网上的人都可以看到此应用空间。",
     needName: "请先提供应用空间别名",
     needDesc: "请先提供应用空间介绍",
-    replaceCoverImage: "更新封面图片"
+    replaceCoverImage: "更新封面图片",
+    updateSuccess: "更新{field}成功",
   },
   download: "下载应用空间",
   downloadSpace: "下载应用空间数据",
@@ -134,5 +135,23 @@ export const application_spaces = {
     buildingFailed: '构建失败',
     deployFailed: '部署失败',
     runtimeError: '运行报错'
+  },
+  env: {
+    title: '环境变量 (可选）',
+    addEnv: '新增环境变量',
+    editEnv: '编辑环境变量',
+    placeholder: '为保证运行效率，最多支持设置 5 个变量',
+    empty:'暂无环境变量',
+    edit: '编辑',
+    delete: '删除',
+    placeholder2:'使用环境变量隐藏敏感信息，避免在文件中明文展示',
+    name:'名称',
+    value:'变量值',
+    cancel: '取消',
+    save:'保存',
+    validatePlaceholder: '变量名只能由字母、数字和下划线组成，且不能以数字开头',
+    validatePlaceholder2: '变量名不能使用系统保留名',
+    validatePlaceholder3: '该变量名已存在',
+    validatePlaceholder4: '变量值不能包含换行符或控制字符',
   }
 }

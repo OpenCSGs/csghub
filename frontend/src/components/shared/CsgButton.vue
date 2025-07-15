@@ -3,7 +3,7 @@
     :is="showTooltip ? ElTooltip : 'div'"
     v-bind="showTooltip ? { content: props.tooltipContent, placement: 'top' } : {}"
   >
-    <span style="display: inline-block">
+    <span>
       <button
         :class="btnClass"
         :type="btnType"
@@ -41,6 +41,10 @@
     svgName: {
       type: String,
       default: "",
+    },
+    svgPosition: {
+      type: String,
+      default: 'left'
     },
     link: {
       type: Boolean,

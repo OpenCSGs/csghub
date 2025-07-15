@@ -118,7 +118,8 @@ export const application_spaces = {
     publicInfo: ", visible to anyone on the internet.",
     needName: "Please provide name first",
     needDesc: "Please provide description first",
-    replaceCoverImage: "Replace the cover image"
+    replaceCoverImage: "Replace the cover image",
+    updateSuccess: "Successfully updated {field}",
   },
   download: "Download Space",
   downloadSpace: "Download space data",
@@ -134,5 +135,24 @@ export const application_spaces = {
     buildingFailed: 'Building Failed',
     deployFailed: 'Deploy Failed',
     runtimeError: 'Runtime Error'
+  },
+  env: {
+    title: 'Environment Variables (Optional)',
+    addEnv: 'Add Environment Variable',
+    editEnv: 'Edit Environment Variable',
+    placeholder: 'To ensure performance, up to 5 variables can be set',
+    empty: 'No environment variables',
+    edit: 'Edit',
+    delete: 'Delete',
+    placeholder2: 'Use environment variables to hide sensitive information and avoid hardcoding it in files',
+    name: 'Name',
+    value: 'Value',
+    cancel: 'Cancel',
+    save: 'Save',
+    validatePlaceholder: 'Variable names must start with a letter or underscore and contain only letters, numbers, and underscores',
+    validatePlaceholder2: 'This variable name is reserved by the system',
+    validatePlaceholder3: 'This variable name already exists',
+    validatePlaceholder4: 'Variable value must not contain line breaks or control characters',
   }
+  
 }
