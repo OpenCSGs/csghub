@@ -44,6 +44,8 @@
         v-else
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
         :name="$t('evaluation.new.title')"
+        :tooltipContent="repo.disableEvaluationReason"
+        :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
         @click="toNewEvaluatePage()"
       />
@@ -68,10 +70,10 @@
       />
     </div>
     <div
-      class="btn btn-secondary-gray btn-sm modelBtn disabled"
       v-else-if="repoType === 'model'"
     >
       <el-tooltip
+
         placement="top"
         effect="dark"
       >
