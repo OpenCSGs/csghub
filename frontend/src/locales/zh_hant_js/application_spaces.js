@@ -117,7 +117,8 @@ export const application_spaces = {
     publicInfo: "， 任何網際網路上的人都可以看到此應用空間。",
     needName: "請先提供應用空間別名",
     needDesc: "請先提供應用空間介紹",
-    replaceCoverImage: "更新封面圖片"
+    replaceCoverImage: "更新封面圖片",
+    updateSuccess: "更新{field}成功",
   },
   download: "下載應用空間",
   downloadSpace: "下載應用空間數據",
@@ -133,5 +134,23 @@ export const application_spaces = {
     buildingFailed: '構建失敗',
     deployFailed: '部署失敗',
     runtimeError: '執行報錯'
-  }
+  },
+  env: {
+    title: '環境變數（可選）',
+    addEnv: '新增環境變數',
+    editEnv: '編輯環境變數',
+    placeholder: '為確保執行效能，最多僅支援設定 5 個變數',
+    empty: '暫無環境變數',
+    edit: '編輯',
+    delete: '刪除',
+    placeholder2: '使用環境變數來隱藏敏感資訊，避免在檔案中明文顯示',
+    name: '名稱',
+    value: '變數值',
+    cancel: '取消',
+    save: '儲存',
+    validatePlaceholder: '變數名稱只能由字母、數字與底線組成，且不得以數字開頭',
+    validatePlaceholder2: '變數名稱不得使用系統保留名稱',
+    validatePlaceholder3: '該變數名稱已存在',
+    validatePlaceholder4: '變數值不得包含換行符號或控制字元',
+  }  
 }

@@ -57,7 +57,7 @@ const createWrapper = (props = {}) => {
     },
     global: {
       mocks: {
-        $t: (key) => key
+        $t: (key, params) => key === 'application_spaces.edit.updateSuccess' ? 'Success' : key
       },
       provide: {
         fetchRepoDetail: mockFetchRepoDetail
