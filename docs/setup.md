@@ -81,6 +81,8 @@ CSGHub Portal 已将 Web 框架从 Rails 迁移至 Gin。如果您之前使用�
 
 ### 设置环境变量（推荐使用 direnv）
 
+有关环境变量的更多信息，可以参考 [环境变量文档](./env_variables_zh.md)。这里推荐使用 `direnv` 来管理环境变量。以下是使用 `direnv` 的步骤：
+
 1. 安装 direnv：按照 [direnv 官方文档](https://direnv.net/) 的说明进行安装。
 
 2. 配置 direnv：在您的 shell 配置文件（如 `.bashrc`、`.zshrc` 等）中添加以下行：
