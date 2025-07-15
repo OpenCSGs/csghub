@@ -97,6 +97,7 @@ export const all = {
   pythonTips:"需安装Python环境(若未安装)，建议使用 Python 3.10 版本",
   csghubSdkTips:"在下载前，请先通过如下命令安装 csghub-sdk",
   documentation: "具体文档",
+  viewDocumentation: "查看文档",
   installDocumentation: "安装文档",
   modelDownloadTips:"下载完整模型库",
   datasetDownloadTips:"下载完整数据集",

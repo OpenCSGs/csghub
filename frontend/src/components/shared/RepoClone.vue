@@ -21,13 +21,33 @@
     <!-- evaluation button -->
     <div v-if="!actionLimited && repoType === 'model'"
       class="relative inline-flex">
+      <el-tooltip
+        v-if="!enableEvaluation || !httpCloneUrl"
+        placement="top"
+        effect="dark"
+      >
+        <template #content>
+          <div>
+            {{ repo.disableEvaluationReason }}, 
+            <a href="https://opencsg.com/docs/inferencefinetune/evaluation_faq" target="_blank" style="color: #fff; text-decoration: underline;">
+              {{ $t('all.viewDocumentation') }}
+            </a>
+          </div>
+        </template>
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm modelBtn pl-8 disabled"
+          :name="$t('evaluation.new.title')"
+          svgName="evaluation_new"
+        />
+      </el-tooltip>
       <CsgButton
+        v-else
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
-        :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
+        :name="$t('evaluation.new.title')"
         :tooltipContent="repo.disableEvaluationReason"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
-        @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
+        @click="toNewEvaluatePage()"
       />
     </div>
 
@@ -53,29 +73,53 @@
       v-else-if="repoType === 'model'"
     >
       <el-tooltip
-        :content="repo.disableInferenceReason"
+
         placement="top"
+        effect="dark"
       >
-        <div class="flex gap-1 btn btn-secondary-gray btn-sm modelBtn disabled">
-          <SvgIcon
-            name="deploy"
-            class="mr-0"
-            :disabled="true"
-          />
-          <div class="text-gray-400">{{ $t('all.deploy') }}</div>
-        </div>
+        <template #content>
+          <div>
+            {{ repo.disableInferenceReason }}, 
+            <a href="https://opencsg.com/docs/inferencefinetune/endpoint_faq" target="_blank" style="color: #fff; text-decoration: underline;">
+              {{ $t('all.viewDocumentation') }}
+            </a>
+          </div>
+        </template>
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm modelBtn disabled"
+          :name="$t('all.deploy')"
+          svgName="model_endpoint_create"
+          :disabled="true"
+        />
       </el-tooltip>
     </div>
 
     <!-- finetune deploy button -->
+    <el-tooltip
+      v-if="!actionLimited && repoType === 'model' && (!enableFinetune || !httpCloneUrl)"
+      placement="top"
+      effect="dark"
+    >
+      <template #content>
+        <div>
+          {{ repo.disableFinetuneReason }}, 
+          <a href="https://opencsg.com/docs/inferencefinetune/finetune_faq" target="_blank" style="color: #fff; text-decoration: underline;">
+            {{ $t('all.viewDocumentation') }}
+          </a>
+        </div>
+      </template>
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm modelBtn disabled"
+        :name="$t('finetune.title')"
+        svgName="model_finetune_create"
+      />
+    </el-tooltip>
     <CsgButton
-      v-if="!actionLimited && repoType === 'model'"
+      v-else-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
-      :disabled="!enableFinetune || !httpCloneUrl"
       :name="$t('finetune.title')"
       svgName="model_finetune_create"
-      :tooltipContent="repo.disableFinetuneReason"
-      @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
+      @click="handleButtonClick()"
     />
 
     <!-- repo download clone button -->
@@ -274,6 +318,7 @@
 
 <script setup>
   import { computed, ref, onMounted, watch } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
   import SyncDropdown from './SyncDropdown.vue'
