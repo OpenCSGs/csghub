@@ -29,7 +29,7 @@ export const evaluation = {
     createEvaluation: "建立評測",
     createSuccess: "評測建立成功",
     createFail: "評測建立失敗",
-    doNowRemoveFirstModel: "請避免刪除模型首項"
+    resetModelsDatsets: "評測框架發生變化，請重新選擇評測模型以及資料集"
   },
   detail: {
     model: "模型",
