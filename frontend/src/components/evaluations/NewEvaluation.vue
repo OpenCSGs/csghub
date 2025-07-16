@@ -58,7 +58,6 @@
               size="large"
               multiple
               :multiple-limit="3"
-              @change="val => handleChangeTag(val)"
               class="ignore-height-select"
             >
               <el-option
@@ -275,7 +274,7 @@
           prop="evaluation_framework"
         >
           <el-select
-              ref="evaluationFrameworkSelectRef"
+            ref="evaluationFrameworkSelectRef"
             v-model="frameworkVersion"
             @change="resetVersions"
             :placeholder="t('all.pleaseSelect')"
@@ -365,7 +364,6 @@
   const fetchDatasetsLoading = ref(false)
   const dataFormRef = ref(null)
   const dataForm = ref({
-    default_model_id: searchParams.get('model_id') || '',
     model_id: searchParams.get('model_id') ? [searchParams.get('model_id')] : [],
     evaluation_resource_type: 'shared'
   })
@@ -482,18 +480,6 @@
     fetchModelsLoading.value = false
   }
 
-  const handleChangeTag = (val) => {
-    if(!dataForm.value.default_model_id) {
-      return
-    }
-
-    const isFirstModelItemExist = val.includes(dataForm.value.default_model_id)
-    if(!isFirstModelItemExist) {
-      ElMessage({ message: t('evaluation.new.doNowRemoveFirstModel'), type: 'warning' })
-      dataForm.value.model_id.unshift(dataForm.value.default_model_id)
-    }
-  }
-
   const getSelectedEvaluationFrameworkText = () => {
     if (evaluationFrameworkSelectRef.value) {
       const selectedLabel = evaluationFrameworkSelectRef.value.selectedLabel
@@ -568,32 +554,41 @@
         frameworkVersionOptions.value = []
         dataForm.value.evaluation_framework = '' 
         selectedFrameworkName.value = ''
-        dataForm.value.default_model_id = ''
       }
     }
   }
 
-  const resetVersions = () => { 
+  const resetVersions = async() => { 
     const currentResource = evaluationResources.value
       .flatMap(category => category.options)
       .find(item => item.id == dataForm.value.cloud_resource.split('/')[0])
 
-      if(filterFrameworks.value.length){
-        if(currentResource&&currentResource.type){
-          frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions.filter((version) => version.compute_type == currentResource.type) || []
-        }else {
-          frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions
-        }
-        dataForm.value.evaluation_framework = frameworkVersionOptions.value[0]?.id || ''
-      }else{
-        frameworkVersionOptions.value = []
-        dataForm.value.evaluation_framework = ''
+    if(filterFrameworks.value.length){
+      if(currentResource&&currentResource.type){
+        frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions.filter((version) => version.compute_type == currentResource.type) || []
+      }else {
+        frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions
       }
+      dataForm.value.evaluation_framework = frameworkVersionOptions.value[0]?.id || ''
+    }else{
+      frameworkVersionOptions.value = []
+      dataForm.value.evaluation_framework = ''
+    }
 
-    if (dataForm.value.model_id && dataForm.value.model_id.length > 1) {
-      const first_model_id = dataForm.value.model_id[0]
-      dataForm.value.model_id = [first_model_id]
-      }
+    if(dataForm.value.model_id.length > 0 || 
+      dataForm.value.evaluation_dataset.length > 0 || 
+      dataForm.value.evaluation_custom_dataset.length > 0) {
+      ElMessage({
+        message: t('evaluation.new.resetModelsDatsets'),
+        type: 'warning',
+        showClose: true,
+        duration: 5000
+      })
+    }
+
+    dataForm.value.model_id = []
+    dataForm.value.evaluation_dataset = []
+    dataForm.value.evaluation_custom_dataset = []
   }
 
   const filterFrameworks = computed(() => {
@@ -645,15 +640,9 @@
 
   watch(
     () => dataForm.value.model_id,
-    async (newVal, oldVal) => {
-      if (oldVal.length === 0 && newVal.length === 1) {
-        dataForm.value.default_model_id = newVal[0]
+    async () => {
+        await fetchRuntimeFramework()
       }
-
-    if((newVal.length > 0 && oldVal.length > 0 && newVal[0] !== oldVal[0]) ||
-     (newVal.length > 0 && oldVal.length === 0))
-      await fetchRuntimeFramework()
-    }
   )
 
   watch(
