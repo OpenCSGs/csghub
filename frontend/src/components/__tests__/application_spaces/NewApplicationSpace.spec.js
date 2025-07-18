@@ -19,7 +19,7 @@ const createWrapper = (props) => {
 
 const triggerFormButton = async (wrapper) => {
   const button = wrapper.findComponent({ name: 'CsgButton' })
-  await button.trigger('click')
+  await button.vm.$emit('click') // Trigger the form submission
   await wrapper.vm.$nextTick()
 }
 
@@ -120,8 +120,8 @@ describe('NewApplicationSpace', () => {
   describe('when select docker sdk', async () => {
     it('fetchs the docker templates', async () => {
       const wrapper = createWrapper()
-      const dockerRadio = wrapper.find('#sdk-docker')
-      await dockerRadio.trigger('click')
+      const dockerRadio = wrapper.findComponent('#sdk-docker')
+      await dockerRadio.vm.$emit('click')
       await waitFor(() => {
         expect(wrapper.vm.dockerTemplates[0].name).toEqual('ChatUI')
       })
