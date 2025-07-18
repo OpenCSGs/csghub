@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-[16px] min-h-[300px] py-[32px] md:px-5">
-    <div class="test-[14px]"><p>{{ repoName }}/</p></div>
+    <div class="test-[14px]"><p>{{ repoName + repoTab.lastPath }}/</p></div>
     <div class="border border-gray-200 rounded-xs bg-gray-100">
       <div class="flex text-sm text-brand-500 leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
@@ -51,7 +51,7 @@
     </div>
     <CommunityMDTextarea desc="" :placeholder="$t('all.provideMoreDesc')" @inputChange="handleCommentInputChange"></CommunityMDTextarea>
     <div>
-      <el-button type="primary" @click="submitUpload" :disabled="filesList.length === 0">{{ $t('all.uploadFile') }}</el-button>
+      <el-button type="primary" @click="submitUpload" :disabled="filesList.length === 0 || uploading">{{ $t('all.uploadFile') }}</el-button>
       <el-button @click="cancel">{{ $t('all.cancel') }}</el-button>
     </div>
   </div>
@@ -70,7 +70,7 @@ const props = defineProps({
   currentBranch: String
 })
 
-const { setRepoTab } = useRepoTabStore()
+const { repoTab, setRepoTab } = useRepoTabStore()
 
 const { t } = useI18n();
 const uploadRef = ref();
@@ -79,6 +79,8 @@ const commitTitle = ref('')
 const commitTitlePlaceholder = ref('Upload file')
 const new_branch = ref('main')
 const commitDesc = ref('')
+const uploading = ref(false)
+
 let prefixPath = document.location.pathname.split('/')[1]
 let apiPrefixPath = document.location.pathname.split('/')[1]
 
@@ -115,9 +117,10 @@ const handleRemove = (file, fileList) => {
 
 const cancel = () => {
   // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+  const toPath = repoTab.lastPath && repoTab.lastPath.startsWith('/') ? repoTab.lastPath.slice(1) : repoTab.lastPath || ''
   setRepoTab({
     actionName: 'files',
-    lastPath: ''
+    lastPath: toPath
   })
 }
 
@@ -131,11 +134,12 @@ const buildCommitMessage = () => {
 const appendFilesToFormData = (formData, files) => {
   files.forEach((file) => {
     formData.append('file', file.raw)
-    formData.append('file_path', file.name)
+    formData.append('file_path', (repoTab.lastPath || '') + '/' + file.name)
   })
 }
 
 const syncUploadFile = async () => {
+  uploading.value = true
   const formData = new FormData()
   formData.append('branch', props.currentBranch)
   formData.append('message', buildCommitMessage())
@@ -155,13 +159,16 @@ const syncUploadFile = async () => {
     } else {
       filesList.value = []
       // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+      const toPath = repoTab.lastPath && repoTab.lastPath.startsWith('/') ? repoTab.lastPath.slice(1) : repoTab.lastPath || ''
       setRepoTab({
         actionName: 'files',
-        lastPath: ''
+        lastPath: toPath
       })
     }
   } catch (error) {
     console.error(error)
+  } finally {
+    uploading.value = false
   }
 }
 </script>

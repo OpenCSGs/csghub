@@ -212,14 +212,14 @@
   const goToNewFile = () => {
     setRepoTab({
       actionName: 'new_file',
-      lastPath: ''
+      lastPath: currentPath.value && currentPath.value.length > 0 ? '/' + currentPath.value : ''
     })
   }
 
   const goToUploadFile = () => {
     setRepoTab({
       actionName: 'upload_file',
-      lastPath: ''
+      lastPath: currentPath.value && currentPath.value.length > 0 ? '/' + currentPath.value : ''
     })
   }
 
