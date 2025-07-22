@@ -6,20 +6,7 @@
     >
       {{ $t('application_spaces.env.title') }}
     </div>
-    <el-tooltip
-      v-if="envList.length >= 5"
-      :content="$t('application_spaces.env.placeholder')"
-      placement="top"
-    >
-      <div class="flex gap-1 btn btn-link-color btn-sm text-gray-400 cursor-not-allowed">
-        <SvgIcon name="space-env-plus" />{{
-          $t('application_spaces.env.addEnv')
-        }}
-      </div>
-    </el-tooltip>
-
     <div
-      v-else
       class="flex gap-1 btn btn-link-color btn-sm"
       @click="openAdd"
     >
