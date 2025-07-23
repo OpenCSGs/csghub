@@ -19,14 +19,12 @@
     class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
     v-loading="dataLoading"
   >
-    <el-button
+    <CsgButton
       v-show="activeName == 'page' && repoDetailStore.endpoint"
-      color="#3250BD"
-      style="border-radius: var(--border-radius-md) !important"
-      class="absolute top-0 right-0 z-10 cursor-pointer text-white"
+      class="btn btn-primary btn-sm absolute top-0 right-0 z-10"
+      :name="$t('finetune.detail.notebook')"
       @click="toNotebookPage"
-      >{{ $t('finetune.detail.notebook') }}</el-button
-    >
+    />
     <el-tabs
       v-model="activeName"
       class="demo-tabs finetune-repo-tabs"
@@ -37,14 +35,15 @@
         :label="$t('finetune.detail.tab1')"
         name="page"
       >
-        <div  v-if="activeName === 'page'" class="pt-[24px]">
+        <div  v-if="activeName === 'page'" class="pt-6 -mx-4">
           <iframe
             v-if="repoDetailStore.endpoint"
             :src="`${httpProtocal}://${repoDetailStore.proxyEndpoint}?jwt=${jwtToken}`"
             width="100%"
-            height="700"
+            :height="iframeHeight"
             frameborder="0"
             allowfullscreen
+            class="block w-full"
           >
           </iframe>
           <div
@@ -52,17 +51,17 @@
             v-else
           >
             <div
-              class="flex items-center justify-start border border-gray-300 p-[16px] rounded-xl shadow-sm"
+              class="flex items-center justify-start border border-gray-300 p-4 rounded-xl shadow-sm"
             >
-              <div class="border border-gray-300 p-[10px] rounded-lg">
+              <div class="border border-gray-300 p-2 rounded-lg">
                 <SvgIcon
                   name="finetune_tip"
                   width="20"
                   height="20"
                 />
               </div>
-              <div class="ml-[16px]">
-                <p class="text-gray-700 text-sm font-medium mb-[4px]">
+              <div class="ml-4">
+                <p class="text-gray-700 text-sm font-medium mb-1">
                   {{ $t('finetune.detail.noDataTip1') }}
                 </p>
                 <p class="text-gray-600 text-sm font-light">
@@ -119,7 +118,7 @@
 </template>
 
 <script setup>
-  import { ref, inject, onBeforeMount, computed, provide, watch } from 'vue'
+  import { ref, inject, onBeforeMount, computed, provide, watch, onMounted, onUnmounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
@@ -135,6 +134,7 @@
   import { useRepoTabStore } from '@/stores/RepoTabStore'
   import { useRoute, useRouter } from 'vue-router'
   import { validateTab } from '@/packs/utils'
+  import CsgButton from '../shared/CsgButton.vue'
 
   const props = defineProps({
     namespace: String,
@@ -155,6 +155,7 @@
   const dataLoading = ref(false)
   const finetuneResources = ref([])
   const finetuneResource = ref('')
+  const iframeHeight = ref(700) // Default height
   const allStatus = [
     'Building',
     'Deploying',
@@ -172,6 +173,29 @@
   const isStatusSSEConnected = ref(false)
   const csghubServer = inject('csghubServer')
   const httpProtocal = ENABLE_HTTPS === 'true' ? 'https' : 'http'
+
+  // Function to calculate iframe height
+  const calculateIframeHeight = () => {
+    // Get viewport height
+    const viewportHeight = window.innerHeight
+    
+    // Estimate fixed height parts to subtract
+    // These values need to be adjusted based on actual page layout
+    const headerHeight = 200 // RepoHeader approximate height
+    const tabsHeight = 60 // Tabs navigation height
+    const paddingAndMargin = 50 // Various padding and margin (reduced since iframe now fills container)
+    
+    // Calculate the height iframe should have
+    const calculatedHeight = viewportHeight - headerHeight - tabsHeight - paddingAndMargin
+    
+    // Set minimum height to prevent being too small
+    iframeHeight.value = Math.max(calculatedHeight, 700)
+  }
+
+  // Recalculate height when window size changes
+  const handleResize = () => {
+    calculateIframeHeight()
+  }
 
   const isSameRepo = computed(() => {
     return (
@@ -204,7 +228,7 @@
     return validTabs.value.includes(tab)
   }
 
-  // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
+  // Listen for route changes, update tab when user uses browser forward/back buttons
   watch(() => route.query.tab, (newTab) => {
     const validatedTab = validateTab(newTab)
     if (validatedTab && isValidTab(validatedTab) && validatedTab !== activeName.value) {
@@ -376,6 +400,15 @@
       namespace: props.namespace,
       repoName: props.modelName,
     })
+  })
+
+  onMounted(() => {
+    calculateIframeHeight()
+    window.addEventListener('resize', handleResize)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)
