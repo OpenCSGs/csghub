@@ -4,7 +4,7 @@
     <div class="px-4 py-2 w-full">
       <div class="flex justify-between items-center text-gray-700 text-md leading-6 font-medium">
         <div class="hover:underline">{{title}}</div>
-        <div class="flex items-center gap-1 text-gray-500 text-sm leading-6 font-normal" v-show="commentNum >=0">
+        <div class="flex items-center gap-1 text-gray-500 text-sm leading-6 font-normal" v-show="Number(commentNum) >= 0">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.33325 6.66634C1.33325 4.7995 1.33325 3.86608 1.69656 3.15304C2.01614 2.52583 2.52608 2.0159 3.15328 1.69632C3.86632 1.33301 4.79974 1.33301 6.66659 1.33301H9.33325C11.2001 1.33301 12.1335 1.33301 12.8466 1.69632C13.4738 2.0159 13.9837 2.52583 14.3033 3.15304C14.6666 3.86608 14.6666 4.7995 14.6666 6.66634V12.7802C14.6666 13.4643 14.6666 13.8063 14.5581 14.0198C14.376 14.3781 13.9972 14.5926 13.5964 14.5643C13.3575 14.5475 13.0642 14.3716 12.4776 14.0196V14.0196C12.1277 13.8097 11.9528 13.7047 11.7694 13.6228C11.4648 13.4867 11.1414 13.3972 10.8102 13.3571C10.6108 13.333 10.4068 13.333 9.99876 13.333H6.66659C4.79974 13.333 3.86632 13.333 3.15328 12.9697C2.52608 12.6501 2.01614 12.1402 1.69656 11.513C1.33325 10.7999 1.33325 9.86652 1.33325 7.99967V6.66634Z" stroke="#606266" stroke-linecap="round" stroke-linejoin="round"/></svg>
           {{commentNum}}
         </div>
@@ -24,18 +24,16 @@
 // import { format } from 'timeago.js';
 export default {
   props: {
-    num:String,
-    title:String,
-    time:String,
-    user:String,
-    userAvatar:String,
-    commentNum:String
+    num: String,
+    title: String,
+    time: String,
+    user: String,
+    userAvatar: String,
+    commentNum: [String, Number]  // 修改：支持字符串和数字类型
   },
   components: {},
   data() {
-    return {
-      // theTime:format(this.time,'zh_CN')
-    };
+    return {};
   },
   mounted() {},
   methods: {},

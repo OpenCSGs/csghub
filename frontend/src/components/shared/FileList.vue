@@ -19,7 +19,7 @@
           1 {{ $t('all.contributors') }}
         </div>
         <a @click.prevent="goToCommits"
-           class="ml-4 flex items-center px-4 py-[5px] border border-gray-200 rounded-full">
+           class="ml-4 flex items-center px-4 py-[5px] border border-gray-200 rounded-full cursor-pointer">
           <SvgIcon name="commits" class="mr-2" />
           {{ $t('all.commits') }}
         </a>
@@ -133,7 +133,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
 
   import { format } from 'timeago.js';
@@ -157,7 +157,7 @@
   const loading = ref(true)
 
   const { repoTab, setRepoTab } = useRepoTabStore()
-  const currentBranch = ref(repoTab.currentBranch)
+  const currentBranch = ref(repoTab.currentBranch || '')
   const currentPath = ref(repoTab.lastPath || '')
 
   const breadcrumb = ref([])
@@ -176,6 +176,37 @@
 
   const emit = defineEmits(['changeBranch'])
 
+  // 添加防重复请求的标记
+  const isInitializing = ref(false)
+
+  // 修改路由监听逻辑
+  watch(() => route.query, (newQuery) => {
+    // 只有当 tab 是 files 且 actionName 是 files 或为空时才处理
+    if (newQuery.tab === 'files' && (newQuery.actionName === 'files' || !newQuery.actionName)) {
+      // 更新 actionName
+      if (newQuery.actionName && newQuery.actionName !== repoTab.actionName) {
+        setRepoTab({
+          actionName: newQuery.actionName,
+          lastPath: newQuery.path || '',
+          currentBranch: newQuery.branch || repoTab.currentBranch
+        })
+      }
+      
+      // 更新路径和分支
+      if (newQuery.path !== currentPath.value) {
+        currentPath.value = newQuery.path || ''
+      }
+      if (newQuery.branch && newQuery.branch !== currentBranch.value) {
+        currentBranch.value = newQuery.branch
+      }
+      
+      // 只有在文件列表页面且未初始化时才重新初始化
+      if (!isInitializing.value) {
+        init()
+      }
+    }
+  }, { deep: true })
+
   const changeBranch = (branch) => {
     currentBranch.value = branch
     setRepoTab({
@@ -184,6 +215,17 @@
       lastPath: ''
     })
     currentPath.value = ''
+
+    const query = {
+      tab: 'files',
+      actionName: 'files',
+      branch: branch
+    }
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
 
     init()
   }
@@ -195,57 +237,153 @@
       lastPath: ''
     })
 
+    const query = {
+      tab: 'files',
+      actionName: 'files'
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+
     init()
   }
 
   const goToBreadcrumb = (path) => {
-    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}${path}`"
     currentPath.value = path.includes('/') ? path?.slice(1) : path
     setRepoTab({
       actionName: 'files',
       lastPath: currentPath.value
     })
 
+    const query = {
+      tab: 'files',
+      actionName: 'files',
+      path: currentPath.value
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+
     init()
   }
 
   const goToNewFile = () => {
+    const query = {
+      tab: 'files',
+      actionName: 'new_file'
+    }
+    if (currentPath.value) {
+      query.path = currentPath.value
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'new_file',
       lastPath: currentPath.value && currentPath.value.length > 0 ? '/' + currentPath.value : ''
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const goToUploadFile = () => {
+    const query = {
+      tab: 'files',
+      actionName: 'upload_file'
+    }
+    if (currentPath.value) {
+      query.path = currentPath.value
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'upload_file',
       lastPath: currentPath.value && currentPath.value.length > 0 ? '/' + currentPath.value : ''
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const goToCommits = () => {
-    //  :href="`/${prefixPath}/${namespacePath}/commits`"
+    const query = {
+      tab: 'files',
+      actionName: 'commits'
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'commits',
       lastPath: ''
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const goToCommitDetail = (commitId) => {
-    //  :href="`/${prefixPath}/${namespacePath}/commit/${lastCommit.id}`"
-    // :href="`/${prefixPath}/${namespacePath}/commit/${file.last_commit_sha}`"
+    const query = {
+      tab: 'files',
+      actionName: 'commit',
+      path: commitId
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'commit',
       lastPath: commitId
+    })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
     })
   }
 
   const goToDir = (path) => {
     currentPath.value = path
-    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}/${file.path}`"
     setRepoTab({
       actionName: 'files',
       lastPath: path
+    })
+
+    // 更新 URL 参数
+    const query = {
+      tab: 'files',
+      actionName: 'files',
+      path: path
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
     })
 
     init()
@@ -253,20 +391,37 @@
 
   const goToBlob = (path) => {
     currentPath.value = path
-    //  :href="`/${prefixPath}/${namespacePath}/blob/${currentBranch}/${file.path}`"
+    const query = {
+      tab: 'files',
+      actionName: 'blob',
+      path: path
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'blob',
       lastPath: path
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const extractNameFromPath = (path) => {
+    // 添加空值检查
+    if (!path) return ''
     const parts = path.split('/')
     return parts[parts.length - 1]
   };
 
   const updateBreadcrumb = () => {
-    const breadcrumbArray = currentPath.value.split('/').filter(Boolean);
+    // 添加空值检查，确保 currentPath.value 不为 null 或 undefined
+    const path = currentPath.value || ''
+    const breadcrumbArray = path.split('/').filter(Boolean);
     let breadcrumbPath = ''
     breadcrumb.value = breadcrumbArray.map((item) => {
       breadcrumbPath += '/' + item
@@ -357,18 +512,25 @@
       const { response, data, error } = await useFetchApi(url).json()
 
       if (data.value) {
-        tempCommit.value = data.value.data?.Commits
-        commitList.value = [...commitList.value, ...tempCommit.value]
+        // 添加空值检查，确保 Commits 是数组
+        const commits = data.value.data?.Commits || []
+        tempCommit.value = commits
+        
+        // 确保 tempCommit.value 是数组后再进行展开操作
+        if (Array.isArray(tempCommit.value)) {
+          commitList.value = [...commitList.value, ...tempCommit.value]
 
-        tempCommit.value.forEach(commit => {
-          const file = files.value.find(f => f.name === commit.name);
-          if (file) {
-            file.commit = commit;
+          tempCommit.value.forEach(commit => {
+            const file = files.value.find(f => f.name === commit.name);
+            if (file) {
+              file.commit = commit;
+            }
+          });
+
+          // 修复递归逻辑：只有当还有更多提交且当前获取的提交数量等于限制数量时才继续
+          if (tempCommit.value.length === 50 && commitList.value.length < files.value.length) {
+            fetchCommits();
           }
-        });
-
-        if (commitList.value.length < files.value.length) {
-          fetchCommits();
         }
       } else if (response.value.status === 403) {
         ToUnauthorizedPage()
@@ -392,7 +554,9 @@
       const { response, data, error } = await useFetchApi(url).json()
 
       if (data.value) {
-        files.value = [...files.value, ...data.value.data?.Files]
+        // 添加空值检查，确保 Files 是数组
+        const filesData = data.value.data?.Files || []
+        files.value = [...files.value, ...filesData]
         filePageCursor.value = data.value.data?.Cursor
         fetchCommits()
       } else if (response.value.status === 403) {
@@ -424,6 +588,9 @@
   }
 
   function init() {
+    if (isInitializing.value) return // 防止重复初始化
+    
+    isInitializing.value = true
     files.value = []
     commitList.value = []
     tempCommit.value = []
@@ -431,9 +598,46 @@
     updateBreadcrumb()
     fetchFileListData()
     fetchLastCommit()
+    
+    // 延迟重置标记
+    setTimeout(() => {
+      isInitializing.value = false
+    }, 100)
   }
 
+  // 在 onMounted 中初始化时也要处理 URL 参数
   onMounted(() => {
-    init()
+    // 从 URL 参数中恢复状态
+    const params = new URLSearchParams(window.location.search)
+    const urlActionName = params.get('actionName')
+    const urlPath = params.get('path')
+    const urlBranch = params.get('branch')
+    const currentTab = params.get('tab')
+    
+    // 只有在当前 tab 是 files 且 actionName 是 files 或为空时才初始化
+    if (currentTab === 'files' && (urlActionName === 'files' || !urlActionName)) {
+      if (urlActionName && urlActionName !== 'files') {
+        setRepoTab({
+          actionName: urlActionName,
+          lastPath: urlPath || '',
+          currentBranch: urlBranch || repoTab.currentBranch || ''
+        })
+      }
+      
+      // 确保 currentPath 不为 null 或 undefined
+      if (urlPath !== undefined && urlPath !== null) {
+        currentPath.value = urlPath
+      } else {
+        currentPath.value = repoTab.lastPath || ''
+      }
+      
+      if (urlBranch) {
+        currentBranch.value = urlBranch
+      } else {
+        currentBranch.value = repoTab.currentBranch || ''
+      }
+      
+      init()
+    }
   })
 </script>
