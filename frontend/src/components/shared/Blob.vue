@@ -233,6 +233,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
   import { format } from 'timeago.js'
   import MarkdownViewer from './viewers/MarkdownViewer.vue'
   import TextViewer from './viewers/TextViewer.vue'
@@ -253,6 +254,8 @@
     canWrite: Boolean
   })
 
+  const router = useRouter()
+  const route = useRoute()
   const { t } = useI18n()
   const { repoTab, setRepoTab } = useRepoTabStore()
   const breadcrumb = ref([])
@@ -312,42 +315,117 @@
   }
 
   const goToNamespace = () => {
-    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`"
+    const query = {
+      tab: 'files',
+      actionName: 'files'
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'files',
       lastPath: ''
-    }) 
+    })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const goToBreadcrumb = (path, index) => {
-    // :href="`/${prefixPath}/${namespacePath}/${
-    // index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`"
     const pathTmp = path.includes('/') ? path?.slice(1) : path
-    setRepoTab({
-      actionName: index === breadcrumb.value.length - 1 ? 'blob' : 'files',
-      lastPath: pathTmp
-    }) 
-    fetchFileContent()
+    const isLastItem = index === breadcrumb.value.length - 1
+    
+    if (isLastItem) {
+      // 如果是最后一个面包屑项（当前文件），导航到blob页面
+      const query = {
+        tab: 'files',
+        actionName: 'blob',
+        path: pathTmp
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
+      
+      setRepoTab({
+        actionName: 'blob',
+        lastPath: pathTmp
+      })
+      
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
+      
+      fetchFileContent()
+    } else {
+      // 否则导航到文件列表页面
+      const query = {
+        tab: 'files',
+        actionName: 'files',
+        path: pathTmp
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
+      
+      setRepoTab({
+        actionName: 'files',
+        lastPath: pathTmp
+      })
+      
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
+    }
   }
 
   const goToEditFile = () => {
-    // :href="`/${prefixPath}/${namespacePath}/edit/${currentBranch}/${currentPath}`"
+    const query = {
+      tab: 'files',
+      actionName: 'edit_file',
+      path: currentPath.value
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'edit_file',
       lastPath: currentPath.value
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const changeBranch = (branch) => {
-    // if (branch !== props.currentBranch) {
-    //   window.location.href = `/${apiPrefixPath}/${props.namespacePath}/blob/${branch}/${props.currentPath}`
-    // }
     currentBranch.value = branch
+    const query = {
+      tab: 'files',
+      actionName: 'files'
+    }
+    if (branch) {
+      query.branch = branch
+    }
+    
     setRepoTab({
       currentBranch: branch,
       actionName: 'files',
       lastPath: ''
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+    
+    init()
   }
 
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
@@ -485,6 +563,10 @@
         }
       })
       .catch(() => {})
+  }
+
+  const init = () => {
+    fetchFileContent()
   }
 
   onMounted(() => {

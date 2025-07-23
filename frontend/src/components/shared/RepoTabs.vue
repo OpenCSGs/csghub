@@ -147,7 +147,7 @@
       </template>
       <template
         #files
-        v-if="repoTab.actionName === 'files'"
+        v-if="repoTab.actionName === 'files' || !repoTab.actionName"
       >
         <repo-files
           :current-path="repoTab.lastPath"
@@ -464,6 +464,28 @@
       tagList.value = tagArray.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
     }
   }
+
+  // 监听路由变化，确保 actionName 状态正确
+  watch(() => route.query, (newQuery) => {
+    if (newQuery.tab === 'files') {
+      const actionName = newQuery.actionName || 'files'
+      if (actionName !== repoTab.actionName) {
+        setRepoTab({
+          actionName: actionName,
+          lastPath: newQuery.path || '',
+          currentBranch: newQuery.branch || repoTab.currentBranch
+        })
+      }
+    } else if (newQuery.tab === 'community') {
+      const actionName = newQuery.actionName || 'list'
+      if (actionName !== repoTab.communityActionName) {
+        setRepoTab({
+          communityActionName: actionName,
+          discussionId: newQuery.discussionId || '',
+        })
+      }
+    }
+  }, { deep: true })
 </script>
 
 <style>

@@ -159,14 +159,36 @@
     }
   }
 
+  const getUrlParams = () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    return {
+      tab: urlParams.get('tab'),
+      actionName: urlParams.get('actionName'),
+      path: urlParams.get('path'),
+      branch: urlParams.get('branch')
+    }
+  }
+
   onMounted(() => {
-    fetchRepoDetail()
-    fetchLastCommit()
-    setRepoTab({
+    // 1. 从URL参数获取状态
+    const urlParams = getUrlParams()
+    
+    // 2. 初始化store，优先使用URL参数
+    const initialData = {
       repoType: props.repoType,
       namespace: props.namespace,
       repoName: props.repoName,
-    })
+      tab: urlParams.tab || props.defaultTab || 'summary',
+      actionName: urlParams.actionName || props.actionName || 'files',
+      lastPath: urlParams.path || props.currentPath || '',
+      currentBranch: urlParams.branch || props.currentBranch || ''
+    }
+    
+    setRepoTab(initialData)
+    
+    // 3. 获取数据
+    fetchRepoDetail()
+    fetchLastCommit()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

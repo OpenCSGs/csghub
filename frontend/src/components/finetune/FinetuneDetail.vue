@@ -203,12 +203,25 @@
     return validTabs.value.includes(tab)
   }
 
+  // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
+  watch(() => route.query.tab, (newTab) => {
+    if (newTab && isValidTab(newTab) && newTab !== activeName.value) {
+      activeName.value = newTab
+      setRepoTab({
+        tab: newTab,
+        actionName: 'files',
+        lastPath: ''
+      })
+      tabChange({ paneName: newTab })
+    }
+  })
+
   const tabChange = (tab) => {
     let tabName = tab.paneName
     
     if (!isValidTab(tabName)) {
       tabName = getDefaultTab()
-      router.replace({
+      router.push({
         path: `/finetune/${props.namespace}/${props.modelName}/${props.finetuneName}/${props.finetuneId}`,
         query: { tab: tabName }
       })
@@ -225,7 +238,7 @@
       repoName: props.modelName
     })
 
-    router.replace({
+    router.push({
       path: `/finetune/${props.namespace}/${props.modelName}/${props.finetuneName}/${props.finetuneId}`,
       query: {
         tab: tabName

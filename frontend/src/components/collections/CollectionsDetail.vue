@@ -99,7 +99,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onBeforeMount, computed, provide } from 'vue'
+  import { ref, onBeforeMount, computed, provide, watch } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import CollectionsRepoList from './CollectionsRepoList.vue'
   import CollectionsSettings from './CollectionsSettings.vue'
@@ -150,12 +150,25 @@
     return validTabs.value.includes(tab)
   }
 
+  // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
+  watch(() => route.query.tab, (newTab) => {
+    if (newTab && isValidTab(newTab) && newTab !== activeName.value) {
+      activeName.value = newTab
+      setRepoTab({
+        tab: newTab,
+        actionName: 'files',
+        lastPath: ''
+      })
+      tabChange({ paneName: newTab })
+    }
+  })
+
   const tabChange = (tab) => {
     let tabName = tab.paneName
     
     if (!isValidTab(tabName)) {
       tabName = getDefaultTab()
-      router.replace({
+      router.push({
         path: `/collections/${props.collectionsId}`,
         query: { tab: tabName }
       })
@@ -163,7 +176,7 @@
 
     activeName.value = tabName
 
-    router.replace({
+    router.push({
       path: `/collections/${props.collectionsId}`,
       query: {
         tab: tabName
