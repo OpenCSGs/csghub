@@ -50,6 +50,7 @@
   import DiscussionDetails from './DiscussionDetails.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { validateCommunityActionName } from '../../packs/utils'
 
   const props = defineProps({
     repoType: String,
@@ -78,9 +79,9 @@
   })
 
   // 监听路由变化
-  watch(() => route.query, (newQuery) => {
-    if (newQuery.tab === 'community') {
-      const actionName = newQuery.actionName || 'list'
+  watch([() => route.query, () => props.repoPath], ([newQuery, newPath]) => {
+    if (newQuery.tab === 'community' && newPath) {
+      const actionName = validateCommunityActionName(newQuery.actionName)
       const discussionIdParam = newQuery.discussionId || ''
       
       if (actionName !== repoTab.communityActionName || discussionIdParam !== repoTab.discussionId) {
@@ -162,13 +163,14 @@
   }
 
   const changeFlag = (flag) => {
+    const validatedFlag = validateCommunityActionName(flag)
     const query = {
       tab: 'community',
-      actionName: flag
+      actionName: validatedFlag
     }
     
     setRepoTab({
-      communityActionName: flag,
+      communityActionName: validatedFlag,
       discussionId: ''
     })
     
@@ -178,7 +180,7 @@
     })
     
     // 如果切换到列表页面，重新获取讨论列表
-    if (flag === 'list') {
+    if (validatedFlag === 'list') {
       getDiscussion()
     }
   }
@@ -281,7 +283,7 @@
     const urlDiscussionId = params.get('discussionId')
     
     if (urlTab === 'community') {
-      const actionName = urlActionName || 'list'
+      const actionName = validateCommunityActionName(urlActionName)
       
       setRepoTab({
         communityActionName: actionName,
@@ -293,14 +295,10 @@
         // 直接获取讨论详情，不依赖讨论列表
         fetchDiscussionDetail(urlDiscussionId)
         // 同时获取讨论列表（用于其他功能）
-        getDiscussion()
-      } else if (actionName === 'list') {
-        // 确保列表页面一定会获取数据
-        getDiscussion()
+        if (props.repoPath) {
+          getDiscussion()
+        }
       }
-    } else {
-      // 默认情况下也获取讨论列表
-      getDiscussion()
     }
   })
 </script>

@@ -43,7 +43,7 @@
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
-  import { ToUnauthorizedPage } from '@/packs/utils'
+  import { ToNotFoundPage, ToUnauthorizedPage, validateTab, validateActionName } from '@/packs/utils'
   import { storeToRefs } from 'pinia'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
@@ -162,8 +162,8 @@
   const getUrlParams = () => {
     const urlParams = new URLSearchParams(window.location.search)
     return {
-      tab: urlParams.get('tab'),
-      actionName: urlParams.get('actionName'),
+      tab: validateTab(urlParams.get('tab')),
+      actionName: validateActionName(urlParams.get('actionName')),
       path: urlParams.get('path'),
       branch: urlParams.get('branch')
     }

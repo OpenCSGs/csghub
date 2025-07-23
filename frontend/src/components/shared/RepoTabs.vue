@@ -314,8 +314,10 @@
   import { safeJsonParse } from '../../packs/utils'
   import McpSchema from '../mcp/McpSchema.vue'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
-  const { t } = useI18n()
+  import { validateActionName, validateCommunityActionName } from '../../packs/utils'
 
+
+  const { t } = useI18n()
   const props = defineProps({
     repoDetail: Object,
     // currentBranch: String,
@@ -468,7 +470,7 @@
   // 监听路由变化，确保 actionName 状态正确
   watch(() => route.query, (newQuery) => {
     if (newQuery.tab === 'files') {
-      const actionName = newQuery.actionName || 'files'
+      const actionName = validateActionName(newQuery.actionName)
       if (actionName !== repoTab.actionName) {
         setRepoTab({
           actionName: actionName,
@@ -477,7 +479,7 @@
         })
       }
     } else if (newQuery.tab === 'community') {
-      const actionName = newQuery.actionName || 'list'
+      const actionName = validateCommunityActionName(newQuery.actionName)
       if (actionName !== repoTab.communityActionName) {
         setRepoTab({
           communityActionName: actionName,

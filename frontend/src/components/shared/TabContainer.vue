@@ -98,6 +98,7 @@
   import { useRouter, useRoute } from 'vue-router'
   import { useI18n } from 'vue-i18n'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { validateTab, validateActionName, validateCommunityActionName } from '../../packs/utils'
 
   const { t } = useI18n()
   const { repoTab, setRepoTab } = useRepoTabStore()
@@ -180,22 +181,22 @@
 
   // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
   watch(() => route.query, (newQuery) => {
-    const newTab = newQuery.tab
-    if (newTab && isValidTab(newTab) && newTab !== activeName.value) {
+    const newTab = validateTab(newQuery.tab)
+    if (newTab && newTab !== activeName.value) {
       activeName.value = newTab // 立即更新 activeName
       
       // 如果是 files tab，处理 actionName 相关参数
       if (newTab === 'files') {
         setRepoTab({
           tab: newTab,
-          actionName: newQuery.actionName || 'files',
+          actionName: validateActionName(newQuery.actionName),
           lastPath: newQuery.path || '',
           currentBranch: newQuery.branch || repoTab.currentBranch
         })
       } else if (newTab === 'community') {
         setRepoTab({
           tab: newTab,
-          communityActionName: newQuery.actionName || 'list',
+          communityActionName: validateCommunityActionName(newQuery.actionName),
           discussionId: newQuery.discussionId || '',
         })
       } else {
@@ -209,6 +210,16 @@
   }, { deep: true })
 
   const handleTabChange = (tab, type) => {
+    // 验证tab参数
+    const validatedTab = validateTab(tab)
+    if (validatedTab !== tab) {
+      router.push({
+        path: `/${props.repoType}s/${props.path}`,
+        query: { tab: validatedTab }
+      })
+      return
+    }
+
     if (!isValidTab(tab)) {
       tab = getDefaultTab()
       router.push({
@@ -236,7 +247,7 @@
         query.branch = repoTab.currentBranch || ''
       } else {
         // 保留URL中的actionName参数，如果没有则默认为'files'
-        query.actionName = urlActionName || 'files'
+        query.actionName = validateActionName(urlActionName)
         
         const currentUrlPath = params.get('path')
         const urlBranch = params.get('branch')
@@ -254,7 +265,7 @@
         query.actionName = 'list'
       } else {
         // 如果已经在community tab，保留现有的actionName
-        query.actionName = urlActionName || 'list'
+        query.actionName = validateCommunityActionName(urlActionName)
       }
       
       const urlDiscussionId = params.get('discussionId')
@@ -277,7 +288,7 @@
 
   onMounted(() => {
     const params = new URLSearchParams(window.location.search)
-    const urlTab = params.get('tab')
+    const urlTab = validateTab(params.get('tab'))
     const urlActionName = params.get('actionName')
     const urlPath = params.get('path')
     const urlBranch = params.get('branch')
@@ -288,7 +299,7 @@
       if (urlTab === 'files' && urlActionName) {
         setRepoTab({
           tab: urlTab,
-          actionName: urlActionName,
+          actionName: validateActionName(urlActionName),
           lastPath: urlPath || '',
           currentBranch: urlBranch || repoTab.currentBranch
         })
@@ -296,7 +307,7 @@
       } else if (urlTab === 'community') {
         setRepoTab({
           tab: urlTab,
-          communityActionName: urlActionName || 'list',
+          communityActionName: validateCommunityActionName(urlActionName),
           discussionId: urlDiscussionId || '',
         })
         activeName.value = urlTab

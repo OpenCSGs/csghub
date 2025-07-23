@@ -109,6 +109,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { storeToRefs } from 'pinia'
   import { useRoute, useRouter } from 'vue-router'
+  import { validateTab } from '../../packs/utils'
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
@@ -152,19 +153,20 @@
 
   // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
   watch(() => route.query.tab, (newTab) => {
-    if (newTab && isValidTab(newTab) && newTab !== activeName.value) {
-      activeName.value = newTab
+    const validatedTab = validateTab(newTab)
+    if (validatedTab && isValidTab(validatedTab) && validatedTab !== activeName.value) {
+      activeName.value = validatedTab
       setRepoTab({
-        tab: newTab,
+        tab: validatedTab,
         actionName: 'files',
         lastPath: ''
       })
-      tabChange({ paneName: newTab })
+      tabChange({ paneName: validatedTab })
     }
   })
 
   const tabChange = (tab) => {
-    let tabName = tab.paneName
+    let tabName = validateTab(tab.paneName)
     
     if (!isValidTab(tabName)) {
       tabName = getDefaultTab()
@@ -204,7 +206,7 @@
 
     // 处理URL query参数中的tab
     const params = new URLSearchParams(window.location.search)
-    const urlTab = params.get('tab')
+    const urlTab = validateTab(params.get('tab'))
     if (urlTab && isValidTab(urlTab)) {
       tabChange({ paneName: urlTab })
     } else {
