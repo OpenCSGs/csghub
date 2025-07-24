@@ -239,11 +239,15 @@
             {{ $t('application_spaces.env.title') }}
           </div>
           <div class="text-sm font-light text-gray-600">
-            {{ $t('application_spaces.env.placeholder2') }}
+            {{ $t('application_spaces.env.settingsPlaceholder') }}
           </div>
         </div>
         <div class="flex flex-col gap-2 !w-[512px] sm:!w-full">
-          <ApplicationSpaceEnvEditor v-model="envJSON" :hideTitle="true" />
+          <ApplicationSpaceEnvEditor
+            v-model:env="envJSON"
+            v-model:secrets="secretJSON"
+            :hideTitle="true"
+          />
           <CsgButton
             @click="updateEnv"
             class="btn btn-secondary-gray btn-sm"
@@ -469,6 +473,7 @@
         uploadCoverImageUrl: '/images/default_cover_image.png',
         imageUploaded: false,
         envJSON:'',
+        secretJSON:'',
         t: useI18n()
       }
     },
@@ -679,9 +684,17 @@
         } else {
           const body = data.value
           const envJSON = body?.data?.env ?? ''
+          const secretJSON = body?.data?.secrets ?? ''
           if (envJSON) {
             try {
               this.envJSON = envJSON
+            } catch (error) {
+              console.log(error)
+            }
+          }
+          if (secretJSON) {
+            try {
+              this.secretJSON = secretJSON
             } catch (error) {
               console.log(error)
             }
@@ -690,7 +703,7 @@
       },
 
       updateEnv() {
-        const payload = { env: this.envJSON }
+        const payload = { env: this.envJSON, secrets: this.secretJSON }
         this.updateApplicationSpace(payload,this.$t('application_spaces.env.title'))
       },
 

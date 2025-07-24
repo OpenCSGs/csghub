@@ -380,7 +380,10 @@
               :value="item.value" />
           </el-select>
         </el-form-item>
-        <ApplicationSpaceEnvEditor v-model="envJson" />
+        <ApplicationSpaceEnvEditor
+            v-model:env="envJson"
+            v-model:secrets="secretJson"
+          />
         <el-divider class="my-[18px]" />
         <el-form-item class="w-full">
           <PublicAndPrivateRadioGroup
@@ -422,6 +425,7 @@
   })
 
   const envJson = ref('')
+  const secretJson = ref('')
   const userStore = useUserStore()
   const dataFormRef = ref(null)
   const imageUploaded = ref(false)
@@ -684,6 +688,9 @@
     }
     if(envJson){
       params.env = envJson.value
+    }
+    if(secretJson){
+      params.secrets = secretJson.value
     }
     if (shouldShowDriverVersion.value) {
       params.driver_version = dataForm.value.driver_version

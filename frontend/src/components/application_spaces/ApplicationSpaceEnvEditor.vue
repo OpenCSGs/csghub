@@ -6,24 +6,23 @@
     >
       {{ $t('application_spaces.env.title') }}
     </div>
-    <el-tooltip
-      v-if="envList.length >= 5"
-      :content="$t('application_spaces.env.placeholder')"
-      placement="top"
-    >
-      <div class="flex gap-1 btn btn-link-color btn-sm text-gray-400 cursor-not-allowed">
+    <div class="flex gap-4">
+      <div
+        class="flex gap-1 btn btn-link-color btn-sm"
+        @click="openAdd('env')"
+      >
         <SvgIcon name="space-env-plus" />{{
           $t('application_spaces.env.addEnv')
         }}
       </div>
-    </el-tooltip>
-
-    <div
-      v-else
-      class="flex gap-1 btn btn-link-color btn-sm"
-      @click="openAdd"
-    >
-      <SvgIcon name="space-env-plus" />{{ $t('application_spaces.env.addEnv') }}
+      <div
+        class="flex gap-1 btn btn-link-color btn-sm"
+        @click="openAdd('secret')"
+      >
+        <SvgIcon name="space-env-plus" />{{
+          $t('application_spaces.env.addSecret')
+        }}
+      </div>
     </div>
   </div>
 
@@ -43,18 +42,44 @@
         <CsgButton
           :name="$t('application_spaces.env.edit')"
           class="btn btn-secondary-gray btn-sm"
-          @click="openEdit(idx)"
+          @click="openEdit('env', idx)"
         />
         <CsgButton
           :name="$t('application_spaces.env.delete')"
           class="btn btn-secondary-gray btn-sm"
-          @click="remove(idx)"
+          @click="remove('env', idx)"
+        />
+      </div>
+    </div>
+  </div>
+  <div v-if="secretList.length">
+    <div
+      v-for="(item, idx) in secretList"
+      :key="item.key"
+      class="flex justify-between items-center px-6 py-2 mb-2 border border-gray-200 bg-gray-50 rounded-xl"
+    >
+      <div class="flex font-medium text-gray-700 text-sm truncate">
+        <SvgIcon
+          name="space-secret-icon"
+          class="mr-3"
+        />{{ item.key }}
+      </div>
+      <div class="flex space-x-2">
+        <CsgButton
+          :name="$t('application_spaces.env.replace')"
+          class="btn btn-secondary-gray btn-sm"
+          @click="openEdit('secret', idx)"
+        />
+        <CsgButton
+          :name="$t('application_spaces.env.delete')"
+          class="btn btn-secondary-gray btn-sm"
+          @click="remove('secret', idx)"
         />
       </div>
     </div>
   </div>
   <div
-    v-else
+    v-if="!envList.length && !secretList.length"
     class="py-4 border border-gray-200 border-dashed flex justify-center text-gray-600 text-sm font-light text-center rounded-lg"
   >
     <SvgIcon
@@ -80,7 +105,7 @@
     <div class="w-full relative">
       <div class="text-lg font-medium text-gray-900">{{ dialogTitle }}</div>
       <div class="text-sm font-light text-gray-600 mb-5">
-        {{ $t('application_spaces.env.placeholder2') }}
+        {{ dialogDesc }}
       </div>
       <el-form>
         <el-form-item
@@ -140,37 +165,64 @@
   const { t } = useI18n()
 
   const props = defineProps({
-    modelValue: String,
+    env: {
+      type: String,
+      default: ''
+    },
+    secrets: {
+      type: String,
+      default: ''
+    },
     hideTitle: {
       type: Boolean,
       default: false
     }
   })
-  const emit = defineEmits(['update:modelValue'])
+  const emit = defineEmits(['update:env', 'update:secrets'])
 
   const envList = ref([])
-  function fromString(str) {
+  const secretList = ref([])
+  function fromString(str, target) {
     try {
       const obj = JSON.parse(str || '{}')
-      envList.value = Object.entries(obj).map(([k, v]) => ({
+      target.value = Object.entries(obj).map(([k, v]) => ({
         key: k,
         value: String(v)
       }))
     } catch {
-      envList.value = []
+      target.value = []
     }
   }
-  fromString(props.modelValue)
-  watch(() => props.modelValue, fromString)
+
+  watch(
+    () => props.env,
+    (newVal) => {
+      fromString(newVal, envList)
+    },
+    { immediate: true }
+  )
+  watch(
+    () => props.secrets,
+    (newVal) => {
+      fromString(newVal, secretList)
+    },
+    { immediate: true }
+  )
 
   function syncToParent() {
-    const obj = {}
-    envList.value.forEach((i) => (obj[i.key] = i.value))
-    emit('update:modelValue', JSON.stringify(obj))
+    const envObj = {}
+    envList.value.forEach((i) => (envObj[i.key] = i.value))
+    emit('update:env', JSON.stringify(envObj))
+    const secretObj = {}
+    secretList.value.forEach((i) => {
+      secretObj[i.key] = i.value
+    })
+    emit('update:secrets', JSON.stringify(secretObj))
   }
 
-  function remove(idx) {
-    envList.value.splice(idx, 1)
+  function remove(type, idx) {
+    const list = type === 'env' ? envList.value : secretList.value
+    list.splice(idx, 1)
     syncToParent()
   }
 
@@ -178,9 +230,11 @@
   const dialogWidth = computed(() => (isMobile.value ? '95%' : '450'))
   const dialogVisible = ref(false)
   const dialogTitle = ref(t('application_spaces.env.addEnv'))
+  const dialogDesc = ref(t('application_spaces.env.placeholder2'))
   const editing = ref(false)
   const editIndex = ref(-1)
   const form = ref({ key: '', value: '' })
+  const formType = ref('env')
 
   const nameError = ref('')
   const valueError = ref('')
@@ -226,7 +280,8 @@
       nameError.value = t('application_spaces.env.validatePlaceholder2')
       return
     }
-    const duplicated = envList.value.some(
+    const list = formType.value === 'env' ? envList.value : secretList.value
+    const duplicated = list.some(
       (item, idx) =>
         item.key === key && idx !== (editing.value ? editIndex.value : -1)
     )
@@ -241,19 +296,40 @@
       : ''
   }
 
-  function openAdd() {
-    dialogTitle.value = t('application_spaces.env.addEnv')
+  function openAdd(type) {
+    formType.value = type
+    dialogTitle.value =
+      type === 'env'
+        ? t('application_spaces.env.addEnv')
+        : t('application_spaces.env.addSecret')
+    dialogDesc.value =
+      type === 'env'
+        ? t('application_spaces.env.placeholder2')
+        : t('application_spaces.env.placeholder3')
     editing.value = false
     form.value = { key: '', value: '' }
     nameError.value = ''
     valueError.value = ''
     dialogVisible.value = true
   }
-  function openEdit(idx) {
-    dialogTitle.value = t('application_spaces.env.editEnv')
+  function openEdit(type, idx) {
+    formType.value = type
+    dialogTitle.value =
+      type === 'env'
+        ? t('application_spaces.env.editEnv')
+        : t('application_spaces.env.editSecret')
+    dialogDesc.value =
+      type === 'env'
+        ? t('application_spaces.env.placeholder2')
+        : t('application_spaces.env.placeholder3')
     editing.value = true
     editIndex.value = idx
-    form.value = { ...envList.value[idx] }
+    const list = type === 'env' ? envList.value : secretList.value
+    if (type === 'secret') {
+      form.value = { key: list[idx].key, value: '' }
+    } else {
+      form.value = { ...list[idx] }
+    }
     nameError.value = ''
     valueError.value = ''
     dialogVisible.value = true
@@ -264,8 +340,13 @@
     validateValue()
     if (nameError.value || valueError.value) return
 
-    if (editing.value) envList.value[editIndex.value] = { ...form.value }
-    else envList.value.push({ ...form.value })
+    const list = formType.value === 'env' ? envList.value : secretList.value
+
+    if (editing.value) {
+      list[editIndex.value] = { ...form.value }
+    } else {
+      list.push({ ...form.value })
+    }
 
     dialogVisible.value = false
     syncToParent()
@@ -273,7 +354,6 @@
   function onResize() {
     isMobile.value = window.innerWidth < 450
   }
-
   onMounted(() => window.addEventListener('resize', onResize))
   onBeforeUnmount(() => window.removeEventListener('resize', onResize))
 </script>
