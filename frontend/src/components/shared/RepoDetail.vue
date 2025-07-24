@@ -43,7 +43,7 @@
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
-  import { ToUnauthorizedPage } from '@/packs/utils'
+  import { ToNotFoundPage, ToUnauthorizedPage, validateTab, validateActionName } from '@/packs/utils'
   import { storeToRefs } from 'pinia'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
@@ -159,14 +159,36 @@
     }
   }
 
+  const getUrlParams = () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    return {
+      tab: validateTab(urlParams.get('tab')),
+      actionName: validateActionName(urlParams.get('actionName')),
+      path: urlParams.get('path'),
+      branch: urlParams.get('branch')
+    }
+  }
+
   onMounted(() => {
-    fetchRepoDetail()
-    fetchLastCommit()
-    setRepoTab({
+    // 1. 从URL参数获取状态
+    const urlParams = getUrlParams()
+    
+    // 2. 初始化store，优先使用URL参数
+    const initialData = {
       repoType: props.repoType,
       namespace: props.namespace,
       repoName: props.repoName,
-    })
+      tab: urlParams.tab || props.defaultTab || 'summary',
+      actionName: urlParams.actionName || props.actionName || 'files',
+      lastPath: urlParams.path || props.currentPath || '',
+      currentBranch: urlParams.branch || props.currentBranch || ''
+    }
+    
+    setRepoTab(initialData)
+    
+    // 3. 获取数据
+    fetchRepoDetail()
+    fetchLastCommit()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

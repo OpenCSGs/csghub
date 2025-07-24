@@ -103,3 +103,34 @@ export const safeJsonParse = (str) => {
     return null
   }
 }
+
+export const formatAmount = (amount) => {
+  return parseFloat(amount / 100).toFixed(2)
+}
+
+// repo-detail 相关，query参数的校验，返回规范化后的参数对象，用于repo-detail组件
+export const validateTab = (tab, setRepoTab = null) => {
+  const validTabs = ['summary', 'files', 'analysis', 'logs', 'schema', 'community', 'billing', 'settings']
+  const isValid = validTabs.includes(tab)
+  
+  if (!isValid && setRepoTab) {
+    // 当tab无效时，重置相关字段
+    setRepoTab({
+      lastPath: '',
+      actionName: 'files',
+      currentPath: ''
+    })
+  }
+  
+  return isValid ? tab : 'summary'
+}
+
+export const validateActionName = (actionName) => {
+  const validActionNames = ['files', 'blob', 'new_file', 'edit_file', 'commits', 'commit', 'upload_file']
+  return validActionNames.includes(actionName) ? actionName : 'files'
+}
+
+export const validateCommunityActionName = (communityActionName) => {
+  const validCommunityActionNames = ['list', 'new', 'detail']
+  return validCommunityActionNames.includes(communityActionName) ? communityActionName : 'list'
+}

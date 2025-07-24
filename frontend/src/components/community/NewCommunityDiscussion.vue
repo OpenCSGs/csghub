@@ -84,7 +84,15 @@
         this.createDiscussion()
       },
       cancel() {
-        this.$emit('changeFlag', 'show')
+        // 清除表单数据
+        this.title = ''
+        this.desc = ''
+        this.titleError = ''
+        this.contentError = ''
+        
+        // 发出事件：切换状态并重新获取列表
+        this.$emit('changeFlag', 'list')
+        this.$emit('getDiscussion')
       },
       async createDiscussion() {
         let discussionCreateEndpoint = `/${this.repoType}s/${this.repoPath}/discussions`
@@ -125,7 +133,7 @@
         }
         const {data, error} = await useFetchApi(commentCreateEndpoint, commentOptions).json()
         if (data.value) {
-          this.$emit('changeFlag', 'show')
+          this.$emit('changeFlag', 'list')
           this.$emit('getDiscussion')
         } else {
           ElMessage.warning(error.value.msg)

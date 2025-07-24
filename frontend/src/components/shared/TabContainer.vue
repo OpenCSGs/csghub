@@ -2,7 +2,7 @@
   <div class="relative repo-tabs-child">
     <el-tabs
       v-model="activeName"
-      @tabClick="handleTabClick"
+      @tab-change="handleTabChange"
       :before-leave="handleBeforeLeave"
     >
       <!-- repo/endpoint summary -->
@@ -95,13 +95,15 @@
 
 <script setup>
   import { ref, computed, watch, inject, onMounted } from 'vue'
-  import { useRouter } from 'vue-router'
+  import { useRouter, useRoute } from 'vue-router'
   import { useI18n } from 'vue-i18n'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { validateTab, validateActionName, validateCommunityActionName } from '../../packs/utils'
 
   const { t } = useI18n()
   const { repoTab, setRepoTab } = useRepoTabStore()
   const router = useRouter()
+  const route = useRoute()
 
   const props = defineProps({
     defaultTab: String,
@@ -133,30 +135,25 @@
     return true
   });
 
-  const activeName = ref(repoTab.tab)
+  // 当前激活的tab名称
+  const activeName = ref('summary')  // 默认值
 
   const handleBeforeLeave = (newTab, oldTab) => {
     // 在这里记录上一个 tab 的位置
-    setRepoTab({
-      ...repoTab,
-      previousTab: oldTab
-    })
-    return true
+    // setRepoTab({
+    //   ...repoTab,
+    //   previousTab: oldTab
+    // })
+    // return true
   }
 
   watch(activeName, (newTab) => {
     if (repoTab.tab !== newTab) {
-      if(['summary', 'settings'].includes(newTab)) {
+      if(newTab === 'settings') {
         fetchRepoDetail()
       }
     }
   })
-
-  const handleTabClick = (tab) => {
-    activeName.value = tab.paneName
-    handleTabChange(tab.paneName)
-    emit('tabChange', tab.paneName)
-  }
 
   const validTabs = computed(() => {
     const baseTabs = ['summary', 'files', 'billing', 'community', 'settings']
@@ -182,44 +179,146 @@
     return validTabs.value.includes(tab)
   }
 
+  // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
+  watch(() => route.query, (newQuery) => {
+    const newTab = validateTab(newQuery.tab)
+    if (newTab && newTab !== activeName.value) {
+      activeName.value = newTab // 立即更新 activeName
+      
+      // 如果是 files tab，处理 actionName 相关参数
+      if (newTab === 'files') {
+        setRepoTab({
+          tab: newTab,
+          actionName: validateActionName(newQuery.actionName),
+          lastPath: newQuery.path || '',
+          currentBranch: newQuery.branch || repoTab.currentBranch
+        })
+      } else if (newTab === 'community') {
+        setRepoTab({
+          tab: newTab,
+          communityActionName: validateCommunityActionName(newQuery.actionName),
+          discussionId: newQuery.discussionId || '',
+        })
+      } else {
+        setRepoTab({
+          tab: newTab,
+          actionName: 'files',
+          lastPath: ''
+        })
+      }
+    }
+  }, { deep: true })
+
   const handleTabChange = (tab, type) => {
+    // 验证tab参数
+    const validatedTab = validateTab(tab)
+    if (validatedTab !== tab) {
+      router.push({
+        path: `/${props.repoType}s/${props.path}`,
+        query: { tab: validatedTab }
+      })
+      return
+    }
+
     if (!isValidTab(tab)) {
       tab = getDefaultTab()
-      router.replace({
+      router.push({
         path: `/${props.repoType}s/${props.path}`,
         query: { tab }
       })
+      return
     }
 
     const params = new URLSearchParams(window.location.search)
     const urlTab = params.get('tab')
-    if (tab === urlTab && type !== 'first') return
+
+    const query = { tab }
+    
+    if (tab === 'files') {
+      // 当切换到files tab时，需要确保有正确的actionName
+      const urlActionName = params.get('actionName')
+      const currentTab = params.get('tab')
+      
+      // 如果当前在community tab，切换到files时重置为默认的files状态
+      if (currentTab === 'community') {
+        query.actionName = 'files'
+        // 清除community相关的参数，使用默认的文件列表状态
+        query.path = ''
+        query.branch = repoTab.currentBranch || ''
+      } else {
+        // 保留URL中的actionName参数，如果没有则默认为'files'
+        query.actionName = validateActionName(urlActionName)
+        
+        const currentUrlPath = params.get('path')
+        const urlBranch = params.get('branch')
+        
+        if (currentUrlPath) query.path = currentUrlPath
+        if (urlBranch) query.branch = urlBranch
+      }
+    } else if (tab === 'community') {
+      // 处理社区讨论的URL参数
+      const urlActionName = params.get('actionName')
+      const currentTab = params.get('tab')
+      
+      // 如果当前在files tab，切换到community时重置actionName
+      if (currentTab === 'files' || !currentTab) {
+        query.actionName = 'list'
+      } else {
+        // 如果已经在community tab，保留现有的actionName
+        query.actionName = validateCommunityActionName(urlActionName)
+      }
+      
+      const urlDiscussionId = params.get('discussionId')
+      if (urlDiscussionId) query.discussionId = urlDiscussionId
+    }
 
     setRepoTab({
       tab,
-      actionName: 'files',
-      // currentBranch: tab === 'files' ? repoTab.currentBranch : '',
-      lastPath: ''
+      actionName: tab === 'files' ? (query.actionName || 'files') : 'files',
+      lastPath: tab === 'files' ? (query.path || '') : '',
+      communityActionName: tab === 'community' ? (query.actionName || 'list') : 'list',
+      discussionId: tab === 'community' ? (query.discussionId || '') : ''
     })
 
-    router.replace({
-      path: props.repoType === 'mcp' ? `/${props.repoType}/servers/${props.path}` :  `/${props.repoType}s/${props.path}`,
-      query: {
-        tab
-      }
+    router.push({
+      path: props.repoType === 'mcp' ? `/${props.repoType}/servers/${props.path}` : `/${props.repoType}s/${props.path}`,
+      query
     })
   }
 
   onMounted(() => {
-    // const urlTab = route.query?.tab
     const params = new URLSearchParams(window.location.search)
-    const urlTab = params.get('tab')
+    const urlTab = validateTab(params.get('tab'))
+    const urlActionName = params.get('actionName')
+    const urlPath = params.get('path')
+    const urlBranch = params.get('branch')
+    const urlDiscussionId = params.get('discussionId')
+    
     if (urlTab && isValidTab(urlTab)) {
-      handleTabChange(urlTab, 'first')
+      // 如果有URL参数，直接设置状态
+      if (urlTab === 'files' && urlActionName) {
+        setRepoTab({
+          tab: urlTab,
+          actionName: validateActionName(urlActionName),
+          lastPath: urlPath || '',
+          currentBranch: urlBranch || repoTab.currentBranch
+        })
+        activeName.value = urlTab
+      } else if (urlTab === 'community') {
+        setRepoTab({
+          tab: urlTab,
+          communityActionName: validateCommunityActionName(urlActionName),
+          discussionId: urlDiscussionId || '',
+        })
+        activeName.value = urlTab
+      } else {
+        activeName.value = urlTab
+      }
     } else {
-      handleTabChange(getDefaultTab())
+      // 使用props中的默认值
+      const defaultTab = props.defaultTab || getDefaultTab()
+      activeName.value = defaultTab
     }
-    activeName.value = urlTab || getDefaultTab()
   })
 </script>
 
