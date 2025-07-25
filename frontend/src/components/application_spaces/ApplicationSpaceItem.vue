@@ -1,7 +1,7 @@
 <template>
   <a
     :href="detailLink"
-    class="xl:w-full focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-lg overflow-hidden"
+    class="w-full focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md border border-gray-200 rounded-lg overflow-hidden"
     :style="`width: ${itemWidth};`"
   >
     <!-- Cover with Overlay -->
