@@ -12,10 +12,16 @@ vi.mock('@/packs/clipboard', () => ({
 vi.mock('@/packs/useFetchApi', () => ({
   default: vi.fn((url) => ({
     put: () => ({
-      json: () => Promise.resolve({ error: { value: null } })
+      json: () => Promise.resolve({ 
+        error: { value: null }, 
+        response: { value: { status: 200 } } 
+      })
     }),
     delete: () => ({
-      json: () => Promise.resolve({ error: { value: null } })
+      json: () => Promise.resolve({ 
+        error: { value: null }, 
+        response: { value: { status: 200 } } 
+      })
     })
   }))
 }))
@@ -25,7 +31,15 @@ const mockRepoDetailStore = {
   likes: 10,
   userLikes: false,
   updateLikes: vi.fn(),
-  updateUserLikes: vi.fn()
+  updateUserLikes: vi.fn(),
+  // 添加其他可能需要的属性
+  hfPath: null,
+  msPath: null,
+  csgPath: null,
+  path: null,
+  githubPath: null,
+  githubStarNum: 0,
+  failedReason: ''
 }
 
 vi.mock('@/stores/RepoDetailStore', () => ({
