@@ -48,7 +48,6 @@
 
 <script setup>
   import { ref, computed, onMounted, watch } from 'vue';
-  import { isSaas } from '../../packs/config'
   import useUserStore from '../../stores/UserStore.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
