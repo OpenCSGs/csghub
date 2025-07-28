@@ -237,7 +237,7 @@
   }
   :deep(.el-select__wrapper) {
     height: 46px;
-    box-shadow: none !important;
+    /* box-shadow: none !important; */
   }
   :deep(.el-upload--picture) {
     border: 0px;
