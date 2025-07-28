@@ -298,6 +298,10 @@
           message: t('organization.edit.deleteOrganizationSuccess'),
           type: 'success'
         });
+        
+        // 更新用户信息以反映组织删除
+        await userStore.fetchUserInfo()
+        
         // 删除成功后跳转到首页或组织列表
         window.location.href = '/'
       }

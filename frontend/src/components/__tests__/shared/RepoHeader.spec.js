@@ -32,7 +32,6 @@ const mockRepoDetailStore = {
   userLikes: false,
   updateLikes: vi.fn(),
   updateUserLikes: vi.fn(),
-  // 添加其他可能需要的属性
   hfPath: null,
   msPath: null,
   csgPath: null,
@@ -82,6 +81,9 @@ describe('RepoHeader', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockRepoDetailStore.isPrivate = false
+    // Reset the mock call count to avoid interference from watchers
+    mockRepoDetailStore.updateLikes.mockClear()
+    mockRepoDetailStore.updateUserLikes.mockClear()
   })
 
   it('mounts correctly', () => {
@@ -145,6 +147,10 @@ describe('RepoHeader', () => {
 
     expect(wrapper.text()).toContain('shared.likes')
     expect(wrapper.text()).toContain('10')
+
+    // 清除初始化时的调用记录
+    mockRepoDetailStore.updateLikes.mockClear()
+    mockRepoDetailStore.updateUserLikes.mockClear()
 
     // Click to like
     await wrapper.find('.flex.cursor-pointer.gap-1').trigger('click')

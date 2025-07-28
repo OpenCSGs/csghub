@@ -509,6 +509,19 @@
     // 等待DOM更新后检查
     setTimeout(checkOverflow, 0)
   })
+
+  // 添加 watch 来监听 props 变化
+  watch(() => props.totalLikes, (newValue) => {
+    if (newValue !== undefined) {
+      repoDetailStore.updateLikes(newValue)
+    }
+  }, { immediate: true })
+
+  watch(() => props.hasLike, (newValue) => {
+    if (newValue !== undefined) {
+      repoDetailStore.updateUserLikes(newValue)
+    }
+  }, { immediate: true })
 </script>
 
 <style scoped>
