@@ -12,6 +12,7 @@
     <!-- invite dialog -->
     <el-dialog
       v-model="dialogVisible"
+      @close="handleDialogClose"
       top="10vh"
       :style="{ borderRadius: '10px' }"
       width="450"
@@ -129,7 +130,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -262,8 +263,31 @@
       return true
     }
   }
+
+  const resetForm = () => {
+    userNameInput.value = ''
+    userRoleInput.value = 'read'
+    selectedUsers.value = []
+    userList.value = []
+    shouldShowUserList.value = false
+  }
+
+  const handleDialogClose = () => {
+    dialogVisible.value = false
+    resetForm()
+  }
+
   onMounted(() => {
     fetchOrgMemberList()
+  })
+
+  watch(dialogVisible, (val) => {
+    if (val) {
+      fetchOrgMemberList()
+    }
+    if (!val) {
+      resetForm()
+    }
   })
 </script>
 
