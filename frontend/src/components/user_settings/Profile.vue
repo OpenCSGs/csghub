@@ -25,7 +25,7 @@
         {{ $t('profile.organization')}}
       </div>
       <div v-if="hasOrg" class="flex gap-2 flex-wrap mt-4">
-        <p v-for="org in (isCurrentUser ? userStore.orgs : userOrgs)">
+        <p v-for="org in (isCurrentUser ? userStore.orgs : userOrgs)" :key="org.path">
           <el-tooltip
             :content="org.name"
             placement="top"
@@ -47,12 +47,14 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, onMounted, watch } from 'vue';
   import useUserStore from '../../stores/UserStore.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
+  import { useRoute } from 'vue-router'
 
   const userStore = useUserStore()
+  const route = useRoute()
 
   const props = defineProps({
     name: String
@@ -68,7 +70,8 @@
     return userId === userStore.uuid || userId === userStore.username
   })
 
-  const hasOrg = computed(() => isCurrentUser.value ? !!userStore.orgs : !!userOrgs.value)
+  const hasOrg = computed(() => isCurrentUser.value ? !!userStore.orgs && userStore.orgs.length > 0 : !!userOrgs.value && userOrgs.value.length > 0)
+
   const fetchUserInfo = async () => {
     const { data, error } = await useFetchApi(`/user/${props.name}`).json()
     if (data.value) {
@@ -82,11 +85,25 @@
     }
   }
 
-  onMounted(() => {
-    if(!isCurrentUser.value) {
+  const refreshProfile = () => {
+    if (isCurrentUser.value) {
+      userStore.fetchUserInfo()
+    } else {
       fetchUserInfo()
     }
+  }
+
+  onMounted(() => {
+    refreshProfile()
   })
+
+  // 监听路由变化，回退时刷新
+  watch(
+    () => route.fullPath,
+    () => {
+      refreshProfile()
+    }
+  )
 </script>
 
 <style scoped>
