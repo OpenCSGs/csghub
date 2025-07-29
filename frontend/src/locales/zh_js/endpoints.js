@@ -43,6 +43,7 @@ export const endpoints = {
     serverlessResource: "请输入部署名称",
     serverlessFramework: "请选择资源",
     serverlessDeploy: "请选择运行时框架",
+    autoShutdownTip: "超过1小时无操作将自动关闭",
   },
   settings: {
     stop: "暂停",

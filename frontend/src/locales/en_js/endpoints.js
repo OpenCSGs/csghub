@@ -43,6 +43,7 @@ export const endpoints = {
     serverlessResource: "Resource is required",
     serverlessFramework: "Runtime Framework is required",
     serverlessDeploy: "Deploy name is required",
+    autoShutdownTip: "Will automatically shut down after 1 hour of inactivity",
   },
   settings: {
     stop: "Stop",
