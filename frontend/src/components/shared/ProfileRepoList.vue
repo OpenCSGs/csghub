@@ -114,7 +114,8 @@
 </template>
 
 <script setup>
-  import { computed, ref, onMounted } from "vue"
+  import { computed, ref, onMounted, watch, onUnmounted } from "vue"
+  import { useRoute } from 'vue-router'
   import RepoItem from "./RepoItem.vue"
   import CollectionCards from "../collections/CollectionCards.vue"
   import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
@@ -128,6 +129,7 @@
     initiator: String
   })
 
+  const route = useRoute()
   const collections = ref({})
   const models = ref({})
   const datasets = ref({})
@@ -161,23 +163,43 @@
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
 
-  const getProfileRepoData = async () => {
-    const collectionsUrl = reposUrl("collections")
-    const modelsUrl = reposUrl("models")
-    const datasetsUrl = reposUrl("datasets")
-    const spacesUrl = reposUrl("spaces")
-    const codesUrl = reposUrl("codes")
-    const mcpsUrl = reposUrl("mcps")
+  const isLoading = ref(false)
+  const lastFetchTime = ref(0)
+  const FETCH_DEBOUNCE_TIME = 1000
 
-    const promises = [
-      fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
-      fetchData(modelsUrl, models, INITIAL_PER_PAGE, 1),
-      fetchData(datasetsUrl, datasets, INITIAL_PER_PAGE, 1),
-      fetchData(spacesUrl, spaces, INITIAL_PER_PAGE, 1),
-      fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1),
-      fetchData(mcpsUrl, mcps, INITIAL_PER_PAGE, 1),
-    ]
-    await Promise.all(promises)
+  const getProfileRepoData = async () => {
+    // 防止重复请求
+    if (isLoading.value) {
+      return
+    }
+    
+    isLoading.value = true
+    lastFetchTime.value = Date.now()
+    
+    try {
+      const collectionsUrl = reposUrl("collections")
+      const modelsUrl = reposUrl("models")
+      const datasetsUrl = reposUrl("datasets")
+      const spacesUrl = reposUrl("spaces")
+      const codesUrl = reposUrl("codes")
+      const promptsUrl = reposUrl("prompts")
+      const mcpsUrl = reposUrl("mcps")
+
+      const promises = [
+        fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
+        fetchData(modelsUrl, models, INITIAL_PER_PAGE, 1),
+        fetchData(datasetsUrl, datasets, INITIAL_PER_PAGE, 1),
+        fetchData(spacesUrl, spaces, INITIAL_PER_PAGE, 1),
+        fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1),
+        fetchData(mcpsUrl, mcps, INITIAL_PER_PAGE, 1),
+      ]
+      if (props.initiator === "profile") {
+        promises.push(fetchData(promptsUrl, prompts, INITIAL_PER_PAGE, 1))
+      }
+      await Promise.all(promises)
+    } finally {
+      isLoading.value = false
+    }
   }
 
   const viewMoreTargets = async (target) => {
@@ -304,5 +326,27 @@
 
   onMounted(() => {
     getProfileRepoData()
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
   })
+
+  onUnmounted(() => {
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
+  })
+
+  const handleVisibilityChange = () => {
+    if (!document.hidden) {
+      if (isLoading.value) {
+        return
+      }
+      
+      const now = Date.now()
+      if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
+        return
+      }
+      
+      // 重新获取数据
+      getProfileRepoData()
+    }
+  }
 </script>

@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-  import { onMounted, computed, provide, ref, watch } from 'vue'
+  import { onMounted, computed, provide, ref, watch, onUnmounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
@@ -66,6 +66,11 @@
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
   const lastCommit = ref({})
+
+  // 添加防抖相关状态
+  const isLoading = ref(false)
+  const lastFetchTime = ref(0)
+  const FETCH_DEBOUNCE_TIME = 1000 // 1秒防抖
 
   // const repo = ref({})
   // const tags = ref({
@@ -101,6 +106,14 @@
   })
 
   const fetchRepoDetail = async () => {
+    // 防止重复请求
+    if (isLoading.value) {
+      return
+    }
+    
+    isLoading.value = true
+    lastFetchTime.value = Date.now()
+    
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
 
     try {
@@ -124,6 +137,8 @@
       // ownerUrl.value = getOwnerUrl(repoData)
     } catch (error) {
       console.error('Failed to fetch repo detail:', error)
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -169,11 +184,28 @@
     }
   }
 
+  const handleVisibilityChange = () => {
+    if (!document.hidden) {
+      // 检查是否正在加载
+      if (isLoading.value) {
+        return
+      }
+      
+      // 检查距离上次请求的时间
+      const now = Date.now()
+      if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
+        return
+      }
+      
+      // 重新获取数据
+      fetchRepoDetail()
+      fetchLastCommit()
+    }
+  }
+
   onMounted(() => {
-    // 1. 从URL参数获取状态
     const urlParams = getUrlParams()
     
-    // 2. 初始化store，优先使用URL参数
     const initialData = {
       repoType: props.repoType,
       namespace: props.namespace,
@@ -186,9 +218,14 @@
     
     setRepoTab(initialData)
     
-    // 3. 获取数据
     fetchRepoDetail()
     fetchLastCommit()
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)
