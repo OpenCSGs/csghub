@@ -162,7 +162,6 @@
       // 只有详情请求成功后，才发起其他请求
       fetchOrgMemberList()
       if (userStore.isLoggedIn) {
-        getOrganizationVerify()
         currentUserRole()
       }
     }
