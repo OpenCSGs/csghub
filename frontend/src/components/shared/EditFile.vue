@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-4 my-[30px] md:px-5">
-    <div class="flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ repoName }}</div>
+  <div class="flex flex-col gap-4 my-8 md:px-5">
+    <div class="flex items-center gap-3">
+      <div class="whitespace-nowrap ">{{ repoName }}</div>
       <div class="text-gray-500">/</div>
       <el-input
         v-model="fileName"
@@ -10,7 +10,7 @@
         clearable
         :placeholder="$t('repo.edit.fileName')"
         @input="handleFileNameChange"
-        class="w-full h-[40px] text-gray-500"
+        class="w-full h-10 text-gray-500"
       />
     </div>
     <code-editor
@@ -36,7 +36,7 @@
         show-word-limit
         clearable
         :placeholder="commitTitlePlaceholder"
-        class="w-full h-[40px] text-gray-500"
+        class="w-full h-10 text-gray-500"
       />
     </div>
     <CommunityMDTextarea
@@ -45,13 +45,19 @@
       @inputChange="handleCommentInputChange"
     ></CommunityMDTextarea>
     <div>
-      <el-button
-        type="primary"
-        @click="updateFile"
+      <div class="flex items-center gap-2">
+        <CsgButton
+        class="btn btn-primary btn-md"
+        :name="$t('repo.edit.update')"
         :disabled="!commitValid || submiting"
-        >{{ $t('repo.edit.update') }}</el-button
-      >
-      <el-button @click="cancel">{{ $t('repo.edit.cancel') }}</el-button>
+        @click="updateFile"
+        />
+        <CsgButton
+          class="btn btn-secondary-gray btn-md"
+          :name="$t('repo.edit.cancel')"
+          @click="cancel"
+        />
+      </div>
     </div>
   </div>
 </template>
