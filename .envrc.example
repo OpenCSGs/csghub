@@ -1,15 +1,58 @@
+# General Configuration
+# Whether it is an on-premise deployment. `true` for on-premise, `false` for SaaS.
 export CSGHUB_PORTAL_ON_PREMISE=true
+# Whether to enable sensitive content checking.
 export CSGHUB_PORTAL_SENSITIVE_CHECK=false
-export CSGHUB_PORTAL_STARHUB_BASE_URL=http://localhost:8080
-export CSGHUB_PORTAL_STARHUB_API_KEY=f3a7b9c1d6e5f8e2a1b5d4f9e6a2b8d7c3a4e2b1d9f6e7a8d2c5a7b4c1e3f5b8a1d4f9b7d6e2f8a5d3b1e7f9c6a8b2d1e4f7d5b6e9f2a4b3c8e1d7f995hd82hf
+# Whether to force the use of HTTPS in site URLs.
 export CSGHUB_PORTAL_ENABLE_HTTPS=true
+# The listening port for the Portal service.
+export CSGHUB_PORTAL_SERVER_PORT=8090
+# A comma-separated list of superuser usernames.
+export CSGHUB_PORTAL_SUPER_USERS=
+
+# csghub-server API Configuration
+# The URL of the csghub-server service.
+# https://github.com/OpenCSGs/csghub-server
+export CSGHUB_PORTAL_STARHUB_BASE_URL=http://localhost:8080
+# The API key for accessing the csghub-server API.
+export CSGHUB_PORTAL_STARHUB_API_KEY=f3a7b9c1d6e5f8e2a1b5d4f9e6a2b8d7c3a4e2b1d9f6e7a8d2c5a7b4c1e3f5b8a1d4f9b7d6e2f8a5d3b1e7f9c6a8b2d1e4f7d5b6e9f2a4b3c8e1d7f995hd82hf
+
+# Database Configuration
+# The Data Source Name (DSN) for the database connection.
 export CSGHUB_PORTAL_DATABASE_DSN=postgresql://postgres:postgres@localhost:5432/csghub_development?sslmode=disable
+# The type of database. Possible values are `pg` (PostgreSQL) or `sqlite`.
 export CSGHUB_PORTAL_DATABASE_DIALECT=pg
+
+# Authentication Configuration
+# The URL to the signup page of an external authentication provider.
 export CSGHUB_PORTAL_SIGNUP_URL=
+# The URL to the login page of an external authentication provider.
 export CSGHUB_PORTAL_LOGIN_URL=
-export CSGHUB_PORTAL_S3_ENABLE_SSL=true
-export CSGHUB_PORTAL_S3_REGION=
-export CSGHUB_PORTAL_S3_ACCESS_KEY_ID=
-export CSGHUB_PORTAL_S3_ACCESS_KEY_SECRET=
-export CSGHUB_PORTAL_S3_BUCKET=
+
+# Public S3 Storage Configuration
+# The endpoint for the S3 service.
 export CSGHUB_PORTAL_S3_ENDPOINT=
+# Whether to use SSL for the S3 endpoint.
+export CSGHUB_PORTAL_S3_ENABLE_SSL=true
+# The region where the S3 bucket is located.
+export CSGHUB_PORTAL_S3_REGION=
+# The access key ID for S3.
+export CSGHUB_PORTAL_S3_ACCESS_KEY_ID=
+# The secret access key for S3.
+export CSGHUB_PORTAL_S3_ACCESS_KEY_SECRET=
+# The name of the S3 bucket for public files.
+export CSGHUB_PORTAL_S3_BUCKET=
+
+# Private S3 Storage Configuration
+# The endpoint for the private S3 service.
+export CSGHUB_PORTAL_PRIVATE_S3_ENDPOINT=
+# Whether to use SSL for the private S3 endpoint.
+export CSGHUB_PORTAL_PRIVATE_S3_ENABLE_SSL=false
+# The region where the private S3 bucket is located.
+export CSGHUB_PORTAL_PRIVATE_S3_REGION=
+# The access key ID for the private S3.
+export CSGHUB_PORTAL_PRIVATE_S3_ACCESS_KEY_ID=
+# The secret access key for the private S3.
+export CSGHUB_PORTAL_PRIVATE_S3_ACCESS_KEY_SECRET=
+# The name of the S3 bucket for private files.
+export CSGHUB_PORTAL_PRIVATE_S3_BUCKET=

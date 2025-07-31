@@ -2,15 +2,15 @@
   <div class="border border-gray-200 rounded-lg bg-gray-100">
     <div class="flex text-sm rounded-t-lg leading-[22px]">
       <div
-        class="px-5 py-2 rounded-tl-lg whitespace-nowrap border-r"
-        :class="activeTab == 'Edit' ? 'bg-white' : 'border-b'"
+        class="px-5 py-2 rounded-tl-lg whitespace-nowrap border-r text-sm font-medium"
+        :class="activeTab == 'Edit' ? 'bg-white text-brand-700' : 'border-b text-gray-700'"
         @click="activeTab = 'Edit'"
       >
         {{ $t('community.MD.edit') }}
       </div>
       <div
-        class="px-5 py-2 whitespace-nowrap border-r"
-        :class="activeTab == 'Preview' ? 'bg-white' : 'border-b'"
+        class="px-5 py-2 whitespace-nowrap border-r text-sm font-medium"
+        :class="activeTab == 'Preview' ? 'bg-white text-brand-700' : 'border-b text-gray-700'"
         @click="activeTab = 'Preview'"
       >
       {{ $t('community.MD.preview') }}
@@ -28,7 +28,7 @@
                 cols="10"
                 @input="handleInput"
                 v-model="theDesc"
-                class="w-full text-gray-500 text-md mb-2 p-2 border border-gray-300 shadow-xs rounded-md focus:outline-none focus:ring-0.5 focus:border-brand-300"
+                class="w-full text-gray-500 text-sm mb-2 p-2 border border-gray200 rounded-sm focus:outline-none focus:ring-0.5 focus:border-brand-300"
                 :placeholder="placeholder || $t('community.MD.default')"
       ></textarea>
       <div class="flex items-center gap-2 text-gray-500 text-sm leading-5">

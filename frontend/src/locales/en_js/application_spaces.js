@@ -118,7 +118,8 @@ export const application_spaces = {
     publicInfo: ", visible to anyone on the internet.",
     needName: "Please provide name first",
     needDesc: "Please provide description first",
-    replaceCoverImage: "Replace the cover image"
+    replaceCoverImage: "Replace the cover image",
+    updateSuccess: "Successfully updated {field}",
   },
   download: "Download Space",
   downloadSpace: "Download space data",
@@ -134,5 +135,29 @@ export const application_spaces = {
     buildingFailed: 'Building Failed',
     deployFailed: 'Deploy Failed',
     runtimeError: 'Runtime Error'
+  },
+  env: {
+    title: 'Variables & Secrets (Optional)',
+    addEnv: 'Add Public Variable',
+    addSecret: 'Add Secret Variable',
+    editEnv: 'Edit Public Variable',
+    editSecret: 'Edit Secret Variable',
+    placeholder: 'To ensure performance, up to 5 variables can be set',
+    empty: 'No variables or secrets available',
+    edit: 'Edit',
+    replace: 'Replace',
+    delete: 'Delete',
+    settingsPlaceholder: 'Use environment variables to hide sensitive information and avoid exposing it in plaintext in files',
+    placeholder2: 'Used to store non-sensitive configuration items. Visible to everyone and will be retained when the Space is copied',
+    placeholder3: 'Used to store sensitive information like API keys. Only visible to you, cannot be viewed after being set, and will not be included in copied Spaces',
+    name: 'Name',
+    value: 'Value',
+    cancel: 'Cancel',
+    save: 'Save',
+    validatePlaceholder: 'Variable names must start with a letter or underscore and contain only letters, numbers, and underscores',
+    validatePlaceholder2: 'This variable name is reserved by the system',
+    validatePlaceholder3: 'This variable name already exists',
+    validatePlaceholder4: 'Variable value must not contain line breaks or control characters',
   }
+  
 }

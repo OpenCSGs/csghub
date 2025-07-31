@@ -9,7 +9,8 @@ vi.mock('vue-router', () => ({
     query: { tab: 'page' }
   }),
   useRouter: () => ({
-    replace: vi.fn()
+    replace: vi.fn(),
+    push: vi.fn()  // 添加这一行
   })
 }));
 

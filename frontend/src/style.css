@@ -96,6 +96,50 @@ body {
   background-color: #EAECF0 !important;
 }
 
+/* Element Plus Select 下拉框样式 */
+.el-popper {
+  border-radius: 12px !important;
+  border: 1px solid #EAECF0 !important;
+}
+
+/* 隐藏下拉框箭头 */
+.el-popper__arrow {
+  display: none !important;
+}
+
+  .el-select-dropdown__item {
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    margin: 2px 6px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    color: #101828 !important;
+    transition: all 0.2s ease !important;
+  }
+
+.el-select-dropdown__item:hover {
+  background-color: #F9FAFB !important;
+  color: #101828 !important;
+}
+
+.el-select-dropdown__item.is-selected {
+  background-color: #F9FAFB !important;
+  color: #3250BD !important;
+  font-weight: 400 !important;
+}
+
+.el-select-dropdown__item.is-disabled {
+  color: #C1C7CD !important;
+  background-color: transparent !important;
+  cursor: not-allowed !important;
+}
+
+/* 下拉框容器样式 */
+.el-select-dropdown {
+  border-radius: 8px !important;
+  border: 1px solid #EAECF0 !important;
+}
+
 img, video {
   max-width: unset !important;
 }

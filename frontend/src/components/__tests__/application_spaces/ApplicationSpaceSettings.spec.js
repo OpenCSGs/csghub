@@ -57,7 +57,7 @@ const createWrapper = (props = {}) => {
     },
     global: {
       mocks: {
-        $t: (key) => key
+        $t: (key, params) => key === 'application_spaces.edit.updateSuccess' ? 'Success' : key
       },
       provide: {
         fetchRepoDetail: mockFetchRepoDetail
@@ -84,14 +84,14 @@ describe('ApplicationSpaceSettings', () => {
   it('updates application space nickname when button is clicked', async () => {
     const wrapper = createWrapper()
     await wrapper.setData({ theApplicationSpaceNickname: 'New Name' })
-    await wrapper.find('button[data-test="update-nickname"]').trigger('click')
+    await wrapper.find('[data-test="update-nickname"]').trigger('click')
     expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 
   it('update application space description when button is clicked', async () => {
     const wrapper = createWrapper()
     await wrapper.setData({ theApplicationSpaceDesc: 'New Description' })
-    await wrapper.find('button[data-test="update-description"]').trigger('click')
+    await wrapper.find('[data-test="update-description"]').trigger('click')
     expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 })

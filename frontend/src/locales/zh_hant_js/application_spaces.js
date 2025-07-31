@@ -117,7 +117,8 @@ export const application_spaces = {
     publicInfo: "， 任何網際網路上的人都可以看到此應用空間。",
     needName: "請先提供應用空間別名",
     needDesc: "請先提供應用空間介紹",
-    replaceCoverImage: "更新封面圖片"
+    replaceCoverImage: "更新封面圖片",
+    updateSuccess: "更新{field}成功",
   },
   download: "下載應用空間",
   downloadSpace: "下載應用空間數據",
@@ -133,5 +134,28 @@ export const application_spaces = {
     buildingFailed: '構建失敗',
     deployFailed: '部署失敗',
     runtimeError: '執行報錯'
-  }
+  },
+  env: {
+    title: '變數與金鑰（可選）',
+    addEnv: '新增公開變數',
+    addSecret: '新增私密變數',
+    editEnv: '編輯公開變數',
+    editSecret: '編輯私密變數',
+    placeholder: '為確保執行效能，最多僅支援設定 5 個變數',
+    empty: '暫無變數與金鑰',
+    edit: '編輯',
+    replace: '替換',
+    delete: '刪除',
+    settingsPlaceholder: '使用環境變數隱藏敏感資訊，避免在檔案中以明文顯示',
+    placeholder2: '用於儲存非敏感的配置項目，所有人可見，會在被複製的 Space 中自動保留',
+    placeholder2: '用於儲存 API 金鑰等敏感資訊，僅你可見，設定後無法查看，也不會出現在複製的 Space 中',
+    name: '名稱',
+    value: '變數值',
+    cancel: '取消',
+    save: '儲存',
+    validatePlaceholder: '變數名稱只能由字母、數字與底線組成，且不得以數字開頭',
+    validatePlaceholder2: '變數名稱不得使用系統保留名稱',
+    validatePlaceholder3: '該變數名稱已存在',
+    validatePlaceholder4: '變數值不得包含換行符號或控制字元',
+  }  
 }

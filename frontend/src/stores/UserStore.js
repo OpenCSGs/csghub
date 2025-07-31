@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import useFetchApi from "@/packs/useFetchApi"
 import { useCookies } from 'vue3-cookies'
+import { clearCookies } from '@/packs/auth'
 
 const persistKey = 'user-store'
 
@@ -61,6 +63,18 @@ const useUserStore = defineStore('User', () => {
     initialized.value = initializedData
   }
 
+  async function fetchUserInfo() {
+    if (!uuid.value) return
+    const { data, error } = await useFetchApi(`/user/${uuid.value}?type=uuid`).json()
+    if (data.value) {
+      await initialize(data.value.data)
+    } else {
+      clearCookies()
+      clearStore()
+      window.location.href = '/'
+    }
+  }
+
   return {
     username,
     nickname,
@@ -84,6 +98,7 @@ const useUserStore = defineStore('User', () => {
     refreshCanChangeUsernameCookie,
     clearStore,
     updateInitalized,
+    fetchUserInfo,
     timestamp
   }
 }, {

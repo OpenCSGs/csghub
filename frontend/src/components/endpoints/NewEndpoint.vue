@@ -19,10 +19,10 @@
         :model="dataForm"
         :rules="rules"
         :validate-on-rule-change="false"
-        class="w-full flex flex-col gap-[14px]"
+        class="w-full flex flex-col gap-4"
         label-position="top"
       >
-        <div class="w-full flex md:flex-col gap-[16px] items-center">
+        <div class="w-full flex md:flex-col gap-4 items-start">
           <el-form-item
             class="w-full"
             :label="t('endpoints.new.name')"
@@ -74,7 +74,7 @@
             />
           </el-form-item>
         </div>
-        <div class="w-full flex md:flex-col gap-[16px] items-center">
+        <div class="w-full flex md:flex-col gap-4 items-start">
           <el-form-item
             :label="t('endpoints.new.minReplica')"
             class="w-full"
@@ -96,6 +96,12 @@
                 :value="item"
               />
             </el-select>
+            <p
+              v-if="dataForm.min_replica === 0"
+              class="text-gray-600 font-light mt-2"
+            >
+              {{ t('endpoints.new.autoShutdownTip') }}
+            </p>
           </el-form-item>
 
           <el-form-item
@@ -288,7 +294,7 @@
   const dataForm = ref({
     model_id: searchParams.get('model_id') || '',
     visibility: 'public',
-    min_replica: 1,
+    min_replica: 0,
     max_replica: 1
   })
   const endpointFrameworks = ref([])

@@ -99,7 +99,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onBeforeMount, computed, provide } from 'vue'
+  import { ref, onBeforeMount, computed, provide, watch } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import CollectionsRepoList from './CollectionsRepoList.vue'
   import CollectionsSettings from './CollectionsSettings.vue'
@@ -109,6 +109,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { storeToRefs } from 'pinia'
   import { useRoute, useRouter } from 'vue-router'
+  import { validateTab } from '../../packs/utils'
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
@@ -150,12 +151,26 @@
     return validTabs.value.includes(tab)
   }
 
+  // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
+  watch(() => route.query.tab, (newTab) => {
+    const validatedTab = validateTab(newTab)
+    if (validatedTab && isValidTab(validatedTab) && validatedTab !== activeName.value) {
+      activeName.value = validatedTab
+      setRepoTab({
+        tab: validatedTab,
+        actionName: 'files',
+        lastPath: ''
+      })
+      tabChange({ paneName: validatedTab })
+    }
+  })
+
   const tabChange = (tab) => {
-    let tabName = tab.paneName
+    let tabName = validateTab(tab.paneName)
     
     if (!isValidTab(tabName)) {
       tabName = getDefaultTab()
-      router.replace({
+      router.push({
         path: `/collections/${props.collectionsId}`,
         query: { tab: tabName }
       })
@@ -163,7 +178,7 @@
 
     activeName.value = tabName
 
-    router.replace({
+    router.push({
       path: `/collections/${props.collectionsId}`,
       query: {
         tab: tabName
@@ -191,7 +206,7 @@
 
     // 处理URL query参数中的tab
     const params = new URLSearchParams(window.location.search)
-    const urlTab = params.get('tab')
+    const urlTab = validateTab(params.get('tab'))
     if (urlTab && isValidTab(urlTab)) {
       tabChange({ paneName: urlTab })
     } else {

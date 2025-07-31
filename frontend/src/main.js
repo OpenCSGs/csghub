@@ -173,6 +173,81 @@ const routes = [
   { path: '/datapipelines/newTask', component: DataflowNewTask },
   { path: '/datapipelines/newTemplate', component: DataflowNewTemplate },
   { path: '/datapipelines/tools', component: DataflowTools },
+
+  // 为每种资源类型创建专门的路由
+  { 
+    path: '/datasets/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'dataset',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/models/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'model',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/codes/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'code',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/spaces/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'space',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/endpoints/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'endpoint',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/finetunes/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'finetune',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/collections/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'collection',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  { 
+    path: '/mcp/servers/:namespace/:name', 
+    component: RepoDetail,
+    props: (route) => ({ 
+      repoType: 'mcp',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  }
+
 ]
 
 const router = createRouter({

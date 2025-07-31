@@ -23,7 +23,7 @@
            :key="commit.id"
            class="py-4 border-b border-gray-200 last-of-type:border-none text-gray-700">
         <div class="mb-2 flex items-center">
-          <a @click.prevent="goToCommitDetail(commit.id)" class="truncate" :title="commit.message">
+          <a @click.prevent="goToCommitDetail(commit.id)" class="truncate cursor-pointer" :title="commit.message">
             {{ commit.message }}
           </a>
           <el-button-group class="ml-2 min-w-[107px]">
@@ -57,6 +57,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
   import { useI18n } from 'vue-i18n'
   import { format } from 'timeago.js'
   import { UserFilled } from '@element-plus/icons-vue'
@@ -67,8 +68,11 @@
   import { ElMessage } from 'element-plus'
   import { beiJingTimeParser } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  // import { goToFiles, goToCommitDetail } from '@/packs/fileNavigation'
 
   const { t } = useI18n()
+  const router = useRouter()
+  const route = useRoute()
   const commits = ref([])
   const currentPage = ref(1)
   const perPage = ref(10)
@@ -94,28 +98,78 @@
   }
 
   const goToFiles = () => {
-    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`"
+    // 构建 query 参数
+    const query = {
+      tab: 'files',
+      actionName: 'files'
+    }
+    
+    // 如果有当前分支信息，也添加到 URL 中
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
+    // 更新 store
     setRepoTab({
       actionName: 'files',
       lastPath: ''
     })
+    
+    // 更新 URL
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const goToCommitDetail = (commitId) => {
-    // :href="`/${prefixPath}/${namespacePath}/commit/${commit.id}`"
+    // 构建 query 参数
+    const query = {
+      tab: 'files',
+      actionName: 'commit',
+      path: commitId
+    }
+    
+    // 如果有当前分支信息，也添加到 URL 中
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
+    // 更新 store
     setRepoTab({
       actionName: 'commit',
       lastPath: commitId
     })
+    
+    // 更新 URL
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
-
 
   const changeBranch = (branch) => {
     currentBranch.value = branch
+    
+    // 构建 query 参数
+    const query = {
+      tab: 'files',
+      actionName: 'commits',
+      branch: branch
+    }
+    
+    // 更新 store
     setRepoTab({
       currentBranch: branch
     })
     
+    // 更新 URL
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+    
+    // 重新获取数据
     const params = new URLSearchParams()
     params.append('ref', branch)
     params.append('page', 1)

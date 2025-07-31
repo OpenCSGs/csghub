@@ -551,6 +551,7 @@
   import useFetchApi from '../../../packs/useFetchApi'
   import zhOps from '../../../locales/zh_js/operator_zh.json'
   import enOps from '../../../locales/en_js/operator_en.json'
+  import zhHantOps from '../../../locales/zh_hant_js/operator_zhHant.json'
   import Sortable from 'sortablejs'
   import { useI18n } from 'vue-i18n'
 
@@ -562,7 +563,8 @@
   const subLoading = ref(false)
   const dataflowOps = {
     zh: zhOps,
-    en: enOps
+    en: enOps,
+    zhHant: zhHantOps
   }
   const route = useRoute()
   const selTemplate = ref(

@@ -79,13 +79,46 @@
         <button class="btn btn-primary btn-md" @click="handleSubmit">{{ $t('all.saveSetting') }}</button>
       </el-form-item>
     </el-form>
+
+    <!-- 删除组织表单 -->
+    <div v-if="isAdmin">
+      <div class="font-semibold text-xl leading-[28px] text-gray-800 mb-4">{{ $t('organization.edit.deleteOrganization') }}</div>
+      <div class="text-sm text-gray-700 mb-6">{{ $t('organization.edit.deleteOrganizationDesc') }}</div>
+      <div class="text-sm text-gray-700 mb-4">{{ $t('organization.edit.deleteOrganizationConfirm', {orgName: organization.name}) }}</div>
+      
+      <el-form
+        ref="deleteFormRef"
+        :model="deleteForm"
+        label-position="top"
+        class="text-left"
+        style="--el-border-radius-base: 8px"
+      >
+        <el-form-item :label="$t('organization.edit.deleteOrganizationName')" prop="confirmName">
+          <el-input 
+            v-model="deleteForm.confirmName" 
+            :placeholder="$t('organization.edit.deleteOrganizationNamePlaceholder')"
+            class="w-full"
+          ></el-input>
+        </el-form-item>
+        
+        <el-form-item>
+          <CsgButton
+            class="btn btn-danger btn-md"
+            :disabled="isDeleteButtonDisabled"
+            :name="$t('organization.edit.deleteOrganizationButton')"
+            @click="handleDeleteOrganization"
+          />
+        </el-form-item>
+      </el-form>
+    </div>
+    
   </div>
 </template>
 <script setup>
   import useFetchApi from "../../packs/useFetchApi"
   import { ref, inject, computed, onMounted, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
   const userStore = useUserStore()
 
@@ -103,10 +136,24 @@
   const selectedProtocol = ref('https://')
   const org_types = ['企业', '高校', '非营利组织', '社区组织']
   const dataFormRef = ref(null)
+  const deleteFormRef = ref(null)
 
   const emit = defineEmits(['updateOrganization']);
 
   const logo_images = ref([])
+
+  // 删除表单数据
+  const deleteForm = ref({
+    confirmName: ''
+  })
+
+  // 用户角色状态
+  const isAdmin = ref(false)
+
+  // 计算删除按钮是否禁用
+  const isDeleteButtonDisabled = computed(() => {
+    return !deleteForm.value.confirmName || deleteForm.value.confirmName.trim() === '' || deleteForm.value.confirmName !== organization.value.name
+  })
 
   watch(props.organizationRaw, (newVal) => {
     // set logo
@@ -220,16 +267,65 @@
       })
     }
   }
+
+  // 删除组织处理函数
+  const handleDeleteOrganization = async () => {
+    if (isDeleteButtonDisabled.value) {
+      return
+    }
+
+    try {
+      await ElMessageBox.confirm(
+        t('organization.edit.deleteOrganizationConfirmTitle'),
+        t('organization.edit.deleteOrganization'),
+        {
+          confirmButtonText: t('organization.edit.deleteOrganizationConfirmButton'),
+          cancelButtonText: t('organization.edit.deleteOrganizationCancelButton'),
+          type: 'warning',
+        }
+      )
+
+      const deleteEndpoint = `/organization/${organization.value.name}`;
+      const { error } = await useFetchApi(deleteEndpoint).delete().json()
+
+      if (error.value) {
+        ElMessage({
+          message: error.value.msg,
+          type: 'error'
+        });
+      } else {
+        ElMessage({
+          message: t('organization.edit.deleteOrganizationSuccess'),
+          type: 'success'
+        });
+        
+        // 更新用户信息以反映组织删除
+        await userStore.fetchUserInfo()
+        
+        // 删除成功后跳转到首页或组织列表
+        window.location.href = '/'
+      }
+    } catch (err) {
+      // 用户取消删除
+    }
+  }
+
   const currentUserRole = async () => {
-    const orgIsAdminEndpoint = `/organization/${props.name}/members/${userStore.username}`
+    if (!organization.value.name) return
+
+    const orgIsAdminEndpoint = `/organization/${organization.value.name}/members/${userStore.username}`
     const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
 
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
+      isAdmin.value = false
     } else {
       const body = data.value
       if(!body.data){
         window.location.href = '/'
+      } else {
+        // 检查用户是否为管理员
+        isAdmin.value = body.data === 'admin'
       }
     }
   }

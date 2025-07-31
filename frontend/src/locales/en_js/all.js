@@ -97,6 +97,7 @@ export const all = {
   pythonTips:"You need to install the Python environment (if not already installed). It is recommended to use Python version 3.10",
   csghubSdkTips:"Before downloading, please install the csghub-sdk using the following command",
   documentation: "Documentation",
+  viewDocumentation: "for more details",
   installDocumentation: "Installation documentation",
   modelDownloadTips:"Download the complete model",
   datasetDownloadTips:"Download the complete dataset",
