@@ -19,7 +19,7 @@ const createWrapper = (props) => {
 
 const triggerFormButton = async (wrapper) => {
   const button = wrapper.findComponent({ name: 'CsgButton' })
-  await button.trigger('click')
+  await button.vm.$emit('click')
   await wrapper.vm.$nextTick()
 }
 
