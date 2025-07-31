@@ -1,4 +1,5 @@
 export const organization = {
+  loading: '正在加载组织信息...',
   orgSetting: "组织设置",
   orgInfo: "组织信息",
   orgTeam: "团队成员",
