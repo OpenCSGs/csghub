@@ -1,4 +1,5 @@
 export const organization = {
+  loading: "Loading organization information...",
   orgSetting: "Organization Settings",
   orgInfo: "Organization Information",
   orgNameSpace: "Organization Namespace",
