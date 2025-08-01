@@ -226,8 +226,8 @@
     }
   }
   const toDatasetPage = (path,branch) => {
-    if(path&&branch){
-      window.location.href=`/datasets/${path}/files/${branch}`
+    if (path) {
+      window.location.href=`/datasets/${path}?tab=files&branch=${branch || 'main'}`
     }
   }
 
