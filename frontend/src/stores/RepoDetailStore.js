@@ -83,6 +83,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const schema = ref('')
   const githubPath = ref('')
   const githubStarNum = ref(0)
+  const mirrorTaskStatus = ref('')
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -172,6 +173,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     schema.value = initialData.schema
     githubPath.value = initialData.github_path
     githubStarNum.value = initialData.star_num
+    mirrorTaskStatus.value = initialData.mirror_task_status || ''
   }
 
   const clearStore = () => {
