@@ -294,7 +294,7 @@
                 </el-dropdown-item>
               </a>
               <a
-                v-if="!!version"
+                v-if="isAdmin && !!version"
                 :href="releaseHistoryUrl"
                 target="_blank">
                 <el-dropdown-item>
@@ -1120,7 +1120,7 @@
         window.location.href = '/'
       },
       async fetchVersion() {
-        if (!isEE()) return
+        if (!this.isAdmin || !isEE()) return
 
         const { data } = await useFetchApi('/version').json()
         if (data.value) {
