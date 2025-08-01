@@ -96,20 +96,20 @@
         >
           <el-radio-group v-model="datasetCheck" class="w-full flex">
             <div class="flex-1">
-              <el-radio value="1" size="large" class="ext-slate-700 text-sm font-normal">{{ t('evaluation.new.systemRecommendedDataset') }}</el-radio>
+              <el-radio value="1" size="large" class="text-gray-700 text-sm font-normal">{{ t('evaluation.new.systemRecommendedDataset') }}</el-radio>
               <div class="self-stretch justify-start pl-6">
-                <span class="text-slate-600 text-sm font-light">
+                <span class="text-gray-600 text-sm font-light">
                   {{ t('evaluation.new.systemRecommendedDatasetTip') }}
                 </span>
               </div>
             </div>
             <div>
-              <el-radio value="2" size="large" class="flex-1 text-slate-700 text-sm font-normal">{{ t('evaluation.new.customDataset') }}</el-radio>
+              <el-radio value="2" size="large" class="flex-1 text-gray-700 text-sm font-normal">{{ t('evaluation.new.customDataset') }}</el-radio>
               <div class="self-stretch justify-start pl-6">
-                <span class="text-slate-600 text-sm font-light">
+                <span class="text-gray-600 text-sm font-light">
                   {{ t('evaluation.new.customDatasetTip') }}
                 </span>
-                <span class="text-blue-800 text-sm font-light leading-snug cursor-pointer pl-1">
+                <span class="text-brand-600 text-sm font-light leading-snug cursor-pointer pl-1">
                   <a 
                     class="text-brand-600 hover:text-brand-700 hover:underline" 
                     target="_blank"
@@ -424,6 +424,40 @@
           }
         }
       }
+      }
+    ],
+    evaluation_dataset: [
+      {
+        required: true,
+        validator: (rule, value, callback) => {
+          if (datasetCheck.value === '1') {
+            if (!value || (Array.isArray(value) && value.length === 0)) {
+              callback(new Error(t('all.pleaseSelect', { value: t('evaluation.new.dataset') })))
+            } else {
+              callback()
+            }
+          } else {
+            callback()
+          }
+        },
+        trigger: 'change'
+      }
+    ],
+    evaluation_custom_dataset: [
+      {
+        required: true,
+        validator: (rule, value, callback) => {
+          if (datasetCheck.value === '2') {
+            if (!value || (Array.isArray(value) && value.length === 0)) {
+              callback(new Error(t('all.pleaseSelect', { value: t('evaluation.new.customdataset') })))
+            } else {
+              callback()
+            }
+          } else {
+            callback()
+          }
+        },
+        trigger: 'change'
       }
     ]
   })
