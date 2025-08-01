@@ -35,7 +35,7 @@
         :label="$t('finetune.detail.tab1')"
         name="page"
       >
-        <div  v-if="activeName === 'page'" class="pt-6 -mx-4">
+        <div  v-if="activeName === 'page'" class="pt-6">
           <iframe
             v-if="repoDetailStore.endpoint"
             :src="`${httpProtocal}://${repoDetailStore.proxyEndpoint}?jwt=${jwtToken}`"
