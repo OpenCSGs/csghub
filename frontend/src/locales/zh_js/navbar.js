@@ -59,4 +59,5 @@ export const navbar = {
   formTip3:'请输入有效的邮箱地址',
   formTip4:'消息存活时间应为1-365天',
   formTip5:'至少选择一种消息类型',
+  releaseVersion: '当前版本',
 }
