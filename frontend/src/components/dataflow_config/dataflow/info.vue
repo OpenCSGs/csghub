@@ -476,8 +476,8 @@
     return route.query.type
   })
   const toDatasetPage = (path,branch) => {
-    if(path&&branch){
-      window.location.href=`/datasets/${path}/files/${branch}`
+    if (path) {
+      window.location.href=`/datasets/${path}/files?tab=files&branch=${branch || 'main'}`
     }
   }
   const getInfoData = async () => {
