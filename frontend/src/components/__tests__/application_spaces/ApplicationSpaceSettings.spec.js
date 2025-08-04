@@ -84,14 +84,14 @@ describe('ApplicationSpaceSettings', () => {
   it('updates application space nickname when button is clicked', async () => {
     const wrapper = createWrapper()
     await wrapper.setData({ theApplicationSpaceNickname: 'New Name' })
-    await wrapper.find('[data-test="update-nickname"]').trigger('click')
+    await wrapper.findComponent('[data-test="update-nickname"]').vm.$emit('click')
     expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 
   it('update application space description when button is clicked', async () => {
     const wrapper = createWrapper()
     await wrapper.setData({ theApplicationSpaceDesc: 'New Description' })
-    await wrapper.find('[data-test="update-description"]').trigger('click')
+    await wrapper.findComponent('[data-test="update-description"]').vm.$emit('click')
     expect(ElMessage.success).toHaveBeenCalledWith('Success')
   })
 })

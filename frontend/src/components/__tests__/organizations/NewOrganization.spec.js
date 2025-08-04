@@ -18,7 +18,7 @@ const createWrapper = (props) => {
 
 const triggerFormButton = async (wrapper) => {
   const button = wrapper.findComponent({ name: 'CsgButton' })
-  await button.trigger('click')
+  await button.vm.$emit('click')
 
   // deprecate this, as we can use waitFor to wait for the async operation to complete
   // return new Promise((resolve) => { setTimeout(resolve, 2000) })
