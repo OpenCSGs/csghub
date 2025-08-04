@@ -108,96 +108,150 @@
         </div>
       </div>
     </div>
-
-    <div class="page-responsive-width m-auto bg-white pt-4">
-      <el-tabs
-        v-if="evaluationSucceed"
-        v-model="activeName"
-        @tab-click="handleTabClick"
-      >
-        <el-tab-pane
-          v-for="tab in tabsList"
-          :key="tab.name"
-          :label="tab.label"
-          :name="tab.name"
-        >
-          <el-table
-            v-loading="loading"
-            :data="tableDataResult"
-            :border="true"
-            header-row-class-name="evaluation-table-header-row"
-            header-cell-class-name="evaluation-table-header-cell"
-            row-class-name="evaluation-table-row"
-            cell-class-name="evaluation-table-row-cell"
-            class="evaluation-table mt-6 mb-10 rounded-xl"
-          >
-            <el-table-column
-              prop="model" 
-              :label="$t('evaluation.detail.model')"
-              :min-width="dynamicModelWidth + 'px'"
-              class-name="evaluation-model-column" 
-              fixed="left"
-            />
-              <el-table-column 
-                v-for="(datasetData, datasetName) in tableDataResult[0]?.dataset || {}" :key="datasetName"
-                :label="datasetName"
-                header-align="center"
-                align="center"
+    <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
+      <el-tabs v-model="activeTabName" class="tabs-container" @tab-click="handleTabContainerClick">
+        <div class="m-auto bg-white">
+          <el-tab-pane :label="$t('evaluation.detail.evaluationResultTab')" name="evaluation-result">   
+            <div class="mt-[10px] md:px-[10px]">
+              <el-tabs
+                v-if="evaluationSucceed"
+                v-model="activeName"
+                @tab-click="handleTabClick"
               >
-                <el-table-column
-                  v-for="(metricItem, index) in datasetData"
-                  :key="`${datasetName}-${metricItem}-${index}`"
-                  :label="metricItem.metric"
-                  :min-width="dynamicMinWidth + 'px'"
-                  class-name="evaluation-metric-column"
+                <el-tab-pane
+                  v-for="tab in tabsList"
+                  :key="tab.name"
+                  :label="tab.label"
+                  :name="tab.name"
                 >
-                  <template #default="{ row }">
-                    <div class="line-clamp-3 break-words">
-                    {{ 
-                      (row.dataset[datasetName] || [])
-                        .find(item => item.metric === metricItem.metric)?.score || 0
-                    }}
+                  <el-table
+                    v-loading="loading"
+                    :data="tableDataResult"
+                    :border="true"
+                    header-row-class-name="evaluation-table-header-row"
+                    header-cell-class-name="evaluation-table-header-cell"
+                    row-class-name="evaluation-table-row"
+                    cell-class-name="evaluation-table-row-cell"
+                    class="evaluation-table mt-6 mb-10 rounded-xl"
+                  >
+                    <el-table-column
+                      prop="model" 
+                      :label="$t('evaluation.detail.model')"
+                      :min-width="dynamicModelWidth + 'px'"
+                      class-name="evaluation-model-column" 
+                      fixed="left"
+                    />
+                      <el-table-column 
+                        v-for="(datasetData, datasetName) in tableDataResult[0]?.dataset || {}" :key="datasetName"
+                        :label="datasetName"
+                        header-align="center"
+                        align="center"
+                      >
+                        <el-table-column
+                          v-for="(metricItem, index) in datasetData"
+                          :key="`${datasetName}-${metricItem}-${index}`"
+                          :label="metricItem.metric"
+                          :min-width="dynamicMinWidth + 'px'"
+                          class-name="evaluation-metric-column"
+                        >
+                          <template #default="{ row }">
+                            <div class="line-clamp-3 break-words">
+                            {{ 
+                              (row.dataset[datasetName] || [])
+                                .find(item => item.metric === metricItem.metric)?.score || 0
+                            }}
+                            </div>
+                          </template>
+                        </el-table-column>
+                      </el-table-column>
+                    <template #empty>
+                      <span v-if="error">{{ error }}</span>
+                      <span v-else>{{ $t('common.noData') }}</span>
+                    </template>
+                  </el-table>
+                </el-tab-pane>
+              </el-tabs>
+              <div v-if="!evaluationSucceed" class="handle-error-page flex justify-center items-center">
+                <div class="background-pattern w-full py-6 flex flex-col justify-center items-center gap-12" 
+                    style="background-image: url('/images/evaluation/Background_pattern.svg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                  <div class="flex flex-col justify-center items-center gap-6">
+                    <SvgIcon
+                    name="feature_icon"
+                    width="56"
+                    height="56"
+                    />
+                    <div class="self-stretch inline-flex flex-col justify-start items-center gap-6">
+                      <div class="self-stretch text-center justify-start text-gray-900 text-4xl font-medium leading-10">{{ $t('evaluation.detail.evaluationFailed') }}</div>
+                      <div ref="errorLogDiv" class="w-80% h-50% flex-1 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white" style="max-height: 200px; max-width: 720px">
+                        <p>...</p>
                     </div>
-                  </template>
-                </el-table-column>
-              </el-table-column>
-            <template #empty>
-              <span v-if="error">{{ error }}</span>
-              <span v-else>{{ $t('all.noData') }}</span>
-            </template>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
-      <div v-if="!evaluationSucceed" class="handle-error-page flex justify-center items-center">
-        <div class="background-pattern w-full py-6 flex flex-col justify-center items-center gap-12" 
-             style="background-image: url('/images/evaluation/Background_pattern.svg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-          <div class="flex flex-col justify-center items-center gap-6">
-            <SvgIcon
-            name="feature_icon"
-            width="56"
-            height="56"
-            />
-            <div class="self-stretch inline-flex flex-col justify-start items-center gap-6">
-              <div class="self-stretch text-center justify-start text-gray-900 text-4xl font-medium leading-10">{{ $t('evaluation.detail.evaluationFailed') }}</div>
-              <div ref="errorLogDiv" class="w-80% h-50% flex-1 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white" style="max-height: 200px; max-width: 720px">
-                <p>...</p>
-             </div>
+                    </div>
+                  </div>
+                  <div class="inline-flex justify-start items-start gap-3">
+                    <CsgButton
+                    class="btn btn-secondary-gray btn-lg"
+                    @click="goBack"
+                    :name="$t('evaluation.detail.return')"
+                  />
+                    <CsgButton
+                    class="btn btn-primary btn-lg"
+                    @click="recreateEvaluation"
+                    :name="$t('evaluation.detail.recreate')"
+                  />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="inline-flex justify-start items-start gap-3">
-            <CsgButton
-            class="btn btn-secondary-gray btn-lg"
-            @click="goBack"
-            :name="$t('evaluation.detail.return')"
-          />
-            <CsgButton
-            class="btn btn-primary btn-lg"
-            @click="recreateEvaluation"
-            :name="$t('evaluation.detail.recreate')"
-          />
-          </div>
+          </el-tab-pane>
+          <el-tab-pane :label="$t('evaluation.detail.evaluationAnalysisTab')" name="evaluation-analysis">
+            <div v-if="hasRunningInstances" class="py-7 flex flex-col gap-4">
+              <!-- refresh button -->
+              <div class="flex gap-2">
+                <el-select
+                  v-model="selectedInstance"
+                  @change="refeshCurrentPeriod"
+                  size="large"
+                  class="!w-[292px]"
+                  :placeholder="$t('endpoints.analysis.selectedInstance')">
+                  <el-option
+                    v-for="instance in instances"
+                    :key="instance"
+                    :label="instance"
+                    :value="instance" />
+                </el-select>
+                <el-select
+                  v-model="timePeriod"
+                  @change="refeshCurrentPeriod"
+                  size="large"
+                  class="!w-[292px]"
+                  :placeholder="$t('endpoints.analysis.selectPeriod')">
+                  <el-option
+                    v-for="option in timePeriodOptions"
+                    :key="option.value"
+                    :label="option.label"
+                    :value="option.value" />
+                </el-select>
+                <CsgButton
+                  class="btn btn-secondary-gray btn-sm"
+                  :name="$t('endpoints.analysis.refresh')"
+                  svgName="refresh"
+                  @click="refeshCurrentPeriod"
+                />
+              </div>
+              <!-- chart row -->
+              <div class="grid grid-cols-2 gap-6">
+                <div class="border border-gray-200 rounded-xl p-4 h-[296px]" ref="chartThreeRef"></div>
+                <div class="border border-gray-200 rounded-xl p-4 h-[296px]" ref="chartFourRef"></div>
+              </div>
+            </div>
+            <div v-else>
+              <div class="mt-8">
+                <p class="text-gray-600 leading-[22px] text-sm">{{ $t('endpoints.analysis.noInstances') }}</p>
+              </div>
+            </div>
+          </el-tab-pane>
         </div>
-      </div>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -208,7 +262,10 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { formatDate } from '@/packs/datetimeUtils'
-  import SvgIcon from '@/components/shared/SvgIcon.vue';
+  import SvgIcon from '@/components/shared/SvgIcon.vue'
+  import * as echarts from 'echarts'
+  import { timestampToDatetimeStr } from '@/packs/datetimeUtils'
+  import useEvaluationDetailStore from '@/stores/EvaluationDetailStore'
 
   const props = defineProps({
     evaluationId: {
@@ -227,6 +284,32 @@
   const error = ref('')
   const categories = ref([])
   const evaluationSucceed = ref(true)
+  const isCustomDataset = ref(false)
+  const evDetailStore = useEvaluationDetailStore()
+  const activeTabName = ref('evaluation-result')
+
+  const loadStore = () => {
+    if (props.evaluationId) {
+      const tabName = evDetailStore.getActiveTabName(props.evaluationId)
+      if (tabName) {
+        activeTabName.value = tabName
+      }
+    }
+  }
+
+  const cleanStore = () => {
+    evDetailStore.clearStore(props.evaluationId)
+  }
+
+  const handleTabContainerClick = (tab) => {
+    activeTabName.value = tab.props.name
+    evDetailStore.setActiveTabName(tab.props.name, props.evaluationId)
+    if(activeTabName.value === "evaluation-analysis") {
+      nextTick(() => {
+        refeshCurrentPeriod()
+      })
+    }
+  }
 
   const groupedDatasets = computed(() => {
     return categories.value.map((category) => ({
@@ -425,6 +508,14 @@
         scoresKey.value = getScoresKey(evaluationResult.value)
         refreshTableData(activeName.value)
       }
+
+      if (evaluation.value.task_id) {
+        instances.value = [evaluation.value.task_id]
+        selectedInstance.value = evaluation.value.task_id
+        nextTick(() => {
+          refeshCurrentPeriod()
+        })
+      }
     } catch (e) {
       error.value = e.message
       ElMessage({
@@ -436,7 +527,187 @@
     }
   }
 
+  const timePeriodOptions = [
+  {
+    label: t('endpoints.analysis.thirty_m'),
+    value: '30m'
+  },
+  {
+    label: t('endpoints.analysis.one_h'),
+    value: '1h'
+  },
+  {
+    label: t('endpoints.analysis.three_h'),
+    value: '3h'
+  },
+  {
+    label: t('endpoints.analysis.six_h'),
+    value: '6h'
+  },
+  {
+    label: t('endpoints.analysis.twelve_h'),
+    value: '12h'
+  },
+  {
+    label: t('endpoints.analysis.one_d'),
+    value: '1d'
+  },
+  {
+    label: t('endpoints.analysis.three_d'),
+    value: '3d'
+  },
+  {
+    label: t('endpoints.analysis.one_w'),
+    value: '1w'
+  }
+  ]
+  const timePeriod = ref(timePeriodOptions[timePeriodOptions.length - 1].value)
+  const instances = ref([])
+  const selectedInstance = ref()
+  const chartThreeRef = ref(null)
+  const chartFourRef = ref(null)
+
+  const hasRunningInstances = computed(() => {
+    return evaluationSucceed.value && instances.value.length > 0
+  })
+
+  const renderCpuUsage = async () => {
+    const chartDom = chartThreeRef.value
+    const existingChart = echarts.getInstanceByDom(chartDom)
+    if (existingChart) {
+      existingChart.dispose()
+      await nextTick()
+    }
+    var myChart = echarts.init(chartDom)
+    const url = `/models/evaluations/${props.evaluationId}/cpu/${evaluation.value.task_id}/usage?last_duration=${timePeriod.value}`
+    let xAxisData = []
+    let seriesData = []
+    try {
+      const { data, error } = await useFetchApi(url).json()
+      if (error.value) {
+        console.log(`Failed to fetch cpu usage: ${error.value}`)
+      } else {
+        const monitorData = data.value.data?.result[0]
+        if (monitorData) {
+          xAxisData = monitorData?.values.map(item => timestampToDatetimeStr(item.timestamp))
+          seriesData = monitorData?.values.map(item => (item.value < 0 ? 0 : item.value))
+        }
+      }
+    } catch (error) {
+      console.log(`Failed to fetch http count: ${error}`)
+    }
+    myChart.setOption({
+      title: {
+        text: t('endpoints.analysis.cpuUsage')
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        align: 'right',
+        left: 'right',
+        data: ['usage in percent']
+      },
+      color: ['#3250BD', '#5271E3', '#223B99'],
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        show: false,
+        data: xAxisData
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'usage in percent',
+          type: 'line',
+          stack: 'Total',
+          data: seriesData
+        }
+      ]
+    })
+  }
+
+  const renderMemoryUsage = async () => {
+    const chartDom = chartFourRef.value
+    const existingChart = echarts.getInstanceByDom(chartDom)
+    if (existingChart) {
+      existingChart.dispose()
+      await nextTick()
+    }
+    var myChart = echarts.init(chartDom)
+    const url = `/models/evaluations/${props.evaluationId}/memory/${evaluation.value.task_id}/usage?last_duration=${timePeriod.value}`
+    let xAxisData = []
+    let seriesData = []
+    try {
+      const { data, error } = await useFetchApi(url).json()      
+      if (error.value) {
+        console.log(`Failed to fetch memory usage: ${error.value}`)
+      } else {
+        const monitorData = data.value.data?.result[0]
+        if (monitorData) {
+          xAxisData = monitorData?.values.map(item => timestampToDatetimeStr(item.timestamp))
+          seriesData = monitorData?.values.map(item => item.value)
+        }
+      }
+    } catch (error) {
+      console.log(`Failed to fetch http count: ${error}`)
+    }
+    myChart.setOption({
+      title: {
+        text: t('endpoints.analysis.memoryUsage')
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {
+        align: 'right',
+        left: 'right',
+        data: ['usage in GB']
+      },
+      color: ['#3250BD', '#5271E3', '#223B99'],
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        show: false,
+        data: xAxisData
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'usage in GB',
+          type: 'line',
+          stack: 'Total',
+          data: seriesData
+        }
+      ]
+    })
+  }
+
+  const refeshCurrentPeriod = () => {
+    if (hasRunningInstances.value) {
+      renderCpuUsage()
+      renderMemoryUsage()
+    }
+  }
+
   onMounted(() => {
+    loadStore()
     fetchTags()
     fetchEvaluation()
     handleResize()
@@ -445,6 +716,7 @@
 
   onBeforeUnmount(() => {
     unObserveResizeEvent()
+    cleanStore()
   })
 </script>
 
