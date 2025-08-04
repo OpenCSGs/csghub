@@ -44,7 +44,8 @@ export const evaluation = {
     download: "Download Results",
     evaluationFailed: "Evaluation Failed",
     return: "Return",
-    recreate: "Recreate"
+    recreate: "Recreate",
+    invalidDataset: "The dataset has been deleted or is invalid"
   },
   list: {
     title: "Model Evaluation",
