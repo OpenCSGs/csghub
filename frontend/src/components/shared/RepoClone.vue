@@ -125,6 +125,19 @@
       @click="handleButtonClick()"
     />
 
+    <!-- dataflow button -->
+    <div
+      class="btn btn-secondary-gray btn-sm"
+      v-if="repoType === 'dataset' && syncStatus !== 'pending' && canManage"
+      @click="toDataflowPage"
+    >
+      <SvgIcon
+        name="repoheader_dataset"
+        class="mr-0"
+      />
+      <div>{{ $t('dataPipelines.dataProcessing') }}</div>
+    </div>
+
     <!-- repo download clone button -->
     <CsgButton
       v-if="!!httpCloneUrl && repo.syncStatus !== 'pending'"
@@ -541,6 +554,11 @@ csghub-cli download ${props.namespacePath}${typeFlag}${revision}
   function toFinetunePage() {
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
   }
+
+  function toDataflowPage() {
+    window.location.href = `/datapipelines/newTask?datasetPath=${props.repo.path}`
+  }
+
 
   const fetchUserToken = async () => {
     if (!userStore.username) return
