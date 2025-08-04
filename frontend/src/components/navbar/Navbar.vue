@@ -865,7 +865,8 @@
         if (data.value) {
           this.userStore.initialize(data.value.data)
         } else {
-          ElMessage.warning(error.value.msg)
+          console.log(error.value.msg)
+          this.clearCookies()
         }
       },
       handleMessageTTLChange() {
@@ -895,6 +896,7 @@
       },
 
       async getMsgTypes() {
+        if (!this.cookies.get('login_identity')) return
         const { data, error } = await useFetchApi(
           `/notifications/message-types`
         ).json()
@@ -1003,6 +1005,7 @@
         this.getNewMsg()
       },
       async getNewMsg() {
+        if (!this.cookies.get('login_identity')) return
         if (this.pollTimer) {
           clearTimeout(this.pollTimer)
           this.pollTimer = null
