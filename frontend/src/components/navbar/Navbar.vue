@@ -561,6 +561,26 @@
           :label="$t('navbar.onlyUnread')"
           size="large" />
       </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-[12px] py-[12px]">
+          <el-checkbox 
+            class="unreadCheckbox"
+            v-model="selectAll"
+            @change="handleSelectAllChange"
+          />
+          <span class="text-md text-gray-700">{{ $t('navbar.checkAll') }}</span>
+        </div>
+        <div class="flex items-center justify-end gap-[16px]">
+          <CsgButton
+            class="btn btn-link-color btn-md"
+            @click="allRead()"
+            :name="$t('navbar.allRead')" />
+          <CsgButton
+            class="btn btn-link-color btn-md"
+            @click="allClear()"
+            :name="$t('navbar.allClear')" />
+        </div>
+      </div>
     </div>
     <div
       class="msg-list-container h-[calc(100vh-200px)] overflow-y-auto"
@@ -569,30 +589,36 @@
       <div
         v-for="(item, index) in msgList"
         :key="index"
-        @click="newMsgShowInfo(2, item, index)"
-        class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
-        <div class="flex items-start justify-between">
-          <div class="flex items-center justify-start gap-[12px]">
-            <span
-              class="block w-[8px] h-[8px] rounded-full"
-              :class="item.is_read ? '' : 'bg-brand-500'"></span>
-            <SvgIcon
-              :name="`${item.notification_type}-message`"
-              class="w-[40px] h-[40px]" />
-            <div class="text-sm">
-              <p class="text-gray-700 font-medium">{{ item.title }}</p>
-              <p class="text-gray-600 font-light">
-                {{ item.click_action_url }}
-              </p>
+        class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start gap-[12px]">
+        <el-checkbox 
+          v-model="item.checked"
+          @change="handleItemCheckChange(item)"
+          class="mt-1 unreadCheckbox"
+        />
+        <div @click="newMsgShowInfo(2, item, index)" class="flex-1">
+          <div class="flex items-start justify-between gap-[16px]">
+            <div class="flex items-center justify-start gap-[12px]">
+              <span
+                class="block w-[8px] h-[8px] rounded-full flex-shrink-0"
+                :class="item.is_read ? '' : 'bg-brand-500'"></span>
+              <SvgIcon
+                :name="`${item.notification_type}-message`"
+                class="w-[40px] h-[40px]" />
+              <div class="text-sm">
+                <p class="text-gray-700 font-medium">{{ item.title }}</p>
+                <p class="text-gray-600 font-light line-clamp-1">
+                  {{ item.click_action_url }}
+                </p>
+              </div>
             </div>
+            <p class="text-sm text-gray-600 font-light whitespace-nowrap">
+              {{ `${formatTime(item.created_at * 1000)}` }}
+            </p>
           </div>
-          <p class="text-sm text-gray-600 font-light">
-            {{ `${formatTime(item.created_at * 1000)}` }}
+          <p class="mt-[16px] text-gray-600 text-sm line-clamp-2">
+            {{ item.content }}
           </p>
         </div>
-        <p class="mt-[16px] text-gray-600 text-sm line-clamp-2">
-          {{ item.content }}
-        </p>
       </div>
       <div
         v-if="loading"
@@ -757,6 +783,8 @@
       const { cookies } = useCookies()
 
       return {
+        selectAll: false,
+        selectedItems: [],
         showUserSet: false,
         showSettings: false,
         showMsgList: false,
@@ -874,6 +902,69 @@
       ...mapActions(useUserStore, { clearUserStore: 'clearStore' }),
       showDialog() {
         this.$refs.child.showDialog()
+      },
+      handleSelectAllChange(val) {
+        this.msgList.forEach(item => {
+          item.checked = val
+        })
+        this.updateSelectedItems()
+      },
+      handleItemCheckChange(item) {
+        this.updateSelectedItems()
+        this.selectAll = this.msgList.every(item => item.checked)
+      },
+      updateSelectedItems() {
+        this.selectedItems = this.msgList.filter(item => item.checked)
+      },
+      async allRead() {
+        let params = {}
+        if(this.selectAll){
+          params = {
+            mark_all:true
+          }
+        }else {
+          params = {
+            ids: this.selectedItems.map(item => item.id)
+          }
+        }
+        const options = { body: JSON.stringify(params) }
+        const { data, error } = await useFetchApi(
+          `/notifications/read`,
+          options
+        )
+          .put()
+          .json()
+        if (data.value) {
+          this.resetList()
+          this.getMsgNum()
+        } else {
+          ElMessage.warning(error.value.msg)
+        }
+      },
+      async allClear() {
+        let params = {}
+        if(this.selectAll){
+          params = {
+            mark_all:true
+          }
+        }else {
+          params = {
+            ids: this.selectedItems.map(item => item.id)
+          }
+        }
+        const options = { body: JSON.stringify(params) }
+        const { data, error } = await useFetchApi(
+          `/notifications`,
+          options
+        )
+          .delete()
+          .json()
+        if (data.value) {
+          this.resetList()
+          this.getMsgNum()
+        } else {
+          ElMessage.warning(error.value.msg)
+        }
       },
       handleLocaleChange(locale) {
         location.href = `/${locale}/settings/locale`
@@ -1071,7 +1162,11 @@
 
           if (data.value?.data) {
             this.msgNum = data.value.data.unread_count
-            this.msgList = [...this.msgList, ...data.value.data.messages]
+            const newMessages = data.value.data.messages.map(msg => ({
+                ...msg,
+                checked: false
+            }))
+            this.msgList = [...this.msgList, ...newMessages]
             this.currentPage++
 
             if (data.value.data.messages.length < this.pageSize) {
@@ -1107,6 +1202,7 @@
         this.msgList = []
         this.currentPage = 1
         this.noMore = false
+        this.selectAll = false
         this.getMsgList()
       },
 
@@ -1152,6 +1248,11 @@
       }
     },
     watch: {
+      msgList(newVal) {
+        if (newVal.length > this.selectedItems.length) {
+          this.selectAll = false
+        }
+      },
       onlyUnread(newVal) {
         this.resetList()
       },

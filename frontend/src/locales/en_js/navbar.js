@@ -40,6 +40,7 @@ export const navbar = {
   system:'System Messages',
   organization:'Organization Messages',
   asset_management:'Asset Management',
+  deployment:'Deployment Message',
   noMoreData: 'No more messages',
   loading: 'Loading...',
   ago: ' ago',
@@ -59,5 +60,8 @@ export const navbar = {
   formTip3: 'Valid email required',
   formTip4: 'TTL: 1-365 days',
   formTip5: 'Select at least one type',
+  allRead:'Read',
+  allClear:'Achieve',
+  checkAll:'Select All',
   releaseVersion: 'Version',
 }

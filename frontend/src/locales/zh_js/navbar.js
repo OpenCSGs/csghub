@@ -40,6 +40,7 @@ export const navbar = {
   system:'系统消息',
   organization:'组织类消息',
   asset_management:'资产管理消息',
+  deployment:'部署消息',
   noMoreData: '没有更多消息了',
   loading: '加载中...',
   ago: ' 前',
@@ -59,5 +60,8 @@ export const navbar = {
   formTip3:'请输入有效的邮箱地址',
   formTip4:'消息存活时间应为1-365天',
   formTip5:'至少选择一种消息类型',
+  checkAll:'选择全部',
+  allRead:'标为已读',
+  allClear:'清除选中',
   releaseVersion: '当前版本',
 }
