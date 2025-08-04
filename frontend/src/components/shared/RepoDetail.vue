@@ -114,6 +114,11 @@
         ToUnauthorizedPage()
         return
       }
+      // redirect not found page
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return
+      }
       if (!data.value) {
         ElMessage.warning(error.value.msg)
         return
