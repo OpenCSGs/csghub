@@ -105,8 +105,18 @@
             {{ $t('shared.preview') }}
           </div>
           <div
+            v-if="!isImage()"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+          >
+            <SvgIcon name="copy" />
+            <a
+              @click.prevent="copyFile"
+              >{{ $t('shared.copyContent') }}</a
+            >
+          </div>
+          <div
             v-if="canWrite && !isImage()"
-            class="flex items-center gap-1 cursor-pointer"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
           >
             <SvgIcon name="edit" />
             <a
@@ -116,7 +126,7 @@
           </div>
           <div
             v-if="canWrite"
-            class="flex items-center gap-1 cursor-pointer"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
           >
             <SvgIcon name="delete" />
             <a
@@ -245,6 +255,7 @@
   import { useI18n } from 'vue-i18n'
   import { createAndClickAnchor } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { copyToClipboard } from '@/packs/clipboard'
 
   const props = defineProps({
     // branches: Object,
@@ -402,6 +413,10 @@
       path: router.currentRoute.value.path,
       query
     })
+  }
+
+  const copyFile = () => {
+    copyToClipboard(content.value)
   }
 
   const changeBranch = (branch) => {

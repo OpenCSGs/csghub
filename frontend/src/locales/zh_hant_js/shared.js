@@ -23,4 +23,5 @@ export const shared = {
     tooLargeFile3:"",
     deleteFile: "刪除檔案",
     deleteFileConfirm: "確定要刪除此檔案嗎？",
+    copyContent: "複製內容",
 }

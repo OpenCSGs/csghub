@@ -23,4 +23,5 @@ export const shared = {
   tooLargeFile3:" instead",
   deleteFile: "Delete file",
   deleteFileConfirm: "Are you sure you want to delete this file?",
+  copyContent: "Copy content",
 }
