@@ -47,13 +47,14 @@
         :tooltipContent="repo.disableEvaluationReason"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
+        :disabled="mirrorTaskRunning"
         @click="toNewEvaluatePage()"
       />
     </div>
 
     <!-- endpoint deploy button -->
     <DeployDropdown
-      v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
+      v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl && !mirrorTaskRunning"
       :modelId="namespacePath"
     />
     <div
@@ -76,6 +77,7 @@
 
         placement="top"
         effect="dark"
+        :disabled="!repo.disableInferenceReason"
       >
         <template #content>
           <div>
@@ -119,6 +121,7 @@
       class="btn btn-secondary-gray btn-sm modelBtn"
       :name="$t('finetune.title')"
       svgName="model_finetune_create"
+      :disabled="mirrorTaskRunning"
       @click="handleButtonClick()"
     />
 
@@ -405,6 +408,10 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
     return (
       props.repo.source === 'opencsg' && props.repo.syncStatus === 'inprogress'
     )
+  })
+
+  const mirrorTaskRunning = computed(() => {
+    return props.repo.mirrorTaskStatus === 'running'
   })
 
   const getMarkdownCode = (code, lang, multiline = false) => {
