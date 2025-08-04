@@ -1,18 +1,70 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import NewModel from "@/components/models/NewModel.vue";
-import SvgIcon from '@/components/shared/SvgIcon.vue';
 import ElementPlus from 'element-plus'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import waitForExpect from 'wait-for-expect';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// Mock vue-i18n
+vi.mock('vue-i18n', () => ({
+  useI18n: () => ({
+    t: (key) => key,
+  }),
+}));
 
+// Mock UserStore
+vi.mock('../../../stores/UserStore', () => ({
+  default: () => ({
+    username: 'testuser',
+    orgs: [{ path: 'testorg' }]
+  })
+}));
+
+// Mock useFetchApi to handle license fetching and form submission
+vi.mock('../../../packs/useFetchApi', () => {
+  const mock = vi.fn().mockImplementation((url) => {
+    if (url.startsWith('/tags')) {
+      return {
+        json: () => Promise.resolve({
+          data: { value: { data: [{name: 'MIT'}, {name: 'Apache-2.0'}] } }
+        })
+      };
+    }
+    if (url === '/models') {
+      return {
+        post: () => ({
+          json: () => Promise.resolve({
+            data: { value: { data: { path: 'testuser/testmodel' } } },
+            error: { value: null }
+          })
+        })
+      };
+    }
+    // Default mock for any other calls
+    return {
+      post: () => ({
+        json: () => Promise.resolve({ data: { value: {} }, error: { value: null } })
+      }),
+      json: () => Promise.resolve({ data: { value: {} } })
+    };
+  });
+  return { default: mock };
+});
 
 const createWrapper = (props) => {
   return mount(NewModel, {
     global: {
+      plugins: [ElementPlus],
       provide: {
         nameRule: /^[a-zA-Z][a-zA-Z0-9-_.]*[a-zA-Z0-9]$/,
+      },
+      stubs: {
+        SvgIcon: true,
+        PublicAndPrivateRadioGroup: true,
+        // Stub CsgButton to be a simple button that emits a click event
+        CsgButton: {
+          template: '<button @click="$emit(\'click\')"><slot/></button>',
+          props: ['loading']
+        }
       }
     },
     props: {
@@ -22,27 +74,27 @@ const createWrapper = (props) => {
   });
 };
 
-
+// Helper to trigger form submission and wait for reactivity
 async function triggerFormButton(wrapper) {
-  const button = wrapper.findComponent({ name: 'CsgButton' })
-  await button.vm.$emit('click')
-  await wrapper.vm.$nextTick()
+  const button = wrapper.find('button');
+  await button.trigger('click');
+  // Wait for the next DOM update cycle
+  await wrapper.vm.$nextTick();
 }
 
-// Mock stores
-vi.mock('../../../stores/UserStore', () => ({
-  default: () => ({
-    username: 'testuser',
-    orgs: [{ path: 'testorg' }]
-  })
-}));
-
-const buttonClass = '.btn.btn-primary'
-
 describe("NewModel", () => {
-  describe("mount", async () => {
-    it("mounts correctly", () => {
+  beforeEach(() => {
+    // Reset mocks and window.location before each test
+    vi.clearAllMocks();
+    delete window.location;
+    window.location = { href: '' };
+  });
+
+  describe("mount", () => {
+    it("mounts correctly", async () => {
       const wrapper = createWrapper();
+      // Wait for async operations in onMounted to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
       expect(wrapper.exists()).toBe(true);
     });
   });
@@ -50,38 +102,66 @@ describe("NewModel", () => {
   describe("form validation", () => {
     it("validates required fields", async () => {
       const wrapper = createWrapper();
+      await new Promise(resolve => setTimeout(resolve, 0)); // Wait for mount
+      // Clear pre-filled fields to test required rule
+      wrapper.vm.dataForm.owner = '';
+      wrapper.vm.dataForm.name = '';
+      wrapper.vm.dataForm.license = '';
       await triggerFormButton(wrapper);
-      const formErrors = wrapper.findAll('.el-form-item__error');
-      expect(formErrors.length).toBeGreaterThan(0);
+      
+      await waitForExpect(() => {
+        const formErrors = wrapper.findAll('.el-form-item__error');
+        expect(formErrors.length).toBe(3); // owner, name, license
+      });
     });
 
     it("validates invalid model name", async () => {
       const wrapper = createWrapper();
+      await new Promise(resolve => setTimeout(resolve, 0));
       wrapper.vm.dataForm.name = 'a'; // Invalid length
+      wrapper.vm.dataForm.license = 'MIT'; // Provide valid license
       await triggerFormButton(wrapper);
-      expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
+      
+      await waitForExpect(() => {
+        const error = wrapper.find('.el-form-item__error');
+        expect(error.exists()).toBe(true);
+        expect(error.text()).toContain('rule.lengthLimit');
+      });
     });
 
-    it("validates valid model name", async () => {
+    it("validates valid form", async () => {
       const wrapper = createWrapper();
-      wrapper.vm.dataForm.name = 'valid_model'; // Invalid length
-      wrapper.vm.dataForm.license = 'apache-2.0'; // Invalid length
+      await new Promise(resolve => setTimeout(resolve, 0));
+      wrapper.vm.dataForm.owner = 'testuser';
+      wrapper.vm.dataForm.name = 'valid_model';
+      wrapper.vm.dataForm.license = 'MIT';
       await triggerFormButton(wrapper);
-      expect(wrapper.find('.el-form-item__error').exists()).toBe(false);
+      
+      await waitForExpect(() => {
+        expect(wrapper.find('.el-form-item__error').exists()).toBe(false);
+      });
     });
 
     it("validates owner selection", async () => {
       const wrapper = createWrapper();
-      wrapper.vm.dataForm.owner = ''; // Invalid owner
+      await new Promise(resolve => setTimeout(resolve, 0));
+      wrapper.vm.dataForm.owner = ''; // Set invalid owner
       await triggerFormButton(wrapper);
-      expect(wrapper.find('.el-form-item__error').exists()).toBe(true);
+      
+      await waitForExpect(() => {
+        const formErrors = wrapper.findAll('.el-form-item__error');
+        const ownerError = formErrors.filter(e => e.text().includes('all.pleaseSelect'));
+        expect(ownerError.length).toBeGreaterThan(0);
+      });
     });
   });
 
   describe("form submission", () => {
-    it("shows success message on successful submission", async () => {
+    it("redirects on successful submission", async () => {
       const wrapper = createWrapper();
+      await new Promise(resolve => setTimeout(resolve, 0));
 
+      // Fill the form with valid data
       wrapper.vm.dataForm = {
         owner: 'testuser',
         name: 'valid-model',
@@ -91,23 +171,11 @@ describe("NewModel", () => {
         visibility: 'public'
       };
 
-      // Mock the API response
-      vi.mock('../../../packs/useFetchApi', () => ({
-        default: () => ({
-          post: () => ({
-            json: () => Promise.resolve({
-              data: { value: { data: { path: 'testuser/testmodel' } } },
-              error: { value: null }
-            })
-          })
-        })
-      }));
-
       await triggerFormButton(wrapper);
-
-      // validate href is correct
-      expect(window.location.href).toBe('/models/testuser/testmodel');
+      
+      await waitForExpect(() => {
+        expect(window.location.href).toBe('/models/testuser/testmodel');
+      });
     });
-
   });
 });
