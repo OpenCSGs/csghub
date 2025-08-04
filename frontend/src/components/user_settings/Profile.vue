@@ -27,7 +27,7 @@
       <div v-if="hasOrg" class="flex gap-2 flex-wrap mt-4">
         <p v-for="org in (isCurrentUser ? userStore.orgs : userOrgs)" :key="org.path">
           <el-tooltip
-            :content="org.name"
+            :content="org.name || org.path"
             placement="top"
             effect="dark"
             :show-after="200"
