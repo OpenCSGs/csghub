@@ -168,7 +168,6 @@
   const FETCH_DEBOUNCE_TIME = 1000
 
   const getProfileRepoData = async () => {
-    // 防止重复请求
     if (isLoading.value) {
       return
     }
@@ -177,13 +176,14 @@
     lastFetchTime.value = Date.now()
     
     try {
-      const collectionsUrl = reposUrl("collections")
-      const modelsUrl = reposUrl("models")
-      const datasetsUrl = reposUrl("datasets")
-      const spacesUrl = reposUrl("spaces")
-      const codesUrl = reposUrl("codes")
-      const promptsUrl = reposUrl("prompts")
-      const mcpsUrl = reposUrl("mcps")
+      const timestamp = Date.now()
+      const collectionsUrl = `${reposUrl("collections")}?_t=${timestamp}`
+      const modelsUrl = `${reposUrl("models")}?_t=${timestamp}`
+      const datasetsUrl = `${reposUrl("datasets")}?_t=${timestamp}`
+      const spacesUrl = `${reposUrl("spaces")}?_t=${timestamp}`
+      const codesUrl = `${reposUrl("codes")}?_t=${timestamp}`
+      const promptsUrl = `${reposUrl("prompts")}?_t=${timestamp}`
+      const mcpsUrl = `${reposUrl("mcps")}?_t=${timestamp}`
 
       const promises = [
         fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
@@ -324,29 +324,27 @@
   const fetchMoreCodes = () => fetchMore(codes, "codes")
   const fetchMoreMcp = () => fetchMore(mcps, "mcps")
 
+  // 添加处理浏览器前进后退的函数
+  const handlePopState = () => {
+    if (isLoading.value) {
+      return
+    }
+    
+    const now = Date.now()
+    if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
+      return
+    }
+    
+    getProfileRepoData()
+  }
+
   onMounted(() => {
     getProfileRepoData()
     
-    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('popstate', handlePopState)
   })
 
   onUnmounted(() => {
-    document.removeEventListener('visibilitychange', handleVisibilityChange)
+    window.removeEventListener('popstate', handlePopState)
   })
-
-  const handleVisibilityChange = () => {
-    if (!document.hidden) {
-      if (isLoading.value) {
-        return
-      }
-      
-      const now = Date.now()
-      if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
-        return
-      }
-      
-      // 重新获取数据
-      getProfileRepoData()
-    }
-  }
 </script>

@@ -71,16 +71,6 @@
   const isLoading = ref(false)
   const lastFetchTime = ref(0)
   const FETCH_DEBOUNCE_TIME = 1000 // 1秒防抖
-
-  // const repo = ref({})
-  // const tags = ref({
-  //   task_tags: [],
-  //   framework_tags: [],
-  //   language_tags: [],
-  //   license_tags: [],
-  //   industry_tags: [],
-  //   other_tags: []
-  // })
   const showNewTag = computed(() => {
     return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(repoDetailStore.createdAt) || isWithinTwoWeeks(repoDetailStore.updatedAt));
   });
@@ -88,7 +78,7 @@
   const tags = computed(() => {
     return handleRepoTags(repoDetailStore)
   })
-  // const ownerUrl = ref('')
+
   const ownerUrl = computed(() => {
     if (repoDetailStore.user.username === props.namespace) {
       return `/profile/${props.namespace}`
@@ -106,7 +96,6 @@
   })
 
   const fetchRepoDetail = async () => {
-    // 防止重复请求
     if (isLoading.value) {
       return
     }
@@ -114,7 +103,9 @@
     isLoading.value = true
     lastFetchTime.value = Date.now()
     
-    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
+    // 添加时间戳参数来避免浏览器缓存
+    const timestamp = Date.now()
+    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}?_t=${timestamp}`
 
     try {
       const { response, data, error } = await useFetchApi(url).json()
@@ -128,17 +119,29 @@
         return
       }
       const repoData = data.value.data
-      // repo.value = repoData
-      // tags.value = handleRepoTags(repoData)
       repoDetailStore.initialize(repoData, props.repoType)
       setRepoTab({
         currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
       })
-      // ownerUrl.value = getOwnerUrl(repoData)
     } catch (error) {
       console.error('Failed to fetch repo detail:', error)
     } finally {
       isLoading.value = false
+    }
+  }
+
+  const fetchLastCommit = async () => {
+    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}/last_commit`
+    
+    try {
+      const { data } = await useFetchApi(url).json()
+
+      if (data.value) {
+        const json = data.value
+        lastCommit.value = json.data
+      }
+    } catch (error) {
+      // 
     }
   }
 
@@ -160,20 +163,6 @@
     return {}
   }
 
-  const fetchLastCommit = async () => {
-    const url = `/${props.repoType}s/${props.namespace}/${props.repoName}/last_commit`
-    try {
-      const { data } = await useFetchApi(url).json()
-
-      if (data.value) {
-        const json = data.value
-        lastCommit.value = json.data
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const getUrlParams = () => {
     const urlParams = new URLSearchParams(window.location.search)
     return {
@@ -184,23 +173,20 @@
     }
   }
 
-  const handleVisibilityChange = () => {
-    if (!document.hidden) {
-      // 检查是否正在加载
-      if (isLoading.value) {
-        return
-      }
-      
-      // 检查距离上次请求的时间
-      const now = Date.now()
-      if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
-        return
-      }
-      
-      // 重新获取数据
-      fetchRepoDetail()
-      fetchLastCommit()
+  // 添加处理浏览器前进后退的函数
+  const handlePopState = () => {
+    if (isLoading.value) {
+      return
     }
+    
+    const now = Date.now()
+    if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
+      return
+    }
+    
+    // 重新获取数据
+    fetchRepoDetail()
+    fetchLastCommit()
   }
 
   onMounted(() => {
@@ -221,11 +207,11 @@
     fetchRepoDetail()
     fetchLastCommit()
     
-    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('popstate', handlePopState)
   })
 
   onUnmounted(() => {
-    document.removeEventListener('visibilitychange', handleVisibilityChange)
+    window.removeEventListener('popstate', handlePopState)
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)
