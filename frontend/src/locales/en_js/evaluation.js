@@ -29,7 +29,7 @@ export const evaluation = {
     createEvaluation: "Create Evaluation",
     createSuccess: "Evaluation created successfully",
     createFail: "Evaluation creation failed",
-    doNotRemoveFirstModel: "Please avoid removing the first item of the model"
+    resetModelsDatsets: "The evaluation framework has changed, please re-select the evaluation model and dataset"
   },
   detail: {
     model: "Model",
