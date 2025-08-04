@@ -124,5 +124,6 @@ export const navbar = {
   formTip2: '免打擾開始時間', 
   formTip3: '請輸入有效的郵箱地址',
   formTip4: '消息存活時間應為1-365天',
-  formTip5: '至少選擇一種消息類型'
+  formTip5: '至少選擇一種消息類型',
+  releaseVersion: '當前版本',
 }

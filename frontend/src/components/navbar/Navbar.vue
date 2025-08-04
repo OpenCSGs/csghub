@@ -293,6 +293,22 @@
                   </div>
                 </el-dropdown-item>
               </a>
+              <a
+                v-if="isAdmin && !!version"
+                :href="releaseHistoryUrl"
+                target="_blank">
+                <el-dropdown-item>
+                  <div class="w-full flex items-center justify-between">
+                    <div class="flex items-center w-fit gap-2">
+                      <SvgIcon name="navbar-package" />
+                      {{ $t('navbar.releaseVersion') }}
+                    </div>
+                    <div class="text-xs font-light text-gray-500">
+                      {{ version }}
+                    </div>
+                  </div>
+                </el-dropdown-item>
+              </a>
               <p @click="clearCookies">
                 <el-dropdown-item divided>
                   <div class="flex items-center w-fit gap-2">
@@ -755,6 +771,7 @@
         canCreateDailyPaper: false,
         csghubServer: inject('csghubServer'),
         uuid: cookies.get('login_identity'),
+        version: '',
         cookies: useCookies().cookies,
         searchText: '',
         filterOptions: ['all'],
@@ -848,6 +865,9 @@
       ]),
       showBroadcast() {
         return !window.location.pathname.includes('/lead_forms')
+      },
+      releaseHistoryUrl() {
+        return 'https://opencsg.com/docs/releasenote/csghub_ee_history'
       }
     },
     methods: {
@@ -1101,6 +1121,16 @@
       clearCookies() {
         logout()
         window.location.href = '/'
+      },
+      async fetchVersion() {
+        if (!this.isAdmin || !isEE()) return
+
+        const { data } = await useFetchApi('/version').json()
+        if (data.value) {
+          this.version = data.value.data?.version
+        } else {
+          this.version = ''
+        }
       }
     },
     async mounted() {
@@ -1111,6 +1141,7 @@
         if (this.isLoggedIn) {
           this.getMsgTypes()
           this.getNewMsg()
+          this.fetchVersion()
         }
       })
     },

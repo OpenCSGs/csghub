@@ -58,5 +58,6 @@ export const navbar = {
   formTip2: 'DND start time',
   formTip3: 'Valid email required',
   formTip4: 'TTL: 1-365 days',
-  formTip5: 'Select at least one type'
+  formTip5: 'Select at least one type',
+  releaseVersion: 'Version',
 }
