@@ -561,7 +561,7 @@
           :label="$t('navbar.onlyUnread')"
           size="large" />
       </div>
-      <div class="flex items-center justify-between">
+      <div v-if="msgList.length>0" class="flex items-center justify-between">
         <div class="flex items-center gap-[12px] py-[12px]">
           <el-checkbox 
             class="unreadCheckbox"
@@ -572,10 +572,12 @@
         </div>
         <div class="flex items-center justify-end gap-[16px]">
           <CsgButton
+            :disabled="!selectAll || selectedItems.length==0"
             class="btn btn-link-color btn-md"
             @click="allRead()"
             :name="$t('navbar.allRead')" />
           <CsgButton
+            :disabled="!selectAll || selectedItems.length==0"
             class="btn btn-link-color btn-md"
             @click="allClear()"
             :name="$t('navbar.allClear')" />
