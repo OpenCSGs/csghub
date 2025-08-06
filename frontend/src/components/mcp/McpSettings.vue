@@ -395,7 +395,7 @@
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
         window.location.href = '/mcp/servers'
-      }, 500)
+      }, 1000)
       return true
     }
   }
