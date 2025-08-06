@@ -15,14 +15,14 @@
           $t('application_spaces.env.addEnv')
         }}
       </div>
-      <div
+      <!-- <div
         class="flex gap-1 btn btn-link-color btn-sm"
         @click="openAdd('secret')"
       >
         <SvgIcon name="space-env-plus" />{{
           $t('application_spaces.env.addSecret')
         }}
-      </div>
+      </div> -->
     </div>
   </div>
 
