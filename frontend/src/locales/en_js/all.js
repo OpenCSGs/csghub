@@ -96,6 +96,7 @@ export const all = {
   commandlineTips: "For more command-line options, see",
   pythonTips:"You need to install the Python environment (if not already installed). It is recommended to use Python version 3.10",
   csghubSdkTips:"Before downloading, please install the csghub-sdk using the following command",
+  csghubLocalDirTips:"Through the --local-dir parameter, you can specify the local download directory",
   documentation: "Documentation",
   viewDocumentation: "for more details",
   installDocumentation: "Installation documentation",

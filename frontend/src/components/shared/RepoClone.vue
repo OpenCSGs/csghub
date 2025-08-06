@@ -201,6 +201,7 @@
             <div class="text-gray-500 mt-[8px]">{{ $t('all.csghubSdkTips') }}</div>
             <markdown-viewer :content="comandlineCodeMarkdown"></markdown-viewer>
             <div class="text-gray-500"># {{ $t(`all.${repoType}DownloadTips`) }}</div>
+            <div class="text-gray-500 mt-[8px]">{{ $t('all.csghubLocalDirTips') }}</div>
             <markdown-viewer :content="comandlineCode2Markdown"></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -366,6 +367,10 @@
     const url = repoDetailStore.repository.http_clone_url
     return url ? new URL(url).protocol : 'https'
   })
+  const httpCloneProtocolHostname = computed(() => {
+    const url = new URL(httpCloneUrl.value)
+    return url ? `${url.protocol}//${url.hostname}` : ''
+  })
 
   const httpsCloneCode = computed(() => {
     return `
@@ -464,10 +469,12 @@ pip install csghub-sdk
   })
 
   const getComandLineCloneCode = () => {
-    const revision =
+    let revision =
       repoDetailStore.defaultBranch && repoDetailStore.defaultBranch !== 'main'
         ? ` --revision ${repoDetailStore.defaultBranch}`
         : ''
+    revision += httpCloneProtocolHostname.value ? ` -e ${httpCloneProtocolHostname.value}` : ''
+    revision += ' --local-dir ./'
     let typeFlag = ''
     if (props.repoType === 'dataset') {
       typeFlag = ' -t dataset'

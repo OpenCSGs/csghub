@@ -100,6 +100,7 @@ export const all = {
   commandlineTips: "更多更豐富的命令行選項，可參見",
   pythonTips:"需安裝Python環境(若未安裝)，建議使用 Python 3.10 版本",
   csghubSdkTips:"在下載前，請先透過如下命令安裝 csghub-sdk",
+  csghubLocalDirTips:"透過--local-dir參數可以指定本地下載目錄",
   documentation: "具體文檔",
   viewDocumentation: "查看說明",
   installDocumentation: "安裝文檔",
