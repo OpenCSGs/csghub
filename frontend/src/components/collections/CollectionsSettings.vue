@@ -304,8 +304,6 @@
     } else {
       ElMessage({ message: t('all.delSuccess'), type: 'success' })
       setTimeout(() => {
-        // userStore will be initialized when loading navbar
-        // delete will trigger manually, so we don't need to check if userStore initialized or not
         window.location.href = `/profile/${userStore.username}`
       }, 500)
     }

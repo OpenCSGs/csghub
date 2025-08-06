@@ -669,7 +669,7 @@
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
-            window.location.href = document.referrer || '/spaces'
+            window.location.href = '/spaces'
           }, 1000)
           return true
         }

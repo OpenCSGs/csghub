@@ -493,7 +493,7 @@
         } else {
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
-            window.location.href = document.referrer || '/datasets'
+            window.location.href = '/datasets'
           }, 1000)
           return true
         }
