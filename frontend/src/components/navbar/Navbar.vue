@@ -108,7 +108,6 @@
             <el-dropdown-menu
               style="
                 max-height: 88vh;
-                min-height: 360px;
                 overflow-y: auto;
                 overscroll-behavior: contain;
                 scrollbar-width: thin;
