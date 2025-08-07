@@ -921,7 +921,7 @@
         let params = {}
         if(this.selectAll){
           params = {
-            mark_all:true
+            ids: this.msgList.map(item => item.id)
           }
         }else {
           params = {
@@ -946,7 +946,7 @@
         let params = {}
         if(this.selectAll){
           params = {
-            mark_all:true
+            ids: this.msgList.map(item => item.id)
           }
         }else {
           params = {
