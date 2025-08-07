@@ -64,4 +64,5 @@ export const navbar = {
   allClear:'Achieve',
   checkAll:'Select All',
   releaseVersion: 'Version',
+  clearTip:'Clearing all selected messages?',
 }

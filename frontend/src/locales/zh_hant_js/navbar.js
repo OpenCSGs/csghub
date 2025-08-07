@@ -130,4 +130,5 @@ export const navbar = {
   allClear:'清除選中',
   checkAll:'選擇全部',
   releaseVersion: '當前版本',
+  clearTip:'確認清空您選中的所有消息？',
 }

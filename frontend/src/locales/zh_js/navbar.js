@@ -64,4 +64,5 @@ export const navbar = {
   allRead:'标为已读',
   allClear:'清除选中',
   releaseVersion: '当前版本',
+  clearTip:'确认清空您选中的所有消息？',
 }

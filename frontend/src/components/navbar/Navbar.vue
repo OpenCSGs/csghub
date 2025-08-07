@@ -571,15 +571,25 @@
         </div>
         <div class="flex items-center justify-end gap-[16px]">
           <CsgButton
-            :disabled="!selectAll || selectedItems.length==0"
+            :disabled="buttonsDisabled"
             class="btn btn-link-color btn-md"
             @click="allRead()"
             :name="$t('navbar.allRead')" />
-          <CsgButton
-            :disabled="!selectAll || selectedItems.length==0"
-            class="btn btn-link-color btn-md"
-            @click="allClear()"
-            :name="$t('navbar.allClear')" />
+          <el-popconfirm
+            class="box-item"
+            :title="$t('navbar.clearTip')"
+            placement="bottom"
+            width="200"
+            :confirm-button-text="$t('all.confirm')"
+            :cancel-button-text="$t('all.cancel')"
+            @confirm="allClear()">
+            <template #reference>
+              <CsgButton
+                :disabled="buttonsDisabled"
+                class="btn btn-link-color btn-md"
+                :name="$t('navbar.allClear')" />
+            </template>
+          </el-popconfirm>
         </div>
       </div>
     </div>
@@ -897,6 +907,9 @@
       },
       releaseHistoryUrl() {
         return 'https://opencsg.com/docs/releasenote/csghub_ee_history'
+      },
+      buttonsDisabled() {
+        return !this.selectAll && this.selectedItems.length === 0
       }
     },
     methods: {
