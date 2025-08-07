@@ -12,6 +12,7 @@ const (
 )
 
 type Config struct {
+	AppEnv         string `envconfig:"CSGHUB_PORTAL_APP_ENV" default:"development"`
 	ServerPort     int    `envconfig:"CSGHUB_PORTAL_SERVER_PORT" default:"8090"`
 	SuperUsers     string `envconfig:"CSGHUB_PORTAL_SUPER_USERS" default:""`
 	OnPremise      bool   `envconfig:"CSGHUB_PORTAL_ON_PREMISE" default:"true"`
