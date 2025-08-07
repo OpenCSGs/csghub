@@ -14,6 +14,9 @@
     >
       <SvgIcon name="text_generation" />
       {{ $t('endpoints.playground.generation') }}
+      <el-tooltip content="https://opencsg.com/docs/inferencefinetune/inference_tasks/text-generation" placement="top" effect="dark">
+        <SvgIcon name="info"  class="w-[12px] h-[12px] cursor-pointer" @click="toDocPage"/>
+      </el-tooltip>
     </div>
     <div
       class="max-h-[480px] min-h-[180px] px-3.5 py-3 bg-white rounded-lg border border-gray-200 text-gray-700 text-base font-light leading-normal mb-4 overflow-auto"
@@ -123,6 +126,9 @@
   const compositionInput = ref(false)
   const chatMessages = ref([])
 
+  const toDocPage = () => {
+    window.open('https://opencsg.com/docs/inferencefinetune/inference_tasks/text-generation', '_blank')
+  }
   const handleFocus = () => {
     inputFocus.value = true
   }

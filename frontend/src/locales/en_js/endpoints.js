@@ -37,6 +37,8 @@ export const endpoints = {
     createFail: "Failed to create endpoint",
     quantization: "Quantization",
     engineArgs: "Framework Variables",
+    frameworkVersion: "Framework Version",
+    frameworkVersionTip: "Please select framework version",
     frameworkInputTip: "Please fill in model id first",
     serverlessSelectPlaceholder: "please select",
     serverlessCluster: "Cluster is required",

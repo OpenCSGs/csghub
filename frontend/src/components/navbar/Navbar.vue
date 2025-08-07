@@ -1220,7 +1220,7 @@
         window.location.href = '/'
       },
       async fetchVersion() {
-        if (!this.isAdmin || !isEE()) return
+        if (!this.isAdmin) return
 
         const { data } = await useFetchApi('/version').json()
         if (data.value) {

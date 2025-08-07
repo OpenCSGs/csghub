@@ -13,6 +13,9 @@
         class="text-gray-700 text-sm font-medium leading-tight mb-4 flex items-center gap-2">
         <SvgIcon name="extraction" />
         Feature Extraction
+        <el-tooltip content="https://opencsg.com/docs/inferencefinetune/inference_tasks/feature-extraction" placement="top" effect="dark">
+          <SvgIcon name="info"  class="w-[12px] h-[12px] cursor-pointer" @click="toDocPage"/>
+        </el-tooltip>
       </div>
       <div
         class="flex items-center justify-between gap-2 rounded-lg relative">
@@ -95,6 +98,10 @@
   const inputFocus = ref(false)
   const compositionInput = ref(false)
   const listData = ref([])
+
+  const toDocPage = () => {
+    window.open('https://opencsg.com/docs/inferencefinetune/inference_tasks/feature-extraction', '_blank')
+  }
 
   const handleFocus = () => {
     inputFocus.value = true

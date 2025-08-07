@@ -37,6 +37,8 @@ export const endpoints = {
     createFail: "专属实例创建失败",
     quantization: "量化",
     engineArgs: "框架参数",
+    frameworkVersion: "框架版本",
+    frameworkVersionTip: "请选择框架版本",
     frameworkInputTip: "请首先填写模型ID",
     serverlessSelectPlaceholder: "请选择",
     serverlessCluster: "请选择集群",
