@@ -381,8 +381,9 @@
     return url ? new URL(url).protocol : 'https'
   })
   const httpCloneProtocolHostname = computed(() => {
-    const url = new URL(httpCloneUrl.value)
-    return url ? `${url.protocol}//${url.hostname}` : ''
+    const url = new URL(CSGHUB_SERVER)
+    if (!url) return ''
+    return `${url.protocol}//${url.hostname}`
   })
 
   const httpsCloneCode = computed(() => {
