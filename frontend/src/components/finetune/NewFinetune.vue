@@ -9,9 +9,16 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('finetune.new.title') }}
     </h3>
-    <p class="text-gray-500 text-md font-regular md:text-center">
-      {{ t('finetune.new.desc') }}
-    </p>
+    <div class="flex items-center sm:flex-col sm:text-center">
+      <p class="text-gray-500 text-md font-regular">
+        {{ t('finetune.new.desc') }}
+      </p>
+      <CsgButton
+        :name="t('finetune.new.guide')"
+        class="btn-link-color"
+        @click="handleGuideClick"
+      />
+    </div>
     <div class="mt-9 w-full">
       <el-form
         ref="dataFormRef"
@@ -409,6 +416,10 @@
       })
       cb(paths)
     }
+  }
+
+  const handleGuideClick = () => {
+    window.open('https://opencsg.com/docs/inferencefinetune/finetune_intro', '_blank')
   }
 
   const handleSubmit = () => {

@@ -2,7 +2,8 @@ export const finetune = {
   title: 'Finetune Instance',
   new: {
     title: 'Create Finetune Instance',
-    desc: 'Deploy your model on dedicated computing power instance',
+    desc: 'Deploy your model on dedicated computing power instance,',
+    guide: 'View Finetune Guide',
     name: 'Instance Name',
     nameTip:'Please enter the Instance Name',
     modelId: 'Model ID',

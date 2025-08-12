@@ -97,10 +97,23 @@
 
           <ElInput
             v-model="nameFilterInput"
-            class="w-fit"
+            class="!w-[180px]"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change="filterChange" />
+            @change="filterChange"
+            size="large" />
+          <CsgButton
+            v-if="repoType === 'space'"
+            :name="$t('space.guide')"
+            class="btn btn-primary btn-md"
+            @click="handleSpaceGuideClick"
+          />
+          <CsgButton
+            v-else-if="repoType === 'mcp'"
+            :name="$t('mcps.guide')"
+            class="btn btn-primary btn-md"
+            @click="handleMcpGuideClick"
+          />
         </div>
       </div>
       <div
@@ -139,7 +152,7 @@
 <script setup>
   import { onMounted, ref, computed, inject, onUnmounted, nextTick } from 'vue'
   import { Search } from '@element-plus/icons-vue'
-  import { ElInput, ElMessage } from 'element-plus'
+  import { ElInput, ElMessage, ElSelect } from 'element-plus'
   import RepoItem from '../shared/RepoItem.vue'
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import TagSidebar from '../tags/TagSidebar.vue'
@@ -286,6 +299,14 @@
     reloadRepos(1)
   }
 
+  const handleSpaceGuideClick = () => {
+    window.open('https://opencsg.com/docs/space/space_intro', '_blank')
+  }
+
+  const handleMcpGuideClick = () => {
+    window.open('https://opencsg.com/docs/mcp/mcp_intro', '_blank')
+  } 
+  
   const reloadRepos = (childCurrent) => {
     if (childCurrent) {
       currentPage.value = childCurrent
