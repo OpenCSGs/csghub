@@ -15,6 +15,7 @@ import { application_spaces } from './en_js/application_spaces';
 import { codes } from './en_js/codes';
 import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
+import { space } from './en_js/space';
 import { user_sessions } from './en_js/user_sessions';
 import { components } from './en_js/components';
 import { collections } from './en_js/collections';
@@ -36,6 +37,7 @@ export default {
   rule,
   user_sessions,
   spaces,
+  space,
   application_spaces,
   widgets,
   models,
