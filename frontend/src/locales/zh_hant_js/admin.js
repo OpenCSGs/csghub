@@ -237,7 +237,8 @@ export const admin = {
       failed: 'lfs 檔案同步失敗',
       finished: 'lfs 檔案同步完成',
       fatal: 'lfs 檔案同步失敗，不可重試',
-      incomplete: 'lfs 同步不完整'
+      incomplete: 'lfs 同步不完整',
+      cancelled:'已取消'
     }
   },
   models: {
