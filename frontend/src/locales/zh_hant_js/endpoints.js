@@ -15,7 +15,8 @@ export const endpoints = {
   },
   new: {
     title: "新建專屬執行個體",
-    desc: "將模型部署到專屬執行個體",
+    desc: "將模型部署到專屬執行個體，",
+    guide: "查看部署指南",
     name: "執行個體名稱",
     modelId: "模型 ID",
     modelIdTip: "請輸入模型ID",

@@ -15,7 +15,8 @@ export const endpoints = {
   },
   new: {
     title: "Create a new endpoint",
-    desc: "Deploy your model to an endpoint",
+    desc: "Deploy your model to an endpoint,",
+    guide: "View Deployment Guide",
     name: "Endpoint name",
     modelId: "Model ID",
     modelIdTip: "Please enter Model ID",

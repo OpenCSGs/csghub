@@ -1,0 +1,18 @@
+export const space = {
+  "Desc1": "嗨！这里是开放的大模型应用空间。",
+  "Desc2": "您可以基于",
+  "Desc3": " 快速构建你的专属大模型应用，并发布到 OpenCSG 大模型应用空间，分享给社区/朋友/同事，支持托管和API调用。",
+  "Desc4": "更多玩法 等你发现！",
+  "SpaceList": "Space 列表",
+  "Running": "运行中",
+  "Stopping": "已暂停",
+  "ClickTag": "点击选择系统默认 tag:",
+  "reTag": "当前 Tag 已经添加！",
+  "Img": "图片",
+  "addComment": "添加评论",
+  "confirm": "确认删除此评论？",
+  "tip": "提示",
+  "sure": "确定",
+  "cancel": "取消",
+  "guide": "使用指南",
+}

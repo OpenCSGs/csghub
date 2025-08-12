@@ -15,7 +15,8 @@ export const endpoints = {
   },
   new: {
     title: "新建专属实例",
-    desc: "将模型部署到专属实例",
+    desc: "将模型部署到专属实例，",
+    guide: "查看部署指南",
     name: "实例名称",
     modelId: "模型 ID",
     modelIdTip: "请输入模型ID",

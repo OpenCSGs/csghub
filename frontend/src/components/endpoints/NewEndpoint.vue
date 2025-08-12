@@ -10,9 +10,16 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('endpoints.new.title') }}
     </h3>
-    <p class="text-gray-500 text-md font-regular md:text-center">
-      {{ t('endpoints.new.desc') }}
-    </p>
+    <div class="flex items-center sm:flex-col sm:text-center">
+      <p class="text-gray-500 text-md font-regular">
+        {{ t('endpoints.new.desc') }}
+      </p>
+      <CsgButton
+        :name="t('endpoints.new.guide')"
+        class="btn-link-color"
+        @click="handleGuideClick"
+      />
+    </div>
     <div class="mt-9">
       <el-form
         ref="dataFormRef"
@@ -302,7 +309,6 @@
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import EngineArgs from './EngineArgs.vue'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
-  import SvgIcon from '../shared/SvgIcon.vue'
 
   const props = defineProps({
     namespace: String
@@ -685,6 +691,10 @@
 
   const getQuantizationLabel = (item) => {
     return `${item.name} - ${t('endpoints.gpuMemoryRequired')}${formatMemory(item.size)}`
+  }
+
+  const handleGuideClick = () => {
+    window.open('https://opencsg.com/docs/inferencefinetune/inference_intro', '_blank')
   }
 
   onMounted(() => {

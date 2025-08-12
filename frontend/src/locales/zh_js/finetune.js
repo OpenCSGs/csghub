@@ -2,7 +2,8 @@ export const finetune = {
   title: '微调实例',
   new: {
     title: '新建微调实例',
-    desc: '在专属算力实例上部署您的模型',
+    desc: '在专属算力实例上部署您的模型，',
+    guide: '查看微调指南',
     name: '实例名称',
     nameTip:'请输入实例名称',
     modelId: '模型 ID',

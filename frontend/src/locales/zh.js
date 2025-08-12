@@ -15,6 +15,7 @@ import { application_spaces } from './zh_js/application_spaces';
 import { codes } from './zh_js/codes';
 import { widgets } from './zh_js/widgets';
 import { spaces } from './zh_js/spaces';
+import { space } from './zh_js/space';
 import { user_sessions } from './zh_js/user_sessions';
 import { collections } from './zh_js/collections';
 import { components } from './zh_js/components';
@@ -36,6 +37,7 @@ export default {
   rule,
   user_sessions,
   spaces,
+  space,
   application_spaces,
   widgets,
   models,

@@ -2,7 +2,8 @@ export const finetune = {
   title: '微調執行個體',
   new: {
     title: '新建微調執行個體',
-    desc: '在專屬算力執行個體上部署您的模型',
+    desc: '在專屬算力執行個體上部署您的模型，',
+    guide: '查看微調指南',
     name: '執行個體名稱',
     nameTip:'請輸入執行個體名稱',
     modelId: '模型 ID',
