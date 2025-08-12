@@ -79,6 +79,7 @@
             {{ $t('collections.cleanSearch') }}
           </div>
           <a
+            v-if="isLoggedIn"
             href="/collections/new"
             class="flex px-4 py-[10px] text-white border border-brand-600 justify-center items-center gap-[6px] rounded-lg bg-brand-600 shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] cursor-pointer"
           >
@@ -105,8 +106,12 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
+  import useUserStore from '../../stores/UserStore'
+  import { storeToRefs } from 'pinia'
 
   const { t } = useI18n()
+  const userStore = useUserStore()
+  const { isLoggedIn } = storeToRefs(userStore)
 
   const perPage = ref(10)
   const currentPage = ref(1)
