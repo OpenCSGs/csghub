@@ -393,7 +393,6 @@ import { ElMessage } from "element-plus";
 import useFetchApi from "../../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../../packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
-import { Router } from "@antv/x6/lib/registry";
 
 const { t, locale } = useI18n();
 const router = useRouter();
