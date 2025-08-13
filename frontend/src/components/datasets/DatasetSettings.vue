@@ -277,6 +277,7 @@
             @click="clickDelete"
             class="btn btn-danger btn-sm w-fit"
             :disabled="delDesc !== datasetPath"
+            data-test="confirm-delete"
             :name="$t('datasets.edit.confirmDel')"
           />
         </div>

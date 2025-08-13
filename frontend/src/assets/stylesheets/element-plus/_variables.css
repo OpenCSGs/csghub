@@ -91,4 +91,5 @@
 
   --el-border-radius-base: var(--border-radius-md);
   --el-color-primary: var(--Brand-600);
+  --el-checkbox-checked-bg-color: var(--Brand-600);
 }

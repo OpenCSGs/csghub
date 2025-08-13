@@ -85,7 +85,9 @@ vi.mock('@/packs/useFetchApi', () => {
 
 vi.mock('@/stores/RepoDetailStore', () => ({
   default: () => ({
-    initialize: vi.fn()
+    initialize: vi.fn(),
+    updateLikes: vi.fn(),
+    updateUserLikes: vi.fn()
   })
 }));
 

@@ -29,6 +29,7 @@ const createUserStore = (overrides = {}) =>
     ],
     lastLoginTime: '2023-09-11',
     phone: '123456',
+    fetchUserInfo: vi.fn(),
     ...overrides
   })
 
@@ -66,6 +67,12 @@ const getApiMockFn = vi.fn().mockResolvedValue({
 vi.mock('../../../packs/useFetchApi', () => ({
   default: () => ({
     json: getApiMockFn
+  })
+}))
+
+vi.mock('vue-router', () => ({
+  useRoute: () => ({
+    fullPath: '/profile/current_user'
   })
 }))
 

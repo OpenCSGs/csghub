@@ -15,7 +15,8 @@ export const endpoints = {
   },
   new: {
     title: "新建專屬執行個體",
-    desc: "將模型部署到專屬執行個體",
+    desc: "將模型部署到專屬執行個體，",
+    guide: "查看部署指南",
     name: "執行個體名稱",
     modelId: "模型 ID",
     modelIdTip: "請輸入模型ID",
@@ -45,6 +46,7 @@ export const endpoints = {
     serverlessResource: "請輸入部署名稱",
     serverlessFramework: "請選擇資源",
     serverlessDeploy: "請選擇執行時框架",
+    autoShutdownTip: "超過1小時無操作將自動關閉",
   },
   settings: {
     stop: "暫停",

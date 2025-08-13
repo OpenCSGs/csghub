@@ -1,4 +1,5 @@
 export const organization = {
+  loading: "Loading organization information...",
   orgSetting: "Organization Settings",
   orgInfo: "Organization Information",
   orgNameSpace: "Organization Namespace",
@@ -26,6 +27,7 @@ export const organization = {
     deleteSuccess: "member removed",
     editRoleSuccess: "member updated",
     deleteConfirmTitle: `Are you sure you want to remove user {username} from organization {orgName}`,
+    assignOtherAdmin: "Please assign another admin user for the organization",
   },
   invite: {
     title: "Invite",
@@ -44,5 +46,15 @@ export const organization = {
     role:"Modify User Role",
     roleTips:"Learn about the differences in permissions for different roles by accessing the documentation",
     updateSuccess: "organization updated successfully",
+    deleteOrganization: "Delete Organization",
+    deleteOrganizationDesc: "This action cannot be undone. This will permanently delete all repositories (models, datasets, and spaces) under the organization.",
+    deleteOrganizationConfirm: "Please enter {orgName} to confirm deletion.",
+    deleteOrganizationName: "Organization Name",
+    deleteOrganizationNamePlaceholder: "Please enter organization name",
+    deleteOrganizationButton: "Delete Organization",
+    deleteOrganizationConfirmTitle: "Are you sure you want to delete this organization? This action cannot be undone.",
+    deleteOrganizationConfirmButton: "Confirm Delete",
+    deleteOrganizationCancelButton: "Cancel",
+    deleteOrganizationSuccess: "Organization deleted successfully",
   },
 }

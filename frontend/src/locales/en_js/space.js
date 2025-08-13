@@ -1,0 +1,18 @@
+export const space = {
+  "Desc1": "Hey! Here is the open space for Large Language Model applications.",
+  "Desc2": "You can leverage the",
+  "Desc3": "Quickly build your exclusive big model application and publish it to the OpenCSG big model application space, share it with the community/friends/colleagues, support hosting and API calls.",
+  "Desc4": "More ways to play are waiting for you to explore!",
+  "SpaceList": "Space List",
+  "Running": "Running",
+  "Stopping": "Suspended",
+  "ClickTag": "Click to select the system default tag:",
+  "reTag": "The current tag has been added!",
+  "Img": "Picture",
+  "addComment": "Comment",
+  "confirm": "Confirm to delete this comment?",
+  "tip": "Tips",
+  "sure": "Confirm",
+  "cancel": "Cancel",
+  "guide": "Guide",
+}

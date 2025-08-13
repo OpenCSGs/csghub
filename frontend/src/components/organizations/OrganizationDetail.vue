@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!isDataLoading">
     <div class="py-[16px] bg-gray-25">
       <div class="page-responsive-width m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
@@ -103,6 +103,13 @@
       </div>
     </div>
   </div>
+  
+  <div v-if="isDataLoading" class="flex items-center justify-center min-h-[400px]">
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-4"></div>
+      <p class="text-gray-600">{{ $t('organization.loading') }}</p>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -112,6 +119,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
+  import { ToNotFoundPage } from '../../packs/utils'
 
   const props = defineProps({
     name: String
@@ -124,6 +132,9 @@
     avatar: ''
   })
   const membersList = ref([])
+  const verifiedStatus = ref('')
+  const verifiedReason = ref('')
+  const isDataLoading = ref(true)
 
   const userStore = useUserStore()
 
@@ -131,7 +142,14 @@
 
   const fetchOrgDetail = async () => {
     const orgDetailEndpoint = `/organization/${props.name}`
-    const { data, error } = await useFetchApi(orgDetailEndpoint).json()
+    const { response, data, error } = await useFetchApi(orgDetailEndpoint).json()
+    
+    // redirect not found page
+    if (response.value.status === 404) {
+      ToNotFoundPage()
+      return
+    }
+    
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
@@ -140,7 +158,15 @@
       organizationData.value.nickname = body.data.name
       organizationData.value.verified = body.data.verified
       organizationData.value.avatar = body.data.logo
+
+      // 只有详情请求成功后，才发起其他请求
+      fetchOrgMemberList()
+      if (userStore.isLoggedIn) {
+        currentUserRole()
+      }
     }
+    
+    isDataLoading.value = false
   }
 
   const fetchOrgMemberList = async () => {
@@ -173,9 +199,5 @@
 
   onMounted(() => {
     fetchOrgDetail()
-    fetchOrgMemberList()
-    if (userStore.isLoggedIn) {
-      currentUserRole()
-    }
   })
 </script>

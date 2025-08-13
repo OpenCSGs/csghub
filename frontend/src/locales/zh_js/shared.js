@@ -20,6 +20,8 @@ export const shared = {
   hasLikes: "已收藏",
   tooLargeFile: "文件过大无法显示，您可以查看",
   tooLargeFile2: "原始版本",
-  tooLargeFile3:""
-
+  tooLargeFile3:"",
+  deleteFile: "删除文件",
+  deleteFileConfirm: "确定要删除此文件吗？",
+  copyContent: "复制内容",
 }

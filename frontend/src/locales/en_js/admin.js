@@ -120,7 +120,7 @@ export const admin = {
     delete: 'Delete',
     deleteConfirm: 'Confirm Delete',
     opSuccess: 'Operation Success',
-    newCategoryNotes: "If you need a new tag category, you can create it and then create new tag for it",
+    newCategoryNotes: "If you need a new tag category, you can create it and then create new tag for it" ,
     newCategoryBtn: "New Category",
     editCancelBtn: 'Cancel',
     editConfirmBtn: 'Confirm',

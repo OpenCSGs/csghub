@@ -380,6 +380,10 @@
               :value="item.value" />
           </el-select>
         </el-form-item>
+        <ApplicationSpaceEnvEditor
+            v-model:env="envJson"
+            v-model:secrets="secretJson"
+          />
         <el-divider class="my-[18px]" />
         <el-form-item class="w-full">
           <PublicAndPrivateRadioGroup
@@ -415,11 +419,13 @@
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
-
+  import ApplicationSpaceEnvEditor from './ApplicationSpaceEnvEditor.vue'
   const props = defineProps({
     licenses: Array
   })
 
+  const envJson = ref('')
+  const secretJson = ref('')
   const userStore = useUserStore()
   const dataFormRef = ref(null)
   const imageUploaded = ref(false)
@@ -679,6 +685,12 @@
       params.template = dataForm.value.dockerTemplate
       params.variables = JSON.stringify(dockerVariables.value) === "{}" ? "" : JSON.stringify(dockerVariables.value)
       params.secrets = JSON.stringify(dockerSecrets.value) === "{}" ? "" : JSON.stringify(dockerSecrets.value)
+    }
+    if(envJson){
+      params.env = envJson.value
+    }
+    if(secretJson){
+      params.secrets = secretJson.value
     }
     if (shouldShowDriverVersion.value) {
       params.driver_version = dataForm.value.driver_version

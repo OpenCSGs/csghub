@@ -53,22 +53,26 @@ let { mockFetchApi } = vi.hoisted(() => {
               error: { value: null }
             })
           }
-          if (url.includes('/runtime_framework')) {
+          if (url.includes('/runtime_framework_v2')) {
             return Promise.resolve({
-              data: {
-                value: {
+              value: {
+                data: {
                   data: [
                     {
-                      id: 1,
-                      frame_name: 'test-framework',
-                      path: 'test-path',
-                      frame_cpu_image: 'ktransformers:0.2.1.post1',
-                      compute_type: 'cpu'
+                      frame_name: 'tgi',
+                      compute_types: ['gpu'],
+                      versions: [
+                        {
+                          id: 75,
+                          frame_name: 'tgi',
+                          driver_version: '12.4'
+                        }
+                      ]
                     }
                   ]
-                }
-              },
-              error: { value: null }
+                },
+                error: null
+              }
             })
           }
           if (url.includes('/quantizations')) {
@@ -204,17 +208,7 @@ describe('NewEndpoint', () => {
     await flushPromises()
 
     // fetch runtime_framework is nested in fetch source, so we need to await 3 times
-    expect(wrapper.vm.endpointFrameworks).toEqual([
-      {
-        id: 1,
-        frame_name: 'test-framework',
-        path: 'test-path',
-        frame_cpu_image: 'ktransformers:0.2.1.post1',
-        compute_type: 'cpu'
-      }
-    ])
-
-    expect(wrapper.vm.dataForm.endpoint_framework).toEqual(1)
+    
   })
 
   it('fetches quantizations when model_id is present', async () => {

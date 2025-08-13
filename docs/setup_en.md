@@ -79,6 +79,8 @@ This project is based on Rails, Vue3, Tailwind CSS, Administrate, Postgresql, Ap
 
 ### Setting Environment Variables (Recommended with direnv)
 
+For more information about environment variables, please refer to the [Environment Variables Documentation](./env_variables_en.md). Here, we recommend using `direnv` to manage environment variables. Below are the steps to use `direnv`:
+
 1. Follow the [direnv official documentation](https://direnv.net/) for installation.
 
 2. Add the following to your shell config file (e.g., `.bashrc`, `.zshrc`, etc.) to configure direnv.

@@ -20,5 +20,8 @@ export const shared = {
   hasLikes: "Liked",
   tooLargeFile:"File too large to display,you can check the",
   tooLargeFile2:"raw version",
-  tooLargeFile3:" instead"
+  tooLargeFile3:" instead",
+  deleteFile: "Delete file",
+  deleteFileConfirm: "Are you sure you want to delete this file?",
+  copyContent: "Copy content",
 }

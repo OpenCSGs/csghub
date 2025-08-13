@@ -39,18 +39,22 @@ func Initialize(svcCtx *svc.ServiceContext) (*gin.Engine, error) {
 		log.Fatalf("failed to create server: %v", err)
 	}
 
-	logFilePath := "./log/app.log"
-	err = os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
-	if err != nil {
-		log.Fatalf("Failed to create directory: %v", err)
+	writer := os.Stdout
+	if svcCtx.Config.AppEnv == "development" {
+		logFilePath := "./log/app.log"
+		err = os.MkdirAll(filepath.Dir(logFilePath), os.ModePerm)
+		if err != nil {
+			log.Fatalf("Failed to create directory: %v", err)
+		}
+
+		f, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		if err != nil {
+			log.Fatalf("Can not open log file：%v", err)
+		}
+		writer = f
 	}
 
-	f, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatalf("Can not open log file：%v", err)
-	}
-
-	lh := slog.NewJSONHandler(f, &slog.HandlerOptions{
+	lh := slog.NewJSONHandler(writer, &slog.HandlerOptions{
 		AddSource: false,
 		Level:     slog.LevelInfo,
 	})
@@ -283,7 +287,9 @@ func setupApiRouter(g *gin.Engine, handlersRegistry *HandlersRegistry) {
 
 	internal_api.GET("/ping", handlersRegistry.FrontendHandlers.PingHandler.Ping)
 	internal_api.PUT("/users/jwt_token", handlersRegistry.FrontendHandlers.TokenHandler.RefreshToken)
-	internal_api.POST("/upload", handlersRegistry.FrontendHandlers.UploadHandler.Create)
+	internal_api.POST("/upload", middleware.Instance.ApiCheckCurrentUser(), handlersRegistry.FrontendHandlers.UploadHandler.Create)
+	internal_api.POST("/private_upload", middleware.Instance.ApiCheckCurrentUser(), handlersRegistry.FrontendHandlers.UploadHandler.PrivateCreate)
+	internal_api.GET("/oss_temp_url", middleware.Instance.ApiCheckCurrentUser(), handlersRegistry.FrontendHandlers.UploadHandler.GetUrlByObjectKey)
 
 	resolve_group := g.Group("")
 	resolve_group.GET("/:repo_type/:namespace/:name/resolve/:branch/*path", handlersRegistry.FrontendHandlers.ResolveHandler.Resolve)

@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
-import { mount } from "@vue/test-utils";
-import NewFinetune from "@/components/finetune/NewFinetune.vue";
+import { describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import NewFinetune from '@/components/finetune/NewFinetune.vue'
 
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => {
@@ -24,31 +24,53 @@ vi.mock('@/packs/useFetchApi', () => ({
             data: {
               value: {
                 data: [
-                  { name: 'Resource 1', is_available: true, resources: 'res1', id: 1 },
-                  { name: 'Resource 2', is_available: false, resources: 'res2', id: 2 }
+                  {
+                    name: 'Resource 1',
+                    is_available: true,
+                    resources: 'res1',
+                    id: 1
+                  },
+                  {
+                    name: 'Resource 2',
+                    is_available: false,
+                    resources: 'res2',
+                    id: 2
+                  }
                 ]
               }
             },
             error: { value: null }
           })
         }
-        if (url.includes('/runtime_framework')) {
+        if (url.includes('/runtime_framework_v2')) {
           return Promise.resolve({
-            data: {
-              value: {
-                data: [{ id: 1, frame_name: 'test-framework', path: 'test-path' }]
-              }
-            },
-            error: { value: null }
+            value: {
+              data: {
+                data: [
+                  {
+                    frame_name: 'tgi',
+                    compute_types: ['gpu'],
+                    versions: [
+                      {
+                        id: 75,
+                        frame_name: 'tgi',
+                        driver_version: '12.4'
+                      }
+                    ]
+                  }
+                ]
+              },
+              error: null
+            }
           })
-
         }
       },
       post: () => ({
         json: () => {
           if (url.includes('finetune?current_user')) {
             return Promise.resolve({
-              error: { value: null }, data: {
+              error: { value: null },
+              data: {
                 deploy_id: 123
               }
             })
@@ -61,10 +83,10 @@ vi.mock('@/packs/useFetchApi', () => ({
       }),
       delete: () => ({
         json: () => Promise.resolve({ error: { value: null } })
-      }),
-    };
+      })
+    }
   }
-}));
+}))
 
 vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory', () => ({
   fetchResourcesInCategory: vi.fn(() => {
@@ -74,13 +96,13 @@ vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory', () => ({
         options: [
           {
             name: 'Resource 1',
-            label: "Resource 1",
+            label: 'Resource 1',
             is_available: true,
-            resources:'res1',
+            resources: 'res1',
             order_detail_id: 1,
             type: 'cpu',
             id: 1
-          },
+          }
         ]
       }
     ])
@@ -93,15 +115,14 @@ const createWrapper = (props = {}) => {
       namespace: 'test-namespace',
       ...props
     }
-  });
-};
+  })
+}
 
 window.location.search = '?namespace=test-namespace&model_id=123'
 
-describe("NewFinetune", () => {
-  it("mounts correctly", () => {
-    const wrapper = createWrapper();
-    expect(wrapper.exists()).toBe(true);
-  });
-
-});
+describe('NewFinetune', () => {
+  it('mounts correctly', () => {
+    const wrapper = createWrapper()
+    expect(wrapper.exists()).toBe(true)
+  })
+})

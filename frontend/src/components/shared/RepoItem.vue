@@ -72,7 +72,7 @@
 
 <script setup>
   import RepoItemSyncIcon from './RepoItemSyncIcon.vue';
-  import { computed, ref, onMounted } from 'vue'
+  import { computed, ref, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
   import NewTag from './NewTag.vue'
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
@@ -146,31 +146,38 @@
     // 获取标签对应的图标路径
     let taskTagIconPath = null
     if (taskTag) {
-      // 英文版使用原始标签名，中文版尝试转换为对应的英文标签名
-      const tagNameForIcon = locale.value === 'en' 
-        ? taskTag.replace(/ /g, '-').toLowerCase()
-        : (props.repo.tags || []).find(tag => tag.category === "task")?.name
+      // 直接使用标签的name属性，因为图标文件名与标签名完全匹配
+      const tagNameForIcon = (props.repo.tags || []).find(tag => tag.category === "task")?.name
       
       if (tagNameForIcon) {
-        // 设置图标路径
+        // 设置图标路径，图标文件名与标签名完全一致
         taskTagIconPath = `/images/tags/${tagNameForIcon}.svg`
-        
-        // 在计算属性中只设置路径，图标存在性检查在onMounted中进行
       }
     }
 
     return { path, visibility, taskTag, showDescription, taskTagIconPath }
   })
 
-  onMounted(() => {
-    // 检查图标是否存在
-    if (getComputed.value.taskTagIconPath) {
-      const img = new Image()
-      img.onload = () => { taskTagIconExists.value = true }
-      img.onerror = () => { taskTagIconExists.value = false }
-      img.src = getComputed.value.taskTagIconPath
+  // 检查图标是否存在的函数
+  const checkIconExists = (iconPath) => {
+    if (!iconPath) {
+      taskTagIconExists.value = false
+      return
     }
-  })
+    
+    const img = new Image()
+    img.onload = () => { 
+      taskTagIconExists.value = true 
+    }
+    img.onerror = () => { 
+      taskTagIconExists.value = false 
+    }
+    img.src = iconPath
+  }
+
+  watch(() => getComputed.value.taskTagIconPath, (newIconPath) => {
+    checkIconExists(newIconPath)
+  }, { immediate: true }) // immediate: true to run on initial load
 </script>
 
 <style scoped>

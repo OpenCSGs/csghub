@@ -148,11 +148,11 @@
                       : t("dataPipelines.log")
                   }}
                 </el-button>
-                
+
                 <el-popconfirm
                   :title="
-                    scope.row.status === 'Failed' || 
-                    scope.row.status === 'Timeout' || 
+                    scope.row.status === 'Failed' ||
+                    scope.row.status === 'Timeout' ||
                     scope.row.status === 'Finished' ? `${t('dataPipelines.executeConfirm')}?` : `${t('dataPipelines.cancelExecute')}?`
                     "
                   :confirm-button-text="t('dataPipelines.confirm')"
@@ -166,8 +166,8 @@
                       class="flex items-center justify-start cursor-pointer"
                     >
                       {{
-                        scope.row.status === 'Failed' || 
-                        scope.row.status === 'Timeout' || 
+                        scope.row.status === 'Failed' ||
+                        scope.row.status === 'Timeout' ||
                         scope.row.status === 'Finished' ? t("dataPipelines.execute") : t("dataPipelines.cancel")
                       }}
                     </el-button>

@@ -1568,38 +1568,5 @@
                 "value": true
             }
         ]
-    },
-    "text_high_score_filter": {
-        "name": "文本高分过滤",
-        "description": "根据指定字段中的得分值范围过滤文本样本。",
-        "type": "Filter",
-        "group": "",
-        "samples": {
-            "before": "我有一只猫，它是一只猫",
-            "after": ""
-        },
-        "params": [
-            {
-                "name": "语言",
-                "type": "STRING",
-                "option_values": [
-                    {
-                        "key": "zh",
-                        "label": "中文"
-                    },
-                    {
-                        "key": "en",
-                        "label": "英文"
-                    }
-                ],
-                "value": "zh"
-            },
-            {
-                "name": "最小动作数量",
-                "type": "INTEGER",
-                "option_values": null,
-                "value": 1
-            }
-        ]
     }
 }

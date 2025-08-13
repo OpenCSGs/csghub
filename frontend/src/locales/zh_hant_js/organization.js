@@ -1,4 +1,5 @@
 export const organization = {
+  loading: '正在載入組織資訊...',
   orgSetting: "組織設定",
     orgInfo: "組織資訊",
     orgTeam: "團隊成員",
@@ -39,6 +40,7 @@ export const organization = {
       deleteSuccess: "成員移除成功",
       editRoleSuccess: "成員更新成功",
       deleteConfirmTitle: `是否確定將用戶 {username} 移出組織 {orgName}`,
+      assignOtherAdmin: "請為組織指定其他admin用戶",
     },
     invite: {
       title: "邀請",
@@ -57,5 +59,15 @@ export const organization = {
       role:"修改用戶角色",
       roleTips:"通過訪問文檔來瞭解不同角色的權限區別",
       updateSuccess: "organization已更新",
+      deleteOrganization: "刪除組織",
+      deleteOrganizationDesc: "此操作無法撤銷,這將永久刪除組織下所有資源庫(模型、數據集和空間)。",
+      deleteOrganizationConfirm: "請輸入{orgName}以確認刪除.",
+      deleteOrganizationName: "組織名稱",
+      deleteOrganizationNamePlaceholder: "請輸入組織名稱",
+      deleteOrganizationButton: "刪除組織",
+      deleteOrganizationConfirmTitle: "確定要刪除這個組織嗎？此操作無法撤銷。",
+      deleteOrganizationConfirmButton: "確定刪除",
+      deleteOrganizationCancelButton: "取消",
+      deleteOrganizationSuccess: "組織刪除成功",
     },
   }

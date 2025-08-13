@@ -1,4 +1,5 @@
 export const organization = {
+  loading: '正在加载组织信息...',
   orgSetting: "组织设置",
   orgInfo: "组织信息",
   orgTeam: "团队成员",
@@ -26,6 +27,7 @@ export const organization = {
     deleteSuccess: "成员移除成功",
     editRoleSuccess: "成员更新成功",
     deleteConfirmTitle: `是否确定将用户 {username} 移出组织 {orgName}`,
+    assignOtherAdmin: "请为组织指定其他admin用户",
   },
   invite: {
     title: "邀请",
@@ -44,5 +46,15 @@ export const organization = {
     role:"修改用户角色",
     roleTips:"通过访问文档来了解不同角色的权限区别",
     updateSuccess: "organization已更新",
+    deleteOrganization: "删除组织",
+    deleteOrganizationDesc: "此操作无法撤销,这将永久删除组织下所有资源库(模型、数据集和空间)。",
+    deleteOrganizationConfirm: "请输入{orgName}以确认删除.",
+    deleteOrganizationName: "组织名称",
+    deleteOrganizationNamePlaceholder: "请输入组织名称",
+    deleteOrganizationButton: "删除组织",
+    deleteOrganizationConfirmTitle: "确定要删除这个组织吗？此操作无法撤销。",
+    deleteOrganizationConfirmButton: "确定删除",
+    deleteOrganizationCancelButton: "取消",
+    deleteOrganizationSuccess: "组织删除成功",
   },
 }

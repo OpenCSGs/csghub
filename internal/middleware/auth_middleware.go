@@ -66,6 +66,33 @@ func (a *MiddlewareImpl) CheckCurrentUser() gin.HandlerFunc {
 	}
 }
 
+func (a *MiddlewareImpl) CheckLicenseActive() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		if isLicenseActive, exists := ctx.Get("isLicenseActive"); exists {
+			if isLicenseActive.(bool) {
+				ctx.Next()
+				return
+			} else {
+				ctx.Redirect(http.StatusFound, "/errors/unauthorized")
+				ctx.Abort()
+				return
+			}
+		}
+	}
+}
+
+func (a *MiddlewareImpl) ApiCheckCurrentUser() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		currentUser := a.jwtUtils.GetCurrentUser(ctx)
+		if currentUser == nil {
+			ctx.JSON(http.StatusBadRequest, map[string]string{"message": "Please Login to continue"})
+			ctx.Abort()
+			return
+		}
+		ctx.Next()
+	}
+}
+
 func (a *MiddlewareImpl) AuthenticateAdminUser() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		currentUser := a.jwtUtils.GetCurrentUser(ctx)

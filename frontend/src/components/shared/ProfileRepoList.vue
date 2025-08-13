@@ -114,7 +114,8 @@
 </template>
 
 <script setup>
-  import { computed, ref, onMounted } from "vue"
+  import { computed, ref, onMounted, watch, onUnmounted } from "vue"
+  import { useRoute } from 'vue-router'
   import RepoItem from "./RepoItem.vue"
   import CollectionCards from "../collections/CollectionCards.vue"
   import ApplicationSpaceItem from "../application_spaces/ApplicationSpaceItem.vue"
@@ -128,6 +129,7 @@
     initiator: String
   })
 
+  const route = useRoute()
   const collections = ref({})
   const models = ref({})
   const datasets = ref({})
@@ -161,23 +163,43 @@
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
 
-  const getProfileRepoData = async () => {
-    const collectionsUrl = reposUrl("collections")
-    const modelsUrl = reposUrl("models")
-    const datasetsUrl = reposUrl("datasets")
-    const spacesUrl = reposUrl("spaces")
-    const codesUrl = reposUrl("codes")
-    const mcpsUrl = reposUrl("mcps")
+  const isLoading = ref(false)
+  const lastFetchTime = ref(0)
+  const FETCH_DEBOUNCE_TIME = 1000
 
-    const promises = [
-      fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
-      fetchData(modelsUrl, models, INITIAL_PER_PAGE, 1),
-      fetchData(datasetsUrl, datasets, INITIAL_PER_PAGE, 1),
-      fetchData(spacesUrl, spaces, INITIAL_PER_PAGE, 1),
-      fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1),
-      fetchData(mcpsUrl, mcps, INITIAL_PER_PAGE, 1),
-    ]
-    await Promise.all(promises)
+  const getProfileRepoData = async () => {
+    if (isLoading.value) {
+      return
+    }
+    
+    isLoading.value = true
+    lastFetchTime.value = Date.now()
+    
+    try {
+      const timestamp = Date.now()
+      const collectionsUrl = `${reposUrl("collections")}?_t=${timestamp}`
+      const modelsUrl = `${reposUrl("models")}?_t=${timestamp}`
+      const datasetsUrl = `${reposUrl("datasets")}?_t=${timestamp}`
+      const spacesUrl = `${reposUrl("spaces")}?_t=${timestamp}`
+      const codesUrl = `${reposUrl("codes")}?_t=${timestamp}`
+      const promptsUrl = `${reposUrl("prompts")}?_t=${timestamp}`
+      const mcpsUrl = `${reposUrl("mcps")}?_t=${timestamp}`
+
+      const promises = [
+        fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
+        fetchData(modelsUrl, models, INITIAL_PER_PAGE, 1),
+        fetchData(datasetsUrl, datasets, INITIAL_PER_PAGE, 1),
+        fetchData(spacesUrl, spaces, INITIAL_PER_PAGE, 1),
+        fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1),
+        fetchData(mcpsUrl, mcps, INITIAL_PER_PAGE, 1),
+      ]
+      if (props.initiator === "profile") {
+        promises.push(fetchData(promptsUrl, prompts, INITIAL_PER_PAGE, 1))
+      }
+      await Promise.all(promises)
+    } finally {
+      isLoading.value = false
+    }
   }
 
   const viewMoreTargets = async (target) => {
@@ -302,7 +324,27 @@
   const fetchMoreCodes = () => fetchMore(codes, "codes")
   const fetchMoreMcp = () => fetchMore(mcps, "mcps")
 
+  // 添加处理浏览器前进后退的函数
+  const handlePopState = () => {
+    if (isLoading.value) {
+      return
+    }
+    
+    const now = Date.now()
+    if (now - lastFetchTime.value < FETCH_DEBOUNCE_TIME) {
+      return
+    }
+    
+    getProfileRepoData()
+  }
+
   onMounted(() => {
     getProfileRepoData()
+    
+    window.addEventListener('popstate', handlePopState)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('popstate', handlePopState)
   })
 </script>

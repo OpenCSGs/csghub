@@ -105,13 +105,33 @@
             {{ $t('shared.preview') }}
           </div>
           <div
+            v-if="!isImage()"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+          >
+            <SvgIcon name="copy" />
+            <a
+              @click.prevent="copyFile"
+              >{{ $t('shared.copyContent') }}</a
+            >
+          </div>
+          <div
             v-if="canWrite && !isImage()"
-            class="flex items-center gap-1 cursor-pointer"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
           >
             <SvgIcon name="edit" />
             <a
               @click.prevent="goToEditFile"
               >{{ $t('shared.edit') }}</a
+            >
+          </div>
+          <div
+            v-if="canWrite"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+          >
+            <SvgIcon name="delete" />
+            <a
+              @click.prevent="deleteFile"
+              >{{ $t('all.delete') }}</a
             >
           </div>
         </div>
@@ -223,17 +243,19 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
   import { format } from 'timeago.js'
   import MarkdownViewer from './viewers/MarkdownViewer.vue'
   import TextViewer from './viewers/TextViewer.vue'
   import CodeViewer from './viewers/CodeViewer.vue'
   import BranchDropdown from './BranchDropdown.vue'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
   import { useI18n } from 'vue-i18n'
   import { createAndClickAnchor } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { copyToClipboard } from '@/packs/clipboard'
 
   const props = defineProps({
     // branches: Object,
@@ -243,6 +265,8 @@
     canWrite: Boolean
   })
 
+  const router = useRouter()
+  const route = useRoute()
   const { t } = useI18n()
   const { repoTab, setRepoTab } = useRepoTabStore()
   const breadcrumb = ref([])
@@ -302,42 +326,121 @@
   }
 
   const goToNamespace = () => {
-    // :href="`/${prefixPath}/${namespacePath}/files/${currentBranch}`"
+    const query = {
+      tab: 'files',
+      actionName: 'files'
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'files',
       lastPath: ''
-    }) 
+    })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
   }
 
   const goToBreadcrumb = (path, index) => {
-    // :href="`/${prefixPath}/${namespacePath}/${
-    // index === breadcrumb.length - 1 ? 'blob' : 'files' }/${currentBranch}${path}`"
     const pathTmp = path.includes('/') ? path?.slice(1) : path
-    setRepoTab({
-      actionName: index === breadcrumb.length - 1 ? 'blob' : 'files',
-      lastPath: pathTmp
-    }) 
-    fetchFileContent()
+    const isLastItem = index === breadcrumb.value.length - 1
+    
+    if (isLastItem) {
+      // 如果是最后一个面包屑项（当前文件），导航到blob页面
+      const query = {
+        tab: 'files',
+        actionName: 'blob',
+        path: pathTmp
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
+      
+      setRepoTab({
+        actionName: 'blob',
+        lastPath: pathTmp
+      })
+      
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
+      
+      fetchFileContent()
+    } else {
+      // 否则导航到文件列表页面
+      const query = {
+        tab: 'files',
+        actionName: 'files',
+        path: pathTmp
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
+      
+      setRepoTab({
+        actionName: 'files',
+        lastPath: pathTmp
+      })
+      
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
+    }
   }
 
   const goToEditFile = () => {
-    // :href="`/${prefixPath}/${namespacePath}/edit/${currentBranch}/${currentPath}`"
+    const query = {
+      tab: 'files',
+      actionName: 'edit_file',
+      path: currentPath.value
+    }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+    
     setRepoTab({
       actionName: 'edit_file',
       lastPath: currentPath.value
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+  }
+
+  const copyFile = () => {
+    copyToClipboard(content.value)
   }
 
   const changeBranch = (branch) => {
-    // if (branch !== props.currentBranch) {
-    //   window.location.href = `/${apiPrefixPath}/${props.namespacePath}/blob/${branch}/${props.currentPath}`
-    // }
     currentBranch.value = branch
+    const query = {
+      tab: 'files',
+      actionName: 'files'
+    }
+    if (branch) {
+      query.branch = branch
+    }
+    
     setRepoTab({
       currentBranch: branch,
       actionName: 'files',
       lastPath: ''
     })
+    
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+    
+    init()
   }
 
   const units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
@@ -358,7 +461,9 @@
       apiPrefixPath,
       data.content,
       props.namespacePath,
-      currentBranch.value
+      currentBranch.value,
+      currentPath.value,
+      fileType.value
     )
     lastCommit.value = data.commit
     size.value = data.size
@@ -377,9 +482,9 @@
 
       if (data.value) {
         const result = data.value
-        updateFileData(result.data)
         updateBreadcrumb()
         detectFileType()
+        updateFileData(result.data)
         lfsContentRegex()
       } else {
         console.log(error.value.msg)
@@ -427,6 +532,56 @@
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const deleteFile = async () => {
+    ElMessageBox.confirm(
+      t('shared.deleteFileConfirm'),
+      t('shared.deleteFile'),
+      {
+        confirmButtonText: t('all.confirm'),
+        cancelButtonText: t('all.cancel'),
+        type: 'warning'
+      }
+    )
+      .then(async () => {
+        const url = `/${apiPrefixPath}/${props.namespacePath}/raw/${currentPath.value}`
+        try {
+          const { error } = await useFetchApi(url, {
+            method: 'DELETE',
+            body: JSON.stringify({
+              message: `Delete ${extractNameFromPath(currentPath.value)}`,
+              content: '',
+              branch: currentBranch.value,
+              new_branch: currentBranch.value,
+              origin_path: '',
+            })
+          }).json()
+
+          if (error.value) {
+            ElMessage({
+              message: error.value.msg,
+              type: 'warning'
+            })
+          } else {
+            ElMessage({
+              message: t('all.deleteSuccess'),
+              type: 'success'
+            })
+            window.location.href = `/${prefixPath}/${props.namespacePath}?tab=files`
+          }
+        } catch (error) {
+          ElMessage({
+            message: error.message,
+            type: 'warning'
+          })
+        }
+      })
+      .catch(() => {})
+  }
+
+  const init = () => {
+    fetchFileContent()
   }
 
   onMounted(() => {

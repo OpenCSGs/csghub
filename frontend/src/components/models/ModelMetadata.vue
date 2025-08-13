@@ -124,6 +124,6 @@
     quantization.type ? quantization.type.split('/') : []
 
   const goToFiles = () => {
-    window.location.href = `/models/${props.namespacePath}/files/${props.currentBranch}`
+    window.location.href = `/models/${props.namespacePath}?tab=files`
   }
 </script>

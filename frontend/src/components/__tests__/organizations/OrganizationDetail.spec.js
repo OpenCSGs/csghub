@@ -19,7 +19,8 @@ const createWrapper = (props) => {
 vi.mock('../../../stores/UserStore', () => ({
   default: () => ({
     username: 'testuser',
-    orgs: [{ path: 'testorg' }]
+    orgs: [{ path: 'testorg' }],
+    isLoggedIn: true
   })
 }))
 
@@ -29,6 +30,7 @@ vi.mock('@/packs/useFetchApi', () => ({
       console.log(url)
       if (url === '/organization/testorg') {
         return Promise.resolve({
+          response: { value: { status: 200 } },
           data: {
             value: {
               data: {
@@ -77,6 +79,23 @@ vi.mock('@/packs/useFetchApi', () => ({
           error: { value: null }
         })
       }
+      if (url === '/organization/verify/testorg') {
+        return Promise.resolve({
+          get: () => ({
+            json: () => Promise.resolve({
+              data: {
+                value: {
+                  data: {
+                    status: 'approved',
+                    reason: ''
+                  }
+                }
+              },
+              error: { value: null }
+            })
+          })
+        })
+      }
       return Promise.resolve({
         data: { value: { data: null } },
         error: { value: null }
@@ -90,7 +109,12 @@ describe('OrganizationDetail', () => {
     it('mounts correctly', async () => {
       const wrapper = createWrapper()
       expect(wrapper.exists()).toBe(true)
+      
+      // 等待异步操作完成
       await wrapper.vm.$nextTick()
+      await new Promise(resolve => setTimeout(resolve, 100))
+      await wrapper.vm.$nextTick()
+      
       expect(wrapper.vm.organizationData).toEqual(
         expect.objectContaining({
           name: 'testorg',
@@ -111,7 +135,11 @@ describe('OrganizationDetail', () => {
             'https://opencsg-test.oss-cn-beijing.aliyuncs.com/comment/10fe27da-4ebe-4713-aa7d-2daafdf9851c'
         }
       ])
-      await wrapper.vm.currentUserRole()
+      
+      // 等待角色获取完成
+      await new Promise(resolve => setTimeout(resolve, 100))
+      await wrapper.vm.$nextTick()
+      
       expect(wrapper.vm.role).toBe('admin')
     })
   })

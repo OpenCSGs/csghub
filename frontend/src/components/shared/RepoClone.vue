@@ -21,18 +21,40 @@
     <!-- evaluation button -->
     <div v-if="!actionLimited && repoType === 'model'"
       class="relative inline-flex">
+      <el-tooltip
+        v-if="!enableEvaluation || !httpCloneUrl"
+        placement="top"
+        effect="dark"
+      >
+        <template #content>
+          <div>
+            {{ repo.disableEvaluationReason }}, 
+            <a href="https://opencsg.com/docs/inferencefinetune/evaluation_faq" target="_blank" style="color: #fff; text-decoration: underline;">
+              {{ $t('all.viewDocumentation') }}
+            </a>
+          </div>
+        </template>
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm modelBtn pl-8 disabled"
+          :name="$t('evaluation.new.title')"
+          svgName="evaluation_new"
+        />
+      </el-tooltip>
       <CsgButton
+        v-else
         class="btn btn-secondary-gray btn-sm modelBtn pl-8"
-        :name="enableEvaluation && !!httpCloneUrl ? $t('evaluation.new.title') : $t('evaluation.new.title')"
+        :name="$t('evaluation.new.title')"
+        :tooltipContent="repo.disableEvaluationReason"
         :class="{ disabled: !enableEvaluation || !httpCloneUrl }"
         svgName="evaluation_new"
-        @click="enableEvaluation && !!httpCloneUrl ? toNewEvaluatePage() : ''"
+        :disabled="mirrorTaskRunning"
+        @click="toNewEvaluatePage()"
       />
     </div>
 
     <!-- endpoint deploy button -->
     <DeployDropdown
-      v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl"
+      v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl && !mirrorTaskRunning"
       :modelId="namespacePath"
     />
     <div
@@ -49,26 +71,72 @@
       />
     </div>
     <div
-      class="btn btn-secondary-gray btn-sm modelBtn disabled"
       v-else-if="repoType === 'model'"
     >
-      <SvgIcon
-        name="deploy"
-        class="mr-0"
-        :disabled="true"
-      />
-      <div>{{ $t('all.deploy') }}</div>
+      <el-tooltip
+
+        placement="top"
+        effect="dark"
+        :disabled="!repo.disableInferenceReason"
+      >
+        <template #content>
+          <div>
+            {{ repo.disableInferenceReason }}, 
+            <a href="https://opencsg.com/docs/inferencefinetune/endpoint_faq" target="_blank" style="color: #fff; text-decoration: underline;">
+              {{ $t('all.viewDocumentation') }}
+            </a>
+          </div>
+        </template>
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm modelBtn disabled"
+          :name="$t('all.deploy')"
+          svgName="model_endpoint_create"
+          :disabled="true"
+        />
+      </el-tooltip>
     </div>
 
     <!-- finetune deploy button -->
+    <el-tooltip
+      v-if="!actionLimited && repoType === 'model' && (!enableFinetune || !httpCloneUrl)"
+      placement="top"
+      effect="dark"
+    >
+      <template #content>
+        <div>
+          {{ repo.disableFinetuneReason }}, 
+          <a href="https://opencsg.com/docs/inferencefinetune/finetune_faq" target="_blank" style="color: #fff; text-decoration: underline;">
+            {{ $t('all.viewDocumentation') }}
+          </a>
+        </div>
+      </template>
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm modelBtn disabled"
+        :name="$t('finetune.title')"
+        svgName="model_finetune_create"
+      />
+    </el-tooltip>
     <CsgButton
-      v-if="!actionLimited && repoType === 'model'"
+      v-else-if="!actionLimited && repoType === 'model'"
       class="btn btn-secondary-gray btn-sm modelBtn"
-      :disabled="!enableFinetune || !httpCloneUrl"
       :name="$t('finetune.title')"
       svgName="model_finetune_create"
-      @click="enableFinetune && !!httpCloneUrl ? handleButtonClick() : ''"
+      :disabled="mirrorTaskRunning"
+      @click="handleButtonClick()"
     />
+
+    <!-- dataflow button -->
+    <div
+      class="btn btn-secondary-gray btn-sm"
+      v-if="repoType === 'dataset' && syncStatus !== 'pending' && canManage"
+      @click="toDataflowPage"
+    >
+      <SvgIcon
+        name="repoheader_dataset"
+        class="mr-0"
+      />
+      <div>{{ $t('dataPipelines.dataProcessing') }}</div>
+    </div>
 
     <!-- repo download clone button -->
     <CsgButton
@@ -146,6 +214,7 @@
             <div class="text-gray-500 mt-[8px]">{{ $t('all.csghubSdkTips') }}</div>
             <markdown-viewer :content="comandlineCodeMarkdown"></markdown-viewer>
             <div class="text-gray-500"># {{ $t(`all.${repoType}DownloadTips`) }}</div>
+            <div class="text-gray-500 mt-[8px]">{{ $t('all.csghubLocalDirTips') }}</div>
             <markdown-viewer :content="comandlineCode2Markdown"></markdown-viewer>
           </div>
         </el-tab-pane>
@@ -266,6 +335,7 @@
 
 <script setup>
   import { computed, ref, onMounted, watch } from 'vue'
+  import { useI18n } from 'vue-i18n'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
   import SyncDropdown from './SyncDropdown.vue'
@@ -310,6 +380,11 @@
     const url = repoDetailStore.repository.http_clone_url
     return url ? new URL(url).protocol : 'https'
   })
+  const httpCloneProtocolHostname = computed(() => {
+    const url = new URL(CSGHUB_SERVER)
+    if (!url) return ''
+    return `${url.protocol}//${url.hostname}`
+  })
 
   const httpsCloneCode = computed(() => {
     return `
@@ -352,6 +427,10 @@ git clone ${httpCloneProtocol.value}//${userStore.username}:${
     return (
       props.repo.source === 'opencsg' && props.repo.syncStatus === 'inprogress'
     )
+  })
+
+  const mirrorTaskRunning = computed(() => {
+    return props.repo.mirrorTaskStatus === 'running'
   })
 
   const getMarkdownCode = (code, lang, multiline = false) => {
@@ -404,19 +483,21 @@ pip install csghub-sdk
   })
 
   const getComandLineCloneCode = () => {
-    if (props.repoType === 'model') {
-      return ref(`
-csghub-cli download ${props.namespacePath}
-`)
-    } else if (props.repoType === 'dataset') {
-      return ref(`
-csghub-cli download ${props.namespacePath} -t dataset
-`)
+    let revision =
+      repoDetailStore.defaultBranch && repoDetailStore.defaultBranch !== 'main'
+        ? ` --revision ${repoDetailStore.defaultBranch}`
+        : ''
+    revision += httpCloneProtocolHostname.value ? ` -e ${httpCloneProtocolHostname.value}` : ''
+    revision += ' --local-dir ./'
+    let typeFlag = ''
+    if (props.repoType === 'dataset') {
+      typeFlag = ' -t dataset'
     } else if (props.repoType === 'space') {
-      return ref(`
-csghub-cli download ${props.namespacePath} -t space
-`)
+      typeFlag = ' -t space'
     }
+    return ref(`
+csghub-cli download ${props.namespacePath}${typeFlag}${revision}
+`)
   }
 
   const comandlineCodeMarkdown = computed(() => {
@@ -481,6 +562,11 @@ csghub-cli download ${props.namespacePath} -t space
   function toFinetunePage() {
     window.location.href = `/finetune/new?model_id=${props.namespacePath}&repoType=${props.repoType}`
   }
+
+  function toDataflowPage() {
+    window.location.href = `/datapipelines/newTask?datasetPath=${props.repo.path}`
+  }
+
 
   const fetchUserToken = async () => {
     if (!userStore.username) return

@@ -40,7 +40,7 @@ config.global.plugins = [
 ];
 
 window.DEFAULT_TAGS = []
-window.CSGHUB_SERVER = 'http://192.168.2.98:20012'
+window.CSGHUB_SERVER = 'http://localhost:8080'
 
 config.global.provide = {
     defaultTags: DEFAULT_TAGS,

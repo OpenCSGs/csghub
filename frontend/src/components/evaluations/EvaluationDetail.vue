@@ -25,16 +25,7 @@
           >
         </div>
 
-        <div class="flex items-center gap-5 mb-4">
-          <div class="flex items-center">
-            <div class="text-gray-500 text-base mr-1">
-              {{ $t('evaluation.detail.creationTime') }}:
-            </div>
-            <div class="text-gray-700 text-base">
-              {{ formatDate(evaluation.submit_time) }}
-            </div>
-          </div>
-          <SvgIcon name="vertical_divider" />
+        <div class="flex flex-wrap items-center gap-5 mb-4">
           <div class="flex items-center">
             <div class="text-gray-500 text-base mr-1">
               {{ $t('evaluation.detail.evaluationModel') }}:
@@ -45,10 +36,28 @@
             >
               <a
                 :href="`/models/${evaluation.repo_ids[0]}`"
-                class="text-brand-700 underline"
+                class="text-brand-700 hover:underline"
               >
                 {{ evaluation.repo_ids[0].split('/')[1] }}
               </a>
+            </div>
+          </div>
+          <SvgIcon name="vertical_divider" />
+          <div class="flex items-center">
+            <div class="text-gray-500 text-base mr-1">
+              {{ $t('evaluation.detail.evaluationResource') }}:
+            </div>
+            <div class="text-gray-700 text-base">
+              {{ evaluation.resource_name }}
+            </div>
+          </div>
+          <SvgIcon name="vertical_divider" />
+          <div class="flex items-center">
+            <div class="text-gray-500 text-base mr-1">
+              {{ $t('evaluation.detail.creationTime') }}:
+            </div>
+            <div class="text-gray-700 text-base">
+              {{ formatDate(evaluation.submit_time) }}
             </div>
           </div>
         </div>
@@ -76,7 +85,7 @@
               class="flex items-center gap-4"
               v-if="category.datasets.length"
             >
-              <div
+              <div v-if="!isCustomDataset"
                 class="border border-gray-300 rounded-sm flex items-center gap-1 px-[6px] py-[2px]"
               >
                 <SvgIcon name="dot_black" />
@@ -87,7 +96,24 @@
                   v-for="(dataset, index) in category.datasets"
                   :key="dataset"
                 >
-                  <div class="text-gray-700 text-base">{{ dataset }}</div>
+                  <span :class="dataset.url ? 'dataset-item-valid' : 'dataset-item-invalid'">
+                    <el-tooltip
+                      :disabled="dataset.url"
+                      class="datasetTooltip"
+                      effect="dark"
+                      :content="$t('evaluation.detail.invalidDataset')"
+                      placement="top"
+                    >
+                      <a
+                        class="text-md font-normal leading-normal"
+                        :href="dataset.url"
+                        :target="dataset.url ? '_blank' : ''"
+                        :class="dataset.url ? 'text-gray-700' : 'text-gray-400 cursor-not-allowed'"
+                      >
+                        {{ dataset.repoDatasetName }}
+                      </a>
+                    </el-tooltip>
+                  </span>
                   <SvgIcon
                     v-if="index < category.datasets.length - 1"
                     name="vertical_divider"
@@ -102,6 +128,7 @@
 
     <div class="page-responsive-width m-auto bg-white pt-4">
       <el-tabs
+        v-if="evaluationSucceed"
         v-model="activeName"
         @tab-click="handleTabClick"
       >
@@ -113,7 +140,7 @@
         >
           <el-table
             v-loading="loading"
-            :data="getTableData(tab.name)"
+            :data="tableDataResult"
             :border="true"
             header-row-class-name="evaluation-table-header-row"
             header-cell-class-name="evaluation-table-header-cell"
@@ -122,23 +149,35 @@
             class="evaluation-table mt-6 mb-10 rounded-xl"
           >
             <el-table-column
-              prop="dataset"
-              :label="$t('evaluation.detail.dataset')"
+              prop="model" 
+              :label="$t('evaluation.detail.model')"
+              :min-width="dynamicModelWidth + 'px'"
+              class-name="evaluation-model-column" 
+              fixed="left"
             />
-            <el-table-column
-              prop="metric"
-              :label="$t('evaluation.detail.metrics')"
-            />
-            <el-table-column
-              prop="score"
-              :label="$t('evaluation.detail.scores')"
-              :sortable="true"
-              :sort-method="
-                (a, b) => {
-                  return parseFloat(a.score) > parseFloat(b.score) ? 1 : -1
-                }
-              "
-            />
+              <el-table-column 
+                v-for="(datasetData, datasetName) in tableDataResult[0]?.dataset || {}" :key="datasetName"
+                :label="datasetName"
+                header-align="center"
+                align="center"
+              >
+                <el-table-column
+                  v-for="(metricItem, index) in datasetData"
+                  :key="`${datasetName}-${metricItem}-${index}`"
+                  :label="metricItem.metric"
+                  :min-width="dynamicMinWidth + 'px'"
+                  class-name="evaluation-metric-column"
+                >
+                  <template #default="{ row }">
+                    <div class="line-clamp-3 break-words">
+                    {{ 
+                      (row.dataset[datasetName] || [])
+                        .find(item => item.metric === metricItem.metric)?.score || 0
+                    }}
+                    </div>
+                  </template>
+                </el-table-column>
+              </el-table-column>
             <template #empty>
               <span v-if="error">{{ error }}</span>
               <span v-else>{{ $t('all.noData') }}</span>
@@ -146,16 +185,47 @@
           </el-table>
         </el-tab-pane>
       </el-tabs>
+      <div v-if="!evaluationSucceed" class="handle-error-page flex justify-center items-center">
+        <div class="background-pattern w-full py-6 flex flex-col justify-center items-center gap-12" 
+             style="background-image: url('/images/evaluation/Background_pattern.svg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+          <div class="flex flex-col justify-center items-center gap-6">
+            <SvgIcon
+            name="feature_icon"
+            width="56"
+            height="56"
+            />
+            <div class="self-stretch inline-flex flex-col justify-start items-center gap-6">
+              <div class="self-stretch text-center justify-start text-gray-900 text-4xl font-medium leading-10">{{ $t('evaluation.detail.evaluationFailed') }}</div>
+              <div ref="errorLogDiv" class="w-80% h-50% flex-1 overflow-y-auto bg-gray-800 p-6 rounded-xl text-white" style="max-height: 200px; max-width: 720px">
+                <p>...</p>
+             </div>
+            </div>
+          </div>
+          <div class="inline-flex justify-start items-start gap-3">
+            <CsgButton
+            class="btn btn-secondary-gray btn-lg"
+            @click="goBack"
+            :name="$t('evaluation.detail.return')"
+          />
+            <CsgButton
+            class="btn btn-primary btn-lg"
+            @click="recreateEvaluation"
+            :name="$t('evaluation.detail.recreate')"
+          />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted, computed, nextTick, onBeforeUnmount } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { formatDate } from '@/packs/datetimeUtils'
+  import SvgIcon from '@/components/shared/SvgIcon.vue';
 
   const props = defineProps({
     evaluationId: {
@@ -173,16 +243,40 @@
   const loading = ref(false)
   const error = ref('')
   const categories = ref([])
+  const evaluationSucceed = ref(true)
+  const isCustomDataset = ref(false)
 
   const groupedDatasets = computed(() => {
+    if(isCustomDataset.value) {
+      return [{
+        name: 'Custom',
+        datasets: evaluation.value.datasets.map((d) =>
+          {
+             return showDataset(d)
+          })
+      }]
+    }
+    else {
     return categories.value.map((category) => ({
       name: locale.value === 'en' ? category.name : category.show_name,
       datasets:
         evaluation.value.datasets
-          ?.filter((d) => d.tags.some((t) => t.name === category.name))
-          .map((d) => d.repo_id.split('/')[1]) || []
+          ?.filter((d) => d.tags && Array.isArray(d.tags) && d.tags.some((t) => t.name === category.name))
+            .map((d) => 
+            {
+              return showDataset(d)
+            }
+          ) || []
     }))
+    }
   })
+
+  const showDataset = (d) => {
+    return {
+      repoDatasetName: d.repo_id.split('/')[1] || [],
+      url: d.deleted ? null : `/datasets/${d.repo_id}?tab=summary`
+    }
+  }
 
   const datasets = computed(() => {
     if (!evaluationResult.value) return []
@@ -207,6 +301,7 @@
     return keyColumn?.key || ''
   }
 
+  const tableDataResult = ref([])
   const getTableData = (tab) => {
     if (!evaluationResult.value?.summary) return []
 
@@ -215,17 +310,45 @@
         ? evaluationResult.value.summary.data
         : evaluationResult.value[tab]?.data
 
-    return (
-      source?.map((item) => ({
+    let res = source?.map((item) => ({
+        model: item.model,
         dataset: item.dataset,
         metric: item.metric,
-        score: item[scoresKey.value]
+        score: item.score
       })) || []
-    )
+
+    const newres = res.reduce((acc, current) => {
+      let modelEntry = acc.find(item => item.model === current.model)
+      if (!modelEntry) {
+        modelEntry = {
+          model: current.model,
+          dataset: {}
+        }
+        acc.push(modelEntry)
+      }
+      
+      if (!modelEntry.dataset[current.dataset]) {
+        modelEntry.dataset[current.dataset] = []
+      }
+      
+      modelEntry.dataset[current.dataset].push({
+        metric: current.metric,
+        score: current.score || 0
+      })
+      
+      return acc
+    }, [])
+
+    return newres
+  }
+
+  const refreshTableData = (tab) => {
+    tableDataResult.value = getTableData(tab)
   }
 
   const handleTabClick = (tab) => {
     activeName.value = tab.props.name
+    refreshTableData(tab.props.name)
   }
 
   const fetchTags = async () => {
@@ -240,6 +363,72 @@
     }
   }
 
+  const errorLogDiv = ref(null)
+  const errorLogLineNum = ref(0)
+  const scrollToBottom = () => {
+    if (errorLogDiv) {
+      errorLogDiv.value.scrollTop = errorLogDiv.value.scrollHeight
+    }
+  }
+
+  const appendLog = (refElem, data, refLineNum) => {
+    // Create the div element
+    const divNode = document.createElement('div')
+    divNode.className = 'flex'
+
+    // Create the first p element
+    const pNode1 = document.createElement('p')
+    pNode1.className = 'pr-6 pt-2'
+    pNode1.innerHTML = `${refLineNum.value}:`
+
+    // Create the second p element
+    const pNode2 = document.createElement('p')
+    pNode2.className = 'pt-2'
+    pNode2.innerHTML = `${data.replace(/\\r/g, '<br>')}`
+
+    // Append the p elements to the div element
+    divNode.appendChild(pNode1)
+    divNode.appendChild(pNode2)
+
+    if (refElem.value) {
+      refElem.value.appendChild(divNode)
+      refLineNum.value = refLineNum.value + 1
+    }
+  }
+
+  const goBack = () => {
+    window.history.back()
+  }
+
+  const recreateEvaluation = () => {
+    window.location.href = `/evaluations/new`
+  }
+
+  const dynamicMinWidth = ref(288)
+  const dynamicModelWidth = ref(320)
+  const calculateMinWidth = () => {
+    const width = window.innerWidth
+    if (width >= 1280) return { metric: 288, model: 320 }
+    if (width >= 1024) return { metric: 224, model: 260 }
+    if (width >= 768) return { metric: 160, model: 200 }
+    if (width >= 640) return { metric: 128, model: 160 }
+    return { metric: 128, model: 160 }                    
+  }
+
+  const handleResize = () => {
+    const widths = calculateMinWidth()
+    dynamicMinWidth.value = widths.metric
+    dynamicModelWidth.value = widths.model
+  }
+
+  const observeResizeEvent = () => {
+    window.addEventListener('resize', handleResize)
+  }
+
+  const unObserveResizeEvent = () => {
+    window.removeEventListener('resize', handleResize)
+  }
+
   const fetchEvaluation = async () => {
     try {
       loading.value = true
@@ -251,12 +440,34 @@
         throw new Error(data.value?.msg || 'Failed to fetch evaluation')
       }
 
+      const status = data.value.data.status
+      if("Failed" === status) {
+        evaluationSucceed.value = false
+        const reason = data.value.data.reason
+        nextTick(() => {
+          const lines = reason.split('\n');
+          lines.forEach(line => {
+            if (line.trim()) {
+              appendLog(errorLogDiv, line, errorLogLineNum);
+            }
+          });
+          nextTick(() => {
+            scrollToBottom()
+          })
+        })
+      }
+
       evaluation.value = data.value.data
+
+      if(evaluation.value.datasets && evaluation.value.datasets.length > 0 && !evaluation.value.datasets[0].tags) {
+        isCustomDataset.value = true
+      }
 
       if (evaluation.value.result_url) {
         const result = await fetch(evaluation.value.result_url)
         evaluationResult.value = await result.json()
         scoresKey.value = getScoresKey(evaluationResult.value)
+        refreshTableData(activeName.value)
       }
     } catch (e) {
       error.value = e.message
@@ -272,6 +483,12 @@
   onMounted(() => {
     fetchTags()
     fetchEvaluation()
+    handleResize()
+    observeResizeEvent()
+  })
+
+  onBeforeUnmount(() => {
+    unObserveResizeEvent()
   })
 </script>
 
@@ -290,12 +507,38 @@
     background-color: #f9fafb;
   }
 
-  .evaluation-table
-    .evaluation-table-header-row
-    .evaluation-table-header-cell:nth-child(1) {
-    border-left: 1px solid #eaecf0;
-    border-top-left-radius: 12px;
-  }
+    .evaluation-table-header-row:not(:first-of-type) {
+      .evaluation-table-header-cell {
+        &:nth-child(1) {
+          border-left: none;
+          border-top-left-radius: 0px;
+        }
+        &:nth-last-child(1) {
+          border-top-right-radius: 0px;
+        }
+        .cell {
+          line-height: 18px;
+        }
+        border-top: none;
+      }
+    }
+
+    .evaluation-table-row {
+      .evaluation-table-row-cell {
+        &:nth-child(1) {
+          border-left: 1px solid #eaecf0;
+        }
+        &:nth-last-child(1) {
+          border-right: 1px solid #eaecf0;
+        }
+        .cell {
+          line-height: 22px;
+        }
+        padding: 16px 24px;
+        font-size: 14px;
+        color: var(--gray-900);
+      }
+    }
 
   .evaluation-table
     .evaluation-table-header-row
@@ -343,5 +586,15 @@
     .evaluation-table-row:nth-last-child(1)
     .evaluation-table-row-cell:nth-last-child(1) {
     border-bottom-right-radius: 12px;
+  }
+
+  .dataset-item-invalid :deep(.el-tooltip__trigger:hover) {
+    color: #98A2B3 !important;
+    background-color: transparent !important;
+  }
+
+  .dataset-item-valid :deep(.el-tooltip__trigger:hover) {
+    color: #223B99 !important;
+    background-color: transparent !important;
   }
 </style>

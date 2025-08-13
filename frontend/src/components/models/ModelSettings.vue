@@ -485,7 +485,7 @@
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
             window.location.href = '/models'
-          }, 500)
+          }, 1000)
           return true
         }
       },

@@ -10,19 +10,26 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('endpoints.new.title') }}
     </h3>
-    <p class="text-gray-500 text-md font-regular md:text-center">
-      {{ t('endpoints.new.desc') }}
-    </p>
+    <div class="flex items-center sm:flex-col sm:text-center">
+      <p class="text-gray-500 text-md font-regular">
+        {{ t('endpoints.new.desc') }}
+      </p>
+      <CsgButton
+        :name="t('endpoints.new.guide')"
+        class="btn-link-color"
+        @click="handleGuideClick"
+      />
+    </div>
     <div class="mt-9">
       <el-form
         ref="dataFormRef"
         :model="dataForm"
         :rules="rules"
         :validate-on-rule-change="false"
-        class="w-full flex flex-col gap-[14px]"
+        class="w-full flex flex-col gap-4"
         label-position="top"
       >
-        <div class="w-full flex md:flex-col gap-[16px] items-center">
+        <div class="w-full flex md:flex-col gap-4 items-start">
           <el-form-item
             class="w-full"
             :label="t('endpoints.new.name')"
@@ -74,7 +81,7 @@
             />
           </el-form-item>
         </div>
-        <div class="w-full flex md:flex-col gap-[16px] items-center">
+        <div class="w-full flex md:flex-col gap-4 items-start">
           <el-form-item
             :label="t('endpoints.new.minReplica')"
             class="w-full"
@@ -96,6 +103,12 @@
                 :value="item"
               />
             </el-select>
+            <p
+              v-if="dataForm.min_replica === 0"
+              class="text-gray-600 font-light mt-2"
+            >
+              {{ t('endpoints.new.autoShutdownTip') }}
+            </p>
           </el-form-item>
 
           <el-form-item
@@ -196,8 +209,8 @@
           </template>
 
           <el-select
-            v-model="dataForm.endpoint_framework"
-            @change="setCurrentEngineArgs"
+            v-model="frameworkVersion"
+            @change="resetVersions"
             :placeholder="
               t('all.pleaseSelect', { value: t('endpoints.new.framework') })
             "
@@ -205,9 +218,31 @@
             style="width: 100%"
           >
             <el-option
-              v-for="item in filterFrameworks"
+              v-for="(item ,index) in filterFrameworks"
               :key="item.id"
-              :label="`${item.frame_name} (${item.compute_type})`"
+              :label="`${item.frame_name} (${item.compute_types.join(',')})`"
+              :value="index"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          :label="t('endpoints.new.frameworkVersion')"
+          class="w-full"
+        >
+          <el-select
+            v-model="dataForm.endpoint_framework"
+            @change="setCurrentEngineArgs"
+            :placeholder="
+              t('all.pleaseSelect', { value: t('endpoints.new.frameworkVersion') })
+            "
+            size="large"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in frameworkVersionOptions"
+              :key="item.id"
+              :label='`${item.frame_name} ${item.driver_version}`'
               :value="item.id"
             />
           </el-select>
@@ -217,7 +252,7 @@
           v-if="Object.keys(currentEngineArgs).length > 0"
           :engineArgs="currentEngineArgs"
           @update:changedArgs="updateChangedEngineArgs"
-        />
+        /> 
 
         <!-- quantization -->
         <el-form-item
@@ -274,7 +309,6 @@
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import EngineArgs from './EngineArgs.vue'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
-  import SvgIcon from '../shared/SvgIcon.vue'
 
   const props = defineProps({
     namespace: String
@@ -282,13 +316,16 @@
 
   const searchParams = new URLSearchParams(window.location.search)
 
+  const frameworkVersion = ref('')
+  const frameworkVersionOptions = ref([])
+
   const { t } = useI18n()
   const nameRule = inject('nameRule')
   const dataFormRef = ref(null)
   const dataForm = ref({
     model_id: searchParams.get('model_id') || '',
     visibility: 'public',
-    min_replica: 1,
+    min_replica: 0,
     max_replica: 1
   })
   const endpointFrameworks = ref([])
@@ -441,34 +478,67 @@
 
   const resetCurrentRuntimeFramework = async () => {
     // if we have current runtime framework
-    if (filterFrameworks.value.includes(Number(dataForm.value.endpoint_framework))) {
+    if (frameworkVersionOptions.value.includes(Number(dataForm.value.endpoint_framework))) {
       return
     } else {
-      dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
+      dataForm.value.endpoint_framework = frameworkVersionOptions.value[0]?.id || ''
     }
   }
 
   const fetchRuntimeFramework = async () => {
     if (!dataForm.value.model_id) return
+    
+    try {
+      const response = await useFetchApi(
+        `/models/${dataForm.value.model_id}/runtime_framework_v2?deploy_type=1`
+      ).json()
+      
+      if (!response) {
+        console.error('Invalid API response')
+      }
 
-    const { data, error } = await useFetchApi(
-      `/models/${dataForm.value.model_id}/runtime_framework?deploy_type=1`
-    ).json()
-    if (error.value) {
+      const { data, error } = response
+      
+      if (error?.value) {
+        frameworkVersionOptions.value = []
+        dataForm.value.endpoint_framework = ''
+        endpointFrameworks.value = []
+      } else {
+        const body = data?.value || {}
+        endpointFrameworks.value = body.data || []
+        
+        if(endpointFrameworks.value.length > 0) {
+          frameworkVersionOptions.value = endpointFrameworks.value[0].versions || []
+          dataForm.value.endpoint_framework = frameworkVersionOptions.value[0]?.id || ''
+        } else {
+          frameworkVersionOptions.value = []
+          dataForm.value.endpoint_framework = ''
+        }
+        setCurrentEngineArgs(dataForm.value.endpoint_framework)
+      }
+    } catch (err) {
+      console.error('获取运行时框架失败:', err)
+      frameworkVersionOptions.value = []
       dataForm.value.endpoint_framework = ''
       endpointFrameworks.value = []
-    } else {
-      const body = data.value
-      endpointFrameworks.value = body.data
-      dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
-      setCurrentEngineArgs(dataForm.value.endpoint_framework)
     }
+  }
+
+  const resetVersions = () => { 
+    const currentResource = endpointResources.value
+        .flatMap((category) => category.options)
+        .find((item) => item.id == dataForm.value.cloud_resource.split('/')[0])
+
+    frameworkVersionOptions.value = filterFrameworks.value[frameworkVersion.value].versions.filter((version) => version.compute_type == currentResource.type) || []
+    dataForm.value.endpoint_framework = frameworkVersionOptions.value[0]?.id || ''
+    setCurrentEngineArgs(dataForm.value.endpoint_framework)
   }
 
   watch(() => dataForm.value.cloud_resource, (newValue) => {
     if (newValue && endpointFrameworks.value.length > 0) {
       if (filterFrameworks.value.length > 0) {
-        dataForm.value.endpoint_framework = filterFrameworks.value[0]?.id || ''
+        frameworkVersionOptions.value = filterFrameworks.value[0].versions
+        dataForm.value.endpoint_framework = frameworkVersionOptions.value[0]?.id || ''
         setCurrentEngineArgs(dataForm.value.endpoint_framework)
       } else {
         dataForm.value.endpoint_framework = ''
@@ -488,7 +558,27 @@
     if (!currentResource) return []
     if (!endpointFrameworks.value) return []
 
-    return endpointFrameworks.value.filter((framework) => framework.compute_type == currentResource.type)
+    return endpointFrameworks.value.filter((framework) => framework.compute_types.includes(currentResource.type))
+  })
+
+  watch(() => filterFrameworks.value, (newValue) => {
+    if (newValue) {
+      if (filterFrameworks.value.length > 0) {
+        frameworkVersion.value = 0
+        const currentResource = endpointResources.value
+        .flatMap((category) => category.options)
+        .find((item) => item.id == dataForm.value.cloud_resource.split('/')[0])
+
+        frameworkVersionOptions.value = filterFrameworks.value[0].versions.filter((version) => version.compute_type == currentResource.type) || []
+        dataForm.value.endpoint_framework = frameworkVersionOptions.value[0]?.id || ''
+        setCurrentEngineArgs(dataForm.value.endpoint_framework)
+      } else {
+        frameworkVersion.value = ''
+        frameworkVersionOptions.value = []
+        dataForm.value.endpoint_framework = ''
+        currentEngineArgs.value = {}
+      }
+    }
   })
 
   const updateChangedEngineArgs = (changes) => {
@@ -496,8 +586,8 @@
   }
 
   const setCurrentEngineArgs = (frameworkId) => {
-    if (!frameworkId) return
-    const currentFramework = endpointFrameworks.value.find(
+    if (!frameworkVersionOptions.value.length > 0) return
+    const currentFramework = frameworkVersionOptions.value.find(
       (framework) => framework.id === frameworkId
     )
     const engineArgs = JSON.parse(currentFramework.engine_args || '[]')
@@ -601,6 +691,10 @@
 
   const getQuantizationLabel = (item) => {
     return `${item.name} - ${t('endpoints.gpuMemoryRequired')}${formatMemory(item.size)}`
+  }
+
+  const handleGuideClick = () => {
+    window.open('https://opencsg.com/docs/inferencefinetune/inference_intro', '_blank')
   }
 
   onMounted(() => {

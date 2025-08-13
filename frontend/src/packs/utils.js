@@ -1,6 +1,25 @@
-import { useCookies } from 'vue3-cookies'
+import useFetchApi from "@/packs/useFetchApi";
+import { useCookies } from "vue3-cookies";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en';
 
 const { cookies } = useCookies()
+
+const defaultLanguage = ["zh", "zh-cn", "zh-CN", "zh-tw"].includes(
+  navigator.language
+)
+  ? "zh"
+  : "en";
+
+const lan = cookies.get('locale') || defaultLanguage;
+dayjs.extend(relativeTime);
+dayjs.locale(lan=='en'?'en':'zh-cn');
+
+export function timeSince(dateString) {
+  return dayjs(dateString).fromNow();
+}
 
 export const btoa_utf8 = (value) => {
   return btoa(
@@ -49,13 +68,13 @@ export const ToLoginPage = () => {
 
 export const ToNotFoundPage = () => {
   setTimeout(() => {
-    location.href = '/errors/not-found'
+    location.replace('/errors/not-found')
   }, 300)
 }
 
 export const ToUnauthorizedPage = () => {
   setTimeout(() => {
-    location.href = '/errors/unauthorized'
+    location.replace('/errors/unauthorized')
   }, 300)
 }
 
@@ -83,4 +102,35 @@ export const safeJsonParse = (str) => {
   } catch (e) {
     return null
   }
+}
+
+export const formatAmount = (amount) => {
+  return parseFloat(amount / 100).toFixed(2)
+}
+
+// repo-detail 相关，query参数的校验，返回规范化后的参数对象，用于repo-detail组件
+export const validateTab = (tab, setRepoTab = null) => {
+  const validTabs = ['summary', 'files', 'analysis', 'logs', 'schema', 'community', 'billing', 'settings']
+  const isValid = validTabs.includes(tab)
+  
+  if (!isValid && setRepoTab) {
+    // 当tab无效时，重置相关字段
+    setRepoTab({
+      lastPath: '',
+      actionName: 'files',
+      currentPath: ''
+    })
+  }
+  
+  return isValid ? tab : 'summary'
+}
+
+export const validateActionName = (actionName) => {
+  const validActionNames = ['files', 'blob', 'new_file', 'edit_file', 'commits', 'commit', 'upload_file']
+  return validActionNames.includes(actionName) ? actionName : 'files'
+}
+
+export const validateCommunityActionName = (communityActionName) => {
+  const validCommunityActionNames = ['list', 'new', 'detail']
+  return validCommunityActionNames.includes(communityActionName) ? communityActionName : 'list'
 }

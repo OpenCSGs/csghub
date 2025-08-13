@@ -15,6 +15,7 @@ import { application_spaces } from './zh_hant_js/application_spaces';
 import { codes } from './zh_hant_js/codes';
 import { widgets } from './zh_hant_js/widgets';
 import { spaces } from './zh_hant_js/spaces';
+import { space } from './zh_hant_js/space';
 import { user_sessions } from './zh_hant_js/user_sessions';
 import { collections } from './zh_hant_js/collections';
 import { components } from './zh_hant_js/components';
@@ -35,6 +36,7 @@ export default {
   rule,
   user_sessions,
   spaces,
+  space,
   application_spaces,
   widgets,
   models,

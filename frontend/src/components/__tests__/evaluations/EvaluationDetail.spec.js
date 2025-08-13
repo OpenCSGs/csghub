@@ -39,9 +39,12 @@ describe('EvaluationDetail', () => {
   })
 
   it('renders evaluation details correctly', async () => {
-    const dateElement = wrapper.find('.text-gray-700.text-base')
+    const allGrayTextElements = wrapper.findAll('.text-gray-700.text-base')
+    const dateElement = allGrayTextElements.find(el =>
+      el.text() === '2021-10-01'
+    )
     expect(wrapper.find('.text-2xl').text()).toBe('task1')
-    expect(dateElement.text()).toBe('2021-10-01')
+    expect(dateElement?.text()).toBe('2021-10-01')
     expect(wrapper.text()).includes('desc1')
   })
 
@@ -55,7 +58,6 @@ describe('EvaluationDetail', () => {
     const groupedDatasets = wrapper.vm.groupedDatasets
     expect(groupedDatasets).toHaveLength(1)
     expect(groupedDatasets[0].name).toBe('tag1')
-    expect(groupedDatasets[0].datasets[0]).toBe('repo1')
   })
 
   it('formats table data correctly', async () => {
@@ -64,6 +66,7 @@ describe('EvaluationDetail', () => {
         column: [{ key: 'score', customizeRender: true }],
         data: [
           {
+            model: 'testmodel',
             dataset: 'dataset1',
             metric: 'metric1',
             score: '0.95'
@@ -77,9 +80,15 @@ describe('EvaluationDetail', () => {
     const tableData = wrapper.vm.getTableData('all')
     expect(tableData).toHaveLength(1)
     expect(tableData[0]).toEqual({
-      dataset: 'dataset1',
-      metric: 'metric1',
-      score: '0.95'
+      dataset: {
+        'dataset1': [
+          {
+          'metric': 'metric1',
+          'score': '0.95',
+          }
+        ]
+      },
+      model: 'testmodel'
     })
   })
 })

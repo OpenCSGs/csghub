@@ -86,7 +86,8 @@
         <div class="flex flex-col gap-1.5">
           <CsgButton
             @click="stopSpace"
-            class="btn btn-secondary-gray btn-sm w-fit"
+            class="btn btn-secondary-gray btn-sm"
+            style="width:fit-content"
             :disabled="!initialized || isSpaceStopped"
             :name="$t('application_spaces.stop')"
           />
@@ -113,7 +114,8 @@
       <div class="flex flex-col gap-1.5">
         <CsgButton
           @click="restartSpace"
-          class="btn btn-secondary-gray btn-sm w-fit"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
           :disabled="notInitialized"
           :name="$t('application_spaces.restart')"
         />
@@ -163,7 +165,8 @@
           class="!w-[512px] sm:!w-full" />
         <CsgButton
           @click="updateNickname"
-          class="btn btn-secondary-gray btn-sm w-fit"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
           data-test="update-nickname"
           :name="$t('all.update')"
         />
@@ -191,7 +194,8 @@
           class="!w-[512px] sm:!w-full" />
         <CsgButton
           @click="updateApplicationSpaceDesc"
-          class="btn btn-secondary-gray btn-sm w-fit"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
           data-test="update-description"
           :name="$t('all.update')"
         />
@@ -217,7 +221,8 @@
           </div>
           <CsgButton
             @click="updateVaribles"
-            class="btn btn-secondary-gray btn-sm w-fit"
+            class="btn btn-secondary-gray btn-sm"
+            style="width:fit-content"
             data-test="update-varibles"
             :name="$t('all.update')"
           />
@@ -225,32 +230,28 @@
       </div>
     </div>
 
-    <!-- mcp space env -->
-    <el-divider v-if="theSdk === 'mcp_server' && Object.keys(mcpEnv).length > 0"/>
-    <div v-if="theSdk === 'mcp_server' && Object.keys(mcpEnv).length > 0">
+    <!-- env -->
+    <el-divider/>
+    <div>
       <div class="flex xl:flex-col gap-8">
         <div class="w-[380px] sm:w-full flex flex-col">
           <div class="text-sm text-gray-700 leading-5 font-medium">
-            {{ $t('mcps.deploy.envDesc') }}
+            {{ $t('application_spaces.env.title') }}
+          </div>
+          <div class="text-sm font-light text-gray-600">
+            {{ $t('application_spaces.env.settingsPlaceholder') }}
           </div>
         </div>
-        <div class="flex flex-col gap-2">
-          <div v-for="(_, envKey) in mcpEnv" :key="envKey" class="mb-3">
-            <label
-              :for="envKey"
-              class="text-gray-700 text-sm block mb-1"
-            >
-              {{ envKey }}
-            </label>
-            <el-input
-              v-model="mcpEnv[envKey]"
-              size="large"
-              class="!w-[400px] sm:!w-full"
-            />
-          </div>
+        <div class="flex flex-col gap-2 !w-[512px] sm:!w-full">
+          <ApplicationSpaceEnvEditor
+            v-model:env="envJSON"
+            v-model:secrets="secretJSON"
+            :hideTitle="true"
+          />
           <CsgButton
             @click="updateEnv"
-            class="btn btn-secondary-gray btn-sm w-fit"
+            class="btn btn-secondary-gray btn-sm"
+            style="width:fit-content"
             data-test="update-mcp-env"
             :name="$t('all.update')"
           />
@@ -408,7 +409,8 @@
           <CsgButton
             id="confirmDelete"
             @click="clickDelete"
-            class="btn btn-danger btn-sm w-fit"
+            class="btn btn-danger btn-sm"
+            style="width:fit-content"
             :disabled="delDesc !== applicationSpacePath"
             :name="$t('application_spaces.edit.confirmDel')"
           />
@@ -427,6 +429,7 @@
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState, mapActions } from 'pinia'
   import { useI18n } from 'vue-i18n'
+  import ApplicationSpaceEnvEditor from './ApplicationSpaceEnvEditor.vue'
 
   export default {
     props: {
@@ -441,7 +444,7 @@
       variables: Object
     },
 
-    components: {},
+    components: { ApplicationSpaceEnvEditor },
 
     data() {
       return {
@@ -469,13 +472,14 @@
         ],
         uploadCoverImageUrl: '/images/default_cover_image.png',
         imageUploaded: false,
-        mcpEnv: {},
+        envJSON:'',
+        secretJSON:'',
         t: useI18n()
       }
     },
 
     computed: {
-      ...mapState(useRepoDetailStore, ['isPrivate']),
+      ...mapState(useRepoDetailStore, ['isPrivate', 'clusterId']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
       hideImageUploadElement() {
         return this.imageUploaded || this.images.length !== 0
@@ -533,9 +537,7 @@
     emits: ['showSpaceLogs'],
     mounted() {
       this.fetchSpaceResources()
-      if (this.theSdk === 'mcp_server') {
-        this.fetchSpaceDetail()
-      }
+      this.fetchSpaceDetail()
     },
     inject: ['fetchRepoDetail'],
     methods: {
@@ -572,7 +574,7 @@
       },
 
       async fetchSpaceResources() {
-        const { data, error } = await useFetchApi('/space_resources').json()
+        const { data, error } = await useFetchApi(`/space_resources?cluster_id=${this.clusterId}&deploy_type=0`).json()
 
         if (!data.value) {
           ElMessage({
@@ -668,7 +670,7 @@
           ElMessage({ message: this.$t('all.delSuccess'), type: 'success' })
           setTimeout(() => {
             window.location.href = '/spaces'
-          }, 500)
+          }, 1000)
           return true
         }
       },
@@ -681,10 +683,18 @@
           console.log(error.value.msg)
         } else {
           const body = data.value
-          const envJSON = body.data.env
+          const envJSON = body?.data?.env ?? ''
+          const secretJSON = body?.data?.secrets ?? ''
           if (envJSON) {
             try {
-              this.mcpEnv = JSON.parse(envJSON)
+              this.envJSON = envJSON
+            } catch (error) {
+              console.log(error)
+            }
+          }
+          if (secretJSON) {
+            try {
+              this.secretJSON = secretJSON
             } catch (error) {
               console.log(error)
             }
@@ -693,8 +703,8 @@
       },
 
       updateEnv() {
-        const payload = { env: JSON.stringify(this.mcpEnv) }
-        this.updateApplicationSpace(payload)
+        const payload = { env: this.envJSON, secrets: this.secretJSON }
+        this.updateApplicationSpace(payload,this.$t('application_spaces.env.title'))
       },
 
       changeVisibility(value) {
@@ -735,13 +745,13 @@
       changeVisibilityCall(value) {
         const isprivateSelected = value === 'Private' ? true : false
         const payload = { private: isprivateSelected }
-        this.updateApplicationSpace(payload)
+        this.updateApplicationSpace(payload,this.$t('application_spaces.edit.visibility'))
       },
 
       updateNickname() {
         if (!!this.theApplicationSpaceNickname.trim()) {
           const payload = { nickname: this.theApplicationSpaceNickname }
-          this.updateApplicationSpace(payload)
+          this.updateApplicationSpace(payload,this.$t('application_spaces.nickname'))
         } else {
           ElMessage({
             message: this.$t('application_spaces.edit.needName'),
@@ -753,7 +763,7 @@
       updateApplicationSpaceDesc() {
         if (!!this.theApplicationSpaceDesc.trim()) {
           const payload = { description: this.theApplicationSpaceDesc }
-          this.updateApplicationSpace(payload)
+          this.updateApplicationSpace(payload,this.$t('application_spaces.desc'))
         } else {
           ElMessage({
             message: this.$t('application_spaces.edit.needDesc'),
@@ -764,7 +774,7 @@
 
       updateApplicationSpaceCloudResource() {
         const payload = { resource_id: this.theCloudResource }
-        this.updateApplicationSpace(payload)
+        this.updateApplicationSpace(payload,this.$t('application_spaces.edit.cloudResource'))
       },
 
       updateApplicationSpaceCoverImage() {
@@ -774,10 +784,10 @@
 
       updateVaribles() {
         const payload = { variables: JSON.stringify(this.theVariables) }
-        this.updateApplicationSpace(payload)
+        this.updateApplicationSpace(payload,this.$t('application_spaces.edit.spaceVariables'))
       },
 
-      async updateApplicationSpace(payload) {
+      async updateApplicationSpace(payload,field) {
         const applicationSpaceUpdateEndpoint = `/spaces/${this.path}`
         const options = {
           headers: { 'Content-Type': 'application/json' },
@@ -790,7 +800,8 @@
         if (error.value) {
           ElMessage.warning(error.value.msg)
         } else {
-          ElMessage.success(data.value.msg)
+          const msg = this.$t('application_spaces.edit.updateSuccess',{field:field})
+          ElMessage.success(msg)
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }

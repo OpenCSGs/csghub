@@ -51,12 +51,7 @@ const createFetchOptions = {
       options.headers = {
         ...options.headers,
         'Authorization': `Bearer ${jwtToken}`,
-        'Accept-Language': acceptLanguage(),
-        // user_id: 54,
-        user_token: `${jwtToken}`,
-        // user_token: `eb8fd091a8204f299b2170b0a938c7f1`, // root
-        // user_token: `9eba3d0173eb48ed99bb6952233bbb50`,
-
+        'Accept-Language': acceptLanguage()
       }
     } else {
       options.headers = {

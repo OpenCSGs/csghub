@@ -101,7 +101,20 @@
                   >
                     <Edit />
                   </el-icon>
+                  <el-tooltip
+                    v-if="!canDeleteMember(scope.row)"
+                    :content="$t('organization.members.assignOtherAdmin')"
+                    placement="top"
+                  >
+                    <el-icon
+                      :size="16"
+                      class="cursor-not-allowed text-gray-400 delete-disabled"
+                    >
+                      <Delete />
+                    </el-icon>
+                  </el-tooltip>
                   <el-popconfirm
+                    v-else
                     :title="
                       $t('organization.members.deleteConfirmTitle', {
                         username: scope.row.nickname || scope.row.name,
@@ -160,9 +173,11 @@
   import InviteMember from './InviteMember.vue'
   import OrgMemberRoleEditDialog from './OrgMemberRoleEditDialog.vue'
   import dayjs from 'dayjs'
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
   import { useCookies } from 'vue3-cookies'
   import { useI18n } from 'vue-i18n'
+  import useUserStore from '../../stores/UserStore'
+  const userStore = useUserStore()
 
   const { cookies } = useCookies()
   const { t } = useI18n()
@@ -188,6 +203,23 @@
     page: 1,
     per: 6
   })
+
+  // 计算当前admin用户数量
+  const adminCount = computed(() => {
+    return members.value.filter(member => member.role === 'admin').length
+  })
+
+  // 检查是否可以删除某个成员
+  const canDeleteMember = (member) => {
+    // 如果是admin用户，需要检查删除后是否还有admin
+    if (member.role === 'admin') {
+      // 如果当前admin数量为1，则不能删除
+      if (adminCount.value <= 1) {
+        return false
+      }
+    }
+    return true
+  }
 
   onMounted(() => {
     fetchMembers()
@@ -217,6 +249,15 @@
   }
 
   const handleDelete = async (member) => {
+    // 再次检查是否可以删除
+    if (!canDeleteMember(member)) {
+      ElMessage({
+        message: t('organization.members.assignOtherAdmin'),
+        type: 'warning'
+      })
+      return
+    }
+
     const url = `/organization/${organization.value.name}/members/${member.username}`
     const options = {
       body: JSON.stringify({ role: member.role }),
@@ -228,6 +269,7 @@
         message: t('organization.members.deleteSuccess'),
         type: 'success'
       })
+      currentUserRole()
       fetchMembers()
     } else {
       ElMessage({
@@ -237,8 +279,32 @@
     }
   }
 
+  const currentUserRole = async () => {
+    const orgIsAdminEndpoint = `/organization/${organization.value.name}/members/${userStore.username}`
+    const { data, error } = await useFetchApi(orgIsAdminEndpoint).json()
+
+    if (error.value) {
+      ElMessage({ message: error.value.msg, type: 'warning' })
+    } else {
+      const body = data.value
+      if(!body.data){
+        window.location.href = '/'
+      }
+    }
+  }
+
   const handleToRoleEdit = (row) => {
     editRow.value = Object.assign({}, row)
     roleEditDialog.value = true
   }
 </script>
+
+<style scoped>
+  .delete-disabled:hover {
+    color: #9ca3af !important;
+  }
+  
+  .delete-disabled:hover :deep(svg) {
+    color: #9ca3af !important;
+  }
+</style>

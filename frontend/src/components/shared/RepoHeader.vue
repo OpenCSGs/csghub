@@ -25,12 +25,11 @@
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="
-          repoDetailStore.userLikes === true
-            ? 'text-gray-400 border-gray-200'
-            : ''
-        "
+        class="flex gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        :class="[
+          repoDetailStore.userLikes === true ? 'text-gray-400 border-gray-200' : '',
+          isLikeLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+        ]"
         @click="clickLike">
         {{
           repoDetailStore.userLikes === false
@@ -125,7 +124,7 @@
         height="24"
       />
       <RepoHeaderSourceIcon
-        v-if="!!repoSource"
+        v-if="!!repoSource && false"
         :repoType="repoType"
         :source="repoSource"
         :sourcePath="repoSourcePath"
@@ -136,12 +135,11 @@
         {{ $t('all.private') }}
       </div>
       <div
-        class="flex cursor-pointer gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
-        :class="
-          repoDetailStore.userLikes === true
-            ? 'text-gray-400 border-gray-200'
-            : ''
-        "
+        class="flex gap-1 border border-gray-300 bg-white px-2 pr-1 py-[3px] text-center text-xs text-gray-700 font-normal rounded-sm hover:bg-gray-50 active:ring-4 active:ring-gray-400 active:ring-opacity-25 active:bg-white"
+        :class="[
+          repoDetailStore.userLikes === true ? 'text-gray-400 border-gray-200' : '',
+          isLikeLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+        ]"
         @click="clickLike">
         {{
           repoDetailStore.userLikes === false
@@ -184,7 +182,17 @@
         </el-tooltip>
       </div>
     </div>
-
+    <div v-if="!!repoSource && repoSourcePath" class="flex flex-wrap w-full gap-1 items-center">
+      <SvgIcon
+        :name="iconSrc"
+        width="24"
+        height="24"
+        class="flex-shrink-0 cursor-pointer" />
+      <div class="text-center text-gray-500 text-md font-normal leading-normal"> {{ $t('all.mirrorSource') }}: </div>
+      <a :href='sourceUrl' target='_blank' class='text-slate-700 text-md font-normal leading-normal hover:underline hover:text-brand-700' rel='noopener noreferrer'> 
+        {{ repoSourcePath }}
+      </a>
+    </div>
     <div
       class="flex gap-2 items-center"
       v-if="repoType !== 'finetune'">
@@ -284,6 +292,8 @@
 
   const emit = defineEmits(['toggleSpaceLogsDrawer'])
 
+  const isLikeLoading = ref(false)
+
   const props = defineProps({
     avatar: String,
     name: String,
@@ -348,34 +358,62 @@
     }
   })
 
-  const clickLike = () => {
-    repoDetailStore.userLikes === true ? removeLike() : addLike()
+  const clickLike = async () => {
+    // 如果正在加载中，直接返回，防止重复点击
+    if (isLikeLoading.value) {
+      return
+    }
+    
+    isLikeLoading.value = true
+    
+    try {
+      if (repoDetailStore.userLikes === true) {
+        await removeLike()
+      } else {
+        await addLike()
+      }
+    } finally {
+      // 确保无论成功还是失败都要重置加载状态
+      isLikeLoading.value = false
+    }
   }
 
   const addLike = async () => {
-    const { error } = await useFetchApi(likeUrl.value).put().json()
-    if (error.value) {
-      ElMessage({
-        type: 'warning',
-        message: error.value.msg
-      })
-    } else {
-      repoDetailStore.updateLikes(repoDetailStore.likes + 1)
-      repoDetailStore.updateUserLikes(true)
+    const { error, response } = await useFetchApi(likeUrl.value).put().json()
+    
+    // 检查是否有错误或者响应状态码不是2xx
+    if (error.value || (response.value && response.value?.status >= 400)) {
+      // 如果是401状态码，不需要显示错误消息，因为会自动弹出登录对话框
+      if (response.value && response.value?.status !== 401) {
+        ElMessage({
+          type: 'warning',
+          message: error.value?.msg || '请求失败'
+        })
+      }
+      return
     }
+    
+    repoDetailStore.updateLikes(repoDetailStore.likes + 1)
+    repoDetailStore.updateUserLikes(true)
   }
 
   const removeLike = async () => {
-    const { error } = await useFetchApi(likeUrl.value).delete().json()
-    if (error.value) {
-      ElMessage({
-        type: 'warning',
-        message: error.value.msg
-      })
-    } else {
-      repoDetailStore.updateLikes(repoDetailStore.likes - 1)
-      repoDetailStore.updateUserLikes(false)
+    const { error, response } = await useFetchApi(likeUrl.value).delete().json()
+    
+    // 检查是否有错误或者响应状态码不是2xx
+    if (error.value || (response.value && response.value?.status >= 400)) {
+      // 如果是401状态码，不需要显示错误消息，因为会自动弹出登录对话框
+      if (response.value && response.value?.status !== 401) {
+        ElMessage({
+          type: 'warning',
+          message: error.value?.msg || '请求失败'
+        })
+      }
+      return
     }
+    
+    repoDetailStore.updateLikes(repoDetailStore.likes - 1)
+    repoDetailStore.updateUserLikes(false)
   }
 
   const repoUrl = computed(() => {
@@ -387,6 +425,34 @@
       return `/${props.repoType}/servers/${props.path}`
     } else {
       return `/${props.repoType}s/${props.path}`
+    }
+  })
+
+  const iconSrc = computed(() => {
+    if (repoSource.value === 'HuggingFace') {
+      return 'repo_source_huggingface'
+    } else if (repoSource.value === 'ModelScope') {
+      return 'repo_source_modelscope'
+    } else {
+      return 'repo_source_opencsg'
+    }
+  })
+
+  const sourceUrl = computed(() => {
+    if (!repoSourcePath.value) {
+      return '';
+    }
+
+    if (repoSource.value === 'HuggingFace') {
+      if (props.repoType === 'model') {
+        return `https://huggingface.co/${repoSourcePath.value}`
+      } else {
+        return `https://huggingface.co/${props.repoType}s/${repoSourcePath.value}`
+      }
+    } else if (repoSource.value === 'ModelScope') {
+      return `https://modelscope.cn/${props.repoType}s/${repoSourcePath.value}`
+    } else {
+      return `https://opencsg.com/${props.repoType}s/${repoSourcePath.value}`
     }
   })
 
@@ -443,6 +509,19 @@
     // 等待DOM更新后检查
     setTimeout(checkOverflow, 0)
   })
+
+  // 添加 watch 来监听 props 变化
+  watch(() => props.totalLikes, (newValue) => {
+    if (newValue !== undefined) {
+      repoDetailStore.updateLikes(newValue)
+    }
+  }, { immediate: true })
+
+  watch(() => props.hasLike, (newValue) => {
+    if (newValue !== undefined) {
+      repoDetailStore.updateUserLikes(newValue)
+    }
+  }, { immediate: true })
 </script>
 
 <style scoped>
