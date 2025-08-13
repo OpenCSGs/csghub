@@ -1,0 +1,14 @@
+{{ define "content" }}
+<div class="bg-white">
+  <repo-detail
+    repo-type="dataset"
+    default-tab="{{ .defaultTab }}"
+    action-name="{{ .actionName }}"
+    namespace="{{ .namespace }}"
+    repo-name="{{ .datasetName }}"
+    current-branch="{{ .currentBranch }}"
+    current-path="{{ .currentPath }}"
+    commit-id="{{ .commitId }}"
+  ></repo-detail>
+</div>
+{{ end }}

@@ -1,0 +1,14 @@
+{{ define "content" }}
+<div class="bg-white">
+  <repo-detail
+    repo-type="model"
+    default-tab="{{ .defaultTab }}"
+    action-name="{{ .actionName }}"
+    namespace="{{ .namespace }}"
+    repo-name="{{ .modelName }}"
+    current-branch="{{ .currentBranch }}"
+    current-path="{{ .currentPath }}"
+    commit-id="{{ .commitId }}"
+  ></repo-detail>
+</div>
+{{ end }}

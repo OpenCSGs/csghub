@@ -1,0 +1,10 @@
+{{ define "content" }}
+<div class="relative h-[1150px] sm:h-[750px]">
+  <img src="/images/new_organization_bg.png" class="h-full w-full object-cover">
+  <div class="sm:w-[95%] absolute top-[108px] sm:top-[67px] left-1/2 translate-x-[-50%]">
+    <new-organization
+      current-user-profile="{{ .currentUser }}">
+    </new-organization>
+  </div>
+</div>
+{{ end }}

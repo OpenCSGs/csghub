@@ -1,0 +1,14 @@
+{{ define "content" }}
+<div class="bg-white">
+  <application-space-detail
+    repo-type="space"
+    default-tab="{{ .defaultTab }}"
+    action-name="{{ .actionName }}"
+    namespace="{{ .namespace }}"
+    repo-name="{{ .spaceName }}"
+    current-branch="{{ .currentBranch }}"
+    current-path="{{ .currentPath }}"
+    commit-id="{{ .commitId }}"
+  ></application-space-detail>
+</div>
+{{ end }}

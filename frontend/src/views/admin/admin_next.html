@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .metaTitle }}</title>
+    <meta name="keywords" content="{{ .metaKeywords }}">
+    <meta name="description" content="{{ .metaDescription }}" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <script>
+      const CSGHUB_SERVER = "{{ .csghubServer }}";
+      const DEFAULT_TAGS = "[]";
+      const ON_PREMISE = "{{ .onPremise }}";
+      const ENABLE_HTTPS = "{{ .enableHttps }}";
+    </script>
+  </head>
+  <body class="h-full">
+    <div id="admin" />
+    <script type="module" src="/src/admin.js"></script>
+  </body>
+</html>

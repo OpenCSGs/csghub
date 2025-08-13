@@ -1,0 +1,16 @@
+{{ define "content" }}
+  <div class="flex justify-center lg:flex-col rounded-md md:px-5 page-responsive-width m-auto bg-white">
+    <div class="md:mb-[24px] border-r lg:border-r-0 sm:bg-white md:bg-white">
+      <profile name="{{ .user.Name }}"
+      ></profile>
+    </div>
+    <div class="grow w-full px-[20px] py-[36px] md:px-0 sm:py-0">
+      <profile-repo-list
+        name="{{ .user.Name }}"
+        initiator="{{ .initiator }}"
+      ></profile-repo-list>
+    </div>
+  </div>
+{{ end }}
+
+

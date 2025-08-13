@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "portal",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/csghub-portal/main.go",
+      "envFile": "${workspaceFolder}/.env",
+      "args": ["start", "server"]
+    },
+    {
+      "name": "init",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/csghub-portal/main.go",
+      "envFile": "${workspaceFolder}/.env",
+      "args": ["migration", "init"]
+    },
+    {
+      "name": "migrate",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/csghub-portal/main.go",
+      "envFile": "${workspaceFolder}/.env",
+      "args": ["migration", "migrate"]
+    },
+    {
+      "name": "rollback",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/csghub-portal/main.go",
+      "envFile": "${workspaceFolder}/.env",
+      "args": ["migration", "rollback"]
+    },
+    {
+      "name": "Test Current File",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${fileDirname}",
+      "env": {},
+      "showLog": true
+    }
+  ]
+}

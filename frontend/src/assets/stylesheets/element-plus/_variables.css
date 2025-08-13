@@ -1,0 +1,94 @@
+:root {
+  --Base-White: #FFFFFF;
+
+  --Gray-25: #FCFCFD;
+  --Gray-50: #F9FAFB;
+  --Gray-100: #F2F4F7;
+  --Gray-200: #EAECF0;
+  --Gray-300: #D0D5DD;
+  --Gray-400: #98A2B3;
+  --Gray-500: #667085;
+  --Gray-600: #475467;
+  --Gray-700: #344054;
+  --Gray-800: #182230;
+  --Gray-900: #101828;
+  --Gray-950: #0C111D;
+
+  --Brand-25: #F0F3FF;
+  --Brand-50: #CED8FF;
+  --Brand-100: #ACBDFF;
+  --Brand-200: #99AFFF;
+  --Brand-300: #6584F8;
+  --Brand-400: #5271E3;
+  --Brand-500: #4D6AD6;
+  --Brand-600: #3250BD;
+  --Brand-700: #223B99;
+  --Brand-800: #17308F;
+  --Brand-900: #25367A;
+  --Brand-950: #0E1B4E;
+  
+
+  --Error-25: #FFFBFA;
+  --Error-50: #FEF3F2;
+  --Error-100: #FEE4E2;
+  --Error-200: #FECDCA;
+  --Error-300: #FDA29B;
+  --Error-400: #F97066;
+  --Error-500: #F04438;
+  --Error-600: #D92D20;
+  --Error-700: #B42318;
+  --Error-800: #912018;
+  --Error-900: #7A271A;
+  --Error-950: #55160C;
+
+  --Warning-25: #FFFCF5;
+  --Warning-50: #FFFAEB;
+  --Warning-100: #FEF0C7;
+  --Warning-200: #FEDF89;
+  --Warning-300: #FEC84B;
+  --Warning-400: #FDB022;
+  --Warning-500: #F79009;
+  --Warning-600: #DC6803;
+  --Warning-700: #B54708;
+  --Warning-800: #93370D;
+  --Warning-900: #7A2E0E;
+  --Warning-950: #4E1D09;
+
+  --Success-25: #F6FEF9;
+  --Success-50: #ECFDF3;
+  --Success-100: #DCFAE6;
+  --Success-200: #ABEFC6;
+  --Success-300: #75E0A7;
+  --Success-400: #47CD89;
+  --Success-500: #17B26A;
+  --Success-600: #079455;
+  --Success-700: #067647;
+  --Success-800: #085D3A;
+  --Success-900: #074D31;
+  --Success-950: #053321;
+
+  /* add shadow variable */
+  --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0px 1px 3px 0px rgba(16, 24, 40, 0.1), 0px  1px 2px 0px rgba(16, 24, 40, 0.06)  ;
+  --shadow-md: 0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  --shadow-xl: 0px 20px 24px -4px rgba(16, 24, 40, 0.08), 0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+  --shadow-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+  --shadow-3xl: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
+  
+/* add border-radius variable */
+  --border-radius-none: 0px;
+  --border-radius-xxs: 2px;
+  --border-radius-xs: 4px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 10px;
+  --border-radius-xl: 12px;
+  --border-radius-2xl: 16px;
+  --border-radius-3xl: 20px;
+  --border-radius-4xl: 24px;
+  --border-radius-full: 9999px;
+
+  --el-border-radius-base: var(--border-radius-md);
+  --el-color-primary: var(--Brand-600);
+}

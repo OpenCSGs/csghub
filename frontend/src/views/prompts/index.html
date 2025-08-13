@@ -1,0 +1,10 @@
+{{ define "content" }}
+<div class="flex page-responsive-width m-auto bg-white">
+  <prompts-hub
+    namespace="{{ .namespace }}"
+    name="{{ .name }}"
+    path="{{ .path }}"
+    licenses="{{ .licenses }}"
+  ></prompts-hub>
+</div>
+{{ end }}

@@ -1,0 +1,210 @@
+@import 'assets/stylesheets/element-plus/application.css';
+@import 'assets/stylesheets/markdown.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Global css
+*/
+
+/*
+  Overwrite plugin css like ElementUI here
+*/
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+.is-active {
+  font-weight: bold !important;
+  color: var(--Brand-600) !important;
+}
+
+.el-button {
+  &:focus-visible {
+    outline: none !important;
+  }
+}
+
+.el-dialog__body {
+  padding: 10px 20px !important;
+}
+
+.el-upload-list--picture-card {
+  width: 100% !important;
+}
+
+.el-upload--picture-card {
+  width: 100% !important;
+}
+
+.el-upload-list__item {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.el-upload-list__item > div {
+    width: 100% !important;
+}
+.el-upload-list--picture-card .el-upload-list__item-thumbnail {
+  object-fit: cover !important;
+}
+
+.el-tabs__header {
+  margin-bottom: 0 !important;
+  z-index: 0;
+}
+
+/* 修改选中的文字颜色 */
+.el-tabs__item.is-active {
+  color: #223B99 !important;
+}
+
+/* 修改选中标签的颜色 */
+.el-tabs__active-bar {
+  background-color: #223B99 !important;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+  will-change: transform !important;
+}
+
+/* 修改选项卡中的文字大小 */
+.el-tabs__item {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.el-tabs__item.is-top {
+  color: #667085 !important;
+  font-weight: 500 !important;
+}
+
+.el-tabs__item.is-top.is-active {
+  color: #223B99 !important;
+}
+
+.el-tabs__item.is-top:hover {
+  color: #223B99 !important;
+}
+
+.el-tabs {
+  color: #667085 !important;
+}
+
+.el-tabs__nav-wrap:after {
+  height: 1px !important;
+  background-color: #EAECF0 !important;
+}
+
+img, video {
+  max-width: unset !important;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+  Overwite tributejs css
+*/
+
+.tribute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  overflow: auto;
+  display: block;
+  z-index: 999999;
+  width: 200px;
+}
+.tribute-container ul {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #efefef;
+}
+.tribute-container li {
+  padding: 5px 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tribute-container li img {
+  height: 20px;
+  width: auto;
+}
+.tribute-container li.highlight {
+  background: #ddd;
+}
+.tribute-container li span {
+  font-weight: bold;
+}
+.tribute-container li.no-match {
+  cursor: default;
+}
+.tribute-container .menu-highlighted {
+  font-weight: bold;
+}
+
+/*
+  Define tailwindcss group class
+*/
+
+@layer utilities {
+  .active-model-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: var(--shadow-sm);
+  }
+
+  .active-dataset-card {
+    border-radius: var(--radius-xl, 12px);
+    border: 1px solid var(--Gray-200, #EAECF0);
+    background: var(--fill-color-light, #F5F7FA);
+    /* Shadows/shadow-sm */
+    box-shadow: var(--shadow-sm);
+  }
+
+  .system-config-obj-box {
+    @apply w-full border border-gray-300 p-[10px] rounded-md text-gray-500 focus:border-blue-300 focus:outline-none overflow-auto whitespace-nowrap;
+  }
+
+  .error_page_bg {
+    background-image: url('../public/images/error_page_bg.png');
+    background-position: top;
+  }
+
+  .page-responsive-width {
+    @apply 3xl:w-[1536px] 2xl:w-[1280px] xl:w-[1024px] lg:w-[768px] md:w-[640px] sm:w-full mx-auto;
+  }
+
+  .admin-field-label {
+    @apply w-[280px] text-sm text-gray-700;
+  }
+
+  .admin-field {
+    @apply text-sm text-gray-600;
+  }
+
+  .el-menu-item.is-active {
+    font-weight: 400 !important;
+  }
+
+  .el-menu-item:hover {
+    color: #3250BD !important;
+  }
+
+  .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+    border-bottom: none !important;
+  }
+
+  .el-sub-menu__title:hover,
+  .el-tooltip__trigger:hover,
+  .el-sub-menu__title.el-tooltip__trigger:hover {
+    color: #3250BD !important;
+  }
+}

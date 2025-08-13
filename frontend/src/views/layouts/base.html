@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .metaTitle }}</title>
+    <meta name="keywords" content="{{ .metaKeywords }}">
+    <meta name="description" content="{{ .metaDescription }}" />
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <script type="module" src="/src/main.js" defer></script>
+    <script>
+      const CSGHUB_SERVER = "{{ .csghubServer }}";
+      const DEFAULT_TAGS = "[]";
+      const ON_PREMISE = "{{ .onPremise }}";
+      const ENABLE_HTTPS = "{{ .enableHttps }}";
+    </script>
+  </head>
+  <body>
+    <div id="app" class="flex flex-col min-h-screen">
+      <div class="grow">
+        {{ template "layouts/navbar.html" . }}
+        {{ template "content" .}}
+      </div>
+      {{ template "layouts/footer.html" . }}
+    </div>
+  </body>
+</html>

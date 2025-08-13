@@ -1,0 +1,25 @@
+export const shared = {
+  commitToMain: "直接提交到 main 分支",
+  dragOr: "拖拽文件到这里或者",
+  uploadFile5Mb: "网页端仅支持5M以内大小文件上传，更大文件请通过Git命令使用LFS上传",
+  onlyFiveFiles: "支持最多 5 个文件",
+  lfs1: "此文件存储在 ",
+  lfs2: "Git LFS",
+  lfs3: " 中。它太大了，无法显示，但您仍然可以",
+  lfs4: "下载",
+  lfs5: "它。",
+  lfs6: "Git LFS 详细信息",
+  lfs7: "指针大小",
+  lfs8: "文件大小",
+  lfs9: "原始指针文件",
+  lfs10: "Git大文件存储（LFS）将大文件替换为Git内部的文本指针，同时将文件内容存储在远程服务器上。",
+  lfs11: "更多信息",
+  preview: "预览",
+  edit: "编辑",
+  likes: "收藏",
+  hasLikes: "已收藏",
+  tooLargeFile: "文件过大无法显示，您可以查看",
+  tooLargeFile2: "原始版本",
+  tooLargeFile3:""
+
+}

@@ -1,0 +1,14 @@
+{{ define "content" }}
+<div class="bg-white">
+  <endpoint-detail
+    repo-type="endpoint"
+    default-tab="{{ .defaultTab }}"
+    action-name="{{ .actionName }}"
+    namespace="{{ .namespace }}"
+    model-name="{{ .modelName }}"
+    current-branch="{{ .currentBranch }}"
+    current-path="{{ .currentPath }}"
+    endpoint-id="{{ .endpointId }}"
+  ></endpoint-detail>
+</div>
+{{ end }}

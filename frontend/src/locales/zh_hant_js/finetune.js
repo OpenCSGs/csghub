@@ -1,0 +1,57 @@
+export const finetune = {
+  title: '微調執行個體',
+  new: {
+    title: '新建微調執行個體',
+    desc: '在專屬算力執行個體上部署您的模型',
+    name: '執行個體名稱',
+    nameTip:'請輸入執行個體名稱',
+    modelId: '模型 ID',
+    modelIdTip: '請輸入模型ID',
+    framework: '執行時框架',
+    cluster: '區域',
+    clusterTip: '請選擇區域',
+    clusterDec1: '建議選擇最靠近您客戶的地域，可降低訪問時延；',
+    clusterDec2: '建立成功後不支援切換地域。',
+    resource: '資源配置',
+    resourceTip: '請選擇資源配置',
+    resourceDec1: '您可以隨時在空間設定中切換到不同的空間雲資源',
+    resourceDec2: '切換到付費資源後，將根據使用時長想您收取費用',
+    createFinetune: '建立執行個體',
+    createSuccess: '微調執行個體建立成功',
+    tip: "應用於微調執行個體，建立後不可變更",
+    createFail: "微調執行個體建立失敗",
+  },
+  detail: {
+    notebook: '啟動 Notebook',
+    tab1: '概觀',
+    tab2: '設定',
+    tab3: '分析',
+    noDataTip1:'微調執行個體尚未處於執行狀態',
+    noDataTip2:'請等待部署成功或前往設定頁面啟用執行狀態後，再嘗試存取微調介面。',
+    settings: {
+      region: '區域',
+      regionTip1: '建議選擇靠近您的地域，可降低訪問時延；',
+      regionTip2: '建立成功後不支援切換地域。',
+      regionTip3: '執行個體區域',
+      resources: '空間雲資源',
+      resourcesTip1: '可切換到不同的微調執行個體雲資源。',
+      resourcesTip2: '切換到付費資源後，將根據使用時長向您收取費用。',
+      resourcesTip3: '目前雲資源',
+      status: '執行狀態',
+      statusTip1: '切換執行或暫停微調執行個體',
+      statusVal1: '執行中',
+      statusVal2: '已停止',
+      enName: '微調執行個體名稱',
+      enNameTip1: '應用於應用空間路徑，建立後不可變更',
+      cnName: '微調執行個體別名',
+      cnNameTip1: '將會顯示在執行個體列表頁面中，選填',
+      delete: '刪除',
+      deleteTip1: '此操作無法撤銷.這將永久刪除',
+      deleteTip2: '模型微調。',
+      finetuneName: '微調執行個體名稱'
+    }
+  },
+  settings: {
+    fetchBillingError: '取得計費資訊失敗'
+  }
+}

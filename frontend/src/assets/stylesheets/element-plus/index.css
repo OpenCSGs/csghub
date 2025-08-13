@@ -1,0 +1,12 @@
+/* Element Plus 组件样式统一导入 */
+
+/* MessageBox 组件样式 */
+@import './el-message-box.css';
+
+/* 在这里可以继续导入其他组件样式 */
+/* 例如：
+@import './el-button.css';
+@import './el-input.css';
+@import './el-select.css';
+等等
+*/ 
