@@ -1202,6 +1202,9 @@ debug@^4.1.1, debug@^4.3.7:
     ms "^2.1.3"
 
 decimal.js@^10.4.3:
+  version "10.6.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/decimal.js/-/decimal.js-10.6.0.tgz#e649a43e3ab953a72192ff5983865e509f37ed9a"
+  integrity sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==
 
 deep-eql@^5.0.1:
   version "5.0.2"
@@ -1215,6 +1218,7 @@ delayed-stream@~1.0.0:
 
 detect-libc@^1.0.3:
   version "1.0.3"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
 
 didyoumean@^1.2.2:
