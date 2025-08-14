@@ -36,16 +36,15 @@ To help users get up to speed with CSGHub, we have created a demo video that hig
 
 ### Quick Start
 
-- For local installation, please refer to the [CSGHub Installer](https://github.com/OpenCSGs/csghub-installer/) project. We offer several installation options including [Helm](https://github.com/OpenCSGs/csghub-installer/blob/main/helm/README.md), [Docker Compose](https://github.com/OpenCSGs/csghub-installer/blob/main/docker/compose/README.md) and [Docker All-in-One](https://github.com/OpenCSGs/csghub-installer/blob/main/docker/README.md). Please choose the option that best meets your requirements.
-
 - For those looking to quickly explore, experiment with CSGHub's free SaaS version on the [OpenCSG website](https://opencsg.com). Refer to this [brief quick start guide](./docs/csghub_saas_en.md) to handle LLMs/datasets and deploy LLM applications with CSGHub SaaS interface.
-For more information, please refer to the [OpenCSG Documentation Center](https://opencsg.com/docs/en/intro).
 
-- For those seeking a hands-on experience, you can quickly launch CSGHub on your local environment (Linux/MacOS/Windows) using the [Docker one-click deployment guide](https://github.com/OpenCSGs/csghub-installer/tree/main/docker), which allows you to start an all-in-one container with simplified commands and instantly experience the core functionalities of CSGHub.
+- **For users seeking further practice:** Please refer to the [CSGHub official documentation](https://opencsg.com/docs/csghub/101/introduction). The documentation currently provides installation methods using [Docker Compose](https://opencsg.com/docs/csghub/101/install/install_csghub_by_docker) and [Helm Chart](https://opencsg.com/docs/csghub/101/install/install_csghub_by_helm).
 
-- For those deploying on Kubernetes, refer to the [Helm Chart installation guide](https://github.com/OpenCSGs/csghub-installer/tree/main/helm) for step-by-step instructions.
+    _For more information and advanced tutorials, please refer to the [OpenCSG Documentation Center](https://opencsg.com/docs/intro)._
+
 
 ### Quick Try
+
 [![one-click deployment on Ali marketplace](https://img.alicdn.com/imgextra/i1/O1CN01YT0adL1pi2znO6BAJ_!!6000000005393-55-tps-208-40.svg)](https://market.aliyun.com/products/56014009/cmgj00068499.html?source=5176.29345612&userCode=swc743za)
 
 ### Roadmap
