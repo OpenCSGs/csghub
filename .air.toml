@@ -3,8 +3,8 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  args_bin = []
-  bin = "./tmp/csghub-portal start server"
+  args_bin = ["start", "server"]
+  bin = "./tmp/csghub-portal"
   cmd = "go build -o ./tmp/csghub-portal ./cmd/csghub-portal"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata", "frontend/src", "frontend/node_modules"]
