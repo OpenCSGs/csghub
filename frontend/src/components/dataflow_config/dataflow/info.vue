@@ -139,6 +139,24 @@
             </p>
           </el-tooltip>
         </div>
+        <div class="flex items-center justify-end gap-2 mt-4">
+          <el-popconfirm
+            :title="`${t('dataPipelines.cancelExecute')}?`"
+            :confirm-button-text="t('dataPipelines.confirm')"
+            :cancel-button-text="t('dataPipelines.cancel')"
+            placement="bottom-end"
+            width="220px"
+            @confirm="cancelExecute(jobInfo.job_id, jobInfo.status)"
+          >
+            <template #reference>
+              <CsgButton
+                v-if="jobInfo.status !== 'Failed' && jobInfo.status !== 'Timeout' && jobInfo.status !== 'Finished'"
+                class="btn btn-secondary-gray btn-sm whitespace-nowrap"
+                :name="t('dataPipelines.cancelExecute')"
+              />
+            </template>
+          </el-popconfirm>
+        </div>
       </div>
     </div>
     <el-tabs
@@ -146,6 +164,20 @@
       class="demo-tabs"
       @tab-click="handleClick"
     >
+      <el-tab-pane
+        :label="t('dataPipelines.graphicDemonstration')"
+        name="0"
+      >
+        <workflow-editor
+          v-if="jobInfo.dslText"
+          ref="workflowEditorRef"
+          :workflow-data="jobInfo.dslText"
+          :jobOperatorsStatus="jobInfo.jobOperatorsStatus"
+          :form="form"
+          :infoId="infoId"
+          :viewMode="'view'"
+        />
+      </el-tab-pane>
       <el-tab-pane
       v-if="taskType == 'pipeline'"
         :label="t('dataPipelines.processInfo')"
@@ -427,15 +459,15 @@
           <p class="text-gray-900 font-medium text-lg invisible">
             {{ t('dataPipelines.logName') }}
           </p>
-          <CsgBtton
+          <CsgButton
             class="btn btn-secondary-gray btn-sm whitespace-nowrap"
             @click="downloadTxt"
             :name="t('dataPipelines.downloadLog')"
           />
         </div>
         <div class="resultBox">
-          <pre class="text-gray-50 text-base font-normal"
-            >{{ logData }}
+          <pre v-for="(log, index) in logData" :key="index" class="text-gray-50 text-base font-normal"
+            >{{ log }}
           </pre>
         </div>
       </el-tab-pane>
@@ -445,27 +477,29 @@
 
 <script setup>
   import { useRouter, useRoute } from 'vue-router'
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted, computed, inject } from 'vue'
+  import { ElMessage } from "element-plus";
   import useFetchApi from '../../../packs/useFetchApi'
   import { convertUtcToLocalTime } from '../../../packs/datetimeUtils'
   import zhOps from '../../../locales/zh_js/operator_zh.json'
   import enOps from '../../../locales/en_js/operator_en.json'
-  import zhHantOps from '../../../locales/zh_hant_js/operator_zhHant.json'
   import { useI18n } from 'vue-i18n'
+  import workflowEditor from './workflowEditor.vue'
 
   const { t, locale } = useI18n()
 
   const dataflowOps = {
     zh: zhOps,
-    en: enOps,
-    zhHant: zhHantOps
+    en: enOps
   }
 
-  const activeTab = ref('1')
+  const activeTab = ref('0')
   const jobInfo = ref({})
   const tableData = ref([])
   const sessionData = ref([])
   const logData = ref([])
+  const workflowEditorRef = ref(null);
+  const form = inject("subForm");
 
   const router = useRouter()
   const route = useRoute()
@@ -476,8 +510,8 @@
     return route.query.type
   })
   const toDatasetPage = (path,branch) => {
-    if (path) {
-      window.location.href=`/datasets/${path}/files?tab=files&branch=${branch || 'main'}`
+    if(path&&branch){
+      window.location.href=`/datasets/${path}/files/${branch}`
     }
   }
   const getInfoData = async () => {
@@ -486,13 +520,12 @@
     const { data } = await useFetchApi(url).get().json()
 
     if (data.value) {
-      jobInfo.value = data.value?.job
       if (
         data.value.config_content &&
         data.value.config_content.process &&
         Array.isArray(data.value.config_content.process)
       ) {
-        let ops = dataflowOps[locale.value]
+        let ops = dataflowOps[locale.value] || dataflowOps.en
         tableData.value = [...data.value.config_content.process]
         sessionData.value = tableData.value.map((item) => item.data)
         tableData.value = tableData.value.map((item) => {
@@ -520,8 +553,26 @@
             key: item.name
           }
         })
+        // job状态
+        const jobOperatorsStatus = await getJobOperatorsStatus()
+        jobInfo.value = { ...data.value?.job, jobOperatorsStatus }
       }
     }
+  }
+  const getJobOperatorsStatus = async () => {
+    // const operatorsData = tableData.value.map((item, index) => {
+    //   return {
+    //     name: item.key,
+    //     index
+    //   }
+    // })
+    // const options = {
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(operatorsData)
+    // }
+    const url = `/dataflow/jobs/get_pipline_job_operators_status/${infoId.value}`
+    const { data } = await useFetchApi(url).get().json()
+    return data.value?.data || []
   }
   const getLogData = async () => {
     const url = `dataflow/jobs/log/${infoId.value}`
@@ -532,6 +583,32 @@
       logData.value = data.value.session_log
     }
   }
+  const getAllLogData = async () => {
+    const url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
+    const { data } = await useFetchApi(url).get().json()
+    if (data.value.code == 200) {
+      logData.value = data.value.data.data.map((item) => {
+        return `${formatTimestamp(item.create_at)} | ${item.level} | ${
+          item.content
+        }`;
+      });
+    }
+  }
+  const formatTimestamp = (timestamp) => {
+    // 检查时间戳是否为秒级
+    const date = new Date(timestamp > 9999999999 ? timestamp : timestamp * 1000);
+
+    // 格式化年、月、日、时、分、秒
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    // 返回格式化后的日期字符串
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
   const navigateToPage = () => {
     router.push('/datapipelines')
   }
@@ -555,9 +632,40 @@
     URL.revokeObjectURL(url)
   }
 
+  const cancelExecute = async (job_id, status) => {
+    if (status === 'Processing') {
+      return ElMessage({
+          message: t("dataPipelines.cannotCancel"),
+          type: "warning",
+          plain: true,
+          grouping: true,
+        });
+    }
+    const url = `/dataflow/jobs/stop_pipline_job?job_id=${job_id}`;
+    const { data } = await useFetchApi(url).post().json();
+    if (data.value.code === 200) {
+      ElMessage({
+        message: t("dataPipelines.taskSuccessStop"),
+        type: "success",
+        plain: true,
+        grouping: true,
+      })
+      getInfoData()
+      getAllLogData()
+    } else {
+      ElMessage({
+        message: t("dataPipelines.taskStopFailed"),
+        type: "error",
+        plain: true,
+        grouping: true,
+      })
+    }
+  }
+
   onMounted(() => {
     getInfoData()
-    getLogData()
+    // getLogData()
+    getAllLogData()
     if(taskType.value!='pipeline'){
       activeTab.value = '3'
     }

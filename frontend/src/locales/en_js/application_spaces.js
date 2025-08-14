@@ -159,5 +159,5 @@ export const application_spaces = {
     validatePlaceholder3: 'This variable name already exists',
     validatePlaceholder4: 'Variable value must not contain line breaks or control characters',
   }
-  
+
 }
