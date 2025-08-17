@@ -514,6 +514,16 @@
       window.location.href=`/datasets/${path}/files/${branch}`
     }
   }
+  /**
+   * 查看资源占用
+   * @param task_id 任务id
+   */
+  const getResourceOccupation = async () => {
+    let url = `/dataflow/jobs/resource/${infoId.value}`;
+    const { data } = await useFetchApi(url).get().json();
+    console.log("资源占用：", data);
+  };
+
   const getInfoData = async () => {
     const url = `/dataflow/jobs/${infoId.value}`
 
@@ -664,6 +674,7 @@
 
   onMounted(() => {
     getInfoData()
+    getResourceOccupation()
     // getLogData()
     getAllLogData()
     if(taskType.value!='pipeline'){

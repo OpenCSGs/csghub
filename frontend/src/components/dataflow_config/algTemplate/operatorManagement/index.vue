@@ -41,7 +41,7 @@
         <div class="p-4 flex items-center flex-1">
           <img
             class="w-[50px] h-[50px] items-center mr-[10px] rounded-[12px] cursor-pointer hover:opacity-80 transition-opacity"
-            :src="origin + item.icon"
+            :src="`data:image/png;base64,${item.pic_base64}`"
             @click="openUploadDialog(item)"
           />
           <div class="flex-1 h-full">
@@ -793,7 +793,7 @@ const originalCardList = ref([])
 const getOperatorList = async () => {
   try {
     const { data } = await useFetchApi(
-      `/dataflow/operator/?skip=${state.value.skip}&limit=${state.value.limit}`
+      `/dataflow/operator?skip=${state.value.skip}&limit=${state.value.limit}`
     )
       .get()
       .json();
