@@ -793,7 +793,7 @@ const originalCardList = ref([])
 const getOperatorList = async () => {
   try {
     const { data } = await useFetchApi(
-      `/dataflow/operator/?skip=${state.value.skip}&limit=${state.value.limit}`
+      `/dataflow/operator?skip=${state.value.skip}&limit=${state.value.limit}`
     )
       .get()
       .json();
