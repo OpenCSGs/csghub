@@ -58,7 +58,13 @@
   const activeTags = ref({})
 
   const avaliableCategories = computed(() => {
-    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled && c.name !== 'publisher')
+    return tagCategories.value.filter((c) => {
+      // 当repoType为mcp时，过滤掉runmode类别
+      if (props.repoType === 'mcp' && c.name === 'runmode') {
+        return false
+      }
+      return c.scope === props.repoType && c.enabled && c.name !== 'publisher'
+    })
   })
 
   watch(avaliableCategories,
