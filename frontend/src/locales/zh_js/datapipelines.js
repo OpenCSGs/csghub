@@ -132,6 +132,7 @@ export const dataPipelines = {
   "cancelTask": "取消任务",
   "refreshStatus": "刷新状态",
   "viewLog": "查看日志",
+  "resourceOccupation": "资源占用",
   "RunItAgain": "重新运行",
   "dataConnectionConfiguration": "数据连接配置",
   "authType_option_NONE": "不做身份校验",
@@ -370,6 +371,6 @@ export const dataPipelines = {
   "data_mixture_postprocess_internal_dec": "将多个数据集混合成一个数据集。随机选择每个数据集的样本并混合这些样本，然后导出为新的混合数据集。支持的格式包括：[“jsonl”, “json”, “parquet”]。",
   "deserialize_meta_postprocess_internal_dec": "对JSONL文件中的指定字段进行反序列化处理。",
   "quality_classifier_common_internal_dec": "本质量分类器类用于预测数据集中文档的评分。它将计算所有行的分数，并为每一行提供两列：分数（score）和是否保留（should_keep），以帮助用户决定应该删除哪一行。默认情况下，如果分数高于 0.9，则将该行标记为 should_keep=1。",
- "opencsg_data_extraction_preprocess_internal_dec": "一个高质量的工具，用于将 PDF 转换为 Markdown 和 JSON",
+  "opencsg_data_extraction_preprocess_internal_dec": "一个高质量的工具，用于将 PDF 转换为 Markdown 和 JSON",
   "opencsg_scrape_url_data_preprocess_internal_dec": "基于大型语言模型的网站和本地文档（XML、HTML、JSON 等）的数据抓取工具",
 }

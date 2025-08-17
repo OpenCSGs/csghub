@@ -52,7 +52,7 @@
                     draggable="true"
                     @dragstart="onDragStart($event, node)"
                   >
-                    <img :src="origin + node.icon" class="node-preview">
+                    <img :src="`data:image/png;base64,${node.pic_base64}`" class="node-preview">
                     <el-tooltip
                       :content="node.display_name"
                       placement="bottom-start"
@@ -199,6 +199,7 @@
   import { ref, onMounted, onUnmounted, computed, defineProps, defineExpose, watch } from 'vue'
   import * as G6 from '@antv/g6'
   import { ElMessage } from 'element-plus'
+  import useUserStore from "@/stores/UserStore";
   import useFetchApi from "@/packs/useFetchApi";
   import DynamicForm from './components/dynamicForm.vue'
   import jsYaml from 'js-yaml';
@@ -210,6 +211,7 @@
     zh: zhOps,
     en: enOps,
   };
+  const userStore = useUserStore();
   const origin = window.location.origin + '/'; 
   const configsDrawer = ref(false)
   const drawerWidth = ref('410px')
@@ -310,7 +312,7 @@
   // 查询当前用户所在的组织
   const getUserInfo = async () => {
     try {
-      const { data } = await useFetchApi(`/user/root`).get().json()
+      const { data } = await useFetchApi(`/user/${userStore.username}`).get().json()
       const { orgs } = data.value.data
       if (orgs) {
          const orgPaths = orgs.map(org => org.path).join(',') || ''
@@ -1329,7 +1331,7 @@
             operator_name: node.operator_name,
             display_name: i18nData?.name || node.display_name || node.operator_name,
             configs: configs,
-            icon: origin + node.icon,
+            icon: `data:image/png;base64,${node.pic_base64}`,
             color: node.color || '#ccc',
             x: node.position?.x || Math.random() * 300,
             y: node.position?.y || Math.random() * 300,
@@ -1403,7 +1405,7 @@
       operator_name: node.operator_name,
       display_name: node.display_name,
       configs: node.configs,
-      icon: node.icon,
+      icon: `data:image/png;base64,${node.pic_base64}`,
       color: node.color || "#ccc"
     }))
     event.dataTransfer.effectAllowed = 'copy'
@@ -1676,7 +1678,7 @@
           operator_type: node.operator_type,
           operator_name: node.operator_name,
           display_name: node.display_name,
-          icon: node.icon,
+          icon: `data:image/png;base64,${node.pic_base64}`,
           position: { x: node.x, y: node.y },
           configs: node.configs || []
         }
