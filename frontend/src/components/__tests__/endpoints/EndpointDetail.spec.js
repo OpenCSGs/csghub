@@ -3,14 +3,14 @@ import { mount } from "@vue/test-utils";
 import EndpointDetail from "@/components/endpoints/EndpointDetail.vue";
 import { createRouter, createWebHistory } from 'vue-router'
 import FinetuneDetail from "@/components/finetune/FinetuneDetail.vue";
-import useWxShare from '@/components/hooks/useWxShare'
+// import useWxShare from '@/components/hooks/useWxShare'
 
-// Mock hooks
-vi.mock('@/components/hooks/useWxShare', () => ({
-  default: () => ({
-    share: vi.fn()
-  })
-}))
+// // Mock hooks
+// vi.mock('@/components/hooks/useWxShare', () => ({
+//   default: () => ({
+//     share: vi.fn()
+//   })
+// }))
 
 // Mock vue3-cookies
 vi.mock('vue3-cookies', () => ({
