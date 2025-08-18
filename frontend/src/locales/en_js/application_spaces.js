@@ -1,5 +1,6 @@
 export const application_spaces = {
   title: "Application Space",
+  loading: 'Loading application space information...',
   placeholder: "Application Space Name",
   name: "Space name",
   nameTips: "Applied to the space path, cannot be changed after creation",

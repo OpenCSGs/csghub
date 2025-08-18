@@ -1,5 +1,6 @@
 export const collections = {
   collectionName: 'Collection name',
+  loading: 'Loading collection information...',
   placeholder: 'Search collections',
   noData: 'No results found',
   noDataDesc:

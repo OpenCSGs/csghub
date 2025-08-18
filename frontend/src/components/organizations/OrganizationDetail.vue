@@ -104,18 +104,17 @@
     </div>
   </div>
   
-  <div v-if="isDataLoading" class="flex items-center justify-center min-h-[400px]">
-    <div class="text-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-4"></div>
-      <p class="text-gray-600">{{ $t('organization.loading') }}</p>
-    </div>
-  </div>
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('organization.loading')" 
+  />
 </template>
 
 <script setup>
   import { ref, onMounted, watch } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'

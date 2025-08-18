@@ -120,7 +120,7 @@ export default {
           this.getComment(newId)
         }
       },
-      immediate: true
+      immediate: false
     },
     title: {
       handler(newTitle) {
