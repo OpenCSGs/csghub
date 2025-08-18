@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"opencsg.com/portal/cmd/csghub-portal/cmd/db"
 	"opencsg.com/portal/cmd/csghub-portal/cmd/migration"
 	"opencsg.com/portal/cmd/csghub-portal/cmd/start"
 )
@@ -40,6 +41,7 @@ func init() {
 	RootCmd.AddCommand(
 		migration.Cmd,
 		start.Cmd,
+		db.Cmd,
 	)
 }
 
