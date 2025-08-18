@@ -1,6 +1,6 @@
 <template>
   <div class="py-[32px] md:px-[10px]">
-    <template v-if="!loading">
+    <template v-if="!isDataLoading">
       <!-- 讨论列表 -->
       <DiscussionCards
         v-if="communityActionName === 'list'"
@@ -35,7 +35,10 @@
         @refreshDiscussions="handleRefreshDiscussions">
       </DiscussionDetails>
     </template>
-    <el-skeleton v-else class="mt-4" :rows="5" animated />
+    <LoadingSpinner 
+      :loading="isDataLoading" 
+      :text="$t('repo.loadingCommunity')" 
+    />
   </div>
 </template>
 
@@ -48,9 +51,10 @@
   import DiscussionCards from './DiscussionCards.vue'
   import NewCommunityDiscussion from './NewCommunityDiscussion.vue'
   import DiscussionDetails from './DiscussionDetails.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
-  import { validateCommunityActionName } from '../../packs/utils'
+  import { validateCommunityActionName, ToNotFoundPage } from '../../packs/utils'
 
   const props = defineProps({
     repoType: String,
@@ -73,7 +77,43 @@
   const currentDiscussionTime = ref('')
   const currentDiscussionData = ref(null)
 
-  // 计算属性：从store获取社区操作状态
+  // 新增：整体加载态
+  const isDataLoading = ref(true)
+
+
+  const getDiscussion = async () => {
+    isDataLoading.value = true
+    if (!props.repoPath || props.repoPath === '') {
+      loading.value = false
+      isDataLoading.value = false
+      return
+    }
+    
+    let discussionCreateEndpoint = `/${props.repoType}s/${props.repoPath}/discussions`
+    if (props.repoType === 'mcp') {
+      discussionCreateEndpoint = `/mcpserver/${props.repoPath}/discussions`
+    }
+    
+    try {
+      const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
+      if (data.value) {
+        const discussions = data.value.data.discussions || []
+        cards.value = discussions.sort((a, b) => b.id - a.id)
+        loading.value = false
+      } else {
+        ElMessage({
+          message: error.value.msg,
+          type: 'warning'
+        })
+        loading.value = false
+      }
+    } catch (error) {
+      loading.value = false
+    } finally {
+      isDataLoading.value = false
+    }
+  }
+
   const communityActionName = computed(() => {
     return repoTab.communityActionName || 'list'
   })
@@ -109,12 +149,20 @@
         getDiscussion()
       }
     }
-  }, { deep: true, immediate: true })
+  }, { deep: true, immediate: false })
 
   // 独立获取讨论详情的函数
   const fetchDiscussionDetail = async (id) => {
+    isDataLoading.value = true
     try {
-      const { data, error } = await useFetchApi(`/discussions/${id}`).json()
+      const { response, data, error } = await useFetchApi(`/discussions/${id}`).json()
+
+      // 404 跳转
+      if (response?.value?.status === 404) {
+        ToNotFoundPage()
+        return
+      }
+
       if (data.value) {
         const discussion = data.value.data
         setDiscussionDetailData(discussion)
@@ -128,6 +176,8 @@
       ElMessage.error('获取讨论详情失败')
       loading.value = false
       toggleDetails()
+    } finally {
+      isDataLoading.value = false
     }
   }
 
@@ -245,35 +295,6 @@
     toggleDetails()
   }
 
-  const getDiscussion = async () => {
-    if (!props.repoPath || props.repoPath === '') {
-      loading.value = false
-      return
-    }
-    
-    let discussionCreateEndpoint = `/${props.repoType}s/${props.repoPath}/discussions`
-    if (props.repoType === 'mcp') {
-      discussionCreateEndpoint = `/mcpserver/${props.repoPath}/discussions`
-    }
-    
-    try {
-      const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
-      if (data.value) {
-        const discussions = data.value.data.discussions || []
-        cards.value = discussions.sort((a, b) => b.id - a.id)
-        loading.value = false
-      } else {
-        ElMessage({
-          message: error.value.msg,
-          type: 'warning'
-        })
-        loading.value = false
-      }
-    } catch (error) {
-      loading.value = false
-    }
-  }
-
   onMounted(() => {
     // 从URL参数恢复状态
     const params = new URLSearchParams(window.location.search)
@@ -292,12 +313,10 @@
       
       if (actionName === 'detail' && urlDiscussionId) {
         discussionId.value = urlDiscussionId
-        // 直接获取讨论详情，不依赖讨论列表
         fetchDiscussionDetail(urlDiscussionId)
-        // 同时获取讨论列表（用于其他功能）
-        if (props.repoPath) {
-          getDiscussion()
-        }
+      } else if (actionName === 'list') {
+        // 如果是列表页面，获取讨论列表
+        getDiscussion()
       }
     }
   })

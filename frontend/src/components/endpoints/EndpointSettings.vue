@@ -381,7 +381,7 @@
       const body = data.value
       frameworks.value = body.data || []
       const currentFramework = body.data?.find((framework) => {
-        return framework.frame_name.toLowerCase() === props.framework.toLowerCase() && framework.compute_type === currentResourceDetail.value?.type
+        return framework.frame_name?.toLowerCase() === props.framework?.toLowerCase() && framework.compute_type === currentResourceDetail.value?.type
       })
       currentFrameworkId.value = currentFramework?.id
     }

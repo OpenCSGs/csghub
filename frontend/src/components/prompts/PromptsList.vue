@@ -10,6 +10,7 @@
   <div
     class="w-full text-gray-900 flex flex-col gap-5 p-8 md:p-1 md:px-12 sm:px-5"
     v-loading="loading"
+    v-if="!isDataLoading"
   >
     <div
       class="flex flex-col gap-4"
@@ -182,6 +183,11 @@
       :total="totalPrompts"
     />
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('prompts.loading')" 
+  />
 </template>
 
 <script setup>
@@ -194,10 +200,13 @@
   import CsgPagination from '../shared/CsgPagination.vue'
   import { useLangOptions, useTagOptions } from './promptsOptions'
 import CsgButton from '../shared/CsgButton.vue'
+import { ToNotFoundPage } from '../../packs/utils'
+import LoadingSpinner from '../shared/LoadingSpinner.vue'
 
   const perPage = ref(24)
   const currentPage = ref(1)
   const loading = ref(true)
+  const isDataLoading = ref(true)
   const nameFilterInput = ref('')
   const repo = ref({})
   const models = ref({ data: [] })
@@ -277,19 +286,39 @@ import CsgButton from '../shared/CsgButton.vue'
   }
 
   const fetchPromptsList = async () => {
+    isDataLoading.value = true
     loading.value = true
-    const { data, error } = await useFetchApi(
-      `/prompts/${props.namespace}/${props.name}`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
-    } else {
+    
+    try {
+      const { response, data, error } = await useFetchApi(
+        `/prompts/${props.namespace}/${props.name}`
+      ).json()
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
+      
+      if (error.value) {
+        ElMessage({ message: error.value.msg, type: 'warning' })
+        return false
+      }
+      
+      if (!data.value) {
+        return false
+      }
+      
       promptsListData.value = data.value.data.prompts || []
       repo.value = data.value.data.detail
       setPromptsDetails(repo.value)
       updateFilteredData()
+      return true
+    } catch (error) {
+      return false
+    } finally {
+      loading.value = false
+      isDataLoading.value = false
     }
-    loading.value = false
   }
 
   const fetchModels = async () => {
@@ -310,9 +339,11 @@ import CsgButton from '../shared/CsgButton.vue'
     }
   }
 
-  onMounted(() => {
-    fetchPromptsList()
-    fetchModels()
+  onMounted(async () => {
+    const success = await fetchPromptsList()
+    if (success) {
+      fetchModels()
+    }
   })
 </script>
 
