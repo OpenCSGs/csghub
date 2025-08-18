@@ -1,5 +1,6 @@
 export const collections = {
   collectionName: '合集名稱',
+  loading: '正在載入合集資訊...',
   placeholder: '搜尋合集',
   noData: '搜尋無結果',
   noDataDesc: '沒有找到與您的搜尋條件匹配的內容您也可以創建對應的合集',

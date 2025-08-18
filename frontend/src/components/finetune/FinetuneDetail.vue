@@ -1,6 +1,7 @@
 <template>
   <div
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+    v-if="!isDataLoading && isInitialized"
   >
     <div class="mx-auto page-responsive-width">
       <RepoHeader
@@ -17,6 +18,7 @@
   </div>
   <div
     class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
+    v-if="!isDataLoading && isInitialized"
     v-loading="dataLoading"
   >
     <CsgButton
@@ -115,6 +117,11 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('finetune.loading')" 
+  />
 </template>
 
 <script setup>
@@ -125,6 +132,7 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import FinetuneSettings from './FinetuneSettings.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
   import { ElMessage } from 'element-plus'
@@ -133,7 +141,7 @@
   import { storeToRefs } from 'pinia'
   import { useRepoTabStore } from '@/stores/RepoTabStore'
   import { useRoute, useRouter } from 'vue-router'
-  import { validateTab } from '@/packs/utils'
+  import { validateTab, ToNotFoundPage } from '@/packs/utils'
   import CsgButton from '../shared/CsgButton.vue'
 
   const props = defineProps({
@@ -155,7 +163,10 @@
   const dataLoading = ref(false)
   const finetuneResources = ref([])
   const finetuneResource = ref('')
-  const iframeHeight = ref(700) // Default height
+  const iframeHeight = ref(700)
+  
+  const isDataLoading = ref(true)
+  
   const allStatus = [
     'Building',
     'Deploying',
@@ -229,7 +240,7 @@
   }
 
   // Listen for route changes, update tab when user uses browser forward/back buttons
-  watch(() => route.query.tab, (newTab) => {
+  watch(() => route.query.tab, async (newTab) => {
     const validatedTab = validateTab(newTab)
     if (validatedTab && isValidTab(validatedTab) && validatedTab !== activeName.value) {
       activeName.value = validatedTab
@@ -238,11 +249,11 @@
         actionName: 'files',
         lastPath: ''
       })
-      tabChange({ paneName: validatedTab })
+      await tabChange({ paneName: validatedTab })
     }
   })
 
-  const tabChange = (tab) => {
+  const tabChange = async (tab) => {
     let tabName = validateTab(tab.paneName)
     
     if (!isValidTab(tabName)) {
@@ -271,30 +282,54 @@
       }
     })
 
-    fetchRepoDetail()
+    // 只有主请求成功后才进行其他操作
+    const success = await fetchRepoDetail()
+    if (success && repoDetailStore.clusterId) {
+      fetchResources()
+    }
   }
 
   const toNotebookPage = () => {
     window.open(`${httpProtocal}://${repoDetailStore.endpoint}?jwt=${jwtToken}`)
   }
 
-  const fetchRepoDetail = async () => {
+  const fetchRepoDetail = async (isInitialLoad = false) => {
+    if (dataLoading.value) {
+      return false
+    }
+    
     dataLoading.value = true
+    
+    if (isInitialLoad) {
+      isDataLoading.value = true
+    }
 
     try {
-      const { data } = await useFetchApi(
+      const { response, data } = await useFetchApi(
         `/models/${props.namespace}/${props.modelName}/run/${props.finetuneId}`
       ).json()
-      if (data.value) {
-        const body = data.value
-        if (body.data) {
-          repoDetailStore.initialize(body.data, 'finetune')
-        }
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
       }
+      
+      if (data.value?.data) {
+        repoDetailStore.initialize(data.value.data, 'finetune')
+        return true
+      }
+      
+      return false
     } catch (err) {
-      console.log(err)
+      console.error('Failed to fetch repo detail:', err)
+      return false
     } finally {
       dataLoading.value = false
+      
+      // 初始加载完成后，关闭全屏加载状态
+      if (isInitialLoad) {
+        isDataLoading.value = false
+      }
     }
   }
 
@@ -352,9 +387,7 @@
           )
           if (repoDetailStore.status !== eventResponse.status) {
             repoDetailStore.status = eventResponse.status
-            if (repoDetailStore.status == 'Running') {
-              fetchRepoDetail()
-            }
+            fetchRepoDetail(false) // SSE event triggers fetchRepoDetail(false)
           }
           repoDetailStore.failedReason = eventResponse.reason
         },
@@ -366,7 +399,7 @@
     )
   }
 
-  onBeforeMount(() => {
+  onBeforeMount(async () => {
     if (props.path) {
       activeName.value = props.path
     }
@@ -375,24 +408,26 @@
     const params = new URLSearchParams(window.location.search)
     const urlTab = validateTab(params.get('tab'))
     if (urlTab && isValidTab(urlTab)) {
-      tabChange({ paneName: urlTab })
+      await tabChange({ paneName: urlTab })
     } else {
-      tabChange({ paneName: getDefaultTab() })
+      await tabChange({ paneName: getDefaultTab() })
     }
 
-    fetchRepoDetail()
+    // 只有主请求成功后才进行其他操作
+    const success = await fetchRepoDetail(true)
+    if (success) {
+      if (repoDetailStore.clusterId) {
+        fetchResources()
+      }
 
-    if (repoDetailStore.clusterId) {
-      fetchResources()
-    }
-
-    if (
-      isStatusSSEConnected.value === false &&
-      allStatus.includes(repoDetailStore.status) &&
-      repoDetailStore.modelId &&
-      repoDetailStore.deployId
-    ) {
-      syncfinetuneStatus()
+      if (
+        isStatusSSEConnected.value === false &&
+        allStatus.includes(repoDetailStore.status) &&
+        repoDetailStore.modelId &&
+        repoDetailStore.deployId
+      ) {
+        syncfinetuneStatus()
+      }
     }
 
     setRepoTab({

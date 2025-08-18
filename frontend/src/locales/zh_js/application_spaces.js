@@ -1,5 +1,6 @@
 export const application_spaces = {
   title: "应用空间",
+  loading: '正在加载应用空间信息...',
   placeholder: "应用空间名字",
   name: "应用空间名称",
   nameTips: "应用于空间路径，创建后不可更改",

@@ -1,6 +1,7 @@
 <template>
   <div
-    class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+    class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+    v-if="!isDataLoading && isInitialized">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :license="repoDetailStore.license"
@@ -21,7 +22,7 @@
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer" />
     </div>
   </div>
-  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
+  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0" v-if="!isDataLoading && isInitialized">
     <repo-tabs
       :repo-detail="repoDetailStore"
       :appStatus="repoDetailStore.status"
@@ -39,6 +40,11 @@
       @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer"
       :path="`${namespace}/${repoName}`" />
   </div>
+
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('application_spaces.loading')" 
+  />
 
   <!-- logs drawer -->
   <div v-show="repoDetailStore.canWrite">
@@ -130,6 +136,7 @@
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import CsgButton from '../shared/CsgButton.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import { useCookies } from 'vue3-cookies'
   import { fetchEventSource } from '@microsoft/fetch-event-source'
   import { useI18n } from 'vue-i18n'
@@ -140,6 +147,7 @@
   import { ElMessage } from 'element-plus'
   import { storeToRefs } from 'pinia'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { ToNotFoundPage } from '../../packs/utils'
 
   const props = defineProps({
     repoType: String,
@@ -163,6 +171,9 @@
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
   const { setRepoTab } = useRepoTabStore()
+  
+  const isDataLoading = ref(false)
+  
   // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const { cookies } = useCookies()
@@ -236,25 +247,38 @@
   }
 
   const fetchRepoDetail = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    
+    isDataLoading.value = true
+    
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
 
     try {
-      const { data, error } = await useFetchApi(url).json()
-
+      const { response, data, error } = await useFetchApi(url).json()
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
+      
       if (!data.value) {
         ElMessage.warning(error.value.msg)
-        return
+        return false
       }
 
       const repoData = data.value.data
-
       repoDetailStore.initialize(repoData, props.repoType)
       
       setRepoTab({
         currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
       })
+      return true
     } catch (error) {
-      console.log(error)
+      return false
+    } finally {
+      isDataLoading.value = false
     }
   }
 
@@ -564,13 +588,12 @@
     )
   }
 
-  onMounted(() => {
-    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
-      fetchRepoDetail()
-    }
-
-    if (isStatusSSEConnected.value === false) {
-      syncSpaceStatus()
+  onMounted(async () => {
+    const success = await fetchRepoDetail()
+    if (success) {
+      if (isStatusSSEConnected.value === false) {
+        syncSpaceStatus()
+      }
     }
 
     setRepoTab({

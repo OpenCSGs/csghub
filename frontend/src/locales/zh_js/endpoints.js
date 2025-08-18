@@ -1,5 +1,6 @@
 export const endpoints = {
   title: "专属实例",
+  loading: '正在加载专属实例信息...',
   resourceType: '资源类型',
   replica: "弹性副本",
   summary: '概览',

@@ -1,5 +1,6 @@
 export const endpoints = {
   title: "Inference Endpoint",
+  loading: 'Loading endpoint information...',
   resourceType: 'Resource Type',
   replica: "Replica",
   summary: 'Overview',

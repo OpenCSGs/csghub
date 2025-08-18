@@ -1,4 +1,6 @@
 export const repo = {
+  loading: '正在加载仓库信息...',
+  loadingCommunity: '正在加载讨论列表...',
   edit: {
     fileName: "文件名",
     main: "直接提交到 main 分支",

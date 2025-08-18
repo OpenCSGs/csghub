@@ -1,5 +1,10 @@
 <template>
-  <div class="min-h-[300px] py-8 md:px-5">
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('repo.loading')" 
+  />
+  
+  <div v-if="!isDataLoading" class="min-h-[300px] py-8 md:px-5">
     <div class="flex items-center justify-between">
       <div class="flex items-center flex-wrap gap-4">
         <BranchDropdown
@@ -249,6 +254,7 @@
   import TextViewer from './viewers/TextViewer.vue'
   import CodeViewer from './viewers/CodeViewer.vue'
   import BranchDropdown from './BranchDropdown.vue'
+  import LoadingSpinner from './LoadingSpinner.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
@@ -256,6 +262,7 @@
   import { createAndClickAnchor } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
   import { copyToClipboard } from '@/packs/clipboard'
+  import { ToNotFoundPage } from '@/packs/utils'
 
   const props = defineProps({
     // branches: Object,
@@ -283,6 +290,10 @@
   const lastCommit = ref({})
   const currentBranch = ref(props.currentBranch)
   const currentPath = ref(props.currentPath || '')
+  
+  // 添加加载状态
+  const isDataLoading = ref(true)
+  const isLoading = ref(false)
 
   let prefixPath = document.location.pathname.split('/')[1]
   let apiPrefixPath = document.location.pathname.split('/')[1]
@@ -440,6 +451,8 @@
       query
     })
     
+    // 重新初始化时显示加载状态
+    isDataLoading.value = true
     init()
   }
 
@@ -475,10 +488,22 @@
   }
 
   const fetchFileContent = async () => {
+    if (isLoading.value) {
+      return false
+    }
+    
+    isDataLoading.value = true
+    isLoading.value = true
+    
     try {
-      const { data, error } = await useFetchApi(
+      const { response, data, error } = await useFetchApi(
         `/${apiPrefixPath}/${props.namespacePath}/blob/${currentPath.value}?ref=${currentBranch.value}`
       ).json()
+
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
 
       if (data.value) {
         const result = data.value
@@ -486,15 +511,32 @@
         detectFileType()
         updateFileData(result.data)
         lfsContentRegex()
+        return true
       } else {
-        console.log(error.value.msg)
+        ElMessage({
+          message: error.value.msg || t('shared.fetchFileError'),
+          type: 'warning'
+        })
+        return false
       }
     } catch (err) {
-      console.error(err)
+      ElMessage({
+        message: t('shared.fetchFileError'),
+        type: 'error'
+      })
+      return false
+    } finally {
+      isLoading.value = false
+      isDataLoading.value = false
     }
   }
 
   const lfsDownload = async () => {
+    // 确保只有在文件内容加载成功后才允许下载
+    if (isLoading.value || isDataLoading.value) {
+      return
+    }
+    
     const url = `/${apiPrefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${currentBranch.value}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${currentPath.value}`
 
     try {
@@ -515,6 +557,11 @@
   }
 
   const normalFileDownload = async () => {
+    // 确保只有在文件内容加载成功后才允许下载
+    if (isLoading.value || isDataLoading.value) {
+      return
+    }
+    
     const url = `/${apiPrefixPath}/${props.namespacePath}/download/${path.value}?ref=${currentBranch.value}`
 
     try {
@@ -535,6 +582,11 @@
   }
 
   const deleteFile = async () => {
+    // 确保只有在文件内容加载成功后才允许删除
+    if (isLoading.value || isDataLoading.value) {
+      return
+    }
+    
     ElMessageBox.confirm(
       t('shared.deleteFileConfirm'),
       t('shared.deleteFile'),
@@ -580,11 +632,11 @@
       .catch(() => {})
   }
 
-  const init = () => {
-    fetchFileContent()
+  const init = async () => {
+    await fetchFileContent()
   }
 
   onMounted(() => {
-    fetchFileContent()
+    init()
   })
 </script>
