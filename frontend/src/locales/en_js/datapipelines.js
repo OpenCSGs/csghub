@@ -39,7 +39,6 @@ export const dataPipelines = {
     }
   },
   "testingConnection": "Testing connection",
-  "submitting": "Submitting",
   "pleaseSelectAnExecutionTime": "Please select an execution time",
   "deletingTask": "Deleting task",
   "terminatingTask": "Terminating task",
