@@ -1,6 +1,6 @@
 export const models = {
   title: "模型",
-    placeholder: "模型名稱",
+    placeholder: "搜索模型名稱",
     newTips:'近兩週新增模型',
     downloadModel: "下載模型數據",
     download: "下載模型",

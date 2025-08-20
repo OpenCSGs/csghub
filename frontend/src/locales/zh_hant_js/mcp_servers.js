@@ -1,6 +1,6 @@
 export const mcps = {
   title: 'MCP 伺服器',
-    placeholder: 'MCP 名稱',
+    placeholder: '搜索 MCP 名稱',
     guide: "使用指南",
     nameTips: "應用於 MCP 路徑，建立後不可變更",
     download: "下載程式碼",
