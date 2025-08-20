@@ -166,7 +166,7 @@
           </div>
         </div>
 
-        <div class="pl-[20px] pr-[20px] pb-[20px]">
+        <div class="pl-[20px] pr-[20px] pb-[20px] flex justify-start">
           <!-- 取消任务 -->
           <el-popconfirm
             v-if="item.task_status === 1"

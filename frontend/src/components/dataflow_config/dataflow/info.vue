@@ -150,7 +150,7 @@
           >
             <template #reference>
               <CsgButton
-                v-if="jobInfo.status !== 'Failed' && jobInfo.status !== 'Timeout' && jobInfo.status !== 'Finished'"
+                v-if="jobInfo.status !== 'Failed' && jobInfo.status !== 'Timeout' && jobInfo.status !== 'Finished' && jobInfo.status !== 'Canceled'"
                 class="btn btn-secondary-gray btn-sm whitespace-nowrap"
                 :name="t('dataPipelines.cancelExecute')"
               />
@@ -563,6 +563,9 @@
             key: item.name
           }
         })
+      }
+
+      if (data.value.job) {
         // job状态
         const jobOperatorsStatus = await getJobOperatorsStatus()
         jobInfo.value = { ...data.value?.job, jobOperatorsStatus }
@@ -643,14 +646,6 @@
   }
 
   const cancelExecute = async (job_id, status) => {
-    if (status === 'Processing') {
-      return ElMessage({
-          message: t("dataPipelines.cannotCancel"),
-          type: "warning",
-          plain: true,
-          grouping: true,
-        });
-    }
     const url = `/dataflow/jobs/stop_pipline_job?job_id=${job_id}`;
     const { data } = await useFetchApi(url).post().json();
     if (data.value.code === 200) {

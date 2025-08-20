@@ -13,7 +13,6 @@ export const dataPipelines = {
   "targetFormat": "Target Format",
   "dataFlowBranch": "Data Flow Branch",
   "startExecution": "Start Execution",
-  "inProgress": "In Progress",
   "searchTaskName": "Search Task Name",
   "confirmTermination": "Confirm Termination",
   "terminate": "Terminate",
@@ -40,6 +39,7 @@ export const dataPipelines = {
     }
   },
   "testingConnection": "Testing connection",
+  "submitting": "Submitting",
   "pleaseSelectAnExecutionTime": "Please select an execution time",
   "deletingTask": "Deleting task",
   "terminatingTask": "Terminating task",
@@ -160,6 +160,8 @@ export const dataPipelines = {
   "connectionInformation": "Connection information",
   "TaskFailed": "Task Failed",
   "manualStop": "Manual stop",
+  "public": "Public",
+  "private": "Private",
 
   "createTime": "Creation Time",
   "dataAmount": "Data Amount",
@@ -189,6 +191,7 @@ export const dataPipelines = {
   "dataCleaning": "Data Cleaning",
   "processingStatus": "Processing Status",
   "processingText": "Processing Text",
+  "inProgress": "In Progress",
   "completed": "Completed",
   "dataSource": "Data Source",
   "dataSourceBranch": "Data Source Branch",
@@ -216,6 +219,7 @@ export const dataPipelines = {
   "reset": "Replace",
   "details": "Details",
   "authorize": "authorize",
+  "settings": "Settings",
   "operatorAuthorization": "Operator Authorization",
   "SearchUserName": "Search User Name",
   "SearchOrganizationName": "Search Organization Name",
@@ -328,6 +332,7 @@ export const dataPipelines = {
   "Finished": "Finished",
   "Failed": "Failed",
   "Timeout": "Timeout",
+  "Canceled": "Canceled",
   "sessionDel": "Session has been deleted",
 
   "toolsTit": "Tool Pool",

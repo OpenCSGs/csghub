@@ -37,7 +37,19 @@
         v-for="item in cardList"
         :key="item.id"
         class="border rounded-lg flex flex-col justify-between"
+        style="position: relative;"
       >
+        <div class="operator-is-public">
+          <el-tooltip
+            :content="item.is_public ? t('dataPipelines.public') : t('dataPipelines.private')"
+            placement="top"
+          >
+            <el-icon>
+              <Unlock v-if="item.is_public" />
+              <Lock v-else />
+            </el-icon>
+          </el-tooltip>
+        </div>
         <div class="p-4 flex items-center flex-1">
           <img
             class="w-[50px] h-[50px] items-center mr-[10px] rounded-[12px] cursor-pointer hover:opacity-80 transition-opacity"
@@ -60,13 +72,14 @@
         <div
           class="flex justify-center text-xs items-center border-t-[1px] text-center py-2"
         >
-          <!-- <div
-            class="text-brand-600 hover:underline cursor-pointer flex-1 border-r-[1px]"
-          >
-            {{ t("dataPipelines.details") }}
-          </div> -->
           <div
-            class="text-brand-600 hover:underline cursor-pointer"
+            class="text-brand-600 hover:underline cursor-pointer flex-1 border-r-[1px]"
+            @click="settings(item.id, item.is_public)"
+          >
+            {{ t("dataPipelines.settings") }}
+          </div>
+          <div
+            class="text-brand-600 hover:underline cursor-pointer flex-1"
             @click="authorize(item.id)"
           >
             {{ t("dataPipelines.authorize") }}
@@ -75,18 +88,53 @@
       </div>
     </div>
 
+    <!-- 设置弹窗 -->
+    <el-dialog
+      :title="t('dataPipelines.settings')"
+      v-model="settingsDialogVisible"
+      width="400px"
+      class="operator-auth-dialog"
+      align-center
+      :before-close="settingsDialogClose"
+    >
+      <el-radio-group v-model="is_public" class="execute-type">
+        <el-radio :value="true" size="large">
+          {{ t("dataPipelines.public") }}
+        </el-radio>
+        <el-radio :value="false" size="large">
+          {{ t("dataPipelines.private") }}
+        </el-radio>
+      </el-radio-group>
+
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="settingsDialogClose">
+            {{ t("dataPipelines.cancel") }}
+          </el-button>
+          <el-button type="primary" @click="seetingsSubmit">
+            {{ t("dataPipelines.confirm") }}
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+
     <!-- 授权弹窗 -->
     <el-dialog
       :title="t('dataPipelines.operatorAuthorization')"
       v-model="dialogVisible"
       width="1000px"
       class="operator-auth-dialog"
+      align-center
     >
       <div class="flex">
         <div class="w-1/2 p-4 mr-2 border rounded-md h-[500px] overflow-y-auto">
           <el-input
             v-model="searchKeyword"
-            :placeholder="activeName === 'user' ? t('dataPipelines.SearchUserName') : t('dataPipelines.SearchOrganizationName')"
+            :placeholder="
+              activeName === 'user'
+                ? t('dataPipelines.SearchUserName')
+                : t('dataPipelines.SearchOrganizationName')
+            "
             :prefix-icon="Search"
             clearable
             class="mb-4"
@@ -96,10 +144,13 @@
           />
           <el-tabs v-model="activeName" tab-position="left" class="demo-tabs">
             <el-tab-pane :label="t('dataPipelines.person')" name="user">
-              <el-checkbox v-model="userSelectAll" @change="handleUserSelectAll">
-                {{ t('dataPipelines.selectAll') }}
+              <el-checkbox
+                v-model="userSelectAll"
+                @change="handleUserSelectAll"
+              >
+                {{ t("dataPipelines.selectAll") }}
               </el-checkbox>
-              <div style="height: 375px; overflow-y: auto;">
+              <div style="height: 375px; overflow-y: auto">
                 <el-checkbox-group
                   v-model="selectedUsers"
                   class="grid grid-cols-2 gap-2"
@@ -109,10 +160,7 @@
                     :key="user.uuid"
                     class="flex items-center p-1"
                   >
-                    <el-checkbox 
-                      :label="user"
-                      :value="user"
-                    >
+                    <el-checkbox :label="user" :value="user">
                       {{ user.username }}
                     </el-checkbox>
                   </div>
@@ -125,10 +173,12 @@
                     :page-size="userPagination.per"
                     :current-page="userPagination.page"
                     :total="userPagination.total"
-                    @current-change="(page) => {
-                      userPagination.page = page;
-                      loadUsers();
-                    }"
+                    @current-change="
+                      (page) => {
+                        userPagination.page = page;
+                        loadUsers();
+                      }
+                    "
                   />
                 </div>
               </div>
@@ -136,7 +186,7 @@
 
             <el-tab-pane :label="t('dataPipelines.organization')" name="org">
               <el-checkbox v-model="orgSelectAll" @change="handleOrgSelectAll">
-                {{ t('dataPipelines.selectAll') }}
+                {{ t("dataPipelines.selectAll") }}
               </el-checkbox>
               <div class="">
                 <el-checkbox-group
@@ -148,11 +198,8 @@
                     :key="org.path"
                     class="flex items-center p-1"
                   >
-                    <el-checkbox 
-                      :label="org"
-                      :value="org"
-                    >
-                      {{ org.name }}
+                    <el-checkbox :label="org" :value="org">
+                      {{ org.path }}{{ org.name ? `（${org.name}）` : '' }}
                     </el-checkbox>
                   </div>
                 </el-checkbox-group>
@@ -162,12 +209,12 @@
         </div>
 
         <div class="w-1/2 p-4 border rounded-md h-[500px] overflow-y-auto">
-          <p class="text-lg mb-2">{{ t('dataPipelines.selected') }}：</p>
-          
+          <p class="text-lg mb-2">{{ t("dataPipelines.selected") }}：</p>
+
           <!-- 已选个人 -->
           <div v-if="selectedUsers.length > 0">
             <p class="text-sm text-gray-500 mb-2">
-              {{ t('dataPipelines.person') }}
+              {{ t("dataPipelines.person") }}
             </p>
             <div class="select-user grid grid-cols-2 gap-2 mb-4">
               <el-tag
@@ -181,11 +228,11 @@
               </el-tag>
             </div>
           </div>
-          
+
           <!-- 已选组织 -->
           <div v-if="selectedOrgs.length > 0">
             <p class="text-sm text-gray-500 mb-2">
-              {{ t('dataPipelines.organization') }}
+              {{ t("dataPipelines.organization") }}
             </p>
             <div class="select-user grid grid-cols-2 gap-2">
               <el-tag
@@ -195,11 +242,11 @@
                 @close="removeOrg(org)"
                 class="mb-2"
               >
-                {{ org.name }}
+                {{ org.path }}{{ org.name ? `（${org.name}）` : '' }}
               </el-tag>
             </div>
           </div>
-          
+
           <el-empty
             :description="t('dataPipelines.noData')"
             :image-size="80"
@@ -227,6 +274,7 @@
       width="900px"
       :before-close="handleUploadDialogClose"
       class="image-upload-dialog"
+      align-center
     >
       <div class="upload-content">
         <!-- 左侧：图标预览区 -->
@@ -236,7 +284,7 @@
             <!-- 显示当前最新图标（原图标或已上传的新图标） -->
             <div v-if="currentPreviewImage" class="image-wrapper">
               <img
-                :src="origin + currentPreviewImage"
+                :src="currentPreviewImage"
                 class="preview-image"
                 :alt="t('dataPipelines.iconPreview')"
               />
@@ -385,6 +433,7 @@ import zhOps from "../../../../locales/zh_js/operator_zh.json";
 import enOps from "../../../../locales/en_js/operator_en.json";
 
 const { t, locale } = useI18n();
+const origin = window.location.origin + "/";
 
 // 准备国际化数据源
 const operatorI18n = {
@@ -403,10 +452,11 @@ const form = ref({
 const templateList = ref([]);
 const templateListAll = ref([]);
 const cardList = ref([]);
-const origin = window.location.origin + '/';
 
 // 授权相关
 const operator_id = ref("");
+const settingsDialogVisible = ref(false);
+const is_public = ref(true);
 const dialogVisible = ref(false);
 const searchKeyword = ref("");
 const selectedUsers = ref([]);
@@ -414,7 +464,7 @@ const selectedOrgs = ref([]);
 const personalUsers = ref([]);
 const orgData = ref([]);
 const selectAll = ref(false);
-const activeName = ref('user');
+const activeName = ref("user");
 const userSelectAll = ref(false);
 const orgSelectAll = ref(false);
 
@@ -441,144 +491,171 @@ const currentPreviewImage = computed(() => {
   return newImageUrl.value || currentTemplate.value?.icon || "";
 });
 
+// 设置
+const settings = (operatorId, isPublic) => {
+  settingsDialogVisible.value = true;
+  operator_id.value = operatorId;
+  is_public.value = isPublic;
+}
+
+const settingsDialogClose = () => {
+  settingsDialogVisible.value = false;
+  is_public.value = false;
+  operator_id.value = '';
+}
+
+const seetingsSubmit = async () => {
+  try {
+    const params = {
+      is_public: is_public.value,
+    };
+    const { data } = await useFetchApi(
+      `${CSGHUB_SERVER}/api/v1/dataflow/operator/${operator_id.value}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(params),
+      }
+    )
+      .put()
+      .json();
+
+    if (data.value?.code === 200) {
+      ElMessage.success(t("dataPipelines.operationSuccessful"));
+      getOperatorList();
+      settingsDialogClose();
+    } else {
+      ElMessage.error(data.value.msg);
+    }
+  } catch (error) {
+    // ElMessage.error(error.message);
+  }
+}
+
 // 授权相关方法
 const authorize = async (operatorId) => {
-  dialogVisible.value = true
-  operator_id.value = operatorId
-  searchKeyword.value = ""
-  userSelectAll.value = false
-  orgSelectAll.value = false
-  activeName.value = 'user'
+  dialogVisible.value = true;
+  operator_id.value = operatorId;
+  searchKeyword.value = "";
+  userSelectAll.value = false;
+  orgSelectAll.value = false;
+  activeName.value = "user";
 
   userPagination.value = {
     page: 1,
     per: 14,
-    total: 0
+    total: 0,
   };
 
   try {
     const [userData, org, operatorData] = await Promise.all([
       getUser(),
       getOrg(),
-      getOperator(operatorId)
-    ])
+      getOperator(operatorId),
+    ]);
     
-    personalUsers.value = userData.data
-    orgData.value = org.data
-    
-    // 初始化已选数据时从所有用户中筛选
-    selectedUsers.value = operatorData.users.map(user => {
-      // 尝试从已加载的用户中找到完整信息
-      const fullUser = allUsers.value.find(u => u.uuid === user.uuid);
-      return fullUser || user;
-    });
-    
-    selectedOrgs.value = orgData.value.filter(org => 
-      operatorData.orgs.some(selectedOrg => selectedOrg.path === org.path)
+    personalUsers.value = userData.data;
+    orgData.value = org.data || [];
+
+    // 确保 operatorData 有默认值，避免 null 或 undefined
+    const safeOperatorData = operatorData || { users: [], orgs: [] };
+
+    // 初始化已选数据（添加空值判断）
+    selectedUsers.value = personalUsers.value.filter((user) =>
+      (safeOperatorData.users || []).some((selectedUser) => selectedUser.uuid === user.uuid)
+    );
+
+    selectedOrgs.value = orgData.value.filter((orgItem) =>
+      (safeOperatorData.orgs || []).some((selectedOrg) => selectedOrg.path === orgItem.path)
     );
 
     // 更新全选状态
-    updateSelectAllStatus()
+    updateSelectAllStatus();
   } catch (error) {
     ElMessage.error(error.message)
   }
 };
 
 const loadUsers = async () => {
-  const userData = await getUser();
-  personalUsers.value = userData.data || [];
+  if (activeName.value === 'user') {
+    const userData = await getUser();
+    personalUsers.value = userData.data || [];
+  } else {
+    const orgDataRes = await getOrg();
+    orgData.value = orgDataRes.data || [];
+  }
   updateSelectAllStatus();
 };
 
 // 更新全选状态
 const updateSelectAllStatus = () => {
-  if (activeName.value === 'user') {
-    userSelectAll.value = filteredUsers.value.length > 0 && 
-      filteredUsers.value.every(user => 
-        selectedUsers.value.some(u => u.uuid === user.uuid))
+  if (activeName.value === "user") {
+    userSelectAll.value =
+      filteredUsers.value.length > 0 &&
+      filteredUsers.value.every((user) =>
+        selectedUsers.value.some((u) => u.uuid === user.uuid)
+      );
   } else {
-    orgSelectAll.value = filteredOrgs.value.length > 0 && 
-      filteredOrgs.value.every(org => 
-        selectedOrgs.value.some(o => o.path === org.path))
+    orgSelectAll.value =
+      filteredOrgs.value.length > 0 &&
+      filteredOrgs.value.every((org) =>
+        selectedOrgs.value.some((o) => o.path === org.path)
+      );
   }
-}
+};
 
 // 全选/取消全选
-const handleUserSelectAll = async (val) => {
+const handleUserSelectAll = (val) => {
+  const currentUserIds = filteredUsers.value.map((user) => user.uuid);
   if (val) {
-    // 获取所有符合条件的用户并选中
-    const allMatchingUsers = [];
-    let currentPage = 1;
-    const totalPages = Math.ceil(userPagination.value.total / userPagination.value.per);
-    
-    // 循环获取所有分页数据
-    while (currentPage <= totalPages) {
-      const { data } = await useFetchApi(`/users?per=${userPagination.value.per}&page=${currentPage}&search=${searchKeyword.value || ''}`)
-        .get()
-        .json();
-      
-      if (data.value?.data?.data) {
-        allMatchingUsers.push(...data.value.data.data);
-      }
-      currentPage++;
-    }
-    
-    // 去重添加到已选
-    const newUsers = allMatchingUsers.filter(
-      user => !selectedUsers.value.some(u => u.uuid === user.uuid)
+    // 添加当前页所有用户（去重）
+    const newUsers = filteredUsers.value.filter(
+      (user) => !selectedUsers.value.some((u) => u.uuid === user.uuid)
     );
     selectedUsers.value = [...selectedUsers.value, ...newUsers];
-    allUsers.value = Array.from(
-      new Map(allMatchingUsers.map(user => [user.uuid, user])).values()
-    );
   } else {
-    // 取消选中当前页用户
+    // 只移除当前页用户
     selectedUsers.value = selectedUsers.value.filter(
-      user => !currentPageUsers.value.some(u => u.uuid === user.uuid)
+      (user) => !currentUserIds.includes(user.uuid)
     );
   }
 };
 
 const handleOrgSelectAll = (val) => {
-  const currentOrgPaths = filteredOrgs.value.map(org => org.path)
+  const currentOrgPaths = filteredOrgs.value.map((org) => org.path);
   if (val) {
     // 添加当前页所有组织（去重）
     const newOrgs = filteredOrgs.value.filter(
-      org => !selectedOrgs.value.some(o => o.path === org.path))
-    selectedOrgs.value = [...selectedOrgs.value, ...newOrgs]
+      (org) => !selectedOrgs.value.some((o) => o.path === org.path)
+    );
+    selectedOrgs.value = [...selectedOrgs.value, ...newOrgs];
   } else {
     // 只移除当前页组织
     selectedOrgs.value = selectedOrgs.value.filter(
-      org => !currentOrgPaths.includes(org.path))
+      (org) => !currentOrgPaths.includes(org.path)
+    );
   }
-}
+};
 
 const userPagination = ref({
   page: 1,
   per: 14,
-  total: 0
+  total: 0,
 });
-
-const allUsers = ref([]);
-const currentPageUsers = ref([]);
 
 // 获取人员
 const getUser = async () => {
   try {
-    const { data } = await useFetchApi(`/users?per=${userPagination.value.per}&page=${userPagination.value.page}&search=${searchKeyword.value || ''}`)
+    const { data } = await useFetchApi(
+      `/users?per=${userPagination.value.per}&page=${
+        userPagination.value.page
+      }&search=${searchKeyword.value || ""}`
+    )
       .get()
       .json();
     if (data.value) {
       userPagination.value.total = data.value.data.total || 0;
-      // 保存当前页数据
-      currentPageUsers.value = data.value.data.data || [];
-      // 合并所有已加载的用户数据（去重）
-      allUsers.value = Array.from(
-        new Map([
-          ...allUsers.value.map(user => [user.uuid, user]),
-          ...currentPageUsers.value.map(user => [user.uuid, user])
-        ]).values()
-      );
       return data.value.data;
     }
     return { data: [], total: 0 };
@@ -594,28 +671,39 @@ const getOrg = async () => {
 };
 
 const getOperator = async (operator_id) => {
-  const url = `/dataflow/operator_permission/operator/${operator_id}`;
-  const { data } = await useFetchApi(url).get().json();
-  return data.value.data;
+  try {
+    const url = `/dataflow/operator_permission/operator/${operator_id}`;
+    const { data } = await useFetchApi(url).get().json();
+    return data.value?.data || { users: [], orgs: [] };
+  } catch (error) {
+    console.error("Failed to get operator data:", error);
+    return { users: [], orgs: [] };
+  }
 };
 
 const filteredUsers = computed(() => {
-  return currentPageUsers.value
-})
+  return personalUsers.value;
+});
 
 const filteredOrgs = computed(() => {
-  return orgData.value.filter(org => 
-    org.name.includes(searchKeyword.value))
-})
+  // return orgData.value.filter((org) => org.name.includes(searchKeyword.value));
+  if (!searchKeyword.value) return orgData.value;
+  if(orgData.value.length === 0) return orgData.value;
+  return orgData.value.filter(org => {
+    const pathMatch = org.path && org.path.toLowerCase().includes(searchKeyword.value.toLowerCase());
+    const nameMatch = org.name && org.name.toLowerCase().includes(searchKeyword.value.toLowerCase());
+    return pathMatch || nameMatch;
+  });
+});
 
 // 移除已选
 const removeUser = (user) => {
-  selectedUsers.value = selectedUsers.value.filter(u => u.uuid !== user.uuid)
-}
+  selectedUsers.value = selectedUsers.value.filter((u) => u.uuid !== user.uuid);
+};
 
 const removeOrg = (org) => {
-  selectedOrgs.value = selectedOrgs.value.filter(o => o.path !== org.path)
-}
+  selectedOrgs.value = selectedOrgs.value.filter((o) => o.path !== org.path);
+};
 
 const handleConfirm = async () => {
   try {
@@ -629,9 +717,9 @@ const handleConfirm = async () => {
       operator_id: operator_id.value,
       users: selectedUsers.value,
       orgs: selectedOrgs.value,
-    }
+    };
 
-    const { data } = await useFetchApi(`/dataflow/operator_permission/`, {
+    const { data } = await useFetchApi(`/dataflow/operator_permission`, {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     })
@@ -789,7 +877,7 @@ const applyI18n = (operator, lang) => {
 };
 
 // 模板和列表加载
-const originalCardList = ref([])
+const originalCardList = ref([]);
 const getOperatorList = async () => {
   try {
     const { data } = await useFetchApi(
@@ -1221,5 +1309,18 @@ watch(locale, () => {
     display: flex;
     justify-content: space-between;
   }
+}
+.execute-type {
+  :deep(.el-radio) {
+    width: 100% !important;
+  }
+}
+.operator-is-public {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  color: #999999;
+  font-size: 14px;
 }
 </style>
