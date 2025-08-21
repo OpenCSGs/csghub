@@ -153,7 +153,8 @@
                   :title="
                     scope.row.status === 'Failed' ||
                     scope.row.status === 'Timeout' ||
-                    scope.row.status === 'Finished' ? `${t('dataPipelines.executeConfirm')}?` : `${t('dataPipelines.cancelExecute')}?`
+                    scope.row.status === 'Finished' ||
+                    scope.row.status === 'Canceled' ? `${t('dataPipelines.executeConfirm')}?` : `${t('dataPipelines.cancelExecute')}?`
                     "
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
@@ -295,14 +296,6 @@ const openExecuteDialog = async (job_id, status) => {
       })
     }
   } else {
-    if (status === 'Processing') {
-      return ElMessage({
-          message: t("dataPipelines.cannotCancel"),
-          type: "warning",
-          plain: true,
-          grouping: true,
-        });
-    }
     const url = `/dataflow/jobs/stop_pipline_job?job_id=${job_id}`;
     const { data } = await useFetchApi(url).post().json();
     if (data.value.code === 200) {

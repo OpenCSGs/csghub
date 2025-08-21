@@ -26,6 +26,13 @@
           </div>
           <div class="info-item">
             <div class="text-gray-400 text-xs mb-1 mt-1">
+              {{ t("dataPipelines.dataFlow") }}：
+            </div>
+            <div>{{ getDataFlow(dataSource.datasourceInfo?.extra_config) }}</div>
+          </div>
+
+          <div class="info-item">
+            <div class="text-gray-400 text-xs mb-1 mt-1">
               {{ t("dataPipelines.createTime") }}：
             </div>
             <div>{{ dataSource.datasourceInfo?.created_at }}</div>
@@ -131,6 +138,11 @@ const testLinkStatus = ref(false);
 onMounted(() => {
   testLink();
 });
+
+const getDataFlow = (extra_config = '{}') => {
+  const dataFlow = JSON.parse(extra_config);
+  return `${dataFlow.csg_hub_dataset_id || ''}${dataFlow.csg_hub_dataset_default_branch ? ` > ${dataFlow.csg_hub_dataset_default_branch}` : ''}`;
+}
 
 /**
  * 测试链接接口

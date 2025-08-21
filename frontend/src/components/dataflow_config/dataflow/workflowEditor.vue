@@ -317,6 +317,8 @@
       if (orgs) {
          const orgPaths = orgs.map(org => org.path).join(',') || ''
          await getOperatorList(orgPaths)
+      } else {
+        await getOperatorList()
       }
     } catch (error) {
       console.error('获取用户信息失败:', error)
@@ -324,7 +326,7 @@
   }
 
   // 获取节点列表
-  const getOperatorList = async (orgPaths) => {
+  const getOperatorList = async (orgPaths = '') => {
     try {
       isLoading.value = true
       const full_path = orgPaths ? `?full_path=${orgPaths}` : ''
@@ -493,7 +495,7 @@
             y: -height/2 + 10,
             width: 40,
             height: 40,
-            img: origin + cfg.icon,
+            img: cfg.icon,
             cursor: 'move',
             radius: 12,
             // crossorigin: 'anonymous',
@@ -1331,7 +1333,7 @@
             operator_name: node.operator_name,
             display_name: i18nData?.name || node.display_name || node.operator_name,
             configs: configs,
-            icon: `data:image/png;base64,${node.pic_base64}`,
+            icon: node.icon,
             color: node.color || '#ccc',
             x: node.position?.x || Math.random() * 300,
             y: node.position?.y || Math.random() * 300,
@@ -1405,7 +1407,7 @@
       operator_name: node.operator_name,
       display_name: node.display_name,
       configs: node.configs,
-      icon: `data:image/png;base64,${node.pic_base64}`,
+      icon: node.pic_base64,
       color: node.color || "#ccc"
     }))
     event.dataTransfer.effectAllowed = 'copy'
@@ -1433,7 +1435,7 @@
         configs: data.configs,
         operator_name: data.operator_name,
         display_name: data.display_name,
-        icon: data.icon,
+        icon: `data:image/png;base64,${data.icon}`,
         color: data.color,
         x: point.x,
         y: point.y
@@ -1678,7 +1680,7 @@
           operator_type: node.operator_type,
           operator_name: node.operator_name,
           display_name: node.display_name,
-          icon: `data:image/png;base64,${node.pic_base64}`,
+          icon: node.icon.includes('data:image/png;base64,') ? node.icon : `data:image/png;base64,${node.icon}`,
           position: { x: node.x, y: node.y },
           configs: node.configs || []
         }
@@ -1794,8 +1796,23 @@
   }
 
   const formatTimestamp = (timestamp) => {
+    // 检查时间戳是否为 null、undefined 或无效值
+    if (timestamp === null || timestamp === undefined || timestamp === '') {
+      return '-';
+    }
+    
+    // 检查时间戳是否为有效数字
+    if (typeof timestamp !== 'number' || isNaN(timestamp)) {
+      return '-';
+    }
+    
     // 检查时间戳是否为秒级
     const date = new Date(timestamp > 9999999999 ? timestamp : timestamp * 1000);
+    
+    // 检查日期对象是否有效
+    if (isNaN(date.getTime())) {
+      return '-';
+    }
 
     // 格式化年、月、日、时、分、秒
     const year = date.getFullYear();

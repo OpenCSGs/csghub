@@ -18,6 +18,7 @@ export const dataPipelines = {
   "terminate": "終止",
   "waiting": "等待中",
   "error": "錯誤",
+  "submitting": "提交中",
   "taskStatus": "任務狀態",
   "labelStudio": "資料標註",
   "dataSourceInfo": {
@@ -159,6 +160,8 @@ export const dataPipelines = {
   "connectionInformation": "連結資訊",
   "TaskFailed": "任務失敗",
   "manualStop": "手動停止",
+  "public": "公開",
+  "private": "私有",
 
   "createTime": "創建時間",
   "dataAmount": "數據量",
@@ -216,6 +219,7 @@ export const dataPipelines = {
   "reset": "替換",
   "details": "詳情",
   "authorize": "授权",
+  "settings": "設置",
   "operatorAuthorization": "算子授權",
   "SearchUserName": "搜索用戶名稱",
   "SearchOrganizationName": "搜索組織名稱",
@@ -241,7 +245,6 @@ export const dataPipelines = {
   "uploadFailedTips2": "圖標大小不能超過10MB",
   "uploadFailedTips3": "上傳失敗，請重試",
   "networkError": "網絡錯誤，請檢查連接後重試",
-  "submitting": "保存中",
   "algorithmTemplateDescription": "算法模版可支持用戶使用多種不同的模型算子組成工作流，完成數據清洗、自動數據增強及分析等工作。",
   "taskTemplate": "任務模板",
   "templateName": "模板名稱",
@@ -328,6 +331,7 @@ export const dataPipelines = {
   "Finished": "已完成",
   "Failed": "失敗",
   "Timeout": "超時",
+  "Canceled": "已取消",
   "sessionDel": "Session已刪除",
 
   "toolsTit": "工具池",

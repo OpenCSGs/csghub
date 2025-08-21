@@ -275,7 +275,6 @@ const jump = async () => {
   loading.close();
   console.log(data, "datadatadata");
   if (data.value?.code === 200) {
-    // http://192.168.10.37:8080/user/login1/?email=${userStore.username}@qq.com
     window.open(
       `${data.value.data}`,
       "_blank"

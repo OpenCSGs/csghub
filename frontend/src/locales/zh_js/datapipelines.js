@@ -159,6 +159,8 @@ export const dataPipelines = {
   "connectionInformation": "连接信息",
   "TaskFailed": "任务失败",
   "manualStop": "手动停止",
+  "public": "公开",
+  "private": "私有",
 
   "createTime": "创建时间",
   "dataAmount": "数据量",
@@ -216,6 +218,7 @@ export const dataPipelines = {
   "reset": "替换",
   "details": "详情",
   "authorize": "授权",
+  "settings": "设置",
   "operatorAuthorization": "算子授权",
   "SearchUserName": "搜索用户名称",
   "SearchOrganizationName": "搜索组织名称",
@@ -328,6 +331,7 @@ export const dataPipelines = {
   "Finished": "已完成",
   "Failed": "失败",
   "Timeout": "超时",
+  "Canceled": "已取消",
   "sessionDel": "Session已删除",
 
   "toolsTit": "工具池",
