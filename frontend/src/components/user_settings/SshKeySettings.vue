@@ -78,7 +78,7 @@
           </div>
         </el-form>
         <template #footer>
-          <span class="dialog-footer">
+          <span class="dialog-footer flex justify-end">
             <CsgButton
               class="btn btn-secondary-gray btn-sm w-fit mr-3"
               @click="handleDialogClose"
