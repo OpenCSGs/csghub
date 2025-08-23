@@ -185,7 +185,7 @@ export const dataPipelines = {
   "data_refine": "Data Refinement",
   "data_generation": "Data Generation",
   "data_enhancement": "Data Enhancement",
-
+  "Internal": "Internal",
   "taskType": "Task Type",
   "dataCleaning": "Data Cleaning",
   "processingStatus": "Processing Status",

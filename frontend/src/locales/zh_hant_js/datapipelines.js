@@ -186,7 +186,7 @@ export const dataPipelines = {
   "data_refine": "數據處理",
   "data_generation": "數據生成",
   "data_enhancement": "數據增強",
-
+  "Internal": "內部",
   "taskType": "任務類型",
   "dataCleaning": "數據清洗",
   "processingStatus": "處理狀態",

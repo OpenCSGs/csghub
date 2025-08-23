@@ -139,7 +139,7 @@
                   type="text"
                   @click="
                     goToNewTask(
-                      `/datapipelines/dataflowInfo?id=${scope.row.job_id}&type=${scope.row.job_source}`
+                      `/datapipelines/dataflowInfo?id=${scope.row.job_id}&type=${scope.row.job_source}&jobType=${scope.row.job_type}`
                     )
                   "
                   >{{

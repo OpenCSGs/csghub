@@ -165,6 +165,7 @@
       @tab-click="handleClick"
     >
       <el-tab-pane
+      v-if="taskType == 'pipeline'"
         :label="t('dataPipelines.graphicDemonstration')"
         name="0"
       >
@@ -465,7 +466,12 @@
             :name="t('dataPipelines.downloadLog')"
           />
         </div>
-        <div class="resultBox">
+        <div v-if="jobType === 'Internal'" class="resultBox">
+          <pre class="text-gray-50 text-base font-normal"
+            >{{ logData }}
+          </pre>
+        </div>
+        <div v-else class="resultBox">
           <pre v-for="(log, index) in logData" :key="index" class="text-gray-50 text-base font-normal"
             >{{ log }}
           </pre>
@@ -508,6 +514,9 @@
   })
   const taskType = computed(() => {
     return route.query.type
+  })
+  const jobType = computed(() => {
+    return route.query.jobType
   })
   const toDatasetPage = (path,branch) => {
     if(path&&branch){
@@ -597,8 +606,15 @@
     }
   }
   const getAllLogData = async () => {
-    const url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
+    let url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
+    if(jobType.value === 'Internal') {
+      url = `dataflow/jobs/log/${infoId.value}?page=1&page_size=1000000`
+    }
     const { data } = await useFetchApi(url).get().json()
+    if(jobType.value === 'Internal') {
+      logData.value = data.value.session_log || ''
+      return
+    }
     if (data.value.code == 200) {
       logData.value = data.value.data.data.map((item) => {
         return `${formatTimestamp(item.create_at)} | ${item.level} | ${

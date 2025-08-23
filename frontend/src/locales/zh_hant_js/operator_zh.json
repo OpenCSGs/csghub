@@ -1568,5 +1568,106 @@
                 "value": true
             }
         ]
+    },
+    "text_high_score_filter": {
+        "name": "打分数据筛选",
+        "description": "根据指定字段中的得分值范围过滤文本样本。",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "分数字段",
+                "type": "LIST",
+                "option_values": null,
+                "value": "score"
+            },
+            {
+                "name": "最低分",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 0.6
+            },
+            {
+                "name": "最高分",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 2
+            }
+        ]
+    },
+    "text_bloom_filter": {
+        "name": "数据Bloom过滤去重",
+        "description": "使用Bloom过滤以删除重复样本。",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "包含重复文本的数据集，如多次出现的相同句子",
+            "after": "去重后的数据集，只保留每个唯一文本的一个实例"
+        },
+        "params": [
+            {
+                "name": "哈希函数",
+                "type": "LIST",
+                "option_values": null,
+                "value": "md5"
+            },
+            {
+                "name": "初始容量",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 100
+            }
+        ]
+    },
+    "make_cosmopedia_mapper": {
+        "name": "风格数据合成",
+        "description": "Mapper从种子文本示例生成合成教程数据。",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "How to Train Your Dog to Sit",
+            "after": "Training your dog to sit is one of the most fundamental commands..."
+        },
+        "params": [
+            {
+                "name": "网页文本最大长度",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 800
+            }
+        ]
+    },
+    "gather_generated_data": {
+        "name": "数据聚合生成",
+        "description": "滤波器用于收集和处理生成的数据。",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "基于前一步结果，除掉 || 与 <|im_end|> 字符并且过滤 出 content 为空的数据",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "是否过滤",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            }
+        ]
+    },
+    "encode_and_get_nearest_mapper": {
+        "name": "数据样本向量编码搜索",
+        "description": "滤波器用于收集和处理生成的数据。",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "数据集包含first_prompt字段的文本数据，如['What is artificial intelligence?', 'How does machine learning work?']",
+            "after": "数据集增加了embedding、nn_indices和nn_scores字段，包含文本的向量表示和最近邻信息"
+        },
+        "params": []
     }
 }

@@ -129,7 +129,7 @@
       v-model="configsDrawer"
       :title="selectedNode ? selectedNode.display_name : t('dataPipelines.nodeConfig')"
       direction="rtl"
-      :before-close="configsDrawerClose"
+      :before-close="handleBeforeClose"
       :size="drawerWidth"
       style="height: calc(100% - 81px);"
     >
@@ -1366,6 +1366,15 @@
     tabsValue.value = 'config'
     logLevelval.value = 'all'
   }
+
+  // 处理抽屉关闭前的事件
+  const handleBeforeClose = async (done) => {
+    await dynamicFormRefs.value.handleSave()
+    done();
+    configsDrawer.value = false;
+    tabsValue.value = 'config';
+    logLevelval.value = 'all';
+  }
   
   // 处理键盘事件
   const handleKeyDown = (e) => {
@@ -1674,6 +1683,23 @@
       if (node) {
         // 使用operator_name作为键，如果operator_name无效则回退到id
         const nodeKey = node.operator_name || node.id
+
+        // 处理节点配置中的数组字段，转为逗号分隔字符串
+        const processedConfigs = (node.configs || []).map(config => {
+          if (config.config_type === 'select-v2' && Array.isArray(config.final_value)) {
+            const arrayStr = config.final_value
+              .map(item => `'${item}'`)
+              .join(', ')
+            return {
+              ...config,
+              final_value: `[${arrayStr}]`
+            }
+          }
+          return config
+        });
+
+        console.log('processedConfigs=', processedConfigs)
+        
         dsl.process[nodeKey] = {
           id: node.id,
           operator_id: node.operatorId,
@@ -1682,7 +1708,7 @@
           display_name: node.display_name,
           icon: node.icon.includes('data:image/png;base64,') ? node.icon : `data:image/png;base64,${node.icon}`,
           position: { x: node.x, y: node.y },
-          configs: node.configs || []
+          configs: processedConfigs
         }
       }
     })

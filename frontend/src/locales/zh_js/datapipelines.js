@@ -185,7 +185,7 @@ export const dataPipelines = {
   "data_refine": "数据处理",
   "data_generation": "数据生成",
   "data_enhancement": "数据增强",
-
+  "Internal": "内部",
   "taskType": "任务类型",
   "dataCleaning": "数据清洗",
   "processingStatus": "处理状态",

@@ -1569,5 +1569,106 @@
                 "value": true
             }
         ]
+    },
+    "text_high_score_filter": {
+        "name": "Score data filtering",
+        "description": "Filter text samples based on score value range in specified field.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "score_field",
+                "type": "LIST",
+                "option_values": null,
+                "value": "score"
+            },
+            {
+                "name": "min_score",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 0.6
+            },
+            {
+                "name": "max_score",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 2
+            }
+        ]
+    },
+    "text_bloom_filter": {
+        "name": "Data Bloom filtering to remove duplicates",
+        "description": "Filter to deduplicate samples using Bloom Filter.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "A data set containing duplicate text, such as the same sentence that occurs multiple times",
+            "after": "A deduplicated data set that keeps only one instance of each unique text"
+        },
+        "params": [
+            {
+                "name": "hash_func",
+                "type": "LIST",
+                "option_values": null,
+                "value": "md5"
+            },
+            {
+                "name": "initial_capacity",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 100
+            }
+        ]
+    },
+    "make_cosmopedia_mapper": {
+        "name": "Style data synthesis",
+        "description": "Mapper to generate synthetic tutorial data from seed text samples.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "How to Train Your Dog to Sit",
+            "after": "Training your dog to sit is one of the most fundamental commands..."
+        },
+        "params": [
+            {
+                "name": "web_text_max_len",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 800
+            }
+        ]
+    },
+    "gather_generated_data": {
+        "name": "Data aggregation generation",
+        "description": "Filter for collecting and processing generated data.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Based on the results of the previous step, remove the | | and < | im_end | > characters and filter out data with empty content",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "is_drop",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
+            }
+        ]
+    },
+    "encode_and_get_nearest_mapper": {
+        "name": "Data sample vector encoding search",
+        "description": "Encode texts and find nearest neighbours using Faiss.",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "The dataset contains text data first_prompt fields, such as ['What is artificial intelligence?', 'How does machine learning work?']",
+            "after": "The dataset adds embedding, nn_indices, and nn_scores fields containing vector representations of text and nearest neighbor information"
+        },
+        "params": []
     }
 }
