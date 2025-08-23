@@ -83,10 +83,94 @@ vi.mock('element-plus', () => ({
     info: vi.fn(),
   },
   ElMessageBox: {
-    confirm: vi.fn((message, title, options) => Promise.resolve())
+    confirm: vi.fn(() => Promise.resolve()) // 简化确认对话框mock
   }
 }))
 ```
+
+### 使用 vi.hoisted mock useFetchApi
+```javascript
+let { useFetchApiMock } = vi.hoisted(() => {
+  return {
+    useFetchApiMock: vi.fn(() => ({
+      json: () => Promise.resolve({ data: { value: {} }, error: { value: null } }),
+      get: () => ({
+        json: () => Promise.resolve({ data: { value: {} }, error: { value: null } })
+      }),
+      post: () => ({
+        json: () => Promise.resolve({ data: { value: {} }, error: { value: null } })
+      }),
+      put: () => ({
+        json: () => Promise.resolve({ 
+          data: { value: { token: 'new-token', msg: 'Success' } }, 
+          error: { value: null } 
+        })
+      })
+    }))
+  }
+})
+
+vi.mock('@/packs/useFetchApi', () => ({
+  default: useFetchApiMock
+}))
+```
+
+#### 使用说明：
+1. **vi.hoisted** 用于将mock变量提升到文件顶部，确保在mock时可用
+2. 可以模拟各种HTTP方法(get/post/put等)的响应
+3. 每个方法返回的json() Promise可以自定义数据结构和错误状态
+4. 支持在测试用例中动态修改mock实现：
+```javascript
+// 在特定测试用例中覆盖默认mock
+useFetchApiMock.mockImplementationOnce(() => ({
+  get: () => ({
+    json: () => Promise.resolve({
+      data: { value: customData },
+      error: { value: customError }
+    })
+  })
+}))
+```
+
+### 测试经验总结：SyncAccessTokenSettings组件
+
+1. **API调用测试要点**：
+   - 使用`vi.fn()` mock API函数，模拟不同响应场景
+   - 测试成功/失败/空数据等边界情况
+   - 验证API调用参数和次数
+
+2. **UI交互测试要点**：
+   - 测试不同状态下的UI渲染（有Token/无Token）
+   - 验证按钮点击事件触发
+   - 测试表单元素交互
+
+3. **异步操作测试**：
+   - 使用`await nextTick()`等待DOM更新
+   - 对异步API调用使用`await`等待完成
+   - 验证异步操作后的UI状态
+
+4. **第三方库mock技巧**：
+   ```javascript
+   // mock clipboard库
+   vi.mock('@/packs/clipboard', () => ({
+     copyToClipboard: vi.fn()
+   }))
+   
+   // mock uuid库
+   vi.mock('uuid', () => ({
+     v4: vi.fn(() => 'mocked-uuid') // 返回固定值便于断言
+   }))
+   ```
+
+5. **组件方法测试**：
+   - 测试`copyToken`方法是否调用剪贴板API
+   - 测试`refreshAccessToken`的确认流程
+   - 验证错误处理逻辑
+
+6. **最佳实践**：
+   - 每个测试用例后使用`vi.clearAllMocks()`
+   - 为每个测试场景编写描述性名称
+   - 保持测试独立，不依赖其他测试的状态
 
 ### use vi.hoisted to mock useFetchApi Function
 ```javascript

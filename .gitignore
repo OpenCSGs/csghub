@@ -48,3 +48,5 @@ app.log
 frontend/coverage
 
 .idea/
+
+frontend/junit-report.xml

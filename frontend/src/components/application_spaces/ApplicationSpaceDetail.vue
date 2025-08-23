@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
-    v-if="!isDataLoading && isInitialized">
+    v-show="!isDataLoading && isInitialized">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :license="repoDetailStore.license"
@@ -22,7 +22,7 @@
         @toggleSpaceLogsDrawer="toggleSpaceLogsDrawer" />
     </div>
   </div>
-  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0" v-if="!isDataLoading && isInitialized">
+  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0" v-show="!isDataLoading && isInitialized">
     <repo-tabs
       :repo-detail="repoDetailStore"
       :appStatus="repoDetailStore.status"

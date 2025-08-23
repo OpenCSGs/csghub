@@ -11,38 +11,44 @@
         :repoType="repoType" />
     </div>
     <div class="pt-8 w-full">
-      <div
-        :class="`flex flex-wrap justify-between items-center gap-2 ${
-          repoType === 'space' ? 'xl:pl-[20px] md:pl-0' : ''
-        }`">
-        <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
-          <!-- <SvgIcon
-            v-if="repoType === 'model'"
-            name="models"
-            width="18"
-            height="18" />
-          <SvgIcon
-            v-if="repoType === 'dataset'"
-            name="datasets"
-            width="18"
-            height="18" />
-          <SvgIcon
-            v-if="repoType === 'code'"
-            name="codes"
-            width="18"
-            height="18" />
-          <SvgIcon
-            v-if="repoType === 'space'"
-            name="spaces"
-            width="18"
-            height="18" /> -->
-          <span class="capitalize">
-            {{ $t(`${repoType}s.title`) }}
-            <span class="text-gray-600 text-md font-normal">
-              {{ totalRepos }}
+      <div class="flex flex-wrap justify-between items-center gap-2">
+        <div class="flex items-center gap-4 flex-nowrap w-auto">
+          <h3 class="text-lg font-normal text-gray-900 flex items-center gap-2">
+            <!-- <SvgIcon
+              v-if="repoType === 'model'"
+              name="models"
+              width="18"
+              height="18" />
+            <SvgIcon
+              v-if="repoType === 'dataset'"
+              name="datasets"
+              width="18"
+              height="18" />
+            <SvgIcon
+              v-if="repoType === 'code'"
+              name="codes"
+              width="18"
+              height="18" />
+            <SvgIcon
+              v-if="repoType === 'space'"
+              name="spaces"
+              width="18"
+              height="18" /> -->
+            <span class="capitalize">
+              {{ $t(`${repoType}s.title`) }}
+              <span class="text-gray-500 text-md font-light">
+                {{ totalRepos }}
+              </span>
             </span>
-          </span>
-        </h3>
+          </h3>
+          <ElInput
+            v-model="nameFilterInput"
+            class="!w-auto min-w-[180px]"
+            :placeholder="$t(`${repoType}s.placeholder`)"
+            :prefix-icon="Search"
+            @change="filterChange"
+            size="large" />
+        </div>
         <div class="md:w-auto flex flex-wrap gap-2">
           <el-select
             v-if="onPremise === 'true'"
@@ -94,14 +100,6 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
-
-          <ElInput
-            v-model="nameFilterInput"
-            class="!w-[180px]"
-            :placeholder="$t(`${repoType}s.placeholder`)"
-            :prefix-icon="Search"
-            @change="filterChange"
-            size="large" />
           <CsgButton
             v-if="repoType === 'space'"
             :name="$t('space.guide')"
@@ -118,7 +116,7 @@
       </div>
       <div
         v-if="repoType === 'space'"
-        class="grid grid-cols-4 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-[16px] xl:pl-[20px] md:pl-0">
+        class="grid grid-cols-4 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 gap-4 mb-4 mt-4 xl:pl-5 md:pl-0">
         <application-space-item
           v-for="repo in reposData"
           :repo="repo"
@@ -126,7 +124,7 @@
       </div>
       <div
         v-else-if="repoType === 'mcp'"
-        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]"
+        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-4 gap-y-4 mb-4 mt-4"
       >
         <McpItem v-for="repo in reposData" :mcp="repo" />
       </div>
@@ -135,7 +133,7 @@
       </div>
       <div
         v-else
-        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-[16px] gap-y-[16px] mb-4 mt-[16px]">
+        class="grid grid-cols-2 xl:grid-cols-1 xl:w-full justify-between gap-x-4 gap-y-4 mb-4 mt-4">
         <repo-item
           v-for="repo in reposData"
           :repo="repo"

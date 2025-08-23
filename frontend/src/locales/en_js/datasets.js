@@ -1,6 +1,6 @@
 export const datasets = {
   title: "Datasets",
-  placeholder: "Search Datasets",
+  placeholder: "Search dataset name",
   newTips:'Datasets added in the last two weeks',
   downloadDataset: "Download Dataset",
   datasetName: "Dataset name",
