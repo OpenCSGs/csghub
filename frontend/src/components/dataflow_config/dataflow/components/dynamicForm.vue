@@ -27,6 +27,27 @@
             </el-select>
         </el-form-item>
         
+        <!-- SelectV2 虚拟化下拉选择器（大数据量优化） -->
+        <el-form-item 
+            v-else-if="config.config_type === 'select-v2'" 
+            :label="config.display_name"
+            :prop="`${config.id}.final_value`"
+            :rules="getRules(config)"
+        >
+            <el-select-v2
+                v-model="formData[config.id].final_value"
+                :options="getSelectOptions(config.select_options)"
+                :placeholder="`${t('dataPipelines.toSel')}${config.display_name}`"
+                :disabled="config.is_disabled"
+                allow-create
+                default-first-option
+                filterable
+                multiple
+                clearable
+                style="vertical-align: middle;"
+            />
+        </el-form-item>
+        
         <!-- Checkbox 复选框 -->
         <el-form-item 
             v-else-if="config.config_type === 'checkbox'" 
@@ -244,6 +265,7 @@
   
   const formData = ref({})
   const formRef = ref(null)
+  const remoteLoading = ref(false)
   
   // 获取验证规则
   const getRules = (config) => {
@@ -256,6 +278,45 @@
         trigger: ['blur', 'change'] 
       }
     ]
+  }
+
+  // 处理字符串形式的数组默认值
+  const parseArrayDefaultValue = (value) => {
+    if (Array.isArray(value)) return value;
+    if (typeof value !== 'string') return [];
+    
+    try {
+      // 先尝试直接解析JSON
+      return JSON.parse(value);
+    } catch (e) {
+      try {
+        // 如果直接解析失败，尝试清理字符串格式
+        const cleanedValue = value
+          .trim()
+          // 替换各种引号类型为标准的双引号
+          .replace(/[‘’]/g, '"')
+          .replace(/['`]/g, '"')
+          // 确保方括号存在
+          .replace(/^([^[]*)(.*)([^]]*)$/, '$2')
+          .replace(/^[^[]*\[/, '[')
+          .replace(/\][^]]*$/, ']');
+        
+        return JSON.parse(cleanedValue);
+      } catch (parseError) {
+        console.warn('Failed to parse default value as array:', value, parseError);
+        
+        // 最后尝试手动分割字符串
+        if (value.includes(',')) {
+          return value
+            .replace(/[\[\]'"‘’`]/g, '') // 移除所有括号和引号
+            .split(',')
+            .map(item => item.trim())
+            .filter(item => item !== '');
+        }
+        
+        return [];
+      }
+    }
   }
   
   // 初始化表单数据
@@ -270,6 +331,30 @@
         switch(config.config_type) {
             // 选择类组件
             case 'select':
+                if (defaultValue === null || defaultValue === undefined) {
+                    formData.value[config.id] = { final_value: null }
+                } else if (Array.isArray(defaultValue)) {
+                    formData.value[config.id] = { final_value: defaultValue[0] ?? null }
+                } else {
+                    formData.value[config.id] = { final_value: defaultValue }
+                }
+                break
+            case 'select-v2':
+                // 处理select-v2的初始化，特别处理字符串形式的数组
+                if (defaultValue === null || defaultValue === undefined) {
+                    formData.value[config.id] = { final_value: [] }
+                } 
+                else if (typeof defaultValue === 'string') {
+                    formData.value[config.id] = { final_value: parseArrayDefaultValue(defaultValue) }
+                    console.log('formData[config.id].final_value', formData.value[config.id].final_value)
+                }
+                else if (Array.isArray(defaultValue)) {
+                    formData.value[config.id] = { final_value: [...defaultValue] }
+                }
+                else {
+                    formData.value[config.id] = { final_value: [defaultValue] }
+                }
+                break
             case 'radio':
             case 'cascader':
             case 'tree-select':
@@ -338,7 +423,7 @@
     })
   }
   
-  // 获取选项数据（模拟）
+  // 获取选项数据
   const getSelectOptions = (optionIds) => {
     // 实际项目中应该从API获取选项数据
     return optionIds?.map(item => ({
@@ -376,7 +461,8 @@
   defineExpose({
     validate: () => {
         return formRef.value.validate()
-    }
+    },
+    handleSave
   })
 </script>
 
@@ -397,5 +483,9 @@
     bottom: 2px;
     right: 2px !important;
     border-radius: 0 0 8px 0 !important;
+  }
+  :deep(.el-select__wrapper) {
+    height: auto;
+    min-height: 40px;
   }
 </style>
