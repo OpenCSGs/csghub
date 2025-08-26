@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-[300px] py-8 md:px-5">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between px-1">
       <div class="flex items-center flex-wrap gap-4">
         <BranchDropdown @changeBranch="changeBranch"
                         :current-branch="currentBranch" />
@@ -18,23 +18,36 @@
           <el-avatar :size="24" class="mr-1" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
           1 {{ $t('all.contributors') }}
         </div>
-        <a @click.prevent="goToCommits"
-           class="ml-4 flex items-center px-4 py-[5px] border border-gray-200 rounded-full cursor-pointer">
-          <SvgIcon name="commits" class="mr-2" />
-          {{ $t('all.commits') }}
-        </a>
+        <CsgButton
+          class="btn btn-secondary-gray btn-sm"
+          :name="$t('all.commits')"  
+          svgName="commits"
+          svgPosition="left"
+          @click="goToCommits"
+        />
         <el-dropdown v-if="canWrite" class="ml-4">
-          <el-button type="default">
-            + {{ $t('all.addFile') }}
-            <el-icon class="el-icon--right pl-1"><arrow-down /></el-icon>
-          </el-button>
+          <CsgButton
+            class="btn btn-secondary-gray btn-sm !hover:text-inherit"
+            :name="$t('all.addFile')"
+            svgName="navbar-new"
+          />
           <template #dropdown>
             <el-dropdown-menu>
               <a @click="goToNewFile">
-                <el-dropdown-item>{{ $t('all.createNewFile') }}</el-dropdown-item>
+                <el-dropdown-item>
+                  <div class="flex items-center gap-2">
+                    <SvgIcon name="add-file" class="w-4 h-4" />
+                    {{ $t('all.createNewFile') }}
+                  </div>
+                </el-dropdown-item>
               </a>
               <a @click="goToUploadFile">
-                <el-dropdown-item>{{ $t('all.uploadFile') }}</el-dropdown-item>
+                <el-dropdown-item>
+                  <div class="flex items-center gap-2">
+                    <SvgIcon name="upload-file" class="w-4 h-4" />
+                    {{ $t('all.uploadFile') }}
+                  </div>
+                </el-dropdown-item>
               </a>
             </el-dropdown-menu>
           </template>
@@ -142,7 +155,7 @@
   import BranchDropdown from './BranchDropdown.vue';
   import useFetchApi from '../../packs/useFetchApi'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
-  import { createAndClickAnchor, beiJingTimeParser, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils'
+  import { createAndClickAnchor, beiJingTimeParser, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils';
 
   const props = defineProps({
     // currentBranch: String,
