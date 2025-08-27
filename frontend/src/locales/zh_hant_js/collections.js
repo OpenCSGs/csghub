@@ -8,6 +8,8 @@ export const collections = {
   collection: '合集',
   title: '探索社群中的精選熱門合集',
   hot: '本週熱門合集',
+  remarkTitle: '備註',
+  remark: '備註資訊',
   color: {
     lPurple: '淡紫色',
     lGreen: '淡綠色',
