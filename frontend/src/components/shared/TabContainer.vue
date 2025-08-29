@@ -147,14 +147,6 @@
     // return true
   }
 
-  watch(activeName, (newTab) => {
-    if (repoTab.tab !== newTab) {
-      if(newTab === 'settings') {
-        fetchRepoDetail()
-      }
-    }
-  })
-
   const validTabs = computed(() => {
     const baseTabs = ['summary', 'files', 'billing', 'community', 'settings']
     

@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
-    v-if="!isDataLoading && isInitialized"
+    v-show=" isInitialized"
   >
     <div class="mx-auto page-responsive-width">
       <repo-header
@@ -131,8 +131,7 @@
 
   const activeName = ref('page')
   
-  const isDataLoading = ref(true)
-  const isFetching = ref(false)
+  const isDataLoading = ref(false)
 
   const showRepoList = computed(() => {
     return repoDetailStore.repositories?.length > 0
@@ -192,11 +191,10 @@
   }
 
   const fetchCollectionDetail = async () => {
-    if (isFetching.value) {
+    if (isDataLoading.value) {
       return false
     }
     
-    isFetching.value = true
     isDataLoading.value = true
     
     const url = `/collections/${props.collectionsId}`
@@ -225,7 +223,6 @@
       return false
     } finally {
       isDataLoading.value = false
-      isFetching.value = false
     }
   }
   

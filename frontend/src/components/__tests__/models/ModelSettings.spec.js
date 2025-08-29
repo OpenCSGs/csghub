@@ -111,9 +111,9 @@ describe("ModelSettings", () => {
   it("removes tag when close icon is clicked", async () => {
     const wrapper = createWrapper();
     await wrapper.setData({
-      selectedTags: [{ name: "tag1", show_name: "Tag 1" }]
+      selectedTags: [{ name: "tag1", show_name: "Tag 1", category: "task", uid: "tasktag1" }]
     });
-    await wrapper.vm.removeTag("tag1");
+    await wrapper.vm.removeTag("tasktag1");
     expect(wrapper.vm.selectedTags).toHaveLength(0);
   });
 });

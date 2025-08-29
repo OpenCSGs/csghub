@@ -108,7 +108,7 @@
                     ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
-                <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
+                <el-icon v-if="!['runtime_framework','language'].includes(tag.category)"><Close @click="removeTag(tag.uid)" /></el-icon>
               </span>
             </div>
             <input
@@ -133,6 +133,8 @@
             @click="updateTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
+            :loading="isUpdatingTags"
+            :disabled="isUpdatingTags"
           />
         </div>
       </div>
@@ -262,6 +264,7 @@
   const mcpPath = ref(props.path)
   const readmeContent = ref('')
   const readmeSha = ref('')
+  const isUpdatingTags = ref(false)
 
   const options = ref([
     { value: 'Private', label: 'Private' },
@@ -336,8 +339,18 @@
 
   const getSelectTags = () => {
     selectedTags.value = [
-      ...props.tags.task_tags.map((tag) => tag),
-      ...props.tags.other_tags.map((tag) => tag)
+      ...props.tags.task_tags.map((tag) => {
+        Object.assign(tag, {
+          uid: tag.category + tag.name,
+        })
+        return tag
+      }),
+      ...props.tags.other_tags.map((tag) => {
+        Object.assign(tag, {
+          uid: tag.category + tag.name,
+        })
+        return tag
+      })
     ]
   }
 
@@ -354,12 +367,14 @@
 
   const showTagList = () => {
     if (tagInput.value !== '') {
-      const userTriggerTagList = theTagList.value.filter((tag) => {
-        return (
-          tag.show_name.includes(tagInput.value) ||
-          tag.name.includes(tagInput.value)
-        )
-      })
+      const userTriggerTagList = theTagList.value
+        .filter((tag) => !['runtime_framework','language'].includes(tag.category))
+        .filter((tag) => {
+          return (
+            tag.show_name.includes(tagInput.value) ||
+            tag.name.includes(tagInput.value)
+          )
+        })
 
       if (userTriggerTagList.length > 0) {
         theTagList.value = userTriggerTagList
@@ -371,18 +386,28 @@
   }
 
   const selectTag = (newTag) => {
-    const findTag = selectedTags.value.find((tag) => tag.name === newTag.name)
+    if (['runtime_framework','language'].includes(newTag.category)) return
+    const findTag = selectedTags.value.find(
+      (tag) => tag.uid === (newTag.category + newTag.name)
+    )
     if (!findTag) {
-      selectedTags.value.push({ name: newTag.name, zh_name: newTag.show_name })
+      selectedTags.value.push({ 
+        name: newTag.name, 
+        zh_name: newTag.show_name, 
+        category: newTag.category,
+        uid: newTag.category + newTag.name 
+      })
       tagInput.value = ''
       shouldShowTagList.value = false
     }
   }
 
-  const removeTag = (tagName) => {
-    selectedTags.value = selectedTags.value.filter(
-      (item) => item.name !== tagName
-    )
+  const removeTag = (tagUid) => {
+    const target = selectedTags.value.find((item) => item.uid === tagUid)
+    if (target && ['runtime_framework','language'].includes(target.category)) {
+      return
+    }
+    selectedTags.value = selectedTags.value.filter((item) => item.uid !== tagUid)
   }
 
   const deleteModel = async () => {
@@ -439,10 +464,23 @@
     updateMcp(payload)
   }
 
-  const updateTags = () => {
+  const updateTags = async () => {
+    if (isUpdatingTags.value) return
+    
     if (selectedTags.value.length !== 0) {
-      const newSelectedTags = selectedTags.value.map((tag) => tag.name)
-      updateTagsInReadme(newSelectedTags)
+      isUpdatingTags.value = true
+      try {
+        const newSelectedTags = selectedTags.value.map((tag) => {
+          return {
+            category: tag.category,
+            name: tag.name
+          }
+        })
+        await updateTagsInReadme(newSelectedTags)
+      } catch (error) {
+      } finally {
+        isUpdatingTags.value = false
+      }
     } else {
       ElMessage({
         message: t('mcps.edit.needMcpTag'),
@@ -464,13 +502,19 @@
   const updateTagsInReadme = async (newTags) => {
     if (readmeContent.value) {
       const { metadata, content } = parseMD(readmeContent.value)
+      const tags = newTags
+        .filter((tag) => tag.category !== 'license')
+        .filter((tag) => !['runtime_framework','language'].includes(tag.category))
+        .map((tag) => tag.name)
+      const license = newTags.filter((tag) => tag.category==='license').map((tag) => tag.name)
       const newMetadata = {
         ...metadata,
-        tags: newTags
+        tags,
+        license
       }
       const newMetadataString = yaml.dump(newMetadata)
       const newContent = `---\n${newMetadataString}\n---\n\n${content}`
-      updateReadme(newContent)
+      return updateReadme(newContent)
     }
   }
 
@@ -495,7 +539,7 @@
       .json()
 
     if (data.value) {
-      fetchRepoDetail()
+      fetchRepoDetail(false)
       ElMessage({ message: t('all.updateSuccess'), type: 'success' })
     } else {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -541,7 +585,7 @@
       if (payload.hasOwnProperty('private')) {
         updateVisibility(payload.private)
       }
-      fetchRepoDetail()
+      fetchRepoDetail(false)
       ElMessage({ message: 'Success', type: 'success' })
     }
   }

@@ -1,7 +1,6 @@
 <template>
   <div class="py-[32px] md:px-[10px]">
     <template v-if="!isDataLoading">
-      <!-- 讨论列表 -->
       <DiscussionCards
         v-if="communityActionName === 'list'"
         :cards="cards"
@@ -12,7 +11,6 @@
         @showNewDiscussion="showNewDiscussion">
       </DiscussionCards>
       
-      <!-- 新建讨论 -->
       <NewCommunityDiscussion
         v-if="communityActionName === 'new'"
         :repoType="repoType"
@@ -21,7 +19,6 @@
         @changeFlag="changeFlag">
       </NewCommunityDiscussion>
       
-      <!-- 讨论详情 -->
       <DiscussionDetails
         v-if="communityActionName === 'detail'"
         :discussionId="discussionId"
@@ -65,11 +62,9 @@
   const route = useRoute()
   const { repoTab, setRepoTab } = useRepoTabStore()
   
-  const loading = ref(true)
   const cards = ref([])
   const lastCommentId = ref('')
   
-  // 讨论详情相关数据
   const discussionId = ref('')
   const currentDiscussionTitle = ref('')
   const currentDiscussionUserName = ref('')
@@ -77,14 +72,11 @@
   const currentDiscussionTime = ref('')
   const currentDiscussionData = ref(null)
 
-  // 新增：整体加载态
-  const isDataLoading = ref(true)
-
+  const isDataLoading = ref(false)
 
   const getDiscussion = async () => {
     isDataLoading.value = true
     if (!props.repoPath || props.repoPath === '') {
-      loading.value = false
       isDataLoading.value = false
       return
     }
@@ -99,16 +91,13 @@
       if (data.value) {
         const discussions = data.value.data.discussions || []
         cards.value = discussions.sort((a, b) => b.id - a.id)
-        loading.value = false
       } else {
         ElMessage({
           message: error.value.msg,
           type: 'warning'
         })
-        loading.value = false
       }
     } catch (error) {
-      loading.value = false
     } finally {
       isDataLoading.value = false
     }
@@ -130,34 +119,28 @@
           discussionId: discussionIdParam
         })
         
-        // 如果是详情页面，需要获取讨论详情数据
         if (actionName === 'detail' && discussionIdParam) {
           discussionId.value = discussionIdParam
-          // 先尝试从cards中找到对应的讨论详情
           const discussion = cards.value.find(card => card.id.toString() === discussionIdParam)
           if (discussion) {
             setDiscussionDetailData(discussion)
           } else {
-            // 如果cards中没有找到，则独立获取讨论详情
             fetchDiscussionDetail(discussionIdParam)
           }
         }
       }
       
-      // 确保每次访问讨论列表页面时都获取最新数据
       if (actionName === 'list') {
         getDiscussion()
       }
     }
   }, { deep: true, immediate: false })
 
-  // 独立获取讨论详情的函数
   const fetchDiscussionDetail = async (id) => {
     isDataLoading.value = true
     try {
       const { response, data, error } = await useFetchApi(`/discussions/${id}`).json()
 
-      // 404 跳转
       if (response?.value?.status === 404) {
         ToNotFoundPage()
         return
@@ -166,15 +149,11 @@
       if (data.value) {
         const discussion = data.value.data
         setDiscussionDetailData(discussion)
-        loading.value = false
       } else {
-        ElMessage.error(error.value?.msg || '获取讨论详情失败')
-        loading.value = false
+        ElMessage.error(error.value?.msg || '')
         toggleDetails()
       }
     } catch (error) {
-      ElMessage.error('获取讨论详情失败')
-      loading.value = false
       toggleDetails()
     } finally {
       isDataLoading.value = false
@@ -229,7 +208,6 @@
       query
     })
     
-    // 如果切换到列表页面，重新获取讨论列表
     if (validatedFlag === 'list') {
       getDiscussion()
     }
@@ -296,7 +274,6 @@
   }
 
   onMounted(() => {
-    // 从URL参数恢复状态
     const params = new URLSearchParams(window.location.search)
     
     const urlTab = params.get('tab')
@@ -315,7 +292,6 @@
         discussionId.value = urlDiscussionId
         fetchDiscussionDetail(urlDiscussionId)
       } else if (actionName === 'list') {
-        // 如果是列表页面，获取讨论列表
         getDiscussion()
       }
     }
