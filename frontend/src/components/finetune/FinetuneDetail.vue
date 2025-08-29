@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
-    v-if="!isDataLoading && isInitialized"
+    v-show="isInitialized"
   >
     <div class="mx-auto page-responsive-width">
       <RepoHeader
@@ -16,10 +16,10 @@
       />
     </div>
   </div>
+  <!-- v-loading="dataLoading" -->
   <div
     class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
-    v-if="!isDataLoading && isInitialized"
-    v-loading="dataLoading"
+    v-show="!isDataLoading && isInitialized"
   >
     <CsgButton
       v-show="activeName == 'page' && repoDetailStore.endpoint"
@@ -160,12 +160,11 @@
   const route = useRoute()
   
   const activeName = ref('page')
-  const dataLoading = ref(false)
   const finetuneResources = ref([])
   const finetuneResource = ref('')
   const iframeHeight = ref(700)
   
-  const isDataLoading = ref(true)
+  const isDataLoading = ref(false)
   
   const allStatus = [
     'Building',
@@ -282,7 +281,6 @@
       }
     })
 
-    // 只有主请求成功后才进行其他操作
     const success = await fetchRepoDetail()
     if (success && repoDetailStore.clusterId) {
       fetchResources()
@@ -293,16 +291,11 @@
     window.open(`${httpProtocal}://${repoDetailStore.endpoint}?jwt=${jwtToken}`)
   }
 
-  const fetchRepoDetail = async (isInitialLoad = false) => {
-    if (dataLoading.value) {
+  const fetchRepoDetail = async () => {
+    if (isDataLoading.value) {
       return false
     }
-    
-    dataLoading.value = true
-    
-    if (isInitialLoad) {
-      isDataLoading.value = true
-    }
+    isDataLoading.value = true
 
     try {
       const { response, data } = await useFetchApi(
@@ -324,12 +317,7 @@
       console.error('Failed to fetch repo detail:', err)
       return false
     } finally {
-      dataLoading.value = false
-      
-      // 初始加载完成后，关闭全屏加载状态
-      if (isInitialLoad) {
-        isDataLoading.value = false
-      }
+      isDataLoading.value = false
     }
   }
 
@@ -387,7 +375,7 @@
           )
           if (repoDetailStore.status !== eventResponse.status) {
             repoDetailStore.status = eventResponse.status
-            fetchRepoDetail(false) // SSE event triggers fetchRepoDetail(false)
+            fetchRepoDetail() 
           }
           repoDetailStore.failedReason = eventResponse.reason
         },
@@ -413,8 +401,7 @@
       await tabChange({ paneName: getDefaultTab() })
     }
 
-    // 只有主请求成功后才进行其他操作
-    const success = await fetchRepoDetail(true)
+    const success = await fetchRepoDetail()
     if (success) {
       if (repoDetailStore.clusterId) {
         fetchResources()

@@ -173,8 +173,6 @@
   const { setRepoTab } = useRepoTabStore()
   
   const isDataLoading = ref(false)
-  
-  // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const { cookies } = useCookies()
   const appEndpoint = computed(() => {
