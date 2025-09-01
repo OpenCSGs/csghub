@@ -6,6 +6,8 @@ export const application_spaces = {
   nameTips: "Applied to the space path, cannot be changed after creation",
   nickname: "Space alias",
   namespaceName: "Space name",
+  sdkType: "SDK Type",
+  sdkTypeTips: "SDK type used by the application space, cannot be changed after creation",
   desc: "Space description",
   stoppedDesc: "This Space has been paused by its owner.",
   sleepingDesc: "This Space has entered sleeping state due to no operation for a long time.",

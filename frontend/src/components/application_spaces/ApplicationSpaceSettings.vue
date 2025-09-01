@@ -73,10 +73,10 @@
       </div>
     </div>
 
-    <el-divider />
+    <el-divider v-if="initialized && !isSpaceStopped" />
 
     <!-- 暂停 Space -->
-    <div class="flex xl:flex-col gap-8">
+    <div v-if="initialized && !isSpaceStopped" class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.stopSpace') }}
@@ -119,6 +119,29 @@
           :disabled="notInitialized"
           :name="$t('application_spaces.restart')"
         />
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- 展示SDK类型 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.sdkType') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.sdkTypeTips') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <p class="text-gray-700 text-sm">
+          {{ $t('application_spaces.sdkType') }}
+        </p>
+        <div
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
+          {{ theSdk || $t('all.unknown') }}
+        </div>
       </div>
     </div>
 
