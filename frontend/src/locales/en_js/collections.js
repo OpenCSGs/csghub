@@ -9,6 +9,8 @@ export const collections = {
   collection: 'Collections',
   title: 'Exploring Featured Popular Collections in the Community',
   hot: 'Featured Collections of the Week',
+  remarkTitle: 'Remark',
+  remark: 'Remark',
   color: {
     lPurple: 'Light Purple',
     lGreen: 'Light Green',

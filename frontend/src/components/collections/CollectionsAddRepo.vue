@@ -69,6 +69,20 @@
                 :value="item.repository_id"
               />
             </el-select>
+            <!-- remark textarea -->
+            <div v-if="repoIdsInput" class="mt-5">
+              <p class="text-gray-700 text-sm mb-1.5">
+                {{ $t('collections.remark') }}
+              </p>
+              <el-input
+                v-model="tempRemark"
+                type="textarea"
+                :rows="3"
+                :placeholder="$t('collections.remark')"
+                maxlength="500"
+                show-word-limit
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -92,7 +106,7 @@
   </div>
 </template>
 <script setup>
-  import { ref } from 'vue'
+  import { ref, inject } from 'vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
@@ -128,12 +142,16 @@
   const reposMappings = ref([])
   const typeInput = ref('models')
   const repoIdsInput = ref('')
+  const tempRemark = ref('')
+  const fetchCollectionDetail = inject('fetchCollectionDetail')
 
   const typeChange = () => {
     repoIdsInput.value = ''
+    tempRemark.value = ''
   }
   const repoInputChange = (search) => {
     repoIdsInput.value = ''
+    tempRemark.value = ''
     fetchRepoList(typeInput.value, search)
   }
   const fetchRepoList = async (type, search) => {
@@ -152,7 +170,7 @@
   }
 
   const confirmAddRepo = () => {
-    if(!repoIdsInput.value) {
+    if (!repoIdsInput.value) {
       ElMessage({ message: t('all.selectProject'), type: 'warning' })
       return
     }
@@ -164,7 +182,7 @@
           type: 'success'
         })
         repoDetailStore.clearStore()
-        location.href = `/collections/${props.collectionsId}`
+        fetchCollectionDetail()
       })
       .catch((err) => {
         ElMessage({
@@ -176,7 +194,10 @@
 
   async function collectionAddRepo() {
     const addRepoData = {
-      repo_ids: [repoIdsInput.value]
+      repo_ids: [repoIdsInput.value],
+      remarks: tempRemark.value
+        ? { [repoIdsInput.value]: tempRemark.value }
+        : {}
     }
 
     const options = { body: JSON.stringify(addRepoData) }
