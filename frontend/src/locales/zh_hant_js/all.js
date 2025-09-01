@@ -144,5 +144,7 @@ export const all = {
   show: "顯示",
   hide: "隱藏",
   copy:"複製",
-  copySuccess: "複製成功"
+  copySuccess: "複製成功",
+  allTab:'全部產品',
+  unknown: "未知"
 }
