@@ -87,7 +87,6 @@
       default: 'index'
     }
   })
-
   const { t, locale } = useI18n()
   const taskTagIconExists = ref(false)
   const { setRepoTab } = useRepoTabStore()
@@ -95,34 +94,66 @@
     return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(props.repo.created_at) || isWithinTwoWeeks(props.repo.updated_at));
   });
 
+  const repoTypeIcon = computed(() => {
+    const icons = {
+      model: 'models',
+      dataset: 'datasets',
+      code: 'codes',
+      space: 'spaces'
+    }
+    return icons[props.repoType]
+  })
+
+  const timeInfo = computed(() =>
+    `${t('all.lastTime')}：${props.repo.updated_at.substring(0, 10)}`
+  )
+
+  const getReturnParams = () => {
+    const { searchParams } = new URL(window.location.href)
+    const returnParams = new URLSearchParams()
+    
+    const paramsToKeep = ['page', 'search', 'sort', 'filter', 'source', 'sdk', 'tag', 'tag_type']
+    paramsToKeep.forEach(param => {
+      const value = searchParams.get(param)
+      if (value) {
+        returnParams.set(param, value)
+      }
+    })
+    
+    return returnParams.toString()
+  }
+
   const detailLink = computed(() => {
+    const returnParams = getReturnParams()
+    const returnQuery = returnParams ? `&return=${encodeURIComponent('?' + returnParams)}` : ''
+    
     switch (props.repoType) {
       case 'model':
         setRepoTab({
           repoType: 'model',
           tab: 'summary'
         })
-        return `/models/${props.repo.path}?tab=summary`
+        return `/models/${props.repo.path}?tab=summary${returnQuery}`
       case 'dataset':
         setRepoTab({
           repoType: 'dataset',
           tab: 'summary'
         })
-        return `/datasets/${props.repo.path}?tab=summary`
+        return `/datasets/${props.repo.path}?tab=summary${returnQuery}`
       case 'space':
         setRepoTab({
           repoType: 'space',
           tab: 'summary'
         })
-        return `/spaces/${props.repo.path}?tab=summary`
+        return `/spaces/${props.repo.path}?tab=summary${returnQuery}`
       case 'code':
         setRepoTab({
           repoType: 'code',
           tab: 'summary'
         })
-        return `/codes/${props.repo.path}?tab=summary`
+        return `/codes/${props.repo.path}?tab=summary${returnQuery}`
       case 'prompt':
-        return `/prompts/library/${props.repo.path}`
+        return `/prompts/library/${props.repo.path}${returnQuery ? '?' + returnQuery.substring(1) : ''}`
       default:
         return ''
     }
