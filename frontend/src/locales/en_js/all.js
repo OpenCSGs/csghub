@@ -138,5 +138,7 @@ export const all = {
   copy: "Copy",
   copySuccess: "Copied successfully",
   allTab:'All Products',
-  unknown: "Unknown"
+  unknown: "Unknown",
+  inBranch: "in branch",
+  notExist: "not exist"
 }
