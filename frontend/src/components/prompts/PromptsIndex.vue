@@ -81,6 +81,10 @@
 
   const emit = defineEmits(['changeCurrentComponent'])
   const changeCurrentComponent = (currentComponent) => {
+    if (!isLoggedIn.value) {
+      window.location.href = '/login'
+      return
+    }
     emit('changeCurrentComponent', currentComponent)
   }
 
