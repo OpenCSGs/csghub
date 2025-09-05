@@ -359,7 +359,6 @@
     const isLastItem = index === breadcrumb.value.length - 1
     
     if (isLastItem) {
-      // 如果是最后一个面包屑项（当前文件），导航到blob页面
       const query = {
         tab: 'files',
         actionName: 'blob',
@@ -381,7 +380,6 @@
       
       fetchFileContent()
     } else {
-      // 否则导航到文件列表页面
       const query = {
         tab: 'files',
         actionName: 'files',
@@ -496,7 +494,28 @@
       ).json()
 
       if (response.value.status === 404) {
-        ToNotFoundPage()
+        setRepoTab({
+          actionName: 'files',
+          lastPath: '',
+          fileNotFound: {
+            show: true,
+            fileName: currentPath.value,
+            branchName: currentBranch.value
+          }
+        })
+        
+        const query = {
+          tab: 'files',
+          actionName: 'files'
+        }
+        if (currentBranch.value) {
+          query.branch = currentBranch.value
+        }
+        
+        router.push({
+          path: router.currentRoute.value.path,
+          query
+        })
         return false
       }
 

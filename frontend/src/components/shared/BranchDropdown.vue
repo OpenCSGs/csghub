@@ -27,16 +27,19 @@
   import { ref, onMounted } from 'vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
+  import { useRepoTabStore } from '../../stores/RepoTabStore'
 
   const props = defineProps({
     currentBranch: String
   })
 
+  const { resetFileNotFound } = useRepoTabStore()
   const branches = ref([])
 
   const emit = defineEmits(['changeBranch'])
 
   const handleClick = (branch) => {
+    resetFileNotFound()
     emit('changeBranch', branch)
   }
 

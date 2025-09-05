@@ -53,7 +53,7 @@
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
 
-  const { setRepoTab } = useRepoTabStore()
+  const { setRepoTab, resetFileNotFound } = useRepoTabStore()
 
   const props = defineProps({
     defaultTab: String,
@@ -194,12 +194,14 @@
       return
     }
     
-    // 重新获取数据
+    resetFileNotFound()
+    
     fetchRepoDetail()
     fetchLastCommit()
   }
 
   onMounted(async () => {
+    resetFileNotFound()
     const urlParams = getUrlParams()
     
     const initialData = {
@@ -214,7 +216,6 @@
     
     setRepoTab(initialData)
     
-    // 只有主请求成功后才获取其他数据
     const success = await fetchRepoDetail()
     if (success) {
       fetchLastCommit()
@@ -225,6 +226,7 @@
 
   onUnmounted(() => {
     window.removeEventListener('popstate', handlePopState)
+    resetFileNotFound()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

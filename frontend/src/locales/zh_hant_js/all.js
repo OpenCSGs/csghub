@@ -146,5 +146,7 @@ export const all = {
   copy:"複製",
   copySuccess: "複製成功",
   allTab:'全部產品',
-  unknown: "未知"
+  unknown: "未知",
+  inBranch: "在分支",
+  notExist: "中不存在"
 }

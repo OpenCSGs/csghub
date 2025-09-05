@@ -1,5 +1,13 @@
 <template>
   <div class="min-h-[300px] py-8 md:px-5">
+    <div v-if="repoTab.fileNotFound.show" style="max-width: 600px">
+      <el-alert
+        :title="`${$t('all.files')} '${repoTab.fileNotFound.fileName}' ${$t('all.inBranch')} '${repoTab.fileNotFound.branchName}' ${$t('all.notExist')}`"
+        type="warning"
+        show-icon
+        class="!mb-5"
+      />
+    </div>
     <div class="flex items-center justify-between px-1">
       <div class="flex items-center flex-wrap gap-4">
         <BranchDropdown @changeBranch="changeBranch"
@@ -169,7 +177,7 @@
   const { t, locale } = useI18n();
   const loading = ref(true)
 
-  const { repoTab, setRepoTab } = useRepoTabStore()
+  const { repoTab, setRepoTab, resetFileNotFound } = useRepoTabStore()
   const currentBranch = ref(repoTab.currentBranch || '')
   const currentPath = ref(repoTab.lastPath || '')
 
@@ -189,14 +197,10 @@
 
   const emit = defineEmits(['changeBranch'])
 
-  // 添加防重复请求的标记
   const isInitializing = ref(false)
 
-  // 修改路由监听逻辑
   watch(() => route.query, (newQuery) => {
-    // 只有当 tab 是 files 且 actionName 是 files 或为空时才处理
     if (newQuery.tab === 'files' && (newQuery.actionName === 'files' || !newQuery.actionName)) {
-      // 更新 actionName
       if (newQuery.actionName && newQuery.actionName !== repoTab.actionName) {
         setRepoTab({
           actionName: newQuery.actionName,
@@ -205,7 +209,6 @@
         })
       }
       
-      // 更新路径和分支
       if (newQuery.path !== currentPath.value) {
         currentPath.value = newQuery.path || ''
       }
@@ -213,7 +216,6 @@
         currentBranch.value = newQuery.branch
       }
       
-      // 只有在文件列表页面且未初始化时才重新初始化
       if (!isInitializing.value) {
         init()
       }
@@ -244,50 +246,58 @@
   }
 
   const goToNamespace = () => {
-    currentPath.value = ''
-    setRepoTab({
-      actionName: 'files',
-      lastPath: ''
-    })
+    if (!isInitializing.value) {
+      resetFileNotFound()
+      
+      currentPath.value = ''
+      setRepoTab({
+        actionName: 'files',
+        lastPath: ''
+      })
 
-    const query = {
-      tab: 'files',
-      actionName: 'files'
-    }
-    if (currentBranch.value) {
-      query.branch = currentBranch.value
-    }
+      const query = {
+        tab: 'files',
+        actionName: 'files'
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
     
-    router.push({
-      path: router.currentRoute.value.path,
-      query
-    })
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
 
-    init()
+      init()
+    }
   }
 
   const goToBreadcrumb = (path) => {
-    currentPath.value = path.includes('/') ? path?.slice(1) : path
-    setRepoTab({
-      actionName: 'files',
-      lastPath: currentPath.value
-    })
+    if (!isInitializing.value) {
+      resetFileNotFound()
+      
+      currentPath.value = path.includes('/') ? path?.slice(1) : path
+      setRepoTab({
+        actionName: 'files',
+        lastPath: currentPath.value
+      })
 
-    const query = {
-      tab: 'files',
-      actionName: 'files',
-      path: currentPath.value
-    }
-    if (currentBranch.value) {
-      query.branch = currentBranch.value
-    }
+      const query = {
+        tab: 'files',
+        actionName: 'files',
+        path: currentPath.value
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
     
-    router.push({
-      path: router.currentRoute.value.path,
-      query
-    })
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
 
-    init()
+      init()
+    }
   }
 
   const goToNewFile = () => {
@@ -378,31 +388,36 @@
   }
 
   const goToDir = (path) => {
-    currentPath.value = path
-    setRepoTab({
-      actionName: 'files',
-      lastPath: path
-    })
+    if (!isInitializing.value) {
+      resetFileNotFound()
+      
+      currentPath.value = path
+      setRepoTab({
+        actionName: 'files',
+        lastPath: path
+      })
 
-    // 更新 URL 参数
-    const query = {
-      tab: 'files',
-      actionName: 'files',
-      path: path
-    }
-    if (currentBranch.value) {
-      query.branch = currentBranch.value
-    }
+      // 更新 URL 参数
+      const query = {
+        tab: 'files',
+        actionName: 'files',
+        path: path
+      }
+      if (currentBranch.value) {
+        query.branch = currentBranch.value
+      }
     
-    router.push({
-      path: router.currentRoute.value.path,
-      query
-    })
+      router.push({
+        path: router.currentRoute.value.path,
+        query
+      })
 
-    init()
-  } 
+      init()
+    }
+  }
 
   const goToBlob = (path) => {
+    resetFileNotFound()
     currentPath.value = path
     const query = {
       tab: 'files',
@@ -604,30 +619,27 @@
     if (isInitializing.value) return // 防止重复初始化
     
     isInitializing.value = true
+    resetFileNotFound()
+    
     files.value = []
     commitList.value = []
-    tempCommit.value = []
     loading.value = true
     updateBreadcrumb()
     fetchFileListData()
     fetchLastCommit()
     
-    // 延迟重置标记
     setTimeout(() => {
       isInitializing.value = false
     }, 100)
   }
 
-  // 在 onMounted 中初始化时也要处理 URL 参数
   onMounted(() => {
-    // 从 URL 参数中恢复状态
     const params = new URLSearchParams(window.location.search)
     const urlActionName = params.get('actionName')
     const urlPath = params.get('path')
     const urlBranch = params.get('branch')
     const currentTab = params.get('tab')
     
-    // 只有在当前 tab 是 files 且 actionName 是 files 或为空时才初始化
     if (currentTab === 'files' && (urlActionName === 'files' || !urlActionName)) {
       if (urlActionName && urlActionName !== 'files') {
         setRepoTab({
@@ -637,7 +649,6 @@
         })
       }
       
-      // 确保 currentPath 不为 null 或 undefined
       if (urlPath !== undefined && urlPath !== null) {
         currentPath.value = urlPath
       } else {
