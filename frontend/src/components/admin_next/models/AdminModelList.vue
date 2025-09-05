@@ -12,7 +12,7 @@
         :placeholder="$t('admin.search') + ' ' + $t('admin.name') + ' / ' + $t('admin.owner')"
         size="large"
         :prefix-icon="Search"
-        @input="searchModels"
+        @input="debouncedSearch"
       />
     </div>
     <Table
@@ -100,7 +100,8 @@
 
 <script setup>
   import { Container, Pagination, Table } from '../admin_component'
-  import { ref, onMounted, inject } from 'vue'
+  import { ref, onMounted, onUnmounted, inject } from 'vue'
+  import { debounce } from 'lodash'
   import { Search } from '@element-plus/icons-vue'
   import { ElMessage } from 'element-plus'
   import useFetchApi from '../../../packs/useFetchApi'
@@ -130,6 +131,12 @@
     page.value = 1
     fetchModels()
   }
+
+  const debouncedSearch = debounce(searchModels, 500)
+
+  onUnmounted(() => {
+    debouncedSearch.cancel()
+  })
 
   const showDetail = (path) => {
     window.location.href = `/admin_panel/models/${path}`
