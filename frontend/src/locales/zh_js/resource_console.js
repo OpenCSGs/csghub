@@ -5,5 +5,6 @@ export const resourceConsole = {
   others:"其他",
   title: "资源管理",
   new:'新建实例',
-  instance:'实例'
+  instance:'实例',
+  allProducts: '全部产品'
 }
