@@ -10,7 +10,7 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('endpoints.new.title') }}
     </h3>
-    <div class="flex items-center sm:flex-col sm:text-center">
+    <div class="flex items-end sm:flex-col sm:items-center sm:text-center">
       <p class="text-gray-500 text-md font-regular">
         {{ t('endpoints.new.desc') }}
       </p>
@@ -18,6 +18,14 @@
         :name="t('endpoints.new.guide')"
         class="btn-link-color"
         @click="handleGuideClick"
+      />
+      <Vue3Lottie
+        :animationData="animationData"
+        :width="36"
+        :height="36"
+        :loop="1"
+        :autoPlay="true"
+        style="display: inline-block"
       />
     </div>
     <div class="mt-9">
@@ -309,6 +317,9 @@
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import EngineArgs from './EngineArgs.vue'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
+  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
+  import { Vue3Lottie } from 'vue3-lottie'
+  import lightAnimation from '../../assets/animations/light.json'
 
   const props = defineProps({
     namespace: String
@@ -335,6 +346,9 @@
   const availableQuantizations = ref([])
   const currentEngineArgs = ref({})
   const changedEngineArgs = ref({})
+  const minGpuMemory = ref(0)
+  const apiErrorMsg = ref('')
+  const animationData = ref(lightAnimation)
 
   const minReplicaRanges = [0, 1, 2, 3, 4, 5]
   const replicaRanges = [1, 2, 3, 4, 5]

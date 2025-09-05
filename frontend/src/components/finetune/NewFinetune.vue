@@ -9,7 +9,7 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('finetune.new.title') }}
     </h3>
-    <div class="flex items-center sm:flex-col sm:text-center">
+    <div class="flex items-end sm:flex-col sm:items-center sm:text-center">
       <p class="text-gray-500 text-md font-regular">
         {{ t('finetune.new.desc') }}
       </p>
@@ -17,6 +17,14 @@
         :name="t('finetune.new.guide')"
         class="btn-link-color"
         @click="handleGuideClick"
+      />
+      <Vue3Lottie
+        :animationData="animationData"
+        :width="36"
+        :height="36"
+        :loop="1"
+        :autoPlay="true"
+        style="display: inline-block"
       />
     </div>
     <div class="mt-9 w-full">
@@ -207,6 +215,9 @@
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
+  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
+  import { Vue3Lottie } from 'vue3-lottie'
+  import lightAnimation from '../../assets/animations/light.json'
 
   const props = defineProps({
     namespace: String
@@ -235,7 +246,8 @@
   const finetuneFrameworks = ref([])
   const finetuneClusters = ref([])
   const loading = ref(false)
-
+  const apiErrorMsg = ref('')
+  const animationData = ref(lightAnimation)
   const rules = ref({
     deploy_name: [
       {
