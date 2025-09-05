@@ -215,7 +215,6 @@
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
-  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
   import { Vue3Lottie } from 'vue3-lottie'
   import lightAnimation from '../../assets/animations/light.json'
 

@@ -317,7 +317,6 @@
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import EngineArgs from './EngineArgs.vue'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
-  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
   import { Vue3Lottie } from 'vue3-lottie'
   import lightAnimation from '../../assets/animations/light.json'
 
