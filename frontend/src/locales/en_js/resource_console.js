@@ -5,5 +5,6 @@ export const resourceConsole = {
   others:"Others",
   title: "Resource Management",
   new:'Create',
-  instance:'Instance'
+  instance:'Instance',
+  allProducts: 'All Products'
 }
