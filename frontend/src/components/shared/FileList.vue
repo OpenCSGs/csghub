@@ -77,7 +77,7 @@
       <div v-if="lastCommit" class="text-gray-500 text-sm cursor-pointer flex-shrink-0">
         <el-popover
           width="158"
-          placement="top"
+          placement="left"
           effect="dark"
           trigger="hover"
           :content="beiJingTimeParser(lastCommit.committer_date)"
