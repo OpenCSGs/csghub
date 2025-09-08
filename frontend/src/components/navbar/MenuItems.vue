@@ -42,10 +42,11 @@
   <!-- more -->
   <el-sub-menu
     v-if="moreItems.length > 0"
+    :index="'more'"
     :popper-class="popperClass"
     :class="subMenuClass"
-    expand-close-icon="null"
-    expand-open-icon="null"
+    :expand-close-icon="null"
+    :expand-open-icon="null"
     style="--el-menu-icon-width: 0px">
     <template #title>
       <SvgIcon

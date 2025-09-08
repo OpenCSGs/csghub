@@ -14,11 +14,6 @@
         :label="`&nbsp;${$t('resourceConsole.allProducts')}&nbsp;`"
       ></el-tab-pane>
       <el-tab-pane 
-        v-if="isSaas()"
-        name="annual"
-        :label="`&nbsp;${$t('resourceConsole.yearMonthResources')}&nbsp;`"
-      ></el-tab-pane>
-      <el-tab-pane 
         name="finetune"
         :label="`&nbsp;${$t('finetune.title')}&nbsp;`"
       ></el-tab-pane>
@@ -32,7 +27,6 @@
       ></el-tab-pane>
     </el-tabs>
 
-    <AnnualAndMonthlyBilling v-if="isSaas() && (activeTab === '' || activeTab === 'annual')" />
 
     <!-- finetunes -->
     <h3 v-if="activeTab === '' || activeTab === 'finetune'" class="text-lg flex justify-between gap-2 mt-8">
@@ -105,7 +99,6 @@
   import EvaluationTable from "./EvaluationTable.vue"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
-  import { isSaas } from "../../packs/config.js"
   import CsgButton from "../shared/CsgButton.vue"
   import { useI18n } from 'vue-i18n'
 
