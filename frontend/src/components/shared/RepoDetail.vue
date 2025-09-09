@@ -157,21 +157,12 @@
   }
 
   const handleRepoTags = (repoData) => {
-    if (repoData.tags) {
-      return buildTags(repoData.tags)
+    // 为 buildTags 函数添加 repoType 信息
+    const dataWithRepoType = {
+      ...repoData,
+      repoType: props.repoType
     }
-
-    if (props.repoType === 'code' && repoData.license) {
-      return buildTags([
-        {
-          name: repoData.license,
-          category: 'license',
-          built_in: true
-        }
-      ])
-    }
-
-    return {}
+    return buildTags(dataWithRepoType)
   }
 
   const getUrlParams = () => {

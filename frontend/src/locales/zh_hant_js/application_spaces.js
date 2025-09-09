@@ -6,8 +6,6 @@ export const application_spaces = {
   nameTips: "應用於空間路徑，創建後不可更改",
   nickname: "應用空間別名",
   namespaceName: "命名空間/應用空間名稱",
-  sdkType: "SDK類型",
-  sdkTypeTips: "應用空間使用的SDK類型，創建後不可更改",
   desc: "應用空間介紹",
   stoppedDesc: "此空間已被其所有者暫停。",
   sleepingDesc: "由於長時間未操作，該空間已進入休眠狀態。",

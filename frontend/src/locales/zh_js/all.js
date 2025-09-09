@@ -17,6 +17,8 @@ export const all = {
   programLanguage: "编程语言",
   runmode: "运行模式",
   scene: "场景",
+  sdk: "SDK",
+  hardware: "云资源",
   others: "其他",
   contributors: "贡献者",
   historyCommits: "历史提交",
