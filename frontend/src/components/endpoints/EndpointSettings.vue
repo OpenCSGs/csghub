@@ -491,14 +491,14 @@
     const { data, error } = await useFetchApi(endpointUpdateEndpoint, options)
       .put()
       .json()
-
+      
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       if (payload.hasOwnProperty('private')) {
         repoDetailStore.updateVisibility(payload.private)
       }
-      fetchRepoDetail()
+      fetchRepoDetail(true)
       ElMessage({ message: data.value.msg, type: 'success' })
     }
   }

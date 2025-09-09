@@ -539,7 +539,7 @@
       .json()
 
     if (data.value) {
-      fetchRepoDetail(false)
+      fetchRepoDetail(true)
       ElMessage({ message: t('all.updateSuccess'), type: 'success' })
     } else {
       ElMessage({ message: error.value.msg, type: 'warning' })
@@ -585,7 +585,7 @@
       if (payload.hasOwnProperty('private')) {
         updateVisibility(payload.private)
       }
-      fetchRepoDetail(false)
+      fetchRepoDetail(true)
       ElMessage({ message: 'Success', type: 'success' })
     }
   }

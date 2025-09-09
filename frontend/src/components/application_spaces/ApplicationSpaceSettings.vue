@@ -828,7 +828,10 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          await this.fetchRepoDetail()
+          const shouldRefreshRepo = !(payload.hasOwnProperty('cluster_id') || payload.hasOwnProperty('resource_id'))
+          if (shouldRefreshRepo) {
+            await this.fetchRepoDetail(true)
+          }
         }
       },
 
