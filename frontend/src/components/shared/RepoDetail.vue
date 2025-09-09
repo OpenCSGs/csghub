@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div v-show="!isDataLoading && isInitialized" class="bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:pb-[70px] md:pb-6 md:h-auto">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :avatar="repoDetailStore.namespace?.Avatar"
@@ -18,7 +17,7 @@
         :repoType="repoType" />
     </div>
   </div>
-  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
+  <div v-show="!isDataLoading && isInitialized" class="page-responsive-width mt-[-40px] xl:mt-[-78px] md:mt-[-40px]">
     <repo-tabs
       :repo-detail="repoDetailStore"
       :current-branch="currentBranch || repoDetailStore.defaultBranch || 'main'"
@@ -33,12 +32,18 @@
       :repoType="repoType"
       :path="`${namespace}/${repoName}`" />
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('repo.loading')" 
+  />
 </template>
 
 <script setup>
-  import { onMounted, computed, provide, ref, watch, onUnmounted } from 'vue'
+  import { onMounted, computed, provide, ref, onUnmounted } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
+  import LoadingSpinner from './LoadingSpinner.vue'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { buildTags } from '../../packs/buildTags'
   import { ElMessage } from 'element-plus'
@@ -48,7 +53,7 @@
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
 
-  const { setRepoTab } = useRepoTabStore()
+  const { setRepoTab, resetFileNotFound } = useRepoTabStore()
 
   const props = defineProps({
     defaultTab: String,
@@ -67,10 +72,10 @@
   const { isInitialized } = storeToRefs(repoDetailStore)
   const lastCommit = ref({})
 
-  // 添加防抖相关状态
-  const isLoading = ref(false)
   const lastFetchTime = ref(0)
-  const FETCH_DEBOUNCE_TIME = 1000 // 1秒防抖
+  const FETCH_DEBOUNCE_TIME = 1000
+  const isDataLoading = ref(false)
+  
   const showNewTag = computed(() => {
     return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(repoDetailStore.createdAt) || isWithinTwoWeeks(repoDetailStore.updatedAt));
   });
@@ -96,14 +101,13 @@
   })
 
   const fetchRepoDetail = async () => {
-    if (isLoading.value) {
-      return
+    if (isDataLoading.value) {
+      return false
     }
     
-    isLoading.value = true
+    isDataLoading.value = true
     lastFetchTime.value = Date.now()
     
-    // 添加时间戳参数来避免浏览器缓存
     const timestamp = Date.now()
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}?_t=${timestamp}`
 
@@ -112,26 +116,28 @@
       // redirect unauthorized page
       if (response.value.status === 403) {
         ToUnauthorizedPage()
-        return
+        return false
       }
       // redirect not found page
       if (response.value.status === 404) {
         ToNotFoundPage()
-        return
+        return false
       }
       if (!data.value) {
         ElMessage.warning(error.value.msg)
-        return
+        return false
       }
       const repoData = data.value.data
       repoDetailStore.initialize(repoData, props.repoType)
       setRepoTab({
         currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
       })
+      return true
     } catch (error) {
       console.error('Failed to fetch repo detail:', error)
+      return false
     } finally {
-      isLoading.value = false
+      isDataLoading.value = false
     }
   }
 
@@ -178,9 +184,8 @@
     }
   }
 
-  // 添加处理浏览器前进后退的函数
   const handlePopState = () => {
-    if (isLoading.value) {
+    if (isDataLoading.value) {
       return
     }
     
@@ -189,12 +194,14 @@
       return
     }
     
-    // 重新获取数据
+    resetFileNotFound()
+    
     fetchRepoDetail()
     fetchLastCommit()
   }
 
-  onMounted(() => {
+  onMounted(async () => {
+    resetFileNotFound()
     const urlParams = getUrlParams()
     
     const initialData = {
@@ -209,14 +216,17 @@
     
     setRepoTab(initialData)
     
-    fetchRepoDetail()
-    fetchLastCommit()
+    const success = await fetchRepoDetail()
+    if (success) {
+      fetchLastCommit()
+    }
     
     window.addEventListener('popstate', handlePopState)
   })
 
   onUnmounted(() => {
     window.removeEventListener('popstate', handlePopState)
+    resetFileNotFound()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

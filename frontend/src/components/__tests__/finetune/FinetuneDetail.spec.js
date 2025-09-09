@@ -10,7 +10,7 @@ vi.mock('vue-router', () => ({
   }),
   useRouter: () => ({
     replace: vi.fn(),
-    push: vi.fn()  // 添加这一行
+    push: vi.fn()
   })
 }));
 
@@ -38,7 +38,7 @@ vi.mock('@/packs/useFetchApi', () => ({
             }
           },
           error: { value: null },
-          response: { status: 200 }
+          response: { value: { status: 200 } }  // 修复: 添加 value 包装
         })
       };
 
@@ -56,7 +56,7 @@ vi.mock('@/packs/useFetchApi', () => ({
             }
           },
           error: { value: null },
-          response: { status: 200 }
+          response: { value: { status: 200 } }  // 修复: 添加 value 包装
         })
       };
 
@@ -73,20 +73,21 @@ vi.mock('@/packs/useFetchApi', () => ({
       return Promise.resolve({
         data: { value: { body: { data: [] } } },
         error: { value: null },
-        response: { status: 200 }
+        response: { value: { status: 200 } }  // 修复: 添加 value 包装
       })
     }
   })
 }));
 
-
 vi.mock('@microsoft/fetch-event-source', () => {
   return {
     fetchEventSource: vi.fn((url, options) => {
-      // Simulate the onopen and onmessage events
-      options.onopen({ ok: true, status: 200 });
-      options.onmessage({ data: JSON.stringify({ status: 'Running', details: [{ name: 'Test Resource' }] }) });
-      return { close: vi.fn() }; // Return a mock close function
+      // 延迟执行 SSE 回调，模拟真实环境
+      setTimeout(() => {
+        options.onopen({ ok: true, status: 200 });
+        options.onmessage({ data: JSON.stringify({ status: 'Running', details: [{ name: 'Test Resource' }] }) });
+      }, 10);
+      return { close: vi.fn() };
     })
   }
 })
@@ -101,7 +102,7 @@ const createWrapper = (props = {}) => {
     },
     props: {
       namespace: 'test-namespace',
-      name: 'test-name',
+      modelName: 'test-model',  // 修复: 使用正确的 prop 名称
       userName: 'test-user',
       finetuneName: 'Test Finetune',
       finetuneId: 789,
@@ -114,20 +115,25 @@ const createWrapper = (props = {}) => {
 describe("FinetuneDetail", () => {
   it("mounts correctly", async () => {
     const wrapper = createWrapper();
+    // 等待组件完全挂载和初始化
+    await new Promise(resolve => setTimeout(resolve, 100));
     await wrapper.vm.$nextTick();
     expect(wrapper.exists()).toBe(true);
   });
 
   it("fetches finetune details on mount", async () => {
     const wrapper = createWrapper();
+    // 等待异步数据加载完成
+    await new Promise(resolve => setTimeout(resolve, 150));
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.repoDetailStore.deployName).toBe('Test Finetune');
     expect(wrapper.vm.repoDetailStore.status).toBe('Running');
   });
 
-
   it("handles SSE connection successfully", async () => {
     const wrapper = createWrapper();
+    // 等待异步数据加载和SSE连接完成
+    await new Promise(resolve => setTimeout(resolve, 200));
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.repoDetailStore.status).toBe('Running');
   });

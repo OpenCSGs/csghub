@@ -10,6 +10,13 @@ vi.mock('vue3-cookies', () => ({
   })
 }))
 
+vi.mock('vue3-lottie', () => ({
+  Vue3Lottie: {
+    name: 'Vue3Lottie',
+    template: '<div class="mock-lottie"></div>'
+  }
+}))
+
 let { mockFetchApi } = vi.hoisted(() => {
   return { mockFetchApi:
     vi.fn((url) => {

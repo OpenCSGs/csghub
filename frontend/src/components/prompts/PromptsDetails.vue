@@ -11,9 +11,10 @@
     :pathTitle="name"
     class="sticky top-0 md:top-15 bg-whitet-0 z-10"
   />
+  <!-- v-loading="loading" -->
   <div
     class="w-full text-gray-900 p-8 md:p-1 md:mt-5 md:px-12 sm:px-5"
-    v-loading="loading"
+    v-show="!isDataLoading"
   >
     <div class="text-2xl mb-3 font-medium">{{ promptsDetails.title }}</div>
     <div
@@ -121,6 +122,11 @@
       </template>
     </el-dialog>
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('prompts.loading')" 
+  />
 </template>
 
 <script setup>
@@ -130,7 +136,9 @@
   import { ElMessage } from 'element-plus'
   import PromptsTags from './PromptsTags.vue'
   import PromptsBreadCrumbs from './PromptsBreadCrumbs.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '../../packs/useFetchApi'
+  import { ToNotFoundPage } from '../../packs/utils'
 
   const props = defineProps({
     namespace: String,
@@ -139,9 +147,9 @@
   })
 
   const { t } = useI18n()
-  const loading = ref(true)
   const promptsDetails = ref({ content: '' })
   const dialogVisible = ref(false)
+  const isDataLoading = ref(false)
 
   const emit = defineEmits(['changeCurrentComponent', 'setPromptsDetails'])
   const changeCurrentComponent = (currentComponent) => {
@@ -158,17 +166,38 @@
   }
 
   const fetchPromptsDetails = async () => {
-    const { data, error } = await useFetchApi(
-      `/prompts/${props.namespace}/${props.name}/prompt/view/${props.filePath}`
-    ).json()
-    if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
-      loading.value = false
-    } else {
+    if (isDataLoading.value) {
+      return false
+    }
+    isDataLoading.value = true
+    
+    try {
+      const { response, data, error } = await useFetchApi(
+        `/prompts/${props.namespace}/${props.name}/prompt/view/${props.filePath}`
+      ).json()
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
+      
+      if (error.value) {
+        ElMessage.warning(error.value.msg)
+        return false
+      }
+      
+      if (!data.value) {
+        return false
+      }
+      
       const res = data.value
       promptsDetails.value = res.data || []
       setPromptsDetails(promptsDetails.value)
-      loading.value = false
+      return true
+    } catch (error) {
+      return false
+    } finally {
+      isDataLoading.value = false
     }
   }
 

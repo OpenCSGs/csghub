@@ -1,7 +1,7 @@
 export const codes = {
   title: "代碼倉庫",
   tips:"創建代碼庫託管您的代碼",
-  placeholder: "代碼倉庫名字",
+  placeholder: "搜索代碼倉庫名稱",
   downloadCode: "下載代碼倉庫",
   codeName: "代碼倉庫名稱",
   codeNameTips: "應用於代碼倉庫路徑，創建後不可更改",

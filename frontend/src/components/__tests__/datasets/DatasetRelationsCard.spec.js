@@ -1,7 +1,51 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
 import { mount } from "@vue/test-utils";
 import DatasetRelationsCard from "@/components/datasets/DatasetRelationsCard.vue";
 import RepoItem from "@/components/shared/RepoItem.vue";
+
+// Mock window.location.href and Image to satisfy RepoItem.vue runtime needs
+const originalLocation = typeof window !== 'undefined' ? window.location : undefined;
+const originalImage = global.Image;
+
+beforeAll(() => {
+  // Ensure window.location.href exists for new URL(window.location.href)
+  if (typeof window !== 'undefined') {
+    Object.defineProperty(window, 'location', {
+      value: { href: 'http://localhost/?page=1&search=kw&sort=updated' },
+      writable: true,
+      configurable: true,
+    });
+  }
+
+  // Stub Image used in RepoItem's icon existence check
+  vi.stubGlobal('Image', class {
+    constructor() {
+      // call onload asynchronously to simulate a successful load
+      setTimeout(() => {
+        if (typeof this.onload === 'function') this.onload();
+      }, 0);
+    }
+    set src(_) {
+      // no-op; onload will fire via constructor timeout
+    }
+  });
+});
+
+afterAll(() => {
+  if (typeof window !== 'undefined' && originalLocation) {
+    Object.defineProperty(window, 'location', {
+      value: originalLocation,
+      configurable: true,
+    });
+  }
+  if (originalImage) {
+    vi.stubGlobal('Image', originalImage);
+  } else {
+    // cleanup stub if none originally
+    // @ts-ignore
+    delete global.Image;
+  }
+});
 
 const createWrapper = (props) => {
   return mount(DatasetRelationsCard, {

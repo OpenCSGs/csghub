@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isDataLoading">
+  <div v-show="!isDataLoading">
     <div class="py-[16px] bg-gray-25">
       <div class="page-responsive-width m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
@@ -104,18 +104,17 @@
     </div>
   </div>
   
-  <div v-if="isDataLoading" class="flex items-center justify-center min-h-[400px]">
-    <div class="text-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-4"></div>
-      <p class="text-gray-600">{{ $t('organization.loading') }}</p>
-    </div>
-  </div>
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('organization.loading')" 
+  />
 </template>
 
 <script setup>
   import { ref, onMounted, watch } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
@@ -134,13 +133,17 @@
   const membersList = ref([])
   const verifiedStatus = ref('')
   const verifiedReason = ref('')
-  const isDataLoading = ref(true)
+  const isDataLoading = ref(false)
 
   const userStore = useUserStore()
 
   const role = ref('')
 
   const fetchOrgDetail = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    isDataLoading.value = true
     const orgDetailEndpoint = `/organization/${props.name}`
     const { response, data, error } = await useFetchApi(orgDetailEndpoint).json()
     

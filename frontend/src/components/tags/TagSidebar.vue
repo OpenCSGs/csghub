@@ -28,11 +28,14 @@
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import TagCategory from './TagCategory.vue'
-
   const props = defineProps({
     repoType: String,
     selectedTag: String,
-    selectedTagType: String
+    selectedTagType: String,
+    externalActiveTags: {
+      type: Object,
+      default: () => ({})
+    }
   })
 
   const emit = defineEmits(['resetTags'])
@@ -58,7 +61,13 @@
   const activeTags = ref({})
 
   const avaliableCategories = computed(() => {
-    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled && c.name !== 'publisher')
+    return tagCategories.value.filter((c) => {
+      // 当repoType为mcp时，过滤掉runmode类别
+      if (props.repoType === 'mcp' && c.name === 'runmode') {
+        return false
+      }
+      return c.scope === props.repoType && c.enabled && c.name !== 'publisher'
+    })
   })
 
   watch(avaliableCategories,
@@ -97,10 +106,13 @@
       if (activeTags.value[props.selectedTagType] === undefined) {
         activeTags.value[props.selectedTagType] = []
         activeTags.value[props.selectedTagType].push(props.selectedTag)
+        return true
       } else if (Array.isArray(activeTags.value[props.selectedTagType])) {
         activeTags.value[props.selectedTagType].push(props.selectedTag)
+        return true
       }
     }
+    return false
   }
 
   const setTagTypeFromParams = () => {
@@ -111,9 +123,27 @@
 
   const emitTagFromParams = () => {
     setTagTypeFromParams()
-    setTagNameFromParams()
-    emitTag()
+    const changed = setTagNameFromParams()
+    if (changed) emitTag()
   }
+
+  watch(
+    () => props.externalActiveTags,
+    (val) => {
+      activeTags.value = JSON.parse(JSON.stringify(val || {}))
+    },
+    { deep: true, immediate: true }
+  )
+
+  watch(
+    () => [props.selectedTag, props.selectedTagType],
+    ([tag, type]) => {
+      if (type && tag) {
+        activeNavItem.value = type
+        activeTags.value = { [type]: [tag] }
+      }
+    }
+  )
 
   async function fetchTags() {
     const params = new URLSearchParams({
@@ -180,10 +210,3 @@
     // }
   })
 </script>
-
-<style scoped>
-  .active-type {
-    box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-    border-radius: var(--border-radius-sm);
-  }
-</style>

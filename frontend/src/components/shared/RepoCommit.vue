@@ -1,5 +1,10 @@
 <template>
-  <div class="min-h-[300px] py-8 md:px-5">
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('repo.loading')" 
+  />
+
+  <div v-show="!isDataLoading" class="min-h-[300px] py-8 md:px-5">
     <div class="rounded-lg border border-gray-200 min-h-[100px] mb-4">
       <div
         class="flex justify-between gap-[4px] border-b border-gray-200 items-center px-[12px] py-[9px] bg-gray-100 rounded-t-lg"
@@ -31,7 +36,6 @@
       </div>
     </div>
     <div v-html="diffContent"></div>
-    <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
   </div>
 </template>
 
@@ -45,13 +49,16 @@
   import { ElMessage } from "element-plus";
   import { parse, html } from "diff2html";
   import MarkdownViewer from "./viewers/MarkdownViewer.vue";
-  import { beiJingTimeParser } from '../../packs/utils'
+  import LoadingSpinner from "./LoadingSpinner.vue";
+  import { beiJingTimeParser, ToNotFoundPage } from '../../packs/utils'
   import "../../styles/codediff.css";
 
   const { t } = useI18n();
   const commit = ref({});
   const diffContent = ref("");
-  const loading = ref(true)
+  
+  const isDataLoading = ref(false)
+  
   const props = defineProps({
     namespacePath: String,
     repoType: String,
@@ -63,16 +70,37 @@
   };
 
   const fetchCommit = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    
+    isDataLoading.value = true
+
     const url = `/${props.repoType}s/${props.namespacePath}/commit/${props.commitId}`;
-    loading.value = true
-    const { data, error } = await useFetchApi(url).json()
-    loading.value = false
-    if (error.value) {
-      ElMessage({ message: error.value, type: "warning" });
-    } else {
-      const body = data.value
-      commit.value = body.data;
-      diffContent.value = getDiffContent();
+    
+    try {
+      const { data, error, response } = await useFetchApi(url).json()
+      
+      // 检查404状态
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return
+      }
+      
+      if (error.value) {
+        ElMessage({ message: error.value, type: "warning" });
+      } else {
+        const body = data.value
+        commit.value = body.data;
+        diffContent.value = getDiffContent();
+      }
+    } catch (err) {
+      ElMessage({ 
+        message: t('shared.fetchCommitError') || 'Failed to fetch commit', 
+        type: "error" 
+      });
+    } finally {
+      isDataLoading.value = false
     }
   };
 

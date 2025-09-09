@@ -1,7 +1,6 @@
 <template>
   <div class="py-[32px] md:px-[10px]">
-    <template v-if="!loading">
-      <!-- 讨论列表 -->
+    <template v-if="!isDataLoading">
       <DiscussionCards
         v-if="communityActionName === 'list'"
         :cards="cards"
@@ -12,7 +11,6 @@
         @showNewDiscussion="showNewDiscussion">
       </DiscussionCards>
       
-      <!-- 新建讨论 -->
       <NewCommunityDiscussion
         v-if="communityActionName === 'new'"
         :repoType="repoType"
@@ -21,7 +19,6 @@
         @changeFlag="changeFlag">
       </NewCommunityDiscussion>
       
-      <!-- 讨论详情 -->
       <DiscussionDetails
         v-if="communityActionName === 'detail'"
         :discussionId="discussionId"
@@ -35,7 +32,10 @@
         @refreshDiscussions="handleRefreshDiscussions">
       </DiscussionDetails>
     </template>
-    <el-skeleton v-else class="mt-4" :rows="5" animated />
+    <LoadingSpinner 
+      :loading="isDataLoading" 
+      :text="$t('repo.loadingCommunity')" 
+    />
   </div>
 </template>
 
@@ -48,9 +48,10 @@
   import DiscussionCards from './DiscussionCards.vue'
   import NewCommunityDiscussion from './NewCommunityDiscussion.vue'
   import DiscussionDetails from './DiscussionDetails.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
-  import { validateCommunityActionName } from '../../packs/utils'
+  import { validateCommunityActionName, ToNotFoundPage } from '../../packs/utils'
 
   const props = defineProps({
     repoType: String,
@@ -61,11 +62,9 @@
   const route = useRoute()
   const { repoTab, setRepoTab } = useRepoTabStore()
   
-  const loading = ref(true)
   const cards = ref([])
   const lastCommentId = ref('')
   
-  // 讨论详情相关数据
   const discussionId = ref('')
   const currentDiscussionTitle = ref('')
   const currentDiscussionUserName = ref('')
@@ -73,7 +72,37 @@
   const currentDiscussionTime = ref('')
   const currentDiscussionData = ref(null)
 
-  // 计算属性：从store获取社区操作状态
+  const isDataLoading = ref(false)
+
+  const getDiscussion = async () => {
+    isDataLoading.value = true
+    if (!props.repoPath || props.repoPath === '') {
+      isDataLoading.value = false
+      return
+    }
+    
+    let discussionCreateEndpoint = `/${props.repoType}s/${props.repoPath}/discussions`
+    if (props.repoType === 'mcp') {
+      discussionCreateEndpoint = `/mcpserver/${props.repoPath}/discussions`
+    }
+    
+    try {
+      const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
+      if (data.value) {
+        const discussions = data.value.data.discussions || []
+        cards.value = discussions.sort((a, b) => b.id - a.id)
+      } else {
+        ElMessage({
+          message: error.value.msg,
+          type: 'warning'
+        })
+      }
+    } catch (error) {
+    } finally {
+      isDataLoading.value = false
+    }
+  }
+
   const communityActionName = computed(() => {
     return repoTab.communityActionName || 'list'
   })
@@ -90,44 +119,44 @@
           discussionId: discussionIdParam
         })
         
-        // 如果是详情页面，需要获取讨论详情数据
         if (actionName === 'detail' && discussionIdParam) {
           discussionId.value = discussionIdParam
-          // 先尝试从cards中找到对应的讨论详情
           const discussion = cards.value.find(card => card.id.toString() === discussionIdParam)
           if (discussion) {
             setDiscussionDetailData(discussion)
           } else {
-            // 如果cards中没有找到，则独立获取讨论详情
             fetchDiscussionDetail(discussionIdParam)
           }
         }
       }
       
-      // 确保每次访问讨论列表页面时都获取最新数据
       if (actionName === 'list') {
         getDiscussion()
       }
     }
-  }, { deep: true, immediate: true })
+  }, { deep: true, immediate: false })
 
-  // 独立获取讨论详情的函数
   const fetchDiscussionDetail = async (id) => {
+    isDataLoading.value = true
     try {
-      const { data, error } = await useFetchApi(`/discussions/${id}`).json()
+      const { response, data, error } = await useFetchApi(`/discussions/${id}`).json()
+
+      if (response?.value?.status === 404) {
+        ToNotFoundPage()
+        return
+      }
+
       if (data.value) {
         const discussion = data.value.data
         setDiscussionDetailData(discussion)
-        loading.value = false
       } else {
-        ElMessage.error(error.value?.msg || '获取讨论详情失败')
-        loading.value = false
+        ElMessage.error(error.value?.msg || '')
         toggleDetails()
       }
     } catch (error) {
-      ElMessage.error('获取讨论详情失败')
-      loading.value = false
       toggleDetails()
+    } finally {
+      isDataLoading.value = false
     }
   }
 
@@ -179,7 +208,6 @@
       query
     })
     
-    // 如果切换到列表页面，重新获取讨论列表
     if (validatedFlag === 'list') {
       getDiscussion()
     }
@@ -245,37 +273,7 @@
     toggleDetails()
   }
 
-  const getDiscussion = async () => {
-    if (!props.repoPath || props.repoPath === '') {
-      loading.value = false
-      return
-    }
-    
-    let discussionCreateEndpoint = `/${props.repoType}s/${props.repoPath}/discussions`
-    if (props.repoType === 'mcp') {
-      discussionCreateEndpoint = `/mcpserver/${props.repoPath}/discussions`
-    }
-    
-    try {
-      const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
-      if (data.value) {
-        const discussions = data.value.data.discussions || []
-        cards.value = discussions.sort((a, b) => b.id - a.id)
-        loading.value = false
-      } else {
-        ElMessage({
-          message: error.value.msg,
-          type: 'warning'
-        })
-        loading.value = false
-      }
-    } catch (error) {
-      loading.value = false
-    }
-  }
-
   onMounted(() => {
-    // 从URL参数恢复状态
     const params = new URLSearchParams(window.location.search)
     
     const urlTab = params.get('tab')
@@ -292,12 +290,9 @@
       
       if (actionName === 'detail' && urlDiscussionId) {
         discussionId.value = urlDiscussionId
-        // 直接获取讨论详情，不依赖讨论列表
         fetchDiscussionDetail(urlDiscussionId)
-        // 同时获取讨论列表（用于其他功能）
-        if (props.repoPath) {
-          getDiscussion()
-        }
+      } else if (actionName === 'list') {
+        getDiscussion()
       }
     }
   })

@@ -135,5 +135,10 @@ export const all = {
   },
   show: "Show",
   hide: "Hide",
-  copySuccess: "Copied successfully"
+  copy: "Copy",
+  copySuccess: "Copied successfully",
+  allTab:'All Products',
+  unknown: "Unknown",
+  inBranch: "in branch",
+  notExist: "not exist"
 }

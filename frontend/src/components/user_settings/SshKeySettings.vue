@@ -53,7 +53,7 @@
         >
           <div class="mb-[16px]">
             <p class="text-gray-700 text-sm mb-[8px]">
-              {{ $t('sshKey.sshKeyName') }} 
+              {{ $t('sshKey.sshKeyName') }}
             </p>
             <el-input
               v-model="theSshKeyName"
@@ -85,6 +85,7 @@
               :name="$t('all.cancel')"
             />
             <CsgButton
+              id="add-ssh-key-button"
               class="btn btn-primary btn-sm w-fit"
               :name="$t('all.add')"
               @click="submitSshKey"
@@ -101,7 +102,7 @@
   import SshKeyCard from './SshKeyCard.vue'
   import { ElMessage } from 'element-plus'
   import { ref, onMounted } from 'vue'
-  import useFetchApi from '../../packs/useFetchApi'
+  import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
@@ -158,14 +159,11 @@
 
   const submitSshKey = () => {
     if (theSshKeyName.value == '') {
-      ElMessage({ message: t('sshKey.nameWarning'), type: 'warning' })
+      ElMessage.warning(t('sshKey.nameWarning'))
       return
     }
     if (formData.value.theSshKey == '') {
-      ElMessage({
-        message: t('sshKey.contentWarning'),
-        type: 'warning'
-      })
+      ElMessage.warning(t('sshKey.contentWarning'))
       return
     }
 
@@ -174,10 +172,7 @@
       if (valid) {
         // 异步发送请求
         createTheSshKey().catch((err) => {
-          ElMessage({
-            message: err.message,
-            type: 'warning'
-          })
+          ElMessage.warning(err.message)
         })
       }
     })
@@ -196,12 +191,12 @@
     const { error } = await useFetchApi(SshKeyCreateEndpoint, options).post().json()
 
     if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+      ElMessage.warning(error.value.msg)
     } else {
+      ElMessage.success(t('all.addSuccess'))
       setTimeout(() => {
         window.location.href = '/settings/ssh-keys'
       }, 1000)
-      ElMessage({ message: t('all.addSuccess'), type: 'success' })
     }
   }
 
@@ -210,10 +205,7 @@
     const { data, error } = await useFetchApi(SshKeyEndpoint).get().json()
 
     if (error.value) {
-      ElMessage({
-        message: error.value.msg,
-        type: 'warning'
-      })
+      ElMessage.warning(error.value.msg)
     } else {
       theSshKeys.value = data.value.data || []
     }
@@ -242,15 +234,15 @@
   const addSshKey = async () => {
     try {
       await formRef.value.validate();
-      
+
       const { error } = await useFetchApi(`/user/${props.name}/ssh_key/${theSshKeyName.value}`)
         .post({ ssh_key: formData.value.theSshKey })
         .json();
 
       if (error.value) {
-        ElMessage({ message: error.value, type: "warning" });
+        ElMessage.warning(error.value)
       } else {
-        ElMessage({ message: t('all.addSuccess'), type: "success" });
+        ElMessage.success(t('all.addSuccess'))
         centerDialogVisible.value = false;
         fetchSshKeys();
       }

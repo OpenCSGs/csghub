@@ -3,7 +3,7 @@ import { evaluation } from "./evaluation";
 
 export const models = {
   title: "Models",
-  placeholder: "Search Models",
+  placeholder: "Search model name",
   newTips:'Models added in the last two weeks',
   downloadModel: "Download model data",
   download: "Download Model",

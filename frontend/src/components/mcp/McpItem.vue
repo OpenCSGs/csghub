@@ -85,12 +85,13 @@
       </div>
     </div>
     <div class="pt-0.5 inline-flex items-center gap-4 flex-wrap content-center">
-      <div
+      <span
         v-if="taskTag"
-        class="w-fit xl:max-w-full text-gray-500 text-xs font-normal overflow-hidden text-ellipsis whitespace-nowrap"
+        class="w-fit xl:max-w-full text-gray-500 text-xs font-normal overflow-hidden text-ellipsis whitespace-nowrap flex items-center gap-1"
       >
+        <img v-if="taskTagIconPath && taskTagIconExists" :src="taskTagIconPath" class="w-3 h-3 text-gray-500 filter-gray flex-shrink-0" alt="" />
         {{ taskTag }}
-      </div>
+      </span>
 
       <div v-if="taskTag && (programLanguage || mcp.license)">
         <SvgIcon name="vertical_divider" />
@@ -125,7 +126,7 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
+  import { computed, ref, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { useRepoTabStore } from '@/stores/RepoTabStore'
   import RepoItemSyncIcon from '../shared/RepoItemSyncIcon.vue'
@@ -142,6 +143,25 @@
       default: true
     }
   })
+
+  const taskTagIconExists = ref(false)
+
+  // 检查图标是否存在的函数
+  const checkIconExists = (iconPath) => {
+    if (!iconPath) {
+      taskTagIconExists.value = false
+      return
+    }
+    
+    const img = new Image()
+    img.onload = () => { 
+      taskTagIconExists.value = true 
+    }
+    img.onerror = () => { 
+      taskTagIconExists.value = false 
+    }
+    img.src = iconPath
+  }
 
   const mcpUrl = computed(() => {
     setRepoTab({
@@ -166,14 +186,44 @@
     }
   })
 
+  const taskTagIconPath = computed(() => {
+    const tags = props.mcp.tags || []
+    const taskTag = tags.find((tag) => tag.category === 'task')
+    if (taskTag) {
+      // 直接使用标签的name属性，因为图标文件名与标签名完全匹配
+      const tagNameForIcon = taskTag.name
+      
+      if (tagNameForIcon) {
+        // 设置图标路径，图标文件名与标签名完全一致
+        const iconPath = `/images/tags/${tagNameForIcon}.svg`
+        return iconPath
+      }
+    }
+    return null
+  })
+
   const displayPath = computed(() => {
     return props.mcp.github_path || props.mcp.path
   })
+
+  watch(taskTagIconPath, (newPath) => {
+    checkIconExists(newPath)
+  }, { immediate: true })
 </script>
 
 <style scoped>
   .mcp-item-bg {
     font-family: 'PingFang SC', sans-serif;
     background: linear-gradient(93deg, #fafeff 0%, #fff 100%);
+  }
+
+  .filter-gray {
+    filter: invert(56%) sepia(11%) saturate(207%) hue-rotate(176deg) brightness(93%) contrast(84%);
+  }
+
+  /* 确保图标和文字完美对齐 */
+  .flex.items-center img {
+    vertical-align: middle;
+    display: inline-block;
   }
 </style>

@@ -135,5 +135,10 @@ export const all = {
   },
   show: "显示",
   hide: "隐藏",
-  copySuccess: "复制成功"
+  copy:"复制",
+  copySuccess: "复制成功",
+  allTab:'全部产品',
+  unknown: "未知",
+  inBranch: "在分支",
+  notExist: "中不存在"
 }

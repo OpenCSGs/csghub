@@ -36,6 +36,7 @@
           :placeholder="$t(`collections.placeholder`)"
           :prefix-icon="Search"
           @change="filterChange"
+          @keyup.enter="filterChange"
         />
       </div>
     </div>
@@ -99,7 +100,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, onUnmounted } from 'vue'
   import { Search } from '@element-plus/icons-vue'
   import CsgPagination from '../shared/CsgPagination.vue'
   import CollectionCards from './CollectionCards.vue'
@@ -134,20 +135,55 @@
     }
   ]
 
+  const getQueryParams = () => {
+    const { searchParams } = new URL(window.location.href)
+    return {
+      page: parseInt(searchParams.get('page')) || 1,
+      search: searchParams.get('search') ?? '',
+      sort: searchParams.get('sort') ?? 'trending'
+    }
+  }
+
+  const updateUrlParams = (mode = 'replace') => {
+    const url = new URL(window.location.href)
+    const params = url.searchParams
+    params.set('page', currentPage.value.toString())
+    params.set('search', nameFilterInput.value)
+    params.set('sort', sortSelection.value)
+    if (mode === 'push') {
+      window.history.pushState({}, '', url.toString())
+    } else {
+      window.history.replaceState({}, '', url.toString())
+    }
+  }
+
+  const initializeFromParams = () => {
+    const params = getQueryParams()
+    currentPage.value = params.page
+    nameFilterInput.value = params.search
+    sortSelection.value = params.sort
+  }
+
+  initializeFromParams()
+
   const filterChange = () => {
     currentPage.value = 1
+    updateUrlParams('push')
     fetchCollections()
   }
 
   const resetInput = () => {
     nameFilterInput.value = ''
     sortSelection.value = 'trending'
+    currentPage.value = 1
+    updateUrlParams('push')
     fetchCollections()
   }
 
   const fetchCollections = async (childCurrent) => {
     if (childCurrent) {
       currentPage.value = childCurrent
+      updateUrlParams('replace')
     }
     const params = new URLSearchParams()
     params.append('per', perPage.value)
@@ -164,7 +200,17 @@
       totalCollections.value = res.total
     }
   }
-  onMounted(() => {
+  const handlePopState = () => {
+    initializeFromParams()
     fetchCollections()
+  }
+
+  onMounted(() => {
+    window.addEventListener('popstate', handlePopState)
+    fetchCollections()
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('popstate', handlePopState)
   })
 </script>

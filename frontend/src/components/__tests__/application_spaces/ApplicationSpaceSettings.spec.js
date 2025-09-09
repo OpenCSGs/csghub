@@ -53,11 +53,17 @@ const createWrapper = (props = {}) => {
       applicationSpaceDesc: 'Test Description',
       default_branch: 'main',
       appStatus: 'Running',
+      sdk: 'gradio', // Add default sdk
       ...props
     },
     global: {
       mocks: {
-        $t: (key, params) => key === 'application_spaces.edit.updateSuccess' ? 'Success' : key
+        $t: (key, params) => {
+          if (key === 'application_spaces.edit.updateSuccess') return 'Success'
+          if (key === 'application_spaces.sdkType') return 'SDK Type'
+          if (key === 'all.unknown') return 'Unknown'
+          return key
+        }
       },
       provide: {
         fetchRepoDetail: mockFetchRepoDetail
@@ -78,7 +84,9 @@ describe('ApplicationSpaceSettings', () => {
   })
 
   it('displays space path correctly', () => {
-    expect(wrapper.find('.bg-gray-50').text()).toBe('test/application_space')
+    const pathElements = wrapper.findAll('.bg-gray-50')
+    expect(pathElements).toHaveLength(2) // SDK type + space path
+    expect(pathElements[1].text()).toBe('test/application_space') // second element is the space path
   })
 
   it('updates application space nickname when button is clicked', async () => {

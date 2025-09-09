@@ -3,17 +3,44 @@
     <div class="text-3xl leading-9 mb-6">
       {{ $t("resourceConsole.title") }}
     </div>
+
+    <!-- Quick Navigation Tabs -->
+    <el-tabs 
+      v-model="activeTab" 
+      class="border-b border-gray-200 my-8 tabCont"
+    >
+      <el-tab-pane 
+        name="" 
+        :label="`&nbsp;${$t('resourceConsole.allProducts')}&nbsp;`"
+      ></el-tab-pane>
+      <el-tab-pane 
+        name="finetune"
+        :label="`&nbsp;${$t('finetune.title')}&nbsp;`"
+      ></el-tab-pane>
+      <el-tab-pane 
+        name="endpoints" 
+        :label="`&nbsp;${$t('endpoints.title')}&nbsp;`"
+      ></el-tab-pane>
+      <el-tab-pane 
+        name="evaluations"
+        :label="`&nbsp;${$t('evaluation.list.title')}&nbsp;`"
+      ></el-tab-pane>
+    </el-tabs>
+
+
     <!-- finetunes -->
-    <h3 class="text-lg flex justify-between gap-2">
-      <span>{{ $t("finetune.title") }}</span>
-      <a href="/finetune/new" class="btn btn-primary btn-md">
-        <SvgIcon name="plus" />
-        {{ $t('resourceConsole.new') }}
-      </a>
+    <h3 v-if="activeTab === '' || activeTab === 'finetune'" class="text-lg flex justify-between gap-2 mt-8">
+      <span class="whitespace-nowrap">{{ $t("finetune.title") }}</span>
+      <CsgButton
+        class="btn btn-primary btn-sm"
+        @click="handleNewClick"
+        :name="$t('resourceConsole.new')"
+        :svgName="'plus'"
+      />
     </h3>
-    <div class="mt-4">
-      <div v-if="hasFinetune" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-8 mt-4">
-        <FinetuneItem v-for="finetune in finetunes.data" :repo="finetune" repo-type="finetune" />
+    <div v-if="activeTab === '' || activeTab === 'finetune'" class="mt-4">
+      <div v-if="filteredFinetunes.length > 0" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-8 mt-4">
+        <FinetuneItem v-for="finetune in filteredFinetunes" :repo="finetune" repo-type="finetune" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-8 mt-4">
         {{ $t("all.noData") }}
@@ -21,17 +48,20 @@
       <view-more v-if="finetunes.more" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
     </div>
+
     <!-- endpoints -->
-    <h3 class="text-lg flex justify-between gap-2">
-      <span>{{ $t("endpoints.title") }}</span>
-      <a  href="/endpoints/new" class="btn btn-primary btn-md">
-        <SvgIcon name="plus" />
-        {{ $t('resourceConsole.new') }}
-      </a>
+    <h3 v-if="activeTab === '' || activeTab === 'endpoints'" class="text-lg flex justify-between gap-2 mt-8">
+      <span class="whitespace-nowrap">{{ $t("endpoints.title") }}</span>
+      <CsgButton
+        class="btn btn-primary btn-sm"
+        @click="handleNewClick"
+        :name="$t('resourceConsole.new')"
+        :svgName="'plus'"
+      />
     </h3>
-    <div class="mt-4 w-full">
-      <div v-if="hasEndpoints" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-8 mt-4">
-        <EndpointItem v-for="endpoint in endpoints.data" :endpoint="endpoint" :namespace="name" />
+    <div v-if="activeTab === '' || activeTab === 'endpoints'" class="mt-4 w-full">
+      <div v-if="filteredEndpoints.length > 0" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-8 mt-4">
+        <EndpointItem v-for="endpoint in filteredEndpoints" :endpoint="endpoint" :namespace="name" />
       </div>
       <div v-else class="flex flex-wrap gap-4 mb-8 mt-4">
         {{ $t("all.noData") }}
@@ -45,15 +75,17 @@
     </div>
 
     <!-- evaluations -->
-    <h3 class="text-lg flex justify-between gap-2">
-      <span>{{ $t("evaluation.list.title") }}</span>
-      <a href="/evaluations/new" class="btn btn-primary btn-md">
-        <SvgIcon name="plus" />
-        {{ $t('evaluation.list.new') }}
-      </a>
+    <h3 v-if="activeTab === '' || activeTab === 'evaluations'" class="text-lg flex justify-between gap-2 mt-8">
+      <span class="whitespace-nowrap">{{ $t("evaluation.list.title") }}</span>
+      <CsgButton
+        class="btn btn-primary btn-sm"
+        @click="handleNewClick"
+        :name="$t('evaluation.list.new')"
+        :svgName="'plus'"
+      />
     </h3>
-    <div class="mt-4 w-full">
-      <EvaluationTable :evaluations="evaluations" />
+    <div v-if="activeTab === '' || activeTab === 'evaluations'" class="mt-4 w-full">
+      <EvaluationTable :evaluations="filteredEvaluations" />
     </div>
   </div>
 </template>
@@ -67,21 +99,47 @@
   import EvaluationTable from "./EvaluationTable.vue"
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
+  import CsgButton from "../shared/CsgButton.vue"
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     name: String
   })
 
+  const { t: $t } = useI18n()
+
+  const handleNewClick = (event) => {
+    // 获取最近的标题元素
+    const titleElement = event.target.closest('h3')
+    if (!titleElement) return
+
+    // 根据标题内容判断类型
+    const titleText = titleElement.textContent.trim()
+    if (titleText.includes($t("finetune.title"))) {
+      window.location.href = '/finetune/new'
+    } else if (titleText.includes($t("endpoints.title"))) {
+      window.location.href = '/endpoints/new'
+    } else if (titleText.includes($t("evaluation.list.title"))) {
+      window.location.href = '/evaluations/new'
+    }
+  }
+
   const userStore = useUserStore()
   const defaultTotal = 6
   const endpoints = ref([])
   const finetunes = ref([])
+  const evaluations = ref([])
+  const activeTab = ref('')
 
   const endpointsLoading = ref(false)
   const finetunesLoading = ref(false)
 
   const hasEndpoints = computed(() => endpoints.value?.total > 0)
   const hasFinetune = computed(() => finetunes.value?.total > 0)
+
+  const filteredFinetunes = computed(() => finetunes.value?.data || [])
+  const filteredEndpoints = computed(() => endpoints.value?.data || [])
+  const filteredEvaluations = computed(() => evaluations.value?.data || [])
 
   const csghubServer = inject("csghubServer")
 
@@ -165,6 +223,7 @@
     }
   )
 
+
   onMounted(() => {
     if (userStore.initialized) {
       getRepoData()
@@ -172,3 +231,33 @@
   })
 
 </script>
+
+<style scoped>
+:deep(.tabCont) {
+  .el-tabs__header {
+    margin: 0;
+  }
+  .el-tabs__nav-wrap::after {
+    height: 1px;
+    background-color: #e5e7eb;
+  }
+  .el-tabs__item {
+    font-size: 14px !important;
+    color: #667085 !important;
+    padding-bottom: 12px;
+    height: auto;
+    line-height: normal;
+    &:hover {
+      color: #223B99 !important;
+    }
+    &.is-active {
+      color: #223B99 !important;
+      font-weight: 500;
+    }
+  }
+  .el-tabs__active-bar {
+    background-color: #223B99 !important;
+    height: 2px !important;
+  }
+}
+</style>

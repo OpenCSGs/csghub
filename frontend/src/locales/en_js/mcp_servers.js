@@ -1,6 +1,6 @@
 export const mcps = {
   title: 'MCP Servers',
-  placeholder: 'MCP Name',
+  placeholder: 'Search MCP name',
   guide: "Guide",
   nameTips: "Applied to MCP path, cannot be changed after creation",
   download: "Download Code",

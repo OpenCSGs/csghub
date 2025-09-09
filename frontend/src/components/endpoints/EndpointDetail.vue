@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto">
+  <div 
+    class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+    v-show="isInitialized">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :name="repoDetailStore.deployName"
@@ -14,7 +16,9 @@
       />
     </div>
   </div>
-  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0">
+  <div 
+    class="mx-auto page-responsive-width mt-[-40px] md:px-0"
+    v-show="!isDataLoading && isInitialized">
     <repo-tabs
       :repo-detail="repoDetailStore"
       :appStatus="repoDetailStore.status"
@@ -38,12 +42,18 @@
       :path="`${namespace}/${modelName}/${endpointId}`"
     />
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('endpoints.loading')" 
+  />
 </template>
 
 <script setup>
   import { ref, onMounted, inject, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import { useCookies } from "vue3-cookies";
   import { fetchEventSource } from '@microsoft/fetch-event-source';
   import refreshJWT from '../../packs/refreshJWT.js'
@@ -53,6 +63,7 @@
   import { ElMessage } from 'element-plus'
   import { storeToRefs } from 'pinia';
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  import { ToNotFoundPage } from '../../packs/utils'
 
   const props = defineProps({
     currentPath: String,
@@ -69,6 +80,8 @@
   const { isInitialized } = storeToRefs(repoDetailStore)
   const { cookies } = useCookies()
   const { setRepoTab } = useRepoTabStore()
+
+  const isDataLoading = ref(false)
 
   // only owner can view endpoint detail, so just set true
   const canManage = ref(true)
@@ -129,19 +142,34 @@
   }
 
   const fetchRepoDetail = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    isDataLoading.value = true
+    
     const url = `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
 
     try {
-      const { data, error } = await useFetchApi(url).json()
-
+      const { response, data, error } = await useFetchApi(url).json()
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
+      
       if (data.value) {
         const json = data.value
         repoDetailStore.initialize(json.data, 'endpoint')
+        return true
       } else {
         ElMessage({ message: error.value.msg, type: 'warning' })
+        return false
       }
     } catch (error) {
       console.log(error.msg)
+      return false
+    } finally {
+      isDataLoading.value = false
     }
   }
 
@@ -193,14 +221,15 @@
     })
   }
 
-  onMounted(() => {
-    if (!isSameRepo.value || (isSameRepo.value && !isInitialized.value)) {
-      fetchRepoDetail()
-    }
-    fetchModelDetail()
+  onMounted(async () => {
+    // 只有主请求成功后才进行其他操作
+    const success = await fetchRepoDetail()
+    if (success) {
+      fetchModelDetail()
 
-    if (isStatusSSEConnected.value === false) {
-      syncEndpointStatus()
+      if (isStatusSSEConnected.value === false) {
+        syncEndpointStatus()
+      }
     }
 
     setRepoTab({

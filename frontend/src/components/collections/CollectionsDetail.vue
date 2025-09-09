@@ -1,6 +1,7 @@
 <template>
   <div
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+    v-show=" isInitialized"
   >
     <div class="mx-auto page-responsive-width">
       <repo-header
@@ -17,7 +18,7 @@
       />
     </div>
   </div>
-  <div class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative">
+  <div class="mx-auto page-responsive-width !mt-[-40px] md:px-0 relative" v-if="!isDataLoading && isInitialized">
     <div
       class="max-w-[max-content] px-2 absolute top-0 right-0 md:relative md:pl-5 md:pb-4 z-10"
     >
@@ -97,6 +98,11 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('collections.loading')" 
+  />
 </template>
 <script setup>
   import { ref, onBeforeMount, computed, provide, watch } from 'vue'
@@ -104,12 +110,13 @@
   import CollectionsRepoList from './CollectionsRepoList.vue'
   import CollectionsSettings from './CollectionsSettings.vue'
   import CollectionsAddRepo from './CollectionsAddRepo.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import { ElMessage } from 'element-plus'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import useFetchApi from '../../packs/useFetchApi'
   import { storeToRefs } from 'pinia'
   import { useRoute, useRouter } from 'vue-router'
-  import { validateTab } from '../../packs/utils'
+  import { validateTab, ToNotFoundPage } from '../../packs/utils'
 
   const repoDetailStore = useRepoDetailStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
@@ -123,6 +130,8 @@
   })
 
   const activeName = ref('page')
+  
+  const isDataLoading = ref(false)
 
   const showRepoList = computed(() => {
     return repoDetailStore.repositories?.length > 0
@@ -156,50 +165,68 @@
     const validatedTab = validateTab(newTab)
     if (validatedTab && isValidTab(validatedTab) && validatedTab !== activeName.value) {
       activeName.value = validatedTab
-      setRepoTab({
-        tab: validatedTab,
-        actionName: 'files',
-        lastPath: ''
-      })
-      tabChange({ paneName: validatedTab })
+      // 路由变化时只更新tab，不重复获取数据
     }
   })
 
-  const tabChange = (tab) => {
-    let tabName = validateTab(tab.paneName)
+  const tabChange = async (tab) => {
+    let tabName = validateTab(tab.paneName);
     
     if (!isValidTab(tabName)) {
-      tabName = getDefaultTab()
+      tabName = getDefaultTab();
       router.push({
         path: `/collections/${props.collectionsId}`,
         query: { tab: tabName }
-      })
+      });
     }
 
-    activeName.value = tabName
+    activeName.value = tabName;
 
     router.push({
       path: `/collections/${props.collectionsId}`,
       query: {
         tab: tabName
       }
-    })
-
-    fetchCollectionDetail()
+    });
   }
 
   const fetchCollectionDetail = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    
+    isDataLoading.value = true
+    
     const url = `/collections/${props.collectionsId}`
-    const { data, error } = await useFetchApi(url).json()
-    if (error.value) {
-      ElMessage.warning(error.value.msg)
-    } else {
+    
+    try {
+      const { response, data, error } = await useFetchApi(url).json()
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
+      
+      if (error.value) {
+        ElMessage.warning(error.value.msg)
+        return false
+      }
+      
+      if (!data.value) {
+        return false
+      }
+      
       const repoData = data.value.data
       repoDetailStore.initialize(repoData, 'collection')
+      return true
+    } catch (error) {
+      return false
+    } finally {
+      isDataLoading.value = false
     }
   }
   
-  onBeforeMount(() => {
+  onBeforeMount(async () => {
     if (props.path) {
       activeName.value = props.path
     }
@@ -208,12 +235,22 @@
     const params = new URLSearchParams(window.location.search)
     const urlTab = validateTab(params.get('tab'))
     if (urlTab && isValidTab(urlTab)) {
-      tabChange({ paneName: urlTab })
+      activeName.value = urlTab
+      router.push({
+        path: `/collections/${props.collectionsId}`,
+        query: { tab: urlTab }
+      })
     } else {
-      tabChange({ paneName: getDefaultTab() })
+      const defaultTab = getDefaultTab()
+      activeName.value = defaultTab
+      router.push({
+        path: `/collections/${props.collectionsId}`,
+        query: { tab: defaultTab }
+      })
     }
 
-    fetchCollectionDetail()
+    // 只在初始化时获取数据
+    await fetchCollectionDetail()
   })
 
   provide('fetchCollectionDetail', fetchCollectionDetail)
