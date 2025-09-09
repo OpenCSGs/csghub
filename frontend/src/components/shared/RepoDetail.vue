@@ -100,13 +100,15 @@
     )
   })
 
-  const fetchRepoDetail = async () => {
+  const fetchRepoDetail = async (isUpdate = false) => {
     if (isDataLoading.value) {
       return false
     }
     
-    isDataLoading.value = true
-    lastFetchTime.value = Date.now()
+    if (!isUpdate) {
+      isDataLoading.value = true
+      lastFetchTime.value = Date.now()
+    }
     
     const timestamp = Date.now()
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}?_t=${timestamp}`

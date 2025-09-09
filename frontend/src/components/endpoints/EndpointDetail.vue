@@ -141,11 +141,13 @@
     }
   }
 
-  const fetchRepoDetail = async () => {
+  const fetchRepoDetail = async (isUpdate = false) => {
     if (isDataLoading.value) {
       return false
     }
-    isDataLoading.value = true
+    if (!isUpdate) {
+      isDataLoading.value = true
+    }
     
     const url = `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
 

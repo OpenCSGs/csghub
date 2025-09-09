@@ -301,7 +301,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
         }
       },
 

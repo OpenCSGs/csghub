@@ -652,7 +652,7 @@
         }
         const { data, error } = await useFetchApi(updateReadmeEndpoint, option).put().json()
         if (data.value) {
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         } else {
           ElMessage({ message: error.value.msg, type: 'warning' })
@@ -670,7 +670,7 @@
         if (error.value) {
           ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
         }
       },
@@ -712,7 +712,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: 'Success', type: 'success' })
         }
       }
