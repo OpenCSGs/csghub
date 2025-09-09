@@ -17,6 +17,8 @@ export const all = {
   programLanguage: "Programming Language",
   runmode: "Runmode",
   scene: "Scene",
+  sdk: "SDK",
+  hardware: "Hardware",
   others: "Others",
   contributors: "Contributors",
   historyCommits: "History commits",

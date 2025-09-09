@@ -124,29 +124,6 @@
 
     <el-divider />
 
-    <!-- 展示SDK类型 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.sdkType') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.sdkTypeTips') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <p class="text-gray-700 text-sm">
-          {{ $t('application_spaces.sdkType') }}
-        </p>
-        <div
-          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
-          {{ theSdk || $t('all.unknown') }}
-        </div>
-      </div>
-    </div>
-
-    <el-divider />
-
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -226,8 +203,8 @@
     </div>
 
     <!-- docker space variables -->
-    <el-divider v-if="theSdk === 'docker'"/>
-    <div v-if="theSdk === 'docker'">
+    <el-divider v-if="theVariables && Object.keys(theVariables).length > 0"/>
+    <div v-if="theVariables && Object.keys(theVariables).length > 0">
       <div class="flex xl:flex-col gap-8">
         <div class="w-[380px] sm:w-full flex flex-col">
           <div class="text-sm text-gray-700 leading-5 font-medium">
@@ -463,7 +440,6 @@
       appStatus: String,
       cloudResource: String,
       coverImage: String,
-      sdk: String,
       variables: Object
     },
 
@@ -475,7 +451,6 @@
         applicationSpacePath: this.path,
         theApplicationSpaceNickname: this.applicationSpaceNickname || '',
         theApplicationSpaceDesc: this.applicationSpaceDesc || '',
-        theSdk: this.sdk || '',
         theVariables: this.variables || {},
         theCloudResource: /^\d+$/.test(this.cloudResource)
           ? Number(this.cloudResource)
