@@ -18,10 +18,10 @@ export const models = {
   tips:" Creating and Uploading Model Files",
   modelsUsedToTrain: "Model used to train",
   index: {
-    allFilter: "all models",
-    inferenceFilter: "support inference",
-    finetuneFilter: "support finetune",
-    evaluationFilter: "support evaluation",
+    allFilter: "All models",
+    inferenceFilter: "Support inference",
+    finetuneFilter: "Support finetune",
+    evaluationFilter: "Support evaluation",
     serverlessFilter: "Serverless API"
   },
   newModel: {
