@@ -1,53 +1,65 @@
 <template>
-  <div class="flex flex-col gap-[24px] px-6 py-10 border-l md:border-l-0">
+  <div class="flex flex-col gap-6 px-6 md:px-0 py-10 border-l md:border-l-0">
     <div class="font-semibold text-xl leading-[28px]">
       {{ $t('profile.accountSetting') }}
     </div>
     <!-- avatar -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">{{ $t('profile.edit.userAvatar') }}</div>
+    <div class="flex flex-row items-center gap-5 mb-2">
       <el-avatar
-        :size="120"
+        :size="96"
         :src="profileData.avatar.value">
       </el-avatar>
-      <div class="flex gap-[12px] fileInput">
+      <div class="flex flex-col gap-3 fileInput">
         <input
           ref="fileInput"
           type="file"
           class="hidden"
           @change="uploadAvatar" />
-        <div
+        <CsgButton
           @click="uploadImage"
-          class="btn btn-primary btn-sm">
-          {{ $t('profile.edit.uploadAvatar') }}
-        </div>
-        <div
+          class="btn btn-secondary-gray btn-sm"
+          :name="$t('profile.edit.uploadAvatar')"
+        />
+        <CsgButton  
           @click="removeImage"
-          class="btn btn-secondary-gray btn-sm">
-          {{ $t('profile.edit.removeAvatar') }}
-        </div>
+          class="btn btn-outline-danger btn-sm"
+          :name="$t('profile.edit.removeAvatar')"
+        />
       </div>
     </div>
-    <!-- name -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.userName') }}
+    <!-- name and nickname -->
+    <div class="flex gap-4 max-w-[600px]">
+      <div class="flex-1">
+        <div class="flex items-center gap-1 mb-2">
+          {{ $t('all.userName') }}
+        </div>
+        <el-input
+          size="large"
+          v-model="profileData.username.value"
+          :disabled="!canChangeUsername"
+          :placeholder="$t('all.userName')">
+        </el-input>
+        <p class="text-gray-500 text-xs italic pt-1">
+          {{ $t('rule.nameRule') }}
+        </p>
       </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.username.value"
-        :disabled="!canChangeUsername"
-        :placeholder="$t('all.userName')">
-      </el-input>
-      <p class="text-gray-500 text-xs italic pt-1">
-        {{ $t('rule.nameRule') }}
-      </p>
+      <div class="flex-1">
+        <div class="flex items-center gap-1 mb-2">
+          {{ $t('all.nickName') }}
+        </div>
+        <el-input
+          size="large"
+          v-model="profileData.nickname.value"
+          :placeholder="$t('all.nickName')"
+          @change="handleInputChange">
+        </el-input>
+      </div>
     </div>
     <!-- phone -->
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.phone')
-        }}<svg
+      <div class="flex items-center gap-1 mb-2">
+        {{ $t('all.phone')}}
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width="6"
           height="6"
@@ -60,6 +72,7 @@
       </div>
       <el-input
         class="max-w-[600px]"
+        size="large"
         v-model="profileData.phone.value"
         disabled
         :placeholder="$t('all.phone')">
@@ -67,7 +80,7 @@
     </div>
     <!-- email -->
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
+      <div class="flex items-center gap-1 mb-2">
         {{ $t('all.email')
         }}<svg
           xmlns="http://www.w3.org/2000/svg"
@@ -85,6 +98,7 @@
         <el-form-item prop="email">
           <el-input
             class="max-w-[600px]"
+            size="large"
             v-model="form.email"
             :placeholder="$t('all.email')"
             @change="handleInputChange">
@@ -93,25 +107,14 @@
       </el-form>
 
     </div>
-    <!-- nickname -->
-    <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
-        {{ $t('all.nickName') }}
-      </div>
-      <el-input
-        class="max-w-[600px]"
-        v-model="profileData.nickname.value"
-        :placeholder="$t('all.nickName')"
-        @change="handleInputChange">
-      </el-input>
-    </div>
     <!-- homepage -->
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
+      <div class="flex items-center gap-1 mb-2">
         {{ $t('all.homepage') }}
       </div>
       <el-input
         class="max-w-[600px]"
+        size="large"
         v-model="profileData.homepage.value"
         :placeholder="$t('all.homepage')"
         @change="handleInputChange">
@@ -119,11 +122,12 @@
     </div>
     <!-- bio -->
     <div>
-      <div class="flex items-center gap-[4px] mb-[8px]">
+      <div class="flex items-center gap-1 mb-2">
         {{ $t('all.bio') }}
       </div>
       <el-input
         class="max-w-[600px]"
+        size="large"
         v-model="profileData.bio.value"
         clearable
         type="textarea"
@@ -133,6 +137,7 @@
       </el-input>
     </div>
     <div
+      v-if="hasBasicInfoChanges"
       @click="confirmUpdateProfile"
       class="btn btn-primary btn-md w-fit">
       {{ $t('all.save') }}
@@ -144,7 +149,7 @@
   import csrfFetch from '../../packs/csrfFetch.js'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
-  import { ref, reactive, watch } from 'vue'
+  import { ref, reactive, watch, computed } from 'vue'
   import useUserStore from '../../stores/UserStore.js'
   import { storeToRefs } from 'pinia'
   import { useI18n } from 'vue-i18n'
@@ -189,9 +194,88 @@
 
   const fileInput = ref(null)
   const emit = defineEmits(['updateHasSave'])
+  
+  // 存储初始值用于比较
+  const initialUsername = ref('')
+  const initialNickname = ref('')
+  const initialHomepage = ref('')
+  const initialBio = ref('')
+  const initialAvatar = ref('')
+  const hasInitialized = ref(false)
+  
+  // 初始化函数
+  const initializeValues = () => {
+    if (!hasInitialized.value) {
+      initialUsername.value = profileData.username?.value || ''
+      initialNickname.value = profileData.nickname?.value || ''
+      initialHomepage.value = profileData.homepage?.value || ''
+      initialBio.value = profileData.bio?.value || ''
+      initialAvatar.value = profileData.avatar?.value || ''
+      hasInitialized.value = true
+    }
+  }
+  
+  // 重置初始值函数（保存成功后调用）
+  const resetInitialValues = () => {
+    initialUsername.value = profileData.username?.value || ''
+    initialNickname.value = profileData.nickname?.value || ''
+    initialHomepage.value = profileData.homepage?.value || ''
+    initialBio.value = profileData.bio?.value || ''
+    initialAvatar.value = profileData.avatar?.value || ''
+  }
 
   const { canChangeUsername } = storeToRefs(userStore)
   const { refreshCanChangeUsernameCookie } = userStore
+
+  // 计算属性：检查字段是否有变化
+  const hasBasicInfoChanges = computed(() => {
+    return (profileData.username?.value || '') !== initialUsername.value ||
+           (profileData.nickname?.value || '') !== initialNickname.value ||
+           (profileData.homepage?.value || '') !== initialHomepage.value ||
+           (profileData.bio?.value || '') !== initialBio.value ||
+           (profileData.avatar?.value || '') !== initialAvatar.value
+  })
+
+  // 初始化初始值
+  initializeValues()
+  
+  // watch 函数需要在所有相关变量定义之后
+  watch(
+    () => profileData,
+    (newVal, oldVal) => {
+      // 只有在不是第一次初始化时才更新初始化状态
+      if (oldVal) {
+        userStore.updateInitalized(false)
+      }
+      form.email = profileData.email?.value || ''
+      
+      // 更新初始值（排除手机号和邮箱）
+      initializeValues()
+    },
+    { deep: true, immediate: true }
+  )
+
+  // 调试用：监控计算属性变化
+  watch(
+    () => hasBasicInfoChanges.value,
+    (newVal) => {
+      console.log('hasBasicInfoChanges:', newVal)
+      console.log('Current values:', {
+        username: profileData.username?.value || '',
+        nickname: profileData.nickname?.value || '',
+        homepage: profileData.homepage?.value || '',
+        bio: profileData.bio?.value || '',
+        avatar: profileData.avatar?.value || ''
+      })
+      console.log('Initial values:', {
+        username: initialUsername.value,
+        nickname: initialNickname.value,
+        homepage: initialHomepage.value,
+        bio: initialBio.value,
+        avatar: initialAvatar.value
+      })
+    }
+  )
 
   const uploadImage = () => {
     fileInput.value.click()
@@ -199,7 +283,9 @@
 
   const removeImage = () => {
     fileInput.value.value = ''
-    profileData.avatar.value = ''
+    if (profileData.avatar) {
+      profileData.avatar.value = ''
+    }
   }
 
   const uploadAvatar = async () => {
@@ -215,7 +301,9 @@
     if (!response.ok) {
       ElMessage.warning(result.message)
     } else {
-      profileData.avatar.value = result.url
+      if (profileData.avatar) {
+        profileData.avatar.value = result.url
+      }
     }
   }
 
@@ -254,7 +342,7 @@
     }
 
     if (canChangeUsername.value) {
-      params['new_username'] = profileData.username.value
+      params['new_username'] = profileData.username?.value || ''
     }
 
     Object.keys(params).forEach(key => {
@@ -288,7 +376,7 @@
   }
 
   const saveProfile = (config={}) => {
-    if (isBlank(profileData.username.value)) {
+    if (isBlank(profileData.username?.value)) {
       ElMessage.warning("Please provide username")
       return
     }
