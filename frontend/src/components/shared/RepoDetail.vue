@@ -131,9 +131,11 @@
       }
       const repoData = data.value.data
       repoDetailStore.initialize(repoData, props.repoType)
+
+      const urlParams = getUrlParams();
       setRepoTab({
-        currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
-      })
+        currentBranch: urlParams.branch || props.currentBranch || repoDetailStore.defaultBranch,
+      });
       return true
     } catch (error) {
       console.error('Failed to fetch repo detail:', error)
