@@ -1,5 +1,5 @@
 <template>
-  <div class="z-20 bg-white border-b border-gray-100">
+  <div class="z-20 bg-white border-gray-100">
     <div class="sticky top-14 pt-6 w-72 rounded-md mx-6 md:w-full md:mx-0">
       <div
         @click="clickProfile"

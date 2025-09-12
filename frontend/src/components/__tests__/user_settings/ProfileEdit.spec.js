@@ -158,7 +158,7 @@ describe('ProfileEdit.vue', () => {
     const clickSpy = vi.spyOn(wrapper.vm.fileInput, 'click')
 
     // Find and click the upload avatar button
-    await wrapper.find('.btn.btn-primary.btn-sm').trigger('click')
+    await wrapper.find('.btn.btn-secondary-gray.btn-sm').trigger('click')
 
     expect(clickSpy).toHaveBeenCalled()
   })
@@ -168,7 +168,7 @@ describe('ProfileEdit.vue', () => {
 
     wrapper.vm.profileData.avatar.value = 'https://example.com/avatar.jpg'
 
-    await wrapper.find('.btn-secondary-gray.btn-sm').trigger('click')
+    await wrapper.find('.btn.btn-outline-danger.btn-sm').trigger('click')
 
     await wrapper.vm.$nextTick()
 
