@@ -13,11 +13,13 @@ export const dataPipelines = {
   "targetFormat": "Target Format",
   "dataFlowBranch": "Data Flow Branch",
   "startExecution": "Start Execution",
+  "inProgress": "In Progress",
   "searchTaskName": "Search Task Name",
   "confirmTermination": "Confirm Termination",
   "terminate": "Terminate",
   "waiting": "Waiting",
   "error": "Error",
+  "submitting": "Submitting",
   "taskStatus": "Task Status",
   "labelStudio": "Data Labeling",
   "dataSourceInfo": {
@@ -39,6 +41,7 @@ export const dataPipelines = {
     }
   },
   "testingConnection": "Testing connection",
+  "submitting": "Submitting",
   "pleaseSelectAnExecutionTime": "Please select an execution time",
   "deletingTask": "Deleting task",
   "terminatingTask": "Terminating task",
@@ -183,9 +186,20 @@ export const dataPipelines = {
   "deduplicate": "Deduplicate",
   "remove": "Remove",
   "data_refine": "Data Refinement",
+  "Internal": "Internal",
   "data_generation": "Data Generation",
   "data_enhancement": "Data Enhancement",
-  "Internal": "Internal",
+
+  "data_source": "Data Source",
+  "execution_completed_normally": "Execution completed (normal)",
+  "execution_end_error": "Execution ended (error)",
+  "stopped": "Stopped",
+  "celery_node_service_list": "Celery Node Service List",
+  "ip_address": "IP Address",
+  "current_number_tasks": "Current Number of Tasks",
+  "node_status": "Node Status",
+  "heartbeat_time": "Heartbeat Time",
+
   "taskType": "Task Type",
   "dataCleaning": "Data Cleaning",
   "processingStatus": "Processing Status",
@@ -247,7 +261,9 @@ export const dataPipelines = {
   "submitting": "Submitting",
   "algorithmTemplateDescription": "The algorithm template allows users to build workflows using various model operators, enabling tasks such as data cleaning, automated data augmentation, and analysis.",
   "taskTemplate": "Task Template",
+  "searchTaskTemplate": "Search task template",
   "searchTemplate": "Search Template",
+  "searchOperator": "search operator",
   "templateName": "Template Name",
   "templateDescription": "Template Description",
   "searchTaskTemplate": "Search Task Template",
@@ -362,6 +378,9 @@ export const dataPipelines = {
 
   "opencsg_data_extraction_preprocess_internal": "opencsg data extraction preprocess",
   "opencsg_scrape_url_data_preprocess_internal": "opencsg scrape url data preprocess",
+  "fineweb_edu_chinese_common_internal": "fineweb edu chinese common",
+  "smoltalk_chinese_common_internal": "smoltalk chinese common",
+  "cosmopedia_chinese_preprocess_internal": "cosmopedia chinese preprocess",
 
 
   "analysis_common_internal_dec": "This analyzer class is used to analyze specific datasets. It calculates statistics for all filtering operations in the configuration file, applies various analyses (such as overall analysis, column-by-column analysis, etc.) to these statistics, and generates analysis results (statistical tables, distribution charts, etc.) to help users better understand the input dataset.",
@@ -379,4 +398,7 @@ export const dataPipelines = {
   "quality_classifier_common_internal_dec": "This quality classifier class is used to predict the scores of documents in the dataset. It will calculate scores for all rows and provide two columns for each row: score and should_keep, to help users decide which row should be deleted. By default, if the score is higher than 0.9, the row will be marked as should_keep=1.",
   "opencsg_data_extraction_preprocess_internal_dec": "A high-quality tool for converting PDF to Markdown and JSON",
   "opencsg_scrape_url_data_preprocess_internal_dec": "A large language model-based data scraping tool for websites and local documents (XML, HTML, JSON, etc.)",
+  "fineweb_edu_chinese_common_internal_dec": "Users can define their own scoring criteria, score the data from the data source based on these criteria, and filter the data. The maximum score is 5.",
+  "smoltalk_chinese_common_internal_dec": "Use a fixed system_prompt to generate relevant multi-round dialogues with a large model and score them. Filter the data based on the score specified by the user, and only retain the one with the highest score.",
+  "cosmopedia_chinese_preprocess_internal_dec": "A detailed tutorial on converting raw text to WikiHow style using the MakeCosmopediaMapper operator. This tool invokes large language models to generate structured tutorial content based on the input seed text.",
 }

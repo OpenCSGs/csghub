@@ -205,11 +205,13 @@
   import jsYaml from 'js-yaml';
   import zhOps from "../../../locales/zh_js/operator_zh.json";
   import enOps from "../../../locales/en_js/operator_en.json";
+  import zhHantOps from '../../../locales/zh_hant_js/operator_zhHant.json'
   import { useI18n } from "vue-i18n";
   const { t, locale } = useI18n();
   const operatorI18n = {
     zh: zhOps,
     en: enOps,
+    zhHant: zhHantOps
   };
   const userStore = useUserStore();
   const origin = window.location.origin + '/'; 

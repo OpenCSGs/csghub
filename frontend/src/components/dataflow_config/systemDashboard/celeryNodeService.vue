@@ -8,7 +8,7 @@
       </p>
     </div>
     <p class="text-gray-900 text-2xl font-medium">
-      数据源
+      {{ t("dataPipelines.data_source") }}
     </p>
 
     <div>
@@ -18,7 +18,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">等待中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.waiting") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-blue-500 rounded-full"
             >
@@ -34,7 +34,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.inProgress") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -49,7 +49,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（正常）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_completed_normally") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-green-500 rounded-full"
             >
@@ -64,7 +64,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（错误）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_end_error") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center bg-purple-100 text-purple-500 rounded-full"
             >
@@ -77,7 +77,7 @@
     </div>
 
     <p class="text-gray-900 text-2xl font-medium mt-[16px]">
-      格式转换
+      {{ t("dataPipelines.formatConversion") }}
     </p>
 
     <div>
@@ -87,7 +87,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">等待中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.waiting") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-blue-500 rounded-full"
             >
@@ -102,7 +102,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.inProgress") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -117,7 +117,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">已停止</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.stopped") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -132,7 +132,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（正常）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_completed_normally") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-green-500 rounded-full"
             >
@@ -147,7 +147,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（错误）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_end_error") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center bg-purple-100 text-purple-500 rounded-full"
             >
@@ -160,7 +160,7 @@
     </div>
 
     <p class="text-gray-900 text-2xl font-medium mt-[16px]">
-      数据处理
+      {{ t("dataPipelines.dataProcessing") }}
     </p>
 
     <div>
@@ -170,7 +170,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">等待中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.waiting") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-blue-500 rounded-full"
             >
@@ -186,7 +186,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.inProgress") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -201,7 +201,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（正常）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_completed_normally") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-green-500 rounded-full"
             >
@@ -216,7 +216,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（错误）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_end_error") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center bg-purple-100 text-purple-500 rounded-full"
             >
@@ -260,7 +260,7 @@
     <div class="borderBox mt-8">
       <div class="py-5 px-6">
         <p class="text-lg text-gray-900 font-medium">
-          Celery 节点服务列表
+          {{ t("dataPipelines.celery_node_service_list") }}
         </p>
       </div>
       <div class="flex flex-col">
@@ -278,18 +278,18 @@
           />
           <el-table-column
             prop="current_ip"
-            label="IP地址"
+            :label="t('dataPipelines.ip_address')"
             min-width="180"
           />
           <el-table-column
             prop="task_count"
-            label="当前任务数"
-            min-width="160"
+            :label="t('dataPipelines.current_number_tasks')"
+            min-width="200"
           />
 
           <el-table-column
             prop="status"
-            label="节点状态"
+            :label="t('dataPipelines.node_status')"
             min-width="160"
           >
             <template #default="scope">
@@ -306,7 +306,7 @@
           
           <el-table-column
             prop="ack_time"
-            label="心跳时间"
+            :label="t('dataPipelines.heartbeat_time')"
             min-width="280"
           >
             <template #default="scope">

@@ -431,6 +431,7 @@ import {
 // 引入国际化文件
 import zhOps from "../../../../locales/zh_js/operator_zh.json";
 import enOps from "../../../../locales/en_js/operator_en.json";
+import zhHantOps from '../../../../locales/zh_hant_js/operator_zhHant.json'
 
 const { t, locale } = useI18n();
 const origin = window.location.origin + "/";
@@ -439,6 +440,7 @@ const origin = window.location.origin + "/";
 const operatorI18n = {
   zh: zhOps,
   en: enOps,
+  zhHant: zhHantOps
 };
 
 // 基础状态管理
