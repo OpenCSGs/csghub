@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isDataLoading && isInitialized" class="bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:pb-[70px] md:pb-6 md:h-auto">
+  <div v-show="!isDataLoading && isInitialized" class="bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:pb-[70px] md:pb-6 md:h-auto">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :avatar="repoDetailStore.namespace?.Avatar"
@@ -17,7 +17,7 @@
         :repoType="repoType" />
     </div>
   </div>
-  <div v-if="!isDataLoading && isInitialized" class="page-responsive-width mt-[-40px] xl:mt-[-78px] md:mt-[-40px]">
+  <div v-show="!isDataLoading && isInitialized" class="page-responsive-width mt-[-40px] xl:mt-[-78px] md:mt-[-40px]">
     <repo-tabs
       :repo-detail="repoDetailStore"
       :current-branch="currentBranch || repoDetailStore.defaultBranch || 'main'"
@@ -53,7 +53,7 @@
   import { isWithinTwoWeeks } from '../../packs/datetimeUtils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
 
-  const { setRepoTab } = useRepoTabStore()
+  const { setRepoTab, resetFileNotFound } = useRepoTabStore()
 
   const props = defineProps({
     defaultTab: String,
@@ -72,11 +72,9 @@
   const { isInitialized } = storeToRefs(repoDetailStore)
   const lastCommit = ref({})
 
-  // 添加防抖相关状态
-  const isLoading = ref(false)
   const lastFetchTime = ref(0)
   const FETCH_DEBOUNCE_TIME = 1000
-  const isDataLoading = ref(true)
+  const isDataLoading = ref(false)
   
   const showNewTag = computed(() => {
     return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(repoDetailStore.createdAt) || isWithinTwoWeeks(repoDetailStore.updatedAt));
@@ -102,16 +100,16 @@
     )
   })
 
-  const fetchRepoDetail = async () => {
-    if (isLoading.value) {
+  const fetchRepoDetail = async (isUpdate = false) => {
+    if (isDataLoading.value) {
       return false
     }
     
-    isDataLoading.value = true
-    isLoading.value = true
-    lastFetchTime.value = Date.now()
+    if (!isUpdate) {
+      isDataLoading.value = true
+      lastFetchTime.value = Date.now()
+    }
     
-    // 添加时间戳参数来避免浏览器缓存
     const timestamp = Date.now()
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}?_t=${timestamp}`
 
@@ -141,7 +139,6 @@
       console.error('Failed to fetch repo detail:', error)
       return false
     } finally {
-      isLoading.value = false
       isDataLoading.value = false
     }
   }
@@ -162,21 +159,12 @@
   }
 
   const handleRepoTags = (repoData) => {
-    if (repoData.tags) {
-      return buildTags(repoData.tags)
+    // 为 buildTags 函数添加 repoType 信息
+    const dataWithRepoType = {
+      ...repoData,
+      repoType: props.repoType
     }
-
-    if (props.repoType === 'code' && repoData.license) {
-      return buildTags([
-        {
-          name: repoData.license,
-          category: 'license',
-          built_in: true
-        }
-      ])
-    }
-
-    return {}
+    return buildTags(dataWithRepoType)
   }
 
   const getUrlParams = () => {
@@ -190,7 +178,7 @@
   }
 
   const handlePopState = () => {
-    if (isLoading.value) {
+    if (isDataLoading.value) {
       return
     }
     
@@ -199,12 +187,14 @@
       return
     }
     
-    // 重新获取数据
+    resetFileNotFound()
+    
     fetchRepoDetail()
     fetchLastCommit()
   }
 
   onMounted(async () => {
+    resetFileNotFound()
     const urlParams = getUrlParams()
     
     const initialData = {
@@ -219,7 +209,6 @@
     
     setRepoTab(initialData)
     
-    // 只有主请求成功后才获取其他数据
     const success = await fetchRepoDetail()
     if (success) {
       fetchLastCommit()
@@ -230,6 +219,7 @@
 
   onUnmounted(() => {
     window.removeEventListener('popstate', handlePopState)
+    resetFileNotFound()
   })
 
   provide('fetchRepoDetail', fetchRepoDetail)

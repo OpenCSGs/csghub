@@ -8,6 +8,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import 'element-plus/dist/index.css'
 import './assets/stylesheets/element-plus/_variables.css'
+import "./assets/stylesheets/element-plus/index.css";
+import "./assets/stylesheets/element-plus/dropdown.css";
 import './assets/stylesheets/markdown.css'
 import './style.css'
 import { createWebHistory, createRouter } from "vue-router";

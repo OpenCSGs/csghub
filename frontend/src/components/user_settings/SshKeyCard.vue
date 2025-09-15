@@ -36,7 +36,7 @@
       <p>{{ $t('sshKey.sureDelKey') }}</p>
     </div>
     <template #footer>
-      <span class="dialog-footer">
+      <span class="dialog-footer flex justify-end">
         <CsgButton :name="$t('all.cancel')" class="btn btn-secondary-gray btn-sm" @click="deleteDialogVisible = false" />
         <CsgButton :name="$t('all.delete')" class="btn btn-danger btn-sm ml-[12px]" @click="confirmDeleteSshKey(theSshKeyName)" />
       </span>

@@ -73,10 +73,10 @@
       </div>
     </div>
 
-    <el-divider />
+    <el-divider v-if="initialized && !isSpaceStopped" />
 
     <!-- 暂停 Space -->
-    <div class="flex xl:flex-col gap-8">
+    <div v-if="initialized && !isSpaceStopped" class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('application_spaces.stopSpace') }}
@@ -203,8 +203,8 @@
     </div>
 
     <!-- docker space variables -->
-    <el-divider v-if="theSdk === 'docker'"/>
-    <div v-if="theSdk === 'docker'">
+    <el-divider v-if="theVariables && Object.keys(theVariables).length > 0"/>
+    <div v-if="theVariables && Object.keys(theVariables).length > 0">
       <div class="flex xl:flex-col gap-8">
         <div class="w-[380px] sm:w-full flex flex-col">
           <div class="text-sm text-gray-700 leading-5 font-medium">
@@ -440,7 +440,6 @@
       appStatus: String,
       cloudResource: String,
       coverImage: String,
-      sdk: String,
       variables: Object
     },
 
@@ -452,7 +451,6 @@
         applicationSpacePath: this.path,
         theApplicationSpaceNickname: this.applicationSpaceNickname || '',
         theApplicationSpaceDesc: this.applicationSpaceDesc || '',
-        theSdk: this.sdk || '',
         theVariables: this.variables || {},
         theCloudResource: /^\d+$/.test(this.cloudResource)
           ? Number(this.cloudResource)
@@ -805,7 +803,10 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          await this.fetchRepoDetail()
+          const shouldRefreshRepo = !(payload.hasOwnProperty('cluster_id') || payload.hasOwnProperty('resource_id'))
+          if (shouldRefreshRepo) {
+            await this.fetchRepoDetail(true)
+          }
         }
       },
 

@@ -25,7 +25,7 @@ export const evaluation = {
     cluster: "Region",
     clusterTip: "It is recommended to choose the region closest to your customers to reduce access latency;",
     resource: "Resource Configuration",
-    resourceTip: "After switching to paid resources, you will be charged based on the length of use.",
+    resourceTip: "Once you switch to a paid resource, you will be charged based on your usage duration.",
     createEvaluation: "Create Evaluation",
     createSuccess: "Evaluation created successfully",
     createFail: "Evaluation creation failed",

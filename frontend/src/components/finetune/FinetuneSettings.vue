@@ -379,8 +379,8 @@ const currentResource = computed(() => {
 
   onMounted(() => {
     fetchClusters()
-    if (currentCid.value) {
-      fetchResources()
-    }
+    // if (currentCid.value) {
+    //   fetchResources()
+    // }
   })
 </script>

@@ -7,6 +7,7 @@
       <TagSidebar
         :selectedTag="selectedTag"
         :selectedTagType="selectedTagType"
+        :externalActiveTags="activeTags"
         @resetTags="resetTags"
         :repoType="repoType" />
     </div>
@@ -47,6 +48,7 @@
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
             @change="filterChange"
+            @keyup.enter="filterChange"
             size="large" />
         </div>
         <div class="md:w-auto flex flex-wrap gap-2">
@@ -164,17 +166,115 @@
     repoType: String
   })
 
+  const activeTags = ref({})
+
   const getQueryParams = () => {
     const { searchParams } = new URL(window.location.href)
     return {
       tag: searchParams.get('tag') ?? '',
-      tagType: searchParams.get('tag_type') ?? ''
+      tagType: searchParams.get('tag_type') ?? '',
+      page: parseInt(searchParams.get('page')) || 1,
+      search: searchParams.get('search') ?? '',
+      sort: searchParams.get('sort') ?? 'trending',
+      filter: searchParams.get('filter') ?? 'all',
+      source: searchParams.get('source') ?? 'all',
+      sdk: searchParams.get('sdk') ?? ''
     }
   }
 
-  const { tag, tagType } = getQueryParams()
-  const selectedTag = ref(tag.toLowerCase())
-  const selectedTagType = ref(tagType.toLowerCase())
+  const updateUrlParams = (mode = 'replace') => {
+    const url = new URL(window.location.href)
+    const params = url.searchParams
+    
+    params.set('page', currentPage.value.toString())
+    params.set('search', nameFilterInput.value)
+    params.set('sort', sortSelection.value)
+    params.set('filter', filterSelection.value)
+    params.set('source', sourceSelection.value)
+    
+    if (props.repoType === 'space') {
+      params.set('sdk', searchSdk.value)
+    }
+    
+    params.delete('tag_category')
+    params.delete('tag_name')
+
+    for (let [category, tags] of Object.entries(activeTags.value)) {
+      if (Array.isArray(tags)) {
+        tags.forEach((tag) => {
+          params.append('tag_category', category)
+          params.append('tag_name', tag.toLowerCase())
+        })
+      }
+    }
+
+    if (selectedTag.value) {
+      params.set('tag', selectedTag.value)
+    } else {
+      params.delete('tag')
+    }
+    
+    if (selectedTagType.value) {
+      params.set('tag_type', selectedTagType.value)
+    } else {
+      params.delete('tag_type')
+    }
+    
+    if (mode === 'push') {
+      window.history.pushState({}, '', url.toString())
+    } else {
+      window.history.replaceState({}, '', url.toString())
+    }
+  }
+
+  const initializeFromParams = () => {
+    const params = getQueryParams()
+    
+    currentPage.value = params.page
+    nameFilterInput.value = params.search
+    sortSelection.value = params.sort
+    filterSelection.value = params.filter
+    sourceSelection.value = params.source
+    searchSdk.value = params.sdk
+    selectedTag.value = params.tag.toLowerCase()
+    selectedTagType.value = params.tagType.toLowerCase()
+
+    const url = new URL(window.location.href)
+    const sp = url.searchParams
+    const categories = sp.getAll('tag_category')
+    const names = sp.getAll('tag_name')
+    const restored = {}
+    for (let i = 0; i < Math.min(categories.length, names.length); i++) {
+      const c = categories[i]
+      const n = (names[i] || '').toLowerCase()
+      if (!restored[c]) restored[c] = []
+      if (n) restored[c].push(n)
+    }
+    activeTags.value = restored
+
+    let count = 0
+    let onlyOneTag = ''
+    let onlyOneCategory = ''
+    for (let [category, tgs] of Object.entries(activeTags.value)) {
+      if (Array.isArray(tgs)) {
+        tgs.forEach((tag) => {
+          count += 1
+          if (count === 1) {
+            onlyOneTag = tag
+            onlyOneCategory = category
+          }
+        })
+      }
+    }
+    if (count === 1) {
+      selectedTag.value = onlyOneTag
+      selectedTagType.value = onlyOneCategory
+    } else if (count > 1) {
+      // 多选时清空单选字段，避免歧义
+      selectedTag.value = ''
+      selectedTagType.value = ''
+    }
+  }
 
   const onPremise = inject('onPremise', 'true')
   const { t } = useI18n()
@@ -185,8 +285,11 @@
   const currentPage = ref(1)
   const totalRepos = ref(0)
   const searchSdk = ref('')
+  const selectedTag = ref('')
+  const selectedTagType = ref('')
+  
+  initializeFromParams()
 
-  const activeTags = ref({})
   const loading = ref(true)
   const windowWidth = ref(window.innerWidth)
 
@@ -195,7 +298,7 @@
     windowWidth.value = window.innerWidth
   }
 
-  const reposData = ref(Array)
+  const reposData = ref([])
   const sortOptions = [
     {
       value: 'trending',
@@ -290,10 +393,36 @@
 
   const resetTags = (tags) => {
     activeTags.value = tags
+    let onlyOneTag = ''
+    let onlyOneCategory = ''
+    let count = 0
+    for (let [category, tgs] of Object.entries(activeTags.value)) {
+      if (Array.isArray(tgs)) {
+        tgs.forEach((tag) => {
+          count += 1
+          if (count === 1) {
+            onlyOneTag = tag.toLowerCase()
+            onlyOneCategory = category
+          }
+        })
+      }
+    }
+    if (count === 1) {
+      selectedTag.value = onlyOneTag
+      selectedTagType.value = onlyOneCategory
+    } else {
+      selectedTag.value = ''
+      selectedTagType.value = ''
+    }
+
+    currentPage.value = 1
+    updateUrlParams('push')
     reloadRepos(1)
   }
 
   const filterChange = () => {
+    currentPage.value = 1
+    updateUrlParams('push')
     reloadRepos(1)
   }
 
@@ -308,7 +437,9 @@
   const reloadRepos = (childCurrent) => {
     if (childCurrent) {
       currentPage.value = childCurrent
+      updateUrlParams('replace')
     }
+    
     let url = `/${props.repoType}s`
     url = url + `?page=${childCurrent ? childCurrent : currentPage.value}`
     url = url + `&per=${perPage.value}`
@@ -344,7 +475,15 @@
     loadRepos(url)
   }
 
+  const lastRequestUrl = ref('')
+  const loadingRequest = ref(false)
+
   async function loadRepos(url) {
+    if (loadingRequest.value && lastRequestUrl.value === url) {
+      return
+    }
+    lastRequestUrl.value = url
+    loadingRequest.value = true
     try {
       const { error, data } = await useFetchApi(url).json()
       if (data.value) {
@@ -366,17 +505,24 @@
       ElMessage.warning(error)
     } finally {
       loading.value = false
+      loadingRequest.value = false
     }
+  }
+
+  const handlePopState = () => {
+    initializeFromParams()
+    reloadRepos()
   }
 
   onMounted(() => {
     window.addEventListener('resize', updateWindowWidth)
-    if (props.repoType === 'space') {
-      reloadRepos()
-    }
+    window.addEventListener('popstate', handlePopState)
+    
+    reloadRepos()
   })
 
   onUnmounted(() => {
     window.removeEventListener('resize', updateWindowWidth)
+    window.removeEventListener('popstate', handlePopState)
   })
 </script>

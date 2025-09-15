@@ -1,0 +1,71 @@
+/* 下拉菜单按钮样式 */
+.el-dropdown {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 禁用下拉菜单触发器的焦点轮廓 */
+
+
+.el-dropdown *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 下拉菜单容器样式 */
+.el-dropdown-menu {
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid var(--Gray-300);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* 下拉菜单项样式 */
+.el-dropdown-menu__item {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--Gray-700);
+  border-radius: 6px;
+  margin: 2px 2px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.el-dropdown-menu__item:not(.is-disabled):hover {
+  background-color: var(--Gray-50);
+  color: inherit;
+}
+
+/* 禁用下拉菜单触发器的hover颜色变化 */
+.el-dropdown .btn.btn-secondary-gray:hover {
+  background-color: var(--Gray-50) !important;
+  border-color: var(--Gray-300) !important;
+  color: var(--Gray-800) !important;
+}
+
+.el-dropdown-menu__item:not(.is-disabled):focus {
+  background-color: var(--Gray-50);
+  color: var(--Gray-800);
+}
+
+.el-dropdown-menu__item.is-disabled {
+  color: var(--Gray-400);
+  cursor: not-allowed;
+}
+
+
+.el-dropdown-menu__divider {
+  margin: 4px 0;
+  border-top: 1px solid var(--Gray-100);
+}
+
+
+.el-icon.el-icon--right {
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+
+.el-dropdown .el-button .el-icon {
+  font-size: 14px;
+}

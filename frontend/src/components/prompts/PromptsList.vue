@@ -7,10 +7,10 @@
     firstHrefName="prompts.promptLibrary"
     class="sticky top-0 md:top-[60px] bg-white left-0 z-10"
   />
+  <!-- v-loading="loading" -->
   <div
     class="w-full text-gray-900 flex flex-col gap-5 p-8 md:p-1 md:px-12 sm:px-5"
-    v-loading="loading"
-    v-if="!isDataLoading"
+    v-show="!isDataLoading"
   >
     <div
       class="flex flex-col gap-4"
@@ -176,7 +176,6 @@
       />
     </div>
     <CsgPagination
-    <CsgPagination
       :perPage="perPage"
       :currentPage="currentPage"
       @currentChange="filterPrompts"
@@ -205,8 +204,7 @@ import LoadingSpinner from '../shared/LoadingSpinner.vue'
 
   const perPage = ref(24)
   const currentPage = ref(1)
-  const loading = ref(true)
-  const isDataLoading = ref(true)
+  const isDataLoading = ref(false)
   const nameFilterInput = ref('')
   const repo = ref({})
   const models = ref({ data: [] })
@@ -286,8 +284,10 @@ import LoadingSpinner from '../shared/LoadingSpinner.vue'
   }
 
   const fetchPromptsList = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
     isDataLoading.value = true
-    loading.value = true
     
     try {
       const { response, data, error } = await useFetchApi(
@@ -316,7 +316,6 @@ import LoadingSpinner from '../shared/LoadingSpinner.vue'
     } catch (error) {
       return false
     } finally {
-      loading.value = false
       isDataLoading.value = false
     }
   }

@@ -164,6 +164,46 @@
       target="other"
       @view-more-targets="viewMoreTargets"
     />
+    <!-- Hardware -->
+    <div
+      v-if="hardwareTags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      {{ $t('all.hardware') }}:
+    </div>
+    <div
+      v-for="tag in theHardwareTags.theTags"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      <SvgIcon name="hardware_icon" />
+      {{ tag.name }}
+    </div>
+    <MoreTags
+      v-if="theHardwareTags.moreTags"
+      :num="hardwareTags.length - 3"
+      target="hardware"
+      @view-more-targets="viewMoreTargets"
+    />
+    <!-- SDK -->
+    <div
+      v-if="sdkTags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      {{ $t('all.sdk') }}:
+    </div>
+    <div
+      v-for="tag in theSdkTags.theTags"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      <SvgIcon name="space_mcp" v-if="tag.name === 'mcp_server'" />
+      {{ tag.name }}
+    </div>
+    <MoreTags
+      v-if="theSdkTags.moreTags"
+      :num="sdkTags.length - 3"
+      target="sdk"
+      @view-more-targets="viewMoreTargets"
+    />
     <!-- License -->
     <div
       v-if="licenseTags?.length"
@@ -177,8 +217,7 @@
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-2xl cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       <SvgIcon name="repo_header_license_icon" />
-      License:
-      <p class="text-gray-700">{{ tag.name }}</p>
+      {{ tag.name }}
     </a>
     <MoreTags
       v-if="theLicenseTags.moreTags"
@@ -250,6 +289,14 @@
     return props.tags.scene_tags
   })
 
+  const sdkTags = computed(() => {
+    return props.tags.sdk_tags
+  })
+
+  const hardwareTags = computed(() => {
+    return props.tags.hardware_tags
+  })
+
     //先定义一个生产参数的方法
   const createTagRefs = (tagType) => {
     const moreTags = ref(tagType.value?.length > 3)
@@ -266,6 +313,8 @@
   const theProgramLanguageTags = ref(createTagRefs(programLanguageTags))
   const theRunmodeTags = ref(createTagRefs(runmodeTags))
   const theSceneTags = ref(createTagRefs(sceneTags))
+  const theSdkTags = ref(createTagRefs(sdkTags))
+  const theHardwareTags = ref(createTagRefs(hardwareTags))
 
   watch(() => props.tags, () => {
     theTaskTags.value = createTagRefs(taskTags)
@@ -277,6 +326,8 @@
     theProgramLanguageTags.value = createTagRefs(programLanguageTags)
     theRunmodeTags.value = createTagRefs(runmodeTags)
     theSceneTags.value = createTagRefs(sceneTags)
+    theSdkTags.value = createTagRefs(sdkTags)
+    theHardwareTags.value = createTagRefs(hardwareTags)
   })
 
   const tagGroups = {
@@ -315,6 +366,14 @@
     scene: {
       source: sceneTags,
       target: theSceneTags
+    },
+    sdk: {
+      source: sdkTags,
+      target: theSdkTags
+    },
+    hardware: {
+      source: hardwareTags,
+      target: theHardwareTags
     }
   }
 

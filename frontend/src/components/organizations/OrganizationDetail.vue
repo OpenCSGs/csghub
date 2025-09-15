@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isDataLoading">
+  <div v-show="!isDataLoading">
     <div class="py-[16px] bg-gray-25">
       <div class="page-responsive-width m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
@@ -133,13 +133,17 @@
   const membersList = ref([])
   const verifiedStatus = ref('')
   const verifiedReason = ref('')
-  const isDataLoading = ref(true)
+  const isDataLoading = ref(false)
 
   const userStore = useUserStore()
 
   const role = ref('')
 
   const fetchOrgDetail = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    isDataLoading.value = true
     const orgDetailEndpoint = `/organization/${props.name}`
     const { response, data, error } = await useFetchApi(orgDetailEndpoint).json()
     

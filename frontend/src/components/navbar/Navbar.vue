@@ -468,16 +468,16 @@
           </div>
           <div
             v-if="msgNum > 0"
-            class="flex items-center gap-[4px] py-[2px] px-[6px] border border-gray-300 rounded-sm shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] ml-[16px]">
+            class="flex items-center gap-1 py-0.5 px-1.5 border border-gray-300 rounded-sm shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] ml-4">
             <SvgIcon
               name="dot-ico"
-              class="w-[8px] h-[8px]" />{{ msgNum || 0 }}
+              class="w-2 h-2" />{{ msgNum || 0 }}
           </div>
         </div>
-        <div class="flex items-center justify-end gap-[12px]">
+        <div class="flex items-center justify-end gap-4">
           <div class="relative">
             <CsgButton
-              class="btn btn-secondary-gray btn-md"
+              class="btn btn-secondary-gray btn-sm"
               svgName="filter-lines"
               :name="$t('navbar.msgSettings')"
               @click.stop="getMsgSettings" />
@@ -525,13 +525,12 @@
           </div>
           <CsgButton
             class="btn btn-secondary-gray btn-md"
-            style="padding: 14px !important"
             svgName="close"
             @click="close" />
         </div>
       </div>
     </template>
-    <div class="px-[16px] pb-[12px] pt-1">
+    <div class="px-4 pb-1 pt-1">
       <el-input
         v-model="searchText"
         class="mb-3"
@@ -543,7 +542,7 @@
           <el-icon><search /></el-icon>
         </template>
       </el-input>
-      <div class="flex items-center justify-between gap-[16px]">
+      <div class="flex items-center justify-between gap-4">
         <el-select
           v-model="selectedFilter"
           style="flex: 1"
@@ -560,17 +559,20 @@
           :label="$t('navbar.onlyUnread')"
           size="large" />
       </div>
-      <div v-if="msgList.length>0" class="flex items-center justify-between">
-        <div class="flex items-center gap-[12px] py-[12px]">
-          <el-checkbox 
+      <div
+        v-if="msgList.length > 0"
+        class="flex items-center justify-between">
+        <div class="flex items-center gap-3 py-2">
+          <el-checkbox
             class="unreadCheckbox"
             v-model="selectAll"
             @change="handleSelectAllChange"
           />
           <span class="text-md text-gray-700">{{ $t('navbar.checkAll') }}</span>
         </div>
-        <div class="flex items-center justify-end gap-[16px]">
+        <div v-if="hasSelectedMessages" class="flex items-center justify-end gap-4">
           <CsgButton
+            v-if="hasUnreadSelectedMessages"
             :disabled="buttonsDisabled"
             class="btn btn-link-color btn-md"
             @click="allRead()"
@@ -600,24 +602,22 @@
       <div
         v-for="(item, index) in msgList"
         :key="index"
-        class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start gap-[12px]">
-        <el-checkbox 
+        class="p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer flex items-start gap-4">
+        <el-checkbox
           v-model="item.checked"
           @change="handleItemCheckChange(item)"
-          class="mt-1 unreadCheckbox"
-        />
-        <div @click="newMsgShowInfo(2, item, index)" class="flex-1">
-          <div class="flex items-start justify-between gap-[16px]">
-            <div class="flex items-center justify-start gap-[12px]">
-              <span
-                class="block w-[8px] h-[8px] rounded-full flex-shrink-0"
-                :class="item.is_read ? '' : 'bg-brand-500'"></span>
+          class="mt-2 unreadCheckbox" />
+        <div
+          @click="newMsgShowInfo(2, item, index)"
+          class="flex-1">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center justify-start gap-4">
               <SvgIcon
                 :name="`${item.notification_type}-message`"
-                class="w-[40px] h-[40px]" />
+                class="w-10 h-10" />
               <div class="text-sm">
-                <p class="text-gray-700 font-medium">{{ item.title }}</p>
-                <p class="text-gray-600 font-light line-clamp-1">
+                <p :class="item.is_read ? 'text-gray-500 font-normal' : 'text-gray-700 font-medium'" class="line-clamp-1 hover:underline">{{ item.title }}</p>
+                <p :class="item.is_read ? 'text-gray-500 font-light' : 'text-gray-600 font-light'" class="line-clamp-1 hover:underline">
                   {{ item.click_action_url }}
                 </p>
               </div>
@@ -626,7 +626,7 @@
               {{ `${formatTime(item.created_at * 1000)}` }}
             </p>
           </div>
-          <p class="mt-[16px] text-gray-600 text-sm line-clamp-2">
+          <p class="mt-1 text-gray-600 text-sm font-light line-clamp-2">
             {{ item.content }}
           </p>
         </div>
@@ -661,7 +661,6 @@
         </div>
         <CsgButton
           class="btn btn-secondary-gray btn-md"
-          style="padding: 14px !important"
           svgName="close"
           @click="close" />
       </div>
@@ -736,12 +735,18 @@
         <el-form-item
           :label="$t('navbar.userSetLabel5')"
           prop="message_ttl">
-          <el-input v-model="userSetForm.message_ttl" @change="handleMessageTTLChange" />
-          <p class="text-gray-600 text-sm mt-[8px]">{{ $t('navbar.userSetLabel6') }}</p>
+          <el-input
+            v-model="userSetForm.message_ttl"
+            size="large"
+            @change="handleMessageTTLChange" />
+          <p class="text-gray-600 text-sm mt-2 font-light">
+            {{ $t('navbar.userSetLabel6') }}
+          </p>
         </el-form-item>
       </el-form>
     </div>
-    <div class="border-t-1 border-gray-200 flex justify-center items-center gap-[12px] p-[24px]">
+    <div
+      class=" border-t border-gray-200 flex justify-end items-center gap-3 p-6">
       <CsgButton
             class="btn btn-secondary-gray btn-md flex-1"
             :name="$t('navbar.userSetCancel')"
@@ -910,6 +915,12 @@
       },
       buttonsDisabled() {
         return !this.selectAll && this.selectedItems.length === 0
+      },
+      hasSelectedMessages() {
+        return this.selectedItems.length > 0
+      },
+      hasUnreadSelectedMessages() {
+        return this.selectedItems.some(item => !item.is_read)
       }
     },
     methods: {
@@ -951,6 +962,8 @@
         if (data.value) {
           this.resetList()
           this.getMsgNum()
+          this.selectedItems = []
+          this.selectAll = false
         } else {
           ElMessage.warning(error.value.msg)
         }
@@ -976,6 +989,8 @@
         if (data.value) {
           this.resetList()
           this.getMsgNum()
+          this.selectedItems = []
+          this.selectAll = false
         } else {
           ElMessage.warning(error.value.msg)
         }
@@ -1166,7 +1181,7 @@
           }, 300000)
         }
       },
-      async getMsgList() {
+      async getMsgList(reset = false) {
         if (this.loading || this.noMore) return
 
         this.loading = true
@@ -1180,7 +1195,13 @@
                 ...msg,
                 checked: false
             }))
-            this.msgList = [...this.msgList, ...newMessages]
+            
+            if (reset) {
+              this.msgList = newMessages
+            } else {
+              this.msgList = [...this.msgList, ...newMessages]
+            }
+            
             this.currentPage++
 
             if (data.value.data.messages.length < this.pageSize) {
@@ -1217,7 +1238,7 @@
         this.currentPage = 1
         this.noMore = false
         this.selectAll = false
-        this.getMsgList()
+        this.getMsgList(true)
       },
 
       async fetchSystemConfig() {

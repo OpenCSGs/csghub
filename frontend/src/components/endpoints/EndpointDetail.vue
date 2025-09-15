@@ -1,7 +1,7 @@
 <template>
   <div 
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
-    v-show="!isDataLoading && isInitialized">
+    v-show="isInitialized">
     <div class="mx-auto page-responsive-width">
       <repo-header
         :name="repoDetailStore.deployName"
@@ -80,7 +80,7 @@
   const { isInitialized } = storeToRefs(repoDetailStore)
   const { cookies } = useCookies()
   const { setRepoTab } = useRepoTabStore()
-  
+
   const isDataLoading = ref(false)
 
   // only owner can view endpoint detail, so just set true
@@ -141,8 +141,13 @@
     }
   }
 
-  const fetchRepoDetail = async (isInitialLoad = true) => {
-    isDataLoading.value = true
+  const fetchRepoDetail = async (isUpdate = false) => {
+    if (isDataLoading.value) {
+      return false
+    }
+    if (!isUpdate) {
+      isDataLoading.value = true
+    }
     
     const url = `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
 

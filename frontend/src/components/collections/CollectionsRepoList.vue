@@ -14,15 +14,18 @@
       <div
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
-        <div class="flex gap-2" v-for="model in models">
-          <div class="flex w-full gap-2 group">
-            <repo-item
-              :repo="model"
-              repo-type="model"
-            ></repo-item>
-            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(model.id)" name="trash" />
-          </div>
-        </div>
+        <CollectionsRepoCard
+          v-for="model in models"
+          :key="model.id"
+          :repo="model"
+          :can-manage="canManage"
+          @update:remark="updateRemark"
+          @remove="removeRepo"
+        >
+          <template #item>
+            <repo-item :repo="model" repo-type="model" />
+          </template>
+        </CollectionsRepoCard>
       </div>
     </div>
 
@@ -40,15 +43,18 @@
       <div
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
-        <div class="flex gap-2" v-for="dataset in datasets">
-          <div class="flex w-full gap-2 group">
-            <repo-item
-              :repo="dataset"
-              repo-type="dataset"
-            ></repo-item>
-            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(dataset.id)" name="trash" />
-          </div>
-        </div>
+        <CollectionsRepoCard
+          v-for="dataset in datasets"
+          :key="dataset.id"
+          :repo="dataset"
+          :can-manage="canManage"
+          @update:remark="updateRemark"
+          @remove="removeRepo"
+        >
+          <template #item>
+            <repo-item :repo="dataset" repo-type="dataset" />
+          </template>
+        </CollectionsRepoCard>
       </div>
     </div>
 
@@ -66,15 +72,18 @@
       <div
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
-        <div class="flex gap-2" v-for="code in codes">
-          <div class="flex w-full gap-2 group">
-            <repo-item
-              :repo="code"
-              repo-type="code"
-            ></repo-item>
-            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(code.id)" name="trash" />
-          </div>
-        </div>
+        <CollectionsRepoCard
+          v-for="code in codes"
+          :key="code.id"
+          :repo="code"
+          :can-manage="canManage"
+          @update:remark="updateRemark"
+          @remove="removeRepo"
+        >
+          <template #item>
+            <repo-item :repo="code" repo-type="code" />
+          </template>
+        </CollectionsRepoCard>
       </div>
     </div>
 
@@ -92,16 +101,18 @@
       <div
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
-        <div class="flex gap-2" v-for="space in spaces">
-          <div class="flex w-full gap-2 group">
-            <application-space-item
-              :repo="space"
-              repo-type="space"
-              class="flex-grow"
-            ></application-space-item>
-            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(space.id)" name="trash" />
-          </div>
-        </div>
+        <CollectionsRepoCard
+          v-for="space in spaces"
+          :key="space.id"
+          :repo="space"
+          :can-manage="canManage"
+          @update:remark="updateRemark"
+          @remove="removeRepo"
+        >
+          <template #item>
+            <application-space-item :repo="space" repo-type="space" class="flex-grow" />
+          </template>
+        </CollectionsRepoCard>
       </div>
     </div>
 
@@ -119,27 +130,31 @@
       <div
         class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-[16px]"
       >
-        <div class="flex gap-2" v-for="mcp in mcps">
-          <div class="flex w-full gap-2 group">
-            <mcp-item
-              :mcp="mcp"
-              :showRightIcons="false"
-            ></mcp-item>
-            <SvgIcon class="cursor-pointer hidden group-hover:block" v-if="canManage" @click="removeRepo(mcp.id)" name="trash" />
-          </div>
-        </div>
+        <CollectionsRepoCard
+          v-for="mcp in mcps"
+          :key="mcp.id"
+          :repo="mcp"
+          :can-manage="canManage"
+          @update:remark="updateRemark"
+          @remove="removeRepo"
+        >
+          <template #item>
+            <mcp-item :mcp="mcp" :showRightIcons="false" />
+          </template>
+        </CollectionsRepoCard>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-  import { computed, ref, onMounted } from 'vue'
+  import { computed, ref, onMounted, inject } from 'vue'
   import RepoItem from '../shared/RepoItem.vue'
   import ApplicationSpaceItem from '../application_spaces/ApplicationSpaceItem.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import McpItem from '../mcp/McpItem.vue'
+  import CollectionsRepoCard from './CollectionsRepoCard.vue'
   import useRepoDetailStore from '@/stores/RepoDetailStore'
 
   const { t } = useI18n()
@@ -162,7 +177,26 @@
   const hasSpaces = computed(() => spaces.value?.length > 0)
   const hasMcps = computed(() => mcps.value?.length > 0)
 
- const removeRepo = async (id) => {
+  const fetchCollectionDetail = inject('fetchCollectionDetail')
+
+  const updateRemark = async (params) => {
+    const remarkData ={
+      remark: params.remark
+    }
+    const options = { body: JSON.stringify(remarkData) }
+    const { data, error } = await useFetchApi(
+      `/collections/${props.collectionsId}/repos/${params.id}`,
+      options
+    ).put().json()
+    if (error.value) {
+      ElMessage.warning(error.value.msg)
+    } else {
+      ElMessage.success(t('all.updateSuccess'))
+      repoDetailStore.clearStore()
+      fetchCollectionDetail()
+    }
+  }
+  const removeRepo = async (id) => {
     try {
       await ElMessageBox.confirm(t('collections.edit.removeTips'), t('collections.edit.removeRepos'), {
         confirmButtonText: t('all.confirm'),
@@ -188,16 +222,19 @@
     const url = `/collections/${props.collectionsId}/repos`
     const { error } = await useFetchApi(url, options).delete().json()
     if (error.value) {
-      ElMessage({ message: error.value.msg, type: 'warning' })
+      ElMessage.warning(error.value.msg)
     }else{
-      ElMessage({ message: t('all.delSuccess'), type: 'success' })
+      ElMessage.success(t('all.delSuccess'))
       repoDetailStore.clearStore()
-      location.href = `/collections/${props.collectionsId}`
+      fetchCollectionDetail()
     }
   }
   onMounted(() => {
     props.repositories.forEach((item) => {
       item.downloads = item.download_count
+      Object.assign(item, {
+        showRemarkInput: false
+      })
       switch (item.repository_type) {
         case 'model':
           models.value.push(item)

@@ -17,6 +17,8 @@ export const all = {
   programLanguage: "Programming Language",
   runmode: "Runmode",
   scene: "Scene",
+  sdk: "SDK",
+  hardware: "Hardware",
   others: "Others",
   contributors: "Contributors",
   historyCommits: "History commits",
@@ -135,5 +137,10 @@ export const all = {
   },
   show: "Show",
   hide: "Hide",
-  copySuccess: "Copied successfully"
+  copy: "Copy",
+  copySuccess: "Copied successfully",
+  allTab:'All Products',
+  unknown: "Unknown",
+  inBranch: "in branch",
+  notExist: "not exist"
 }

@@ -173,8 +173,6 @@
   const { setRepoTab } = useRepoTabStore()
   
   const isDataLoading = ref(false)
-  
-  // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
 
   const { cookies } = useCookies()
   const appEndpoint = computed(() => {
@@ -246,12 +244,13 @@
     }
   }
 
-  const fetchRepoDetail = async () => {
+  const fetchRepoDetail = async (isUpdate = false) => {
     if (isDataLoading.value) {
       return false
     }
-    
-    isDataLoading.value = true
+    if (!isUpdate) {
+      isDataLoading.value = true
+    }
     
     const url = `/${props.repoType}s/${props.namespace}/${props.repoName}`
 
@@ -442,6 +441,8 @@
   let lastContainerLogTime = ''
 
   const appendLog = (refElem, data, refLineNum, logBlocksRef, lastLogTimeRef) => {
+    if (!refElem.value) return;
+    
     // ANSI 转 HTML 简单实现
     function ansiToHtml(text) {
       const ansiMap = {
@@ -456,30 +457,68 @@
       };
       return text.replace(/\x1b\[(\d+)m/g, (match, code) => ansiMap[code] || '');
     }
-    // 提取时间戳（如 [003s] 或 [0107]）
-    const timeMatch = data.match(/\[(\d+s?|\d{4})\]/)
-    let timeStr = ''
-    if (timeMatch) {
-      timeStr = timeMatch[1]
-      // 格式化为 03s 或 0107
+
+    /**
+     * 将 [0004] 转换为 [00:04] 格式
+     */
+    function formatTime(timeStr) {
+      if (!timeStr) return '';
+      
+      // 处理秒格式 (如 "03s")
       if (/^\d+s$/.test(timeStr)) {
-        timeStr = timeStr.padStart(3, '0')
+        const seconds = timeStr.replace('s', '').padStart(2, '0');
+        return `00:${seconds}`;
       }
+      
+      // 处理纯数字格式 (如 "0107")
+      if (/^\d{4}$/.test(timeStr)) {
+        return `${timeStr.slice(0, 2)}:${timeStr.slice(2)}`;
+      }
+      
+      return timeStr;
     }
-    // 处理内容，去掉时间戳部分
-    let content = data.replace(/\[(\d+s?|\d{4})\]\s*/, '')
-    content = ansiToHtml(content.replace(/\\r/g, '<br>'))
-    // 合并到同一时间块
-    if (timeStr && lastLogTimeRef.value === timeStr && logBlocksRef.value.length > 0) {
-      logBlocksRef.value[logBlocksRef.value.length - 1].lines.push(content)
-    } else if (timeStr) {
-      logBlocksRef.value.push({ time: timeStr, lines: [content] })
-      lastLogTimeRef.value = timeStr
-    } else {
-      // 没有时间戳，单独作为一块
-      logBlocksRef.value.push({ time: '', lines: [content] })
-      lastLogTimeRef.value = ''
+
+    /**
+     * 过滤不需要的前缀如"build-"
+     */
+    function filterPrefixes(text) {
+      return text.replace(/(build|platform)-\d+\s*\|\s*/g, '');
     }
+
+    // 新增：在日志级别后添加空格的函数
+    function addSpaceAfterLogLevel(text) {
+      return text.replace(/(INFO|WARN|ERROR|DEBUG|TRACE|FATAL)([^\s])/g, '$1 $2');
+    }
+
+    // 处理换行符
+    const processedData = data.replace(/\\n/g, '\n');
+
+    // 按行处理日志内容
+    processedData.split('\n').forEach(line => {
+      if (!line.trim()) return;
+
+      // 转换时间格式 [0004] → [00:04]
+      line = line.replace(/\[(\d{4})\]/g, (_, time) => `[${time.slice(0, 2)}:${time.slice(2)}]`)
+               .replace(/\[(\d+)s\]/g, (_, sec) => `[00:${sec.padStart(2, '0')}]`);
+
+      // 处理内容
+      let content = line;
+      
+      // 过滤不需要的前缀
+      content = filterPrefixes(content);
+      
+      // 在日志级别后添加空格
+      content = addSpaceAfterLogLevel(content);
+      
+      content = ansiToHtml(content.replace(/\\r/g, '<br>'));
+
+      // 合并到同一时间块（不再使用时间块分组）
+      logBlocksRef.value.push({ 
+        time: '',  // 置空时间，不在渲染时显示单独的时间行
+        lines: [content] 
+      });
+    });
+
     // 重新渲染
     renderLogBlocks(refElem, logBlocksRef)
     refLineNum.value = logBlocksRef.value.reduce((acc, b) => acc + b.lines.length, 0)
@@ -488,54 +527,104 @@
     })
   }
 
-  // 渲染日志块
   function renderLogBlocks(refElem, logBlocksRef) {
-    if (!refElem.value) return
-    refElem.value.innerHTML = ''
-    let lineNum = 0
-    logBlocksRef.value.forEach(block => {
-      const blockDiv = document.createElement('div')
-      blockDiv.className = 'mb-2'
-      if (block.time) {
-        const timeDiv = document.createElement('div')
-        timeDiv.className = 'text-base text-gray-400 mb-1 flex items-center'
-        timeDiv.innerHTML = `⏱ <span class='ml-1'>${block.time}</span>`
-        blockDiv.appendChild(timeDiv)
-      }
-      block.lines.forEach(line => {
-        const lineDiv = document.createElement('div')
-        lineDiv.className = 'flex items-start'
-        // 在INFO/WARN/ERROR等类型和内容之间加4px间距
-        let lineHtml = line
-        // 匹配以INFO/WARN/ERROR/DEBUG等大写单词开头的内容，后跟内容
-        lineHtml = lineHtml.replace(/^(<span[^>]*>)*(INFO|WARN|ERROR|DEBUG|TRACE|FATAL|NOTICE|WARNING)(<\/span[^>]*>)*([\s\S]*?)(?=<|$)/, (match, p1, type, p3, rest) => {
-          return `${p1 || ''}${type}${p3 || ''}<span style='display:inline-block;width:4px'></span>${rest || ''}`
+      if (!refElem.value) return
+      refElem.value.innerHTML = ''
+      let lineNum = 0
+      logBlocksRef.value.forEach(block => {
+        const blockDiv = document.createElement('div')
+        blockDiv.className = 'mb-2'
+        if (block.time) {
+          const timeDiv = document.createElement('div')
+          timeDiv.className = 'text-base text-gray-400 mb-1 flex items-center'
+          timeDiv.innerHTML = `⏱ <span class='ml-1'>${block.time}</span>`
+          blockDiv.appendChild(timeDiv)
+        }
+        block.lines.forEach(line => {
+          const lineDiv = document.createElement('div')
+          lineDiv.className = 'flex items-start'
+          // 在INFO/WARN/ERROR等类型和内容之间加4px间距
+          let lineHtml = line
+          // 匹配以INFO/WARN/ERROR/DEBUG等大写单词开头的内容，后跟内容
+          lineHtml = lineHtml.replace(/^(<span[^>]*>)*(INFO|WARN|ERROR|DEBUG|TRACE|FATAL|NOTICE|WARNING)(<\/span[^>]*>)*([\s\S]*?)(?=<|$)/, (match, p1, type, p3, rest) => {
+            return `${p1 || ''}${type}${p3 || ''}<span style='display:inline-block;width:4px'></span>${rest || ''}`
+          })
+          lineDiv.innerHTML = `<span class='mr-1 text-base text-gray-400' style='min-width:2.5em;display:inline-block;'>${lineNum}:</span><span class='mr-2 text-base'>•</span><span class='text-base'>${lineHtml}</span>`
+          blockDiv.appendChild(lineDiv)
+          lineNum++
         })
-        lineDiv.innerHTML = `<span class='mr-1 text-base text-gray-400' style='min-width:2.5em;display:inline-block;'>${lineNum}:</span><span class='mr-2 text-base'>•</span><span class='text-base'>${lineHtml}</span>`
-        blockDiv.appendChild(lineDiv)
-        lineNum++
+        refElem.value.appendChild(blockDiv)
       })
-      refElem.value.appendChild(blockDiv)
-    })
   }
 
   const downloadLog = () => {
-    const targetDiv = isBuildLogTab.value ? buildLogDiv : containerLogDiv
-    if (!targetDiv.value) return
+    const logBlocks = isBuildLogTab.value ? buildLogBlocks : containerLogBlocks
+    
+    if (!logBlocks.value.length) {
+      ElMessage.warning(t('application_spaces.errorPage.downloadNull'))
+      return
+    }
 
-    const logElements = targetDiv.value.querySelectorAll('p')
-    let logContent = ''
-    logElements.forEach((element) => {
-      logContent += element.textContent + '\n'
-    })
+    // 时间格式转换函数
+    const formatTime = (timeStr) => {
+      if (!timeStr) return ''
+      
+      // 处理秒格式 (如 "03s")
+      if (/^\d+s$/.test(timeStr)) {
+        const seconds = timeStr.replace('s', '').padStart(2, '0')
+        return `00:${seconds}`
+      }
+      
+      // 处理纯数字格式 (如 "0107")
+      if (/^\d{4}$/.test(timeStr)) {
+        return `${timeStr.slice(0, 2)}:${timeStr.slice(2)}`
+      }
+      
+      return timeStr
+    }
 
-    const blob = new Blob([logContent], { type: 'text/plain' })
-    const link = document.createElement('a')
-    link.href = URL.createObjectURL(blob)
-    link.download = isBuildLogTab.value ? 'build_log.txt' : 'container_log.txt'
-    link.click()
-    URL.revokeObjectURL(link.href)
-  }
+    const logContent = logBlocks.value.map(block => {
+      // 转换时间格式 [0004] → [00:04]
+      const timeHeader = block.time ? `[${formatTime(block.time)}]\n` : ''
+      return timeHeader + block.lines.map(line => {
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML = line
+        let plainText = tempDiv.textContent || tempDiv.innerText || ''
+        
+        // 1. 日志级别后添加空格 (INFO/WARN/ERROR等)
+        plainText = plainText.replace(/^(INFO|WARN|ERROR|DEBUG|TRACE|FATAL|NOTICE|WARNING)([^\s])/, '$1 $2')
+        
+        // 2. 移除ANSI颜色代码
+        plainText = plainText.replace(/\x1b\[[0-9;]*m/g, '')
+        
+        // 3. 处理换行符 (\r → \n)
+        plainText = plainText.replace(/\\r/g, '\n')
+        
+        // 4. 处理换行符 (\n → 实际换行)
+        plainText = plainText.replace(/\\n/g, '\n')
+        
+        return plainText
+      }).join('\n')
+    }).join('\n\n')
+
+    try {
+      const blob = new Blob([logContent], { type: 'text/plain;charset=utf-8' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = `${props.repoName}_${isBuildLogTab.value ? 'build' : 'container'}_${new Date().toISOString().slice(0,10)}.log`
+      
+      document.body.appendChild(link)
+      link.click()
+      
+      setTimeout(() => {
+        document.body.removeChild(link)
+        URL.revokeObjectURL(link.href)
+      }, 100)
+    } catch (err) {
+      console.error('日志下载失败:', err)
+      ElMessage.error(t('application_spaces.errorPage.downloadError'))
+    }
+}
 
   const syncSpaceStatus = () => {
     fetchEventSource(

@@ -270,7 +270,7 @@
 
   <!-- repo tags -->
   <HeaderTags
-    v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code' || repoType === 'mcp'"
+    v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code' || repoType === 'mcp' || repoType === 'space'"
     :tags="tags"
     :prefix="`${repoType}s/`" />
 </template>

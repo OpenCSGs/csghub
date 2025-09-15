@@ -2,6 +2,13 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NewFinetune from '@/components/finetune/NewFinetune.vue'
 
+vi.mock('vue3-lottie', () => ({
+  Vue3Lottie: {
+    name: 'Vue3Lottie',
+    template: '<div class="mock-lottie"></div>'
+  }
+}))
+
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => {
     return {

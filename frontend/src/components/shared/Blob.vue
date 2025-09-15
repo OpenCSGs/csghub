@@ -291,9 +291,7 @@
   const currentBranch = ref(props.currentBranch)
   const currentPath = ref(props.currentPath || '')
   
-  // 添加加载状态
-  const isDataLoading = ref(true)
-  const isLoading = ref(false)
+  const isDataLoading = ref(false)
 
   let prefixPath = document.location.pathname.split('/')[1]
   let apiPrefixPath = document.location.pathname.split('/')[1]
@@ -361,7 +359,6 @@
     const isLastItem = index === breadcrumb.value.length - 1
     
     if (isLastItem) {
-      // 如果是最后一个面包屑项（当前文件），导航到blob页面
       const query = {
         tab: 'files',
         actionName: 'blob',
@@ -383,7 +380,6 @@
       
       fetchFileContent()
     } else {
-      // 否则导航到文件列表页面
       const query = {
         tab: 'files',
         actionName: 'files',
@@ -451,8 +447,6 @@
       query
     })
     
-    // 重新初始化时显示加载状态
-    isDataLoading.value = true
     init()
   }
 
@@ -488,12 +482,11 @@
   }
 
   const fetchFileContent = async () => {
-    if (isLoading.value) {
+    if (isDataLoading.value) {
       return false
     }
     
     isDataLoading.value = true
-    isLoading.value = true
     
     try {
       const { response, data, error } = await useFetchApi(
@@ -501,7 +494,28 @@
       ).json()
 
       if (response.value.status === 404) {
-        ToNotFoundPage()
+        setRepoTab({
+          actionName: 'files',
+          lastPath: '',
+          fileNotFound: {
+            show: true,
+            fileName: currentPath.value,
+            branchName: currentBranch.value
+          }
+        })
+        
+        const query = {
+          tab: 'files',
+          actionName: 'files'
+        }
+        if (currentBranch.value) {
+          query.branch = currentBranch.value
+        }
+        
+        router.push({
+          path: router.currentRoute.value.path,
+          query
+        })
         return false
       }
 
@@ -526,14 +540,12 @@
       })
       return false
     } finally {
-      isLoading.value = false
       isDataLoading.value = false
     }
   }
 
   const lfsDownload = async () => {
-    // 确保只有在文件内容加载成功后才允许下载
-    if (isLoading.value || isDataLoading.value) {
+    if (isDataLoading.value) {
       return
     }
     
@@ -557,8 +569,7 @@
   }
 
   const normalFileDownload = async () => {
-    // 确保只有在文件内容加载成功后才允许下载
-    if (isLoading.value || isDataLoading.value) {
+    if (isDataLoading.value) {
       return
     }
     
@@ -582,8 +593,7 @@
   }
 
   const deleteFile = async () => {
-    // 确保只有在文件内容加载成功后才允许删除
-    if (isLoading.value || isDataLoading.value) {
+    if (isDataLoading.value) {
       return
     }
     
