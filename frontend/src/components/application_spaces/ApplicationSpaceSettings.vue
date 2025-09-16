@@ -41,7 +41,114 @@
   </div>
 
   <div
-    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
+  class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
+     <!-- 展示英文名 -->
+     <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.name') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.nameTips') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <p class="text-gray-700 text-sm">
+          {{ $t('application_spaces.namespaceName') }}
+        </p>
+        <div
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
+          {{ applicationSpacePath }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 更新应用空间别名 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.nickname') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.tips') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-input
+          v-model="theApplicationSpaceNickname"
+          clearable
+          size="large"
+          class="!w-[512px] sm:!w-full" />
+        <CsgButton
+          v-if="hasNicknameChanged"
+          @click="updateNickname"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
+          data-test="update-nickname"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
+
+
+    <!-- 更新应用空间简介 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.desc') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.tips2') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-input
+          v-model="theApplicationSpaceDesc"
+          clearable
+          size="large"
+          type="textarea"
+          class="!w-[512px] sm:!w-full" />
+        <CsgButton
+          v-if="hasDescChanged"
+          @click="updateApplicationSpaceDesc"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
+          data-test="update-description"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
+    
+    <el-divider />
+
+    <!-- space cluster -->
+    <div class="flex xl:flex-col gap-8 mb-[24px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.new.cluster') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5">
+          <el-select
+            v-model="theClusterId"
+            :placeholder="$t('all.pleaseSelect', { value: $t('application_spaces.new.cluster') })"
+            size="large"
+            class="!w-[512px] sm:!w-full"
+            @change="onClusterSelectChange"
+          >
+            <el-option
+              v-for="item in spaceClusters"
+              :key="item.cluster_id"
+              :label="item.region"
+              :value="item.cluster_id"
+            />
+          </el-select>
+        </div>
+      </div>
+    </div>
+
     <!-- cloud resource -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -70,6 +177,14 @@
             :disabled="!item.is_available"
           />
         </el-select>
+        <CsgButton
+          v-if="hasClusterOrResourceChanged"
+          @click="updateClusterAndResource"
+          class="btn btn-secondary-gray btn-sm mt-2 w-fit"
+          data-test="update-cluster-resource"
+          :name="$t('all.update')"
+          :disabled="!theCloudResource || !theClusterId || resourcesLoading"
+        />
       </div>
     </div>
 
@@ -102,7 +217,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 重启 Space -->
     <div class="flex xl:flex-col gap-[32px]">
@@ -121,87 +235,7 @@
         />
       </div>
     </div>
-
-    <el-divider />
-
-    <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.name') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.nameTips') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <p class="text-gray-700 text-sm">
-          {{ $t('application_spaces.namespaceName') }}
-        </p>
-        <div
-          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
-          {{ applicationSpacePath }}
-        </div>
-      </div>
-    </div>
-
-    <el-divider />
-
-    <!-- 更新应用空间别名 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.nickname') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.edit.tips') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <el-input
-          v-model="theApplicationSpaceNickname"
-          clearable
-          size="large"
-          class="!w-[512px] sm:!w-full" />
-        <CsgButton
-          @click="updateNickname"
-          class="btn btn-secondary-gray btn-sm"
-          style="width:fit-content"
-          data-test="update-nickname"
-          :name="$t('all.update')"
-        />
-      </div>
-    </div>
-
-    <el-divider />
-
-    <!-- 更新应用空间简介 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.desc') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.edit.tips2') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <el-input
-          v-model="theApplicationSpaceDesc"
-          clearable
-          size="large"
-          type="textarea"
-          class="!w-[512px] sm:!w-full" />
-        <CsgButton
-          @click="updateApplicationSpaceDesc"
-          class="btn btn-secondary-gray btn-sm"
-          style="width:fit-content"
-          data-test="update-description"
-          :name="$t('all.update')"
-        />
-      </div>
-    </div>
-
+    
     <!-- docker space variables -->
     <el-divider v-if="theVariables && Object.keys(theVariables).length > 0"/>
     <div v-if="theVariables && Object.keys(theVariables).length > 0">
@@ -220,6 +254,7 @@
             <el-input v-model="theVariables[name]" size="large" class="!w-[400px] sm:!w-full"></el-input>
           </div>
           <CsgButton
+            v-if="hasVariablesChanged"
             @click="updateVaribles"
             class="btn btn-secondary-gray btn-sm"
             style="width:fit-content"
@@ -249,6 +284,7 @@
             :hideTitle="true"
           />
           <CsgButton
+            v-if="hasEnvChanged"
             @click="updateEnv"
             class="btn btn-secondary-gray btn-sm"
             style="width:fit-content"
@@ -330,7 +366,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- cover image feature temporarily disabled
     <div class="flex xl:flex-col gap-[32px]">
@@ -452,9 +487,13 @@
         theApplicationSpaceNickname: this.applicationSpaceNickname || '',
         theApplicationSpaceDesc: this.applicationSpaceDesc || '',
         theVariables: this.variables || {},
-        theCloudResource: /^\d+$/.test(this.cloudResource)
-          ? Number(this.cloudResource)
-          : this.cloudResource,
+        theClusterId: this.clusterId || '',
+        theCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
+        originalApplicationSpaceNickname: this.applicationSpaceNickname || '',
+        originalApplicationSpaceDesc: this.applicationSpaceDesc || '',
+        originalVariables: JSON.stringify(this.variables || {}),
+        originalClusterId: this.clusterId || '',
+        originalCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -472,6 +511,10 @@
         imageUploaded: false,
         envJSON:'',
         secretJSON:'',
+        originalEnvJSON: '',
+        originalSecretJSON: '',
+        detailLoaded: false,
+        detailLoading: false,
         t: useI18n()
       }
     },
@@ -515,6 +558,23 @@
       },
       notInitialized() {
         return this.appStatus === 'NoAppFile'
+      },
+      hasNicknameChanged() {
+        return this.theApplicationSpaceNickname.trim() !== this.originalApplicationSpaceNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theApplicationSpaceDesc.trim() !== this.originalApplicationSpaceDesc.trim()
+      },
+      hasVariablesChanged() {
+        return JSON.stringify(this.theVariables) !== this.originalVariables
+      },
+      hasClusterOrResourceChanged() {
+        return (this.theClusterId !== this.originalClusterId) || 
+               (this.theCloudResource !== this.originalCloudResource)
+      },
+      hasEnvChanged() {
+        return (this.envJSON !== this.originalEnvJSON) || 
+               (this.secretJSON !== this.originalSecretJSON)
       }
     },
 
@@ -580,8 +640,45 @@
             type: 'warning'
           })
         } else {
-          this.spaceResources = data.value.data
+          const list = data.value.data || []
+          this.spaceResources = list
+          const ids = list.map(item => String(item.id))
+          const current = this.theCloudResource ? String(this.theCloudResource) : ''
+          if (forcePickFirst) {
+            const firstAvailable = list.find(item => item.is_available) || null
+            this.theCloudResource = firstAvailable ? String(firstAvailable.id) : ''
+          } else {
+            if (!current || !ids.includes(current)) {
+              const propVal = this.cloudResource != null ? String(this.cloudResource) : ''
+              if (propVal && ids.includes(propVal)) {
+                this.theCloudResource = propVal
+              } else {
+                const firstAvailable = list.find(item => item.is_available) || null
+                this.theCloudResource = firstAvailable ? String(firstAvailable.id) : ''
+              }
+            }
+          }
+          // Set original values after resource is set
+          if (!this.originalCloudResource && this.theCloudResource) {
+            this.originalCloudResource = this.theCloudResource
+          }
         }
+        this.resourcesLoading = false
+      },
+
+      async updateClusterAndResource() {
+        const rid = Number(this.theCloudResource)
+        if (Number.isNaN(rid)) return
+        
+        const payload = { 
+          cluster_id: this.theClusterId,
+          resource_id: rid
+        }
+        await this.updateApplicationSpace(payload, this.$t('application_spaces.edit.cloudResource'))
+      },
+
+      onClusterSelectChange() {
+        this.fetchSpaceResources(true)
       },
 
       async stopSpace() {
@@ -686,6 +783,9 @@
           if (envJSON) {
             try {
               this.envJSON = envJSON
+              if (!this.originalEnvJSON) {
+                this.originalEnvJSON = envJSON
+              }
             } catch (error) {
               console.log(error)
             }
@@ -693,6 +793,9 @@
           if (secretJSON) {
             try {
               this.secretJSON = secretJSON
+              if (!this.originalSecretJSON) {
+                this.originalSecretJSON = secretJSON
+              }
             } catch (error) {
               console.log(error)
             }
@@ -826,6 +929,30 @@
 
       showErrorLogs() {
         this.$emit('showSpaceLogs')
+      }
+    },
+    watch: {
+      clusterId: {
+        handler(cid) {
+          if (cid && this.theClusterId !== cid) {
+            this.theClusterId = cid
+            // Set original clusterId if not set yet
+            if (!this.originalClusterId) {
+              this.originalClusterId = cid
+            }
+            // 同步刷新资源，确保资源列表与下拉展示一致
+            this.fetchSpaceResources()
+          }
+        },
+        immediate: true
+      },
+      cloudResource: {
+        handler(resource) {
+          if (resource != null && !this.originalCloudResource) {
+            this.originalCloudResource = String(resource)
+          }
+        },
+        immediate: true
       }
     }
   }
