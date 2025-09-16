@@ -17,8 +17,7 @@ export const codes = {
     codeNickName: "代碼倉庫別名",
     codeDesc: "代碼倉庫簡介",
     public: "公開",
-    publicDesc:
-      "任何互聯網上的人都可以看到這個倉庫。只有你（個人）或你所在組織的成員可以提交。",
+    publicDesc: "任何互聯網上的人都可以看到這個倉庫。只有你（個人）或你所在組織的成員可以提交。",
     private: "私有",
     privateDesc: "只有你（個人）或你所在組織的成員可以看到並提交到這個倉庫。",
     tips: "創建代碼倉庫後，你可以使用網頁或 Git 上傳你的文件。",
