@@ -631,7 +631,7 @@
         }
       },
 
-      async fetchSpaceResources() {
+      async fetchSpaceResources(forcePickFirst = false) {
         const { data, error } = await useFetchApi(`/space_resources?cluster_id=${this.clusterId}&deploy_type=0`).json()
 
         if (!data.value) {
