@@ -1669,5 +1669,106 @@
             "after": "數據集增加了embedding、nn_indices和nn_scores字段，包含文本的向量表示和最近鄰信息"
         },
         "params": []
+    },
+    "gather_generated_data_filter": {
+        "name": "數據聚合生成",
+        "description": "用於收集和處理生成數據的過濾器。",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "基於前一步結果，除掉 || 與 <|im_end|> 字符並且過濾 出 content 為空的數據",
+            "after": ""
+        },
+        "params": []
+    },
+    "annotate_edu_train_bert_scorer_mapper": {
+        "name": "教學評估打分",
+        "description": "注釋Edu火車BERT記分器。",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Here is a more concise translation of the provided sentence:'Score a field and add a _score field for the result.'",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "模型名稱",
+                "type": "LIST",
+                "option_values": null,
+                "value": "text-embedding-v4"
+            },
+            {
+                "name": "尺寸",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": "1024"
+            },
+            {
+                "name": "模型網址",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            },
+            {
+                "name": "查詢文本",
+                "type": "LIST",
+                "option_values": null,
+                "value": "What is Deep Learning?"
+            }
+        ]
+    },
+    "dedup_and_save_deduplicator": {
+        "name": "多輪對話生成",
+        "description": "基於圖連接性的去重器。它通過連接相似度得分高於閾值的樣本來構建相似度圖，然後從每個連接的組件中只保留一個樣本（具有最小索引）。適用於具有預先計算的最近鄰相似性信息的數據集。",
+        "type": "Deduplicator",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "相似閾值",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 0.5
+            }
+        ]
+    },
+    "pipeline_magpie_zh_mapper": {
+        "name": "相似去重",
+        "description": "使用deepseek-v2.5或qwen2.5模型，根據手動設計的與多個任務對應的system_prompt生成多輪對話數據",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "模型名稱",
+                "type": "LIST",
+                "option_values": null,
+                "value": "qwen-plus"
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "模型網址",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            }
+        ]
     }
 }
