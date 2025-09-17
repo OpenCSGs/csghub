@@ -83,11 +83,15 @@ describe('CollectionsSettings.vue', () => {
 
   it('更新集合名称和描述', async () => {
     const wrapper = createWrapper()
-    const updateButtons = wrapper.findAll('.btn-secondary-gray')
     const nicknameInputs = wrapper.findAll('.el-input__inner')
 
     // 使用第一个输入框（集合名称）
     await nicknameInputs[0].setValue('New Name')
+    await nextTick() // 等待响应式更新
+    
+    // 现在更新按钮应该显示了，因为内容发生了变化
+    const updateButtons = wrapper.findAll('.btn-secondary-gray')
+    expect(updateButtons.length).toBeGreaterThan(0)
     await updateButtons[0].trigger('click')
 
     expect(useFetchApiMock).toHaveBeenCalledWith(
@@ -138,8 +142,15 @@ it('删除集合需要正确输入名称', async () => {
   it('处理API错误情况', async () => {
     mockPut.mockResolvedValueOnce({ data: { value: null }, error: { value: { msg: 'Error' } } })
     const wrapper = createWrapper()
-    // 使用更精确的选择器找到第一个更新按钮
+    
+    // 先修改输入内容以触发按钮显示
+    const nicknameInputs = wrapper.findAll('.el-input__inner')
+    await nicknameInputs[0].setValue('Modified Name')
+    await nextTick() // 等待响应式更新
+    
+    // 现在更新按钮应该显示了
     const updateButtons = wrapper.findAll('.btn-secondary-gray')
+    expect(updateButtons.length).toBeGreaterThan(0)
     await updateButtons[0].trigger('click')
 
     expect(ElMessage.warning).toHaveBeenCalled()

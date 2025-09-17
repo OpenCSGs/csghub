@@ -1,7 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6"
-  >
+  class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
     <!-- collection name -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -20,12 +19,12 @@
           class="!w-[512px] sm:!w-full"
         />
         <CsgButton
+          v-if="hasNicknameChanged"
           @click="updateCollection()"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')" />
       </div>
     </div>
-    <el-divider />
 
     <!-- collection desc -->
     <div class="flex xl:flex-col gap-8">
@@ -45,12 +44,12 @@
           class="!w-[512px] sm:!w-full"
         />
         <CsgButton
+          v-if="hasDescChanged"
           @click="updateCollection()"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')" />
       </div>
     </div>
-    <el-divider />
 
     <!-- theme -->
     <div class="flex xl:flex-col gap-[32px]">
@@ -104,7 +103,6 @@
         </el-select>
       </div>
     </div>
-    <el-divider /> -->
 
     <!-- Change Visibility -->
     <div class="flex xl:flex-col gap-8">
@@ -140,7 +138,6 @@
         </el-select>
       </div>
     </div>
-    <el-divider />
 
     <!-- 删除应用空间 -->
     <div class="flex xl:flex-col gap-8">
@@ -187,7 +184,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, h, inject } from 'vue'
+  import { ref, computed, onMounted, h, inject } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
@@ -207,6 +204,10 @@
   const collectionNickname = ref(props.collection.nickname)
   const collectionDesc = ref(props.collection.description)
   const visibility = ref(props.collection.privateVisibility)
+  
+  // Store original values for comparison
+  const originalCollectionNickname = ref(props.collection.nickname)
+  const originalCollectionDesc = ref(props.collection.description)
   const options = ref([
     { value: true, label: t('all.private') },
     { value: false, label: t('all.public') }
@@ -220,6 +221,15 @@
   ])
 
   const fetchCollectionDetail = inject('fetchCollectionDetail')
+  
+  // Computed properties to detect changes
+  const hasNicknameChanged = computed(() => {
+    return collectionNickname.value?.trim() !== originalCollectionNickname.value?.trim()
+  })
+  
+  const hasDescChanged = computed(() => {
+    return collectionDesc.value?.trim() !== originalCollectionDesc.value?.trim()
+  })
 
   const changeVisibility = (value) => {
     ElMessageBox({
