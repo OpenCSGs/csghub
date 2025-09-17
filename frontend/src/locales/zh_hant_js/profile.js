@@ -8,6 +8,16 @@ export const profile = {
     organization: "組織機構",
     title: "個人主頁",
     likes: "我的收藏",
+    tabs: {
+      all: "全部",
+      collections: "合集",
+      models: "模型",
+      datasets: "數據集",
+      codes: "代碼",
+      prompts: "提示詞",
+      spaces: "應用空間",
+      mcps: "MCP"
+    },
     menu: {
       accountInformation: "帳戶資訊",
       accessToken: "Access Token",
