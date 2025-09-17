@@ -191,12 +191,14 @@
   const models = ref({})
   const datasets = ref({})
   const codes = ref({})
+  const prompts = ref({})
   const spaces = ref({})
   const mcps = ref({})
   const collectionsLoading = ref(false)
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
   const codeLoading = ref(false)
+  const promptsLoading = ref(false)
   const spacesLoading = ref(false)
   const mcpsLoading = ref(false)
 
@@ -204,6 +206,7 @@
   const modelsPage = ref(1)
   const datasetsPage = ref(1)
   const codesPage = ref(1)
+  const promptsPage = ref(1)
   const spacesPage = ref(1)
   const mcpsPage = ref(1)
 
@@ -225,6 +228,7 @@
   const hasModels = computed(() => models.value?.data?.length > 0)
   const hasDatasets = computed(() => datasets.value?.data?.length > 0)
   const hasCodes = computed(() => codes.value?.data?.length > 0)
+  const hasPrompts = computed(() => prompts.value?.data?.length > 0)
   const hasSpaces = computed(() => spaces.value?.data?.length > 0)
   const hasMcps = computed(() => mcps.value?.data?.length > 0)
 
@@ -380,6 +384,11 @@
         await fetchMoreCodes()
         codeLoading.value = false
         break
+      case "prompts":
+        promptsLoading.value = true
+        await fetchMorePrompts()
+        promptsLoading.value = false
+        break
       case "mcps":
         mcpsLoading.value = true
         await fetchMoreMcp()
@@ -458,6 +467,7 @@
     if (targetRef === models) return modelsPage
     if (targetRef === datasets) return datasetsPage
     if (targetRef === codes) return codesPage
+    if (targetRef === prompts) return promptsPage
     if (targetRef === spaces) return spacesPage
     if (targetRef === mcps) return mcpsPage
   }
@@ -473,6 +483,7 @@
   const fetchMoreDatasets = () => fetchMore(datasets, "datasets")
   const fetchMoreSpaces = () => fetchMore(spaces, "spaces")
   const fetchMoreCodes = () => fetchMore(codes, "codes")
+  const fetchMorePrompts = () => fetchMore(prompts, "prompts")
   const fetchMoreMcp = () => fetchMore(mcps, "mcps")
 
 
