@@ -5,6 +5,16 @@ export const profile = {
   organization: "组织机构",
   title: "个人主页",
   likes: "我的收藏",
+  tabs: {
+    all: "全部",
+    collections: "合集",
+    models: "模型",
+    datasets: "数据集",
+    codes: "代码",
+    prompts: "提示词",
+    spaces: "应用空间",
+    mcps: "MCP"
+  },
   menu: {
     accountInformation: "账户信息",
     accessToken: "Access Token",
