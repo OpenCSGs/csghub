@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
+  class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -22,7 +22,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 更新数据集别名 -->
     <div class="flex xl:flex-col gap-8">
@@ -41,6 +40,7 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasNicknameChanged"
           @click="updateNickname"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 更新数据集简介 -->
     <div class="flex xl:flex-col gap-8">
@@ -68,6 +67,7 @@
           type="textarea"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasDescChanged"
           @click="updateDatasetDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -127,6 +127,7 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasTagsChanged"
             @click="updateTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
@@ -136,8 +137,6 @@
         </div>
       </div>
     </div>
-
-    <el-divider />
 
     <!-- 行业标签 -->
     <div class="flex xl:flex-col gap-8">
@@ -193,6 +192,7 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasIndustryTagsChanged"
             @click="updateIndustryTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
@@ -243,8 +243,6 @@
         </el-select>
       </div>
     </div>
-
-    <el-divider />
 
     <!-- 数据集删除 -->
     <div class="flex xl:flex-col gap-8">
@@ -330,6 +328,10 @@
         readmeSha: '',
         isUpdatingTags: false,
         isUpdatingIndustryTags: false,
+        originalDatasetNickname: this.datasetNickname || '',
+        originalDatasetDesc: this.datasetDesc || '',
+        originalTags: [],
+        originalIndustryTags: [],
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -339,6 +341,24 @@
     computed: {
       ...mapState(useRepoDetailStore, ['isPrivate']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+      hasNicknameChanged() {
+        return this.theDatasetNickname.trim() !== this.originalDatasetNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theDatasetDesc.trim() !== this.originalDatasetDesc.trim()
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
+      hasIndustryTagsChanged() {
+        if (this.originalIndustryTags.length !== this.selectedIndustryTags.length) return true
+        const originalTagIds = this.originalIndustryTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedIndustryTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
       visibilityName: {
         get() {
           return !!this.privateVisibility ? 'Private' : 'Public'
@@ -419,6 +439,13 @@
             return tag
           })
         ]
+        // Store original values for comparison
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+        if (this.originalIndustryTags.length === 0) {
+          this.originalIndustryTags = JSON.parse(JSON.stringify(this.selectedIndustryTags))
+        }
       },
       clickDelete() {
         if (this.delDesc === this.datasetPath) {
