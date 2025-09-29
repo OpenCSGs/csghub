@@ -1670,5 +1670,106 @@
             "after": "The dataset adds embedding, nn_indices, and nn_scores fields containing vector representations of text and nearest neighbor information"
         },
         "params": []
+    },
+    "gather_generated_data_filter": {
+        "name": "gather_generated_data_filter",
+        "description": "Filter for collecting and processing generated data.",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Based on the results of the previous step, remove the | | and < | im_end | > characters and filter to get the empty content data.",
+            "after": ""
+        },
+        "params": []
+    },
+    "annotate_edu_train_bert_scorer_mapper": {
+        "name": "annotate_edu_train_bert_scorer_mapper",
+        "description": "Annotate Edu Train BERT Scorer",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "Here is a more concise translation of the provided sentence:'Score a field and add a _score field for the result.'",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "model_name",
+                "type": "LIST",
+                "option_values": null,
+                "value": "text-embedding-v4"
+            },
+            {
+                "name": "dimensions",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": "1024"
+            },
+            {
+                "name": "model_url",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            },
+            {
+                "name": "query_text",
+                "type": "LIST",
+                "option_values": null,
+                "value": "What is Deep Learning?"
+            }
+        ]
+    },
+    "dedup_and_save_deduplicator": {
+        "name": "dedup_and_save_deduplicator",
+        "description": "A deduplicator based on graph connectivity. It constructs a similarity graph by connecting samples with similarity scores above the threshold, then keeps only one sample (with minimum index) from each connected component. Suitable for datasets with pre-computed nearest neighbor similarity information.",
+        "type": "Deduplicator",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "similarity_threshold",
+                "type": "PositiveFloat",
+                "option_values": null,
+                "value": 0.5
+            }
+        ]
+    },
+    "pipeline_magpie_zh_mapper": {
+        "name": "pipeline_magpie_zh_mapper",
+        "description": "Using the deepseek-v2.5 or qwen2.5 model, generate multi-round dialogue data based on the manually designed system_prompt corresponding to multiple tasks",
+        "type": "Mapper",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "model_name",
+                "type": "LIST",
+                "option_values": null,
+                "value": "qwen-plus"
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "model_url",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            }
+        ]
     }
 }
