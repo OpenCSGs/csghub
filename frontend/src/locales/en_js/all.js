@@ -142,5 +142,7 @@ export const all = {
   allTab:'All Products',
   unknown: "Unknown",
   inBranch: "in branch",
-  notExist: "not exist"
+  notExist: "not exist",
+  useModel: "Use Model",
+  clickForQuickTutorial: "Click here to start the quick tutorial"
 }

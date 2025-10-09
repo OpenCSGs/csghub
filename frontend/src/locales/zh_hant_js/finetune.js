@@ -22,6 +22,10 @@ export const finetune = {
     createSuccess: '微調執行個體建立成功',
     tip: "應用於微調執行個體，建立後不可變更",
     createFail: "微調執行個體建立失敗",
+    cancel: "取消",
+    goToRecharge: "前往儲值",
+    balanceInsufficient: '餘額不足，無法運行資源',
+    taskBalanceInsufficient: '當前餘額不足，無法建立任務，您的當前餘額為 {balance}，請儲值後繼續使用，以確保任務順利執行。',
   },
   detail: {
     notebook: '啟動 Notebook',

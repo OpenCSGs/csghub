@@ -142,5 +142,7 @@ export const all = {
   allTab:'全部产品',
   unknown: "未知",
   inBranch: "在分支",
-  notExist: "中不存在"
+  notExist: "中不存在",
+  useModel: "使用模型",
+  clickForQuickTutorial: "点击这里，开始快速教程"
 }

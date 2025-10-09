@@ -24,6 +24,7 @@ import zhHant from './locales/zhHant.js'
 import Navbar from "./components/navbar/Navbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
+import NotebookDetail from "./components/notebooks/NotebookDetail.vue"
 import RepoDetail from "./components/shared/RepoDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
@@ -83,6 +84,7 @@ import DataflowAlgTemplate from "./components/dataflow_config/algTemplate/index.
 import DataflowNewTask from "./components/dataflow_config/newTask/index.vue"
 import DataflowNewTemplate from "./components/dataflow_config/algTemplate/newTemplate.vue"
 import DataflowTools from "./components/dataflow_config/tools/index.vue"
+import NewNotebook from "./components/notebooks/NewNotebook.vue"
 
 // 数据采集
 import DataCollectionTask from "./components/dataflow_config/dataAcquisition/dataCollectionTask/index.vue"
@@ -138,6 +140,7 @@ const app = createApp({
     finetuneDetail,
     ApplicationSpaceDetail,
     EndpointDetail,
+    NotebookDetail,
     CollectionIndex,
     CollectionsDetail,
     NotFound,
@@ -150,6 +153,7 @@ const app = createApp({
     NewEvaluation,
     EvaluationDetail,
     NewMcpServer,
+    NewNotebook,
     McpTools,
     DeployMcpServer,
     DataflowIndex,
