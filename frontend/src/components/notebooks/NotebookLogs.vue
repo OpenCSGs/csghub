@@ -59,19 +59,21 @@ const hasInstances = computed(() => {
   return Array.isArray(props.instances) && props.instances.length > 0
 })
 
-watch(() => repoDetailStore.activeInstance, (newValue) => {
-  if (repoDetailStore.status !== 'Running') {
+// 仅在用户手动切换实例或外部主动修改时触发，避免初始化时重复调用
+watch(() => repoDetailStore.activeInstance, (newValue, oldValue) => {
+  if (!newValue || !isInitialSetupDone.value) {
     return
   }
   
-  if (!newValue) {
+  // 如果是初始化时的首次赋值（从空到有值），跳过，由 onMounted 处理
+  if (!oldValue && newValue && !isLogsSSEConnected.value) {
     return
   }
   
   if (props.instances?.length > 0) {
     const instanceExists = props.instances.some(instance => instance.name === newValue)
     if (instanceExists) {
-      if (!isLogsSSEConnected.value && isInitialSetupDone.value) {
+      if (!isLogsSSEConnected.value) {
         syncInstanceLogs(newValue)
       }
     } else {
@@ -82,10 +84,10 @@ watch(() => repoDetailStore.activeInstance, (newValue) => {
   }
 }, { immediate: false })
 
-watch(() => repoDetailStore.isInitialized, (initialized) => {
-  if (initialized && isInitialSetupDone.value && 
-      repoDetailStore.status === 'Running' && 
-      props.instances?.length > 0) {
+// 监听 store 初始化状态，仅在 store 延迟初始化的场景下触发
+watch(() => repoDetailStore.isInitialized, (initialized, wasInitialized) => {
+  // 只在从未初始化变为已初始化时处理，避免重复触发
+  if (initialized && !wasInitialized && isInitialSetupDone.value && props.instances?.length > 0) {
     const firstInstance = props.instances[0].name
     
     if (repoDetailStore.activeInstance !== firstInstance) {
@@ -96,14 +98,16 @@ watch(() => repoDetailStore.isInitialized, (initialized) => {
   }
 })
 
-watch(() => repoDetailStore.status, (newStatus) => {
-  if (newStatus !== 'Running' || !props.instances?.length) {
+// 监听状态变化，仅在特定状态转换时重新连接日志
+watch(() => repoDetailStore.status, (newStatus, oldStatus) => {
+  if (!props.instances?.length) {
     isLogsSSEConnected.value = false
     isLoading.value = false
     return
   }
   
-  if (!isLogsSSEConnected.value && isInitialSetupDone.value && props.instances?.length > 0) {
+  // 只在状态真正发生变化且未连接时才处理，避免初始化时重复触发
+  if (oldStatus && newStatus !== oldStatus && !isLogsSSEConnected.value && isInitialSetupDone.value) {
     if (repoDetailStore.activeInstance) {
       const instanceExists = props.instances.some(instance => instance.name === repoDetailStore.activeInstance)
       if (instanceExists) {
@@ -126,10 +130,11 @@ watch(() => props.instances, (newInstances) => {
     return
   } 
   
-  if (isInitialSetupDone.value && repoDetailStore.status === 'Running') {
+  if (isInitialSetupDone.value) {
     const firstInstance = newInstances[0].name
     if (repoDetailStore.activeInstance !== firstInstance) {
       repoDetailStore.activeInstance = firstInstance
+      // syncInstanceLogs(firstInstance)
     }
   } else {
     isLoading.value = false
@@ -137,11 +142,6 @@ watch(() => props.instances, (newInstances) => {
 }, { deep: true })
 
 const syncInstanceLogs = (instanceName) => {
-  if (repoDetailStore.status !== 'Running') {
-    isLoading.value = false
-    return
-  }
-  
   if (isLogsSSEConnected.value || !instanceName || !Array.isArray(props.instances)) {
     isLoading.value = false
     return
@@ -325,16 +325,21 @@ onMounted(() => {
     
     isInitialSetupDone.value = true
     
-    if (repoDetailStore.isInitialized && 
-        repoDetailStore.status === 'Running' && 
-        props.instances.length > 0) {
+    // 无论 store 是否初始化，都尝试设置实例并连接日志
+    if (props.instances.length > 0) {
       const firstInstance = props.instances[0].name
-      if (repoDetailStore.activeInstance !== firstInstance) {
+      
+      // 如果当前没有选中实例或选中的实例不存在，设置为第一个
+      if (!repoDetailStore.activeInstance || 
+          !props.instances.some(inst => inst.name === repoDetailStore.activeInstance)) {
         repoDetailStore.activeInstance = firstInstance
-      } else if (!isLogsSSEConnected.value) {
-        syncInstanceLogs(firstInstance)
       }
-      console.log(`Status is ${repoDetailStore.status} on mount, waiting for status change`)
+      
+      const targetInstance = repoDetailStore.activeInstance || firstInstance
+      if (!isLogsSSEConnected.value && targetInstance) {
+        syncInstanceLogs(targetInstance)
+      }
+      
       isLoading.value = false
     }
   });

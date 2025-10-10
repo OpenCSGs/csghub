@@ -279,7 +279,7 @@
           :notebookName="notebookName"
           :notebookId="notebookId"
           :appStatus="appStatus"
-          :framework="repoDetail.runtimeFramework"
+          :runtimeFrameworkId="repoDetail.runtimeFrameworkVersion"
           :maxReplica="repoDetail.maxReplica"
           :minReplica="repoDetail.minReplica"
           :clusterId="repoDetail.clusterId"

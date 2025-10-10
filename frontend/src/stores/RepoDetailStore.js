@@ -84,6 +84,7 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
   const githubPath = ref('')
   const githubStarNum = ref(0)
   const mirrorTaskStatus = ref('')
+  const runtimeFrameworkVersion = ref('')
 
   // getters
   const isPrivate = computed(() => !!privateVisibility.value)
@@ -174,6 +175,8 @@ const useRepoDetailStore = defineStore('repoDetail', () => {
     githubPath.value = initialData.github_path
     githubStarNum.value = initialData.star_num
     mirrorTaskStatus.value = initialData.mirror_task_status || ''
+    // 使用runtime_framework_version代替runtime_framework_id，有时候升级的时候老的runtime_framework 会被删除掉，所以ID会变
+    runtimeFrameworkVersion.value = initialData.runtime_framework_version || ''
   }
 
   const clearStore = () => {
