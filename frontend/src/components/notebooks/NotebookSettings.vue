@@ -14,6 +14,7 @@
             @click="stopNotebook"
             class="btn btn-secondary-gray btn-sm w-[100px]"
             :disabled="!initialized || isStopped"
+            :loading="isStopLoading"
             :name="$t('notebooks.settings.stop')">
           </CsgButton>
         </div>
@@ -34,6 +35,7 @@
           @click="restartNotebook"
           class="btn btn-secondary-gray btn-sm w-[100px]"
           :disabled="notInitialized"
+          :loading="isRestartLoading"
           :name="$t('notebooks.settings.restart')">
         </CsgButton>
       </div>
@@ -55,13 +57,14 @@
         <p class="text-gray-700 text-sm">
           {{ $t('notebooks.settings.currentCloudResource') }}
         </p>
+        <!-- @change="updateCloudResource"
+          :disabled="!isStopped" -->
         <el-select
           v-model="currentResource"
           :placeholder="$t('all.select')"
           size="large"
           class="!w-[512px] sm:!w-full"
-          @change="updateCloudResource"
-          :disabled="!isStopped">
+          disabled>
           <el-option-group
             v-for="group in cloudResources"
             :key="group.label"
@@ -97,20 +100,13 @@
           :placeholder="$t('all.select')"
           size="large"
           class="!w-[512px] sm:!w-full"
-          @change="updateFramework"
-          :disabled="!isStopped">
-          <el-option-group
-            v-for="(items, computeType) in groupedRuntimeFrameworks"
-            :key="computeType"
-            :label="computeTypeLabels[computeType] || computeType"
-          >
-            <el-option
-              v-for="item in items"
-              :key="item.id"
-              :label="item.label"
-              :value="item.id"
-            />
-          </el-option-group>
+          disabled>
+          <el-option
+            v-for="item in runtimeFrameworkOptions"
+            :key="item.frameVersion"
+            :label="item.label"
+            :value="item.frameVersion"
+          />
         </el-select>
       </div>
     </div>
@@ -245,7 +241,7 @@
     notebookId: Number,
     notebookName: String,
     appStatus: String,
-    framework: String,
+    runtimeFrameworkId: String,
     maxReplica: Number,
     minReplica: Number,
     clusterId: String,
@@ -264,12 +260,8 @@
   const currentMaxReplica = ref(null)
   const apiErrorMsg = ref('')
   const runtimeFrameworkOptions = ref([])
-  const groupedRuntimeFrameworks = ref({})
-  const computeTypeLabels = {
-    'gpu': t('resources.gpuResource'),
-    'cpu': t('resources.cpuResource'),
-    '': t('resources.otherResource')
-  }
+  const isStopLoading = ref(false)
+  const isRestartLoading = ref(false)
 
   watch(
     () => props.clusterId,
@@ -279,6 +271,7 @@
       }
     }
   )
+
 
   const initialized = computed(() => {
     return [
@@ -306,80 +299,43 @@
     currentResource.value = props.sku
     currentMaxReplica.value = props.maxReplica
     currentMinReplica.value = props.minReplica || 0
-  })
-
-  const fetchFrameworks = async () => {
-    try {
-      const { data, error } = await useFetchApi(`/runtime_framework?deploy_type=5`).json()
-      if (error?.value) {
-        runtimeFrameworkOptions.value = []
-        groupedRuntimeFrameworks.value = {}
-        currentFrameworkId.value = ''
-        return
-      }
-      const body = data?.value || {}
-      const frameworks = body.data || []
-      
-      const groupedByComputeType = {}
-      frameworks.forEach(framework => {
-        const computeType = framework.compute_type || ''
-        if (!groupedByComputeType[computeType]) {
-          groupedByComputeType[computeType] = []
-        }
-        
-        groupedByComputeType[computeType].push({
-          id: framework.id,
-          label: `${framework.frame_version}`,
-          frameVersion: framework.frame_version,
-          frameName: framework.frame_name
-        })
-      })
-      
-      groupedRuntimeFrameworks.value = groupedByComputeType
-      const options = Object.values(groupedByComputeType).flat()
-      
-      runtimeFrameworkOptions.value = options
-      const currentFramework = options.find(opt => 
-        opt.frameName?.toLowerCase() === props.framework?.toLowerCase()
-      )
-      currentFrameworkId.value = currentFramework?.id || options[0]?.id || ''
-    } catch (e) {
-      runtimeFrameworkOptions.value = []
-      groupedRuntimeFrameworks.value = {}
-      currentFrameworkId.value = ''
+    if (props.runtimeFrameworkId) {
+      currentFrameworkId.value = props.runtimeFrameworkId
     }
-  }
+  })
 
   const fetchResources = async () => {
     if (!props.clusterId) return
 
     const categoryResources = await fetchResourcesInCategory(props.clusterId, 5)
     cloudResources.value = categoryResources
-    nextTick(() => {
-      fetchFrameworks()
-    })
   }
 
   const stopNotebook = async () => {
-    const stopUrl = `/notebooks/${props.notebookId}/stop`
-    const { response, error } = await useFetchApi(stopUrl).put().json()
+    isStopLoading.value = true
+    try {
+      const stopUrl = `/notebooks/${props.notebookId}/stop`
+      const { response, error } = await useFetchApi(stopUrl).put().json()
 
-    if (!error.value) {
-      repoDetailStore.activeInstance = ''
-      ElMessage({
-        message: t('notebooks.settings.toggleStatusSuccess'),
-        type: 'success'
-      })
-      fetchRepoDetail(true)
-    } else {
-      if (response.value.status === 401) {
-        refreshJWT()
-      } else {
+      if (!error.value) {
+        repoDetailStore.activeInstance = ''
         ElMessage({
-          message: error.value.msg,
-          type: 'warning'
+          message: t('notebooks.settings.toggleStatusSuccess'),
+          type: 'success'
         })
+        fetchRepoDetail(true)
+      } else {
+        if (response.value.status === 401) {
+          refreshJWT()
+        } else {
+          ElMessage({
+            message: error.value.msg,
+            type: 'warning'
+          })
+        }
       }
+    } finally {
+      isStopLoading.value = false
     }
   }
 
@@ -389,11 +345,6 @@
       resource_id: Number(resourceId),
       order_detail_id: Number(orderDetailId)
     }
-    updateNotebook(payload)
-  }
-
-  const updateFramework = (value) => {
-    const payload = { runtime_framework_id: value }
     updateNotebook(payload)
   }
 
@@ -445,24 +396,29 @@
   }
 
   const restartNotebook = async () => {
-    const startUrl = `/notebooks/${props.notebookId}/start`
-    const { response, error } = await useFetchApi(startUrl).put().json()
+    isRestartLoading.value = true
+    try {
+      const startUrl = `/notebooks/${props.notebookId}/start`
+      const { response, error } = await useFetchApi(startUrl).put().json()
 
-    if (!error.value) {
-      ElMessage({
-        message: t('notebooks.settings.toggleStatusSuccess'),
-        type: 'success'
-      })
-      fetchRepoDetail(true)
-    } else {
-      if (response.value.status === 401) {
-        refreshJWT()
-      } else {
+      if (!error.value) {
         ElMessage({
-          message: error.value.msg,
-          type: 'warning'
+          message: t('notebooks.settings.toggleStatusSuccess'),
+          type: 'success'
         })
+        fetchRepoDetail(true)
+      } else {
+        if (response.value.status === 401) {
+          refreshJWT()
+        } else {
+          ElMessage({
+            message: error.value.msg,
+            type: 'warning'
+          })
+        }
       }
+    } finally {
+      isRestartLoading.value = false
     }
   }
 

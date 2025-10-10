@@ -176,19 +176,19 @@
             size="large"
             style="width: 100%"
           >
-            <el-option-group
-              v-for="(items, computeType) in groupedRuntimeFrameworks"
-              :key="computeType"
-              :label="computeTypeLabels[computeType] || computeType"
-            >
-              <el-option
-                v-for="item in items"
-                :key="item.id"
-                :label="item.label"
-                :value="item.id"
-              />
-            </el-option-group>
+            <el-option
+              v-for="item in filteredRuntimeFrameworks"
+              :key="item.id"
+              :label="item.label"
+              :value="item.id"
+            />
           </el-select>
+          <!-- <p 
+            v-if="dataForm.resource && filteredRuntimeFrameworks.length === 0" 
+            class="text-red-500 mt-2 font-light"
+          >
+            当前资源类型暂无可用的预装镜像
+          </p> -->
         </el-form-item>
 
         <!-- 按钮 -->
@@ -215,7 +215,7 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import useFetchApi from '../../packs/useFetchApi'
 import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory.js'
@@ -234,13 +234,6 @@ const clusters = ref([])
 const resourcesOptions = ref([])
 // 运行时框架版本选项
 const runtimeFrameworkOptions = ref([])
-// 按compute_type分组的运行时框架
-const groupedRuntimeFrameworks = ref({})
-const computeTypeLabels = {
-  'gpu': t('resources.gpuResource'),
-  'cpu': t('resources.cpuResource'),
-  '': t('resources.otherResource')
-}
 
 const minReplicaRanges = [0, 1]
 const replicaRanges = [1]
@@ -319,52 +312,88 @@ const fetchResources = async () => {
   } else {
     dataForm.value.resource = ''
   }
+  fetchRuntimeFrameworks()
 }
 
-// 获取运行时框架版本（deploy_type=5）
+// 获取运行时框架版本(deploy_type=5)
 const fetchRuntimeFrameworks = async () => {
   try {
     const { data, error } = await useFetchApi(`/runtime_framework?deploy_type=5`).json()
     if (error?.value) {
       runtimeFrameworkOptions.value = []
-      groupedRuntimeFrameworks.value = {}
       dataForm.value.runtime_framework_id = ''
       return
     }
     const body = data?.value || {}
     const frameworks = body.data || []
     
-    // 按compute_type字段进行分组
-    const groupedByComputeType = {}
-    frameworks.forEach(framework => {
-      // 从接口返回的实际数据结构中获取compute_type
-      const computeType = framework.compute_type || ''
-      if (!groupedByComputeType[computeType]) {
-        groupedByComputeType[computeType] = []
-      }
+    runtimeFrameworkOptions.value = frameworks.map(framework => ({
+      id: framework.id,
+      label: `${framework.frame_version}`,
+      frameVersion: framework.frame_version,
+      frameName: framework.frame_name,
+      computeType: framework.compute_type || ''
+    }))
+    
+    // 获取数据后,自动选择匹配当前资源类型的第一个框架
+    if (dataForm.value.resource && runtimeFrameworkOptions.value.length > 0) {
+      const currentResource = resourcesOptions.value
+        .flatMap(category => category.options)
+        .find(item => `${item.id}/${item.order_detail_id}` === dataForm.value.resource)
       
-      // 直接将框架信息添加到对应分组中
-      groupedByComputeType[computeType].push({
-        id: framework.id,
-        label: `${framework.frame_version}`,
-        frameVersion: framework.frame_version,
-        frameName: framework.frame_name
-      })
-    })
-    
-    // 保存分组结果和扁平化后的选项列表
-    groupedRuntimeFrameworks.value = groupedByComputeType
-    const options = Object.values(groupedByComputeType).flat()
-    
-    runtimeFrameworkOptions.value = options
-    dataForm.value.runtime_framework_id = options[0]?.id || ''
+      if (currentResource && currentResource.type) {
+        const filtered = runtimeFrameworkOptions.value.filter(
+          framework => framework.computeType === currentResource.type
+        )
+        if (filtered.length > 0) {
+          dataForm.value.runtime_framework_id = filtered[0].id
+        } else {
+          dataForm.value.runtime_framework_id = ''
+        }
+      }
+    }
   } catch (e) {
     console.error(t('notebooks.error.getRuntimeFrameworkFailed'), e)
     runtimeFrameworkOptions.value = []
-    groupedRuntimeFrameworks.value = {}
     dataForm.value.runtime_framework_id = ''
   }
 }
+
+// 根据选中资源的类型过滤运行时框架
+const filteredRuntimeFrameworks = computed(() => {
+  if (!dataForm.value.resource) return []
+  if (!resourcesOptions.value.length) return []
+  if (!runtimeFrameworkOptions.value.length) return []
+  
+  // 从资源选项中找到当前选中的资源
+  const currentResource = resourcesOptions.value
+    .flatMap(category => category.options)
+    .find(item => `${item.id}/${item.order_detail_id}` === dataForm.value.resource)
+  
+  if (!currentResource || !currentResource.type) return []
+  
+  // 根据资源的type属性过滤框架
+  const filtered = runtimeFrameworkOptions.value.filter(
+    framework => framework.computeType === currentResource.type
+  )
+  
+  return filtered
+})
+
+// 监听资源变化,自动选择对应类型的第一个框架
+watch(
+  () => dataForm.value.resource,
+  () => {
+    const filtered = filteredRuntimeFrameworks.value
+    if (filtered && filtered.length > 0) {
+      // 有匹配的预装镜像,选择第一个
+      dataForm.value.runtime_framework_id = filtered[0].id
+    } else {
+      // 没有匹配的预装镜像,清空选择
+      dataForm.value.runtime_framework_id = ''
+    }
+  }
+)
 
 const createNotebook = () => {
   if (!dataForm.value) return
@@ -423,7 +452,6 @@ const handleCancel = () => {
 
 onMounted(() => {
   fetchClusters()
-  fetchRuntimeFrameworks()
 })
 </script>
 

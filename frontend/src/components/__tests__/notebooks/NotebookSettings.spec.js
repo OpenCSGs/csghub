@@ -102,14 +102,6 @@ describe('NotebookSettings', () => {
     expect(JSON.parse(lastCall[1].body)).toMatchObject({ resource_id: 11, order_detail_id: 101 })
   })
 
-  it('updateFramework sends PUT payload', async () => {
-    const wrapper = await mountSettings()
-    await wrapper.vm.updateFramework(2)
-    const lastCall = apiMock.mock.calls[apiMock.mock.calls.length - 1]
-    expect(lastCall[0]).toBe('/notebooks/1')
-    expect(JSON.parse(lastCall[1].body)).toMatchObject({ runtime_framework_id: 2 })
-  })
-
   it('updateMinReplica sends PUT payload', async () => {
     const wrapper = await mountSettings()
     await wrapper.vm.updateMinReplica(1)

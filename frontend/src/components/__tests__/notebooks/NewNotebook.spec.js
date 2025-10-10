@@ -30,7 +30,7 @@ vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory.js', () => 
     {
       label: 'GPU',
       options: [
-        { id: 11, order_detail_id: 101, is_available: true, label: 'A100' },
+        { id: 11, order_detail_id: 101, is_available: true, label: 'A100', type: 'gpu' },
         { id: 12, order_detail_id: 102, is_available: false, label: 'V100' }
       ]
     }
@@ -38,7 +38,7 @@ vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory.js', () => 
 }))
 
 // Mock API
-const apiMock = vi.fn((url) => ({
+const apiMock = vi.fn((url, options) => ({
   json: () => {
     if (url === '/cluster') {
       return Promise.resolve({
@@ -67,7 +67,7 @@ const apiMock = vi.fn((url) => ({
     })
   })
 }))
-vi.mock('@/packs/useFetchApi', () => ({ default: (url) => apiMock(url) }))
+vi.mock('@/packs/useFetchApi', () => ({ default: (url, options) => apiMock(url, options) }))
 
 const mountNew = async (props = {}) => {
   const wrapper = mount(NewNotebook, {
@@ -90,13 +90,23 @@ describe('NewNotebook', () => {
   })
 
   it('mounts and loads clusters, resources and frameworks', async () => {
+    console.log('Starting test...')
     const wrapper = await mountNew()
-    // cluster fetched
-    expect(apiMock).toHaveBeenCalledWith('/cluster')
-    // runtime frameworks fetched
-    expect(apiMock).toHaveBeenCalledWith('/runtime_framework?deploy_type=5')
+    
+    // 增加等待时间并添加多个 nextTick 确保所有异步操作完成
+    await new Promise(resolve => setTimeout(resolve, 100))
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+    
+    // 打印调试信息
+    console.log('API calls made:', apiMock.mock.calls)
+    
+    // 验证 API 调用
+    expect(apiMock).toHaveBeenCalled()
+    expect(apiMock.mock.calls.some(call => call[0] === '/cluster')).toBe(true)
+    expect(apiMock.mock.calls.some(call => call[0] === '/runtime_framework?deploy_type=5')).toBe(true)
 
-    // default selections set
+    // 验证默认选中项
     expect(wrapper.vm.dataForm.notebook_cluster).toBe('c1')
     expect(wrapper.vm.dataForm.resource).toBe('11/101')
     expect([1, '']).toContain(wrapper.vm.dataForm.runtime_framework_id)
@@ -112,7 +122,20 @@ describe('NewNotebook', () => {
     await wrapper.vm.createNotebook()
     await new Promise(r => setTimeout(r, 20))
 
-    expect(apiMock).toHaveBeenCalledWith('/notebooks')
+    const notebooksCall = apiMock.mock.calls.find(([url]) => url === '/notebooks')
+    expect(notebooksCall).toBeTruthy()
+
+    const [, requestOptions] = notebooksCall
+    expect(requestOptions?.headers?.['Content-Type']).toBe('application/json')
+
+    const payload = JSON.parse(requestOptions.body)
+    expect(payload).toMatchObject({
+      currentUser: 'tester',
+      deploy_name: 'nb-1',
+      order_detail_id: 101,
+      resource_id: 11
+    })
+
     expect(window.location.href).toBe('/notebooks/999')
 
     // restore
