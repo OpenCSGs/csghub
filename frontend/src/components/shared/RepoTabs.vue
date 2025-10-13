@@ -2,7 +2,7 @@
   <div class="relative mb-[80px]">
     <div class="absolute -top-1.5 right-0 xl:relative md:right-0 flex gap-4">
       <RepoClone
-        v-if="repoType !== 'endpoint'"
+        v-if="repoType !== 'endpoint' && repoType !== 'notebook'"
         :showAddToCollections="showAddToCollections"
         :repoType="repoType"
         :httpCloneUrl="repoDetail.repository?.http_clone_url || ''"
@@ -174,11 +174,18 @@
       <!-- logs -->
       <template
         #logs
-        v-if="repoType === 'endpoint' && repoTab.tab === 'logs'"
+        v-if="(repoType === 'endpoint' || repoType === 'notebook') && repoTab.tab === 'logs'"
       >
         <EndpointLogs
+          v-if="repoType === 'endpoint'"
           :instances="repoDetail.instances"
           :modelId="repoDetail.modelId"
+          :deployId="repoDetail.deployId"
+        />
+        <NotebookLogs
+          v-else-if="repoType === 'notebook'"
+          :instances="repoDetail.instances"
+          :notebookId="repoDetail.id"
           :deployId="repoDetail.deployId"
         />
       </template>
@@ -265,6 +272,17 @@
           :clusterId="repoDetail.clusterId"
           :variables="safeJsonParse(repoDetail.engineArgs) ? JSON.parse(repoDetail.engineArgs) : {}"
         />
+        <NotebookSettings
+          v-if="repoType === 'notebook'"
+          :notebookName="notebookName"
+          :notebookId="notebookId"
+          :appStatus="appStatus"
+          :framework="repoDetail.runtimeFramework"
+          :maxReplica="repoDetail.maxReplica"
+          :minReplica="repoDetail.minReplica"
+          :clusterId="repoDetail.clusterId"
+          :sku="repoDetail.sku"
+        />
         <McpSettings
           v-if="repoType === 'mcp'"
           :path="path"
@@ -307,6 +325,8 @@
   import BuildAndErrorPage from '../application_spaces/BuildAndErrorPage.vue'
   import EndpointPage from '../endpoints/EndpointPage.vue'
   import EndpointLogs from '../endpoints/EndpointLogs.vue'
+  import NotebookLogs from '../notebooks/NotebookLogs.vue'
+  import NotebookSettings from '../notebooks/NotebookSettings.vue'
   import InstanceAnalysis from './InstanceAnalysis.vue'
   import BillingDetail from './BillingDetail.vue'
   import McpSpacePage from '../application_spaces/McpSpacePage.vue'
@@ -320,7 +340,8 @@
   const { t } = useI18n()
   const props = defineProps({
     repoDetail: Object,
-    // currentBranch: String,
+    notebookName: String,
+    notebookId: String,
     currentPath: String,
     defaultTab: String,
     tags: Object,
@@ -334,6 +355,7 @@
     userName: String,
     commitId: String,
     sku: String,
+    clusterId: String,
     modelId: String,
     isPrivate: Boolean,
     endpointReplica: Number,

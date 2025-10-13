@@ -22,6 +22,8 @@ export const navbar = {
   loginRegister: "登录/注册",
   login: "登录",
   newCollection: "新建合集",
+  newNotebook: "新建Notebook",
+  newAgent: "新建智能体",
   emailMissing: '体验完整功能，请提供您的电子邮件',
   usernameNeedChange: '体验完整功能，请先更新您的用户名',
   emailAndUsernameMissing: '体验完整功能，请先更新您的用户名和邮箱',

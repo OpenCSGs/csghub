@@ -35,7 +35,7 @@ export const fetchResourcesInCategory = async (clusterId, depployType = 1) => {
     const allGPUResources = body.data
     const categories = {}
     // Category data
-    allGPUResources.forEach((item) => {
+    allGPUResources?.forEach((item) => {
       const category = payModeMapping[item.pay_mode] || 'Others'
       if (!categories[category]) {
         categories[category] = []

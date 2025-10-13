@@ -28,6 +28,31 @@
     </el-tabs>
 
 
+    <!-- notebooks -->
+    <h3 v-if="activeTab === ''" class="text-lg flex justify-between gap-2 mt-8">
+      <span class="whitespace-nowrap">{{ $t("notebooks.title") }}</span>
+      <CsgButton
+        class="btn btn-primary btn-sm"
+        @click="handleNewClick"
+        :name="$t('notebooks.new.title')"
+        :svgName="'plus'"
+      />
+    </h3>
+    <div v-if="activeTab === ''|| activeTab === 'notebooks'" class="mt-4 w-full">
+      <div v-if="filteredNotebooks.length > 0" class="grid grid-cols-2 lg:grid-cols-1 gap-4 mb-8 mt-4">
+        <NotebookItem v-for="notebook in filteredNotebooks" :notebook="notebook" repo-type="notebook" />
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-8 mt-4">
+        {{ $t("all.noData") }}
+      </div>
+      <view-more
+        v-if="notebooks.more"
+        target="notebooks"
+        @view-more-targets="viewMoreTargets"
+      ></view-more>
+      <el-skeleton class="pr-6" v-if="notebooksLoading" :rows="2" animated />
+    </div>
+
     <!-- finetunes -->
     <h3 v-if="activeTab === '' || activeTab === 'finetune'" class="text-lg flex justify-between gap-2 mt-8">
       <span class="whitespace-nowrap">{{ $t("finetune.title") }}</span>
@@ -94,6 +119,7 @@
   import { computed, ref, watch, inject, onMounted } from "vue"
   import useUserStore from '../../stores/UserStore.js'
   import FinetuneItem from "../shared/FinetuneItem.vue"
+  import NotebookItem from "../notebooks/NotebookItem.vue"
   import ViewMore from "../shared/ViewMore.vue"
   import EndpointItem from "../endpoints/EndpointItem.vue"
   import EvaluationTable from "./EvaluationTable.vue"
@@ -121,23 +147,28 @@
       window.location.href = '/endpoints/new'
     } else if (titleText.includes($t("evaluation.list.title"))) {
       window.location.href = '/evaluations/new'
+    } else if (titleText.includes('Notebook')) {
+      window.location.href = '/notebooks/new'
     }
   }
 
   const userStore = useUserStore()
   const defaultTotal = 6
   const endpoints = ref([])
+  const notebooks = ref([])
   const finetunes = ref([])
   const evaluations = ref([])
   const activeTab = ref('')
 
   const endpointsLoading = ref(false)
+  const notebooksLoading = ref(false)
   const finetunesLoading = ref(false)
 
   const hasEndpoints = computed(() => endpoints.value?.total > 0)
   const hasFinetune = computed(() => finetunes.value?.total > 0)
 
   const filteredFinetunes = computed(() => finetunes.value?.data || [])
+  const filteredNotebooks = computed(() => notebooks.value?.data?.data || [])
   const filteredEndpoints = computed(() => endpoints.value?.data || [])
   const filteredEvaluations = computed(() => evaluations.value?.data || [])
 
@@ -149,6 +180,8 @@
     promises.push(fetchData(endpointsUrl, endpoints, defaultTotal, 'endpoints'));
     const finetunesUrl = reposUrl("finetunes")
     promises.push(fetchData(finetunesUrl, finetunes, defaultTotal));
+    const notebooksUrl = reposUrl("notebooks")
+    promises.push(fetchData(notebooksUrl, notebooks, defaultTotal, 'notebooks'));
     await Promise.all(promises);
   }
 
@@ -169,6 +202,9 @@
     } else if (target === "finetunes") {
       finetunesLoading.value = true
       fetchMoreFinetunes()
+    } else if (target === 'notebooks') {
+      notebooksLoading.value = true
+      fetchMoreNotebooks()
     }
   }
 
@@ -180,6 +216,11 @@
   const fetchMoreFinetunes = async () => {
     const url = reposUrl("finetunes")
     await fetchData(url, finetunes, finetunes.value.total, 'finetunes')
+  }
+
+  const fetchMoreNotebooks = async () => {
+    const url = reposUrl("notebooks")
+    await fetchData(url, notebooks, notebooks.value.data?.total, 'notebooks')
   }
 
   const fetchData = async (url, targetRef, total, type) => {
@@ -212,6 +253,8 @@
         finetunesLoading.value = false
       } else if (targetRef === endpoints) {
         endpointsLoading.value = false
+      } else if (targetRef === notebooks) {
+        notebooksLoading.value = false
       }
     }
   }
