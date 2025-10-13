@@ -63,6 +63,7 @@ import EvaluationDetail from "./components/evaluations/EvaluationDetail.vue"
 import NewMcpServer from "./components/mcp/NewMcpServer.vue"
 import McpTools from "./components/mcp/McpTools.vue"
 import DeployMcpServer from "./components/mcp/DeployMcpServer.vue"
+import NewNotebook from "./components/notebooks/NewNotebook.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -84,23 +85,6 @@ import DataflowAlgTemplate from "./components/dataflow_config/algTemplate/index.
 import DataflowNewTask from "./components/dataflow_config/newTask/index.vue"
 import DataflowNewTemplate from "./components/dataflow_config/algTemplate/newTemplate.vue"
 import DataflowTools from "./components/dataflow_config/tools/index.vue"
-import AboutPage from "./components/about/About.vue"
-import AutohubPage from "./components/autohub/AutohubPage.vue"
-import BlogIndex from "./components/blogs/Index.vue"
-import BlogShow from "./components/blogs/Show.vue"
-import CasesIndex from "./components/cases/Index.vue"
-import CasesShow from "./components/cases/Show.vue"
-import NewMcpServer from "./components/mcp/NewMcpServer.vue"
-import NewNotebook from "./components/notebooks/NewNotebook.vue"
-import ContributeIntro from "./components/contribute/ContributeIntro.vue"
-import ContributeStats from "./components/contribute/ContributeStats.vue"
-import ContributeValue from "./components/contribute/ContributeValue.vue"
-import McpTools from "./components/mcp/McpTools.vue"
-import DeployMcpServer from "./components/mcp/DeployMcpServer.vue"
-import InvoiceTitleList from "./components/user_settings/invoices/InvoiceTitleList.vue"
-import InvoicableList from "./components/user_settings/invoices/InvoicableList.vue"
-import InvoiceList from "./components/user_settings/invoices/InvoiceList.vue"
-import InvoiceDetail from "./components/user_settings/invoices/InvoiceDetail.vue"
 
 // 数据采集
 import DataCollectionTask from "./components/dataflow_config/dataAcquisition/dataCollectionTask/index.vue"
@@ -170,9 +154,6 @@ const app = createApp({
     EvaluationDetail,
     NewMcpServer,
     NewNotebook,
-    ContributeIntro,
-    ContributeStats,
-    ContributeValue,
     McpTools,
     DeployMcpServer,
     DataflowIndex,

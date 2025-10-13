@@ -4,7 +4,6 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 type NotebookHandler interface {
@@ -14,15 +13,15 @@ type NotebookHandler interface {
 
 type NotebookHandlerImpl struct {
 	BaseHandlerImpl
+	isSmallFooter bool
 }
 
 func NewNotebookHandler() NotebookHandler {
 	return &NotebookHandlerImpl{
-		BaseHandlerImpl{
-			resourceType:  "notebooks",
-			isSmallFooter: true,
-			jwtUtils:      jwt.NewJwtUtils(),
+		BaseHandlerImpl: BaseHandlerImpl{
+			resourceType: "notebooks",
 		},
+		isSmallFooter: true,
 	}
 }
 
