@@ -17,8 +17,22 @@
     </div>
   </div>
   <div 
-    class="mx-auto page-responsive-width mt-[-40px] md:px-0"
+    class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
     v-show="!isDataLoading && isInitialized">
+    <div class="absolute top-0 right-0 pr-4 z-10">
+      <div
+        v-if="repoDetailStore.status === 'Sleeping' || isWakingUp"
+        @click="wakeupEndpoint"
+        class="btn btn-sm"
+        :class="{
+          'btn-primary': !isWakingUp,
+          'btn-secondary-gray btn-gray-disabled-notebook': isWakingUp
+        }"
+        >
+        {{ isWakingUp ? $t('notebooks.settings.wakingUpNotebook') : $t('notebooks.settings.wakeupNotebook') }}
+      </div>
+    </div>
+
     <repo-tabs
       :repo-detail="repoDetailStore"
       :appStatus="repoDetailStore.status"
@@ -64,6 +78,7 @@
   import { storeToRefs } from 'pinia';
   import { useRepoTabStore } from '../../stores/RepoTabStore'
   import { ToNotFoundPage } from '../../packs/utils'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     currentPath: String,
@@ -75,6 +90,7 @@
     endpointId: Number
   })
 
+  const { t: $t } = useI18n()
   const repoDetailStore = useRepoDetailStore()
   const userStore = useUserStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
@@ -82,6 +98,7 @@
   const { setRepoTab } = useRepoTabStore()
 
   const isDataLoading = ref(false)
+  const isWakingUp = ref(false)
 
   // only owner can view endpoint detail, so just set true
   const canManage = ref(true)
@@ -175,6 +192,33 @@
     }
   }
 
+  const wakeupEndpoint = async () => {
+    if (isWakingUp.value) return
+    
+    isWakingUp.value = true
+    try {
+      const { data, error } = await useFetchApi(
+        `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}/wakeup`,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        }
+      ).put().json()
+      
+      if (data.value) {
+        ElMessage.success($t('notebooks.settings.wakeupSuccess'))
+        await fetchRepoDetail(true)
+      } else {
+        ElMessage.error(error.value?.msg || $t('notebooks.settings.wakeupFailed'))
+      }
+    } catch (err) {
+      ElMessage.error($t('notebooks.settings.wakeupFailed'))
+    } finally {
+      isWakingUp.value = false
+    }
+  }
+
   const syncEndpointStatus = () => {
     fetchEventSource(`${csghubServer}/api/v1/models/${props.namespace}/${props.modelName}/run/${props.endpointId}/status`, {
       openWhenHidden: true,
@@ -249,6 +293,19 @@
     background: #fff !important;
   }
 
+  .btn-secondary-gray.btn-gray-disabled-notebook {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: var(--Gray-100);
+    color: var(--Gray-400);
+    border: 1px solid var(--Gray-200);
+    box-shadow: var(--shadow-xs);
+    &:hover {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
   :deep(.el-drawer__header) {
     border-bottom: solid 1px lightgray;
     padding: 10px;
@@ -259,5 +316,18 @@
     border-radius: var(--border-radius-sm);
     background: #E5E7EB;
     padding: 6px;
+  }
+
+  .btn-secondary-gray.btn-gray-disabled-notebook {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: var(--Gray-100);
+    color: var(--Gray-400);
+    border: 1px solid var(--Gray-200);
+    box-shadow: var(--shadow-xs);
+    &:hover {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   }
 </style>
