@@ -22,8 +22,20 @@
   <div 
     class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
     v-show="!isDataLoading && isInitialized">
-    <div class="absolute top-0 right-0 pr-4 z-10" v-if="repoDetailStore.endpoint || repoDetailStore.status === 'Deploying'">
+    <div class="absolute top-0 right-0 pr-4 z-10">
       <div
+        v-if="repoDetailStore.status === 'Sleeping' || isWakingUp"
+        @click="wakeupNotebook"
+        class="btn btn-sm"
+        :class="{
+          'btn-primary': !isWakingUp,
+          'btn-secondary-gray btn-gray-disabled-notebook': isWakingUp
+        }"
+        >
+        {{ isWakingUp ? $t('notebooks.settings.wakingUpNotebook') : $t('notebooks.settings.wakeupNotebook') }}
+      </div>  
+      <div
+        v-else-if="(repoDetailStore.endpoint || repoDetailStore.status === 'Deploying') && !isWakingUp"
         @click="startNotebook"
         class="btn btn-sm"
         :class="{
@@ -79,6 +91,7 @@
   import { storeToRefs } from 'pinia';
   import { useRepoTabStore } from '../../stores/RepoTabStore'
   import { ToNotFoundPage } from '../../packs/utils'
+  import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
     actionName: String,
@@ -87,6 +100,7 @@
     notebookName: String
   })
 
+  const { t: $t } = useI18n()
   const repoDetailStore = useRepoDetailStore()
   const userStore = useUserStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
@@ -98,6 +112,7 @@
   const isDataLoading = ref(false)
   const namespace = ref('')
   const notebookResource = ref('')
+  const isWakingUp = ref(false)
 
   // only owner can view notebook detail, so just set true
   const canManage = ref(true)
@@ -178,6 +193,30 @@
       return false
     } finally {
       isDataLoading.value = false
+    }
+  }
+
+  const wakeupNotebook = async () => {
+    if (isWakingUp.value) return
+    
+    isWakingUp.value = true
+    try {
+      const { data, error } = await useFetchApi(`/notebooks/${props.notebookId}/wakeup`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).put().json()
+      
+      if (data.value) {
+        ElMessage.success($t('notebooks.settings.wakeupSuccess'))
+        await fetchNotebookDetail(true)
+      } else {
+        ElMessage.error(error.value?.msg || $t('notebooks.settings.wakeupFailed'))
+      }
+    } catch (err) {
+      ElMessage.error($t('notebooks.settings.wakeupFailed'))
+    } finally {
+      isWakingUp.value = false
     }
   }
 
