@@ -34,6 +34,7 @@
       :actionName="actionName"
       :settingsVisibility="repoDetailStore.canManage"
       :can-write="repoDetailStore.canWrite"
+      :tags="tags"
       repo-type="space"
       :user-name="userName"
       :commitId="commitId"
@@ -184,7 +185,21 @@
   })
 
   const tags = computed(() => {
-    return buildTags(repoDetailStore)
+    const allTags = buildTags(repoDetailStore)
+    return {
+      ...allTags,
+      task_tags: [],
+      framework_tags: [],
+      language_tags: [],
+      license_tags: [],
+      industry_tags: allTags.industry_tags || [],
+      program_language_tags: [],
+      runmode_tags: [],
+      scene_tags: [],
+      hardware_tags: [],
+      sdk_tags: [],
+      other_tags: []
+    }
   })
 
   // const ownerUrl = ref('')

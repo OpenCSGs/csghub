@@ -20,6 +20,7 @@ export const application_spaces = {
   sendRequest: 'API 调用示例',
   endpointUrl: 'SSE 服务 URL',
   mcpSpaceType: '应用空间类型：MCP',
+  applicationSpaceTag: "应用空间标签",
   gradioGuide: {
     notice: '开始使用您的 gradio 应用空间！',
     noticeDesc: '应用空间创建成功！空间运行需要程序文件，请参考下面案例创建 app.py 文件。',
@@ -101,6 +102,7 @@ export const application_spaces = {
     runningStatusDesc: '切换运行或关停应用空间',
     tips: "将会显示在应用空间列表页面中，选填",
     tips2: "一段关于应用空间的介绍，选填",
+    tips3: "选择应用对应的分类标签，便于用户在筛选时更快的找到您的应用。",
     changeVisibility: "修改应用空间可见性",
     statusText: "当前应用空间目前是",
     status: "状态。",

@@ -20,6 +20,7 @@ export const application_spaces = {
   sendRequest: 'API Call Example',
   endpointUrl: 'SSE Server URL',
   mcpSpaceType: 'Space type: MCP',
+  applicationSpaceTag: "Application space tag",
   gradioGuide: {
     notice: 'Get started with your grario app space!',
     noticeDesc: 'The space is created successfully! Space operation requires program files. Please refer to the following case to create the app.py file.',
@@ -101,6 +102,7 @@ export const application_spaces = {
     runningStatusDesc: 'Switch running or stop application space',
     tips: "Will be displayed on the spaces list page, optional",
     tips2: "An introduction about spaces, optional",
+    tips3: "Select the category tag corresponding to the application, which makes it easier for users to find your application when filtering.",
     changeVisibility: "Space visibility",
     statusText: "The current Space is now",
     status: "Status.",

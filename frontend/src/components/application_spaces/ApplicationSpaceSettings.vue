@@ -121,6 +121,68 @@
     </div>
     
     <el-divider />
+    
+    <!-- 应用标签 -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.applicationSpaceTag') }}
+        </div>
+        <div class="text-sm font-light text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.tips3') }}
+        </div>
+      </div>
+      <div
+        class="flex flex-col gap-1.5"
+        ref="tagListContainer">
+        <p class="text-gray-700 text-sm">{{ $t('application_spaces.applicationSpaceTag') }}</p>
+        <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
+          <div
+            class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-1.5">
+            <div
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
+              <span
+                v-for="tag in selectedTags"
+                :key="tag.uid"
+                class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
+                {{
+                  this.$i18n.locale === 'zh'
+                    ? tag.zh_name || tag.show_name || tag.name
+                    : tag.name
+                }}
+                <el-icon><Close @click="removeTag(tag.uid)" /></el-icon>
+              </span>
+            </div>
+            <input
+              class="w-full max-h-8 outline-none"
+              v-model="tagInput"
+              @input="showTagList" />
+          </div>
+          <div
+            v-show="shouldShowTagList"
+            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5">
+            <p
+              v-for="tag in theTagList"
+              @click="selectTag(tag)"
+              class="flex gap-2 items-center cursor-pointer p-2.5">
+              {{
+                this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
+              }}
+            </p>
+          </div>
+          <CsgButton
+            v-if="hasTagsChanged"
+            @click="updateTags"
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :name="$t('all.update')"
+            :loading="isUpdatingTags"
+            :disabled="isUpdatingTags"
+          />
+        </div>
+      </div>
+    </div>
+
+    <el-divider />
 
     <!-- space cluster -->
     <div class="flex xl:flex-col gap-8 mb-[24px]">
@@ -235,7 +297,7 @@
         />
       </div>
     </div>
-    
+
     <!-- docker space variables -->
     <el-divider v-if="theVariables && Object.keys(theVariables).length > 0"/>
     <div v-if="theVariables && Object.keys(theVariables).length > 0">
@@ -475,7 +537,8 @@
       appStatus: String,
       cloudResource: String,
       coverImage: String,
-      variables: Object
+      variables: Object,
+      tags: { type: Object, default: () => ({}) }
     },
 
     components: { ApplicationSpaceEnvEditor },
@@ -511,11 +574,19 @@
         imageUploaded: false,
         envJSON:'',
         secretJSON:'',
+        t: useI18n(),
+        // tags related
+        tagListContainer: null,
+        theTagList: [],
+        selectedTags: [],
+        shouldShowTagList: false,
+        tagInput: '',
         originalEnvJSON: '',
         originalSecretJSON: '',
         detailLoaded: false,
         detailLoading: false,
-        t: useI18n()
+        isUpdatingTags: false,
+        originalTags: []
       }
     },
 
@@ -575,6 +646,12 @@
       hasEnvChanged() {
         return (this.envJSON !== this.originalEnvJSON) || 
                (this.secretJSON !== this.originalSecretJSON)
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
       }
     },
 
@@ -590,12 +667,35 @@
       },
       variables(newVariables, _) {
         this.theVariables = newVariables
+      },
+      tagList: {
+        handler(newTagList) {
+          this.theTagList = newTagList
+        },
+        immediate: true,
+        deep: true
+      },
+      tags: {
+        handler() {
+          this.getSelectTags()
+        },
+        immediate: true,
+        deep: true
       }
     },
     emits: ['showSpaceLogs'],
-    mounted() {
-      this.fetchSpaceResources()
+    async mounted() {
+      await this.fetchClusters()
+      // this.fetchSpaceResources()
       this.fetchSpaceDetail()
+      if (this.tags && Object.keys(this.tags).length > 0) {
+        this.getSelectTags()
+      }
+      document.addEventListener('click', this.collapseTagList)
+      this.getSpaceTags()
+    },
+    beforeUnmount() {
+      document.removeEventListener('click', this.collapseTagList)
     },
     inject: ['fetchRepoDetail'],
     methods: {
@@ -631,9 +731,115 @@
         }
       },
 
-      async fetchSpaceResources(forcePickFirst = false) {
-        const { data, error } = await useFetchApi(`/space_resources?cluster_id=${this.clusterId}&deploy_type=0`).json()
+      // tags related methods (mirroring McpSettings.vue)
+      collapseTagList(event) {
+        if (this.$refs.tagListContainer && !this.$refs.tagListContainer.contains(event.target)) {
+          this.shouldShowTagList = false
+        }
+      },
 
+      getSelectTags() {
+        if (!this.tags) return
+        const industryTags = (this.tags.industry_tags || []).map((tag) => {
+          return {
+            ...tag,
+            uid: tag.category + tag.name
+          }
+        })
+        this.selectedTags = industryTags
+        // Store original values for comparison
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+      },
+
+      async getSpaceTags() {
+        const { data, error } = await useFetchApi('/tags?scope=space').json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
+        } else {
+          const body = data.value
+          this.theTagList = body?.data?.filter(item => item.category === 'industry')
+        }
+      },
+      showTagList() {
+        if (this.tagInput !== '') {
+          const userTriggerTagList = (this.theTagList || []).filter((tag) => {
+            return (
+              (tag.show_name && tag.show_name.includes(this.tagInput)) ||
+              (tag.name && tag.name.includes(this.tagInput))
+            )
+          })
+
+          if (userTriggerTagList.length > 0) {
+            this.theTagList = userTriggerTagList
+            this.shouldShowTagList = true
+          }
+        } else {
+          this.shouldShowTagList = false
+        }
+      },
+
+      selectTag(newTag) {
+        const findTag = this.selectedTags.find((tag) => tag.uid === (newTag.category + newTag.name))
+        if (!findTag) {
+          this.selectedTags.push({ 
+            name: newTag.name, 
+            zh_name: newTag.show_name,
+            category: newTag.category,
+            uid: newTag.category + newTag.name
+          })
+          this.tagInput = ''
+          this.shouldShowTagList = false
+        }
+      },
+
+      removeTag(tagUid) {
+        this.selectedTags = this.selectedTags.filter((item) => item.uid !== tagUid)
+      },
+
+      async updateTags() {
+        if (this.isUpdatingTags) return
+        
+        this.isUpdatingTags = true
+        try {
+          const tags = this.selectedTags.map((tag) => tag.name)
+          const options = {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tags)
+          }
+          const { error } = await useFetchApi(`/spaces/${this.path}/tags/industry`, options).post().json()
+          if (error.value) {
+            ElMessage({ message: error.value.msg, type: 'warning' })
+          } else {
+            await this.fetchRepoDetail(true)
+            ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
+          }
+        } catch (error) {
+        } finally {
+          this.isUpdatingTags = false
+        }
+      },
+
+      async fetchClusters() {
+        const { data, error } = await useFetchApi('/cluster').json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
+        } else {
+          const body = data.value
+          this.spaceClusters = body.data || []
+          const preferred = this.clusterId || this.theClusterId || this.spaceClusters[0]?.cluster_id || ''
+          if (preferred !== this.theClusterId) {
+            this.theClusterId = preferred
+          }
+        }
+      },
+
+      async fetchSpaceResources(forcePickFirst = false) {
+        const cid = this.theClusterId || this.clusterId
+        if (!cid) return
+        this.resourcesLoading = true
+        const { data, error } = await useFetchApi(`/space_resources?cluster_id=${cid}&deploy_type=0`).json()
         if (!data.value) {
           ElMessage({
             message: error.value.msg || t('application_spaces.new.failedFetchResources'),
