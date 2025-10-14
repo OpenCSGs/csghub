@@ -487,29 +487,36 @@
       const { data: tagsData } = await useFetchApi(
         '/tags?scope=dataset&category=evaluation'
       ).json()
+      
+      if (!tagsData.value.data || tagsData.value.data.length === 0) {
+        datasetOptions.value = []
+        return
+      }
 
-      const options = await Promise.all(
-        tagsData.value.data.map(async (tag) => {
-          const { data: datasetsData } = await useFetchApi(
-            `/datasets?tag_category=runtime_framework&tag_name=${framework.toLowerCase()}&tag_category=evaluation&tag_name=${
-              tag.name
-            }`
-          ).json()
-
-          const children =
-            datasetsData.value.data?.map((dataset) => ({
-              value: dataset.path,
-              label: dataset.path
-            })) || []
-
-          return {
-            label: tag.show_name || tag.name,
-            value: tag.name,
-            disabled: children.length === 0,
-            children
-          }
-        })
-      )
+      const { data: allDatasetsData } = await useFetchApi(
+        `/datasets?tag_category=runtime_framework&tag_name=${framework.toLowerCase()}`
+      ).json()
+      
+      const options = tagsData.value.data.map((tag) => {
+        const filteredDatasets = allDatasetsData.value.data?.filter(dataset => 
+          dataset.tags?.some(datasetTag => 
+            datasetTag.category === 'evaluation' && 
+            datasetTag.name === tag.name
+          )
+        ) || [];
+        
+        const children = filteredDatasets.map(dataset => ({
+          value: dataset.path,
+          label: dataset.path
+        }));
+        
+        return {
+          label: tag.show_name || tag.name,
+          value: tag.name,
+          disabled: children.length === 0,
+          children
+        };
+      });
 
       datasetOptions.value = options
     } catch (error) {
