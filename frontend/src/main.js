@@ -290,13 +290,20 @@ const routes = [
       repoName: route.params.name
     })
   },
-  { 
-    path: '/mcp/servers/:namespace/:name', 
+  {
+    path: '/mcp/servers/:namespace/:name',
     component: RepoDetail,
-    props: (route) => ({ 
+    props: (route) => ({
       repoType: 'mcp',
       namespace: route.params.namespace,
       repoName: route.params.name
+    })
+  },
+  {
+    path: '/profile/:username',
+    component: Profile,
+    props: (route) => ({
+      username: route.params.username
     })
   }
 
