@@ -144,6 +144,7 @@ func (i *SessionHandlerImpl) Create(ctx *gin.Context) {
 
 	previousPath, _ := ctx.Cookie("previous_path")
 	if previousPath != "" {
+		ctx.SetCookie("previous_path", "", -1, "/", "", false, false)
 		ctx.Redirect(http.StatusFound, previousPath)
 	} else {
 		ctx.Redirect(http.StatusFound, "/")
