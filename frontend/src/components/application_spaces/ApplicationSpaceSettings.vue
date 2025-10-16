@@ -137,38 +137,41 @@
         ref="tagListContainer">
         <p class="text-gray-700 text-sm">{{ $t('application_spaces.applicationSpaceTag') }}</p>
         <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
-          <div
-            class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-1.5">
+          <div class="relative">
             <div
-              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
-              <span
-                v-for="tag in selectedTags"
-                :key="tag.uid"
-                class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
-                {{
-                  this.$i18n.locale === 'zh'
-                    ? tag.zh_name || tag.show_name || tag.name
-                    : tag.name
-                }}
-                <el-icon><Close @click="removeTag(tag.uid)" /></el-icon>
-              </span>
+              class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-1.5">
+              <div
+                class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
+                <span
+                  v-for="tag in selectedTags"
+                  :key="tag.uid"
+                  class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
+                  {{
+                    this.$i18n.locale === 'zh'
+                      ? tag.zh_name || tag.show_name || tag.name
+                      : tag.name
+                  }}
+                  <el-icon><Close @click="removeTag(tag.uid)" /></el-icon>
+                </span>
+              </div>
+              <input
+                class="w-full max-h-8 outline-none"
+                v-model="tagInput"
+                @focus="handleTagInputFocus"
+                @input="showTagList" />
             </div>
-            <input
-              class="w-full max-h-8 outline-none"
-              v-model="tagInput"
-              @input="showTagList" />
-          </div>
-          <div
-            v-show="shouldShowTagList"
-            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5">
-            <p
-              v-for="tag in theTagList"
-              @click="selectTag(tag)"
-              class="flex gap-2 items-center cursor-pointer p-2.5">
-              {{
-                this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
-              }}
-            </p>
+            <div
+              v-show="shouldShowTagList"
+              class="absolute top-full left-0 right-0 mt-1 rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5 z-10">
+              <p
+                v-for="tag in theTagList"
+                @click="selectTag(tag)"
+                class="flex gap-2 items-center cursor-pointer p-2.5 hover:bg-gray-50 rounded">
+                {{
+                  this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
+                }}
+              </p>
+            </div>
           </div>
           <CsgButton
             v-if="hasTagsChanged"
@@ -578,6 +581,7 @@
         // tags related
         tagListContainer: null,
         theTagList: [],
+        allTagList: [],
         selectedTags: [],
         shouldShowTagList: false,
         tagInput: '',
@@ -759,24 +763,29 @@
           ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
           const body = data.value
-          this.theTagList = body?.data?.filter(item => item.category === 'industry')
+          const industryTags = body?.data?.filter(item => item.category === 'industry') || []
+          this.allTagList = industryTags
+          this.theTagList = industryTags
         }
       },
+      handleTagInputFocus() {
+        this.theTagList = this.allTagList
+        this.shouldShowTagList = true
+      },
+
       showTagList() {
         if (this.tagInput !== '') {
-          const userTriggerTagList = (this.theTagList || []).filter((tag) => {
+          const userTriggerTagList = (this.allTagList || []).filter((tag) => {
             return (
               (tag.show_name && tag.show_name.includes(this.tagInput)) ||
               (tag.name && tag.name.includes(this.tagInput))
             )
           })
-
-          if (userTriggerTagList.length > 0) {
-            this.theTagList = userTriggerTagList
-            this.shouldShowTagList = true
-          }
+          this.theTagList = userTriggerTagList
+          this.shouldShowTagList = userTriggerTagList.length > 0
         } else {
-          this.shouldShowTagList = false
+          this.theTagList = this.allTagList
+          this.shouldShowTagList = true
         }
       },
 
