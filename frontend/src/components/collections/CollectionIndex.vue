@@ -35,7 +35,6 @@
           class="!w-[320px] xl:!w-full h-10"
           :placeholder="$t(`collections.placeholder`)"
           :prefix-icon="Search"
-          @change="filterChange"
           @keyup.enter="filterChange"
         />
       </div>
@@ -93,7 +92,7 @@
     <CsgPagination
       :perPage="perPage"
       :currentPage="currentPage"
-      @currentChange="fetchCollections"
+      @currentChange="handlePageChange"
       :total="totalCollections"
     />
   </div>
@@ -168,7 +167,19 @@
 
   const filterChange = () => {
     currentPage.value = 1
-    updateUrlParams('push')
+    
+    const currentUrl = new URL(window.location.href)
+    const newUrl = new URL(window.location.href)
+    const newParams = newUrl.searchParams
+    
+    newParams.set('page', '1')
+    newParams.set('search', nameFilterInput.value)
+    newParams.set('sort', sortSelection.value)
+    
+    if (currentUrl.toString() !== newUrl.toString()) {
+      updateUrlParams('push')
+    }
+    
     fetchCollections()
   }
 
@@ -180,10 +191,16 @@
     fetchCollections()
   }
 
-  const fetchCollections = async (childCurrent) => {
+  const handlePageChange = (page) => {
+    fetchCollections(page, true)
+  }
+
+  const fetchCollections = async (childCurrent, shouldUpdateUrl = false) => {
     if (childCurrent) {
       currentPage.value = childCurrent
-      updateUrlParams('replace')
+      if (shouldUpdateUrl) {
+        updateUrlParams('push')
+      }
     }
     const params = new URLSearchParams()
     params.append('per', perPage.value)
@@ -207,6 +224,7 @@
 
   onMounted(() => {
     window.addEventListener('popstate', handlePopState)
+    updateUrlParams('replace')
     fetchCollections()
   })
 

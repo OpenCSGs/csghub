@@ -17,7 +17,7 @@
             <TaskTagItem
               v-for="tag in value"
               :tag="tag"
-              :active="activeTags['task']?.includes(tag.name)"
+              :active="isTagActive('task', tag.name)"
               @handleTagClick="handleTagClick" />
           </div>
         </template>
@@ -31,7 +31,7 @@
         v-for="tag in filteredTags"
         :noIcon="true"
         :tag="tag"
-        :active="activeTags['task']?.includes(tag.name)"
+        :active="isTagActive('task', tag.name)"
         @handleTagClick="handleTagClick" />
     </div>
   </div>
@@ -40,28 +40,28 @@
     <div class="flex gap-2 flex-wrap">
       <PyTorch
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('pytorch')" />
+        :active="isTagActive('framework', 'pytorch')" />
       <TensorFlow
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('tensorflow')" />
+        :active="isTagActive('framework', 'tensorflow')" />
       <Safetensors
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('safetensors')" />
+        :active="isTagActive('framework', 'safetensors')" />
       <ONNX
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('onnx')" />
+        :active="isTagActive('framework', 'onnx')" />
       <JAX
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('jax')" />
+        :active="isTagActive('framework', 'jax')" />
       <PaddlePaddle
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('paddlepaddle')" />
+        :active="isTagActive('framework', 'paddlepaddle')" />
       <Joblib
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('joblib')" />
+        :active="isTagActive('framework', 'joblib')" />
       <GGUF
         @setActiveFrameworkTag="handleTagClick"
-        :active="activeTags['framework']?.includes('gguf')" />
+        :active="isTagActive('framework', 'gguf')" />
     </div>
   </div>
 
@@ -70,7 +70,7 @@
       <LanguageTagItem
         v-for="languageTag in filteredTags"
         :tag="languageTag"
-        :active="activeTags['language']?.includes(languageTag.name)"
+        :active="isTagActive('language', languageTag.name)"
         @handleTagClick="handleTagClick" />
     </div>
   </div>
@@ -80,7 +80,7 @@
       <LicenseTagItem
         v-for="licenseTag in filteredTags"
         :tag="licenseTag"
-        :active="activeTags['license']?.includes(licenseTag.name)"
+        :active="isTagActive('license', licenseTag.name)"
         @handleTagClick="handleTagClick" />
     </div>
   </div>
@@ -91,7 +91,7 @@
         v-for="tag in filteredTags"
         :tag="tag"
         :activeCategory="activeCategory"
-        :active="activeTags[activeCategory]?.includes(tag.name)"
+        :active="isTagActive(activeCategory, tag.name)"
         @handleTagClick="handleTagClick" />
     </div>
   </div>
@@ -132,6 +132,13 @@
 
   const handleTagClick = (category, tagName) => {
     emit('setActiveTag', category, tagName)
+  }
+
+  const isTagActive = (category, tagName) => {
+    const activeCategoryTags = props.activeTags[category]
+    if (!Array.isArray(activeCategoryTags)) return false
+    const lowerTagName = tagName.toLowerCase()
+    return activeCategoryTags.some(tag => tag.toLowerCase() === lowerTagName)
   }
 
   const isGeneralCategory = computed(() => {

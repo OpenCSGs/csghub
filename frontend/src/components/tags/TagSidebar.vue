@@ -6,6 +6,7 @@
         :name="category.name"
         :zhName="category.show_name"
         :activeCategory="activeNavItem"
+        :activeTags="activeTags"
         @changeActiveItem="changeActiveItem" />
     </div>
     <div>
@@ -38,7 +39,7 @@
     }
   })
 
-  const emit = defineEmits(['resetTags'])
+  const emit = defineEmits(['resetTags', 'updateCategories'])
 
   const { t } = useI18n()
 
@@ -75,6 +76,7 @@
       if (newValue.length > 0 && newValue[0]?.name) {
         activeNavItem.value = newValue[0].name
       }
+      emit('updateCategories', newValue.map(item => item.name))
     }
   )
 
@@ -103,12 +105,16 @@
 
   const setTagNameFromParams = () => {
     if (props.selectedTagType && props.selectedTag) {
+      const tags = props.selectedTag.split(',').map(t => t.trim()).filter(t => t)
       if (activeTags.value[props.selectedTagType] === undefined) {
-        activeTags.value[props.selectedTagType] = []
-        activeTags.value[props.selectedTagType].push(props.selectedTag)
+        activeTags.value[props.selectedTagType] = tags
         return true
       } else if (Array.isArray(activeTags.value[props.selectedTagType])) {
-        activeTags.value[props.selectedTagType].push(props.selectedTag)
+        tags.forEach(tag => {
+          if (!activeTags.value[props.selectedTagType].includes(tag)) {
+            activeTags.value[props.selectedTagType].push(tag)
+          }
+        })
         return true
       }
     }
@@ -127,6 +133,29 @@
     if (changed) emitTag()
   }
 
+  const syncUIFromActiveTags = () => {
+    const categoriesWithTags = Object.entries(activeTags.value).filter(
+      ([_, tags]) => Array.isArray(tags) && tags.length > 0
+    )
+    
+    const currentCategoryTags = activeTags.value[activeNavItem.value]
+    const currentHasTags = Array.isArray(currentCategoryTags) && currentCategoryTags.length > 0
+    
+    if (!currentHasTags) {
+      if (categoriesWithTags.length > 0) {
+        activeNavItem.value = categoriesWithTags[0][0]
+      } else {
+        if (avaliableCategories.value.length > 0) {
+          activeNavItem.value = avaliableCategories.value[0].name
+        }
+      }
+    }
+  }
+
+  defineExpose({
+    syncUIFromActiveTags
+  })
+
   watch(
     () => props.externalActiveTags,
     (val) => {
@@ -140,7 +169,8 @@
     ([tag, type]) => {
       if (type && tag) {
         activeNavItem.value = type
-        activeTags.value = { [type]: [tag] }
+        const tags = tag.split(',').map(t => t.trim()).filter(t => t)
+        activeTags.value = { [type]: tags }
       }
     }
   )
