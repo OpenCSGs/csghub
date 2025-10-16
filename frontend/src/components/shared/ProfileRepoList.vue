@@ -232,15 +232,9 @@
   const hasSpaces = computed(() => spaces.value?.data?.length > 0)
   const hasMcps = computed(() => mcps.value?.data?.length > 0)
 
-  // 根据activeTab和是否有更多数据来决定显示数量
   const displayedCollections = computed(() => {
     const data = collections.value?.data || []
-    // 在"全部"tab下，如果已经展开则显示所有数据，否则只显示前6个
-    if (activeTab.value === '') {
-      return expandedSections.value.collections ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    // 在特定tab下，如果已经展开则显示所有数据，否则只显示前6个
-    if (activeTab.value === 'collections' && expandedSections.value.collections) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -248,10 +242,7 @@
 
   const displayedModels = computed(() => {
     const data = models.value?.data || []
-    if (activeTab.value === '') {
-      return expandedSections.value.models ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    if (activeTab.value === 'models' && expandedSections.value.models) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -259,10 +250,7 @@
 
   const displayedDatasets = computed(() => {
     const data = datasets.value?.data || []
-    if (activeTab.value === '') {
-      return expandedSections.value.datasets ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    if (activeTab.value === 'datasets' && expandedSections.value.datasets) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -270,10 +258,7 @@
 
   const displayedCodes = computed(() => {
     const data = codes.value?.data || []
-    if (activeTab.value === '') {
-      return expandedSections.value.codes ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    if (activeTab.value === 'codes' && expandedSections.value.codes) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -281,10 +266,7 @@
 
   const displayedPrompts = computed(() => {
     const data = prompts.value?.data || []
-    if (activeTab.value === '') {
-      return expandedSections.value.prompts ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    if (activeTab.value === 'prompts' && expandedSections.value.prompts) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -292,10 +274,7 @@
 
   const displayedSpaces = computed(() => {
     const data = spaces.value?.data || []
-    if (activeTab.value === '') {
-      return expandedSections.value.spaces ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    if (activeTab.value === 'spaces' && expandedSections.value.spaces) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -303,10 +282,7 @@
 
   const displayedMcps = computed(() => {
     const data = mcps.value?.data || []
-    if (activeTab.value === '') {
-      return expandedSections.value.mcps ? data : data.slice(0, INITIAL_PER_PAGE)
-    }
-    if (activeTab.value === 'mcps' && expandedSections.value.mcps) {
+    if (data.length > INITIAL_PER_PAGE) {
       return data
     }
     return data.slice(0, INITIAL_PER_PAGE)
@@ -328,14 +304,13 @@
     lastFetchTime.value = Date.now()
     
     try {
-      const timestamp = Date.now()
-      const collectionsUrl = `${reposUrl("collections")}?_t=${timestamp}`
-      const modelsUrl = `${reposUrl("models")}?_t=${timestamp}`
-      const datasetsUrl = `${reposUrl("datasets")}?_t=${timestamp}`
-      const spacesUrl = `${reposUrl("spaces")}?_t=${timestamp}`
-      const codesUrl = `${reposUrl("codes")}?_t=${timestamp}`
-      const promptsUrl = `${reposUrl("prompts")}?_t=${timestamp}`
-      const mcpsUrl = `${reposUrl("mcps")}?_t=${timestamp}`
+      const collectionsUrl = `${reposUrl("collections")}`
+      const modelsUrl = `${reposUrl("models")}`
+      const datasetsUrl = `${reposUrl("datasets")}`
+      const spacesUrl = `${reposUrl("spaces")}`
+      const codesUrl = `${reposUrl("codes")}`
+      const promptsUrl = `${reposUrl("prompts")}`
+      const mcpsUrl = `${reposUrl("mcps")}`
 
       const promises = [
         fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
@@ -355,44 +330,63 @@
   }
 
   const viewMoreTargets = async (target) => {
-    // 标记该类型已展开
-    expandedSections.value[target] = true
-
     switch (target) {
       case "collections":
         collectionsLoading.value = true
         await fetchMoreCollections()
         collectionsLoading.value = false
+        // 只有当没有更多数据时才标记为已展开
+        if (!collections.value.more) {
+          expandedSections.value.collections = true
+        }
         break
       case "models":
         modelsLoading.value = true
         await fetchMoreModels()
         modelsLoading.value = false
+        if (!models.value.more) {
+          expandedSections.value.models = true
+        }
         break
       case "datasets":
         datasetsLoading.value = true
         await fetchMoreDatasets()
         datasetsLoading.value = false
+        if (!datasets.value.more) {
+          expandedSections.value.datasets = true
+        }
         break
       case "spaces":
         spacesLoading.value = true
         await fetchMoreSpaces()
         spacesLoading.value = false
+        if (!spaces.value.more) {
+          expandedSections.value.spaces = true
+        }
         break
       case "codes":
         codeLoading.value = true
         await fetchMoreCodes()
         codeLoading.value = false
+        if (!codes.value.more) {
+          expandedSections.value.codes = true
+        }
         break
       case "prompts":
         promptsLoading.value = true
         await fetchMorePrompts()
         promptsLoading.value = false
+        if (!prompts.value.more) {
+          expandedSections.value.prompts = true
+        }
         break
       case "mcps":
         mcpsLoading.value = true
         await fetchMoreMcp()
         mcpsLoading.value = false
+        if (!mcps.value.more) {
+          expandedSections.value.mcps = true
+        }
         break
     }
   }
@@ -407,15 +401,18 @@
     }
   }
 
-  const updatePageAndData = (response, targetRef, pageRef) => {
-    if (!targetRef.value.data || pageRef.value === 1) {
-      targetRef.value.data = []
-    }
+  const updatePageAndData = (response, targetRef, pageRef, isFirstExpand = false) => {
     const addData = targetRef === mcps ? response.data.data : response.data
-    targetRef.value.data = [...targetRef.value.data, ...addData]
     const repoTotal = targetRef === mcps ? response.data.total : response.total
+    
+    if (isFirstExpand) {
+      targetRef.value.data = addData
+      pageRef.value = 1
+    } else {
+      targetRef.value.data = [...targetRef.value.data, ...addData]
+    }
+    
     targetRef.value.total = repoTotal
-
     const loadedCount = targetRef.value.data.length
     const hasMore = loadedCount < repoTotal
     targetRef.value.more = hasMore
@@ -430,8 +427,10 @@
     params.append("per", perPage)
     params.append("page", page)
 
+    const timestamp = Date.now()
+
     try {
-      const { data, error } = await useFetchApi(`${url}?${params}`).json()
+      const { data, error } = await useFetchApi(`${url}?${params}&_t=${timestamp}`).json()
 
       if (error.value) {
         ElMessage({
@@ -452,7 +451,9 @@
           targetRef.value.more = data.value.total > perPage
         }
       } else {
-        updatePageAndData(data.value, targetRef, getPageRef(targetRef))
+        const pageRef = getPageRef(targetRef)
+        const isFirstExpand = pageRef.value === 1 && perPage === PER_PAGE
+        updatePageAndData(data.value, targetRef, pageRef, isFirstExpand)
       }
 
       return data.value
@@ -475,7 +476,13 @@
   const fetchMore = async (targetRef, type) => {
     const pageRef = getPageRef(targetRef)
     const url = reposUrl(type)
-    await fetchData(url, targetRef, PER_PAGE, pageRef.value)
+    const currentLoadedCount = targetRef.value.data?.length || 0
+
+    if (currentLoadedCount <= INITIAL_PER_PAGE) {
+      await fetchData(url, targetRef, PER_PAGE, 1)
+    } else {
+      await fetchData(url, targetRef, PER_PAGE, pageRef.value)
+    }
   }
 
   const fetchMoreCollections = () => fetchMore(collections, "collections")
@@ -487,7 +494,6 @@
   const fetchMoreMcp = () => fetchMore(mcps, "mcps")
 
 
-  // 添加处理浏览器前进后退的函数
   const handlePopState = () => {
     if (isLoading.value) {
       return
