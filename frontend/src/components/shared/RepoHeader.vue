@@ -47,9 +47,9 @@
       </div>
     </div>
 
-    <!-- endpoint -->
+    <!-- endpoint || notebook -->
     <div
-      v-else-if="repoType === 'endpoint'"
+      v-else-if="repoType === 'endpoint' || repoType === 'notebook'"
       class="flex flex-wrap w-full gap-2 items-center">
       <SvgIcon
         name="finetune_cpu_icon"
@@ -197,7 +197,7 @@
       class="flex gap-2 items-center"
       v-if="repoType !== 'finetune'">
       <el-avatar
-        v-if="repoType !== 'endpoint'"
+        v-if="repoType !== 'endpoint' && repoType !== 'notebook'"
         :size="24"
         :src="avatar"
         class="flex-shrink-0"></el-avatar>
@@ -211,16 +211,24 @@
         <a
           class="md:ml-0 hover:text-brand-700 text-gray-500 font-normal"
           data-test="owner-link"
-          v-if="repoType !== 'endpoint'"
+          v-if="repoType !== 'endpoint' && repoType !== 'notebook'"
           :href="ownerUrl">
           {{ path?.split('/')[0] }}
         </a>
-        <div class="font-normal text-gray-700" v-if="repoType !== 'endpoint'">/</div>
+        <div class="font-normal text-gray-700" v-if="repoType !== 'endpoint' && repoType !== 'notebook'">/</div>
         <a
           class="max-w-full break-words hover:text-brand-700 text-gray-700 font-normal"
-          :href="repoUrl">
-          {{ repoType === 'endpoint' ? name : path?.split('/')[1] }}
+          :href="repoType === 'notebook' ? `/notebooks/${repoId}` : repoUrl">
+          {{ repoType === 'endpoint' || repoType === 'notebook' ? name : path?.split('/')[1] }}
         </a>
+        <template v-if="repoType === 'notebook' && resourceName">
+          <SvgIcon
+            name="finetune_cpu_icon"
+            width="16"
+            height="16"
+            class="flex-shrink-0 ml-6 md:ml-0" />
+          <span class="text-gray-700 font-normal text-md">{{ resourceName }}</span>
+        </template>
       </div>
       <div
         class="cursor-pointer"
@@ -328,7 +336,7 @@
   })
 
   const copyName = () => {
-    if (props.repoType === 'endpoint') {
+    if (props.repoType === 'endpoint' || props.repoType === 'notebook') {
       copyToClipboard(props.name)
     } else {
       copyToClipboard(props.path)

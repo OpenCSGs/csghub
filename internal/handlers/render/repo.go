@@ -181,6 +181,8 @@ func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[str
 	case "endpoints":
 		data["modelName"] = ctx.Param("model_name")
 		data["endpointId"] = ctx.Param("endpoint_id")
+	case "notebooks":
+		data["notebookId"] = ctx.Param("notebook_id")
 	case "finetunes":
 		data["modelName"] = ctx.Param("model_name")
 		data["finetuneId"] = ctx.Param("finetune_id")

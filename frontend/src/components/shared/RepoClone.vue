@@ -53,7 +53,7 @@
     </div>
 
     <!-- endpoint deploy button -->
-    <DeployDropdown
+    <!-- <DeployDropdown
       v-if="!actionLimited && repoType === 'model' && enableEndpoint && !!httpCloneUrl && !mirrorTaskRunning"
       :modelId="namespacePath"
     />
@@ -94,10 +94,21 @@
           :disabled="true"
         />
       </el-tooltip>
-    </div>
+    </div> -->
+
+
+    <UseModelDropdown
+      v-if="!actionLimited && repoType === 'model'"
+      :repo="repo"
+      :enableFinetune="enableFinetune"
+      :enableEndpoint="enableEndpoint"
+      :modelId="namespacePath"
+      :repoType="repoType"
+      :disabled="mirrorTaskRunning"
+    />
 
     <!-- finetune deploy button -->
-    <el-tooltip
+    <!-- <el-tooltip
       v-if="!actionLimited && repoType === 'model' && (!enableFinetune || !httpCloneUrl)"
       placement="top"
       effect="dark"
@@ -123,7 +134,7 @@
       svgName="model_finetune_create"
       :disabled="mirrorTaskRunning"
       @click="handleButtonClick()"
-    />
+    /> -->
 
     <!-- dataflow button -->
     <div
@@ -338,6 +349,7 @@
   import { useI18n } from 'vue-i18n'
   import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
   import DeployDropdown from './DeployDropdown.vue'
+  import UseModelDropdown from './UseModelDropdown.vue'
   import SyncDropdown from './SyncDropdown.vue'
   import SvgIcon from './SvgIcon.vue'
   import useFetchApi from '../../packs/useFetchApi'

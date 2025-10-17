@@ -1,0 +1,61 @@
+export const notebooks = {   
+  title: "Notebook",
+  useNotebook: "使用Notebook开发",
+  startNotebook: '启动 Notebook',
+  loading: '正在加载 Notebook 信息...',
+  new: {
+    title: "新建 Notebook",
+    desc: "交互式 Notebook，轻松运行模型",
+    name: "Notebook 名称",
+    tip: "名称规则：",
+    cluster: "集群",
+    resource: "资源",
+    resourceTip1: "提供不同的硬件资源，您可以根据需求选择不同配置",
+    resourceTip2: "计费说明：按照实际使用时长计费，未使用时不收费",
+    minReplicas: "最小弹性副本",
+    maxReplicas: "最大弹性副本",
+    autoSleepTip: "设置最小弹性副本为0时可以自动休眠",
+    maxReplicaFixedTip: "最大弹性副本为1，不可修改",
+    runtimeFramework: "预装镜像",
+    cancel: "取消",
+    create: "创建 Notebook",
+    createSuccess: "创建成功"
+  },
+  settings: {
+    stop: "暂停",
+    restart: "重启",
+    restartNotebook: "重启 Notebook",
+    wakeupNotebook: "唤醒",
+    wakingUpNotebook: "正在唤醒...",
+    wakeupSuccess: "唤醒成功",
+    wakeupFailed: "唤醒失败",
+    stopNotebook: "暂停 Notebook",
+    delete: "删除",
+    deleteNotebook: "删除 Notebook",
+    delTips: "此操作",
+    delTips2: "撤销，这将永久删除",
+    delTips3: "Notebook。",
+    confirmDel: "我已知晓,确认删除",
+    namespaceName: "Notebook 名称/ID",
+    toggleStatusSuccess: '更新成功，请等待实例状态切换',
+    resource: "资源配置",
+    resourceTip: "您可以随时在实例设置中切换到不同的资源配置。切换到付费资源后，将根据使用时长向您收取费用。",
+    currentCloudResource: '当前云资源',
+    framework: "运行时框架",
+    currentFramework: '当前运行时框架',
+    maxReplica: "最大弹性副本",
+    minReplica: "最小弹性副本",
+    currentMaxReplica: "当前最大弹性副本",
+    currentMinReplica: "当前最小弹性副本"
+  },
+  error: {
+    getRuntimeFrameworkFailed: '获取运行时框架失败:',
+    createNotebookFailed: '创建 Notebook 失败:',
+    createFailedRetry: '创建失败，请重试'
+  },
+  resources: {
+    gpuResource: 'GPU 资源',
+    cpuResource: 'CPU 资源',
+    otherResource: '其他资源'
+  }
+}

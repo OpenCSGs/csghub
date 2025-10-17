@@ -256,6 +256,16 @@
               </a>
               <a
                 v-if="!actionLimited"
+                href="/notebooks/new">
+                <el-dropdown-item>
+                  <div class="flex items-center w-fit gap-2">
+                    <SvgIcon name="navbar-new" />
+                    {{ $t('navbar.newNotebook') }}
+                  </div>
+                </el-dropdown-item>
+              </a>
+              <a
+                v-if="!actionLimited"
                 href="/organizations/new">
                 <el-dropdown-item divided>
                   <div class="flex items-center w-fit gap-2">

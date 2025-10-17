@@ -24,6 +24,7 @@ import zhHant from './locales/zhHant.js'
 import Navbar from "./components/navbar/Navbar.vue"
 import CommentList from "./components/comment/CommentList.vue"
 import EndpointDetail from "./components/endpoints/EndpointDetail.vue"
+import NotebookDetail from "./components/notebooks/NotebookDetail.vue"
 import RepoDetail from "./components/shared/RepoDetail.vue"
 import Profile from "./components/user_settings/Profile.vue"
 import ProfileEdit from "./components/user_settings/ProfileEdit.vue"
@@ -62,6 +63,7 @@ import EvaluationDetail from "./components/evaluations/EvaluationDetail.vue"
 import NewMcpServer from "./components/mcp/NewMcpServer.vue"
 import McpTools from "./components/mcp/McpTools.vue"
 import DeployMcpServer from "./components/mcp/DeployMcpServer.vue"
+import NewNotebook from "./components/notebooks/NewNotebook.vue"
 
 // Admin pages
 import AdminNavbar from "./components/new_admin/AdminNavbar.vue"
@@ -138,6 +140,7 @@ const app = createApp({
     finetuneDetail,
     ApplicationSpaceDetail,
     EndpointDetail,
+    NotebookDetail,
     CollectionIndex,
     CollectionsDetail,
     NotFound,
@@ -150,6 +153,7 @@ const app = createApp({
     NewEvaluation,
     EvaluationDetail,
     NewMcpServer,
+    NewNotebook,
     McpTools,
     DeployMcpServer,
     DataflowIndex,

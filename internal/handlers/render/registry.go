@@ -17,6 +17,7 @@ type RenderHandlerRegistry struct {
 	SessionHandler         SessionHandler
 	OrganizationHandler    OrganizationHandler
 	CollectionsHandler     CollectionsHandler
+	NotebookHandler        NotebookHandler
 	ProfileHandler         ProfileHandler
 	SettingHandler         SettingHandler
 	AdminHandler           AdminHandler
@@ -43,6 +44,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 	}
 	organizationHandler := NewOrganizationHandler()
 	collectionsHandler := NewCollectionsHandler()
+	notebookHandler := NewNotebookHandler()
 	profileHandler := NewProfileHandler(svcCtx)
 	settingHandler := NewSettingHandler(svcCtx)
 	adminHandler := NewAdminHandler()
@@ -61,6 +63,7 @@ func NewHandlersRegistry(svcCtx *svc.ServiceContext) (*RenderHandlerRegistry, er
 		SessionHandler:         sessionHandler,
 		OrganizationHandler:    organizationHandler,
 		CollectionsHandler:     collectionsHandler,
+		NotebookHandler:        notebookHandler,
 		ProfileHandler:         profileHandler,
 		SettingHandler:         settingHandler,
 		AdminHandler:           adminHandler,

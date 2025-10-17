@@ -20,6 +20,7 @@ import { user_sessions } from './zh_js/user_sessions';
 import { collections } from './zh_js/collections';
 import { components } from './zh_js/components';
 import { endpoints } from './zh_js/endpoints';
+import { notebooks } from './zh_js/notebook';
 import { finetune } from './zh_js/finetune';
 import { admin } from './zh_js/admin';
 import { billing } from './zh_js/billing';
@@ -55,6 +56,7 @@ export default {
   collections,
   components,
   endpoints,
+  notebooks,
   admin,
   finetune,
   billing,

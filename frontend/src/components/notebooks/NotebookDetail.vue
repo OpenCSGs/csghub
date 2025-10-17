@@ -5,14 +5,17 @@
     <div class="mx-auto page-responsive-width">
       <repo-header
         :name="repoDetailStore.deployName"
-        :path="repoDetailStore.modelId"
+        :path="repoDetailStore.id"
         :appStatus="repoDetailStore.status"
         :space-resource="repoDetailStore.hardware"
+        :resource-name="repoDetailStore.notebookResource"
         :avatar="avatar"
         :owner-url="ownerUrl"
-        repo-type="endpoint"
+        repo-type="notebook"
         :repoId="repoDetailStore.repositoryId"
         :deployId="repoDetailStore.deployId"
+        :nickname="repoDetailStore.nickName || ''"
+        :desc="repoDetailStore.description || ''"
       />
     </div>
   </div>
@@ -22,7 +25,7 @@
     <div class="absolute top-0 right-0 z-10">
       <div
         v-if="repoDetailStore.status === 'Sleeping' || isWakingUp"
-        @click="wakeupEndpoint"
+        @click="wakeupNotebook"
         class="btn btn-sm"
         :class="{
           'btn-primary': !isWakingUp,
@@ -30,41 +33,51 @@
         }"
         >
         {{ isWakingUp ? $t('notebooks.settings.wakingUpNotebook') : $t('notebooks.settings.wakeupNotebook') }}
-      </div>
+      </div>  
+      <div
+        v-else-if="(repoDetailStore.endpoint || repoDetailStore.status === 'Deploying') && !isWakingUp"
+        @click="startNotebook"
+        class="btn btn-sm"
+        :class="{
+          'btn-primary': repoDetailStore.status === 'Running',
+          'btn-secondary-gray btn-gray-disabled-notebook': repoDetailStore.status === 'Deploying' || !repoDetailStore.endpoint
+        }"
+        >
+        {{ $t('notebooks.startNotebook') }}
+      </div>  
     </div>
-
     <repo-tabs
       :repo-detail="repoDetailStore"
       :appStatus="repoDetailStore.status"
       :appEndpoint="appEndpoint"
-      :current-path="currentPath"
-      :default-tab="defaultTab"
-      :actionName="actionName"
+      :current-path="''"
+      :default-tab="'logs'"
+      :actionName="props.actionName"
       :settingsVisibility="canManage"
       :can-write="canWrite"
-      repo-type="endpoint"
+      repo-type="notebook"
       :clusterId="repoDetailStore.clusterId"
-      :sku="repoDetailStore.sku"
       :modelId="repoDetailStore.modelId"
       :private="repoDetailStore.privateVisibility"
       :endpointReplica="repoDetailStore.actualReplica"
-      :endpointName="repoDetailStore.deployName"
+      :notebookName="repoDetailStore.deployName"
+      :notebookId="repoDetailStore.id"
       :endpointId="repoDetailStore.deployId"
       :deployId="repoDetailStore.deployId"
       :userName="namespace"
       :replicaList="replicaList"
-      :path="`${namespace}/${modelName}/${endpointId}`"
+      :path="props.notebookName || props.notebookId"
     />
   </div>
   
   <LoadingSpinner 
     :loading="isDataLoading" 
-    :text="$t('endpoints.loading')" 
+    :text="$t('notebooks.loading')" 
   />
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed, provide } from 'vue'
+  import { ref, onMounted, onUnmounted, inject, computed, provide } from 'vue'
   import RepoHeader from '../shared/RepoHeader.vue'
   import RepoTabs from '../shared/RepoTabs.vue'
   import LoadingSpinner from '../shared/LoadingSpinner.vue'
@@ -81,13 +94,10 @@
   import { useI18n } from 'vue-i18n'
 
   const props = defineProps({
-    currentPath: String,
-    defaultTab: String,
     actionName: String,
     tags: Object,
-    namespace: String,
-    modelName: String,
-    endpointId: Number
+    notebookId: String,
+    notebookName: String
   })
 
   const { t: $t } = useI18n()
@@ -95,28 +105,27 @@
   const userStore = useUserStore()
   const { isInitialized } = storeToRefs(repoDetailStore)
   const { cookies } = useCookies()
+  const jwtToken = cookies.get('user_token')
+  const httpProtocal = ENABLE_HTTPS === 'true' ? 'https' : 'http'
   const { setRepoTab } = useRepoTabStore()
 
   const isDataLoading = ref(false)
+  const namespace = ref('')
+  const notebookResource = ref('')
   const isWakingUp = ref(false)
 
-  // only owner can view endpoint detail, so just set true
+  // only owner can view notebook detail, so just set true
   const canManage = ref(true)
 
   const canWrite = computed(() => {
-    return userStore.username === props.namespace
+    return true // 笔记本应该总是可写的
   })
   const isSameRepo = computed(() => {
-    return (
-      Number(props.endpointId) === repoDetailStore.deployId &&
-      repoDetailStore.repoType === 'endpoint'
-    )
+    return repoDetailStore.repoType === 'notebook'
   })
 
   const csghubServer = inject('csghubServer')
-  // const endpoint = ref({})
   const modelInfo = ref({})
-  // const allStatus = ['Building', 'Deploying', 'Startup', 'Running', 'Stopped', 'Sleeping', 'BuildingFailed', 'DeployFailed', 'RuntimeError']
   const isStatusSSEConnected = ref(false)
   const replicaList = ref([])
 
@@ -136,29 +145,14 @@
   const ownerUrl = computed(() => {
     const { namespace } = modelInfo.value
     if (!namespace) return ''
+
     const baseUrl = namespace.Type === 'user' ? '/profile/' : '/organizations/'
     return baseUrl + namespace.Path
   })
 
   const avatar = computed(() => modelInfo.value.namespace?.Avatar || '')
 
-  const fetchModelDetail = async () => {
-    const url = `/models/${props.namespace}/${props.modelName}`
-
-    try {
-      const { data, error } = await useFetchApi(url).json()
-
-      if (data.value) {
-        modelInfo.value = data.value.data
-      } else {
-        ElMessage({ message: error.value.msg, type: 'warning' })
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchRepoDetail = async (isUpdate = false) => {
+  const fetchNotebookDetail = async (isUpdate = false) => {
     if (isDataLoading.value) {
       return false
     }
@@ -166,7 +160,7 @@
       isDataLoading.value = true
     }
     
-    const url = `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}`
+    const url = `/notebooks/${props.notebookId}`
 
     try {
       const { response, data, error } = await useFetchApi(url).json()
@@ -178,37 +172,44 @@
       
       if (data.value) {
         const json = data.value
-        repoDetailStore.initialize(json.data, 'endpoint')
+        modelInfo.value = json.data
+        repoDetailStore.initialize({...json.data, sku: json.data.resource_id + '/' + json.data.order_detail_id}, 'notebook')
+        notebookResource.value = json.data.resource_name || ''
+        
+        // 更新 namespace 值
+        if (json.data.namespace && json.data.namespace.Path) {
+          namespace.value = json.data.namespace.Path
+        } else {
+          namespace.value = userStore.username || ''
+        }
+        
         return true
       } else {
         ElMessage({ message: error.value.msg, type: 'warning' })
         return false
       }
     } catch (error) {
-      console.log(error.msg)
+      console.log(error.message || error.msg)
       return false
     } finally {
       isDataLoading.value = false
     }
   }
 
-  const wakeupEndpoint = async () => {
+  const wakeupNotebook = async () => {
     if (isWakingUp.value) return
     
     isWakingUp.value = true
     try {
-      const { data, error } = await useFetchApi(
-        `/models/${props.namespace}/${props.modelName}/run/${props.endpointId}/wakeup`,
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        }
-      ).put().json()
+      const { data, error } = await useFetchApi(`/notebooks/${props.notebookId}/wakeup`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).put().json()
       
       if (data.value) {
         ElMessage.success($t('notebooks.settings.wakeupSuccess'))
-        await fetchRepoDetail(true)
+        await fetchNotebookDetail(true)
       } else {
         ElMessage.error(error.value?.msg || $t('notebooks.settings.wakeupFailed'))
       }
@@ -219,8 +220,15 @@
     }
   }
 
+  const startNotebook = () => {
+    if (repoDetailStore.status === 'Deploying' || !repoDetailStore.endpoint) {
+      return;
+    }
+    window.open(`${httpProtocal}://${repoDetailStore.endpoint}?jwt=${jwtToken}`)
+  }
+
   const syncEndpointStatus = () => {
-    fetchEventSource(`${csghubServer}/api/v1/models/${props.namespace}/${props.modelName}/run/${props.endpointId}/status`, {
+    fetchEventSource(`${csghubServer}/api/v1/notebooks/${props.notebookId}/status`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,
@@ -242,23 +250,27 @@
         }
       },
       onmessage(ev) {
-        console.log(ev)
-        const eventResponse = JSON.parse(ev.data)
-        console.log(`SyncStatus: ${eventResponse.status}`)
-        console.log(`SyncStatus: ${eventResponse.details && eventResponse.details[0].name}`)
-        if (repoDetailStore.status !== eventResponse.status) {
-          repoDetailStore.status = eventResponse.status
-          fetchRepoDetail()
+        if (ev.event === 'Status' || ev.event === 'status') {
+          console.log(`SyncStatus: ${ev.data}`)
+          
+          if (repoDetailStore.status !== ev.data) {
+            repoDetailStore.status = ev.data
+            fetchNotebookDetail()
+          }
+        } else if (ev.event === 'Instance' || ev.event === 'instance') {
+          repoDetailStore.activeInstance = ev.data
+        } else if (ev.event === 'Replica' || ev.event === 'replica') {
+          try {
+            const replicaData = JSON.parse(ev.data)
+            if (Array.isArray(replicaData)) {
+              replicaList.value = replicaData
+            }
+          } catch (error) {
+            console.error('Failed to parse replica data:', error)
+          }
+        } else if (ev.event === 'Reason' || ev.event === 'reason') {
+          repoDetailStore.failedReason = ev.data
         }
-
-        if (eventResponse.details && eventResponse.details[0].name) {
-          repoDetailStore.activeInstance = eventResponse.details[0].name
-        }
-
-        if (eventResponse.details) {
-          replicaList.value = eventResponse.details
-        }
-        repoDetailStore.failedReason = eventResponse.reason
       },
       onerror(err) {
         console.log('Status Server Error:')
@@ -268,31 +280,34 @@
   }
 
   onMounted(async () => {
-    // 只有主请求成功后才进行其他操作
-    const success = await fetchRepoDetail()
-    if (success) {
-      fetchModelDetail()
+    repoDetailStore.isInitialized = false
+    repoDetailStore.activeInstance = ''
+    repoDetailStore.status = ''
 
-      if (isStatusSSEConnected.value === false) {
-        syncEndpointStatus()
-      }
+    await fetchNotebookDetail()
+
+    if (isStatusSSEConnected.value === false) {
+      syncEndpointStatus()
     }
 
     setRepoTab({
-      repoType: props.repoType,
-      namespace: props.namespace,
-      repoName: props.modelName,
+      repoType: 'notebook',
+      namespace: '',
+      repoName: props.notebookName || props.notebookId,
+      tab: 'logs'
     })
   })
 
-  provide('fetchRepoDetail', fetchRepoDetail)
+  onUnmounted(() => {
+    repoDetailStore.isInitialized = false
+    repoDetailStore.activeInstance = ''
+    repoDetailStore.status = ''
+  })
+
+  provide('fetchRepoDetail', fetchNotebookDetail)
 </script>
 
 <style scoped>
-  body {
-    background: #fff !important;
-  }
-
   .btn-secondary-gray.btn-gray-disabled-notebook {
     cursor: not-allowed;
     pointer-events: none;
@@ -316,18 +331,5 @@
     border-radius: var(--border-radius-sm);
     background: #E5E7EB;
     padding: 6px;
-  }
-
-  .btn-secondary-gray.btn-gray-disabled-notebook {
-    cursor: not-allowed;
-    pointer-events: none;
-    background-color: var(--Gray-100);
-    color: var(--Gray-400);
-    border: 1px solid var(--Gray-200);
-    box-shadow: var(--shadow-xs);
-    &:hover {
-      cursor: not-allowed;
-      pointer-events: none;
-    }
   }
 </style>
