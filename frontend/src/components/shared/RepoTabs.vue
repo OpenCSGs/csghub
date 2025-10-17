@@ -243,6 +243,8 @@
           :coverImage="repoDetail.coverImageUrl"
           @showSpaceLogs="showSpaceLogs"
           :sdk="sdk"
+          :tag-list="tagList"
+          :tags="tags"
           :variables="repoDetail.variables ? JSON.parse(repoDetail.variables) : {}"
         />
         <code-settings
@@ -271,7 +273,7 @@
           :mcpNickname="repoDetail.nickname"
           :mcpDesc="repoDetail.description"
           :defaultBranch="repoDetail.defaultBranch"
-          :tagList="tagList"
+          :tag-list="tagList"
           :tags="tags"
         />
       </template>
