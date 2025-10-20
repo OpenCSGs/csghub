@@ -34,7 +34,7 @@
         :label="`&nbsp;${$t('profile.tabs.codes')}&nbsp;`"
       ></el-tab-pane>
       <el-tab-pane
-        v-if="initiator === 'profile'"
+        v-if="initiator === 'profile' || initiator === 'organization'"
         name="prompts"
         :label="`&nbsp;${$t('profile.tabs.prompts')}&nbsp;`"
       ></el-tab-pane>
@@ -120,7 +120,7 @@
     </div>
 
     <!-- prompts repo -->
-    <div v-if="(activeTab === '' || activeTab === 'prompts') && initiator === 'profile'" class="mt-8">
+    <div v-if="(activeTab === '' || activeTab === 'prompts') && (initiator === 'profile' || initiator === 'organization')" class="mt-8">
       <h3 class="text-[20px] text-[#344054] flex items-center gap-2">
         <SvgIcon name="codes" width="18" height="18" />
         <span>{{ $t("organization.prompt") }}</span>
@@ -320,7 +320,7 @@
         fetchData(codesUrl, codes, INITIAL_PER_PAGE, 1),
         fetchData(mcpsUrl, mcps, INITIAL_PER_PAGE, 1),
       ]
-      if (props.initiator === "profile") {
+      if (props.initiator === "profile" || props.initiator === "organization") {
         promises.push(fetchData(promptsUrl, prompts, INITIAL_PER_PAGE, 1))
       }
       await Promise.all(promises)

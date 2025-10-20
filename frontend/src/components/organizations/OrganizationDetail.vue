@@ -24,41 +24,46 @@
               </div>
             </template>
             <div>
-              <a :href="`/models/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="models" />
-                </div>
+              <a :href="`/models/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('models.title') }}</div>
-                  <div class="font-light">{{ $t('models.tips') }}</div>
+                  <div>{{ $t('organization.new.model') }}</div>
                 </div>
               </a>
-              <a :href="`/datasets/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="datasets" />
-                </div>
+              <a :href="`/datasets/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('datasets.title') }}</div>
-                  <div class="font-light">{{ $t('datasets.tips') }}</div>
+                  <div>{{ $t('organization.new.dataset') }}</div>
                 </div>
               </a>
-              <a :href="`/spaces/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="spaces" />
-                </div>
+              <a :href="`/spaces/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('spaces.title') }}</div>
-                  <div class="font-light">{{ $t('spaces.tips') }}</div>
+                  <div>{{ $t('organization.new.space') }}</div>
                 </div>
               </a>
-              <a  :href="`/codes/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="codes" />
-                </div>
+              <a  :href="`/codes/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('codes.title') }}</div>
-                  <div class="font-light">{{ $t('codes.tips')}}</div>
+                  <div>{{ $t('organization.new.code') }}</div>
+                </div>
+              </a>
+              <a :href="`/collections/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
+                <div class="text-sm leading-[20px] text-gray-700">
+                  <div>{{ $t('organization.new.collection') }}</div>
+                </div>
+              </a>
+              <a :href="`/prompts/library?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
+                <div class="text-sm leading-[20px] text-gray-700">
+                  <div>{{ $t('organization.new.prompt') }}</div>
+                </div>
+              </a>
+              <a :href="`/mcp/servers/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
+                <div class="text-sm leading-[20px] text-gray-700">
+                  <div>{{ $t('organization.new.mcp') }}</div>
                 </div>
               </a>
             </div>
