@@ -1,5 +1,6 @@
 import { useCookies } from "vue3-cookies";
 import { jwtDecode } from "jwt-decode";
+import { popupReloginDialog } from './authDialog'
 
 const { cookies } = useCookies()
 
@@ -10,20 +11,35 @@ const refreshJWT = async () => {
 
   if(loginIdentity) {
     if (jwt) {
-      const jwtInfos = jwtDecode(jwt);
-      const expireTime = jwtInfos.exp;
-      if (currentTime >= expireTime) {
-        await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
-      } else {
-        // if user token will expire soon, refresh
-        // if user token will not expire soon, do nothing
-        const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
-        if (differenceInMinutes < 120) {
-          await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+      try {
+        const jwtInfos = jwtDecode(jwt);
+        const expireTime = jwtInfos.exp;
+        if (currentTime >= expireTime) {
+          const response = await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+          if (!response.ok) {
+            throw new Error('Token refresh failed')
+          }
+        } else {
+          const differenceInMinutes = Math.floor((expireTime - currentTime) / (60));
+          if (differenceInMinutes < 120) {
+            const response = await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+            if (!response.ok) {
+              throw new Error('Token refresh failed')
+            }
+          }
         }
+      } catch (error) {
+        popupReloginDialog()
       }
     } else {
-      await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+      try {
+        const response = await fetch('/internal_api/users/jwt_token', {method: 'PUT'})
+        if (!response.ok) {
+          throw new Error('Token refresh failed')
+        }
+      } catch (error) {
+        popupReloginDialog()
+      }
     }
   }
 }
