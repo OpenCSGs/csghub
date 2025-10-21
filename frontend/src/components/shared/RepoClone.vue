@@ -383,7 +383,7 @@
   const httpCloneProtocolHostname = computed(() => {
     const url = new URL(CSGHUB_SERVER)
     if (!url) return ''
-    return `${url.protocol}//${url.hostname}`
+    return `${url.protocol}//${url.host}`
   })
 
   const httpsCloneCode = computed(() => {
