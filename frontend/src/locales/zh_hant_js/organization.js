@@ -70,4 +70,13 @@ export const organization = {
       deleteOrganizationCancelButton: "取消",
       deleteOrganizationSuccess: "組織刪除成功",
     },
+    new: {
+      model: "新建模型",
+      dataset: "新建數據集",
+      space: "新建應用空間",
+      code: "新建代碼倉庫",
+      prompt: "新建提示詞庫",
+      collection: "新建合集",
+      mcp: "新建MCP",
+    }
   }

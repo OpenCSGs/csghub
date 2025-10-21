@@ -57,4 +57,13 @@ export const organization = {
     deleteOrganizationCancelButton: "取消",
     deleteOrganizationSuccess: "组织删除成功",
   },
+  new: {
+    model: "新建模型",
+    dataset: "新建数据集",
+    space: "新建应用空间",
+    code: "新建代码仓库",
+    prompt: "新建提示词库",
+    collection: "新建合集",
+    mcp: "新建MCP",
+  }
 }

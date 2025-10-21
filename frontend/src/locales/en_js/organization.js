@@ -57,4 +57,13 @@ export const organization = {
     deleteOrganizationCancelButton: "Cancel",
     deleteOrganizationSuccess: "Organization deleted successfully",
   },
+  new: {
+    model: "New Model",
+    dataset: "New Dataset",
+    space: "New Space",
+    code: "New Code",
+    prompt: "New Prompt",
+    collection: "New Collection",
+    mcp: "New MCP",
+  }
 }
