@@ -36,6 +36,7 @@
             id="error-Description"
             class="text-xl font-light mb-12 text-gray-600">
             {{ $t('errors_page.conflict.contact') }}
+            <a href="mailto:support@opencsg.com">support@opencsg.com</a>
           </p>
 
           <div

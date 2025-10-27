@@ -22,6 +22,6 @@ export const errors_page = {
     title: '資源衝突',
     decName: '用戶名 {username} 已經存在',
     dec: '電子郵件 {username} 已經存在',
-    contact: '請嘗試其他登錄方式或聯繫 support@opencsg.com'
+    contact: '請嘗試其他登錄方式或聯繫 '
   }
 }

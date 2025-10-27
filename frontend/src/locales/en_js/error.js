@@ -22,6 +22,6 @@ export const errors_page = {
     title: 'Resource Conflict',
     decName: 'Username {username} already exists',
     dec: 'Email {username} already exists',
-    contact: 'Please try another login method or contact support@opencsg.com'
+    contact: 'Please try another login method or contact '
   }
 }
