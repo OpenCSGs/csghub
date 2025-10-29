@@ -6,6 +6,8 @@ export const endpoints = {
   summary: '概览',
   logDownload: '下载日志',
   gpuMemoryRequired: '最小显存需求：',
+  gpuMemoryRecommendation: '推荐最小显存：',
+  lowMemory: '显存不足',
   detail: {
     endpointUrl: '专属实例 URL',
     modelId: '模型 ID',
