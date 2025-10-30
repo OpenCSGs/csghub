@@ -316,28 +316,26 @@
             </template>
           </el-table-column>
           
-          <!-- <el-table-column
+          <el-table-column
             prop="token"
             :label="t('dataPipelines.operations')"
             min-width="120"
             fixed="right"
+            v-if="userStore.isAdmin"
           >
             <template #default="scope">
               <div class="settingsTableBtn flex items-center justify-start">
                 <el-button
                   class="flex items-center justify-start cursor-pointer"
                   type="text"
-                  @click="
-                    goToNewTask(
-                      `/datapipelines/dataflowInfo?id=${scope.row.job_id}&type=${scope.row.job_source}`
-                    )
-                  "
-                  >
-                  {{ t("dataPipelines.details") }}
+                  @click="delCeleryNode(scope.row.worker_name)"
+                  :disabled="scope.row.status === 'online'"
+                >
+                  {{ t('prompts.del') }}
                 </el-button>
               </div>
             </template>
-          </el-table-column> -->
+          </el-table-column>
         </el-table>
 
         <div class="flex justify-end mt-4 mr-4 mb-4">
@@ -359,13 +357,15 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
+import useUserStore from '../../../stores/UserStore'
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 const tableLoading = ref(false);
+const userStore = useUserStore();
 
 const form = ref({
   searchStr: "",
@@ -514,6 +514,34 @@ const toDatasetPage = (path, branch) => {
     window.location.href = `/datasets/${path}/files/${branch}`;
   }
 };
+
+const delCeleryNode = (worker_name) => {
+  ElMessageBox.confirm(
+    t('dataPipelines.delCeleryNodeTips', { worker_name }),
+    t("dataPipelines.delCeleryNodeTitle"),
+    {
+      confirmButtonText: t("dataPipelines.confirm"),
+      cancelButtonText: t("dataPipelines.cancel"),
+      type: 'warning',
+    }
+  )
+    .then(async () => {
+      const url = `/dataflow/celery/delete_celery_worker/${worker_name}`;
+      const { data, error } = await useFetchApi(url).delete().json();
+      if (data.value.code === 200) {
+        ElMessage({
+          message: t('dataPipelines.delSuccess'),
+          type: "success",
+        });
+        getDataFlowListFun();
+      } else {
+        ElMessage({
+          message: `${t('dataPipelines.delFailed')}: ${error.value.msg}`,
+          type: "error",
+        });
+      }
+    })
+}
 
 const router = useRouter();
 
